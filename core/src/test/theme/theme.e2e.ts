@@ -4,8 +4,17 @@ import { configs, test } from '@utils/test/playwright';
 
 const styleTestHelpers = `
   <style>
+    main {
+      background: var(--ion-color-contrast);
+    }
     .ion-background {
       background: var(--ion-color-base);
+    }
+    .ion-background-shade {
+      background: var(--ion-color-shade);
+    }
+    .ion-background-tint {
+      background: var(--ion-color-tint);
     }
     .ion-background-opacity-08 {
       background: rgba(var(--ion-color-base-rgb), 0.08);
@@ -22,20 +31,21 @@ const styleTestHelpers = `
     .ion-color-contrast {
       color: var(--ion-color-contrast);
     }
-    .ion-color-shade {
-      color: var(--ion-color-shade);
-    }
-    .ion-color-tint {
-      color: var(--ion-color-tint);
-    }
   </style>
 `;
 
 /**
- * All colors besides `light` should be tested against a dark background on dark theme.
+ * All colors should be tested in the following scenarios:
+ * 1) The base color as the text color against the contrast color as the background color
+ * 2) The contrast color as the text color against the base color as the background color
+ * 3) The contrast color as the text color against the shade color as the background color
+ * 4) The contrast color as the text color against the tint color as the background color
+ * 5) The base color as the text color against the base color at 0.08 opacity as the background color
+ * 6) The base color as the text color against the base color at 0.12 opacity as the background color
+ * 7) The base color as the text color against the base color at 0.16 opacity as the background color
  */
 configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
-  const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'medium', 'dark'];
+  const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 
   test.describe(title('theme'), () => {
     test.beforeEach(({ skip }) => {
@@ -47,8 +57,8 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }
       test(`color "${color}" should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
-          <main>
-            <p class="ion-color ion-color-${color}">Hello World</p>
+          <main class="ion-color-${color}">
+            <p class="ion-color">Hello World</p>
           </main>`,
           config
         );
@@ -60,8 +70,34 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }
       test(`contrast color on "${color}" background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
-          <main>
-            <p class="ion-color-contrast ion-background ion-color-${color}">Hello World</p>
+          <main class="ion-color-${color}">
+            <p class="ion-color-contrast ion-background">Hello World</p>
+          </main>`,
+          config
+        );
+
+        const results = await new AxeBuilder({ page }).analyze();
+        expect(results.violations).toEqual([]);
+      });
+
+      test(`contrast color on "${color}" background shade should pass AA guidelines`, async ({ page }) => {
+        await page.setContent(
+          `${styleTestHelpers}
+          <main class="ion-color-${color}">
+            <p class="ion-color-contrast ion-background-shade">Hello World</p>
+          </main>`,
+          config
+        );
+
+        const results = await new AxeBuilder({ page }).analyze();
+        expect(results.violations).toEqual([]);
+      });
+
+      test(`contrast color on "${color}" background tint should pass AA guidelines`, async ({ page }) => {
+        await page.setContent(
+          `${styleTestHelpers}
+          <main class="ion-color-${color}">
+            <p class="ion-color-contrast ion-background-tint">Hello World</p>
           </main>`,
           config
         );
@@ -73,8 +109,8 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }
       test(`color "${color}" on 0.08 opacity background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
-          <main>
-            <p class="ion-color ion-color-${color} ion-background-opacity-08">Hello World</p>
+          <main class="ion-color-${color}">
+            <p class="ion-color ion-background-opacity-08">Hello World</p>
           </main>`,
           config
         );
@@ -86,8 +122,8 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }
       test(`color "${color}" on 0.12 opacity background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
-          <main>
-            <p class="ion-color ion-color-${color} ion-background-opacity-12">Hello World</p>
+          <main class="ion-color-${color}">
+            <p class="ion-color ion-background-opacity-12">Hello World</p>
           </main>`,
           config
         );
@@ -99,8 +135,8 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }
       test(`color "${color}" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
-          <main>
-            <p class="ion-color ion-color-${color} ion-background-opacity-16">Hello World</p>
+          <main class="ion-color-${color}">
+            <p class="ion-color ion-background-opacity-16">Hello World</p>
           </main>`,
           config
         );
@@ -109,108 +145,5 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }
         expect(results.violations).toEqual([]);
       });
     }
-  });
-});
-
-/**
- * The `light` color should be tested against a black background for light theme and a white background for dark theme.
- * The mode doesn't matter here since we are testing against a consistent background color.
- */
-configs({ modes: ['md'], directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
-  test.describe(title('theme: light color'), () => {
-    test.beforeEach(({ skip }) => {
-      skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
-      skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
-    });
-
-    test(`color light should pass AA guidelines on a white background`, async ({ page }) => {
-      await page.setContent(
-        `${styleTestHelpers}
-          <style>
-            .md body {
-              --ion-background-color: var(--ion-text-color, #000);
-            }
-          </style>
-          <main>
-            <p class="ion-color ion-color-light">Hello World</p>
-          </main>`,
-        config
-      );
-
-      const results = await new AxeBuilder({ page }).analyze();
-      expect(results.violations).toEqual([]);
-    });
-
-    test(`contrast color on "light" background should pass AA guidelines`, async ({ page }) => {
-      await page.setContent(
-        `${styleTestHelpers}
-        <style>
-          .md body {
-            --ion-background-color: var(--ion-text-color, #000);
-          }
-        </style>
-        <main>
-          <p class="ion-color-contrast ion-background ion-color-light">Hello World</p>
-        </main>`,
-        config
-      );
-
-      const results = await new AxeBuilder({ page }).analyze();
-      expect(results.violations).toEqual([]);
-    });
-
-    test(`color "light" on 0.08 opacity background should pass AA guidelines`, async ({ page }) => {
-      await page.setContent(
-        `${styleTestHelpers}
-        <style>
-          .md body {
-            --ion-background-color: var(--ion-text-color, #000);
-          }
-        </style>
-        <main>
-          <p class="ion-color ion-color-light ion-background-opacity-08">Hello World</p>
-        </main>`,
-        config
-      );
-
-      const results = await new AxeBuilder({ page }).analyze();
-      expect(results.violations).toEqual([]);
-    });
-
-    test(`color "light" on 0.12 opacity background should pass AA guidelines`, async ({ page }) => {
-      await page.setContent(
-        `${styleTestHelpers}
-        <style>
-          .md body {
-            --ion-background-color: var(--ion-text-color, #000);
-          }
-        </style>
-        <main>
-          <p class="ion-color ion-color-light ion-background-opacity-12">Hello World</p>
-        </main>`,
-        config
-      );
-
-      const results = await new AxeBuilder({ page }).analyze();
-      expect(results.violations).toEqual([]);
-    });
-
-    test(`color "light" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
-      await page.setContent(
-        `${styleTestHelpers}
-        <style>
-          .md body {
-            --ion-background-color: var(--ion-text-color, #000);
-          }
-        </style>
-        <main>
-          <p class="ion-color ion-color-light ion-background-opacity-16">Hello World</p>
-        </main>`,
-        config
-      );
-
-      const results = await new AxeBuilder({ page }).analyze();
-      expect(results.violations).toEqual([]);
-    });
   });
 });
