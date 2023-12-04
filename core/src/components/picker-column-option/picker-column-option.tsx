@@ -107,7 +107,7 @@ export class PickerColumnOption implements ComponentInterface {
   }
 
   render() {
-    const { color, value, disabled, ariaLabel } = this;
+    const { color, disabled, ariaLabel } = this;
     const mode = getIonMode(this);
 
     return (
