@@ -13,6 +13,7 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - uses: actions/labeler@v4
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
