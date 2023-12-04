@@ -4,6 +4,7 @@ import { getElementRoot, raf } from '@utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
 import { isPlatform } from '@utils/platform';
 import { createColorClasses } from '@utils/theme';
+import { doc } from '@utils/browser';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
@@ -296,10 +297,46 @@ export class PickerColumn implements ComponentInterface {
         const centerX = bbox.x + bbox.width / 2;
         const centerY = bbox.y + bbox.height / 2;
 
-        const newActiveElement = el.shadowRoot!.elementFromPoint(
+        /**
+         * elementFromPoint returns the top-most element.
+         * This means that if an ion-backdrop is overlaying the
+         * picker then the appropriate picker-column-option will
+         * not be selected. To account for this, we use elementsFromPoint
+         * and use an Array.find to find the appropriate column option
+         * at that point.
+         *
+         * Additionally, the picker column could be used in the
+         * Shadow DOM (i.e. in ion-datetime) so we need to make
+         * sure we are choosing the correct host otherwise
+         * the elements returns by elementsFromPoint will be
+         * retargeted. To account for this, we check to see
+         * if the picker column has a parent shadow root. If
+         * so, we use that shadow root when doing elementsFromPoint.
+         * Otherwise, we just use the document.
+         */
+        const rootNode = el.getRootNode();
+        const hasParentShadow = rootNode instanceof ShadowRoot;
+        const referenceNode = hasParentShadow ? rootNode as ShadowRoot : doc;
+
+        /**
+         * If the reference node is undefined
+         * then it's likely that doc is undefined
+         * due to being in an SSR environment.
+         */
+        if (referenceNode === undefined) {
+          return;
+        }
+
+        const elementsAtPoint = referenceNode.elementsFromPoint(
           centerX,
           centerY
-        ) as HTMLIonPickerColumnOptionElement | null;
+        ) as HTMLIonPickerColumnOptionElement[];
+
+        /**
+         * elementsFromPoint can returns multiple elements
+         * so find the relevant picker column option if one exists.
+         */
+        const newActiveElement = elementsAtPoint.find(el => el.tagName === 'ION-PICKER-COLUMN-OPTION') as HTMLIonPickerColumnOptionElement | undefined;
 
         if (activeEl !== undefined) {
           this.setPickerItemActiveState(activeEl, false);
@@ -313,7 +350,7 @@ export class PickerColumn implements ComponentInterface {
          * below if newActiveElement was null but activeEl
          * was undefined.
          */
-        if (newActiveElement === null || newActiveElement.disabled) {
+        if (newActiveElement === undefined || newActiveElement.disabled) {
           return;
         }
 
