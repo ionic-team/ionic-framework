@@ -473,6 +473,7 @@ export class PickerColumn implements ComponentInterface {
      * from two layers of shadow nesting. If this causes problems,
      * the attribute can be moved to datetime.tsx and set on every
      * instance of ion-picker-column there instead.
+     * TODO FW-5580 remove exportparts
      */
 
     return (
