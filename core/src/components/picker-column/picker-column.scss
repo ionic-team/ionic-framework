@@ -11,6 +11,7 @@
   justify-content: center;
 
   height: 200px;
+  width: 100%;
 
   font-size: 22px;
 
@@ -84,7 +85,7 @@
    * This is added in addition to the column's own padding so that there is white
    * space between the slot and the column's focus highlight.
    */
-  @include padding(0, 8px);
+  @include padding(0, 16px);
   
   justify-content: end;
 }
@@ -94,7 +95,7 @@
    * This is added in addition to the column's own padding so that there is white
    * space between the slot and the column's focus highlight.
    */
-  @include padding(0, 8px);
+  @include padding(0, 16px);
   
   justify-content: start;
 }
