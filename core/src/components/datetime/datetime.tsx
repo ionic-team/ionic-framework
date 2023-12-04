@@ -1648,7 +1648,12 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {items.map((item: PickerColumnItem) => (
-          <ion-picker-column-option part={item.value === todayString ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART} key={item.value} disabled={item.disabled} value={item.value}>
+          <ion-picker-column-option
+            part={item.value === todayString ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
+            key={item.value}
+            disabled={item.disabled}
+            value={item.value}
+          >
             {item.text}
           </ion-picker-column-option>
         ))}
@@ -1771,7 +1776,12 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {days.map((day: PickerColumnItem) => (
-          <ion-picker-column-option part={day.value === pickerColumnValue ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART} key={day.value} disabled={day.disabled} value={day.value}>
+          <ion-picker-column-option
+            part={day.value === pickerColumnValue ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
+            key={day.value}
+            disabled={day.disabled}
+            value={day.value}
+          >
             {day.text}
           </ion-picker-column-option>
         ))}
@@ -1821,7 +1831,12 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {months.map((month: PickerColumnItem) => (
-          <ion-picker-column-option part={month.value === workingParts.month ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART} key={month.value} disabled={month.disabled} value={month.value}>
+          <ion-picker-column-option
+            part={month.value === workingParts.month ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
+            key={month.value}
+            disabled={month.disabled}
+            value={month.value}
+          >
             {month.text}
           </ion-picker-column-option>
         ))}
@@ -1870,7 +1885,12 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {years.map((year: PickerColumnItem) => (
-          <ion-picker-column-option part={year.value === workingParts.year ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART} key={year.value} disabled={year.disabled} value={year.value}>
+          <ion-picker-column-option
+            part={year.value === workingParts.year ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
+            key={year.value}
+            disabled={year.disabled}
+            value={year.value}
+          >
             {year.text}
           </ion-picker-column-option>
         ))}
@@ -1938,7 +1958,12 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {hoursData.map((hour: PickerColumnItem) => (
-          <ion-picker-column-option part={hour.value === activePart.hour ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART} key={hour.value} disabled={hour.disabled} value={hour.value}>
+          <ion-picker-column-option
+            part={hour.value === activePart.hour ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
+            key={hour.value}
+            disabled={hour.disabled}
+            value={hour.value}
+          >
             {hour.text}
           </ion-picker-column-option>
         ))}
@@ -1972,7 +1997,12 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {minutesData.map((minute: PickerColumnItem) => (
-          <ion-picker-column-option part={minute.value === activePart.minute ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART} key={minute.value} disabled={minute.disabled} value={minute.value}>
+          <ion-picker-column-option
+            part={minute.value === activePart.minute ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
+            key={minute.value}
+            disabled={minute.disabled}
+            value={minute.value}
+          >
             {minute.text}
           </ion-picker-column-option>
         ))}
@@ -2013,7 +2043,12 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {dayPeriodData.map((dayPeriod: PickerColumnItem) => (
-          <ion-picker-column-option part={dayPeriod.value === activePart.ampm ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART} key={dayPeriod.value} disabled={dayPeriod.disabled} value={dayPeriod.value}>
+          <ion-picker-column-option
+            part={dayPeriod.value === activePart.ampm ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
+            key={dayPeriod.value}
+            disabled={dayPeriod.disabled}
+            value={dayPeriod.value}
+          >
             {dayPeriod.text}
           </ion-picker-column-option>
         ))}
