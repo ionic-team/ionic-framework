@@ -104,9 +104,9 @@ export class PickerColumn implements ComponentInterface {
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
          */
-        const oldActive = getElementRoot(el).querySelector(
+        const oldActive = getElementRoot(el).querySelector<HTMLIonPickerColumnOptionElement>(
           `.${PICKER_ITEM_ACTIVE_CLASS}`
-        ) as HTMLIonPickerColumnOptionElement | null;
+        );
         if (oldActive) {
           this.setPickerItemActiveState(oldActive, false);
         }
