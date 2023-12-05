@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction, Theme } from '@utils/test/playwright';
 
 /**
  * This is an extended version of Playwright's
@@ -28,13 +28,22 @@ configs().forEach(({ config, title }) => {
 
   let mode: Mode;
   let direction: Direction;
+  let theme: Theme;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
+    theme = testInfo.project.metadata.theme;
   } else {
     mode = options.mode;
     direction = options.direction;
+    theme = options.theme;
+  }
+
+  if (theme !== 'light') {
+    throw new Error(
+      'The "themes" config option is only supported when using "page.setContent". Remove the theme from the config and manually set the theme in the test template.'
+    );
   }
 
   const rtlString = direction === 'rtl' ? 'true' : undefined;
