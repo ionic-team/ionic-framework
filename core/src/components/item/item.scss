@@ -51,6 +51,15 @@
    * @prop --highlight-color-valid: The color of the highlight on the item when valid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    * @prop --highlight-color-invalid: The color of the highlight on the item when invalid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    */
+
+  /**
+   * We change the minimum width as the
+   * font size changes. Using a fixed minimum
+   * width means that fewer and fewer characters
+   * can be displayed in the same space as the
+   * text grows.
+   */
+  --inner-min-width: 4rem;
   --border-radius: 0px;
   --border-width: 0px;
   --border-style: solid;
@@ -79,15 +88,6 @@
   display: block;
 
   position: relative;
-
-  // When an item containing a select is inside of a
-  // flex container the item will collapse to 0px
-  // width due to the select setting the width to 0px.
-  // By setting the flex property here, we are
-  // allowing the item to grow to fill the flex container.
-  // If the item is inside of a block container this
-  // property will be ignored.
-  flex: 1;
 
   align-items: center;
   justify-content: space-between;
@@ -310,7 +310,7 @@ button, a {
   // This flex property is required in order to make
   // the elements wrap when there is a slotted start
   // element and a label
-  flex: 1 0 auto;
+  flex: 1 0 0;
 
   flex-direction: inherit;
 
@@ -321,6 +321,15 @@ button, a {
 
   align-items: inherit;
   align-self: stretch;
+
+  /**
+   * The min-width defines when the
+   * content in the default slot should
+   * stop wrapping/truncating within its own
+   * container. At this point the entire
+   * container will wrap to the next line.
+   */
+  min-width: var(--inner-min-width);
 
   // Max width must be set to 100%, otherwise the
   // elements will overflow this container instead
