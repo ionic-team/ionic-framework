@@ -443,7 +443,7 @@ export class PickerColumn implements ComponentInterface {
     const options = Array.from(
       this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option')
     );
-    return options.find((option: HTMLIonPickerColumnOptionElement) => {
+    return options.find((option) => {
       /**
        * If the whole picker column is disabled, the current value should appear active
        * If the current value item is specifically disabled, it should not appear active
