@@ -124,7 +124,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const firstColumn = page.locator('ion-picker-column#first');
       const secondColumn = page.locator('ion-picker-column#second');
 
-      await secondColumn.focus();
+      await secondColumn.evaluate((el: HTMLIonPickerColumnElement) => el.setFocus());
       await expect(secondColumn).toBeFocused();
 
       await page.waitForChanges();
