@@ -40,7 +40,7 @@ configs().forEach(({ config, title }) => {
     theme = options.theme;
   }
 
-  if (theme !== 'light') {
+  if (theme !== 'light' && options?.inline === undefined) {
     throw new Error(
       'The "themes" config option is only supported when using "page.setContent". Remove the theme from the config and manually set the theme in the test template.'
     );
