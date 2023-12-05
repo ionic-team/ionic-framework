@@ -19,7 +19,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     IGNORED_KEYS.forEach((ignoredKey: string) => {
-      test.only(`should not clear when ${ignoredKey} is pressed`, async ({ page }) => {
+      test(`should not clear when ${ignoredKey} is pressed`, async ({ page }) => {
         await page.setContent(`<ion-input value="abc" clear-on-edit="true" aria-label="input"></ion-input>`, config);
 
         const input = page.locator('ion-input');
@@ -32,7 +32,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
     });
 
-    test.only('should clear after when pressing valid key after pressing ignored key', async ({ page }) => {
+    test('should clear after when pressing valid key after pressing ignored key', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/28633',
