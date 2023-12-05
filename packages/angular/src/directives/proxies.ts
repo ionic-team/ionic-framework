@@ -1446,7 +1446,8 @@ export declare interface IonPicker extends Components.IonPicker {
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'items', 'mode', 'value']
+  inputs: ['color', 'disabled', 'items', 'mode', 'value'],
+  methods: ['setFocus']
 })
 @Component({
   selector: 'ion-picker-column',

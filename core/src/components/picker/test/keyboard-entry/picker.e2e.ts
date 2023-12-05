@@ -32,7 +32,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const column = page.locator('ion-picker-column');
       const ionChange = await page.spyOnEvent('ionChange');
-      await column.focus();
+      await column.evaluate((el: HTMLIonPickerColumnElement) => el.setFocus());
 
       await page.keyboard.press('Digit2');
 
@@ -126,7 +126,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const column = page.locator('ion-picker-column');
       const ionChange = await page.spyOnEvent('ionChange');
-      await column.focus();
+      await column.evaluate((el: HTMLIonPickerColumnElement) => el.setFocus());
 
       await page.keyboard.press('Digit0');
 

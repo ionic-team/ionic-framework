@@ -4,13 +4,53 @@
 // --------------------------------------------------
 
 :host {
-  @include padding(0px, 16px, 0px, 16px);
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  max-width: 100%;
 
   height: 200px;
 
+  font-size: 22px;
+
+  text-align: center;
+}
+
+.picker-opts {
+  /**
+   * This padding must be set here and not on the
+   * host to ensure that the focus highlight on the
+   * column is not overly narrow.
+   */
+  @include padding(0px, 16px, 0px, 16px);
+
+  /**
+   * When using reactive data, such as in datetime's
+   * wheel picker, there may be layout shifts between
+   * individual columns in a picker as the columns
+   * shrink to fit the widest item in the column.
+   * Setting a minimum width avoids this layout shifting.
+   *
+   * Note that we need this min-width set on the same
+   * element as the vertical padding (i.e. not on the
+   * host).
+   */
+  min-width: 26px;
+  max-height: 200px;
+
   outline: none;
 
-  font-size: 22px;
+  /**
+   * Added so that text-align can be set on the host
+   * from external components. For example, datetime
+   * changes the alignment of specific columns in its
+   * wheel pickers.
+   */
+  text-align: inherit;
+
   scroll-snap-type: y mandatory;
 
   /**
@@ -22,15 +62,43 @@
 
   // Hide scrollbars on Firefox
   scrollbar-width: none;
-
-  text-align: center;
 }
 
 /**
  * Hide scrollbars on Chrome and Safari
  */
-:host::-webkit-scrollbar {
+.picker-opts::-webkit-scrollbar {
   display: none;
+}
+
+::slotted([slot="prefix"]), ::slotted([slot="suffix"]) {
+  max-width: 200px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+::slotted([slot="prefix"]) {
+  /**
+   * This is added in addition to the column's own padding so that there is white
+   * space between the slot and the column's focus highlight.
+   */
+  @include padding(0, 16px);
+  
+  justify-content: end;
+}
+
+::slotted([slot="suffix"]) {
+  /**
+   * This is added in addition to the column's own padding so that there is white
+   * space between the slot and the column's focus highlight.
+   */
+  @include padding(0, 16px);
+  
+  justify-content: start;
 }
 
 :host .picker-item {
@@ -93,7 +161,7 @@
 }
 
 @media (any-hover: hover) {
-  :host(:focus) {
+  :host(:focus) .picker-opts {
     outline: none;
 
     background: current-color(base, 0.2);
