@@ -38,7 +38,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
     IGNORED_KEYS.forEach((ignoredKey: string) => {
       test.only(`should not clear when ${ignoredKey} is pressed`, async ({ page }) => {
-        await page.setContent(`<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`, config);
+        await page.setContent(
+          `<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`,
+          config
+        );
 
         const textarea = page.locator('ion-textarea');
         await textarea.locator('textarea').focus();
@@ -56,7 +59,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         description: 'https://github.com/ionic-team/ionic-framework/issues/28633',
       });
 
-      await page.setContent(`<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`, config);
+      await page.setContent(
+        `<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`,
+        config
+      );
 
       const textarea = page.locator('ion-textarea');
       await textarea.locator('textarea').focus();
