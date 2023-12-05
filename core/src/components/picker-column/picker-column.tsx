@@ -438,9 +438,7 @@ export class PickerColumn implements ComponentInterface {
 
   get activeItem() {
     const { value } = this;
-    const options = Array.from(
-      this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option')
-    );
+    const options = Array.from(this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option'));
     return options.find((option) => {
       /**
        * If the whole picker column is disabled, the current value should appear active
