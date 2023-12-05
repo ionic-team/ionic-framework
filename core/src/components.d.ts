@@ -1162,7 +1162,7 @@ export namespace Components {
          */
         "autocorrect": 'on' | 'off';
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus": boolean;
         /**
@@ -1274,7 +1274,7 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -2611,7 +2611,7 @@ export namespace Components {
          */
         "searchIcon"?: string;
         /**
-          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
+          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -2960,7 +2960,7 @@ export namespace Components {
          */
         "autocapitalize": string;
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus": boolean;
         /**
@@ -3060,7 +3060,7 @@ export namespace Components {
          */
         "rows"?: number;
         /**
-          * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.
+          * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -5871,7 +5871,7 @@ declare namespace LocalJSX {
          */
         "autocorrect"?: 'on' | 'off';
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus"?: boolean;
         /**
@@ -7726,7 +7726,7 @@ declare namespace LocalJSX {
          */
         "autocapitalize"?: string;
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus"?: boolean;
         /**
