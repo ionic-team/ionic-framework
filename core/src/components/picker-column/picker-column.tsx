@@ -441,7 +441,7 @@ export class PickerColumn implements ComponentInterface {
   get activeItem() {
     const { value } = this;
     const options = Array.from(
-      this.el.querySelectorAll('ion-picker-column-option') as NodeListOf<HTMLIonPickerColumnOptionElement>
+      this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option')
     );
     return options.find((option: HTMLIonPickerColumnOptionElement) => {
       /**
