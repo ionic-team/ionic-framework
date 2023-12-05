@@ -1,5 +1,5 @@
-import type { MenuControllerI, AnimationBuilder, MenuI } from '@ionic/core/components';
-import { Animation } from '@ionic/core/components';
+import type { MenuControllerI, AnimationBuilder, MenuI, Animation } from '@ionic/core/components';
+// import { Animation } from '@ionic/core/components';
 
 export class MenuController implements MenuControllerI {
   constructor(private menuController: MenuControllerI) {}
