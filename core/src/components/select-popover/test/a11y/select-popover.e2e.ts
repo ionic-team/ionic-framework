@@ -28,6 +28,7 @@ configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) =
       await popover.evaluate((el: HTMLIonPopoverElement) => el.present());
       await ionPopoverDidPresent.next();
 
+      // TODO(FW-5698): remove withRules() call and resolve Axe errors
       const results = await new AxeBuilder({ page }).withRules('color-contrast').analyze();
       expect(results.violations).toEqual([]);
     });
