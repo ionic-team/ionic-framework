@@ -63,6 +63,16 @@
 }
 
 /**
+ * This ensures that selects are allowed
+ * to shrink when placed inside of a flex container.
+ * Otherwise they will forcibly take up the entire row.
+ */
+// TODO FW-3194 - Remove :not()
+:host(.in-item:not(.legacy-select)) {
+  flex: 1 1 0;
+}
+
+/**
  * Since the label sits on top of the element,
  * the component needs to be taller otherwise the
  * label will appear too close to the select text.
