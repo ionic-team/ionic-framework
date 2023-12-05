@@ -333,9 +333,7 @@ export class PickerColumn implements ComponentInterface {
          * elementsFromPoint can returns multiple elements
          * so find the relevant picker column option if one exists.
          */
-        const newActiveElement = elementsAtPoint.find((el) => el.tagName === 'ION-PICKER-COLUMN-OPTION') as
-          | HTMLIonPickerColumnOptionElement
-          | undefined;
+        const newActiveElement = elementsAtPoint.find((el) => el.tagName === 'ION-PICKER-COLUMN-OPTION');
 
         if (activeEl !== undefined) {
           this.setPickerItemActiveState(activeEl, false);
