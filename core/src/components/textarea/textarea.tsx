@@ -455,15 +455,39 @@ export class Textarea implements ComponentInterface {
     if (!this.clearOnEdit) {
       return;
     }
+
+    /**
+     * The following keys do not modify the
+     * contents of the input. As a result, pressing
+     * them should not edit the textarea.
+     *
+     * We can't check to see if the value of the textarea
+     * was changed because we call checkClearOnEdit
+     * in a keydown listener, and the key has not yet
+     * been added to the textarea.
+     *
+     * Unlike ion-input, the "Enter" key does modify the
+     * textarea by adding a new line, so "Enter" is not
+     * included in the IGNORED_KEYS array.
+     */
+    const IGNORED_KEYS = ['Tab', 'Shift', 'Meta', 'Alt', 'Control'];
+
     /**
      * Clear the textarea if the control has not been previously cleared
      * during focus.
      */
-    if (!this.didTextareaClearOnEdit && this.hasValue() && ev.key !== 'Tab') {
+    if (!this.didTextareaClearOnEdit && this.hasValue() && !IGNORED_KEYS.includes(ev.key)) {
       this.value = '';
       this.emitInputChange(ev);
+
+      /**
+       * Only set this flag if we cleared the input.
+       * Otherwise pressing an IGNORED_KEYS first and
+       * then an allowed key will cause the input to not
+       * be cleared.
+       */
+      this.didTextareaClearOnEdit = true;
     }
-    this.didTextareaClearOnEdit = true;
   }
 
   private focusChange() {
