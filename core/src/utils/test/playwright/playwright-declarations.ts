@@ -6,7 +6,7 @@ import type { LocatorOptions, E2ELocator } from './page/utils/locator';
 
 export interface E2EPageOptions extends PageOptions, TestConfig {
   /**
-   * Indicates if the page content is set inline with `.setContent`. This setting can 
+   * Indicates if the page content is set inline with `.setContent`. This setting can
    * only be true or not set.
    */
   inline?: true;
