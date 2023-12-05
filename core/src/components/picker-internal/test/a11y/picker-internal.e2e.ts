@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.only(title('picker-internal: a11y  (light mode)'), () => {
+  test.describe(title('picker-internal: a11y  (light mode)'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       /**
        * `ion-picker-internal` relies on the `ion-content` component for
