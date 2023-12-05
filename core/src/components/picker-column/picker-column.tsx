@@ -300,7 +300,7 @@ export class PickerColumn implements ComponentInterface {
         /**
          * elementFromPoint returns the top-most element.
          * This means that if an ion-backdrop is overlaying the
-         * picker then the appropriate picker-column-option will
+         * picker then the appropriate picker column option will
          * not be selected. To account for this, we use elementsFromPoint
          * and use an Array.find to find the appropriate column option
          * at that point.
