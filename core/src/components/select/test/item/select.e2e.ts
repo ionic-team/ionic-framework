@@ -45,11 +45,13 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
         <div id="container" style="display: flex">
-          <ion-item>
-            <ion-select label="Fruit" value="apple">
-              <ion-select-option value="apple">Apple</ion-select-option>
-            </ion-select>
-          </ion-item>
+          <ion-list>
+            <ion-item>
+              <ion-select label="Fruit" value="apple">
+                <ion-select-option value="apple">Apple</ion-select-option>
+              </ion-select>
+            </ion-item>
+          <ion-list>
         </div>
       `,
         config
