@@ -52,6 +52,7 @@ import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
 import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
 import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/components/ion-picker-column.js';
+import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
 import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
 import { defineCustomElement as defineIonRadioGroup } from '@ionic/core/components/ion-radio-group.js';
@@ -583,6 +584,12 @@ export const IonPickerColumn = /*@__PURE__*/ defineContainer<JSX.IonPickerColumn
   'color',
   'numericInput',
   'ionChange'
+]);
+
+
+export const IonPickerColumnOption = /*@__PURE__*/ defineContainer<JSX.IonPickerColumnOption>('ion-picker-column-option', defineIonPickerColumnOption, [
+  'disabled',
+  'value'
 ]);
 
 

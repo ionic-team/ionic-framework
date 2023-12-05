@@ -46,6 +46,7 @@ import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
 import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
 import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/components/ion-picker-column.js';
+import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
 import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
 import { defineCustomElement as defineIonRadioGroup } from '@ionic/core/components/ion-radio-group.js';
@@ -113,6 +114,7 @@ export const IonNavLink = /*@__PURE__*/createReactComponent<JSX.IonNavLink, HTML
 export const IonNote = /*@__PURE__*/createReactComponent<JSX.IonNote, HTMLIonNoteElement>('ion-note', undefined, undefined, defineIonNote);
 export const IonPicker = /*@__PURE__*/createReactComponent<JSX.IonPicker, HTMLIonPickerElement>('ion-picker', undefined, undefined, defineIonPicker);
 export const IonPickerColumn = /*@__PURE__*/createReactComponent<JSX.IonPickerColumn, HTMLIonPickerColumnElement>('ion-picker-column', undefined, undefined, defineIonPickerColumn);
+export const IonPickerColumnOption = /*@__PURE__*/createReactComponent<JSX.IonPickerColumnOption, HTMLIonPickerColumnOptionElement>('ion-picker-column-option', undefined, undefined, defineIonPickerColumnOption);
 export const IonProgressBar = /*@__PURE__*/createReactComponent<JSX.IonProgressBar, HTMLIonProgressBarElement>('ion-progress-bar', undefined, undefined, defineIonProgressBar);
 export const IonRadio = /*@__PURE__*/createReactComponent<JSX.IonRadio, HTMLIonRadioElement>('ion-radio', undefined, undefined, defineIonRadio);
 export const IonRadioGroup = /*@__PURE__*/createReactComponent<JSX.IonRadioGroup, HTMLIonRadioGroupElement>('ion-radio-group', undefined, undefined, defineIonRadioGroup);

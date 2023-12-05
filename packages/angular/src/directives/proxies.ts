@@ -1477,6 +1477,28 @@ export declare interface IonPickerColumn extends Components.IonPickerColumn {
 
 
 @ProxyCmp({
+  inputs: ['disabled', 'value']
+})
+@Component({
+  selector: 'ion-picker-column-option',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['disabled', 'value'],
+})
+export class IonPickerColumnOption {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonPickerColumnOption extends Components.IonPickerColumnOption {}
+
+
+@ProxyCmp({
   inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
 })
