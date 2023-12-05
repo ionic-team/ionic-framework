@@ -2,6 +2,35 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, config }) => {
+  test.describe(title('toast: Axe testing'), () => {
+    test('should not have any axe violations with inline toasts', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-toast></ion-toast>
+
+          <script>
+            const toast = document.querySelector('ion-toast');
+            toast.icon = 'person';
+            toast.header = 'Inline Toast Header';
+            toast.message = 'Inline Toast Message';
+          </script>
+        `,
+        config
+      );
+
+      const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+      const toast = page.locator('ion-toast');
+
+      await toast.evaluate((el: HTMLIonToastElement) => el.present());
+      await ionToastDidPresent.next();
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
+
 /**
  * This test does not check LTR vs RTL layouts
  */
@@ -10,20 +39,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/toast/test/a11y`, config);
     });
-    test('should not have any axe violations with inline toasts', async ({ page }) => {
-      const didPresent = await page.spyOnEvent('ionToastDidPresent');
 
-      await page.click('#inline-toast-trigger');
-      await didPresent.next();
-
-      /**
-       * IonToast overlays the entire screen, so
-       * Axe will be unable to verify color contrast
-       * on elements under the toast.
-       */
-      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
-      expect(results.violations).toEqual([]);
-    });
     test('should not have any axe violations with controller toasts', async ({ page }) => {
       const didPresent = await page.spyOnEvent('ionToastDidPresent');
 
@@ -33,7 +49,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       /**
        * IonToast overlays the entire screen, so
        * Axe will be unable to verify color contrast
-       * on elements under the toast.
+       * on elements under the toast. To avoid needing
+       * to spin up a controller toast using page.setContent
+       * (to support automatic dark theme testing), color
+       * contrast is checked on an inline toast in a
+       * separate test above.
        */
       const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
       expect(results.violations).toEqual([]);
