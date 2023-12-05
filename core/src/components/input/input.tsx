@@ -95,7 +95,9 @@ export class Input implements ComponentInterface {
   @Prop() autocorrect: 'on' | 'off' = 'off';
 
   /**
-   * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+   * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.
+   *
+   * This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Prop() autofocus = false;
 
@@ -424,6 +426,8 @@ export class Input implements ComponentInterface {
    *
    * Developers who wish to focus an input when an overlay is presented
    * should call `setFocus` after `didPresent` has resolved.
+   *
+   * See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Method()
   async setFocus() {
