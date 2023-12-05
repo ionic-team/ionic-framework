@@ -95,7 +95,9 @@ export class Textarea implements ComponentInterface {
   @Prop() autocapitalize = 'none';
 
   /**
-   * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+   * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.
+   *
+   * This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Prop() autofocus = false;
 
@@ -374,6 +376,8 @@ export class Textarea implements ComponentInterface {
   /**
    * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global
    * `textarea.focus()`.
+   *
+   * See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Method()
   async setFocus() {
