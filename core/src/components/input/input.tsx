@@ -557,21 +557,23 @@ export class Input implements ComponentInterface {
      * been added to the input.
      */
     const IGNORED_KEYS = ['Enter', 'Tab', 'Shift', 'Meta', 'Alt', 'Control'];
+    const pressedIgnoredKey = !IGNORED_KEYS.includes(ev.key);
 
     /**
      * Clear the input if the control has not been previously cleared during focus.
      * Do not clear if the user hitting enter to submit a form.
      */
-    if (!this.didInputClearOnEdit && this.hasValue() && !IGNORED_KEYS.includes(ev.key)) {
+    if (!this.didInputClearOnEdit && this.hasValue() && pressedIgnoredKey) {
       this.value = '';
       this.emitInputChange(ev);
+    }
 
-      /**
-       * Only set this flag if we cleared the input.
-       * Otherwise pressing an IGNORED_KEYS first and
-       * then an allowed key will cause the input to not
-       * be cleared.
-       */
+    /**
+     * Pressing an IGNORED_KEYS first and
+     * then an allowed key will cause the input to not
+     * be cleared.
+     */
+    if (!pressedIgnoredKey) {
       this.didInputClearOnEdit = true;
     }
   }

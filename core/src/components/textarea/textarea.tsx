@@ -471,21 +471,23 @@ export class Textarea implements ComponentInterface {
      * included in the IGNORED_KEYS array.
      */
     const IGNORED_KEYS = ['Tab', 'Shift', 'Meta', 'Alt', 'Control'];
+    const pressedIgnoredKey = !IGNORED_KEYS.includes(ev.key);
 
     /**
      * Clear the textarea if the control has not been previously cleared
      * during focus.
      */
-    if (!this.didTextareaClearOnEdit && this.hasValue() && !IGNORED_KEYS.includes(ev.key)) {
+    if (!this.didTextareaClearOnEdit && this.hasValue() && pressedIgnoredKey) {
       this.value = '';
       this.emitInputChange(ev);
+    }
 
-      /**
-       * Only set this flag if we cleared the input.
-       * Otherwise pressing an IGNORED_KEYS first and
-       * then an allowed key will cause the input to not
-       * be cleared.
-       */
+    /**
+     * Pressing an IGNORED_KEYS first and
+     * then an allowed key will cause the input to not
+     * be cleared.
+     */
+    if (!pressedIgnoredKey) {
       this.didTextareaClearOnEdit = true;
     }
   }
