@@ -100,6 +100,16 @@
 // Select Used in ion-item
 // --------------------------------------------------
 
+// TODO FW-3194 - Remove the :not(.legacy-select) piece
+//
+// flex is required here
+// in order to allow the select to shrink inside of an item
+// otherwise it always wraps to the next line even
+// when it can shrink
+:host(.in-item:not(.legacy-select)) {
+  flex: 1 1 0;
+}
+
 // TODO FW-3194 - Remove this
 :host(.in-item.legacy-select) {
   position: static;
