@@ -453,7 +453,7 @@ export class PickerColumn implements ComponentInterface {
       }
 
       return option.value === value;
-    }) as HTMLIonPickerColumnOptionElement | undefined;
+    });
   }
 
   render() {
