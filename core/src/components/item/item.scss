@@ -89,15 +89,6 @@
 
   position: relative;
 
-  // When an item containing a select is inside of a
-  // flex container the item will collapse to 0px
-  // width due to the select setting the width to 0px.
-  // By setting the flex property here, we are
-  // allowing the item to grow to fill the flex container.
-  // If the item is inside of a block container this
-  // property will be ignored.
-  flex: 1;
-
   align-items: center;
   justify-content: space-between;
 
