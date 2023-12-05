@@ -30,7 +30,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     IGNORED_KEYS.forEach((ignoredKey: string) => {
-      test(`should not clear when ${ignoredKey} is pressed`, async ({ page }) => {
+      test(`should not clear when ${ignoredKey} is pressed`, async ({ page, skip }) => {
+        skip.browser(
+          (browserName: string) => browserName === 'firefox' && ignoredKey === 'Meta',
+          'Firefox incorrectly adds "OS" to the input when pressing the Meta key on Linux'
+        );
         await page.setContent(`<ion-input value="abc" clear-on-edit="true" aria-label="input"></ion-input>`, config);
 
         const input = page.locator('ion-input');

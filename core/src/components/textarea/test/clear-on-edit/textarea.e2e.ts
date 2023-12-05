@@ -48,7 +48,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     IGNORED_KEYS.forEach((ignoredKey: string) => {
-      test(`should not clear when ${ignoredKey} is pressed`, async ({ page }) => {
+      test(`should not clear when ${ignoredKey} is pressed`, async ({ page, skip }) => {
+        skip.browser(
+          (browserName: string) => browserName === 'firefox' && ignoredKey === 'Meta',
+          'Firefox incorrectly adds "OS" to the textarea when pressing the Meta key on Linux'
+        );
         await page.setContent(
           `<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`,
           config
