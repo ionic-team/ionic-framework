@@ -1,0 +1,5 @@
+@import "./picker-column-option.scss";
+
+:host(.option-active) button {
+  color: current-color(base);
+}
