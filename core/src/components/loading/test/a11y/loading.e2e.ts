@@ -2,27 +2,48 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('loading: a11y'), () => {
     test('should set aria-labelledby with a message', async ({ page }) => {
-      await page.goto('/src/components/loading/test/a11y', config);
+      await page.setContent(
+        `
+          <ion-loading></ion-loading>
+
+          <script>
+            const loading = document.querySelector('ion-loading');
+            loading.message = 'Loading';
+          </script>
+        `,
+        config
+      );
 
       const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
+      const loading = page.locator('ion-loading');
 
-      await page.click('#open-message-loading');
-
+      await loading.evaluate((el: HTMLIonLoadingElement) => el.present());
       await ionLoadingDidPresent.next();
 
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
+
     test('should set aria-labelledby with a label', async ({ page }) => {
-      await page.goto('/src/components/loading/test/a11y', config);
+      await page.setContent(
+        `
+          <ion-loading aria-label="Loading"></ion-loading>
+
+          <script>
+            const loading = document.querySelector('ion-loading');
+            loading.spinner = 'bubbles';
+          </script>
+        `,
+        config
+      );
 
       const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
+      const loading = page.locator('ion-loading');
 
-      await page.click('#open-label-loading');
-
+      await loading.evaluate((el: HTMLIonLoadingElement) => el.present());
       await ionLoadingDidPresent.next();
 
       const results = await new AxeBuilder({ page }).analyze();
