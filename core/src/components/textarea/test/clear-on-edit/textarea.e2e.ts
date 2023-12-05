@@ -36,6 +36,17 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(textarea).toHaveJSProperty('value', 'abc');
     });
 
+    test('should not clear the textarea if it does not have an initial value when typing', async ({ page }) => {
+      await page.setContent(`<ion-textarea label="textarea" value="" clear-on-edit="true"></ion-textarea>`, config);
+
+      const textarea = page.locator('ion-textarea');
+
+      await textarea.click();
+      await textarea.type('hello world');
+
+      await expect(textarea).toHaveJSProperty('value', 'hello world');
+    });
+
     IGNORED_KEYS.forEach((ignoredKey: string) => {
       test(`should not clear when ${ignoredKey} is pressed`, async ({ page }) => {
         await page.setContent(

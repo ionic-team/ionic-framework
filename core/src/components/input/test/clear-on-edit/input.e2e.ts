@@ -18,6 +18,17 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(input).toHaveJSProperty('value', 'h');
     });
 
+    test('should not clear the input if it does not have an initial value when typing', async ({ page }) => {
+      await page.setContent(`<ion-input label="input" value="" clear-on-edit="true"></ion-input>`, config);
+
+      const input = page.locator('ion-input');
+
+      await input.click();
+      await input.type('hello world');
+
+      await expect(input).toHaveJSProperty('value', 'hello world');
+    });
+
     IGNORED_KEYS.forEach((ignoredKey: string) => {
       test(`should not clear when ${ignoredKey} is pressed`, async ({ page }) => {
         await page.setContent(`<ion-input value="abc" clear-on-edit="true" aria-label="input"></ion-input>`, config);
