@@ -46,7 +46,7 @@ configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, config }) =
       );
 
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
-      const alert = page.locator('ion-action-sheet');
+      const alert = page.locator('ion-alert');
 
       await alert.evaluate((el: HTMLIonAlertElement) => el.present());
       await ionAlertDidPresent.next();
