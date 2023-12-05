@@ -1647,7 +1647,7 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       >
-        {items.map((item: PickerColumnItem) => (
+        {items.map((item) => (
           <ion-picker-column-option
             part={item.value === todayString ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
             key={item.value}
@@ -1775,7 +1775,7 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       >
-        {days.map((day: PickerColumnItem) => (
+        {days.map((day) => (
           <ion-picker-column-option
             part={day.value === pickerColumnValue ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
             key={day.value}
@@ -1830,7 +1830,7 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       >
-        {months.map((month: PickerColumnItem) => (
+        {months.map((month) => (
           <ion-picker-column-option
             part={month.value === workingParts.month ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
             key={month.value}
@@ -1884,7 +1884,7 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       >
-        {years.map((year: PickerColumnItem) => (
+        {years.map((year) => (
           <ion-picker-column-option
             part={year.value === workingParts.year ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
             key={year.value}
@@ -1957,7 +1957,7 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       >
-        {hoursData.map((hour: PickerColumnItem) => (
+        {hoursData.map((hour) => (
           <ion-picker-column-option
             part={hour.value === activePart.hour ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
             key={hour.value}
@@ -1996,7 +1996,7 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       >
-        {minutesData.map((minute: PickerColumnItem) => (
+        {minutesData.map((minute) => (
           <ion-picker-column-option
             part={minute.value === activePart.minute ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
             key={minute.value}
@@ -2042,7 +2042,7 @@ export class Datetime implements ComponentInterface {
           ev.stopPropagation();
         }}
       >
-        {dayPeriodData.map((dayPeriod: PickerColumnItem) => (
+        {dayPeriodData.map((dayPeriod) => (
           <ion-picker-column-option
             part={dayPeriod.value === activePart.ampm ? WHEEL_ITEM_ACTIVE_PART : WHEEL_ITEM_PART}
             key={dayPeriod.value}
