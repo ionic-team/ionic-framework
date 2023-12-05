@@ -8,11 +8,14 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    <ion-button expand="block" @click="pushPage" id="push-nav-child">Go to Nav Child</ion-button>
+    <div id="nav-root-params">Message: {{ message }}</div>
+    <ion-button expand="block" @click="pushPage" id="push-nav-child"
+      >Go to Nav Child</ion-button
+    >
   </ion-content>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   IonButtons,
   IonButton,
@@ -20,28 +23,20 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  modalController
-} from '@ionic/vue';
-import { defineComponent } from 'vue';
-import NavChild from '@/components/NavChild.vue';
+  modalController,
+} from "@ionic/vue";
+import NavChild from "@/components/NavChild.vue";
 
-export default defineComponent({
-  components: {
-    IonButtons,
-    IonButton,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar
-  },
-  methods: {
-    pushPage: function() {
-      const ionNav = document.querySelector('ion-nav') as any;
-      ionNav.push(NavChild, { title: 'Custom Title' });
-    },
-    dismiss: async function() {
-      await modalController.dismiss();
-    }
-  }
-})
+defineProps<{
+  message: string;
+}>();
+
+function pushPage() {
+  const ionNav = document.querySelector("ion-nav") as any;
+  ionNav.push(NavChild, { title: "Custom Title" });
+}
+
+async function dismiss() {
+  await modalController.dismiss();
+}
 </script>

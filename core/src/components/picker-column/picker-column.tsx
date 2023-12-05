@@ -13,6 +13,9 @@ import type { PickerColumnItem } from './picker-column-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot prefix - Content to show on the left side of the picker options.
+ * @slot suffix - Content to show on the right side of the picker options.
  */
 @Component({
   tag: 'ion-picker-column',
@@ -23,6 +26,7 @@ import type { PickerColumnItem } from './picker-column-interfaces';
   shadow: true,
 })
 export class PickerColumn implements ComponentInterface {
+  private scrollEl?: HTMLDivElement | null;
   private destroyScrollListener?: () => void;
   private isScrolling = false;
   private scrollEndCallback?: () => void;
@@ -175,13 +179,25 @@ export class PickerColumn implements ComponentInterface {
     }
   }
 
+  /**
+   * Sets focus on the scrollable container within the picker column.
+   * Use this method instead of the global `pickerColumn.focus()`.
+   */
+  @Method()
+  async setFocus() {
+    if (this.scrollEl) {
+      this.scrollEl.focus();
+    }
+  }
+
   private centerPickerItemInView = (target: HTMLElement, smooth = true, canExitInputMode = true) => {
-    const { el, isColumnVisible } = this;
-    if (isColumnVisible) {
+    const { isColumnVisible, scrollEl } = this;
+
+    if (isColumnVisible && scrollEl) {
       // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
       const top = target.offsetTop - 3 * target.clientHeight + target.clientHeight / 2;
 
-      if (el.scrollTop !== top) {
+      if (scrollEl.scrollTop !== top) {
         /**
          * Setting this flag prevents input
          * mode from exiting in the picker column's
@@ -190,7 +206,7 @@ export class PickerColumn implements ComponentInterface {
          * of these can cause a scroll to occur.
          */
         this.canExitInputMode = canExitInputMode;
-        el.scroll({
+        scrollEl.scroll({
           top,
           left: 0,
           behavior: smooth ? 'smooth' : undefined,
@@ -267,13 +283,15 @@ export class PickerColumn implements ComponentInterface {
      * be disabled on Android.
      */
     const enableHaptics = isPlatform('ios');
-    const { el } = this;
+    const { el, scrollEl } = this;
 
     let timeout: ReturnType<typeof setTimeout> | undefined;
     let activeEl: HTMLElement | null = this.activeItem;
 
     const scrollCallback = () => {
       raf(() => {
+        if (!scrollEl) return;
+
         if (timeout) {
           clearTimeout(timeout);
           timeout = undefined;
@@ -288,7 +306,7 @@ export class PickerColumn implements ComponentInterface {
          * Select item in the center of the column
          * which is the month/year that we want to select
          */
-        const bbox = el.getBoundingClientRect();
+        const bbox = scrollEl.getBoundingClientRect();
         const centerX = bbox.x + bbox.width / 2;
         const centerY = bbox.y + bbox.height / 2;
 
@@ -378,10 +396,12 @@ export class PickerColumn implements ComponentInterface {
      * does not fire when component is initially shown.
      */
     raf(() => {
-      el.addEventListener('scroll', scrollCallback);
+      if (!scrollEl) return;
+
+      scrollEl.addEventListener('scroll', scrollCallback);
 
       this.destroyScrollListener = () => {
-        el.removeEventListener('scroll', scrollCallback);
+        scrollEl.removeEventListener('scroll', scrollCallback);
       };
     });
   };
@@ -434,62 +454,71 @@ export class PickerColumn implements ComponentInterface {
       <Host
         exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         disabled={pickerDisabled}
-        tabindex={pickerDisabled ? null : 0}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
         })}
       >
-        <div class="picker-item picker-item-empty" aria-hidden="true">
-          &nbsp;
-        </div>
-        <div class="picker-item picker-item-empty" aria-hidden="true">
-          &nbsp;
-        </div>
-        <div class="picker-item picker-item-empty" aria-hidden="true">
-          &nbsp;
-        </div>
-        {items.map((item, index) => {
-          const isItemDisabled = pickerDisabled || item.disabled || false;
+        <slot name="prefix"></slot>
+        <div
+          class="picker-opts"
+          tabindex={pickerDisabled ? undefined : 0}
+          ref={(el) => {
+            this.scrollEl = el;
+          }}
+        >
+          <div class="picker-item picker-item-empty" aria-hidden="true">
+            &nbsp;
+          </div>
+          <div class="picker-item picker-item-empty" aria-hidden="true">
+            &nbsp;
+          </div>
+          <div class="picker-item picker-item-empty" aria-hidden="true">
+            &nbsp;
+          </div>
+          {items.map((item, index) => {
+            const isItemDisabled = pickerDisabled || item.disabled || false;
 
-          {
-            /*
-            Users should be able to tab
-            between multiple columns. As a result,
-            we set tabindex here so that tabbing switches
-            between columns instead of buttons. Users
-            can still use arrow keys on the keyboard to
-            navigate the column up and down.
-          */
-          }
-          return (
-            <button
-              tabindex="-1"
-              class={{
-                'picker-item': true,
-              }}
-              data-value={item.value}
-              data-index={index}
-              onClick={(ev: Event) => {
-                this.centerPickerItemInView(ev.target as HTMLElement, true);
-              }}
-              disabled={isItemDisabled}
-              part={PICKER_ITEM_PART}
-            >
-              {item.text}
-            </button>
-          );
-        })}
-        <div class="picker-item picker-item-empty" aria-hidden="true">
-          &nbsp;
+            {
+              /*
+              Users should be able to tab
+              between multiple columns. As a result,
+              we set tabindex here so that tabbing switches
+              between columns instead of buttons. Users
+              can still use arrow keys on the keyboard to
+              navigate the column up and down.
+            */
+            }
+            return (
+              <button
+                tabindex="-1"
+                class={{
+                  'picker-item': true,
+                }}
+                data-value={item.value}
+                data-index={index}
+                onClick={(ev: Event) => {
+                  this.centerPickerItemInView(ev.target as HTMLElement, true);
+                }}
+                disabled={isItemDisabled}
+                part={PICKER_ITEM_PART}
+              >
+                {item.text}
+              </button>
+            );
+          })}
+          <div class="picker-item picker-item-empty" aria-hidden="true">
+            &nbsp;
+          </div>
+          <div class="picker-item picker-item-empty" aria-hidden="true">
+            &nbsp;
+          </div>
+          <div class="picker-item picker-item-empty" aria-hidden="true">
+            &nbsp;
+          </div>
         </div>
-        <div class="picker-item picker-item-empty" aria-hidden="true">
-          &nbsp;
-        </div>
-        <div class="picker-item picker-item-empty" aria-hidden="true">
-          &nbsp;
-        </div>
+        <slot name="suffix"></slot>
       </Host>
     );
   }

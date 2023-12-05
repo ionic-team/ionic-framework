@@ -916,6 +916,7 @@ ion-picker-column,prop,disabled,boolean,false,false,false
 ion-picker-column,prop,items,PickerColumnItem[],[],false,false
 ion-picker-column,prop,mode,"ios" | "md",undefined,false,false
 ion-picker-column,prop,value,number | string | undefined,undefined,false,false
+ion-picker-column,method,setFocus,setFocus() => Promise<void>
 ion-picker-column,event,ionChange,PickerColumnItem,true
 
 ion-picker-column-option,shadow

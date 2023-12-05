@@ -25,19 +25,6 @@
   overflow: hidden;
 }
 
-/**
- * When using the wheel picker to switch
- * between months, sometimes the allowed
- * dates may be filtered. As a result, it
- * is possible to get a layout shift as
- * the picker column will shrink to fit the
- * widest item in the column. Setting a minimum
- * width avoids this layout shifting.
- */
-ion-picker-column {
-  min-width: 26px;
-}
-
 :host(.datetime-size-fixed) {
   width: auto;
   height: auto;

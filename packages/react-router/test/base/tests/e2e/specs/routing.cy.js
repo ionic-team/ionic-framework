@@ -309,6 +309,41 @@ describe('Routing Tests', () => {
     cy.ionPageDoesNotExist('home-details-page-1');
     cy.ionPageVisible('home-page');
   });
+
+  it('should mount new view item instances of parameterized routes', () => {
+    cy.visit(`http://localhost:${port}/routing/tabs/home/details/1`);
+
+    cy.get('div.ion-page[data-pageid=home-details-page-1]')
+      .get('[data-testid="details-input"]')
+      .should('have.value', '');
+
+    cy.get('div.ion-page[data-pageid=home-details-page-1] [data-testid="details-input"]').type('1');
+
+    cy.ionNav('ion-button', 'Go to Details 2');
+    cy.ionPageVisible('home-details-page-2');
+
+    cy.get('div.ion-page[data-pageid=home-details-page-2] [data-testid="details-input"]').should('have.value', '');
+
+    cy.get('div.ion-page[data-pageid=home-details-page-2] [data-testid="details-input"]').type('2');
+
+    cy.ionNav('ion-button', 'Go to Details 3');
+    cy.ionPageVisible('home-details-page-3');
+
+    cy.get('div.ion-page[data-pageid=home-details-page-3] [data-testid="details-input"]').should('have.value', '');
+
+    cy.get('div.ion-page[data-pageid=home-details-page-3] [data-testid="details-input"]').type('3');
+
+    cy.ionBackClick('home-details-page-3');
+    cy.ionPageVisible('home-details-page-2');
+
+    cy.get('div.ion-page[data-pageid=home-details-page-2] [data-testid="details-input"]').should('have.value', '2');
+
+    cy.ionBackClick('home-details-page-2');
+    cy.ionPageVisible('home-details-page-1');
+
+    cy.get('div.ion-page[data-pageid=home-details-page-1] [data-testid="details-input"]').should('have.value', '1');
+  });
+
   /*
     Tests to add:
     Test that lifecycle events fire
