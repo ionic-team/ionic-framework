@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
@@ -79,6 +80,56 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const label = page.locator('ion-label');
 
       await expect(label).toHaveScreenshot(screenshot(`label-stacked-scale`));
+    });
+  });
+});
+
+configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, config }) => {
+  test.describe(title('label: a11y  (light mode)'), () => {
+    test('should not have accessibility violations when focused', async ({ page, pageUtils }) => {
+      /**
+       * All page content should be contained by landmarks (main, nav, etc.)
+       * By containing the badge in a main element, we can avoid this violation.
+       */
+      await page.setContent(
+        `
+          <main>
+            <ion-input label="Stacked" label-placement="stacked"></ion-input>
+          </main>
+        `,
+        config
+      );
+
+      await pageUtils.pressKeys('Tab');
+
+      const results = await new AxeBuilder({ page }).analyze();
+
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
+
+configs({ directions: ['ltr'], modes: ['md'], themes: ['dark'] }).forEach(({ title, config }) => {
+  test.describe(title('label: a11y  (dark mode)'), () => {
+    test('should not have accessibility violations when focused', async ({ page, pageUtils }) => {
+      /**
+       * All page content should be contained by landmarks (main, nav, etc.)
+       * By containing the badge in a main element, we can avoid this violation.
+       */
+      await page.setContent(
+        `
+          <main>
+            <ion-input label="Stacked" label-placement="stacked"></ion-input>
+          </main>
+        `,
+        config
+      );
+
+      await pageUtils.pressKeys('Tab');
+
+      const results = await new AxeBuilder({ page }).analyze();
+
+      expect(results.violations).toEqual([]);
     });
   });
 });
