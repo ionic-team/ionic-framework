@@ -323,7 +323,9 @@ export class Picker implements ComponentInterface {
       return;
     }
 
-    const values = inputModeColumn.items.filter((item) => item.disabled !== true);
+    const options = Array.from(inputModeColumn.querySelectorAll('ion-picker-column-option')).filter(
+      (el) => el.disabled !== true
+    );
 
     /**
      * If users pause for a bit, the search
@@ -368,8 +370,13 @@ export class Picker implements ComponentInterface {
      * 0+(?=[1-9]) --> Match 1 or more zeros that are followed by 1-9
      * 0+(?=0$) --> Match 1 or more zeros that must be followed by one 0 and end.
      */
-    const findItemFromCompleteValue = values.find(({ text }) => {
-      const parsedText = text.replace(/^0+(?=[1-9])|0+(?=0$)/, '');
+    const findItemFromCompleteValue = options.find(({ textContent }) => {
+      /**
+       * Keyboard entry is currently only used inside of Datetime
+       * where we guarantee textContent is set.
+       * If we end up exposing this feature publicly we should revisit this assumption.
+       */
+      const parsedText = textContent!.replace(/^0+(?=[1-9])|0+(?=0$)/, '');
       return parsedText === inputEl.value;
     });
 
@@ -401,10 +408,12 @@ export class Picker implements ComponentInterface {
     zeroBehavior: 'start' | 'end' = 'start'
   ) => {
     const behavior = zeroBehavior === 'start' ? /^0+/ : /0$/;
-    const item = colEl.items.find(({ text, disabled }) => disabled !== true && text.replace(behavior, '') === value);
+    const option = Array.from(colEl.querySelectorAll('ion-picker-column-option')).find((el) => {
+      return el.disabled !== true && el.textContent!.replace(behavior, '') === value;
+    });
 
-    if (item) {
-      colEl.setValue(item.value);
+    if (option) {
+      colEl.setValue(option.value);
     }
   };
 

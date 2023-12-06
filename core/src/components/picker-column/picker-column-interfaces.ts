@@ -4,3 +4,9 @@ export interface PickerColumnItem {
   value: string | number;
   disabled?: boolean;
 }
+
+export interface PickerColumnChangeEventDetail {
+  value: PickerColumnValue;
+}
+
+export type PickerColumnValue = string | number | undefined;

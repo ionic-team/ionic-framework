@@ -24,7 +24,7 @@ import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./compone
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
 import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
-import { PickerColumnItem } from "./components/picker-column/picker-column-interfaces";
+import { PickerColumnChangeEventDetail, PickerColumnItem, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
@@ -60,7 +60,7 @@ export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./compone
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
 export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
-export { PickerColumnItem } from "./components/picker-column/picker-column-interfaces";
+export { PickerColumnChangeEventDetail, PickerColumnItem, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
@@ -1984,7 +1984,7 @@ export namespace Components {
         /**
           * Sets the value prop and fires the ionChange event. This is used when we need to fire ionChange from user-generated events that cannot be caught with normal input/change event listeners.
          */
-        "setValue": (value?: string | number) => Promise<void>;
+        "setValue": (value: PickerColumnValue) => Promise<void>;
         /**
           * The selected option in the picker.
          */
@@ -4055,7 +4055,7 @@ declare global {
         new (): HTMLIonPickerElement;
     };
     interface HTMLIonPickerColumnElementEventMap {
-        "ionChange": { value: string | number | undefined };
+        "ionChange": PickerColumnChangeEventDetail;
     }
     interface HTMLIonPickerColumnElement extends Components.IonPickerColumn, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6635,7 +6635,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the value has changed.
          */
-        "onIonChange"?: (event: IonPickerColumnCustomEvent<{ value: string | number | undefined }>) => void;
+        "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnChangeEventDetail>) => void;
         /**
           * The selected option in the picker.
          */

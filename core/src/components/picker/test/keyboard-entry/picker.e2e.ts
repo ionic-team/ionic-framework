@@ -17,15 +17,22 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         <script>
           const column = document.querySelector('ion-picker-column');
-          column.items = [
+          column.numericInput = true;
+          const items = [
             { text: '01', value: 1 },
             { text: '02', value: 2 },
             { text: '03', value: 3 },
             { text: '04', value: 4 },
             { text: '05', value: 5 }
           ];
-          column.value = 5;
-          column.numericInput = true;
+
+          items.forEach((item) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = item.value;
+            option.textContent = item.text;
+
+            column.appendChild(option);
+          });
         </script>
       `,
         config
@@ -37,7 +44,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.keyboard.press('Digit2');
 
-      await expect(ionChange).toHaveReceivedEventDetail({ text: '02', value: 2 });
+      await expect(ionChange).toHaveReceivedEventDetail({ value: 2 });
       await expect(column).toHaveJSProperty('value', 2);
     });
 
@@ -51,7 +58,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         <script>
           const firstColumn = document.querySelector('ion-picker-column#first');
-          firstColumn.items = [
+          const firstItems = [
             { text: '01', value: 1 },
             { text: '02', value: 2 },
             { text: '03', value: 3 },
@@ -61,8 +68,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           firstColumn.value = 5;
           firstColumn.numericInput = true;
 
+          firstItems.forEach((item) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = item.value;
+            option.textContent = item.text;
+
+            firstColumn.appendChild(option);
+          });
+
           const secondColumn = document.querySelector('ion-picker-column#second');
-          secondColumn.items = [
+          const secondItems = [
             { text: '20', value: 20 },
             { text: '21', value: 21 },
             { text: '22', value: 22 },
@@ -71,11 +86,18 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           ];
           secondColumn.value = 22;
           secondColumn.numericInput = true;
+
+          secondItems.forEach((item) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = item.value;
+            option.textContent = item.text;
+
+            secondColumn.appendChild(option);
+          });
         </script>
       `,
         config
       );
-
       const firstColumn = page.locator('ion-picker-column#first');
       const secondColumn = page.locator('ion-picker-column#second');
       const highlight = page.locator('ion-picker .picker-highlight');
@@ -92,12 +114,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.keyboard.press('Digit2');
 
-      await expect(firstIonChange).toHaveReceivedEventDetail({ text: '02', value: 2 });
+      await expect(firstIonChange).toHaveReceivedEventDetail({ value: 2 });
       await expect(firstColumn).toHaveJSProperty('value', 2);
 
       await page.keyboard.press('Digit2+Digit4');
 
-      await expect(secondIonChange).toHaveReceivedEventDetail({ text: '24', value: 24 });
+      await expect(secondIonChange).toHaveReceivedEventDetail({ value: 24 });
       await expect(secondColumn).toHaveJSProperty('value', 24);
     });
 
@@ -110,7 +132,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         <script>
           const column = document.querySelector('ion-picker-column');
-          column.items = [
+          const items = [
             { text: '00', value: 12 },
             { text: '01', value: 1 },
             { text: '02', value: 2 },
@@ -120,6 +142,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           ];
           column.value = 5;
           column.numericInput = true;
+
+          items.forEach((item) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = item.value;
+            option.textContent = item.text;
+
+            column.appendChild(option);
+          });
         </script>
       `,
         config
@@ -131,7 +161,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.keyboard.press('Digit0');
 
-      await expect(ionChange).toHaveReceivedEventDetail({ text: '00', value: 12 });
+      await expect(ionChange).toHaveReceivedEventDetail({ value: 12 });
       await expect(column).toHaveJSProperty('value', 12);
     });
   });
