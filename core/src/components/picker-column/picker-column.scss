@@ -112,64 +112,8 @@
   justify-content: start;
 }
 
-// TODO FW-5580 remove this
-:host .picker-item {
-  @include padding(0);
-  @include margin(0);
-
-  display: block;
-
-  width: 100%;
-
-  height: 34px;
-
-  border: 0px;
-
-  outline: none;
-
-  background: transparent;
-
-  color: inherit;
-
-  font-family: $font-family-base;
-
-  font-size: inherit;
-
-  line-height: 34px;
-
-  text-align: inherit;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  cursor: pointer;
-
-  overflow: hidden;
-
-  scroll-snap-align: center;
-}
-
-// TODO FW-5580 remove this.
-// Figure out if we still need the .picker-item-empty selector
-:host .picker-item-empty,
-:host .picker-item[disabled] {
-  cursor: default;
-}
-
-// TODO FW-5580 remove this
-:host .picker-item-empty,
-:host(:not([disabled])) .picker-item[disabled] {
-  scroll-snap-align: none;
-}
-
 :host(.picker-column-disabled) .picker-opts {
   overflow-y: hidden;
-}
-
-// TODO FW-5580 remove this
-:host .picker-item[disabled] {
-  opacity: 0.4;
 }
 
 /**
@@ -184,11 +128,6 @@
   cursor: default;
   opacity: 0.4;
   pointer-events: none;
-}
-
-// TODO FW-5580 remove this
-:host(.picker-column-active) .picker-item.picker-item-active {
-  color: current-color(base);
 }
 
 @media (any-hover: hover) {
