@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.8-nightly.20231206](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8-nightly.20231206) (2023-12-06)
+
+
+### Bug Fixes
+
+* **angular:** add missing menu controller methods ([#28618](https://github.com/ionic-team/ionic-framework/issues/28618)) ([7871b56](https://github.com/ionic-team/ionic-framework/commit/7871b56eccfe63326b6dd4b56ade3b3afd444fce)), closes [#20053](https://github.com/ionic-team/ionic-framework/issues/20053)
+* **overlays:** trigger is configured on load ([#28526](https://github.com/ionic-team/ionic-framework/issues/28526)) ([a3cd204](https://github.com/ionic-team/ionic-framework/commit/a3cd204f616606ccffc35082655e55fdfb19fe28)), closes [#28524](https://github.com/ionic-team/ionic-framework/issues/28524)
+* **react:** router creates new view instances of parameterized routes ([#28616](https://github.com/ionic-team/ionic-framework/issues/28616)) ([1705d06](https://github.com/ionic-team/ionic-framework/commit/1705d064cc041e99f432a27207f3aab7fa62c778)), closes [#26524](https://github.com/ionic-team/ionic-framework/issues/26524)
+* **vue:** nav component accepts kebab-case component properties ([#28615](https://github.com/ionic-team/ionic-framework/issues/28615)) ([60303aa](https://github.com/ionic-team/ionic-framework/commit/60303aad23f823488afc8f8824e9c72e3ab86acc)), closes [#28611](https://github.com/ionic-team/ionic-framework/issues/28611)
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.8-nightly.20231206](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8-nightly.20231206) (2023-12-06)
+
+
+### Bug Fixes
+
+* **angular:** add missing menu controller methods ([#28618](https://github.com/ionic-team/ionic-framework/issues/28618)) ([7871b56](https://github.com/ionic-team/ionic-framework/commit/7871b56eccfe63326b6dd4b56ade3b3afd444fce)), closes [#20053](https://github.com/ionic-team/ionic-framework/issues/20053)
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 **Note:** Version bump only for package @ionic/angular

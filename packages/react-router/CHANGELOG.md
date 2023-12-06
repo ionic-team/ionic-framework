@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.8-nightly.20231206](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8-nightly.20231206) (2023-12-06)
+
+
+### Bug Fixes
+
+* **react:** router creates new view instances of parameterized routes ([#28616](https://github.com/ionic-team/ionic-framework/issues/28616)) ([1705d06](https://github.com/ionic-team/ionic-framework/commit/1705d064cc041e99f432a27207f3aab7fa62c778)), closes [#26524](https://github.com/ionic-team/ionic-framework/issues/26524)
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 **Note:** Version bump only for package @ionic/react-router

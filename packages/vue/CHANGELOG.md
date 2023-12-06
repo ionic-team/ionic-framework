@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.8-nightly.20231206](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8-nightly.20231206) (2023-12-06)
+
+
+### Bug Fixes
+
+* **vue:** nav component accepts kebab-case component properties ([#28615](https://github.com/ionic-team/ionic-framework/issues/28615)) ([60303aa](https://github.com/ionic-team/ionic-framework/commit/60303aad23f823488afc8f8824e9c72e3ab86acc)), closes [#28611](https://github.com/ionic-team/ionic-framework/issues/28611)
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 **Note:** Version bump only for package @ionic/vue

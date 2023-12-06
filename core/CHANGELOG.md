@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.8-nightly.20231206](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8-nightly.20231206) (2023-12-06)
+
+
+### Bug Fixes
+
+* **overlays:** trigger is configured on load ([#28526](https://github.com/ionic-team/ionic-framework/issues/28526)) ([a3cd204](https://github.com/ionic-team/ionic-framework/commit/a3cd204f616606ccffc35082655e55fdfb19fe28)), closes [#28524](https://github.com/ionic-team/ionic-framework/issues/28524)
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 
