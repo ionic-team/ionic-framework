@@ -27,7 +27,7 @@ import { PickerButton, PickerColumn } from "./components/picker/picker-interface
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
-import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
@@ -39,7 +39,7 @@ import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions } from "./components/toast/toast-interface";
+import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
 export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
@@ -63,7 +63,7 @@ export { PickerButton, PickerColumn } from "./components/picker/picker-interface
 export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
-export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
@@ -75,7 +75,7 @@ export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions } from "./components/toast/toast-interface";
+export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
@@ -2270,6 +2270,10 @@ export namespace Components {
          */
         "allowEmptySelection": boolean;
         /**
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
+         */
+        "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
@@ -2688,7 +2692,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * A property name or function used to compare object values
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**
@@ -3173,6 +3177,10 @@ export namespace Components {
          */
         "present": () => Promise<void>;
         /**
+          * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
+         */
+        "swipeGesture"?: ToastSwipeGestureDirection;
+        /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
@@ -3389,6 +3397,10 @@ export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
+}
+export interface IonSkeletonTextCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonSkeletonTextElement;
 }
 export interface IonSplitPaneCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4404,7 +4416,18 @@ declare global {
         prototype: HTMLIonSelectPopoverElement;
         new (): HTMLIonSelectPopoverElement;
     };
+    interface HTMLIonSkeletonTextElementEventMap {
+        "ionStyle": StyleEventDetail;
+    }
     interface HTMLIonSkeletonTextElement extends Components.IonSkeletonText, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonSkeletonTextElementEventMap>(type: K, listener: (this: HTMLIonSkeletonTextElement, ev: IonSkeletonTextCustomEvent<HTMLIonSkeletonTextElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonSkeletonTextElementEventMap>(type: K, listener: (this: HTMLIonSkeletonTextElement, ev: IonSkeletonTextCustomEvent<HTMLIonSkeletonTextElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonSkeletonTextElement: {
         prototype: HTMLIonSkeletonTextElement;
@@ -6935,6 +6958,10 @@ declare namespace LocalJSX {
          */
         "allowEmptySelection"?: boolean;
         /**
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
+         */
+        "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name"?: string;
@@ -7416,7 +7443,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * A property name or function used to compare object values
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**
@@ -7553,6 +7580,10 @@ declare namespace LocalJSX {
           * If `true`, the skeleton text will animate.
          */
         "animated"?: boolean;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: IonSkeletonTextCustomEvent<StyleEventDetail>) => void;
     }
     interface IonSpinner {
         /**
@@ -7951,6 +7982,10 @@ declare namespace LocalJSX {
           * The element to anchor the toast's position to. Can be set as a direct reference or the ID of the element. With `position="bottom"`, the toast will sit above the chosen element. With `position="top"`, the toast will sit below the chosen element. With `position="middle"`, the value of `positionAnchor` is ignored.
          */
         "positionAnchor"?: HTMLElement | string;
+        /**
+          * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
+         */
+        "swipeGesture"?: ToastSwipeGestureDirection;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */

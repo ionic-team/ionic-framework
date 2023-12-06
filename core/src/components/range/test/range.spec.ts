@@ -229,4 +229,22 @@ describe('range: item adjustments', () => {
     expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
   });
+
+  describe('shadow parts', () => {
+    it('should have shadow parts', async () => {
+      const page = await newSpecPage({
+        components: [Range],
+        html: `<ion-range pin="true" snaps="true" value="50" label="Label"></ion-range>`,
+      });
+      const range = page.body.querySelector('ion-range')!;
+
+      expect(range).toHaveShadowPart('label');
+      expect(range).toHaveShadowPart('pin');
+      expect(range).toHaveShadowPart('knob');
+      expect(range).toHaveShadowPart('bar');
+      expect(range).toHaveShadowPart('bar-active');
+      expect(range).toHaveShadowPart('tick');
+      expect(range).toHaveShadowPart('tick-active');
+    });
+  });
 });

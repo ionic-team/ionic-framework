@@ -6,18 +6,20 @@ import { raf } from '@utils/helpers';
  * This is not needed for components using native slots in the Shadow DOM.
  * @internal
  * @param el The host element to observe
- * @param slotName mutationCallback will fire when nodes on this slot change
+ * @param slotName mutationCallback will fire when nodes on these slot(s) change
  * @param mutationCallback The callback to fire whenever the slotted content changes
  */
 export const createSlotMutationController = (
   el: HTMLElement,
-  slotName: string,
+  slotName: string | string[],
   mutationCallback: () => void
 ): SlotMutationController => {
   let hostMutationObserver: MutationObserver | undefined;
   let slottedContentMutationObserver: MutationObserver | undefined;
 
   if (win !== undefined && 'MutationObserver' in win) {
+    const slots = Array.isArray(slotName) ? slotName : [slotName];
+
     hostMutationObserver = new MutationObserver((entries) => {
       for (const entry of entries) {
         for (const node of entry.addedNodes) {
@@ -25,7 +27,7 @@ export const createSlotMutationController = (
            * Check to see if the added node
            *  is our slotted content.
            */
-          if (node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).slot === slotName) {
+          if (node.nodeType === Node.ELEMENT_NODE && slots.includes((node as HTMLElement).slot)) {
             /**
              * If so, we want to watch the slotted
              * content itself for changes. This lets us
