@@ -1976,7 +1976,7 @@ export namespace Components {
           * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
          */
         "numericInput": boolean;
-        "scrollActiveItemIntoView": () => Promise<void>;
+        "scrollActiveItemIntoView": (smooth?: boolean) => Promise<void>;
         /**
           * Sets focus on the scrollable container within the picker column. Use this method instead of the global `pickerColumn.focus()`.
          */

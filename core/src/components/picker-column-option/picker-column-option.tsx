@@ -101,7 +101,7 @@ export class PickerColumnOption implements ComponentInterface {
   }
 
   /**
-   * When an option is clicked update the
+   * When an option is clicked, update the
    * parent picker column value. This
    * component will handle centering the option
    * in the column view.

@@ -371,6 +371,11 @@ export class Picker implements ComponentInterface {
      * 0+(?=0$) --> Match 1 or more zeros that must be followed by one 0 and end.
      */
     const findItemFromCompleteValue = options.find(({ textContent }) => {
+      /**
+       * Keyboard entry is currently only used inside of Datetime
+       * where we guarantee textContent is set.
+       * If we end up exposing this feature publicly we should revisit this assumption.
+       */
       const parsedText = textContent!.replace(/^0+(?=[1-9])|0+(?=0$)/, '');
       return parsedText === inputEl.value;
     });
