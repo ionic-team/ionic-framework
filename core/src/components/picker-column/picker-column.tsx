@@ -176,7 +176,7 @@ export class PickerColumn implements ComponentInterface {
    */
   @Method()
   async setValue(value: PickerColumnValue) {
-    if (this.value === value) {
+    if (this.disabled === true || this.value === value) {
       return;
     }
 
@@ -473,7 +473,7 @@ export class PickerColumn implements ComponentInterface {
   }
 
   render() {
-    const { color, disabled: pickerDisabled, isActive, numericInput } = this;
+    const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
 
     /**
@@ -487,17 +487,17 @@ export class PickerColumn implements ComponentInterface {
     return (
       <Host
         exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
-        disabled={pickerDisabled}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
+          ['picker-column-disabled']: disabled,
         })}
       >
         <slot name="prefix"></slot>
         <div
           class="picker-opts"
-          tabindex={pickerDisabled ? undefined : 0}
+          tabindex={disabled ? undefined : 0}
           ref={(el) => {
             this.scrollEl = el;
           }}
