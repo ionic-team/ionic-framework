@@ -10,7 +10,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { PickerCustomEvent } from '../picker/picker-interfaces';
 
-import type { PickerColumnItem, PickerColumnChangeEventDetail, PickerColumnValue } from './picker-column-interfaces';
+import type { PickerColumnChangeEventDetail, PickerColumnValue } from './picker-column-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -40,11 +40,6 @@ export class PickerColumn implements ComponentInterface {
    * If `true`, the user cannot interact with the picker.
    */
   @Prop() disabled = false;
-
-  /**
-   * A list of options to be displayed in the picker
-   */
-  @Prop() items: PickerColumnItem[] = [];
 
   /**
    * The selected option in the picker.

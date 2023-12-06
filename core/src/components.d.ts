@@ -24,7 +24,7 @@ import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./compone
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
 import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
-import { PickerColumnChangeEventDetail, PickerColumnItem, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
+import { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
@@ -60,7 +60,7 @@ export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./compone
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
 export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
-export { PickerColumnChangeEventDetail, PickerColumnItem, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
+export { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
@@ -1964,10 +1964,6 @@ export namespace Components {
           * If `true`, the user cannot interact with the picker.
          */
         "disabled": boolean;
-        /**
-          * A list of options to be displayed in the picker
-         */
-        "items": PickerColumnItem[];
         /**
           * The mode determines which platform styles to use.
          */
@@ -6620,10 +6616,6 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the picker.
          */
         "disabled"?: boolean;
-        /**
-          * A list of options to be displayed in the picker
-         */
-        "items"?: PickerColumnItem[];
         /**
           * The mode determines which platform styles to use.
          */

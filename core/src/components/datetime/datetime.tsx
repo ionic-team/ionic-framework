@@ -9,7 +9,6 @@ import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward 
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
-import type { PickerColumnItem } from '../picker-column/picker-column-interfaces';
 
 import type {
   DatetimePresentation,
@@ -22,6 +21,7 @@ import type {
   DatetimeHourCycle,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
+import type { WheelColumnOption } from './utils/data';
 import {
   generateMonths,
   getDaysOfMonth,
@@ -1733,7 +1733,7 @@ export class Datetime implements ComponentInterface {
     return renderArray;
   }
 
-  private renderDayPickerColumn(days: PickerColumnItem[]) {
+  private renderDayPickerColumn(days: WheelColumnOption[]) {
     if (days.length === 0) {
       return [];
     }
@@ -1789,7 +1789,7 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderMonthPickerColumn(months: PickerColumnItem[]) {
+  private renderMonthPickerColumn(months: WheelColumnOption[]) {
     if (months.length === 0) {
       return [];
     }
@@ -1843,7 +1843,7 @@ export class Datetime implements ComponentInterface {
       </ion-picker-column>
     );
   }
-  private renderYearPickerColumn(years: PickerColumnItem[]) {
+  private renderYearPickerColumn(years: WheelColumnOption[]) {
     if (years.length === 0) {
       return [];
     }
@@ -1931,7 +1931,7 @@ export class Datetime implements ComponentInterface {
     ];
   }
 
-  private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
+  private renderHourPickerColumn(hoursData: WheelColumnOption[]) {
     const { disabled, workingParts } = this;
     if (hoursData.length === 0) return [];
 
@@ -1970,7 +1970,7 @@ export class Datetime implements ComponentInterface {
       </ion-picker-column>
     );
   }
-  private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
+  private renderMinutePickerColumn(minutesData: WheelColumnOption[]) {
     const { disabled, workingParts } = this;
     if (minutesData.length === 0) return [];
 
@@ -2009,7 +2009,7 @@ export class Datetime implements ComponentInterface {
       </ion-picker-column>
     );
   }
-  private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
+  private renderDayPeriodPickerColumn(dayPeriodData: WheelColumnOption[]) {
     const { disabled, workingParts } = this;
     if (dayPeriodData.length === 0) {
       return [];
