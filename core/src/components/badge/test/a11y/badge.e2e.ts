@@ -36,14 +36,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
         `
         <main>
           <ion-badge>123</ion-badge>
-          <ion-badge color="primary">123</ion-badge>
-          <ion-badge color="secondary">123</ion-badge>
-          <ion-badge color="tertiary">123</ion-badge>
-          <ion-badge color="success">123</ion-badge>
-          <ion-badge color="warning">123</ion-badge>
-          <ion-badge color="danger">123</ion-badge>
-          <ion-badge color="medium">123</ion-badge>
-          <ion-badge color="dark">123</ion-badge>
+          <ion-badge class="ion-color">123</ion-badge>
         </main>
       `,
         config
@@ -67,14 +60,7 @@ configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) =
         `
         <main>
           <ion-badge>123</ion-badge>
-          <ion-badge color="primary">123</ion-badge>
-          <ion-badge color="secondary">123</ion-badge>
-          <ion-badge color="tertiary">123</ion-badge>
-          <ion-badge color="success">123</ion-badge>
-          <ion-badge color="warning">123</ion-badge>
-          <ion-badge color="danger">123</ion-badge>
-          <ion-badge color="medium">123</ion-badge>
-          <ion-badge color="dark">123</ion-badge>
+          <ion-badge class="ion-color">123</ion-badge>
         </main>
       `,
         config

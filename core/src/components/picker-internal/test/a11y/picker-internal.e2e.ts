@@ -11,11 +11,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
        */
       await page.setContent(
         `
-          <ion-content>
-            <ion-picker-internal>
-              <ion-picker-column-internal value="3"></ion-picker-column-internal>
-            </ion-picker-internal>
-          </ion-content>
+          <ion-picker-internal>
+            <ion-picker-column-internal value="3"></ion-picker-column-internal>
+          </ion-picker-internal>
           <script>
             const column = document.querySelector('ion-picker-column-internal');
             column.items = [
@@ -48,11 +46,9 @@ configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, config }) =
        */
       await page.setContent(
         `
-          <ion-content>
-            <ion-picker-internal>
-              <ion-picker-column-internal value="3"></ion-picker-column-internal>
-            </ion-picker-internal>
-          </ion-content>
+          <ion-picker-internal>
+            <ion-picker-column-internal value="3"></ion-picker-column-internal>
+          </ion-picker-internal>
           <script>
             const column = document.querySelector('ion-picker-column-internal');
             column.items = [
