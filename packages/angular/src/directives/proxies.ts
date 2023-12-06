@@ -1446,7 +1446,7 @@ export declare interface IonPicker extends Components.IonPicker {
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'mode', 'value'],
+  inputs: ['disabled', 'mode', 'value'],
   methods: ['setFocus']
 })
 @Component({
@@ -1454,7 +1454,7 @@ export declare interface IonPicker extends Components.IonPicker {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'mode', 'value'],
+  inputs: ['disabled', 'mode', 'value'],
 })
 export class IonPickerColumn {
   protected el: HTMLElement;

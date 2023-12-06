@@ -4,10 +4,8 @@ import { doc } from '@utils/browser';
 import { getElementRoot, raf } from '@utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
 import { isPlatform } from '@utils/platform';
-import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color } from '../../interface';
 import type { PickerCustomEvent } from '../picker/picker-interfaces';
 
 import type { PickerColumnChangeEventDetail, PickerColumnValue } from './picker-column-interfaces';
@@ -45,13 +43,6 @@ export class PickerColumn implements ComponentInterface {
    * The selected option in the picker.
    */
   @Prop({ mutable: true }) value?: string | number;
-
-  /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop({ reflect: true }) color?: Color = 'primary';
 
   /**
    * If `true`, tapping the picker will
@@ -461,17 +452,17 @@ export class PickerColumn implements ComponentInterface {
   }
 
   render() {
-    const { color, disabled, isActive, numericInput } = this;
+    const { disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
 
     return (
       <Host
-        class={createColorClasses(color, {
+        class={{
           [mode]: true,
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
           ['picker-column-disabled']: disabled,
-        })}
+        }}
       >
         <slot name="prefix"></slot>
         <div

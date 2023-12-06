@@ -911,7 +911,6 @@ ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,event,ionInputModeChange,PickerChangeEventDetail,true
 
 ion-picker-column,shadow
-ion-picker-column,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
 ion-picker-column,prop,disabled,boolean,false,false,false
 ion-picker-column,prop,mode,"ios" | "md",undefined,false,false
 ion-picker-column,prop,value,number | string | undefined,undefined,false,false
