@@ -472,23 +472,23 @@ export class PickerColumn implements ComponentInterface {
             this.scrollEl = el;
           }}
         >
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
           <slot></slot>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
         </div>
