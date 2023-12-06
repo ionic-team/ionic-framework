@@ -1,5 +1,76 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
+
+configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
+  test.describe(title('button: contrast'), () => {
+    test('should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-button>Default</ion-button>
+        <ion-button fill="solid">Solid</ion-button>
+        <ion-button fill="outline">Outline</ion-button>
+        <ion-button fill="clear">Clear</ion-button>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test('focused state should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-button class="ion-focused" fill="solid">Solid</ion-button>
+        <ion-button class="ion-focused" fill="outline">Outline</ion-button>
+        <ion-button class="ion-focused" fill="clear">Clear</ion-button>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test('button in toolbar should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button fill="outline" class="ion-activated"> Start </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
+
+/**
+ * Only ios mode uses ion-color() for the activated button state
+ */
+configs({ directions: ['ltr'], modes: ['ios'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
+  test.describe(title('button: ios contrast'), () => {
+    test('activated state should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-button class="ion-activated" fill="solid">Solid</ion-button>
+        <ion-button class="ion-activated" fill="outline">Outline</ion-button>
+        <ion-button class="ion-activated" fill="clear">Clear</ion-button>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: font scaling'), () => {
