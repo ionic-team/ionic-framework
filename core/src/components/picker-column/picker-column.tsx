@@ -218,10 +218,8 @@ export class PickerColumn implements ComponentInterface {
   private setPickerItemActiveState = (item: HTMLIonPickerColumnOptionElement, isActive: boolean) => {
     if (isActive) {
       item.classList.add(PICKER_ITEM_ACTIVE_CLASS);
-      item.part.add(PICKER_ITEM_ACTIVE_PART);
     } else {
       item.classList.remove(PICKER_ITEM_ACTIVE_CLASS);
-      item.part.remove(PICKER_ITEM_ACTIVE_PART);
     }
   };
 
@@ -471,17 +469,8 @@ export class PickerColumn implements ComponentInterface {
     const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
 
-    /**
-     * exportparts is needed so ion-datetime can expose the parts
-     * from two layers of shadow nesting. If this causes problems,
-     * the attribute can be moved to datetime.tsx and set on every
-     * instance of ion-picker-column there instead.
-     * TODO FW-5580 remove exportparts
-     */
-
     return (
       <Host
-        exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
@@ -524,5 +513,3 @@ export class PickerColumn implements ComponentInterface {
 }
 
 const PICKER_ITEM_ACTIVE_CLASS = 'option-active';
-const PICKER_ITEM_PART = 'wheel-item';
-const PICKER_ITEM_ACTIVE_PART = 'active';
