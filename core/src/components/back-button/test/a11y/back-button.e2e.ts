@@ -6,7 +6,7 @@ import { configs, test } from '@utils/test/playwright';
  * Only ios mode uses ion-color() for the back button
  */
 configs({ directions: ['ltr'], modes: ['ios'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
-  test.describe(title('back-button: a11y'), () => {
+  test.describe(title('back-button: contrast'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
         `
