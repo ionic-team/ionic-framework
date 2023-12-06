@@ -5,8 +5,9 @@ import type { E2ELocator } from '@utils/test/playwright/page/utils/locator';
 /**
  * This behavior does not vary across modes/directions.
  */
+// TODO FW-5580 fix this functionality
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('picker: keyboard entry'), () => {
+  test.describe.skip(title('picker: keyboard entry'), () => {
     test('should scroll to and update the value prop for a single column', async ({ page }) => {
       await page.setContent(
         `

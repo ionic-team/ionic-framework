@@ -86,7 +86,7 @@ export class PickerColumn implements ComponentInterface {
        * Only scroll the active item into view when the picker column
        * is actively visible to the user.
        */
-      this.scrollActiveItemIntoView();
+      this.scrollActiveItemIntoView(true);
     }
   }
 
@@ -159,11 +159,11 @@ export class PickerColumn implements ComponentInterface {
 
   /** @internal  */
   @Method()
-  async scrollActiveItemIntoView() {
+  async scrollActiveItemIntoView(smooth = false) {
     const activeEl = this.activeItem;
 
     if (activeEl) {
-      this.centerPickerItemInView(activeEl, false, false);
+      this.centerPickerItemInView(activeEl, smooth, false);
     }
   }
 
