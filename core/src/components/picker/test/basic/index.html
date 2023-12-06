@@ -111,10 +111,19 @@
         console.log('Column change', ev.detail);
       });
       const setPickerColumn = (selector, items, value) => {
-        const picker = document.querySelector(selector);
+        const column = document.querySelector(selector);
 
-        picker.items = items;
-        picker.value = value;
+        items.forEach((item) => {
+          const option = document.createElement('ion-picker-column-option');
+          option.value = item.value;
+          option.textContent = item.text;
+
+          option.setAttribute('data-test-value', item.value);
+
+          column.appendChild(option);
+        });
+
+        column.value = value;
       };
 
       const modal = document.querySelector('ion-modal');

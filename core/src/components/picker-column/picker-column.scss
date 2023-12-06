@@ -71,6 +71,17 @@
   display: none;
 }
 
+::slotted(ion-picker-column-option) {
+  display: block;
+
+  scroll-snap-align: center;
+}
+
+.picker-item-empty,
+:host(:not([disabled])) ::slotted(ion-picker-column-option.option-disabled) {
+  scroll-snap-align: none;
+}
+
 ::slotted([slot="prefix"]), ::slotted([slot="suffix"]) {
   max-width: 200px;
 
@@ -87,7 +98,7 @@
    * space between the slot and the column's focus highlight.
    */
   @include padding(0, 16px);
-  
+
   justify-content: end;
 }
 
@@ -97,10 +108,11 @@
    * space between the slot and the column's focus highlight.
    */
   @include padding(0, 16px);
-  
+
   justify-content: start;
 }
 
+// TODO FW-5580 remove this
 :host .picker-item {
   @include padding(0);
   @include margin(0);
@@ -138,11 +150,14 @@
   scroll-snap-align: center;
 }
 
+// TODO FW-5580 remove this.
+// Figure out if we still need the .picker-item-empty selector
 :host .picker-item-empty,
 :host .picker-item[disabled] {
   cursor: default;
 }
 
+// TODO FW-5580 remove this
 :host .picker-item-empty,
 :host(:not([disabled])) .picker-item[disabled] {
   scroll-snap-align: none;
@@ -152,10 +167,12 @@
   overflow-y: hidden;
 }
 
+// TODO FW-5580 remove this
 :host .picker-item[disabled] {
   opacity: 0.4;
 }
 
+// TODO FW-5580 remove this
 :host(.picker-column-active) .picker-item.picker-item-active {
   color: current-color(base);
 }

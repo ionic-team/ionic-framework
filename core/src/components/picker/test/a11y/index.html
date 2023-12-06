@@ -16,22 +16,17 @@
         <h1>Picker - a11y</h1>
 
         <ion-picker>
-          <ion-picker-column color="tertiary" value="3"></ion-picker-column>
+          <ion-picker-column color="tertiary" value="3">
+            <ion-picker-column-option value="1" color="tertiary">First</ion-picker-column-option>
+            <ion-picker-column-option value="2" color="tertiary">Second</ion-picker-column-option>
+            <ion-picker-column-option value="3" color="tertiary">Third</ion-picker-column-option>
+            <ion-picker-column-option value="4" color="tertiary">Fourth</ion-picker-column-option>
+            <ion-picker-column-option value="5" color="tertiary">Fifth</ion-picker-column-option>
+            <ion-picker-column-option value="6" color="tertiary">Sixth</ion-picker-column-option>
+            <ion-picker-column-option value="7" color="tertiary">Seventh</ion-picker-column-option>
+          </ion-picker-column>
         </ion-picker>
       </ion-content>
-
-      <script>
-        const column = document.querySelector('ion-picker-column');
-        column.items = [
-          { text: 'First', value: '1' },
-          { text: 'Second', value: '2' },
-          { text: 'Third', value: '3' },
-          { text: 'Fourth', value: '4' },
-          { text: 'Fifth', value: '5' },
-          { text: 'Sixth', value: '6' },
-          { text: 'Seventh', value: '7' },
-        ];
-      </script>
     </ion-app>
   </body>
 </html>

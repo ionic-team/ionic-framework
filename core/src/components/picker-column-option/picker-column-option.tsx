@@ -15,6 +15,13 @@ import type { Color } from '../../interface';
   shadow: true,
 })
 export class PickerColumnOption implements ComponentInterface {
+  /**
+   * We keep track of the parent picker column
+   * so we can update the value of it when
+   * clicking an enable option.
+   */
+  private pickerColumn: HTMLIonPickerColumnElement | null = null;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -60,12 +67,54 @@ export class PickerColumnOption implements ComponentInterface {
     /**
      * The initial value of `aria-label` needs to be set for
      * the first render.
+
      */
     this.ariaLabel = inheritedAttributes['aria-label'] || null;
   }
 
+  connectedCallback() {
+    this.pickerColumn = this.el.closest('ion-picker-column');
+  }
+
+  disconnectedCallback() {
+    this.pickerColumn = null;
+  }
+
+  /**
+   * The column options can load at any time
+   * so the options needs to tell the
+   * parent picker column when it is loaded
+   * so the picker column can ensure it is
+   * centered in the view.
+   *
+   * We intentionally run this for every
+   * option. If we only ran this from
+   * the selected option then if the newly
+   * loaded options were not selected then
+   * scrollActiveItemIntoView would not be called.
+   */
+  componentDidLoad() {
+    const { pickerColumn } = this;
+    if (pickerColumn !== null) {
+      pickerColumn.scrollActiveItemIntoView();
+    }
+  }
+
+  /**
+   * When an option is clicked, update the
+   * parent picker column value. This
+   * component will handle centering the option
+   * in the column view.
+   */
+  onClick() {
+    const { pickerColumn } = this;
+    if (pickerColumn !== null) {
+      pickerColumn.setValue(this.value);
+    }
+  }
+
   render() {
-    const { color, value, disabled, ariaLabel } = this;
+    const { color, disabled, ariaLabel } = this;
     const mode = getIonMode(this);
 
     return (
@@ -75,8 +124,8 @@ export class PickerColumnOption implements ComponentInterface {
           ['option-disabled']: disabled,
         })}
       >
-        <button tabindex="-1" aria-label={ariaLabel} disabled={disabled}>
-          <slot>{value}</slot>
+        <button tabindex="-1" aria-label={ariaLabel} disabled={disabled} onClick={() => this.onClick()}>
+          <slot></slot>
         </button>
       </Host>
     );

@@ -8,19 +8,13 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         <ion-picker>
           <ion-picker-column value="b">
+            <ion-picker-column-option value="a">A</ion-picker-column-option>
+            <ion-picker-column-option value="b">B</ion-picker-column-option>
+            <ion-picker-column-option value="c">C</ion-picker-column-option>
             <div slot="prefix">Prefix</div>
             <div slot="suffix">Suffix</div>
           </ion-picker-column>
         </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a' },
-            { text: 'B', value: 'b' },
-            { text: 'C', value: 'c' }
-          ]
-        </script>
       `,
         config
       );
@@ -34,19 +28,13 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         <ion-picker>
           <ion-picker-column value="b">
+            <ion-picker-column-option value="a">A</ion-picker-column-option>
+            <ion-picker-column-option value="b">B</ion-picker-column-option>
+            <ion-picker-column-option value="c">C</ion-picker-column-option>
             <div slot="prefix">Long prefix long prefix long prefix</div>
             <div slot="suffix">Long suffix long suffix long suffix</div>
           </ion-picker-column>
         </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a' },
-            { text: 'B', value: 'b' },
-            { text: 'C', value: 'c' }
-          ]
-        </script>
       `,
         config
       );

@@ -1976,7 +1976,7 @@ export namespace Components {
           * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
          */
         "numericInput": boolean;
-        "scrollActiveItemIntoView": () => Promise<void>;
+        "scrollActiveItemIntoView": (smooth?: boolean) => Promise<void>;
         /**
           * Sets focus on the scrollable container within the picker column. Use this method instead of the global `pickerColumn.focus()`.
          */
@@ -4055,7 +4055,7 @@ declare global {
         new (): HTMLIonPickerElement;
     };
     interface HTMLIonPickerColumnElementEventMap {
-        "ionChange": PickerColumnItem;
+        "ionChange": { value: string | number | undefined };
     }
     interface HTMLIonPickerColumnElement extends Components.IonPickerColumn, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6635,7 +6635,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the value has changed.
          */
-        "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnItem>) => void;
+        "onIonChange"?: (event: IonPickerColumnCustomEvent<{ value: string | number | undefined }>) => void;
         /**
           * The selected option in the picker.
          */
