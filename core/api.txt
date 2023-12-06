@@ -426,8 +426,6 @@ ion-datetime,event,ionFocus,void,true
 ion-datetime,css-prop,--background
 ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
-ion-datetime,css-prop,--wheel-fade-background-rgb
-ion-datetime,css-prop,--wheel-highlight-background
 ion-datetime,part,calendar-day
 ion-datetime,part,calendar-day active
 ion-datetime,part,calendar-day disabled
@@ -909,6 +907,9 @@ ion-note,css-prop,--color
 ion-picker,shadow
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,event,ionInputModeChange,PickerChangeEventDetail,true
+ion-picker,css-prop,--fade-background-rgb
+ion-picker,css-prop,--highlight-background
+ion-picker,css-prop,--highlight-border-radius
 
 ion-picker-column,shadow
 ion-picker-column,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
