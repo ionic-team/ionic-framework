@@ -13,6 +13,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         `
           <main>
             <ion-router-link href="#">Router Link</ion-router-link>
+            <ion-router-link href="#" class="ion-color">Router Link</ion-router-link>
           </main>
         `,
         config
