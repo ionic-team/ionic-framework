@@ -26,7 +26,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, config }) => {
-  test.describe.only(title('router-link: a11y  (dark mode)'), () => {
+  test.describe(title('router-link: a11y  (dark mode)'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       /**
        * All page content should be contained by landmarks (main, nav, etc.)
