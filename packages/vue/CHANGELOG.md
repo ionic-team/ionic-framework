@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+
+### Bug Fixes
+
+* **angular,vue:** range form value updates while dragging knob ([#28422](https://github.com/ionic-team/ionic-framework/issues/28422)) ([0854a11](https://github.com/ionic-team/ionic-framework/commit/0854a11a25759d0201eae66c96a62fe138d486f8)), closes [#28256](https://github.com/ionic-team/ionic-framework/issues/28256)
+
+
+### Features
+
+* **radio-group:** add compareWith property ([#28452](https://github.com/ionic-team/ionic-framework/issues/28452)) ([0ae327f](https://github.com/ionic-team/ionic-framework/commit/0ae327f0e09cd97d705f2d3051c215034381e226))
+* **toast:** add swipe to dismiss functionality ([#28442](https://github.com/ionic-team/ionic-framework/issues/28442)) ([30c21aa](https://github.com/ionic-team/ionic-framework/commit/30c21aab3ed40d73c28e7d60d0952d8891b0a9d3)), closes [#21769](https://github.com/ionic-team/ionic-framework/issues/21769)
+
+
+
+
+
 ## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
 
 
