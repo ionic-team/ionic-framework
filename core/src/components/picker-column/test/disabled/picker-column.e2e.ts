@@ -131,9 +131,20 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto('/src/components/picker-column/test/disabled', config);
     });
 
-    test('item in disabled column should not be interactive', async ({ page }) => {
-      const secondItem = page.locator('#column-disabled .picker-item:not(.picker-item-empty)').nth(1);
-      await expect(secondItem).toBeDisabled();
+    test('clicking option in disabled column should not change value', async ({ page }) => {
+      const column = page.locator('#column-disabled');
+      const option = column.locator('ion-picker-column-option').nth(1);
+
+      await expect(column).toHaveJSProperty('value', 11);
+
+      /**
+       * Options do not receive pointer events
+       * so we need to forcibly click the element.
+       */
+      await option.click({ force: true });
+      await page.waitForChanges();
+
+      await expect(column).toHaveJSProperty('value', 11);
     });
   });
 });

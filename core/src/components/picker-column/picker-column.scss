@@ -163,13 +163,27 @@
   scroll-snap-align: none;
 }
 
-:host([disabled]) {
+:host(.picker-column-disabled) .picker-opts {
   overflow-y: hidden;
 }
 
 // TODO FW-5580 remove this
 :host .picker-item[disabled] {
   opacity: 0.4;
+}
+
+/**
+ * When the column is disabled, none of the options
+ * should be interactive. However, we do not disable
+ * the buttons because that would require overriding the
+ * app's preference for each option. In this case,
+ * the picker column interactive as a whole is
+ * disabled, not individual options.
+ */
+:host(.picker-column-disabled) ::slotted(ion-picker-column-option) {
+  cursor: default;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 // TODO FW-5580 remove this
