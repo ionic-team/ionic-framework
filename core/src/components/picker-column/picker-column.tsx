@@ -10,7 +10,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { PickerCustomEvent } from '../picker/picker-interfaces';
 
-import type { PickerColumnItem } from './picker-column-interfaces';
+import type { PickerColumnItem, PickerColumnChangeEventDetail, PickerColumnValue } from './picker-column-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -77,7 +77,7 @@ export class PickerColumn implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<{ value: string | number | undefined }>;
+  @Event() ionChange!: EventEmitter<PickerColumnChangeEventDetail>;
 
   @Watch('value')
   valueChange() {
@@ -175,7 +175,7 @@ export class PickerColumn implements ComponentInterface {
    * @internal
    */
   @Method()
-  async setValue(value?: string | number) {
+  async setValue(value: PickerColumnValue) {
     if (this.value === value) {
       return;
     }
