@@ -18,14 +18,9 @@ import type { PickerColumnItem, PickerColumnChangeEventDetail, PickerColumnValue
  * @slot prefix - Content to show on the left side of the picker options.
  * @slot suffix - Content to show on the right side of the picker options.
  */
-// TODO FW-5580 we can likely go back to a single stylesheet here
-// the per-mode styles were moved to ion-picker-column-option
 @Component({
   tag: 'ion-picker-column',
-  styleUrls: {
-    ios: 'picker-column.ios.scss',
-    md: 'picker-column.md.scss',
-  },
+  styleUrl: 'picker-column.scss',
   shadow: true,
 })
 export class PickerColumn implements ComponentInterface {
