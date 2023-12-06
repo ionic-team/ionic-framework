@@ -163,7 +163,7 @@
   scroll-snap-align: none;
 }
 
-:host([disabled]) {
+:host(.picker-column-disabled) .picker-opts {
   overflow-y: hidden;
 }
 
