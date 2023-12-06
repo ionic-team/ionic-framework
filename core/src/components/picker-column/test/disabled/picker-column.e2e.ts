@@ -6,43 +6,6 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('picker-column: disabled items'), () => {
-    // TODO FW-5580 move this to a spec test in picker-column-option
-    test('all picker items should be enabled by default', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-picker>
-          <ion-picker-column>
-            <ion-picker-column-option value="a">A</ion-picker-column-option>
-            <ion-picker-column-option value="b">B</ion-picker-column-option>
-            <ion-picker-column-option value="c">C</ion-picker-column-option>
-          </ion-picker-column>
-        </ion-picker>
-      `,
-        config
-      );
-
-      const pickerItems = page.locator('ion-picker-column ion-picker-column-option button:not([disabled])');
-
-      expect(await pickerItems.count()).toBe(3);
-    });
-    // TODO FW-5580 move this to a spec test in picker-column-option
-    test('disabled picker item should not be interactive', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-picker>
-          <ion-picker-column>
-            <ion-picker-column-option value="a">A</ion-picker-column-option>
-            <ion-picker-column-option value="b" disabled="true">B</ion-picker-column-option>
-            <ion-picker-column-option value="c">C</ion-picker-column-option>
-          </ion-picker-column>
-        </ion-picker>
-      `,
-        config
-      );
-
-      const disabledItem = page.locator('ion-picker-column ion-picker-column-option button').nth(1);
-      await expect(disabledItem).not.toBeEnabled();
-    });
     test('disabled picker item should not be considered active', async ({ page }) => {
       await page.setContent(
         `
