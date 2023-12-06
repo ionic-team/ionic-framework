@@ -2,6 +2,35 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+/**
+ * Only md mode uses ion-color() for the segment button
+ */
+configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
+  test.describe(title('segment: contrast'), () => {
+    test('should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <main>
+          <ion-segment aria-label="Tab Options" value="bookmarks">
+            <ion-segment-button value="bookmarks">
+              <ion-label>Bookmarks</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="reading-list">
+              <ion-label>Reading List</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </main>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
+
 configs().forEach(({ title, config }) => {
   test.describe(title('segment: a11y'), () => {
     test('should not have any axe violations', async ({ page }) => {
