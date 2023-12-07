@@ -328,21 +328,17 @@
       });
 
       function toggleTheme(theme) {
-        var cssFile = `/scripts/testing/themes/${theme}.css`;
+        var cssFile = `/src/themes/test/${theme}.css`;
 
         var oldLink = document.getElementById('theme');
 
-        if (theme == 'default') {
-          oldLink.setAttribute('href', '');
-        } else {
-          var newLink = document.createElement('link');
-          newLink.setAttribute('id', 'theme');
-          newLink.setAttribute('rel', 'stylesheet');
-          newLink.setAttribute('type', 'text/css');
-          newLink.setAttribute('href', cssFile);
+        var newLink = document.createElement('link');
+        newLink.setAttribute('id', 'theme');
+        newLink.setAttribute('rel', 'stylesheet');
+        newLink.setAttribute('type', 'text/css');
+        newLink.setAttribute('href', cssFile);
 
-          document.getElementsByTagName('head').item(0).replaceChild(newLink, oldLink);
-        }
+        document.getElementsByTagName('head').item(0).replaceChild(newLink, oldLink);
       }
     </script>
   </body>
