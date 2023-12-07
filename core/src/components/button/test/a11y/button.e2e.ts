@@ -37,9 +37,7 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
       await page.setContent(
         `
         <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button fill="outline" class="ion-activated"> Start </ion-button>
-          </ion-buttons>
+          <ion-button fill="outline" class="ion-activated"> Start </ion-button>
         </ion-toolbar>
       `,
         config
