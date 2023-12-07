@@ -1957,6 +1957,10 @@ export namespace Components {
     }
     interface IonPickerColumn {
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
           * If `true`, the user cannot interact with the picker.
          */
         "disabled": boolean;
@@ -6604,6 +6608,10 @@ declare namespace LocalJSX {
         "onIonInputModeChange"?: (event: IonPickerCustomEvent<PickerChangeEventDetail>) => void;
     }
     interface IonPickerColumn {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
         /**
           * If `true`, the user cannot interact with the picker.
          */
