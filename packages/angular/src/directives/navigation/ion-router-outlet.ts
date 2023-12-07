@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Directive, Attribute, Optional, SkipSelf, ElementRef, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IonRouterOutlet as IonRouterOutletBase } from '@ionic/angular/common';
+import { IonRouterOutletBase } from '@ionic/angular/common';
 
 @Directive({
   selector: 'ion-router-outlet',

@@ -6,7 +6,7 @@ import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 import { ProxyCmp } from '../../utils/proxy';
 
-import { IonRouterOutlet } from './router-outlet';
+import { IonRouterOutletBase } from './router-outlet';
 
 const BACK_BUTTON_INPUTS = ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type'];
 
@@ -31,7 +31,7 @@ export class IonBackButton {
   protected el: HTMLElement;
 
   constructor(
-    @Optional() private routerOutlet: IonRouterOutlet,
+    @Optional() private routerOutlet: IonRouterOutletBase,
     private navCtrl: NavController,
     private config: Config,
     private r: ElementRef,

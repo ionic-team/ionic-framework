@@ -3,7 +3,7 @@ import { Injectable, Optional } from '@angular/core';
 import { NavigationExtras, Router, UrlSerializer, UrlTree, NavigationStart } from '@angular/router';
 import type { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core/components';
 
-import { IonRouterOutlet } from '../directives/navigation/router-outlet';
+import { IonRouterOutletBase } from '../directives/navigation/router-outlet';
 
 import { Platform } from './platform';
 
@@ -19,7 +19,7 @@ export interface NavigationOptions extends NavigationExtras, AnimationOptions {}
   providedIn: 'root',
 })
 export class NavController {
-  private topOutlet?: IonRouterOutlet;
+  private topOutlet?: IonRouterOutletBase;
   private direction: 'forward' | 'back' | 'root' | 'auto' = DEFAULT_DIRECTION;
   private animated?: NavDirection = DEFAULT_ANIMATED;
   private animationBuilder?: AnimationBuilder;
@@ -169,7 +169,7 @@ export class NavController {
   /**
    * @internal
    */
-  setTopOutlet(outlet: IonRouterOutlet): void {
+  setTopOutlet(outlet: IonRouterOutletBase): void {
     this.topOutlet = outlet;
   }
 

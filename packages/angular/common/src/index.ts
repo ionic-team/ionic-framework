@@ -15,7 +15,7 @@ export { NavParams } from './directives/navigation/nav-params';
 export { IonPopover } from './overlays/popover';
 export { IonModal } from './overlays/modal';
 
-export { IonRouterOutlet, provideComponentInputBinding } from './directives/navigation/router-outlet';
+export { IonRouterOutletBase, provideComponentInputBinding } from './directives/navigation/router-outlet';
 
 export { IonBackButton } from './directives/navigation/back-button';
 export {

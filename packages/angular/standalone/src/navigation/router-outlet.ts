@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Directive, Attribute, Optional, SkipSelf, ElementRef, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IonRouterOutlet as IonRouterOutletBase, ProxyCmp } from '@ionic/angular/common';
+import { IonRouterOutletBase, ProxyCmp } from '@ionic/angular/common';
 import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js';
 
 @ProxyCmp({

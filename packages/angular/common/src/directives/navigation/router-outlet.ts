@@ -42,7 +42,7 @@ import { RouteView, StackDidChangeEvent, StackWillChangeEvent, getUrl, isTabSwit
   inputs: ['animated', 'animation', 'mode', 'swipeGesture'],
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export class IonRouterOutlet implements OnDestroy, OnInit {
+export class IonRouterOutletBase implements OnDestroy, OnInit {
   nativeEl: HTMLIonRouterOutletElement;
   activatedView: RouteView | null = null;
   tabsPrefix: string | undefined;
@@ -116,7 +116,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     router: Router,
     zone: NgZone,
     activatedRoute: ActivatedRoute,
-    @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
+    @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutletBase
   ) {
     this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
@@ -463,19 +463,19 @@ const INPUT_BINDER = new InjectionToken<RoutedComponentInputBinder>('');
  */
 @Injectable()
 class RoutedComponentInputBinder {
-  private outletDataSubscriptions = new Map<IonRouterOutlet, Subscription>();
+  private outletDataSubscriptions = new Map<IonRouterOutletBase, Subscription>();
 
-  bindActivatedRouteToOutletComponent(outlet: IonRouterOutlet): void {
+  bindActivatedRouteToOutletComponent(outlet: IonRouterOutletBase): void {
     this.unsubscribeFromRouteData(outlet);
     this.subscribeToRouteData(outlet);
   }
 
-  unsubscribeFromRouteData(outlet: IonRouterOutlet): void {
+  unsubscribeFromRouteData(outlet: IonRouterOutletBase): void {
     this.outletDataSubscriptions.get(outlet)?.unsubscribe();
     this.outletDataSubscriptions.delete(outlet);
   }
 
-  private subscribeToRouteData(outlet: IonRouterOutlet) {
+  private subscribeToRouteData(outlet: IonRouterOutletBase) {
     const { activatedRoute } = outlet;
     const dataSubscription = combineLatest([activatedRoute.queryParams, activatedRoute.params, activatedRoute.data])
       .pipe(
