@@ -19,7 +19,6 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
       `,
         config
       );
-      await page.goto(`/src/components/input/test/a11y`, config);
 
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
@@ -46,7 +45,6 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
       `,
         config
       );
-      await page.goto(`/src/components/input/test/a11y`, config);
 
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
