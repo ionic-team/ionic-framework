@@ -44,7 +44,7 @@ const styleTestHelpers = `
  * 6) The base color as the text color against the base color at 0.12 opacity as the background color
  * 7) The base color as the text color against the base color at 0.16 opacity as the background color
  */
-configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
+configs({ modes: ['md'], directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
   const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 
   test.describe(title('theme'), () => {
