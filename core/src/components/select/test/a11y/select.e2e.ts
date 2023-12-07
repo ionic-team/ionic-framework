@@ -17,6 +17,23 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
           </ion-select>
           <ion-select aria-label="Label"></ion-select>
           <ion-select disabled="true" label="My Label"></ion-select>
+          <ion-item>
+            <ion-select label="My Label" value="apples">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-select id="multiple" multiple="true" label="My Label">
+            <ion-select-option value="apples">Apples</ion-select-option>
+            <ion-select-option value="bananas">Bananas</ion-select-option>
+            <ion-select-option value="oranges">Oranges</ion-select-option>
+          </ion-select>
+
+          <script>
+            const multiple = document.querySelector('#multiple');
+            multiple.value = ['apples', 'bananas'];
+          </script>
         </main>
       `,
         config
