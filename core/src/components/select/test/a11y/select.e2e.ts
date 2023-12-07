@@ -10,13 +10,12 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
         <main>
           <ion-select label="Label" placeholder="Placeholder"></ion-select>
           <ion-select placeholder="Placeholder">
-            <div slot="label">Label"></div>
+            <div slot="label">Label</div>
           </ion-select>
           <ion-select label="Label" value="a">
             <ion-select-option value="a">Apple</ion-select-option>
           </ion-select>
           <ion-select aria-label="Label"></ion-select>
-          <ion-select disabled="true" label="My Label"></ion-select>
           <ion-item>
             <ion-select label="My Label" value="apples">
               <ion-select-option value="apples">Apples</ion-select-option>

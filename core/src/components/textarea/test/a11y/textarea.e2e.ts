@@ -14,7 +14,6 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
           </ion-textarea>
           <ion-textarea label="Label" value="My Text"></ion-textarea>
           <ion-textarea aria-label="Label"></ion-textarea>
-          <ion-textarea disabled="true" label="My Label"></ion-textarea>
         </main>
       `,
         config

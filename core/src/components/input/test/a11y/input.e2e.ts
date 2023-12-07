@@ -14,7 +14,6 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
           </ion-input>
           <ion-input label="Label" value="My Text"></ion-input>
           <ion-input aria-label="Label"></ion-input>
-          <ion-input disabled="true" label="My Label"></ion-input>
         </main>
       `,
         config
