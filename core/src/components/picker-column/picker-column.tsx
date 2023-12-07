@@ -10,7 +10,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { PickerCustomEvent } from '../picker/picker-interfaces';
 
-import type { PickerColumnItem, PickerColumnChangeEventDetail, PickerColumnValue } from './picker-column-interfaces';
+import type { PickerColumnChangeEventDetail, PickerColumnValue } from './picker-column-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -18,14 +18,9 @@ import type { PickerColumnItem, PickerColumnChangeEventDetail, PickerColumnValue
  * @slot prefix - Content to show on the left side of the picker options.
  * @slot suffix - Content to show on the right side of the picker options.
  */
-// TODO FW-5580 we can likely go back to a single stylesheet here
-// the per-mode styles were moved to ion-picker-column-option
 @Component({
   tag: 'ion-picker-column',
-  styleUrls: {
-    ios: 'picker-column.ios.scss',
-    md: 'picker-column.md.scss',
-  },
+  styleUrl: 'picker-column.scss',
   shadow: true,
 })
 export class PickerColumn implements ComponentInterface {
@@ -45,11 +40,6 @@ export class PickerColumn implements ComponentInterface {
    * If `true`, the user cannot interact with the picker.
    */
   @Prop() disabled = false;
-
-  /**
-   * A list of options to be displayed in the picker
-   */
-  @Prop() items: PickerColumnItem[] = [];
 
   /**
    * The selected option in the picker.
@@ -223,10 +213,8 @@ export class PickerColumn implements ComponentInterface {
   private setPickerItemActiveState = (item: HTMLIonPickerColumnOptionElement, isActive: boolean) => {
     if (isActive) {
       item.classList.add(PICKER_ITEM_ACTIVE_CLASS);
-      item.part.add(PICKER_ITEM_ACTIVE_PART);
     } else {
       item.classList.remove(PICKER_ITEM_ACTIVE_CLASS);
-      item.part.remove(PICKER_ITEM_ACTIVE_PART);
     }
   };
 
@@ -476,17 +464,8 @@ export class PickerColumn implements ComponentInterface {
     const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
 
-    /**
-     * exportparts is needed so ion-datetime can expose the parts
-     * from two layers of shadow nesting. If this causes problems,
-     * the attribute can be moved to datetime.tsx and set on every
-     * instance of ion-picker-column there instead.
-     * TODO FW-5580 remove exportparts
-     */
-
     return (
       <Host
-        exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
@@ -502,23 +481,23 @@ export class PickerColumn implements ComponentInterface {
             this.scrollEl = el;
           }}
         >
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
           <slot></slot>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
         </div>
@@ -529,5 +508,3 @@ export class PickerColumn implements ComponentInterface {
 }
 
 const PICKER_ITEM_ACTIVE_CLASS = 'option-active';
-const PICKER_ITEM_PART = 'wheel-item';
-const PICKER_ITEM_ACTIVE_PART = 'active';
