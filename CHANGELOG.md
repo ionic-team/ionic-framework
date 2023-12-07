@@ -28,6 +28,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **toast:** add swipe to dismiss functionality ([#28442](https://github.com/ionic-team/ionic-framework/issues/28442)) ([30c21aa](https://github.com/ionic-team/ionic-framework/commit/30c21aab3ed40d73c28e7d60d0952d8891b0a9d3)), closes [#21769](https://github.com/ionic-team/ionic-framework/issues/21769)
 * **toggle:** expose label wrapper as shadow part ([#28585](https://github.com/ionic-team/ionic-framework/issues/28585)) ([a34188f](https://github.com/ionic-team/ionic-framework/commit/a34188f7dbec4a16e4f2043ed3dc096e337725a7))
 
+Note: Text inside of `ion-item` can now wrap to resolve accessibility issues related to readability. We recommend evaluating your application to account for text wrapping.
+
 
 
 
