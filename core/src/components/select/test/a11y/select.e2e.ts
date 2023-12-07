@@ -7,6 +7,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should not have accessibility violations', async ({ page }) => {
       await page.goto(`/src/components/select/test/a11y`, config);
 
+      /**
+       * The primary color against the focus background
+       * when using fill="solid" does not meet AA
+       * contrast guidelines so it excluded from the test.
+       * The contrast here is a significant improvement
+       * over what Ionic has had in the past, so the team
+       * has decided that this tradeoff is acceptable since
+       * the scope of the problem is limited to the focus
+       * state with the primary color when fill="solid".
+       */
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
