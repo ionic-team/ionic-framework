@@ -59,7 +59,6 @@ configs({ directions: ['ltr'], modes: ['ios'], themes: ['light', 'dark'] }).forE
         `
         <ion-button class="ion-activated" fill="solid">Solid</ion-button>
         <ion-button class="ion-activated" fill="outline">Outline</ion-button>
-        <ion-button class="ion-activated" fill="clear">Clear</ion-button>
       `,
         config
       );
