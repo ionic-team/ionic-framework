@@ -2,19 +2,65 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-/**
- * This behavior does not vary across modes/directions.
- */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('radio: a11y'), () => {
-    test('should not have accessibility violations', async ({ page }) => {
-      await page.goto(`/src/components/radio/test/a11y`, config);
+    test('default layout should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <main>
+          <ion-radio>my label</ion-radio>
+          <ion-radio aria-label="my aria label"></ion-radio>
+          <ion-radio-group>
+            <ion-radio>my label in a group</ion-radio>
+          </ion-radio-group>
+          <ion-radio-group>
+            <ion-radio aria-label="my aria label in a group"></ion-radio>
+          </ion-radio-group>
+          <ion-list>
+            <ion-item>
+              <ion-radio-group>
+                <ion-radio>my label in a group in a list</ion-radio>
+              </ion-radio-group>
+            </ion-item>
+          </ion-list>
+          <ion-list>
+            <ion-item>
+              <ion-radio-group>
+                <ion-radio aria-label="my aria label in a group in a list"></ion-radio>
+              </ion-radio-group>
+            </ion-item>
+          </ion-list>
+        </main>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test('selected state should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <main>
+          <ion-radio-group value="a">
+            <ion-radio value="a">Selected radio</ion-radio>
+          </ion-radio-group>
+        </main>
+      `,
+        config
+      );
 
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
   });
+});
 
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio: keyboard navigation'), () => {
     test.beforeEach(async ({ page }) => {
       await page.setContent(
