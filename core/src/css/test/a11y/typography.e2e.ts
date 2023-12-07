@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
@@ -30,6 +31,52 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
       const div = page.locator('div');
 
       await expect(div).toHaveScreenshot(screenshot(`typography-scale`));
+    });
+  });
+});
+
+configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('typography: a11y (light mode)'), () => {
+    test('should not have accessibility violations for anchor tags', async ({ page }) => {
+      /**
+       * All page content should be contained by landmarks (main, nav, etc.)
+       * By containing the badge in a main element, we can avoid this violation.
+       */
+      await page.setContent(
+        `
+        <main>
+          <a href="#">Link</a>
+        </main>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
+
+configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
+  test.describe(title('typography: a11y (dark mode)'), () => {
+    test('should not have accessibility violations for anchor tags', async ({ page }) => {
+      /**
+       * All page content should be contained by landmarks (main, nav, etc.)
+       * By containing the badge in a main element, we can avoid this violation.
+       */
+      await page.setContent(
+        `
+        <main>
+          <a href="#">Link</a>
+        </main>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+
+      expect(results.violations).toEqual([]);
     });
   });
 });
