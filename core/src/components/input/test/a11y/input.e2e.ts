@@ -2,11 +2,30 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('input: a11y'), () => {
-    test('should not have accessibility violations', async ({ page }) => {
+    test('default layout should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <main>
+          <ion-input label="Label" placeholder="Placeholder"></ion-input>
+          <ion-input placeholder="Placeholder">
+            <div slot="label">Label"></div>
+          </ion-input>
+          <ion-input label="Label" value="My Text"></ion-input>
+          <ion-input aria-label="Label"></ion-input>
+          <ion-input disabled="true" label="My Label"></ion-input>
+        </main>
+      `,
+        config
+      );
       await page.goto(`/src/components/input/test/a11y`, config);
 
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test('focused state should not have accessibility violations', async ({ page }) => {
       /**
        * The primary color against the focus background
        * when using fill="solid" does not meet AA
@@ -17,11 +36,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
        * the scope of the problem is limited to the focus
        * state with the primary color when fill="solid".
        */
+      await page.setContent(
+        `
+        <main>
+          <ion-input class="has-focus" label="Label" value="My Text"></ion-input>
+          <ion-input class="has-focus" label-placement="floating" label="Label" value="My Text"></ion-input>
+          <ion-input class="has-focus" fill="outline" label-placement="floating" label="Label" value="My Text"></ion-input>
+        </main>
+      `,
+        config
+      );
+      await page.goto(`/src/components/input/test/a11y`, config);
+
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
   });
+});
 
+configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
   test.describe(title('input: font scaling'), () => {
     test('should scale text on larger font sizes', async ({ page }) => {
       await page.setContent(
