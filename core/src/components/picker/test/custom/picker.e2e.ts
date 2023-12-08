@@ -3,27 +3,50 @@ import { configs, test } from '@utils/test/playwright';
 
 const pickerElement = `
   <ion-picker>
-    <ion-picker-column></ion-picker-column>
-    <ion-picker-column></ion-picker-column>
+    <ion-picker-column id="first"></ion-picker-column>
+    <ion-picker-column id="second"></ion-picker-column>
   </ion-picker>
 
   <script>
-    const columns = document.querySelectorAll('ion-picker-column');
-    columns[0].items = [
-      { text: 'Minified', value: 'minified' },
-      { text: 'Responsive', value: 'responsive' },
-      { text: 'Full Stack', value: 'full-stack' },
-      { text: 'Mobile First', value: 'mobile-first' },
-      { text: 'Serverless', value: 'serverless' },
-    ]
+    const setPickerColumn = (selector, items, value) => {
+      const column = document.querySelector(selector);
 
-    columns[1].items = [
-      { text: 'Tomato', value: 'tomato' },
-      { text: 'Avocado', value: 'avocado' },
-      { text: 'Onion', value: 'onion' },
-      { text: 'Potato', value: 'potato' },
-      { text: 'Artichoke', value: 'artichoke' },
-    ];
+      items.forEach((item) => {
+        const option = document.createElement('ion-picker-column-option');
+        option.value = item.value;
+        option.textContent = item.text;
+
+        option.setAttribute('data-test-value', item.value);
+
+        column.appendChild(option);
+      });
+
+      column.value = value;
+    };
+
+    setPickerColumn(
+      '#first',
+      [
+        { text: 'Minified', value: 'minified' },
+        { text: 'Responsive', value: 'responsive' },
+        { text: 'Full Stack', value: 'full-stack' },
+        { text: 'Mobile First', value: 'mobile-first' },
+        { text: 'Serverless', value: 'serverless' },
+      ],
+      'minified'
+    );
+
+    setPickerColumn(
+      '#second',
+      [
+        { text: 'Tomato', value: 'tomato' },
+        { text: 'Avocado', value: 'avocado' },
+        { text: 'Onion', value: 'onion' },
+        { text: 'Potato', value: 'potato' },
+        { text: 'Artichoke', value: 'artichoke' },
+      ],
+      'tomato'
+    );
   </script>
 `;
 
