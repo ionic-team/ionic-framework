@@ -5,10 +5,6 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('picker-internal: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
-      /**
-       * `ion-picker-internal` relies on the `ion-content` component for
-       * its colors. This is why we need to wrap the picker in the content.
-       */
       await page.setContent(
         `
           <ion-picker-internal>
