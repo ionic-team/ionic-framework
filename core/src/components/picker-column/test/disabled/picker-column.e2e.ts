@@ -2,122 +2,37 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * This behavior does not vary across directions.
- */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('picker-column: disabled rendering'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-picker>
-          <ion-picker-column value="b"></ion-picker-column>
-        </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a', disabled: true },
-            { text: 'B', value: 'b' },
-            { text: 'C', value: 'c', disabled: true }
-          ]
-        </script>
-      `,
-        config
-      );
-
-      const picker = page.locator('ion-picker');
-      await expect(picker).toHaveScreenshot(screenshot(`picker-disabled`));
-    });
-  });
-});
-
-/**
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('picker-column: disabled items'), () => {
-    test('all picker items should be enabled by default', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-picker>
-          <ion-picker-column></ion-picker-column>
-        </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a' },
-            { text: 'B', value: 'b' },
-            { text: 'C', value: 'c' }
-          ]
-        </script>
-      `,
-        config
-      );
-
-      const pickerItems = page.locator('ion-picker-column .picker-item:not(.picker-item-empty, [disabled])');
-
-      expect(await pickerItems.count()).toBe(3);
-    });
-    test('disabled picker item should not be interactive', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-picker>
-          <ion-picker-column></ion-picker-column>
-        </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a' },
-            { text: 'B', value: 'b', disabled: true },
-            { text: 'C', value: 'c' }
-          ]
-        </script>
-      `,
-        config
-      );
-
-      const disabledItem = page.locator('ion-picker-column .picker-item[disabled]');
-      await expect(disabledItem).not.toBeEnabled();
-    });
     test('disabled picker item should not be considered active', async ({ page }) => {
       await page.setContent(
         `
         <ion-picker>
-          <ion-picker-column value="b"></ion-picker-column>
+          <ion-picker-column value="b">
+            <ion-picker-column-option value="a">A</ion-picker-column-option>
+            <ion-picker-column-option value="b" disabled="true">B</ion-picker-column-option>
+            <ion-picker-column-option value="c">C</ion-picker-column-option>
+          </ion-picker-column>
         </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a' },
-            { text: 'B', value: 'b', disabled: true },
-            { text: 'C', value: 'c' }
-          ]
-        </script>
       `,
         config
       );
 
-      const disabledItem = page.locator('ion-picker-column .picker-item[data-value="b"]');
-      await expect(disabledItem).not.toHaveClass(/picker-item-active/);
+      const disabledItem = page.locator('ion-picker-column-option').nth(1);
+      await expect(disabledItem).not.toHaveClass(/option-active/);
     });
     test('setting the value to a disabled item should not cause that item to be active', async ({ page }) => {
       await page.setContent(
         `
         <ion-picker>
-          <ion-picker-column></ion-picker-column>
+          <ion-picker-column>
+            <ion-picker-column-option value="a">A</ion-picker-column-option>
+            <ion-picker-column-option value="b" disabled="true">B</ion-picker-column-option>
+            <ion-picker-column-option value="c">C</ion-picker-column-option>
+          </ion-picker-column>
         </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a' },
-            { text: 'B', value: 'b', disabled: true },
-            { text: 'C', value: 'c' }
-          ]
-        </script>
       `,
         config
       );
@@ -127,33 +42,25 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.waitForChanges();
 
-      const disabledItem = page.locator('ion-picker-column .picker-item[data-value="b"]');
-      await expect(disabledItem).toBeDisabled();
-      await expect(disabledItem).not.toHaveClass(/picker-item-active/);
+      const disabledItem = page.locator('ion-picker-column ion-picker-column-option').nth(1);
+      await expect(disabledItem).not.toHaveClass(/option-active/);
     });
     test('defaulting the value to a disabled item should not cause that item to be active', async ({ page }) => {
       await page.setContent(
         `
         <ion-picker>
-          <ion-picker-column></ion-picker-column>
+          <ion-picker-column value="b">
+            <ion-picker-column-option value="a">A</ion-picker-column-option>
+            <ion-picker-column-option value="b" disabled="true">B</ion-picker-column-option>
+            <ion-picker-column-option value="c">C</ion-picker-column-option>
+          </ion-picker-column>
         </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a' },
-            { text: 'B', value: 'b', disabled: true },
-            { text: 'C', value: 'c' }
-          ]
-          column.value = 'b'
-        </script>
       `,
         config
       );
 
-      const disabledItem = page.locator('ion-picker-column .picker-item[data-value="b"]');
-      await expect(disabledItem).toBeDisabled();
-      await expect(disabledItem).not.toHaveClass(/picker-item-active/);
+      const disabledItem = page.locator('ion-picker-column ion-picker-column-option').nth(1);
+      await expect(disabledItem).not.toHaveClass(/option-active/);
     });
   });
 });
@@ -185,9 +92,20 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto('/src/components/picker-column/test/disabled', config);
     });
 
-    test('item in disabled column should not be interactive', async ({ page }) => {
-      const secondItem = page.locator('#column-disabled .picker-item:not(.picker-item-empty)').nth(1);
-      await expect(secondItem).toBeDisabled();
+    test('clicking option in disabled column should not change value', async ({ page }) => {
+      const column = page.locator('#column-disabled');
+      const option = column.locator('ion-picker-column-option').nth(1);
+
+      await expect(column).toHaveJSProperty('value', 11);
+
+      /**
+       * Options do not receive pointer events
+       * so we need to forcibly click the element.
+       */
+      await option.click({ force: true });
+      await page.waitForChanges();
+
+      await expect(column).toHaveJSProperty('value', 11);
     });
   });
 });

@@ -24,7 +24,7 @@ import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./compone
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
 import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
-import { PickerColumnItem } from "./components/picker-column/picker-column-interfaces";
+import { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
@@ -60,7 +60,7 @@ export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./compone
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
 export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
-export { PickerColumnItem } from "./components/picker-column/picker-column-interfaces";
+export { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
 export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
@@ -1965,10 +1965,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * A list of options to be displayed in the picker
-         */
-        "items": PickerColumnItem[];
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -1976,7 +1972,7 @@ export namespace Components {
           * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
          */
         "numericInput": boolean;
-        "scrollActiveItemIntoView": () => Promise<void>;
+        "scrollActiveItemIntoView": (smooth?: boolean) => Promise<void>;
         /**
           * Sets focus on the scrollable container within the picker column. Use this method instead of the global `pickerColumn.focus()`.
          */
@@ -1984,13 +1980,17 @@ export namespace Components {
         /**
           * Sets the value prop and fires the ionChange event. This is used when we need to fire ionChange from user-generated events that cannot be caught with normal input/change event listeners.
          */
-        "setValue": (value?: string | number) => Promise<void>;
+        "setValue": (value: PickerColumnValue) => Promise<void>;
         /**
           * The selected option in the picker.
          */
         "value"?: string | number;
     }
     interface IonPickerColumnOption {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
         /**
           * If `true`, the user cannot interact with the picker column option.
          */
@@ -4051,7 +4051,7 @@ declare global {
         new (): HTMLIonPickerElement;
     };
     interface HTMLIonPickerColumnElementEventMap {
-        "ionChange": PickerColumnItem;
+        "ionChange": PickerColumnChangeEventDetail;
     }
     interface HTMLIonPickerColumnElement extends Components.IonPickerColumn, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6617,10 +6617,6 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * A list of options to be displayed in the picker
-         */
-        "items"?: PickerColumnItem[];
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -6631,13 +6627,17 @@ declare namespace LocalJSX {
         /**
           * Emitted when the value has changed.
          */
-        "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnItem>) => void;
+        "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnChangeEventDetail>) => void;
         /**
           * The selected option in the picker.
          */
         "value"?: string | number;
     }
     interface IonPickerColumnOption {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
         /**
           * If `true`, the user cannot interact with the picker column option.
          */

@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { doc } from '@utils/browser';
 import { getElementRoot, raf } from '@utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
 import { isPlatform } from '@utils/platform';
@@ -9,7 +10,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { PickerCustomEvent } from '../picker/picker-interfaces';
 
-import type { PickerColumnItem } from './picker-column-interfaces';
+import type { PickerColumnChangeEventDetail, PickerColumnValue } from './picker-column-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -19,10 +20,7 @@ import type { PickerColumnItem } from './picker-column-interfaces';
  */
 @Component({
   tag: 'ion-picker-column',
-  styleUrls: {
-    ios: 'picker-column.ios.scss',
-    md: 'picker-column.md.scss',
-  },
+  styleUrl: 'picker-column.scss',
   shadow: true,
 })
 export class PickerColumn implements ComponentInterface {
@@ -42,11 +40,6 @@ export class PickerColumn implements ComponentInterface {
    * If `true`, the user cannot interact with the picker.
    */
   @Prop() disabled = false;
-
-  /**
-   * A list of options to be displayed in the picker
-   */
-  @Prop() items: PickerColumnItem[] = [];
 
   /**
    * The selected option in the picker.
@@ -74,7 +67,7 @@ export class PickerColumn implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<PickerColumnItem>;
+  @Event() ionChange!: EventEmitter<PickerColumnChangeEventDetail>;
 
   @Watch('value')
   valueChange() {
@@ -83,7 +76,7 @@ export class PickerColumn implements ComponentInterface {
        * Only scroll the active item into view when the picker column
        * is actively visible to the user.
        */
-      this.scrollActiveItemIntoView();
+      this.scrollActiveItemIntoView(true);
     }
   }
 
@@ -105,7 +98,9 @@ export class PickerColumn implements ComponentInterface {
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
          */
-        const oldActive = getElementRoot(el).querySelector(`.${PICKER_ITEM_ACTIVE_CLASS}`);
+        const oldActive = getElementRoot(el).querySelector<HTMLIonPickerColumnOptionElement>(
+          `.${PICKER_ITEM_ACTIVE_CLASS}`
+        );
         if (oldActive) {
           this.setPickerItemActiveState(oldActive, false);
         }
@@ -134,31 +129,31 @@ export class PickerColumn implements ComponentInterface {
   }
 
   componentDidRender() {
-    const { activeItem, items, isColumnVisible, value } = this;
+    const { el, activeItem, isColumnVisible, value } = this;
 
-    if (isColumnVisible) {
-      if (activeItem) {
-        this.scrollActiveItemIntoView();
-      } else if (items[0]?.value !== value) {
-        /**
-         * If the picker column does not have an active item and the current value
-         * does not match the first item in the picker column, that means
-         * the value is out of bounds. In this case, we assign the value to the
-         * first item to match the scroll position of the column.
-         *
-         */
-        this.setValue(items[0].value);
+    if (isColumnVisible && !activeItem) {
+      const firstOption = el.querySelector('ion-picker-column-option');
+
+      /**
+       * If the picker column does not have an active item and the current value
+       * does not match the first item in the picker column, that means
+       * the value is out of bounds. In this case, we assign the value to the
+       * first item to match the scroll position of the column.
+       *
+       */
+      if (firstOption !== null && firstOption.value !== value) {
+        this.setValue(firstOption.value);
       }
     }
   }
 
   /** @internal  */
   @Method()
-  async scrollActiveItemIntoView() {
+  async scrollActiveItemIntoView(smooth = false) {
     const activeEl = this.activeItem;
 
     if (activeEl) {
-      this.centerPickerItemInView(activeEl, false, false);
+      this.centerPickerItemInView(activeEl, smooth, false);
     }
   }
 
@@ -170,13 +165,13 @@ export class PickerColumn implements ComponentInterface {
    * @internal
    */
   @Method()
-  async setValue(value?: string | number) {
-    const { items } = this;
-    this.value = value;
-    const findItem = items.find((item) => item.value === value && item.disabled !== true);
-    if (findItem) {
-      this.ionChange.emit(findItem);
+  async setValue(value: PickerColumnValue) {
+    if (this.disabled === true || this.value === value) {
+      return;
     }
+
+    this.value = value;
+    this.ionChange.emit({ value });
   }
 
   /**
@@ -215,13 +210,11 @@ export class PickerColumn implements ComponentInterface {
     }
   };
 
-  private setPickerItemActiveState = (item: Element, isActive: boolean) => {
+  private setPickerItemActiveState = (item: HTMLIonPickerColumnOptionElement, isActive: boolean) => {
     if (isActive) {
       item.classList.add(PICKER_ITEM_ACTIVE_CLASS);
-      item.part.add(PICKER_ITEM_ACTIVE_PART);
     } else {
       item.classList.remove(PICKER_ITEM_ACTIVE_CLASS);
-      item.part.remove(PICKER_ITEM_ACTIVE_PART);
     }
   };
 
@@ -286,7 +279,7 @@ export class PickerColumn implements ComponentInterface {
     const { el, scrollEl } = this;
 
     let timeout: ReturnType<typeof setTimeout> | undefined;
-    let activeEl: HTMLElement | null = this.activeItem;
+    let activeEl: HTMLIonPickerColumnOptionElement | undefined = this.activeItem;
 
     const scrollCallback = () => {
       raf(() => {
@@ -310,13 +303,49 @@ export class PickerColumn implements ComponentInterface {
         const centerX = bbox.x + bbox.width / 2;
         const centerY = bbox.y + bbox.height / 2;
 
-        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement | null;
+        /**
+         * elementFromPoint returns the top-most element.
+         * This means that if an ion-backdrop is overlaying the
+         * picker then the appropriate picker column option will
+         * not be selected. To account for this, we use elementsFromPoint
+         * and use an Array.find to find the appropriate column option
+         * at that point.
+         *
+         * Additionally, the picker column could be used in the
+         * Shadow DOM (i.e. in ion-datetime) so we need to make
+         * sure we are choosing the correct host otherwise
+         * the elements returns by elementsFromPoint will be
+         * retargeted. To account for this, we check to see
+         * if the picker column has a parent shadow root. If
+         * so, we use that shadow root when doing elementsFromPoint.
+         * Otherwise, we just use the document.
+         */
+        const rootNode = el.getRootNode();
+        const hasParentShadow = rootNode instanceof ShadowRoot;
+        const referenceNode = hasParentShadow ? (rootNode as ShadowRoot) : doc;
 
-        if (activeEl !== null) {
+        /**
+         * If the reference node is undefined
+         * then it's likely that doc is undefined
+         * due to being in an SSR environment.
+         */
+        if (referenceNode === undefined) {
+          return;
+        }
+
+        const elementsAtPoint = referenceNode.elementsFromPoint(centerX, centerY) as HTMLIonPickerColumnOptionElement[];
+
+        /**
+         * elementsFromPoint can returns multiple elements
+         * so find the relevant picker column option if one exists.
+         */
+        const newActiveElement = elementsAtPoint.find((el) => el.tagName === 'ION-PICKER-COLUMN-OPTION');
+
+        if (activeEl !== undefined) {
           this.setPickerItemActiveState(activeEl, false);
         }
 
-        if (activeElement === null || activeElement.disabled) {
+        if (newActiveElement === undefined || newActiveElement.disabled) {
           return;
         }
 
@@ -324,7 +353,7 @@ export class PickerColumn implements ComponentInterface {
          * If we are selecting a new value,
          * we need to run haptics again.
          */
-        if (activeElement !== activeEl) {
+        if (newActiveElement !== activeEl) {
           enableHaptics && hapticSelectionChanged();
 
           if (this.canExitInputMode) {
@@ -343,8 +372,8 @@ export class PickerColumn implements ComponentInterface {
           }
         }
 
-        activeEl = activeElement;
-        this.setPickerItemActiveState(activeElement, true);
+        activeEl = newActiveElement;
+        this.setPickerItemActiveState(newActiveElement, true);
 
         timeout = setTimeout(() => {
           this.isScrolling = false;
@@ -370,23 +399,7 @@ export class PickerColumn implements ComponentInterface {
            */
           this.canExitInputMode = true;
 
-          const dataIndex = activeElement.getAttribute('data-index');
-
-          /**
-           * If no value it is
-           * possible we hit one of the
-           * empty padding columns.
-           */
-          if (dataIndex === null) {
-            return;
-          }
-
-          const index = parseInt(dataIndex, 10);
-          const selectedItem = this.items[index];
-
-          if (selectedItem.value !== this.value) {
-            this.setValue(selectedItem.value);
-          }
+          this.setValue(newActiveElement.value);
         }, 250);
       });
     };
@@ -432,89 +445,59 @@ export class PickerColumn implements ComponentInterface {
   };
 
   get activeItem() {
-    // If the whole picker column is disabled, the current value should appear active
-    // If the current value item is specifically disabled, it should not appear active
-    const selector = `.picker-item[data-value="${this.value}"]${this.disabled ? '' : ':not([disabled])'}`;
+    const { value } = this;
+    const options = Array.from(this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option'));
+    return options.find((option) => {
+      /**
+       * If the whole picker column is disabled, the current value should appear active
+       * If the current value item is specifically disabled, it should not appear active
+       */
+      if (!this.disabled && option.disabled) {
+        return false;
+      }
 
-    return getElementRoot(this.el).querySelector(selector) as HTMLElement | null;
+      return option.value === value;
+    });
   }
 
   render() {
-    const { items, color, disabled: pickerDisabled, isActive, numericInput } = this;
+    const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
-
-    /**
-     * exportparts is needed so ion-datetime can expose the parts
-     * from two layers of shadow nesting. If this causes problems,
-     * the attribute can be moved to datetime.tsx and set on every
-     * instance of ion-picker-column there instead.
-     */
 
     return (
       <Host
-        exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
-        disabled={pickerDisabled}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
+          ['picker-column-disabled']: disabled,
         })}
       >
         <slot name="prefix"></slot>
         <div
           class="picker-opts"
-          tabindex={pickerDisabled ? undefined : 0}
+          tabindex={disabled ? undefined : 0}
           ref={(el) => {
             this.scrollEl = el;
           }}
         >
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          {items.map((item, index) => {
-            const isItemDisabled = pickerDisabled || item.disabled || false;
-
-            {
-              /*
-              Users should be able to tab
-              between multiple columns. As a result,
-              we set tabindex here so that tabbing switches
-              between columns instead of buttons. Users
-              can still use arrow keys on the keyboard to
-              navigate the column up and down.
-            */
-            }
-            return (
-              <button
-                tabindex="-1"
-                class={{
-                  'picker-item': true,
-                }}
-                data-value={item.value}
-                data-index={index}
-                onClick={(ev: Event) => {
-                  this.centerPickerItemInView(ev.target as HTMLElement, true);
-                }}
-                disabled={isItemDisabled}
-                part={PICKER_ITEM_PART}
-              >
-                {item.text}
-              </button>
-            );
-          })}
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <slot></slot>
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <div class="picker-item picker-item-empty" aria-hidden="true">
+          <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
         </div>
@@ -524,6 +507,4 @@ export class PickerColumn implements ComponentInterface {
   }
 }
 
-const PICKER_ITEM_ACTIVE_CLASS = 'picker-item-active';
-const PICKER_ITEM_PART = 'wheel-item';
-const PICKER_ITEM_ACTIVE_PART = 'active';
+const PICKER_ITEM_ACTIVE_CLASS = 'option-active';

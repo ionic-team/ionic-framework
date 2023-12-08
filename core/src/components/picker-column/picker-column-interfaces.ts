@@ -1,5 +1,5 @@
-export interface PickerColumnItem {
-  text: string;
-  value: string | number;
-  disabled?: boolean;
+export interface PickerColumnChangeEventDetail {
+  value: PickerColumnValue;
 }
+
+export type PickerColumnValue = string | number | undefined;

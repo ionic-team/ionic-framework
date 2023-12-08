@@ -1,5 +1,4 @@
 import type { Mode } from '../../../interface';
-import type { PickerColumnItem } from '../../picker-column/picker-column-interfaces';
 import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
@@ -13,6 +12,12 @@ import {
 } from './format';
 import { getNumDaysInMonth, is24Hour, getHourCycle } from './helpers';
 import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
+
+export interface WheelColumnOption {
+  text: string;
+  value: string | number;
+  disabled?: boolean;
+}
 
 /**
  * Returns the current date as
@@ -313,7 +318,7 @@ export const getMonthColumnData = (
   formatOptions: Intl.DateTimeFormatOptions = {
     month: 'long',
   }
-): PickerColumnItem[] => {
+): WheelColumnOption[] => {
   const { year } = refParts;
   const months = [];
 
@@ -391,7 +396,7 @@ export const getDayColumnData = (
   formatOptions: Intl.DateTimeFormatOptions = {
     day: 'numeric',
   }
-): PickerColumnItem[] => {
+): WheelColumnOption[] => {
   const { month, year } = refParts;
   const days = [];
 
@@ -438,7 +443,7 @@ export const getYearColumnData = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   yearValues?: number[]
-): PickerColumnItem[] => {
+): WheelColumnOption[] => {
   let processedYears = [];
   if (yearValues !== undefined) {
     processedYears = yearValues;
@@ -466,7 +471,7 @@ export const getYearColumnData = (
 
 interface CombinedDateColumnData {
   parts: DatetimeParts[];
-  items: PickerColumnItem[];
+  items: WheelColumnOption[];
 }
 
 /**
@@ -495,7 +500,7 @@ export const getCombinedDateColumnData = (
   dayValues?: number[],
   monthValues?: number[]
 ): CombinedDateColumnData => {
-  let items: PickerColumnItem[] = [];
+  let items: WheelColumnOption[] = [];
   let parts: DatetimeParts[] = [];
 
   /**
@@ -528,7 +533,7 @@ export const getCombinedDateColumnData = (
     });
 
     const dateParts: DatetimeParts[] = [];
-    const dateColumnItems: PickerColumnItem[] = [];
+    const dateColumnItems: WheelColumnOption[] = [];
 
     monthDays.forEach((dayObject) => {
       const isToday = isSameDay({ ...referenceMonth, day: dayObject.value as number }, todayParts);
@@ -576,7 +581,7 @@ export const getTimeColumnsData = (
   maxParts?: DatetimeParts,
   allowedHourValues?: number[],
   allowedMinuteValues?: number[]
-): { [key: string]: PickerColumnItem[] } => {
+): { [key: string]: WheelColumnOption[] } => {
   const computedHourCycle = getHourCycle(locale, hourCycle);
   const use24Hour = is24Hour(computedHourCycle);
   const { hours, minutes, am, pm } = generateTime(
