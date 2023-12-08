@@ -8,7 +8,7 @@ configs().forEach(({ title, screenshot, config }) => {
         `
           <ion-select label-placement="start" fill="solid" placeholder="Select weight" label="Weight">
             <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
-            <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+            <ion-button slot="end" aria-label="Show/hide password">
               <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
             </ion-button>
           </ion-select>
@@ -25,7 +25,7 @@ configs().forEach(({ title, screenshot, config }) => {
         `
           <ion-select label-placement="floating" fill="solid" placeholder="Select weight" label="Weight">
             <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
-            <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+            <ion-button slot="end" aria-label="Show/hide password">
               <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
             </ion-button>
           </ion-select>
