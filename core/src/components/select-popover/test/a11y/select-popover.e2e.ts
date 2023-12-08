@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
+configs({ directions: ['ltr'], themes: ['dark', 'light'] }).forEach(({ config, title }) => {
   test.describe(title('select-popover: a11y'), () => {
     test('should not have accessibility violations when header is defined', async ({ page }) => {
       await page.setContent(

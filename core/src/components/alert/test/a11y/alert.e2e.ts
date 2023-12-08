@@ -28,7 +28,7 @@ const testAria = async (
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
 };
 
-configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], themes: ['dark', 'light'] }).forEach(({ title, config }) => {
   test.describe(title('alert: Axe testing'), () => {
     test('should not have accessibility violations when header and message are defined', async ({ page }) => {
       await page.setContent(

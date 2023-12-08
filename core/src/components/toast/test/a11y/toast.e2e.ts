@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], themes: ['dark', 'light'] }).forEach(({ title, config }) => {
   test.describe(title('toast: Axe testing'), () => {
     test('should not have any axe violations with inline toasts', async ({ page }) => {
       await page.setContent(
