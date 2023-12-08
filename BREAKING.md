@@ -14,6 +14,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 8.x
 
 - [Browser and Platform Support](#version-8x-browser-platform-support)
+- [Global Styles](#global-styles)
 - [Components](#version-8x-components)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
@@ -42,6 +43,18 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | -------- | ---------------------- |
 | iOS      | 15+                    |
 | Android  | 5.1+ with Chromium 89+ |
+
+<h2 id="version-8x-global-styles">Global Styles</h2>
+
+The `core.css` file has been updated to set the text color on the `body` element:
+
+```diff
+body {
++  color: var(--ion-text-color);
+}
+```
+
+This allows components to inherit the color properly when used outside of Ionic Framework and is required for custom themes to work properly. However, it may have unintentional side effects in apps if the color was not expected to inherit.
 
 <h2 id="version-8x-components">Components</h2>
 
