@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
-  test.describe(title('fab-button: contrast'), () => {
+  test.describe(title('fab-button: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
         `

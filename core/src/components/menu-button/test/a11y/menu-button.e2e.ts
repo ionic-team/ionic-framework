@@ -6,7 +6,7 @@ import { configs, test } from '@utils/test/playwright';
  * Only ios mode uses ion-color() for the menu button
  */
 configs({ directions: ['ltr'], modes: ['ios'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
-  test.describe(title('menu-button: contrast'), () => {
+  test.describe(title('menu-button: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
         `
