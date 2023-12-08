@@ -8,7 +8,9 @@ configs().forEach(({ title, screenshot, config }) => {
         `
           <ion-textarea label-placement="start" fill="solid" value="100" label="Weight">
             <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
-            <ion-label slot="end">lbs</ion-label>
+            <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+              <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
           </ion-textarea>
         `,
         config
@@ -23,7 +25,9 @@ configs().forEach(({ title, screenshot, config }) => {
         `
           <ion-textarea label-placement="floating" fill="solid" value="100" label="Weight">
             <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
-            <ion-label slot="end">lbs</ion-label>
+            <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+              <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
           </ion-textarea>
         `,
         config
