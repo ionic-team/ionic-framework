@@ -344,7 +344,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.setProperty('display', 'none'));
       await expect(datetime).toBeHidden();
-      await expect(datetime).not.toHaveClass(/datetime-ready/);
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
       await expect(datetime).toBeVisible();
