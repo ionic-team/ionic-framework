@@ -518,3 +518,12 @@
 
   align-items: center;
 }
+
+// Picker Custom Variables
+// -----------------------------------
+
+ion-picker {
+  --highlight-background: var(--wheel-highlight-background);
+  --highlight-border-radius: var(--wheel-highlight-border-radius);
+  --fade-background-rgb: var(--wheel-fade-background-rgb);
+}

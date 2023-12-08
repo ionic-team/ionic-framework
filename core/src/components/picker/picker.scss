@@ -69,7 +69,7 @@
 }
 
 :host .picker-highlight {
-  @include border-radius(var(--wheel-highlight-border-radius, var(--highlight-border-radius)));
+  @include border-radius(var(--highlight-border-radius));
   @include position(50%, 0, 0, 0);
   @include margin(0, auto, 0, auto);
 
@@ -80,7 +80,7 @@
 
   transform: translateY(-50%);
 
-  background: var(--wheel-highlight-background, var(--highlight-background));
+  background: var(--highlight-background);
 
   z-index: -1;
 }
