@@ -426,6 +426,9 @@ ion-datetime,event,ionFocus,void,true
 ion-datetime,css-prop,--background
 ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
+ion-datetime,css-prop,--wheel-fade-background-rgb
+ion-datetime,css-prop,--wheel-highlight-background
+ion-datetime,css-prop,--wheel-highlight-border-radius
 ion-datetime,part,calendar-day
 ion-datetime,part,calendar-day active
 ion-datetime,part,calendar-day disabled

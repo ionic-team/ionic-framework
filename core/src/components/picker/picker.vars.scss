@@ -1,4 +1,4 @@
 @import "../../themes/ionic.globals";
 
 $picker-fade-background-fallback: var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255));
-$picker-fade-background: var(--fade-background-rgb, $picker-fade-background-fallback);
+$picker-fade-background: var(--wheel-fade-background-rgb, var(--fade-background-rgb, $picker-fade-background-fallback));

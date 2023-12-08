@@ -5,10 +5,17 @@
 
 :host {
   /**
-   * @prop --background: Background of the datetime component
-   * @prop --background-rgb: Background of the datetime component in rgb format
+   * @prop --background: The primary background of the datetime component.
+   * @prop --background-rgb: The primary background of the datetime component in RGB format.
+   * @prop --title-color: The text color of the title.
    *
-   * @prop --title-color: Color of the title
+   * @prop --wheel-highlight-background: The background of the highlight under the selected
+   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
+   * @prop --wheel-highlight-border-radius: The border radius of the highlight under the selected
+   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
+   * @prop --wheel-fade-background-rgb: The color of the gradient covering non-selected items
+   * when using a wheel style layout, or in the month/year picker for grid style layouts. Must
+   * be in RGB format, e.g. `255, 255, 255`.
    */
 
   display: flex;
