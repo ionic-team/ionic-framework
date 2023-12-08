@@ -579,7 +579,6 @@ export const IonPicker = /*@__PURE__*/ defineContainer<JSX.IonPicker>('ion-picke
 
 export const IonPickerColumn = /*@__PURE__*/ defineContainer<JSX.IonPickerColumn>('ion-picker-column', defineIonPickerColumn, [
   'disabled',
-  'items',
   'value',
   'color',
   'numericInput',
@@ -589,7 +588,8 @@ export const IonPickerColumn = /*@__PURE__*/ defineContainer<JSX.IonPickerColumn
 
 export const IonPickerColumnOption = /*@__PURE__*/ defineContainer<JSX.IonPickerColumnOption>('ion-picker-column-option', defineIonPickerColumnOption, [
   'disabled',
-  'value'
+  'value',
+  'color'
 ]);
 
 

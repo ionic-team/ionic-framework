@@ -18,7 +18,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       page,
     }) => {
       const monthYearToggle = page.locator('ion-datetime .calendar-month-year');
-      const monthColumnItems = page.locator('ion-datetime .month-column .picker-item:not(.picker-item-empty)');
+      const monthColumnItems = page.locator('ion-datetime .month-column ion-picker-column-option');
 
       await expect(monthYearToggle).toContainText('January 2022');
 
@@ -34,7 +34,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should adjust the selected day when moving to a month with a different number of days', async ({ page }) => {
       const monthYearToggle = page.locator('ion-datetime .calendar-month-year');
-      const monthColumnItems = page.locator('ion-datetime .month-column .picker-item:not(.picker-item-empty)');
+      const monthColumnItems = page.locator('ion-datetime .month-column ion-picker-column-option');
       const datetime = page.locator('ion-datetime');
       const ionChange = await page.spyOnEvent('ionChange');
 

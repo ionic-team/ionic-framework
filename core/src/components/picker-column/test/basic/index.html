@@ -57,12 +57,13 @@
 
         const items = Array(24)
           .fill()
-          .map((_, i) => ({
-            text: `${i}`,
-            value: i,
-          }));
+          .forEach((_, i) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = i;
+            option.textContent = i;
 
-        defaultPickerColumn.items = items;
+            defaultPickerColumn.appendChild(option);
+          });
       </script>
     </ion-app>
   </body>

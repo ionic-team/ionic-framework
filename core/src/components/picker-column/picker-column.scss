@@ -64,44 +64,7 @@
   scrollbar-width: none;
 }
 
-/**
- * Hide scrollbars on Chrome and Safari
- */
-.picker-opts::-webkit-scrollbar {
-  display: none;
-}
-
-::slotted([slot="prefix"]), ::slotted([slot="suffix"]) {
-  max-width: 200px;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-}
-
-::slotted([slot="prefix"]) {
-  /**
-   * This is added in addition to the column's own padding so that there is white
-   * space between the slot and the column's focus highlight.
-   */
-  @include padding(0, 16px);
-  
-  justify-content: end;
-}
-
-::slotted([slot="suffix"]) {
-  /**
-   * This is added in addition to the column's own padding so that there is white
-   * space between the slot and the column's focus highlight.
-   */
-  @include padding(0, 16px);
-  
-  justify-content: start;
-}
-
-:host .picker-item {
+.picker-item-empty {
   @include padding(0);
   @include margin(0);
 
@@ -131,33 +94,73 @@
 
   white-space: nowrap;
 
-  cursor: pointer;
-
   overflow: hidden;
+}
+
+/**
+ * Hide scrollbars on Chrome and Safari
+ */
+.picker-opts::-webkit-scrollbar {
+  display: none;
+}
+
+::slotted(ion-picker-column-option) {
+  display: block;
 
   scroll-snap-align: center;
 }
 
-:host .picker-item-empty,
-:host .picker-item[disabled] {
-  cursor: default;
-}
-
-:host .picker-item-empty,
-:host(:not([disabled])) .picker-item[disabled] {
+.picker-item-empty,
+:host(:not([disabled])) ::slotted(ion-picker-column-option.option-disabled) {
   scroll-snap-align: none;
 }
 
-:host([disabled]) {
+::slotted([slot="prefix"]), ::slotted([slot="suffix"]) {
+  max-width: 200px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+::slotted([slot="prefix"]) {
+  /**
+   * This is added in addition to the column's own padding so that there is white
+   * space between the slot and the column's focus highlight.
+   */
+  @include padding(0, 16px);
+
+  justify-content: end;
+}
+
+::slotted([slot="suffix"]) {
+  /**
+   * This is added in addition to the column's own padding so that there is white
+   * space between the slot and the column's focus highlight.
+   */
+  @include padding(0, 16px);
+
+  justify-content: start;
+}
+
+:host(.picker-column-disabled) .picker-opts {
   overflow-y: hidden;
 }
 
-:host .picker-item[disabled] {
+/**
+ * When the column is disabled, none of the options
+ * should be interactive. However, we do not disable
+ * the buttons because that would require overriding the
+ * app's preference for each option. In this case,
+ * the picker column interactive as a whole is
+ * disabled, not individual options.
+ */
+:host(.picker-column-disabled) ::slotted(ion-picker-column-option) {
+  cursor: default;
   opacity: 0.4;
-}
-
-:host(.picker-column-active) .picker-item.picker-item-active {
-  color: current-color(base);
+  pointer-events: none;
 }
 
 @media (any-hover: hover) {

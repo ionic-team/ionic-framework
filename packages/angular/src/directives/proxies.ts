@@ -1446,7 +1446,7 @@ export declare interface IonPicker extends Components.IonPicker {
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'items', 'mode', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'value'],
   methods: ['setFocus']
 })
 @Component({
@@ -1454,7 +1454,7 @@ export declare interface IonPicker extends Components.IonPicker {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'items', 'mode', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'value'],
 })
 export class IonPickerColumn {
   protected el: HTMLElement;
@@ -1466,25 +1466,25 @@ export class IonPickerColumn {
 }
 
 
-import type { PickerColumnItem as IIonPickerColumnPickerColumnItem } from '@ionic/core';
+import type { PickerColumnChangeEventDetail as IIonPickerColumnPickerColumnChangeEventDetail } from '@ionic/core';
 
 export declare interface IonPickerColumn extends Components.IonPickerColumn {
   /**
    * Emitted when the value has changed.
    */
-  ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnItem>>;
+  ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
 }
 
 
 @ProxyCmp({
-  inputs: ['disabled', 'value']
+  inputs: ['color', 'disabled', 'value']
 })
 @Component({
   selector: 'ion-picker-column-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'value'],
+  inputs: ['color', 'disabled', 'value'],
 })
 export class IonPickerColumnOption {
   protected el: HTMLElement;
