@@ -187,6 +187,12 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
           routeInfo.pushedByRoute = pushedByRoute;
+          /**
+           * When replacing routes we should still prefer
+           * any custom direction/animation that the developer
+           * has specified when navigating first instead of relying
+           * on previously used directions/animations.
+           */
           routeInfo.routeDirection = routeInfo.routeDirection || currentRouteInfo?.routeDirection;
           routeInfo.routeAnimation = routeInfo.routeAnimation || currentRouteInfo?.routeAnimation;
         }
