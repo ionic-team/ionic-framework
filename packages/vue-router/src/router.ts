@@ -422,8 +422,10 @@ export const createIonRouter = (
            * has specified when navigating first instead of relying
            * on previously used directions/animations.
            */
-          routeInfo.routerDirection = routeInfo.routerDirection || currentRouteInfo?.routerDirection;
-          routeInfo.routerAnimation = routeInfo.routerAnimation || currentRouteInfo?.routerAnimation;
+          routeInfo.routerDirection =
+            routeInfo.routerDirection || currentRouteInfo?.routerDirection;
+          routeInfo.routerAnimation =
+            routeInfo.routerAnimation || currentRouteInfo?.routerAnimation;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
       }
