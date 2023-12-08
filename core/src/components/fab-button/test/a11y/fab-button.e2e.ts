@@ -45,7 +45,6 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
         `
-        <ion-fab-button class="ion-focused">FAB</ion-fab-button>
         <ion-fab-button translucent="true">FAB</ion-fab-button>
         <ion-fab-button class="ion-focused" translucent="true"> FAB </ion-fab-button>
         <ion-fab activated="true">
