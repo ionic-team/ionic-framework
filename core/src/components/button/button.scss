@@ -339,15 +339,3 @@ ion-ripple-effect {
   background: var(--ion-toolbar-color, var(--color));
   color: #{var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))};
 }
-
-// Icon-Only Button in Form Controls
-// --------------------------------------------------
-
-:host-context(ion-input):host(.button-has-icon-only) .button-native,
-:host-context(ion-textarea):host(.button-has-icon-only) .button-native,
-:host-context(ion-select):host(.button-has-icon-only) .button-native {
-  @include border-radius(50%);
-  @include padding(0);
-
-  aspect-ratio: 1;
-}
