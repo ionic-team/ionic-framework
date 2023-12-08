@@ -420,7 +420,7 @@ export const createIonRouter = (
            * When replacing routes we should still prefer
            * any custom direction/animation that the developer
            * has specified when navigating first instead of relying
-           * on previously use directions/animations.
+           * on previously used directions/animations.
            */
           routeInfo.routerDirection = routeInfo.routerDirection || currentRouteInfo?.routerDirection;
           routeInfo.routerAnimation = routeInfo.routerAnimation || currentRouteInfo?.routerAnimation;
