@@ -346,8 +346,8 @@ ion-ripple-effect {
 :host-context(ion-input):host(.button-has-icon-only) .button-native,
 :host-context(ion-textarea):host(.button-has-icon-only) .button-native,
 :host-context(ion-select):host(.button-has-icon-only) .button-native {
+  @include border-radius(50%);
   @include padding(0);
 
   aspect-ratio: 1;
-  border-radius: 50%;
 }
