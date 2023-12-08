@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
-  test.describe(title('refresher: a11y'), () => {
+  test.describe(title('refresher: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
         `

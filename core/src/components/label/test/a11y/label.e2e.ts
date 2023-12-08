@@ -85,7 +85,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
-  test.describe(title('label: a11y'), () => {
+  test.describe(title('label: a11y for ion-color()'), () => {
     test('should not have accessibility violations when focused', async ({ page, pageUtils }) => {
       /**
        * All page content should be contained by landmarks (main, nav, etc.)
