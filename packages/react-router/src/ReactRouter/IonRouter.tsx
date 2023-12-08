@@ -279,10 +279,10 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', incomingAnimation);
         }
       } else {
-        this.handleNavigate(defaultHref as string, 'pop', 'back', incomingAnimation);
+        this.handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
       }
     } else {
-      this.handleNavigate(defaultHref as string, 'pop', 'back', incomingAnimation);
+      this.handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
     }
   }
 
