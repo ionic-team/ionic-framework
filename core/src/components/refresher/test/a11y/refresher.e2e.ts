@@ -24,6 +24,13 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
 
       await page.waitForSelector('.arrow-container', { state: 'attached' });
 
+      /**
+       * The Axe test fails because a landmark role like `<main>` is missing from the top level.
+       *
+       * It also fails when adding a `<main>` element because
+       * the `<ion-content>` component already has a `<main>` element.
+       * This leads to a nested `<main>` element which is not allowed.
+       */
       const results = await new AxeBuilder({ page }).disableRules('region').analyze();
 
       expect(results.violations).toEqual([]);
