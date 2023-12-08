@@ -492,7 +492,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
-    const { isCalendarPicker, activeParts } = this;
+    const { isCalendarPicker, activeParts, preferWheel, workingParts } = this;
 
     /**
      * We only update the value if the presentation is not a calendar picker.
@@ -500,7 +500,16 @@ export class Datetime implements ComponentInterface {
     if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
-        this.setValue(undefined);
+        if (preferWheel) {
+          /**
+           * If the datetime is using a wheel picker, but the
+           * active parts are empty, then the user has confirmed the
+           * initial value (working parts) presented to them.
+           */
+          this.setValue(convertDataToISO(workingParts));
+        } else {
+          this.setValue(undefined);
+        }
       } else {
         this.setValue(convertDataToISO(activeParts));
       }
@@ -1356,10 +1365,20 @@ export class Datetime implements ComponentInterface {
     const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
 
     const todayParts = (this.todayParts = parseDate(getToday())!);
-    this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
 
     this.processMinParts();
     this.processMaxParts();
+
+    this.defaultParts = getClosestValidDate({
+      refParts: todayParts,
+      monthValues,
+      dayValues,
+      yearValues,
+      hourValues,
+      minuteValues,
+      minParts: this.minParts,
+      maxParts: this.maxParts,
+    });
 
     this.processValue(this.value);
 
