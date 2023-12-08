@@ -244,11 +244,17 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = this.locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
+        /**
+         * This needs to be passed to handleNavigate
+         * otherwise incomingRouteParams.routeAnimation
+         * will be overridden.
+         */
+        const incomingAnimation = routeAnimation || routeInfo.routeAnimation;
         this.incomingRouteParams = {
           ...prevInfo,
           routeAction: 'pop',
           routeDirection: 'back',
-          routeAnimation: routeAnimation || routeInfo.routeAnimation,
+          routeAnimation: incomingAnimation,
         };
         if (
           routeInfo.lastPathname === routeInfo.pushedByRoute ||
@@ -270,13 +276,13 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           const goBack = history.goBack || history.back;
           goBack();
         } else {
-          this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', routeAnimation);
+          this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back', incomingAnimation);
         }
       } else {
-        this.handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
+        this.handleNavigate(defaultHref as string, 'pop', 'back', incomingAnimation);
       }
     } else {
-      this.handleNavigate(defaultHref as string, 'pop', 'back', routeAnimation);
+      this.handleNavigate(defaultHref as string, 'pop', 'back', incomingAnimation);
     }
   }
 
