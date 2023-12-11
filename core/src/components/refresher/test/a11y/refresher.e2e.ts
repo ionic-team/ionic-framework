@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
-  test.describe.only(title('refresher: a11y for ion-color()'), () => {
+  test.describe(title('refresher: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
         `
@@ -29,7 +29,7 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
        * the `<ion-content>` component already has a `<main>` element.
        * This leads to a nested `<main>` element which is not allowed.
        */
-      const results = await new AxeBuilder({ page }).disableRules('region').analyze();
+      const results = await new AxeBuilder({ page }).analyze();
 
       expect(results.violations).toEqual([]);
     });
