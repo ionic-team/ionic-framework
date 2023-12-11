@@ -10,7 +10,6 @@
   *
   * @prop --fade-background-rgb: Background of the gradient covering non-selected items in rgb format
   */
-  --highlight-border-radius: 8px;
 
   display: flex;
 
@@ -69,7 +68,7 @@
 }
 
 :host .picker-highlight {
-  @include border-radius(var(--highlight-border-radius));
+  @include border-radius(var(--highlight-border-radius, 8px));
   @include position(50%, 0, 0, 0);
   @include margin(0, auto, 0, auto);
 
