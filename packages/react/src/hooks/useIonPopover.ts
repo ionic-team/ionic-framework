@@ -16,6 +16,14 @@ import { useOverlay } from './useOverlay';
  * @param componentProps The props that will be passed to the component, if required
  * @returns Returns the present and dismiss methods in an array
  */
+export function useIonPopover(component: JSX.Element, componentProps?: any): UseIonPopoverResult;
+export function useIonPopover<P extends undefined>(
+  component: React.ComponentClass<P> | React.FC<P>
+): UseIonPopoverResult;
+export function useIonPopover<P>(
+  component: React.ComponentClass<P> | React.FC<P>,
+  componentProps: P
+): UseIonPopoverResult;
 export function useIonPopover(component: ReactComponentOrElement, componentProps?: any): UseIonPopoverResult {
   const controller = useOverlay<PopoverOptions, HTMLIonPopoverElement>(
     'IonPopover',
