@@ -17,10 +17,11 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
       );
 
       const target = page.locator('body');
+      const refresher = await page.locator('ion-refresher');
 
       await dragElementBy(target, page, 0, 320, undefined, undefined, false);
 
-      await page.waitForSelector('.arrow-container', { state: 'attached' });
+      await expect(refresher).toHaveClass(/refresher-pulling/);
 
       /**
        * The Axe test fails because a landmark role like `<main>` is missing from the top level.
@@ -29,7 +30,7 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
        * the `<ion-content>` component already has a `<main>` element.
        * This leads to a nested `<main>` element which is not allowed.
        */
-      const results = await new AxeBuilder({ page }).analyze();
+      const results = await new AxeBuilder({ page }).disableRules('region').analyze();
 
       expect(results.violations).toEqual([]);
     });
