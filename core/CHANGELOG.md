@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.1-nightly.20231211](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1-nightly.20231211) (2023-12-11)
+
+
+### Bug Fixes
+
+* **datetime:** prefer wheel sets working value on confirmation ([#28520](https://github.com/ionic-team/ionic-framework/issues/28520)) ([e886e3f](https://github.com/ionic-team/ionic-framework/commit/e886e3ff2fcb8a3586a62881c5fc848f3074235d)), closes [#25839](https://github.com/ionic-team/ionic-framework/issues/25839)
+
+
+
+
+
 # [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
 
 
