@@ -86,7 +86,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
 configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('label: a11y for ion-color()'), () => {
-    test('should not have accessibility violations when focused', async ({ page, pageUtils }) => {
+    test('should not have accessibility violations when focused', async ({ page }) => {
       /**
        * All page content should be contained by landmarks (main, nav, etc.)
        * By containing the badge in a main element, we can avoid this violation.
@@ -94,13 +94,13 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
       await page.setContent(
         `
           <main>
-            <ion-input label="Stacked" label-placement="stacked"></ion-input>
+            <div class="ion-focused">
+              <ion-label position="stacked">Default Label</ion-label>
+            </div>
           </main>
         `,
         config
       );
-
-      await pageUtils.pressKeys('Tab');
 
       const results = await new AxeBuilder({ page }).analyze();
 
