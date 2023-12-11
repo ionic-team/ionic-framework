@@ -220,16 +220,6 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
   }
 }
 
-// TODO: remove once Safari 11.2 is no longer supported
-@supports (padding-top: constant(safe-area-inset-top)) {
-  html {
-    --ion-safe-area-top: constant(safe-area-inset-top);
-    --ion-safe-area-bottom: constant(safe-area-inset-bottom);
-    --ion-safe-area-left: constant(safe-area-inset-left);
-    --ion-safe-area-right: constant(safe-area-inset-right);
-  }
-}
-
 @supports (padding-top: env(safe-area-inset-top)) {
   html {
     --ion-safe-area-top: env(safe-area-inset-top);
