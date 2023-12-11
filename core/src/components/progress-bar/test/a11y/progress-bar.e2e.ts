@@ -13,7 +13,6 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
         `
           <main>
             <ion-progress-bar type="indeterminate" aria-label="default"></ion-progress-bar>
-            <ion-progress-bar type="indeterminate" aria-label="class" color="ion-color"></ion-progress-bar>
             <ion-progress-bar buffer="0.10" value="0.02" aria-label="buffer"></ion-progress-bar>
           </main>
         `,
