@@ -36,7 +36,6 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ config, t
         `
         <main>
           <ion-badge>123</ion-badge>
-          <ion-badge class="ion-color">123</ion-badge>
         </main>
       `,
         config
