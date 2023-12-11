@@ -549,15 +549,37 @@ export class Input implements ComponentInterface {
     if (!this.shouldClearOnEdit()) {
       return;
     }
+
+    /**
+     * The following keys do not modify the
+     * contents of the input. As a result, pressing
+     * them should not edit the input.
+     *
+     * We can't check to see if the value of the input
+     * was changed because we call checkClearOnEdit
+     * in a keydown listener, and the key has not yet
+     * been added to the input.
+     */
+    const IGNORED_KEYS = ['Enter', 'Tab', 'Shift', 'Meta', 'Alt', 'Control'];
+    const pressedIgnoredKey = IGNORED_KEYS.includes(ev.key);
+
     /**
      * Clear the input if the control has not been previously cleared during focus.
      * Do not clear if the user hitting enter to submit a form.
      */
-    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter' && ev.key !== 'Tab') {
+    if (!this.didInputClearOnEdit && this.hasValue() && !pressedIgnoredKey) {
       this.value = '';
       this.emitInputChange(ev);
     }
-    this.didInputClearOnEdit = true;
+
+    /**
+     * Pressing an IGNORED_KEYS first and
+     * then an allowed key will cause the input to not
+     * be cleared.
+     */
+    if (!pressedIgnoredKey) {
+      this.didInputClearOnEdit = true;
+    }
   }
 
   private onCompositionStart = () => {
