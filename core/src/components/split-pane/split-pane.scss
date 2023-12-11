@@ -43,9 +43,8 @@
 
   position: relative;
 
-  /* stylelint-disable-next-line declaration-no-important */
-  box-shadow: none !important;
-  z-index: 0;
+  box-shadow: none;
+  z-index: 1;
 }
 
 :host(.split-pane-visible) ::slotted(.split-pane-main) {
