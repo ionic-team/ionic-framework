@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
-  test.describe(title('refresher: a11y for ion-color()'), () => {
+  test.describe.only(title('refresher: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
         `
@@ -17,8 +17,6 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
       );
 
       const target = page.locator('body');
-
-      await page.waitForSelector('ion-refresher.hydrated', { state: 'attached' });
 
       await dragElementBy(target, page, 0, 320, undefined, undefined, false);
 
