@@ -11,6 +11,8 @@
    *
    * @prop --wheel-highlight-background: The background of the highlight under the selected
    * item when using a wheel style layout, or in the month/year picker for grid style layouts.
+   * @prop --wheel-highlight-border-radius: The border radius of the highlight under the selected
+   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
    * @prop --wheel-fade-background-rgb: The color of the gradient covering non-selected items
    * when using a wheel style layout, or in the month/year picker for grid style layouts. Must
    * be in RGB format, e.g. `255, 255, 255`.
@@ -515,4 +517,13 @@
   display: inline-flex;
 
   align-items: center;
+}
+
+// Picker Custom Variables
+// -----------------------------------
+
+ion-picker {
+  --highlight-background: var(--wheel-highlight-background);
+  --highlight-border-radius: var(--wheel-highlight-border-radius);
+  --fade-background-rgb: var(--wheel-fade-background-rgb);
 }

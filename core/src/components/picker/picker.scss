@@ -1,9 +1,16 @@
-@import "../../themes/ionic.globals";
+@import "./picker.vars";
 
 // Picker
 // --------------------------------------------------
 
 :host {
+  /**
+  * @prop --highlight-background: Background of the picker highlight for the selected item
+  * @prop --highlight-border-radius: Border radius of the picker highlight for the selected item
+  *
+  * @prop --fade-background-rgb: Background of the gradient covering non-selected items in rgb format
+  */
+
   display: flex;
 
   position: relative;
@@ -61,7 +68,7 @@
 }
 
 :host .picker-highlight {
-  @include border-radius(8px, 8px, 8px, 8px);
+  @include border-radius(var(--highlight-border-radius, 8px));
   @include position(50%, 0, 0, 0);
   @include margin(0, auto, 0, auto);
 
@@ -71,8 +78,8 @@
   height: 34px;
 
   transform: translateY(-50%);
-  
-  background: var(--wheel-highlight-background);
+
+  background: var(--highlight-background);
 
   z-index: -1;
 }
