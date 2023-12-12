@@ -46,14 +46,14 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
       await page.setContent(
         `
         <ion-fab-button translucent="true">FAB</ion-fab-button>
-        <ion-fab-button class="ion-focused" translucent="true"> FAB </ion-fab-button>
+        <ion-fab-button class="ion-focused" translucent="true">FAB</ion-fab-button>
         <ion-fab activated="true">
           <ion-fab-button>
             Open
           </ion-fab-button>
           <ion-fab-list side="bottom">
-            <ion-fab-button translucent="true"> Down </ion-fab-button>
-            <ion-fab-button class="ion-focused" translucent="true"> Down </ion-fab-button>
+            <ion-fab-button translucent="true">Down</ion-fab-button>
+            <ion-fab-button class="ion-focused" translucent="true">Down</ion-fab-button>
           </ion-fab-list>
         </ion-fab>
         `,
