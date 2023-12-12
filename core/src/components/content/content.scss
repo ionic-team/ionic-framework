@@ -238,11 +238,11 @@
   transform: scaleX(-1);
 }
 
-
 // Content: Fixed
 // --------------------------------------------------
 
-::slotted([slot="fixed"]) {
+::slotted([slot="fixed"]),
+::slotted([slot="new"]) {
   position: absolute;
 
   /**

@@ -446,6 +446,9 @@ export class Content implements ComponentInterface {
         }}
       >
         <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
+
+        <slot name="new"></slot>
+
         <TagType
           class={{
             'inner-scroll': true,
