@@ -48,7 +48,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-8x-button">Button</h4>
 
-- Button text wraps by default.
+- Button text now wraps by default. If this behavior is not desired, add the `ion-text-nowrap` class from the [CSS Utilities](https://ionicframework.com/docs/layout/css-utilities).
 
 <h4 id="version-8x-content">Content</h4>
 
