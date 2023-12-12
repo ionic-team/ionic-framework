@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Browser and Platform Support](#version-8x-browser-platform-support)
 - [Components](#version-8x-components)
+  - [Button](#version-8x-button)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
 
@@ -44,6 +45,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | Android  | 5.1+ with Chromium 89+ |
 
 <h2 id="version-8x-components">Components</h2>
+
+<h4 id="version-8x-button">Button</h4>
+
+- Button text wraps by default.
 
 <h4 id="version-8x-content">Content</h4>
 
