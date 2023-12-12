@@ -24,6 +24,8 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
       await expect(refresher).toHaveClass(/refresher-pulling/);
 
       /**
+       * TODO(FW-5765): remove `disableRules('region')` when the following issues are resolved:
+       *
        * The Axe test fails because a landmark role like `<main>` is missing from the top level.
        *
        * It also fails when adding a `<main>` element because
