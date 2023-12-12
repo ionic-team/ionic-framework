@@ -44,7 +44,7 @@
   position: relative;
 
   box-shadow: none;
-  z-index: 1;
+  z-index: 0;
 }
 
 :host(.split-pane-visible) ::slotted(.split-pane-main) {

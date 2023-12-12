@@ -22,6 +22,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
           ion-menu {
             box-shadow: 10px 5px 5px red;
+            z-index: 1;
           }
         </style>
 
