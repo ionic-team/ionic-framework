@@ -1,4 +1,4 @@
-Issue number: #
+Issue number: resolves #
 
 ---------
 
