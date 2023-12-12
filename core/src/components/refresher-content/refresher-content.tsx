@@ -108,7 +108,7 @@ export class RefresherContent implements ComponentInterface {
           {this.pullingIcon && hasSpinner && (
             <div class="refresher-pulling-icon">
               <div class="spinner-arrow-container">
-                <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
+                <ion-spinner name={this.pullingIcon as SpinnerTypes} aria-label="pulling icon" paused></ion-spinner>
                 {mode === 'md' && this.pullingIcon === 'circular' && (
                   <div class="arrow-container">
                     <ion-icon icon={caretBackSharp} aria-hidden="true"></ion-icon>
@@ -127,7 +127,7 @@ export class RefresherContent implements ComponentInterface {
         <div class="refresher-refreshing">
           {this.refreshingSpinner && (
             <div class="refresher-refreshing-icon">
-              <ion-spinner name={this.refreshingSpinner}></ion-spinner>
+              <ion-spinner name={this.refreshingSpinner} aria-label="refreshing icon"></ion-spinner>
             </div>
           )}
           {this.refreshingText !== undefined && this.renderRefreshingText()}
