@@ -71,6 +71,10 @@ jobs:
       shell: bash
 
   update-package-lock:
+    # This needs to run after finalize-release
+    # because we also push to the repo in that
+    # job. If these jobs ran in parallel then it is
+    # possible for them to push at the same time.
     needs: [finalize-release]
     runs-on: ubuntu-latest
     steps:
