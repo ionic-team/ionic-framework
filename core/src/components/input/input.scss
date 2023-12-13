@@ -659,8 +659,10 @@
 
 ::slotted([slot="start"]) {
   margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
 }
 
 ::slotted([slot="end"]) {
   margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
 }
