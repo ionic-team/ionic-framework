@@ -426,6 +426,13 @@ button, a {
   // shrink and wrap its text instead of moving to its
   // own row if there are slotted elements next to it
   width: min-content;
+
+  /**
+   * We allow labels in the default
+   * slot to grow. However, we do not
+   * want them to grow indefinitely.
+   */
+  max-width: 100%;
 }
 
 // Item Input
