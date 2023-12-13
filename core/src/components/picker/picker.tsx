@@ -26,6 +26,9 @@ export class Picker implements ComponentInterface {
 
   @Element() el!: HTMLIonPickerElement;
 
+  /**
+   * @internal
+   */
   @Event() ionInputModeChange!: EventEmitter<PickerChangeEventDetail>;
 
   /**

@@ -909,7 +909,6 @@ ion-note,css-prop,--color
 
 ion-picker,shadow
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
-ion-picker,event,ionInputModeChange,PickerChangeEventDetail,true
 ion-picker,css-prop,--fade-background-rgb
 ion-picker,css-prop,--highlight-background
 ion-picker,css-prop,--highlight-border-radius
