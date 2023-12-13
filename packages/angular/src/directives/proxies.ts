@@ -1432,17 +1432,11 @@ export class IonPicker {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInputModeChange']);
   }
 }
 
 
-import type { PickerChangeEventDetail as IIonPickerPickerChangeEventDetail } from '@ionic/core';
-
-export declare interface IonPicker extends Components.IonPicker {
-
-  ionInputModeChange: EventEmitter<CustomEvent<IIonPickerPickerChangeEventDetail>>;
-}
+export declare interface IonPicker extends Components.IonPicker {}
 
 
 @ProxyCmp({
