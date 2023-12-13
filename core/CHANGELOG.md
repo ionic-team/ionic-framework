@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* **datetime:** prefer wheel sets working value on confirmation ([#28520](https://github.com/ionic-team/ionic-framework/issues/28520)) ([e886e3f](https://github.com/ionic-team/ionic-framework/commit/e886e3ff2fcb8a3586a62881c5fc848f3074235d)), closes [#25839](https://github.com/ionic-team/ionic-framework/issues/25839)
+* **input, textarea:** clearOnInput ignores key modifiers ([#28639](https://github.com/ionic-team/ionic-framework/issues/28639)) ([8f7d87c](https://github.com/ionic-team/ionic-framework/commit/8f7d87c6803b1600a3ca21785df0e9bac49f74a3)), closes [#28633](https://github.com/ionic-team/ionic-framework/issues/28633)
+* **menu:** allow styling of the box shadow and transform when visible inside of a split pane ([#28691](https://github.com/ionic-team/ionic-framework/issues/28691)) ([8ee23d2](https://github.com/ionic-team/ionic-framework/commit/8ee23d20d5cc7419ce15f047b92d2f826d3eb681)), closes [#21530](https://github.com/ionic-team/ionic-framework/issues/21530)
+
+
+
+
+
 # [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
 
 
