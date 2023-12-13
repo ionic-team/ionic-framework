@@ -1418,17 +1418,98 @@ export declare interface IonNote extends Components.IonNote {}
 
 
 @ProxyCmp({
-  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-picker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  inputs: ['mode'],
 })
 export class IonPicker {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionInputModeChange']);
+  }
+}
+
+
+import type { PickerChangeEventDetail as IIonPickerPickerChangeEventDetail } from '@ionic/core';
+
+export declare interface IonPicker extends Components.IonPicker {
+
+  ionInputModeChange: EventEmitter<CustomEvent<IIonPickerPickerChangeEventDetail>>;
+}
+
+
+@ProxyCmp({
+  inputs: ['color', 'disabled', 'mode', 'value'],
+  methods: ['setFocus']
+})
+@Component({
+  selector: 'ion-picker-column',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'disabled', 'mode', 'value'],
+})
+export class IonPickerColumn {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange']);
+  }
+}
+
+
+import type { PickerColumnChangeEventDetail as IIonPickerColumnPickerColumnChangeEventDetail } from '@ionic/core';
+
+export declare interface IonPickerColumn extends Components.IonPickerColumn {
+  /**
+   * Emitted when the value has changed.
+   */
+  ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
+}
+
+
+@ProxyCmp({
+  inputs: ['color', 'disabled', 'value']
+})
+@Component({
+  selector: 'ion-picker-column-option',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'disabled', 'value'],
+})
+export class IonPickerColumnOption {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonPickerColumnOption extends Components.IonPickerColumnOption {}
+
+
+@ProxyCmp({
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
+})
+@Component({
+  selector: 'ion-picker-legacy',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+})
+export class IonPickerLegacy {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -1438,9 +1519,9 @@ export class IonPicker {
 }
 
 
-import type { OverlayEventDetail as IIonPickerOverlayEventDetail } from '@ionic/core';
+import type { OverlayEventDetail as IIonPickerLegacyOverlayEventDetail } from '@ionic/core';
 
-export declare interface IonPicker extends Components.IonPicker {
+export declare interface IonPickerLegacy extends Components.IonPickerLegacy {
   /**
    * Emitted after the picker has presented.
    */
@@ -1452,11 +1533,11 @@ export declare interface IonPicker extends Components.IonPicker {
   /**
    * Emitted before the picker has dismissed.
    */
-  ionPickerWillDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  ionPickerWillDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has dismissed.
    */
-  ionPickerDidDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  ionPickerDidDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has presented.
 Shorthand for ionPickerWillDismiss.
@@ -1471,12 +1552,12 @@ Shorthand for ionPickerWillPresent.
    * Emitted before the picker has dismissed.
 Shorthand for ionPickerWillDismiss.
    */
-  willDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  willDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has dismissed.
 Shorthand for ionPickerDidDismiss.
    */
-  didDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  didDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
 }
 
 

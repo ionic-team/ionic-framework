@@ -23,9 +23,9 @@ import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
-import { PickerButton, PickerColumn } from "./components/picker/picker-interface";
-import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
-import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
+import { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
+import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
@@ -59,9 +59,9 @@ export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
-export { PickerButton, PickerColumn } from "./components/picker/picker-interface";
-export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
-export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
+export { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
+export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
@@ -1949,6 +1949,58 @@ export namespace Components {
         "mode"?: "ios" | "md";
     }
     interface IonPicker {
+        "exitInputMode": () => Promise<void>;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+    }
+    interface IonPickerColumn {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker.
+         */
+        "disabled": boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
+         */
+        "numericInput": boolean;
+        "scrollActiveItemIntoView": (smooth?: boolean) => Promise<void>;
+        /**
+          * Sets focus on the scrollable container within the picker column. Use this method instead of the global `pickerColumn.focus()`.
+         */
+        "setFocus": () => Promise<void>;
+        /**
+          * Sets the value prop and fires the ionChange event. This is used when we need to fire ionChange from user-generated events that cannot be caught with normal input/change event listeners.
+         */
+        "setValue": (value: PickerColumnValue) => Promise<void>;
+        /**
+          * The selected option in the picker.
+         */
+        "value"?: string | number;
+    }
+    interface IonPickerColumnOption {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker column option.
+         */
+        "disabled": boolean;
+        /**
+          * The text value of the option.
+         */
+        "value"?: any | null;
+    }
+    interface IonPickerLegacy {
         /**
           * If `true`, the picker will animate.
          */
@@ -2032,49 +2084,11 @@ export namespace Components {
          */
         "trigger": string | undefined;
     }
-    interface IonPickerColumn {
+    interface IonPickerLegacyColumn {
         /**
           * Picker column data
          */
         "col": PickerColumn;
-    }
-    interface IonPickerColumnInternal {
-        /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-         */
-        "color"?: Color;
-        /**
-          * If `true`, the user cannot interact with the picker.
-         */
-        "disabled": boolean;
-        /**
-          * A list of options to be displayed in the picker
-         */
-        "items": PickerColumnItem[];
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
-         */
-        "numericInput": boolean;
-        "scrollActiveItemIntoView": () => Promise<void>;
-        /**
-          * Sets the value prop and fires the ionChange event. This is used when we need to fire ionChange from user-generated events that cannot be caught with normal input/change event listeners.
-         */
-        "setValue": (value?: string | number) => Promise<void>;
-        /**
-          * The selected option in the picker.
-         */
-        "value"?: string | number;
-    }
-    interface IonPickerInternal {
-        "exitInputMode": () => Promise<void>;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
     }
     interface IonPopover {
         /**
@@ -3330,13 +3344,13 @@ export interface IonPickerColumnCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonPickerColumnElement;
 }
-export interface IonPickerColumnInternalCustomEvent<T> extends CustomEvent<T> {
+export interface IonPickerLegacyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLIonPickerColumnInternalElement;
+    target: HTMLIonPickerLegacyElement;
 }
-export interface IonPickerInternalCustomEvent<T> extends CustomEvent<T> {
+export interface IonPickerLegacyColumnCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLIonPickerInternalElement;
+    target: HTMLIonPickerLegacyColumnElement;
 }
 export interface IonPopoverCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4020,14 +4034,7 @@ declare global {
         new (): HTMLIonNoteElement;
     };
     interface HTMLIonPickerElementEventMap {
-        "ionPickerDidPresent": void;
-        "ionPickerWillPresent": void;
-        "ionPickerWillDismiss": OverlayEventDetail;
-        "ionPickerDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
+        "ionInputModeChange": PickerChangeEventDetail;
     }
     interface HTMLIonPickerElement extends Components.IonPicker, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonPickerElementEventMap>(type: K, listener: (this: HTMLIonPickerElement, ev: IonPickerCustomEvent<HTMLIonPickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4044,7 +4051,7 @@ declare global {
         new (): HTMLIonPickerElement;
     };
     interface HTMLIonPickerColumnElementEventMap {
-        "ionPickerColChange": PickerColumn;
+        "ionChange": PickerColumnChangeEventDetail;
     }
     interface HTMLIonPickerColumnElement extends Components.IonPickerColumn, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4060,39 +4067,52 @@ declare global {
         prototype: HTMLIonPickerColumnElement;
         new (): HTMLIonPickerColumnElement;
     };
-    interface HTMLIonPickerColumnInternalElementEventMap {
-        "ionChange": PickerColumnItem;
+    interface HTMLIonPickerColumnOptionElement extends Components.IonPickerColumnOption, HTMLStencilElement {
     }
-    interface HTMLIonPickerColumnInternalElement extends Components.IonPickerColumnInternal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerColumnInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnInternalElement, ev: IonPickerColumnInternalCustomEvent<HTMLIonPickerColumnInternalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerColumnInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnInternalElement, ev: IonPickerColumnInternalCustomEvent<HTMLIonPickerColumnInternalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLIonPickerColumnInternalElement: {
-        prototype: HTMLIonPickerColumnInternalElement;
-        new (): HTMLIonPickerColumnInternalElement;
+    var HTMLIonPickerColumnOptionElement: {
+        prototype: HTMLIonPickerColumnOptionElement;
+        new (): HTMLIonPickerColumnOptionElement;
     };
-    interface HTMLIonPickerInternalElementEventMap {
-        "ionInputModeChange": PickerInternalChangeEventDetail;
+    interface HTMLIonPickerLegacyElementEventMap {
+        "ionPickerDidPresent": void;
+        "ionPickerWillPresent": void;
+        "ionPickerWillDismiss": OverlayEventDetail;
+        "ionPickerDidDismiss": OverlayEventDetail;
+        "didPresent": void;
+        "willPresent": void;
+        "willDismiss": OverlayEventDetail;
+        "didDismiss": OverlayEventDetail;
     }
-    interface HTMLIonPickerInternalElement extends Components.IonPickerInternal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerInternalElement, ev: IonPickerInternalCustomEvent<HTMLIonPickerInternalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLIonPickerLegacyElement extends Components.IonPickerLegacy, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonPickerLegacyElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyElement, ev: IonPickerLegacyCustomEvent<HTMLIonPickerLegacyElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerInternalElement, ev: IonPickerInternalCustomEvent<HTMLIonPickerInternalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonPickerLegacyElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyElement, ev: IonPickerLegacyCustomEvent<HTMLIonPickerLegacyElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLIonPickerInternalElement: {
-        prototype: HTMLIonPickerInternalElement;
-        new (): HTMLIonPickerInternalElement;
+    var HTMLIonPickerLegacyElement: {
+        prototype: HTMLIonPickerLegacyElement;
+        new (): HTMLIonPickerLegacyElement;
+    };
+    interface HTMLIonPickerLegacyColumnElementEventMap {
+        "ionPickerColChange": PickerColumn;
+    }
+    interface HTMLIonPickerLegacyColumnElement extends Components.IonPickerLegacyColumn, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonPickerLegacyColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyColumnElement, ev: IonPickerLegacyColumnCustomEvent<HTMLIonPickerLegacyColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonPickerLegacyColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyColumnElement, ev: IonPickerLegacyColumnCustomEvent<HTMLIonPickerLegacyColumnElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLIonPickerLegacyColumnElement: {
+        prototype: HTMLIonPickerLegacyColumnElement;
+        new (): HTMLIonPickerLegacyColumnElement;
     };
     interface HTMLIonPopoverElementEventMap {
         "ionPopoverDidPresent": void;
@@ -4647,8 +4667,9 @@ declare global {
         "ion-note": HTMLIonNoteElement;
         "ion-picker": HTMLIonPickerElement;
         "ion-picker-column": HTMLIonPickerColumnElement;
-        "ion-picker-column-internal": HTMLIonPickerColumnInternalElement;
-        "ion-picker-internal": HTMLIonPickerInternalElement;
+        "ion-picker-column-option": HTMLIonPickerColumnOptionElement;
+        "ion-picker-legacy": HTMLIonPickerLegacyElement;
+        "ion-picker-legacy-column": HTMLIonPickerLegacyColumnElement;
         "ion-popover": HTMLIonPopoverElement;
         "ion-progress-bar": HTMLIonProgressBarElement;
         "ion-radio": HTMLIonRadioElement;
@@ -6581,6 +6602,53 @@ declare namespace LocalJSX {
     }
     interface IonPicker {
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        "onIonInputModeChange"?: (event: IonPickerCustomEvent<PickerChangeEventDetail>) => void;
+    }
+    interface IonPickerColumn {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker.
+         */
+        "disabled"?: boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
+         */
+        "numericInput"?: boolean;
+        /**
+          * Emitted when the value has changed.
+         */
+        "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnChangeEventDetail>) => void;
+        /**
+          * The selected option in the picker.
+         */
+        "value"?: string | number;
+    }
+    interface IonPickerColumnOption {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker column option.
+         */
+        "disabled"?: boolean;
+        /**
+          * The text value of the option.
+         */
+        "value"?: any | null;
+    }
+    interface IonPickerLegacy {
+        /**
           * If `true`, the picker will animate.
          */
         "animated"?: boolean;
@@ -6633,35 +6701,35 @@ declare namespace LocalJSX {
         /**
           * Emitted after the picker has dismissed. Shorthand for ionPickerDidDismiss.
          */
-        "onDidDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        "onDidDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
         /**
           * Emitted after the picker has presented. Shorthand for ionPickerWillDismiss.
          */
-        "onDidPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        "onDidPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
         /**
           * Emitted after the picker has dismissed.
          */
-        "onIonPickerDidDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        "onIonPickerDidDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
         /**
           * Emitted after the picker has presented.
          */
-        "onIonPickerDidPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        "onIonPickerDidPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
         /**
           * Emitted before the picker has dismissed.
          */
-        "onIonPickerWillDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        "onIonPickerWillDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
         /**
           * Emitted before the picker has presented.
          */
-        "onIonPickerWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        "onIonPickerWillPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
         /**
           * Emitted before the picker has dismissed. Shorthand for ionPickerWillDismiss.
          */
-        "onWillDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        "onWillDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
         /**
           * Emitted before the picker has presented. Shorthand for ionPickerWillPresent.
          */
-        "onWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        "onWillPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the picker.
@@ -6672,7 +6740,7 @@ declare namespace LocalJSX {
          */
         "trigger"?: string | undefined;
     }
-    interface IonPickerColumn {
+    interface IonPickerLegacyColumn {
         /**
           * Picker column data
          */
@@ -6680,44 +6748,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the selected value has changed
          */
-        "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn>) => void;
-    }
-    interface IonPickerColumnInternal {
-        /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-         */
-        "color"?: Color;
-        /**
-          * If `true`, the user cannot interact with the picker.
-         */
-        "disabled"?: boolean;
-        /**
-          * A list of options to be displayed in the picker
-         */
-        "items"?: PickerColumnItem[];
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
-         */
-        "numericInput"?: boolean;
-        /**
-          * Emitted when the value has changed.
-         */
-        "onIonChange"?: (event: IonPickerColumnInternalCustomEvent<PickerColumnItem>) => void;
-        /**
-          * The selected option in the picker.
-         */
-        "value"?: string | number;
-    }
-    interface IonPickerInternal {
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        "onIonInputModeChange"?: (event: IonPickerInternalCustomEvent<PickerInternalChangeEventDetail>) => void;
+        "onIonPickerColChange"?: (event: IonPickerLegacyColumnCustomEvent<PickerColumn>) => void;
     }
     interface IonPopover {
         /**
@@ -8086,8 +8117,9 @@ declare namespace LocalJSX {
         "ion-note": IonNote;
         "ion-picker": IonPicker;
         "ion-picker-column": IonPickerColumn;
-        "ion-picker-column-internal": IonPickerColumnInternal;
-        "ion-picker-internal": IonPickerInternal;
+        "ion-picker-column-option": IonPickerColumnOption;
+        "ion-picker-legacy": IonPickerLegacy;
+        "ion-picker-legacy-column": IonPickerLegacyColumn;
         "ion-popover": IonPopover;
         "ion-progress-bar": IonProgressBar;
         "ion-radio": IonRadio;
@@ -8183,8 +8215,9 @@ declare module "@stencil/core" {
             "ion-note": LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
             "ion-picker": LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
             "ion-picker-column": LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
-            "ion-picker-column-internal": LocalJSX.IonPickerColumnInternal & JSXBase.HTMLAttributes<HTMLIonPickerColumnInternalElement>;
-            "ion-picker-internal": LocalJSX.IonPickerInternal & JSXBase.HTMLAttributes<HTMLIonPickerInternalElement>;
+            "ion-picker-column-option": LocalJSX.IonPickerColumnOption & JSXBase.HTMLAttributes<HTMLIonPickerColumnOptionElement>;
+            "ion-picker-legacy": LocalJSX.IonPickerLegacy & JSXBase.HTMLAttributes<HTMLIonPickerLegacyElement>;
+            "ion-picker-legacy-column": LocalJSX.IonPickerLegacyColumn & JSXBase.HTMLAttributes<HTMLIonPickerLegacyColumnElement>;
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
             "ion-progress-bar": LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
             "ion-radio": LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;

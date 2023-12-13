@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Picker Column - Basic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Picker Column - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default</h2>
+            <ion-picker>
+              <ion-picker-column id="default"></ion-picker-column>
+            </ion-picker>
+          </div>
+        </div>
+      </ion-content>
+      <script>
+        const defaultPickerColumn = document.getElementById('default');
+
+        const items = Array(24)
+          .fill()
+          .forEach((_, i) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = i;
+            option.textContent = i;
+
+            defaultPickerColumn.appendChild(option);
+          });
+      </script>
+    </ion-app>
+  </body>
+</html>

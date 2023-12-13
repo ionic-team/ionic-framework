@@ -9,7 +9,6 @@ import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward 
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
-import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
 import type {
   DatetimePresentation,
@@ -22,6 +21,7 @@ import type {
   DatetimeHourCycle,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
+import type { WheelColumnOption } from './utils/data';
 import {
   generateMonths,
   getDaysOfMonth,
@@ -1527,7 +1527,7 @@ export class Datetime implements ComponentInterface {
       forcePresentation === 'time-date'
         ? [this.renderTimePickerColumns(forcePresentation), this.renderDatePickerColumns(forcePresentation)]
         : [this.renderDatePickerColumns(forcePresentation), this.renderTimePickerColumns(forcePresentation)];
-    return <ion-picker-internal>{renderArray}</ion-picker-internal>;
+    return <ion-picker>{renderArray}</ion-picker>;
   }
 
   private renderDatePickerColumns(forcePresentation: string) {
@@ -1613,11 +1613,10 @@ export class Datetime implements ComponentInterface {
         : `${defaultParts.year}-${defaultParts.month}-${defaultParts.day}`;
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         class="date-column"
         color={this.color}
         disabled={disabled}
-        items={items}
         value={todayString}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
@@ -1647,7 +1646,18 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      >
+        {items.map((item) => (
+          <ion-picker-column-option
+            part={item.value === todayString ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
+            key={item.value}
+            disabled={item.disabled}
+            value={item.value}
+          >
+            {item.text}
+          </ion-picker-column-option>
+        ))}
+      </ion-picker-column>
     );
   }
 
@@ -1723,7 +1733,7 @@ export class Datetime implements ComponentInterface {
     return renderArray;
   }
 
-  private renderDayPickerColumn(days: PickerColumnItem[]) {
+  private renderDayPickerColumn(days: WheelColumnOption[]) {
     if (days.length === 0) {
       return [];
     }
@@ -1731,14 +1741,14 @@ export class Datetime implements ComponentInterface {
     const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
+    const pickerColumnValue = (workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined;
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         class="day-column"
         color={this.color}
         disabled={disabled}
-        items={days}
-        value={(workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined}
+        value={pickerColumnValue}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
@@ -1764,11 +1774,22 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      >
+        {days.map((day) => (
+          <ion-picker-column-option
+            part={day.value === pickerColumnValue ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
+            key={day.value}
+            disabled={day.disabled}
+            value={day.value}
+          >
+            {day.text}
+          </ion-picker-column-option>
+        ))}
+      </ion-picker-column>
     );
   }
 
-  private renderMonthPickerColumn(months: PickerColumnItem[]) {
+  private renderMonthPickerColumn(months: WheelColumnOption[]) {
     if (months.length === 0) {
       return [];
     }
@@ -1778,11 +1799,10 @@ export class Datetime implements ComponentInterface {
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         class="month-column"
         color={this.color}
         disabled={disabled}
-        items={months}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
@@ -1809,10 +1829,21 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      >
+        {months.map((month) => (
+          <ion-picker-column-option
+            part={month.value === workingParts.month ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
+            key={month.value}
+            disabled={month.disabled}
+            value={month.value}
+          >
+            {month.text}
+          </ion-picker-column-option>
+        ))}
+      </ion-picker-column>
     );
   }
-  private renderYearPickerColumn(years: PickerColumnItem[]) {
+  private renderYearPickerColumn(years: WheelColumnOption[]) {
     if (years.length === 0) {
       return [];
     }
@@ -1822,11 +1853,10 @@ export class Datetime implements ComponentInterface {
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         class="year-column"
         color={this.color}
         disabled={disabled}
-        items={years}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
@@ -1853,7 +1883,18 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      >
+        {years.map((year) => (
+          <ion-picker-column-option
+            part={year.value === workingParts.year ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
+            key={year.value}
+            disabled={year.disabled}
+            value={year.value}
+          >
+            {year.text}
+          </ion-picker-column-option>
+        ))}
+      </ion-picker-column>
     );
   }
   private renderTimePickerColumns(forcePresentation: string) {
@@ -1890,18 +1931,17 @@ export class Datetime implements ComponentInterface {
     ];
   }
 
-  private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
+  private renderHourPickerColumn(hoursData: WheelColumnOption[]) {
     const { disabled, workingParts } = this;
     if (hoursData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         color={this.color}
         disabled={disabled}
         value={activePart.hour}
-        items={hoursData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
           this.setWorkingParts({
@@ -1916,21 +1956,31 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      >
+        {hoursData.map((hour) => (
+          <ion-picker-column-option
+            part={hour.value === activePart.hour ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
+            key={hour.value}
+            disabled={hour.disabled}
+            value={hour.value}
+          >
+            {hour.text}
+          </ion-picker-column-option>
+        ))}
+      </ion-picker-column>
     );
   }
-  private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
+  private renderMinutePickerColumn(minutesData: WheelColumnOption[]) {
     const { disabled, workingParts } = this;
     if (minutesData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         color={this.color}
         disabled={disabled}
         value={activePart.minute}
-        items={minutesData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
           this.setWorkingParts({
@@ -1945,10 +1995,21 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      >
+        {minutesData.map((minute) => (
+          <ion-picker-column-option
+            part={minute.value === activePart.minute ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART}
+            key={minute.value}
+            disabled={minute.disabled}
+            value={minute.value}
+          >
+            {minute.text}
+          </ion-picker-column-option>
+        ))}
+      </ion-picker-column>
     );
   }
-  private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
+  private renderDayPeriodPickerColumn(dayPeriodData: WheelColumnOption[]) {
     const { disabled, workingParts } = this;
     if (dayPeriodData.length === 0) {
       return [];
@@ -1958,12 +2019,11 @@ export class Datetime implements ComponentInterface {
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
         disabled={disabled}
         value={activePart.ampm}
-        items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
           const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
 
@@ -1981,7 +2041,20 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      >
+        {dayPeriodData.map((dayPeriod) => (
+          <ion-picker-column-option
+            part={
+              dayPeriod.value === activePart.ampm ? `${WHEEL_ITEM_PART} ${WHEEL_ITEM_ACTIVE_PART}` : WHEEL_ITEM_PART
+            }
+            key={dayPeriod.value}
+            disabled={dayPeriod.disabled}
+            value={dayPeriod.value}
+          >
+            {dayPeriod.text}
+          </ion-picker-column-option>
+        ))}
+      </ion-picker-column>
     );
   }
 
@@ -2345,7 +2418,7 @@ export class Datetime implements ComponentInterface {
            * This will correctly scroll the element position to the correct time value,
            * before the popover is fully presented.
            */
-          const cols = (ev.target! as HTMLElement).querySelectorAll('ion-picker-column-internal');
+          const cols = (ev.target! as HTMLElement).querySelectorAll('ion-picker-column');
           // TODO (FW-615): Potentially remove this when intersection observers are fixed in picker column
           cols.forEach((col) => col.scrollActiveItemIntoView());
         }}
@@ -2529,3 +2602,5 @@ export class Datetime implements ComponentInterface {
 }
 
 let datetimeIds = 0;
+const WHEEL_ITEM_PART = 'wheel-item';
+const WHEEL_ITEM_ACTIVE_PART = `active`;

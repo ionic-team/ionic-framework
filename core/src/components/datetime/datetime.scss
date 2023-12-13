@@ -11,6 +11,8 @@
    *
    * @prop --wheel-highlight-background: The background of the highlight under the selected
    * item when using a wheel style layout, or in the month/year picker for grid style layouts.
+   * @prop --wheel-highlight-border-radius: The border radius of the highlight under the selected
+   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
    * @prop --wheel-fade-background-rgb: The color of the gradient covering non-selected items
    * when using a wheel style layout, or in the month/year picker for grid style layouts. Must
    * be in RGB format, e.g. `255, 255, 255`.
@@ -23,19 +25,6 @@
   background: var(--background);
 
   overflow: hidden;
-}
-
-/**
- * When using the wheel picker to switch
- * between months, sometimes the allowed
- * dates may be filtered. As a result, it
- * is possible to get a layout shift as
- * the picker column will shrink to fit the
- * widest item in the column. Setting a minimum
- * width avoids this layout shifting.
- */
-ion-picker-column-internal {
-  min-width: 26px;
 }
 
 :host(.datetime-size-fixed) {
@@ -528,4 +517,13 @@ ion-picker-column-internal {
   display: inline-flex;
 
   align-items: center;
+}
+
+// Picker Custom Variables
+// -----------------------------------
+
+ion-picker {
+  --highlight-background: var(--wheel-highlight-background);
+  --highlight-border-radius: var(--wheel-highlight-border-radius);
+  --fade-background-rgb: var(--wheel-fade-background-rgb);
 }
