@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.2-nightly.20231214](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2-nightly.20231214) (2023-12-14)
+
+
+### Bug Fixes
+
+* **input, textarea, select:** reduce padding on slotted buttons ([#28676](https://github.com/ionic-team/ionic-framework/issues/28676)) ([516b844](https://github.com/ionic-team/ionic-framework/commit/516b84475e5d78060f35fa2c4821efc712536353))
+* **item:** label does not expand indefinitely ([#28700](https://github.com/ionic-team/ionic-framework/issues/28700)) ([bc51dd0](https://github.com/ionic-team/ionic-framework/commit/bc51dd05cf036656980de584d2367db46054f774))
+
+
+
+
+
 ## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
 
 
