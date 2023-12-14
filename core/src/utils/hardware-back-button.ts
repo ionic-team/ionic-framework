@@ -107,6 +107,11 @@ export const startHardwareBackButton = () => {
 
     const configureWatcher = () => {
       watcher?.destroy();
+
+      /**
+       * Since CloseWatcher is experimental, there
+       * are no types available for it yet.
+       */
       watcher = new (win as any).CloseWatcher();
 
       /**

@@ -781,6 +781,11 @@ export class Menu implements ComponentInterface, MenuI {
     const { type, disabled, isPaneVisible, inheritedAttributes, side } = this;
     const mode = getIonMode(this);
 
+    /**
+     * If the Close Watcher is enabled then
+     * the ionBackButton listener in the menu controller
+     * will handle closing the menu when Escape is pressed.
+     */
     return (
       <Host
         onKeyDown={shoudUseCloseWatcher ? null : this.onKeydown}
