@@ -1,4 +1,5 @@
 import { win } from '@utils/browser';
+import type { CloseWatcher } from '@utils/browser';
 
 import { config } from '../global/config';
 
@@ -103,16 +104,11 @@ export const startHardwareBackButton = () => {
    * events firing.
    */
   if (shoudUseCloseWatcher) {
-    let watcher: any;
+    let watcher: CloseWatcher | undefined;
 
     const configureWatcher = () => {
       watcher?.destroy();
-
-      /**
-       * Since CloseWatcher is experimental, there
-       * are no types available for it yet.
-       */
-      watcher = new (win as any).CloseWatcher();
+      watcher = new win!.CloseWatcher!();
 
       /**
        * Once a close request happens
@@ -121,7 +117,7 @@ export const startHardwareBackButton = () => {
        * the watcher so we can respond to other
        * close requests.
        */
-      watcher.onclose = () => {
+      watcher!.onclose = () => {
         backButtonCallback();
         configureWatcher();
       };
