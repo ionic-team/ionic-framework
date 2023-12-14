@@ -1,6 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, h } from '@stencil/core';
 import type { FocusVisibleUtility } from '@utils/focus-visible';
+import { shoudUseCloseWatcher } from '@utils/hardware-back-button';
 import { isPlatform } from '@utils/platform';
 
 import { config } from '../../global/config';
@@ -34,7 +35,8 @@ export class App implements ComponentInterface {
           import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
         }
         const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
-        if (config.getBoolean('hardwareBackButton', isHybrid)) {
+        const supportsHardwareBackButtonEvents = isHybrid || shoudUseCloseWatcher;
+        if (config.getBoolean('hardwareBackButton', supportsHardwareBackButtonEvents)) {
           hardwareBackButtonModule.startHardwareBackButton();
         } else {
           hardwareBackButtonModule.blockHardwareBackButton();
