@@ -56,11 +56,23 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   render() {
+    const { el } = this;
     const mode = getIonMode(this);
     const size = this.getSize();
 
+    const page = el.closest('.ion-page');
+    const hasHeading = page?.querySelector('h1, [role="heading"][aria-level="1"]');
+
+    /**
+     * The first `ion-title` on the page is considered
+     * the heading.
+     */
+    const isHeading = hasHeading === null && page?.querySelector('ion-title') === el;
+
     return (
       <Host
+        role={isHeading ? 'heading' : null}
+        aria-level={isHeading? '1': null}
         class={createColorClasses(this.color, {
           [mode]: true,
           [`title-${size}`]: true,

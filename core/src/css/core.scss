@@ -358,3 +358,13 @@ ion-input input::-webkit-date-and-time-value {
   width: 320px;
   min-height: 320px;
 }
+
+/**
+ * When moving focus on page transitions
+ * we call .focus() on an element which
+ * can add an undesired outline ring.
+ * This CSS removes the outline ring.
+ */
+[ion-last-focus] {
+  outline: none;
+}

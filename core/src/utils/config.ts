@@ -204,6 +204,11 @@ export interface IonicConfig {
    */
   platform?: PlatformConfig;
 
+  /**
+   * @experimental
+   */
+  experimentalFocusManagerPriority?: FocusManagerPriority[];
+
   // PRIVATE configs
   keyboardHeight?: number;
   inputShims?: boolean;
@@ -222,6 +227,8 @@ export interface IonicConfig {
   _rel?: (el: any, name: string, cb: any, opts: any) => any;
   _ce?: (eventName: string, opts: any) => any;
 }
+
+type FocusManagerPriority = 'content' | 'heading' | 'banner';
 
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;

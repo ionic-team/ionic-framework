@@ -36,9 +36,21 @@ export const transition = (opts: TransitionOptions): Promise<TransitionResult> =
   });
 };
 
+const LAST_FOCUS = 'ion-last-focus';
 const beforeTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
+
+  /**
+   * When going back to a previously visited page
+   * focus should typically be moved back to the
+   * element that was last focused when the user
+   * was on this view.
+   */
+  const activeEl = document.activeElement;
+  if (activeEl !== null && leavingEl?.contains(activeEl)) {
+    activeEl.setAttribute(LAST_FOCUS, 'true');
+  }
 
   setZIndex(enteringEl, leavingEl, opts.direction);
 
@@ -71,6 +83,18 @@ const runTransition = async (opts: TransitionOptions): Promise<TransitionResult>
   return ani;
 };
 
+/**
+ * Moves focus to a specified element.
+ * Note that we do not remove the tabindex
+ * because that can result in an unintentional
+ * blur. Non-focusables can't be focused, so the
+ * body will get focused again.
+ */
+const moveFocus = (el: HTMLElement) => {
+  el.tabIndex = -1;
+  el.focus();
+}
+
 const afterTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
@@ -80,6 +104,51 @@ const afterTransition = (opts: TransitionOptions) => {
     leavingEl.classList.remove('ion-page-invisible');
     leavingEl.style.removeProperty('pointer-events');
   }
+
+  if (!enteringEl.contains(document.activeElement)) {
+    /**
+     * When going back to a previously visited view
+     * focus should always be moved back to the element
+     * that the user was last focused on when they were on this view.
+     */
+    const lastFocus = enteringEl.querySelector<HTMLElement>(`[${LAST_FOCUS}]`);
+    if (lastFocus) {
+      moveFocus(lastFocus);
+      return;
+    }
+
+    /**
+     * If no last focus exists then we should prefer to focus
+     * level one headings. We do not prioritize the header yet
+     * because the header can have non-title elements such as
+     * a back button which is not necessarily helpful
+     * to focus first.
+     */
+    const headingOne = enteringEl.querySelector<HTMLElement>('h1, [role="heading"][aria-level="1"]');
+    if (headingOne) {
+      moveFocus(headingOne);
+      return;
+    }
+
+    /**
+     * If no level one heading exists then we should at least focus the
+     * header so focus starts at the top of the page.
+     */
+    const header = enteringEl.querySelector<HTMLElement>('header, [role="banner"]');
+    if (header) {
+      moveFocus(header);
+      return;
+    }
+
+    /**
+     * If there is no header then focus the page
+     * so focus at least moves to the correct view.
+     * The browser will then determine where within the
+     * page to move focus to.
+     */
+    moveFocus(enteringEl);
+  }
+
 };
 
 const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBuilder | undefined> => {
