@@ -124,7 +124,6 @@ const afterTransition = (opts: TransitionOptions) => {
     }
 
     for (const priority of focusManagerPriorities) {
-      console.log(priority)
       switch (priority) {
         case 'content':
           /**

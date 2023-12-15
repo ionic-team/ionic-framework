@@ -74,6 +74,12 @@
       customElements.define('page-one', PageOne);
       customElements.define('page-two', PageTwo);
       customElements.define('page-three', PageThree);
+
+      window.Ionic = {
+        config: {
+          experimentalFocusManagerPriority: ['heading', 'content']
+        }
+      }
     </script>
   </head>
 
