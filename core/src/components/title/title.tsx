@@ -80,7 +80,10 @@ export class ToolbarTitle implements ComponentInterface {
      * so we check for ion-header which is typically the landmark.
      */
     const isHeading =
-      hasRole === false && hasHeading === null && root?.querySelector('ion-title') === el && el?.closest('ion-header[role]') !== null;
+      hasRole === false &&
+      hasHeading === null &&
+      root?.querySelector('ion-title') === el &&
+      el?.closest('ion-header[role]') !== null;
     return (
       <Host
         role={isHeading ? 'heading' : null}
