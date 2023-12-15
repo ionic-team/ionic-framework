@@ -1,6 +1,6 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
-import AxeBuilder from '@axe-core/playwright';
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('title: font scaling'), () => {

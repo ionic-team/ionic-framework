@@ -78,7 +78,8 @@ export class ToolbarTitle implements ComponentInterface {
      * Level 1 headings must be contained inside of a landmark,
      * so we check for ion-header which is typically the landmark.
      */
-    const isHeading = hasHeading === null && root?.querySelector('ion-title') === el && el?.closest('ion-header[role]') !== null;
+    const isHeading =
+      hasHeading === null && root?.querySelector('ion-title') === el && el?.closest('ion-header[role]') !== null;
     return (
       <Host
         role={isHeading ? 'heading' : null}

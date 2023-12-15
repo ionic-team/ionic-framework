@@ -5,7 +5,7 @@
     <title>Title - Basic</title>
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
@@ -15,10 +15,74 @@
   </head>
 
   <body>
-    <ion-header>
-      <ion-toolbar>
-       <ion-title>My Title</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <ion-app>
+      <div id="header-wrapper">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Settings</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Browse</ion-title>
+            <ion-buttons slot="end">
+              <ion-button>Cancel</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-back-button default-href="#"></ion-back-button>
+            </ion-buttons>
+            <ion-title>Title</ion-title>
+            <ion-title class="hide-ios" size="small">Subtitle</ion-title>
+            <ion-buttons slot="end">
+              <ion-button><ion-icon slot="icon-only" name="search"></ion-icon></ion-button>
+              <ion-button><ion-icon slot="icon-only" name="menu"></ion-icon></ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title size="small">Choose a contact to add to Favorites</ion-title>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-title>Contacts</ion-title>
+            <ion-buttons slot="end">
+              <ion-button>Cancel</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-header>
+          <ion-toolbar color="secondary">
+            <ion-title size="small">
+              Choose multiple contacts to add to your Favorites so this just goes on and on and on
+            </ion-title>
+          </ion-toolbar>
+          <ion-toolbar color="secondary">
+            <ion-buttons slot="start">
+              <ion-button>Groups</ion-button>
+            </ion-buttons>
+            <ion-title>Contacts</ion-title>
+            <ion-buttons slot="end">
+              <ion-button>Cancel</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+      </div>
+
+      <ion-content fullscreen> </ion-content>
+    </ion-app>
+
+    <style>
+      .ios .hide-ios {
+        display: none;
+      }
+    </style>
   </body>
 </html>
