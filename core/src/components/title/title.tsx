@@ -68,6 +68,7 @@ export class ToolbarTitle implements ComponentInterface {
      */
     const root = el.closest('.ion-page') ?? doc?.body;
     const hasHeading = root?.querySelector('h1, [role="heading"][aria-level="1"]');
+    const hasRole = el.hasAttribute('role');
 
     /**
      * The first `ion-title` on the page is considered
@@ -79,7 +80,7 @@ export class ToolbarTitle implements ComponentInterface {
      * so we check for ion-header which is typically the landmark.
      */
     const isHeading =
-      hasHeading === null && root?.querySelector('ion-title') === el && el?.closest('ion-header[role]') !== null;
+      hasRole === false && hasHeading === null && root?.querySelector('ion-title') === el && el?.closest('ion-header[role]') !== null;
     return (
       <Host
         role={isHeading ? 'heading' : null}

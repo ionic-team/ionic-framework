@@ -77,7 +77,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
 });
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.only(title('title: level 1 heading'), () => {
+  test.describe(title('title: level 1 heading'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       /**
        * Level 1 headings must be inside of a landmark (ion-header)

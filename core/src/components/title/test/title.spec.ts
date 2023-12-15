@@ -22,6 +22,22 @@ describe('title: a11y', () => {
     expect(title.getAttribute('role')).toBe('heading');
     expect(title.getAttribute('aria-level')).toBe('1');
   });
+  it('should not override a custom role', async () => {
+    const page = await newSpecPage({
+      components: [Header, Toolbar, ToolbarTitle],
+      html: `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title role="article">Title 1</ion-title>
+          </ion-toolbar>
+        </ion-header>
+      `,
+    });
+    const title = page.body.querySelector('ion-title')!;
+
+    expect(title.getAttribute('role')).toBe('article');
+    expect(title.hasAttribute('aria-level')).toBe(false);
+  });
   it('should not add heading level 1 attributes when outside of a landmark', async () => {
     const page = await newSpecPage({
       components: [Header, Toolbar, ToolbarTitle],
