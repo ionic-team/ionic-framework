@@ -1,4 +1,5 @@
 import { Build, writeTask } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 
 import {
   LIFECYCLE_DID_ENTER,
@@ -7,12 +8,12 @@ import {
   LIFECYCLE_WILL_LEAVE,
 } from '../../components/nav/constants';
 import type { NavOptions, NavDirection } from '../../components/nav/nav-interface';
+import { config } from '../../global/config';
 import type { Animation, AnimationBuilder } from '../animation/animation-interface';
 import { raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
-
 // TODO(FW-2832): types
 
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
@@ -40,6 +41,7 @@ const LAST_FOCUS = 'ion-last-focus';
 const beforeTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
+  const focusManagerEnabled = config.get('experimentalFocusManagerPriority', false);
 
   /**
    * When going back to a previously visited page
@@ -47,9 +49,11 @@ const beforeTransition = (opts: TransitionOptions) => {
    * element that was last focused when the user
    * was on this view.
    */
-  const activeEl = document.activeElement;
-  if (activeEl !== null && leavingEl?.contains(activeEl)) {
-    activeEl.setAttribute(LAST_FOCUS, 'true');
+  if (focusManagerEnabled) {
+    const activeEl = document.activeElement;
+    if (activeEl !== null && leavingEl?.contains(activeEl)) {
+      activeEl.setAttribute(LAST_FOCUS, 'true');
+    }
   }
 
   setZIndex(enteringEl, leavingEl, opts.direction);
@@ -93,6 +97,7 @@ const runTransition = async (opts: TransitionOptions): Promise<TransitionResult>
 const moveFocus = (el: HTMLElement) => {
   el.tabIndex = -1;
   el.focus();
+  console.log('focus',el)
 };
 
 const afterTransition = (opts: TransitionOptions) => {
@@ -105,7 +110,8 @@ const afterTransition = (opts: TransitionOptions) => {
     leavingEl.style.removeProperty('pointer-events');
   }
 
-  if (!enteringEl.contains(document.activeElement)) {
+  const focusManagerPriorities = config.get('experimentalFocusManagerPriority', false);
+  if (Array.isArray(focusManagerPriorities) && !enteringEl.contains(document.activeElement)) {
     /**
      * When going back to a previously visited view
      * focus should always be moved back to the element
@@ -117,27 +123,49 @@ const afterTransition = (opts: TransitionOptions) => {
       return;
     }
 
-    /**
-     * If no last focus exists then we should prefer to focus
-     * level one headings. We do not prioritize the header yet
-     * because the header can have non-title elements such as
-     * a back button which is not necessarily helpful
-     * to focus first.
-     */
-    const headingOne = enteringEl.querySelector<HTMLElement>('h1, [role="heading"][aria-level="1"]');
-    if (headingOne) {
-      moveFocus(headingOne);
-      return;
-    }
-
-    /**
-     * If no level one heading exists then we should at least focus the
-     * header so focus starts at the top of the page.
-     */
-    const header = enteringEl.querySelector<HTMLElement>('header, [role="banner"]');
-    if (header) {
-      moveFocus(header);
-      return;
+    for (const priority of focusManagerPriorities) {
+      console.log(priority)
+      switch (priority) {
+        case 'content':
+          /**
+           * If no level one heading exists then we should at least focus the
+           * header so focus starts at the top of the page.
+           */
+          const content = enteringEl.querySelector<HTMLElement>('main, [role="main"]');
+          if (content) {
+            moveFocus(content);
+            return;
+          }
+          break;
+        case 'heading':
+          /**
+           * If no last focus exists then we should prefer to focus
+           * level one headings. We do not prioritize the header yet
+           * because the header can have non-title elements such as
+           * a back button which is not necessarily helpful
+           * to focus first.
+           */
+          const headingOne = enteringEl.querySelector<HTMLElement>('h1, [role="heading"][aria-level="1"]');
+          if (headingOne) {
+            moveFocus(headingOne);
+            return;
+          }
+          break;
+        case 'banner':
+          /**
+           * If no level one heading exists then we should at least focus the
+           * header so focus starts at the top of the page.
+           */
+          const header = enteringEl.querySelector<HTMLElement>('header, [role="banner"]');
+          if (header) {
+            moveFocus(header);
+            return;
+          }
+          break;
+        default:
+          printIonWarning(`Unrecognized focus manager priority value ${priority}`);
+          break;
+      }
     }
 
     /**
