@@ -93,7 +93,7 @@ const runTransition = async (opts: TransitionOptions): Promise<TransitionResult>
 const moveFocus = (el: HTMLElement) => {
   el.tabIndex = -1;
   el.focus();
-}
+};
 
 const afterTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
@@ -148,7 +148,6 @@ const afterTransition = (opts: TransitionOptions) => {
      */
     moveFocus(enteringEl);
   }
-
 };
 
 const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBuilder | undefined> => {

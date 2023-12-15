@@ -56,7 +56,6 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   render() {
-    const { el } = this;
     const mode = getIonMode(this);
     const size = this.getSize();
     return (
