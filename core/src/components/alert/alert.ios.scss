@@ -95,6 +95,8 @@
   background-color: $alert-ios-input-background-color;
   appearance: none;
 
+  font-size: dynamic-font(17px);
+
   &::placeholder {
     color: $alert-ios-input-placeholder-color;
 
@@ -108,10 +110,10 @@
 
   &::-webkit-date-and-time-value {
     /**
-     * The -webkit-date-and-time-value pseudo element is used 
+     * The -webkit-date-and-time-value pseudo element is used
      * to style the date/time input on iOS/Mobile Safari.
      * To avoid layout shift between an empty state and a selected state,
-     * we set the height `18px` to match the native input height for 
+     * we set the height `18px` to match the native input height for
      * date/time inputs on iOS/Mobile Safari.
      */
     height: 18px;
