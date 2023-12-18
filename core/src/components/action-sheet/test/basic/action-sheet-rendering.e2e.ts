@@ -43,7 +43,7 @@ configs().forEach(({ config, screenshot, title }) => {
 });
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('action sheet: disabled buttons'), () => {
+  test.describe(title('action sheet: disabled buttons'), () => {
     test('should render disabled button', async ({ page }) => {
       await page.setContent(
         `
