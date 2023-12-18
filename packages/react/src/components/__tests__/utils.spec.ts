@@ -1,5 +1,6 @@
 import * as utils from '../react-component-lib/utils';
-import '@testing-library/jest-dom';
+// https://github.com/testing-library/jest-native/issues/72
+import '@testing-library/jest-dom/extend-expect';
 
 describe('isCoveredByReact', () => {
   it('should identify standard events as covered by React', () => {
