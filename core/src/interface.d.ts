@@ -32,6 +32,7 @@ export { TabsCustomEvent } from './components/tabs/tabs-interface';
 export { TextareaCustomEvent } from './components/textarea/textarea-interface';
 export { ToastOptions } from './components/toast/toast-interface';
 export { ToggleCustomEvent } from './components/toggle/toggle-interface';
+export { BackButtonEvent, BackButtonEventDetail } from './utils/hardware-back-button';
 
 // Types from utils
 export {
@@ -140,15 +141,10 @@ export type ComponentRef = Function | HTMLElement | string | null;
 // eslint-disable-next-line
 export type ComponentProps<T = null> = { [key: string]: any };
 export type CssClassMap = { [className: string]: boolean };
-export type BackButtonEvent = CustomEvent<BackButtonEventDetail>;
 
 export interface FrameworkDelegate {
   attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;
   removeViewFromDom(container: any, component: any): Promise<void>;
-}
-
-export interface BackButtonEventDetail {
-  register(priority: number, handler: (processNextHandler: () => void) => Promise<any> | void): void;
 }
 
 export interface KeyboardEventDetail {

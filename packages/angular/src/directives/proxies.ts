@@ -1610,14 +1610,14 @@ export declare interface IonRadio extends Components.IonRadio {
 
 
 @ProxyCmp({
-  inputs: ['allowEmptySelection', 'name', 'value']
+  inputs: ['allowEmptySelection', 'compareWith', 'name', 'value']
 })
 @Component({
   selector: 'ion-radio-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['allowEmptySelection', 'name', 'value'],
+  inputs: ['allowEmptySelection', 'compareWith', 'name', 'value'],
 })
 export class IonRadioGroup {
   protected el: HTMLElement;
@@ -2276,7 +2276,7 @@ export declare interface IonTitle extends Components.IonTitle {}
 
 
 @ProxyCmp({
-  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'translucent', 'trigger'],
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'swipeGesture', 'translucent', 'trigger'],
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
 })
 @Component({
@@ -2284,7 +2284,7 @@ export declare interface IonTitle extends Components.IonTitle {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'translucent', 'trigger'],
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'swipeGesture', 'translucent', 'trigger'],
 })
 export class IonToast {
   protected el: HTMLElement;

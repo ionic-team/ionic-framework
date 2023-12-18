@@ -8,6 +8,9 @@
         <ion-item button router-link="/components/select">
           <ion-label>Select</ion-label>
         </ion-item>
+        <ion-item button router-link="/components/range">
+          <ion-label>Range</ion-label>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-page>

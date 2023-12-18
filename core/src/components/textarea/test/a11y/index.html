@@ -21,7 +21,13 @@
       <ion-textarea label="Email" label-placement="stacked" value="hi@ionic.io"></ion-textarea>
       <ion-textarea label="Email" label-placement="floating"></ion-textarea>
       <ion-textarea label="Email" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-textarea> <br />
-      <ion-textarea label="Email" label-placement="floating" fill="solid" value="hi@ionic.io"></ion-textarea>
+      <ion-textarea label="Email" label-placement="floating" fill="solid" value="hi@ionic.io"></ion-textarea><br />
+      <ion-textarea label="Email" label-placement="floating" fill="solid" value="hi@ionic.io">
+        <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+        <ion-button slot="end" aria-label="button">
+          <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+        </ion-button>
+      </ion-textarea>
     </main>
   </body>
 </html>

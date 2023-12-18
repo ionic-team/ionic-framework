@@ -12,6 +12,14 @@ export class InfiniteScroll implements ComponentInterface {
   private thrPx = 0;
   private thrPc = 0;
   private scrollEl?: HTMLElement;
+
+  /**
+   * didFire exists so that ionInfinite
+   * does not fire multiple times if
+   * users continue to scroll after
+   * scrolling into the infinite
+   * scroll threshold.
+   */
   private didFire = false;
   private isBusy = false;
 
@@ -127,8 +135,6 @@ export class InfiniteScroll implements ComponentInterface {
         this.ionInfinite.emit();
         return 3;
       }
-    } else {
-      this.didFire = false;
     }
 
     return 4;
@@ -190,10 +196,13 @@ export class InfiniteScroll implements ComponentInterface {
             writeTask(() => {
               scrollEl.scrollTop = newScrollTop;
               this.isBusy = false;
+              this.didFire = false;
             });
           });
         });
       });
+    } else {
+      this.didFire = false;
     }
   }
 

@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
+import { createLegacyFormController, isOptionSelected } from '@utils/forms';
 import { addEventListener, getAriaLabel, removeEventListener } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -15,6 +15,7 @@ import type { Color, StyleEventDetail } from '../../interface';
  * @slot - The label text to associate with the radio. Use the "labelPlacement" property to control where the label is placed relative to the radio.
  *
  * @part container - The container for the radio mark.
+ * @part label - The label text describing the radio.
  * @part mark - The checkmark or dot used to indicate the checked state.
  */
 @Component({
@@ -183,6 +184,8 @@ export class Radio implements ComponentInterface {
   private emitStyle() {
     const style: StyleEventDetail = {
       'interactive-disabled': this.disabled,
+      // TODO(FW-3125): remove this
+      legacy: !!this.legacy,
     };
 
     if (this.legacyFormController.hasLegacyControl()) {
@@ -194,7 +197,9 @@ export class Radio implements ComponentInterface {
 
   private updateState = () => {
     if (this.radioGroup) {
-      this.checked = this.radioGroup.value === this.value;
+      const { compareWith, value: radioGroupValue } = this.radioGroup;
+
+      this.checked = isOptionSelected(radioGroupValue, this.value, compareWith);
     }
   };
 
@@ -293,6 +298,7 @@ export class Radio implements ComponentInterface {
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': !hasLabel,
             }}
+            part="label"
           >
             <slot></slot>
           </div>

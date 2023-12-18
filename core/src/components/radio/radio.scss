@@ -109,13 +109,6 @@ input {
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  /**
-   * This ensures that double tapping this text
-   * clicks the <label> and focuses the radio
-   * when a screen reader is enabled.
-   */
-  pointer-events: none;
-
   text-overflow: ellipsis;
 
   white-space: nowrap;
