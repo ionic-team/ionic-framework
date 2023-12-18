@@ -1,4 +1,5 @@
 import * as utils from '../react-component-lib/utils';
+import '@testing-library/jest-dom';
 
 describe('isCoveredByReact', () => {
   it('should identify standard events as covered by React', () => {
