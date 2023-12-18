@@ -23,7 +23,7 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Install Playwright Dependencies
-      run: pnpm install && pnpm dlx playwright install && pnpm dlx playwright install-deps
+      run: pnpm install && pnpm exec playwright install && pnpm exec playwright install-deps
       shell: bash
       working-directory: ./core
     - name: Test
