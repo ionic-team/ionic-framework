@@ -62,20 +62,20 @@
 }
 
 :host .picker-after {
-  @include position(116px, null, null, 0);
+  @include position(117px, null, null, 0);
 
-  height: 84px;
+  height: 83px;
 }
 
 :host .picker-highlight {
-  @include border-radius(var(--highlight-border-radius, 8px));
+  @include border-radius(var(--highlight-border-radius, 7px));
   @include position(50%, 0, 0, 0);
   @include margin(0, auto, 0, auto);
 
   position: absolute;
 
   width: calc(100% - 16px);
-  height: 34px;
+  height: 35px;
 
   transform: translateY(-50%);
 
