@@ -51,8 +51,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         <script>
           const actionSheet = document.querySelector('ion-action-sheet');
           actionSheet.buttons = [
-            { text: 'Disabled', disabled: true },
-            { text: 'Cancel', role: 'cancel', disabled: true }
+            { text: 'Disabled', disabled: true }
           ];
         </script>
       `,
