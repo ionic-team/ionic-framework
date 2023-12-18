@@ -75,7 +75,8 @@
   "jest": {
     "preset": "ts-jest",
     "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.js"
+      "<rootDir>/jest.setup.js",
+      "@testing-library/jest-dom/extend-expect"
     ],
     "testPathIgnorePatterns": [
       "cypress",
