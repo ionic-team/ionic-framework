@@ -141,6 +141,10 @@ export class Range implements ComponentInterface {
   /**
    * A callback used to format the pin text.
    * By default the pin text is set to `Math.round(value)`.
+   *
+   * Developers who wish to access "this" inside of the function
+   * should either use an arrow function or manually bind "this"
+   * using `.bind(this)` when passing the function to pinFormatter.
    */
   @Prop() pinFormatter: PinFormatter = (value: number): number => Math.round(value);
 

@@ -121,6 +121,10 @@ export class Input implements ComponentInterface {
   /**
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
+   *
+   * Developers who wish to access "this" inside of the function
+   * should either use an arrow function or manually bind "this"
+   * using `.bind(this)` when passing the function to counterFormatter.
    */
   @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
 

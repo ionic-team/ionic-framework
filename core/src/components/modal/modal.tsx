@@ -264,6 +264,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    *
    * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
    * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+   *
+   * Developers passing a function who wish to access "this" inside of the function
+   * should either use an arrow function or manually bind "this"
+   * using `.bind(this)` when passing the function to canDismiss.
    */
   @Prop() canDismiss: boolean | ((data?: any, role?: string) => Promise<boolean>) = true;
 

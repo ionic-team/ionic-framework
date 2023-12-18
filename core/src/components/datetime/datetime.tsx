@@ -341,6 +341,10 @@ export class Datetime implements ComponentInterface {
    * dates are selected. Only used if there are 0 or more than 1
    * selected (i.e. unused for exactly 1). By default, the header
    * text is set to "numberOfDates days".
+   *
+   * Developers who wish to access "this" inside of the function
+   * should either use an arrow function or manually bind "this"
+   * using `.bind(this)` when passing the function to titleSelectedDatesFormatter.
    */
   @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
 
