@@ -416,12 +416,16 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
             {cancelButton && (
               <div class="action-sheet-group action-sheet-group-cancel">
+                {/*
+                  Cancel buttons intentionally do not
+                  receive a disabled state here as we should
+                  not make it difficult to dismiss the overlay.
+                */}
                 <button
                   {...cancelButton.htmlAttributes}
                   type="button"
                   class={buttonClass(cancelButton)}
                   onClick={() => this.buttonClick(cancelButton)}
-                  disabled={cancelButton.disabled}
                 >
                   <span class="action-sheet-button-inner">
                     {cancelButton.icon && (
