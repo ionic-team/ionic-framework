@@ -342,9 +342,8 @@ export class Datetime implements ComponentInterface {
    * selected (i.e. unused for exactly 1). By default, the header
    * text is set to "numberOfDates days".
    *
-   * Developers who wish to access "this" inside of the function
-   * should either use an arrow function or manually bind "this"
-   * using `.bind(this)` when passing the function to titleSelectedDatesFormatter.
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
 

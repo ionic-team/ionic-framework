@@ -943,7 +943,7 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  Developers who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to titleSelectedDatesFormatter.
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
@@ -1182,7 +1182,7 @@ export namespace Components {
          */
         "counter": boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  Developers who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to counterFormatter.
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -2336,7 +2336,7 @@ export namespace Components {
          */
         "pin": boolean;
         /**
-          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.  Developers who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to pinFormatter.
+          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "pinFormatter": PinFormatter;
         /**
@@ -2974,7 +2974,7 @@ export namespace Components {
          */
         "counter": boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  Developers who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to counterFormatter.
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -5646,7 +5646,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  Developers who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to titleSelectedDatesFormatter.
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
@@ -5897,7 +5897,7 @@ declare namespace LocalJSX {
          */
         "counter"?: boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  Developers who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to counterFormatter.
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -7060,7 +7060,7 @@ declare namespace LocalJSX {
          */
         "pin"?: boolean;
         /**
-          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.  Developers who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to pinFormatter.
+          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "pinFormatter"?: PinFormatter;
         /**
@@ -7750,7 +7750,7 @@ declare namespace LocalJSX {
          */
         "counter"?: boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  Developers who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to counterFormatter.
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
