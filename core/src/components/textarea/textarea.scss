@@ -330,11 +330,7 @@
 // ----------------------------------------------------------------
 
 .native-wrapper {
-  display: flex;
-
   position: relative;
-
-  flex-grow: 1;
 
   width: 100%;
 
@@ -412,6 +408,13 @@
   grid-area: 1 / 1 / 2 / 2;
 
   word-break: break-word;
+}
+
+.textarea-wrapper-inner {
+  display: flex;
+
+  width: 100%;
+  min-height: inherit;
 }
 
 // Textarea Highlight
@@ -688,6 +691,13 @@
   @include margin(8px, 0px, 0px, 0px);
 }
 
+:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
+:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
+  margin-top: 8px;
+}
+
 /**
  * This makes the label sit over the textarea
  * when the textarea is blurred and has no value.
@@ -713,9 +723,7 @@
 /**
  * This makes the label sit above the textarea.
  */
-:host(.textarea-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
-:host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
+:host(.label-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
@@ -723,4 +731,32 @@
    * beyond the bounds of the textarea.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+.start-slot-wrapper, .end-slot-wrapper {
+  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+
+  display: flex;
+
+  flex-shrink: 0;
+
+  align-self: start;
+}
+
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  margin-top: 0; // ensure slot content is vertically aligned with label
+}
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
 }
