@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "7.5.3",
+  "version": "7.6.1",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -10,7 +10,7 @@
     "test": "jest",
     "build": "pnpm run clean && pnpm run copy && pnpm run copy.overlays && pnpm run bundle && pnpm run build.vetur && pnpm run build.web-types",
     "build.watch": "pnpm run bundle --watch",
-    "bundle": "rollup --config rollup.config.js",
+    "bundle": "rollup --config rollup.config.mjs",
     "clean": "rimraf dist",
     "build.web-types": "node ./scripts/build-web-types.js",
     "build.vetur": "node ./scripts/build-vetur.js",
@@ -59,13 +59,13 @@
     "fs-extra": "^9.1.0",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
-    "rollup": "^2.32.1",
+    "rollup": "^4.2.0",
     "typescript": "^4.7.3",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },
   "dependencies": {
-    "@ionic/core": "^7.5.3",
+    "@ionic/core": "^7.6.1",
     "ionicons": "^7.0.0"
   },
   "vetur": {

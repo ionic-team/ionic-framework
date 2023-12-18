@@ -4,7 +4,7 @@ import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
 
-import type { RadioGroupChangeEventDetail } from './radio-group-interface';
+import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-group-interface';
 
 @Component({
   tag: 'ion-radio-group',
@@ -20,6 +20,14 @@ export class RadioGroup implements ComponentInterface {
    * If `true`, the radios can be deselected.
    */
   @Prop() allowEmptySelection = false;
+
+  /**
+   * This property allows developers to specify a custom function or property
+   * name for comparing objects when determining the selected option in the
+   * ion-radio-group. When not specified, the default behavior will use strict
+   * equality (===) for comparison.
+   */
+  @Prop() compareWith?: string | RadioGroupCompareFn | null;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -52,7 +60,16 @@ export class RadioGroup implements ComponentInterface {
   @Event() ionValueChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
   componentDidLoad() {
-    this.setRadioTabindex(this.value);
+    /**
+     * There's an issue when assigning a value to the radio group
+     * within the Angular primary content (rendering within the
+     * app component template). When the template is isolated to a route,
+     * the value is assigned correctly.
+     * To address this issue, we need to ensure that the watcher is
+     * called after the component has finished loading,
+     * allowing the emit to be dispatched correctly.
+     */
+    this.valueChanged(this.value);
   }
 
   private setRadioTabindex = (value: any | undefined) => {

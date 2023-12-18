@@ -1,6 +1,7 @@
-import { Radio } from '../radio.tsx';
-import { RadioGroup } from '../../radio-group/radio-group.tsx';
 import { newSpecPage } from '@stencil/core/testing';
+
+import { RadioGroup } from '../../radio-group/radio-group';
+import { Radio } from '../radio';
 
 describe('ion-radio', () => {
   it('should set a default value', async () => {
@@ -21,7 +22,7 @@ describe('ion-radio', () => {
       `,
     });
 
-    const radio = page.root.querySelector('ion-radio');
+    const radio = page.body.querySelector('ion-radio')!;
     expect(radio.classList.contains('radio-checked')).toBe(false);
 
     radio.value = 'a';
@@ -29,6 +30,23 @@ describe('ion-radio', () => {
     await page.waitForChanges();
 
     expect(radio.classList.contains('radio-checked')).toBe(true);
+  });
+
+  it('should render the radio with shadow parts', async () => {
+    const page = await newSpecPage({
+      components: [Radio, RadioGroup],
+      html: `
+        <ion-radio-group>
+          <ion-radio value="value"></ion-radio>
+        </ion-radio-group>
+      `,
+    });
+
+    const radio = page.body.querySelector('ion-radio')!;
+
+    expect(radio).toHaveShadowPart('container');
+    expect(radio).toHaveShadowPart('label');
+    expect(radio).toHaveShadowPart('mark');
   });
 });
 
@@ -43,8 +61,8 @@ describe('ion-radio: disabled', () => {
       `,
     });
 
-    const radio = page.body.querySelector('ion-radio');
-    const radioGroup = page.body.querySelector('ion-radio-group');
+    const radio = page.body.querySelector('ion-radio')!;
+    const radioGroup = page.body.querySelector('ion-radio-group')!;
 
     expect(radioGroup.value).toBe(undefined);
 

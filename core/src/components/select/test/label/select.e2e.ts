@@ -171,7 +171,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('label should appear on top of the select when the select is expanded', async ({ page }) => {
         await page.setContent(
           `
-           <ion-select class="select-expanded" label="Label" label-placement="floating" placeholder="Select a Fruit">
+           <ion-select class="select-expanded label-floating" label="Label" label-placement="floating" placeholder="Select a Fruit">
              <ion-select-option value="apples">Apples</ion-select-option>
            </ion-select>
          `,

@@ -1,10 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import type { Gesture } from '@utils/gesture';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
+  GESTURE,
   createDelegateController,
   createTriggerController,
   dismiss,
@@ -29,6 +31,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { getAnimationPosition } from './animations/utils';
+import { createSwipeToDismissGesture } from './gestures/swipe-to-dismiss';
 import type {
   ToastButton,
   ToastPosition,
@@ -36,6 +39,7 @@ import type {
   ToastPresentOptions,
   ToastDismissOptions,
   ToastAnimationPosition,
+  ToastSwipeGestureDirection,
 } from './toast-interface';
 
 // TODO(FW-2832): types
@@ -64,6 +68,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
+  private gesture?: Gesture;
 
   /**
    * Holds the position of the toast calculated in the present
@@ -194,6 +199,45 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
+   * If set to 'vertical', the Toast can be dismissed with
+   * a swipe gesture. The swipe direction is determined by
+   * the value of the `position` property:
+   * `top`: The Toast can be swiped up to dismiss.
+   * `bottom`: The Toast can be swiped down to dismiss.
+   * `middle`: The Toast can be swiped up or down to dismiss.
+   */
+  @Prop() swipeGesture?: ToastSwipeGestureDirection;
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
+    /**
+     * If the Toast is presented, then we need to destroy
+     * any actives gestures before a new gesture is potentially
+     * created below.
+     *
+     * If the Toast is dismissed, then no gesture should be available
+     * since the Toast is not visible. This case should never
+     * happen since the "dismiss" method handles destroying
+     * any active swipe gestures, but we keep this code
+     * around to handle the first case.
+     */
+    this.destroySwipeGesture();
+
+    /**
+     * A new swipe gesture should only be created
+     * if the Toast is presented. If the Toast is not
+     * yet presented then the "present" method will
+     * handle calling the swipe gesture setup function.
+     */
+    if (this.presented && this.prefersSwipeGesture()) {
+      /**
+       * If the Toast is presented then
+       * lastPresentedPosition is defined.
+       */
+      this.createSwipeGesture(this.lastPresentedPosition!);
+    }
+  }
+
+  /**
    * If `true`, the toast will open. If `false`, the toast will close.
    * Use this if you need finer grained control over presentation, otherwise
    * just use the toastController or the `trigger` property.
@@ -288,6 +332,17 @@ export class Toast implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
+
+    /**
+     * When binding values in frameworks such as Angular
+     * it is possible for the value to be set after the Web Component
+     * initializes but before the value watcher is set up in Stencil.
+     * As a result, the watcher callback may not be fired.
+     * We work around this by manually calling the watcher
+     * callback when the component has loaded and the watcher
+     * is configured.
+     */
+    this.triggerChanged();
   }
 
   /**
@@ -324,6 +379,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
+    }
+
+    /**
+     * If the Toast has a swipe gesture then we can
+     * create the gesture so users can swipe the
+     * presented Toast.
+     */
+    if (this.prefersSwipeGesture()) {
+      this.createSwipeGesture(animationPosition);
     }
 
     unlock();
@@ -373,6 +437,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
     }
 
     this.lastPresentedPosition = undefined;
+
+    /**
+     * If the Toast has a swipe gesture then we can
+     * safely destroy it now that it is dismissed.
+     */
+    this.destroySwipeGesture();
+
     unlock();
 
     return dismissed;
@@ -484,6 +555,48 @@ export class Toast implements ComponentInterface, OverlayInterface {
       const cancelButton = this.getButtons().find((b) => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
+  };
+
+  /**
+   * Create a new swipe gesture so Toast
+   * can be swiped to dismiss.
+   */
+  private createSwipeGesture = (toastPosition: ToastAnimationPosition) => {
+    const gesture = (this.gesture = createSwipeToDismissGesture(this.el, toastPosition, () => {
+      /**
+       * If the gesture completed then
+       * we should dismiss the toast.
+       */
+      this.dismiss(undefined, GESTURE);
+    }));
+
+    gesture.enable(true);
+  };
+
+  /**
+   * Destroy an existing swipe gesture
+   * so Toast can no longer be swiped to dismiss.
+   */
+  private destroySwipeGesture = () => {
+    const { gesture } = this;
+
+    if (gesture === undefined) {
+      return;
+    }
+
+    gesture.destroy();
+    this.gesture = undefined;
+  };
+
+  /**
+   * Returns `true` if swipeGesture
+   * is configured to a value that enables the swipe behavior.
+   * Returns `false` otherwise.
+   */
+  private prefersSwipeGesture = () => {
+    const { swipeGesture } = this;
+
+    return swipeGesture === 'vertical';
   };
 
   renderButtons(buttons: ToastButton[], side: 'start' | 'end') {

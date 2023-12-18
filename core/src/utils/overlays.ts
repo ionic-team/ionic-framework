@@ -1,4 +1,5 @@
 import { doc } from '@utils/browser';
+import type { BackButtonEvent } from '@utils/hardware-back-button';
 
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
@@ -7,7 +8,6 @@ import type {
   AlertOptions,
   Animation,
   AnimationBuilder,
-  BackButtonEvent,
   FrameworkDelegate,
   HTMLIonOverlayElement,
   IonicConfig,
@@ -685,6 +685,7 @@ export const safeCall = (handler: any, arg?: any) => {
 
 export const BACKDROP = 'backdrop';
 export const GESTURE = 'gesture';
+export const OVERLAY_GESTURE_PRIORITY = 39;
 
 /**
  * Creates a delegate controller.

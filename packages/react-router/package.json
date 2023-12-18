@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "7.5.3",
+  "version": "7.6.1",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -35,7 +35,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^7.5.3",
+    "@ionic/react": "^7.6.1",
     "tslib": "*"
   },
   "peerDependencies": {
@@ -47,7 +47,6 @@
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/node": "^14.0.14",
     "@types/react": "16.14.0",
@@ -63,8 +62,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.26.4",
-    "rollup-plugin-sourcemaps": "^0.6.2",
+    "rollup": "^4.2.0",
     "typescript": "^4.0.5"
   },
   "prettier": "@ionic/prettier-config"

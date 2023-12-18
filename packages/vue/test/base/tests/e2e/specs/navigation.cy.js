@@ -10,4 +10,10 @@ describe('Navigation', () => {
 
     cy.get('#nav-child-content').should('have.text', 'Custom Title');
   });
+
+  it('nav should support kebab-case root-params', () => {
+    cy.get('#open-nav-modal').click();
+
+    cy.get('#nav-root-params').should('have.text', 'Message: Hello World!');
+  });
 });

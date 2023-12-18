@@ -1,9 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { Modal } from '../../../components/modal/modal';
 import { Nav } from '../../../components/nav/nav';
 import { RouterOutlet } from '../../../components/router-outlet/router-outlet';
-import { Modal } from '../../../components/modal/modal';
-
 import { setRootAriaHidden } from '../../overlays';
 
 describe('setRootAriaHidden()', () => {
@@ -15,7 +14,7 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const routerOutlet = page.body.querySelector('ion-router-outlet');
+    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
 
     expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
 
@@ -34,7 +33,7 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const nav = page.body.querySelector('ion-nav');
+    const nav = page.body.querySelector('ion-nav')!;
 
     expect(nav.hasAttribute('aria-hidden')).toEqual(false);
 
@@ -54,8 +53,8 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const containerRoot = page.body.querySelector('#ion-view-container-root');
-    const notContainerRoot = page.body.querySelector('#not-container-root');
+    const containerRoot = page.body.querySelector('#ion-view-container-root')!;
+    const notContainerRoot = page.body.querySelector('#not-container-root')!;
 
     expect(containerRoot.hasAttribute('aria-hidden')).toEqual(false);
     expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
@@ -90,8 +89,8 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const routerOutlet = page.body.querySelector('ion-router-outlet');
-    const modal = page.body.querySelector('ion-modal');
+    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
+    const modal = page.body.querySelector('ion-modal')!;
 
     await modal.present();
 
@@ -109,9 +108,9 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const routerOutlet = page.body.querySelector('ion-router-outlet');
-    const modalOne = page.body.querySelector('ion-modal#one');
-    const modalTwo = page.body.querySelector('ion-modal#two');
+    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
+    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
+    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
 
     await modalOne.present();
 

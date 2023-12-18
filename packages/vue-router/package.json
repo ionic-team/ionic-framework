@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue-router",
-  "version": "7.5.3",
+  "version": "7.6.1",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test.spec": "jest",
@@ -8,7 +8,7 @@
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "pnpm run eslint && pnpm run prettier --write --cache",
     "lint.fix": "pnpm run eslint --fix && pnpm run prettier --write --cache",
-    "bundle": "rollup --config rollup.config.js",
+    "bundle": "rollup --config rollup.config.mjs",
     "build": "pnpm run clean && pnpm run bundle",
     "build.watch": "pnpm run bundle --watch",
     "clean": "rimraf dist"
@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "dependencies": {
-    "@ionic/vue": "^7.5.3"
+    "@ionic/vue": "^7.6.1"
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
@@ -58,7 +58,7 @@
     "jest-environment-jsdom": "^28.1.1",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
-    "rollup": "^2.32.1",
+    "rollup": "^4.2.0",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.3",
     "vue": "^3.2.37",
