@@ -60,6 +60,7 @@ ion-action-sheet,css-prop,--button-background-selected
 ion-action-sheet,css-prop,--button-background-selected-opacity
 ion-action-sheet,css-prop,--button-color
 ion-action-sheet,css-prop,--button-color-activated
+ion-action-sheet,css-prop,--button-color-disabled
 ion-action-sheet,css-prop,--button-color-focused
 ion-action-sheet,css-prop,--button-color-hover
 ion-action-sheet,css-prop,--button-color-selected

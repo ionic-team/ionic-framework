@@ -403,6 +403,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   id={b.id}
                   class={buttonClass(b)}
                   onClick={() => this.buttonClick(b)}
+                  disabled={b.disabled}
                 >
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
@@ -420,6 +421,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   type="button"
                   class={buttonClass(cancelButton)}
                   onClick={() => this.buttonClick(cancelButton)}
+                  disabled={cancelButton.disabled}
                 >
                   <span class="action-sheet-button-inner">
                     {cancelButton.icon && (
@@ -443,8 +445,8 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 const buttonClass = (button: ActionSheetButton): CssClassMap => {
   return {
     'action-sheet-button': true,
-    'ion-activatable': true,
-    'ion-focusable': true,
+    'ion-activatable': !button.disabled,
+    'ion-focusable': !button.disabled,
     [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };

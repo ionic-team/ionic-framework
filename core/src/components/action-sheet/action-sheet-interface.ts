@@ -26,4 +26,5 @@ export interface ActionSheetButton<T = any> {
   htmlAttributes?: { [key: string]: any };
   handler?: () => boolean | void | Promise<boolean | void>;
   data?: T;
+  disabled?: boolean;
 }
