@@ -12,7 +12,7 @@ $alert-ios-font-size:                                   dynamic-font-min(1, 14px
 $alert-ios-max-width:                                   dynamic-font-clamp(1, 270px, 1.2) !default;
 
 /// @prop - Border radius of the alert
-$alert-ios-border-radius:                               14px !default;
+$alert-ios-border-radius:                               13px !default;
 
 /// @prop - Background color of the alert
 $alert-ios-background-color:                            $overlay-ios-background-color !default;
