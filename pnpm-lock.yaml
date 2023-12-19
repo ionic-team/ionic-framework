@@ -978,11 +978,11 @@ importers:
   packages/react-router/test/apps/reactrouter5:
     dependencies:
       '@ionic/react':
-        specifier: ^6.6.1
-        version: 6.7.5(react-dom@18.2.0)(react@18.2.0)
+        specifier: 'workspace:'
+        version: link:../../../../react
       '@ionic/react-router':
-        specifier: ^6.6.1
-        version: 6.7.5(react-dom@18.2.0)(react-router-dom@5.3.4)(react-router@5.3.4)(react@18.2.0)
+        specifier: 'workspace:'
+        version: link:../../..
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.17.0
@@ -10161,14 +10161,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@ionic/core@6.7.5:
-    resolution: {integrity: sha512-zRkRn+h/Vs3xt/EVgBdShMKDyeGOM4RU31NPF2icfu3CUTH+VrMV569MUnNjYvd1Lu2xK90pYy4TaicSWmC1Pw==}
-    dependencies:
-      '@stencil/core': 2.22.3
-      ionicons: 6.1.3
-      tslib: 2.6.2
-    dev: false
-
   /@ionic/eslint-config@0.3.0(eslint@7.32.0)(typescript@4.7.2):
     resolution: {integrity: sha512-Uf1hS2YIoHlcvXPF5LnsPM6auMewEdChQhR117Rt3sVEAutbyKMpFP4slNC2a6up3a5Q34zepqlf61Qgkf9XeQ==}
     peerDependencies:
@@ -10243,35 +10235,6 @@ packages:
     dependencies:
       prettier: 2.8.3
     dev: true
-
-  /@ionic/react-router@6.7.5(react-dom@18.2.0)(react-router-dom@5.3.4)(react-router@5.3.4)(react@18.2.0):
-    resolution: {integrity: sha512-zh3i+d8cPnqcadqythTQwyhTL+V+hrEjWNNvtEnA1xAVx8Ol7dDu6V0aDlF6C2+e1q0Vf1fDSMNI4O0JcDutpA==}
-    peerDependencies:
-      react: '>=16.8.6'
-      react-dom: '>=16.8.6'
-      react-router: ^5.0.1
-      react-router-dom: ^5.0.1
-    dependencies:
-      '@ionic/react': 6.7.5(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-router: 5.3.4(react@18.2.0)
-      react-router-dom: 5.3.4(react@18.2.0)
-      tslib: 2.6.2
-    dev: false
-
-  /@ionic/react@6.7.5(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-BRJbG2IfwNepAlJWKxZzNnfMVH3f9zK+yTQ9OO+yTpV8XY/CyYtHUDwUVJoBNPc25rAEn5txzZlHh/jDGpl8LA==}
-    peerDependencies:
-      react: '>=16.8.6'
-      react-dom: '>=16.8.6'
-    dependencies:
-      '@ionic/core': 6.7.5
-      ionicons: 6.1.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      tslib: 2.6.2
-    dev: false
 
   /@isaacs/cliui@8.0.2:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
