@@ -13,7 +13,7 @@ import { calculateSpringStep, handleCanDismiss } from './utils';
 
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {
-  MIN_PRESENTING_SCALE: 0.93,
+  MIN_PRESENTING_SCALE: 0.91,
 };
 
 export const createSwipeToCloseGesture = (
