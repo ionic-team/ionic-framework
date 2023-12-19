@@ -1701,7 +1701,7 @@ export namespace Components {
          */
         "breakpoints"?: number[];
         /**
-          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.  Developers passing a function who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to canDismiss.
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "canDismiss": boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
@@ -6428,7 +6428,7 @@ declare namespace LocalJSX {
          */
         "breakpoints"?: number[];
         /**
-          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.  Developers passing a function who wish to access "this" inside of the function should either use an arrow function or manually bind "this" using `.bind(this)` when passing the function to canDismiss.
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "canDismiss"?: boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
