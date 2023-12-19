@@ -77,5 +77,4 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 **iOS**
 
-- The default background color opacity has been increased from `0.07` to `0.12`. This change was made to match the native iOS search bar background color opacity.
-- The default background color has been changed from `$text-color-rgb` to `118, 118, 128`. This change was made to match the native iOS search bar background color.
+- The spacing between the search input and the cancel button has increased from `8px` to `12px`.
