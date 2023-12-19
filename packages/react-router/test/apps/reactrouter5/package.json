@@ -13,6 +13,7 @@
     "@types/react-dom": "^18.2.0",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
+    "history": "^4.9.0",
     "ionicons": "^6.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
