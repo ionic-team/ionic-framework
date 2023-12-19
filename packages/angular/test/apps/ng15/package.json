@@ -16,8 +16,8 @@
     "prerender": "ng run test-app:prerender",
     "cy.open": "cypress open",
     "cy.run": "cypress run",
-    "test": "concurrently \"npm run start -- --configuration production\" \"wait-on http-get://localhost:4200 && npm run cy.run\" --kill-others --success first",
-    "test.watch": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.open\" --kill-others --success first"
+    "test": "concurrently \"pnpm run start -- --configuration production\" \"wait-on http-get://localhost:4200 && pnpm run cy.run\" --kill-others --success first",
+    "test.watch": "concurrently \"pnpm run start\" \"wait-on http-get://localhost:4200 && pnpm run cy.open\" --kill-others --success first"
   },
   "dependencies": {
     "@angular/animations": "^15.0.0",

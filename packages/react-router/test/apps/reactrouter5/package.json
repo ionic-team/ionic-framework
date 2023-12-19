@@ -28,7 +28,7 @@
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
-    "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
+    "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && pnpm run cypress\" --kill-others --success first",
     "sync": "sh ./scripts/sync.sh"
   },
   "eslintConfig": {
