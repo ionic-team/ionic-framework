@@ -27,14 +27,13 @@ runs:
         name: ionic-angular-server
         path: ./packages/angular-server
         filename: AngularServerBuild.zip
+    - name: Install Dependencies
+      run: pnpm install
+      shell: bash
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
       working-directory: ./packages/angular/test
-    - name: Install Dependencies
-      run: pnpm install
-      shell: bash
-      working-directory: ./packages/angular/test/build/${{ inputs.app }}
     - name: Run Tests
       run: pnpm run test
       shell: bash
