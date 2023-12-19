@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
+
+
+### Bug Fixes
+
+* **refresher:** mode property can be used in typescript ([#28717](https://github.com/ionic-team/ionic-framework/issues/28717)) ([7ce1031](https://github.com/ionic-team/ionic-framework/commit/7ce1031c177487649c2a698664ec98f10d9002b9)), closes [#28716](https://github.com/ionic-team/ionic-framework/issues/28716)
+
+
+
+
+
 ## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
 
 **Note:** Version bump only for package @ionic/angular
