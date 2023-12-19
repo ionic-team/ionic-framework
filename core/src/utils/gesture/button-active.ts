@@ -14,7 +14,7 @@ export const createButtonActiveGesture = (el: HTMLElement, isButton: (refEl: HTM
       return;
     }
     const target = document.elementFromPoint(x, y) as HTMLElement | null;
-    if (!target || !isButton(target)) {
+    if (!target || !isButton(target) || (target as HTMLButtonElement).disabled) {
       clearActiveButton();
       return;
     }
