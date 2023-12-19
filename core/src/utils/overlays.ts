@@ -371,7 +371,7 @@ const connectListeners = (doc: Document) => {
     });
 
     /**
-     * Handle ESC to close overlay
+     * Handle ESC to close overlay.
      * CloseWatcher also handles pressing the Esc
      * key, so if a browser supports CloseWatcher then
      * this behavior will be handled via the ionBackButton
