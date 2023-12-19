@@ -9,6 +9,9 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18.x
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
@@ -29,19 +32,15 @@ runs:
       shell: bash
       working-directory: ./packages/react/test
     - name: Install Dependencies
-      run: npm install
-      shell: bash
-      working-directory: ./packages/react/test/build/${{ inputs.app }}
-    - name: Sync Built Changes
-      run: npm run sync
+      run: pnpm install
       shell: bash
       working-directory: ./packages/react/test/build/${{ inputs.app }}
     - name: Build
-      run: npm run build
+      run: pnpm run build
       shell: bash
       working-directory: ./packages/react/test/build/${{ inputs.app }}
     - name: Run Tests
-      run: npm run e2e
+      run: pnpm run e2e
       shell: bash
       working-directory: ./packages/react/test/build/${{ inputs.app }}
 

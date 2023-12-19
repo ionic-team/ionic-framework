@@ -9,6 +9,9 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18.x
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
@@ -29,18 +32,14 @@ runs:
       shell: bash
       working-directory: ./packages/vue/test
     - name: Install Dependencies
-      run: npm install
-      shell: bash
-      working-directory: ./packages/vue/test/build/${{ inputs.app }}
-    - name: Sync
-      run: npm run sync
+      run: pnpm install
       shell: bash
       working-directory: ./packages/vue/test/build/${{ inputs.app }}
     - name: Run Spec Tests
-      run: npm run test:unit
+      run: pnpm run test:unit
       shell: bash
       working-directory: ./packages/vue/test/build/${{ inputs.app }}
     - name: Run E2E Tests
-      run: npm run test:e2e
+      run: pnpm run test:e2e
       shell: bash
       working-directory: ./packages/vue/test/build/${{ inputs.app }}
