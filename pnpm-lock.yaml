@@ -913,6 +913,9 @@ importers:
       '@ionic/react':
         specifier: ^7.6.1
         version: link:../react
+      history:
+        specifier: ^4.9.0
+        version: 4.10.1
       tslib:
         specifier: '*'
         version: 2.4.0

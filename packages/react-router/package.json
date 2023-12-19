@@ -36,6 +36,7 @@
   ],
   "dependencies": {
     "@ionic/react": "^7.6.1",
+    "history": "^4.9.0",
     "tslib": "*"
   },
   "peerDependencies": {
