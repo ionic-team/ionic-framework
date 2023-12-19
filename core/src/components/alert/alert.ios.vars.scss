@@ -99,10 +99,10 @@ $alert-ios-content-max-height:                          240px !default;
 $alert-ios-input-margin-top:                            10px !default;
 
 /// @prop - Padding top on the alert input
-$alert-ios-input-padding-top:                           8px !default;
+$alert-ios-input-padding-top:                           7px !default;
 
 /// @prop - Padding end on the alert input
-$alert-ios-input-padding-end:                           7px !default;
+$alert-ios-input-padding-end:                           $alert-ios-input-padding-top !default;
 
 /// @prop - Padding bottom on the alert input
 $alert-ios-input-padding-bottom:                        $alert-ios-input-padding-top !default;
