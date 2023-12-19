@@ -9,4 +9,5 @@ packages:
   - 'packages/react-router'
   - 'packages/vue/test/apps/**'
   - 'packages/react/test/apps/**'
+  - 'packages/react-router/test/apps/**'
   - 'packages/angular/test/apps/**'
