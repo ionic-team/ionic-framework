@@ -23,6 +23,9 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.4.3
         version: 14.4.3(@testing-library/dom@9.0.1)
+      '@types/history':
+        specifier: '4'
+        version: 4.7.11
       '@types/jest':
         specifier: ^27.5.2
         version: 27.5.2
