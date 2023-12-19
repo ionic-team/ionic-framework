@@ -47,8 +47,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Prepare NPM Token
-      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
-      working-directory: ${{ inputs.working-directory }}
+      run: pnpm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
       shell: bash
       env:
         NPM_TOKEN: ${{ inputs.token }}
