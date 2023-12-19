@@ -141,8 +141,8 @@ importers:
   packages/angular:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.1
-        version: 7.6.2
+        specifier: ^7.6.2
+        version: link:../../core
       ionicons:
         specifier: ^7.0.0
         version: 7.0.0
@@ -247,8 +247,8 @@ importers:
   packages/angular-server:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.1
-        version: 7.6.2
+        specifier: ^7.6.2
+        version: link:../../core
       zone.js:
         specifier: '>=0.11.0'
         version: 0.11.0
@@ -312,8 +312,8 @@ importers:
   packages/react:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.1
-        version: 7.6.2
+        specifier: ^7.6.2
+        version: link:../../core
       ionicons:
         specifier: ^7.0.0
         version: 7.0.0
@@ -397,8 +397,8 @@ importers:
   packages/react-router:
     dependencies:
       '@ionic/react':
-        specifier: ^7.6.1
-        version: 7.6.2(react-dom@16.9.0)(react@16.9.0)
+        specifier: ^7.6.2
+        version: link:../react
       history:
         specifier: ^4.9.0
         version: 4.10.1
@@ -467,8 +467,8 @@ importers:
   packages/vue:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.1
-        version: 7.6.2
+        specifier: ^7.6.2
+        version: link:../../core
       ionicons:
         specifier: ^7.0.0
         version: 7.0.0
@@ -522,8 +522,8 @@ importers:
   packages/vue-router:
     dependencies:
       '@ionic/vue':
-        specifier: ^7.6.1
-        version: 7.6.2
+        specifier: ^7.6.2
+        version: link:../vue
     devDependencies:
       '@ionic/eslint-config':
         specifier: ^0.3.0
@@ -1795,14 +1795,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@ionic/core@7.6.2:
-    resolution: {integrity: sha512-PEeCAjKrtKkc7PqCF7WlXn36PmowBbswnMADmoJ75ozyheRMe+v+GY2a75dGsBxB8nMZP9X9wYBXvZ3BgYUdLw==}
-    dependencies:
-      '@stencil/core': 4.9.0
-      ionicons: 7.2.1
-      tslib: 2.6.2
-    dev: false
-
   /@ionic/eslint-config@0.3.0(eslint@7.32.0)(typescript@4.7.2):
     resolution: {integrity: sha512-Uf1hS2YIoHlcvXPF5LnsPM6auMewEdChQhR117Rt3sVEAutbyKMpFP4slNC2a6up3a5Q34zepqlf61Qgkf9XeQ==}
     peerDependencies:
@@ -1894,26 +1886,6 @@ packages:
     dependencies:
       prettier: 2.8.3
     dev: true
-
-  /@ionic/react@7.6.2(react-dom@16.9.0)(react@16.9.0):
-    resolution: {integrity: sha512-c2dD/ATMDf70GAp6z6QLzmRNZVBZl9B6zcCGJlYhxSHReNOAln3PWYwxy8v/7MuTyclG4rnNQxiSBd3XQbqKTw==}
-    peerDependencies:
-      react: '>=16.8.6'
-      react-dom: '>=16.8.6'
-    dependencies:
-      '@ionic/core': 7.6.2
-      ionicons: 7.2.1
-      react: 16.9.0
-      react-dom: 16.9.0(react@16.9.0)
-      tslib: 2.6.2
-    dev: false
-
-  /@ionic/vue@7.6.2:
-    resolution: {integrity: sha512-+qamnvbplyPN0RASemYvxMCPcwJ+lrJVJeDQ8Cw14OIuItVkMsidM2pF4hzZaxXyS+aHqCaVTewvLJ2/cUpzTw==}
-    dependencies:
-      '@ionic/core': 7.6.2
-      ionicons: 7.2.1
-    dev: false
 
   /@isaacs/cliui@8.0.2:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -13615,6 +13587,7 @@ packages:
   /object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
+    dev: true
 
   /object-copy@0.1.0:
     resolution: {integrity: sha512-79LYn6VAb63zgtmAteVOWo9Vdj71ZVBy3Pbse+VqxDpEP83XuujMrGqHIwAXJ5I/aM0zU7dIyIAhifVTPrNItQ==}
@@ -14828,6 +14801,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
+    dev: true
 
   /proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
@@ -14970,6 +14944,7 @@ packages:
       prop-types: 15.8.1
       react: 16.9.0
       scheduler: 0.15.0
+    dev: true
 
   /react-error-boundary@3.1.4(react@16.9.0):
     resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
@@ -14983,6 +14958,7 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: true
 
   /react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
@@ -15032,6 +15008,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       prop-types: 15.8.1
+    dev: true
 
   /read-cmd-shim@3.0.1:
     resolution: {integrity: sha512-kEmDUoYf/CDy8yZbLTmhB1X9kkjf9Q80PCNsDMb7ufrGd6zZSQA1+UyjrO+pZm5K/S4OXCWJeiIt1JA8kAsa6g==}
@@ -15576,6 +15553,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    dev: true
 
   /scoped-regex@2.1.0:
     resolution: {integrity: sha512-g3WxHrqSWCZHGHlSrF51VXFdjImhwvH8ZO/pryFH56Qi0cDsZfylQa/t0jCzVQFNbNvM00HfHjkDPEuarKDSWQ==}
@@ -16658,6 +16636,7 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+    dev: true
 
   /tsutils@3.21.0(typescript@4.7.2):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
