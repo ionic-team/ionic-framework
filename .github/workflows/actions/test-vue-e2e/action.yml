@@ -27,13 +27,14 @@ runs:
         name: ionic-vue-router
         path: ./packages/vue-router
         filename: VueRouterBuild.zip
-    - name: Install Dependencies
-      run: pnpm install
-      shell: bash
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
       working-directory: ./packages/vue/test
+    - name: Install Dependencies
+      run: pnpm install
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}
     - name: Run Spec Tests
       run: pnpm run test:unit
       shell: bash

@@ -27,13 +27,14 @@ runs:
         name: ionic-react-router
         path: ./packages/react-router
         filename: ReactRouterBuild.zip
-    - name: Install Dependencies
-      run: pnpm install
-      shell: bash
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
       working-directory: ./packages/react-router/test
+    - name: Install Dependencies
+      run: pnpm install
+      shell: bash
+      working-directory: ./packages/react-router/test/build/${{ inputs.app }}
     - name: Build
       run: pnpm run build
       shell: bash
