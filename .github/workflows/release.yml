@@ -72,16 +72,25 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
-    # Lerna does not automatically bump versions
-    # of Ionic dependencies that have changed,
-    # so we do that here.
-    - name: Bump Package Lock
-      run: |
-        pnpm install --lockfile-only
-        git add .
-        git commit -m "chore(): update package lock files"
-        git push
-      shell: bash
+
+  update-package-lock:
+    # This needs to run after finalize-release
+    # because we also push to the repo in that
+    # job. If these jobs ran in parallel then it is
+    # possible for them to push at the same time.
+    needs: [finalize-release]
+    runs-on: ubuntu-latest
+    steps:
+      # Lerna does not automatically bump versions
+      # of Ionic dependencies that have changed,
+      # so we do that here.
+      - name: Bump Package Lock
+        run: |
+          pnpm install --lockfile-only
+          git add .
+          git commit -m "chore(): update package lock files"
+          git push
+        shell: bash
 
   purge-cdn-cache:
     needs: [release-ionic]
