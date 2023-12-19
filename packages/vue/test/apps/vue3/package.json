@@ -16,8 +16,8 @@
     "sync": "sh ./scripts/sync.sh"
   },
   "dependencies": {
-    "@ionic/vue": "^6.0.12",
-    "@ionic/vue-router": "^6.0.12",
+    "@ionic/vue": "workspace:*",
+    "@ionic/vue-router": "workspace:*",
     "ionicons": "^6.0.4",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"

@@ -7,3 +7,6 @@ packages:
   - 'packages/vue-router'
   - 'packages/react'
   - 'packages/react-router'
+  - 'packages/vue/test/build/**'
+  - 'packages/react/test/build/**'
+  - 'packages/angular/test/build/**'
