@@ -16,7 +16,6 @@
     "start": "vite",
     "build": "tsc && vite build",
     "test": "vitest",
-    "sync": "sh ./scripts/sync.sh",
     "cypress": "cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
     "e2e": "concurrently \"serve -s dist -l 3000\" \"wait-on http-get://localhost:3000 && pnpm run cypress\" --kill-others --success first"

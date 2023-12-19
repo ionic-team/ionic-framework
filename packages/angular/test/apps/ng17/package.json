@@ -6,7 +6,6 @@
     "ng": "ng",
     "start": "ng serve",
     "sync:build": "sh scripts/build-ionic.sh",
-    "sync": "sh scripts/sync.sh",
     "build": "ng build --configuration production --no-progress",
     "lint": "ng lint",
     "serve:ssr": "node dist/test-app/server/main.js",

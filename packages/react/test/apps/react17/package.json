@@ -22,7 +22,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject",
-    "sync": "sh ./scripts/sync.sh",
     "cypress": "cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
     "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && pnpm run cypress\" --kill-others --success first"
