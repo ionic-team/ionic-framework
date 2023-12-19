@@ -161,7 +161,6 @@ jobs:
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
         working-directory: 'packages/angular-server'
-        folder: './dist'
         token: ${{ secrets.NPM_TOKEN }}
 
   release-react-router:
