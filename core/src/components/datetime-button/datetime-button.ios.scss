@@ -5,7 +5,6 @@
 
 :host button {
   @include padding(7px, 13px, 7px, 13px);
-  @include margin(0px, 3px, 0px, 3px);
 }
 
 :host button.ion-activated {
