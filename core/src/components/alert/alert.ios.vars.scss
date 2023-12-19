@@ -99,10 +99,10 @@ $alert-ios-content-max-height:                          240px !default;
 $alert-ios-input-margin-top:                            10px !default;
 
 /// @prop - Padding top on the alert input
-$alert-ios-input-padding-top:                           2px !default;
+$alert-ios-input-padding-top:                           8px !default;
 
 /// @prop - Padding end on the alert input
-$alert-ios-input-padding-end:                           6px !default;
+$alert-ios-input-padding-end:                           7px !default;
 
 /// @prop - Padding bottom on the alert input
 $alert-ios-input-padding-bottom:                        $alert-ios-input-padding-top !default;
@@ -120,7 +120,7 @@ $alert-ios-input-border-color:                          $background-color-step-2
 $alert-ios-input-border:                                $hairlines-width solid $alert-ios-input-border-color !default;
 
 /// @prop - Border radius of the alert input
-$alert-ios-input-border-radius:                         4px !default;
+$alert-ios-input-border-radius:                         7px !default;
 
 /// @prop - Background color of the alert input
 $alert-ios-input-background-color:                      $background-color !default;
