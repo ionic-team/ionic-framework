@@ -5,6 +5,7 @@
   "dependencies": {
     "@ionic/react": "file:../../../",
     "@ionic/react-router": "file:../../../../react-router",
+    "@types/jest": "27.5.2",
     "ionicons": "^7.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -32,14 +33,14 @@
     "@vitejs/plugin-react": "^4.0.1",
     "concurrently": "^6.3.0",
     "cypress": "^13.2.0",
-    "serve": "^14.0.1",
-    "wait-on": "^6.0.0",
     "eslint": "^8.35.0",
     "eslint-plugin-react": "^7.32.2",
     "jsdom": "^22.1.0",
+    "serve": "^14.0.1",
     "typescript": "^5.1.6",
     "vite": "^4.3.9",
-    "vitest": "^0.32.2"
+    "vitest": "^0.32.2",
+    "wait-on": "^6.0.0"
   },
   "description": "An Ionic project",
   "engines": {
