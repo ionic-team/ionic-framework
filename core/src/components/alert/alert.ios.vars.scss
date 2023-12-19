@@ -288,10 +288,10 @@ $alert-ios-checkbox-background-color-off:               $item-ios-background !de
 $alert-ios-checkbox-background-color-on:                ion-color(primary, base) !default;
 
 /// @prop - Top of the icon in the checkbox alert
-$alert-ios-checkbox-icon-top:                           calc($alert-ios-checkbox-size / 6) !default;
+$alert-ios-checkbox-icon-top:                           calc($alert-ios-checkbox-size / 8) !default;
 
 /// @prop - Start of the icon in the checkbox alert
-$alert-ios-checkbox-icon-start:                         calc($alert-ios-checkbox-size / 3 + 1px) !default;
+$alert-ios-checkbox-icon-start:                         calc($alert-ios-checkbox-size / 3) !default;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-ios-checkbox-icon-width:                         calc($alert-ios-checkbox-size / 6 + 1px) !default;
