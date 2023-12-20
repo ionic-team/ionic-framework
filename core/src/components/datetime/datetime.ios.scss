@@ -234,6 +234,8 @@
 
 .calendar-day.calendar-day-active {
   background: current-color(base, 0.2);
+
+  font-size: dynamic-font-max(22px, 1.6);
 }
 
 /**
