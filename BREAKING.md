@@ -51,6 +51,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Button text now wraps by default. If this behavior is not desired, add the `ion-text-nowrap` class from the [CSS Utilities](https://ionicframework.com/docs/layout/css-utilities).
 
+<h4 id="version-8x-content">Content</h4>
+
+- Content no longer sets the `--background` custom property when the `.outer-content` class is set on the host.
+
 <h4 id="version-8x-datetime">Datetime</h4>
 
 - The CSS shadow part for `month-year-button` has been changed to target a `button` element instead of `ion-item`. Developers should verify their UI renders as expected for the month/year toggle button inside of `ion-datetime`.
@@ -62,7 +66,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
       +  background: red;
       }
       ```
-<h4 id="version-8x-picker">Picker</h4>
+<h2 id="version-8x-picker">Picker</h2>
 
 - `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
   - Only the component names have been changed. Usages such as `ion-picker` or `IonPicker` should be changed to `ion-picker-legacy` and `IonPickerLegacy`, respectively.
