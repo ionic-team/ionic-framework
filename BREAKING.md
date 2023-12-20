@@ -15,13 +15,10 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Browser and Platform Support](#version-8x-browser-platform-support)
 - [Components](#version-8x-components)
-  - [Alert](#version-8x-alert)
   - [Button](#version-8x-button)
-  - [Checkbox](#version-8x-checkbox)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
   - [Picker](#version-8x-picker)
-  - [Select](#version-8x-select)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -50,27 +47,9 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h2 id="version-8x-components">Components</h2>
 
-<h4 id="version-8x-alert">Alert</h2>
-
-**iOS**
-
-- The height of the checkbox has decreased from `26px` to `22px`. This change was made to match the native iOS checkbox height.
-- The border width of the unchecked checkbox has increased from `1px` to `2px`. This change was made to match the native iOS checkbox border width.
-
 <h4 id="version-8x-button">Button</h4>
 
 - Button text now wraps by default. If this behavior is not desired, add the `ion-text-nowrap` class from the [CSS Utilities](https://ionicframework.com/docs/layout/css-utilities).
-
-<h4 id="version-8x-checkbox">Checkbox</h2>
-
-**iOS**
-
-- The height of the checkbox has decreased from `26px` to `22px`. This change was made to match the native iOS checkbox height.
-- The border width of the unchecked checkbox has increased from `1px` to `2px`. This change was made to match the native iOS checkbox border width.
-
-<h4 id="version-8x-content">Content</h4>
-
-- Content no longer sets the `--background` custom property when the `.outer-content` class is set on the host.
 
 <h4 id="version-8x-datetime">Datetime</h4>
 
@@ -83,16 +62,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
       +  background: red;
       }
       ```
-
 <h4 id="version-8x-picker">Picker</h4>
 
 - `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
   - Only the component names have been changed. Usages such as `ion-picker` or `IonPicker` should be changed to `ion-picker-legacy` and `IonPickerLegacy`, respectively.
   - Non-component usages such as `pickerController` or `useIonPicker` remain unchanged. The new picker displays inline with your page content and does not have equivalents for these non-component usages. 
-
-<h4 id="version-8x-select">Select</h2>
-
-**iOS**
-
-- The height of the checkbox on the popover and alert interfaces has decreased from `26px` to `22px`. This change was made to match the native iOS checkbox height.
-- The border width of the unchecked checkbox on the popover and alert interfaces has increased from `1px` to `2px`. This change was made to match the native iOS checkbox border width. 
