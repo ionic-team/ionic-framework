@@ -48,7 +48,7 @@
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.8.3",
     "@stencil/react-output-target": "^0.5.3",
-    "@stencil/sass": "^3.0.7",
+    "@stencil/sass": "^3.0.8",
     "@stencil/vue-output-target": "^0.8.7",
     "@types/jest": "^29.5.6",
     "@types/node": "^14.6.0",
