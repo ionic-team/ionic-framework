@@ -15,8 +15,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  // TODO(FW-5715): re-enable test
-  test.skip(title('radio: keyboard navigation'), () => {
+  test.describe(title('radio: keyboard navigation'), () => {
     test.beforeEach(async ({ page }) => {
       await page.setContent(
         `
@@ -64,6 +63,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
       const firstGroupRadios = page.locator('#first-group ion-radio');
       const secondGroupRadios = page.locator('#second-group ion-radio');
+
+      /**
+       * Wait for the first radio to be rendered before tabbing.
+       * This is necessary because the first radio may not be rendered
+       * when the page first loads.
+       *
+       * This would cause the first radio to be skipped when tabbing.
+       */
+      await firstGroupRadios.nth(0).waitFor();
 
       await pageUtils.pressKeys('Tab');
       await expect(firstGroupRadios.nth(0)).toBeFocused();
