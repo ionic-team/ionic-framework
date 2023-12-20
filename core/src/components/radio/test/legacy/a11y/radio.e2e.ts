@@ -6,21 +6,27 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio: a11y'), () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, browserName }) => {
       await page.goto(`/src/components/radio/test/legacy/a11y`, config);
+
+      if (browserName === 'webkit') {
+        const radio = page.locator('#first-group ion-radio').first();
+        /**
+         * Sometimes Safari does not focus the first radio.
+         * This is a workaround to ensure the first radio is focused.
+         *
+         * Wait for the first radio to be rendered before tabbing.
+         * This is necessary because the first radio may not be rendered
+         * when the page first loads.
+         *
+         * This would cause the first radio to be skipped when tabbing.
+         */
+        await radio.waitFor();
+      }
     });
     test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
       const firstGroupRadios = page.locator('#first-group ion-radio');
       const secondGroupRadios = page.locator('#second-group ion-radio');
-
-      /**
-       * Wait for the first radio to be rendered before tabbing.
-       * This is necessary because the first radio may not be rendered
-       * when the page first loads.
-       *
-       * This would cause the first radio to be skipped when tabbing.
-       */
-      await firstGroupRadios.nth(0).waitFor();
 
       await pageUtils.pressKeys('Tab');
       await expect(firstGroupRadios.nth(0)).toBeFocused();
