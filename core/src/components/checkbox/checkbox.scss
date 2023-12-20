@@ -20,12 +20,10 @@
    * @prop --transition: Transition of the checkbox icon
    *
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
-   * @prop --checkmark-width: Stroke width of the checkbox checkmark
    */
   --checkbox-background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};
-  --checkmark-width: 1;
   --transition: none;
 
   display: inline-block;
