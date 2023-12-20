@@ -1,7 +1,6 @@
 import { writeTask } from '@stencil/core';
 import { createAnimation } from '@utils/animation/animation';
 import { clamp, componentOnReady, transitionEndAsync } from '@utils/helpers';
-import { isPlatform } from '@utils/platform';
 
 // MD Native Refresher
 // -----------------------------
@@ -197,24 +196,21 @@ export const translateElement = (el?: HTMLElement, value?: string, duration = 20
 
 /**
  * In order to use the native iOS refresher the device must support rubber band scrolling.
- * The ios + mobile platform check ensures that desktop Safari is not included. Desktop Safari
- * has a slightly different rubber band effect that is not compatible with the native refresher
- * in Ionic.
+ * As part of this, we need to exclude Desktop Safari because it has a slightly different rubber band effect that is not compatible with the native refresher in Ionic.
  *
  * We also need to be careful not to include devices that spoof their user agent.
  * For example, when using iOS emulation in Chrome the user agent will be spoofed such that
- * isPlatform('ios') and isPlatform('mobile') both return true. To work around this,
+ * navigator.maxTouchPointer > 0. To work around this,
  * we check to see if the apple-pay-logo is supported as a named image which is only
  * true on Apple devices.
  *
  * We previously checked referencEl.style.webkitOverflowScrolling to explicitly check
  * for rubber band support. However, this property was removed on iPadOS and it's possible
  * that this will be removed on iOS in the future too.
+ *
  */
 export const supportsRubberBandScrolling = () => {
-  return (
-    isPlatform('ios') && isPlatform('mobile') && CSS.supports('background: -webkit-named-image(apple-pay-logo-black)')
-  );
+  return navigator.maxTouchPoints > 0 && CSS.supports('background: -webkit-named-image(apple-pay-logo-black)');
 };
 
 export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElement, mode: string) => {
