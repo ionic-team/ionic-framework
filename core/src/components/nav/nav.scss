@@ -6,20 +6,5 @@
   position: absolute;
 
   contain: layout size style;
-  /**
-   * Overflow on the y-axis is allowed
-   * so fullscreen content can flow underneath
-   * any tab bars to to create a translucency
-   * effect when this is enabled on the tab bar.
-   * However, we do not want overflow on the x-axis
-   * otherwise iOS page transitions can accidentally
-   * flow outside of the parent outlet. This can happen
-   * when pushing a view inside of split pane
-   * on larger viewports with the menu visible. The
-   * page will slide over the menu when it should be clipped
-   * by the parent outlet.
-   */
-  overflow-x: hidden;
-
   z-index: $z-index-page-container;
 }
