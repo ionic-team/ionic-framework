@@ -315,6 +315,7 @@ ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
 ion-checkbox,part,container
+ion-checkbox,part,label
 ion-checkbox,part,mark
 
 ion-chip,shadow
@@ -428,6 +429,7 @@ ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
 ion-datetime,css-prop,--wheel-fade-background-rgb
 ion-datetime,css-prop,--wheel-highlight-background
+ion-datetime,css-prop,--wheel-highlight-border-radius
 ion-datetime,part,calendar-day
 ion-datetime,part,calendar-day active
 ion-datetime,part,calendar-day disabled
@@ -906,47 +908,66 @@ ion-note,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
-ion-picker,scoped
-ion-picker,prop,animated,boolean,true,false,false
-ion-picker,prop,backdropDismiss,boolean,true,false,false
-ion-picker,prop,buttons,PickerButton[],[],false,false
-ion-picker,prop,columns,PickerColumn[],[],false,false
-ion-picker,prop,cssClass,string | string[] | undefined,undefined,false,false
-ion-picker,prop,duration,number,0,false,false
-ion-picker,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-picker,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
-ion-picker,prop,isOpen,boolean,false,false,false
-ion-picker,prop,keyboardClose,boolean,true,false,false
-ion-picker,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-picker,shadow
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
-ion-picker,prop,showBackdrop,boolean,true,false,false
-ion-picker,prop,trigger,string | undefined,undefined,false,false
-ion-picker,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
-ion-picker,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
-ion-picker,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
-ion-picker,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
-ion-picker,method,present,present() => Promise<void>
-ion-picker,event,didDismiss,OverlayEventDetail<any>,true
-ion-picker,event,didPresent,void,true
-ion-picker,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
-ion-picker,event,ionPickerDidPresent,void,true
-ion-picker,event,ionPickerWillDismiss,OverlayEventDetail<any>,true
-ion-picker,event,ionPickerWillPresent,void,true
-ion-picker,event,willDismiss,OverlayEventDetail<any>,true
-ion-picker,event,willPresent,void,true
-ion-picker,css-prop,--backdrop-opacity
-ion-picker,css-prop,--background
-ion-picker,css-prop,--background-rgb
-ion-picker,css-prop,--border-color
-ion-picker,css-prop,--border-radius
-ion-picker,css-prop,--border-style
-ion-picker,css-prop,--border-width
-ion-picker,css-prop,--height
-ion-picker,css-prop,--max-height
-ion-picker,css-prop,--max-width
-ion-picker,css-prop,--min-height
-ion-picker,css-prop,--min-width
-ion-picker,css-prop,--width
+ion-picker,css-prop,--fade-background-rgb
+ion-picker,css-prop,--highlight-background
+ion-picker,css-prop,--highlight-border-radius
+
+ion-picker-column,shadow
+ion-picker-column,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-picker-column,prop,disabled,boolean,false,false,false
+ion-picker-column,prop,mode,"ios" | "md",undefined,false,false
+ion-picker-column,prop,value,number | string | undefined,undefined,false,false
+ion-picker-column,method,setFocus,setFocus() => Promise<void>
+ion-picker-column,event,ionChange,PickerColumnChangeEventDetail,true
+
+ion-picker-column-option,shadow
+ion-picker-column-option,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-picker-column-option,prop,disabled,boolean,false,false,false
+ion-picker-column-option,prop,value,any,undefined,false,false
+
+ion-picker-legacy,scoped
+ion-picker-legacy,prop,animated,boolean,true,false,false
+ion-picker-legacy,prop,backdropDismiss,boolean,true,false,false
+ion-picker-legacy,prop,buttons,PickerButton[],[],false,false
+ion-picker-legacy,prop,columns,PickerColumn[],[],false,false
+ion-picker-legacy,prop,cssClass,string | string[] | undefined,undefined,false,false
+ion-picker-legacy,prop,duration,number,0,false,false
+ion-picker-legacy,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-picker-legacy,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-picker-legacy,prop,isOpen,boolean,false,false,false
+ion-picker-legacy,prop,keyboardClose,boolean,true,false,false
+ion-picker-legacy,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-picker-legacy,prop,mode,"ios" | "md",undefined,false,false
+ion-picker-legacy,prop,showBackdrop,boolean,true,false,false
+ion-picker-legacy,prop,trigger,string | undefined,undefined,false,false
+ion-picker-legacy,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
+ion-picker-legacy,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
+ion-picker-legacy,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-picker-legacy,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-picker-legacy,method,present,present() => Promise<void>
+ion-picker-legacy,event,didDismiss,OverlayEventDetail<any>,true
+ion-picker-legacy,event,didPresent,void,true
+ion-picker-legacy,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
+ion-picker-legacy,event,ionPickerDidPresent,void,true
+ion-picker-legacy,event,ionPickerWillDismiss,OverlayEventDetail<any>,true
+ion-picker-legacy,event,ionPickerWillPresent,void,true
+ion-picker-legacy,event,willDismiss,OverlayEventDetail<any>,true
+ion-picker-legacy,event,willPresent,void,true
+ion-picker-legacy,css-prop,--backdrop-opacity
+ion-picker-legacy,css-prop,--background
+ion-picker-legacy,css-prop,--background-rgb
+ion-picker-legacy,css-prop,--border-color
+ion-picker-legacy,css-prop,--border-radius
+ion-picker-legacy,css-prop,--border-style
+ion-picker-legacy,css-prop,--border-width
+ion-picker-legacy,css-prop,--height
+ion-picker-legacy,css-prop,--max-height
+ion-picker-legacy,css-prop,--max-width
+ion-picker-legacy,css-prop,--min-height
+ion-picker-legacy,css-prop,--min-width
+ion-picker-legacy,css-prop,--width
 
 ion-popover,shadow
 ion-popover,prop,alignment,"center" | "end" | "start" | undefined,undefined,false,false
@@ -1029,10 +1050,12 @@ ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 ion-radio,css-prop,--inner-border-radius
 ion-radio,part,container
+ion-radio,part,label
 ion-radio,part,mark
 
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
+ion-radio-group,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-radio-group,prop,name,string,this.inputId,false,false
 ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
@@ -1076,6 +1099,7 @@ ion-range,css-prop,--pin-color
 ion-range,part,bar
 ion-range,part,bar-active
 ion-range,part,knob
+ion-range,part,label
 ion-range,part,pin
 ion-range,part,tick
 ion-range,part,tick-active
@@ -1446,6 +1470,7 @@ ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,fals
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,positionAnchor,HTMLElement | string | undefined,undefined,false,false
+ion-toast,prop,swipeGesture,"vertical" | undefined,undefined,false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,prop,trigger,string | undefined,undefined,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
@@ -1512,6 +1537,7 @@ ion-toggle,css-prop,--handle-width
 ion-toggle,css-prop,--track-background
 ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
+ion-toggle,part,label
 ion-toggle,part,track
 
 ion-toolbar,shadow

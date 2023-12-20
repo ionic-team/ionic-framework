@@ -227,7 +227,7 @@ class TimePickerFixture {
   }
 
   async expectTime(hour: number, minute: number, ampm: string) {
-    const pickerColumns = this.timePicker.locator('ion-picker-column-internal');
+    const pickerColumns = this.timePicker.locator('ion-picker-column');
 
     await expect(pickerColumns.nth(0)).toHaveJSProperty('value', hour);
     await expect(pickerColumns.nth(1)).toHaveJSProperty('value', minute);

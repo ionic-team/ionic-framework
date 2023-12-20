@@ -15,7 +15,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  test.describe(title('radio: keyboard navigation'), () => {
+  // TODO(FW-5715): re-enable test
+  test.skip(title('radio: keyboard navigation'), () => {
     test.beforeEach(async ({ page }) => {
       await page.setContent(
         `

@@ -56,8 +56,7 @@
   text-align: center;
   text-decoration: none;
 
-  // TODO(FW-4599): change to normal
-  white-space: nowrap;
+  white-space: normal;
 
   user-select: none;
   vertical-align: top; // the better option for most scenarios
@@ -68,7 +67,7 @@
 
 :host(.button-disabled) {
   cursor: default;
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }
 
@@ -229,11 +228,11 @@
 }
 
 ::slotted(ion-icon[slot="start"]) {
-  @include margin(0, .3em, 0, -.3em);
+  @include margin(0, 0.3em, 0, -0.3em);
 }
 
 ::slotted(ion-icon[slot="end"]) {
-  @include margin(0, -.2em, 0, .3em);
+  @include margin(0, -0.2em, 0, 0.3em);
 }
 
 ::slotted(ion-icon[slot="icon-only"]) {

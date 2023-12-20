@@ -19,9 +19,6 @@ export * from './directives/validators';
 
 // PROVIDERS
 export {
-  AlertController,
-  LoadingController,
-  PickerController,
   DomController,
   NavController,
   Config,
@@ -34,11 +31,14 @@ export {
   ViewDidEnter,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export { AlertController } from './providers/alert-controller';
 export { AnimationController } from './providers/animation-controller';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { GestureController } from './providers/gesture-controller';
+export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
+export { PickerController } from './providers/picker-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
 

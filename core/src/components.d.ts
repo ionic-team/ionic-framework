@@ -23,11 +23,11 @@ import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
-import { PickerButton, PickerColumn } from "./components/picker/picker-interface";
-import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
-import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
+import { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
+import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
-import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
@@ -39,7 +39,7 @@ import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions } from "./components/toast/toast-interface";
+import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
 export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
@@ -59,11 +59,11 @@ export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
-export { PickerButton, PickerColumn } from "./components/picker/picker-interface";
-export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
-export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
+export { PickerColumnChangeEventDetail, PickerColumnValue } from "./components/picker-column/picker-column-interfaces";
+export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
-export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
@@ -75,7 +75,7 @@ export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions } from "./components/toast/toast-interface";
+export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
@@ -1162,7 +1162,7 @@ export namespace Components {
          */
         "autocorrect": 'on' | 'off';
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus": boolean;
         /**
@@ -1274,7 +1274,7 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -1949,6 +1949,58 @@ export namespace Components {
         "mode"?: "ios" | "md";
     }
     interface IonPicker {
+        "exitInputMode": () => Promise<void>;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+    }
+    interface IonPickerColumn {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker.
+         */
+        "disabled": boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
+         */
+        "numericInput": boolean;
+        "scrollActiveItemIntoView": (smooth?: boolean) => Promise<void>;
+        /**
+          * Sets focus on the scrollable container within the picker column. Use this method instead of the global `pickerColumn.focus()`.
+         */
+        "setFocus": () => Promise<void>;
+        /**
+          * Sets the value prop and fires the ionChange event. This is used when we need to fire ionChange from user-generated events that cannot be caught with normal input/change event listeners.
+         */
+        "setValue": (value: PickerColumnValue) => Promise<void>;
+        /**
+          * The selected option in the picker.
+         */
+        "value"?: string | number;
+    }
+    interface IonPickerColumnOption {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker column option.
+         */
+        "disabled": boolean;
+        /**
+          * The text value of the option.
+         */
+        "value"?: any | null;
+    }
+    interface IonPickerLegacy {
         /**
           * If `true`, the picker will animate.
          */
@@ -2032,45 +2084,11 @@ export namespace Components {
          */
         "trigger": string | undefined;
     }
-    interface IonPickerColumn {
+    interface IonPickerLegacyColumn {
         /**
           * Picker column data
          */
         "col": PickerColumn;
-    }
-    interface IonPickerColumnInternal {
-        /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-         */
-        "color"?: Color;
-        /**
-          * A list of options to be displayed in the picker
-         */
-        "items": PickerColumnItem[];
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
-         */
-        "numericInput": boolean;
-        "scrollActiveItemIntoView": () => Promise<void>;
-        /**
-          * Sets the value prop and fires the ionChange event. This is used when we need to fire ionChange from user-generated events that cannot be caught with normal input/change event listeners.
-         */
-        "setValue": (value?: string | number) => Promise<void>;
-        /**
-          * The selected option in the picker.
-         */
-        "value"?: string | number;
-    }
-    interface IonPickerInternal {
-        "exitInputMode": () => Promise<void>;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
     }
     interface IonPopover {
         /**
@@ -2265,6 +2283,10 @@ export namespace Components {
           * If `true`, the radios can be deselected.
          */
         "allowEmptySelection": boolean;
+        /**
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
+         */
+        "compareWith"?: string | RadioGroupCompareFn | null;
         /**
           * The name of the control, which is submitted with the form data.
          */
@@ -2597,7 +2619,7 @@ export namespace Components {
          */
         "searchIcon"?: string;
         /**
-          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
+          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -2684,7 +2706,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * A property name or function used to compare object values
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**
@@ -2946,7 +2968,7 @@ export namespace Components {
          */
         "autocapitalize": string;
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus": boolean;
         /**
@@ -3046,7 +3068,7 @@ export namespace Components {
          */
         "rows"?: number;
         /**
-          * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.
+          * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -3168,6 +3190,10 @@ export namespace Components {
           * Present the toast overlay after it has been created.
          */
         "present": () => Promise<void>;
+        /**
+          * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
+         */
+        "swipeGesture"?: ToastSwipeGestureDirection;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -3326,13 +3352,13 @@ export interface IonPickerColumnCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonPickerColumnElement;
 }
-export interface IonPickerColumnInternalCustomEvent<T> extends CustomEvent<T> {
+export interface IonPickerLegacyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLIonPickerColumnInternalElement;
+    target: HTMLIonPickerLegacyElement;
 }
-export interface IonPickerInternalCustomEvent<T> extends CustomEvent<T> {
+export interface IonPickerLegacyColumnCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLIonPickerInternalElement;
+    target: HTMLIonPickerLegacyColumnElement;
 }
 export interface IonPopoverCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3385,6 +3411,10 @@ export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
+}
+export interface IonSkeletonTextCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonSkeletonTextElement;
 }
 export interface IonSplitPaneCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4016,14 +4046,7 @@ declare global {
         new (): HTMLIonNoteElement;
     };
     interface HTMLIonPickerElementEventMap {
-        "ionPickerDidPresent": void;
-        "ionPickerWillPresent": void;
-        "ionPickerWillDismiss": OverlayEventDetail;
-        "ionPickerDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
+        "ionInputModeChange": PickerChangeEventDetail;
     }
     interface HTMLIonPickerElement extends Components.IonPicker, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonPickerElementEventMap>(type: K, listener: (this: HTMLIonPickerElement, ev: IonPickerCustomEvent<HTMLIonPickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4040,7 +4063,7 @@ declare global {
         new (): HTMLIonPickerElement;
     };
     interface HTMLIonPickerColumnElementEventMap {
-        "ionPickerColChange": PickerColumn;
+        "ionChange": PickerColumnChangeEventDetail;
     }
     interface HTMLIonPickerColumnElement extends Components.IonPickerColumn, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4056,39 +4079,52 @@ declare global {
         prototype: HTMLIonPickerColumnElement;
         new (): HTMLIonPickerColumnElement;
     };
-    interface HTMLIonPickerColumnInternalElementEventMap {
-        "ionChange": PickerColumnItem;
+    interface HTMLIonPickerColumnOptionElement extends Components.IonPickerColumnOption, HTMLStencilElement {
     }
-    interface HTMLIonPickerColumnInternalElement extends Components.IonPickerColumnInternal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerColumnInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnInternalElement, ev: IonPickerColumnInternalCustomEvent<HTMLIonPickerColumnInternalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerColumnInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnInternalElement, ev: IonPickerColumnInternalCustomEvent<HTMLIonPickerColumnInternalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLIonPickerColumnInternalElement: {
-        prototype: HTMLIonPickerColumnInternalElement;
-        new (): HTMLIonPickerColumnInternalElement;
+    var HTMLIonPickerColumnOptionElement: {
+        prototype: HTMLIonPickerColumnOptionElement;
+        new (): HTMLIonPickerColumnOptionElement;
     };
-    interface HTMLIonPickerInternalElementEventMap {
-        "ionInputModeChange": PickerInternalChangeEventDetail;
+    interface HTMLIonPickerLegacyElementEventMap {
+        "ionPickerDidPresent": void;
+        "ionPickerWillPresent": void;
+        "ionPickerWillDismiss": OverlayEventDetail;
+        "ionPickerDidDismiss": OverlayEventDetail;
+        "didPresent": void;
+        "willPresent": void;
+        "willDismiss": OverlayEventDetail;
+        "didDismiss": OverlayEventDetail;
     }
-    interface HTMLIonPickerInternalElement extends Components.IonPickerInternal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerInternalElement, ev: IonPickerInternalCustomEvent<HTMLIonPickerInternalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLIonPickerLegacyElement extends Components.IonPickerLegacy, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonPickerLegacyElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyElement, ev: IonPickerLegacyCustomEvent<HTMLIonPickerLegacyElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerInternalElement, ev: IonPickerInternalCustomEvent<HTMLIonPickerInternalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonPickerLegacyElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyElement, ev: IonPickerLegacyCustomEvent<HTMLIonPickerLegacyElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLIonPickerInternalElement: {
-        prototype: HTMLIonPickerInternalElement;
-        new (): HTMLIonPickerInternalElement;
+    var HTMLIonPickerLegacyElement: {
+        prototype: HTMLIonPickerLegacyElement;
+        new (): HTMLIonPickerLegacyElement;
+    };
+    interface HTMLIonPickerLegacyColumnElementEventMap {
+        "ionPickerColChange": PickerColumn;
+    }
+    interface HTMLIonPickerLegacyColumnElement extends Components.IonPickerLegacyColumn, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonPickerLegacyColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyColumnElement, ev: IonPickerLegacyColumnCustomEvent<HTMLIonPickerLegacyColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonPickerLegacyColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerLegacyColumnElement, ev: IonPickerLegacyColumnCustomEvent<HTMLIonPickerLegacyColumnElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLIonPickerLegacyColumnElement: {
+        prototype: HTMLIonPickerLegacyColumnElement;
+        new (): HTMLIonPickerLegacyColumnElement;
     };
     interface HTMLIonPopoverElementEventMap {
         "ionPopoverDidPresent": void;
@@ -4400,7 +4436,18 @@ declare global {
         prototype: HTMLIonSelectPopoverElement;
         new (): HTMLIonSelectPopoverElement;
     };
+    interface HTMLIonSkeletonTextElementEventMap {
+        "ionStyle": StyleEventDetail;
+    }
     interface HTMLIonSkeletonTextElement extends Components.IonSkeletonText, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonSkeletonTextElementEventMap>(type: K, listener: (this: HTMLIonSkeletonTextElement, ev: IonSkeletonTextCustomEvent<HTMLIonSkeletonTextElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonSkeletonTextElementEventMap>(type: K, listener: (this: HTMLIonSkeletonTextElement, ev: IonSkeletonTextCustomEvent<HTMLIonSkeletonTextElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonSkeletonTextElement: {
         prototype: HTMLIonSkeletonTextElement;
@@ -4643,8 +4690,9 @@ declare global {
         "ion-note": HTMLIonNoteElement;
         "ion-picker": HTMLIonPickerElement;
         "ion-picker-column": HTMLIonPickerColumnElement;
-        "ion-picker-column-internal": HTMLIonPickerColumnInternalElement;
-        "ion-picker-internal": HTMLIonPickerInternalElement;
+        "ion-picker-column-option": HTMLIonPickerColumnOptionElement;
+        "ion-picker-legacy": HTMLIonPickerLegacyElement;
+        "ion-picker-legacy-column": HTMLIonPickerLegacyColumnElement;
         "ion-popover": HTMLIonPopoverElement;
         "ion-progress-bar": HTMLIonProgressBarElement;
         "ion-radio": HTMLIonRadioElement;
@@ -5850,7 +5898,7 @@ declare namespace LocalJSX {
          */
         "autocorrect"?: 'on' | 'off';
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus"?: boolean;
         /**
@@ -6577,6 +6625,53 @@ declare namespace LocalJSX {
     }
     interface IonPicker {
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        "onIonInputModeChange"?: (event: IonPickerCustomEvent<PickerChangeEventDetail>) => void;
+    }
+    interface IonPickerColumn {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker.
+         */
+        "disabled"?: boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
+         */
+        "numericInput"?: boolean;
+        /**
+          * Emitted when the value has changed.
+         */
+        "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnChangeEventDetail>) => void;
+        /**
+          * The selected option in the picker.
+         */
+        "value"?: string | number;
+    }
+    interface IonPickerColumnOption {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker column option.
+         */
+        "disabled"?: boolean;
+        /**
+          * The text value of the option.
+         */
+        "value"?: any | null;
+    }
+    interface IonPickerLegacy {
+        /**
           * If `true`, the picker will animate.
          */
         "animated"?: boolean;
@@ -6629,35 +6724,35 @@ declare namespace LocalJSX {
         /**
           * Emitted after the picker has dismissed. Shorthand for ionPickerDidDismiss.
          */
-        "onDidDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        "onDidDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
         /**
           * Emitted after the picker has presented. Shorthand for ionPickerWillDismiss.
          */
-        "onDidPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        "onDidPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
         /**
           * Emitted after the picker has dismissed.
          */
-        "onIonPickerDidDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        "onIonPickerDidDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
         /**
           * Emitted after the picker has presented.
          */
-        "onIonPickerDidPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        "onIonPickerDidPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
         /**
           * Emitted before the picker has dismissed.
          */
-        "onIonPickerWillDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        "onIonPickerWillDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
         /**
           * Emitted before the picker has presented.
          */
-        "onIonPickerWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        "onIonPickerWillPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
         /**
           * Emitted before the picker has dismissed. Shorthand for ionPickerWillDismiss.
          */
-        "onWillDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        "onWillDismiss"?: (event: IonPickerLegacyCustomEvent<OverlayEventDetail>) => void;
         /**
           * Emitted before the picker has presented. Shorthand for ionPickerWillPresent.
          */
-        "onWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        "onWillPresent"?: (event: IonPickerLegacyCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the picker.
@@ -6668,7 +6763,7 @@ declare namespace LocalJSX {
          */
         "trigger"?: string | undefined;
     }
-    interface IonPickerColumn {
+    interface IonPickerLegacyColumn {
         /**
           * Picker column data
          */
@@ -6676,40 +6771,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the selected value has changed
          */
-        "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn>) => void;
-    }
-    interface IonPickerColumnInternal {
-        /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-         */
-        "color"?: Color;
-        /**
-          * A list of options to be displayed in the picker
-         */
-        "items"?: PickerColumnItem[];
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * If `true`, tapping the picker will reveal a number input keyboard that lets the user type in values for each picker column. This is useful when working with time pickers.
-         */
-        "numericInput"?: boolean;
-        /**
-          * Emitted when the value has changed.
-         */
-        "onIonChange"?: (event: IonPickerColumnInternalCustomEvent<PickerColumnItem>) => void;
-        /**
-          * The selected option in the picker.
-         */
-        "value"?: string | number;
-    }
-    interface IonPickerInternal {
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        "onIonInputModeChange"?: (event: IonPickerInternalCustomEvent<PickerInternalChangeEventDetail>) => void;
+        "onIonPickerColChange"?: (event: IonPickerLegacyColumnCustomEvent<PickerColumn>) => void;
     }
     interface IonPopover {
         /**
@@ -6926,6 +6988,10 @@ declare namespace LocalJSX {
           * If `true`, the radios can be deselected.
          */
         "allowEmptySelection"?: boolean;
+        /**
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
+         */
+        "compareWith"?: string | RadioGroupCompareFn | null;
         /**
           * The name of the control, which is submitted with the form data.
          */
@@ -7408,7 +7474,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * A property name or function used to compare object values
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**
@@ -7545,6 +7611,10 @@ declare namespace LocalJSX {
           * If `true`, the skeleton text will animate.
          */
         "animated"?: boolean;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: IonSkeletonTextCustomEvent<StyleEventDetail>) => void;
     }
     interface IonSpinner {
         /**
@@ -7691,7 +7761,7 @@ declare namespace LocalJSX {
          */
         "autocapitalize"?: string;
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus"?: boolean;
         /**
@@ -7944,6 +8014,10 @@ declare namespace LocalJSX {
          */
         "positionAnchor"?: HTMLElement | string;
         /**
+          * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
+         */
+        "swipeGesture"?: ToastSwipeGestureDirection;
+        /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
@@ -8078,8 +8152,9 @@ declare namespace LocalJSX {
         "ion-note": IonNote;
         "ion-picker": IonPicker;
         "ion-picker-column": IonPickerColumn;
-        "ion-picker-column-internal": IonPickerColumnInternal;
-        "ion-picker-internal": IonPickerInternal;
+        "ion-picker-column-option": IonPickerColumnOption;
+        "ion-picker-legacy": IonPickerLegacy;
+        "ion-picker-legacy-column": IonPickerLegacyColumn;
         "ion-popover": IonPopover;
         "ion-progress-bar": IonProgressBar;
         "ion-radio": IonRadio;
@@ -8175,8 +8250,9 @@ declare module "@stencil/core" {
             "ion-note": LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
             "ion-picker": LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
             "ion-picker-column": LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
-            "ion-picker-column-internal": LocalJSX.IonPickerColumnInternal & JSXBase.HTMLAttributes<HTMLIonPickerColumnInternalElement>;
-            "ion-picker-internal": LocalJSX.IonPickerInternal & JSXBase.HTMLAttributes<HTMLIonPickerInternalElement>;
+            "ion-picker-column-option": LocalJSX.IonPickerColumnOption & JSXBase.HTMLAttributes<HTMLIonPickerColumnOptionElement>;
+            "ion-picker-legacy": LocalJSX.IonPickerLegacy & JSXBase.HTMLAttributes<HTMLIonPickerLegacyElement>;
+            "ion-picker-legacy-column": LocalJSX.IonPickerLegacyColumn & JSXBase.HTMLAttributes<HTMLIonPickerLegacyColumnElement>;
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
             "ion-progress-bar": LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
             "ion-radio": LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;

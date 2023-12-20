@@ -38,6 +38,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
+ * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)
+ * @slot end - Content to display at the trailing edge of the textarea. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-textarea',
@@ -93,7 +95,9 @@ export class Textarea implements ComponentInterface {
   @Prop() autocapitalize = 'none';
 
   /**
-   * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+   * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.
+   *
+   * This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Prop() autofocus = false;
 
@@ -316,7 +320,7 @@ export class Textarea implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
     this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -372,6 +376,8 @@ export class Textarea implements ComponentInterface {
   /**
    * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global
    * `textarea.focus()`.
+   *
+   * See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Method()
   async setFocus() {
@@ -405,6 +411,8 @@ export class Textarea implements ComponentInterface {
         'has-placeholder': this.placeholder !== undefined,
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus,
+        // TODO(FW-2876): remove this
+        legacy: !!this.legacy,
       });
     }
   }
@@ -451,15 +459,41 @@ export class Textarea implements ComponentInterface {
     if (!this.clearOnEdit) {
       return;
     }
+
+    /**
+     * The following keys do not modify the
+     * contents of the input. As a result, pressing
+     * them should not edit the textarea.
+     *
+     * We can't check to see if the value of the textarea
+     * was changed because we call checkClearOnEdit
+     * in a keydown listener, and the key has not yet
+     * been added to the textarea.
+     *
+     * Unlike ion-input, the "Enter" key does modify the
+     * textarea by adding a new line, so "Enter" is not
+     * included in the IGNORED_KEYS array.
+     */
+    const IGNORED_KEYS = ['Tab', 'Shift', 'Meta', 'Alt', 'Control'];
+    const pressedIgnoredKey = IGNORED_KEYS.includes(ev.key);
+
     /**
      * Clear the textarea if the control has not been previously cleared
      * during focus.
      */
-    if (!this.didTextareaClearOnEdit && this.hasValue() && ev.key !== 'Tab') {
+    if (!this.didTextareaClearOnEdit && this.hasValue() && !pressedIgnoredKey) {
       this.value = '';
       this.emitInputChange(ev);
     }
-    this.didTextareaClearOnEdit = true;
+
+    /**
+     * Pressing an IGNORED_KEYS first and
+     * then an allowed key will cause the input to not
+     * be cleared.
+     */
+    if (!pressedIgnoredKey) {
+      this.didTextareaClearOnEdit = true;
+    }
   }
 
   private focusChange() {
@@ -703,55 +737,100 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 
   private renderTextarea() {
-    const { inputId, disabled, fill, shape, labelPlacement } = this;
+    const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
+    /**
+     * If the label is stacked, it should always sit above the textarea.
+     * For floating labels, the label should move above the textarea if
+     * the textarea has a value, is focused, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the textarea is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     *
+     * TODO(FW-5592): Remove hasStartEndSlots condition
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+
     return (
       <Host
         class={createColorClasses(this.color, {
           [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
+          'has-value': hasValue,
+          'has-focus': hasFocus,
+          'label-floating': labelShouldFloat,
           [`textarea-fill-${fill}`]: fill !== undefined,
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
         })}
       >
-        <label class="textarea-wrapper">
+        {/**
+         * htmlFor is needed so that clicking the label always focuses
+         * the textarea. Otherwise, if the start slot has something
+         * interactable, clicking the label would focus that instead
+         * since it comes before the textarea in the DOM.
+         */}
+        <label class="textarea-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
-            <textarea
-              class="native-textarea"
-              ref={(el) => (this.nativeInput = el)}
-              id={inputId}
-              disabled={disabled}
-              autoCapitalize={this.autocapitalize}
-              autoFocus={this.autofocus}
-              enterKeyHint={this.enterkeyhint}
-              inputMode={this.inputmode}
-              minLength={this.minlength}
-              maxLength={this.maxlength}
-              name={this.name}
-              placeholder={this.placeholder || ''}
-              readOnly={this.readonly}
-              required={this.required}
-              spellcheck={this.spellcheck}
-              cols={this.cols}
-              rows={this.rows}
-              wrap={this.wrap}
-              onInput={this.onInput}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-              onFocus={this.onFocus}
-              onKeyDown={this.onKeyDown}
-              {...this.inheritedAttributes}
-            >
-              {value}
-            </textarea>
+          <div class="textarea-wrapper-inner">
+            {/**
+             * Some elements have their own padding styles which may
+             * interfere with slot content alignment (such as icon-
+             * only buttons setting --padding-top=0). To avoid this,
+             * we wrap both the start and end slots in separate
+             * elements and apply our padding styles to that instead.
+             */}
+            <div class="start-slot-wrapper">
+              <slot name="start"></slot>
+            </div>
+            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+              <textarea
+                class="native-textarea"
+                ref={(el) => (this.nativeInput = el)}
+                id={inputId}
+                disabled={disabled}
+                autoCapitalize={this.autocapitalize}
+                autoFocus={this.autofocus}
+                enterKeyHint={this.enterkeyhint}
+                inputMode={this.inputmode}
+                minLength={this.minlength}
+                maxLength={this.maxlength}
+                name={this.name}
+                placeholder={this.placeholder || ''}
+                readOnly={this.readonly}
+                required={this.required}
+                spellcheck={this.spellcheck}
+                cols={this.cols}
+                rows={this.rows}
+                wrap={this.wrap}
+                onInput={this.onInput}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                onKeyDown={this.onKeyDown}
+                {...this.inheritedAttributes}
+              >
+                {value}
+              </textarea>
+            </div>
+            <div class="end-slot-wrapper">
+              <slot name="end"></slot>
+            </div>
           </div>
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>

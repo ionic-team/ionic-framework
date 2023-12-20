@@ -1,9 +1,9 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
-import { matchPath } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
+import { matchPath } from './utils/matchPath';
 
 // TODO(FW-2959): types
 
@@ -433,12 +433,10 @@ export default StackManager;
 function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
   let matchedNode: React.ReactNode;
   React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
-    const matchProps = {
-      exact: child.props.exact,
-      path: child.props.path || child.props.from,
-      component: child.props.component,
-    };
-    const match = matchPath(routeInfo.pathname, matchProps);
+    const match = matchPath({
+      pathname: routeInfo.pathname,
+      componentProps: child.props,
+    });
     if (match) {
       matchedNode = child;
     }
@@ -459,12 +457,11 @@ function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
 }
 
 function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
-  const matchProps = {
-    exact: forceExact ? true : node.props.exact,
-    path: node.props.path || node.props.from,
-    component: node.props.component,
-  };
-  const match = matchPath(pathname, matchProps);
-
-  return match;
+  return matchPath({
+    pathname,
+    componentProps: {
+      ...node.props,
+      exact: forceExact,
+    },
+  });
 }

@@ -1,8 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Range } from '../range';
-import { Item } from '../../item/item';
 
-let sharedRange;
+import { Item } from '../../item/item';
+import { Range } from '../range';
+
+let sharedRange: Range;
+
 describe('Range', () => {
   beforeEach(() => {
     sharedRange = new Range();
@@ -21,7 +23,8 @@ describe('Range', () => {
       ];
 
       valueTests.forEach((test) => {
-        expect(sharedRange.ensureValueInBounds(test[0])).toBe(test[1]);
+        // Casting as any since we are accessing a private API on the range component
+        expect((sharedRange as any).ensureValueInBounds(test[0])).toBe(test[1]);
       });
     });
 
@@ -58,7 +61,8 @@ describe('Range', () => {
       ];
 
       valueTests.forEach((test) => {
-        expect(sharedRange.ensureValueInBounds(test[0])).toEqual(test[1]);
+        // Casting as any since we are accessing a private API on the range component
+        expect((sharedRange as any).ensureValueInBounds(test[0])).toEqual(test[1]);
       });
     });
   });
@@ -73,7 +77,7 @@ describe('range id', () => {
       </ion-range>`,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.getAttribute('id')).toBe('my-custom-range');
   });
 });
@@ -89,7 +93,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(true);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(true);
   });
@@ -104,7 +108,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(true);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
   });
@@ -119,7 +123,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(true);
   });
@@ -134,7 +138,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(true);
   });
@@ -149,7 +153,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(true);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(true);
   });
@@ -164,7 +168,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(true);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(true);
   });
@@ -177,7 +181,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
   });
@@ -191,7 +195,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
   });
@@ -206,7 +210,7 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
   });
@@ -221,8 +225,26 @@ describe('range: item adjustments', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
+    const range = page.body.querySelector('ion-range')!;
     expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
+  });
+
+  describe('shadow parts', () => {
+    it('should have shadow parts', async () => {
+      const page = await newSpecPage({
+        components: [Range],
+        html: `<ion-range pin="true" snaps="true" value="50" label="Label"></ion-range>`,
+      });
+      const range = page.body.querySelector('ion-range')!;
+
+      expect(range).toHaveShadowPart('label');
+      expect(range).toHaveShadowPart('pin');
+      expect(range).toHaveShadowPart('knob');
+      expect(range).toHaveShadowPart('bar');
+      expect(range).toHaveShadowPart('bar-active');
+      expect(range).toHaveShadowPart('tick');
+      expect(range).toHaveShadowPart('tick-active');
+    });
   });
 });

@@ -9,7 +9,7 @@ describe('searchbar: rendering', () => {
       html: '<ion-searchbar name="search"></ion-searchbar>',
     });
 
-    const nativeEl = page.body.querySelector('ion-searchbar input');
+    const nativeEl = page.body.querySelector('ion-searchbar input')!;
     expect(nativeEl.getAttribute('name')).toBe('search');
   });
 });

@@ -15,7 +15,10 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Browser and Platform Support](#version-8x-browser-platform-support)
 - [Components](#version-8x-components)
+  - [Button](#version-8x-button)
   - [Content](#version-8x-content)
+  - [Datetime](#version-8x-datetime)
+  - [Picker](#version-8x-picker)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -44,6 +47,27 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h2 id="version-8x-components">Components</h2>
 
+<h4 id="version-8x-button">Button</h4>
+
+- Button text now wraps by default. If this behavior is not desired, add the `ion-text-nowrap` class from the [CSS Utilities](https://ionicframework.com/docs/layout/css-utilities).
+
 <h4 id="version-8x-content">Content</h4>
 
 - Content no longer sets the `--background` custom property when the `.outer-content` class is set on the host.
+
+<h4 id="version-8x-datetime">Datetime</h4>
+
+- The CSS shadow part for `month-year-button` has been changed to target a `button` element instead of `ion-item`. Developers should verify their UI renders as expected for the month/year toggle button inside of `ion-datetime`.
+   - Developers using the CSS variables available on `ion-item` will need to migrate their CSS to use CSS properties. For example:
+      ```diff
+      ion-datetime::part(month-year-button) {
+      -  --background: red;
+
+      +  background: red;
+      }
+      ```
+<h4 id="version-8x-picker">Picker</h4>
+
+- `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
+  - Only the component names have been changed. Usages such as `ion-picker` or `IonPicker` should be changed to `ion-picker-legacy` and `IonPickerLegacy`, respectively.
+  - Non-component usages such as `pickerController` or `useIonPicker` remain unchanged. The new picker displays inline with your page content and does not have equivalents for these non-component usages. 
