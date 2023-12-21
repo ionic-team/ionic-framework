@@ -8,7 +8,7 @@
 $toggle-ios-width:                     51px !default;
 
 /// @prop - Height of the toggle
-$toggle-ios-height:                    32px !default;
+$toggle-ios-height:                    31px !default;
 
 /// @prop - Border width of the toggle
 $toggle-ios-border-width:              2px !default;
@@ -32,7 +32,7 @@ $toggle-ios-handle-max-height:         calc(100% - (var(--handle-spacing) * 2)) 
 $toggle-ios-handle-border-radius:      $toggle-ios-width * 0.5 !default;
 
 /// @prop - Box shadow of the toggle handle
-$toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .1) !default;
+$toggle-ios-handle-box-shadow:         0 3px 4px rgba(0, 0, 0, .06), 0 3px 8px rgba(0, 0, 0, .06) !default;
 
 /// @prop - Background color of the toggle handle
 $toggle-ios-handle-background-color:   #ffffff !default;
