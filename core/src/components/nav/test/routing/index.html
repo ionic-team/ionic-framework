@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html style="font-size: 36px" lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <title>Nav - Routing</title>
@@ -21,8 +21,12 @@
               <ion-title>Root</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content class="ion-padding">
-            <h1>Root</h1>
+          <ion-content fullscreen="true">
+            <ion-header  collapse="condense">
+              <ion-toolbar>
+                <ion-title size="large">Page Root</ion-title>
+              </ion-toolbar>
+            </ion-header>
             <div>
               <ion-nav-link router-direction="forward" component="page-one">
                 <ion-button class="next">Go to Page One</ion-button>
@@ -38,12 +42,17 @@
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
-                <ion-back-button></ion-back-button>
+                <ion-back-button text=""></ion-back-button>
               </ion-buttons>
               <ion-title>Page One</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content class="ion-padding">
+          <ion-content fullscreen="true">
+          <ion-header  collapse="condense">
+            <ion-toolbar>
+              <ion-title size="large">Page One</ion-title>
+            </ion-toolbar>
+          </ion-header>
             <h1>Page One</h1>
             <ion-nav-link router-direction="forward" component="page-two">
               <ion-button class="next">Go to Page Two</ion-button>
@@ -58,7 +67,7 @@
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
-                <ion-back-button></ion-back-button>
+                <ion-back-button text="Page One"></ion-back-button>
               </ion-buttons>
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
