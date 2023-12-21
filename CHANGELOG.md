@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.3-nightly.20231221](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3-nightly.20231221) (2023-12-21)
+
+
+### Bug Fixes
+
+* **datetime:** selected today button renders correctly on ios ([#28740](https://github.com/ionic-team/ionic-framework/issues/28740)) ([2f99aea](https://github.com/ionic-team/ionic-framework/commit/2f99aeae6f71d5ffd1880f2c549227ecf71becf3))
+* **refresher:** native ios refresher works on iPadOS ([#28620](https://github.com/ionic-team/ionic-framework/issues/28620)) ([e522601](https://github.com/ionic-team/ionic-framework/commit/e5226016a0f0b066a7bd7fc9997f905d3b87fbc4)), closes [#28617](https://github.com/ionic-team/ionic-framework/issues/28617)
+
+
+
+
+
 ## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
 
 
