@@ -1,5 +1,4 @@
 triage:
-  label: triage
   label: "holiday triage"
   removeLabelWhenProjectAssigned: true
   dryRun: false
