@@ -1092,6 +1092,7 @@ export class Datetime implements ComponentInterface {
     const hiddenCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
       if (ev.isIntersecting) {
+        console.log('isIntersecting return early')
         return;
       }
 
@@ -1104,10 +1105,16 @@ export class Datetime implements ComponentInterface {
        * and the scroll area of the calendar grid will be 0.
        * As a result, the wrong month will be shown.
        */
+      console.log('before showMonthAndYear')
       this.showMonthAndYear = false;
+      console.log('after showMonthAndYear')
+
 
       writeTask(() => {
+        console.log('before datetime-ready')
         this.el.classList.remove('datetime-ready');
+        console.log('after datetime-ready')
+
       });
     };
     const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
