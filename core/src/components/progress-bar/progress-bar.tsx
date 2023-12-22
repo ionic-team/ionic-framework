@@ -99,14 +99,7 @@ const renderProgress = (value: number, buffer: number) => {
   const progressSolid = buffer === 1;
 
   return [
-    <div
-      part="progress"
-      class={{
-        progress: true,
-        'progress-solid': progressSolid,
-      }}
-      style={{ transform: `scaleX(${finalValue})` }}
-    ></div>,
+    <div part="progress" class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
     /**
      * Buffer circles with two container to move
      * the circles behind the buffer progress
@@ -122,6 +115,13 @@ const renderProgress = (value: number, buffer: number) => {
         <div part="stream" class="buffer-circles"></div>
       </div>
     </div>,
-    <div part="track" class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
+    <div
+      part="track"
+      class={{
+        'progress-buffer-bar': true,
+        'progress-buffer-bar-solid': progressSolid,
+      }}
+      style={{ transform: `scaleX(${finalBuffer})` }}
+    ></div>,
   ];
 };
