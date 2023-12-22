@@ -1028,7 +1028,6 @@ ion-progress-bar,prop,reversed,boolean,false,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
 ion-progress-bar,prop,value,number,0,false,false
 ion-progress-bar,css-prop,--background
-ion-progress-bar,css-prop,--buffer-background
 ion-progress-bar,css-prop,--progress-background
 ion-progress-bar,part,progress
 ion-progress-bar,part,stream
