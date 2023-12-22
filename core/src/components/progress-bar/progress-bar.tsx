@@ -95,8 +95,18 @@ const renderProgress = (value: number, buffer: number) => {
   const finalValue = clamp(0, value, 1);
   const finalBuffer = clamp(0, buffer, 1);
 
+  // If the progress is displayed as a solid bar.
+  const progressSolid = buffer === 1;
+
   return [
-    <div part="progress" class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
+    <div
+      part="progress"
+      class={{
+        progress: true,
+        'progress-solid': progressSolid,
+      }}
+      style={{ transform: `scaleX(${finalValue})` }}
+    ></div>,
     /**
      * Buffer circles with two container to move
      * the circles behind the buffer progress
