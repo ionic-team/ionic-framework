@@ -4,56 +4,53 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
 
 - [Contributing Etiquette](#contributing-etiquette)
 - [Creating an Issue](#creating-an-issue)
-  * [Creating a Good Code Reproduction](#creating-a-good-code-reproduction)
+  - [Creating a Good Code Reproduction](#creating-a-good-code-reproduction)
 - [Creating a Pull Request](#creating-a-pull-request)
-  * [Requirements](#requirements)
-  * [Setup](#setup)
-  * [Core](#core)
-    + [Modifying Components](#modifying-components)
-    + [Preview Changes](#preview-changes)
-    + [Lint Changes](#lint-changes)
-    + [Modifying Documentation](#modifying-documentation)
-    + [Modifying Tests](#modifying-tests)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+  - [Core](#core)
+    - [Modifying Components](#modifying-components)
+    - [Preview Changes](#preview-changes)
+    - [Lint Changes](#lint-changes)
+    - [Modifying Documentation](#modifying-documentation)
+    - [Modifying Tests](#modifying-tests)
       - [Screenshot Tests](#screenshot-tests)
-    + [Building Changes](#building-changes)
-  * [Angular, React, and Vue](#angular-react-and-vue)
-    + [Modifying Files](#modifying-files)
-    + [Preview Changes](#preview-changes-1)
-    + [Lint Changes](#lint-changes-1)
-    + [Modifying Tests](#modifying-tests-1)
-    + [Building Changes](#building-changes-1)
-  * [Submit Pull Request](#submit-pull-request)
+    - [Building Changes](#building-changes)
+  - [Angular, React, and Vue](#angular-react-and-vue)
+    - [Modifying Files](#modifying-files)
+    - [Preview Changes](#preview-changes-1)
+    - [Lint Changes](#lint-changes-1)
+    - [Modifying Tests](#modifying-tests-1)
+    - [Building Changes](#building-changes-1)
+  - [Submit Pull Request](#submit-pull-request)
 - [Commit Message Guidelines](#commit-message-guidelines)
-  * [Commit Message Format](#commit-message-format)
-  * [Revert](#revert)
-  * [Type](#type)
-  * [Scope](#scope)
-  * [Subject](#subject)
-  * [Body](#body)
-  * [Footer](#footer)
-  * [Examples](#examples)
+  - [Commit Message Format](#commit-message-format)
+  - [Revert](#revert)
+  - [Type](#type)
+  - [Scope](#scope)
+  - [Subject](#subject)
+  - [Body](#body)
+  - [Footer](#footer)
+  - [Examples](#examples)
 - [License](#license)
-
 
 ## Contributing Etiquette
 
 Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic-framework/blob/main/CODE_OF_CONDUCT.md) for information on our rules of conduct.
 
-
 ## Creating an Issue
 
-* If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Discord](https://ionic.link/discord).
+- If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Discord](https://ionic.link/discord).
 
-* It is required that you clearly describe the steps necessary to reproduce the issue you are running into. Although we would love to help our users as much as possible, diagnosing issues without clear reproduction steps is extremely time-consuming and simply not sustainable.
+- It is required that you clearly describe the steps necessary to reproduce the issue you are running into. Although we would love to help our users as much as possible, diagnosing issues without clear reproduction steps is extremely time-consuming and simply not sustainable.
 
-* The issue list of this repository is exclusively for bug reports and feature requests. Non-conforming issues will be closed immediately.
+- The issue list of this repository is exclusively for bug reports and feature requests. Non-conforming issues will be closed immediately.
 
-* Issues with no clear steps to reproduce will not be triaged. If an issue is labeled with "needs: reply" and receives no further replies from the author of the issue for more than 14 days, it will be closed.
+- Issues with no clear steps to reproduce will not be triaged. If an issue is labeled with "needs: reply" and receives no further replies from the author of the issue for more than 14 days, it will be closed.
 
-* If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/ionic-team/ionic-framework/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
+- If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/ionic-team/ionic-framework/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
 
-* Next, [create a new issue](https://github.com/ionic-team/ionic-framework/issues/new/choose) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
-
+- Next, [create a new issue](https://github.com/ionic-team/ionic-framework/issues/new/choose) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
 
 ## Creating a Good Code Reproduction
 
@@ -69,42 +66,42 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 ### How to Create a Reproduction
 
-* Create a new Ionic application using one of our starter templates. The `blank` starter application is a great choice for this. You can create one using the following Ionic CLI command: `ionic start myApp blank`
-* Add the minimum amount of code needed to recreate the issue you are experiencing. Do not include anything that is not required to reproduce the issue. This includes any 3rd party plugins you have installed.
-* Publish the application on GitHub and include a link to it when [creating an issue](#creating-an-issue).
-* Be sure to include steps to reproduce the issue. These steps should be clear and easy to follow.
+- Create a new Ionic application using one of our starter templates. The `blank` starter application is a great choice for this. You can create one using the following Ionic CLI command: `ionic start myApp blank`
+- Add the minimum amount of code needed to recreate the issue you are experiencing. Do not include anything that is not required to reproduce the issue. This includes any 3rd party plugins you have installed.
+- Publish the application on GitHub and include a link to it when [creating an issue](#creating-an-issue).
+- Be sure to include steps to reproduce the issue. These steps should be clear and easy to follow.
 
 ### Benefits of Creating a Reproduction
 
-* **Uses the latest version of Ionic:** By creating a new Ionic application, you are ensuring that you are testing against the latest version of the framework. Sometimes the issues you are experiencing have already been resolved in a newer version of the framework!
-* **Minimal surface area:** By removing code that is not needed in order to reproduce the issue, it makes it easier to identify the cause of the issue.
-* **No secret code needed:** Creating a minimal reproduction of the issue prevents you from having to publish any proprietary code used in your project.
-* **Get help fixing the issue:** If we can reliably reproduce an issue, there is a good chance we will be able to address it.
-
+- **Uses the latest version of Ionic:** By creating a new Ionic application, you are ensuring that you are testing against the latest version of the framework. Sometimes the issues you are experiencing have already been resolved in a newer version of the framework!
+- **Minimal surface area:** By removing code that is not needed in order to reproduce the issue, it makes it easier to identify the cause of the issue.
+- **No secret code needed:** Creating a minimal reproduction of the issue prevents you from having to publish any proprietary code used in your project.
+- **Get help fixing the issue:** If we can reliably reproduce an issue, there is a good chance we will be able to address it.
 
 ## Creating a Pull Request
 
 Before creating a pull request, please read our requirements that explains the minimal details to have your PR considered and merged into the codebase.
 
 ### Requirements
+
 1. PRs must reference an existing issue that describes the issue or feature being submitted.
 2. PRs must have a reproduction app or the issue must include a reproduction app to verify changes against.
 3. PRs must include tests covering the changed behavior or a description of why tests cannot be written.
 
 > Note: We appreciate you taking the time to contribute! Before submitting a pull request, please take the time to comment on the issue you are wanting to resolve. This helps us prevent duplicate effort or advise if the team is already addressing the issue.
 
-* Looking for an issue to fix? Look through our issues with the [help wanted](https://github.com/ionic-team/ionic-framework/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
+- Looking for an issue to fix? Look through our issues with the [help wanted](https://github.com/ionic-team/ionic-framework/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
 
 ### Setup
 
-1. [Download the installer](https://nodejs.org/) for the LTS version of Node.js. This is the best way to also [install npm](https://blog.npmjs.org/post/85484771375/how-to-install-npm#_=_).
-2. Fork this repository.
-3. Clone your fork.
-4. Create a new branch from main for your change.
-5. Navigate into the directory of the package you wish to modify (core, angular, etc.).
-6. Run `npm install` to install dependencies for this package.
-7. Follow the steps for the specific package below.
-
+1. [Download the installer](https://nodejs.org/) for the LTS version of Node.js.
+2. Install pnpm following the [installation instructions](https://pnpm.io/installation).
+3. Fork this repository.
+4. Clone your fork.
+5. Create a new branch from main for your change.
+6. Navigate into the directory of the package you wish to modify (core, angular, etc.).
+7. Run `pnpm install` to install dependencies for this package.
+8. Follow the steps for the specific package below.
 
 ### Core
 
@@ -120,12 +117,11 @@ Before creating a pull request, please read our requirements that explains the m
 8. After the build is finished, commit the changes. Please follow the [commit message format](#commit-message-format) for every commit.
 9. [Submit a Pull Request](#submit-pull-request) of your changes.
 
-
 #### Preview Changes
 
 ##### Previewing in this repository
 
-1. Run `npm start` from within the `core` directory.
+1. Run `pnpm start` from within the `core` directory.
 2. A browser should open at `http://localhost:3333/`.
 3. From here, navigate to one of the component's tests to preview your changes.
 4. If a test showing your change doesn't exist, [add a new test or update an existing one](#modifying-tests).
@@ -133,7 +129,7 @@ Before creating a pull request, please read our requirements that explains the m
 
 ##### Previewing in an external app
 
-We can use `npm pack` to test Ionic Framework changes in an external app outside of this repository. Follow the below steps based on your framework.
+We can use `pnpm pack` to test Ionic Framework changes in an external app outside of this repository. Follow the below steps based on your framework.
 
 ###### JavaScript
 
@@ -141,17 +137,16 @@ Run the following commands to build the core directory and pack the changes:
 
 ```bash
 cd core
-npm i
-npm run build
-npm pack --pack-destination ~
+pnpm install
+pnpm build
+pnpm pack --pack-destination ~
 ```
 
 Then, in your Ionic Framework JavaScript app, run the following command to use the built package with the `.tgz` file that was created:
 
 ```bash
-npm install file:/~/ionic-core-7.0.1.tgz
+pnpm install file:/~/ionic-core-7.0.1.tgz
 ```
-
 
 ###### Angular
 
@@ -159,26 +154,23 @@ Run the following commands to build the core & angular directories and pack the 
 
 ```bash
 cd core
-npm i
-npm run build
-npm pack --pack-destination ~
+pnpm install
+pnpm build
+pnpm pack --pack-destination ~
 
 cd ../packages/angular
-npm i
-npm run sync
-npm run build
+pnpm build
 cd dist/
-npm pack --pack-destination ~
+pnpm pack --pack-destination ~
 ```
 
 Then, in your Ionic Framework Angular app, run the following commands to use the built packages with the `.tgz` files that were created:
 
 ```bash
 rm -rf .angular/
-npm install file:/~/ionic-core-7.0.1.tgz
-npm install file:/~/ionic-angular-7.0.1.tgz
+pnpm install file:/~/ionic-core-7.0.1.tgz
+pnpm install file:/~/ionic-angular-7.0.1.tgz
 ```
-
 
 ###### React
 
@@ -186,31 +178,26 @@ Run the following commands to build the core & react directories and pack the ch
 
 ```bash
 cd core
-npm i
-npm run build
-npm pack --pack-destination ~
+pnpm install
+pnpm build
+pnpm pack --pack-destination ~
 
 cd ../packages/react
-npm i
-npm run sync
-npm run build
-npm pack --pack-destination ~
+pnpm build
+pnpm pack --pack-destination ~
 
 cd ../react-router
-npm i
-npm run sync
-npm run build
-npm pack --pack-destination ~
+pnpm build
+pnpm pack --pack-destination ~
 ```
 
 Then, in your Ionic Framework React app, run the following commands to use the built packages with the `.tgz` files that were created:
 
 ```bash
-npm install file:/~/ionic-core-7.0.1.tgz
-npm install file:/~/ionic-react-7.0.1.tgz
-npm install file:/~/ionic-react-router-7.0.1.tgz
+pnpm install file:/~/ionic-core-7.0.1.tgz
+pnpm install file:/~/ionic-react-7.0.1.tgz
+pnpm install file:/~/ionic-react-router-7.0.1.tgz
 ```
-
 
 ##### Vue
 
@@ -218,50 +205,43 @@ Run the following commands to build the core & vue directories and pack the chan
 
 ```bash
 cd core
-npm i
-npm run build
-npm pack --pack-destination ~
+pnpm install
+pnpm build
+pnpm pack --pack-destination ~
 
 cd ../packages/vue
-npm i
-npm run sync
-npm run build
-npm pack --pack-destination ~
+pnpm build
+pnpm pack --pack-destination ~
 
 cd ../vue-router
-npm i
-npm run sync
-npm run build
-npm pack --pack-destination ~
+pnpm build
+pnpm pack --pack-destination ~
 ```
 
 Then, in your Ionic Framework Vue app, run the following commands to use the built packages with the `.tgz` files that were created:
 
 ```bash
-npm install file:/~/ionic-core-7.0.1.tgz
-npm install file:/~/ionic-vue-7.0.1.tgz
-npm install file:/~/ionic-vue-router-7.0.1.tgz
+pnpm install file:/~/ionic-core-7.0.1.tgz
+pnpm install file:/~/ionic-vue-7.0.1.tgz
+pnpm install file:/~/ionic-vue-router-7.0.1.tgz
 ```
-
 
 #### Lint Changes
 
-1. Run `npm run lint` to lint the TypeScript and Sass.
-2. If there are lint errors, run `npm run lint.fix` to automatically fix any errors. Repeat step 1 to ensure the errors have been fixed, and manually fix them if not.
-3. To lint and fix only TypeScript errors, run `npm run lint.ts` and `npm run lint.ts.fix`, respectively.
-4. To lint and fix only Sass errors, run `npm run lint.sass` and `npm run lint.sass.fix`, respectively.
-
+1. Run `pnpm lint` to lint the TypeScript and Sass.
+2. If there are lint errors, run `pnpm lint.fix` to automatically fix any errors. Repeat step 1 to ensure the errors have been fixed, and manually fix them if not.
+3. To lint and fix only TypeScript errors, run `pnpm lint.ts` and `pnpm lint.ts.fix`, respectively.
+4. To lint and fix only Sass errors, run `pnpm lint.sass` and `pnpm lint.sass.fix`, respectively.
 
 #### Modifying Documentation
 
 - Changes to manually written documentation should be made in the `ionic-docs` repo: https://github.com/ionic-team/ionic-docs/tree/main/docs
   - In your `ionic-docs` PR, please add a link back to the related `ionic-framework` PR.
 - Changes to auto generated documentation should be made in the `ionic-framework` repo. These can be done in the same PR as your fix or feature.
-  - Run `npm run build` and commit all updates to ensure your changes make it into the generated documentation.
+  - Run `pnpm build` and commit all updates to ensure your changes make it into the generated documentation.
   - `Usage`: update the component's usage examples in the component's `usage/` directory.
   - `Properties`, `Events`, or `Methods`: update the component's TypeScript file (`*.tsx`).
   - `CSS Custom Properties`: update the component's main Sass file (`*.scss`).
-
 
 #### Modifying Tests
 
@@ -277,15 +257,14 @@ See [Ionic's E2E testing guide](../core/src/utils/test/playwright/docs/README.md
 1. If the test exists in screenshot, there will be a file named `e2e.ts` in the directory of the test.
 2. A screenshot test can be added by including this file and adding one or more `test()` calls that include a call to `page.compareScreenshot()`. See [Stencil end-to-end testing](https://stenciljs.com/docs/end-to-end-testing) and existing tests in `core/` for examples.
 3. **Important:** each `test()` should have only one screenshot (`page.compareScreenshot()`) call **or** it should check the expect at the end of each test. If there is a mismatch it will fail the test which will prevent the rest of the test from running, i.e. if the first screenshot fails the remaining screenshot calls would not be called _unless_ they are in a separate test or all of the expects are called at the end.
-4. To run screenshot locally, use the following command: `npm run test.screenshot`.
-    - To run screenshot for a specific test, pass the path to the test or a string to search for.
-    - For example, running all `alert` tests: `npm run test.screenshot alert`.
-    - Or, running the basic `alert` tests: `npm run test.screenshot src/components/alert/test/basic/e2e.ts`.
-
+4. To run screenshot locally, use the following command: `pnpm test.screenshot`.
+   - To run screenshot for a specific test, pass the path to the test or a string to search for.
+   - For example, running all `alert` tests: `pnpm test.screenshot alert`.
+   - Or, running the basic `alert` tests: `pnpm test.screenshot src/components/alert/test/basic/e2e.ts`.
 
 #### Building Changes
 
-1. Once all changes have been made and the documentation has been updated, run `npm run build` inside of the `core` directory. This will add your changes to any auto-generated files, if necessary.
+1. Once all changes have been made and the documentation has been updated, run `pnpm build` inside of the `core` directory. This will add your changes to any auto-generated files, if necessary.
 2. Review the changes and, if everything looks correct, [commit](#commit-message-format) the changes.
 3. Make sure the build has finished before committing. If you made changes to the documentation, properties, methods, or anything else that requires an update to a generate file, this needs to be committed.
 4. After the changes have been pushed, publish the branch and [create a pull request](#creating-a-pull-request).
@@ -295,25 +274,26 @@ See [Ionic's E2E testing guide](../core/src/utils/test/playwright/docs/README.md
 #### Modifying Files
 
 1. Locate the files inside the relevant root directory:
-  - Angular: [`/packages/angular/src`](/packages/angular/src)
-  - React: [`/packages/react/src`](/packages/react/src)
-  - Vue: [`/packages/vue/src`](/packages/vue/src)
+
+- Angular: [`/packages/angular/src`](/packages/angular/src)
+- React: [`/packages/react/src`](/packages/react/src)
+- Vue: [`/packages/vue/src`](/packages/vue/src)
+
 2. Make your changes to the files. If the change is overly complex or out of the ordinary, add comments so we can understand the changes.
 3. Run lint on the directory and make sure there are no errors.
 4. Build the project.
 5. After the build is finished, commit the changes. Please follow the [commit message format](#commit-message-format) for every commit.
 6. [Submit a Pull Request](#submit-pull-request) of your changes.
 
-
-
 #### Preview Changes
 
 ##### Previewing in this repository
 
 Follow the steps in the test directory for each framework:
-  - Angular: [`/packages/angular/test`](/packages/angular/test/README.md)
-  - React: [`/packages/react/test`](/packages/react/test/README.md)
-  - Vue: [`/packages/vue/test`](/packages/vue/test/README.md)
+
+- Angular: [`/packages/angular/test`](/packages/angular/test/README.md)
+- React: [`/packages/react/test`](/packages/react/test/README.md)
+- Vue: [`/packages/vue/test`](/packages/vue/test/README.md)
 
 ##### Previewing in an external app
 
@@ -321,25 +301,29 @@ Follow the steps to [preview changes in core](#preview-changes).
 
 #### Lint Changes
 
-1. Run `npm run lint` to lint the TypeScript in the relevant directory:
-  - Angular: [`/packages/angular/src`](/packages/angular/src)
-  - React: [`/packages/react/src`](/packages/react/src)
-  - Vue: [`/packages/vue/src`](/packages/vue/src)
-2. If there are lint errors, run `npm run lint.fix` to automatically fix any errors. Repeat step 1 to ensure the errors have been fixed, and manually fix them if not.
+1. Run `pnpm lint` to lint the TypeScript in the relevant directory:
+
+- Angular: [`/packages/angular/src`](/packages/angular/src)
+- React: [`/packages/react/src`](/packages/react/src)
+- Vue: [`/packages/vue/src`](/packages/vue/src)
+
+2. If there are lint errors, run `pnpm lint.fix` to automatically fix any errors. Repeat step 1 to ensure the errors have been fixed, and manually fix them if not.
 
 #### Modifying Tests
 
 1. Locate the e2e test to modify inside the relevant test app directory:
-  - Angular: [`/packages/angular/test/base/e2e/src`](/packages/angular/test/base/e2e/src)
-  - React: [`/packages/react/test/base/tests/e2e/specs`](/packages/react/test/base/tests/e2e/specs)
-  - Vue: [`/packages/vue/test/base/tests/e2e/specs`](/packages/vue/test/base/tests/e2e/specs)
+
+- Angular: [`/packages/angular/test/base/e2e/src`](/packages/angular/test/base/e2e/src)
+- React: [`/packages/react/test/base/tests/e2e/specs`](/packages/react/test/base/tests/e2e/specs)
+- Vue: [`/packages/vue/test/base/tests/e2e/specs`](/packages/vue/test/base/tests/e2e/specs)
+
 2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.
 3. If a new test is needed, copy an existing test, rename it, and edit the content in the test file.
-4. Run `npm run test` to run your tests.
+4. Run `pnpm test` to run your tests.
 
 #### Building Changes
 
-1. Once all changes have been made, run `npm run build` inside of the package's root directory. This will add your changes to any auto-generated files, if necessary.
+1. Once all changes have been made, run `pnpm build` inside of the package's root directory. This will add your changes to any auto-generated files, if necessary.
 2. Review the changes and, if everything looks correct, [commit](#commit-message-format) the changes.
 3. Make sure the build has finished before committing. If you made changes to the documentation, properties, methods, or anything else that requires an update to a generate file, this needs to be committed.
 4. After the changes have been pushed, publish the branch and [create a pull request](#creating-a-pull-request).
@@ -356,14 +340,13 @@ The team has an internal design process for new Ionic features, which must be co
 
 To expedite the process, please ensure that all feature PRs have an associated issue created, with a clear use case for why the feature should be added to Ionic.
 
-
 ## Commit Message Guidelines
 
 We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic-framework/blob/main/CHANGELOG.md). Our format closely resembles Angular's [commit message guidelines](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit).
 
 ### Commit Message Format
 
-We follow the [Conventional Commits specification](https://www.conventionalcommits.org/). A commit message consists of a **header**, **body** and **footer**.  The header has a **type**, **scope** and **subject**:
+We follow the [Conventional Commits specification](https://www.conventionalcommits.org/). A commit message consists of a **header**, **body** and **footer**. The header has a **type**, **scope** and **subject**:
 
 ```
 <type>(<scope>): <subject>
@@ -385,14 +368,14 @@ If the prefix is `feat`, `fix` or `perf`, it will appear in the changelog. Howev
 
 Must be one of the following:
 
-* **feat**: A new feature
-* **fix**: A bug fix
-* **docs**: Documentation only changes
-* **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-* **refactor**: A code change that neither fixes a bug nor adds a feature
-* **perf**: A code change that improves performance
-* **test**: Adding missing tests
-* **chore**: Changes to the build process or auxiliary tools and libraries such as documentation generation
+- **feat**: A new feature
+- **fix**: A bug fix
+- **docs**: Documentation only changes
+- **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **perf**: A code change that improves performance
+- **test**: Adding missing tests
+- **chore**: Changes to the build process or auxiliary tools and libraries such as documentation generation
 
 ### Scope
 
@@ -402,12 +385,12 @@ The scope can be anything specifying place of the commit change. Usually it will
 
 The subject contains succinct description of the change:
 
-* use the imperative, present tense: "change" not "changed" nor "changes"
-* do not capitalize first letter
-* do not place a period `.` at the end
-* entire length of the commit message must not go over 50 characters
-* describe what the commit does, not what issue it relates to or fixes
-* **be brief, yet descriptive** - we should have a good understanding of what the commit does by reading the subject
+- use the imperative, present tense: "change" not "changed" nor "changes"
+- do not capitalize first letter
+- do not place a period `.` at the end
+- entire length of the commit message must not go over 50 characters
+- describe what the commit does, not what issue it relates to or fixes
+- **be brief, yet descriptive** - we should have a good understanding of what the commit does by reading the subject
 
 ### Body
 
@@ -468,7 +451,6 @@ revert: feat(skeleton-text): add animated property
 
 This reverts commit 667ecc1654a317a13331b17617d973392f415f02.
 ```
-
 
 ## License
 
