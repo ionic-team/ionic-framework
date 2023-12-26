@@ -82,6 +82,6 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
       }
     });
 
-    await page.goto(`${baseUrl}#`, options);
+    await page.goto(`${baseUrl}#`, { ...options, inline: true } as E2EPageOptions);
   }
 };
