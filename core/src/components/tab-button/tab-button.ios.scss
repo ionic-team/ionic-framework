@@ -140,6 +140,12 @@
   @include position(10px, null, null, null);
 }
 
+// Icon
 :host(.tab-layout-label-hide) ::slotted(ion-icon) {
   @include margin(0);
+}
+
+:host(.tab-layout-label-hide) ::slotted(ion-icon),
+:host(.tab-has-icon-only) ::slotted(ion-icon) {
+  font-size: $tab-button-ios-icon-only-size;
 }
