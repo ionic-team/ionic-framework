@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@ionic/react": "file:../../../",
-    "@ionic/react-router": "file:../../../../react-router",
+    "@ionic/react": "workspace:*",
+    "@ionic/react-router": "workspace:*",
     "@types/jest": "27.5.2",
     "ionicons": "^7.0.0",
     "react": "^18.2.0",
@@ -45,5 +45,9 @@
   "description": "An Ionic project",
   "engines": {
     "node": ">= 16"
+  },
+  "resolutions": {
+    "@types/react": "^18.0.27",
+    "react": "^18.2.0"
   }
 }
