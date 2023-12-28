@@ -29,7 +29,7 @@
     "@types/react-dom": "^18.0.10",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
-    "@vitejs/plugin-legacy": "^4.0.2",
+    "@vitejs/plugin-legacy": "^5.0.0",
     "@vitejs/plugin-react": "^4.0.1",
     "concurrently": "^6.3.0",
     "cypress": "^13.2.0",
@@ -38,7 +38,7 @@
     "jsdom": "^22.1.0",
     "serve": "^14.0.1",
     "typescript": "^5.1.6",
-    "vite": "^4.3.9",
+    "vite": "^5.0.0",
     "vitest": "^0.32.2",
     "wait-on": "^6.0.0"
   },
