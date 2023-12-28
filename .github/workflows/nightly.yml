@@ -1,11 +1,5 @@
 name: 'Ionic Nightly Build'
 
-on:
-  schedule:
-    # Run every Monday-Friday
-    # at 6:00 UTC (6:00 am UTC)
-    - cron: '00 06 * * 1-5'
-
 jobs:
   create-nightly-hash:
     runs-on: ubuntu-latest

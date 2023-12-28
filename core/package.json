@@ -32,12 +32,12 @@
   ],
   "dependencies": {
     "@stencil/core": "^4.8.2",
-    "ionicons": "^7.2.1",
+    "ionicons": "^7.2.2",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.8.2",
-    "@capacitor/core": "^5.5.1",
+    "@capacitor/core": "^5.6.0",
     "@capacitor/haptics": "^5.0.6",
     "@capacitor/keyboard": "^5.0.7",
     "@capacitor/status-bar": "^5.0.6",
@@ -49,7 +49,7 @@
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.8.3",
     "@stencil/react-output-target": "^0.5.3",
-    "@stencil/sass": "^3.0.7",
+    "@stencil/sass": "^3.0.8",
     "@stencil/vue-output-target": "^0.8.7",
     "@types/jest": "^27.5.2",
     "@types/node": "^14.6.0",

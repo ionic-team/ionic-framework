@@ -341,6 +341,9 @@ export class Datetime implements ComponentInterface {
    * dates are selected. Only used if there are 0 or more than 1
    * selected (i.e. unused for exactly 1). By default, the header
    * text is set to "numberOfDates days".
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
 
