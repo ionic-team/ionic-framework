@@ -21,8 +21,8 @@ importers:
         specifier: ^4.8.2
         version: 4.9.0
       ionicons:
-        specifier: ^7.2.1
-        version: 7.2.1
+        specifier: ^7.2.2
+        version: 7.2.2
       tslib:
         specifier: ^2.1.0
         version: 2.4.0
@@ -31,17 +31,17 @@ importers:
         specifier: ^4.8.2
         version: 4.8.2(playwright-core@1.39.0)
       '@capacitor/core':
-        specifier: ^5.5.1
-        version: 5.5.1
+        specifier: ^5.6.0
+        version: 5.6.0
       '@capacitor/haptics':
         specifier: ^5.0.6
-        version: 5.0.6(@capacitor/core@5.5.1)
+        version: 5.0.6(@capacitor/core@5.6.0)
       '@capacitor/keyboard':
         specifier: ^5.0.7
-        version: 5.0.7(@capacitor/core@5.5.1)
+        version: 5.0.7(@capacitor/core@5.6.0)
       '@capacitor/status-bar':
         specifier: ^5.0.6
-        version: 5.0.6(@capacitor/core@5.5.1)
+        version: 5.0.6(@capacitor/core@5.6.0)
       '@ionic/eslint-config':
         specifier: ^0.3.0
         version: 0.3.0(eslint@7.32.0)(typescript@4.7.4)
@@ -67,8 +67,8 @@ importers:
         specifier: ^0.5.3
         version: 0.5.3(@stencil/core@4.9.0)
       '@stencil/sass':
-        specifier: ^3.0.7
-        version: 3.0.7(@stencil/core@4.9.0)
+        specifier: ^3.0.8
+        version: 3.0.8(@stencil/core@4.9.0)
       '@stencil/vue-output-target':
         specifier: ^0.8.7
         version: 0.8.7(@stencil/core@4.9.0)
@@ -1513,34 +1513,34 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@capacitor/core@5.5.1:
-    resolution: {integrity: sha512-VG6Iv8Q7ZAbvjodxpvjcSe0jfxUwZXnvjbi93ehuJ6eYP8U926qLSXyrT/DToZq+F6v/HyGyVgn3mrE/9jW2Tg==}
+  /@capacitor/core@5.6.0:
+    resolution: {integrity: sha512-xJhCOUGPHw0QYDA3YH+CmL6qiV9DH4Ij3yPxSenymjrtLuXI197u9ddCZwGEwgVIkh9kGZBBKzsNkn89SZ2gdQ==}
     dependencies:
-      tslib: 2.4.0
+      tslib: 2.6.2
     dev: true
 
-  /@capacitor/haptics@5.0.6(@capacitor/core@5.5.1):
+  /@capacitor/haptics@5.0.6(@capacitor/core@5.6.0):
     resolution: {integrity: sha512-UrMcR7p2X10ql4VLlowUuH/VckTeu0lj+RQpekxox14uxDmu5AGIFDK/iDTi8W6QZkxTJRZK6sbCjgwYgNJ7Pw==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:
-      '@capacitor/core': 5.5.1
+      '@capacitor/core': 5.6.0
     dev: true
 
-  /@capacitor/keyboard@5.0.7(@capacitor/core@5.5.1):
+  /@capacitor/keyboard@5.0.7(@capacitor/core@5.6.0):
     resolution: {integrity: sha512-+6lW8z2nXTM2NOG7D7pOasCfIGicz26+EeDRXIj5AtJibbjwtE1Q5GIY+qGHgzpmwOF0qmcrGJBz4zagDwUapg==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:
-      '@capacitor/core': 5.5.1
+      '@capacitor/core': 5.6.0
     dev: true
 
-  /@capacitor/status-bar@5.0.6(@capacitor/core@5.5.1):
+  /@capacitor/status-bar@5.0.6(@capacitor/core@5.6.0):
     resolution: {integrity: sha512-7od8CxsBnot1XMK3IeOkproFL4hgoKoWAc3pwUvmDOkQsXoxwQm4SR9mLwQavv1XfxtHbFV9Ukd7FwMxOPSViw==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:
-      '@capacitor/core': 5.5.1
+      '@capacitor/core': 5.6.0
     dev: true
 
   /@cnakazawa/watch@1.0.4:
@@ -4022,8 +4022,8 @@ packages:
       '@stencil/core': 4.9.0
     dev: true
 
-  /@stencil/sass@3.0.7(@stencil/core@4.9.0):
-    resolution: {integrity: sha512-HcBjrh2CJ6aJnkOrBNSVyf1+x3FnUneYFk44rcx/jDK6Lx7R4w0dXMEsIR5MXqtROYWonZt7WtR8wsM1vcD+6w==}
+  /@stencil/sass@3.0.8(@stencil/core@4.9.0):
+    resolution: {integrity: sha512-QJUG4Dr/b3wSizViwQXorrk1PJzxOsKkq5hSqtUHc3NNG3iomC4DQFYGeu15yNfoCDBtt4qkyHSCynsekQ8F6A==}
     engines: {node: '>=12.0.0', npm: '>=6.0.0'}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3.0.0-beta.0 || >= 4.0.0-beta.0 || >= 4.0.0'
@@ -8154,7 +8154,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.8.4)
+      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       debug: 3.2.7
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.9
@@ -8321,7 +8321,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.8.4)
+      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.2
@@ -9989,8 +9989,8 @@ packages:
       '@stencil/core': 2.22.3
     dev: false
 
-  /ionicons@7.2.1:
-    resolution: {integrity: sha512-2pvCM7DGVEtbbj48PJzQrCADCQrqjU1nUYX9l9PyEWz3ZfdnLdAouqwPxLdl8tbaF9cE7OZRSlyQD7oLOLnGoQ==}
+  /ionicons@7.2.2:
+    resolution: {integrity: sha512-I3iYIfc9Q9FRifWyFSwTAvbEABWlWY32i0sAVDDPGYnaIZVugkLCZFbEcrphW6ixVPg8tt1oLwalo/JJwbEqnA==}
     dependencies:
       '@stencil/core': 4.9.0
     dev: false
