@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
+
+
+### Bug Fixes
+
+* **datetime:** selected today button renders correctly on ios ([#28740](https://github.com/ionic-team/ionic-framework/issues/28740)) ([2f99aea](https://github.com/ionic-team/ionic-framework/commit/2f99aeae6f71d5ffd1880f2c549227ecf71becf3))
+* **nav, router-outlet:** ios page transition does not cover menu on larger screens ([#28745](https://github.com/ionic-team/ionic-framework/issues/28745)) ([878eec6](https://github.com/ionic-team/ionic-framework/commit/878eec6ea21d76586466d01e13e5e842e69eaceb)), closes [#28737](https://github.com/ionic-team/ionic-framework/issues/28737)
+* **radio-group:** radio disabled prop can be undefined ([#28712](https://github.com/ionic-team/ionic-framework/issues/28712)) ([75ffeee](https://github.com/ionic-team/ionic-framework/commit/75ffeee933ae353d2601670178896116c81923e0)), closes [#28677](https://github.com/ionic-team/ionic-framework/issues/28677)
+* **refresher:** native ios refresher works on iPadOS ([#28620](https://github.com/ionic-team/ionic-framework/issues/28620)) ([e522601](https://github.com/ionic-team/ionic-framework/commit/e5226016a0f0b066a7bd7fc9997f905d3b87fbc4)), closes [#28617](https://github.com/ionic-team/ionic-framework/issues/28617)
+
+
+
+
+
 ## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
 
 
