@@ -78,12 +78,17 @@ jobs:
     needs: [finalize-release]
     runs-on: ubuntu-latest
     steps:
+      # This ensures the local version of Lerna is installed
+      # and that we do not use the global Lerna version
+      - name: Install root dependencies
+        run: npm ci
+        shell: bash
       # Lerna does not automatically bump versions
       # of Ionic dependencies that have changed,
       # so we do that here.
       - name: Bump Package Lock
         run: |
-          lerna exec "npm install --package-lock-only"
+          npx lerna exec "npm install --package-lock-only"
           git add .
           git commit -m "chore(): update package lock files"
           git push
