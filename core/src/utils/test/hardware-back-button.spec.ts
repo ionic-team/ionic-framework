@@ -75,6 +75,21 @@ describe('Experimental Close Watcher', () => {
 
     expect(mockAPI.mock.calls).toHaveLength(1);
   });
+  test('Close Watcher should dispatch ionBackButton events', () => {
+    const mockAPI = mockCloseWatcher();
+
+    config.reset({ experimentalCloseWatcher: true });
+
+    startHardwareBackButton();
+
+    const cbSpy = jest.fn();
+    document.addEventListener('ionBackButton', cbSpy);
+
+    // Call onclose on Ionic's instance of CloseWatcher
+    mockAPI.getMockImplementation()!().onclose();
+
+    expect(cbSpy).toHaveBeenCalled();
+  });
 });
 
 const mockCloseWatcher = () => {
@@ -89,7 +104,7 @@ const mockCloseWatcher = () => {
   (win as any).CloseWatcher = mockCloseWatcher;
 
   return mockCloseWatcher;
-};
+}
 
 const dispatchBackButtonEvent = () => {
   const ev = new Event('backbutton');
