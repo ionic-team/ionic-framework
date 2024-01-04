@@ -16,7 +16,7 @@ export interface SpinnerData {
   y2?: number;
   cx?: number;
   cy?: number;
-  style: { [key: string]: string | undefined; };
+  style: { [key: string]: string | undefined };
   viewBox?: string;
   transform?: string;
 }

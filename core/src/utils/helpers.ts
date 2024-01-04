@@ -22,7 +22,7 @@ export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0)
  */
 const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
-  let animationTimeout: number | undefined;
+  let animationTimeout: any;
   const opts: AddEventListenerOptions = { passive: true };
   const ANIMATION_FALLBACK_TIMEOUT = 500;
 

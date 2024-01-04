@@ -112,7 +112,7 @@ export class SplitPane implements ComponentInterface {
       return;
     }
 
-    if (window.matchMedia) {
+    if ((window as any).matchMedia) {
       // Listen on media query
       const callback = (q: MediaQueryList) => {
         this.visible = q.matches;
