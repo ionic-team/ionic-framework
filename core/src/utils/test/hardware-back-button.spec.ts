@@ -104,7 +104,7 @@ const mockCloseWatcher = () => {
   (win as any).CloseWatcher = mockCloseWatcher;
 
   return mockCloseWatcher;
-}
+};
 
 const dispatchBackButtonEvent = () => {
   const ev = new Event('backbutton');
