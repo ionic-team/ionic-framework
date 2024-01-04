@@ -23,6 +23,12 @@ interface HandlerRegister {
  * use detect the hardware back button event
  * in a web browser: https://caniuse.com/?search=closewatcher
  * However, not every browser supports it yet.
+ *
+ * This needs to be a function so that we can
+ * check the config once it has been set.
+ * Otherwise, this code would be evaluated the
+ * moment this file is evaluated which could be
+ * before the config is set.
  */
 export const shoudUseCloseWatcher = () =>
   config.get('experimentalCloseWatcher', false) && win !== undefined && 'CloseWatcher' in win;
