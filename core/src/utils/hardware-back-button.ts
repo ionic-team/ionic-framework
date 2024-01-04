@@ -24,7 +24,7 @@ interface HandlerRegister {
  * in a web browser: https://caniuse.com/?search=closewatcher
  * However, not every browser supports it yet.
  */
-export const shoudUseCloseWatcher =
+export const shoudUseCloseWatcher = () =>
   config.get('experimentalCloseWatcher', false) && win !== undefined && 'CloseWatcher' in win;
 
 /**
@@ -103,7 +103,7 @@ export const startHardwareBackButton = () => {
    * backbutton event otherwise we may get duplicate
    * events firing.
    */
-  if (shoudUseCloseWatcher) {
+  if (shoudUseCloseWatcher()) {
     let watcher: CloseWatcher | undefined;
 
     const configureWatcher = () => {

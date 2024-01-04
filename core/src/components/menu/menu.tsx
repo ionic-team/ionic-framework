@@ -788,7 +788,7 @@ export class Menu implements ComponentInterface, MenuI {
      */
     return (
       <Host
-        onKeyDown={shoudUseCloseWatcher ? null : this.onKeydown}
+        onKeyDown={shoudUseCloseWatcher() ? null : this.onKeydown}
         role="navigation"
         aria-label={inheritedAttributes['aria-label'] || 'menu'}
         class={{

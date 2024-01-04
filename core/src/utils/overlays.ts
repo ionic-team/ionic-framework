@@ -377,7 +377,7 @@ const connectListeners = (doc: Document) => {
      * this behavior will be handled via the ionBackButton
      * event.
      */
-    if (!shoudUseCloseWatcher) {
+    if (!shoudUseCloseWatcher()) {
       doc.addEventListener('keydown', (ev) => {
         if (ev.key === 'Escape') {
           const lastOverlay = getPresentedOverlay(doc);

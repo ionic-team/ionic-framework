@@ -36,7 +36,7 @@ export class App implements ComponentInterface {
           import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
         }
         const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
-        const supportsHardwareBackButtonEvents = isHybrid || shoudUseCloseWatcher;
+        const supportsHardwareBackButtonEvents = isHybrid || shoudUseCloseWatcher();
         if (config.getBoolean('hardwareBackButton', supportsHardwareBackButtonEvents)) {
           hardwareBackButtonModule.startHardwareBackButton();
         } else {
@@ -44,7 +44,7 @@ export class App implements ComponentInterface {
            * If an app sets hardwareBackButton: false and experimentalCloseWatcher: true
            * then the close watcher will not be used.
            */
-          if (shoudUseCloseWatcher) {
+          if (shoudUseCloseWatcher()) {
             printIonWarning(
               'experimentalCloseWatcher was set to `true`, but hardwareBackButton was set to `false`. Both config options must be `true` for the Close Watcher API to be used.'
             );

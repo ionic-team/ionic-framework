@@ -1,5 +1,7 @@
 import type { BackButtonEvent } from '../../../src/interface';
 import { startHardwareBackButton } from '../hardware-back-button';
+import { config } from '../../global/config';
+import { win } from '@utils/browser';
 
 describe('Hardware Back Button', () => {
   beforeEach(() => startHardwareBackButton());
@@ -53,6 +55,41 @@ describe('Hardware Back Button', () => {
     expect(cbSpyTwo).toHaveBeenCalled();
   });
 });
+
+describe('Experimental Close Watcher', () => {
+  test('should not use the Close Watcher API when available', () => {
+    const mockAPI = mockCloseWatcher();
+
+    config.reset({ experimentalCloseWatcher: false });
+
+    startHardwareBackButton();
+
+    expect(mockAPI.mock.calls).toHaveLength(0);
+  });
+  test('should use the Close Watcher API when available', () => {
+    const mockAPI = mockCloseWatcher();
+
+    config.reset({ experimentalCloseWatcher: true });
+
+    startHardwareBackButton();
+
+    expect(mockAPI.mock.calls).toHaveLength(1);
+  });
+});
+
+const mockCloseWatcher = () => {
+  const mockCloseWatcher = jest.fn();
+  mockCloseWatcher.mockReturnValue({
+    requestClose: () => null,
+    close: () => null,
+    destroy: () => null,
+    oncancel: () => null,
+    onclose: () => null,
+  });
+  (win as any).CloseWatcher = mockCloseWatcher;
+
+  return mockCloseWatcher;
+};
 
 const dispatchBackButtonEvent = () => {
   const ev = new Event('backbutton');
