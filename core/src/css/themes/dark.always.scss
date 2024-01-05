@@ -1,0 +1,13 @@
+@import "./dark";
+
+:root {
+  @include dark-base-theme();
+}
+
+.ios body {
+  @include dark-ios-theme();
+}
+
+.md body {
+  @include dark-md-theme();
+}
