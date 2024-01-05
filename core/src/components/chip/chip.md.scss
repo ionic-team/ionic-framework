@@ -1,6 +1,13 @@
 @import "./chip";
 @import "./chip.vars";
 
-:host {
-  font-size: $chip-base-font-size-rem;
+@import 'chip.md2.scss';
+@import 'chip.md3.scss';
+
+$useMD3: true;
+
+@if $useMD3 {
+  @include chipMD3;
+} @else {
+  @include chipMD2;
 }
