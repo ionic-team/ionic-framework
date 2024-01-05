@@ -6,13 +6,22 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
+styleUrls: {
+  ios: 'chip.ios.scss',
+  md: 'chip.md2.scss',
+  md3: Build.isDev ? 'chip.md3.scss' : undefined
+},
+*/
+
+/**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-chip',
   styleUrls: {
     ios: 'chip.ios.scss',
-    md: 'chip.md.scss',
+    md: 'chip.md2.flag.scss',
+    md3: 'chip.md3.flag.scss'
   },
   shadow: true,
 })

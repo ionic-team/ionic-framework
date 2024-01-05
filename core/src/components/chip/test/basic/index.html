@@ -23,82 +23,19 @@
       </ion-header>
 
       <ion-content class="ion-padding" id="content" style="text-align: center">
-        <h2>Basic Chips</h2>
+        <h2>Default Chip</h2>
         <ion-chip>
           <ion-label>Default</ion-label>
         </ion-chip>
-        <ion-chip style="border-radius: 4px">
-          <ion-label>Border Radius</ion-label>
-        </ion-chip>
-        <ion-chip>
-          <ion-icon name="checkmark-circle"></ion-icon>
-          <ion-label>With Icon</ion-label>
-        </ion-chip>
-        <ion-chip>
-          <ion-avatar>
-            <img
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-            />
-          </ion-avatar>
-          <ion-label>With Avatar</ion-label>
-        </ion-chip>
-        <ion-chip>
-          <ion-avatar>
-            <img
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-            />
-          </ion-avatar>
-          <ion-label>With Icon and Avatar</ion-label>
-          <ion-icon name="close-circle"></ion-icon>
+
+        <h2>MD2 Chip</h2>
+        <ion-chip mode="md">
+          <ion-label>MD2</ion-label>
         </ion-chip>
 
-        <h2>Color Chips</h2>
-        <ion-chip color="primary">
-          <ion-label>Primary</ion-label>
-        </ion-chip>
-        <ion-chip color="danger">
-          <ion-label>Danger</ion-label>
-        </ion-chip>
-        <ion-chip color="tertiary">
-          <ion-icon name="checkmark-circle"></ion-icon>
-          <ion-label>Tertiary with Icon</ion-label>
-        </ion-chip>
-        <ion-chip color="primary">
-          <ion-avatar>
-            <img
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-            />
-          </ion-avatar>
-          <ion-label>Primary with Avatar</ion-label>
-        </ion-chip>
-        <ion-chip color="success">
-          <ion-label>Success with Icon</ion-label>
-          <ion-icon name="calendar"></ion-icon>
-        </ion-chip>
-
-        <h2>Outline Chips</h2>
-        <ion-chip outline>
-          <ion-label>Outline</ion-label>
-        </ion-chip>
-        <ion-chip outline color="danger">
-          <ion-label>Danger Outline</ion-label>
-        </ion-chip>
-        <ion-chip outline color="secondary">
-          <ion-icon name="checkmark-circle"></ion-icon>
-          <ion-label>Secondary Outline with Icon</ion-label>
-        </ion-chip>
-        <ion-chip outline color="primary">
-          <ion-label>Primary Outline with Avatar</ion-label>
-          <ion-avatar>
-            <img
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
-            />
-          </ion-avatar>
-        </ion-chip>
-        <ion-chip outline>
-          <ion-icon name="git-pull-request"></ion-icon>
-          <ion-label>Outline with Icon and Avatar</ion-label>
-          <ion-icon name="close-circle"></ion-icon>
+        <h2>MD3 Chip</h2>
+        <ion-chip mode="md3">
+          <ion-label>MD3</ion-label>
         </ion-chip>
       </ion-content>
     </ion-app>

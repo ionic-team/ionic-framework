@@ -1,156 +1,158 @@
 @import "../../themes/ionic.globals";
 @import "./chip.vars";
 
-:host {
-  /**
-   * @prop --background: Background of the chip
-   * @prop --color: Color of the chip
-   */
-  --background: #{rgba($text-color-rgb, 0.12)};
-  --color: #{rgba($text-color-rgb, 0.87)};
+@mixin base {
+  :host {
+    /**
+     * @prop --background: Background of the chip
+     * @prop --color: Color of the chip
+     */
+    --background: #{rgba($text-color-rgb, 0.12)};
+    --color: #{rgba($text-color-rgb, 0.87)};
 
-  @include border-radius(16px);
-  @include font-smoothing();
-  @include margin(4px);
-  @include padding(6px, 12px);
+    @include border-radius(16px);
+    @include font-smoothing();
+    @include margin(4px);
+    @include padding(6px, 12px);
 
-  display: inline-flex;
+    display: inline-flex;
 
-  position: relative;
+    position: relative;
 
-  align-items: center;
+    align-items: center;
 
-  min-height: 32px;
+    min-height: 32px;
 
-  background: var(--background);
-  color: var(--color);
+    background: var(--background);
+    color: var(--color);
 
-  font-family: $font-family-base;
+    font-family: $font-family-base;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  overflow: hidden;
+    overflow: hidden;
 
-  vertical-align: middle;
-  box-sizing: border-box;
-}
-
-:host(.chip-disabled) {
-  cursor: default;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-// Chip Colors
-// ---------------------------------------------
-
-:host(.ion-color) {
-  background: current-color(base, 0.08);
-  color: current-color(shade);
-}
-
-:host(.ion-color:focus) {
-  background: current-color(base, 0.12);
-}
-
-:host(.ion-color.ion-activated) {
-  background: current-color(base, 0.16);
-}
-
-// Outline Chip
-// ---------------------------------------------
-
-:host(.chip-outline) {
-  border-width: 1px;
-  border-style: solid;
-}
-
-:host(.chip-outline) {
-  border-color: rgba($text-color-rgb, 0.32);
-
-  background: transparent;
-}
-
-:host(.chip-outline.ion-color) {
-  border-color: current-color(base, 0.32);
-}
-
-:host(.chip-outline:not(.ion-color):focus) {
-  background: rgba($text-color-rgb, 0.04);
-}
-
-:host(.chip-outline.ion-activated:not(.ion-color)) {
-  background: rgba($text-color-rgb, 0.08);
-}
-
-// Chip Icon
-// ---------------------------------------------
-
-::slotted(ion-icon) {
-  font-size: $chip-icon-size;
-}
-
-:host(:not(.ion-color)) ::slotted(ion-icon) {
-  color: rgba($text-color-rgb, 0.54);
-}
-
-::slotted(ion-icon:first-child) {
-  @include margin(-4px, 8px, -4px, -4px);
-}
-
-::slotted(ion-icon:last-child) {
-  @include margin(-4px, -4px, -4px, 8px);
-}
-
-// Chip Avatar
-// ---------------------------------------------
-
-::slotted(ion-avatar) {
-  flex-shrink: 0;
-
-  width: $chip-avatar-size;
-  height: $chip-avatar-size;
-}
-
-::slotted(ion-avatar:first-child) {
-  @include margin(-4px, 8px, -4px, -8px);
-}
-
-::slotted(ion-avatar:last-child) {
-  @include margin(-4px, -8px, -4px, 8px);
-}
-
-// Chip: Focus
-// ---------------------------------------------
-
-:host(:focus) {
-  outline: none;
-}
-
-:host(:focus) {
-  --background: #{rgba($text-color-rgb, 0.16)};
-}
-
-// Chip: Activated
-// ---------------------------------------------
-
-:host(.ion-activated) {
-  --background: #{rgba($text-color-rgb, 0.2)};
-}
-
-// Chip: Hover
-// ---------------------------------------------
-
-@media (any-hover: hover) {
-  :host(:hover) {
-    --background: #{rgba($text-color-rgb, 0.16)};
+    vertical-align: middle;
+    box-sizing: border-box;
   }
 
-  :host(.ion-color:hover) {
+  :host(.chip-disabled) {
+    cursor: default;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  // Chip Colors
+  // ---------------------------------------------
+
+  :host(.ion-color) {
+    background: current-color(base, 0.08);
+    color: current-color(shade);
+  }
+
+  :host(.ion-color:focus) {
     background: current-color(base, 0.12);
   }
 
-  :host(.chip-outline:not(.ion-color):hover) {
+  :host(.ion-color.ion-activated) {
+    background: current-color(base, 0.16);
+  }
+
+  // Outline Chip
+  // ---------------------------------------------
+
+  :host(.chip-outline) {
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  :host(.chip-outline) {
+    border-color: rgba($text-color-rgb, 0.32);
+
+    background: transparent;
+  }
+
+  :host(.chip-outline.ion-color) {
+    border-color: current-color(base, 0.32);
+  }
+
+  :host(.chip-outline:not(.ion-color):focus) {
     background: rgba($text-color-rgb, 0.04);
+  }
+
+  :host(.chip-outline.ion-activated:not(.ion-color)) {
+    background: rgba($text-color-rgb, 0.08);
+  }
+
+  // Chip Icon
+  // ---------------------------------------------
+
+  ::slotted(ion-icon) {
+    font-size: $chip-icon-size;
+  }
+
+  :host(:not(.ion-color)) ::slotted(ion-icon) {
+    color: rgba($text-color-rgb, 0.54);
+  }
+
+  ::slotted(ion-icon:first-child) {
+    @include margin(-4px, 8px, -4px, -4px);
+  }
+
+  ::slotted(ion-icon:last-child) {
+    @include margin(-4px, -4px, -4px, 8px);
+  }
+
+  // Chip Avatar
+  // ---------------------------------------------
+
+  ::slotted(ion-avatar) {
+    flex-shrink: 0;
+
+    width: $chip-avatar-size;
+    height: $chip-avatar-size;
+  }
+
+  ::slotted(ion-avatar:first-child) {
+    @include margin(-4px, 8px, -4px, -8px);
+  }
+
+  ::slotted(ion-avatar:last-child) {
+    @include margin(-4px, -8px, -4px, 8px);
+  }
+
+  // Chip: Focus
+  // ---------------------------------------------
+
+  :host(:focus) {
+    outline: none;
+  }
+
+  :host(:focus) {
+    --background: #{rgba($text-color-rgb, 0.16)};
+  }
+
+  // Chip: Activated
+  // ---------------------------------------------
+
+  :host(.ion-activated) {
+    --background: #{rgba($text-color-rgb, 0.2)};
+  }
+
+  // Chip: Hover
+  // ---------------------------------------------
+
+  @media (any-hover: hover) {
+    :host(:hover) {
+      --background: #{rgba($text-color-rgb, 0.16)};
+    }
+
+    :host(.ion-color:hover) {
+      background: current-color(base, 0.12);
+    }
+
+    :host(.chip-outline:not(.ion-color):hover) {
+      background: rgba($text-color-rgb, 0.04);
+    }
   }
 }

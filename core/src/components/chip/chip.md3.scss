@@ -1,4 +1,6 @@
-@mixin chipMD3 {
+@import "./chip.vars";
+
+@mixin md3 {
   :host {
     background: green;
   }

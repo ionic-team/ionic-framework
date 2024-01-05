@@ -1,0 +1,9 @@
+@use 'chip.md3.scss' as c;
+@use 'chip.scss' as b;
+
+@use '../../utils/md-controller/index.scss' as controller;
+
+@if controller.$md3 {
+  @include b.base;
+  @include c.md3;
+}
