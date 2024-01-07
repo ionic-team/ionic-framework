@@ -659,9 +659,9 @@ export class Datetime implements ComponentInterface {
         // we are setting. We can do this by comparing if the validatedParts is before or after
         // the first active part. Users can select the same day as the start or end of the range.
         const [start, end] = this.activeParts;
-        if (isBefore(validatedParts, start)) {
+        if (start !== undefined && isBefore(validatedParts, start)) {
           this.activeParts = [validatedParts, end];
-        } else if (isAfter(validatedParts, end)) {
+        } else if (end !== undefined && isAfter(validatedParts, end)) {
           this.activeParts = [start, validatedParts];
         } else {
           this.activeParts = [validatedParts, validatedParts];
