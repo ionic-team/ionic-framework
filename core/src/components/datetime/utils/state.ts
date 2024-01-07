@@ -227,3 +227,30 @@ export const getHighlightStyles = (
 
   return undefined;
 };
+
+export const isDateRangeStart = (referenceParts: DatetimeParts, activeParts: DatetimeParts | DatetimeParts[]) => {
+  if (activeParts !== undefined && Array.isArray(activeParts)) {
+    const startDate = activeParts[0];
+    return isSameDay(referenceParts, startDate);
+  }
+  return false;
+}
+
+export const isDateRangeEnd = (referenceParts: DatetimeParts, activeParts: DatetimeParts | DatetimeParts[]) => {
+  if (activeParts !== undefined && Array.isArray(activeParts)) {
+    const endDate = activeParts[1];
+    return isSameDay(referenceParts, endDate);
+  }
+  return false;
+}
+
+export const isDateInRange = (referenceParts: DatetimeParts, activeParts: DatetimeParts | DatetimeParts[]) => {
+  if (activeParts !== undefined && Array.isArray(activeParts)) {
+    const startDate = activeParts[0];
+    const endDate = activeParts[1];
+    const isAfterStart = isAfter(referenceParts, startDate) || isSameDay(referenceParts, startDate);
+    const isBeforeEnd = isBefore(referenceParts, endDate) || isSameDay(referenceParts, endDate);
+    return isAfterStart && isBeforeEnd;
+  }
+  return false;
+};

@@ -1,4 +1,4 @@
-import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
+import type { DatetimeParts, DatetimeHourCycle, DatetimeValue } from '../datetime-interface';
 
 import { is24Hour } from './helpers';
 import { convertDataToISO } from './manipulation';
@@ -344,6 +344,12 @@ export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | u
  *
  * @param value The value to format, either an ISO string or an array thereof.
  */
-export const formatValue = (value: string | string[] | null | undefined) => {
-  return Array.isArray(value) ? value.join(',') : value;
+export const formatValue = (value?: DatetimeValue) => {
+  if (Array.isArray(value)) {
+    return value.join(',');
+  }
+  if (typeof value === 'object' && value !== null) {
+    return [value.start, value.end].join(',');
+  }
+  return value;
 };

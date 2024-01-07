@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, DatetimeValue, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -51,7 +51,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, DatetimeValue, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
@@ -915,6 +915,10 @@ export namespace Components {
          */
         "presentation": DatetimePresentation;
         /**
+          * If `true`, a single range of dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+         */
+        "range": boolean;
+        /**
           * If `true`, the datetime appears normal but the selected date cannot be changed.
          */
         "readonly": boolean;
@@ -949,7 +953,7 @@ export namespace Components {
         /**
           * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
          */
-        "value"?: string | string[] | null;
+        "value"?: DatetimeValue;
         /**
           * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2008,2012,2016,2020,2024"`.
          */
@@ -5643,6 +5647,10 @@ declare namespace LocalJSX {
          */
         "presentation"?: DatetimePresentation;
         /**
+          * If `true`, a single range of dates can be selected at once. Only applies to `presentation="date"` and `preferWheel="false"`.
+         */
+        "range"?: boolean;
+        /**
           * If `true`, the datetime appears normal but the selected date cannot be changed.
          */
         "readonly"?: boolean;
@@ -5673,7 +5681,7 @@ declare namespace LocalJSX {
         /**
           * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
          */
-        "value"?: string | string[] | null;
+        "value"?: DatetimeValue;
         /**
           * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2008,2012,2016,2020,2024"`.
          */

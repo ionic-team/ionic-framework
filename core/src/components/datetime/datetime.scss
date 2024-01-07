@@ -79,9 +79,9 @@
  * the text alignment too.
  */
 :host .wheel-order-year-first .day-column {
- order: 3;
+  order: 3;
 
- text-align: end;
+  text-align: end;
 }
 
 :host .wheel-order-year-first .month-column {
@@ -161,7 +161,8 @@
  * sufficient to resolve the issue mentioned above, which
  * is why we do another set of @supports checks.
  */
-@supports (not (background: -webkit-named-image(apple-pay-logo-black))) or ((background: -webkit-named-image(apple-pay-logo-black)) and (aspect-ratio: 1/1)) {
+@supports (not (background: -webkit-named-image(apple-pay-logo-black))) or
+  ((background: -webkit-named-image(apple-pay-logo-black)) and (aspect-ratio: 1/1)) {
   :host(.show-month-and-year) .calendar-next-prev,
   :host(.show-month-and-year) .calendar-days-of-week,
   :host(.show-month-and-year) .calendar-body,
@@ -281,7 +282,6 @@
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body {
-
   /**
    * Show all calendar months inline
    * and allow them to take up 100% of
@@ -367,6 +367,35 @@
   min-height: 0;
 
   overflow: visible;
+}
+
+.calendar-day-in-range {
+  &.calendar-day-range-start:not(.calendar-day-range-end) {
+    justify-content: flex-end;
+  }
+
+  &.calendar-day-range-end:not(.calendar-day-range-start) {
+    justify-content: flex-start;
+  }
+
+  .calendar-day {
+    background: current-color(base, 0.1);
+  }
+}
+
+.calendar-day-in-range:not(.calendar-day-range-start):not(.calendar-day-range-end) {
+  .calendar-day {
+    @include border-radius(0);
+    width: 100% !important;
+  }
+}
+
+.calendar-day-range-start:not(.calendar-day-range-end) .calendar-day {
+  @include border-radius(50%, 0, 0, 50%);
+}
+
+.calendar-day-range-end:not(.calendar-day-range-start) .calendar-day {
+  @include border-radius(0, 50%, 50%, 0);
 }
 
 /**

@@ -19,6 +19,7 @@ import type {
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
   DatetimeHourCycle,
+  DatetimeValue,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import type { WheelColumnOption } from './utils/data';
@@ -63,6 +64,9 @@ import {
 import {
   getCalendarDayState,
   getHighlightStyles,
+  isDateInRange,
+  isDateRangeEnd,
+  isDateRangeStart,
   isDayDisabled,
   isMonthDisabled,
   isNextMonthDisabled,
@@ -350,6 +354,12 @@ export class Datetime implements ComponentInterface {
   @Prop() multiple = false;
 
   /**
+   * If `true`, a single range of dates can be selected at once.
+   * Only applies to `presentation="date"` and `preferWheel="false"`.
+   */
+  @Prop() range = false;
+
+  /**
    * Used to apply custom text and background colors to specific dates.
    *
    * Can be either an array of objects containing ISO strings and colors,
@@ -364,7 +374,7 @@ export class Datetime implements ComponentInterface {
    * The value of the datetime as a valid ISO 8601 datetime string.
    * This should be an array of strings only when `multiple="true"`.
    */
-  @Prop({ mutable: true }) value?: string | string[] | null;
+  @Prop({ mutable: true }) value?: DatetimeValue;
 
   /**
    * Update the datetime value when the value changes
@@ -545,8 +555,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private warnIfIncorrectValueUsage = () => {
-    const { multiple, value } = this;
-    if (!multiple && Array.isArray(value)) {
+    const { multiple, value, range } = this;
+    if (!multiple && !range && Array.isArray(value)) {
       /**
        * We do some processing on the `value` array so
        * that it looks more like an array when logged to
@@ -607,15 +617,16 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
-    /** if the datetime component is in readonly mode,
+    /**
+     * If the datetime component is in readonly mode,
      * allow browsing of the calendar without changing
-     * the set value
+     * the set value.
      */
     if (this.readonly) {
       return;
     }
 
-    const { multiple, minParts, maxParts, activeParts } = this;
+    const { multiple, minParts, maxParts, activeParts, range } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -636,6 +647,25 @@ export class Datetime implements ComponentInterface {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
         this.activeParts = [...activePartsArray, validatedParts];
+      }
+    } else if (range) {
+      if (!Array.isArray(this.activeParts)) {
+        // If the activeParts is not an array, that means they have not made a selection yet
+        // and that the current activeParts is just the default value.
+        // We can set the start and end range to the same value.
+        this.activeParts = [validatedParts, validatedParts];
+      } else {
+        // If the active parts is an array, then we need to determine which part of the range
+        // we are setting. We can do this by comparing if the validatedParts is before or after
+        // the first active part. Users can select the same day as the start or end of the range.
+        const [start, end] = this.activeParts;
+        if (isBefore(validatedParts, start)) {
+          this.activeParts = [validatedParts, end];
+        } else if (isAfter(validatedParts, end)) {
+          this.activeParts = [start, validatedParts];
+        } else {
+          this.activeParts = [validatedParts, validatedParts];
+        }
       }
     } else {
       this.activeParts = {
@@ -1202,7 +1232,7 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private processValue = (value?: string | string[] | null) => {
+  private processValue = (value?: DatetimeValue) => {
     const hasValue = value !== null && value !== undefined && (!Array.isArray(value) || value.length > 0);
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
@@ -1332,7 +1362,7 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, highlightedDates, multiple, presentation, preferWheel } = this;
+    const { el, highlightedDates, multiple, presentation, preferWheel, range } = this;
 
     if (multiple) {
       if (presentation !== 'date') {
@@ -1354,6 +1384,18 @@ export class Datetime implements ComponentInterface {
 
       if (preferWheel) {
         printIonWarning('The highlightedDates property is not supported with preferWheel="true".', el);
+      }
+    }
+
+    if (range) {
+      if (presentation !== 'date') {
+        printIonWarning('The range property is only supported with presentation="date".', el);
+      }
+      if (multiple) {
+        printIonWarning('The range property cannot be used with multiple="true".', el);
+      }
+      if (preferWheel) {
+        printIonWarning('The range property is not supported with preferWheel="true".', el);
       }
     }
 
@@ -2211,7 +2253,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { el, highlightedDates, isDateEnabled, multiple } = this;
+            const { el, highlightedDates, isDateEnabled, multiple, range, activeParts } = this;
             const referenceParts = { month, day, year };
             const isCalendarPadding = day === null;
             const {
@@ -2273,16 +2315,29 @@ export class Datetime implements ComponentInterface {
 
             let dateParts = undefined;
 
+            const inRange = range && isDateInRange(referenceParts, activeParts);
+            const isRangeStart = range && isDateRangeStart(referenceParts, activeParts);
+            const isRangeEnd = range && isDateRangeEnd(referenceParts, activeParts);
+
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
             if (!isCalendarPadding) {
               dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
                 isCalDayDisabled ? ' disabled' : ''
+              }${inRange ? ' range-selection' : ''}${isRangeStart ? ' range-start' : ''}${
+                isRangeEnd ? ' range-end' : ''
               }`;
             }
 
             return (
-              <div class="calendar-day-wrapper">
+              <div
+                class={{
+                  'calendar-day-wrapper': true,
+                  'calendar-day-in-range': inRange,
+                  'calendar-day-range-start': isRangeStart,
+                  'calendar-day-range-end': isRangeEnd,
+                }}
+              >
                 <button
                   // We need to use !important for the inline styles here because
                   // otherwise the CSS shadow parts will override these styles.
@@ -2330,8 +2385,8 @@ export class Datetime implements ComponentInterface {
                       year,
                     });
 
-                    // multiple only needs date info, so we can wipe out other fields like time
-                    if (multiple) {
+                    // multiple and range only needs date info, so we can wipe out other fields like time
+                    if (multiple || range) {
                       this.setActiveParts(
                         {
                           month,

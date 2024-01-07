@@ -6,7 +6,7 @@ import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import type { DatetimePresentation } from '../datetime/datetime-interface';
+import type { DatetimePresentation, DatetimeValue } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
 import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
@@ -172,7 +172,7 @@ export class DatetimeButton implements ComponentInterface {
    * can work with an array internally and not need
    * to keep checking if the datetime value is `string` or `string[]`.
    */
-  private getParsedDateValues = (value?: string[] | string | null): string[] => {
+  private getParsedDateValues = (value?: DatetimeValue): string[] => {
     if (value === undefined || value === null) {
       return [];
     }
@@ -181,7 +181,11 @@ export class DatetimeButton implements ComponentInterface {
       return value;
     }
 
-    return [value];
+    if (typeof value === 'string') {
+      return [value];
+    }
+
+    return [value.start, value.end];
   };
 
   /**

@@ -1,6 +1,6 @@
 import { printIonWarning } from '@utils/logging';
 
-import type { DatetimeParts } from '../datetime-interface';
+import type { DatetimeMultipleValue, DatetimeParts, DatetimeRangeValue } from '../datetime-interface';
 
 import { isAfter, isBefore } from './comparison';
 import { getNumDaysInMonth } from './helpers';
@@ -59,11 +59,12 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
  * it adjusts the date for the current timezone.
  */
 export function parseDate(val: string): DatetimeParts | undefined;
-export function parseDate(val: string[]): DatetimeParts[] | undefined;
+export function parseDate(val: DatetimeMultipleValue): DatetimeParts[] | undefined;
+export function parseDate(val: DatetimeRangeValue): DatetimeParts[] | undefined;
 export function parseDate(val: undefined | null): undefined;
-export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts[] | undefined;
-export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
-export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
+export function parseDate(val: string | DatetimeMultipleValue): DatetimeParts | DatetimeParts[] | undefined;
+export function parseDate(val: string | DatetimeMultipleValue | DatetimeRangeValue | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
+export function parseDate(val: string | DatetimeMultipleValue | DatetimeRangeValue | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
   if (Array.isArray(val)) {
     const parsedArray: DatetimeParts[] = [];
     for (const valStr of val) {
@@ -84,6 +85,18 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
     }
 
     return parsedArray;
+  }
+
+  if (typeof val === 'object') {
+    if (val?.start && val?.end) {
+      const parsedStart = parseDate(val.start);
+      const parsedEnd = parseDate(val.end);
+      if (!parsedStart || !parsedEnd) {
+        return undefined;
+      }
+      return [parsedStart, parsedEnd];
+    }
+    return undefined;
   }
 
   // manually parse IS0 cuz Date.parse cannot be trusted
