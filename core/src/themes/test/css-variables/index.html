@@ -983,11 +983,14 @@
 
         // The default and dark themes are official Ionic
         // themes so they are located outside of this test
-        if (theme == 'default' || theme == 'dark') {
-          themeFilesDir = '/src/themes/test';
-        }
+        let cssFile = `${themeFilesDir}/${theme}.css`;
 
-        var cssFile = `${themeFilesDir}/${theme}.css`;
+        if (theme == 'default') {
+          themeFilesDir = '/src/themes/test';
+        } else if (theme === 'dark') {
+          themeFilesDir = '/css/themes/';
+          cssFile = `${themeFilesDir}/${theme}.always.css`;
+        }
 
         var oldLink = document.getElementById('theme');
 
