@@ -3,3 +3,11 @@
 .ion-theme-high-contrast-dark {
   @include high-contrast-dark-base-theme();
 }
+
+.ion-theme-high-contrast-dark.ios {
+  @include high-contrast-dark-ios-theme();
+}
+
+.ion-theme-high-contrast-dark.md {
+  @include high-contrast-dark-md-theme();
+}
