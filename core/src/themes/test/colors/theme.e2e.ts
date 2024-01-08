@@ -153,71 +153,81 @@ configs({ modes: ['md'], directions: ['ltr'], themes: ['light', 'dark'] }).forEa
   });
 });
 
-configs({ modes: ['md'], directions: ['ltr'], themes: ['high-contrast-light', 'high-contrast-dark'] }).forEach(({ config, title }) => {
-  const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
+configs({ modes: ['md'], directions: ['ltr'], themes: ['high-contrast-light', 'high-contrast-dark'] }).forEach(
+  ({ config, title }) => {
+    const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 
-  test.describe(title('theme'), () => {
-    test.beforeEach(({ skip }) => {
-      skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
-      skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
-    });
+    test.describe(title('theme'), () => {
+      test.beforeEach(({ skip }) => {
+        skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
+        skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
+      });
 
-    for (const color of colors) {
-      test(`color "${color}" should pass AAA guidelines`, async ({ page }) => {
-        await page.setContent(
-          `${styleTestHelpers}
+      for (const color of colors) {
+        test(`color "${color}" should pass AAA guidelines`, async ({ page }) => {
+          await page.setContent(
+            `${styleTestHelpers}
           <main class="ion-color-${color}">
             <p class="ion-color">Hello World</p>
           </main>`,
-          config
-        );
+            config
+          );
 
-        if (color === 'danger') {
-          await page.pause();
-        }
+          if (color === 'danger') {
+            await page.pause();
+          }
 
-        const results = await new AxeBuilder({ page }).options({ rules: { 'color-contrast-enhanced': { enabled: true }}}).analyze();
-        expect(results.violations).toEqual([]);
-      });
+          const results = await new AxeBuilder({ page })
+            .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
+            .analyze();
+          expect(results.violations).toEqual([]);
+        });
 
-      test(`contrast color on "${color}" background should pass AAA guidelines`, async ({ page }) => {
-        await page.setContent(
-          `${styleTestHelpers}
+        test(`contrast color on "${color}" background should pass AAA guidelines`, async ({ page }) => {
+          await page.setContent(
+            `${styleTestHelpers}
           <main class="ion-color-${color}">
             <p class="ion-color-contrast ion-background">Hello World</p>
           </main>`,
-          config
-        );
+            config
+          );
 
-        const results = await new AxeBuilder({ page }).options({ rules: { 'color-contrast-enhanced': { enabled: true }}}).analyze();
-        expect(results.violations).toEqual([]);
-      });
+          const results = await new AxeBuilder({ page })
+            .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
+            .analyze();
+          expect(results.violations).toEqual([]);
+        });
 
-      test(`contrast color on "${color}" background shade should pass AAA guidelines`, async ({ page }) => {
-        await page.setContent(
-          `${styleTestHelpers}
+        test(`contrast color on "${color}" background shade should pass AAA guidelines`, async ({ page }) => {
+          await page.setContent(
+            `${styleTestHelpers}
           <main class="ion-color-${color}">
             <p class="ion-color-contrast ion-background-shade">Hello World</p>
           </main>`,
-          config
-        );
+            config
+          );
 
-        const results = await new AxeBuilder({ page }).options({ rules: { 'color-contrast-enhanced': { enabled: true }}}).analyze();
-        expect(results.violations).toEqual([]);
-      });
+          const results = await new AxeBuilder({ page })
+            .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
+            .analyze();
+          expect(results.violations).toEqual([]);
+        });
 
-      test(`contrast color on "${color}" background tint should pass AAA guidelines`, async ({ page }) => {
-        await page.setContent(
-          `${styleTestHelpers}
+        test(`contrast color on "${color}" background tint should pass AAA guidelines`, async ({ page }) => {
+          await page.setContent(
+            `${styleTestHelpers}
           <main class="ion-color-${color}">
             <p class="ion-color-contrast ion-background-tint">Hello World</p>
           </main>`,
-          config
-        );
+            config
+          );
 
-        const results = await new AxeBuilder({ page }).options({ rules: { 'color-contrast-enhanced': { enabled: true }}}).analyze();
-        expect(results.violations).toEqual([]);
-      });
-    }
-  });
-});
+          const results = await new AxeBuilder({ page })
+            .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
+            .analyze();
+          expect(results.violations).toEqual([]);
+        });
+      }
+    });
+  }
+);
