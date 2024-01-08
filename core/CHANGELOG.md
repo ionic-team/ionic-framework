@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* **datetime:** prefer wheel sets working value on confirmation ([#28520](https://github.com/ionic-team/ionic-framework/issues/28520)) ([e886e3f](https://github.com/ionic-team/ionic-framework/commit/e886e3ff2fcb8a3586a62881c5fc848f3074235d)), closes [#25839](https://github.com/ionic-team/ionic-framework/issues/25839)
+* **input, textarea:** clearOnInput ignores key modifiers ([#28639](https://github.com/ionic-team/ionic-framework/issues/28639)) ([8f7d87c](https://github.com/ionic-team/ionic-framework/commit/8f7d87c6803b1600a3ca21785df0e9bac49f74a3)), closes [#28633](https://github.com/ionic-team/ionic-framework/issues/28633)
+* **menu:** allow styling of the box shadow and transform when visible inside of a split pane ([#28691](https://github.com/ionic-team/ionic-framework/issues/28691)) ([8ee23d2](https://github.com/ionic-team/ionic-framework/commit/8ee23d20d5cc7419ce15f047b92d2f826d3eb681)), closes [#21530](https://github.com/ionic-team/ionic-framework/issues/21530)
+
+
+
+
+
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+
+### Bug Fixes
+
+* **angular,vue:** range form value updates while dragging knob ([#28422](https://github.com/ionic-team/ionic-framework/issues/28422)) ([0854a11](https://github.com/ionic-team/ionic-framework/commit/0854a11a25759d0201eae66c96a62fe138d486f8)), closes [#28256](https://github.com/ionic-team/ionic-framework/issues/28256)
+* **animation:** add stronger types to Animation interface ([#28334](https://github.com/ionic-team/ionic-framework/issues/28334)) ([4a088d5](https://github.com/ionic-team/ionic-framework/commit/4a088d5d612ab0387064d388b37d46cdf15cf1ff))
+* **animation:** progressEnd coercion is reset before onFinish ([#28394](https://github.com/ionic-team/ionic-framework/issues/28394)) ([eae8162](https://github.com/ionic-team/ionic-framework/commit/eae8162d0dc2e0bd7a9d56a3662a8e5f5d142b72)), closes [#28393](https://github.com/ionic-team/ionic-framework/issues/28393)
+* **infinite-scroll:** remaining in threshold after ionInfinite can trigger event again on scroll ([#28569](https://github.com/ionic-team/ionic-framework/issues/28569)) ([8c235fd](https://github.com/ionic-team/ionic-framework/commit/8c235fd30c50f317de1f37f69068507aa0979068)), closes [#18071](https://github.com/ionic-team/ionic-framework/issues/18071)
+* **item:** allow item to grow when it is used in a flex container ([#28594](https://github.com/ionic-team/ionic-framework/issues/28594)) ([1c1b567](https://github.com/ionic-team/ionic-framework/commit/1c1b567279dee44da70bb9b90c129946c9043987))
+* **item:** wrap elements and label contents when the font size increases or the elements do not fit ([#28146](https://github.com/ionic-team/ionic-framework/issues/28146)) ([6438e3e](https://github.com/ionic-team/ionic-framework/commit/6438e3e919c665569b731a2d74fe1547b4f3c1cc))
+* **select:** do not collapse to width: 0 when placed in flex container ([#28631](https://github.com/ionic-team/ionic-framework/issues/28631)) ([e71e7a0](https://github.com/ionic-team/ionic-framework/commit/e71e7a069000db8738abc304758de64286817442))
+* **toast:** add swipeGesture to ToastOptions ([#28518](https://github.com/ionic-team/ionic-framework/issues/28518)) ([4ad6df6](https://github.com/ionic-team/ionic-framework/commit/4ad6df67f01cebce30d4da46c7541c4b14c5d4a4))
+
+
+### Features
+
+* **checkbox:** add shadow part for label ([#28604](https://github.com/ionic-team/ionic-framework/issues/28604)) ([f9f5654](https://github.com/ionic-team/ionic-framework/commit/f9f5654ab0e920bf97089fbabfb9eedbcf6fe8ae)), closes [#28300](https://github.com/ionic-team/ionic-framework/issues/28300)
+* **input, textarea, select:** add start and end slots ([#28583](https://github.com/ionic-team/ionic-framework/issues/28583)) ([357b8b2](https://github.com/ionic-team/ionic-framework/commit/357b8b2beb29b95d53ef043af349067be1d32658)), closes [#26297](https://github.com/ionic-team/ionic-framework/issues/26297)
+* **radio-group:** add compareWith property ([#28452](https://github.com/ionic-team/ionic-framework/issues/28452)) ([0ae327f](https://github.com/ionic-team/ionic-framework/commit/0ae327f0e09cd97d705f2d3051c215034381e226))
+* **radio:** add shadow part for label ([#28607](https://github.com/ionic-team/ionic-framework/issues/28607)) ([b757970](https://github.com/ionic-team/ionic-framework/commit/b757970d23e87c59aa883ecb1bfa9b66bcae8de2)), closes [#28300](https://github.com/ionic-team/ionic-framework/issues/28300)
+* **range:** expose label wrapper as shadow part ([#28601](https://github.com/ionic-team/ionic-framework/issues/28601)) ([52ed2bf](https://github.com/ionic-team/ionic-framework/commit/52ed2bf63777c764f57bb4c3a5d4a127bff46c50))
+* **toast:** add swipe to dismiss functionality ([#28442](https://github.com/ionic-team/ionic-framework/issues/28442)) ([30c21aa](https://github.com/ionic-team/ionic-framework/commit/30c21aab3ed40d73c28e7d60d0952d8891b0a9d3)), closes [#21769](https://github.com/ionic-team/ionic-framework/issues/21769)
+* **toggle:** expose label wrapper as shadow part ([#28585](https://github.com/ionic-team/ionic-framework/issues/28585)) ([a34188f](https://github.com/ionic-team/ionic-framework/commit/a34188f7dbec4a16e4f2043ed3dc096e337725a7))
+
+
+
+
+
+## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
+
+
+### Bug Fixes
+
+* **overlays:** trigger is configured on load ([#28526](https://github.com/ionic-team/ionic-framework/issues/28526)) ([a3cd204](https://github.com/ionic-team/ionic-framework/commit/a3cd204f616606ccffc35082655e55fdfb19fe28)), closes [#28524](https://github.com/ionic-team/ionic-framework/issues/28524)
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 

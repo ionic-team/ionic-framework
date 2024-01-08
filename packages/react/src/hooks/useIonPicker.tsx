@@ -1,6 +1,6 @@
 import type { PickerButton, PickerColumn, PickerOptions } from '@ionic/core/components';
 import { pickerController } from '@ionic/core/components';
-import { defineCustomElement } from '@ionic/core/components/ion-picker.js';
+import { defineCustomElement } from '@ionic/core/components/ion-picker-legacy.js';
 import { useCallback } from 'react';
 
 import type { HookOverlayOptions } from './HookOverlayOptions';
@@ -9,9 +9,10 @@ import { useController } from './useController';
 /**
  * A hook for presenting/dismissing an IonPicker component
  * @returns Returns the present and dismiss methods in an array
+ * @deprecated Use the inline ion-picker component instead.
  */
 export function useIonPicker(): UseIonPickerResult {
-  const controller = useController<PickerOptions, HTMLIonPickerElement>(
+  const controller = useController<PickerOptions, HTMLIonPickerLegacyElement>(
     'IonPicker',
     pickerController,
     defineCustomElement

@@ -29,7 +29,7 @@ const getAngularOutputTargets = () => {
     'ion-tab',
 
     // auxiliar
-    'ion-picker-column',
+    'ion-picker-legacy-column',
   ]
   return [
     angularOutputTarget({
@@ -86,7 +86,7 @@ export const config: Config = {
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
-    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column'] },
+    { components: ['ion-datetime', 'ion-picker-legacy', 'ion-picker-legacy-column'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
@@ -153,7 +153,7 @@ export const config: Config = {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker',
+        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 
@@ -185,7 +185,7 @@ export const config: Config = {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker',
+        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 
@@ -199,12 +199,12 @@ export const config: Config = {
           event: 'ion-change'
         },
         {
-          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
+          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
           event: 'ion-change',
         },
         {
-          elements: ['ion-input', 'ion-searchbar', 'ion-textarea'],
+          elements: ['ion-input', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
           event: 'ion-input',
         }
@@ -251,6 +251,7 @@ export const config: Config = {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
       "@utils/logging": ["<rootDir>/src/utils/logging"],
     },
+    setupFilesAfterEnv: ['./setupJest.js']
   },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',

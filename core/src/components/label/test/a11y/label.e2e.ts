@@ -108,3 +108,33 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
     });
   });
 });
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('label: text wrapping in item'), () => {
+    test('long text should not cause label to expand infinitely', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          div {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+        </style>
+        <ion-item>
+          <ion-label>
+            <!-- This text should be truncated with ellipses -->
+            <div>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+          </ion-label>
+        </ion-item>
+      `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`label-item-wrap`));
+    });
+  });
+});

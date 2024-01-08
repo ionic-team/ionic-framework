@@ -14,6 +14,12 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
           </ion-input>
           <ion-input label="Label" value="My Text"></ion-input>
           <ion-input aria-label="Label"></ion-input>
+          <ion-input label="Email" fill="solid" value="hi@ionic.io">
+            <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+            <ion-button slot="end" aria-label="button">
+              <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
+          </ion-input>
         </main>
       `,
         config

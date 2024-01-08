@@ -49,7 +49,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
 
       await calendarMonthYear.click();
       await page.waitForChanges();
-      await page.locator('.month-column .picker-item[data-value="3"]').click();
+      await page.locator('.month-column ion-picker-column-option').nth(2).click();
       await page.waitForChanges();
       await expect(calendarMonthYear).toHaveText('March 2022');
 
@@ -78,7 +78,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
       await page.keyboard.press('Enter');
       await page.waitForChanges();
 
-      const marchPickerItem = page.locator('.month-column .picker-item[data-value="3"]');
+      const marchPickerItem = page.locator('.month-column ion-picker-column-option').nth(2);
       await expect(marchPickerItem).toBeVisible();
     });
 

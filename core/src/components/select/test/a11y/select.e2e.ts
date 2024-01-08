@@ -28,6 +28,15 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
             <ion-select-option value="bananas">Bananas</ion-select-option>
             <ion-select-option value="oranges">Oranges</ion-select-option>
           </ion-select>
+          <ion-select label="My Label" label-placement="floating">
+            <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+            <ion-select-option value="apples">Apples</ion-select-option>
+            <ion-select-option value="bananas">Bananas</ion-select-option>
+            <ion-select-option value="oranges">Oranges</ion-select-option>
+            <ion-button slot="end" aria-label="button">
+              <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
+          </ion-select>
 
           <script>
             const multiple = document.querySelector('#multiple');
