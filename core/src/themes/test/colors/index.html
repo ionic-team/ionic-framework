@@ -328,7 +328,13 @@
       });
 
       function toggleTheme(theme) {
-        var cssFile = `/css/themes/${theme}.always.css`;
+        let cssFile = `/css/themes/${theme}.always.css`;
+        if (theme === 'default') {
+          // TODO FW-XXXX update this to not
+          // load a file when default is set. The light
+          // theme is automatically set when importing ionic.bundle.css
+          cssFile = `/src/themes/test/${theme}.css`;
+        }
 
         var oldLink = document.getElementById('theme');
 
