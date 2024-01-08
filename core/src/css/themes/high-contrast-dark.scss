@@ -7,9 +7,9 @@ $tertiary:        #b6b9f9 !default;
 $success:         #4ada71 !default;
 $warning:         #ffce31 !default;
 $danger:          #fc9aa2 !default;
-$light:           #f6f8fc !default;
+$light:           #2f2f2f !default;
 $medium:          #b4bcc6 !default;
-$dark:            #2f2f2f !default;
+$dark:            #f6f8fc !default;
 
 $colors:  (
   primary: (
@@ -26,7 +26,7 @@ $colors:  (
   ),
   tertiary: (
     base:             $tertiary,
-    contrast:         #fff,
+    contrast:         #000,
     shade:            get-color-shade($tertiary),
     tint:             get-color-tint($tertiary)
   ),
