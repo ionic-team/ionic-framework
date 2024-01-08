@@ -1,15 +1,10 @@
 triage:
-  label: "holiday triage"
+  label: triage
   removeLabelWhenProjectAssigned: true
   dryRun: false
 
 comment:
   labels:
-    - label: "holiday triage"
-      message: >
-        Thanks for the issue! This issue has been labeled as `holiday triage`. With the winter holidays quickly approaching, much of the Ionic Team will soon be taking time off. During this time, issue triaging and PR review will be delayed until the team begins to return. After this period, we will work to ensure that all new issues are properly triaged and that new PRs are reviewed.
-        In the meantime, please read our [Winter Holiday Triage Guide](https://github.com/ionic-team/ionic-framework/issues/22699) for information on how to ensure that your issue is triaged correctly.
-        Thank you!
     - label: "help wanted"
       message: >
         This issue has been labeled as `help wanted`. This label is added to issues
@@ -45,7 +40,7 @@ comment:
 
 
         If the requested feature is something you would find useful for your applications, please react to the original post with 👍 (`+1`). If you would like to provide an additional use case for the feature, please post a comment.
-
+        
 
         The team will review this feedback and make a final decision. Any decision will be posted on this thread, but please note that we may ultimately decide not to pursue this feature.
 
