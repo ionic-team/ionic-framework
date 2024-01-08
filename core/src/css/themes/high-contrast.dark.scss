@@ -1,0 +1,92 @@
+@use "sass:map";
+@import "../../themes/ionic.functions.color";
+
+$primary:         #7cabff !default;
+$secondary:       #62bdff !default;
+$tertiary:        #b6b9f9 !default;
+$success:         #4ada71 !default;
+$warning:         #ffce31 !default;
+$danger:          #fc9aa2 !default;
+$light:           #f6f8fc !default;
+$medium:          #b4bcc6 !default;
+$dark:            #2f2f2f !default;
+
+$colors:  (
+  primary: (
+    base:             $primary,
+    contrast:         #000,
+    shade:            get-color-shade($primary),
+    tint:             get-color-tint($primary)
+  ),
+  secondary: (
+    base:             $secondary,
+    contrast:         #000,
+    shade:            get-color-shade($secondary),
+    tint:             get-color-tint($secondary)
+  ),
+  tertiary: (
+    base:             $tertiary,
+    contrast:         #fff,
+    shade:            get-color-shade($tertiary),
+    tint:             get-color-tint($tertiary)
+  ),
+  success: (
+    base:             $success,
+    contrast:         #000,
+    shade:            get-color-shade($success),
+    tint:             get-color-tint($success)
+  ),
+  warning: (
+    base:             $warning,
+    contrast:         #000,
+    shade:            get-color-shade($warning),
+    tint:             get-color-tint($warning)
+  ),
+  danger: (
+    base:             $danger,
+    contrast:         #000,
+    shade:            get-color-shade($danger),
+    tint:             get-color-tint($danger)
+  ),
+  light: (
+    base:             $light,
+    contrast:         #fff,
+    shade:            get-color-shade($light),
+    tint:             get-color-tint($light)
+  ),
+  medium: (
+    base:             $medium,
+    contrast:         #000,
+    shade:            get-color-shade($medium),
+    tint:             get-color-tint($medium)
+  ),
+  dark: (
+    base:             $dark,
+    contrast:         #000,
+    shade:            get-color-shade($dark),
+    tint:             get-color-tint($dark)
+  )
+) !default;
+
+
+/// Loop through each color object above
+/// and generate CSS Variables for each
+/// color. Do not use the ion-color function
+/// here because that will set the variable
+/// to evaluate to itself with a fallback.
+/// For example:
+/// --ion-color-primary: #{ion-color(primary, base)};
+/// Maps to:
+/// --ion-color-primary: var(--ion-color-primary, #...);
+@mixin high-contrast-dark-base-theme() {
+  & {
+    @each $color-name, $value in $colors {
+      --ion-color-#{$color-name}: #{map.get($value, base)};
+      --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+      --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+      --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+      --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+      --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+    }
+  }
+}

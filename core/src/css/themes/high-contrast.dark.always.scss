@@ -1,0 +1,5 @@
+@import "./high-contrast.dark";
+
+:root {
+  @include high-contrast-dark-base-theme();
+}

@@ -1,0 +1,7 @@
+@import "./high-contrast.dark";
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root {
+    @include high-contrast-dark-base-theme();
+  }
+}
