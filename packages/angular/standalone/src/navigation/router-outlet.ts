@@ -24,7 +24,7 @@ import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet extends IonRouterOutletBase {
   /**
-   * static: true must be set so the query results are resolved
+   * `static: true` must be set so the query results are resolved
    * before change detection runs. Otherwise, the view container
    * ref will be ion-router-outlet instead of ng-container, and
    * the first view will be added as a sibling of ion-router-outlet
