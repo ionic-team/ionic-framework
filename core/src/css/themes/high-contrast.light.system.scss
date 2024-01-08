@@ -1,0 +1,7 @@
+@import "./high-contrast.light";
+
+@media (prefers-contrast: more) {
+  :root {
+    @include high-contrast-light-base-theme();
+  }
+}

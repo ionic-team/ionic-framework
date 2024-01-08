@@ -1,0 +1,5 @@
+@import "./high-contrast.light";
+
+:root {
+  @include high-contrast-light-base-theme();
+}
