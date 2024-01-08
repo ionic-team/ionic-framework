@@ -5,8 +5,10 @@ export type Direction = 'ltr' | 'rtl';
  *
  * - `light`: The fallback theme values. Theme stylesheet will not be included.
  * - `dark`: The dark theme values.
+ * - `high-contrast-light`: The high contrast light theme values.
+ * - `high-contrast-dark`: The high contrast dark theme values.
  */
-export type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'high-contrast-light' | 'high-contrast-dark';
 
 export type TitleFn = (title: string) => string;
 export type ScreenshotFn = (fileName: string) => string;
