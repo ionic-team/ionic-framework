@@ -1,0 +1,89 @@
+@import "../../themes/ionic.globals";
+
+// Picker Column
+// --------------------------------------------------
+
+.picker-col {
+  display: flex;
+  position: relative;
+
+  flex: 1;
+  justify-content: center;
+
+  height: 100%;
+  box-sizing: content-box;
+
+  contain: content;
+}
+
+.picker-opts {
+  position: relative;
+
+  flex: 1;
+
+  max-width: 100%;
+}
+
+// contain property is supported by Chrome
+.picker-opt {
+  @include position(0, null, null, 0);
+
+  display: block;
+  position: absolute;
+
+  width: 100%;
+
+  border: 0;
+
+  text-align: center;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  contain: strict;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.picker-opt.picker-opt-disabled {
+  pointer-events: none;
+}
+
+.picker-opt-disabled {
+  opacity: 0;
+}
+
+.picker-opts-left {
+  justify-content: flex-start;
+}
+
+.picker-opts-right {
+  justify-content: flex-end;
+}
+
+.picker-opt {
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.picker-prefix {
+  position: relative;
+
+  flex: 1;
+
+  text-align: end;
+
+  white-space: nowrap;
+}
+
+.picker-suffix {
+  position: relative;
+
+  flex: 1;
+
+  text-align: start;
+
+  white-space: nowrap;
+}

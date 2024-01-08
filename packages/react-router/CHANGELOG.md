@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* **react:** replacing route uses new route direction and animation ([#28671](https://github.com/ionic-team/ionic-framework/issues/28671)) ([a17b963](https://github.com/ionic-team/ionic-framework/commit/a17b9631829c36c2daf1d5227f5afa69f99f8743)), closes [#24260](https://github.com/ionic-team/ionic-framework/issues/24260)
+* **react:** use custom animation when going back after a replace ([#28674](https://github.com/ionic-team/ionic-framework/issues/28674)) ([fc88613](https://github.com/ionic-team/ionic-framework/commit/fc88613fefa019a3b695a2c6e10c85cd3ce79ae8)), closes [#28673](https://github.com/ionic-team/ionic-framework/issues/28673)
+
+
+
+
+
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
+
+
+### Bug Fixes
+
+* **react:** router creates new view instances of parameterized routes ([#28616](https://github.com/ionic-team/ionic-framework/issues/28616)) ([1705d06](https://github.com/ionic-team/ionic-framework/commit/1705d064cc041e99f432a27207f3aab7fa62c778)), closes [#26524](https://github.com/ionic-team/ionic-framework/issues/26524)
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 **Note:** Version bump only for package @ionic/react-router

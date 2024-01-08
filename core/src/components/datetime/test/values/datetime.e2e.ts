@@ -29,7 +29,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const items = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+      const items = page.locator('.month-column ion-picker-column-option');
       await expect(items).toHaveText(['May', 'June', 'October']);
     });
     test('should render correct years', async ({ page }) => {
@@ -40,7 +40,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const items = page.locator('.year-column .picker-item:not(.picker-item-empty)');
+      const items = page.locator('.year-column ion-picker-column-option');
       await expect(items).toHaveText(['2022', '2021', '2020']);
     });
     test('should render correct hours', async ({ page }) => {
@@ -51,7 +51,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const items = page.locator('ion-picker-column-internal:first-of-type .picker-item:not(.picker-item-empty)');
+      const items = page.locator('ion-picker-column:first-of-type ion-picker-column-option');
       await expect(items).toHaveText(['1', '2', '3']);
     });
     test('should render correct minutes', async ({ page }) => {
@@ -62,7 +62,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const items = page.locator('ion-picker-column-internal:nth-of-type(2) .picker-item:not(.picker-item-empty)');
+      const items = page.locator('ion-picker-column:nth-of-type(2) ion-picker-column-option');
       await expect(items).toHaveText(['01', '02', '03']);
     });
     test('should adjust default parts for allowed hour and minute values', async ({ page }) => {
@@ -93,23 +93,25 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.waitForSelector('.datetime-ready');
 
-      const minuteItems = page.locator(
-        'ion-picker-column-internal:nth-of-type(2) .picker-item:not(.picker-item-empty)'
-      );
-      await expect(minuteItems).toHaveText(['00', '15', '30', '45']);
-      await expect(minuteItems.nth(1)).toHaveClass(/picker-item-active/);
+      const minuteColumn = page.locator('ion-picker-column').nth(1);
+      const minuteItems = minuteColumn.locator('ion-picker-column-option');
 
-      const hourItems = page.locator('ion-picker-column-internal:nth-of-type(1) .picker-item:not(.picker-item-empty)');
+      await expect(minuteItems).toHaveText(['00', '15', '30', '45']);
+      await expect(minuteColumn).toHaveJSProperty('value', 15);
+
+      const hourColumn = page.locator('ion-picker-column').nth(0);
+      const hourItems = hourColumn.locator('ion-picker-column-option');
       await expect(hourItems).toHaveText(['2']);
-      await expect(hourItems.nth(0)).toHaveClass(/picker-item-active/);
+      await expect(hourColumn).toHaveJSProperty('value', 2);
 
       /**
        * Since the allowed hour is 2AM, the time period
        * should switch from PM to AM.
        */
-      const ampmItems = page.locator('ion-picker-column-internal:nth-of-type(3) .picker-item:not(.picker-item-empty)');
+      const ampmColumn = page.locator('ion-picker-column').nth(2);
+      const ampmItems = ampmColumn.locator('ion-picker-column-option');
       await expect(ampmItems).toHaveText(['AM', 'PM']);
-      await expect(ampmItems.nth(0)).toHaveClass(/picker-item-active/);
+      await expect(ampmColumn).toHaveJSProperty('value', 'am');
     });
     test('should adjust default parts month for allowed month values', async ({ page }) => {
       /**
@@ -139,9 +141,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.waitForSelector('.datetime-ready');
 
-      const monthItems = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+      const monthItems = page.locator('.month-column ion-picker-column-option');
       await expect(monthItems).toHaveText(['January']);
-      await expect(monthItems.nth(0)).toHaveClass(/picker-item-active/);
+      await expect(monthItems.nth(0)).toHaveClass(/option-active/);
     });
     test('today date highlight should persist even if disallowed from dayValues', async ({ page }) => {
       /**

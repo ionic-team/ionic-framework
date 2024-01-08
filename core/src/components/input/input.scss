@@ -322,6 +322,9 @@
 
   flex-grow: 1;
 
+  // ensure start/end slot content is vertically centered
+  align-items: center;
+
   width: 100%;
 }
 
@@ -641,9 +644,7 @@
 /**
  * This makes the label sit above the input.
  */
-:host(.input-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.input-label-placement-floating) .label-text-wrapper,
-:host(.has-value.input-label-placement-floating) .label-text-wrapper {
+:host(.label-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
@@ -651,4 +652,17 @@
    * beyond the bounds of the input.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
 }

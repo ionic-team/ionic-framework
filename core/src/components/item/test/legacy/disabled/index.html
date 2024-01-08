@@ -41,7 +41,7 @@
 
           <ion-item>
             <ion-label>Disabled Select</ion-label>
-            <ion-select disabled value="n64">
+            <ion-select disabled value="n64" legacy="true">
               <ion-select-option value="">No Game Console</ion-select-option>
               <ion-select-option value="nes">NES</ion-select-option>
               <ion-select-option value="n64">Nintendo64</ion-select-option>
@@ -54,34 +54,34 @@
 
           <ion-item>
             <ion-label>Disabled Input</ion-label>
-            <ion-input placeholder="Disabled" disabled></ion-input>
+            <ion-input placeholder="Disabled" disabled legacy="true"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label>Disabled Textarea</ion-label>
-            <ion-textarea placeholder="Disabled" disabled></ion-textarea>
+            <ion-textarea placeholder="Disabled" disabled legacy="true"></ion-textarea>
           </ion-item>
 
           <ion-item>
             <ion-label>Disabled Toggle</ion-label>
-            <ion-toggle disabled checked slot="end"></ion-toggle>
+            <ion-toggle disabled checked slot="end" legacy="true"></ion-toggle>
           </ion-item>
 
           <ion-item>
             <ion-label>Disabled Checkbox</ion-label>
-            <ion-checkbox disabled checked slot="start"></ion-checkbox>
+            <ion-checkbox disabled checked slot="start" legacy="true"></ion-checkbox>
           </ion-item>
 
           <ion-radio-group value="radio">
             <ion-item>
               <ion-label>Disabled Radio</ion-label>
-              <ion-radio disabled value="radio" slot="start"></ion-radio>
+              <ion-radio disabled value="radio" slot="start" legacy="true"></ion-radio>
             </ion-item>
           </ion-radio-group>
 
           <ion-item>
             <ion-label>Disabled Range</ion-label>
-            <ion-range disabled value="10"></ion-range>
+            <ion-range disabled value="10" legacy="true"></ion-range>
           </ion-item>
         </ion-list>
 
@@ -111,25 +111,25 @@
           </ion-item>
 
           <ion-item>
-            <ion-checkbox disabled slot="start"></ion-checkbox>
+            <ion-checkbox disabled slot="start" legacy="true"></ion-checkbox>
             <ion-label>Checkbox + Radio</ion-label>
             <ion-radio slot="end"></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-checkbox disabled slot="start"></ion-checkbox>
+            <ion-checkbox disabled slot="start" legacy="true"></ion-checkbox>
             <ion-radio slot="start"></ion-radio>
             <ion-label>Checkbox + Radio</ion-label>
           </ion-item>
 
           <ion-item>
             <ion-label>Disabled Selects</ion-label>
-            <ion-select placeholder="month">
+            <ion-select placeholder="month" legacy="true">
               <ion-select-option value="1">January</ion-select-option>
               <ion-select-option value="2">February</ion-select-option>
               <ion-select-option value="3">March</ion-select-option>
             </ion-select>
-            <ion-select disabled placeholder="year">
+            <ion-select disabled placeholder="year" legacy="true">
               <ion-select-option value="1990">1990</ion-select-option>
               <ion-select-option value="1991">1991</ion-select-option>
               <ion-select-option value="1992">1992</ion-select-option>
@@ -142,19 +142,19 @@
           </ion-item>
 
           <ion-item>
-            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-checkbox slot="start" legacy="true"></ion-checkbox>
             <ion-label>Checkbox + Range</ion-label>
             <ion-range disabled value="45"></ion-range>
           </ion-item>
 
           <ion-item>
-            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-checkbox slot="start" legacy="true"></ion-checkbox>
             <ion-label>Checkbox + Toggle</ion-label>
             <ion-toggle disabled value="45"></ion-toggle>
           </ion-item>
 
           <ion-item>
-            <ion-checkbox disabled slot="start"></ion-checkbox>
+            <ion-checkbox disabled slot="start" legacy="true"></ion-checkbox>
             <ion-label>Checkbox + Buttons</ion-label>
             <ion-button slot="end">Default</ion-button>
             <ion-button slot="end">Buttons</ion-button>
@@ -162,7 +162,7 @@
 
           <ion-item>
             <ion-label>Disabled Input</ion-label>
-            <ion-input slot="start" placeholder="Disabled" disabled></ion-input>
+            <ion-input slot="start" placeholder="Disabled" disabled legacy="true"></ion-input>
             <ion-segment>
               <ion-segment-button value="friends">
                 <ion-label>Friends</ion-label>
@@ -174,7 +174,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-checkbox slot="start" disabled></ion-checkbox>
+            <ion-checkbox slot="start" disabled legacy="true"></ion-checkbox>
             <ion-label>Disabled Checkbox</ion-label>
             <ion-searchbar></ion-searchbar>
           </ion-item>

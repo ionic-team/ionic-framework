@@ -14,6 +14,12 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
           </ion-textarea>
           <ion-textarea label="Label" value="My Text"></ion-textarea>
           <ion-textarea aria-label="Label"></ion-textarea>
+          <ion-textarea label="Email" label-placement="floating" fill="solid" value="hi@ionic.io">
+            <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+            <ion-button slot="end" aria-label="button">
+              <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
+          </ion-textarea>
         </main>
       `,
         config

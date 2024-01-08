@@ -1,6 +1,6 @@
-import type { MenuControllerI } from '@ionic/core/components';
+import type { MenuControllerI, AnimationBuilder, MenuI, Animation } from '@ionic/core/components';
 
-export class MenuController {
+export class MenuController implements MenuControllerI {
   constructor(private menuController: MenuControllerI) {}
 
   /**
@@ -97,5 +97,33 @@ export class MenuController {
    */
   getMenus(): Promise<HTMLIonMenuElement[]> {
     return this.menuController.getMenus();
+  }
+
+  registerAnimation(name: string, animation: AnimationBuilder): void {
+    return this.menuController.registerAnimation(name, animation);
+  }
+
+  isAnimating(): Promise<boolean> {
+    return this.menuController.isAnimating();
+  }
+
+  _getOpenSync(): HTMLIonMenuElement | undefined {
+    return this.menuController._getOpenSync();
+  }
+
+  _createAnimation(type: string, menuCmp: MenuI): Promise<Animation> {
+    return this.menuController._createAnimation(type, menuCmp);
+  }
+
+  _register(menu: MenuI): void {
+    return this.menuController._register(menu);
+  }
+
+  _unregister(menu: MenuI): void {
+    return this.menuController._unregister(menu);
+  }
+
+  _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> {
+    return this.menuController._setOpen(menu, shouldOpen, animated);
   }
 }
