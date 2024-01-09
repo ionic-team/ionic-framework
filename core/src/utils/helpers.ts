@@ -22,7 +22,7 @@ export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0)
  */
 const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
-  let animationTimeout: any;
+  let animationTimeout: number | undefined;
   const opts: any = { passive: true };
   const ANIMATION_FALLBACK_TIMEOUT = 500;
 
@@ -45,7 +45,7 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
     animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
 
     unRegTrans = () => {
-      if (animationTimeout) {
+      if (animationTimeout !== undefined) {
         clearTimeout(animationTimeout);
         animationTimeout = undefined;
       }
