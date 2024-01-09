@@ -1,0 +1,128 @@
+@use "sass:map";
+@import "../../themes/ionic.functions.color";
+
+$primary:         #7cabff !default;
+$secondary:       #62bdff !default;
+$tertiary:        #b6b9f9 !default;
+$success:         #4ada71 !default;
+$warning:         #ffce31 !default;
+$danger:          #fc9aa2 !default;
+$light:           #2f2f2f !default;
+$medium:          #b4bcc6 !default;
+$dark:            #f6f8fc !default;
+
+$colors:  (
+  primary: (
+    base:             $primary,
+    contrast:         #000,
+    shade:            get-color-shade($primary),
+    tint:             get-color-tint($primary)
+  ),
+  secondary: (
+    base:             $secondary,
+    contrast:         #000,
+    shade:            get-color-shade($secondary),
+    tint:             get-color-tint($secondary)
+  ),
+  tertiary: (
+    base:             $tertiary,
+    contrast:         #000,
+    shade:            get-color-shade($tertiary),
+    tint:             get-color-tint($tertiary)
+  ),
+  success: (
+    base:             $success,
+    contrast:         #000,
+    shade:            get-color-shade($success),
+    tint:             get-color-tint($success)
+  ),
+  warning: (
+    base:             $warning,
+    contrast:         #000,
+    shade:            get-color-shade($warning),
+    tint:             get-color-tint($warning)
+  ),
+  danger: (
+    base:             $danger,
+    contrast:         #000,
+    shade:            get-color-shade($danger),
+    tint:             get-color-tint($danger)
+  ),
+  light: (
+    base:             $light,
+    contrast:         #fff,
+    shade:            get-color-shade($light),
+    tint:             get-color-tint($light)
+  ),
+  medium: (
+    base:             $medium,
+    contrast:         #000,
+    shade:            get-color-shade($medium),
+    tint:             get-color-tint($medium)
+  ),
+  dark: (
+    base:             $dark,
+    contrast:         #000,
+    shade:            get-color-shade($dark),
+    tint:             get-color-tint($dark)
+  )
+) !default;
+
+
+/// Loop through each color object above
+/// and generate CSS Variables for each
+/// color. Do not use the ion-color function
+/// here because that will set the variable
+/// to evaluate to itself with a fallback.
+/// For example:
+/// --ion-color-primary: #{ion-color(primary, base)};
+/// Maps to:
+/// --ion-color-primary: var(--ion-color-primary, #...);
+
+/// We apply certain styles to the per-mode classes (ios and md)
+/// as opposed to setting everything in :root
+// so any high contrast dark styles override the standard
+/// contrast dark styles.
+
+/// TODO FW-5863 The per-mode styles were copied
+/// from the standard contrast dark theme, but the values
+/// are subject to change once the proper step colors are updated.
+@mixin high-contrast-dark-base-theme() {
+  & {
+    @each $color-name, $value in $colors {
+      --ion-color-#{$color-name}: #{map.get($value, base)};
+      --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+      --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+      --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+      --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+      --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+    }
+  }
+}
+
+@mixin high-contrast-dark-ios-theme() {
+  & {
+    --ion-background-color: #000000;
+    --ion-background-color-rgb: 0, 0, 0;
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+    --ion-item-background: #000000;
+    --ion-card-background: #1c1c1d;
+  }
+
+  & ion-modal {
+    --ion-background-color: var(--ion-color-step-100);
+    --ion-toolbar-background: var(--ion-color-step-150);
+    --ion-toolbar-border-color: var(--ion-color-step-250);
+  }
+}
+
+@mixin high-contrast-dark-md-theme() {
+  & {
+    --ion-background-color: #121212;
+    --ion-background-color-rgb: 18, 18, 18;
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+    --ion-border-color: #222222;
+  }
+}
