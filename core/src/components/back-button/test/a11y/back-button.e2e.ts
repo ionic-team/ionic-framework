@@ -1,5 +1,31 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
+
+/**
+ * Only ios mode uses ion-color() for the back button
+ */
+configs({ directions: ['ltr'], modes: ['ios'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
+  test.describe(title('back-button: a11y for ion-color()'), () => {
+    test('should not have accessibility violations', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-back-button {
+            display: inline-block !important;
+            vertical-align: middle;
+          }
+        </style>
+        <ion-back-button text="Back" aria-label="back button"></ion-back-button>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('back-button: font scaling'), () => {

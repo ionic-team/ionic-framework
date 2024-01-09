@@ -428,12 +428,12 @@ export class Content implements ComponentInterface {
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
-    const TagType = isMainContent ? 'main' : ('div' as any);
 
     this.resize();
 
     return (
       <Host
+        role={isMainContent ? 'main' : undefined}
         class={createColorClasses(this.color, {
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
@@ -446,19 +446,19 @@ export class Content implements ComponentInterface {
         }}
       >
         <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
-        <TagType
+        <div
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
             overscroll: (scrollX || scrollY) && forceOverscroll,
           }}
-          ref={(scrollEl: HTMLElement) => (this.scrollEl = scrollEl!)}
+          ref={(scrollEl) => (this.scrollEl = scrollEl)}
           onScroll={this.scrollEvents ? (ev: UIEvent) => this.onScroll(ev) : undefined}
           part="scroll"
         >
           <slot></slot>
-        </TagType>
+        </div>
 
         {transitionShadow ? (
           <div class="transition-effect">

@@ -13,7 +13,7 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <link id="theme" href="/src/themes/test/css-variables/css/default.css" rel="stylesheet" />
+    <link id="theme" href="/src/themes/test/default.css" rel="stylesheet" />
 
     <style>
       .wrapper {
@@ -977,7 +977,17 @@
       }
 
       function toggleTheme(theme) {
-        var cssFile = `/src/themes/test/css-variables/css/${theme}.css`;
+        // The path to the directory containing the
+        // custom theme files for this test
+        var themeFilesDir = '/src/themes/test/css-variables/css';
+
+        // The default and dark themes are official Ionic
+        // themes so they are located outside of this test
+        if (theme == 'default' || theme == 'dark') {
+          themeFilesDir = '/src/themes/test';
+        }
+
+        var cssFile = `${themeFilesDir}/${theme}.css`;
 
         var oldLink = document.getElementById('theme');
 
