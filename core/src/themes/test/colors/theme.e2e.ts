@@ -173,10 +173,6 @@ configs({ modes: ['md'], directions: ['ltr'], themes: ['high-contrast-light', 'h
             config
           );
 
-          if (color === 'danger') {
-            await page.pause();
-          }
-
           const results = await new AxeBuilder({ page })
             .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
             .analyze();
