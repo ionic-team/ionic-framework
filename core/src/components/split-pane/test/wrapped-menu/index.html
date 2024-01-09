@@ -26,7 +26,7 @@
   <body>
     <ion-app>
       <ion-split-pane id="splitPane" content-id="split-content">
-        <app-menu></app-menu>
+        <app-menu side="start"></app-menu>
         <div class="ion-page" id="split-content">
           <ion-header>
             <ion-toolbar>
@@ -51,7 +51,7 @@
 
         connectedCallback() {
           this.innerHTML = `
-            <ion-menu side="start" content-id="split-content">
+            <ion-menu side=${this.getAttribute('side')} content-id="split-content">
               <ion-header>
                 <ion-toolbar color="secondary">
                   <ion-title>Menu</ion-title>
