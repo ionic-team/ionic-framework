@@ -278,7 +278,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const component = snapshot.routeConfig!.component ?? snapshot.component;
 
       /**
-       * View components need to be added as a child of ion-router-outlet.
+       * View components need to be added as a child of ion-router-outlet
+       * for page transitions and swipe to go back.
        * However, createComponent mounts components as siblings of the
        * ViewContainerRef. As a result, outletContent must reference
        * an ng-container inside of ion-router-outlet and not
