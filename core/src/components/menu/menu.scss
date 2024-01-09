@@ -180,6 +180,17 @@ ion-backdrop {
 // --------------------------------------------------
 
 /**
+ * The split pane styles for menu are defined
+ * in the menu stylesheets instead in the split pane
+ * stylesheets with ::slotted to allow for menus
+ * to be wrapped in custom components.
+ * If we used ::slotted to target the menu
+ * then menus wrapped in components would never
+ * receive these styles because they are not
+ * children of the split pane.
+ */
+
+/**
  * Do not pass CSS Variables down on larger
  * screens as we want them to affect the outer
  * `ion-menu` rather than the inner content
