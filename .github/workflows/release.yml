@@ -78,6 +78,7 @@ jobs:
     needs: [finalize-release]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       # Lerna does not automatically bump versions
       # of Ionic dependencies that have changed,
       # so we do that here.
