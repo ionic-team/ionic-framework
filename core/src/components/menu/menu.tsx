@@ -288,23 +288,16 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
-  onSplitPaneChanged(ev: CustomEvent) {
-    const { target } = ev;
-    const closestSplitPane = this.el.closest('ion-split-pane');
+  async onSplitPaneChanged() {
+    const closestSplitPane = this.el.closest<HTMLIonSplitPaneElement>('ion-split-pane');
 
-    /**
-     * Menu listens on the body for "ionSplitPaneVisible".
-     * However, this means the callback will run any time
-     * a SplitPane changes visibility. As a result, we only want
-     * Menu's visibility state to update if its parent SplitPane
-     * changes visibility.
-     */
-    if (target !== closestSplitPane) {
+    if (closestSplitPane === null) {
       return;
     }
 
-    this.isPaneVisible = ev.detail.isPane(this.el);
+    this.isPaneVisible = await closestSplitPane.isPane(this.el);
     this.updateState();
+    this.menuChanged();
   }
 
   @Listen('click', { capture: true })

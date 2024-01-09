@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Listen, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -58,8 +58,23 @@ export class SplitPane implements ComponentInterface {
 
   @Watch('visible')
   visibleChanged(visible: boolean) {
-    const detail = { visible, isPane: this.isPane.bind(this) };
-    this.ionSplitPaneVisible.emit(detail);
+    this.ionSplitPaneVisible.emit({ visible });
+  }
+
+  /**
+   * Listen for child menus to be
+   * loaded and set the appropriate
+   * pane class. Note that menus
+   * can be loaded at any time and
+   * they can be encapsulated in other
+   * components so we need to listen for
+   * the menu load event instead of
+   * querying the DOM when the split pane
+   * loads.
+   */
+  @Listen('ionMenuChange')
+  onMenuLoad(ev: CustomEvent) {
+    setPaneClass(ev.target as HTMLIonSplitPaneElement, false);
   }
 
   async connectedCallback() {
@@ -68,7 +83,7 @@ export class SplitPane implements ComponentInterface {
     if (typeof (customElements as any) !== 'undefined' && (customElements as any) != null) {
       await customElements.whenDefined('ion-split-pane');
     }
-    this.styleChildren();
+    this.styleMainElement();
     this.updateState();
   }
 
@@ -125,17 +140,31 @@ export class SplitPane implements ComponentInterface {
     }
   }
 
-  private isPane(element: HTMLElement): boolean {
+  /**
+   * @internal
+   */
+  @Method()
+  isPane(element: HTMLElement): Promise<boolean> {
     if (!this.visible) {
-      return false;
+      return Promise.resolve(false);
     }
-    return element.parentElement === this.el && element.classList.contains(SPLIT_PANE_SIDE);
+    return Promise.resolve(this.el.contains(element) && element.classList.contains(SPLIT_PANE_SIDE));
   }
 
-  private styleChildren() {
+  /**
+   * Attempt to find the main content
+   * element inside of the split pane.
+   * If found, set it as the main node.
+   *
+   * We assume that the main node
+   * is available in the DOM on split
+   * pane load.
+   */
+  private styleMainElement() {
     if (!Build.isBrowser) {
       return;
     }
+
     const contentId = this.contentId;
     const children = this.el.children;
     const nu = this.el.childElementCount;
@@ -147,10 +176,11 @@ export class SplitPane implements ComponentInterface {
         if (foundMain) {
           console.warn('split pane cannot have more than one main node');
           return;
+        } else {
+          setPaneClass(child, isMain);
+          foundMain = true;
         }
-        foundMain = true;
       }
-      setPaneClass(child, isMain);
     }
     if (!foundMain) {
       console.warn('split pane does not have a specified main node');
@@ -189,4 +219,6 @@ const setPaneClass = (el: HTMLElement, isMain: boolean) => {
   const classList = el.classList;
   classList.add(toAdd);
   classList.remove(toRemove);
+
+  console.log('Adding', toAdd, 'removing', toRemove, 'el', el);
 };
