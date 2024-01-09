@@ -179,10 +179,40 @@ ion-backdrop {
 // Menu Split Pane
 // --------------------------------------------------
 
+/**
+ * Do not pass CSS Variables down on larger
+ * screens as we want them to affect the outer
+ * `ion-menu` rather than the inner content
+ */
 :host(.menu-pane-visible) {
-  width: var(--width);
-  min-width: var(--min-width);
-  max-width: var(--max-width);
+  flex: 0 1 auto;
+
+  width: var(--side-width, var(--width));
+  min-width: var(--side-min-width, var(--min-width));
+  max-width: var(--side-max-width, var(--max-width));
+}
+
+:host(.menu-pane-visible.split-pane-side) {
+  @include position(0, 0, 0, 0);
+
+  position: relative;
+
+  box-shadow: none;
+  z-index: 0;
+}
+
+:host(.menu-pane-visible.split-pane-side.menu-enabled) {
+  display: flex;
+
+  flex-shrink: 0;
+}
+
+:host(.menu-pane-visible.split-pane-side) {
+  order: -1;
+}
+
+:host(.menu-pane-visible.split-pane-side[side=end]) {
+  order: 1;
 }
 
 :host(.menu-pane-visible) .menu-inner {

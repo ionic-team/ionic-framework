@@ -23,3 +23,18 @@
 
   contain: strict;
 }
+
+:host(.split-pane-visible) ::slotted(.split-pane-main) {
+  @include position(0, 0, 0, 0);
+
+  position: relative;
+
+  flex: 1;
+
+  box-shadow: none;
+  z-index: 0;
+}
+
+::slotted(.split-pane-side:not(ion-menu)) {
+  display: none;
+}
