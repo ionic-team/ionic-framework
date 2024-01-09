@@ -219,6 +219,4 @@ const setPaneClass = (el: HTMLElement, isMain: boolean) => {
   const classList = el.classList;
   classList.add(toAdd);
   classList.remove(toRemove);
-
-  console.log('Adding', toAdd, 'removing', toRemove, 'el', el);
 };
