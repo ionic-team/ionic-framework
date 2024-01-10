@@ -6,6 +6,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
 import { getPresentedOverlay } from '@utils/overlays';
+import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -792,7 +793,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   render() {
-    const { type, disabled, isPaneVisible, inheritedAttributes, side } = this;
+    const { type, disabled, el, isPaneVisible, inheritedAttributes, side } = this;
     const mode = getIonMode(this);
 
     return (
@@ -805,7 +806,7 @@ export class Menu implements ComponentInterface, MenuI {
           'menu-enabled': !disabled,
           [`menu-side-${side}`]: true,
           'menu-pane-visible': isPaneVisible,
-          'split-pane-side': this.el.closest('ion-split-pane') !== null,
+          'split-pane-side': hostContext('ion-split-pane', el),
         }}
       >
         <div class="menu-inner" part="container" ref={(el) => (this.menuInnerEl = el)}>
