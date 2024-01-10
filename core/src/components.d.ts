@@ -3962,7 +3962,6 @@ declare global {
         "ionDidOpen": void;
         "ionDidClose": void;
         "ionMenuChange": MenuChangeEventDetail;
-        "ionMenuLoaded": void;
     }
     interface HTMLIonMenuElement extends Components.IonMenu, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonMenuElementEventMap>(type: K, listener: (this: HTMLIonMenuElement, ev: IonMenuCustomEvent<HTMLIonMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6376,10 +6375,6 @@ declare namespace LocalJSX {
           * Emitted when the menu state is changed.
          */
         "onIonMenuChange"?: (event: IonMenuCustomEvent<MenuChangeEventDetail>) => void;
-        /**
-          * Emitted when the menu's componentDidLoad
-         */
-        "onIonMenuLoaded"?: (event: IonMenuCustomEvent<void>) => void;
         /**
           * Emitted when the menu is about to be closed.
          */

@@ -187,12 +187,6 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
-  /**
-   * Emitted when the menu's componentDidLoad
-   * @internal
-   */
-  @Event() protected ionMenuLoaded!: EventEmitter<void>;
-
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
     // before WC is defined. This needs to be fixed in Stencil.
@@ -233,7 +227,6 @@ export class Menu implements ComponentInterface, MenuI {
     menuController._register(this);
 
     this.menuChanged();
-
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
       gestureName: 'menu-swipe',
