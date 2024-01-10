@@ -87,7 +87,7 @@
 .toggle-switch-icon {
   position: absolute;
 
-  color: var(--ion-color-dark);
+  color: #{ion-color(dark, base)};
 }
 
 :host(.toggle-ltr) .toggle-switch-icon {
