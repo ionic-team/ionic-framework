@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
+
+
+### Bug Fixes
+
+* **input:** slotted buttons are clickable ([#28772](https://github.com/ionic-team/ionic-framework/issues/28772)) ([4ccc150](https://github.com/ionic-team/ionic-framework/commit/4ccc150edff4e3f33f453343aedb081d920b2f90)), closes [#28762](https://github.com/ionic-team/ionic-framework/issues/28762)
+
+
+
+
+
 ## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
 
 
