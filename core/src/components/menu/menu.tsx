@@ -77,6 +77,14 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Element() el!: HTMLIonMenuElement;
 
+  /**
+   * If true, then the menu should be
+   * visible within a split pane.
+   * If false, then the menu is hidden.
+   * However, the menu-button/menu-toggle
+   * components can be used to open the
+   * menu.
+   */
   @State() isPaneVisible = false;
   @State() isEndSide = false;
 
