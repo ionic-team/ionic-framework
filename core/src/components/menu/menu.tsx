@@ -187,6 +187,12 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
+    /**
+     * Emitted when the menu's componentDidLoad
+     * @internal
+     */
+    @Event() protected ionMenuLoaded!: EventEmitter<void>;
+
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
     // before WC is defined. This needs to be fixed in Stencil.
@@ -249,6 +255,18 @@ export class Menu implements ComponentInterface, MenuI {
 
   async componentDidLoad() {
     this.didLoad = true;
+
+    /**
+     * When the menu is loaded is needs to
+     * see if it should be considered visible inside
+     * of the split pane. If the split pane is
+     * hidden then the menu should be too.
+     *
+     */
+    const splitPane = this.el.closest('ion-split-pane');
+    if (splitPane !== null) {
+      this.isPaneVisible = await splitPane.isVisible();
+    }
 
     this.menuChanged();
     this.updateState();

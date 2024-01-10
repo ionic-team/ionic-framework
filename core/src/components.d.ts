@@ -2852,6 +2852,7 @@ export namespace Components {
           * If `true`, the split pane will be hidden.
          */
         "disabled": boolean;
+        "isVisible": () => Promise<boolean>;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
@@ -3961,6 +3962,7 @@ declare global {
         "ionDidOpen": void;
         "ionDidClose": void;
         "ionMenuChange": MenuChangeEventDetail;
+        "ionMenuLoaded": void;
     }
     interface HTMLIonMenuElement extends Components.IonMenu, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonMenuElementEventMap>(type: K, listener: (this: HTMLIonMenuElement, ev: IonMenuCustomEvent<HTMLIonMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6374,6 +6376,10 @@ declare namespace LocalJSX {
           * Emitted when the menu state is changed.
          */
         "onIonMenuChange"?: (event: IonMenuCustomEvent<MenuChangeEventDetail>) => void;
+        /**
+          * Emitted when the menu's componentDidLoad
+         */
+        "onIonMenuLoaded"?: (event: IonMenuCustomEvent<void>) => void;
         /**
           * Emitted when the menu is about to be closed.
          */

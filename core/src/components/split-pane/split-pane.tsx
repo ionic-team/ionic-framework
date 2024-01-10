@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Listen, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -62,19 +62,11 @@ export class SplitPane implements ComponentInterface {
   }
 
   /**
-   * Listen for child menus to be
-   * loaded and set the appropriate
-   * pane class. Note that menus
-   * can be loaded at any time and
-   * they can be encapsulated in other
-   * components so we need to listen for
-   * the menu load event instead of
-   * querying the DOM when the split pane
-   * loads.
+   * @internal
    */
-  @Listen('ionMenuChange')
-  onMenuLoad(ev: CustomEvent) {
-    setPaneClass(ev.target as HTMLIonMenuElement, false);
+  @Method()
+  async isVisible(): Promise<boolean> {
+    return Promise.resolve(this.visible);
   }
 
   async connectedCallback() {
@@ -83,7 +75,6 @@ export class SplitPane implements ComponentInterface {
     if (typeof (customElements as any) !== 'undefined' && (customElements as any) != null) {
       await customElements.whenDefined('ion-split-pane');
     }
-    (this as any).el.liam = this.isPane.bind(this);
     this.styleMainElement();
     this.updateState();
   }
@@ -139,17 +130,6 @@ export class SplitPane implements ComponentInterface {
       this.rmL = () => (mediaList as any).removeListener(callback as any);
       this.visible = mediaList.matches;
     }
-  }
-
-  /**
-   * @internal
-   */
-  isPane(element: HTMLElement): boolean {
-    if (!this.visible) {
-      return false;
-    }
-    console.log(this.el.contains(element), element.classList.contains(SPLIT_PANE_SIDE), element, element.classList)
-    return this.el.contains(element);
   }
 
   /**
