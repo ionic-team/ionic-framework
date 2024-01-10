@@ -310,16 +310,6 @@ export class Menu implements ComponentInterface, MenuI {
       this.isPaneVisible = ev.detail.visible;
 
       this.updateState();
-
-      /**
-       * Because isPane is async, we need to re-emit
-       * ionMenuChange so that dependent components
-       * such as MenuButton can re-render. Otherwise,
-       * when MenuButton will check if the menu is visible
-       * before isPane resolves, and it will think
-       * the menu is hidden.
-       */
-      this.menuChanged();
     }
   }
 
