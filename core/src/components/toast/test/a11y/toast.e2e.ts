@@ -236,7 +236,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  */
 configs({ directions: ['ltr'], themes: ['high-contrast-dark', 'high-contrast-light'] }).forEach(
   ({ title, config, screenshot }) => {
-    test.describe.only(title('toast: high contrast: buttons'), () => {
+    test.describe(title('toast: high contrast: buttons'), () => {
       test.beforeEach(async ({ page }) => {
         await page.setContent(
           `
