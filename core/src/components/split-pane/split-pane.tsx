@@ -74,7 +74,7 @@ export class SplitPane implements ComponentInterface {
    */
   @Listen('ionMenuChange')
   onMenuLoad(ev: CustomEvent) {
-    setPaneClass(ev.target as HTMLIonSplitPaneElement, false);
+    setPaneClass(ev.target as HTMLIonMenuElement, false);
   }
 
   async connectedCallback() {
@@ -83,6 +83,7 @@ export class SplitPane implements ComponentInterface {
     if (typeof (customElements as any) !== 'undefined' && (customElements as any) != null) {
       await customElements.whenDefined('ion-split-pane');
     }
+    (this as any).el.liam = this.isPane.bind(this);
     this.styleMainElement();
     this.updateState();
   }
@@ -143,12 +144,12 @@ export class SplitPane implements ComponentInterface {
   /**
    * @internal
    */
-  @Method()
-  isPane(element: HTMLElement): Promise<boolean> {
+  isPane(element: HTMLElement): boolean {
     if (!this.visible) {
-      return Promise.resolve(false);
+      return false;
     }
-    return Promise.resolve(this.el.contains(element) && element.classList.contains(SPLIT_PANE_SIDE));
+    console.log(this.el.contains(element), element.classList.contains(SPLIT_PANE_SIDE), element, element.classList)
+    return this.el.contains(element);
   }
 
   /**

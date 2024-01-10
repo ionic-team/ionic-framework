@@ -225,6 +225,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     // register this menu with the app's menu controller
     menuController._register(this);
+
     this.menuChanged();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -248,6 +249,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   async componentDidLoad() {
     this.didLoad = true;
+
     this.menuChanged();
     this.updateState();
   }
@@ -288,16 +290,24 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
-  async onSplitPaneChanged() {
+  async onSplitPaneChanged(ev: CustomEvent<{ visible: boolean }>) {
     const closestSplitPane = this.el.closest<HTMLIonSplitPaneElement>('ion-split-pane');
 
-    if (closestSplitPane === null) {
-      return;
-    }
+    if (closestSplitPane !== null && closestSplitPane === ev.target) {
+      this.isPaneVisible = ev.detail.visible;
 
-    this.isPaneVisible = await closestSplitPane.isPane(this.el);
-    this.updateState();
-    this.menuChanged();
+      this.updateState();
+
+      /**
+       * Because isPane is async, we need to re-emit
+       * ionMenuChange so that dependent components
+       * such as MenuButton can re-render. Otherwise,
+       * when MenuButton will check if the menu is visible
+       * before isPane resolves, and it will think
+       * the menu is hidden.
+       */
+      this.menuChanged();
+    }
   }
 
   @Listen('click', { capture: true })
@@ -784,6 +794,7 @@ export class Menu implements ComponentInterface, MenuI {
           'menu-enabled': !disabled,
           [`menu-side-${side}`]: true,
           'menu-pane-visible': isPaneVisible,
+          'split-pane-side': this.el.closest('ion-split-pane') !== null
         }}
       >
         <div class="menu-inner" part="container" ref={(el) => (this.menuInnerEl = el)}>

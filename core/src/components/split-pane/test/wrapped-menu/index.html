@@ -50,6 +50,7 @@
         }
 
         connectedCallback() {
+          setTimeout(() => {
           this.innerHTML = `
             <ion-menu side=${this.getAttribute('side')} content-id="split-content">
               <ion-header>
@@ -60,6 +61,7 @@
               <ion-content class="ion-padding">Menu Content</ion-content>
             </ion-menu>
           `;
+        }, 1000);
         }
       }
 
