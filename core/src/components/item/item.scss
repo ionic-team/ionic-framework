@@ -288,10 +288,7 @@ button, a {
   // This is required to work with an inset highlight
   position: relative;
 
-  // This flex property is required in order to make
-  // the elements wrap when there is a slotted start
-  // element and a label
-  flex: 1 0 0;
+  flex: 1;
 
   flex-direction: inherit;
 
