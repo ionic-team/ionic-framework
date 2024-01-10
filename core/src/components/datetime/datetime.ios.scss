@@ -3,8 +3,8 @@
 @import "../../themes/ionic.globals.ios";
 
 :host {
-  --background: var(--ion-color-light, #ffffff);
-  --background-rgb: var(--ion-color-light-rgb);
+  --background: #{ion-color(light, base)};
+  --background-rgb: #{ion-color(light, base, null, true)};
   --title-color: #{$text-color-step-400};
 }
 
