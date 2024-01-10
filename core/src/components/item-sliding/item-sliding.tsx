@@ -465,6 +465,55 @@ export class ItemSliding implements ComponentInterface {
       return;
     }
     style.transform = `translate3d(${-openAmount}px,0,0)`;
+
+    if (this.state === SlidingState.End) {
+      const options = this.rightOptions?.querySelectorAll('ion-item-option') ?? [];
+      if (openAmount < this.optsWidthRightSide) {
+        /**
+         * The total width of the 'processed' options.
+         * Used to calculate the offset to move each option off the
+         * screen, on top of each other.
+         */
+        let optionWidthOffset = 0;
+        /**
+         * The amount of space available for each option based
+         * on the total open space for the current swipe gesture
+         */
+        const spacePerOption = Math.abs(openAmount) / options.length;
+
+        options.forEach((option, index) => {
+          /**
+           * The initial distance to offset the individual option
+           * to locate it off the screen.
+           */
+          const initialOffset = this.optsWidthRightSide - optionWidthOffset;
+          /**
+           * The indexOffset is used to calculate the offset of each option
+           * based on its index. The further away from the center (index 0)
+           * the option is, the further it should be moved.
+           */
+          const indexOffset = options.length - index;
+          /**
+           * The offset to move the item-option so that it is displayed at
+           * an even visual interval as the other options.
+           */
+          const optionOffset = initialOffset - indexOffset * spacePerOption;
+
+          option.style.transform = `translate3d(${optionOffset}px,0,0)`;
+
+          optionWidthOffset += option.clientWidth;
+        });
+      } else {
+        options.forEach((option) => {
+          option.style.transform = 'translate3d(0,0,0)';
+        });
+      }
+    }
+
+    if (this.state === SlidingState.Start) {
+      // TODO
+    }
+
     this.ionDrag.emit({
       amount: openAmount,
       ratio: this.getSlidingRatioSync(),
