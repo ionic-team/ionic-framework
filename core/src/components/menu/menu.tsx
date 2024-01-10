@@ -187,11 +187,11 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
-    /**
-     * Emitted when the menu's componentDidLoad
-     * @internal
-     */
-    @Event() protected ionMenuLoaded!: EventEmitter<void>;
+  /**
+   * Emitted when the menu's componentDidLoad
+   * @internal
+   */
+  @Event() protected ionMenuLoaded!: EventEmitter<void>;
 
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
@@ -812,7 +812,7 @@ export class Menu implements ComponentInterface, MenuI {
           'menu-enabled': !disabled,
           [`menu-side-${side}`]: true,
           'menu-pane-visible': isPaneVisible,
-          'split-pane-side': this.el.closest('ion-split-pane') !== null
+          'split-pane-side': this.el.closest('ion-split-pane') !== null,
         }}
       >
         <div class="menu-inner" part="container" ref={(el) => (this.menuInnerEl = el)}>
