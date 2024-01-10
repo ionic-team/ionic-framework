@@ -250,11 +250,13 @@ export class Menu implements ComponentInterface, MenuI {
     this.didLoad = true;
 
     /**
-     * When the menu is loaded is needs to
+     * A menu inside of a split pane is assumed
+     * to be a side pane.
+     *
+     * When the menu is loaded it needs to
      * see if it should be considered visible inside
      * of the split pane. If the split pane is
      * hidden then the menu should be too.
-     *
      */
     const splitPane = this.el.closest('ion-split-pane');
     if (splitPane !== null) {
