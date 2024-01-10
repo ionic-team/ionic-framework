@@ -82,8 +82,8 @@ jobs:
       - name: Configure Identity
         # Commits from github-actions do not
         # trigger other GitHub Actions. As a result,
-        # we publish releases from Ionitron instead
-        # so actions run when merging the release branch
+        # we push from Ionitron instead so actions
+        # run when merging the release branch
         # back into main.
         run: |
           git config user.name ionitron
