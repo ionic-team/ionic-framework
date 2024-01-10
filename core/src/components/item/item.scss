@@ -407,7 +407,7 @@ button, a {
   // This flex property is required in order to keep
   // the label from shrinking when there are wide
   // elements next to it
-  flex: 1;
+  flex: 1 0 0;
 
   flex-direction: inherit;
 
@@ -432,6 +432,8 @@ button, a {
 
 // TODO(FW-5289): remove
 :host(.item-legacy) .input-wrapper {
+  flex: 1;
+
   flex-wrap: unset;
 
   max-width: unset;
