@@ -230,3 +230,48 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+/**
+ * High contrast mode tests
+ */
+configs({ directions: ['ltr'], themes: ['high-contrast-dark', 'high-contrast-light'] }).forEach(
+  ({ title, config, screenshot }) => {
+    test.describe(title('toast: high contrast: buttons'), () => {
+      test.beforeEach(async ({ page }) => {
+        await page.setContent(
+          `
+        <ion-toast is-open="true" header="Testing" message="Hello world"></ion-toast>
+        <script>
+          const toast = document.querySelector('ion-toast');
+          toast.buttons = [
+            { text: 'Cancel', role: 'cancel' },
+            { text: 'OK' }
+          ];
+        </script>
+      `,
+          config
+        );
+      });
+
+      test('should not have visual regressions', async ({ page }) => {
+        const toast = page.locator('ion-toast');
+
+        await expect(toast).toBeVisible();
+
+        const toastWrapper = toast.locator('.toast-wrapper');
+        await expect(toastWrapper).toHaveScreenshot(screenshot(`toast-high-contrast-buttons`));
+      });
+
+      test('should pass AAA guidelines', async ({ page }) => {
+        const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+
+        await ionToastDidPresent.next();
+
+        const results = await new AxeBuilder({ page })
+          .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
+          .analyze();
+        expect(results.violations).toEqual([]);
+      });
+    });
+  }
+);

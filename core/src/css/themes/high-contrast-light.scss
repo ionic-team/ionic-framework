@@ -89,4 +89,23 @@ $colors:  (
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
     }
   }
+
+  // Toast
+  // --------------------------------------------------
+
+  & ion-toast::part(button) {
+    // Fallback for browsers that don't support color-mix
+    color: var(--color);
+  }
+
+  /* stylelint-disable-next-line order/order */
+  @supports (color: color-mix(in lch, plum, pink)) {
+    & ion-toast::part(button) {
+      color: color-mix(in srgb, var(--color) 60%, var(--button-color));
+    }
+  }
+
+  & ion-toast::part(button cancel) {
+    color: var(--color);
+  }
 }
