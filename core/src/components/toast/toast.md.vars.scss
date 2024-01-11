@@ -77,7 +77,7 @@ $toast-md-button-opacity-hover: 0.08 !default;
 $toast-md-button-background-color-hover: ion-color(primary, base, $toast-md-button-opacity-hover) !default;
 
 /// @prop - Text color of the cancel toast button
-$toast-md-button-cancel-text-color: $background-color-step-100 !default;
+$toast-md-button-cancel-text-color: $text-color-step-900 !default;
 
 /// @prop - Background color of the cancel toast button on hover
 $toast-md-button-cancel-background-color-hover: rgba($background-color-rgb, $toast-md-button-opacity-hover) !default;

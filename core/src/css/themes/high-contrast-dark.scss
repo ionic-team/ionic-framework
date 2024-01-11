@@ -98,6 +98,25 @@ $colors:  (
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
     }
   }
+
+  // Toast
+  // --------------------------------------------------
+
+  & ion-toast::part(button) {
+    // Fallback for browsers that don't support color-mix
+    color: var(--color);
+  }
+
+  /* stylelint-disable-next-line order/order */
+  @supports (color: color-mix(in lch, plum, pink)) {
+    & ion-toast::part(button) {
+      color: color-mix(in srgb, var(--color) 67%, var(--button-color));
+    }
+  }
+
+  & ion-toast::part(button cancel) {
+    color: var(--color);
+  }
 }
 
 @mixin high-contrast-dark-ios-theme() {
@@ -110,11 +129,15 @@ $colors:  (
     --ion-card-background: #1c1c1d;
   }
 
+  // Modal
+  // --------------------------------------------------
+
   & ion-modal {
     --ion-background-color: var(--ion-color-step-100);
     --ion-toolbar-background: var(--ion-color-step-150);
     --ion-toolbar-border-color: var(--ion-color-step-250);
   }
+
 }
 
 @mixin high-contrast-dark-md-theme() {
