@@ -379,6 +379,7 @@ export class ItemSliding implements ComponentInterface {
     }
 
     const state = this.state;
+
     this.setOpenAmount(restingPoint, true);
 
     if ((state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
@@ -462,12 +463,30 @@ export class ItemSliding implements ComponentInterface {
 
       openSlidingItem = undefined;
       style.transform = '';
+
+      /**
+       * When the swipe gesture is released, we need to
+       * animate the item-options to their final position.
+       *
+       * If the item is revealing options, we need to move
+       * the option to their end position. If the item is
+       * collapsing the options, we need to move the options
+       * to their start position off the screen.
+       */
+      if (this.state === SlidingState.End) {
+        const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
+        this.animateOptionsEnd(options, this.optsWidthRightSide, true);
+      }
+
+      if (this.state === SlidingState.Start) {
+      }
+
       return;
     }
     style.transform = `translate3d(${-openAmount}px,0,0)`;
 
     if (this.state === SlidingState.End) {
-      const options = this.rightOptions?.querySelectorAll('ion-item-option') ?? [];
+      const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
       if (openAmount < this.optsWidthRightSide) {
         /**
          * The total width of the 'processed' options.
@@ -504,19 +523,105 @@ export class ItemSliding implements ComponentInterface {
           optionWidthOffset += option.clientWidth;
         });
       } else {
-        options.forEach((option) => {
-          option.style.transform = 'translate3d(0,0,0)';
-        });
+        /**
+         * Reveals all of the options.
+         */
+        this.animateOptionsEnd(options, this.optsWidthRightSide);
       }
     }
 
     if (this.state === SlidingState.Start) {
-      // TODO
+      const options = this.leftOptions?.querySelectorAll('ion-item-option') ?? [];
+
+      if (openAmount > -this.optsWidthLeftSide) {
+        /**
+         * The total width of the 'processed' options.
+         * Used to calculate the offset to move each option off the
+         * screen, on top of each other.
+         */
+        let optionWidthOffset = 0;
+        /**
+         * The amount of space available for each option based
+         * on the total open space for the current swipe gesture
+         */
+        const spacePerOption = Math.abs(openAmount) / options.length;
+
+        options.forEach((option, index) => {
+          /**
+           * The initial distance to offset the individual option
+           * to locate it off the screen.
+           */
+          const initialOffset = -(option.clientWidth + optionWidthOffset);
+          /**
+           * The indexOffset is used to calculate the offset of each option
+           * based on its index. The further away from the center (index 0)
+           * the option is, the further it should be moved.
+           */
+          const indexOffset = index + 1;
+
+          /**
+           * The offset to move the item-option so that it is displayed at
+           * an even visual interval as the other options.
+           */
+          const optionOffset = initialOffset + indexOffset * spacePerOption;
+
+          option.style.transform = `translate3d(${optionOffset}px,0,0)`;
+          option.style.zIndex = `${options.length - index}`;
+
+          optionWidthOffset += option.clientWidth;
+        });
+      } else {
+        options.forEach((option) => {
+          const keyframes: Keyframe[] = [{ transform: option.style.transform }, { transform: `translate3d(0,0,0)` }];
+
+          const optionsAnimation = option.animate(keyframes, {
+            duration: 300,
+            easing: 'ease-out',
+          });
+
+          optionsAnimation.onfinish = () => {
+            option.style.transform = 'translate3d(0,0,0)';
+          };
+        });
+      }
     }
 
     this.ionDrag.emit({
       amount: openAmount,
       ratio: this.getSlidingRatioSync(),
+    });
+  }
+
+  private animateOptionsEnd(options: HTMLIonItemOptionElement[], containerWidthOffset: number = 0, isReset = false) {
+    let optionWidthOffset = 0;
+
+    options.forEach((option) => {
+      // The end keyframe needs to be dependent on if they are swiping
+      // to open or close.
+      // Swiping to open can clear to translate3d(0, 0, 0)
+      // but swiping to close needs to move the elements off the viewport
+
+      const keyframes: Keyframe[] = [
+        { transform: option.style.transform },
+        isReset
+          ? {
+              transform: `translate3d(${containerWidthOffset - optionWidthOffset}px,0,0)`,
+            }
+          : { transform: `translate3d(0,0,0)` },
+      ];
+
+      console.log('keyframes?', keyframes);
+
+      const optionsAnimation = option.animate(keyframes, {
+        duration: 300,
+        easing: 'ease-out',
+      });
+
+      optionsAnimation.onfinish = () => {
+        option.style.transform = 'translate3d(0,0,0)';
+      };
+
+      optionWidthOffset += option.clientWidth;
     });
   }
 
