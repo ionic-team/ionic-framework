@@ -1,12 +1,13 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { createAnimation } from '@utils/animation/animation';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { watchForOptions } from '@utils/watch-options';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Gesture, GestureDetail } from '../../interface';
+import { type Gesture, type GestureDetail } from '../../interface';
 import type { Side } from '../menu/menu-interface';
 
 const SWIPE_MARGIN = 30;
@@ -417,7 +418,7 @@ export class ItemSliding implements ComponentInterface {
       return;
     }
 
-    const { el } = this;
+    const { el, optsWidthRightSide, optsWidthLeftSide } = this;
 
     const rtl = isRTL(el);
 
@@ -430,12 +431,10 @@ export class ItemSliding implements ComponentInterface {
 
     if (openAmount > 0) {
       this.state =
-        openAmount >= this.optsWidthRightSide + SWIPE_MARGIN
-          ? SlidingState.End | SlidingState.SwipeEnd
-          : SlidingState.End;
+        openAmount >= optsWidthRightSide + SWIPE_MARGIN ? SlidingState.End | SlidingState.SwipeEnd : SlidingState.End;
     } else if (openAmount < 0) {
       this.state =
-        openAmount <= -this.optsWidthLeftSide - SWIPE_MARGIN
+        openAmount <= -optsWidthLeftSide - SWIPE_MARGIN
           ? SlidingState.Start | SlidingState.SwipeStart
           : SlidingState.Start;
     } else {
@@ -478,22 +477,29 @@ export class ItemSliding implements ComponentInterface {
        */
       if (this.state === SlidingState.End) {
         const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
-        this.animateOptionsEnd(options, rtl, this.optsWidthRightSide, true);
+        this.animateOptionsEnd(options, rtl, optsWidthRightSide, true);
       }
 
       if (this.state === SlidingState.Start) {
         const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
-        this.animateOptionsStart(options, rtl, this.optsWidthLeftSide, true);
+        this.animateOptionsStart(options, rtl, optsWidthLeftSide, true);
       }
 
       return;
     }
     style.transform = `translate3d(${-openAmount}px,0,0)`;
 
+    // this.animatingSlidingOptions();
+
+    /**
+     * const slidingOptionsAnimation = createSlidingOptionsAnimation(opts);
+     * slidingOptionsAnimation.complete();
+     */
+
     if (this.state === SlidingState.End) {
       const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
 
-      if (openAmount < this.optsWidthRightSide) {
+      if (openAmount < optsWidthRightSide) {
         /**
          * The total width of the 'processed' options.
          * Used to calculate the offset to move each option off the
@@ -532,7 +538,7 @@ export class ItemSliding implements ComponentInterface {
              * The initial distance to offset the individual option
              * to locate it off the screen.
              */
-            const initialOffset = this.optsWidthRightSide - optionWidthOffset;
+            const initialOffset = optsWidthRightSide - optionWidthOffset;
             /**
              * The indexOffset is used to calculate the offset of each option
              * based on its index. The further away from the center (index 0)
@@ -553,14 +559,14 @@ export class ItemSliding implements ComponentInterface {
         /**
          * Reveals all of the options.
          */
-        this.animateOptionsEnd(options, rtl, this.optsWidthRightSide);
+        this.animateOptionsEnd(options, rtl, optsWidthRightSide);
       }
     }
 
     if (this.state === SlidingState.Start) {
       const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
 
-      if (openAmount > -this.optsWidthLeftSide) {
+      if (openAmount > -optsWidthLeftSide) {
         /**
          * The total width of the 'processed' options.
          * Used to calculate the offset to move each option off the
@@ -575,7 +581,7 @@ export class ItemSliding implements ComponentInterface {
 
         options.forEach((option, index) => {
           if (rtl) {
-            const initialOffset = -(this.optsWidthLeftSide - optionWidthOffset);
+            const initialOffset = -(optsWidthLeftSide - optionWidthOffset);
             const indexOffset = options.length - index;
             const optionOffset = initialOffset + indexOffset * spacePerOption;
             option.style.transform = `translate3d(${optionOffset}px,0,0)`;
@@ -628,24 +634,16 @@ export class ItemSliding implements ComponentInterface {
         ? `translate3d(${optionWidthOffset + option.clientWidth}px,0,0)`
         : `translate3d(${containerWidthOffset - optionWidthOffset}px,0,0)`;
 
-      const keyframes: Keyframe[] = [
-        { transform: option.style.transform },
-        isReset
-          ? {
-              transform: finalTransform,
-            }
-          : { transform: `translate3d(0,0,0)` },
-      ];
+      const animation = createAnimation();
 
-      const optionsAnimation = option.animate(keyframes, {
-        duration: 300,
-        easing: 'ease-out',
-      });
+      animation
+        .addElement(option)
+        .easing('ease-out')
+        .duration(300)
+        .fromTo('transform', option.style.transform, isReset ? finalTransform : `translate3d(0,0,0)`)
+        .afterClearStyles(['transform', 'z-index']);
 
-      optionsAnimation.onfinish = () => {
-        option.style.transform = 'translate3d(0,0,0)';
-        option.style.zIndex = '';
-      };
+      animation.play().then(() => animation.destroy());
 
       optionWidthOffset += option.clientWidth;
     });
@@ -664,24 +662,16 @@ export class ItemSliding implements ComponentInterface {
         ? `translate3d(-${containerWidthOffset - optionWidthOffset}px, 0, 0)`
         : `translate3d(-${option.clientWidth + optionWidthOffset}px, 0, 0)`;
 
-      const keyframes: Keyframe[] = [
-        { transform: option.style.transform },
-        isReset
-          ? {
-              transform: finalTransform,
-            }
-          : { transform: `translate3d(0,0,0)` },
-      ];
+      const animation = createAnimation();
 
-      const optionsAnimation = option.animate(keyframes, {
-        duration: 300,
-        easing: 'ease-out',
-      });
+      animation
+        .addElement(option)
+        .easing('ease-out')
+        .duration(300)
+        .fromTo('transform', option.style.transform, isReset ? finalTransform : `translate3d(0,0,0)`)
+        .afterClearStyles(['transform', 'z-index']);
 
-      optionsAnimation.onfinish = () => {
-        option.style.transform = 'translate3d(0,0,0)';
-        option.style.zIndex = '';
-      };
+      animation.play().then(() => animation.destroy());
 
       optionWidthOffset += option.clientWidth;
     });
