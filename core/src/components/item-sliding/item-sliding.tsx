@@ -479,6 +479,8 @@ export class ItemSliding implements ComponentInterface {
       }
 
       if (this.state === SlidingState.Start) {
+        const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
+        this.animateOptionsStart(options, true);
       }
 
       return;
@@ -531,7 +533,7 @@ export class ItemSliding implements ComponentInterface {
     }
 
     if (this.state === SlidingState.Start) {
-      const options = this.leftOptions?.querySelectorAll('ion-item-option') ?? [];
+      const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
 
       if (openAmount > -this.optsWidthLeftSide) {
         /**
@@ -571,18 +573,7 @@ export class ItemSliding implements ComponentInterface {
           optionWidthOffset += option.clientWidth;
         });
       } else {
-        options.forEach((option) => {
-          const keyframes: Keyframe[] = [{ transform: option.style.transform }, { transform: `translate3d(0,0,0)` }];
-
-          const optionsAnimation = option.animate(keyframes, {
-            duration: 300,
-            easing: 'ease-out',
-          });
-
-          optionsAnimation.onfinish = () => {
-            option.style.transform = 'translate3d(0,0,0)';
-          };
-        });
+        this.animateOptionsStart(options);
       }
     }
 
@@ -596,11 +587,6 @@ export class ItemSliding implements ComponentInterface {
     let optionWidthOffset = 0;
 
     options.forEach((option) => {
-      // The end keyframe needs to be dependent on if they are swiping
-      // to open or close.
-      // Swiping to open can clear to translate3d(0, 0, 0)
-      // but swiping to close needs to move the elements off the viewport
-
       const keyframes: Keyframe[] = [
         { transform: option.style.transform },
         isReset
@@ -610,7 +596,30 @@ export class ItemSliding implements ComponentInterface {
           : { transform: `translate3d(0,0,0)` },
       ];
 
-      console.log('keyframes?', keyframes);
+      const optionsAnimation = option.animate(keyframes, {
+        duration: 300,
+        easing: 'ease-out',
+      });
+
+      optionsAnimation.onfinish = () => {
+        option.style.transform = 'translate3d(0,0,0)';
+      };
+
+      optionWidthOffset += option.clientWidth;
+    });
+  }
+
+  private animateOptionsStart(options: HTMLIonItemOptionElement[], isReset = false) {
+    let optionWidthOffset = 0;
+    options.forEach((option) => {
+      const keyframes: Keyframe[] = [
+        { transform: option.style.transform },
+        isReset
+          ? {
+              transform: `translate3d(-${option.clientWidth + optionWidthOffset}px, 0, 0)`,
+            }
+          : { transform: `translate3d(0,0,0)` },
+      ];
 
       const optionsAnimation = option.animate(keyframes, {
         duration: 300,
