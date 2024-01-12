@@ -623,11 +623,11 @@ export class ItemSliding implements ComponentInterface {
   ) {
     let optionWidthOffset = 0;
 
-    const finalTransform = isRTL
-      ? `translate3d(${containerWidthOffset + optionWidthOffset},0,0)`
-      : `translate3d(${containerWidthOffset - optionWidthOffset}px,0,0)`;
-
     options.forEach((option) => {
+      const finalTransform = isRTL
+        ? `translate3d(${optionWidthOffset + option.clientWidth}px,0,0)`
+        : `translate3d(${containerWidthOffset - optionWidthOffset}px,0,0)`;
+
       const keyframes: Keyframe[] = [
         { transform: option.style.transform },
         isReset
