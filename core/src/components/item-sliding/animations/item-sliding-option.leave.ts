@@ -1,4 +1,4 @@
-import { createAnimation } from "@utils/animation/animation";
+import { createAnimation } from '@utils/animation/animation';
 
 import type { Animation } from '../../../interface';
 
@@ -23,13 +23,10 @@ interface ItemSlidingOptionLeaveAnimationOptions {
 /**
  * Animation for the sliding items at the end (right) of the item.
  */
-export const slidingItemEndLeaveAnimation = (baseEl: HTMLIonItemOptionElement, {
-  isRTL,
-  isReset,
-  optionWidthOffset,
-  containerWidthOffset
-}: ItemSlidingOptionLeaveAnimationOptions): Animation => {
-
+export const slidingItemEndLeaveAnimation = (
+  baseEl: HTMLIonItemOptionElement,
+  { isRTL, isReset, optionWidthOffset, containerWidthOffset }: ItemSlidingOptionLeaveAnimationOptions
+): Animation => {
   const finalTransform = isRTL
     ? `translate3d(${optionWidthOffset + baseEl.clientWidth}px,0,0)`
     : `translate3d(${containerWidthOffset - optionWidthOffset}px,0,0)`;
@@ -42,17 +39,15 @@ export const slidingItemEndLeaveAnimation = (baseEl: HTMLIonItemOptionElement, {
     .duration(300)
     .fromTo('transform', baseEl.style.transform, isReset ? finalTransform : `translate3d(0,0,0)`)
     .afterClearStyles(['transform', 'z-index']);
-}
+};
 
 /**
  * Animation for the sliding items at the start (left) of the item.
  */
-export const slidingItemStartLeaveAnimation = (baseEl: HTMLIonItemOptionElement, {
-  isRTL,
-  isReset,
-  optionWidthOffset,
-  containerWidthOffset
-}: ItemSlidingOptionLeaveAnimationOptions): Animation => {
+export const slidingItemStartLeaveAnimation = (
+  baseEl: HTMLIonItemOptionElement,
+  { isRTL, isReset, optionWidthOffset, containerWidthOffset }: ItemSlidingOptionLeaveAnimationOptions
+): Animation => {
   const finalTransform = isRTL
     ? `translate3d(-${containerWidthOffset - optionWidthOffset}px, 0, 0)`
     : `translate3d(-${baseEl.clientWidth + optionWidthOffset}px, 0, 0)`;
@@ -65,4 +60,4 @@ export const slidingItemStartLeaveAnimation = (baseEl: HTMLIonItemOptionElement,
     .duration(300)
     .fromTo('transform', baseEl.style.transform, isReset ? finalTransform : `translate3d(0,0,0)`)
     .afterClearStyles(['transform', 'z-index']);
-}
+};

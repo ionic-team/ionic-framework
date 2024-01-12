@@ -618,9 +618,7 @@ export class ItemSliding implements ComponentInterface {
            * The initial distance to offset the individual option
            * to locate it off the viewport.
            */
-          const viewportOffset = isRTL
-            ? -(optsWidthLeftSide - optionWidthOffset)
-            : -(option.clientWidth + optionWidthOffset);
+          const viewportOffset = isRTL ? optsWidthLeftSide - optionWidthOffset : option.clientWidth + optionWidthOffset;
 
           /**
            * The x-axis offset to move the item-option so that it is displayed at
@@ -628,7 +626,7 @@ export class ItemSliding implements ComponentInterface {
            */
           const deltaX = isRTL ? (options.length - index) * spacePerOption : (index + 1) * spacePerOption;
 
-          option.style.transform = `translate3d(${viewportOffset + deltaX}px,0,0)`;
+          option.style.transform = `translate3d(${-1 * viewportOffset + deltaX}px,0,0)`;
 
           if (!isRTL) {
             /**
