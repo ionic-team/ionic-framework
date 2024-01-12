@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
 import { watchForOptions } from '@utils/watch-options';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -418,6 +419,8 @@ export class ItemSliding implements ComponentInterface {
 
     const { el } = this;
 
+    const rtl = isRTL(el);
+
     const style = this.item.style;
     this.openAmount = openAmount;
 
@@ -475,12 +478,12 @@ export class ItemSliding implements ComponentInterface {
        */
       if (this.state === SlidingState.End) {
         const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
-        this.animateOptionsEnd(options, this.optsWidthRightSide, true);
+        this.animateOptionsEnd(options, rtl, this.optsWidthRightSide, true);
       }
 
       if (this.state === SlidingState.Start) {
         const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
-        this.animateOptionsStart(options, true);
+        this.animateOptionsStart(options, rtl, this.optsWidthLeftSide, true);
       }
 
       return;
@@ -489,6 +492,7 @@ export class ItemSliding implements ComponentInterface {
 
     if (this.state === SlidingState.End) {
       const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
+
       if (openAmount < this.optsWidthRightSide) {
         /**
          * The total width of the 'processed' options.
@@ -503,32 +507,53 @@ export class ItemSliding implements ComponentInterface {
         const spacePerOption = Math.abs(openAmount) / options.length;
 
         options.forEach((option, index) => {
-          /**
-           * The initial distance to offset the individual option
-           * to locate it off the screen.
-           */
-          const initialOffset = this.optsWidthRightSide - optionWidthOffset;
-          /**
-           * The indexOffset is used to calculate the offset of each option
-           * based on its index. The further away from the center (index 0)
-           * the option is, the further it should be moved.
-           */
-          const indexOffset = options.length - index;
-          /**
-           * The offset to move the item-option so that it is displayed at
-           * an even visual interval as the other options.
-           */
-          const optionOffset = initialOffset - indexOffset * spacePerOption;
+          if (rtl) {
+            /**
+             * The initial distance to offset the individual option
+             * to locate it off the screen.
+             */
+            const initialOffset = optionWidthOffset + option.clientWidth;
+            /**
+             * The indexOffset is used to calculate the offset of each option
+             * based on its index. The further away from the center (index 0)
+             * the option is, the further it should be moved.
+             */
+            const indexOffset = index + 1;
+            /**
+             * The offset to move the item-option so that it is displayed at
+             * an even visual interval as the other options.
+             */
+            const optionOffset = initialOffset - indexOffset * spacePerOption;
 
-          option.style.transform = `translate3d(${optionOffset}px,0,0)`;
+            option.style.transform = `translate3d(${optionOffset}px,0,0)`;
+            option.style.zIndex = `${options.length - index}`;
+          } else {
+            /**
+             * The initial distance to offset the individual option
+             * to locate it off the screen.
+             */
+            const initialOffset = this.optsWidthRightSide - optionWidthOffset;
+            /**
+             * The indexOffset is used to calculate the offset of each option
+             * based on its index. The further away from the center (index 0)
+             * the option is, the further it should be moved.
+             */
+            const indexOffset = options.length - index;
+            /**
+             * The offset to move the item-option so that it is displayed at
+             * an even visual interval as the other options.
+             */
+            const optionOffset = initialOffset - indexOffset * spacePerOption;
 
+            option.style.transform = `translate3d(${optionOffset}px,0,0)`;
+          }
           optionWidthOffset += option.clientWidth;
         });
       } else {
         /**
          * Reveals all of the options.
          */
-        this.animateOptionsEnd(options, this.optsWidthRightSide);
+        this.animateOptionsEnd(options, rtl, this.optsWidthRightSide);
       }
     }
 
@@ -549,31 +574,38 @@ export class ItemSliding implements ComponentInterface {
         const spacePerOption = Math.abs(openAmount) / options.length;
 
         options.forEach((option, index) => {
-          /**
-           * The initial distance to offset the individual option
-           * to locate it off the screen.
-           */
-          const initialOffset = -(option.clientWidth + optionWidthOffset);
-          /**
-           * The indexOffset is used to calculate the offset of each option
-           * based on its index. The further away from the center (index 0)
-           * the option is, the further it should be moved.
-           */
-          const indexOffset = index + 1;
+          if (rtl) {
+            const initialOffset = -(this.optsWidthLeftSide - optionWidthOffset);
+            const indexOffset = options.length - index;
+            const optionOffset = initialOffset + indexOffset * spacePerOption;
+            option.style.transform = `translate3d(${optionOffset}px,0,0)`;
+          } else {
+            /**
+             * The initial distance to offset the individual option
+             * to locate it off the screen.
+             */
+            const initialOffset = -(option.clientWidth + optionWidthOffset);
+            /**
+             * The indexOffset is used to calculate the offset of each option
+             * based on its index. The further away from the center (index 0)
+             * the option is, the further it should be moved.
+             */
+            const indexOffset = index + 1;
 
-          /**
-           * The offset to move the item-option so that it is displayed at
-           * an even visual interval as the other options.
-           */
-          const optionOffset = initialOffset + indexOffset * spacePerOption;
+            /**
+             * The offset to move the item-option so that it is displayed at
+             * an even visual interval as the other options.
+             */
+            const optionOffset = initialOffset + indexOffset * spacePerOption;
 
-          option.style.transform = `translate3d(${optionOffset}px,0,0)`;
-          option.style.zIndex = `${options.length - index}`;
+            option.style.transform = `translate3d(${optionOffset}px,0,0)`;
+            option.style.zIndex = `${options.length - index}`;
+          }
 
           optionWidthOffset += option.clientWidth;
         });
       } else {
-        this.animateOptionsStart(options);
+        this.animateOptionsStart(options, rtl);
       }
     }
 
@@ -583,15 +615,24 @@ export class ItemSliding implements ComponentInterface {
     });
   }
 
-  private animateOptionsEnd(options: HTMLIonItemOptionElement[], containerWidthOffset: number = 0, isReset = false) {
+  private animateOptionsEnd(
+    options: HTMLIonItemOptionElement[],
+    isRTL: boolean,
+    containerWidthOffset: number = 0,
+    isReset = false
+  ) {
     let optionWidthOffset = 0;
+
+    const finalTransform = isRTL
+      ? `translate3d(${containerWidthOffset + optionWidthOffset},0,0)`
+      : `translate3d(${containerWidthOffset - optionWidthOffset}px,0,0)`;
 
     options.forEach((option) => {
       const keyframes: Keyframe[] = [
         { transform: option.style.transform },
         isReset
           ? {
-              transform: `translate3d(${containerWidthOffset - optionWidthOffset}px,0,0)`,
+              transform: finalTransform,
             }
           : { transform: `translate3d(0,0,0)` },
       ];
@@ -603,20 +644,31 @@ export class ItemSliding implements ComponentInterface {
 
       optionsAnimation.onfinish = () => {
         option.style.transform = 'translate3d(0,0,0)';
+        option.style.zIndex = '';
       };
 
       optionWidthOffset += option.clientWidth;
     });
   }
 
-  private animateOptionsStart(options: HTMLIonItemOptionElement[], isReset = false) {
+  private animateOptionsStart(
+    options: HTMLIonItemOptionElement[],
+    isRTL: boolean,
+    containerWidthOffset: number = 0,
+    isReset = false
+  ) {
     let optionWidthOffset = 0;
+
     options.forEach((option) => {
+      const finalTransform = isRTL
+        ? `translate3d(-${containerWidthOffset - optionWidthOffset}px, 0, 0)`
+        : `translate3d(-${option.clientWidth + optionWidthOffset}px, 0, 0)`;
+
       const keyframes: Keyframe[] = [
         { transform: option.style.transform },
         isReset
           ? {
-              transform: `translate3d(-${option.clientWidth + optionWidthOffset}px, 0, 0)`,
+              transform: finalTransform,
             }
           : { transform: `translate3d(0,0,0)` },
       ];
@@ -628,6 +680,7 @@ export class ItemSliding implements ComponentInterface {
 
       optionsAnimation.onfinish = () => {
         option.style.transform = 'translate3d(0,0,0)';
+        option.style.zIndex = '';
       };
 
       optionWidthOffset += option.clientWidth;
