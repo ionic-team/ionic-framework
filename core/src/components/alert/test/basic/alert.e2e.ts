@@ -73,11 +73,6 @@ configs().forEach(({ config, screenshot, title }) => {
       await alertFixture.screenshot('longMessage');
     });
 
-    test('more than two buttons', async () => {
-      await alertFixture.open('#multipleButtons');
-      await alertFixture.screenshot('multipleButtons');
-    });
-
     test('no message', async () => {
       await alertFixture.open('#noMessage');
       await alertFixture.screenshot('noMessage');
@@ -101,6 +96,41 @@ configs().forEach(({ config, screenshot, title }) => {
     test('checkboxes', async () => {
       await alertFixture.open('#checkbox');
       await alertFixture.screenshot('checkbox');
+    });
+  });
+});
+
+configs({ themes: ['light', 'dark'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('should not have visual regressions'), () => {
+    test('more than two buttons', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-alert
+          header="Alert"
+          sub-header="Subtitle"
+          message="This is an alert message."
+          is-open="true"
+        ></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.buttons = [
+            'Open Modal',
+            {
+              text: 'Delete',
+              id: 'delete-button',
+              role: 'destructive',
+            },
+            'Cancel'
+          ];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+
+      await expect(alert).toHaveScreenshot(screenshot(`alert-multipleButtons`));
     });
   });
 });
