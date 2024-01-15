@@ -549,9 +549,12 @@ export class ItemSliding implements ComponentInterface {
       if (openAmount < optsWidthRightSide) {
         /**
          * The amount of space available for each option based
-         * on the total open space for the current swipe gesture
+         * on the total open space for the current swipe gesture.
          */
         const spacePerOption = Math.abs(openAmount) / options.length;
+
+        const minOptionWidth = Math.min(...options.map((option) => option.clientWidth));
+        const baseFactor = minOptionWidth / optsWidthRightSide;
 
         options.forEach((option, index) => {
           /**
@@ -568,7 +571,12 @@ export class ItemSliding implements ComponentInterface {
            */
           const deltaX = isRTL ? (index + 1) * spacePerOption : (options.length - index) * spacePerOption;
 
-          option.style.transform = `translate3d(${viewportOffset - deltaX}px,0,0)`;
+          const scaleFactor = option.clientWidth / optsWidthRightSide;
+          const multiplier = 1 + (scaleFactor - Math.min(baseFactor, scaleFactor));
+
+          const transformX = Math.max(viewportOffset - deltaX * multiplier, 0);
+
+          option.style.transform = `translate3d(${transformX}px,0,0)`;
 
           if (isRTL) {
             /**
@@ -609,9 +617,12 @@ export class ItemSliding implements ComponentInterface {
       if (openAmount > -optsWidthLeftSide) {
         /**
          * The amount of space available for each option based
-         * on the total open space for the current swipe gesture
+         * on the total open space for the current swipe gesture.
          */
         const spacePerOption = Math.abs(openAmount) / options.length;
+
+        const minOptionWidth = Math.min(...options.map((option) => option.clientWidth));
+        const baseFactor = minOptionWidth / optsWidthRightSide;
 
         options.forEach((option, index) => {
           /**
@@ -626,7 +637,12 @@ export class ItemSliding implements ComponentInterface {
            */
           const deltaX = isRTL ? (options.length - index) * spacePerOption : (index + 1) * spacePerOption;
 
-          option.style.transform = `translate3d(${-1 * viewportOffset + deltaX}px,0,0)`;
+          const scaleFactor = option.clientWidth / optsWidthRightSide;
+          const multiplier = 1 + (scaleFactor - Math.min(baseFactor, scaleFactor));
+
+          const transformX = Math.min(-1 * viewportOffset + deltaX * multiplier, 0);
+
+          option.style.transform = `translate3d(${transformX}px,0,0)`;
 
           if (!isRTL) {
             /**
