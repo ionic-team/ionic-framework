@@ -19,20 +19,3 @@
 :host(.menu-type-push) .show-backdrop {
   display: block;
 }
-
-// Menu Split Pane
-// --------------------------------------------------
-
-:host(.menu-pane-visible.split-pane-side) {
-  @include border(0, var(--border), 0, 0);
-
-  min-width: var(--side-min-width);
-  max-width: var(--side-max-width);
-}
-
-:host(.menu-pane-visible.split-pane-side[side=end]) {
-  @include border(0, 0, 0, var(--border));
-
-  min-width: var(--side-min-width);
-  max-width: var(--side-max-width);
-}
