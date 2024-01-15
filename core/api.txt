@@ -699,7 +699,7 @@ ion-item-option,part,native
 
 ion-item-options,none
 ion-item-options,prop,side,"end" | "start",'end',false,false
-ion-item-options,event,ionSwipe,any,true
+ion-item-options,event,ionSwipe,{ side: Side; },true
 
 ion-item-sliding,none
 ion-item-sliding,prop,disabled,boolean,false,false,false

@@ -3872,7 +3872,7 @@ declare global {
         new (): HTMLIonItemOptionElement;
     };
     interface HTMLIonItemOptionsElementEventMap {
-        "ionSwipe": any;
+        "ionSwipe": { side: Side };
     }
     interface HTMLIonItemOptionsElement extends Components.IonItemOptions, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonItemOptionsElementEventMap>(type: K, listener: (this: HTMLIonItemOptionsElement, ev: IonItemOptionsCustomEvent<HTMLIonItemOptionsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6186,7 +6186,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the item has been fully swiped.
          */
-        "onIonSwipe"?: (event: IonItemOptionsCustomEvent<any>) => void;
+        "onIonSwipe"?: (event: IonItemOptionsCustomEvent<{ side: Side }>) => void;
         /**
           * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
          */

@@ -24,7 +24,7 @@ export class ItemOptions implements ComponentInterface {
   /**
    * Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe!: EventEmitter<any>; // TODO(FW-2832): type
+  @Event() ionSwipe!: EventEmitter<{ side: Side }>;
 
   /** @internal */
   @Method()

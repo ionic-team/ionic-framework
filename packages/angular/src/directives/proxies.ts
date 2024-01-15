@@ -1121,11 +1121,13 @@ export class IonItemOptions {
 }
 
 
+import type { Side as IIonItemOptionsSide } from '@ionic/core';
+
 export declare interface IonItemOptions extends Components.IonItemOptions {
   /**
    * Emitted when the item has been fully swiped.
    */
-  ionSwipe: EventEmitter<CustomEvent<any>>;
+  ionSwipe: EventEmitter<CustomEvent<IIonItemOptions{ side: IIonItemOptionsSide }>>;
 }
 
 
