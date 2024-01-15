@@ -83,7 +83,7 @@ This allows components to inherit the color properly when used outside of Ionic 
 
 <h4 id="version-8x-nav">Nav</h4>
 
-- `getLength` returns `Promise<number>` instead of `<number>`. This method was not previously available in Nav's TypeScript interface, but developers could still access it by casting Nav as `any`. Applications that do that will need to make sure to `await` `getLength` before accessing the returned value.
+- `getLength` returns `Promise<number>` instead of `<number>`. This method was not previously available in Nav's TypeScript interface, but developers could still access it by casting Nav as `any`. Developers should ensure they `await` their `getLength` call before accessing the returned value.
 
 <h4 id="version-8x-picker">Picker</h4>
 
