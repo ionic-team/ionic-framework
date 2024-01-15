@@ -312,7 +312,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
-  async onSplitPaneChanged(ev: CustomEvent<{ visible: boolean }>) {
+  onSplitPaneChanged(ev: CustomEvent<{ visible: boolean }>) {
     const closestSplitPane = this.el.closest<HTMLIonSplitPaneElement>('ion-split-pane');
 
     if (closestSplitPane !== null && closestSplitPane === ev.target) {
