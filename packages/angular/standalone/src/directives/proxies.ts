@@ -1103,7 +1103,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemSliding,
-  inputs: ['disabled'],
+  inputs: ['disabled', 'reveal'],
   methods: ['getOpenAmount', 'getSlidingRatio', 'open', 'close', 'closeOpened']
 })
 @Component({
@@ -1111,7 +1111,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled'],
+  inputs: ['disabled', 'reveal'],
   standalone: true
 })
 export class IonItemSliding {

@@ -703,6 +703,7 @@ ion-item-options,event,ionSwipe,any,true
 
 ion-item-sliding,none
 ion-item-sliding,prop,disabled,boolean,false,false,false
+ion-item-sliding,prop,reveal,"cover" | "push",'push',false,false
 ion-item-sliding,method,close,close() => Promise<void>
 ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>
 ion-item-sliding,method,getOpenAmount,getOpenAmount() => Promise<number>

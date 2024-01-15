@@ -1463,6 +1463,10 @@ export namespace Components {
           * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
          */
         "open": (side: Side | undefined) => Promise<void>;
+        /**
+          * The reveal animation for the item options.
+         */
+        "reveal": 'push' | 'cover';
     }
     interface IonLabel {
         /**
@@ -6197,6 +6201,10 @@ declare namespace LocalJSX {
           * Emitted when the sliding position changes.
          */
         "onIonDrag"?: (event: IonItemSlidingCustomEvent<any>) => void;
+        /**
+          * The reveal animation for the item options.
+         */
+        "reveal"?: 'push' | 'cover';
     }
     interface IonLabel {
         /**

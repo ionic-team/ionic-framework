@@ -491,6 +491,7 @@ export const IonItemOptions = /*@__PURE__*/ defineContainer<JSX.IonItemOptions>(
 
 export const IonItemSliding = /*@__PURE__*/ defineContainer<JSX.IonItemSliding>('ion-item-sliding', defineIonItemSliding, [
   'disabled',
+  'reveal',
   'ionDrag'
 ]);
 
