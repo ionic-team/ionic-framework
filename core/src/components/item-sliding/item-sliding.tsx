@@ -69,6 +69,11 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
+   * The reveal animation for the item options.
+   */
+  @Prop() reveal: 'push' | 'cover' = 'push';
+
+  /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
@@ -178,7 +183,7 @@ export class ItemSliding implements ComponentInterface {
     }
 
     // In RTL we want to switch the sides
-    side = isEndSide(side) ? 'end' : 'start';
+    side = isEndSide(side, isRTL(this.el)) ? 'end' : 'start';
 
     const isStartOpen = this.openAmount < 0;
     const isEndOpen = this.openAmount > 0;
@@ -265,7 +270,7 @@ export class ItemSliding implements ComponentInterface {
       // eslint-disable-next-line custom-rules/no-component-on-ready-method
       const option = (item as any).componentOnReady !== undefined ? await item.componentOnReady() : item;
 
-      const side = isEndSide(option.side) ? 'end' : 'start';
+      const side = isEndSide(option.side, isRTL(this.el)) ? 'end' : 'start';
 
       if (side === 'start') {
         this.leftOptions = option;
@@ -467,51 +472,54 @@ export class ItemSliding implements ComponentInterface {
       openSlidingItem = undefined;
       style.transform = '';
 
-      /**
-       * When the swipe gesture is released, we need to
-       * animate the item-options to their final position.
-       *
-       * If the item is revealing options, we need to move
-       * the option to their end position. If the item is
-       * collapsing the options, we need to move the options
-       * to their start position off the screen.
-       */
-      if (this.state === SlidingState.End) {
-        const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
-        this.finishSlidingOptionsAnimation(
-          {
-            options,
-            isRTL: rtl,
-            isReset: true,
-            containerWidthOffset: optsWidthRightSide,
-          },
-          SlidingState.End
-        );
-      }
+      if (this.reveal === 'push') {
+        /**
+         * When the swipe gesture is released, we need to
+         * animate the item-options to their final position.
+         *
+         * If the item is revealing options, we need to move
+         * the option to their end position. If the item is
+         * collapsing the options, we need to move the options
+         * to their start position off the screen.
+         */
+        if (this.state === SlidingState.End) {
+          const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
+          this.finishSlidingOptionsAnimation(
+            {
+              options,
+              isRTL: rtl,
+              isReset: true,
+              containerWidthOffset: optsWidthRightSide,
+            },
+            SlidingState.End
+          );
+        }
 
-      if (this.state === SlidingState.Start) {
-        const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
-        this.finishSlidingOptionsAnimation(
-          {
-            options,
-            isRTL: rtl,
-            isReset: true,
-            containerWidthOffset: optsWidthLeftSide,
-          },
-          SlidingState.Start
-        );
+        if (this.state === SlidingState.Start) {
+          const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
+          this.finishSlidingOptionsAnimation(
+            {
+              options,
+              isRTL: rtl,
+              isReset: true,
+              containerWidthOffset: optsWidthLeftSide,
+            },
+            SlidingState.Start
+          );
+        }
       }
-
       return;
     }
     style.transform = `translate3d(${-openAmount}px,0,0)`;
 
-    this.animateSlidingOptionsProgress({
-      openAmount,
-      optsWidthRightSide,
-      optsWidthLeftSide,
-      isRTL: rtl,
-    });
+    if (this.reveal === 'push') {
+      this.animateSlidingOptionsProgress({
+        openAmount,
+        optsWidthRightSide,
+        optsWidthLeftSide,
+        isRTL: rtl,
+      });
+    }
 
     this.ionDrag.emit({
       amount: openAmount,
