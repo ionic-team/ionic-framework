@@ -105,6 +105,12 @@ configs({ themes: ['light', 'dark'] }).forEach(({ config, screenshot, title }) =
     test('more than two buttons', async ({ page }) => {
       await page.setContent(
         `
+        <style>
+          #delete-button {
+            color: #eb445a;
+          }
+        </style>
+
         <ion-alert
           header="Alert"
           sub-header="Subtitle"
