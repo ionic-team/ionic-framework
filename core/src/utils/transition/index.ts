@@ -97,7 +97,6 @@ const runTransition = async (opts: TransitionOptions): Promise<TransitionResult>
 const moveFocus = (el: HTMLElement) => {
   el.tabIndex = -1;
   el.focus();
-  console.log('focus',el)
 };
 
 /**
