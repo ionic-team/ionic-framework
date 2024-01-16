@@ -772,6 +772,11 @@ export class Select implements ComponentInterface {
       this.open(ev);
     } else {
       /**
+       * Prevent clicks to the start/end slots from opening the select.
+       * We ensure the target isn't this element in case the select is slotted
+       * in, for example, an item. This would prevent the select from ever
+       * being opened since the element itself has slot="start"/"end".
+       *
        * Clicking a slotted element also causes a click
        * on the <label> element (since it wraps the slots).
        * Clicking <label> dispatches another click event on
