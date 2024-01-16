@@ -273,6 +273,12 @@
   */
 .alert-button-group-vertical .alert-button {
   border-right: none;
+
+  &:last-child {
+    @include rtl() {
+      border-right: none;
+    }
+  }
 }
 
 .alert-button {
