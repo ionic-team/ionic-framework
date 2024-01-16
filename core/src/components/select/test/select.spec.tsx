@@ -69,3 +69,31 @@ describe('ion-select', () => {
     expect(slotEl).toBe(null);
   });
 });
+
+describe('select: slot interactivity', () => {
+  test('should not prevent click handlers from firing', async () => {
+    // https://github.com/ionic-team/ionic-framework/issues/28818
+    const divSpy = jest.fn();
+    const buttonSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [Select],
+      template: () => (
+        <div onClick={divSpy}>
+          <ion-select label="Label Prop Text">
+            <button slot="end" onClick={buttonSpy}>
+              Button
+            </button>
+          </ion-select>
+        </div>
+      ),
+    });
+
+    const button = page.body.querySelector('button')!;
+
+    await button.click();
+
+    expect(buttonSpy).toHaveBeenCalled();
+    expect(divSpy).toHaveBeenCalled();
+  });
+});
