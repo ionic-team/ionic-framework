@@ -100,6 +100,14 @@ const moveFocus = (el: HTMLElement) => {
   console.log('focus',el)
 };
 
+/**
+ * Elements that are hidden using `display: none` should
+ * not be focused even if they are present in the DOM.
+ */
+const isVisible = (el: HTMLElement) => {
+  return el.offsetParent !== null;
+}
+
 const afterTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
@@ -118,12 +126,13 @@ const afterTransition = (opts: TransitionOptions) => {
      * that the user was last focused on when they were on this view.
      */
     const lastFocus = enteringEl.querySelector<HTMLElement>(`[${LAST_FOCUS}]`);
-    if (lastFocus) {
+    if (lastFocus && isVisible(lastFocus)) {
       moveFocus(lastFocus);
       return;
     }
 
     for (const priority of focusManagerPriorities) {
+      console.log('priority',priority)
       switch (priority) {
         case 'content':
           /**
@@ -131,7 +140,7 @@ const afterTransition = (opts: TransitionOptions) => {
            * header so focus starts at the top of the page.
            */
           const content = enteringEl.querySelector<HTMLElement>('main, [role="main"]');
-          if (content) {
+          if (content && isVisible(content)) {
             moveFocus(content);
             return;
           }
@@ -145,7 +154,7 @@ const afterTransition = (opts: TransitionOptions) => {
            * to focus first.
            */
           const headingOne = enteringEl.querySelector<HTMLElement>('h1, [role="heading"][aria-level="1"]');
-          if (headingOne) {
+          if (headingOne && isVisible(headingOne)) {
             moveFocus(headingOne);
             return;
           }
@@ -156,7 +165,7 @@ const afterTransition = (opts: TransitionOptions) => {
            * header so focus starts at the top of the page.
            */
           const header = enteringEl.querySelector<HTMLElement>('header, [role="banner"]');
-          if (header) {
+          if (header && isVisible(header)) {
             moveFocus(header);
             return;
           }

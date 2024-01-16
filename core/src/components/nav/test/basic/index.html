@@ -16,7 +16,7 @@
       class PageOne extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-          <ion-header>
+          <ion-header translucent="true">
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-back-button></ion-back-button>
@@ -24,11 +24,17 @@
               <ion-title>Page One</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content class="ion-padding">
-            <h1>Page One</h1>
+          <ion-content fullscreen="true">
+            <ion-header collapse="condense">
+              <ion-toolbar>
+                <ion-title role="heading" aria-level="1" size="large">Page One</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <div class="ion-padding">
             <ion-nav-link router-direction="forward" component="page-two">
               <ion-button class="next">Go to Page Two</ion-button>
             </ion-nav-link>
+            </div>
           </ion-content>
         `;
         }
