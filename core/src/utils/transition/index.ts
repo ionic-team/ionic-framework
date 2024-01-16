@@ -132,7 +132,6 @@ const afterTransition = (opts: TransitionOptions) => {
     }
 
     for (const priority of focusManagerPriorities) {
-      console.log('priority',priority)
       switch (priority) {
         case 'content':
           /**
@@ -229,8 +228,17 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
 const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
+  const focusManagerEnabled = config.get('experimentalFocusManagerPriority', false);
 
-  await waitForReady(opts, false);
+  /**
+   * If the focus manager is enabled then we
+   * need to wait for Ionic components to be rendered
+   * otherwise the correct component to focus may not
+   * be focused because it is still hidden.
+   * However, if the manager is not enabled
+   * then there's no need to wait since there will be no animation.
+   */
+  await waitForReady(opts, focusManagerEnabled);
 
   fireWillEvents(enteringEl, leavingEl);
   fireDidEvents(enteringEl, leavingEl);
