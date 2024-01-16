@@ -28,23 +28,31 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-button id="basic" expand="block" onclick="presentAlert()">Alert</ion-button>
-        <ion-button id="longMessage" expand="block" onclick="presentAlertLongMessage()">Alert Long Message</ion-button>
-        <ion-button id="multipleButtons" expand="block" onclick="presentAlertMultipleButtons()"
-          >Multiple Buttons (>2)
-        </ion-button>
-        <ion-button id="noMessage" expand="block" onclick="presentAlertNoMessage()">Alert No Message</ion-button>
-        <ion-button id="asyncHandler" expand="block" onclick="presentAlertAsyncHandler()"
-          >Alert Async Handler</ion-button
-        >
-        <ion-button id="confirm" expand="block" onclick="presentAlertConfirm()">Confirm</ion-button>
-        <ion-button id="prompt" expand="block" onclick="presentAlertPrompt()">Prompt</ion-button>
-        <ion-button id="radio" expand="block" onclick="presentAlertRadio()">Radio</ion-button>
-        <ion-button id="checkbox" expand="block" onclick="presentAlertCheckbox()">Checkbox</ion-button>
-        <ion-button expand="block" onclick="presentWithCssClass()">CssClass</ion-button>
+        <button class="custom-accordion-button" id="basic" onclick="presentAlert()">Alert</button>
+        <button id="longMessage" onclick="presentAlertLongMessage()">Alert Long Message</button>
+        <button id="multipleButtons" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</button>
+        <button id="noMessage" onclick="presentAlertNoMessage()">Alert No Message</button>
+        <button id="asyncHandler" onclick="presentAlertAsyncHandler()">Alert Async Handler</button>
+        <button id="confirm" onclick="presentAlertConfirm()">Confirm</button>
+        <button id="prompt" onclick="presentAlertPrompt()">Prompt</button>
+        <button id="radio" onclick="presentAlertRadio()">Radio</button>
+        <button id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
+        <button onclick="presentWithCssClass()">CssClass</button>
       </ion-content>
 
       <style>
+        ion-content > button {
+          display: block;
+          clear: both;
+          width: 100%;
+          padding: 12px 8px;
+          font-size: 1em;
+          background: #f8f8f8;
+          border: 1px solid #eee;
+          border-radius: 4px;
+          margin-bottom: 8px;
+        }
+
         .my-custom-class {
           --background: lightblue;
           --min-width: 0;

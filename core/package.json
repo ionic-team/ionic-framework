@@ -31,12 +31,12 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^4.9.1",
+    "@stencil/core": "^4.10.0",
     "ionicons": "^7.2.2",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.8.2",
+    "@axe-core/playwright": "^4.8.3",
     "@capacitor/core": "^5.6.0",
     "@capacitor/haptics": "^5.0.6",
     "@capacitor/keyboard": "^5.0.7",
