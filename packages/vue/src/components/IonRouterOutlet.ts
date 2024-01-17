@@ -115,7 +115,8 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
 
         previousMatchedRouteRef = currentMatchedRouteRef;
         previousMatchedPath = currentRoute.path;
-      }
+      },
+      { deep: true }
     );
 
     const canStart = () => {
