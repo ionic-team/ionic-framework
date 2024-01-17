@@ -454,7 +454,7 @@ export class ItemSliding implements ComponentInterface {
       return;
     }
 
-    const { el, optsWidthRightSide, optsWidthLeftSide } = this;
+    const { el, optsWidthRightSide, optsWidthLeftSide, animationType } = this;
 
     const rtl = isRTL(el);
 
@@ -501,49 +501,59 @@ export class ItemSliding implements ComponentInterface {
 
       openSlidingItem = undefined;
       style.transform = '';
+
+      if (animationType === 'modern') {
+        this.animateSlidingItemOptions(0, rtl);
+      }
       return;
     }
     style.transform = `translate3d(${-openAmount}px,0,0)`;
 
-    if (this.animationType === 'modern') {
-      /**
-       * The total width of the 'processed' options.
-       * Used to calculate the offset to move each option off the
-       * screen, on top of each other.
-       */
-      let optionWidthOffset = 0;
-
-      const side = this.state === SlidingState.Start ? 'start' : 'end';
-
-      const options = Array.from(this.getOptions(side)?.querySelectorAll('ion-item-option') || []);
-      const optsWidth = this.getOptionsWidth(side);
-
-      const progress = Math.abs(openAmount / optsWidth);
-
-      options.forEach((option, index) => {
-        let isFinal = false;
-        let zIndex: number | undefined;
-        let viewportOffset = 0;
-
-        if (side === 'start') {
-          viewportOffset = rtl ? -1 * (optsWidth - optionWidthOffset) : -1 * (option.clientWidth + optionWidthOffset);
-          isFinal = openAmount <= -optsWidth;
-          zIndex = rtl ? undefined : options.length - index;
-        } else {
-          viewportOffset = rtl ? optionWidthOffset + option.clientWidth : optsWidth - optionWidthOffset;
-          isFinal = openAmount >= optsWidth;
-          zIndex = rtl ? options.length - index : undefined;
-        }
-
-        slidingItemAnimation(option, viewportOffset, progress, isFinal, zIndex);
-
-        optionWidthOffset += option.clientWidth;
-      });
+    if (animationType === 'modern') {
+      this.animateSlidingItemOptions(openAmount, rtl);
     }
 
     this.ionDrag.emit({
       amount: openAmount,
       ratio: this.getSlidingRatioSync(),
+    });
+  }
+
+  private animateSlidingItemOptions(openAmount: number, isRTL: boolean) {
+    /**
+     * The total width of the 'processed' options.
+     * Used to calculate the offset to move each option off the
+     * screen, on top of each other.
+     */
+    let optionWidthOffset = 0;
+
+    const side = this.state === SlidingState.Start ? 'start' : 'end';
+
+    const options = Array.from(this.getOptions(side)?.querySelectorAll('ion-item-option') || []);
+    const optsWidth = this.getOptionsWidth(side);
+
+    const progress = Math.abs(openAmount / optsWidth);
+
+    options.forEach((option, index) => {
+      let isFinal = false;
+      let zIndex: number | undefined;
+      let viewportOffset = 0;
+
+      const isReset = openAmount === 0;
+
+      if (side === 'start') {
+        viewportOffset = isRTL ? -1 * (optsWidth - optionWidthOffset) : -1 * (option.clientWidth + optionWidthOffset);
+        isFinal = openAmount <= -optsWidth;
+        zIndex = isRTL ? undefined : options.length - index;
+      } else {
+        viewportOffset = isRTL ? optionWidthOffset + option.clientWidth : optsWidth - optionWidthOffset;
+        isFinal = openAmount >= optsWidth;
+        zIndex = isRTL ? options.length - index : undefined;
+      }
+
+      slidingItemAnimation(option, viewportOffset, progress, isFinal, isReset, zIndex);
+
+      optionWidthOffset += option.clientWidth;
     });
   }
 
