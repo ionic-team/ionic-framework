@@ -1,6 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { createAnimation } from '@utils/animation/animation';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
@@ -9,6 +8,8 @@ import { watchForOptions } from '@utils/watch-options';
 import { getIonMode } from '../../global/ionic-global';
 import { type Gesture, type GestureDetail } from '../../interface';
 import type { Side } from '../menu/menu-interface';
+
+import { slidingItemAnimation } from './animations/item-sliding-options';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -257,6 +258,20 @@ export class ItemSliding implements ComponentInterface {
     }
   }
 
+  /**
+   * Given a side, return the width of the options on that side.
+   * 
+   * @param side The side of the options to get the width for.
+   */
+  private getOptionsWidth(side: 'start' | 'end'): number {
+    if (side === 'start') {
+      return this.optsWidthLeftSide;
+    } else if (side === 'end') {
+      return this.optsWidthRightSide;
+    }
+    return 0;
+  }
+
   private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
 
@@ -482,11 +497,38 @@ export class ItemSliding implements ComponentInterface {
     style.transform = `translate3d(${-openAmount}px,0,0)`;
 
     if (this.animationType === 'modern') {
-      this.animateSlidingOptionsProgress({
-        openAmount,
-        optsWidthRightSide,
-        optsWidthLeftSide,
-        isRTL: rtl,
+      /**
+       * The total width of the 'processed' options.
+       * Used to calculate the offset to move each option off the
+       * screen, on top of each other.
+       */
+      let optionWidthOffset = 0;
+
+      const side = this.state === SlidingState.Start ? 'start' : 'end';
+
+      const options = Array.from(this.getOptions(side)?.querySelectorAll('ion-item-option') || []);
+      const optsWidth = this.getOptionsWidth(side);
+
+      const progress = Math.abs(openAmount / optsWidth);
+
+      options.forEach((option, index) => {
+        let isFinal = false;
+        let zIndex: number | undefined;
+        let viewportOffset = 0;
+
+        if (side === 'start') {
+          viewportOffset = rtl ? -1 * (optsWidth - optionWidthOffset) : -1 * (option.clientWidth + optionWidthOffset);
+          isFinal = openAmount <= -optsWidth;
+          zIndex = rtl ? undefined : options.length - index;
+        } else {
+          viewportOffset = rtl ? optionWidthOffset + option.clientWidth : optsWidth - optionWidthOffset;
+          isFinal = openAmount >= optsWidth;
+          zIndex = rtl ? options.length - index : undefined;
+        }
+
+        slidingItemAnimation(option, viewportOffset, progress, isFinal, zIndex);
+
+        optionWidthOffset += option.clientWidth;
       });
     }
 
@@ -494,129 +536,6 @@ export class ItemSliding implements ComponentInterface {
       amount: openAmount,
       ratio: this.getSlidingRatioSync(),
     });
-  }
-
-  private animateSlidingOptionsProgress({
-    openAmount,
-    optsWidthRightSide,
-    optsWidthLeftSide,
-    isRTL,
-  }: {
-    openAmount: number;
-    optsWidthRightSide: number;
-    optsWidthLeftSide: number;
-    isRTL: boolean;
-  }) {
-    /**
-     * The total width of the 'processed' options.
-     * Used to calculate the offset to move each option off the
-     * screen, on top of each other.
-     */
-    let optionWidthOffset = 0;
-
-    if (this.state === SlidingState.End) {
-      const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
-      const progress = openAmount / optsWidthRightSide;
-
-      options.forEach((option, index) => {
-        /**
-         * The initial distance to offset the individual option
-         * to locate it off the viewport.
-         */
-        const viewportOffset = isRTL ? optionWidthOffset + option.clientWidth : optsWidthRightSide - optionWidthOffset;
-
-        const styles = isRTL ? { zIndex: `${options.length - index}` } : {};
-
-        const optionAnimation = createAnimation()
-          .addElement(option)
-          /**
-           * The specific value here does not actually
-           * matter. We just need this to be a positive
-           * value so the animation does not jump
-           * to the end when the user begins to drag.
-           */
-          .duration(1)
-          .commitStyles()
-          .keyframes([
-            { offset: 0, transform: `translate3d(${viewportOffset}px,0,0)`, ...styles },
-            { offset: 1, transform: `translate3d(0,0,0)`, ...styles },
-          ]);
-
-        if (openAmount < optsWidthRightSide) {
-          optionAnimation.progressStart(true, progress);
-        } else {
-          optionAnimation.destroy();
-
-          const toggleAnimation = createAnimation()
-            .addElement(option)
-            .duration(300)
-            .easing('ease-out')
-            .commitStyles()
-            .beforeStyles({
-              zIndex: `${options.length - index}`,
-            })
-            .fromTo('transform', option.style.transform, `translate3d(0,0,0)`)
-            .afterClearStyles(['z-index']);
-
-          toggleAnimation.play();
-        }
-
-        optionWidthOffset += option.clientWidth;
-      });
-    }
-
-    if (this.state === SlidingState.Start) {
-      const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
-      const progress = Math.abs(openAmount / optsWidthLeftSide);
-
-      options.forEach((option, index) => {
-        /**
-         * The initial distance to offset the individual option
-         * to locate it off the viewport.
-         */
-        const viewportOffset = isRTL
-          ? -1 * (optsWidthLeftSide - optionWidthOffset)
-          : -1 * (option.clientWidth + optionWidthOffset);
-
-        const styles = isRTL ? {} : { zIndex: `${options.length - index}` };
-
-        const optionAnimation = createAnimation()
-          .addElement(option)
-          /**
-           * The specific value here does not actually
-           * matter. We just need this to be a positive
-           * value so the animation does not jump
-           * to the end when the user begins to drag.
-           */
-          .duration(1)
-          .commitStyles()
-          .keyframes([
-            { offset: 0, transform: `translate3d(${viewportOffset}px,0,0)`, ...styles },
-            { offset: 1, transform: `translate3d(0,0,0)`, ...styles },
-          ]);
-
-        if (openAmount > -optsWidthLeftSide) {
-          optionAnimation.progressStart(true, progress);
-        } else {
-          optionAnimation.destroy();
-
-          const toggleAnimation = createAnimation()
-            .addElement(option)
-            .duration(300)
-            .easing('ease-out')
-            .commitStyles()
-            .beforeStyles({
-              zIndex: `${options.length - index}`,
-            })
-            .fromTo('transform', option.style.transform, `translate3d(0,0,0)`)
-            .afterClearStyles(['z-index']);
-
-          toggleAnimation.play();
-        }
-
-        optionWidthOffset += option.clientWidth;
-      });
-    }
   }
 
   private getSlidingRatioSync(): number {
