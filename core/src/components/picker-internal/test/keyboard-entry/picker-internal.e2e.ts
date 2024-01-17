@@ -133,7 +133,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(ionChange).toHaveReceivedEventDetail({ text: '00', value: 12 });
       await expect(column).toHaveJSProperty('value', 12);
     });
-    test.only('pressing Enter should dismiss the keyboard', async ({ page }) => {
+    test('pressing Enter should dismiss the keyboard', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/28325',
