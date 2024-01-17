@@ -79,6 +79,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        # Pull the latest version of the reference
+        # branch instead of the revision that triggered
+        # the workflow otherwise we won't get the commit
+        # created in the previous job and this next job
+        # will fail.
+        with:
+          ref: ${{ github.ref }}
       - name: Configure Identity
         # Commits from github-actions do not
         # trigger other GitHub Actions. As a result,
