@@ -227,6 +227,7 @@ export class PickerInternal implements ComponentInterface {
    * column is focused.
    */
   private enterInputMode = (columnEl?: HTMLIonPickerColumnInternalElement, focusInput = true) => {
+    console.log('enter');
     const { inputEl, el } = this;
     if (!inputEl) {
       return;
@@ -550,6 +551,21 @@ export class PickerInternal implements ComponentInterface {
           tabindex={-1}
           inputmode="numeric"
           type="number"
+          onKeyDown={(ev: KeyboardEvent) => {
+            /**
+             * The "Enter" key represents
+             * the user submitting their time
+             * selection, so we should blur the
+             * input (and therefore close the keyboard)
+             *
+             * Updating the picker's state to no longer
+             * be in input mode is handled in the onBlur
+             * callback below.
+             */
+            if (ev.key === 'Enter') {
+              this.inputEl?.blur();
+            }
+          }}
           ref={(el) => (this.inputEl = el)}
           onInput={() => this.onInputChange()}
           onBlur={() => this.exitInputMode()}
