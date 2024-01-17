@@ -80,7 +80,7 @@ export class ItemSliding implements ComponentInterface {
    * The "modern" animation type requires the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API).
    * Check [Browser Support](https://caniuse.com/web-animation) for more information.
    */
-  @Prop() animationType: 'modern' | 'legacy' = 'modern';
+  @Prop() animationType: 'modern' | 'legacy' = 'legacy';
 
   /**
    * Emitted when the sliding position changes.
