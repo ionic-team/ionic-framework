@@ -227,7 +227,6 @@ export class PickerInternal implements ComponentInterface {
    * column is focused.
    */
   private enterInputMode = (columnEl?: HTMLIonPickerColumnInternalElement, focusInput = true) => {
-    console.log('enter');
     const { inputEl, el } = this;
     if (!inputEl) {
       return;
