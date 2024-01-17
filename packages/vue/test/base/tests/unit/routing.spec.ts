@@ -198,7 +198,7 @@ describe('Routing', () => {
       template: `
         <ion-page>
           <ion-tabs>
-            <ion-router-outlet></ion-router-outlet>
+            <IonRouterOutlet />
             <ion-tab-bar slot="top">
               <ion-tab-button tab="tab1" href="/tabs/tab1">
                 <ion-label>Tab 1</ion-label>
@@ -242,9 +242,9 @@ describe('Routing', () => {
       ]
     });
 
-    router.push('/');
+    router.push('/tabs/tab1');
     await router.isReady();
-    const wrapper = mount(Tabs, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
