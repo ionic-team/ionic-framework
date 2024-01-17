@@ -160,7 +160,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should not scroll to new month when value is updated with dates in different months', async ({ page }) => {
       const datetime = await datetimeFixture.goto(config, MULTIPLE_DATES);
-      await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value = MULTIPLE_DATES_SEPARATE_MONTHS);
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = MULTIPLE_DATES_SEPARATE_MONTHS));
       await page.waitForChanges();
 
       const monthYear = datetime.locator('.calendar-month-year');
