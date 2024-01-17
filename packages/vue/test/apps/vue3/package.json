@@ -19,8 +19,8 @@
     "@ionic/vue": "^6.0.12",
     "@ionic/vue-router": "^6.0.12",
     "ionicons": "^6.0.4",
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.14"
+    "vue": "^3.4.14",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
