@@ -17,11 +17,6 @@ import { waitForRouter } from './utils';
 
 enableAutoUnmount(afterEach);
 
-const App = {
-  components: { IonApp, IonRouterOutlet },
-  template: '<ion-app><ion-router-outlet /></ion-app>',
-}
-
 const BasePage = {
   template: '<ion-page :data-pageid="name"></ion-page>',
   components: { IonPage },
@@ -46,7 +41,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -74,7 +69,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -107,7 +102,7 @@ describe('Routing', () => {
 
     router.push('/myPath/123');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -147,7 +142,7 @@ describe('Routing', () => {
 
     router.push('/myPath');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -182,7 +177,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -249,7 +244,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(Tabs, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -302,7 +297,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -355,7 +350,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -402,7 +397,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -450,7 +445,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -618,7 +613,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -672,7 +667,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
