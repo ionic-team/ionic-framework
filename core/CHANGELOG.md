@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.5) (2024-01-17)
+
+
+### Bug Fixes
+
+* **list:** remove uneeded border radius from items in inset list ([#28830](https://github.com/ionic-team/ionic-framework/issues/28830)) ([dbaaa5b](https://github.com/ionic-team/ionic-framework/commit/dbaaa5bd9f43b8ba589b3f9c4b4204d2f203ef18))
+
+
+
+
+
 ## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
 
 

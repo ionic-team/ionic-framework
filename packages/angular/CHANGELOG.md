@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.4...v7.6.5) (2024-01-17)
+
+
+### Bug Fixes
+
+* **angular:** add old IonBackButtonDelegate import ([#28831](https://github.com/ionic-team/ionic-framework/issues/28831)) ([fb77353](https://github.com/ionic-team/ionic-framework/commit/fb7735397ed53323dd93a172407117228610b929)), closes [#28827](https://github.com/ionic-team/ionic-framework/issues/28827)
+
+
+
+
+
 ## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
 
 **Note:** Version bump only for package @ionic/angular
