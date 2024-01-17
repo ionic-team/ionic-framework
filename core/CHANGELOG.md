@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.5-nightly.20240117](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.5-nightly.20240117) (2024-01-17)
+
+
+### Bug Fixes
+
+* **input:** slotted buttons are clickable ([#28772](https://github.com/ionic-team/ionic-framework/issues/28772)) ([4ccc150](https://github.com/ionic-team/ionic-framework/commit/4ccc150edff4e3f33f453343aedb081d920b2f90)), closes [#28762](https://github.com/ionic-team/ionic-framework/issues/28762)
+* **list:** remove uneeded border radius from items in inset list ([#28830](https://github.com/ionic-team/ionic-framework/issues/28830)) ([dbaaa5b](https://github.com/ionic-team/ionic-framework/commit/dbaaa5bd9f43b8ba589b3f9c4b4204d2f203ef18))
+
+
+
+
+
 ## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
 
 

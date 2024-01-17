@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "7.6.4",
+  "version": "7.6.5-nightly.20240117",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -36,7 +36,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^7.6.4",
+    "@ionic/react": "^7.6.5-nightly.20240117",
     "tslib": "*"
   },
   "peerDependencies": {
