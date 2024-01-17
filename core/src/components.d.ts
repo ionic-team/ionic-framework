@@ -1439,6 +1439,10 @@ export namespace Components {
     }
     interface IonItemSliding {
         /**
+          * Specifies the animation behavior for sliding item options. You can choose between two available options: "modern" and "legacy".  - "legacy": The item will be swiped to reveal the option buttons beneath it. - "modern": As the item is swiped, all item options will smoothly and gradually reveal themselves.  The "modern" animation type requires the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API). Check [Browser Support](https://caniuse.com/web-animation) for more information.
+         */
+        "animationType": 'modern' | 'legacy';
+        /**
           * Close the sliding item. Items can also be closed from the [List](./list).
          */
         "close": () => Promise<void>;
@@ -1463,10 +1467,6 @@ export namespace Components {
           * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
          */
         "open": (side: Side | undefined) => Promise<void>;
-        /**
-          * The reveal animation for the item options.
-         */
-        "reveal": 'push' | 'cover';
     }
     interface IonLabel {
         /**
@@ -6194,6 +6194,10 @@ declare namespace LocalJSX {
     }
     interface IonItemSliding {
         /**
+          * Specifies the animation behavior for sliding item options. You can choose between two available options: "modern" and "legacy".  - "legacy": The item will be swiped to reveal the option buttons beneath it. - "modern": As the item is swiped, all item options will smoothly and gradually reveal themselves.  The "modern" animation type requires the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API). Check [Browser Support](https://caniuse.com/web-animation) for more information.
+         */
+        "animationType"?: 'modern' | 'legacy';
+        /**
           * If `true`, the user cannot interact with the sliding item.
          */
         "disabled"?: boolean;
@@ -6201,10 +6205,6 @@ declare namespace LocalJSX {
           * Emitted when the sliding position changes.
          */
         "onIonDrag"?: (event: IonItemSlidingCustomEvent<any>) => void;
-        /**
-          * The reveal animation for the item options.
-         */
-        "reveal"?: 'push' | 'cover';
     }
     interface IonLabel {
         /**

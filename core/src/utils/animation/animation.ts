@@ -49,6 +49,7 @@ export const createAnimation = (animationId?: string): Animation => {
   let beforeAddClasses: string[] = [];
   let beforeRemoveClasses: string[] = [];
   let initialized = false;
+  let _commitStyles = false;
   let parentAnimation: Animation | undefined;
   let beforeStylesValue: { [property: string]: any } = {};
   let afterAddClasses: string[] = [];
@@ -435,6 +436,14 @@ export const createAnimation = (animationId?: string): Animation => {
     return ani;
   };
 
+  const commitStyles = (shouldCommitStyles: boolean = true) => {
+    _commitStyles = shouldCommitStyles;
+
+    update(true);
+
+    return ani;
+  };
+
   const duration = (animationDuration: number) => {
     /**
      * CSS Animation Durations of 0ms work fine on Chrome
@@ -721,6 +730,10 @@ export const createAnimation = (animationId?: string): Animation => {
         // When creating the animation the delay is guaranteed to be set to a number.
         animation.currentTime = animation.effect!.getComputedTiming().delay! + getDuration() * step;
         animation.pause();
+
+        if (_commitStyles) {
+          animation.commitStyles();
+        }
       });
     } else {
       const animationDuration = `-${getDuration() * step}ms`;
@@ -1117,6 +1130,7 @@ export const createAnimation = (animationId?: string): Animation => {
     addAnimation,
     addElement,
     update,
+    commitStyles,
     fill,
     direction,
     iterations,

@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { createAnimation } from '@utils/animation/animation';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
@@ -8,8 +9,6 @@ import { watchForOptions } from '@utils/watch-options';
 import { getIonMode } from '../../global/ionic-global';
 import { type Gesture, type GestureDetail } from '../../interface';
 import type { Side } from '../menu/menu-interface';
-
-import { slidingItemEndLeaveAnimation, slidingItemStartLeaveAnimation } from './animations/item-sliding-option.leave';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -69,9 +68,16 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
-   * The reveal animation for the item options.
+   * Specifies the animation behavior for sliding item options.
+   * You can choose between two available options: "modern" and "legacy".
+   *
+   * - "legacy": The item will be swiped to reveal the option buttons beneath it.
+   * - "modern": As the item is swiped, all item options will smoothly and gradually reveal themselves.
+   *
+   * The "modern" animation type requires the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API).
+   * Check [Browser Support](https://caniuse.com/web-animation) for more information.
    */
-  @Prop() reveal: 'push' | 'cover' = 'push';
+  @Prop() animationType: 'modern' | 'legacy' = 'modern';
 
   /**
    * Emitted when the sliding position changes.
@@ -471,48 +477,11 @@ export class ItemSliding implements ComponentInterface {
 
       openSlidingItem = undefined;
       style.transform = '';
-
-      if (this.reveal === 'push') {
-        /**
-         * When the swipe gesture is released, we need to
-         * animate the item-options to their final position.
-         *
-         * If the item is revealing options, we need to move
-         * the option to their end position. If the item is
-         * collapsing the options, we need to move the options
-         * to their start position off the screen.
-         */
-        if (this.state === SlidingState.End) {
-          const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
-          this.finishSlidingOptionsAnimation(
-            {
-              options,
-              isRTL: rtl,
-              isReset: true,
-              containerWidthOffset: optsWidthRightSide,
-            },
-            SlidingState.End
-          );
-        }
-
-        if (this.state === SlidingState.Start) {
-          const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
-          this.finishSlidingOptionsAnimation(
-            {
-              options,
-              isRTL: rtl,
-              isReset: true,
-              containerWidthOffset: optsWidthLeftSide,
-            },
-            SlidingState.Start
-          );
-        }
-      }
       return;
     }
     style.transform = `translate3d(${-openAmount}px,0,0)`;
 
-    if (this.reveal === 'push') {
+    if (this.animationType === 'modern') {
       this.animateSlidingOptionsProgress({
         openAmount,
         optsWidthRightSide,
@@ -547,174 +516,107 @@ export class ItemSliding implements ComponentInterface {
 
     if (this.state === SlidingState.End) {
       const options = Array.from(this.rightOptions?.querySelectorAll('ion-item-option') || []);
+      const progress = openAmount / optsWidthRightSide;
 
-      /**
-       * If the open amount is less than the width of the
-       * end (right) options container, then we need to calculate
-       * the transformation to move each option within the
-       * visible area of the screen that is available (the open amount).
-       */
-      if (openAmount < optsWidthRightSide) {
+      options.forEach((option, index) => {
         /**
-         * The amount of space available for each option based
-         * on the total open space for the current swipe gesture.
+         * The initial distance to offset the individual option
+         * to locate it off the viewport.
          */
-        const spacePerOption = Math.abs(openAmount) / options.length;
+        const viewportOffset = isRTL ? optionWidthOffset + option.clientWidth : optsWidthRightSide - optionWidthOffset;
 
-        const minOptionWidth = Math.min(...options.map((option) => option.clientWidth));
-        const baseFactor = minOptionWidth / optsWidthRightSide;
+        const styles = isRTL ? { zIndex: `${options.length - index}` } : {};
 
-        options.forEach((option, index) => {
+        const optionAnimation = createAnimation()
+          .addElement(option)
           /**
-           * The initial distance to offset the individual option
-           * to locate it off the viewport.
+           * The specific value here does not actually
+           * matter. We just need this to be a positive
+           * value so the animation does not jump
+           * to the end when the user begins to drag.
            */
-          const viewportOffset = isRTL
-            ? optionWidthOffset + option.clientWidth
-            : optsWidthRightSide - optionWidthOffset;
+          .duration(1)
+          .commitStyles()
+          .keyframes([
+            { offset: 0, transform: `translate3d(${viewportOffset}px,0,0)`, ...styles },
+            { offset: 1, transform: `translate3d(0,0,0)`, ...styles },
+          ]);
 
-          /**
-           * The x-axis offset to move the item-option so that it is displayed at
-           * an even visual interval as the other options.
-           */
-          const deltaX = isRTL ? (index + 1) * spacePerOption : (options.length - index) * spacePerOption;
+        if (openAmount < optsWidthRightSide) {
+          optionAnimation.progressStart(true, progress);
+        } else {
+          optionAnimation.destroy();
 
-          const scaleFactor = option.clientWidth / optsWidthRightSide;
-          const multiplier = 1 + (scaleFactor - Math.min(baseFactor, scaleFactor));
+          const toggleAnimation = createAnimation()
+            .addElement(option)
+            .duration(300)
+            .easing('ease-out')
+            .commitStyles()
+            .beforeStyles({
+              zIndex: `${options.length - index}`,
+            })
+            .fromTo('transform', option.style.transform, `translate3d(0,0,0)`)
+            .afterClearStyles(['z-index']);
 
-          const transformX = Math.max(viewportOffset - deltaX * multiplier, 0);
+          toggleAnimation.play();
+        }
 
-          option.style.transform = `translate3d(${transformX}px,0,0)`;
-
-          if (isRTL) {
-            /**
-             * In RTL, the layer that the options initially render on
-             * results in the inverse order of options displaying on top
-             * of each other.
-             *
-             * To account for this, we set the z-index of each option
-             * to stack the options in the correct order.
-             *
-             * This style is later removed to prevent unexpected visual behavior.
-             */
-            option.style.zIndex = `${options.length - index}`;
-          }
-
-          optionWidthOffset += option.clientWidth;
-        });
-      } else {
-        this.finishSlidingOptionsAnimation(
-          {
-            options,
-            isRTL,
-            containerWidthOffset: optsWidthRightSide,
-          },
-          SlidingState.End
-        );
-      }
+        optionWidthOffset += option.clientWidth;
+      });
     }
 
     if (this.state === SlidingState.Start) {
       const options = Array.from(this.leftOptions?.querySelectorAll('ion-item-option') || []);
-      /**
-       * If the open amount is greater than the width of the
-       * start (left) options container, then we need to calculate
-       * the transformation to move each option within the
-       * visible area of the screen that is available (the open amount).
-       */
-      if (openAmount > -optsWidthLeftSide) {
+      const progress = Math.abs(openAmount / optsWidthLeftSide);
+
+      options.forEach((option, index) => {
         /**
-         * The amount of space available for each option based
-         * on the total open space for the current swipe gesture.
+         * The initial distance to offset the individual option
+         * to locate it off the viewport.
          */
-        const spacePerOption = Math.abs(openAmount) / options.length;
+        const viewportOffset = isRTL
+          ? -1 * (optsWidthLeftSide - optionWidthOffset)
+          : -1 * (option.clientWidth + optionWidthOffset);
 
-        const minOptionWidth = Math.min(...options.map((option) => option.clientWidth));
-        const baseFactor = minOptionWidth / optsWidthRightSide;
+        const styles = isRTL ? {} : { zIndex: `${options.length - index}` };
 
-        options.forEach((option, index) => {
+        const optionAnimation = createAnimation()
+          .addElement(option)
           /**
-           * The initial distance to offset the individual option
-           * to locate it off the viewport.
+           * The specific value here does not actually
+           * matter. We just need this to be a positive
+           * value so the animation does not jump
+           * to the end when the user begins to drag.
            */
-          const viewportOffset = isRTL ? optsWidthLeftSide - optionWidthOffset : option.clientWidth + optionWidthOffset;
+          .duration(1)
+          .commitStyles()
+          .keyframes([
+            { offset: 0, transform: `translate3d(${viewportOffset}px,0,0)`, ...styles },
+            { offset: 1, transform: `translate3d(0,0,0)`, ...styles },
+          ]);
 
-          /**
-           * The x-axis offset to move the item-option so that it is displayed at
-           * an even visual interval as the other options.
-           */
-          const deltaX = isRTL ? (options.length - index) * spacePerOption : (index + 1) * spacePerOption;
+        if (openAmount > -optsWidthLeftSide) {
+          optionAnimation.progressStart(true, progress);
+        } else {
+          optionAnimation.destroy();
 
-          const scaleFactor = option.clientWidth / optsWidthRightSide;
-          const multiplier = 1 + (scaleFactor - Math.min(baseFactor, scaleFactor));
+          const toggleAnimation = createAnimation()
+            .addElement(option)
+            .duration(300)
+            .easing('ease-out')
+            .commitStyles()
+            .beforeStyles({
+              zIndex: `${options.length - index}`,
+            })
+            .fromTo('transform', option.style.transform, `translate3d(0,0,0)`)
+            .afterClearStyles(['z-index']);
 
-          const transformX = Math.min(-1 * viewportOffset + deltaX * multiplier, 0);
+          toggleAnimation.play();
+        }
 
-          option.style.transform = `translate3d(${transformX}px,0,0)`;
-
-          if (!isRTL) {
-            /**
-             * In LTR, the layer that the options initially render on
-             * results in the inverse order of options displaying on top
-             * of each other.
-             *
-             * To account for this, we set the z-index of each option
-             * to stack the options in the correct order.
-             *
-             * This style is later removed to prevent unexpected visual behavior.
-             */
-            option.style.zIndex = `${options.length - index}`;
-          }
-
-          optionWidthOffset += option.clientWidth;
-        });
-      } else {
-        this.finishSlidingOptionsAnimation(
-          {
-            options,
-            isRTL,
-          },
-          SlidingState.Start
-        );
-      }
-    }
-  }
-
-  /**
-   * Finishes the in-progress animation for the sliding options.
-   * This can be either a collapse animation to hide the options
-   * or an open animation to fully reveal the options.
-   * @param opts The animation options.
-   * @param side The side of the options to animate, either start or end.
-   */
-  private finishSlidingOptionsAnimation(
-    opts: {
-      options: HTMLIonItemOptionElement[];
-      containerWidthOffset?: number;
-      isReset?: boolean;
-      isRTL: boolean;
-    },
-    side: SlidingState.Start | SlidingState.End
-  ) {
-    let optionWidthOffset = 0;
-
-    const { options, ...animationOptions } = opts;
-
-    const animationBuilder =
-      side === SlidingState.Start ? slidingItemStartLeaveAnimation : slidingItemEndLeaveAnimation;
-
-    options.forEach((option) => {
-      const animation = animationBuilder(option, {
-        containerWidthOffset: 0,
-        isReset: false,
-        ...animationOptions,
-        optionWidthOffset,
+        optionWidthOffset += option.clientWidth;
       });
-
-      animation.play().then(() => animation.destroy());
-
-      optionWidthOffset += option.clientWidth;
-    });
+    }
   }
 
   private getSlidingRatioSync(): number {
@@ -729,15 +631,17 @@ export class ItemSliding implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
+    const { state, animationType } = this;
     return (
       <Host
         class={{
           [mode]: true,
-          'item-sliding-active-slide': this.state !== SlidingState.Disabled,
-          'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
-          'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
-          'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
-          'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0,
+          [`item-sliding-animation-${animationType}`]: true,
+          'item-sliding-active-slide': state !== SlidingState.Disabled,
+          'item-sliding-active-options-end': (state & SlidingState.End) !== 0,
+          'item-sliding-active-options-start': (state & SlidingState.Start) !== 0,
+          'item-sliding-active-swipe-end': (state & SlidingState.SwipeEnd) !== 0,
+          'item-sliding-active-swipe-start': (state & SlidingState.SwipeStart) !== 0,
         }}
       ></Host>
     );

@@ -238,6 +238,13 @@ export interface Animation {
    * @internal
    */
   animationFinish(): void;
+
+  /**
+   * Writes the computed values of the animation's current styles
+   * into its target element's style attribute.
+   * @internal
+   */
+  commitStyles(shouldCommitStyles?: boolean): Animation;
 }
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;
