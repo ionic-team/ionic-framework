@@ -265,6 +265,7 @@ export class PickerInternal implements ComponentInterface {
 
       inputEl.focus();
     } else {
+      // TODO FW-5900 Use keydown instead
       el.addEventListener('keypress', this.onKeyPress);
       this.destroyKeypressListener = () => {
         el.removeEventListener('keypress', this.onKeyPress);
