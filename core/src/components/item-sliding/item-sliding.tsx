@@ -1,7 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { supportsWebAnimations } from '@utils/animation/animation';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { watchForOptions } from '@utils/watch-options';
 
@@ -136,6 +138,13 @@ export class ItemSliding implements ComponentInterface {
     }
   }
 
+  componentWillLoad() {
+    if (!supportsWebAnimations && this.animationType === 'modern') {
+      printIonWarning('Animation type "modern" needs Web Animations API support. Falling back to "legacy".');
+      this.animationType = 'legacy';
+    }
+  }
+
   /**
    * Get the amount the item is open in pixels.
    */
@@ -260,7 +269,7 @@ export class ItemSliding implements ComponentInterface {
 
   /**
    * Given a side, return the width of the options on that side.
-   * 
+   *
    * @param side The side of the options to get the width for.
    */
   private getOptionsWidth(side: 'start' | 'end'): number {

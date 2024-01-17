@@ -38,6 +38,15 @@ type AnimationOnStopCallback = AnimationOnFinishCallback;
  */
 type AnimationReadWriteCallback = () => void;
 
+export const supportsAnimationEffect =
+  typeof (AnimationEffect as any) === 'function' ||
+  (win !== undefined && typeof (win as any).AnimationEffect === 'function');
+
+export const supportsWebAnimations =
+  typeof (Element as any) === 'function' &&
+  typeof (Element as any).prototype!.animate === 'function' &&
+  supportsAnimationEffect;
+
 export const createAnimation = (animationId?: string): Animation => {
   let _delay: number | undefined;
   let _duration: number | undefined;
