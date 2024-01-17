@@ -199,7 +199,7 @@ export class ItemSliding implements ComponentInterface {
     }
 
     // In RTL we want to switch the sides
-    side = isEndSide(side, isRTL(this.el)) ? 'end' : 'start';
+    side = isEndSide(side) ? 'end' : 'start';
 
     const isStartOpen = this.openAmount < 0;
     const isEndOpen = this.openAmount > 0;
@@ -300,7 +300,7 @@ export class ItemSliding implements ComponentInterface {
       // eslint-disable-next-line custom-rules/no-component-on-ready-method
       const option = (item as any).componentOnReady !== undefined ? await item.componentOnReady() : item;
 
-      const side = isEndSide(option.side, isRTL(this.el)) ? 'end' : 'start';
+      const side = isEndSide(option.side) ? 'end' : 'start';
 
       if (side === 'start') {
         this.leftOptions = option;
@@ -454,7 +454,7 @@ export class ItemSliding implements ComponentInterface {
       return;
     }
 
-    const { el, optsWidthRightSide, optsWidthLeftSide, animationType } = this;
+    const { el, animationType } = this;
 
     const rtl = isRTL(el);
 
@@ -467,10 +467,12 @@ export class ItemSliding implements ComponentInterface {
 
     if (openAmount > 0) {
       this.state =
-        openAmount >= optsWidthRightSide + SWIPE_MARGIN ? SlidingState.End | SlidingState.SwipeEnd : SlidingState.End;
+        openAmount >= this.optsWidthRightSide + SWIPE_MARGIN
+          ? SlidingState.End | SlidingState.SwipeEnd
+          : SlidingState.End;
     } else if (openAmount < 0) {
       this.state =
-        openAmount <= -optsWidthLeftSide - SWIPE_MARGIN
+        openAmount <= -this.optsWidthLeftSide - SWIPE_MARGIN
           ? SlidingState.Start | SlidingState.SwipeStart
           : SlidingState.Start;
     } else {

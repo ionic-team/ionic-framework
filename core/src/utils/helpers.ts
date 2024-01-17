@@ -413,7 +413,8 @@ export const pointerCoord = (ev: any): { x: number; y: number } => {
  * @param side the side
  * @param isRTL whether the application dir is rtl
  */
-export const isEndSide = (side: Side, isRTL = document.dir === 'rtl'): boolean => {
+export const isEndSide = (side: Side): boolean => {
+  const isRTL = document.dir === 'rtl';
   switch (side) {
     case 'start':
       return isRTL;
