@@ -159,6 +159,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
 
     test('should scroll to new month when value is updated with multiple dates in the same month', async ({ page }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/28602',
+    });
       const datetime = await datetimeFixture.goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
       await datetime.evaluate((el: HTMLIonDatetimeElement, dates: string[]) => {
         el.value = dates;
