@@ -306,11 +306,6 @@ button, a {
   box-sizing: border-box;
 }
 
-// TODO(FW-5289): remove
-:host(.item-legacy) .item-inner {
-  flex: 1;
-}
-
 // Item Bottom
 // --------------------------------------------------
 
@@ -404,36 +399,17 @@ button, a {
   // This flex property is required in order to keep
   // the label from shrinking when there are wide
   // elements next to it
-  flex: 1 0 0;
+  flex: 1;
 
   flex-direction: inherit;
 
-  // Flex wrap is required here in order to wrap
-  // content in the default slot (such as a label
-  // and a button) that doesn't fit on the same line
-  flex-wrap: wrap;
-
   align-items: inherit;
   align-self: stretch;
-
-  // Max width must be set to 100%, otherwise the
-  // elements will overflow this container instead
-  // of wrapping
-  max-width: 100%;
 
   text-overflow: ellipsis;
 
   overflow: inherit;
   box-sizing: border-box;
-}
-
-// TODO(FW-5289): remove
-:host(.item-legacy) .input-wrapper {
-  flex: 1;
-
-  flex-wrap: unset;
-
-  max-width: unset;
 }
 
 :host(.item-label-stacked),
