@@ -12,6 +12,7 @@ const DID_CHANGE = "ionTabsDidChange";
  * As a result, we need to account for both here since we support
  * versions of Vue < 3.2.38.
  */
+// TODO FW-5904
 const isRouterOutlet = (node: VNode) => {
   return (
     node.type &&
