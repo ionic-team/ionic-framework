@@ -45,7 +45,7 @@ export const slidingItemAnimation = (
         zIndex: zIndex,
       })
       .fromTo('transform', el.style.transform, `translate3d(${viewportOffset}px,0,0)`)
-      .afterClearStyles(['z-index']);
+      .afterClearStyles(['z-index', 'transform']);
 
     leaveAnimation.play().then(() => leaveAnimation.destroy());
   }
@@ -59,12 +59,11 @@ export const slidingItemAnimation = (
       .addElement(el)
       .duration(300)
       .easing('ease-out')
-      .commitStyles()
       .beforeStyles({
         zIndex: zIndex,
       })
       .fromTo('transform', el.style.transform, `translate3d(0,0,0)`)
-      .afterClearStyles(['z-index']);
+      .afterClearStyles(['z-index', 'transform']);
 
     expandAnimation.play();
   }
