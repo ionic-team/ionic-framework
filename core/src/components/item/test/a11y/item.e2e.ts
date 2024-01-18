@@ -155,16 +155,22 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
 
         <ion-list>
           <ion-item>
-            <ion-label>Item</ion-label>
-            <ion-button>Default</ion-button>
+            <ion-label>
+              Item
+              <ion-button>Default</ion-button>
+            </ion-label>
           </ion-item>
           <ion-item>
-            <ion-label>Item</ion-label>
-            <ion-button size="small">Small</ion-button>
+            <ion-label>
+              Item
+              <ion-button size="small">Small</ion-button>
+            </ion-label>
           </ion-item>
           <ion-item>
-            <ion-label>Item</ion-label>
-            <ion-button size="large">Large</ion-button>
+            <ion-label>
+              Item
+              <ion-button size="large">Large</ion-button>
+            </ion-label>
           </ion-item>
         </ion-list>
       `,
