@@ -116,6 +116,13 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
         previousMatchedRouteRef = currentMatchedRouteRef;
         previousMatchedPath = currentRoute.path;
       },
+      /**
+       * Future versions of Vue may default watching nested
+       * reactive objects to "deep: false".
+       * We explicitly set this watcher to "deep: true" to
+       * account for that.
+       * https://github.com/vuejs/core/issues/9965#issuecomment-1875067499
+       */
       { deep: true }
     );
 
