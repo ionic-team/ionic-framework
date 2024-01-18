@@ -158,6 +158,18 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       });
     });
 
+    test('should scroll to new month when value is updated with multiple dates in the same month', async ({ page }) => {
+      const datetime = await datetimeFixture.goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
+      await datetime.evaluate((el: HTMLIonDatetimeElement, dates: string[]) => {
+        el.value = dates;
+      }, MULTIPLE_DATES);
+
+      await page.waitForChanges();
+
+      const monthYear = datetime.locator('.calendar-month-year');
+      await expect(monthYear).toHaveText(/June 2022/);
+    });
+
     test('should not scroll to new month when value is updated with dates in different months', async ({ page }) => {
       const datetime = await datetimeFixture.goto(config, MULTIPLE_DATES);
       await datetime.evaluate((el: HTMLIonDatetimeElement, dates: string[]) => {
