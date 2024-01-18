@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.6-nightly.20240118](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6-nightly.20240118) (2024-01-18)
+
+
+### Bug Fixes
+
+* **alert:** remove border-right on ios stacked buttons ([#28821](https://github.com/ionic-team/ionic-framework/issues/28821)) ([ad65824](https://github.com/ionic-team/ionic-framework/commit/ad65824722da0eed90ef9e595b743754bfd360b8))
+* **segment:** setting value via binding updates button state ([#28837](https://github.com/ionic-team/ionic-framework/issues/28837)) ([0847c2a](https://github.com/ionic-team/ionic-framework/commit/0847c2ac2c52b5fa6d30e381685d6cbf7a41231a)), closes [#28816](https://github.com/ionic-team/ionic-framework/issues/28816)
+* **select:** click handlers on slotted content fire ([#28839](https://github.com/ionic-team/ionic-framework/issues/28839)) ([aed7a03](https://github.com/ionic-team/ionic-framework/commit/aed7a03532b88628a4358c8cbae1a1cbb861462b)), closes [#28818](https://github.com/ionic-team/ionic-framework/issues/28818)
+
+
+
+
+
 ## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.5) (2024-01-17)
 
 
