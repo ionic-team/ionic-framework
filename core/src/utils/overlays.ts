@@ -496,7 +496,7 @@ export const present = async <OverlayPresentOptions>(
    * from returning focus as a result.
    */
   if (overlay.el.tagName !== 'ION-TOAST') {
-    focusPreviousElementOnDismiss(overlay.el);
+    focusPreviousElementOnDismissIfNeeded(overlay.el);
   }
 
   /**
@@ -520,7 +520,7 @@ export const present = async <OverlayPresentOptions>(
  * to where they were before they
  * opened the overlay.
  */
-const focusPreviousElementOnDismiss = async (overlayEl: any) => {
+const focusPreviousElementOnDismissIfNeeded = async (overlayEl: any) => {
   let previousElement = document.activeElement as HTMLElement | null;
   if (!previousElement) {
     return;
@@ -533,7 +533,17 @@ const focusPreviousElementOnDismiss = async (overlayEl: any) => {
   }
 
   await overlayEl.onDidDismiss();
-  previousElement.focus();
+
+  /**
+   * If the user has already removed focus
+   * from the overlay (For example, focusing
+   * a text box after tapping a button in an
+   * action sheet) then don't restore focus
+   * to previous element
+   */
+  if (document.activeElement === null || document.activeElement === document.body) {
+    previousElement.focus();
+  }
 };
 
 export const dismiss = async <OverlayDismissOptions>(
