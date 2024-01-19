@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.6-nightly.20240119](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6-nightly.20240119) (2024-01-19)
+
+
+### Bug Fixes
+
+* **alert:** remove border-right on ios stacked buttons ([#28821](https://github.com/ionic-team/ionic-framework/issues/28821)) ([ad65824](https://github.com/ionic-team/ionic-framework/commit/ad65824722da0eed90ef9e595b743754bfd360b8))
+* **datetime:** do not animate to new value when multiple values in different months are set ([#28847](https://github.com/ionic-team/ionic-framework/issues/28847)) ([9262f7d](https://github.com/ionic-team/ionic-framework/commit/9262f7da15969706039e9d5f11ef5c7bd73ced0d)), closes [#28602](https://github.com/ionic-team/ionic-framework/issues/28602)
+* **datetime:** enter closes keyboard when typing time ([#28848](https://github.com/ionic-team/ionic-framework/issues/28848)) ([c47a16d](https://github.com/ionic-team/ionic-framework/commit/c47a16d6c3c57f56b053727dd10ead0bfe547e50)), closes [#28325](https://github.com/ionic-team/ionic-framework/issues/28325)
+* **segment:** setting value via binding updates button state ([#28837](https://github.com/ionic-team/ionic-framework/issues/28837)) ([0847c2a](https://github.com/ionic-team/ionic-framework/commit/0847c2ac2c52b5fa6d30e381685d6cbf7a41231a)), closes [#28816](https://github.com/ionic-team/ionic-framework/issues/28816)
+* **select:** click handlers on slotted content fire ([#28839](https://github.com/ionic-team/ionic-framework/issues/28839)) ([aed7a03](https://github.com/ionic-team/ionic-framework/commit/aed7a03532b88628a4358c8cbae1a1cbb861462b)), closes [#28818](https://github.com/ionic-team/ionic-framework/issues/28818)
+
+
+
+
+
 ## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.5) (2024-01-17)
 
 
