@@ -75,7 +75,7 @@ In Ionic Framework version 8, the dark theme is being distributed via css files 
 @import "@ionic/angular/css/themes/dark.system.css";
 ```
 
-By importing the `dark.system.css` file, the dark theme selectors will be defined like the following:
+By importing the `dark.system.css` file, the dark theme variables will be defined like the following:
 
 ```css
 @media (prefers-color-scheme: dark) {
@@ -93,9 +93,9 @@ By importing the `dark.system.css` file, the dark theme selectors will be define
 }
 ```
 
-Notice that the dark theme is now applied to the `:root` selector instead of the `body` selector. The [`:root` selector](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) is identical to the `html` selector, except that its specificity is higher.
+Notice that the dark theme is now applied to the `:root` selector instead of the `body` selector. The [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) selector represents the `<html>` element and is identical to the selector `html`, except that its specificity is higher.
 
-While migrating to include the new dark theme files is unlikely to cause breaking changes, these new selectors can lead to unexpected overrides if custom CSS variables are being set on the `body` element. We recommend updating any instances where global application variables are set to target the `:root` or `html` element instead.
+While migrating to include the new dark theme files is unlikely to cause breaking changes, these new selectors can lead to unexpected overrides if custom CSS variables are being set on the `body` element. We recommend updating any instances where global application variables are set to target the `:root` selector instead.
 
 For more information on the new dark theme files, refer to the [Dark Mode documentation](https://ionicframework.com/docs/theming/dark-mode).
 
