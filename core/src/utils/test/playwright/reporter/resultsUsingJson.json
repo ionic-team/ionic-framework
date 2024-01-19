@@ -1,0 +1,618 @@
+{
+  "config": {
+    "configFile": "/Users/maria/Desktop/projects/ionic-framework/core/playwright.config.ts",
+    "rootDir": "/Users/maria/Desktop/projects/ionic-framework/core",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 3
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "github",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "src/utils/test/playwright/reporter/resultsUsingJson.json"
+        }
+      ],
+      [
+        "/Users/maria/Desktop/projects/ionic-framework/core/src/utils/test/playwright/reporter/reporter.tsx",
+        null
+      ]
+    ],
+    "reportSlowTests": null,
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/maria/Desktop/projects/ionic-framework/core/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "id": "Mobile Firefox",
+        "name": "Mobile Firefox",
+        "testDir": "/Users/maria/Desktop/projects/ionic-framework/core",
+        "testIgnore": [],
+        "testMatch": [
+          "*.e2e.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/maria/Desktop/projects/ionic-framework/core/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/maria/Desktop/projects/ionic-framework/core",
+        "testIgnore": [],
+        "testMatch": [
+          "*.e2e.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/maria/Desktop/projects/ionic-framework/core/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/maria/Desktop/projects/ionic-framework/core",
+        "testIgnore": [],
+        "testMatch": [
+          "*.e2e.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "version": "1.39.0",
+    "workers": 6,
+    "webServer": {
+      "command": "serve -p 3333",
+      "port": 3333,
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "src/components/chip/test/basic/chip.e2e.ts",
+      "file": "src/components/chip/test/basic/chip.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "chip: rendering - ios/ltr",
+          "file": "src/components/chip/test/basic/chip.e2e.ts",
+          "line": 8,
+          "column": 8,
+          "specs": [
+            {
+              "title": "should not have visual regressions",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "theme",
+                      "description": "light"
+                    },
+                    {
+                      "type": "mode",
+                      "description": "ios"
+                    },
+                    {
+                      "type": "direction",
+                      "description": "ltr"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Firefox",
+                  "projectName": "Mobile Firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "status": "failed",
+                      "duration": 924,
+                      "error": {
+                        "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  49 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
+                        "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  49 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
+                        "location": {
+                          "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                          "column": 26,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                            "column": 26,
+                            "line": 26
+                          },
+                          "message": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  49 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2024-01-19T01:00:38.005Z",
+                      "attachments": [
+                        {
+                          "name": "chip-basic-ios-ltr-expected.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Firefox-darwin.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-ltr-actual.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-actual.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-ltr-diff.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-diff.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                        "column": 26,
+                        "line": 26
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                },
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "theme",
+                      "description": "light"
+                    },
+                    {
+                      "type": "mode",
+                      "description": "ios"
+                    },
+                    {
+                      "type": "direction",
+                      "description": "ltr"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "status": "failed",
+                      "duration": 511,
+                      "error": {
+                        "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
+                        "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
+                        "location": {
+                          "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                          "column": 26,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                            "column": 26,
+                            "line": 26
+                          },
+                          "message": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2024-01-19T01:00:38.005Z",
+                      "attachments": [
+                        {
+                          "name": "chip-basic-ios-ltr-expected.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Chrome-darwin.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-ltr-actual.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-actual.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-ltr-diff.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-diff.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                        "column": 26,
+                        "line": 26
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                },
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "theme",
+                      "description": "light"
+                    },
+                    {
+                      "type": "mode",
+                      "description": "ios"
+                    },
+                    {
+                      "type": "direction",
+                      "description": "ltr"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "status": "failed",
+                      "duration": 565,
+                      "error": {
+                        "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  50 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
+                        "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  50 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
+                        "location": {
+                          "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                          "column": 26,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                            "column": 26,
+                            "line": 26
+                          },
+                          "message": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  50 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2024-01-19T01:00:38.005Z",
+                      "attachments": [
+                        {
+                          "name": "chip-basic-ios-ltr-expected.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Safari-darwin.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-ltr-actual.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-actual.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-ltr-diff.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-diff.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                        "column": 26,
+                        "line": 26
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f6ea308e81510890fd6f-8785cafdf7ace9edc59a",
+              "file": "src/components/chip/test/basic/chip.e2e.ts",
+              "line": 9,
+              "column": 10
+            }
+          ]
+        },
+        {
+          "title": "chip: rendering - ios/rtl",
+          "file": "src/components/chip/test/basic/chip.e2e.ts",
+          "line": 8,
+          "column": 8,
+          "specs": [
+            {
+              "title": "should not have visual regressions",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "theme",
+                      "description": "light"
+                    },
+                    {
+                      "type": "mode",
+                      "description": "ios"
+                    },
+                    {
+                      "type": "direction",
+                      "description": "rtl"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Firefox",
+                  "projectName": "Mobile Firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "status": "failed",
+                      "duration": 840,
+                      "error": {
+                        "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
+                        "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
+                        "location": {
+                          "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                          "column": 26,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                            "column": 26,
+                            "line": 26
+                          },
+                          "message": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2024-01-19T01:00:41.756Z",
+                      "attachments": [
+                        {
+                          "name": "chip-basic-ios-rtl-expected.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Firefox-darwin.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-rtl-actual.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-actual.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-rtl-diff.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-diff.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                        "column": 26,
+                        "line": 26
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                },
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "theme",
+                      "description": "light"
+                    },
+                    {
+                      "type": "mode",
+                      "description": "ios"
+                    },
+                    {
+                      "type": "direction",
+                      "description": "rtl"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "status": "failed",
+                      "duration": 525,
+                      "error": {
+                        "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
+                        "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
+                        "location": {
+                          "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                          "column": 26,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                            "column": 26,
+                            "line": 26
+                          },
+                          "message": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2024-01-19T01:00:38.916Z",
+                      "attachments": [
+                        {
+                          "name": "chip-basic-ios-rtl-expected.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Chrome-darwin.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-rtl-actual.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-actual.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-rtl-diff.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-diff.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                        "column": 26,
+                        "line": 26
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                },
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "theme",
+                      "description": "light"
+                    },
+                    {
+                      "type": "mode",
+                      "description": "ios"
+                    },
+                    {
+                      "type": "direction",
+                      "description": "rtl"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "status": "failed",
+                      "duration": 566,
+                      "error": {
+                        "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  51 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
+                        "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  51 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
+                        "location": {
+                          "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                          "column": 26,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                            "column": 26,
+                            "line": 26
+                          },
+                          "message": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  51 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2024-01-19T01:00:38.857Z",
+                      "attachments": [
+                        {
+                          "name": "chip-basic-ios-rtl-expected.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Safari-darwin.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-rtl-actual.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-actual.png"
+                        },
+                        {
+                          "name": "chip-basic-ios-rtl-diff.png",
+                          "contentType": "image/png",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-diff.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
+                        "column": 26,
+                        "line": 26
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f6ea308e81510890fd6f-97b9bb68a1d72ff9e021",
+              "file": "src/components/chip/test/basic/chip.e2e.ts",
+              "line": 9,
+              "column": 10
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2024-01-19T01:00:37.725Z",
+    "duration": 7612.927
+  }
+}
