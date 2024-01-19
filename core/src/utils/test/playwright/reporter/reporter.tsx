@@ -19,9 +19,7 @@ import type {
   Suite,
   TestCase,
   TestResult,
-  // TestStep,
   FullResult,
-  // Location,
   TestError,
   Reporter,
 } from '@playwright/test/reporter';
@@ -30,32 +28,11 @@ import fs from 'fs';
 import path from 'path';
 import util from 'util';
 
-const htmlReportOptions = ['always', 'never', 'on-failure'];
-type HtmlReportOpenOption = typeof htmlReportOptions[number];
-
-const isHtmlReportOption = (type: string): type is HtmlReportOpenOption => {
-  return htmlReportOptions.includes(type);
-};
-
-type HtmlReporterOptions = {
-  configDir: string;
-  outputFolder?: string;
-  open?: HtmlReportOpenOption;
-  host?: string;
-  port?: number;
-  attachmentsBaseURL?: string;
-};
-
 class HtmlReporter implements Reporter {
   private config!: FullConfig;
   private suite!: Suite;
-  private _options: HtmlReporterOptions;
   private _topLevelErrors: TestError[] = [];
   private _reactAppDirectory = path.dirname(__filename);
-
-  constructor(options: HtmlReporterOptions) {
-    this._options = options;
-  }
 
   printsToStdio() {
     return false;
@@ -104,8 +81,7 @@ class HtmlReporter implements Reporter {
       }
     }
 
-    let ok = true;
-    for (const [fileId, { testFile, testFileSummary }] of data) {
+    for (const [, { testFileSummary }] of data) {
       const stats = testFileSummary.stats;
       for (const test of testFileSummary.tests) {
         if (test.outcome === 'expected') ++stats.expected;
@@ -115,7 +91,6 @@ class HtmlReporter implements Reporter {
         ++stats.total;
       }
       stats.ok = stats.unexpected + stats.flaky === 0;
-      if (!stats.ok) ok = false;
 
       const testCaseSummaryComparator = (t1: any, t2: any) => {
         const w1 = (t1.outcome === 'unexpected' ? 1000 : 0) + (t1.outcome === 'flaky' ? 1 : 0);
@@ -246,7 +221,7 @@ const createTestEntry = (test: TestCase, projectName: string, botName: string | 
   };
 };
 
-const createTestResult = (test: TestCase, result: TestResult): any => {
+const createTestResult = (_test: TestCase, result: TestResult): any => {
   return {
     duration: result.duration,
     startTime: result.startTime.toISOString(),
@@ -261,8 +236,7 @@ const createTestResult = (test: TestCase, result: TestResult): any => {
   };
 };
 
-const serializeTestResult = (result: TestResult, test: TestCase): any => {
-  const steps = result.steps.filter((s) => s.category === 'test.step');
+const serializeTestResult = (result: TestResult, _test: TestCase): any => {
   const jsonResult: any = {
     workerIndex: result.workerIndex,
     status: result.status,

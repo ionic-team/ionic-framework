@@ -6,7 +6,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
    * Chip rendering does not vary across modes.
    */
   test.describe(title('chip: rendering'), () => {
-    test.only('should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
         <ion-chip>
