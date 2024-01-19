@@ -6,6 +6,28 @@ const DID_CHANGE = "ionTabsDidChange";
 
 // TODO(FW-2969): types
 
+/**
+ * Vue 3.2.38 fixed an issue where Web Component
+ * names are respected using kebab case instead of pascal case.
+ * As a result, we need to account for both here since we support
+ * versions of Vue < 3.2.38.
+ */
+// TODO FW-5904
+const isRouterOutlet = (node: VNode) => {
+  return (
+    node.type &&
+    ((node.type as any).name === "IonRouterOutlet" ||
+      node.type === "ion-router-outlet")
+  );
+};
+
+const isTabBar = (node: VNode) => {
+  return (
+    node.type &&
+    ((node.type as any).name === "IonTabBar" || node.type === "ion-tab-bar")
+  );
+};
+
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: "IonTabs",
   emits: [WILL_CHANGE, DID_CHANGE],
@@ -19,9 +41,8 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
      * inside of ion-tabs.
      */
     if (slottedContent && slottedContent.length > 0) {
-      routerOutlet = slottedContent.find(
-        (child: VNode) =>
-          child.type && (child.type as any).name === "IonRouterOutlet"
+      routerOutlet = slottedContent.find((child: VNode) =>
+        isRouterOutlet(child)
       );
     }
 
@@ -57,13 +78,11 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
        * since that needs to be inside of `.tabs-inner`.
        */
       const filteredContent = slottedContent.filter(
-        (child: VNode) =>
-          !child.type ||
-          (child.type && (child.type as any).name !== "IonRouterOutlet")
+        (child: VNode) => !child.type || !isRouterOutlet(child)
       );
 
-      const slottedTabBar = filteredContent.find(
-        (child: VNode) => child.type && (child.type as any).name === "IonTabBar"
+      const slottedTabBar = filteredContent.find((child: VNode) =>
+        isTabBar(child)
       );
       const hasTopSlotTabBar =
         slottedTabBar && slottedTabBar.props?.slot === "top";
