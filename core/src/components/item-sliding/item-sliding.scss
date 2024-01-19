@@ -47,7 +47,7 @@ ion-item-sliding .item {
 // --------------------------------------------------
 
 .item-sliding-animation-legacy,
-// TODO: FW-xxxx - Add support for modern animation with Ionic animations
+// TODO: FW-5907 - Add support for modern animation with Ionic animations
 .item-sliding-animation-modern {
   // Animation to expand the item option
   &.item-sliding-active-swipe-end .item-options-end .item-option-expandable {
