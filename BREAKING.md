@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Button](#version-8x-button)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
+  - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
@@ -132,6 +133,10 @@ This allows components to inherit the color properly when used outside of Ionic 
       +  background: red;
       }
       ```
+
+<h4 id="version-8x-nav">Nav</h4>
+
+- `getLength` returns `Promise<number>` instead of `<number>`. This method was not previously available in Nav's TypeScript interface, but developers could still access it by casting Nav as `any`. Developers should ensure they `await` their `getLength` call before accessing the returned value.
 
 <h4 id="version-8x-picker">Picker</h4>
 

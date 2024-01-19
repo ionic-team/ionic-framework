@@ -1823,6 +1823,10 @@ export namespace Components {
          */
         "getByIndex": (index: number) => Promise<ViewController | undefined>;
         /**
+          * Returns the number of views in the stack.
+         */
+        "getLength": () => Promise<number>;
+        /**
           * Get the previous view.
           * @param view The view to get.
          */
