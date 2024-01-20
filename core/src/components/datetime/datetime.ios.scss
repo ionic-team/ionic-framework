@@ -5,6 +5,7 @@
 :host {
   --background: var(--ion-color-light, #ffffff);
   --background-rgb: var(--ion-color-light-rgb);
+  --range-background: #{current-color(base, 0.1)};
   --title-color: #{$text-color-step-400};
 }
 
@@ -222,7 +223,7 @@
 }
 
 :host .calendar-day-wrapper {
-  @include padding(4px);
+  @include padding(2px);
 
   // This is required so that the calendar day wrapper
   // will collapse instead of expanding to fill the button
@@ -315,16 +316,16 @@
   position: relative;
 
   &:not(.calendar-day-range-start):not(.calendar-day-range-end) {
-    background: current-color(base, 0.1);
+    background: var(--range-background);
   }
 
-  &.calendar-day-range-start,
-  &.calendar-day-range-end {
-    .calendar-day {
-      background: var(--ion-color-base);
+  &.calendar-day-range-start .calendar-day,
+  &.calendar-day-range-end .calendar-day {
+    background: var(--ion-color-base);
 
-      color: var(--ion-color-contrast);
-    }
+    color: var(--ion-color-contrast);
+
+    z-index: 1;
   }
 
   &.calendar-day-range-start:not(.calendar-day-range-end)::after,
@@ -346,12 +347,12 @@
   &.calendar-day-range-start::after {
     @include position(null, 0, null, null);
 
-    background: current-color(base, 0.1);
+    background: var(--range-background);
   }
 
   &.calendar-day-range-end::before {
     @include position(null, null, null, 0);
 
-    background: current-color(base, 0.1);
+    background: var(--range-background);
   }
 }

@@ -16,6 +16,8 @@
    * @prop --wheel-fade-background-rgb: The color of the gradient covering non-selected items
    * when using a wheel style layout, or in the month/year picker for grid style layouts. Must
    * be in RGB format, e.g. `255, 255, 255`.
+   *
+   * @prop --range-background: The background of the range track between a start and end date.
    */
 
   display: flex;

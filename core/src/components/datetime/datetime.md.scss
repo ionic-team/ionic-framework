@@ -4,6 +4,7 @@
 
 :host {
   --background: var(--ion-color-step-100, #ffffff);
+  --range-background: #{current-color(base, 0.1)};
   --title-color: #{current-color(contrast)};
 }
 
@@ -174,7 +175,12 @@
   position: relative;
 
   &:not(.calendar-day-range-start):not(.calendar-day-range-end) {
-    background: current-color(base, 0.1);
+    background: var(--range-background);
+  }
+
+  &.calendar-day-range-start .calendar-day,
+  &.calendar-day-range-end .calendar-day {
+    z-index: 1;
   }
 
   &.calendar-day-range-start:not(.calendar-day-range-end)::after,
@@ -184,7 +190,7 @@
     width: 50%;
     height: 100%;
 
-    background: current-color(base, 0.1);
+    background: var(--range-background);
 
     content: " ";
   }
