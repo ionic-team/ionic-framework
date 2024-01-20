@@ -10,7 +10,12 @@
 // Header
 // -----------------------------------
 :host .datetime-header {
-  @include padding($datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding);
+  @include padding(
+    $datetime-md-header-padding,
+    $datetime-md-header-padding,
+    $datetime-md-header-padding,
+    $datetime-md-header-padding
+  );
 
   background: current-color(base);
   color: var(--title-color);
@@ -160,4 +165,33 @@
   align-items: center;
 
   justify-content: flex-end;
+}
+
+// Range Selection
+// -----------------------------------
+
+.calendar-day-in-range.calendar-day-wrapper:not(.calendar-day-wrapper-padding) {
+  position: relative;
+
+  &:not(.calendar-day-range-start):not(.calendar-day-range-end) {
+    background: current-color(base, 0.1);
+  }
+
+  &.calendar-day-range-start:not(.calendar-day-range-end)::after,
+  &.calendar-day-range-end:not(.calendar-day-range-start)::before {
+    width: 50%;
+    height: 100%;
+    content: " ";
+    position: absolute;
+
+    background: current-color(base, 0.1);
+  }
+
+  &.calendar-day-range-start::after {
+    right: 0;
+  }
+
+  &.calendar-day-range-end::before {
+    left: 0;
+  }
 }

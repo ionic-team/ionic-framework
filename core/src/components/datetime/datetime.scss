@@ -369,35 +369,6 @@
   overflow: visible;
 }
 
-.calendar-day-in-range {
-  &.calendar-day-range-start:not(.calendar-day-range-end) {
-    justify-content: flex-end;
-  }
-
-  &.calendar-day-range-end:not(.calendar-day-range-start) {
-    justify-content: flex-start;
-  }
-
-  .calendar-day {
-    background: current-color(base, 0.1);
-  }
-}
-
-.calendar-day-in-range:not(.calendar-day-range-start):not(.calendar-day-range-end) {
-  .calendar-day {
-    @include border-radius(0);
-    width: 100% !important;
-  }
-}
-
-.calendar-day-range-start:not(.calendar-day-range-end) .calendar-day {
-  @include border-radius(50%, 0, 0, 50%);
-}
-
-.calendar-day-range-end:not(.calendar-day-range-start) .calendar-day {
-  @include border-radius(0, 50%, 50%, 0);
-}
-
 /**
  * Center the day text vertically
  * and horizontally within its grid cell.

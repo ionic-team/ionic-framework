@@ -2333,6 +2333,7 @@ export class Datetime implements ComponentInterface {
               <div
                 class={{
                   'calendar-day-wrapper': true,
+                  'calendar-day-wrapper-padding': isCalendarPadding,
                   'calendar-day-in-range': inRange,
                   'calendar-day-range-start': isRangeStart,
                   'calendar-day-range-end': isRangeEnd,

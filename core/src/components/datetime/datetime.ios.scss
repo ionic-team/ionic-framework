@@ -182,7 +182,11 @@
  * The second set of @support checks account for all other browsers that
  * do not support mod() yet.
  */
-@supports ((border-radius: mod(1px, 1px)) and (background: -webkit-named-image(apple-pay-logo-black)) and (not (contain-intrinsic-size: none))) or (not (border-radius: mod(1px, 1px))) {
+@supports (
+    (border-radius: mod(1px, 1px)) and (background: -webkit-named-image(apple-pay-logo-black)) and
+      (not (contain-intrinsic-size: none))
+  )
+  or (not (border-radius: mod(1px, 1px))) {
   .calendar-days-of-week .day-of-week {
     width: auto;
     height: auto;
@@ -198,7 +202,6 @@
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body .calendar-month .calendar-month-grid {
-
   /**
    * We need to apply the padding to
    * each month grid item otherwise
@@ -206,7 +209,12 @@
    * this padding a snapping point if applied
    * on .calendar-month
    */
-  @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
+  @include padding(
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5
+  );
 
   align-items: center;
 
@@ -220,7 +228,7 @@
   // will collapse instead of expanding to fill the button
   height: 0;
 
-  min-height: dynamic-font(16px);
+  min-height: dynamic-font(35px);
 }
 
 :host .calendar-day {
@@ -278,7 +286,12 @@
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
-  @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
+  @include padding(
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5
+  );
 
   border-top: $datetime-ios-border-color;
 }
@@ -293,4 +306,50 @@
 
 :host .datetime-action-buttons {
   width: 100%;
+}
+
+// Range Selection
+// -----------------------------------
+
+.calendar-day-in-range.calendar-day-wrapper:not(.calendar-day-wrapper-padding) {
+  position: relative;
+
+  &:not(.calendar-day-range-start):not(.calendar-day-range-end) {
+    background: current-color(base, 0.1);
+  }
+
+  &.calendar-day-range-start,
+  &.calendar-day-range-end {
+    .calendar-day {
+      background: var(--ion-color-base);
+
+      color: var(--ion-color-contrast);
+    }
+  }
+
+  &.calendar-day-range-start:not(.calendar-day-range-end)::after,
+  &.calendar-day-range-end:not(.calendar-day-range-start)::before {
+    width: 50%;
+    height: 100%;
+    content: " ";
+    position: absolute;
+
+    .calendar-day {
+      background: var(--ion-color-base);
+
+      color: var(--ion-color-contrast);
+    }
+  }
+
+  &.calendar-day-range-start::after {
+    right: 0;
+
+    background: current-color(base, 0.1);
+  }
+
+  &.calendar-day-range-end::before {
+    left: 0;
+
+    background: current-color(base, 0.1);
+  }
 }
