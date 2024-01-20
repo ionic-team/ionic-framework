@@ -617,7 +617,11 @@ export class Datetime implements ComponentInterface {
     };
   };
 
-  private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
+  // TODO - I'm not happy with this change/API.
+  // But we need to avoid calling confirm()
+  // Otherwise changing the month/year in the wheel picker
+  // will update the value of the range selection.
+  private setActiveParts = (parts: DatetimeParts, removeDate = false, confirmDate = true) => {
     /**
      * If the datetime component is in readonly mode,
      * allow browsing of the calendar without changing
@@ -695,7 +699,9 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    this.confirm();
+    if (confirmDate) {
+      this.confirm();
+    }
   };
 
   private get isCalendarPicker() {
@@ -1872,7 +1878,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { disabled, workingParts } = this;
+    const { disabled, workingParts, range } = this;
 
     const activePart = this.getActivePartsWithFallback() as DatetimeParts;
 
@@ -1896,10 +1902,16 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            month: ev.detail.value,
-          });
+          const shouldUpdateValue = range === true;
+
+          this.setActiveParts(
+            {
+              ...activePart,
+              month: ev.detail.value,
+            },
+            false,
+            shouldUpdateValue
+          );
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1926,7 +1938,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { disabled, workingParts } = this;
+    const { disabled, workingParts, range } = this;
 
     const activePart = this.getActivePartsWithFallback() as DatetimeParts;
 
@@ -1950,10 +1962,16 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          this.setActiveParts({
-            ...activePart,
-            year: ev.detail.value,
-          });
+          const shouldUpdateValue = range === true;
+
+          this.setActiveParts(
+            {
+              ...activePart,
+              year: ev.detail.value,
+            },
+            false,
+            shouldUpdateValue
+          );
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
