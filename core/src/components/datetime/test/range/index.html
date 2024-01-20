@@ -267,6 +267,11 @@
         datetime.addEventListener('ionChange', (event) => {
           console.log('Listen ionChange', event.detail);
         });
+
+        datetime.value = {
+          start: '2024-01-05',
+          end: '2024-02-10',
+        };
       </script>
     </ion-app>
   </body>

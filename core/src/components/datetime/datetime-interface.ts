@@ -17,6 +17,11 @@ export interface DatetimeParts {
   ampm?: 'am' | 'pm';
 }
 
+export interface DatetimeRangeParts {
+  start: DatetimeParts;
+  end: DatetimeParts;
+}
+
 export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
 
 export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;

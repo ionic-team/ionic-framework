@@ -5,10 +5,11 @@ import type {
   DatetimeHighlightCallback,
   DatetimeHighlightStyle,
   DatetimeParts,
+  DatetimeRangeParts,
 } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
-import { generateDayAriaLabel, getDay } from './format';
+import { activePartsToArray, generateDayAriaLabel, getDay } from './format';
 import { getNextMonth, getPreviousMonth } from './manipulation';
 
 export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
@@ -96,26 +97,17 @@ export const isDayDisabled = (
 export const getCalendarDayState = (
   locale: string,
   refParts: DatetimeParts,
-  activeParts: DatetimeParts | DatetimeParts[],
+  activeParts: DatetimeParts | DatetimeRangeParts | DatetimeParts[],
   todayParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   dayValues?: number[]
 ) => {
   /**
-   * activeParts signals what day(s) are currently selected in the datetime.
-   * If multiple="true", this will be an array, but the logic in this util
-   * is the same whether we have one selected day or many because we're only
-   * calculating the state for one button. So, we treat a single activeParts value
-   * the same as an array of length one.
-   */
-  const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
-
-  /**
    * The day button is active if it is selected, or in other words, if refParts
    * matches at least one selected date.
    */
-  const isActive = activePartsArray.find((parts) => isSameDay(refParts, parts)) !== undefined;
+  const isActive = activePartsToArray(activeParts).find((parts) => isSameDay(refParts, parts)) !== undefined;
 
   const isToday = isSameDay(refParts, todayParts);
   const disabled = isDayDisabled(refParts, minParts, maxParts, dayValues);
@@ -228,7 +220,7 @@ export const getHighlightStyles = (
   return undefined;
 };
 
-export const isDateRangeStart = (referenceParts: DatetimeParts, activeParts: DatetimeParts | DatetimeParts[]) => {
+export const isDateRangeStart = (referenceParts: DatetimeParts, activeParts: DatetimeRangeParts) => {
   if (activeParts !== undefined && Array.isArray(activeParts)) {
     const startDate = activeParts[0];
     return startDate !== undefined && isSameDay(referenceParts, startDate);
@@ -236,7 +228,7 @@ export const isDateRangeStart = (referenceParts: DatetimeParts, activeParts: Dat
   return false;
 }
 
-export const isDateRangeEnd = (referenceParts: DatetimeParts, activeParts: DatetimeParts | DatetimeParts[]) => {
+export const isDateRangeEnd = (referenceParts: DatetimeParts, activeParts: DatetimeRangeParts) => {
   if (activeParts !== undefined && Array.isArray(activeParts)) {
     const endDate = activeParts[1];
     return endDate !== undefined && isSameDay(referenceParts, endDate);
@@ -244,7 +236,7 @@ export const isDateRangeEnd = (referenceParts: DatetimeParts, activeParts: Datet
   return false;
 }
 
-export const isDateInRange = (referenceParts: DatetimeParts, activeParts: DatetimeParts | DatetimeParts[]) => {
+export const isDateInRange = (referenceParts: DatetimeParts, activeParts: DatetimeRangeParts) => {
   if (activeParts !== undefined && Array.isArray(activeParts)) {
     const startDate = activeParts[0];
     const endDate = activeParts[1];

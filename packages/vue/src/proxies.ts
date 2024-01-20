@@ -294,6 +294,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime, JSX.Io
   'firstDayOfWeek',
   'titleSelectedDatesFormatter',
   'multiple',
+  'range',
   'highlightedDates',
   'value',
   'showDefaultTitle',

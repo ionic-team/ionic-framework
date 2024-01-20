@@ -408,6 +408,7 @@ ion-datetime,prop,multiple,boolean,false,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,preferWheel,boolean,false,false,false
 ion-datetime,prop,presentation,"date" | "date-time" | "month" | "month-year" | "time" | "time-date" | "year",'date-time',false,false
+ion-datetime,prop,range,boolean,false,false,false
 ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,showClearButton,boolean,false,false,false
 ion-datetime,prop,showDefaultButtons,boolean,false,false,false
@@ -415,7 +416,7 @@ ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false
 ion-datetime,prop,size,"cover" | "fixed",'fixed',false,false
 ion-datetime,prop,titleSelectedDatesFormatter,((selectedDates: string[]) => string) | undefined,undefined,false,false
-ion-datetime,prop,value,null | string | string[] | undefined,undefined,false,false
+ion-datetime,prop,value,null | string | string[] | undefined | { start: string; end: string; },undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>
 ion-datetime,method,confirm,confirm(closeOverlay?: boolean) => Promise<void>

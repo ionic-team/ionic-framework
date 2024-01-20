@@ -1,4 +1,4 @@
-import type { DatetimeParts, DatetimeHourCycle, DatetimeValue } from '../datetime-interface';
+import type { DatetimeParts, DatetimeHourCycle, DatetimeValue, DatetimeRangeParts } from '../datetime-interface';
 
 import { is24Hour } from './helpers';
 import { convertDataToISO } from './manipulation';
@@ -353,3 +353,19 @@ export const formatValue = (value?: DatetimeValue) => {
   }
   return value;
 };
+
+/**
+ * Takes an incoming active parts object and formats it into an array
+ * of active parts.
+ * @param activeParts The active parts object to format.
+ * @returns Active parts as an array.
+ */
+export const activePartsToArray = (activeParts: DatetimeParts | DatetimeRangeParts | DatetimeParts[]) => {
+  if (Array.isArray(activeParts)) {
+    return activeParts;
+  }
+  if ('start' in activeParts) {
+    return [activeParts.start, activeParts.end];
+  }
+  return [activeParts];
+}

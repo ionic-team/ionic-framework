@@ -20,6 +20,7 @@ import type {
   DatetimeHighlightCallback,
   DatetimeHourCycle,
   DatetimeValue,
+  DatetimeRangeParts,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import type { WheelColumnOption } from './utils/data';
@@ -131,7 +132,7 @@ export class Datetime implements ComponentInterface {
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts | DatetimeParts[] = [];
+  @State() activeParts: DatetimeParts | DatetimeParts[] | DatetimeRangeParts = [];
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -642,30 +643,46 @@ export class Datetime implements ComponentInterface {
     this.setWorkingParts(validatedParts);
 
     if (multiple) {
-      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+      const activePartsArray = Array.isArray(activeParts) ? activeParts : ([activeParts] as DatetimeParts[]);
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
         this.activeParts = [...activePartsArray, validatedParts];
       }
     } else if (range) {
-      if (!Array.isArray(this.activeParts)) {
-        // If the activeParts is not an array, that means they have not made a selection yet
-        // and that the current activeParts is just the default value.
-        // We can set the start and end range to the same value.
-        this.activeParts = [validatedParts, validatedParts];
-      } else {
-        // If the active parts is an array, then we need to determine which part of the range
-        // we are setting. We can do this by comparing if the validatedParts is before or after
-        // the first active part. Users can select the same day as the start or end of the range.
+      if (Array.isArray(this.activeParts)) {
+        /**
+         * If the active parts is an array, then we need to determine which part of the range
+         * we are setting. We can do this by comparing if the validatedParts is before or after
+         * the first active part. Users can select the same day as the start or end of the range.
+         */
         const [start, end] = this.activeParts;
         if (start !== undefined && isBefore(validatedParts, start)) {
-          this.activeParts = [validatedParts, end];
+          this.activeParts = {
+            start: validatedParts,
+            end,
+          };
         } else if (end !== undefined && isAfter(validatedParts, end)) {
-          this.activeParts = [start, validatedParts];
+          this.activeParts = {
+            start,
+            end: validatedParts,
+          };
         } else {
-          this.activeParts = [validatedParts, validatedParts];
+          this.activeParts = {
+            start: validatedParts,
+            end: validatedParts,
+          };
         }
+      } else {
+        /**
+         * If the activeParts is not an array, that means they have not made a selection yet
+         * and that the current activeParts is just the default value.
+         * We can set the start and end range to the same value.
+         */
+        this.activeParts = {
+          start: validatedParts,
+          end: validatedParts,
+        };
       }
     } else {
       this.activeParts = {
@@ -1600,7 +1617,7 @@ export class Datetime implements ComponentInterface {
   private renderCombinedDatePickerColumn() {
     const { defaultParts, disabled, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
-    const activePart = this.getActivePartsWithFallback();
+    const activePart = this.getActivePartsWithFallback() as DatetimeParts;
 
     /**
      * By default, generate a range of 3 months:
@@ -1801,7 +1818,7 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
+    const activePart = this.getActivePartsWithFallback() as DatetimeParts;
     const pickerColumnValue = (workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined;
 
     return (
@@ -1857,7 +1874,7 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
+    const activePart = this.getActivePartsWithFallback() as DatetimeParts;
 
     return (
       <ion-picker-column
@@ -1911,7 +1928,7 @@ export class Datetime implements ComponentInterface {
 
     const { disabled, workingParts } = this;
 
-    const activePart = this.getActivePartsWithFallback();
+    const activePart = this.getActivePartsWithFallback() as DatetimeParts;
 
     return (
       <ion-picker-column
@@ -1996,7 +2013,7 @@ export class Datetime implements ComponentInterface {
     const { disabled, workingParts } = this;
     if (hoursData.length === 0) return [];
 
-    const activePart = this.getActivePartsWithFallback();
+    const activePart = this.getActivePartsWithFallback() as DatetimeParts;
 
     return (
       <ion-picker-column
@@ -2035,7 +2052,7 @@ export class Datetime implements ComponentInterface {
     const { disabled, workingParts } = this;
     if (minutesData.length === 0) return [];
 
-    const activePart = this.getActivePartsWithFallback();
+    const activePart = this.getActivePartsWithFallback() as DatetimeParts;
 
     return (
       <ion-picker-column
@@ -2076,7 +2093,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const activePart = this.getActivePartsWithFallback();
+    const activePart = this.getActivePartsWithFallback() as DatetimeParts;
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
 
     return (
@@ -2315,9 +2332,9 @@ export class Datetime implements ComponentInterface {
 
             let dateParts = undefined;
 
-            const inRange = range && isDateInRange(referenceParts, activeParts);
-            const isRangeStart = range && isDateRangeStart(referenceParts, activeParts);
-            const isRangeEnd = range && isDateRangeEnd(referenceParts, activeParts);
+            const inRange = range && isDateInRange(referenceParts, activeParts as DatetimeRangeParts);
+            const isRangeStart = range && isDateRangeStart(referenceParts, activeParts as DatetimeRangeParts);
+            const isRangeEnd = range && isDateRangeEnd(referenceParts, activeParts as DatetimeRangeParts);
 
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
@@ -2444,7 +2461,7 @@ export class Datetime implements ComponentInterface {
   private renderTimeOverlay() {
     const { disabled, hourCycle, isTimePopoverOpen, locale } = this;
     const computedHourCycle = getHourCycle(locale, hourCycle);
-    const activePart = this.getActivePartsWithFallback();
+    const activePart = this.getActivePartsWithFallback() as DatetimeParts;
 
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
@@ -2527,7 +2544,7 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback());
+      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback() as DatetimeParts); // TODO verify if this can show with range enabled
     }
 
     return headerText;
