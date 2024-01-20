@@ -368,4 +368,4 @@ export const activePartsToArray = (activeParts: DatetimeParts | DatetimeRangePar
     return [activeParts.start, activeParts.end];
   }
   return [activeParts];
-}
+};

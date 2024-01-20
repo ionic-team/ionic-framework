@@ -63,8 +63,12 @@ export function parseDate(val: DatetimeMultipleValue): DatetimeParts[] | undefin
 export function parseDate(val: DatetimeRangeValue): DatetimeParts[] | undefined;
 export function parseDate(val: undefined | null): undefined;
 export function parseDate(val: string | DatetimeMultipleValue): DatetimeParts | DatetimeParts[] | undefined;
-export function parseDate(val: string | DatetimeMultipleValue | DatetimeRangeValue | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
-export function parseDate(val: string | DatetimeMultipleValue | DatetimeRangeValue | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
+export function parseDate(
+  val: string | DatetimeMultipleValue | DatetimeRangeValue | undefined | null
+): DatetimeParts | DatetimeParts[] | undefined;
+export function parseDate(
+  val: string | DatetimeMultipleValue | DatetimeRangeValue | undefined | null
+): DatetimeParts | DatetimeParts[] | undefined {
   if (Array.isArray(val)) {
     const parsedArray: DatetimeParts[] = [];
     for (const valStr of val) {

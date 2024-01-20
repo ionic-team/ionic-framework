@@ -1,4 +1,9 @@
-import type { DatetimeMultipleValue, DatetimeParts, DatetimeRangeParts, DatetimeRangeValue } from '../datetime-interface';
+import type {
+  DatetimeMultipleValue,
+  DatetimeParts,
+  DatetimeRangeParts,
+  DatetimeRangeValue,
+} from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
 import { getNumDaysInMonth } from './helpers';
@@ -15,8 +20,12 @@ const fourDigit = (val: number | undefined): string => {
 export function convertDataToISO(data: DatetimeParts): string;
 export function convertDataToISO(data: DatetimeRangeParts): DatetimeRangeValue;
 export function convertDataToISO(data: DatetimeParts[]): DatetimeMultipleValue;
-export function convertDataToISO(data: DatetimeParts | DatetimeRangeParts | DatetimeParts[]): string | DatetimeMultipleValue;
-export function convertDataToISO(data: DatetimeParts | DatetimeRangeParts | DatetimeParts[]): string | DatetimeMultipleValue | DatetimeRangeValue {
+export function convertDataToISO(
+  data: DatetimeParts | DatetimeRangeParts | DatetimeParts[]
+): string | DatetimeMultipleValue;
+export function convertDataToISO(
+  data: DatetimeParts | DatetimeRangeParts | DatetimeParts[]
+): string | DatetimeMultipleValue | DatetimeRangeValue {
   // Multiple selection
   if (Array.isArray(data)) {
     return data.map((parts) => convertDataToISO(parts));

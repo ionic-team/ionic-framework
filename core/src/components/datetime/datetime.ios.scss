@@ -329,10 +329,12 @@
 
   &.calendar-day-range-start:not(.calendar-day-range-end)::after,
   &.calendar-day-range-end:not(.calendar-day-range-start)::before {
+    position: absolute;
+
     width: 50%;
     height: 100%;
+
     content: " ";
-    position: absolute;
 
     .calendar-day {
       background: var(--ion-color-base);
@@ -342,13 +344,13 @@
   }
 
   &.calendar-day-range-start::after {
-    right: 0;
+    @include position(null, 0, null, null);
 
     background: current-color(base, 0.1);
   }
 
   &.calendar-day-range-end::before {
-    left: 0;
+    @include position(null, null, null, 0);
 
     background: current-color(base, 0.1);
   }

@@ -179,19 +179,21 @@
 
   &.calendar-day-range-start:not(.calendar-day-range-end)::after,
   &.calendar-day-range-end:not(.calendar-day-range-start)::before {
-    width: 50%;
-    height: 100%;
-    content: " ";
     position: absolute;
 
+    width: 50%;
+    height: 100%;
+
     background: current-color(base, 0.1);
+
+    content: " ";
   }
 
   &.calendar-day-range-start::after {
-    right: 0;
+    @include position(null, 0, null, null);
   }
 
   &.calendar-day-range-end::before {
-    left: 0;
+    @include position(null, null, null, 0);
   }
 }

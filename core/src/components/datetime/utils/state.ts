@@ -226,7 +226,7 @@ export const isDateRangeStart = (referenceParts: DatetimeParts, activeParts: Dat
     return startDate !== undefined && isSameDay(referenceParts, startDate);
   }
   return false;
-}
+};
 
 export const isDateRangeEnd = (referenceParts: DatetimeParts, activeParts: DatetimeRangeParts) => {
   if (activeParts !== undefined && Array.isArray(activeParts)) {
@@ -234,14 +234,16 @@ export const isDateRangeEnd = (referenceParts: DatetimeParts, activeParts: Datet
     return endDate !== undefined && isSameDay(referenceParts, endDate);
   }
   return false;
-}
+};
 
 export const isDateInRange = (referenceParts: DatetimeParts, activeParts: DatetimeRangeParts) => {
   if (activeParts !== undefined && Array.isArray(activeParts)) {
     const startDate = activeParts[0];
     const endDate = activeParts[1];
-    const isAfterStart = startDate !== undefined && (isAfter(referenceParts, startDate) || isSameDay(referenceParts, startDate));
-    const isBeforeEnd = endDate !== undefined && (isBefore(referenceParts, endDate) || isSameDay(referenceParts, endDate));
+    const isAfterStart =
+      startDate !== undefined && (isAfter(referenceParts, startDate) || isSameDay(referenceParts, startDate));
+    const isBeforeEnd =
+      endDate !== undefined && (isBefore(referenceParts, endDate) || isSameDay(referenceParts, endDate));
     return isAfterStart && isBeforeEnd;
   }
   return false;
