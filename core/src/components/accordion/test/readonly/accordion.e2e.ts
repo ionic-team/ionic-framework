@@ -3,7 +3,6 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('accordion: readonly'), () => {
-    // NOTE: this test moved here from another file
     test('should properly set readonly on child accordions', async ({ page }) => {
       await page.setContent(
         `
@@ -78,7 +77,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
     });
 
     test('should not open accordion via keyboard navigation when group is readonly', async ({ page, browserName }) => {
-      // TODO: may need to skip browsers
       await page.setContent(
         `
       <ion-accordion-group animated="false" readonly>
@@ -109,7 +107,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
       page,
       browserName,
     }) => {
-      // TODO: may need to skip browsers
       await page.setContent(
         `
       <ion-accordion-group animated="false">

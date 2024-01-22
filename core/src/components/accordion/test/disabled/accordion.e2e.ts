@@ -3,7 +3,6 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('accordion: disabled'), () => {
-    // NOTE: this test moved here from another file
     test('should properly set disabled on child accordions', async ({ page }) => {
       await page.setContent(
         `
@@ -78,7 +77,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
     });
 
     test('should not open accordion via keyboard navigation when group is disabled', async ({ page, browserName }) => {
-      // TODO: may need to skip browsers
       await page.setContent(
         `
       <ion-accordion-group animated="false" disabled>
@@ -109,7 +107,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
       page,
       browserName,
     }) => {
-      // TODO: may need to skip browsers
       await page.setContent(
         `
       <ion-accordion-group animated="false">
