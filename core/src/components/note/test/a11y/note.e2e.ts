@@ -72,45 +72,33 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
         <ion-list>
           <ion-item>
-            <ion-label>
-              <ion-note>Really really long note</ion-note>
-              Label
-            </ion-label>
+            <ion-note slot="start">Note</ion-note>
+            <ion-label>Label</ion-label>
           </ion-item>
 
           <ion-item>
-            <ion-label>
-              Label
-              <ion-note>Really really long note</ion-note>
-            </ion-label>
+            <ion-label>Label</ion-label>
+            <ion-note slot="end">Really really long note</ion-note>
           </ion-item>
 
           <ion-item>
-            <ion-label>
-              Really really long label
-              <ion-note>Note</ion-note>
-            </ion-label>
+            <ion-note slot="start">Note</ion-note>
+            <ion-label>Really really long label</ion-label>
           </ion-item>
 
           <ion-item>
-            <ion-label>
-              Really really long label
-              <ion-note>Really really long note</ion-note>
-            </ion-label>
+            <ion-label>Really really long label</ion-label>
+            <ion-note slot="end">Note</ion-note>
           </ion-item>
 
           <ion-item>
-            <ion-label>
-              <ion-note>Really really long note</ion-note>
-              Really really long label
-            </ion-label>
+            <ion-note slot="start">Really really long note</ion-note>
+            <ion-label>Really really long label</ion-label>
           </ion-item>
 
           <ion-item>
-            <ion-label>
-              Really really long label
-              <ion-note>Really really long note</ion-note>
-            </ion-label>
+            <ion-label>Really really long label</ion-label>
+            <ion-note slot="end">Really really long note</ion-note>
           </ion-item>
         </ion-list>
       `,
