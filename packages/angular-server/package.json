@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular-server",
-  "version": "7.6.5",
+  "version": "7.6.6-nightly.20240122",
   "description": "Angular SSR Module for Ionic",
   "keywords": [
     "ionic",
@@ -62,6 +62,6 @@
   },
   "prettier": "@ionic/prettier-config",
   "dependencies": {
-    "@ionic/core": "^7.6.5"
+    "@ionic/core": "^7.6.6-nightly.20240122"
   }
 }
