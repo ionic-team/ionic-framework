@@ -1,0 +1,85 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base", ":semanticCommitTypeAll(chore)"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["@stencil/core", "@stencil/angular-output-target", "@stencil/react-output-target", "@stencil/sass", "@stencil/vue-output-target"],
+      "groupName": "stencil",
+      "matchFileNames": [
+        "core/package.json"
+      ]
+    },
+    {
+      "matchPackagePatterns": ["@capacitor/core", "@capacitor/keyboard", "@capacitor/haptics", "@capacitor/status-bar"],
+      "groupName": "capacitor",
+      "matchFileNames": [
+        "core/package.json"
+      ]
+    },
+    {
+      "matchPackagePatterns": ["@playwright/test", "@axe-core/playwright"],
+      "groupName": "playwright",
+      "matchFileNames": [
+        "core/package.json"
+      ]
+    },
+    {
+      "matchPackagePatterns": ["ionicons"],
+      "groupName": "ionicons",
+      "matchFileNames": [
+        "core/package.json"
+      ]
+    },
+    {
+      "matchPackagePatterns": ["@angular/"],
+      "groupName": "angular",
+      "matchFileNames": [
+        "packages/angular/test/apps/**/package.json"
+      ]
+    },
+    {
+      "matchPackagePatterns": ["vue", "vue-router"],
+      "groupName": "vue",
+      "matchFileNames": [
+        "packages/vue/test/apps/**/package.json"
+      ]
+    },
+    {
+      "matchPackageNames": ["react-router", "react-router-dom"],
+      "groupName": "react-router",
+      "allowedVersions": "^5.0.0",
+      "matchFileNames": [
+        "packages/react/test/apps/**/package.json",
+        "packages/react-router/test/apps/**/package.json"
+      ]
+    },
+    {
+      "matchPackageNames": ["react", "react-dom"],
+      "groupName": "react",
+      "matchFileNames": [
+        "packages/react/test/apps/**/package.json",
+        "packages/react-router/test/apps/**/package.json"
+      ]
+    },
+    {
+      "matchPackageNames": ["vite", "@vitejs/plugin-react"],
+      "groupName": "vite-react",
+      "matchFileNames": [
+        "packages/react/test/apps/**/package.json",
+        "packages/react-router/test/apps/**/package.json"
+      ]
+    },
+    {
+      "matchPackageNames": ["vite", "@vitejs/plugin-vue"],
+      "groupName": "vite-vue",
+      "matchFileNames": [
+        "packages/vue/test/apps/**/package.json"
+      ]
+    }
+  ],
+  "dependencyDashboard": false,
+  "minimumReleaseAge": "3 days",
+  "rebaseWhen": "never",
+  "schedule": ["every weekday before 11am"],
+  "semanticCommits": "enabled"
+}
