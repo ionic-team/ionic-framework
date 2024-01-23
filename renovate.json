@@ -81,5 +81,12 @@
   "minimumReleaseAge": "3 days",
   "rebaseWhen": "never",
   "schedule": ["every weekday before 11am"],
-  "semanticCommits": "enabled"
+  "semanticCommits": "enabled",
+  "includePaths": [
+    "core",
+    "packages/angular/test/apps",
+    "packages/vue/test/apps",
+    "packages/react/test/apps",
+    "packages/react-router/test/apps"
+  ]
 }
