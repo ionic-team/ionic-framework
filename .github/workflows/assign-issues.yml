@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      steps:
-        - name: 'Auto-assign issue'
-          uses: pozil/auto-assign-issue@edee9537367a8fbc625d27f9e10aa8bad47b8723 # v1.13.0
-          with:
-            repo-token: ${{ secrets.GITHUB_TOKEN }}
-            teams: framework
-            numOfAssignee: 1
-            allowSelfAssign: false
+    steps:
+      - name: 'Auto-assign issue'
+        uses: pozil/auto-assign-issue@edee9537367a8fbc625d27f9e10aa8bad47b8723 # v1.13.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          teams: framework
+          numOfAssignee: 1
+          allowSelfAssign: false
