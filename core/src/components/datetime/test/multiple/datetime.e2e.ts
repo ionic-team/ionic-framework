@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
 
 const SINGLE_DATE = '2022-06-01';
 const MULTIPLE_DATES = ['2022-06-01', '2022-06-02', '2022-06-03'];
-const MULTIPLE_DATES_SEPARATE_MONTHS = ['2022-04-01', '2022-05-01', '2022-06-01'];
+const MULTIPLE_DATES_SEPARATE_MONTHS = ['2022-03-01', '2022-04-01', '2022-05-01'];
 
 interface DatetimeMultipleConfig {
   multiple?: boolean;
@@ -158,10 +158,32 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       });
     });
 
-    test('multiple default values across months should display at least one value', async () => {
+    test('should scroll to new month when value is updated with multiple dates in the same month', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28602',
+      });
       const datetime = await datetimeFixture.goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
+      await datetime.evaluate((el: HTMLIonDatetimeElement, dates: string[]) => {
+        el.value = dates;
+      }, MULTIPLE_DATES);
+
+      await page.waitForChanges();
+
       const monthYear = datetime.locator('.calendar-month-year');
-      await expect(monthYear).toHaveText(/April 2022/);
+      await expect(monthYear).toHaveText(/June 2022/);
+    });
+
+    test('should not scroll to new month when value is updated with dates in different months', async ({ page }) => {
+      const datetime = await datetimeFixture.goto(config, MULTIPLE_DATES);
+      await datetime.evaluate((el: HTMLIonDatetimeElement, dates: string[]) => {
+        el.value = dates;
+      }, MULTIPLE_DATES_SEPARATE_MONTHS);
+
+      await page.waitForChanges();
+
+      const monthYear = datetime.locator('.calendar-month-year');
+      await expect(monthYear).toHaveText(/June 2022/);
     });
 
     test('with buttons, should only update value when confirm is called', async ({ page }) => {
