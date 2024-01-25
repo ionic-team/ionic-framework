@@ -164,7 +164,13 @@ export const attachView = (
       );
     }
 
-    Object.assign(instance, params);
+    if (componentRef.setInput !== undefined) {
+      for (const key in params) {
+        componentRef.setInput(key, params[key]);
+      }
+    } else {
+      Object.assign(instance, params);
+    }
   }
   if (cssClasses) {
     for (const cssClass of cssClasses) {
