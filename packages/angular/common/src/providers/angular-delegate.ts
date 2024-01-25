@@ -164,7 +164,16 @@ export const attachView = (
       );
     }
 
+    /**
+     * Angular 14.1 added support for setInput
+     * so we need to fall back to Object.assign
+     * for Angular 14.0.
+     */
     if (componentRef.setInput !== undefined) {
+      /**
+       * Any key/value pairs set in componentProps
+       * must be set as inputs on the component instance.
+       */
       for (const key in params) {
         componentRef.setInput(key, params[key]);
       }
