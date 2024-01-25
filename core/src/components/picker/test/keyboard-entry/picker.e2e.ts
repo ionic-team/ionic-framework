@@ -170,31 +170,37 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
       await page.setContent(
         `
-        <ion-picker-internal>
-          <ion-picker-column-internal></ion-picker-column-internal>
-        </ion-picker-internal>
+        <ion-picker>
+          <ion-picker-column></ion-picker-column>
+        </ion-picker>
 
         <script>
-          const column = document.querySelector('ion-picker-column-internal');
-          column.items = [
-            { text: '00', value: 12 },
+          const column = document.querySelector('ion-picker-column');
+          column.numericInput = true;
+          const items = [
             { text: '01', value: 1 },
             { text: '02', value: 2 },
             { text: '03', value: 3 },
             { text: '04', value: 4 },
             { text: '05', value: 5 }
           ];
-          column.value = 5;
-          column.numericInput = true;
+
+          items.forEach((item) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = item.value;
+            option.textContent = item.text;
+
+            column.appendChild(option);
+          });
         </script>
       `,
         config
       );
 
-      const column = page.locator('ion-picker-column-internal');
+      const column = page.locator('ion-picker-column');
       await column.click();
 
-      const input = page.locator('ion-picker-internal input');
+      const input = page.locator('ion-picker input');
       await expect(input).toBeFocused();
 
       // pressing Enter should blur the input and therefore close the keyboard

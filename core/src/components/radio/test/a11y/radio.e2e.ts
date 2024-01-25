@@ -54,7 +54,7 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
-    test(title('radio: keyboard navigation'), () => {
+    test.describe(title('radio: keyboard navigation'), () => {
       test.beforeEach(async ({ page, browserName }) => {
         await page.setContent(
           `
