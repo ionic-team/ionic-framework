@@ -264,6 +264,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    *
    * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
    * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() canDismiss: boolean | ((data?: any, role?: string) => Promise<boolean>) = true;
 
@@ -368,6 +371,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
       raf(() => this.present());
     }
     this.breakpointsChanged(this.breakpoints);
+
+    /**
+     * When binding values in frameworks such as Angular
+     * it is possible for the value to be set after the Web Component
+     * initializes but before the value watcher is set up in Stencil.
+     * As a result, the watcher callback may not be fired.
+     * We work around this by manually calling the watcher
+     * callback when the component has loaded and the watcher
+     * is configured.
+     */
+    this.triggerChanged();
   }
 
   /**

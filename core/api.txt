@@ -315,6 +315,7 @@ ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
 ion-checkbox,part,container
+ion-checkbox,part,label
 ion-checkbox,part,mark
 
 ion-chip,shadow
@@ -1029,10 +1030,12 @@ ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 ion-radio,css-prop,--inner-border-radius
 ion-radio,part,container
+ion-radio,part,label
 ion-radio,part,mark
 
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
+ion-radio-group,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-radio-group,prop,name,string,this.inputId,false,false
 ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
@@ -1076,6 +1079,7 @@ ion-range,css-prop,--pin-color
 ion-range,part,bar
 ion-range,part,bar-active
 ion-range,part,knob
+ion-range,part,label
 ion-range,part,pin
 ion-range,part,tick
 ion-range,part,tick-active
@@ -1083,6 +1087,7 @@ ion-range,part,tick-active
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
 ion-refresher,prop,disabled,boolean,false,false,false
+ion-refresher,prop,mode,"ios" | "md",undefined,false,false
 ion-refresher,prop,pullFactor,number,1,false,false
 ion-refresher,prop,pullMax,number,this.pullMin + 60,false,false
 ion-refresher,prop,pullMin,number,60,false,false
@@ -1446,6 +1451,7 @@ ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,fals
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,positionAnchor,HTMLElement | string | undefined,undefined,false,false
+ion-toast,prop,swipeGesture,"vertical" | undefined,undefined,false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,prop,trigger,string | undefined,undefined,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
@@ -1512,6 +1518,7 @@ ion-toggle,css-prop,--handle-width
 ion-toggle,css-prop,--track-background
 ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
+ion-toggle,part,label
 ion-toggle,part,track
 
 ion-toolbar,shadow

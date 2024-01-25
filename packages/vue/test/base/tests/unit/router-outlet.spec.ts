@@ -3,21 +3,13 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import {
   IonicVue,
-  IonApp,
   IonRouterOutlet,
   IonPage,
   useIonRouter,
-  createAnimation
 } from '@ionic/vue';
-import { onBeforeRouteLeave } from 'vue-router';
 import { mockAnimation, waitForRouter } from './utils';
 
 enableAutoUnmount(afterEach);
-
-const App = {
-  components: { IonApp, IonRouterOutlet },
-  template: '<ion-app><ion-router-outlet /></ion-app>',
-}
 
 const BasePage = {
   template: '<ion-page :data-pageid="name"></ion-page>',
@@ -60,7 +52,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -122,7 +114,7 @@ describe('Routing', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }

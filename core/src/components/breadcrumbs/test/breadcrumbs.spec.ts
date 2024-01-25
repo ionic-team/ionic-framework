@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Breadcrumb } from '../../breadcrumb/breadcrumb.tsx';
-import { Breadcrumbs } from '../breadcrumbs.tsx';
+import { Breadcrumb } from '../../breadcrumb/breadcrumb';
+import { Breadcrumbs } from '../breadcrumbs';
 
 it('should correctly provide the collapsed breadcrumbs in the event payload', async () => {
   const page = await newSpecPage({
@@ -18,8 +18,8 @@ it('should correctly provide the collapsed breadcrumbs in the event payload', as
   });
 
   const onCollapsedClick = jest.fn((ev) => ev);
-  const breadcrumbs = page.body.querySelector('ion-breadcrumbs');
-  const breadcrumb = page.body.querySelectorAll('ion-breadcrumb');
+  const breadcrumbs = page.body.querySelector('ion-breadcrumbs')!;
+  const breadcrumb = page.body.querySelectorAll('ion-breadcrumb')!;
 
   breadcrumbs.addEventListener('ionCollapsedClick', onCollapsedClick);
 
@@ -46,8 +46,8 @@ it('should exclude the separator from narrators', async () => {
     `,
   });
 
-  const firstBreadcrumb = page.body.querySelector('ion-breadcrumb:first-of-type');
-  const separator = firstBreadcrumb.shadowRoot.querySelector('[part="separator"]');
+  const firstBreadcrumb = page.body.querySelector('ion-breadcrumb:first-of-type')!;
+  const separator = firstBreadcrumb.shadowRoot!.querySelector('[part="separator"]')!;
 
   expect(separator.getAttribute('aria-hidden')).toBe('true');
 });
@@ -62,7 +62,7 @@ it('should have color attribute', async () => {
     `,
   });
 
-  const breadcrumbs = page.body.querySelector('ion-breadcrumbs');
+  const breadcrumbs = page.body.querySelector('ion-breadcrumbs')!;
 
   expect(breadcrumbs.hasAttribute('color')).toBe(true);
 });

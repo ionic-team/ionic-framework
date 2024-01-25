@@ -10,6 +10,20 @@ $alert-md-font-size:                          dynamic-font(14px) !default;
 /// @prop - Max width of the alert
 $alert-md-max-width:                          280px !default;
 
+/// @prop - Max width of the alert on a tablet
+/**
+ * Large display requirements for MD Alert:
+ * 1. Maintain a minimum of 48px distance from the leading and
+ * trailing edges of the screen. (48px * 2 = 96px)
+ * 2. The width can increase up to 560px.
+ * 3. The height can increase up to 560px.
+ * Source: https://m2.material.io/components/dialogs#behavior
+ */
+$alert-md-max-width-tablet:                          min(calc(100vw - 96px), 560px) !default;
+
+/// @prop - Max width of the alert on a tablet
+$alert-md-max-height-tablet:                          min(calc(100vh - 96px), 560px) !default;
+
 /// @prop - Border radius of the alert
 $alert-md-border-radius:                      4px !default;
 

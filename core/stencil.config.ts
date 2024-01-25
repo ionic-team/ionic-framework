@@ -197,20 +197,17 @@ export const config: Config = {
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'v-ion-change',
-          externalEvent: 'ionChange'
+          event: 'ion-change'
         },
         {
-          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
+          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
-          event: 'v-ion-change',
-          externalEvent: 'ionChange'
+          event: 'ion-change',
         },
         {
-          elements: ['ion-input', 'ion-searchbar', 'ion-textarea'],
+          elements: ['ion-input', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
-          event: 'v-ion-input',
-          externalEvent: 'ionInput'
+          event: 'ion-input',
         }
       ],
     }),
@@ -255,6 +252,7 @@ export const config: Config = {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
       "@utils/logging": ["<rootDir>/src/utils/logging"],
     },
+    setupFilesAfterEnv: ['./setupJest.js']
   },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',

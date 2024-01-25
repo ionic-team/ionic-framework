@@ -341,6 +341,9 @@ export class Datetime implements ComponentInterface {
    * dates are selected. Only used if there are 0 or more than 1
    * selected (i.e. unused for exactly 1). By default, the header
    * text is set to "numberOfDates days".
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
 
@@ -492,7 +495,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
-    const { isCalendarPicker, activeParts } = this;
+    const { isCalendarPicker, activeParts, preferWheel, workingParts } = this;
 
     /**
      * We only update the value if the presentation is not a calendar picker.
@@ -500,7 +503,16 @@ export class Datetime implements ComponentInterface {
     if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
-        this.setValue(undefined);
+        if (preferWheel) {
+          /**
+           * If the datetime is using a wheel picker, but the
+           * active parts are empty, then the user has confirmed the
+           * initial value (working parts) presented to them.
+           */
+          this.setValue(convertDataToISO(workingParts));
+        } else {
+          this.setValue(undefined);
+        }
       } else {
         this.setValue(convertDataToISO(activeParts));
       }
@@ -1132,7 +1144,7 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel } = this;
+    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel, forceRenderDate } = this;
 
     /**
      * TODO(FW-2165)
@@ -1150,7 +1162,20 @@ export class Datetime implements ComponentInterface {
     const hasCalendarGrid = !preferWheel && ['date-time', 'time-date', 'date'].includes(presentation);
     if (minParts !== undefined && hasCalendarGrid && calendarBodyRef) {
       const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
-      if (workingMonth) {
+      /**
+       * We need to make sure the datetime is not in the process
+       * of scrolling to a new datetime value if the value
+       * is updated programmatically.
+       * Otherwise, the datetime will appear to not scroll at all because
+       * we are resetting the scroll position to the center of the view.
+       * Prior to the datetime's value being updated programmatically,
+       * the calendarBodyRef is scrolled such that the middle month is centered
+       * in the view. The below code updates the scroll position so the middle
+       * month is also centered in the view. Since the scroll position did not change,
+       * the scroll callback in this file does not fire,
+       * and the resolveForceDateScrolling promise never resolves.
+       */
+      if (workingMonth && forceRenderDate === undefined) {
         calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
       }
     }
@@ -1259,21 +1284,42 @@ export class Datetime implements ComponentInterface {
       (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
-    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
-      this.animateToDate(targetValue);
-    } else {
-      /**
-       * We only need to do this if we didn't just animate to a new month,
-       * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
-       */
-      this.setWorkingParts({
-        month,
-        day,
-        year,
-        hour,
-        minute,
-        ampm,
-      });
+
+    let areAllSelectedDatesInSameMonth = true;
+    if (Array.isArray(valueToProcess)) {
+      const firstMonth = valueToProcess[0].month;
+      for (const date of valueToProcess) {
+        if (date.month !== firstMonth) {
+          areAllSelectedDatesInSameMonth = false;
+          break;
+        }
+      }
+    }
+
+    /**
+     * If there is more than one date selected
+     * and the dates aren't all in the same month,
+     * then we should neither animate to the date
+     * nor update the working parts because we do
+     * not know which date the user wants to view.
+     */
+    if (areAllSelectedDatesInSameMonth) {
+      if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+        this.animateToDate(targetValue);
+      } else {
+        /**
+         * We only need to do this if we didn't just animate to a new month,
+         * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
+         */
+        this.setWorkingParts({
+          month,
+          day,
+          year,
+          hour,
+          minute,
+          ampm,
+        });
+      }
     }
   };
 
@@ -1343,10 +1389,20 @@ export class Datetime implements ComponentInterface {
     const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
 
     const todayParts = (this.todayParts = parseDate(getToday())!);
-    this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
 
     this.processMinParts();
     this.processMaxParts();
+
+    this.defaultParts = getClosestValidDate({
+      refParts: todayParts,
+      monthValues,
+      dayValues,
+      yearValues,
+      hourValues,
+      minuteValues,
+      minParts: this.minParts,
+      maxParts: this.maxParts,
+    });
 
     this.processValue(this.value);
 
@@ -1525,7 +1581,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { defaultParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { defaultParts, disabled, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1604,6 +1660,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="date-column"
         color={this.color}
+        disabled={disabled}
         items={items}
         value={todayString}
         onIonChange={(ev: CustomEvent) => {
@@ -1715,7 +1772,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1723,6 +1780,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="day-column"
         color={this.color}
+        disabled={disabled}
         items={days}
         value={(workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
@@ -1759,7 +1817,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1767,6 +1825,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="month-column"
         color={this.color}
+        disabled={disabled}
         items={months}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
@@ -1802,7 +1861,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1810,6 +1869,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="year-column"
         color={this.color}
+        disabled={disabled}
         items={years}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
@@ -1875,7 +1935,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (hoursData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -1883,6 +1943,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
+        disabled={disabled}
         value={activePart.hour}
         items={hoursData}
         numericInput
@@ -1903,7 +1964,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (minutesData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -1911,6 +1972,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
+        disabled={disabled}
         value={activePart.minute}
         items={minutesData}
         numericInput
@@ -1931,7 +1993,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (dayPeriodData.length === 0) {
       return [];
     }
@@ -1943,6 +2005,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
+        disabled={disabled}
         value={activePart.ampm}
         items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {

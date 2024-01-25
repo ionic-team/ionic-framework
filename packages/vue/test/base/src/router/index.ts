@@ -83,6 +83,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Select.vue')
   },
   {
+    path: '/components/range',
+    component: () => import('@/views/Range.vue')
+  },
+  {
     path: '/nested',
     component: () => import('@/views/RouterOutlet.vue'),
     children: [

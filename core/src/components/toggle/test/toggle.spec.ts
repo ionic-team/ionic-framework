@@ -40,6 +40,19 @@ describe('toggle', () => {
       expect(t.enableOnOffLabels).toBe(true);
     });
   });
+
+  describe('shadow parts', () => {
+    it('should have shadow parts', async () => {
+      const page = await newSpecPage({
+        components: [Toggle],
+        html: `<ion-toggle>Label</ion-toggle>`,
+      });
+      const toggle = page.body.querySelector('ion-toggle')!;
+      expect(toggle).toHaveShadowPart('label');
+      expect(toggle).toHaveShadowPart('track');
+      expect(toggle).toHaveShadowPart('handle');
+    });
+  });
 });
 
 describe('ion-toggle: disabled', () => {
@@ -51,7 +64,7 @@ describe('ion-toggle: disabled', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle');
+    const toggle = page.body.querySelector('ion-toggle')!;
 
     expect(toggle.checked).toBe(false);
 

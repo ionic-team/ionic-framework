@@ -10,9 +10,9 @@ describe('ion-select', () => {
       template: () => <ion-select value="my value" name="my name" disabled={true}></ion-select>,
     });
 
-    const select = page.body.querySelector('ion-select');
+    const select = page.body.querySelector('ion-select')!;
 
-    const hiddenInput = select.querySelector('input[type="hidden"]');
+    const hiddenInput = select.querySelector<HTMLInputElement>('input[type="hidden"]')!;
     expect(hiddenInput).not.toBe(null);
 
     expect(hiddenInput.value).toBe('my value');
@@ -28,10 +28,10 @@ describe('ion-select', () => {
       `,
     });
 
-    const select = page.body.querySelector('ion-select');
+    const select = page.body.querySelector('ion-select')!;
 
-    const propEl = select.shadowRoot.querySelector('.label-text');
-    const slotEl = select.shadowRoot.querySelector('slot[name="label"]');
+    const propEl = select.shadowRoot!.querySelector('.label-text');
+    const slotEl = select.shadowRoot!.querySelector('slot[name="label"]');
 
     expect(propEl).not.toBe(null);
     expect(slotEl).toBe(null);
@@ -44,10 +44,10 @@ describe('ion-select', () => {
       `,
     });
 
-    const select = page.body.querySelector('ion-select');
+    const select = page.body.querySelector('ion-select')!;
 
-    const propEl = select.shadowRoot.querySelector('.label-text');
-    const slotEl = select.shadowRoot.querySelector('slot[name="label"]');
+    const propEl = select.shadowRoot!.querySelector('.label-text');
+    const slotEl = select.shadowRoot!.querySelector('slot[name="label"]');
 
     expect(propEl).toBe(null);
     expect(slotEl).not.toBe(null);
@@ -60,12 +60,40 @@ describe('ion-select', () => {
       `,
     });
 
-    const select = page.body.querySelector('ion-select');
+    const select = page.body.querySelector('ion-select')!;
 
-    const propEl = select.shadowRoot.querySelector('.label-text');
-    const slotEl = select.shadowRoot.querySelector('slot[name="label"]');
+    const propEl = select.shadowRoot!.querySelector('.label-text');
+    const slotEl = select.shadowRoot!.querySelector('slot[name="label"]');
 
     expect(propEl).not.toBe(null);
     expect(slotEl).toBe(null);
+  });
+});
+
+describe('select: slot interactivity', () => {
+  test('should not prevent click handlers from firing', async () => {
+    // https://github.com/ionic-team/ionic-framework/issues/28818
+    const divSpy = jest.fn();
+    const buttonSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [Select],
+      template: () => (
+        <div onClick={divSpy}>
+          <ion-select label="Label Prop Text">
+            <button slot="end" onClick={buttonSpy}>
+              Button
+            </button>
+          </ion-select>
+        </div>
+      ),
+    });
+
+    const button = page.body.querySelector('button')!;
+
+    await button.click();
+
+    expect(buttonSpy).toHaveBeenCalled();
+    expect(divSpy).toHaveBeenCalled();
   });
 });

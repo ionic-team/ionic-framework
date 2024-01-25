@@ -1,19 +1,18 @@
-import { h } from '@stencil/core';
+import { h, setMode } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { setMode } from '@stencil/core';
 
-import { Modal } from '../../modal';
 import { Content } from '../../../content/content';
+import { Modal } from '../../modal';
 
 describe('modal: canDismiss', () => {
   describe('modal: regular modal', () => {
     it('should dismiss when canDismiss is true', async () => {
       const page = await newSpecPage({
         components: [Modal],
-        template: () => <ion-modal animated={false} canDismiss={true}></ion-modal>,
+        template: () => <ion-modal overlayIndex={1} animated={false} canDismiss={true}></ion-modal>,
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -26,10 +25,10 @@ describe('modal: canDismiss', () => {
     it('should not dismiss when canDismiss is false', async () => {
       const page = await newSpecPage({
         components: [Modal],
-        template: () => <ion-modal animated={false} canDismiss={false}></ion-modal>,
+        template: () => <ion-modal overlayIndex={1} animated={false} canDismiss={false}></ion-modal>,
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -44,6 +43,7 @@ describe('modal: canDismiss', () => {
         components: [Modal],
         template: () => (
           <ion-modal
+            overlayIndex={1}
             animated={false}
             canDismiss={() => {
               return new Promise((resolve) => {
@@ -54,7 +54,7 @@ describe('modal: canDismiss', () => {
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -69,6 +69,7 @@ describe('modal: canDismiss', () => {
         components: [Modal],
         template: () => (
           <ion-modal
+            overlayIndex={1}
             animated={false}
             canDismiss={() => {
               return new Promise((resolve) => {
@@ -79,7 +80,7 @@ describe('modal: canDismiss', () => {
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -94,19 +95,24 @@ describe('modal: canDismiss', () => {
       /**
        * Card modal is only available on iOS
        */
-      setMode((elm) => 'ios');
+      setMode(() => 'ios');
     });
     it('should dismiss when canDismiss is true', async () => {
       const page = await newSpecPage({
         components: [Content, Modal],
         template: () => (
-          <ion-modal presentingElement={document.createElement('div')} animated={false} canDismiss={true}>
+          <ion-modal
+            overlayIndex={1}
+            presentingElement={document.createElement('div')}
+            animated={false}
+            canDismiss={true}
+          >
             <ion-content>Test Content</ion-content>
           </ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -120,13 +126,18 @@ describe('modal: canDismiss', () => {
       const page = await newSpecPage({
         components: [Content, Modal],
         template: () => (
-          <ion-modal presentingElement={document.createElement('div')} animated={false} canDismiss={false}>
+          <ion-modal
+            overlayIndex={1}
+            presentingElement={document.createElement('div')}
+            animated={false}
+            canDismiss={false}
+          >
             <ion-content>Test Content</ion-content>
           </ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -141,6 +152,7 @@ describe('modal: canDismiss', () => {
         components: [Content, Modal],
         template: () => (
           <ion-modal
+            overlayIndex={1}
             presentingElement={document.createElement('div')}
             animated={false}
             canDismiss={() => {
@@ -154,7 +166,7 @@ describe('modal: canDismiss', () => {
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -169,6 +181,7 @@ describe('modal: canDismiss', () => {
         components: [Content, Modal],
         template: () => (
           <ion-modal
+            overlayIndex={1}
             presentingElement={document.createElement('div')}
             animated={false}
             canDismiss={() => {
@@ -182,7 +195,7 @@ describe('modal: canDismiss', () => {
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -197,11 +210,17 @@ describe('modal: canDismiss', () => {
       const page = await newSpecPage({
         components: [Modal],
         template: () => (
-          <ion-modal breakpoints={[0, 1]} initialBreakpoint={1} animated={false} canDismiss={true}></ion-modal>
+          <ion-modal
+            overlayIndex={1}
+            breakpoints={[0, 1]}
+            initialBreakpoint={1}
+            animated={false}
+            canDismiss={true}
+          ></ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -215,11 +234,17 @@ describe('modal: canDismiss', () => {
       const page = await newSpecPage({
         components: [Modal],
         template: () => (
-          <ion-modal breakpoints={[0, 1]} initialBreakpoint={1} animated={false} canDismiss={false}></ion-modal>
+          <ion-modal
+            overlayIndex={1}
+            breakpoints={[0, 1]}
+            initialBreakpoint={1}
+            animated={false}
+            canDismiss={false}
+          ></ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -234,6 +259,7 @@ describe('modal: canDismiss', () => {
         components: [Modal],
         template: () => (
           <ion-modal
+            overlayIndex={1}
             breakpoints={[0, 1]}
             initialBreakpoint={1}
             animated={false}
@@ -246,7 +272,7 @@ describe('modal: canDismiss', () => {
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -261,6 +287,7 @@ describe('modal: canDismiss', () => {
         components: [Modal],
         template: () => (
           <ion-modal
+            overlayIndex={1}
             breakpoints={[0, 1]}
             initialBreakpoint={1}
             animated={false}
@@ -273,7 +300,7 @@ describe('modal: canDismiss', () => {
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
@@ -288,15 +315,15 @@ describe('modal: canDismiss', () => {
       const canDismiss = jest.fn();
       const page = await newSpecPage({
         components: [Modal],
-        template: () => <ion-modal animated={false} canDismiss={canDismiss}></ion-modal>,
+        template: () => <ion-modal overlayIndex={1} animated={false} canDismiss={canDismiss}></ion-modal>,
       });
 
-      const modal = page.body.querySelector('ion-modal');
+      const modal = page.body.querySelector('ion-modal')!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss('my data', 'my role');
+      await modal.dismiss('my data', 'my role');
 
       expect(canDismiss).toHaveBeenCalledWith('my data', 'my role');
     });

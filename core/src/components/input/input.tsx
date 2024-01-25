@@ -26,6 +26,8 @@ import { getCounterText } from './input.utils';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
+ * @slot start - Content to display at the leading edge of the input. (EXPERIMENTAL)
+ * @slot end - Content to display at the trailing edge of the input. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-input',
@@ -95,7 +97,9 @@ export class Input implements ComponentInterface {
   @Prop() autocorrect: 'on' | 'off' = 'off';
 
   /**
-   * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+   * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.
+   *
+   * This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Prop() autofocus = false;
 
@@ -117,6 +121,9 @@ export class Input implements ComponentInterface {
   /**
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
 
@@ -369,7 +376,7 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -424,6 +431,8 @@ export class Input implements ComponentInterface {
    *
    * Developers who wish to focus an input when an overlay is presented
    * should call `setFocus` after `didPresent` has resolved.
+   *
+   * See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Method()
   async setFocus() {
@@ -492,6 +501,8 @@ export class Input implements ComponentInterface {
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus,
         'interactive-disabled': this.disabled,
+        // TODO(FW-2764): remove this
+        legacy: !!this.legacy,
       });
     }
   }
@@ -541,15 +552,37 @@ export class Input implements ComponentInterface {
     if (!this.shouldClearOnEdit()) {
       return;
     }
+
+    /**
+     * The following keys do not modify the
+     * contents of the input. As a result, pressing
+     * them should not edit the input.
+     *
+     * We can't check to see if the value of the input
+     * was changed because we call checkClearOnEdit
+     * in a keydown listener, and the key has not yet
+     * been added to the input.
+     */
+    const IGNORED_KEYS = ['Enter', 'Tab', 'Shift', 'Meta', 'Alt', 'Control'];
+    const pressedIgnoredKey = IGNORED_KEYS.includes(ev.key);
+
     /**
      * Clear the input if the control has not been previously cleared during focus.
      * Do not clear if the user hitting enter to submit a form.
      */
-    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter' && ev.key !== 'Tab') {
+    if (!this.didInputClearOnEdit && this.hasValue() && !pressedIgnoredKey) {
       this.value = '';
       this.emitInputChange(ev);
     }
-    this.didInputClearOnEdit = true;
+
+    /**
+     * Pressing an IGNORED_KEYS first and
+     * then an allowed key will cause the input to not
+     * be cleared.
+     */
+    if (!pressedIgnoredKey) {
+      this.didInputClearOnEdit = true;
+    }
   }
 
   private onCompositionStart = () => {
@@ -695,18 +728,42 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
+    /**
+     * If the label is stacked, it should always sit above the input.
+     * For floating labels, the label should move above the input if
+     * the input has a value, is focused, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the input is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     *
+     * TODO(FW-5592): Remove hasStartEndSlots condition
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+
     return (
       <Host
         class={createColorClasses(this.color, {
           [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
+          'has-value': hasValue,
+          'has-focus': hasFocus,
+          'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
@@ -715,9 +772,16 @@ export class Input implements ComponentInterface {
           'input-disabled': disabled,
         })}
       >
-        <label class="input-wrapper">
+        {/**
+         * htmlFor is needed so that clicking the label always focuses
+         * the input. Otherwise, if the start slot has something
+         * interactable, clicking the label would focus that instead
+         * since it comes before the input in the DOM.
+         */}
+        <label class="input-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="native-wrapper">
+            <slot name="start"></slot>
             <input
               class="native-input"
               ref={(input) => (this.nativeInput = input)}
@@ -772,6 +836,7 @@ export class Input implements ComponentInterface {
                 <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
+            <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
         </label>

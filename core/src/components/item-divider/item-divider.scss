@@ -31,12 +31,19 @@
 
   @include font-smoothing();
   @include margin(0);
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
+  @include padding(var(--padding-top), null, var(--padding-bottom), null);
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: var(--padding-end);
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
+    padding-left: var(--padding-end);
+  }
+  /* stylelint-enable */
 
   display: flex;
 
@@ -67,12 +74,7 @@
 
 .item-divider-inner {
   @include margin(0);
-  @include padding(
-    var(--inner-padding-top),
-    null,
-    var(--inner-padding-bottom),
-    null
-  );
+  @include padding(var(--inner-padding-top), null, var(--inner-padding-bottom), null);
   @include safe-area-padding(null, var(--inner-padding-end));
 
   display: flex;

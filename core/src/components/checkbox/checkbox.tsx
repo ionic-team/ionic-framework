@@ -18,6 +18,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  * @slot - The label text to associate with the checkbox. Use the "labelPlacement" property to control where the label is placed relative to the checkbox.
  *
  * @part container - The container for the checkbox mark.
+ * @part label - The label text describing the checkbox.
  * @part mark - The checkmark used to indicate the checked state.
  */
 @Component({
@@ -164,6 +165,8 @@ export class Checkbox implements ComponentInterface {
   private emitStyle() {
     const style: StyleEventDetail = {
       'interactive-disabled': this.disabled,
+      // TODO(FW-3100): remove this
+      legacy: !!this.legacy,
     };
 
     // TODO(FW-3100): remove this
@@ -282,6 +285,7 @@ export class Checkbox implements ComponentInterface {
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': el.textContent === '',
             }}
+            part="label"
           >
             <slot></slot>
           </div>

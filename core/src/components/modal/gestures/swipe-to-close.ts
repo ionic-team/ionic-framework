@@ -2,6 +2,7 @@ import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { isIonContent, findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { createGesture } from '@utils/gesture';
 import { clamp, getElementRoot } from '@utils/helpers';
+import { OVERLAY_GESTURE_PRIORITY } from '@utils/overlays';
 
 import type { Animation } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
@@ -292,7 +293,7 @@ export const createSwipeToCloseGesture = (
   const gesture = createGesture({
     el,
     gestureName: 'modalSwipeToClose',
-    gesturePriority: 39,
+    gesturePriority: OVERLAY_GESTURE_PRIORITY,
     direction: 'y',
     threshold: 10,
     canStart,

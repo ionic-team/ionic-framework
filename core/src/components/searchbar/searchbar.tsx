@@ -257,6 +257,8 @@ export class Searchbar implements ComponentInterface {
    *
    * Developers who wish to focus an input when an overlay is presented
    * should call `setFocus` after `didPresent` has resolved.
+   *
+   * See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Method()
   async setFocus() {

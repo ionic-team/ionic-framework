@@ -27,7 +27,7 @@ import { PickerButton, PickerColumn } from "./components/picker/picker-interface
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
-import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
@@ -39,7 +39,7 @@ import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions } from "./components/toast/toast-interface";
+import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
 export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
@@ -63,7 +63,7 @@ export { PickerButton, PickerColumn } from "./components/picker/picker-interface
 export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
-export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
@@ -75,7 +75,7 @@ export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions } from "./components/toast/toast-interface";
+export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
@@ -943,7 +943,7 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
@@ -1162,7 +1162,7 @@ export namespace Components {
          */
         "autocorrect": 'on' | 'off';
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus": boolean;
         /**
@@ -1182,7 +1182,7 @@ export namespace Components {
          */
         "counter": boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -1274,7 +1274,7 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -1701,7 +1701,7 @@ export namespace Components {
          */
         "breakpoints"?: number[];
         /**
-          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "canDismiss": boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
@@ -2044,6 +2044,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * If `true`, the user cannot interact with the picker.
+         */
+        "disabled": boolean;
+        /**
           * A list of options to be displayed in the picker
          */
         "items": PickerColumnItem[];
@@ -2266,6 +2270,10 @@ export namespace Components {
          */
         "allowEmptySelection": boolean;
         /**
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
+         */
+        "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
@@ -2328,7 +2336,7 @@ export namespace Components {
          */
         "pin": boolean;
         /**
-          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.
+          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "pinFormatter": PinFormatter;
         /**
@@ -2369,6 +2377,10 @@ export namespace Components {
           * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
          */
         "getProgress": () => Promise<number>;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
         /**
           * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
@@ -2597,7 +2609,7 @@ export namespace Components {
          */
         "searchIcon"?: string;
         /**
-          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
+          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -2684,7 +2696,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * A property name or function used to compare object values
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**
@@ -2946,7 +2958,7 @@ export namespace Components {
          */
         "autocapitalize": string;
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus": boolean;
         /**
@@ -2966,7 +2978,7 @@ export namespace Components {
          */
         "counter": boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -3046,7 +3058,7 @@ export namespace Components {
          */
         "rows"?: number;
         /**
-          * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.
+          * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -3168,6 +3180,10 @@ export namespace Components {
           * Present the toast overlay after it has been created.
          */
         "present": () => Promise<void>;
+        /**
+          * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
+         */
+        "swipeGesture"?: ToastSwipeGestureDirection;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -3385,6 +3401,10 @@ export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
+}
+export interface IonSkeletonTextCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonSkeletonTextElement;
 }
 export interface IonSplitPaneCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4400,7 +4420,18 @@ declare global {
         prototype: HTMLIonSelectPopoverElement;
         new (): HTMLIonSelectPopoverElement;
     };
+    interface HTMLIonSkeletonTextElementEventMap {
+        "ionStyle": StyleEventDetail;
+    }
     interface HTMLIonSkeletonTextElement extends Components.IonSkeletonText, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonSkeletonTextElementEventMap>(type: K, listener: (this: HTMLIonSkeletonTextElement, ev: IonSkeletonTextCustomEvent<HTMLIonSkeletonTextElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonSkeletonTextElementEventMap>(type: K, listener: (this: HTMLIonSkeletonTextElement, ev: IonSkeletonTextCustomEvent<HTMLIonSkeletonTextElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonSkeletonTextElement: {
         prototype: HTMLIonSkeletonTextElement;
@@ -5619,7 +5650,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
@@ -5850,7 +5881,7 @@ declare namespace LocalJSX {
          */
         "autocorrect"?: 'on' | 'off';
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus"?: boolean;
         /**
@@ -5870,7 +5901,7 @@ declare namespace LocalJSX {
          */
         "counter"?: boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -6401,7 +6432,7 @@ declare namespace LocalJSX {
          */
         "breakpoints"?: number[];
         /**
-          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "canDismiss"?: boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
@@ -6684,6 +6715,10 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * If `true`, the user cannot interact with the picker.
+         */
+        "disabled"?: boolean;
+        /**
           * A list of options to be displayed in the picker
          */
         "items"?: PickerColumnItem[];
@@ -6927,6 +6962,10 @@ declare namespace LocalJSX {
          */
         "allowEmptySelection"?: boolean;
         /**
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
+         */
+        "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name"?: string;
@@ -7025,7 +7064,7 @@ declare namespace LocalJSX {
          */
         "pin"?: boolean;
         /**
-          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.
+          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "pinFormatter"?: PinFormatter;
         /**
@@ -7054,6 +7093,10 @@ declare namespace LocalJSX {
           * If `true`, the refresher will be hidden.
          */
         "disabled"?: boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
         /**
           * Emitted while the user is pulling down the content and exposing the refresher.
          */
@@ -7408,7 +7451,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * A property name or function used to compare object values
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**
@@ -7545,6 +7588,10 @@ declare namespace LocalJSX {
           * If `true`, the skeleton text will animate.
          */
         "animated"?: boolean;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: IonSkeletonTextCustomEvent<StyleEventDetail>) => void;
     }
     interface IonSpinner {
         /**
@@ -7691,7 +7738,7 @@ declare namespace LocalJSX {
          */
         "autocapitalize"?: string;
         /**
-          * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
+          * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.  This may not be sufficient for the element to be focused on page load. See [managing focus](/docs/developing/managing-focus) for more information.
          */
         "autofocus"?: boolean;
         /**
@@ -7711,7 +7758,7 @@ declare namespace LocalJSX {
          */
         "counter"?: boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -7943,6 +7990,10 @@ declare namespace LocalJSX {
           * The element to anchor the toast's position to. Can be set as a direct reference or the ID of the element. With `position="bottom"`, the toast will sit above the chosen element. With `position="top"`, the toast will sit below the chosen element. With `position="middle"`, the value of `positionAnchor` is ignored.
          */
         "positionAnchor"?: HTMLElement | string;
+        /**
+          * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
+         */
+        "swipeGesture"?: ToastSwipeGestureDirection;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
