@@ -264,6 +264,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    *
    * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
    * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() canDismiss: boolean | ((data?: any, role?: string) => Promise<boolean>) = true;
 

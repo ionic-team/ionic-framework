@@ -325,9 +325,36 @@ ion-card-header.ion-color .ion-inherit-color {
   cursor: pointer;
   touch-action: manipulation;
 
-  // the containing element itself should be clickable but
-  // everything inside of it should not clickable when menu is open
+  /**
+   * The containing element itself should be clickable but
+   * everything inside of it should not clickable when menu is open
+   *
+   * Setting pointer-events after scrolling has already started
+   * will not cancel scrolling which is why we also set
+   * overflow-y below.
+   */
   pointer-events: none;
+
+  /**
+   * This accounts for scenarios where the main content itself
+   * is scrollable.
+   */
+  overflow-y: hidden;
+}
+
+/**
+ * Setting overflow cancels any in-progress scrolling
+ * when the menu opens. This prevents users from accidentally
+ * scrolling the main content while also dragging the menu open.
+ * The code below accounts for both ion-content and then custom
+ * scroll containers within ion-content (such as virtual scroll)
+ */
+.menu-content-open ion-content {
+  --overflow: hidden;
+}
+
+.menu-content-open .ion-content-scroll-host {
+  overflow: hidden;
 }
 
 .ios .menu-content-reveal {
