@@ -257,6 +257,13 @@
   @content;
 }
 
+// Add padding for the safe areas on the left and right of the device.
+// @param {string} $start - amount to add to start.
+// @param {string} $end - amount to add to end.
+@mixin safe-area-padding($start, $end) {
+  @include safe-area-horizontal('padding', $start, $end);
+}
+
 // Safe area horizontal
 // --------------------------------------------------------------------------------
 // Adds styles to the left and right of the element to account for the safe area.

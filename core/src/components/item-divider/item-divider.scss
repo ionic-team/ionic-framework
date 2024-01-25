@@ -73,7 +73,7 @@
     var(--inner-padding-bottom),
     null
   );
-  @include safe-area-horizontal("padding", null, var(--inner-padding-end));
+  @include safe-area-padding(null, var(--inner-padding-end));
 
   display: flex;
 
