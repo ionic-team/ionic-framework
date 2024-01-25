@@ -4,7 +4,7 @@ import { createAnimation } from '@utils/animation/animation';
  * Animates the opening and closing of a sliding item option.
  * @param el The element to animate.
  * @param viewportOffset The offset of the element on the x-axis to locate it off-screen.
- * @param progress The progress of the animation (0 - 1).
+ * @param progress The progress of the animation. Accepted values are between 0 and 1. Represents the progress from the starting transform to the final transform.
  * @param isFinal Whether the animation is in its final state (collapsed or expanded).
  * @param isReset Whether to reset the element to its initial state.
  * @param zIndex _Optional_ The z-index to apply to the element.

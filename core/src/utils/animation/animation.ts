@@ -38,15 +38,6 @@ type AnimationOnStopCallback = AnimationOnFinishCallback;
  */
 type AnimationReadWriteCallback = () => void;
 
-export const supportsAnimationEffect =
-  typeof (AnimationEffect as any) === 'function' ||
-  (win !== undefined && typeof (win as any).AnimationEffect === 'function');
-
-export const supportsWebAnimations =
-  typeof (Element as any) === 'function' &&
-  typeof (Element as any).prototype!.animate === 'function' &&
-  supportsAnimationEffect;
-
 export const createAnimation = (animationId?: string): Animation => {
   let _delay: number | undefined;
   let _duration: number | undefined;
@@ -445,8 +436,8 @@ export const createAnimation = (animationId?: string): Animation => {
     return ani;
   };
 
-  const commitStyles = (shouldCommitStyles: boolean = true) => {
-    _commitStyles = shouldCommitStyles;
+  const commitStyles = () => {
+    _commitStyles = true;
 
     update(true);
 
@@ -706,6 +697,10 @@ export const createAnimation = (animationId?: string): Animation => {
         direction: getDirection(),
       });
 
+      if (_commitStyles) {
+        animation.commitStyles();
+      }
+
       animation.pause();
 
       webAnimations.push(animation);
@@ -766,6 +761,10 @@ export const createAnimation = (animationId?: string): Animation => {
         fill: getFill(),
         direction: getDirection(),
       });
+
+      if (_commitStyles) {
+        animation.commitStyles();
+      }
     });
 
     if (step !== undefined) {

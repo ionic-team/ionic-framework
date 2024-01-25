@@ -702,7 +702,7 @@ ion-item-options,prop,side,"end" | "start",'end',false,false
 ion-item-options,event,ionSwipe,any,true
 
 ion-item-sliding,none
-ion-item-sliding,prop,animationType,"legacy" | "modern",'legacy',false,false
+ion-item-sliding,prop,animationType,"legacy" | "modern",SlidingAnimation.Legacy,false,false
 ion-item-sliding,prop,disabled,boolean,false,false,false
 ion-item-sliding,method,close,close() => Promise<void>
 ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>

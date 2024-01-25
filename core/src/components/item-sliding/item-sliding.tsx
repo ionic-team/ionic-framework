@@ -1,9 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { supportsWebAnimations } from '@utils/animation/animation';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
-import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { watchForOptions } from '@utils/watch-options';
 
@@ -12,6 +10,7 @@ import { type Gesture, type GestureDetail } from '../../interface';
 import type { Side } from '../menu/menu-interface';
 
 import { slidingItemAnimation } from './animations/item-sliding-options';
+import type { SlidingAnimationType } from './item-sliding-interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -32,6 +31,11 @@ const enum SlidingState {
   SwipeEnd = 1 << 5,
   SwipeStart = 1 << 6,
 }
+
+const SlidingAnimation: { [key in string]: SlidingAnimationType } = {
+  Modern: 'modern',
+  Legacy: 'legacy',
+};
 
 let openSlidingItem: HTMLIonItemSlidingElement | undefined;
 
@@ -77,10 +81,8 @@ export class ItemSliding implements ComponentInterface {
    * - "legacy": The item will be swiped to reveal the option buttons beneath it.
    * - "modern": As the item is swiped, all item options will smoothly and gradually reveal themselves.
    *
-   * The "modern" animation type requires the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API).
-   * Check [Browser Support](https://caniuse.com/web-animation) for more information.
    */
-  @Prop() animationType: 'modern' | 'legacy' = 'legacy';
+  @Prop() animationType: SlidingAnimationType = SlidingAnimation.Legacy;
 
   /**
    * Emitted when the sliding position changes.
@@ -135,13 +137,6 @@ export class ItemSliding implements ComponentInterface {
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.mutationObserver = undefined;
-    }
-  }
-
-  componentWillLoad() {
-    if (!supportsWebAnimations && this.animationType === 'modern') {
-      printIonWarning('Animation type "modern" needs Web Animations API support. Falling back to "legacy".');
-      this.animationType = 'legacy';
     }
   }
 
@@ -504,14 +499,14 @@ export class ItemSliding implements ComponentInterface {
       openSlidingItem = undefined;
       style.transform = '';
 
-      if (animationType === 'modern') {
+      if (animationType === SlidingAnimation.Modern) {
         this.animateSlidingItemOptions(0, rtl);
       }
       return;
     }
     style.transform = `translate3d(${-openAmount}px,0,0)`;
 
-    if (animationType === 'modern') {
+    if (animationType === SlidingAnimation.Modern) {
       this.animateSlidingItemOptions(openAmount, rtl);
     }
 
