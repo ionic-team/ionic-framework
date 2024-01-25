@@ -13,7 +13,6 @@ jobs:
       - name: 'Auto-assign issue'
         uses: pozil/auto-assign-issue@edee9537367a8fbc625d27f9e10aa8bad47b8723 # v1.13.0
         with:
-          repo-token: ${{ secrets.IONITRON_TOKEN }}
-          teams: framework
+          assignees: liamdebeasi, sean-perkins, brandyscarney, amandaejohnston, mapsandapps, thetaPC
           numOfAssignee: 1
           allowSelfAssign: false
