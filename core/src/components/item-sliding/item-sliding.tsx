@@ -2,11 +2,15 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
 import { watchForOptions } from '@utils/watch-options';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Gesture, GestureDetail } from '../../interface';
+import { type Gesture, type GestureDetail } from '../../interface';
 import type { Side } from '../menu/menu-interface';
+
+import { slidingItemAnimation } from './animations/item-sliding-options';
+import type { SlidingAnimationType } from './item-sliding-interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -27,6 +31,11 @@ const enum SlidingState {
   SwipeEnd = 1 << 5,
   SwipeStart = 1 << 6,
 }
+
+const SlidingAnimation: { [key in string]: SlidingAnimationType } = {
+  Modern: 'modern',
+  Legacy: 'legacy',
+};
 
 let openSlidingItem: HTMLIonItemSlidingElement | undefined;
 
@@ -64,6 +73,16 @@ export class ItemSliding implements ComponentInterface {
       this.gesture.enable(!this.disabled);
     }
   }
+
+  /**
+   * Specifies the animation behavior for sliding item options.
+   * You can choose between two available options: "modern" and "legacy".
+   *
+   * - "legacy": The item will be swiped to reveal the option buttons beneath it.
+   * - "modern": As the item is swiped, all item options will smoothly and gradually reveal themselves.
+   *
+   */
+  @Prop() animationType: SlidingAnimationType = SlidingAnimation.Legacy;
 
   /**
    * Emitted when the sliding position changes.
@@ -243,6 +262,20 @@ export class ItemSliding implements ComponentInterface {
     }
   }
 
+  /**
+   * Given a side, return the width of the options on that side.
+   *
+   * @param side The side of the options to get the width for.
+   */
+  private getOptionsWidth(side: 'start' | 'end'): number {
+    if (side === 'start') {
+      return this.optsWidthLeftSide;
+    } else if (side === 'end') {
+      return this.optsWidthRightSide;
+    }
+    return 0;
+  }
+
   private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
 
@@ -379,6 +412,7 @@ export class ItemSliding implements ComponentInterface {
     }
 
     const state = this.state;
+
     this.setOpenAmount(restingPoint, true);
 
     if ((state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
@@ -415,7 +449,9 @@ export class ItemSliding implements ComponentInterface {
       return;
     }
 
-    const { el } = this;
+    const { el, animationType } = this;
+
+    const rtl = isRTL(el);
 
     const style = this.item.style;
     this.openAmount = openAmount;
@@ -462,12 +498,59 @@ export class ItemSliding implements ComponentInterface {
 
       openSlidingItem = undefined;
       style.transform = '';
+
+      if (animationType === SlidingAnimation.Modern) {
+        this.animateSlidingItemOptions(0, rtl);
+      }
       return;
     }
     style.transform = `translate3d(${-openAmount}px,0,0)`;
+
+    if (animationType === SlidingAnimation.Modern) {
+      this.animateSlidingItemOptions(openAmount, rtl);
+    }
+
     this.ionDrag.emit({
       amount: openAmount,
       ratio: this.getSlidingRatioSync(),
+    });
+  }
+
+  private animateSlidingItemOptions(openAmount: number, isRTL: boolean) {
+    /**
+     * The total width of the 'processed' options.
+     * Used to calculate the offset to move each option off the
+     * screen, on top of each other.
+     */
+    let optionWidthOffset = 0;
+
+    const side = this.state === SlidingState.Start ? 'start' : 'end';
+
+    const options = Array.from(this.getOptions(side)?.querySelectorAll('ion-item-option') || []);
+    const optsWidth = this.getOptionsWidth(side);
+
+    const progress = Math.abs(openAmount / optsWidth);
+
+    options.forEach((option, index) => {
+      let isFinal = false;
+      let zIndex: number | undefined;
+      let viewportOffset = 0;
+
+      const isReset = openAmount === 0;
+
+      if (side === 'start') {
+        viewportOffset = isRTL ? -1 * (optsWidth - optionWidthOffset) : -1 * (option.clientWidth + optionWidthOffset);
+        isFinal = openAmount <= -optsWidth;
+        zIndex = isRTL ? undefined : options.length - index;
+      } else {
+        viewportOffset = isRTL ? optionWidthOffset + option.clientWidth : optsWidth - optionWidthOffset;
+        isFinal = openAmount >= optsWidth;
+        zIndex = isRTL ? options.length - index : undefined;
+      }
+
+      slidingItemAnimation(option, viewportOffset, progress, isFinal, isReset, zIndex);
+
+      optionWidthOffset += option.clientWidth;
     });
   }
 
@@ -483,15 +566,17 @@ export class ItemSliding implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
+    const { state, animationType } = this;
     return (
       <Host
         class={{
           [mode]: true,
-          'item-sliding-active-slide': this.state !== SlidingState.Disabled,
-          'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
-          'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
-          'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
-          'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0,
+          [`item-sliding-animation-${animationType}`]: true,
+          'item-sliding-active-slide': state !== SlidingState.Disabled,
+          'item-sliding-active-options-end': (state & SlidingState.End) !== 0,
+          'item-sliding-active-options-start': (state & SlidingState.Start) !== 0,
+          'item-sliding-active-swipe-end': (state & SlidingState.SwipeEnd) !== 0,
+          'item-sliding-active-swipe-start': (state & SlidingState.SwipeStart) !== 0,
         }}
       ></Host>
     );

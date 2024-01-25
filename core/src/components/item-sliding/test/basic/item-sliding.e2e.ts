@@ -13,40 +13,88 @@ configs().forEach(({ title, screenshot, config }) => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/basic`, config);
     });
-    test.describe('start options', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        const item = page.locator('#item2');
 
-        /**
-         * Negative dragByX value to drag element from the right to the left
-         * to reveal the options on the right side.
-         * Positive dragByX value to drag element from the left to the right
-         * to reveal the options on the left side.
-         */
-        const dragByX = config.direction === 'rtl' ? -150 : 150;
+    test.describe('legacy animation', () => {
+      test.describe('start options', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          const item = page.locator('#item2');
 
-        await dragElementBy(item, page, dragByX);
-        await page.waitForChanges();
+          /**
+           * Negative dragByX value to drag element from the right to the left
+           * to reveal the options on the right side.
+           * Positive dragByX value to drag element from the left to the right
+           * to reveal the options on the left side.
+           */
+          const dragByX = config.direction === 'rtl' ? -150 : 150;
 
-        await expect(item).toHaveScreenshot(screenshot('item-sliding-start'));
+          await dragElementBy(item, page, dragByX);
+          await page.waitForChanges();
+
+          await expect(item).toHaveScreenshot(screenshot('item-sliding-start'));
+        });
+      });
+
+      test.describe('end options', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          const item = page.locator('#item2');
+
+          /**
+           * Negative dragByX value to drag element from the right to the left
+           * to reveal the options on the right side.
+           * Positive dragByX value to drag element from the left to the right
+           * to reveal the options on the left side.
+           */
+          const dragByX = config.direction === 'rtl' ? 150 : -150;
+
+          await dragElementBy(item, page, dragByX);
+
+          await expect(item).toHaveScreenshot(screenshot('item-sliding-end'));
+        });
       });
     });
 
-    test.describe('end options', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        const item = page.locator('#item2');
+    test.describe('modern animation', () => {
+      test.describe('start options', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          const useModernAnimationBtn = page.locator('#useModernAnimation');
+          await useModernAnimationBtn.click();
 
-        /**
-         * Negative dragByX value to drag element from the right to the left
-         * to reveal the options on the right side.
-         * Positive dragByX value to drag element from the left to the right
-         * to reveal the options on the left side.
-         */
-        const dragByX = config.direction === 'rtl' ? 150 : -150;
+          const item = page.locator('#item2');
 
-        await dragElementBy(item, page, dragByX);
+          /**
+           * Negative dragByX value to drag element from the right to the left
+           * to reveal the options on the right side.
+           * Positive dragByX value to drag element from the left to the right
+           * to reveal the options on the left side.
+           */
+          const dragByX = config.direction === 'rtl' ? -150 : 150;
 
-        await expect(item).toHaveScreenshot(screenshot('item-sliding-end'));
+          await dragElementBy(item, page, dragByX);
+          await page.waitForChanges();
+
+          await expect(item).toHaveScreenshot(screenshot('modern-item-sliding-start'));
+        });
+      });
+
+      test.describe('end options', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          const useModernAnimationBtn = page.locator('#useModernAnimation');
+          await useModernAnimationBtn.click();
+
+          const item = page.locator('#item2');
+
+          /**
+           * Negative dragByX value to drag element from the right to the left
+           * to reveal the options on the right side.
+           * Positive dragByX value to drag element from the left to the right
+           * to reveal the options on the left side.
+           */
+          const dragByX = config.direction === 'rtl' ? 150 : -150;
+
+          await dragElementBy(item, page, dragByX);
+
+          await expect(item).toHaveScreenshot(screenshot('modern-item-sliding-end'));
+        });
       });
     });
   });

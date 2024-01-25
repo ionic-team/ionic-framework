@@ -20,6 +20,7 @@ import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
 import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+import { SlidingAnimationType } from "./components/item-sliding/item-sliding-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
@@ -56,6 +57,7 @@ export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
 export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+export { SlidingAnimationType } from "./components/item-sliding/item-sliding-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
@@ -1438,6 +1440,10 @@ export namespace Components {
         "side": Side;
     }
     interface IonItemSliding {
+        /**
+          * Specifies the animation behavior for sliding item options. You can choose between two available options: "modern" and "legacy".  - "legacy": The item will be swiped to reveal the option buttons beneath it. - "modern": As the item is swiped, all item options will smoothly and gradually reveal themselves.
+         */
+        "animationType": SlidingAnimationType;
         /**
           * Close the sliding item. Items can also be closed from the [List](./list).
          */
@@ -6189,6 +6195,10 @@ declare namespace LocalJSX {
         "side"?: Side;
     }
     interface IonItemSliding {
+        /**
+          * Specifies the animation behavior for sliding item options. You can choose between two available options: "modern" and "legacy".  - "legacy": The item will be swiped to reveal the option buttons beneath it. - "modern": As the item is swiped, all item options will smoothly and gradually reveal themselves.
+         */
+        "animationType"?: SlidingAnimationType;
         /**
           * If `true`, the user cannot interact with the sliding item.
          */

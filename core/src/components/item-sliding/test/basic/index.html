@@ -30,6 +30,9 @@
           <ion-button expand="block" id="openItemOneSide" onclick="openItemOneSide()"
             >Open Item with only one side</ion-button
           >
+          <ion-button expand="block" id="useModernAnimation" onclick="useModernAnimation()"
+            >Use modern animation</ion-button
+          >
         </div>
 
         <ion-list id="list">
@@ -186,6 +189,13 @@
             if (itemEle) {
               itemEle.close();
             }
+          }
+
+          function useModernAnimation() {
+            const slidingItems = document.querySelectorAll('ion-item-sliding');
+            slidingItems.forEach((slidingItem) => {
+              slidingItem.animationType = 'modern';
+            });
           }
         </script>
       </ion-content>
