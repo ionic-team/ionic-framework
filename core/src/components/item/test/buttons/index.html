@@ -310,6 +310,10 @@
             </ion-button>
           </div>
         </ion-item>
+
+        <ion-item id="focusableTest">
+          <ion-toggle id="focusableTestToggle">Toggle Button Option</ion-toggle>
+        </ion-item>
       </ion-content>
     </ion-app>
 
@@ -365,6 +369,15 @@
 
       function testClickOutsize(ev) {
         console.log('CLICK OUTSIDE!', ev.target.tagName, ev.target.textContent.trim());
+      }
+
+      const focusableItem = document.getElementById('focusableTest');
+      const focusableItemToggle = document.getElementById('focusableTestToggle');
+
+      if (focusableItemToggle) {
+        focusableItemToggle.addEventListener('ionChange', (event) => {
+          focusableItem.button = event.detail.checked;
+        });
       }
     </script>
   </body>
