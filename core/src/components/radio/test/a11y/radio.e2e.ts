@@ -54,9 +54,8 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
-    // TODO(FW-5715): re-enable test
-    test.skip(title('radio: keyboard navigation'), () => {
-      test.beforeEach(async ({ page }) => {
+    test(title('radio: keyboard navigation'), () => {
+      test.beforeEach(async ({ page, browserName }) => {
         await page.setContent(
           `
         <ion-app>
@@ -98,6 +97,21 @@ configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, co
       `,
           config
         );
+
+        if (browserName === 'webkit') {
+          const radio = page.locator('#first-group ion-radio').first();
+          /**
+           * Sometimes Safari does not focus the first radio.
+           * This is a workaround to ensure the first radio is focused.
+           *
+           * Wait for the first radio to be rendered before tabbing.
+           * This is necessary because the first radio may not be rendered
+           * when the page first loads.
+           *
+           * This would cause the first radio to be skipped when tabbing.
+           */
+          await radio.waitFor();
+        }
       });
 
       test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
