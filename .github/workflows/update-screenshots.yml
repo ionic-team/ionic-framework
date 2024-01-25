@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       component:
-        description: 'Which component should be updated? (leave blank to update all)'
+        description: 'What component(s) should be updated? (leave blank to update all or use a space-separated list for multiple components)'
         required: false
         default: ''
 
