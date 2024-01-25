@@ -20,7 +20,6 @@ export {
   NavController,
   Config,
   Platform,
-  NavParams,
   IonicRouteStrategy,
   ViewWillEnter,
   ViewDidEnter,

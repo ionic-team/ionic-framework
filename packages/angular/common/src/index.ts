@@ -10,8 +10,6 @@ export { bindLifecycleEvents, AngularDelegate } from './providers/angular-delega
 export type { IonicWindow } from './types/interfaces';
 export type { ViewWillEnter, ViewWillLeave, ViewDidEnter, ViewDidLeave } from './types/ionic-lifecycle-hooks';
 
-export { NavParams } from './directives/navigation/nav-params';
-
 export { IonPopover } from './overlays/popover';
 export { IonModal } from './overlays/modal';
 

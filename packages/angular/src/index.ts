@@ -24,7 +24,6 @@ export {
   Config,
   Platform,
   AngularDelegate,
-  NavParams,
   IonicRouteStrategy,
   ViewWillEnter,
   ViewWillLeave,

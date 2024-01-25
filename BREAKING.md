@@ -22,6 +22,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Datetime](#version-8x-datetime)
   - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
+- [Angular](#version-8x-angular)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -143,3 +144,80 @@ This allows components to inherit the color properly when used outside of Ionic 
 - `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
   - Only the component names have been changed. Usages such as `ion-picker` or `IonPicker` should be changed to `ion-picker-legacy` and `IonPickerLegacy`, respectively.
   - Non-component usages such as `pickerController` or `useIonPicker` remain unchanged. The new picker displays inline with your page content and does not have equivalents for these non-component usages.
+
+<h4 id="version-8x-angular">Angular</h4>
+
+- NavParams has been removed in favor of using Angular's Input API. Components that accessed parameters should ensure that an input is created for each parameter:
+
+**Old**
+```js
+import { NavParams } from '@ionic/angular';
+
+console.log(this.navParams.get('myProp'));
+```
+
+**New**
+```js
+import { Input } from '@angular/core';
+
+...
+
+@Input() myProp: string;
+
+ngOnInit() {
+  console.log(this.myProp)
+}
+```
+
+Developers who were using `NavParams` as a pass through to an encapsulated IonNav component can use a single `Input` to achieve the same behavior.
+
+**Old**
+```js
+// home.page.ts
+const modal = await modalCtrl.create({
+  component: NavComponent,
+  componentProps: {
+    foo: 'hello',
+    bar: 'goodbye'
+  }
+});
+```
+
+```js
+// nav.component.ts
+public rootParams = {};
+
+constructor(private navParams: NavParams) {
+  this.rootParams = {
+    ...navParams.data
+  }
+}
+```
+```html
+<!-- nav.component.html -->
+<ion-nav [rootParams]="rootParams"></ion-nav>
+```
+
+**New**
+
+```js
+// home.page.ts
+const modal = await modalCtrl.create({
+  component: NavComponent,
+  componentProps: {
+    rootParams: {
+      foo: 'hello',
+      bar: 'goodbye'
+    }
+  }
+});
+```
+
+```js
+// nav.component.ts
+@Input() rootParams = {};
+```
+```html
+<!-- nav.component.html -->
+<ion-nav [rootParams]="rootParams"></ion-nav>
+```

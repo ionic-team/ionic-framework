@@ -6,7 +6,6 @@ import {
   EnvironmentInjector,
   inject,
   createComponent,
-  InjectionToken,
   ComponentRef,
 } from '@angular/core';
 import {
@@ -17,8 +16,6 @@ import {
   LIFECYCLE_WILL_LEAVE,
   LIFECYCLE_WILL_UNLOAD,
 } from '@ionic/core/components';
-
-import { NavParams } from '../directives/navigation/nav-params';
 
 // TODO(FW-2827): types
 
@@ -123,26 +120,9 @@ export const attachView = (
   cssClasses: string[] | undefined,
   elementReferenceKey: string | undefined
 ): any => {
-  /**
-   * Wraps the injector with a custom injector that
-   * provides NavParams to the component.
-   *
-   * NavParams is a legacy feature from Ionic v3 that allows
-   * Angular developers to provide data to a component
-   * and access it by providing NavParams as a dependency
-   * in the constructor.
-   *
-   * The modern approach is to access the data directly
-   * from the component's class instance.
-   */
-  const childInjector = Injector.create({
-    providers: getProviders(params),
-    parent: injector,
-  });
-
   const componentRef = createComponent<any>(component, {
     environmentInjector,
-    elementInjector: childInjector,
+    elementInjector: injector,
   });
 
   const instance = componentRef.instance;
@@ -229,24 +209,4 @@ export const bindLifecycleEvents = (zone: NgZone, instance: any, element: HTMLEl
     });
     return () => unregisters.forEach((fn) => fn());
   });
-};
-
-const NavParamsToken = new InjectionToken<any>('NavParamsToken');
-
-const getProviders = (params: { [key: string]: any }) => {
-  return [
-    {
-      provide: NavParamsToken,
-      useValue: params,
-    },
-    {
-      provide: NavParams,
-      useFactory: provideNavParamsInjectable,
-      deps: [NavParamsToken],
-    },
-  ];
-};
-
-const provideNavParamsInjectable = (params: { [key: string]: any }) => {
-  return new NavParams(params);
 };
