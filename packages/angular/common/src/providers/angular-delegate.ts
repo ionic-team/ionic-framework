@@ -170,7 +170,7 @@ export const attachView = (
      * for Angular 14.0.
      */
     if (componentRef.setInput !== undefined) {
-      const { modal, popover, otherParams } = params;
+      const { modal, popover, ...otherParams } = params;
       /**
        * Any key/value pairs set in componentProps
        * must be set as inputs on the component instance.
