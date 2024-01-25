@@ -18,8 +18,8 @@ importers:
   core:
     dependencies:
       '@stencil/core':
-        specifier: ^4.8.2
-        version: 4.9.0
+        specifier: ^4.10.0
+        version: 4.11.0
       ionicons:
         specifier: ^7.2.2
         version: 7.2.2
@@ -28,8 +28,8 @@ importers:
         version: 2.4.0
     devDependencies:
       '@axe-core/playwright':
-        specifier: ^4.8.2
-        version: 4.8.2(playwright-core@1.39.0)
+        specifier: ^4.8.3
+        version: 4.8.3(playwright-core@1.39.0)
       '@capacitor/core':
         specifier: ^5.6.0
         version: 5.6.0
@@ -62,16 +62,16 @@ importers:
         version: 2.0.3(rollup@2.26.4)
       '@stencil/angular-output-target':
         specifier: ^0.8.3
-        version: 0.8.3(@stencil/core@4.9.0)
+        version: 0.8.3(@stencil/core@4.11.0)
       '@stencil/react-output-target':
         specifier: ^0.5.3
-        version: 0.5.3(@stencil/core@4.9.0)
+        version: 0.5.3(@stencil/core@4.11.0)
       '@stencil/sass':
         specifier: ^3.0.8
-        version: 3.0.8(@stencil/core@4.9.0)
+        version: 3.0.8(@stencil/core@4.11.0)
       '@stencil/vue-output-target':
         specifier: ^0.8.7
-        version: 0.8.7(@stencil/core@4.9.0)
+        version: 0.8.7(@stencil/core@4.11.0)
       '@types/jest':
         specifier: ^27.5.2
         version: 27.5.2
@@ -141,7 +141,7 @@ importers:
   packages/angular:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.2
+        specifier: ^7.6.6
         version: link:../../core
       ionicons:
         specifier: ^7.0.0
@@ -247,7 +247,7 @@ importers:
   packages/angular-server:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.2
+        specifier: ^7.6.6
         version: link:../../core
       zone.js:
         specifier: '>=0.11.0'
@@ -312,7 +312,7 @@ importers:
   packages/react:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.2
+        specifier: ^7.6.6
         version: link:../../core
       ionicons:
         specifier: ^7.0.0
@@ -397,7 +397,7 @@ importers:
   packages/react-router:
     dependencies:
       '@ionic/react':
-        specifier: ^7.6.2
+        specifier: ^7.6.6
         version: link:../react
       history:
         specifier: ^4.9.0
@@ -470,7 +470,7 @@ importers:
   packages/vue:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.2
+        specifier: ^7.6.6
         version: link:../../core
       ionicons:
         specifier: ^7.0.0
@@ -525,7 +525,7 @@ importers:
   packages/vue-router:
     dependencies:
       '@ionic/vue':
-        specifier: ^7.6.2
+        specifier: ^7.6.6
         version: link:../vue
     devDependencies:
       '@ionic/eslint-config':
@@ -1007,12 +1007,12 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /@axe-core/playwright@4.8.2(playwright-core@1.39.0):
-    resolution: {integrity: sha512-9KOhX2tNuvqn9DzpBNyqoqNKRZBrexeSiN9irQ0sEdq8zH13JnatepCJxobuXn4UopNy6iIpP4342beMiH+MSQ==}
+  /@axe-core/playwright@4.8.3(playwright-core@1.39.0):
+    resolution: {integrity: sha512-YtbkAWeOp5oQeI8vS6KYqJDa5yTl5O1wJP8KOZAAVjhxeiK/Y1ssxnZuGRobARyVh3eS6O3jdxTv/iCK1RfgaA==}
     peerDependencies:
       playwright-core: '>= 1.0.0'
     dependencies:
-      axe-core: 4.8.2
+      axe-core: 4.8.3
       playwright-core: 1.39.0
     dev: true
 
@@ -3995,12 +3995,12 @@ packages:
       '@sinonjs/commons': 1.8.6
     dev: true
 
-  /@stencil/angular-output-target@0.8.3(@stencil/core@4.9.0):
+  /@stencil/angular-output-target@0.8.3(@stencil/core@4.11.0):
     resolution: {integrity: sha512-I/QO1sEx09WWUaNlA30EBhlXYftOSfSBTwYBwC65qlpHDIlD5WU3EAtKhU5IphfwhxnD63kvOoU1YvTUXFHNng==}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3 || >= 4.0.0-beta.0 || >= 4.0.0'
     dependencies:
-      '@stencil/core': 4.9.0
+      '@stencil/core': 4.11.0
     dev: true
 
   /@stencil/core@2.22.3:
@@ -4009,34 +4009,34 @@ packages:
     hasBin: true
     dev: false
 
-  /@stencil/core@4.9.0:
-    resolution: {integrity: sha512-aWSkhBmk3yPwRAkUwBbzRwmdhb8hKiQ/JMr9m5jthpBZLjtppYbzz6PN2MhSMDfRp6K93eQw5WogSEH4HHuB6w==}
+  /@stencil/core@4.11.0:
+    resolution: {integrity: sha512-zsKhgIkTGo+s7IthitxR/MKiMS3Ck1yIypOdXr0aE6ofboKqe9NdffTcxZ0vel0wD2bZYOb6WfPMzuhRKk6+FA==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
-  /@stencil/react-output-target@0.5.3(@stencil/core@4.9.0):
+  /@stencil/react-output-target@0.5.3(@stencil/core@4.11.0):
     resolution: {integrity: sha512-68jwRp35CjAcwhTJ9yFD/3n+jrHOqvEH2jreVuPVvZK+4tkhPlYlwz0d1E1RlF3jyifUSfdkWUGgXIEy8Fo3yw==}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3 || >= 4.0.0-beta.0 || >= 4.0.0'
     dependencies:
-      '@stencil/core': 4.9.0
+      '@stencil/core': 4.11.0
     dev: true
 
-  /@stencil/sass@3.0.8(@stencil/core@4.9.0):
+  /@stencil/sass@3.0.8(@stencil/core@4.11.0):
     resolution: {integrity: sha512-QJUG4Dr/b3wSizViwQXorrk1PJzxOsKkq5hSqtUHc3NNG3iomC4DQFYGeu15yNfoCDBtt4qkyHSCynsekQ8F6A==}
     engines: {node: '>=12.0.0', npm: '>=6.0.0'}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3.0.0-beta.0 || >= 4.0.0-beta.0 || >= 4.0.0'
     dependencies:
-      '@stencil/core': 4.9.0
+      '@stencil/core': 4.11.0
     dev: true
 
-  /@stencil/vue-output-target@0.8.7(@stencil/core@4.9.0):
+  /@stencil/vue-output-target@0.8.7(@stencil/core@4.11.0):
     resolution: {integrity: sha512-hgOzbKKgLdCFrhLpmaw/qQrPSXl6hZ09K+j3p/iWh3esq6sxnwuW1PJKLniwkT4Z/JlDIk6stGPGQYi+WE5I2Q==}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3 || >= 4.0.0-beta.0 || >= 4.0.0'
     dependencies:
-      '@stencil/core': 4.9.0
+      '@stencil/core': 4.11.0
     dev: true
 
   /@stylelint/postcss-css-in-js@0.37.3(postcss-syntax@0.36.2)(postcss@7.0.39):
@@ -6019,8 +6019,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /axe-core@4.8.2:
-    resolution: {integrity: sha512-/dlp0fxyM3R8YW7MFzaHWXrf4zzbr0vaYb23VBFCl83R7nWNPg/yaQw2Dc8jzCMmDVLhSdzH8MjrsuIUuvX+6g==}
+  /axe-core@4.8.3:
+    resolution: {integrity: sha512-d5ZQHPSPkF9Tw+yfyDcRoUOc4g/8UloJJe5J8m4L5+c7AtDdjDLRxew/knnI4CxvtdxEUVgWz4x3OIQUIFiMfw==}
     engines: {node: '>=4'}
     dev: true
 
@@ -9992,7 +9992,7 @@ packages:
   /ionicons@7.2.2:
     resolution: {integrity: sha512-I3iYIfc9Q9FRifWyFSwTAvbEABWlWY32i0sAVDDPGYnaIZVugkLCZFbEcrphW6ixVPg8tt1oLwalo/JJwbEqnA==}
     dependencies:
-      '@stencil/core': 4.9.0
+      '@stencil/core': 4.11.0
     dev: false
 
   /ip@1.1.8:
