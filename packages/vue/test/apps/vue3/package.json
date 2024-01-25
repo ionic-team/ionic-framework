@@ -18,8 +18,8 @@
     "@ionic/vue": "file:../../../",
     "@ionic/vue-router": "file:../../../../vue-router",
     "ionicons": "^6.0.4",
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.14"
+    "vue": "^3.4.14",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -34,7 +34,7 @@
     "jsdom": "^20.0.0",
     "typescript": "~4.5.5",
     "vite": "^3.1.4",
-    "vitest": "^0.23.4",
+    "vitest": "^1.2.1",
     "wait-on": "^5.3.0"
   },
   "engines": {

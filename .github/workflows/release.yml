@@ -81,6 +81,24 @@ jobs:
     needs: [finalize-release]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        # Pull the latest version of the reference
+        # branch instead of the revision that triggered
+        # the workflow otherwise we won't get the commit
+        # created in the previous job and this next job
+        # will fail.
+        with:
+          ref: ${{ github.ref }}
+      - name: Configure Identity
+        # Commits from github-actions do not
+        # trigger other GitHub Actions. As a result,
+        # we push from Ionitron instead so actions
+        # run when merging the release branch
+        # back into main.
+        run: |
+          git config user.name ionitron
+          git config user.email hi@ionicframework.com
+        shell: bash
       # Lerna does not automatically bump versions
       # of Ionic dependencies that have changed,
       # so we do that here.
@@ -90,6 +108,8 @@ jobs:
           git add .
           git commit -m "chore(): update package lock files"
           git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
 
   purge-cdn-cache:

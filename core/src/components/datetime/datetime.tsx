@@ -1284,21 +1284,42 @@ export class Datetime implements ComponentInterface {
       (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
-    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
-      this.animateToDate(targetValue);
-    } else {
-      /**
-       * We only need to do this if we didn't just animate to a new month,
-       * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
-       */
-      this.setWorkingParts({
-        month,
-        day,
-        year,
-        hour,
-        minute,
-        ampm,
-      });
+
+    let areAllSelectedDatesInSameMonth = true;
+    if (Array.isArray(valueToProcess)) {
+      const firstMonth = valueToProcess[0].month;
+      for (const date of valueToProcess) {
+        if (date.month !== firstMonth) {
+          areAllSelectedDatesInSameMonth = false;
+          break;
+        }
+      }
+    }
+
+    /**
+     * If there is more than one date selected
+     * and the dates aren't all in the same month,
+     * then we should neither animate to the date
+     * nor update the working parts because we do
+     * not know which date the user wants to view.
+     */
+    if (areAllSelectedDatesInSameMonth) {
+      if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+        this.animateToDate(targetValue);
+      } else {
+        /**
+         * We only need to do this if we didn't just animate to a new month,
+         * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
+         */
+        this.setWorkingParts({
+          month,
+          day,
+          year,
+          hour,
+          minute,
+          ampm,
+        });
+      }
     }
   };
 
