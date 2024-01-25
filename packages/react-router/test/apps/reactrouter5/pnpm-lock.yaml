@@ -92,7 +92,7 @@ importers:
   ../../..:
     dependencies:
       '@ionic/react':
-        specifier: ^7.6.2
+        specifier: ^7.6.6
         version: link:../react
       history:
         specifier: ^4.9.0
@@ -165,8 +165,8 @@ importers:
   ../../../../react:
     dependencies:
       '@ionic/core':
-        specifier: ^7.6.2
-        version: 7.6.2
+        specifier: ^7.6.6
+        version: 7.6.6
       ionicons:
         specifier: ^7.0.0
         version: 7.2.2
@@ -1903,10 +1903,10 @@ packages:
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
 
-  /@ionic/core@7.6.2:
-    resolution: {integrity: sha512-PEeCAjKrtKkc7PqCF7WlXn36PmowBbswnMADmoJ75ozyheRMe+v+GY2a75dGsBxB8nMZP9X9wYBXvZ3BgYUdLw==}
+  /@ionic/core@7.6.6:
+    resolution: {integrity: sha512-WstnLHiR8ipW2ASdO/eqSwgMHCuVvJE3qsUNPHWkup9f08/bcbKYZpOfaWNLw/ftNqEpFbjiRuocoYYyLP0/gw==}
     dependencies:
-      '@stencil/core': 4.9.0
+      '@stencil/core': 4.11.0
       ionicons: 7.2.2
       tslib: 2.4.0
     dev: false
@@ -2732,6 +2732,12 @@ packages:
   /@stencil/core@2.19.2:
     resolution: {integrity: sha512-TK3sHqyQAACwcac4fWntypFtN9c/y+y9ioZojeCnNDY3dxF33Ax70lL9ZLDyQnWWR+aTh1WFoqB5sYOnZIUKMA==}
     engines: {node: '>=12.10.0', npm: '>=6.0.0'}
+    hasBin: true
+    dev: false
+
+  /@stencil/core@4.11.0:
+    resolution: {integrity: sha512-zsKhgIkTGo+s7IthitxR/MKiMS3Ck1yIypOdXr0aE6ofboKqe9NdffTcxZ0vel0wD2bZYOb6WfPMzuhRKk6+FA==}
+    engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
     dev: false
 
@@ -11925,7 +11931,6 @@ packages:
       react: 18.2.0
       scheduler: 0.19.1
     dev: true
-    bundledDependencies: false
 
   /react-dom@18.2.0(react@18.2.0):
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
