@@ -221,11 +221,11 @@
 
             // If element exists, stop the function call
             if (isAddedElement) {
-              return
+              return;
             }
 
             // Define and create the elements to add on DOM
-            var itemSlidind = document.getElementById('target-element');
+            var itemSliding = document.getElementById('target-element');
             var newIonItemOption = document.createElement('ion-item-option');
 
             var newIonItemOptionText = document.createTextNode('DELETE');
@@ -235,7 +235,7 @@
             newIonItemOption.setAttribute('id', 'element-added-delete');
             newIonItemOption.classList.add('element-added');
             newIonItemOption.appendChild(newIonItemOptionText);
-            itemSlidind.appendChild(newIonItemOption);
+            itemSliding.appendChild(newIonItemOption);
 
             // Close the item-sliding to update the values
             item.close();
