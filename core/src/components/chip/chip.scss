@@ -6,7 +6,7 @@
    * @prop --background: Background of the chip
    * @prop --color: Color of the chip
    */
-  --background: #{rgba($text-color-rgb, 0.12)};
+  --background: red;
   --color: #{rgba($text-color-rgb, 0.87)};
 
   @include border-radius(16px);
