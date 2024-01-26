@@ -25,7 +25,7 @@ runs:
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      run: npm run test.e2e.docker -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: npm run test.e2e.docker.ci -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -47,7 +47,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npm run test.e2e.docker -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e.docker.ci -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
