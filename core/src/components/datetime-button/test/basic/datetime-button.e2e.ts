@@ -53,8 +53,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test('should set only month and year', async ({ page }) => {
       await page.setContent(
         `
-        <ion-datetime-button locale="en-US" datet
-        ime="datetime"></ion-datetime-button>
+        <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
         <ion-datetime id="datetime" value="2022-01-01T06:30:00" presentation="month-year"></ion-datetime>
       `,
         config
