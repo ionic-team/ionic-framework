@@ -19,8 +19,8 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Install Playwright Dependencies
-      run: npm install && npx playwright install && npx playwright install-deps
+    - name: Install Dependencies
+      run: npm install
       shell: bash
       working-directory: ./core
     - name: Test
