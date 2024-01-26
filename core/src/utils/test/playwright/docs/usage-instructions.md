@@ -50,7 +50,7 @@ npm run test.e2e src/components/button/test
 
 Ionic uses [Docker](https://www.docker.com) to provide a way to run tests locally in the same environment that is used on CI.
 
-While `npm run test.e2e` can be used to run tests in the same environment that you are developing in, `npm run test.e2e.docker` can be used to run tests in a Docker environment provided by the Ionic team. This command supports all the same features as `npm run test.e2e` detailed in the previous section.
+While `npm run test.e2e` can be used to run tests in the same environment that you are developing in, `npm run test.e2e.docker` can be used to run tests in a Docker environment provided by the Ionic team. This command supports all the same features as `npm run test.e2e` detailed in the previous section with the exception of the `--headed` flag. Tests run inside of Docker cannot be run in headed mode.
 
 This command builds a Docker image before tests run. It will also re-build the Docker image in the event that a Playwright update was merged into the repo.
 
