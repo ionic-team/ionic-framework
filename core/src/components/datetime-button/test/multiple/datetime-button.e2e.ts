@@ -20,7 +20,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('3 days');
     });
@@ -32,7 +32,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toHaveText('0 days');
     });
@@ -49,7 +49,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toHaveText('Jun 1, 2022');
     });
@@ -69,7 +69,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toHaveText('Selected: 3');
     });
@@ -86,7 +86,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
       const ionValueChange = await page.spyOnEvent('ionValueChange');
@@ -111,7 +111,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toHaveText('Jun 1, 2022');
       await expect(page.locator('#time-button')).toHaveText('4:30 PM');
