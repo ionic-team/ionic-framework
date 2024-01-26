@@ -1,0 +1,99 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:base", ":semanticCommitTypeAll(chore)"],
+  packageRules: [
+    {
+      matchPackagePatterns: ["@stencil/core", "@stencil/angular-output-target", "@stencil/react-output-target", "@stencil/sass", "@stencil/vue-output-target"],
+      groupName: "stencil",
+      matchFileNames: [
+        "core/package.json"
+      ]
+    },
+    {
+      matchPackagePatterns: ["@capacitor/core", "@capacitor/keyboard", "@capacitor/haptics", "@capacitor/status-bar"],
+      groupName: "capacitor",
+      matchFileNames: [
+        "core/package.json"
+      ]
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackagePatterns: ["@playwright/test", "playwright"],
+      groupName: "playwright",
+      matchFileNames: [
+        "core/package.json",
+        "core/Dockerfile"
+      ],
+      "versioning": "loose"
+    },
+    {
+      matchPackagePatterns: ["ionicons"],
+      groupName: "ionicons",
+      matchFileNames: [
+        "core/package.json"
+      ]
+    },
+    /**
+     * While we update dependencies in certain directories, we currently
+     * do not want to update every single dependency. Some of the dependencies are
+     * very out of date, and the team needs to schedule work to account for
+     * breaking changes in some of these updates. To potentially avoid a large number of
+     * failing PRs the team has chosen to selectively enable dependencies to be updated
+     * as we have capacity to account for breaking changes.
+     */
+    {
+      matchPackagePatterns: ["tslib", "@ionic/", "@rollup/", "@types/", "@typescript-eslint/", "clean-css-cli", "domino", "eslint", "eslint-config-prettier", "execa", "fs-extra", "jest", "jest-cli", "prettier", "puppeteer", "rollup", "sass", "serve", "stylelint", "stylelint-order"],
+      groupName: "core-disabled",
+      matchFileNames: [
+        "core/package.json"
+      ],
+      enabled: false
+    },
+    /**
+     * Local Ionic dependencies are managed by the
+     * workspace to ensure the correct local version is used.
+     */
+    {
+      matchPackagePatterns: ["@ionic/", "ionicons"],
+      groupName: "ignore-local-ionic-deps",
+      matchFileNames: [
+        "**/package.json"
+      ],
+      enabled: false
+    },
+    {
+      matchPackagePatterns: ["lerna", "semver"],
+      groupName: "root-disabled",
+      matchFileNames: [
+        "package.json"
+      ],
+      enabled: false
+    }
+  ],
+  dependencyDashboard: false,
+  minimumReleaseAge: "3 days",
+  rebaseWhen: "never",
+  schedule: ["every weekday before 11am"],
+  semanticCommits: "enabled",
+  ignorePaths: [
+    // GitHub Actions
+    ".github",
+    // Ionic Packages
+    "packages/angular/package.json",
+    "packages/angular-server/package.json",
+    "packages/react/package.json",
+    "packages/react-router/package.json",
+    "packages/vue/package.json",
+    "packages/vue-router/package.json",
+    "docs",
+    // Local Development Scripts
+    "core/custom-rules",
+    "core/scripts",
+    "packages/angular/scripts",
+    // E2E Test Apps
+    "packages/angular/test/apps",
+    "packages/react/test/apps",
+    "packages/react-router/test/apps",
+    "packages/vue/test/apps"
+  ]
+}
