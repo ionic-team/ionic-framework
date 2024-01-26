@@ -91,9 +91,9 @@
     "core/scripts",
     "packages/angular/scripts",
     // E2E Test Apps
-    "packages/angular/test/apps",
-    "packages/react/test/apps",
-    "packages/react-router/test/apps",
-    "packages/vue/test/apps"
+    "packages/angular/test",
+    "packages/react/test",
+    "packages/react-router/test",
+    "packages/vue/test"
   ]
 }
