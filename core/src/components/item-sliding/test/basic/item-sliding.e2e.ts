@@ -75,13 +75,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       // Scroll page in view and drag the item-sliding
       await page.setIonViewport();
       await dragElementBy(item, page, -150);
-      
+
       // Trigger the button to add the dynamic content
       const button = page.locator('#add-element-btn');
       await button.click();
 
       // Check if the element added is clicked
-      const elementAdded = page.locator('#element-added-delete')
+      const elementAdded = page.locator('#element-added-delete');
       await elementAdded.click();
 
       await page.waitForChanges();
