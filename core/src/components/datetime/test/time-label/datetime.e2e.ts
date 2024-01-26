@@ -10,7 +10,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const timeLabel = page.locator('ion-datetime .time-header');
       await expect(timeLabel).toHaveText('Time');
@@ -22,7 +22,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const timeLabel = page.locator('ion-datetime .time-header');
       await expect(timeLabel).toHaveText('');

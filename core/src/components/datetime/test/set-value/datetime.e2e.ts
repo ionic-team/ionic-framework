@@ -5,7 +5,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   test.describe(title('datetime: set-value'), () => {
     test('should update the active date when value is initially set', async ({ page }) => {
       await page.goto('/src/components/datetime/test/set-value', config);
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-11-25T12:40:00.000Z'));
@@ -18,7 +18,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
     test('should update the active time when value is initially set', async ({ page }) => {
       await page.goto('/src/components/datetime/test/set-value', config);
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-11-25T12:40:00.000Z'));
@@ -37,7 +37,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
       const activeDayButton = page.locator('.calendar-day-active');
@@ -53,7 +53,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
     test('should scroll to new month when value is initially set and then updated', async ({ page }) => {
       await page.goto('/src/components/datetime/test/set-value', config);
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-05-25T12:40:00.000Z'));
