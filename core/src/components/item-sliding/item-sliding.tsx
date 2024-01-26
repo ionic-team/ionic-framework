@@ -407,15 +407,16 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private setOpenAmount(openAmount: number, isFinal: boolean) {
+    const { el } = this;
+
     if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
+      el.classList.remove('item-sliding-closing');
       this.tmr = undefined;
     }
     if (!this.item) {
       return;
     }
-
-    const { el } = this;
 
     const style = this.item.style;
     this.openAmount = openAmount;
@@ -457,6 +458,7 @@ export class ItemSliding implements ComponentInterface {
         if (this.gesture) {
           this.gesture.enable(!this.disabled);
         }
+
         el.classList.remove('item-sliding-closing');
       }, 600);
 

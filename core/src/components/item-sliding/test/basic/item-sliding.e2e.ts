@@ -68,6 +68,28 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(item).toHaveScreenshot(screenshot(`item-sliding-gesture`));
     });
 
+    test('the dynamic element should be clicked', async ({ page }) => {
+      await page.goto(`/src/components/item-sliding/test/basic`, config);
+      const item = page.locator('#item43');
+
+      // Scroll page in view and drag the item-sliding
+      await page.setIonViewport();
+      await dragElementBy(item, page, -150);
+      
+      // Trigger the button to add the dynamic content
+      const button = page.locator('#add-element-btn');
+      await button.click();
+
+      // Check if the element added is clicked
+      const elementAdded = page.locator('#element-added-delete')
+      await elementAdded.click();
+
+      await page.waitForChanges();
+
+      // item-sliding doesn't have an easy way to tell whether it's fully open so just screenshot it
+      await expect(item).toHaveScreenshot(screenshot(`dynamic-element-clicked`));
+    });
+
     test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
