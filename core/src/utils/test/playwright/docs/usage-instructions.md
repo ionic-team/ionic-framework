@@ -46,11 +46,41 @@ npm run test.e2e src/components/button/test/basic/button.e2e.ts src/components/b
 npm run test.e2e src/components/button/test
 ```
 
+### Running Tests Inside Docker
+
+Ionic uses [Docker](https://www.docker.com) to provide a way to run tests locally in the same environment that is used on CI.
+
+While `npm run test.e2e` can be used to run tests in the same environment that you are developing in, `npm run test.e2e.docker` can be used to run tests in a Docker environment provided by the Ionic team. This command supports all the same features as `npm run test.e2e` detailed in the previous section.
+
+This command builds a Docker image before tests run. It will also re-build the Docker container in the event that a Playwright update was merged into the repo.
+
 ## Managing Screenshots
 
-### Generating or Updating Ground Truths (Local Development)
+If you are running a test that takes a screenshot, you must first generate the reference screenshot from your reference branch. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth. 
 
-If you are running a test that takes a screenshot, you must first generate the reference screenshot from your reference branch. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth. Alternatively, if the reference branch has changed since the last time you generated ground truths you may need to update your local ground truths.
+### Generating or Updating Ground Truths With Docker (Local Development)
+
+We recommend generating ground truths inside of [Docker](https://www.docker.com). This allows anyone contributing to Ionic Framework to create or update ground truths.
+
+To create or update ground truths, run the following command:
+
+```shell
+npm run test.e2e.docker.update-snapshots
+```
+
+Optionally, you can pass a directory to only update the ground truths for that directory & subdirectories. This is useful when working on a specific component.
+
+```shell
+npm run test.e2e.docker.update-snapshots src/components/alert/
+```
+
+The resulting screenshots should be committed and pushed to your branch.
+
+### Generating or Updating Ground Truths Without Docker (Local Development)
+
+While we recommend generating ground truths insider of Docker it is possible to generate ground truths without it. Note that these generated ground truths can only be used for local testing and will not update the ground truths stored in the repo.
+
+If the reference branch has changed since the last time you generated ground truths you may need to update your local ground truths.
 
 For most types of work the reference branch is typically `main`. Features are merged into a different branch, so developers should use that as the reference branch. For example, if branch `foo` will be merged into `bar`, then the reference branch is `bar`.
 
@@ -73,10 +103,10 @@ From here, you can switch back to your branch and run the tests.
 > [!NOTE]
 > Locally generated ground truths should not be committed to the repo. The `.gitignore` file prevents this from accidentally happening.
 
-### Updating Ground Truths (CI)
+### Generating or Updating Ground Truths (CI)
 
 > [!IMPORTANT]
-> Only Ionic Team members can update ground truths on the main repo. Ground truths cannot be updated on forked versions of the repo.
+> Only Ionic Team members can update ground truths on the main repo. Ground truths cannot be updated on forked versions of the repo. Instead, we recommend generating ground truths in Docker.
 
 When making an intentional visual change, you will need to update the ground truth screenshots or add new ones. It is important that the ground truth and comparison screenshots are taken in the same environment, so do not update the ground truth screenshots locally and commit them to the repo.
 
