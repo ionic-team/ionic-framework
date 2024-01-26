@@ -54,6 +54,8 @@ While `npm run test.e2e` can be used to run tests in the same environment that y
 
 This command builds a Docker image before tests run. It will also re-build the Docker image in the event that a Playwright update was merged into the repo.
 
+Note that the Playwright report will not automatically open in your web browser when tests are complete because the tests were run in Docker. Run `npm run test.report` outside of Docker to open the most recent test report.
+
 ## Managing Screenshots
 
 If you are running a test that takes a screenshot, you must first generate the reference screenshot from your reference branch. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth. 
