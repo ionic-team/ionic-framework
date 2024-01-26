@@ -17,14 +17,21 @@
       ]
     },
     {
-      matchDatasources: ["docker"],
-      matchPackagePatterns: ["@playwright/test", "playwright"],
+      matchDatasources: ["npm"],
+      matchPackagePatterns: ["@playwright/test", "@axe-core/playwright"],
       groupName: "playwright",
       matchFileNames: [
-        "core/package.json",
+        "core/package.json"
+      ]
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["mcr.microsoft.com/playwright"],
+      groupName: "playwright",
+      matchFileNames: [
         "core/Dockerfile"
       ],
-      "versioning": "loose"
+      versioning: "semver"
     },
     {
       matchPackagePatterns: ["ionicons"],
@@ -79,21 +86,15 @@
     // GitHub Actions
     ".github",
     // Ionic Packages
-    "packages/angular/package.json",
-    "packages/angular-server/package.json",
-    "packages/react/package.json",
-    "packages/react-router/package.json",
-    "packages/vue/package.json",
-    "packages/vue-router/package.json",
+    "packages/angular",
+    "packages/angular-server",
+    "packages/react",
+    "packages/react-router",
+    "packages/vue",
+    "packages/vue-router",
     "docs",
     // Local Development Scripts
     "core/custom-rules",
-    "core/scripts",
-    "packages/angular/scripts",
-    // E2E Test Apps
-    "packages/angular/test",
-    "packages/react/test",
-    "packages/react-router/test",
-    "packages/vue/test"
+    "core/scripts"
   ]
 }
