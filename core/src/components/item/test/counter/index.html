@@ -25,25 +25,18 @@
       <ion-content class="ion-padding-vertical">
         <ion-list>
           <ion-item counter="true">
-            <ion-input label="Counter" label-placement="stacked" maxlength="20"></ion-input>
+            <ion-label position="stacked">Counter</ion-label>
+            <ion-input maxlength="20"></ion-input>
           </ion-item>
 
           <ion-item counter="true">
-            <ion-input
-              label="Counter with value"
-              label-placement="stacked"
-              maxlength="20"
-              value="some value"
-            ></ion-input>
+            <ion-label position="stacked">Counter with value</ion-label>
+            <ion-input maxlength="20" value="some value"></ion-input>
           </ion-item>
 
           <ion-item counter="true" id="customFormatter">
-            <ion-input
-              label="Counter with custom formatter"
-              label-placement="stacked"
-              maxlength="20"
-              value=""
-            ></ion-input>
+            <ion-label position="stacked">Counter with custom formatter</ion-label>
+            <ion-input maxlength="20" value=""></ion-input>
           </ion-item>
         </ion-list>
       </ion-content>
