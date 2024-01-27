@@ -7,7 +7,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a range with no visible label', async ({ page }) => {
         await page.setContent(
           `
-          <ion-range aria-label="Range"></ion-range>
+          <ion-range style="padding-inline-start: 20px;" aria-label="Range"></ion-range>
         `,
           config
         );
