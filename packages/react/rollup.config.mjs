@@ -1,4 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
+const external = ['react', 'react-dom', 'react-router', 'react-router-dom', 'history'];
 
 export default {
   input: 'src/index.ts',
@@ -11,8 +12,8 @@ export default {
       sourcemap: true,
     }
   ],
-  external: (id) => !/^(\.|\/)/.test(id),
   plugins: [
     typescript(),
   ],
+  external: id => external.includes(id) || id.startsWith('@ionic/core') || id.startsWith('ionicons'),
 };
