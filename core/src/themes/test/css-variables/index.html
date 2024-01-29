@@ -154,6 +154,12 @@
                 <ion-segment-button value="oceanic">
                   <ion-label>Oceanic</ion-label>
                 </ion-segment-button>
+                <ion-segment-button value="high-contrast-light">
+                  <ion-label>High Contrast</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="high-contrast-dark">
+                  <ion-label>High Contrast (Dark)</ion-label>
+                </ion-segment-button>
                 <ion-segment-button value="vibrant">
                   <ion-label>Vibrant</ion-label>
                 </ion-segment-button>
@@ -345,6 +351,8 @@
                     </ion-item-options>
                   </ion-item-sliding>
                 </ion-list>
+
+                <ion-datetime></ion-datetime>
               </section>
 
               <section>
@@ -980,14 +988,26 @@
         // The path to the directory containing the
         // custom theme files for this test
         var themeFilesDir = '/src/themes/test/css-variables/css';
+        let modifier = '';
 
         // The default and dark themes are official Ionic
         // themes so they are located outside of this test
-        if (theme == 'default' || theme == 'dark') {
-          themeFilesDir = '/src/themes/test';
+
+        switch(theme) {
+          case 'default':
+            themeFilesDir = '/css/themes';
+            break;
+          case 'dark':
+          case 'high-contrast-light':
+          case 'high-contrast-dark':
+            themeFilesDir = '/css/themes';
+            modifier = '.always';
+            break;
+          default:
+            break;
         }
 
-        var cssFile = `${themeFilesDir}/${theme}.css`;
+        var cssFile = `${themeFilesDir}/${theme}${modifier}.css`;
 
         var oldLink = document.getElementById('theme');
 
