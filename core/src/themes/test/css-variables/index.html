@@ -983,11 +983,17 @@
 
         // The default and dark themes are official Ionic
         // themes so they are located outside of this test
-        if (theme == 'default' || theme == 'dark') {
-          themeFilesDir = '/src/themes/test';
-        }
+        let cssFile = `${themeFilesDir}/${theme}.css`;
 
-        var cssFile = `${themeFilesDir}/${theme}.css`;
+        // TODO FW-5862 update this to not
+        // load a file when default is set. The light
+        // theme is automatically set when importing ionic.bundle.css
+        if (theme == 'default') {
+          themeFilesDir = '/src/themes/test';
+        } else if (theme === 'dark') {
+          themeFilesDir = '/css/themes/';
+          cssFile = `${themeFilesDir}/${theme}.always.css`;
+        }
 
         var oldLink = document.getElementById('theme');
 
