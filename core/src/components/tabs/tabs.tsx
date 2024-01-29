@@ -4,6 +4,8 @@ import { Component, Element, Event, Host, Method, Prop, State, h } from '@stenci
 import type { NavOutlet, RouteID, RouteWrite } from '../router/utils/interface';
 import type { TabButtonClickEventDetail } from '../tab-bar/tab-bar-interface';
 
+import type { TabsEventDetail } from './tabs-interface';
+
 /**
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot top - Content is placed at the top of the screen.
@@ -34,12 +36,12 @@ export class Tabs implements NavOutlet {
   /**
    * Emitted when the navigation is about to transition to a new component.
    */
-  @Event({ bubbles: false }) ionTabsWillChange!: EventEmitter<{ tab: string }>;
+  @Event({ bubbles: false }) ionTabsWillChange!: EventEmitter<TabsEventDetail>;
 
   /**
    * Emitted when the navigation has finished transitioning to a new component.
    */
-  @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<{ tab: string }>;
+  @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<TabsEventDetail>;
 
   async componentWillLoad() {
     if (!this.useRouter) {

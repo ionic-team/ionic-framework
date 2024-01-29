@@ -1362,8 +1362,8 @@ ion-tabs,shadow
 ion-tabs,method,getSelected,getSelected() => Promise<string | undefined>
 ion-tabs,method,getTab,getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>
 ion-tabs,method,select,select(tab: string | HTMLIonTabElement) => Promise<boolean>
-ion-tabs,event,ionTabsDidChange,{ tab: string; },false
-ion-tabs,event,ionTabsWillChange,{ tab: string; },false
+ion-tabs,event,ionTabsDidChange,TabsEventDetail,false
+ion-tabs,event,ionTabsWillChange,TabsEventDetail,false
 
 ion-text,shadow
 ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true

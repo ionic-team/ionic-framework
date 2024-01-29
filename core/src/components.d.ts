@@ -38,6 +38,7 @@ import { SegmentButtonLayout } from "./components/segment-button/segment-button-
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+import { TabsEventDetail } from "./components/tabs/tabs-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -74,6 +75,7 @@ export { SegmentButtonLayout } from "./components/segment-button/segment-button-
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+export { TabsEventDetail } from "./components/tabs/tabs-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions, ToastSwipeGestureDirection } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -4503,8 +4505,8 @@ declare global {
     };
     interface HTMLIonTabsElementEventMap {
         "ionNavWillLoad": void;
-        "ionTabsWillChange": { tab: string };
-        "ionTabsDidChange": { tab: string };
+        "ionTabsWillChange": TabsEventDetail;
+        "ionTabsDidChange": TabsEventDetail;
     }
     interface HTMLIonTabsElement extends Components.IonTabs, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonTabsElementEventMap>(type: K, listener: (this: HTMLIonTabsElement, ev: IonTabsCustomEvent<HTMLIonTabsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7711,11 +7713,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the navigation has finished transitioning to a new component.
          */
-        "onIonTabsDidChange"?: (event: IonTabsCustomEvent<{ tab: string }>) => void;
+        "onIonTabsDidChange"?: (event: IonTabsCustomEvent<TabsEventDetail>) => void;
         /**
           * Emitted when the navigation is about to transition to a new component.
          */
-        "onIonTabsWillChange"?: (event: IonTabsCustomEvent<{ tab: string }>) => void;
+        "onIonTabsWillChange"?: (event: IonTabsCustomEvent<TabsEventDetail>) => void;
         "useRouter"?: boolean;
     }
     interface IonText {
