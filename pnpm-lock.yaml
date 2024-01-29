@@ -28,8 +28,8 @@ importers:
         version: 2.4.0
     devDependencies:
       '@axe-core/playwright':
-        specifier: ^4.8.3
-        version: 4.8.3(playwright-core@1.39.0)
+        specifier: ^4.8.4
+        version: 4.8.4(playwright-core@1.39.0)
       '@capacitor/core':
         specifier: ^5.6.0
         version: 5.6.0
@@ -1007,8 +1007,8 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /@axe-core/playwright@4.8.3(playwright-core@1.39.0):
-    resolution: {integrity: sha512-YtbkAWeOp5oQeI8vS6KYqJDa5yTl5O1wJP8KOZAAVjhxeiK/Y1ssxnZuGRobARyVh3eS6O3jdxTv/iCK1RfgaA==}
+  /@axe-core/playwright@4.8.4(playwright-core@1.39.0):
+    resolution: {integrity: sha512-xpwd+T0BODt19hnXW0eX9xf+H/Ns1rdWwZNmuCV9UoTqjZ9mGm1F80pvh/A1r317ooltq8nwqcoVO9jbHWKSdA==}
     peerDependencies:
       playwright-core: '>= 1.0.0'
     dependencies:
