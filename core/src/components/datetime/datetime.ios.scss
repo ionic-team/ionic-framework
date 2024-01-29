@@ -3,8 +3,8 @@
 @import "../../themes/ionic.globals.ios";
 
 :host {
-  --background: var(--ion-color-light, #ffffff);
-  --background-rgb: var(--ion-color-light-rgb);
+  --background: #{ion-color(light, base)};
+  --background-rgb: #{ion-color(light, base, null, true)};
   --title-color: #{$text-color-step-400};
 }
 
@@ -257,9 +257,11 @@
 
 /**
  * Day that is selected and is today
- * should have white color.
+ * should have base background color
+ * with contrast text.
  */
 :host .calendar-day.calendar-day-today.calendar-day-active {
+  background: current-color(base);
   color: current-color(contrast);
 }
 
