@@ -19,7 +19,7 @@ import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js
 @Component({
   selector: 'ion-router-outlet',
   standalone: true,
-  template: '<ng-container #outletContent><ng-content></ng-content></ng-container>',
+  template: '<ng-container #content><ng-content></ng-content></ng-container>',
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet extends IonRouterOutletBase {
@@ -30,7 +30,7 @@ export class IonRouterOutlet extends IonRouterOutletBase {
    * the first view will be added as a sibling of ion-router-outlet
    * instead of a child.
    */
-  @ViewChild('outletContent', { read: ViewContainerRef, static: true }) outletContent: ViewContainerRef;
+  @ViewChild('content', { read: ViewContainerRef, static: true }) content: ViewContainerRef;
 
   /**
    * We need to pass in the correct instance of IonRouterOutlet
@@ -46,9 +46,9 @@ export class IonRouterOutlet extends IonRouterOutletBase {
     router: Router,
     zone: NgZone,
     activatedRoute: ActivatedRoute,
-    outletContent: ViewContainerRef,
+    content: ViewContainerRef,
     @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
   ) {
-    super(name, tabs, commonLocation, elementRef, router, zone, activatedRoute, outletContent, parentOutlet);
+    super(name, tabs, commonLocation, elementRef, router, zone, activatedRoute, content, parentOutlet);
   }
 }
