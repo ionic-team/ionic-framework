@@ -884,6 +884,7 @@ ion-nav,prop,swipeGesture,boolean | undefined,undefined,false,false
 ion-nav,method,canGoBack,canGoBack(view?: ViewController) => Promise<boolean>
 ion-nav,method,getActive,getActive() => Promise<ViewController | undefined>
 ion-nav,method,getByIndex,getByIndex(index: number) => Promise<ViewController | undefined>
+ion-nav,method,getLength,getLength() => Promise<number>
 ion-nav,method,getPrevious,getPrevious(view?: ViewController) => Promise<ViewController | undefined>
 ion-nav,method,insert,insert<T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
 ion-nav,method,insertPages,insertPages(insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
@@ -1107,6 +1108,7 @@ ion-range,part,tick-active
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
 ion-refresher,prop,disabled,boolean,false,false,false
+ion-refresher,prop,mode,"ios" | "md",undefined,false,false
 ion-refresher,prop,pullFactor,number,1,false,false
 ion-refresher,prop,pullMax,number,this.pullMin + 60,false,false
 ion-refresher,prop,pullMin,number,60,false,false

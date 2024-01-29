@@ -5,11 +5,11 @@
     @include dark-base-theme();
   }
 
-  .ios body {
+  :root.ios {
     @include dark-ios-theme();
   }
 
-  .md body {
+  :root.md {
     @include dark-md-theme();
   }
 }

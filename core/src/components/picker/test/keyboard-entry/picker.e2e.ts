@@ -163,5 +163,50 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(ionChange).toHaveReceivedEventDetail({ value: 12 });
       await expect(column).toHaveJSProperty('value', 12);
     });
+    test('pressing Enter should dismiss the keyboard', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28325',
+      });
+      await page.setContent(
+        `
+        <ion-picker>
+          <ion-picker-column></ion-picker-column>
+        </ion-picker>
+
+        <script>
+          const column = document.querySelector('ion-picker-column');
+          column.numericInput = true;
+          const items = [
+            { text: '01', value: 1 },
+            { text: '02', value: 2 },
+            { text: '03', value: 3 },
+            { text: '04', value: 4 },
+            { text: '05', value: 5 }
+          ];
+
+          items.forEach((item) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = item.value;
+            option.textContent = item.text;
+
+            column.appendChild(option);
+          });
+        </script>
+      `,
+        config
+      );
+
+      const column = page.locator('ion-picker-column');
+      await column.click();
+
+      const input = page.locator('ion-picker input');
+      await expect(input).toBeFocused();
+
+      // pressing Enter should blur the input and therefore close the keyboard
+      await page.keyboard.press('Enter');
+
+      await expect(input).not.toBeFocused();
+    });
   });
 });

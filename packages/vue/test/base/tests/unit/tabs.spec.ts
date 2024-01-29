@@ -1,13 +1,8 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { IonicVue, IonApp, IonRouterOutlet, IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/vue';
+import { IonicVue, IonRouterOutlet, IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/vue';
 import { waitForRouter } from './utils';
-
-const App = {
-  components: { IonApp, IonRouterOutlet },
-  template: '<ion-app><ion-router-outlet /></ion-app>',
-}
 
 const Tabs = {
   components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel, IonRouterOutlet },
@@ -64,7 +59,7 @@ describe('ion-tabs', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -112,7 +107,7 @@ describe('ion-tabs', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -166,7 +161,7 @@ describe('ion-tabs', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -222,7 +217,7 @@ describe('ion-tabs', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
