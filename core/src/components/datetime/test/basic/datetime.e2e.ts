@@ -458,6 +458,44 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   });
 });
 
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: today button rendering'), () => {
+    test('should render today button correctly when selected', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'FW-5808',
+      });
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" value="2022-01-02"></ion-datetime>
+
+        <script>
+          const mockToday = '2022-01-02T16:22';
+          Date = class extends Date {
+            constructor(...args) {
+              if (args.length === 0) {
+                super(mockToday)
+              } else {
+                super(...args);
+              }
+            }
+          }
+        </script>
+      `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+
+      await page.waitForSelector('.datetime-ready');
+
+      await expect(datetime.locator('.calendar-day-today')).toHaveScreenshot(
+        screenshot(`datetime-today-calendar-button`)
+      );
+    });
+  });
+});
+
 /**
  * The calendar day highlight does not render
  * on iOS and has the same behavior across directions.
