@@ -14,7 +14,7 @@ import { IonRouterOutlet as IonRouterOutletBase } from '@ionic/angular/common';
 
 @Component({
   selector: 'ion-router-outlet',
-  template: '<ng-container #content><ng-content></ng-content></ng-container>',
+  template: '<ng-container #outletContent><ng-content></ng-content></ng-container>',
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet extends IonRouterOutletBase {
@@ -25,7 +25,7 @@ export class IonRouterOutlet extends IonRouterOutletBase {
    * the first view will be added as a sibling of ion-router-outlet
    * instead of a child.
    */
-  @ViewChild('content', { read: ViewContainerRef, static: true }) content: ViewContainerRef;
+  @ViewChild('outletContent', { read: ViewContainerRef, static: true }) outletContent: ViewContainerRef;
 
   /**
    * We need to pass in the correct instance of IonRouterOutlet
@@ -41,9 +41,13 @@ export class IonRouterOutlet extends IonRouterOutletBase {
     router: Router,
     zone: NgZone,
     activatedRoute: ActivatedRoute,
-    content: ViewContainerRef,
+    outletContent: ViewContainerRef,
     @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
   ) {
-    super(name, tabs, commonLocation, elementRef, router, zone, activatedRoute, content, parentOutlet);
+    console.log('lookiehere', outletContent)
+    setTimeout(() => {
+      console.log('tst2',outletContent)
+    }, 500);
+    super(name, tabs, commonLocation, elementRef, router, zone, activatedRoute, outletContent, parentOutlet);
   }
 }
