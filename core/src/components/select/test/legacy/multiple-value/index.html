@@ -24,7 +24,8 @@
 
       <ion-content class="outer-content test-content">
         <ion-item>
-          <ion-select label="Toppings" id="toppings" multiple="true" cancel-text="Nah" ok-text="Okay!">
+          <ion-label>Toppings</ion-label>
+          <ion-select id="toppings" multiple="true" cancel-text="Nah" ok-text="Okay!">
             <ion-select-option value="bacon">Bacon</ion-select-option>
             <ion-select-option value="olives">Black Olives</ion-select-option>
             <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
@@ -39,7 +40,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-select label="Car Features" id="carFeatures" multiple="true">
+          <ion-label>Car Features</ion-label>
+          <ion-select id="carFeatures" multiple="true">
             <ion-select-option value="backupcamera">Backup Camera</ion-select-option>
             <ion-select-option value="heatedseats">Headted Seats</ion-select-option>
             <ion-select-option value="keyless">Keyless Entry</ion-select-option>
@@ -50,7 +52,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-select label="Pets" id="pets" multiple>
+          <ion-label>Pets</ion-label>
+          <ion-select id="pets" multiple>
             <ion-select-option value="cat">Cat</ion-select-option>
             <ion-select-option value="dog">Dog</ion-select-option>
             <ion-select-option value="turtle">Turtle</ion-select-option>
@@ -59,13 +62,15 @@
         </ion-item>
 
         <ion-item>
-          <ion-select label="Disabled" id="disabled" multiple disabled value="selected">
+          <ion-label>Disabled</ion-label>
+          <ion-select id="disabled" multiple disabled value="selected">
             <ion-select-option value="selected">Selected Text</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item>
-          <ion-select label="Statuses" id="status" value="selected" multiple>
+          <ion-label>Statuses</ion-label>
+          <ion-select id="status" value="selected" multiple>
             <ion-select-option value="selected">Selected</ion-select-option>
             <ion-select-option value="default">Default</ion-select-option>
             <ion-select-option value="disabled" disabled="true">Disabled</ion-select-option>
@@ -84,10 +89,11 @@
         <form>
           <ion-list class="ion-padding-vertical">
             <ion-item>
-              <ion-input aria-label="input" type="text"></ion-input>
+              <ion-input type="text"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-select label="Select" id="multiple" multiple="true">
+              <ion-label>Select</ion-label>
+              <ion-select id="multiple" multiple="true">
                 <ion-select-option value="1">1</ion-select-option>
                 <ion-select-option value="2">2</ion-select-option>
                 <ion-select-option value="3">3</ion-select-option>
@@ -98,7 +104,8 @@
         </form>
 
         <ion-item>
-          <ion-select label="Floating label" label-placement="floating" multiple="true">
+          <ion-label position="floating">Floating label</ion-label>
+          <ion-select multiple="true">
             <ion-select-option value="bacon">Bacon</ion-select-option>
             <ion-select-option value="olives">Black Olives</ion-select-option>
             <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
