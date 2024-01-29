@@ -2,6 +2,80 @@
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
 
+:root {
+  /** primary **/
+  --ion-color-primary: #0054e9;
+  --ion-color-primary-rgb: 0, 84, 233;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #004acd;
+  --ion-color-primary-tint: #1a65eb;
+
+  /** secondary **/
+  --ion-color-secondary: #0163aa;
+  --ion-color-secondary-rgb: 1, 99, 170;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #015796;
+  --ion-color-secondary-tint: #1a73b3;
+
+  /** tertiary **/
+  --ion-color-tertiary: #6030ff;
+  --ion-color-tertiary-rgb: 96, 48, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #542ae0;
+  --ion-color-tertiary-tint: #7045ff;
+
+  /** success **/
+  --ion-color-success: #2dd55b;
+  --ion-color-success-rgb: 45, 213, 91;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #28bb50;
+  --ion-color-success-tint: #42d96b;
+
+  /** warning **/
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  /** danger **/
+  --ion-color-danger: #c5000f;
+  --ion-color-danger-rgb: 197, 0, 15;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #ad000d;
+  --ion-color-danger-tint: #cb1a27;
+
+  /** dark **/
+  --ion-color-dark: #2f2f2f;
+  --ion-color-dark-rgb: 47, 47, 47;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #292929;
+  --ion-color-dark-tint: #444444;
+
+  /** medium **/
+  --ion-color-medium: #5f5f5f;
+  --ion-color-medium-rgb: 95, 95, 95;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #545454;
+  --ion-color-medium-tint: #6f6f6f;
+
+  /** light **/
+  --ion-color-light: #f6f8fc;
+  --ion-color-light-rgb: 246, 248, 252;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d8dade;
+  --ion-color-light-tint: #f7f9fc;
+}
+
 // Ionic Font Family
 // --------------------------------------------------
 
@@ -251,9 +325,36 @@ ion-card-header.ion-color .ion-inherit-color {
   cursor: pointer;
   touch-action: manipulation;
 
-  // the containing element itself should be clickable but
-  // everything inside of it should not clickable when menu is open
+  /**
+   * The containing element itself should be clickable but
+   * everything inside of it should not clickable when menu is open
+   *
+   * Setting pointer-events after scrolling has already started
+   * will not cancel scrolling which is why we also set
+   * overflow-y below.
+   */
   pointer-events: none;
+
+  /**
+   * This accounts for scenarios where the main content itself
+   * is scrollable.
+   */
+  overflow-y: hidden;
+}
+
+/**
+ * Setting overflow cancels any in-progress scrolling
+ * when the menu opens. This prevents users from accidentally
+ * scrolling the main content while also dragging the menu open.
+ * The code below accounts for both ion-content and then custom
+ * scroll containers within ion-content (such as virtual scroll)
+ */
+.menu-content-open ion-content {
+  --overflow: hidden;
+}
+
+.menu-content-open .ion-content-scroll-host {
+  overflow: hidden;
 }
 
 .ios .menu-content-reveal {

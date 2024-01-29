@@ -776,8 +776,27 @@ export class Select implements ComponentInterface {
        * We ensure the target isn't this element in case the select is slotted
        * in, for example, an item. This would prevent the select from ever
        * being opened since the element itself has slot="start"/"end".
+       *
+       * Clicking a slotted element also causes a click
+       * on the <label> element (since it wraps the slots).
+       * Clicking <label> dispatches another click event on
+       * the native form control that then bubbles up to this
+       * listener. This additional event targets the host
+       * element, so the select overlay is opened.
+       *
+       * When the slotted elements are clicked (and therefore
+       * the ancestor <label> element) we want to prevent the label
+       * from dispatching another click event.
+       *
+       * Do not call stopPropagation() because this will cause
+       * click handlers on the slotted elements to never fire in React.
+       * When developers do onClick in React a native "click" listener
+       * is added on the root element, not the slotted element. When that
+       * native click listener fires, React then dispatches the synthetic
+       * click event on the slotted element. However, if stopPropagation
+       * is called then the native click event will never bubble up
+       * to the root element.
        */
-      ev.stopPropagation();
       ev.preventDefault();
     }
   };
