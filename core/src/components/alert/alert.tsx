@@ -461,8 +461,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private async buttonClick(button: AlertButton) {
     const role = button.role;
+    const hasHandler = button.handler !== undefined;
     const values = this.getValues();
-    if (isCancel(role)) {
+    if (isCancel(role) && hasHandler === false) {
       return this.dismiss({ values }, role);
     }
     const returnData = await this.callButtonHandler(button, values);
@@ -669,9 +670,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
   };
 
   private dispatchCancelHandler = (ev: CustomEvent) => {
-    const role = ev.detail.role;
+    const button = ev.detail;
+    const role = button.role;
     if (isCancel(role)) {
-      const cancelButton = this.processedButtons.find((b) => b.role === 'cancel');
+      const cancelButton = this.processedButtons.find((b) => (b === button && b.role === 'cancel'));
       this.callButtonHandler(cancelButton);
     }
   };
