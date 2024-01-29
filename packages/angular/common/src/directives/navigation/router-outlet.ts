@@ -9,7 +9,7 @@ import {
   ViewContainerRef,
   inject,
   Attribute,
-  Component,
+  Directive,
   EventEmitter,
   Optional,
   Output,
@@ -35,13 +35,14 @@ import { RouteView, StackDidChangeEvent, StackWillChangeEvent, getUrl, isTabSwit
 
 // TODO(FW-2827): types
 
-@Component({
+@Directive({
   selector: 'ion-router-outlet',
-  template: '<ng-container #outletContent><ng-content></ng-content></ng-container>',
+  exportAs: 'outlet',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['animated', 'animation', 'mode', 'swipeGesture'],
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class IonRouterOutlet implements OnDestroy, OnInit {
-
   abstract outletContent: any;
 
   nativeEl: HTMLIonRouterOutletElement;
@@ -117,7 +118,6 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
     router: Router,
     zone: NgZone,
     activatedRoute: ActivatedRoute,
-    protected outletContentContainer: ViewContainerRef,
     @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
   ) {
     this.nativeEl = elementRef.nativeElement;
@@ -125,12 +125,6 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
     this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
     this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, this.navCtrl, zone, commonLocation);
     this.parentContexts.onChildOutletCreated(this.name, this as any);
-
-    console.log('looking at container', this.outletContentContainer)
-
-    setTimeout(() => {
-      console.log('in timeout', this.outletContentContainer)
-    }, 500);
   }
 
   ngOnDestroy(): void {
@@ -288,12 +282,12 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
        * View components need to be added as a child of ion-router-outlet
        * for page transitions and swipe to go back.
        * However, createComponent mounts components as siblings of the
-       * ViewContainerRef. As a result, outletContentContainer must reference
+       * ViewContainerRef. As a result, outletContent must reference
        * an ng-container inside of ion-router-outlet and not
        * ion-router-outlet itself.
        */
-      cmpRef = this.activated = this.outletContentContainer.createComponent(component, {
-        index: this.outletContentContainer.length,
+      cmpRef = this.activated = this.outletContent.createComponent(component, {
+        index: this.outletContent.length,
         injector,
         environmentInjector: environmentInjector ?? this.environmentInjector,
       });
@@ -303,7 +297,7 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
 
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
-      enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
+      enteringView = this.stackCtrl.createView(this.activated!, activatedRoute);
 
       // Store references to the proxy by component
       this.proxyMap.set(cmpRef.instance, activatedRouteProxy);

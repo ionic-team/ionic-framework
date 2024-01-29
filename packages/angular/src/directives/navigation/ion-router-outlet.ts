@@ -41,13 +41,8 @@ export class IonRouterOutlet extends IonRouterOutletBase {
     router: Router,
     zone: NgZone,
     activatedRoute: ActivatedRoute,
-    outletContent: ViewContainerRef,
     @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
   ) {
-    console.log('lookiehere', outletContent)
-    setTimeout(() => {
-      console.log('tst2',outletContent)
-    }, 500);
-    super(name, tabs, commonLocation, elementRef, router, zone, activatedRoute, outletContent, parentOutlet);
+    super(name, tabs, commonLocation, elementRef, router, zone, activatedRoute, parentOutlet);
   }
 }
