@@ -444,7 +444,7 @@
 
   border: none;
 
-  background: var(--ion-color-step-300, #edeef0);
+  background: var(--ion-color-step-300, var(--ion-background-color-step-300, #ffffff));
 
   color: $text-color;
 
