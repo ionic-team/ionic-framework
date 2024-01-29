@@ -26,7 +26,6 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build.ng && pnpm run build.core && pnpm run clean-generated",
     "build.core": "node scripts/build-core.js",
-    "build.link": "pnpm run build && node scripts/link-copy.js",
     "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
     "build.watch": "pnpm run build.ng --watch",
     "clean": "node scripts/clean.js",
