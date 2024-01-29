@@ -7,7 +7,7 @@ import { defineCustomElement as defineIonTabButton } from '@ionic/core/component
 import type { JSX as IoniconsJSX } from 'ionicons';
 import { defineCustomElement as defineIonIcon } from 'ionicons/components/ion-icon.js';
 
-import { /*@__PURE__*/ createReactComponent } from './react-component-lib';
+import { createReactComponent } from './react-component-lib';
 
 export const IonTabButtonInner = /*@__PURE__*/ createReactComponent<
   JSX.IonTabButton & { onIonTabButtonClick?: (e: CustomEvent) => void },

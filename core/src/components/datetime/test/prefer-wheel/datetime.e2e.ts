@@ -23,7 +23,7 @@ configs().forEach(({ title, screenshot, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-wheel-date-diff`));
     });
@@ -34,7 +34,7 @@ configs().forEach(({ title, screenshot, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-wheel-date-time-diff`));
     });
@@ -45,7 +45,7 @@ configs().forEach(({ title, screenshot, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-wheel-time-date-diff`));
     });
@@ -56,7 +56,7 @@ configs().forEach(({ title, screenshot, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
 
@@ -80,7 +80,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('ion-datetime .day-column .picker-item[data-value]');
         expect(await dayValues.count()).toEqual(27);
@@ -93,7 +93,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('ion-datetime .day-column .picker-item[data-value]');
         expect(await dayValues.count()).toEqual(1);
@@ -116,7 +116,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const disabledMonths = page.locator('.month-column .picker-item[disabled]');
         const disabledYears = page.locator('.year-column .picker-item[disabled]');
@@ -141,7 +141,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
         const yearValues = page.locator('.year-column .picker-item:not(.picker-item-empty)');
@@ -175,7 +175,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const ionChange = await page.spyOnEvent('ionChange');
         const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
@@ -209,7 +209,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const ionChange = await page.spyOnEvent('ionChange');
         const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
@@ -230,7 +230,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const ionChange = await page.spyOnEvent('ionChange');
         const yearValues = page.locator('.year-column .picker-item:not(.picker-item-empty)');
@@ -244,6 +244,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await ionChange.next();
       });
+
+      test('should jump to selected date when programmatically updating value', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-datetime presentation="date" prefer-wheel="true" min="2019-05-05" max="2023-10-01" value="2019-05-30"></ion-datetime>
+          `,
+          config
+        );
+
+        await page.locator('.datetime-ready').waitFor();
+        const datetime = page.locator('ion-datetime');
+
+        await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-05-25T12:40:00.000Z'));
+        await page.waitForChanges();
+
+        const selectedMonth = datetime.locator('.month-column .picker-item-active');
+        const selectedDay = datetime.locator('.day-column .picker-item-active');
+        const selectedYear = datetime.locator('.year-column .picker-item-active');
+
+        await expect(selectedMonth).toHaveText(/May/);
+        await expect(selectedDay).toHaveText(/25/);
+        await expect(selectedYear).toHaveText(/2021/);
+      });
+
       test.describe('datetime: date wheel localization', () => {
         test('should correctly localize the date data', async ({ page }) => {
           await page.setContent(
@@ -261,7 +285,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
             config
           );
 
-          await page.waitForSelector('.datetime-ready');
+          await page.locator('.datetime-ready').waitFor();
 
           const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
           const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
@@ -282,7 +306,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
             config
           );
 
-          await page.waitForSelector('.datetime-ready');
+          await page.locator('.datetime-ready').waitFor();
 
           const columns = page.locator('ion-picker-column-internal');
 
@@ -303,7 +327,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
             config
           );
 
-          await page.waitForSelector('.datetime-ready');
+          await page.locator('.datetime-ready').waitFor();
 
           const columns = page.locator('ion-picker-column-internal');
 
@@ -322,7 +346,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
         expect(await dayValues.count()).toEqual(57);
@@ -335,7 +359,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
         expect(await dayValues.count()).toEqual(41);
@@ -358,7 +382,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const disabledDates = page.locator('.date-column .picker-item[disabled]');
 
@@ -379,7 +403,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
@@ -400,7 +424,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
@@ -420,7 +444,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dateColumn = page.locator('.date-column');
         const dateValues = dateColumn.locator('.picker-item:not(.picker-item-empty)');
@@ -450,7 +474,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
@@ -470,7 +494,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
@@ -487,7 +511,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const ionChange = await page.spyOnEvent('ionChange');
         const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
@@ -507,7 +531,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
         expect(await dayValues.count()).toEqual(57);
@@ -520,7 +544,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
         expect(await dayValues.count()).toEqual(41);
@@ -543,7 +567,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const disabledDates = page.locator('.date-column .picker-item[disabled]');
 
@@ -564,7 +588,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
@@ -585,7 +609,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
@@ -605,7 +629,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dateColumn = page.locator('.date-column');
         const dateValues = dateColumn.locator('.picker-item:not(.picker-item-empty)');
@@ -635,7 +659,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
@@ -655,7 +679,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 

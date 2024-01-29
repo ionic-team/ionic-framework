@@ -95,7 +95,7 @@ export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionG
   'ionChange',
   'ionValueChange'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'ion-change');
 
 
 export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar', defineIonAvatar);
@@ -212,13 +212,14 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox, JSX.Io
   'value',
   'labelPlacement',
   'justify',
+  'alignment',
   'legacy',
   'ionChange',
   'ionFocus',
   'ionBlur',
   'ionStyle'
 ],
-'checked', 'v-ion-change', 'ionChange');
+'checked', 'ion-change');
 
 
 export const IonChip = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', defineIonChip, [
@@ -307,7 +308,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime, JSX.Io
   'ionStyle',
   'ionRender'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'ion-change');
 
 
 export const IonDatetimeButton = /*@__PURE__*/ defineContainer<JSX.IonDatetimeButton>('ion-datetime-button', defineIonDatetimeButton, [
@@ -434,7 +435,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'ionFocus',
   'ionStyle'
 ],
-'value', 'v-ion-input', 'ionInput');
+'value', 'ion-input');
 
 
 export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', defineIonItem, [
@@ -585,21 +586,23 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio, JSX.IonRadio
   'labelPlacement',
   'legacy',
   'justify',
+  'alignment',
   'ionStyle',
   'ionFocus',
   'ionBlur'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'ion-change');
 
 
 export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup, JSX.IonRadioGroup["value"]>('ion-radio-group', defineIonRadioGroup, [
   'allowEmptySelection',
+  'compareWith',
   'name',
   'value',
   'ionChange',
   'ionValueChange'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'ion-change');
 
 
 export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange["value"]>('ion-range', defineIonRange, [
@@ -628,7 +631,7 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange
   'ionKnobMoveStart',
   'ionKnobMoveEnd'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'ion-input');
 
 
 export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion-refresher', defineIonRefresher, [
@@ -697,7 +700,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.
   'ionFocus',
   'ionStyle'
 ],
-'value', 'v-ion-input', 'ionInput');
+'value', 'ion-input');
 
 
 export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment, JSX.IonSegment["value"]>('ion-segment', defineIonSegment, [
@@ -711,7 +714,7 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment, JSX.IonS
   'ionSelect',
   'ionStyle'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'ion-change');
 
 
 export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton, JSX.IonSegmentButton["value"]>('ion-segment-button', defineIonSegmentButton, [
@@ -720,7 +723,7 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
   'type',
   'value'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'ion-change');
 
 
 export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSelect["value"]>('ion-select', defineIonSelect, [
@@ -751,7 +754,7 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'ionBlur',
   'ionStyle'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'ion-change');
 
 
 export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption>('ion-select-option', defineIonSelectOption, [
@@ -761,7 +764,8 @@ export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption
 
 
 export const IonSkeletonText = /*@__PURE__*/ defineContainer<JSX.IonSkeletonText>('ion-skeleton-text', defineIonSkeletonText, [
-  'animated'
+  'animated',
+  'ionStyle'
 ]);
 
 
@@ -822,7 +826,7 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea, JSX.Io
   'ionBlur',
   'ionFocus'
 ],
-'value', 'v-ion-input', 'ionInput');
+'value', 'ion-input');
 
 
 export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail', defineIonThumbnail);
@@ -845,12 +849,13 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'labelPlacement',
   'legacy',
   'justify',
+  'alignment',
   'ionChange',
   'ionFocus',
   'ionBlur',
   'ionStyle'
 ],
-'checked', 'v-ion-change', 'ionChange');
+'checked', 'ion-change');
 
 
 export const IonToolbar = /*@__PURE__*/ defineContainer<JSX.IonToolbar>('ion-toolbar', defineIonToolbar, [

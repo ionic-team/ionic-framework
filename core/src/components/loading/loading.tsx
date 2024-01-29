@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import {
   BACKDROP,
   dismiss,
@@ -42,10 +43,10 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
-  private currentTransition?: Promise<any>;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -224,6 +225,17 @@ export class Loading implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
+
+    /**
+     * When binding values in frameworks such as Angular
+     * it is possible for the value to be set after the Web Component
+     * initializes but before the value watcher is set up in Stencil.
+     * As a result, the watcher callback may not be fired.
+     * We work around this by manually calling the watcher
+     * callback when the component has loaded and the watcher
+     * is configured.
+     */
+    this.triggerChanged();
   }
 
   disconnectedCallback() {
@@ -235,29 +247,17 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline loading indicator
-     * and dismissing a loading indicator it is possible to
-     * quickly present the loading indicator while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
-
-    await this.currentTransition;
+    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
     }
 
-    this.currentTransition = undefined;
+    unlock();
   }
 
   /**
@@ -271,16 +271,18 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
+    const unlock = await this.lockController.lock();
+
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    this.currentTransition = dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
-
-    const dismissed = await this.currentTransition;
+    const dismissed = await dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
     }
+
+    unlock();
 
     return dismissed;
   }

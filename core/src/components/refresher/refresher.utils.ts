@@ -1,7 +1,6 @@
 import { writeTask } from '@stencil/core';
 import { createAnimation } from '@utils/animation/animation';
 import { clamp, componentOnReady, transitionEndAsync } from '@utils/helpers';
-import { isPlatform } from '@utils/platform';
 
 // MD Native Refresher
 // -----------------------------
@@ -25,12 +24,11 @@ export const createPullingAnimation = (
 };
 
 const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
-  // TODO(FW-2832): add types/re-evaluate asserting so many things
-  const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
-  const circle = spinner!.shadowRoot!.querySelector('circle') as any;
-  const spinnerArrowContainer = pullingRefresherIcon.querySelector('.spinner-arrow-container') as HTMLElement;
+  const spinner = pullingRefresherIcon.querySelector('ion-spinner')!;
+  const circle = spinner!.shadowRoot!.querySelector('circle')!;
+  const spinnerArrowContainer = pullingRefresherIcon.querySelector('.spinner-arrow-container')!;
   const arrowContainer = pullingRefresherIcon!.querySelector('.arrow-container');
-  const arrow = arrowContainer ? (arrowContainer!.querySelector('ion-icon') as HTMLElement) : null;
+  const arrow = arrowContainer ? arrowContainer!.querySelector('ion-icon') : null;
 
   const baseAnimation = createAnimation().duration(1000).easing('ease-out');
 
@@ -196,6 +194,25 @@ export const translateElement = (el?: HTMLElement, value?: string, duration = 20
 // Utils
 // -----------------------------
 
+/**
+ * In order to use the native iOS refresher the device must support rubber band scrolling.
+ * As part of this, we need to exclude Desktop Safari because it has a slightly different rubber band effect that is not compatible with the native refresher in Ionic.
+ *
+ * We also need to be careful not to include devices that spoof their user agent.
+ * For example, when using iOS emulation in Chrome the user agent will be spoofed such that
+ * navigator.maxTouchPointer > 0. To work around this,
+ * we check to see if the apple-pay-logo is supported as a named image which is only
+ * true on Apple devices.
+ *
+ * We previously checked referencEl.style.webkitOverflowScrolling to explicitly check
+ * for rubber band support. However, this property was removed on iPadOS and it's possible
+ * that this will be removed on iOS in the future too.
+ *
+ */
+export const supportsRubberBandScrolling = () => {
+  return navigator.maxTouchPoints > 0 && CSS.supports('background: -webkit-named-image(apple-pay-logo-black)');
+};
+
 export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElement, mode: string) => {
   const refresherContent = referenceEl.querySelector('ion-refresher-content');
   if (!refresherContent) {
@@ -210,7 +227,6 @@ export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElem
   return (
     pullingSpinner !== null &&
     refreshingSpinner !== null &&
-    ((mode === 'ios' && isPlatform('mobile') && (referenceEl.style as any).webkitOverflowScrolling !== undefined) ||
-      mode === 'md')
+    ((mode === 'ios' && supportsRubberBandScrolling()) || mode === 'md')
   );
 };

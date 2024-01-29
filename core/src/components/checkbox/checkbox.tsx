@@ -18,6 +18,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  * @slot - The label text to associate with the checkbox. Use the "labelPlacement" property to control where the label is placed relative to the checkbox.
  *
  * @part container - The container for the checkbox mark.
+ * @part label - The label text describing the checkbox.
  * @part mark - The checkmark used to indicate the checked state.
  */
 @Component({
@@ -81,8 +82,9 @@ export class Checkbox implements ComponentInterface {
    * `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"stacked"`: The label will appear above the checkbox regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   /**
    * How to pack the label and checkbox within a line.
@@ -94,6 +96,13 @@ export class Checkbox implements ComponentInterface {
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
+   * How to control the alignment of the checkbox and label on the cross axis.
+   * `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
+   * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+   */
+  @Prop() alignment: 'start' | 'center' = 'center';
 
   // TODO(FW-3100): remove this
   /**
@@ -132,9 +141,8 @@ export class Checkbox implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
-  // TODO(FW-3100): remove this
   connectedCallback() {
-    this.legacyFormController = createLegacyFormController(this.el);
+    this.legacyFormController = createLegacyFormController(this.el); // TODO(FW-3100): remove this
   }
 
   componentWillLoad() {
@@ -157,6 +165,8 @@ export class Checkbox implements ComponentInterface {
   private emitStyle() {
     const style: StyleEventDetail = {
       'interactive-disabled': this.disabled,
+      // TODO(FW-3100): remove this
+      legacy: !!this.legacy,
     };
 
     // TODO(FW-3100): remove this
@@ -187,7 +197,7 @@ export class Checkbox implements ComponentInterface {
     });
   };
 
-  private toggleChecked = (ev: any) => {
+  private toggleChecked = (ev: Event) => {
     ev.preventDefault();
 
     this.setFocus();
@@ -201,6 +211,14 @@ export class Checkbox implements ComponentInterface {
 
   private onBlur = () => {
     this.ionBlur.emit();
+  };
+
+  private onClick = (ev: MouseEvent) => {
+    if (this.disabled) {
+      return;
+    }
+
+    this.toggleChecked(ev);
   };
 
   // TODO(FW-3100): run contents of renderCheckbox directly instead
@@ -224,6 +242,7 @@ export class Checkbox implements ComponentInterface {
       labelPlacement,
       name,
       value,
+      alignment,
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
@@ -240,8 +259,10 @@ export class Checkbox implements ComponentInterface {
           'checkbox-indeterminate': indeterminate,
           interactive: true,
           [`checkbox-justify-${justify}`]: true,
+          [`checkbox-alignment-${alignment}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
+        onClick={this.onClick}
       >
         <label class="checkbox-wrapper">
           {/*
@@ -264,6 +285,7 @@ export class Checkbox implements ComponentInterface {
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': el.textContent === '',
             }}
+            part="label"
           >
             <slot></slot>
           </div>
@@ -323,6 +345,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'legacy-checkbox': true,
           interactive: true,
         })}
+        onClick={this.onClick}
       >
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}

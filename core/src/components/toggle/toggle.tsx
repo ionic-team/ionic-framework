@@ -23,6 +23,7 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
  *
  * @part track - The background track of the toggle.
  * @part handle - The toggle handle, or knob, used to change the checked state.
+ * @part label - The label text describing the toggle.
  */
 @Component({
   tag: 'ion-toggle',
@@ -90,8 +91,9 @@ export class Toggle implements ComponentInterface {
    * `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"stacked"`: The label will appear above the toggle regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -114,6 +116,13 @@ export class Toggle implements ComponentInterface {
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
+   * How to control the alignment of the toggle and label on the cross axis.
+   * ``"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
+   * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+   */
+  @Prop() alignment: 'start' | 'center' = 'center';
 
   /**
    * Emitted when the user switches the toggle on or off. Does not emit
@@ -215,6 +224,8 @@ export class Toggle implements ComponentInterface {
     if (this.legacyFormController.hasLegacyControl()) {
       this.ionStyle.emit({
         'interactive-disabled': this.disabled,
+        // TODO(FW-2990): remove this
+        legacy: !!this.legacy,
       });
     }
   }
@@ -250,7 +261,11 @@ export class Toggle implements ComponentInterface {
     }
   }
 
-  private onClick = (ev: Event) => {
+  private onClick = (ev: MouseEvent) => {
+    if (this.disabled) {
+      return;
+    }
+
     ev.preventDefault();
 
     if (this.lastDrag + 300 < Date.now()) {
@@ -319,7 +334,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderToggle() {
-    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name } = this;
+    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment } = this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
@@ -336,6 +351,7 @@ export class Toggle implements ComponentInterface {
           'toggle-checked': checked,
           'toggle-disabled': disabled,
           [`toggle-justify-${justify}`]: true,
+          [`toggle-alignment-${alignment}`]: true,
           [`toggle-label-placement-${labelPlacement}`]: true,
           [`toggle-${rtl}`]: true,
         })}
@@ -362,6 +378,7 @@ export class Toggle implements ComponentInterface {
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': !this.hasLabel,
             }}
+            part="label"
           >
             <slot></slot>
           </div>

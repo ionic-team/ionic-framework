@@ -1,9 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import type { Gesture } from '@utils/gesture';
 import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
+  GESTURE,
   createDelegateController,
   createTriggerController,
   dismiss,
@@ -27,7 +30,17 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface';
+import { getAnimationPosition } from './animations/utils';
+import { createSwipeToDismissGesture } from './gestures/swipe-to-dismiss';
+import type {
+  ToastButton,
+  ToastPosition,
+  ToastLayout,
+  ToastPresentOptions,
+  ToastDismissOptions,
+  ToastAnimationPosition,
+  ToastSwipeGestureDirection,
+} from './toast-interface';
 
 // TODO(FW-2832): types
 
@@ -51,10 +64,18 @@ import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface'
 })
 export class Toast implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
-  private currentTransition?: Promise<any>;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
+  private gesture?: Gesture;
+
+  /**
+   * Holds the position of the toast calculated in the present
+   * animation, to be passed along to the dismiss animation so
+   * we don't have to calculate the position twice.
+   */
+  private lastPresentedPosition?: ToastAnimationPosition;
 
   presented = false;
 
@@ -136,9 +157,18 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() keyboardClose = false;
 
   /**
-   * The position of the toast on the screen.
+   * The starting position of the toast on the screen. Can be tweaked further
+   * using the `positionAnchor` property.
    */
   @Prop() position: ToastPosition = 'bottom';
+
+  /**
+   * The element to anchor the toast's position to. Can be set as a direct reference
+   * or the ID of the element. With `position="bottom"`, the toast will sit above the
+   * chosen element. With `position="top"`, the toast will sit below the chosen element.
+   * With `position="middle"`, the value of `positionAnchor` is ignored.
+   */
+  @Prop() positionAnchor?: HTMLElement | string;
 
   /**
    * An array of buttons for the toast.
@@ -167,6 +197,45 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Additional attributes to pass to the toast.
    */
   @Prop() htmlAttributes?: { [key: string]: any };
+
+  /**
+   * If set to 'vertical', the Toast can be dismissed with
+   * a swipe gesture. The swipe direction is determined by
+   * the value of the `position` property:
+   * `top`: The Toast can be swiped up to dismiss.
+   * `bottom`: The Toast can be swiped down to dismiss.
+   * `middle`: The Toast can be swiped up or down to dismiss.
+   */
+  @Prop() swipeGesture?: ToastSwipeGestureDirection;
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
+    /**
+     * If the Toast is presented, then we need to destroy
+     * any actives gestures before a new gesture is potentially
+     * created below.
+     *
+     * If the Toast is dismissed, then no gesture should be available
+     * since the Toast is not visible. This case should never
+     * happen since the "dismiss" method handles destroying
+     * any active swipe gestures, but we keep this code
+     * around to handle the first case.
+     */
+    this.destroySwipeGesture();
+
+    /**
+     * A new swipe gesture should only be created
+     * if the Toast is presented. If the Toast is not
+     * yet presented then the "present" method will
+     * handle calling the swipe gesture setup function.
+     */
+    if (this.presented && this.prefersSwipeGesture()) {
+      /**
+       * If the Toast is presented then
+       * lastPresentedPosition is defined.
+       */
+      this.createSwipeGesture(this.lastPresentedPosition!);
+    }
+  }
 
   /**
    * If `true`, the toast will open. If `false`, the toast will close.
@@ -263,6 +332,17 @@ export class Toast implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
+
+    /**
+     * When binding values in frameworks such as Angular
+     * it is possible for the value to be set after the Web Component
+     * initializes but before the value watcher is set up in Stencil.
+     * As a result, the watcher callback may not be fired.
+     * We work around this by manually calling the watcher
+     * callback when the component has loaded and the watcher
+     * is configured.
+     */
+    this.triggerChanged();
   }
 
   /**
@@ -270,28 +350,25 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline toast
-     * and dismissing a toast it is possible to
-     * quickly present the toast while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present<ToastPresentOptions>(
-      this,
-      'toastEnter',
-      iosEnterAnimation,
-      mdEnterAnimation,
-      this.position
-    );
-    await this.currentTransition;
+    const { el, position } = this;
+    const anchor = this.getAnchorElement();
+    const animationPosition = getAnimationPosition(position, anchor, getIonMode(this), el);
+
+    /**
+     * Cache the calculated position of the toast, so we can re-use it
+     * in the dismiss animation.
+     */
+    this.lastPresentedPosition = animationPosition;
+
+    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, {
+      position,
+      top: animationPosition.top,
+      bottom: animationPosition.bottom,
+    });
 
     /**
      * Content is revealed to screen readers after
@@ -300,11 +377,20 @@ export class Toast implements ComponentInterface, OverlayInterface {
      */
     this.revealContentToScreenReader = true;
 
-    this.currentTransition = undefined;
-
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
     }
+
+    /**
+     * If the Toast has a swipe gesture then we can
+     * create the gesture so users can swipe the
+     * presented Toast.
+     */
+    if (this.prefersSwipeGesture()) {
+      this.createSwipeGesture(animationPosition);
+    }
+
+    unlock();
   }
 
   /**
@@ -318,25 +404,47 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    if (this.durationTimeout) {
-      clearTimeout(this.durationTimeout);
+    const unlock = await this.lockController.lock();
+
+    const { durationTimeout, position, lastPresentedPosition } = this;
+
+    if (durationTimeout) {
+      clearTimeout(durationTimeout);
     }
 
-    this.currentTransition = dismiss<ToastDismissOptions>(
+    const dismissed = await dismiss<ToastDismissOptions>(
       this,
       data,
       role,
       'toastLeave',
       iosLeaveAnimation,
       mdLeaveAnimation,
-      this.position
+      /**
+       * Fetch the cached position that was calculated back in the present
+       * animation. We always want to animate the dismiss from the same
+       * position the present stopped at, so the animation looks continuous.
+       */
+      {
+        position,
+        top: lastPresentedPosition?.top ?? '',
+        bottom: lastPresentedPosition?.bottom ?? '',
+      }
     );
-    const dismissed = await this.currentTransition;
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
       this.revealContentToScreenReader = false;
     }
+
+    this.lastPresentedPosition = undefined;
+
+    /**
+     * If the Toast has a swipe gesture then we can
+     * safely destroy it now that it is dismissed.
+     */
+    this.destroySwipeGesture();
+
+    unlock();
 
     return dismissed;
   }
@@ -365,6 +473,51 @@ export class Toast implements ComponentInterface, OverlayInterface {
       : [];
 
     return buttons;
+  }
+
+  /**
+   * Returns the element specified by the positionAnchor prop,
+   * or undefined if prop's value is an ID string and the element
+   * is not found in the DOM.
+   */
+  private getAnchorElement(): HTMLElement | undefined {
+    const { position, positionAnchor, el } = this;
+
+    /**
+     * If positionAnchor is undefined then
+     * no anchor should be used when presenting the toast.
+     */
+    if (positionAnchor === undefined) {
+      return;
+    }
+
+    if (position === 'middle' && positionAnchor !== undefined) {
+      printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
+      return undefined;
+    }
+
+    if (typeof positionAnchor === 'string') {
+      /**
+       * If the anchor is defined as an ID, find the element.
+       * We do this on every present so the toast doesn't need
+       * to account for the surrounding DOM changing since the
+       * last time it was presented.
+       */
+      const foundEl = document.getElementById(positionAnchor);
+      if (foundEl === null) {
+        printIonWarning(`An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`, el);
+        return undefined;
+      }
+
+      return foundEl;
+    }
+
+    if (positionAnchor instanceof HTMLElement) {
+      return positionAnchor;
+    }
+
+    printIonWarning('Invalid positionAnchor value:', positionAnchor, el);
+    return undefined;
   }
 
   private async buttonClick(button: ToastButton) {
@@ -402,6 +555,48 @@ export class Toast implements ComponentInterface, OverlayInterface {
       const cancelButton = this.getButtons().find((b) => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
+  };
+
+  /**
+   * Create a new swipe gesture so Toast
+   * can be swiped to dismiss.
+   */
+  private createSwipeGesture = (toastPosition: ToastAnimationPosition) => {
+    const gesture = (this.gesture = createSwipeToDismissGesture(this.el, toastPosition, () => {
+      /**
+       * If the gesture completed then
+       * we should dismiss the toast.
+       */
+      this.dismiss(undefined, GESTURE);
+    }));
+
+    gesture.enable(true);
+  };
+
+  /**
+   * Destroy an existing swipe gesture
+   * so Toast can no longer be swiped to dismiss.
+   */
+  private destroySwipeGesture = () => {
+    const { gesture } = this;
+
+    if (gesture === undefined) {
+      return;
+    }
+
+    gesture.destroy();
+    this.gesture = undefined;
+  };
+
+  /**
+   * Returns `true` if swipeGesture
+   * is configured to a value that enables the swipe behavior.
+   * Returns `false` otherwise.
+   */
+  private prefersSwipeGesture = () => {
+    const { swipeGesture } = this;
+
+    return swipeGesture === 'vertical';
   };
 
   renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
@@ -590,6 +785,3 @@ const buttonClass = (button: ToastButton): CssClassMap => {
 const buttonPart = (button: ToastButton): string => {
   return isCancel(button.role) ? 'button cancel' : 'button';
 };
-
-type ToastPresentOptions = ToastPosition;
-type ToastDismissOptions = ToastPosition;

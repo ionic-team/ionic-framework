@@ -105,6 +105,17 @@
   &::-ms-clear {
     display: none;
   }
+
+  &::-webkit-date-and-time-value {
+    /**
+     * The -webkit-date-and-time-value pseudo element is used 
+     * to style the date/time input on iOS/Mobile Safari.
+     * To avoid layout shift between an empty state and a selected state,
+     * we set the height `18px` to match the native input height for 
+     * date/time inputs on iOS/Mobile Safari.
+     */
+    height: 18px;
+  }
 }
 
 
@@ -254,14 +265,36 @@
   flex-wrap: $alert-ios-button-group-flex-wrap;
 }
 
+/**
+  * The right border should only be applied to the first button
+  * when the group has 2 or less buttons (horizontal).
+  * Otherwise, the right border should not be applied
+  * when the group has 3 or more buttons (vertical).
+  */
+.alert-button-group-vertical .alert-button {
+  border-right: none;
+
+  &:last-child {
+    @include rtl() {
+      border-right: none;
+    }
+  }
+}
+
 .alert-button {
+  /**
+   * This padding ensures that alerts
+   * with multiple buttons render on separate lines
+   * so the text does not run up against the edge of the button.
+   */
+  @include padding-horizontal($alert-ios-button-padding);
   @include margin($alert-ios-button-margin);
   @include border-radius($alert-ios-button-border-radius);
 
   flex: $alert-ios-button-flex;
 
   min-width: $alert-ios-button-min-width;
-  height: $alert-ios-button-min-height;
+  height: $alert-ios-button-height;
 
   border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;

@@ -1,8 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Listen, Method, Prop } from '@stencil/core';
+import type { BackButtonEvent } from '@utils/hardware-back-button';
 import { debounce } from '@utils/helpers';
 
-import type { AnimationBuilder, BackButtonEvent } from '../../interface';
+import type { AnimationBuilder } from '../../interface';
 import type { NavigationHookResult } from '../route/route-interface';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
@@ -312,6 +313,7 @@ export class Router implements ComponentInterface {
     const routes = readRoutes(this.el);
 
     const fromChain = findChainForSegments(from, routes);
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
@@ -320,6 +322,7 @@ export class Router implements ComponentInterface {
     }
 
     const toChain = findChainForSegments(to, routes);
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
 
     return beforeEnterHook ? beforeEnterHook() : true;

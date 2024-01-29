@@ -15,7 +15,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`range-list`));
+      await expect(list).toHaveScreenshot(screenshot(`range-list`));
     });
     test('should render correctly in inset list', async ({ page }) => {
       await page.setContent(
@@ -29,7 +29,21 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`range-inset-list`));
+      await expect(list).toHaveScreenshot(screenshot(`range-inset-list`));
+    });
+    test('should render adjustments in item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-list inset="true">
+          <ion-item>
+            <ion-range value="0" aria-label="true"></ion-range>
+          </ion-item>
+        </ion-list>
+      `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`range-adjustments`));
     });
   });
 });
@@ -46,7 +60,26 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const item = page.locator('ion-item');
-      expect(await item.screenshot()).toMatchSnapshot(screenshot(`range-item-color`));
+      await expect(item).toHaveScreenshot(screenshot(`range-item-color`));
+    });
+  });
+});
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+  test.describe(title('range: stacked label in item'), () => {
+    test('should render margins correctly when using stacked label in item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-item>
+              <ion-range label="Temperature" label-placement="stacked"></ion-range>
+            </ion-item>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`range-stacked-label-in-item`));
     });
   });
 });

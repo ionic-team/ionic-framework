@@ -1,3 +1,38 @@
+
+/**
+ * A heuristic that applies CSS to tablet
+ * viewports.
+ *
+ * Usage:
+ * @include tablet-viewport() {
+ *   :host {
+ *     background-color: green;
+ *   }
+ * }
+ */
+@mixin tablet-viewport() {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+/**
+ * A heuristic that applies CSS to mobile
+ * viewports (i.e. phones, not tablets).
+ *
+ * Usage:
+ * @include mobile-viewport() {
+ *   :host {
+ *     background-color: blue;
+ *   }
+ * }
+ */
+@mixin mobile-viewport() {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+
 @mixin input-cover() {
   @include position(0, null, null, 0);
   @include margin(0);
@@ -217,7 +252,7 @@
       $restSelectors: append($restSelectors, $selector, comma);
     }
   }
-  
+
   // Supported by Chrome.
   @if length($hostContextSelectors) > 0 {
     @at-root #{$hostContextSelectors} {
@@ -242,17 +277,13 @@
     // - Firefox doesn't support `:host-context()`, but does support `:dir()`.
     // - Safari doesn't support `:host-context()`, but Safari 16.4+ supports `:dir()`
     // @link https://webkit.org/blog/13966/webkit-features-in-safari-16-4/
-    @each $selector in $rootSplit {
-      $dirSelector: "#{$selector}:dir(rtl)";
-      // Group the selectors back into a single selector to optimize the output.
-      $dirSelectors: append($dirSelectors, $dirSelector, comma);
-    }
+    // -- However, there is a Webkit bug on v16 that prevents `:dir()` from working when
+    // -- the app direction is changed dynamically. v17+ works fine.
+    // -- @link https://bugs.webkit.org/show_bug.cgi?id=257133
 
     // Supported by Firefox.
-    @if length($dirSelectors) > 0 {
-      @at-root #{$dirSelectors} {
-        @content;
-      }
+    @at-root #{add-root-selector($root, ":dir(rtl)", false)} {
+      @content;
     }
   }
 }

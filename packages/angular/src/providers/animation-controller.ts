@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Animation, createAnimation, getTimeGivenProgression } from '@ionic/core';
+import { createAnimation, getTimeGivenProgression } from '@ionic/core';
+import type { Animation } from '@ionic/core';
 
 @Injectable({
   providedIn: 'root',

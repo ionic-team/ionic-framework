@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-readonly`));
+      await expect(input).toHaveScreenshot(screenshot(`input-readonly`));
     });
 
     test('should render disabled input correctly', async ({ page }) => {
@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-disabled`));
+      await expect(input).toHaveScreenshot(screenshot(`input-disabled`));
     });
   });
 });

@@ -8,6 +8,8 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
+
+  min-height: 56px;
 }
 
 :host(.input-fill-outline.input-shape-round) {
@@ -87,17 +89,15 @@
 /**
  * This makes the label sit above the input.
  */
-:host(.has-focus.input-fill-outline.input-label-placement-floating) .label-text-wrapper,
-:host(.has-value.input-fill-outline.input-label-placement-floating) .label-text-wrapper,
-:host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$input-floating-label-scale}));
+:host(.label-floating.input-fill-outline) .label-text-wrapper {
+  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
    * Label text should not extend
    * beyond the bounds of the input.
    */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$input-floating-label-scale});
+  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale});
 }
 
 /**
@@ -166,7 +166,7 @@
    */
   @include padding(null, #{$input-md-floating-label-padding * 2}, null, null);
 
-  font-size: calc(1em * #{$input-floating-label-scale});
+  font-size: calc(1em * #{$form-control-label-stacked-scale});
 
   opacity: 0;
   pointer-events: none;
@@ -214,8 +214,6 @@
  * the floating/stacked label. We simulate this "cut out"
  * by removing the top border from the notch fragment.
  */
-:host(.has-focus.input-fill-outline.input-label-placement-floating) .input-outline-notch,
-:host(.has-value.input-fill-outline.input-label-placement-floating) .input-outline-notch,
-:host(.input-fill-outline.input-label-placement-stacked) .input-outline-notch {
+:host(.label-floating.input-fill-outline) .input-outline-notch {
   border-top: none;
 }

@@ -4,6 +4,12 @@ on:
   pull_request:
     branches: [ '**' ]
   merge_group:
+  workflow_dispatch:
+    inputs:
+      ionicons_npm_release_tag:
+        required: false
+        type: string
+        description: What version of ionicons should be pulled from NPM? Use this if you want to test a custom version of Ionicons with Ionic.
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -18,6 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/build-core
+        with:
+          ionicons-version: ${{ inputs.ionicons_npm_release_tag }}
 
   test-core-clean-build:
     needs: [build-core]
@@ -132,7 +140,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng14, ng15, ng16]
+        apps: [ng14, ng15, ng16, ng17]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:

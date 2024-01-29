@@ -22,7 +22,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-start-justify-start`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-start-justify-start`));
       });
       test('should render an end justification with label in the start position', async ({ page }) => {
         await page.setContent(
@@ -34,7 +34,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-start-justify-end`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-start-justify-end`));
       });
       test('should render a space between justification with label in the start position', async ({ page }) => {
         await page.setContent(
@@ -46,7 +46,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-start-justify-space-between`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-start-justify-space-between`));
       });
     });
 
@@ -61,7 +61,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-end-justify-start`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-end-justify-start`));
       });
       test('should render an end justification with label in the end position', async ({ page }) => {
         await page.setContent(
@@ -73,7 +73,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-end-justify-end`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-end-justify-end`));
       });
       test('should render a space between justification with label in the end position', async ({ page }) => {
         await page.setContent(
@@ -85,7 +85,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-end-justify-space-between`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-end-justify-space-between`));
       });
     });
 
@@ -100,7 +100,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-fixed-justify-start`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-fixed-justify-start`));
       });
       test('should render an end justification with label in the fixed position', async ({ page }) => {
         await page.setContent(
@@ -112,7 +112,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-fixed-justify-end`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-fixed-justify-end`));
       });
       test('should render a space between justification with label in the fixed position', async ({ page }) => {
         await page.setContent(
@@ -124,7 +124,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-fixed-justify-space-between`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-fixed-justify-space-between`));
       });
     });
 
@@ -140,7 +140,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-floating-value`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-floating-value`));
       });
       test('label should appear on top of the select when there is no value', async ({ page }) => {
         await page.setContent(
@@ -153,7 +153,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-floating-no-value`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-floating-no-value`));
       });
       test('label should appear on top of the select when there is a placeholder and no value', async ({ page }) => {
         await page.setContent(
@@ -166,12 +166,12 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-floating-no-value-placeholder`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-floating-no-value-placeholder`));
       });
       test('label should appear on top of the select when the select is expanded', async ({ page }) => {
         await page.setContent(
           `
-           <ion-select class="select-expanded" label="Label" label-placement="floating" placeholder="Select a Fruit">
+           <ion-select class="select-expanded label-floating" label="Label" label-placement="floating" placeholder="Select a Fruit">
              <ion-select-option value="apples">Apples</ion-select-option>
            </ion-select>
          `,
@@ -180,9 +180,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
 
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-          screenshot(`select-label-floating-expanded`)
-        );
+        await expect(select).toHaveScreenshot(screenshot(`select-label-floating-expanded`));
       });
       test('long text should truncate', async ({ page }) => {
         await page.setContent(
@@ -196,9 +194,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
 
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-          screenshot(`select-label-floating-long-text`)
-        );
+        await expect(select).toHaveScreenshot(screenshot(`select-label-floating-long-text`));
       });
     });
 
@@ -214,7 +210,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-stacked-value`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-value`));
       });
       test('label should appear above the select when there is no value', async ({ page }) => {
         await page.setContent(
@@ -227,7 +223,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-stacked-no-value`));
+        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-no-value`));
       });
       test('label should appear on top of the select when the select is expanded', async ({ page }) => {
         await page.setContent(
@@ -241,9 +237,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
 
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-          screenshot(`select-label-stacked-expanded`)
-        );
+        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-expanded`));
       });
       test('long text should truncate', async ({ page }) => {
         await page.setContent(
@@ -257,9 +251,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
 
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-          screenshot(`select-label-stacked-long-text`)
-        );
+        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-long-text`));
       });
     });
   });
@@ -276,7 +268,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-truncate`));
+      await expect(select).toHaveScreenshot(screenshot(`select-label-truncate`));
     });
     test('label slot should be truncated with ellipses', async ({ page }) => {
       await page.setContent(
@@ -289,7 +281,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-slot-truncate`));
+      await expect(select).toHaveScreenshot(screenshot(`select-label-slot-truncate`));
     });
   });
 });

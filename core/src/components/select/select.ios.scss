@@ -12,21 +12,6 @@
   --padding-start: #{$select-ios-padding-start};
 }
 
-// TODO FW-3194 - Move this to host
-:host(:not(.legacy-select)) {
-  min-height: 44px;
-}
-
-/**
- * Since the label sits on top of the element,
- * the component needs to be taller otherwise the
- * label will appear too close to the select text.
- */
-:host(.select-label-placement-floating),
-:host(.select-label-placement-stacked) {
-  min-height: 56px;
-}
-
 .select-icon {
   width: $select-ios-icon-size;
   height: $select-ios-icon-size;
@@ -36,11 +21,11 @@
   color: #{$text-color-step-350};
 }
 
-// Select Native Wrapper
+// Select Inner Wrapper
 // ----------------------------------------------------------------
 
-:host(.select-label-placement-stacked) .native-wrapper,
-:host(.select-label-placement-floating) .native-wrapper {
+:host(.select-label-placement-stacked) .select-wrapper-inner,
+:host(.select-label-placement-floating) .select-wrapper-inner {
   width: calc(100% - $select-ios-icon-size - $select-icon-margin-start);
 }
 
@@ -52,4 +37,26 @@
 
 :host(.select-disabled) {
   opacity: $select-ios-disabled-opacity;
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+/**
+ * Slotted buttons have a lot of default padding that can
+ * cause them to look misaligned from other pieces such
+ * as the control's label, especially when using a clear
+ * fill. We also make them circular to ensure that non-
+ * clear buttons and the focus/hover state on clear ones
+ * don't look too crowded.
+ */
+::slotted(ion-button[slot="start"].button-has-icon-only),
+::slotted(ion-button[slot="end"].button-has-icon-only) {
+  --border-radius: 50%;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  aspect-ratio: 1;
 }

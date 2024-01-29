@@ -153,7 +153,7 @@ export const createNotchController = (
      * The notch is only visible when the label is scaled,
      * which is why we multiply the width by 0.75 as this is
      * the same amount the label element is scaled by in the host CSS.
-     * (For ion-select, see $select-floating-label-scale in select.vars.scss).
+     * (See $form-control-label-stacked-scale in ionic.globals.scss).
      */
     notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
   };

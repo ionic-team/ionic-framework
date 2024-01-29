@@ -101,6 +101,23 @@
   --highlight-color-focused: #{current-color(base)};
 }
 
+// Input Wrapper
+// ----------------------------------------------------------------
+
+:host(:not(.legacy-input)) {
+  min-height: 44px;
+}
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the input text.
+ */
+:host(.input-label-placement-floating),
+:host(.input-label-placement-stacked) {
+  min-height: 56px;
+}
+
 // Native Text Input
 // --------------------------------------------------
 
@@ -242,15 +259,16 @@
 
 // Input Has focus
 // --------------------------------------------------
-// When the input has focus, then the input cover should be hidden
 
-:host(.has-focus) {
+// TODO FW-2764 Remove this
+:host(.has-focus.legacy-input) {
   pointer-events: none;
 }
 
-:host(.has-focus) input,
-:host(.has-focus) a,
-:host(.has-focus) button {
+// TODO FW-2764 Remove this
+:host(.has-focus.legacy-input) input,
+:host(.has-focus.legacy-input) a,
+:host(.has-focus.legacy-input) button {
   pointer-events: auto;
 }
 
@@ -305,6 +323,9 @@
 
   flex-grow: 1;
 
+  // ensure start/end slot content is vertically centered
+  align-items: center;
+
   width: 100%;
 }
 
@@ -346,7 +367,7 @@
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 }
 
 /**
@@ -624,14 +645,25 @@
 /**
  * This makes the label sit above the input.
  */
-:host(.input-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.input-label-placement-floating) .label-text-wrapper,
-:host(.has-value.input-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(#{$input-floating-label-scale}));
+:host(.label-floating) .label-text-wrapper {
+  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
    * Label text should not extend
    * beyond the bounds of the input.
    */
-  max-width: calc(100% / #{$input-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
 }

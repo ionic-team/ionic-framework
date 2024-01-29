@@ -231,28 +231,6 @@ export declare interface IonAvatar extends Components.IonAvatar {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type']
-})
-@Component({
-  selector: 'ion-back-button',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type'],
-})
-export class IonBackButton {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface IonBackButton extends Components.IonBackButton {}
-
-
-@ProxyCmp({
   inputs: ['stopPropagation', 'tappable', 'visible']
 })
 @Component({
@@ -529,14 +507,14 @@ export declare interface IonCardTitle extends Components.IonCardTitle {}
 
 
 @ProxyCmp({
-  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
+  inputs: ['alignment', 'checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-checkbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
+  inputs: ['alignment', 'checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
 })
 export class IonCheckbox {
   protected el: HTMLElement;
@@ -1396,39 +1374,6 @@ export declare interface IonMenuToggle extends Components.IonMenuToggle {}
 
 
 @ProxyCmp({
-  inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],
-  methods: ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']
-})
-@Component({
-  selector: 'ion-nav',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],
-})
-export class IonNav {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionNavWillChange', 'ionNavDidChange']);
-  }
-}
-
-
-export declare interface IonNav extends Components.IonNav {
-  /**
-   * Event fired when the nav will change components
-   */
-  ionNavWillChange: EventEmitter<CustomEvent<void>>;
-  /**
-   * Event fired when the nav has changed components
-   */
-  ionNavDidChange: EventEmitter<CustomEvent<void>>;
-}
-
-
-@ProxyCmp({
   inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection']
 })
 @Component({
@@ -1558,14 +1503,14 @@ export declare interface IonProgressBar extends Components.IonProgressBar {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-radio',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
 })
 export class IonRadio {
   protected el: HTMLElement;
@@ -1590,14 +1535,14 @@ export declare interface IonRadio extends Components.IonRadio {
 
 
 @ProxyCmp({
-  inputs: ['allowEmptySelection', 'name', 'value']
+  inputs: ['allowEmptySelection', 'compareWith', 'name', 'value']
 })
 @Component({
   selector: 'ion-radio-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['allowEmptySelection', 'name', 'value'],
+  inputs: ['allowEmptySelection', 'compareWith', 'name', 'value'],
 })
 export class IonRadioGroup {
   protected el: HTMLElement;
@@ -1681,7 +1626,7 @@ mouse drag, touch gesture, or keyboard interaction.
 
 
 @ProxyCmp({
-  inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
+  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
   methods: ['complete', 'cancel', 'getProgress']
 })
 @Component({
@@ -1689,7 +1634,7 @@ mouse drag, touch gesture, or keyboard interaction.
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
+  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
 })
 export class IonRefresher {
   protected el: HTMLElement;
@@ -2256,7 +2201,7 @@ export declare interface IonTitle extends Components.IonTitle {}
 
 
 @ProxyCmp({
-  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'translucent', 'trigger'],
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'swipeGesture', 'translucent', 'trigger'],
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
 })
 @Component({
@@ -2264,7 +2209,7 @@ export declare interface IonTitle extends Components.IonTitle {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'translucent', 'trigger'],
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'swipeGesture', 'translucent', 'trigger'],
 })
 export class IonToast {
   protected el: HTMLElement;
@@ -2319,14 +2264,14 @@ Shorthand for ionToastDidDismiss.
 
 
 @ProxyCmp({
-  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
+  inputs: ['alignment', 'checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
+  inputs: ['alignment', 'checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
 })
 export class IonToggle {
   protected el: HTMLElement;

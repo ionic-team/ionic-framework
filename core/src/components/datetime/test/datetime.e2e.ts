@@ -11,7 +11,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
     });
 
     test('should switch the calendar header when moving to a month with a different number of days', async ({

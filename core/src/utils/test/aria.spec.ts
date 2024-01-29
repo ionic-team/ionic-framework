@@ -1,8 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Item } from '../../components/item/item.tsx';
-import { Label } from '../../components/label/label.tsx';
-import { Toggle } from '../../components/toggle/toggle.tsx';
+import { Item } from '../../components/item/item';
+import { Label } from '../../components/label/label';
+import { Toggle } from '../../components/toggle/toggle';
 import { getAriaLabel } from '../helpers';
 
 describe('getAriaLabel()', () => {
@@ -17,7 +17,7 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle');
+    const toggle = page.body.querySelector('ion-toggle')!;
 
     const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
@@ -35,7 +35,7 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle');
+    const toggle = page.body.querySelector('ion-toggle')!;
 
     const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
@@ -53,7 +53,7 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle');
+    const toggle = page.body.querySelector('ion-toggle')!;
 
     const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
@@ -70,7 +70,7 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle');
+    const toggle = page.body.querySelector('ion-toggle')!;
 
     const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 
@@ -87,7 +87,7 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle');
+    const toggle = page.body.querySelector('ion-toggle')!;
 
     const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
 

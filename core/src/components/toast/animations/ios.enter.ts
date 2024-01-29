@@ -2,19 +2,20 @@ import { createAnimation } from '@utils/animation/animation';
 import { getElementRoot } from '@utils/helpers';
 
 import type { Animation } from '../../../interface';
+import type { ToastPresentOptions } from '../toast-interface';
+
+import { getOffsetForMiddlePosition } from './utils';
 
 /**
  * iOS Toast Enter Animation
  */
-export const iosEnterAnimation = (baseEl: HTMLElement, position: string): Animation => {
+export const iosEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions): Animation => {
   const baseAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
+  const { position, top, bottom } = opts;
 
   const root = getElementRoot(baseEl);
   const wrapperEl = root.querySelector('.toast-wrapper') as HTMLElement;
-
-  const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
-  const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
 
   wrapperAnimation.addElement(wrapperEl);
 
@@ -23,7 +24,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, position: string): Animat
       wrapperAnimation.fromTo('transform', 'translateY(-100%)', `translateY(${top})`);
       break;
     case 'middle':
-      const topPosition = Math.floor(baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2);
+      const topPosition = getOffsetForMiddlePosition(baseEl.clientHeight, wrapperEl.clientHeight);
       wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;

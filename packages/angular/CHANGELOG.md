@@ -3,6 +3,253 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.4...v7.6.5) (2024-01-17)
+
+
+### Bug Fixes
+
+* **angular:** add old IonBackButtonDelegate import ([#28831](https://github.com/ionic-team/ionic-framework/issues/28831)) ([fb77353](https://github.com/ionic-team/ionic-framework/commit/fb7735397ed53323dd93a172407117228610b929)), closes [#28827](https://github.com/ionic-team/ionic-framework/issues/28827)
+
+
+
+
+
+## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
+
+
+### Bug Fixes
+
+* **refresher:** mode property can be used in typescript ([#28717](https://github.com/ionic-team/ionic-framework/issues/28717)) ([7ce1031](https://github.com/ionic-team/ionic-framework/commit/7ce1031c177487649c2a698664ec98f10d9002b9)), closes [#28716](https://github.com/ionic-team/ionic-framework/issues/28716)
+
+
+
+
+
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+
+### Bug Fixes
+
+* **angular,vue:** range form value updates while dragging knob ([#28422](https://github.com/ionic-team/ionic-framework/issues/28422)) ([0854a11](https://github.com/ionic-team/ionic-framework/commit/0854a11a25759d0201eae66c96a62fe138d486f8)), closes [#28256](https://github.com/ionic-team/ionic-framework/issues/28256)
+
+
+### Features
+
+* **radio-group:** add compareWith property ([#28452](https://github.com/ionic-team/ionic-framework/issues/28452)) ([0ae327f](https://github.com/ionic-team/ionic-framework/commit/0ae327f0e09cd97d705f2d3051c215034381e226))
+* **toast:** add swipe to dismiss functionality ([#28442](https://github.com/ionic-team/ionic-framework/issues/28442)) ([30c21aa](https://github.com/ionic-team/ionic-framework/commit/30c21aab3ed40d73c28e7d60d0952d8891b0a9d3)), closes [#21769](https://github.com/ionic-team/ionic-framework/issues/21769)
+
+
+
+
+
+## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
+
+
+### Bug Fixes
+
+* **angular:** add missing menu controller methods ([#28618](https://github.com/ionic-team/ionic-framework/issues/28618)) ([7871b56](https://github.com/ionic-team/ionic-framework/commit/7871b56eccfe63326b6dd4b56ade3b3afd444fce)), closes [#20053](https://github.com/ionic-team/ionic-framework/issues/20053)
+
+
+
+
+
+## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.5.6](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6) (2023-11-21)
+
+
+### Bug Fixes
+
+* **angular:** ng add @ionic/angular in standalone projects ([#28523](https://github.com/ionic-team/ionic-framework/issues/28523)) ([c07312e](https://github.com/ionic-team/ionic-framework/commit/c07312e5ed931f6f825ccf083c9dead9fa815843)), closes [#28514](https://github.com/ionic-team/ionic-framework/issues/28514)
+* **angular:** overlays are defined when using standalone controllers ([#28560](https://github.com/ionic-team/ionic-framework/issues/28560)) ([9453132](https://github.com/ionic-team/ionic-framework/commit/9453132aa8952b4adfa1326e61138b329e254f76)), closes [#28385](https://github.com/ionic-team/ionic-framework/issues/28385)
+
+
+
+
+
+## [7.5.5](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5) (2023-11-15)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.5.4](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4) (2023-11-08)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.5.3](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3) (2023-11-01)
+
+
+### Bug Fixes
+
+* **angular:** inputs on standalone form controls are reactive ([#28434](https://github.com/ionic-team/ionic-framework/issues/28434)) ([3b6e631](https://github.com/ionic-team/ionic-framework/commit/3b6e6318bf94125b3f8305b4d072a5945ceb3730)), closes [#28431](https://github.com/ionic-team/ionic-framework/issues/28431)
+* **angular:** NavController works with nested outlets ([#28421](https://github.com/ionic-team/ionic-framework/issues/28421)) ([90acad1](https://github.com/ionic-team/ionic-framework/commit/90acad1837b117542830ec0083389a35c5b4ee76)), closes [#28417](https://github.com/ionic-team/ionic-framework/issues/28417)
+* **angular:** run platform subscriptions inside zone ([#28404](https://github.com/ionic-team/ionic-framework/issues/28404)) ([a4b303e](https://github.com/ionic-team/ionic-framework/commit/a4b303e1338a35756a9cf7f67508d24d2f8537a2)), closes [#19539](https://github.com/ionic-team/ionic-framework/issues/19539)
+* **angular:** standalone form components do not error when multiple are used ([#28423](https://github.com/ionic-team/ionic-framework/issues/28423)) ([89698b3](https://github.com/ionic-team/ionic-framework/commit/89698b338fb05cde427c98720c238d2365abdaa7)), closes [#28418](https://github.com/ionic-team/ionic-framework/issues/28418)
+
+
+
+
+
+## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
+
+
+### Bug Fixes
+
+* **angular:** remove form control side effects ([#28359](https://github.com/ionic-team/ionic-framework/issues/28359)) ([82d6309](https://github.com/ionic-team/ionic-framework/commit/82d6309ef1675c0a6e767e87c23f166d84579d8f)), closes [#28358](https://github.com/ionic-team/ionic-framework/issues/28358)
+
+
+
+
+
+## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* **angular:** do not create duplicate menuController instances ([#28343](https://github.com/ionic-team/ionic-framework/issues/28343)) ([fa78676](https://github.com/ionic-team/ionic-framework/commit/fa78676d57eb80655ee9447ffa07dcfdae0c6b2a)), closes [#28337](https://github.com/ionic-team/ionic-framework/issues/28337)
+* **angular:** export missing lifecycle interfaces for standalone package ([#28346](https://github.com/ionic-team/ionic-framework/issues/28346)) ([dd93e0b](https://github.com/ionic-team/ionic-framework/commit/dd93e0b2689511f3145606f4dbb2c30dcf4c2950)), closes [/github.com/ionic-team/ionic-angular-standalone-codemods/pull/13/files/baa37ef1e3e8ba773b693db280542efba815482a#r1356414362](https://github.com//github.com/ionic-team/ionic-angular-standalone-codemods/pull/13/files/baa37ef1e3e8ba773b693db280542efba815482a/issues/r1356414362)
+
+
+
+
+
+# [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
+
+
+### Features
+
+* **angular, react, vue, core:** export openURL utility ([#28295](https://github.com/ionic-team/ionic-framework/issues/28295)) ([6da82aa](https://github.com/ionic-team/ionic-framework/commit/6da82aab816b28bfc174f7634ded1fc1e06502ab)), closes [#27911](https://github.com/ionic-team/ionic-framework/issues/27911)
+* **angular:** ship Ionic components as Angular standalone components ([#28311](https://github.com/ionic-team/ionic-framework/issues/28311)) ([57e2476](https://github.com/ionic-team/ionic-framework/commit/57e247637005b10f0d21d5ac5f5232bcb1908301))
+* **toast:** allow custom positioning relative to specific element ([#28248](https://github.com/ionic-team/ionic-framework/issues/28248)) ([897ff6f](https://github.com/ionic-team/ionic-framework/commit/897ff6f7493d8d7e4ab22c6ae59de066b43ce682)), closes [#17499](https://github.com/ionic-team/ionic-framework/issues/17499)
+
+
+
+
+
+## [7.4.4](https://github.com/ionic-team/ionic-framework/compare/v7.4.3...v7.4.4) (2023-10-11)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.4.3](https://github.com/ionic-team/ionic-framework/compare/v7.4.2...v7.4.3) (2023-10-04)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.4.2](https://github.com/ionic-team/ionic-framework/compare/v7.4.1...v7.4.2) (2023-09-27)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.4.1](https://github.com/ionic-team/ionic-framework/compare/v7.4.0...v7.4.1) (2023-09-20)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.4.0](https://github.com/ionic-team/ionic-framework/compare/v7.3.4...v7.4.0) (2023-09-14)
+
+
+### Features
+
+* **checkbox, radio, toggle, range:** stacked labels for form controls ([#28075](https://github.com/ionic-team/ionic-framework/issues/28075)) ([e6c7bb6](https://github.com/ionic-team/ionic-framework/commit/e6c7bb60e7e61c965f45e2bf3e3bd16f5125ad56))
+* export TransitionOptions interface and getIonPageElement ([#28140](https://github.com/ionic-team/ionic-framework/issues/28140)) ([19f3bb2](https://github.com/ionic-team/ionic-framework/commit/19f3bb23fd5587848fc41a744ca46ef5985c04d2)), closes [#28137](https://github.com/ionic-team/ionic-framework/issues/28137)
+
+
+
+
+
+## [7.3.4](https://github.com/ionic-team/ionic-framework/compare/v7.3.3...v7.3.4) (2023-09-13)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+
+### Bug Fixes
+
+* **angular:** ionTabsWillChange is fired before tab activation ([#27991](https://github.com/ionic-team/ionic-framework/issues/27991)) ([bbfb8f8](https://github.com/ionic-team/ionic-framework/commit/bbfb8f81a61475d7e73b63743db5d6a0cd979d21)), closes [#27212](https://github.com/ionic-team/ionic-framework/issues/27212)
+
+
+
+
+
 # [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
 
 **Note:** Version bump only for package @ionic/angular

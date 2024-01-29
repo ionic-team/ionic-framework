@@ -3,6 +3,7 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } fro
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import {
   BACKDROP,
   createDelegateController,
@@ -40,8 +41,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class ActionSheet implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
-  private currentTransition?: Promise<any>;
   private wrapperEl?: HTMLElement;
   private groupEl?: HTMLElement;
   private gesture?: Gesture;
@@ -198,25 +199,13 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline action sheet
-     * and dismissing a action sheet it is possible to
-     * quickly present the action sheet while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
+    await present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
 
-    await this.currentTransition;
-
-    this.currentTransition = undefined;
+    unlock();
   }
 
   /**
@@ -230,12 +219,15 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    this.currentTransition = dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
-    const dismissed = await this.currentTransition;
+    const unlock = await this.lockController.lock();
+
+    const dismissed = await dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
     }
+
+    unlock();
 
     return dismissed;
   }
@@ -345,6 +337,17 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
+
+    /**
+     * When binding values in frameworks such as Angular
+     * it is possible for the value to be set after the Web Component
+     * initializes but before the value watcher is set up in Stencil.
+     * As a result, the watcher callback may not be fired.
+     * We work around this by manually calling the watcher
+     * callback when the component has loaded and the watcher
+     * is configured.
+     */
+    this.triggerChanged();
   }
 
   render() {

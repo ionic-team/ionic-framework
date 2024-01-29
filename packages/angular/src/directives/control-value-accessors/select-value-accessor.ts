@@ -1,11 +1,10 @@
 import { ElementRef, Injector, Directive, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { ValueAccessor } from './value-accessor';
+import { ValueAccessor } from '@ionic/angular/common';
 
 @Directive({
   /* tslint:disable-next-line:directive-selector */
-  selector: 'ion-range, ion-select, ion-radio-group, ion-segment, ion-datetime',
+  selector: 'ion-select, ion-radio-group, ion-segment, ion-datetime',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -21,12 +20,7 @@ export class SelectValueAccessorDirective extends ValueAccessor {
 
   @HostListener('ionChange', ['$event.target'])
   _handleChangeEvent(
-    el:
-      | HTMLIonRangeElement
-      | HTMLIonSelectElement
-      | HTMLIonRadioGroupElement
-      | HTMLIonSegmentElement
-      | HTMLIonDatetimeElement
+    el: HTMLIonSelectElement | HTMLIonRadioGroupElement | HTMLIonSegmentElement | HTMLIonDatetimeElement
   ): void {
     this.handleValueChange(el, el.value);
   }

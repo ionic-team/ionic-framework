@@ -9,6 +9,10 @@ export interface IonLifeCycleContextInterface {
   ionViewWillLeave: () => void;
   onIonViewDidLeave: (callback: () => void) => void;
   ionViewDidLeave: () => void;
+  cleanupIonViewWillEnter: (callback: () => void) => void;
+  cleanupIonViewDidEnter: (callback: () => void) => void;
+  cleanupIonViewWillLeave: (callback: () => void) => void;
+  cleanupIonViewDidLeave: (callback: () => void) => void;
 }
 
 export const IonLifeCycleContext = /*@__PURE__*/ React.createContext<IonLifeCycleContextInterface>({
@@ -36,11 +40,28 @@ export const IonLifeCycleContext = /*@__PURE__*/ React.createContext<IonLifeCycl
   ionViewDidLeave: () => {
     return;
   },
+  cleanupIonViewWillEnter: () => {
+    return;
+  },
+  cleanupIonViewDidEnter: () => {
+    return;
+  },
+  cleanupIonViewWillLeave: () => {
+    return;
+  },
+  cleanupIonViewDidLeave: () => {
+    return;
+  },
 });
 
 export interface LifeCycleCallback {
-  (): void;
+  (): void | (() => void | undefined);
   id?: number;
+}
+
+export interface LifeCycleDestructor {
+  id: number;
+  destructor: ReturnType<LifeCycleCallback>;
 }
 
 export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextInterface {
@@ -49,6 +70,10 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
   ionViewWillLeaveCallbacks: LifeCycleCallback[] = [];
   ionViewDidLeaveCallbacks: LifeCycleCallback[] = [];
   componentCanBeDestroyedCallback?: () => void;
+  ionViewWillEnterDestructorCallbacks: LifeCycleDestructor[] = [];
+  ionViewDidEnterDestructorCallbacks: LifeCycleDestructor[] = [];
+  ionViewWillLeaveDestructorCallbacks: LifeCycleDestructor[] = [];
+  ionViewDidLeaveDestructorCallbacks: LifeCycleDestructor[] = [];
 
   onIonViewWillEnter(callback: LifeCycleCallback) {
     if (callback.id) {
@@ -63,8 +88,64 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
     }
   }
 
+  teardownCallback(callback: LifeCycleCallback, callbacks: any[]) {
+    // Find any destructors that have been registered for the callback
+    const matches = callbacks.filter((x) => x.id === callback.id);
+    if (matches.length !== 0) {
+      // Execute the destructor for each matching item
+      matches.forEach((match) => {
+        if (match && typeof match.destructor === 'function') {
+          match.destructor();
+        }
+      });
+      // Remove all matching items from the array
+      callbacks = callbacks.filter((x) => x.id !== callback.id);
+    }
+  }
+
+  /**
+   * Tears down the user-provided ionViewWillEnter lifecycle callback.
+   * This is the same behavior as React's useEffect hook. The callback
+   * is invoked when the component is unmounted.
+   */
+  cleanupIonViewWillEnter(callback: LifeCycleCallback) {
+    this.teardownCallback(callback, this.ionViewWillEnterDestructorCallbacks);
+  }
+
+  /**
+   * Tears down the user-provided ionViewDidEnter lifecycle callback.
+   * This is the same behavior as React's useEffect hook. The callback
+   * is invoked when the component is unmounted.
+   */
+  cleanupIonViewDidEnter(callback: LifeCycleCallback) {
+    this.teardownCallback(callback, this.ionViewDidEnterDestructorCallbacks);
+  }
+
+  /**
+   * Tears down the user-provided ionViewWillLeave lifecycle callback.
+   * This is the same behavior as React's useEffect hook. The callback
+   * is invoked when the component is unmounted.
+   */
+  cleanupIonViewWillLeave(callback: LifeCycleCallback) {
+    this.teardownCallback(callback, this.ionViewWillLeaveDestructorCallbacks);
+  }
+
+  /**
+   * Tears down the user-provided ionViewDidLeave lifecycle callback.
+   * This is the same behavior as React's useEffect hook. The callback
+   * is invoked when the component is unmounted.
+   */
+  cleanupIonViewDidLeave(callback: LifeCycleCallback) {
+    this.teardownCallback(callback, this.ionViewDidLeaveDestructorCallbacks);
+  }
+
   ionViewWillEnter() {
-    this.ionViewWillEnterCallbacks.forEach((cb) => cb());
+    this.ionViewWillEnterCallbacks.forEach((cb) => {
+      const destructor = cb();
+      if (cb.id) {
+        this.ionViewWillEnterDestructorCallbacks.push({ id: cb.id, destructor });
+      }
+    });
   }
 
   onIonViewDidEnter(callback: LifeCycleCallback) {
@@ -81,7 +162,12 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
   }
 
   ionViewDidEnter() {
-    this.ionViewDidEnterCallbacks.forEach((cb) => cb());
+    this.ionViewDidEnterCallbacks.forEach((cb) => {
+      const destructor = cb();
+      if (cb.id) {
+        this.ionViewDidEnterDestructorCallbacks.push({ id: cb.id, destructor });
+      }
+    });
   }
 
   onIonViewWillLeave(callback: LifeCycleCallback) {
@@ -98,7 +184,12 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
   }
 
   ionViewWillLeave() {
-    this.ionViewWillLeaveCallbacks.forEach((cb) => cb());
+    this.ionViewWillLeaveCallbacks.forEach((cb) => {
+      const destructor = cb();
+      if (cb.id) {
+        this.ionViewWillLeaveDestructorCallbacks.push({ id: cb.id, destructor });
+      }
+    });
   }
 
   onIonViewDidLeave(callback: LifeCycleCallback) {
@@ -115,7 +206,12 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
   }
 
   ionViewDidLeave() {
-    this.ionViewDidLeaveCallbacks.forEach((cb) => cb());
+    this.ionViewDidLeaveCallbacks.forEach((cb) => {
+      const destructor = cb();
+      if (cb.id) {
+        this.ionViewDidLeaveDestructorCallbacks.push({ id: cb.id, destructor });
+      }
+    });
     this.componentCanBeDestroyed();
   }
 

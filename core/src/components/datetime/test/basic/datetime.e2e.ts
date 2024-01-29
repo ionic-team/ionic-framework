@@ -110,7 +110,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
       const datetime = page.locator('ion-datetime');
       const ionChange = await page.spyOnEvent('ionChange');
 
@@ -255,7 +255,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -275,7 +275,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -297,7 +297,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -331,7 +331,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const monthYearButton = page.locator('ion-datetime .calendar-month-year');
       const monthYearInterface = page.locator('ion-datetime .datetime-year');
@@ -349,7 +349,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
       await expect(datetime).toBeVisible();
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       // month/year interface should be reset
       await expect(monthYearInterface).toBeHidden();
@@ -399,7 +399,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const selectedDay = page.locator('ion-datetime .calendar-day-active');
 
@@ -428,7 +428,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const ionChange = await page.spyOnEvent('ionChange');
       const calendarButtons = page.locator('.calendar-day:not([disabled])');
@@ -447,13 +447,51 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const ionChange = await page.spyOnEvent('ionChange');
       const datetime = page.locator('ion-datetime');
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2022-01-01'));
       await expect(ionChange).not.toHaveReceivedEvent();
+    });
+  });
+});
+
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: today button rendering'), () => {
+    test('should render today button correctly when selected', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'FW-5808',
+      });
+      await page.setContent(
+        `
+        <ion-datetime presentation="date" value="2022-01-02"></ion-datetime>
+
+        <script>
+          const mockToday = '2022-01-02T16:22';
+          Date = class extends Date {
+            constructor(...args) {
+              if (args.length === 0) {
+                super(mockToday)
+              } else {
+                super(...args);
+              }
+            }
+          }
+        </script>
+      `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(datetime.locator('.calendar-day-today')).toHaveScreenshot(
+        screenshot(`datetime-today-calendar-button`)
+      );
     });
   });
 });
@@ -479,7 +517,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       const datetime = page.locator('ion-datetime');
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(datetime).toHaveScreenshot(screenshot(`date-highlight-start-of-month`));
 
@@ -487,6 +525,43 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.waitForChanges();
 
       await expect(datetime).toHaveScreenshot(screenshot(`date-highlight-end-of-month`));
+    });
+  });
+});
+
+/**
+ * This behavior does not differ across
+ * directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: focus'), () => {
+    test('should focus the selected day and then the day after', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2023-08-01"></ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const datetime = page.locator('ion-datetime');
+
+      const day = datetime.locator(`.calendar-day[data-day='1'][data-month='8']`);
+
+      await day.focus();
+      await page.waitForChanges();
+
+      await expect(day).toBeFocused();
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-focus-selected-calendar-day`));
+
+      await page.keyboard.press('ArrowRight');
+      await page.waitForChanges();
+
+      const nextDay = datetime.locator(`.calendar-day[data-day='2'][data-month='8']`);
+
+      await expect(nextDay).toBeFocused();
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-focus-calendar-day`));
     });
   });
 });

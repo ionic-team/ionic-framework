@@ -3,6 +3,213 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.4...v7.6.5) (2024-01-17)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* **react:** replacing route uses new route direction and animation ([#28671](https://github.com/ionic-team/ionic-framework/issues/28671)) ([a17b963](https://github.com/ionic-team/ionic-framework/commit/a17b9631829c36c2daf1d5227f5afa69f99f8743)), closes [#24260](https://github.com/ionic-team/ionic-framework/issues/24260)
+* **react:** use custom animation when going back after a replace ([#28674](https://github.com/ionic-team/ionic-framework/issues/28674)) ([fc88613](https://github.com/ionic-team/ionic-framework/commit/fc88613fefa019a3b695a2c6e10c85cd3ce79ae8)), closes [#28673](https://github.com/ionic-team/ionic-framework/issues/28673)
+
+
+
+
+
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
+
+
+### Bug Fixes
+
+* **react:** router creates new view instances of parameterized routes ([#28616](https://github.com/ionic-team/ionic-framework/issues/28616)) ([1705d06](https://github.com/ionic-team/ionic-framework/commit/1705d064cc041e99f432a27207f3aab7fa62c778)), closes [#26524](https://github.com/ionic-team/ionic-framework/issues/26524)
+
+
+
+
+
+## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.5.6](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6) (2023-11-21)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.5.5](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5) (2023-11-15)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.5.4](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4) (2023-11-08)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.5.3](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3) (2023-11-01)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.4.4](https://github.com/ionic-team/ionic-framework/compare/v7.4.3...v7.4.4) (2023-10-11)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.4.3](https://github.com/ionic-team/ionic-framework/compare/v7.4.2...v7.4.3) (2023-10-04)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.4.2](https://github.com/ionic-team/ionic-framework/compare/v7.4.1...v7.4.2) (2023-09-27)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.4.1](https://github.com/ionic-team/ionic-framework/compare/v7.4.0...v7.4.1) (2023-09-20)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.4.0](https://github.com/ionic-team/ionic-framework/compare/v7.3.4...v7.4.0) (2023-09-14)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.3.4](https://github.com/ionic-team/ionic-framework/compare/v7.3.3...v7.3.4) (2023-09-13)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
 # [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
 
 **Note:** Version bump only for package @ionic/react-router

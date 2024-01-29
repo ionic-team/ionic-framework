@@ -40,4 +40,38 @@ describe('toggle', () => {
       expect(t.enableOnOffLabels).toBe(true);
     });
   });
+
+  describe('shadow parts', () => {
+    it('should have shadow parts', async () => {
+      const page = await newSpecPage({
+        components: [Toggle],
+        html: `<ion-toggle>Label</ion-toggle>`,
+      });
+      const toggle = page.body.querySelector('ion-toggle')!;
+      expect(toggle).toHaveShadowPart('label');
+      expect(toggle).toHaveShadowPart('track');
+      expect(toggle).toHaveShadowPart('handle');
+    });
+  });
+});
+
+describe('ion-toggle: disabled', () => {
+  it('clicking disabled toggle should not toggle checked state', async () => {
+    const page = await newSpecPage({
+      components: [Toggle],
+      html: `
+        <ion-toggle disabled="true">Toggle</ion-toggle>
+      `,
+    });
+
+    const toggle = page.body.querySelector('ion-toggle')!;
+
+    expect(toggle.checked).toBe(false);
+
+    toggle.click();
+
+    await page.waitForChanges();
+
+    expect(toggle.checked).toBe(false);
+  });
 });

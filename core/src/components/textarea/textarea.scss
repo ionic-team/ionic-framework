@@ -67,6 +67,45 @@
   box-sizing: border-box;
 }
 
+// Textarea Wrapper
+// ----------------------------------------------------------------
+
+// TODO: FW-2876 - Make this style a :host style, remove :not selector
+:host(:not(.legacy-textarea)) {
+  min-height: 44px;
+}
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the textarea text.
+ * Also, floating and stacked labels should not
+ * push the label down since it it
+ * sits on top of the textarea.
+ */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 0px;
+
+  min-height: 56px;
+}
+
+/**
+ * When the cols property is set we should
+ * respect that width instead of defaulting
+ * to taking up the entire line.
+ * Requires both the cols and autoGrow
+ * properties to be reflected as attributes
+ * on the host.
+ *
+ * cols does not work with autoGrow because
+ * autoGrow would prevent line breaks from naturally
+ * occurring until the textarea takes up the entire line width.
+ */
+:host([cols]:not([auto-grow])) {
+  width: fit-content;
+}
+
 // TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) {
   flex: 1;
@@ -291,11 +330,7 @@
 // ----------------------------------------------------------------
 
 .native-wrapper {
-  display: flex;
-
   position: relative;
-
-  flex-grow: 1;
 
   width: 100%;
 
@@ -375,6 +410,13 @@
   word-break: break-word;
 }
 
+.textarea-wrapper-inner {
+  display: flex;
+
+  width: 100%;
+  min-height: inherit;
+}
+
 // Textarea Highlight
 // ----------------------------------------------------------------
 
@@ -413,7 +455,7 @@
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 }
 
 /**
@@ -649,6 +691,13 @@
   @include margin(8px, 0px, 0px, 0px);
 }
 
+:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
+:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
+  margin-top: 8px;
+}
+
 /**
  * This makes the label sit over the textarea
  * when the textarea is blurred and has no value.
@@ -674,14 +723,40 @@
 /**
  * This makes the label sit above the textarea.
  */
-:host(.textarea-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
-:host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(#{$textarea-floating-label-scale}));
+:host(.label-floating) .label-text-wrapper {
+  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
    */
-  max-width: calc(100% / #{$textarea-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+.start-slot-wrapper, .end-slot-wrapper {
+  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+
+  display: flex;
+
+  flex-shrink: 0;
+
+  align-self: start;
+}
+
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  margin-top: 0; // ensure slot content is vertically aligned with label
+}
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
 }

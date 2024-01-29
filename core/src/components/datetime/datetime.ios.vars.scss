@@ -7,11 +7,11 @@ $datetime-ios-border-color:         0.55px solid $background-color-step-200 !def
 /// @prop - Padding for content
 $datetime-ios-padding:              16px !default;
 
-/// @prop - Height of the time picker
-$datetime-ios-time-height:          28px !default;
+/// @prop - The font size at which layouts may change to accommodate Dynamic Type
+$datetime-dynamic-font-breakpoint: 24px !default;
 
-/// @prop - Width of the time picker
-$datetime-ios-time-width:           68px !default;
+/// @prop - Width of the calendar day
+$datetime-ios-day-width: 40px !default;
 
-/// @prop - Border radius of the time picker
-$datetime-ios-time-border-radius:   8px !default;
+/// @prop - Height of the calendar day
+$datetime-ios-day-height: $datetime-ios-day-width !default;

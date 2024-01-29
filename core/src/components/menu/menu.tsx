@@ -1,12 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
-import { doc } from '@utils/browser';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
-import { getOverlay } from '@utils/overlays';
+import { getPresentedOverlay } from '@utils/overlays';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -34,10 +33,20 @@ const focusableQueryString =
   shadow: true,
 })
 export class Menu implements ComponentInterface, MenuI {
-  private animation?: any; // TODO(FW-2832): type
+  private animation?: Animation;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
+  private didLoad = false;
+
+  /**
+   * Flag used to determine if an open/close
+   * operation was cancelled. For example, if
+   * an app calls "menu.open" then disables the menu
+   * part way through the animation, then this would
+   * be considered a cancelled operation.
+   */
+  private operationCancelled = false;
 
   isAnimating = false;
   width!: number;
@@ -58,7 +67,7 @@ export class Menu implements ComponentInterface, MenuI {
      * open does not contain this ion-menu, then ion-menu's
      * focus trapping should not run.
      */
-    const lastOverlay = getOverlay(document);
+    const lastOverlay = getPresentedOverlay(document);
     if (lastOverlay && !lastOverlay.contains(this.el)) {
       return;
     }
@@ -181,7 +190,7 @@ export class Menu implements ComponentInterface, MenuI {
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
     // before WC is defined. This needs to be fixed in Stencil.
-    if (typeof (customElements as any) !== 'undefined' && (customElements as any) != null) {
+    if (typeof customElements !== 'undefined' && customElements != null) {
       await customElements.whenDefined('ion-menu');
     }
 
@@ -216,6 +225,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     // register this menu with the app's menu controller
     menuController._register(this);
+    this.menuChanged();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
@@ -237,8 +247,20 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   async componentDidLoad() {
-    this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
+    this.didLoad = true;
+    this.menuChanged();
     this.updateState();
+  }
+
+  private menuChanged() {
+    /**
+     * Inform dependent components such as ion-menu-button
+     * that the menu is ready. Note that we only want to do this
+     * once the menu has been rendered which is why we check for didLoad.
+     */
+    if (this.didLoad) {
+      this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
+    }
   }
 
   async disconnectedCallback() {
@@ -267,6 +289,20 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
   onSplitPaneChanged(ev: CustomEvent) {
+    const { target } = ev;
+    const closestSplitPane = this.el.closest('ion-split-pane');
+
+    /**
+     * Menu listens on the body for "ionSplitPaneVisible".
+     * However, this means the callback will run any time
+     * a SplitPane changes visibility. As a result, we only want
+     * Menu's visibility state to update if its parent SplitPane
+     * changes visibility.
+     */
+    if (target !== closestSplitPane) {
+      return;
+    }
+
     this.isPaneVisible = ev.detail.isPane(this.el);
     this.updateState();
   }
@@ -418,6 +454,17 @@ export class Menu implements ComponentInterface, MenuI {
 
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
+
+    /**
+     * If the animation was cancelled then
+     * return false because the operation
+     * did not succeed.
+     */
+    if (this.operationCancelled) {
+      this.operationCancelled = false;
+      return false;
+    }
+
     this.afterAnimation(shouldOpen);
 
     return true;
@@ -444,11 +491,11 @@ export class Menu implements ComponentInterface, MenuI {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await menuController._createAnimation(this.type!, this);
+    const animation = (this.animation = await menuController._createAnimation(this.type!, this));
     if (!config.getBoolean('animated', true)) {
-      this.animation.duration(0);
+      animation.duration(0);
     }
-    this.animation.fill('both');
+    animation.fill('both');
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
@@ -458,17 +505,23 @@ export class Menu implements ComponentInterface, MenuI {
     const easingReverse = mode === 'ios' ? iosEasingReverse : mdEasingReverse;
     const ani = (this.animation as Animation)!
       .direction(isReversed ? 'reverse' : 'normal')
-      .easing(isReversed ? easingReverse : easing)
-      .onFinish(() => {
-        if (ani.getDirection() === 'reverse') {
-          ani.direction('normal');
-        }
-      });
+      .easing(isReversed ? easingReverse : easing);
 
     if (animated) {
       await ani.play();
     } else {
       ani.play({ sync: true });
+    }
+
+    /**
+     * We run this after the play invocation
+     * instead of using ani.onFinish so that
+     * multiple onFinish callbacks do not get
+     * run if an animation is played, stopped,
+     * and then played again.
+     */
+    if (ani.getDirection() === 'reverse') {
+      ani.direction('normal');
     }
   }
 
@@ -629,8 +682,6 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   private afterAnimation(isOpen: boolean) {
-    assert(this.isAnimating, '_before() should be called while animating');
-
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
@@ -699,36 +750,31 @@ export class Menu implements ComponentInterface, MenuI {
       this.gesture.enable(isActive && this.swipeGesture);
     }
 
-    // Close menu immediately
-    if (!isActive && this._isOpen) {
-      // close if this menu is open, and should not be enabled
-      this.forceClosing();
-    }
-
-    if (doc?.contains(this.el)) {
+    /**
+     * If the menu is disabled but it is still open
+     * then we should close the menu immediately.
+     * Additionally, if the menu is in the process
+     * of animating {open, close} and the menu is disabled
+     * then it should still be closed immediately.
+     */
+    if (!isActive) {
       /**
-       * Only set the active menu if the menu element is
-       * present in the DOM. Otherwise if it was destructively
-       * re-hydrated (through Angular Universal), then ignore
-       * setting the removed node as the active menu.
+       * It is possible to disable the menu while
+       * it is mid-animation. When this happens, we
+       * need to set the operationCancelled flag
+       * so that this._setOpen knows to return false
+       * and not run the "afterAnimation" callback.
        */
-      if (!this.disabled) {
-        menuController._setActiveMenu(this);
+      if (this.isAnimating) {
+        this.operationCancelled = true;
       }
+
+      /**
+       * If the menu is disabled then we should
+       * forcibly close the menu even if it is open.
+       */
+      this.afterAnimation(false);
     }
-
-    assert(!this.isAnimating, 'can not be animating');
-  }
-
-  private forceClosing() {
-    assert(this._isOpen, 'menu cannot be closed');
-
-    this.isAnimating = true;
-
-    const ani = (this.animation as Animation)!.direction('reverse');
-    ani.play({ sync: true });
-
-    this.afterAnimation(false);
   }
 
   render() {

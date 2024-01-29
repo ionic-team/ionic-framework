@@ -4,8 +4,7 @@
 // iOS Label
 // --------------------------------------------------
 
-:host(.ion-text-wrap),
-:host([text-wrap]) {
+:host(.ion-text-wrap) {
   font-size: $label-ios-text-wrap-font-size;
 
   line-height: $label-ios-text-wrap-line-height;
@@ -17,7 +16,7 @@
 :host(.label-stacked) {
   @include margin(null, null, 4px, null);
 
-  font-size: 14px;
+  font-size: dynamic-font(14px);
 }
 
 :host(.label-floating) {
@@ -49,14 +48,14 @@
 ::slotted(*) h1 {
   @include margin(3px, 0, 2px);
 
-  font-size: 22px;
+  font-size: dynamic-font(22px);
   font-weight: normal;
 }
 
 ::slotted(*) h2 {
   @include margin(0, 0, 2px);
 
-  font-size: 17px;
+  font-size: dynamic-font(17px);
   font-weight: normal;
 }
 
@@ -66,7 +65,7 @@
 ::slotted(*) h6 {
   @include margin(0, 0, 3px);
 
-  font-size: 14px;
+  font-size: dynamic-font(14px);
   font-weight: normal;
 
   line-height: normal;

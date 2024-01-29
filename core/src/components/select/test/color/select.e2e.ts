@@ -15,7 +15,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`select-no-fill-color`));
+        await expect(select).toHaveScreenshot(screenshot(`select-no-fill-color`));
       });
     });
     test.describe('input: fill solid', () => {
@@ -30,7 +30,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`select-solid-color`));
+        await expect(select).toHaveScreenshot(screenshot(`select-solid-color`));
       });
     });
     test.describe('input: fill outline', () => {
@@ -45,7 +45,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`select-outline-color`));
+        await expect(select).toHaveScreenshot(screenshot(`select-outline-color`));
       });
     });
   });

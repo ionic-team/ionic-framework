@@ -44,16 +44,10 @@
 
 ::slotted(h1) {
   @include margin(0, 0, 2px);
-
-  font-size: 24px;
-  font-weight: normal;
 }
 
 ::slotted(h2) {
   @include margin(0, 0, 2px);
-
-  font-size: 17px;
-  font-weight: normal;
 }
 
 ::slotted(h3),
@@ -61,11 +55,6 @@
 ::slotted(h5),
 ::slotted(h6) {
   @include margin(0, 0, 3px);
-
-  font-size: 14px;
-  font-weight: normal;
-
-  line-height: normal;
 }
 
 ::slotted(p) {

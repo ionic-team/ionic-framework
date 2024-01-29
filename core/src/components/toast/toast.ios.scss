@@ -10,6 +10,7 @@
   --button-color: #{$toast-ios-button-color};
   --color: #{$toast-ios-title-color};
   --max-width: #{$toast-max-width};
+  --max-height: #{$toast-ios-max-height};
   --start: 10px;
   --end: 10px;
 
@@ -36,20 +37,8 @@
   }
 }
 
-.toast-wrapper.toast-top {
-  @include transform(translate3d(0, -100%, 0));
-
-  top: 0;
-}
-
 .toast-wrapper.toast-middle {
   opacity: .01;
-}
-
-.toast-wrapper.toast-bottom {
-  @include transform(translate3d(0, 100%, 0));
-
-  bottom: 0;
 }
 
 .toast-content {
@@ -68,7 +57,7 @@
 .toast-button {
   @include padding($toast-ios-button-padding-top, $toast-ios-button-padding-end, $toast-ios-button-padding-bottom, $toast-ios-button-padding-start);
 
-  height: $toast-ios-button-min-height;
+  min-height: $toast-ios-button-min-height;
 
   transition: background-color, opacity 100ms linear;
 

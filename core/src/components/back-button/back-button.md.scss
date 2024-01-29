@@ -13,14 +13,14 @@
   --color: #{$back-button-md-color};
   --icon-margin-end: 0;
   --icon-margin-start: 0;
-  --icon-font-size: 24px;
+  --icon-font-size: #{dynamic-font(24px)};
   --icon-font-weight: normal;
   --min-height: 32px;
   --min-width: 44px;
   --padding-start: 12px;
   --padding-end: 12px;
 
-  font-size: 14px;
+  font-size: dynamic-font(14px);
   font-weight: 500;
 
   text-transform: uppercase;
@@ -30,7 +30,14 @@
   --border-radius: 50%;
 
   min-width: 48px;
-  height: 48px;
+  min-height: 48px;
+
+  /**
+   * This allows the icon only button to
+   * keep its circular shape even when the
+   * text scales up.
+   */
+  aspect-ratio: 1 / 1;
 }
 
 .button-native {

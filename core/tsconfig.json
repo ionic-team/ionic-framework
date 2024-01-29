@@ -14,7 +14,8 @@
       "dom",
       "dom.iterable",
       "es2017",
-      "es2020"
+      "es2020",
+      "es2021"
     ],
     "module": "esnext",
     "moduleResolution": "node",
@@ -36,9 +37,6 @@
     "src",
   ],
   "exclude": [
-    "node_modules",
-    "**/test/**/*.spec.ts",
-    "**/test/**/*.spec.tsx",
-    "**/test/**/e2e.ts"
+    "node_modules"
   ]
 }

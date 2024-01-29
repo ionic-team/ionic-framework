@@ -24,10 +24,6 @@ const Details: React.FC<DetailsProps> = () => {
     return () => console.log('Home Details unmount');
   }, []);
 
-  // useIonViewWillEnter(() => {
-  //   console.log('IVWE Details')
-  // })
-
   const nextId = parseInt(id, 10) + 1;
 
   return (
@@ -58,6 +54,9 @@ const Details: React.FC<DetailsProps> = () => {
         <IonButton routerLink={`/routing/tabs/settings/details/1`}>
           <IonLabel>Go to Settings Details 1</IonLabel>
         </IonButton>
+        <br />
+        <br />
+        <input data-testid="details-input" />
       </IonContent>
     </IonPage>
   );

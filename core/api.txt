@@ -289,12 +289,13 @@ ion-card-title,prop,mode,"ios" | "md",undefined,false,false
 ion-card-title,css-prop,--color
 
 ion-checkbox,shadow
+ion-checkbox,prop,alignment,"center" | "start",'center',false,false
 ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,justify,"end" | "space-between" | "start",'space-between',false,false
-ion-checkbox,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-checkbox,prop,legacy,boolean | undefined,undefined,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
@@ -314,6 +315,7 @@ ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
 ion-checkbox,part,container
+ion-checkbox,part,label
 ion-checkbox,part,mark
 
 ion-chip,shadow
@@ -393,7 +395,7 @@ ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
 ion-datetime,prop,firstDayOfWeek,number,0,false,false
 ion-datetime,prop,highlightedDates,((dateIsoString: string) => DatetimeHighlightStyle | undefined) | DatetimeHighlight[] | undefined,undefined,false,false
-ion-datetime,prop,hourCycle,"h12" | "h23" | undefined,undefined,false,false
+ion-datetime,prop,hourCycle,"h11" | "h12" | "h23" | "h24" | undefined,undefined,false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,isDateEnabled,((dateIsoString: string) => boolean) | undefined,undefined,false,false
 ion-datetime,prop,locale,string,'default',false,false
@@ -427,6 +429,10 @@ ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
 ion-datetime,css-prop,--wheel-fade-background-rgb
 ion-datetime,css-prop,--wheel-highlight-background
+ion-datetime,part,calendar-day
+ion-datetime,part,calendar-day active
+ion-datetime,part,calendar-day disabled
+ion-datetime,part,calendar-day today
 ion-datetime,part,month-year-button
 ion-datetime,part,time-button
 ion-datetime,part,time-button active
@@ -1008,10 +1014,11 @@ ion-progress-bar,part,stream
 ion-progress-bar,part,track
 
 ion-radio,shadow
+ion-radio,prop,alignment,"center" | "start",'center',false,false
 ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-radio,prop,disabled,boolean,false,false,false
 ion-radio,prop,justify,"end" | "space-between" | "start",'space-between',false,false
-ion-radio,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-radio,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-radio,prop,legacy,boolean | undefined,undefined,false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
@@ -1023,10 +1030,12 @@ ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 ion-radio,css-prop,--inner-border-radius
 ion-radio,part,container
+ion-radio,part,label
 ion-radio,part,mark
 
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
+ion-radio-group,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-radio-group,prop,name,string,this.inputId,false,false
 ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
@@ -1038,7 +1047,7 @@ ion-range,prop,debounce,number | undefined,undefined,false,false
 ion-range,prop,disabled,boolean,false,false,false
 ion-range,prop,dualKnobs,boolean,false,false,false
 ion-range,prop,label,string | undefined,undefined,false,false
-ion-range,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-range,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-range,prop,legacy,boolean | undefined,undefined,false,false
 ion-range,prop,max,number,100,false,false
 ion-range,prop,min,number,0,false,false
@@ -1070,6 +1079,7 @@ ion-range,css-prop,--pin-color
 ion-range,part,bar
 ion-range,part,bar-active
 ion-range,part,knob
+ion-range,part,label
 ion-range,part,pin
 ion-range,part,tick
 ion-range,part,tick-active
@@ -1077,6 +1087,7 @@ ion-range,part,tick-active
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
 ion-refresher,prop,disabled,boolean,false,false,false
+ion-refresher,prop,mode,"ios" | "md",undefined,false,false
 ion-refresher,prop,pullFactor,number,1,false,false
 ion-refresher,prop,pullMax,number,this.pullMin + 60,false,false
 ion-refresher,prop,pullMin,number,60,false,false
@@ -1364,7 +1375,7 @@ ion-textarea,prop,autocapitalize,string,'none',false,false
 ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false
 ion-textarea,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-textarea,prop,cols,number | undefined,undefined,false,false
+ion-textarea,prop,cols,number | undefined,undefined,false,true
 ion-textarea,prop,counter,boolean,false,false,false
 ion-textarea,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-textarea,prop,debounce,number | undefined,undefined,false,false
@@ -1439,6 +1450,8 @@ ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
+ion-toast,prop,positionAnchor,HTMLElement | string | undefined,undefined,false,false
+ion-toast,prop,swipeGesture,"vertical" | undefined,undefined,false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,prop,trigger,string | undefined,undefined,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
@@ -1478,12 +1491,13 @@ ion-toast,part,icon
 ion-toast,part,message
 
 ion-toggle,shadow
+ion-toggle,prop,alignment,"center" | "start",'center',false,false
 ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
 ion-toggle,prop,justify,"end" | "space-between" | "start",'space-between',false,false
-ion-toggle,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-toggle,prop,legacy,boolean | undefined,undefined,false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
@@ -1504,6 +1518,7 @@ ion-toggle,css-prop,--handle-width
 ion-toggle,css-prop,--track-background
 ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
+ion-toggle,part,label
 ion-toggle,part,track
 
 ion-toolbar,shadow

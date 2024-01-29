@@ -67,7 +67,7 @@
   --show-full-highlight: 0;
   --show-inset-highlight: 0;
   --detail-icon-color: initial;
-  --detail-icon-font-size: 20px;
+  --detail-icon-font-size: 1.25em;
   --detail-icon-opacity: 0.25;
   --color-activated: var(--color);
   --color-focused: var(--color);
@@ -173,6 +173,13 @@
   }
 }
 
+// Item: Interactive
+// --------------------------------------------------
+
+:host(.item-has-interactive-control) {
+  cursor: pointer;
+}
+
 
 // Item: Disabled
 // --------------------------------------------------
@@ -189,19 +196,27 @@
 }
 
 
+
 // Native Item
 // --------------------------------------------------
 
 .item-native {
   @include border-radius(var(--border-radius));
   @include margin(0);
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
+  @include padding(var(--padding-top), null, var(--padding-bottom));
   @include text-inherit();
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: var(--padding-end);
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
+    padding-left: var(--padding-end);
+  }
+  /* stylelint-enable */
 
   display: flex;
   position: relative;
@@ -223,9 +238,10 @@
   background: var(--background);
 
   overflow: inherit;
-  box-sizing: border-box;
 
   z-index: 1;
+
+  box-sizing: border-box;
 }
 
 .item-native::-moz-focus-inner {
@@ -253,12 +269,19 @@ button, a {
 
 .item-inner {
   @include margin(0);
-  @include padding(
-    var(--inner-padding-top),
-    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
-    var(--inner-padding-bottom),
-    var(--inner-padding-start)
-  );
+  @include padding(var(--inner-padding-top), null, var(--inner-padding-bottom));
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
+    padding-left: var(--inner-padding-start);
+  }
+
+  @include rtl() {
+    padding-right: var(--inner-padding-start);
+    padding-left: calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-end));
+  }
+  /* stylelint-enable */
 
   display: flex;
 
@@ -266,7 +289,9 @@ button, a {
   position: relative;
 
   flex: 1;
+
   flex-direction: inherit;
+
   align-items: inherit;
   align-self: stretch;
 
@@ -281,18 +306,24 @@ button, a {
   box-sizing: border-box;
 }
 
-
 // Item Bottom
 // --------------------------------------------------
 
 .item-bottom {
   @include margin(0);
-  @include padding(
-    0,
-    var(--inner-padding-end),
-    0,
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
+  @include padding(0, null);
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+    padding-right: calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px));
+  }
+
+  @include rtl() {
+    padding-left: calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px));
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
+  }
+  /* stylelint-enable */
 
   display: flex;
 
@@ -341,6 +372,18 @@ button, a {
 
 ::slotted(ion-label:not([slot="end"])) {
   flex: 1;
+
+  // Setting width to min-content allows the label to
+  // shrink and wrap its text instead of moving to its
+  // own row if there are slotted elements next to it
+  width: min-content;
+
+  /**
+   * We allow labels in the default
+   * slot to grow. However, we do not
+   * want them to grow indefinitely.
+   */
+  max-width: 100%;
 }
 
 // Item Input
@@ -353,7 +396,11 @@ button, a {
 .input-wrapper {
   display: flex;
 
+  // This flex property is required in order to keep
+  // the label from shrinking when there are wide
+  // elements next to it
   flex: 1;
+
   flex-direction: inherit;
 
   align-items: inherit;
@@ -573,7 +620,7 @@ ion-ripple-effect {
 .item-counter {
   padding-top: 5px;
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 
   z-index: 1;
 }

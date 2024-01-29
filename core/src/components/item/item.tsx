@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes, raf } from '@utils/helpers';
@@ -85,6 +85,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
    * `"outline"` the item will be transparent with a border. Only available in `md` mode.
+   * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -148,6 +149,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() counterFormatter?: CounterFormatter;
 
   @State() counterString: string | null | undefined;
+
+  @Watch('button')
+  buttonChanged() {
+    // Update the focusable option when the button option is changed
+    this.focusable = this.isFocusable();
+  }
 
   @Watch('counterFormatter')
   counterFormatterChanged() {
@@ -350,6 +357,22 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
+  private getFirstInteractive() {
+    if (Build.isTesting) {
+      /**
+       * Pseudo selectors can't be tested in unit tests.
+       * It will cause an error when running the tests.
+       *
+       * TODO: FW-5205 - Remove the build conditional when this is fixed in Stencil
+       */
+      return undefined;
+    }
+    const controls = this.el.querySelectorAll<HTMLElement>(
+      'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled]), ion-select:not([disabled])'
+    );
+    return controls[0];
+  }
+
   render() {
     const {
       counterString,
@@ -367,6 +390,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerAnimation,
       routerDirection,
       inheritedAriaAttributes,
+      multipleInputs,
     } = this;
     const childStyles = {} as StyleEventDetail;
     const mode = getIonMode(this);
@@ -383,15 +407,41 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             rel,
             target,
           };
+
+    let clickFn = {};
+
+    const firstInteractive = this.getFirstInteractive();
+
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
-    const clickFn = clickable
-      ? {
-          onClick: (ev: Event) => {
+    if (clickable || (firstInteractive !== undefined && !multipleInputs)) {
+      clickFn = {
+        onClick: (ev: MouseEvent) => {
+          if (clickable) {
             openURL(href, ev, routerDirection, routerAnimation);
-          },
-        }
-      : {};
+          }
+          if (firstInteractive !== undefined && !multipleInputs) {
+            const path = ev.composedPath();
+            const target = path[0] as HTMLElement;
+            if (ev.isTrusted) {
+              /**
+               * Dispatches a click event to the first interactive element,
+               * when it is the result of a user clicking on the item.
+               *
+               * We check if the click target is in the shadow root,
+               * which means the user clicked on the .item-native or
+               * .item-inner padding.
+               */
+              const clickedWithinShadowRoot = this.el.shadowRoot!.contains(target);
+              if (clickedWithinShadowRoot) {
+                firstInteractive.click();
+              }
+            }
+          }
+        },
+      };
+    }
+
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach((value) => {
       Object.assign(childStyles, value);
@@ -413,6 +463,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
+            'item-has-interactive-control': firstInteractive !== undefined,
             'item-disabled': disabled,
             'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,

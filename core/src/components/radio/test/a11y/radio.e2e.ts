@@ -16,7 +16,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('radio: keyboard navigation'), () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, browserName }) => {
       await page.setContent(
         `
       <ion-app>
@@ -58,6 +58,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     `,
         config
       );
+
+      if (browserName === 'webkit') {
+        const radio = page.locator('#first-group ion-radio').first();
+        /**
+         * Sometimes Safari does not focus the first radio.
+         * This is a workaround to ensure the first radio is focused.
+         *
+         * Wait for the first radio to be rendered before tabbing.
+         * This is necessary because the first radio may not be rendered
+         * when the page first loads.
+         *
+         * This would cause the first radio to be skipped when tabbing.
+         */
+        await radio.waitFor();
+      }
     });
 
     test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
@@ -91,6 +106,32 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.keyboard.press('ArrowUp');
       await expect(firstGroupRadios.nth(3)).toBeFocused();
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+        <ion-radio-group value="a">
+          <ion-radio value="a">Radio Label</ion-alert>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radioGroup = page.locator('ion-radio-group');
+      await expect(radioGroup).toHaveScreenshot(screenshot(`radio-scale`));
     });
   });
 });

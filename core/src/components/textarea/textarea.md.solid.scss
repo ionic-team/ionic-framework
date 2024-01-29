@@ -9,6 +9,8 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
+
+  min-height: 56px;
 }
 
 /**
@@ -65,12 +67,10 @@
 // Textarea Label
 // ----------------------------------------------------------------
 
-:host(.textarea-fill-solid.textarea-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.textarea-fill-solid.textarea-label-placement-floating) .label-text-wrapper,
-:host(.has-value.textarea-fill-solid.textarea-label-placement-floating) .label-text-wrapper {
+:host(.label-floating.textarea-fill-solid) .label-text-wrapper {
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
    */
-  max-width: calc(100% / #{$textarea-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }

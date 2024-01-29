@@ -3,6 +3,228 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.4...v7.6.5) (2024-01-17)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* **react:** avoid type collision with @types/react@18.2.43 and greater ([#28687](https://github.com/ionic-team/ionic-framework/issues/28687)) ([92f1b86](https://github.com/ionic-team/ionic-framework/commit/92f1b8627a240c93891205f75adcb5ce3d46596d))
+
+
+
+
+
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.6](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6) (2023-11-21)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.5](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5) (2023-11-15)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.4](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4) (2023-11-08)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.3](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3) (2023-11-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* **react:** cleanup functions are execute for lifecycle hooks ([#28319](https://github.com/ionic-team/ionic-framework/issues/28319)) ([1ba9973](https://github.com/ionic-team/ionic-framework/commit/1ba9973857503c6e47cb225b77a5b89e0a9d2718)), closes [#28186](https://github.com/ionic-team/ionic-framework/issues/28186)
+* **react:** lifecycle events are removed on page unmount ([#28316](https://github.com/ionic-team/ionic-framework/issues/28316)) ([f14a59c](https://github.com/ionic-team/ionic-framework/commit/f14a59c5e0670ed7cc9ce1a73a087a5af13266e2))
+
+
+
+
+
+# [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
+
+
+### Features
+
+* **angular, react, vue, core:** export openURL utility ([#28295](https://github.com/ionic-team/ionic-framework/issues/28295)) ([6da82aa](https://github.com/ionic-team/ionic-framework/commit/6da82aab816b28bfc174f7634ded1fc1e06502ab)), closes [#27911](https://github.com/ionic-team/ionic-framework/issues/27911)
+
+
+
+
+
+## [7.4.4](https://github.com/ionic-team/ionic-framework/compare/v7.4.3...v7.4.4) (2023-10-11)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.4.3](https://github.com/ionic-team/ionic-framework/compare/v7.4.2...v7.4.3) (2023-10-04)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.4.2](https://github.com/ionic-team/ionic-framework/compare/v7.4.1...v7.4.2) (2023-09-27)
+
+
+### Bug Fixes
+
+* **react:** Nav unmounts component while invoking popTo or popToRoot ([#27821](https://github.com/ionic-team/ionic-framework/issues/27821)) ([0edcb2c](https://github.com/ionic-team/ionic-framework/commit/0edcb2cd85133ae8c304c53c37ca829e5fbad447)), closes [#27798](https://github.com/ionic-team/ionic-framework/issues/27798)
+
+
+
+
+
+## [7.4.1](https://github.com/ionic-team/ionic-framework/compare/v7.4.0...v7.4.1) (2023-09-20)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.4.0](https://github.com/ionic-team/ionic-framework/compare/v7.3.4...v7.4.0) (2023-09-14)
+
+
+### Features
+
+* export TransitionOptions interface and getIonPageElement ([#28140](https://github.com/ionic-team/ionic-framework/issues/28140)) ([19f3bb2](https://github.com/ionic-team/ionic-framework/commit/19f3bb23fd5587848fc41a744ca46ef5985c04d2)), closes [#28137](https://github.com/ionic-team/ionic-framework/issues/28137)
+
+
+
+
+
+## [7.3.4](https://github.com/ionic-team/ionic-framework/compare/v7.3.3...v7.3.4) (2023-09-13)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
+
+
+### Bug Fixes
+
+* **react:** overlay content is shown with hook  ([#28109](https://github.com/ionic-team/ionic-framework/issues/28109)) ([7b551fd](https://github.com/ionic-team/ionic-framework/commit/7b551fd54b9e16a2538e5b82a13d72b3007fa045)), closes [#28102](https://github.com/ionic-team/ionic-framework/issues/28102)
+
+
+
+
+
+## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+
+### Bug Fixes
+
+* **react:** avoid multiple invocations of onDidDismiss and onWillPresent ([#28020](https://github.com/ionic-team/ionic-framework/issues/28020)) ([0ac3df3](https://github.com/ionic-team/ionic-framework/commit/0ac3df3f378bdefc3a927adc798ebd9ec7a54fee)), closes [#28010](https://github.com/ionic-team/ionic-framework/issues/28010)
+
+
+
+
+
 # [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
 
 **Note:** Version bump only for package @ionic/react

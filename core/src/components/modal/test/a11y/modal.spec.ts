@@ -15,8 +15,8 @@ describe('modal: a11y', () => {
       `,
     });
 
-    const modal = page.body.querySelector('ion-modal');
-    const modalWrapper = modal.shadowRoot.querySelector('.modal-wrapper');
+    const modal = page.body.querySelector('ion-modal')!;
+    const modalWrapper = modal.shadowRoot!.querySelector('.modal-wrapper')!;
 
     await expect(modalWrapper.getAttribute('role')).toBe('alertdialog');
   });

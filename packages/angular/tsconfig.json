@@ -27,7 +27,7 @@
     "pretty": true,
     "removeComments": false,
     "importHelpers": true,
-    "rootDir": "src",
+    "rootDir": "./",
     "strictPropertyInitialization": false,
     "target": "es2015",
     "baseUrl": ".",
@@ -35,8 +35,11 @@
       {
         "name": "typescript-eslint-language-service"
       }
-    ]
+    ],
+    "paths": {
+      "@ionic/angular/common": ["common/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "src/schematics"],
-  "files": ["src/index.ts"]
+  "files": ["src/index.ts", "common/src/index.ts", "standalone/src/index.ts"]
 }

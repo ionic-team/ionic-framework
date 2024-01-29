@@ -1,3 +1,5 @@
+import type { BackButtonEvent } from '@utils/hardware-back-button';
+
 /**
  * When accessing the document or window, it is important
  * to account for SSR applications where the
@@ -20,6 +22,59 @@
  * Note: Code inside of this if-block will
  * not run in an SSR environment.
  */
-export const win: Window | undefined = typeof window !== 'undefined' ? window : undefined;
 
-export const doc: Document | undefined = typeof document !== 'undefined' ? document : undefined;
+/**
+ * Event listeners on the window typically expect
+ * Event types for the listener parameter. If you want to listen
+ * on the window for certain CustomEvent types you can add that definition
+ * here as long as you are using the "win" utility below.
+ */
+type IonicEvents = {
+  addEventListener(
+    type: 'ionKeyboardDidShow',
+    listener: (ev: CustomEvent<{ keyboardHeight: number }>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: 'ionKeyboardDidShow',
+    listener: (ev: CustomEvent<{ keyboardHeight: number }>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  addEventListener(
+    type: 'ionInputDidLoad',
+    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: 'ionInputDidLoad',
+    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  addEventListener(
+    type: 'ionInputDidUnload',
+    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: 'ionInputDidUnload',
+    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  addEventListener(
+    type: 'ionBackButton',
+    listener: (ev: BackButtonEvent) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: 'ionBackButton',
+    listener: (ev: BackButtonEvent) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+};
+
+type IonicWindow = Window & IonicEvents;
+type IonicDocument = Document & IonicEvents;
+
+export const win: IonicWindow | undefined = typeof window !== 'undefined' ? window : undefined;
+
+export const doc: IonicDocument | undefined = typeof document !== 'undefined' ? document : undefined;

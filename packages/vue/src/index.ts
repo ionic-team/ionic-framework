@@ -47,6 +47,8 @@ export {
   isPlatform,
   menuController,
   getTimeGivenProgression,
+  getIonPageElement,
+  openURL,
 
   // TYPES
   Animation,
@@ -123,4 +125,5 @@ export {
   ToastLayout,
   ToggleChangeEventDetail,
   ToggleCustomEvent,
+  TransitionOptions,
 } from "@ionic/core/components";

@@ -3,6 +3,229 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
+
+
+### Bug Fixes
+
+* **vue:** tabs and parameterized routes work with latest vue ([#28846](https://github.com/ionic-team/ionic-framework/issues/28846)) ([5bc4399](https://github.com/ionic-team/ionic-framework/commit/5bc439961fda2c595666e67688fdd1b8ff4dd0bf)), closes [#28774](https://github.com/ionic-team/ionic-framework/issues/28774)
+
+
+
+
+
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.4...v7.6.5) (2024-01-17)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+
+### Bug Fixes
+
+* **angular,vue:** range form value updates while dragging knob ([#28422](https://github.com/ionic-team/ionic-framework/issues/28422)) ([0854a11](https://github.com/ionic-team/ionic-framework/commit/0854a11a25759d0201eae66c96a62fe138d486f8)), closes [#28256](https://github.com/ionic-team/ionic-framework/issues/28256)
+
+
+### Features
+
+* **radio-group:** add compareWith property ([#28452](https://github.com/ionic-team/ionic-framework/issues/28452)) ([0ae327f](https://github.com/ionic-team/ionic-framework/commit/0ae327f0e09cd97d705f2d3051c215034381e226))
+* **toast:** add swipe to dismiss functionality ([#28442](https://github.com/ionic-team/ionic-framework/issues/28442)) ([30c21aa](https://github.com/ionic-team/ionic-framework/commit/30c21aab3ed40d73c28e7d60d0952d8891b0a9d3)), closes [#21769](https://github.com/ionic-team/ionic-framework/issues/21769)
+
+
+
+
+
+## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
+
+
+### Bug Fixes
+
+* **vue:** nav component accepts kebab-case component properties ([#28615](https://github.com/ionic-team/ionic-framework/issues/28615)) ([60303aa](https://github.com/ionic-team/ionic-framework/commit/60303aad23f823488afc8f8824e9c72e3ab86acc)), closes [#28611](https://github.com/ionic-team/ionic-framework/issues/28611)
+
+
+
+
+
+## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.5.6](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6) (2023-11-21)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.5.5](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5) (2023-11-15)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.5.4](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4) (2023-11-08)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.5.3](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3) (2023-11-01)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
+
+
+### Features
+
+* **angular, react, vue, core:** export openURL utility ([#28295](https://github.com/ionic-team/ionic-framework/issues/28295)) ([6da82aa](https://github.com/ionic-team/ionic-framework/commit/6da82aab816b28bfc174f7634ded1fc1e06502ab)), closes [#27911](https://github.com/ionic-team/ionic-framework/issues/27911)
+* **toast:** allow custom positioning relative to specific element ([#28248](https://github.com/ionic-team/ionic-framework/issues/28248)) ([897ff6f](https://github.com/ionic-team/ionic-framework/commit/897ff6f7493d8d7e4ab22c6ae59de066b43ce682)), closes [#17499](https://github.com/ionic-team/ionic-framework/issues/17499)
+
+
+
+
+
+## [7.4.4](https://github.com/ionic-team/ionic-framework/compare/v7.4.3...v7.4.4) (2023-10-11)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.4.3](https://github.com/ionic-team/ionic-framework/compare/v7.4.2...v7.4.3) (2023-10-04)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.4.2](https://github.com/ionic-team/ionic-framework/compare/v7.4.1...v7.4.2) (2023-09-27)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.4.1](https://github.com/ionic-team/ionic-framework/compare/v7.4.0...v7.4.1) (2023-09-20)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [7.4.0](https://github.com/ionic-team/ionic-framework/compare/v7.3.4...v7.4.0) (2023-09-14)
+
+
+### Features
+
+* **checkbox, radio, toggle, range:** stacked labels for form controls ([#28075](https://github.com/ionic-team/ionic-framework/issues/28075)) ([e6c7bb6](https://github.com/ionic-team/ionic-framework/commit/e6c7bb60e7e61c965f45e2bf3e3bd16f5125ad56))
+* export TransitionOptions interface and getIonPageElement ([#28140](https://github.com/ionic-team/ionic-framework/issues/28140)) ([19f3bb2](https://github.com/ionic-team/ionic-framework/commit/19f3bb23fd5587848fc41a744ca46ef5985c04d2)), closes [#28137](https://github.com/ionic-team/ionic-framework/issues/28137)
+
+
+
+
+
+## [7.3.4](https://github.com/ionic-team/ionic-framework/compare/v7.3.3...v7.3.4) (2023-09-13)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 # [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
 
 **Note:** Version bump only for package @ionic/vue

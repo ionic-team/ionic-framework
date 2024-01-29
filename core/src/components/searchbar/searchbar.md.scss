@@ -25,8 +25,8 @@
 .searchbar-search-icon {
   @include position(11px, null, null, 16px);
 
-  width: $searchbar-md-input-search-icon-size + 1;
-  height: $searchbar-md-input-search-icon-size + 1;
+  width: $searchbar-md-input-search-icon-size;
+  height: $searchbar-md-input-search-icon-size;
 }
 
 
@@ -34,7 +34,13 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  @include position(0, null, null, 5px);
+  /**
+   * The left edge of the cancel button
+   * should align with the left edge
+   * of the back button if the searchbar
+   * is used in a toolbar.
+   */
+  @include position(0, null, null, 9px);
 
   background-color: $searchbar-md-cancel-button-background-color;
 
@@ -59,12 +65,12 @@
 // -----------------------------------------
 
 .searchbar-input {
-  @include padding(6px, 55px);
+  @include padding(dynamic-font(6px), dynamic-font(55px));
   @include background-position(start, 8px, center);
 
   height: $searchbar-md-input-height;
 
-  font-size: 16px;
+  font-size: dynamic-font(16px);
   font-weight: 400;
 
   line-height: $searchbar-md-input-line-height;

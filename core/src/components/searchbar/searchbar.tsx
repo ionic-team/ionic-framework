@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import { debounceEvent, raf } from '@utils/helpers';
+import { debounceEvent, raf, componentOnReady } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
@@ -257,6 +257,8 @@ export class Searchbar implements ComponentInterface {
    *
    * Developers who wish to focus an input when an overlay is presented
    * should call `setFocus` after `didPresent` has resolved.
+   *
+   * See [managing focus](/docs/developing/managing-focus) for more information.
    */
   @Method()
   async setFocus() {
@@ -269,7 +271,14 @@ export class Searchbar implements ComponentInterface {
    * Returns the native `<input>` element used under the hood.
    */
   @Method()
-  getInputElement(): Promise<HTMLInputElement> {
+  async getInputElement(): Promise<HTMLInputElement> {
+    /**
+     * If this gets called in certain early lifecycle hooks (ex: Vue onMounted),
+     * nativeInput won't be defined yet with the custom elements build, so wait for it to load in.
+     */
+    if (!this.nativeInput) {
+      await new Promise((resolve) => componentOnReady(this.el, resolve));
+    }
     return Promise.resolve(this.nativeInput!);
   }
 
@@ -461,7 +470,13 @@ export class Searchbar implements ComponentInterface {
         const inputLeft = 'calc(50% - ' + textWidth / 2 + 'px)';
 
         // Calculate the icon margin
-        const iconLeft = 'calc(50% - ' + (textWidth / 2 + 30) + 'px)';
+        /**
+         * We take the icon width to account
+         * for any text scales applied to the icon
+         * such as Dynamic Type on iOS as well as 8px
+         * of padding.
+         */
+        const iconLeft = 'calc(50% - ' + (textWidth / 2 + iconEl.clientWidth + 8) + 'px)';
 
         // Set the input padding start and icon margin start
         if (rtl) {

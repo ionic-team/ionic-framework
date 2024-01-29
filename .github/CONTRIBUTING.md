@@ -163,7 +163,7 @@ npm i
 npm run build
 npm pack --pack-destination ~
 
-cd ../angular
+cd ../packages/angular
 npm i
 npm run sync
 npm run build

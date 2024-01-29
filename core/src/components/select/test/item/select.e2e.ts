@@ -20,7 +20,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`select-list-no-fill`));
+      await expect(list).toHaveScreenshot(screenshot(`select-list-no-fill`));
     });
     test('should render correctly in inset list with no fill', async ({ page }) => {
       await page.setContent(
@@ -39,7 +39,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`select-inset-list-no-fill`));
+      await expect(list).toHaveScreenshot(screenshot(`select-inset-list-no-fill`));
+    });
+    test('should render correctly in an item inside of a flex container', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="container" style="display: flex">
+          <ion-list>
+            <ion-item>
+              <ion-select label="Fruit" value="apple">
+                <ion-select-option value="apple">Apple</ion-select-option>
+              </ion-select>
+            </ion-item>
+          <ion-list>
+        </div>
+      `,
+        config
+      );
+      const container = page.locator('#container');
+      await expect(container).toHaveScreenshot(screenshot(`select-item-flex-container`));
     });
   });
 });

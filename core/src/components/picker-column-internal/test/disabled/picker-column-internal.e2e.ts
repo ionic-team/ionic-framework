@@ -35,7 +35,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('picker-column-internal: disabled'), () => {
+  test.describe(title('picker-column-internal: disabled items'), () => {
     test('all picker items should be enabled by default', async ({ page }) => {
       await page.setContent(
         `
@@ -55,9 +55,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const pickerItems = page.locator(
-        'ion-picker-column-internal .picker-item:not(.picker-item-empty, .picker-item-disabled)'
-      );
+      const pickerItems = page.locator('ion-picker-column-internal .picker-item:not(.picker-item-empty, [disabled])');
 
       expect(await pickerItems.count()).toBe(3);
     });
@@ -80,7 +78,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const disabledItem = page.locator('ion-picker-column-internal .picker-item.picker-item-disabled');
+      const disabledItem = page.locator('ion-picker-column-internal .picker-item[disabled]');
       await expect(disabledItem).not.toBeEnabled();
     });
     test('disabled picker item should not be considered active', async ({ page }) => {
@@ -130,7 +128,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.waitForChanges();
 
       const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-      await expect(disabledItem).toHaveClass(/picker-item-disabled/);
+      await expect(disabledItem).toBeDisabled();
       await expect(disabledItem).not.toHaveClass(/picker-item-active/);
     });
     test('defaulting the value to a disabled item should not cause that item to be active', async ({ page }) => {
@@ -154,8 +152,42 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
 
       const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-      await expect(disabledItem).toHaveClass(/picker-item-disabled/);
+      await expect(disabledItem).toBeDisabled();
       await expect(disabledItem).not.toHaveClass(/picker-item-active/);
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('picker-column-internal: disabled column rendering'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/picker-column-internal/test/disabled', config);
+    });
+
+    test('disabled column should not have visual regressions', async ({ page }) => {
+      const disabledColumn = page.locator('#column-disabled');
+      await page.waitForChanges();
+
+      await expect(disabledColumn).toHaveScreenshot(screenshot('picker-internal-disabled-column'));
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('picker-column-internal: disabled column'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/picker-column-internal/test/disabled', config);
+    });
+
+    test('item in disabled column should not be interactive', async ({ page }) => {
+      const secondItem = page.locator('#column-disabled .picker-item:not(.picker-item-empty)').nth(1);
+      await expect(secondItem).toBeDisabled();
     });
   });
 });

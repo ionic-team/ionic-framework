@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { LegacyFormController, NotchController } from '@utils/forms';
-import { createLegacyFormController, createNotchController } from '@utils/forms';
+import { compareOptions, createLegacyFormController, createNotchController, isOptionSelected } from '@utils/forms';
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -33,6 +33,8 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the select. Use the `labelPlacement` property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+ * @slot start - Content to display at the leading edge of the select.
+ * @slot end - Content to display at the trailing edge of the select.
  *
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
@@ -82,7 +84,10 @@ export class Select implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * A property name or function used to compare object values
+   * This property allows developers to specify a custom function or property
+   * name for comparing objects when determining the selected option in the
+   * ion-select. When not specified, the default behavior will use strict
+   * equality (===) for comparison.
    */
   @Prop() compareWith?: string | SelectCompareFn | null;
 
@@ -316,29 +321,46 @@ export class Select implements ComponentInterface {
 
     // focus selected option for popovers
     if (this.interface === 'popover') {
-      let indexOfSelected = this.childOpts.map((o) => o.value).indexOf(this.value);
-      indexOfSelected = indexOfSelected > -1 ? indexOfSelected : 0; // default to first option if nothing selected
-      const selectedItem = overlay.querySelector<HTMLElement>(
-        `.select-interface-option:nth-child(${indexOfSelected + 1})`
-      );
+      const indexOfSelected = this.childOpts.map((o) => o.value).indexOf(this.value);
 
-      if (selectedItem) {
-        focusElement(selectedItem);
+      if (indexOfSelected > -1) {
+        const selectedItem = overlay.querySelector<HTMLElement>(
+          `.select-interface-option:nth-child(${indexOfSelected + 1})`
+        );
 
+        if (selectedItem) {
+          focusElement(selectedItem);
+
+          /**
+           * Browsers such as Firefox do not
+           * correctly delegate focus when manually
+           * focusing an element with delegatesFocus.
+           * We work around this by manually focusing
+           * the interactive element.
+           * ion-radio and ion-checkbox are the only
+           * elements that ion-select-popover uses, so
+           * we only need to worry about those two components
+           * when focusing.
+           */
+          const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
+          if (interactiveEl) {
+            interactiveEl.focus();
+          }
+        }
+      } else {
         /**
-         * Browsers such as Firefox do not
-         * correctly delegate focus when manually
-         * focusing an element with delegatesFocus.
-         * We work around this by manually focusing
-         * the interactive element.
-         * ion-radio and ion-checkbox are the only
-         * elements that ion-select-popover uses, so
-         * we only need to worry about those two components
-         * when focusing.
+         * If no value is set then focus the first enabled option.
          */
-        const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
-        if (interactiveEl) {
-          interactiveEl.focus();
+        const firstEnabledOption = overlay.querySelector<HTMLElement>(
+          'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
+        );
+        if (firstEnabledOption) {
+          focusElement(firstEnabledOption.closest('ion-item')!);
+
+          /**
+           * Focus the option for the same reason as we do above.
+           */
+          firstEnabledOption.focus();
         }
       }
     }
@@ -734,14 +756,49 @@ export class Select implements ComponentInterface {
       style['has-placeholder'] = this.placeholder !== undefined;
       style['has-value'] = this.hasValue();
       style['has-focus'] = this.isExpanded;
+      // TODO(FW-3194): remove this
+      style['legacy'] = !!this.legacy;
     }
 
     this.ionStyle.emit(style);
   }
 
   private onClick = (ev: UIEvent) => {
-    this.setFocus();
-    this.open(ev);
+    const target = ev.target as HTMLElement;
+    const closestSlot = target.closest('[slot="start"], [slot="end"]');
+
+    if (target === this.el || closestSlot === null) {
+      this.setFocus();
+      this.open(ev);
+    } else {
+      /**
+       * Prevent clicks to the start/end slots from opening the select.
+       * We ensure the target isn't this element in case the select is slotted
+       * in, for example, an item. This would prevent the select from ever
+       * being opened since the element itself has slot="start"/"end".
+       *
+       * Clicking a slotted element also causes a click
+       * on the <label> element (since it wraps the slots).
+       * Clicking <label> dispatches another click event on
+       * the native form control that then bubbles up to this
+       * listener. This additional event targets the host
+       * element, so the select overlay is opened.
+       *
+       * When the slotted elements are clicked (and therefore
+       * the ancestor <label> element) we want to prevent the label
+       * from dispatching another click event.
+       *
+       * Do not call stopPropagation() because this will cause
+       * click handlers on the slotted elements to never fire in React.
+       * When developers do onClick in React a native "click" listener
+       * is added on the root element, not the slotted element. When that
+       * native click listener fires, React then dispatches the synthetic
+       * click event on the slotted element. However, if stopPropagation
+       * is called then the native click event will never bubble up
+       * to the root element.
+       */
+      ev.preventDefault();
+    }
   };
 
   private onFocus = () => {
@@ -842,7 +899,30 @@ export class Select implements ComponentInterface {
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
     renderHiddenInput(true, el, name, parseValue(value), disabled);
+
+    /**
+     * If the label is stacked, it should always sit above the select.
+     * For floating labels, the label should move above the select if
+     * the select has a value, is open, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the select is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     *
+     * TODO(FW-5592): Remove hasStartEndSlots condition
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded || hasStartEndSlots));
 
     return (
       <Host
@@ -854,7 +934,8 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-expanded-icon': expandedIcon !== undefined,
-          'has-value': this.hasValue(),
+          'has-value': hasValue,
+          'label-floating': labelShouldFloat,
           'has-placeholder': placeholder !== undefined,
           'ion-focusable': true,
           [`select-${rtl}`]: true,
@@ -866,17 +947,23 @@ export class Select implements ComponentInterface {
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
-            {this.renderSelectText()}
+          <div class="select-wrapper-inner">
+            <slot name="start"></slot>
+            <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
+              {this.renderSelectText()}
+              {this.renderListbox()}
+            </div>
+            <slot name="end"></slot>
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
-            {this.renderListbox()}
           </div>
           {/**
            * The icon in a floating/stacked select
            * must be centered with the entire select,
-           * not just the native control. As a result,
-           * we need to render the icon outside of
-           * the native wrapper.
+           * while the start/end slots and native control
+           * are vertically offset in the default or
+           * solid fills. As a result, we render the
+           * icon outside the inner wrapper, which holds
+           * those components.
            */}
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
@@ -1041,7 +1128,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
         disabled={disabled}
         id={inputId}
         aria-label={this.ariaLabel}
-        aria-haspopup="listbox"
+        aria-haspopup="dialog"
         aria-expanded={`${isExpanded}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
@@ -1057,21 +1144,6 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 }
 
-const isOptionSelected = (
-  currentValue: any[] | any,
-  compareValue: any,
-  compareWith?: string | SelectCompareFn | null
-) => {
-  if (currentValue === undefined) {
-    return false;
-  }
-  if (Array.isArray(currentValue)) {
-    return currentValue.some((val) => compareOptions(val, compareValue, compareWith));
-  } else {
-    return compareOptions(currentValue, compareValue, compareWith);
-  }
-};
-
 const getOptionValue = (el: HTMLIonSelectOptionElement) => {
   const value = el.value;
   return value === undefined ? el.textContent || '' : value;
@@ -1085,20 +1157,6 @@ const parseValue = (value: any) => {
     return value.join(',');
   }
   return value.toString();
-};
-
-const compareOptions = (
-  currentValue: any,
-  compareValue: any,
-  compareWith?: string | SelectCompareFn | null
-): boolean => {
-  if (typeof compareWith === 'function') {
-    return compareWith(currentValue, compareValue);
-  } else if (typeof compareWith === 'string') {
-    return currentValue[compareWith] === compareValue[compareWith];
-  } else {
-    return Array.isArray(compareValue) ? compareValue.includes(currentValue) : currentValue === compareValue;
-  }
 };
 
 const generateText = (

@@ -8,6 +8,8 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
+
+  min-height: 56px;
 }
 
 :host(.textarea-fill-outline.textarea-shape-round) {
@@ -87,10 +89,8 @@
 /**
  * This makes the label sit above the textarea.
  */
-:host(.has-focus.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper,
-:host(.has-value.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper,
-:host(.textarea-fill-outline.textarea-label-placement-stacked) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$textarea-floating-label-scale}));
+:host(.label-floating.textarea-fill-outline) .label-text-wrapper {
+  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
@@ -98,7 +98,7 @@
    * beyond the bounds of the textarea.
    */
   max-width: calc(
-    (100% - var(--padding-start) - var(--padding-end) - #{$textarea-md-floating-label-padding * 2}) / #{$textarea-floating-label-scale}
+    (100% - var(--padding-start) - var(--padding-end) - #{$textarea-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale}
   );
 }
 
@@ -112,6 +112,13 @@
 :host(.textarea-fill-outline.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
 :host(.textarea-fill-outline.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
   @include margin(12px, 0px, 0px, 0px);
+}
+
+:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot="start"]),
+:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot="end"]),
+:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot="start"]),
+:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot="end"]) {
+  margin-top: 12px;
 }
 
 // Textarea Fill: Outline Outline Container
@@ -170,7 +177,7 @@
    */
   @include padding(null, #{$textarea-md-floating-label-padding * 2}, null, null);
 
-  font-size: calc(1em * #{$textarea-floating-label-scale});
+  font-size: calc(1em * #{$form-control-label-stacked-scale});
 
   opacity: 0;
   pointer-events: none;
@@ -218,8 +225,6 @@
  * the floating/stacked label. We simulate this "cut out"
  * by removing the top border from the notch fragment.
  */
-:host(.has-focus.textarea-fill-outline.textarea-label-placement-floating) .textarea-outline-notch,
-:host(.has-value.textarea-fill-outline.textarea-label-placement-floating) .textarea-outline-notch,
-:host(.textarea-fill-outline.textarea-label-placement-stacked) .textarea-outline-notch {
+:host(.label-floating.textarea-fill-outline) .textarea-outline-notch {
   border-top: none;
 }

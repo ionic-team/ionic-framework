@@ -7,6 +7,71 @@ import { vueOutputTarget } from '@stencil/vue-output-target';
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
 
+const componentCorePackage = '@ionic/core';
+
+const getAngularOutputTargets = () => {
+  const excludeComponents = [
+    // overlays that accept user components
+    'ion-modal',
+    'ion-popover',
+
+    // navigation
+    'ion-router',
+    'ion-route',
+    'ion-route-redirect',
+    'ion-router-link',
+    'ion-router-outlet',
+    'ion-nav',
+    'ion-back-button',
+
+    // tabs
+    'ion-tabs',
+    'ion-tab',
+
+    // auxiliar
+    'ion-picker-column',
+  ]
+  return [
+    angularOutputTarget({
+      componentCorePackage,
+      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
+      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
+      excludeComponents,
+      outputType: 'component',
+    }),
+    angularOutputTarget({
+      componentCorePackage,
+      directivesProxyFile: '../packages/angular/standalone/src/directives/proxies.ts',
+      excludeComponents: [
+        ...excludeComponents,
+        /**
+         * IonIcon is a special case because it does not come
+         * from the `@ionic/core` package, so generating proxies that
+         * are reliant on the CE build will reference the wrong
+         * import location.
+         */
+        'ion-icon',
+        /**
+         * Value Accessors are manually implemented in the `@ionic/angular/standalone` package.
+         */
+        'ion-input',
+        'ion-textarea',
+        'ion-searchbar',
+        'ion-datetime',
+        'ion-radio',
+        'ion-segment',
+        'ion-checkbox',
+        'ion-toggle',
+        'ion-range',
+        'ion-radio-group',
+        'ion-select'
+
+      ],
+      outputType: 'standalone',
+    })
+  ];
+}
+
 export const config: Config = {
   autoprefixCss: true,
   sourceMap: false,
@@ -61,7 +126,7 @@ export const config: Config = {
   ],
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage: '@ionic/core',
+      componentCorePackage,
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
@@ -98,7 +163,7 @@ export const config: Config = {
       ]
     }),
     vueOutputTarget({
-      componentCorePackage: '@ionic/core',
+      componentCorePackage,
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
@@ -132,20 +197,17 @@ export const config: Config = {
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'v-ion-change',
-          externalEvent: 'ionChange'
+          event: 'ion-change'
         },
         {
-          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
+          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
-          event: 'v-ion-change',
-          externalEvent: 'ionChange'
+          event: 'ion-change',
         },
         {
-          elements: ['ion-input', 'ion-searchbar', 'ion-textarea'],
+          elements: ['ion-input', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
-          event: 'v-ion-input',
-          externalEvent: 'ionInput'
+          event: 'ion-input',
         }
       ],
     }),
@@ -182,30 +244,7 @@ export const config: Config = {
     //   type: 'stats',
     //   file: 'stats.json'
     // },
-    angularOutputTarget({
-      componentCorePackage: '@ionic/core',
-      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
-      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
-      excludeComponents: [
-        // overlays that accept user components
-        'ion-modal',
-        'ion-popover',
-
-        // navigation
-        'ion-router',
-        'ion-route',
-        'ion-route-redirect',
-        'ion-router-link',
-        'ion-router-outlet',
-
-        // tabs
-        'ion-tabs',
-        'ion-tab',
-
-        // auxiliar
-        'ion-picker-column',
-      ],
-    }),
+    ...getAngularOutputTargets(),
   ],
   buildEs5: 'prod',
   testing: {
@@ -213,6 +252,7 @@ export const config: Config = {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
       "@utils/logging": ["<rootDir>/src/utils/logging"],
     },
+    setupFilesAfterEnv: ['./setupJest.js']
   },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',

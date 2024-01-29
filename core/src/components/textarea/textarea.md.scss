@@ -42,24 +42,6 @@
   letter-spacing: 0.0333333333em;
 }
 
-// Textarea Wrapper
-// ----------------------------------------------------------------
-
-// TODO: FW-2876 - Make this a style on :host, remove :not selector
-:host(:not(.legacy-textarea)) {
-  min-height: 56px;
-}
-
-/**
- * Floating and stacked labels should not
- * push the label down since it it
- * sits on top of the textarea.
- */
-:host(.textarea-label-placement-floating),
-:host(.textarea-label-placement-stacked) {
-  --padding-top: 0px;
-}
-
 // Textarea Label
 // ----------------------------------------------------------------
 
@@ -126,4 +108,28 @@
 
 :host(.textarea-shape-round) {
   --border-radius: 16px;
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+/**
+ * Slotted buttons have a lot of default padding that can
+ * cause them to look misaligned from other pieces such
+ * as the control's label, especially when using a clear
+ * fill. We also make them circular to ensure that non-
+ * clear buttons and the focus/hover state on clear ones
+ * don't look too crowded.
+ */
+::slotted(ion-button[slot="start"].button-has-icon-only),
+::slotted(ion-button[slot="end"].button-has-icon-only) {
+  --border-radius: 50%;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+
+  aspect-ratio: 1;
+
+  min-height: 40px;
 }

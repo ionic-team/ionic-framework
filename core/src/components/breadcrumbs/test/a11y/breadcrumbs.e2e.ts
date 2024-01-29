@@ -12,3 +12,30 @@ configs().forEach(({ config, title }) => {
     });
   });
 });
+
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('breadcrumbs: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+        <ion-breadcrumbs max-items="2" items-before-collapse="1">
+          <ion-breadcrumb>Home</ion-breadcrumb>
+          <ion-breadcrumb>Electronics</ion-breadcrumb>
+          <ion-breadcrumb>Photography</ion-breadcrumb>
+        </ion-breadcrumbs>
+      `,
+        config
+      );
+
+      const breadcrumbs = page.locator('ion-breadcrumbs');
+
+      await expect(breadcrumbs).toHaveScreenshot(screenshot(`breadcrumbs-scale`));
+    });
+  });
+});

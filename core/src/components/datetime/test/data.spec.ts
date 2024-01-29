@@ -1,4 +1,126 @@
-import { generateMonths, getDaysOfWeek, generateTime, getToday, getCombinedDateColumnData } from '../utils/data';
+import type { DatetimeParts } from '../datetime-interface';
+import {
+  generateMonths,
+  getDaysOfWeek,
+  generateTime,
+  getToday,
+  getCombinedDateColumnData,
+  getTimeColumnsData,
+} from '../utils/data';
+
+// The minutes are the same across all hour cycles, so we don't check those
+describe('getTimeColumnsData()', () => {
+  it('should generate formatted h12 hours and AM/PM data data', () => {
+    const refParts = { month: 5, year: 2021, day: 1, hour: 4, minute: 30 };
+    const results = getTimeColumnsData('en-US', refParts, 'h12');
+
+    expect(results.hoursData).toEqual([
+      { text: '12', value: 0 },
+      { text: '1', value: 1 },
+      { text: '2', value: 2 },
+      { text: '3', value: 3 },
+      { text: '4', value: 4 },
+      { text: '5', value: 5 },
+      { text: '6', value: 6 },
+      { text: '7', value: 7 },
+      { text: '8', value: 8 },
+      { text: '9', value: 9 },
+      { text: '10', value: 10 },
+      { text: '11', value: 11 },
+    ]);
+    expect(results.dayPeriodData).toEqual([
+      { text: 'AM', value: 'am' },
+      { text: 'PM', value: 'pm' },
+    ]);
+  });
+  it('should generate formatted h23 hours and AM/PM data data', () => {
+    const refParts = { month: 5, year: 2021, day: 1, hour: 4, minute: 30 };
+    const results = getTimeColumnsData('en-US', refParts, 'h23');
+
+    expect(results.hoursData).toEqual([
+      { text: '00', value: 0 },
+      { text: '01', value: 1 },
+      { text: '02', value: 2 },
+      { text: '03', value: 3 },
+      { text: '04', value: 4 },
+      { text: '05', value: 5 },
+      { text: '06', value: 6 },
+      { text: '07', value: 7 },
+      { text: '08', value: 8 },
+      { text: '09', value: 9 },
+      { text: '10', value: 10 },
+      { text: '11', value: 11 },
+      { text: '12', value: 12 },
+      { text: '13', value: 13 },
+      { text: '14', value: 14 },
+      { text: '15', value: 15 },
+      { text: '16', value: 16 },
+      { text: '17', value: 17 },
+      { text: '18', value: 18 },
+      { text: '19', value: 19 },
+      { text: '20', value: 20 },
+      { text: '21', value: 21 },
+      { text: '22', value: 22 },
+      { text: '23', value: 23 },
+    ]);
+    expect(results.dayPeriodData).toEqual([]);
+  });
+  it('should generate formatted h11 hours and AM/PM data data', () => {
+    const refParts = { month: 5, year: 2021, day: 1, hour: 4, minute: 30 };
+    const results = getTimeColumnsData('en-US', refParts, 'h11');
+
+    expect(results.hoursData).toEqual([
+      { text: '0', value: 0 },
+      { text: '1', value: 1 },
+      { text: '2', value: 2 },
+      { text: '3', value: 3 },
+      { text: '4', value: 4 },
+      { text: '5', value: 5 },
+      { text: '6', value: 6 },
+      { text: '7', value: 7 },
+      { text: '8', value: 8 },
+      { text: '9', value: 9 },
+      { text: '10', value: 10 },
+      { text: '11', value: 11 },
+    ]);
+    expect(results.dayPeriodData).toEqual([
+      { text: 'AM', value: 'am' },
+      { text: 'PM', value: 'pm' },
+    ]);
+  });
+  it('should generate formatted h24 hours and AM/PM data data', () => {
+    const refParts = { month: 5, year: 2021, day: 1, hour: 4, minute: 30 };
+    const results = getTimeColumnsData('en-US', refParts, 'h24');
+
+    expect(results.hoursData).toEqual([
+      { text: '01', value: 1 },
+      { text: '02', value: 2 },
+      { text: '03', value: 3 },
+      { text: '04', value: 4 },
+      { text: '05', value: 5 },
+      { text: '06', value: 6 },
+      { text: '07', value: 7 },
+      { text: '08', value: 8 },
+      { text: '09', value: 9 },
+      { text: '10', value: 10 },
+      { text: '11', value: 11 },
+      { text: '12', value: 12 },
+      { text: '13', value: 13 },
+      { text: '14', value: 14 },
+      { text: '15', value: 15 },
+      { text: '16', value: 16 },
+      { text: '17', value: 17 },
+      { text: '18', value: 18 },
+      { text: '19', value: 19 },
+      { text: '20', value: 20 },
+      { text: '21', value: 21 },
+      { text: '22', value: 22 },
+      { text: '23', value: 23 },
+      { text: '24', value: 0 },
+    ]);
+    expect(results.dayPeriodData).toEqual([]);
+  });
+});
 
 describe('generateMonths()', () => {
   it('should generate correct month data', () => {
@@ -41,7 +163,7 @@ describe('generateTime()', () => {
       hour: 5,
       minute: 43,
     };
-    const { hours, minutes } = generateTime(today);
+    const { hours, minutes } = generateTime('en-US', today);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -61,7 +183,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', min);
+    const { hours, minutes } = generateTime('en-US', today, 'h12', min);
 
     expect(hours.length).toEqual(10);
     expect(minutes.length).toEqual(60);
@@ -81,7 +203,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', min);
+    const { hours, minutes } = generateTime('en-US', today, 'h12', min);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -101,7 +223,7 @@ describe('generateTime()', () => {
       hour: 7,
       minute: 44,
     };
-    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
+    const { hours, minutes } = generateTime('en-US', today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(8);
     expect(minutes.length).toEqual(45);
@@ -121,7 +243,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
+    const { hours, minutes } = generateTime('en-US', today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -141,7 +263,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', min);
+    const { hours, minutes } = generateTime('en-US', today, 'h12', min);
 
     expect(hours.length).toEqual(0);
     expect(minutes.length).toEqual(0);
@@ -161,7 +283,7 @@ describe('generateTime()', () => {
       hour: 2,
       minute: 40,
     };
-    const { hours, minutes } = generateTime(today, 'h12', undefined, max);
+    const { hours, minutes } = generateTime('en-US', today, 'h12', undefined, max);
 
     expect(hours.length).toEqual(0);
     expect(minutes.length).toEqual(0);
@@ -185,7 +307,7 @@ describe('generateTime()', () => {
       year: 2021,
     };
 
-    const { hours, minutes } = generateTime(today, 'h12', min, max);
+    const { hours, minutes } = generateTime('en-US', today, 'h12', min, max);
 
     expect(hours.length).toEqual(12);
     expect(minutes.length).toEqual(60);
@@ -199,7 +321,7 @@ describe('generateTime()', () => {
       minute: 43,
     };
 
-    const { hours, minutes } = generateTime(today, 'h12', undefined, undefined, [1, 2, 3], [10, 15, 20]);
+    const { hours, minutes } = generateTime('en-US', today, 'h12', undefined, undefined, [1, 2, 3], [10, 15, 20]);
 
     expect(hours).toStrictEqual([1, 2, 3]);
     expect(minutes).toStrictEqual([10, 15, 20]);
@@ -229,7 +351,7 @@ describe('generateTime()', () => {
       minute: 14,
     };
 
-    const { am, pm } = generateTime(today, 'h12', min, max);
+    const { am, pm } = generateTime('en-US', today, 'h12', min, max);
 
     expect(am).toBe(true);
     expect(pm).toBe(true);
@@ -243,7 +365,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 19,
         minute: 50,
-      };
+      } as unknown as DatetimeParts;
 
       const minParts = {
         day: undefined,
@@ -251,9 +373,9 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 19,
         minute: 50,
-      };
+      } as unknown as DatetimeParts;
 
-      const { hours } = generateTime(refValue, 'h23', minParts);
+      const { hours } = generateTime('en-US', refValue, 'h23', minParts);
 
       expect(hours).toStrictEqual([19, 20, 21, 22, 23]);
     });
@@ -266,7 +388,7 @@ describe('generateTime()', () => {
           year: undefined,
           hour: 20,
           minute: 22,
-        };
+        } as unknown as DatetimeParts;
 
         const minParts = {
           day: undefined,
@@ -274,9 +396,9 @@ describe('generateTime()', () => {
           year: undefined,
           hour: 19,
           minute: 30,
-        };
+        } as unknown as DatetimeParts;
 
-        const { hours, minutes } = generateTime(refValue, 'h23', minParts);
+        const { hours, minutes } = generateTime('en-US', refValue, 'h23', minParts);
 
         expect(hours).toStrictEqual([19, 20, 21, 22, 23]);
         expect(minutes.length).toEqual(60);
@@ -290,7 +412,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 20,
         minute: 30,
-      };
+      } as unknown as DatetimeParts;
 
       const minParts = {
         day: undefined,
@@ -298,7 +420,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 19,
         minute: 30,
-      };
+      } as unknown as DatetimeParts;
 
       const maxParts = {
         day: undefined,
@@ -306,9 +428,9 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 20,
         minute: 40,
-      };
+      } as unknown as DatetimeParts;
 
-      const { hours } = generateTime(refValue, 'h23', minParts, maxParts);
+      const { hours } = generateTime('en-US', refValue, 'h23', minParts, maxParts);
 
       expect(hours).toStrictEqual([19, 20]);
     });
@@ -320,7 +442,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 13,
         minute: 0,
-      };
+      } as unknown as DatetimeParts;
 
       const maxParts = {
         day: undefined,
@@ -328,9 +450,9 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 13,
         minute: 2,
-      };
+      } as unknown as DatetimeParts;
 
-      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts);
+      const { minutes } = generateTime('en-US', refValue, 'h23', undefined, maxParts);
 
       expect(minutes).toStrictEqual([0, 1, 2]);
     });
@@ -342,7 +464,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 12,
         minute: 0,
-      };
+      } as unknown as DatetimeParts;
 
       const maxParts = {
         day: undefined,
@@ -350,9 +472,9 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 13,
         minute: 2,
-      };
+      } as unknown as DatetimeParts;
 
-      const { minutes } = generateTime(refValue, 'h23', undefined, maxParts);
+      const { minutes } = generateTime('en-US', refValue, 'h23', undefined, maxParts);
 
       expect(minutes.length).toEqual(60);
     });
@@ -361,7 +483,7 @@ describe('generateTime()', () => {
 
 describe('getToday', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
     // System time is zero based, 1 = February
     jest.setSystemTime(new Date(2022, 1, 21, 18, 30));
   });

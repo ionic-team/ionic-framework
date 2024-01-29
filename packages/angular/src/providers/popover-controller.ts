@@ -1,11 +1,8 @@
-import { Injector, Injectable, inject, EnvironmentInjector } from '@angular/core';
-import { PopoverOptions, popoverController } from '@ionic/core';
+import { Injector, inject, EnvironmentInjector } from '@angular/core';
+import { AngularDelegate, OverlayBaseController } from '@ionic/angular/common';
+import type { PopoverOptions } from '@ionic/core';
+import { popoverController } from '@ionic/core';
 
-import { OverlayBaseController } from '../util/overlay';
-
-import { AngularDelegate } from './angular-delegate';
-
-@Injectable()
 export class PopoverController extends OverlayBaseController<PopoverOptions, HTMLIonPopoverElement> {
   private angularDelegate = inject(AngularDelegate);
   private injector = inject(Injector);

@@ -59,15 +59,77 @@
 }
 
 :host(.menu-side-start) .menu-inner {
+  /**
+    * Menu does not cover the whole screen so we need to set the safe area for the
+    * side that touches the screen edge only. Since safe area is not logical, it
+    * needs to be applied to the correct side depending on the language direction.
+    * Otherwise, the content will have less space on both sides.
+    *
+    * LTR:
+    * The left side of the menu touches the screen edge. The safe area padding has
+    * already been set in the core styles, so there's no need to set it again.
+    * The right side of the menu is not touching the screen edge. Padding is not
+    * applied to the right side of the menu. A value of 0 is set.
+    */
   --ion-safe-area-right: 0px;
 
   @include position(0, auto, 0, 0);
+
+  @include rtl() {
+    /**
+      * Menu does not cover the whole screen so we need to set the safe area for the
+      * side that touches the screen edge only. Since safe area is not logical, it
+      * needs to be applied to the correct side depending on the language direction.
+      * Otherwise, the content will have less space on both sides.
+      *
+      * RTL:
+      * The right side of the menu touches the screen edge.
+      * The right side needs to revert back to the default value that was set in the core styles, so we unset it here.
+      * This would keep the variable consistent with the core styles.
+      * Additionally, it would continue to allow users to override the variable if they choose to.
+      * The left side of the menu is not touching the screen edge. Padding is not
+      * applied to the left side of the menu. A value of 0 is set.
+      */
+    --ion-safe-area-right: unset;
+    --ion-safe-area-left: 0px;
+  }
 }
 
 :host(.menu-side-end) .menu-inner {
+  /**
+    * Menu does not cover the whole screen so we need to set the safe area for the
+    * side that touches the screen edge only. Since safe area is not logical, it
+    * needs to be applied to the correct side depending on the language direction.
+    * Otherwise, the content will have less space on both sides.
+    *
+    * LTR:
+    * The right side of the menu touches the screen edge. The safe area padding has
+    * already been set in the core styles, so there's no need to set it again.
+    * The left side of the menu is not touching the screen edge. Padding is not
+    * applied to the left side of the menu. A value of 0 is set.
+    */
   --ion-safe-area-left: 0px;
 
   @include position(0, 0, 0, auto);
+
+  @include rtl() {
+    /**
+      * Menu does not cover the whole screen so we need to set the safe area for the
+      * side that touches the screen edge only. Since safe area is not logical, it
+      * needs to be applied to the correct side depending on the language direction.
+      * Otherwise, the content will have less space on both sides.
+      *
+      * RTL:
+      * The left side of the menu touches the screen edge.
+      * The left side needs to revert back to the default value that was set in the core styles, so we unset it here.
+      * This would keep the variable consistent with the core styles.
+      * Additionally, it would continue to allow users to override the variable if they choose to.
+      * The right side of the menu is not touching the screen edge. Padding is not
+      * applied to the right side of the menu. A value of 0 is set.
+      */
+    --ion-safe-area-left: unset;
+    --ion-safe-area-right: 0px;
+  }
 }
 
 ion-backdrop {
@@ -128,13 +190,12 @@ ion-backdrop {
 
   width: auto;
 
-  /* stylelint-disable declaration-no-important */
-  transform: none !important;
+  transform: none;
 
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 :host(.menu-pane-visible) ion-backdrop {
+  /* stylelint-disable-next-line declaration-no-important */
   display: hidden !important;
-  /* stylelint-enable declaration-no-important */
 }
