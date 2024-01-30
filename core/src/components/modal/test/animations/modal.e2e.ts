@@ -2,41 +2,39 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
-  test.describe(title('card modal - animations'), () => {
+  test.describe(title('modal: animations'), () => {
     test.beforeEach(async ({ page }) => {
       await page.setContent(
         `
-        <ion-button id="open-modal">Open Modal</ion-button>
-
-        <ion-modal trigger="open-modal"></ion-modal>
+        <ion-modal is-open="true" trigger="open-modal"></ion-modal>
       `,
         config
       );
     });
-    test('should have animations and then clean them up', async ({ page }) => {
-      page.locator('#open-modal').click();
-
-      await page.waitForChanges();
+    test('card modal should clean up animations on dismiss', async ({ page }) => {
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
       const modal = page.locator('ion-modal');
 
-      let animations = await page.evaluate(() => {
+      const initialAnimations = await page.evaluate(() => {
         return document.querySelector('ion-modal')!.shadowRoot!.getAnimations();
       });
 
       // While the modal is open, it should have animations
-      await expect(animations.length).toBeGreaterThan(0);
+      await expect(initialAnimations.length).toBeGreaterThan(0);
 
-      await modal.evaluate(async (el: HTMLIonModalElement) => {
-        await el.dismiss();
+      await modal.evaluate((el: HTMLIonModalElement) => {
+        el.dismiss();
       });
 
-      animations = await page.evaluate(() => {
+      await ionModalDidDismiss.next();
+
+      const currentAnimations = await page.evaluate(() => {
         return document.querySelector('ion-modal')!.shadowRoot!.getAnimations();
       });
 
       // Once the modal has finished closing, there should be no animations
-      await expect(animations.length).toBe(0);
+      await expect(currentAnimations.length).toBe(0);
     });
   });
 });
