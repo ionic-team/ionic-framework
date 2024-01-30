@@ -1,4 +1,4 @@
-import type { AnimationBuilder, Mode } from '../../interface';
+import type { AnimationBuilder, LiteralUnion, Mode } from '../../interface';
 
 export interface ActionSheetOptions {
   header?: string;
@@ -19,7 +19,7 @@ export interface ActionSheetOptions {
 
 export interface ActionSheetButton<T = any> {
   text?: string;
-  role?: 'cancel' | 'destructive' | 'selected' | string;
+  role?: LiteralUnion<'cancel' | 'destructive' | 'selected', string>;
   icon?: string;
   cssClass?: string | string[];
   id?: string;
