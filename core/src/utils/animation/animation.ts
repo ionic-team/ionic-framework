@@ -600,6 +600,17 @@ export const createAnimation = (animationId?: string): Animation => {
       }
     });
 
+    /**
+     * Clean up any value coercion before
+     * the user callbacks fire otherwise
+     * they may get stale values. For example,
+     * if someone calls progressStart(0) the
+     * animation may still be reversed.
+     */
+    forceDurationValue = undefined;
+    forceDirectionValue = undefined;
+    forceDelayValue = undefined;
+
     onFinishCallbacks.forEach((onFinishCallback) => {
       return onFinishCallback.c(currentStep, ani);
     });
@@ -848,21 +859,8 @@ export const createAnimation = (animationId?: string): Animation => {
       }
     }
 
-    if (playTo !== undefined) {
-      onFinish(
-        () => {
-          forceDurationValue = undefined;
-          forceDirectionValue = undefined;
-          forceDelayValue = undefined;
-        },
-        {
-          oneTimeCallback: true,
-        }
-      );
-
-      if (!parentAnimation) {
-        play();
-      }
+    if (playTo !== undefined && !parentAnimation) {
+      play();
     }
 
     return ani;

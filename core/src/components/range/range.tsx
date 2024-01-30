@@ -37,6 +37,7 @@ import type {
  * @part knob - The handle that is used to drag the range.
  * @part bar - The inactive part of the bar.
  * @part bar-active - The active part of the bar.
+ * @part label - The label text describing the range.
  */
 @Component({
   tag: 'ion-range',
@@ -140,6 +141,9 @@ export class Range implements ComponentInterface {
   /**
    * A callback used to format the pin text.
    * By default the pin text is set to `Math.round(value)`.
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() pinFormatter: PinFormatter = (value: number): number => Math.round(value);
 
@@ -397,6 +401,8 @@ export class Range implements ComponentInterface {
       this.ionStyle.emit({
         interactive: true,
         'interactive-disabled': this.disabled,
+        // TODO(FW-2997): remove this
+        legacy: !!this.legacy,
       });
     }
   }
@@ -673,6 +679,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': !hasLabel,
             }}
+            part="label"
           >
             {label !== undefined ? <div class="label-text">{label}</div> : <slot name="label"></slot>}
           </div>

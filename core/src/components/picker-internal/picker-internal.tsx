@@ -265,6 +265,7 @@ export class PickerInternal implements ComponentInterface {
 
       inputEl.focus();
     } else {
+      // TODO FW-5900 Use keydown instead
       el.addEventListener('keypress', this.onKeyPress);
       this.destroyKeypressListener = () => {
         el.removeEventListener('keypress', this.onKeyPress);
@@ -550,6 +551,21 @@ export class PickerInternal implements ComponentInterface {
           tabindex={-1}
           inputmode="numeric"
           type="number"
+          onKeyDown={(ev: KeyboardEvent) => {
+            /**
+             * The "Enter" key represents
+             * the user submitting their time
+             * selection, so we should blur the
+             * input (and therefore close the keyboard)
+             *
+             * Updating the picker's state to no longer
+             * be in input mode is handled in the onBlur
+             * callback below.
+             */
+            if (ev.key === 'Enter') {
+              this.inputEl?.blur();
+            }
+          }}
           ref={(el) => (this.inputEl = el)}
           onInput={() => this.onInputChange()}
           onBlur={() => this.exitInputMode()}

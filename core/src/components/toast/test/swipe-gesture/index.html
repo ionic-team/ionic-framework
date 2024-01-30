@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast - Swipe Gesture</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-content class="ion-padding">
+        <ion-button id="top">Open Top Toast</ion-button>
+        <ion-button id="middle">Open Middle Toast</ion-button>
+        <ion-button id="bottom">Open Bottom Toast</ion-button>
+
+        <ion-button id="top-anchor">Open Top Toast with Anchor</ion-button>
+        <ion-button id="bottom-anchor">Open Bottom Toast with Anchor</ion-button>
+
+        <ion-fab id="bottom-fab" horizontal="end" vertical="bottom">
+          <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <ion-fab id="top-fab" horizontal="end" vertical="top">
+          <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <ion-toast
+          id="top-toast"
+          position="top"
+          trigger="top"
+          message="Hello World"
+          swipe-gesture="vertical"
+        ></ion-toast>
+        <ion-toast
+          id="middle-toast"
+          position="middle"
+          trigger="middle"
+          message="Hello World"
+          swipe-gesture="vertical"
+        ></ion-toast>
+        <ion-toast
+          id="bottom-toast"
+          position="bottom"
+          trigger="bottom"
+          message="Hello World"
+          swipe-gesture="vertical"
+        ></ion-toast>
+        <ion-toast
+          id="bottom-anchor-toast"
+          position="bottom"
+          trigger="bottom-anchor"
+          message="Hello World"
+          swipe-gesture="vertical"
+          position-anchor="bottom-fab"
+        ></ion-toast>
+        <ion-toast
+          id="top-anchor-toast"
+          position="top"
+          trigger="top-anchor"
+          message="Hello World"
+          swipe-gesture="vertical"
+          position-anchor="top-fab"
+        ></ion-toast>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

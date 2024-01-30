@@ -341,6 +341,9 @@ export class Datetime implements ComponentInterface {
    * dates are selected. Only used if there are 0 or more than 1
    * selected (i.e. unused for exactly 1). By default, the header
    * text is set to "numberOfDates days".
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
 
@@ -492,7 +495,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
-    const { isCalendarPicker, activeParts } = this;
+    const { isCalendarPicker, activeParts, preferWheel, workingParts } = this;
 
     /**
      * We only update the value if the presentation is not a calendar picker.
@@ -500,7 +503,16 @@ export class Datetime implements ComponentInterface {
     if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
-        this.setValue(undefined);
+        if (preferWheel) {
+          /**
+           * If the datetime is using a wheel picker, but the
+           * active parts are empty, then the user has confirmed the
+           * initial value (working parts) presented to them.
+           */
+          this.setValue(convertDataToISO(workingParts));
+        } else {
+          this.setValue(undefined);
+        }
       } else {
         this.setValue(convertDataToISO(activeParts));
       }
@@ -1272,21 +1284,42 @@ export class Datetime implements ComponentInterface {
       (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
-    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
-      this.animateToDate(targetValue);
-    } else {
-      /**
-       * We only need to do this if we didn't just animate to a new month,
-       * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
-       */
-      this.setWorkingParts({
-        month,
-        day,
-        year,
-        hour,
-        minute,
-        ampm,
-      });
+
+    let areAllSelectedDatesInSameMonth = true;
+    if (Array.isArray(valueToProcess)) {
+      const firstMonth = valueToProcess[0].month;
+      for (const date of valueToProcess) {
+        if (date.month !== firstMonth) {
+          areAllSelectedDatesInSameMonth = false;
+          break;
+        }
+      }
+    }
+
+    /**
+     * If there is more than one date selected
+     * and the dates aren't all in the same month,
+     * then we should neither animate to the date
+     * nor update the working parts because we do
+     * not know which date the user wants to view.
+     */
+    if (areAllSelectedDatesInSameMonth) {
+      if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+        this.animateToDate(targetValue);
+      } else {
+        /**
+         * We only need to do this if we didn't just animate to a new month,
+         * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
+         */
+        this.setWorkingParts({
+          month,
+          day,
+          year,
+          hour,
+          minute,
+          ampm,
+        });
+      }
     }
   };
 
@@ -1356,10 +1389,20 @@ export class Datetime implements ComponentInterface {
     const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
 
     const todayParts = (this.todayParts = parseDate(getToday())!);
-    this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
 
     this.processMinParts();
     this.processMaxParts();
+
+    this.defaultParts = getClosestValidDate({
+      refParts: todayParts,
+      monthValues,
+      dayValues,
+      yearValues,
+      hourValues,
+      minuteValues,
+      minParts: this.minParts,
+      maxParts: this.maxParts,
+    });
 
     this.processValue(this.value);
 
