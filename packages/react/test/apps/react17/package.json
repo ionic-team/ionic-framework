@@ -60,8 +60,11 @@
   "engines": {
     "node": ">= 16"
   },
-  "resolutions": {
-    "@types/react": "^17.0.53",
-    "react": "^17.0.2"
+  "pnpm": {
+    "overrides": {
+      "@types/react": "^17.0.53",
+      "@ionic/core": "workspace:../../../../core",
+      "react": "^17.0.2"
+    }
   }
 }

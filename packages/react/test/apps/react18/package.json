@@ -46,8 +46,11 @@
   "engines": {
     "node": ">= 16"
   },
-  "resolutions": {
-    "@types/react": "^18.0.27",
-    "react": "^18.2.0"
+  "pnpm": {
+    "overrides": {
+      "@types/react": "^18.0.27",
+      "@ionic/core": "workspace:../../../../core",
+      "react": "^18.2.0"
+    }
   }
 }

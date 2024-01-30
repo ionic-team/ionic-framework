@@ -258,4 +258,13 @@ export const config: Config = {
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
   transformAliasedImportPaths: true,
+  /**
+   * Creates the `dist` directory and runs the output targets
+   * when the Stencil dev server rebuilds.
+   * 
+   * This option adds ~20s to the dev server startup time.
+   * You can disable it locally if you are not testing the
+   * custom elements output in the framework projects.
+   */
+  buildDist: true
 };
