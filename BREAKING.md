@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Button](#version-8x-button)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
+  - [Input](#version-8x-input)
   - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
 
@@ -133,6 +134,10 @@ This allows components to inherit the color properly when used outside of Ionic 
       +  background: red;
       }
       ```
+
+<h4 id="version-8x-input">Input</h4>
+
+- `size` has been removed from the `ion-input` component. Developers should use CSS to specify the visible width of the input.
 
 <h4 id="version-8x-nav">Nav</h4>
 

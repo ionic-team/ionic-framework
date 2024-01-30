@@ -281,9 +281,6 @@ export class Input implements ComponentInterface {
    */
   @Prop() step?: string;
 
-  // FW-4914 Remove this property in Ionic 8
-  @Prop() size?: number;
-
   /**
    * The type of control to display. The default type is text.
    */
@@ -806,7 +803,6 @@ export class Input implements ComponentInterface {
               required={this.required}
               spellcheck={this.spellcheck}
               step={this.step}
-              size={this.size}
               type={this.type}
               value={value}
               onInput={this.onInput}
@@ -915,7 +911,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           required={this.required}
           spellcheck={this.spellcheck}
           step={this.step}
-          size={this.size}
           type={this.type}
           value={value}
           onInput={this.onInput}
