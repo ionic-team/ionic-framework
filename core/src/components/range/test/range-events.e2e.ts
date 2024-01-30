@@ -20,7 +20,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.setContent(
           `
           <div style="padding: 0 20px">
-            <ion-range value="20"></ion-range>
+            <ion-range aria-label="Range" value="20"></ion-range>
           </div>
         `,
           config
@@ -52,7 +52,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
 
       test('should emit start/end events, keyboard', async ({ page }) => {
-        await page.setContent(`<ion-range value="20"></ion-range>`, config);
+        await page.setContent(`<ion-range aria-label="Range" value="20"></ion-range>`, config);
 
         const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
         const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
