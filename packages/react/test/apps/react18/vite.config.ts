@@ -17,7 +17,7 @@ export default defineConfig({
     port: 3000
   },
   optimizeDeps: {
-    exclude: ['@ionic/react', '@ionic/react-router', '@stencil/core'],
+    exclude: ['@ionic/react', '@ionic/react-router'],
     /**
      * ESM dependencies that have a CJS dependency need to 
      * include that dependency for optimization.
