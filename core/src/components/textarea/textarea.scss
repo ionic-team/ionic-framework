@@ -484,7 +484,7 @@
 .textarea-bottom .helper-text {
   display: block;
 
-  color: #{$background-color-step-550};
+  color: #{$text-color-step-450};
 }
 
 :host(.ion-touched.ion-invalid) .textarea-bottom .error-text {
@@ -506,7 +506,7 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: #{$background-color-step-550};
+  color: #{$text-color-step-450};
 
   white-space: nowrap;
 
