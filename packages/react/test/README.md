@@ -39,6 +39,12 @@ To add new tests, components, or pages, modify the `base` project. This ensures 
 
 If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.e2e.ts` in `apps/react17`, make sure you place the file in `apps/react17/tests/e2e/test.e2e.ts`.
 
+If you are updating dependencies in the `base` project, you can update the lock file without installing dependencies by running the following command:
+
+```
+pnpm install --lockfile-only
+```
+
 ### Version-specific tests
 
 If you need to add E2E tests that are only run on a specific version of the JS Framework, replicate the `VersionTest` component on each partial application. This ensures that tests for framework version X do not get run for framework version Y.

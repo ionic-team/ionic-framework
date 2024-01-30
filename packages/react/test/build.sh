@@ -22,6 +22,10 @@ FULL_BASE_DIR="${BASE_DIR}/."
 # The full path to the built application.
 BUILD_APP_DIR="${BUILD_DIR}/${APP_DIR}/"
 
+# Delete any node_modules directory from running
+# pnpm install in the base application.
+rm -rf $FULL_APP_DIR/node_modules
+
 # Make the build directory if it does not already exist.
 mkdir -p $BUILD_DIR
 
