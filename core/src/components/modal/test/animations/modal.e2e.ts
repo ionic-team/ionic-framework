@@ -11,7 +11,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
         config
       );
     });
-    test('card modal should clean up animations on dismiss', async ({ page }) => {
+    test('card modal should clean up animations on dismiss', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28352',
+      });
+
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
       const modal = page.locator('ion-modal');
