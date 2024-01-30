@@ -280,7 +280,7 @@ $alert-md-checkbox-border-style:              solid !default;
 $alert-md-checkbox-border-radius:             2px !default;
 
 /// @prop - Border color of the checkbox in the alert when off
-$alert-md-checkbox-border-color-off:          $border-color-step-550 !default;
+$alert-md-checkbox-border-color-off:          $background-color-step-550 !default;
 
 /// @prop - Border color of the checkbox in the alert when on
 $alert-md-checkbox-border-color-on:           $alert-md-button-text-color !default;
