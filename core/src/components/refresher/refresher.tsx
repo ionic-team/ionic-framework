@@ -25,6 +25,9 @@ import {
   translateElement,
 } from './refresher.utils';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-refresher',
   styleUrls: {

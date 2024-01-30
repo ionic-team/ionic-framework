@@ -141,6 +141,9 @@ export class Range implements ComponentInterface {
   /**
    * A callback used to format the pin text.
    * By default the pin text is set to `Math.round(value)`.
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() pinFormatter: PinFormatter = (value: number): number => Math.round(value);
 
