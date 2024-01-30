@@ -6,7 +6,7 @@ settings:
 
 overrides:
   '@types/react': ^18.0.27
-  '@ionic/core': workspace:../../core
+  '@ionic/core': link:../../../../../core
   react: ^18.2.0
 
 importers:
@@ -99,7 +99,7 @@ importers:
   ../../..:
     dependencies:
       '@ionic/core':
-        specifier: workspace:../../core
+        specifier: link:../../core
         version: link:../../core
       ionicons:
         specifier: ^7.0.0
