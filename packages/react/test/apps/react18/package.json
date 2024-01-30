@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "test": "vitest",
     "cypress": "cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
