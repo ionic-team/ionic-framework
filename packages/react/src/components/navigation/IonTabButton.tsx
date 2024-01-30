@@ -10,6 +10,8 @@ type Props = LocalJSX.IonTabButton &
     routerOptions?: RouterOptions;
     ref?: React.Ref<HTMLIonTabButtonElement>;
     onClick?: (e: CustomEvent) => void;
+    // TODO: Refactor type with PropsWithChildren when moving to React v18
+    children?: React.ReactNode;
   };
 
 export const IonTabButton = /*@__PURE__*/ (() =>

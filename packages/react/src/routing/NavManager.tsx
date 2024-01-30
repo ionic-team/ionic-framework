@@ -34,6 +34,8 @@ interface NavManagerProps {
   ionRoute: any;
   stackManager: any;
   locationHistory: LocationHistory;
+  // TODO: Refactor type with PropsWithChildren when moving to React v18
+  children?: React.ReactNode;
 }
 
 export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {

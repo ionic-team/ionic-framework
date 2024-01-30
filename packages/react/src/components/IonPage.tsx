@@ -6,8 +6,10 @@ import PageManager from '../routing/PageManager';
 import type { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IonPageProps extends IonicReactProps {}
+interface IonPageProps extends IonicReactProps {
+  // TODO: Refactor type with PropsWithChildren when moving to React v18
+  children?: React.ReactNode;
+}
 
 interface IonPageInternalProps extends IonPageProps {
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;

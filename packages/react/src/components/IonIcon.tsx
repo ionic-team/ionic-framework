@@ -21,6 +21,8 @@ interface IonIconProps {
 
 type InternalProps = IonIconProps & {
   forwardedRef?: React.ForwardedRef<HTMLIonIconElement>;
+  // TODO: Refactor type with PropsWithChildren when moving to React v18
+  children?: React.ReactNode;
 };
 
 class IonIconContainer extends React.PureComponent<InternalProps> {

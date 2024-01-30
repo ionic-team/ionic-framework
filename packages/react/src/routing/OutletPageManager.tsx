@@ -12,6 +12,8 @@ interface OutletPageManagerProps {
   forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
   routeInfo?: RouteInfo;
   StackManager: any; // TODO(FW-2959): type
+  // TODO: Refactor type with PropsWithChildren when moving to React v18
+  children?: React.ReactNode;
 }
 
 export class OutletPageManager extends React.Component<OutletPageManagerProps> {

@@ -12,6 +12,8 @@ type Props = LocalJSX.IonRouterOutlet & {
   basePath?: string;
   ref?: React.Ref<any>;
   ionPage?: boolean;
+  // TODO: Refactor type with PropsWithChildren when moving to React v18
+  children?: React.ReactNode;
 };
 
 interface InternalProps extends Props {

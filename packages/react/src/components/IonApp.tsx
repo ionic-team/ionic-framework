@@ -12,6 +12,8 @@ import { IonAppInner } from './inner-proxies';
 type Props = LocalJSX.IonApp &
   IonicReactProps & {
     ref?: React.Ref<HTMLIonAppElement>;
+    // TODO: Refactor type with PropsWithChildren when moving to React v18
+    children?: React.ReactNode;
   };
 
 export const IonApp = /*@__PURE__*/ (() =>

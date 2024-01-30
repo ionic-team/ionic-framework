@@ -10,6 +10,8 @@ interface PageManagerProps {
   className?: string;
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;
   routeInfo?: RouteInfo;
+  // TODO: Refactor type with PropsWithChildren when moving to React v18
+  children?: React.ReactNode;
 }
 
 export class PageManager extends React.PureComponent<PageManagerProps> {

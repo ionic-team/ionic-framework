@@ -15,6 +15,8 @@ type IonTabBarProps = LocalJSX.IonTabBar &
     onIonTabsWillChange?: (event: CustomEvent<{ tab: string }>) => void;
     slot?: 'bottom' | 'top';
     style?: { [key: string]: string };
+    // TODO: Refactor type with PropsWithChildren when moving to React v18
+    children?: React.ReactNode;
   };
 
 interface InternalProps extends IonTabBarProps {

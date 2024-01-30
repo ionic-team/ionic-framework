@@ -15,6 +15,8 @@ const IonNavInner = createReactComponent<JSX.IonNav & { delegate: FrameworkDeleg
 
 type IonNavProps = JSX.IonNav & {
   forwardedRef?: React.ForwardedRef<HTMLIonNavElement>;
+  // TODO: Refactor type with PropsWithChildren when moving to React v18
+  children?: React.ReactNode;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

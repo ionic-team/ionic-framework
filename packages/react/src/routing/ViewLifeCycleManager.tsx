@@ -5,6 +5,8 @@ import { DefaultIonLifeCycleContext, IonLifeCycleContext } from '../contexts/Ion
 interface ViewTransitionManagerProps {
   removeView: () => void;
   mount: boolean;
+  // TODO: Refactor type with PropsWithChildren when moving to React v18
+  children?: React.ReactNode;
 }
 
 interface ViewTransitionManagerState {
