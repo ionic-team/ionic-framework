@@ -19,14 +19,14 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@ionic/react', '@ionic/react-router'],
     /**
-     * ESM dependencies that have a CJS dependency need to 
+     * ESM dependencies that have a CJS dependency need to
      * include that dependency for optimization.
      */
     include: ['@ionic/react > react-dom']
   },
   build: {
     rollupOptions: {
-      external: ['@stencil/core'],
+      external: ['@stencil/core/internal/client'],
     }
   }
 })
