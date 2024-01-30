@@ -26,7 +26,7 @@
 // ---------------------------------------------------
 
 .action-sheet-wrapper {
-  @include margin(null, auto);
+  @include margin(var(--ion-safe-area-top, 0), auto, null, auto);
 }
 
 // iOS Action Sheet Container
