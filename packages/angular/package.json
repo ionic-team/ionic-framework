@@ -27,7 +27,7 @@
     "build": "pnpm run clean && pnpm run build.ng && pnpm run build.core && pnpm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
-    "build.watch": "pnpm run build.ng --watch",
+    "build.watch": "pnpm build.core && pnpm build.ng --watch",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "pnpm run eslint && pnpm run prettier --write --cache",

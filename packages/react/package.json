@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run copy && pnpm run compile",
-    "build.watch": "pnpm run compile --watch",
+    "build.watch": "pnpm copy && pnpm compile --watch",
     "clean": "rimraf dist && rimraf routing",
     "compile": "rollup -c",
     "eslint": "eslint src",

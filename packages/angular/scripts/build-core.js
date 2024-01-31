@@ -4,6 +4,12 @@ const spawn = require('child_process').spawn;
 
 const typescriptPath = path.join(__dirname, '..', 'node_modules', '.bin');
 
+/**
+ * Copy the CSS from the core package to the angular package.
+ * 
+ * This allows developers to import the global stylesheets
+ * from the @ionic/angular package instead of @ionic/core. 
+ */
 function copyCSS() {
   const src = path.join(__dirname, '..', '..', '..', 'core', 'css');
   const dst = path.join(__dirname, '..','dist', 'css');
