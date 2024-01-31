@@ -10,7 +10,7 @@ $refresher-md-text-color:                     $text-color !default;
 $refresher-md-native-spinner-color:           #{ion-color(primary, base)} !default;
 
 /// @prop - Border of the native refresher spinner
-$refresher-md-native-spinner-border:          1px solid var(--ion-color-step-200, var(--ion-text-color-step-200, #ececec)) !default;
+$refresher-md-native-spinner-border:          1px solid var(--ion-color-step-800, var(--ion-text-color-step-200, #ececec)) !default;
 
 /// @prop - Background of the native refresher spinner
 $refresher-md-native-spinner-background:      var(--ion-color-step-250, var(--ion-background-color-step-250, #ffffff)) !default;
