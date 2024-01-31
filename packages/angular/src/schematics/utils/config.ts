@@ -121,7 +121,7 @@ export function addCli(host: Tree, collectionName: string): void | never {
 export function addSchematics(
   host: Tree,
   schematicName: string,
-  schematicOpts: SchematicOptions & { [property: string]: any }
+  schematicOpts: SchematicOptions
 ): void | never {
   const angularJson = readConfig<any>(host);
 
