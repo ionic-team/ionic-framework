@@ -108,9 +108,9 @@ Note: You may encounter some other peer dependency issues not covered by the Ang
 `src/app/form/form.component.ts`
 `src/app/modal-example/modal-example.component.ts`
 
-5. Create a directory in `apps` named `ng17`.
-6. Copy the modified files to the `apps/ng17` directory.
+5. Create a directory in `apps` named `ng14`.
+6. Copy the modified files to the `apps/ng14` directory.
 7. Open `./github/workflows/build.yml` and find the `test-angular-e2e` job.
 8. Find the `apps` field under `matrix`.
-9. Add "ng17" to the `apps` field.
+9. Add "ng14" to the `apps` field.
 10. Commit these changes and push.
