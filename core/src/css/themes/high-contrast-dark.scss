@@ -97,6 +97,8 @@ $colors:  (
       --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
     }
+
+    --ion-placeholder-opacity: 0.8;
   }
 
   // Toast
