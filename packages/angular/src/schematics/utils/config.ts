@@ -117,11 +117,7 @@ export function addCli(host: Tree, collectionName: string): void | never {
   writeConfig(host, angularJson);
 }
 
-export function addSchematics(
-  host: Tree,
-  schematicName: string,
-  schematicOpts: SchematicOptions
-): void | never {
+export function addSchematics(host: Tree, schematicName: string, schematicOpts: SchematicOptions): void | never {
   const angularJson = readConfig<any>(host);
 
   if (angularJson.schematics === undefined) {
