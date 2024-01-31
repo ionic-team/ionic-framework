@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Color of the breadcrumb
-$breadcrumb-ios-color:                             var(--ion-color-step-150, var(--ion-text-color-step-850, #2d4665)) !default;
+$breadcrumb-ios-color:                             var(--ion-color-step-850, var(--ion-background-color-step-850, #2d4665)) !default;
 
 /// @prop - Color of the active breadcrumb
 $breadcrumb-ios-color-active:                      var(--ion-text-color, #03060b) !default;
@@ -13,13 +13,13 @@ $breadcrumb-ios-color-active:                      var(--ion-text-color, #03060b
 $breadcrumb-ios-background-focused:                var(--ion-color-step-50, var(--ion-background-color-step-50, rgba(233, 237, 243, 0.7))) !default;
 
 /// @prop - Color of the breadcrumb icon
-$breadcrumb-ios-icon-color:                        var(--ion-color-step-600, var(--ion-text-color-step-400, #92a0b3)) !default;
+$breadcrumb-ios-icon-color:                        var(--ion-color-step-400, var(--ion-background-color-step-400, #92a0b3)) !default;
 
 /// @prop - Color of the breadcrumb icon when active
-$breadcrumb-ios-icon-color-active:                 var(--ion-color-step-150, var(--ion-text-color-step-850, #242d39)) !default;
+$breadcrumb-ios-icon-color-active:                 var(--ion-color-step-850, var(--ion-background-color-step-850, #242d39)) !default;
 
 /// @prop - Color of the breadcrumb icon when focused
-$breadcrumb-ios-icon-color-focused:                var(--ion-color-step-250, var(--ion-text-color-step-750, #445b78)) !default;
+$breadcrumb-ios-icon-color-focused:                var(--ion-color-step-750, var(--ion-background-color-step-750, #445b78)) !default;
 
 /// @prop - Color of the breadcrumb separator
 $breadcrumb-ios-separator-color:                   $breadcrumb-separator-color !default;
