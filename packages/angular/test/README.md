@@ -113,4 +113,5 @@ Note: You may encounter some other peer dependency issues not covered by the Ang
 7. Open `./github/workflows/build.yml` and find the `test-angular-e2e` job.
 8. Find the `apps` field under `matrix`.
 9. Add "ng14" to the `apps` field.
-10. Commit these changes and push.
+10. Similar to steps 7-9, add "ng14" in the `./github/workflows/stencil-nightly.yml` `test-angular-e2e` job.
+11. Commit these changes and push.
