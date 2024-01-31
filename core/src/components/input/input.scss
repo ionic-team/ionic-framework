@@ -211,7 +211,8 @@
   @include margin(0);
 }
 
-.input-clear-icon {
+.input-clear-icon,
+.input-show-password {
   @include margin(auto);
   @include padding(0);
   @include background-position(center);
@@ -233,7 +234,6 @@
 
   color: $text-color-step-400;
 
-  visibility: hidden;
   appearance: none;
 }
 
@@ -248,14 +248,14 @@
  * However, the clear button always disappears after
  * being activated, so we never get to that state.
  */
-.input-clear-icon:focus {
+.input-clear-icon:focus,
+.input-show-password:focus {
   opacity: 0.5;
 }
 
-:host(.has-value) .input-clear-icon {
-  visibility: visible;
+:host(:not(.has-value)) .input-clear-icon {
+  visibility: hidden;
 }
-
 
 // Input Has focus
 // --------------------------------------------------
@@ -271,7 +271,6 @@
 :host(.has-focus.legacy-input) button {
   pointer-events: auto;
 }
-
 
 // Item Floating: Placeholder
 // ----------------------------------------------------------------
@@ -461,7 +460,7 @@
    */
   max-width: 200px;
 
-  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /**
    * This ensures that double tapping this text
@@ -653,6 +652,46 @@
    * beyond the bounds of the input.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Password Strength Indicator
+// ----------------------------------------------------------------
+.input-bottom-password-info {
+  $form-control-label-margin: 12px;
+
+  ion-note,
+  ion-list,
+  ion-progress-bar {
+    @include margin($form-control-label-margin, 0, 0, 0);
+  }
+
+  ion-note {
+    font-size: dynamic-font(10px);
+    display: block;
+  }
+
+  ion-item {
+    --min-height: initial;
+    font-size: dynamic-font(12px);
+  }
+}
+
+.password-strength-indicator {
+  --buffer-background: #{ion-color(light, base)};
+
+  &.password-strength-level {
+    &-weak {
+      --progress-background: #{ion-color(danger, base)};
+    }
+
+    &-moderate {
+      --progress-background: #{ion-color(warning, base)};
+    }
+
+    &-strong {
+      --progress-background: #{ion-color(success, base)};
+    }
+  }
 }
 
 // Start/End Slots

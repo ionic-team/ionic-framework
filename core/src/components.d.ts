@@ -1281,6 +1281,9 @@ export namespace Components {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        "showPasswordIcon": boolean;
+        "showPasswordStrength": boolean;
+        "showPasswordValidations": boolean;
         "size"?: number;
         /**
           * If `true`, the element will have its spelling and grammar checked.
@@ -6012,6 +6015,9 @@ declare namespace LocalJSX {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        "showPasswordIcon"?: boolean;
+        "showPasswordStrength"?: boolean;
+        "showPasswordValidations"?: boolean;
         "size"?: number;
         /**
           * If `true`, the element will have its spelling and grammar checked.
