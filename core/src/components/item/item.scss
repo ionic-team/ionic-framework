@@ -51,15 +51,6 @@
    * @prop --highlight-color-valid: The color of the highlight on the item when valid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    * @prop --highlight-color-invalid: The color of the highlight on the item when invalid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    */
-
-  /**
-   * We change the minimum width as the
-   * font size changes. Using a fixed minimum
-   * width means that fewer and fewer characters
-   * can be displayed in the same space as the
-   * text grows.
-   */
-  --inner-min-width: 4rem;
   --border-radius: 0px;
   --border-width: 0px;
   --border-style: solid;
@@ -230,11 +221,6 @@
   display: flex;
   position: relative;
 
-  // Flex wrap is required here in order to wrap
-  // the start slot + .item-inner content that
-  // doesn't fit on the same line
-  flex-wrap: wrap;
-
   align-items: inherit;
   justify-content: inherit;
 
@@ -256,11 +242,6 @@
   z-index: 1;
 
   box-sizing: border-box;
-}
-
-// TODO(FW-5289): remove
-:host(.item-legacy) .item-native {
-  flex-wrap: unset;
 }
 
 .item-native::-moz-focus-inner {
@@ -307,34 +288,13 @@ button, a {
   // This is required to work with an inset highlight
   position: relative;
 
-  // This flex property is required in order to make
-  // the elements wrap when there is a slotted start
-  // element and a label
-  flex: 1 0 0;
+  flex: 1;
 
   flex-direction: inherit;
-
-  // Flex wrap is required here in order to wrap
-  // .input-wrapper content + the end slot that
-  // doesn't fit on the same line
-  flex-wrap: wrap;
 
   align-items: inherit;
   align-self: stretch;
 
-  /**
-   * The min-width defines when the
-   * content in the default slot should
-   * stop wrapping/truncating within its own
-   * container. At this point the entire
-   * container will wrap to the next line.
-   */
-  min-width: var(--inner-min-width);
-
-  // Max width must be set to 100%, otherwise the
-  // elements will overflow this container instead
-  // of wrapping
-  max-width: 100%;
   min-height: inherit;
 
   border-width: var(--inner-border-width);
@@ -344,15 +304,6 @@ button, a {
   box-shadow: var(--inner-box-shadow);
   overflow: inherit;
   box-sizing: border-box;
-}
-
-// TODO(FW-5289): remove
-:host(.item-legacy) .item-inner {
-  flex: 1;
-
-  flex-wrap: unset;
-
-  max-width: unset;
 }
 
 // Item Bottom
@@ -426,6 +377,13 @@ button, a {
   // shrink and wrap its text instead of moving to its
   // own row if there are slotted elements next to it
   width: min-content;
+
+  /**
+   * We allow labels in the default
+   * slot to grow. However, we do not
+   * want them to grow indefinitely.
+   */
+  max-width: 100%;
 }
 
 // Item Input
@@ -441,36 +399,17 @@ button, a {
   // This flex property is required in order to keep
   // the label from shrinking when there are wide
   // elements next to it
-  flex: 1 0 auto;
+  flex: 1;
 
   flex-direction: inherit;
 
-  // Flex wrap is required here in order to wrap
-  // content in the default slot (such as a label
-  // and a button) that doesn't fit on the same line
-  flex-wrap: wrap;
-
   align-items: inherit;
   align-self: stretch;
-
-  // Max width must be set to 100%, otherwise the
-  // elements will overflow this container instead
-  // of wrapping
-  max-width: 100%;
 
   text-overflow: ellipsis;
 
   overflow: inherit;
   box-sizing: border-box;
-}
-
-// TODO(FW-5289): remove
-:host(.item-legacy) .input-wrapper {
-  flex: 1;
-
-  flex-wrap: unset;
-
-  max-width: unset;
 }
 
 :host(.item-label-stacked),

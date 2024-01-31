@@ -4,8 +4,8 @@ import type { Side } from '../components/menu/menu-interface';
 
 // TODO(FW-2832): types
 
-declare const __zone_symbol__requestAnimationFrame: any;
-declare const requestAnimationFrame: any;
+declare const __zone_symbol__requestAnimationFrame: typeof window.requestAnimationFrame;
+declare const requestAnimationFrame: typeof window.requestAnimationFrame;
 
 export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0) => {
   return new Promise((resolve) => {
@@ -23,7 +23,7 @@ export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0)
 const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
   let animationTimeout: number | undefined;
-  const opts: any = { passive: true };
+  const opts: AddEventListenerOptions = { passive: true };
   const ANIMATION_FALLBACK_TIMEOUT = 500;
 
   const unregister = () => {
@@ -240,7 +240,7 @@ export const getElementRoot = (el: HTMLElement, fallback: HTMLElement = el) => {
  * Patched version of requestAnimationFrame that avoids ngzone
  * Use only when you know ngzone should not run
  */
-export const raf = (h: any) => {
+export const raf = (h: FrameRequestCallback) => {
   if (typeof __zone_symbol__requestAnimationFrame === 'function') {
     return __zone_symbol__requestAnimationFrame(h);
   }

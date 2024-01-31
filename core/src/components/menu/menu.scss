@@ -190,13 +190,12 @@ ion-backdrop {
 
   width: auto;
 
-  /* stylelint-disable declaration-no-important */
-  transform: none !important;
+  transform: none;
 
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 :host(.menu-pane-visible) ion-backdrop {
+  /* stylelint-disable-next-line declaration-no-important */
   display: hidden !important;
-  /* stylelint-enable declaration-no-important */
 }

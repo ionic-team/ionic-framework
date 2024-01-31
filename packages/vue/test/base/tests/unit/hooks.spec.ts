@@ -1,13 +1,8 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { IonicVue, IonApp, IonRouterOutlet, IonPage, useIonRouter, createAnimation } from '@ionic/vue';
+import { IonicVue, IonRouterOutlet, IonPage, useIonRouter } from '@ionic/vue';
 import { mockAnimation, waitForRouter } from './utils';
-
-const App = {
-  components: { IonApp, IonRouterOutlet },
-  template: '<ion-app><ion-router-outlet /></ion-app>',
-}
 
 const BasePage = {
   template: '<ion-page></ion-page>',
@@ -40,7 +35,7 @@ describe('useIonRouter', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -85,7 +80,7 @@ describe('useIonRouter', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -137,7 +132,7 @@ describe('useIonRouter', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -181,7 +176,7 @@ describe('useIonRouter', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -229,7 +224,7 @@ describe('useIonRouter', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }

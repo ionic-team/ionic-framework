@@ -131,7 +131,7 @@ export type PredefinedColors =
   | 'medium'
   | 'dark';
 
-type LiteralUnion<T extends U, U = string> = T | (U & Record<never, never>);
+export type LiteralUnion<T extends U, U = string> = T | (U & Record<never, never>);
 
 export type Color = LiteralUnion<PredefinedColors, string>;
 export type Mode = 'ios' | 'md';
