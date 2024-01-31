@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.7.0](https://github.com/ionic-team/ionic-framework/compare/v7.6.7...v7.7.0) (2024-01-31)
+
+
+### Features
+
+* add experimental hardware back button support in browsers ([#28705](https://github.com/ionic-team/ionic-framework/issues/28705)) ([658d1ca](https://github.com/ionic-team/ionic-framework/commit/658d1caccd530350843b85c0e24544ec27dd9eb4)), closes [#28703](https://github.com/ionic-team/ionic-framework/issues/28703)
+
+
+
+
+
 ## [7.6.7](https://github.com/ionic-team/ionic-framework/compare/v7.6.6...v7.6.7) (2024-01-31)
 
 

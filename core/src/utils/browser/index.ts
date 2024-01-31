@@ -72,7 +72,32 @@ type IonicEvents = {
   ): void;
 };
 
-type IonicWindow = Window & IonicEvents;
+export interface CloseWatcher extends EventTarget {
+  new (options?: CloseWatcherOptions): any;
+  requestClose(): void;
+  close(): void;
+  destroy(): void;
+
+  oncancel: (event: Event) => void | null;
+  onclose: (event: Event) => void | null;
+}
+
+interface CloseWatcherOptions {
+  signal: AbortSignal;
+}
+
+/**
+ * Experimental browser features that
+ * are selectively used inside of Ionic
+ * Since they are experimental they typically
+ * do not have types yet, so we can add custom ones
+ * here until types are available.
+ */
+type ExperimentalWindowFeatures = {
+  CloseWatcher?: CloseWatcher;
+};
+
+type IonicWindow = Window & IonicEvents & ExperimentalWindowFeatures;
 type IonicDocument = Document & IonicEvents;
 
 export const win: IonicWindow | undefined = typeof window !== 'undefined' ? window : undefined;
