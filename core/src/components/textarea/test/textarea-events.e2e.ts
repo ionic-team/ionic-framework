@@ -8,7 +8,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   test.describe(title('textarea: events: ionChange'), () => {
     test.describe('when the textarea is blurred', () => {
       test('should emit if the value has changed', async ({ page }) => {
-        await page.setContent(`<ion-textarea></ion-textarea>`, config);
+        await page.setContent(`<ion-textarea aria-label="textarea"></ion-textarea>`, config);
 
         const nativeTextarea = page.locator('ion-textarea textarea');
         const ionChangeSpy = await page.spyOnEvent('ionChange');
@@ -24,7 +24,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
 
       test('should emit if the textarea is cleared with an initial value', async ({ page }) => {
-        await page.setContent(`<ion-textarea clear-on-edit="true" value="123"></ion-textarea>`, config);
+        await page.setContent(
+          `<ion-textarea aria-label="textarea" clear-on-edit="true" value="123"></ion-textarea>`,
+          config
+        );
 
         const textarea = page.locator('ion-textarea');
         const nativeTextarea = textarea.locator('textarea');
@@ -41,7 +44,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
 
       test('should not emit if the value is set programmatically', async ({ page }) => {
-        await page.setContent(`<ion-textarea></ion-textarea>`, config);
+        await page.setContent(`<ion-textarea aria-label="textarea"></ion-textarea>`, config);
 
         const textarea = page.locator('ion-textarea');
         const ionChangeSpy = await page.spyOnEvent('ionChange');
@@ -67,7 +70,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
   test.describe(title('textarea: events: ionInput'), () => {
     test('should emit when the user types', async ({ page }) => {
-      await page.setContent(`<ion-textarea value="some value"></ion-textarea>`, config);
+      await page.setContent(`<ion-textarea aria-label="textarea" value="some value"></ion-textarea>`, config);
 
       const ionInputSpy = await page.spyOnEvent('ionInput');
 
