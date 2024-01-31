@@ -8,7 +8,7 @@ The Angular test app supports syncing your locally built changes for validation.
 
 1. Build the `core` and `packages/angular` directories using `npm run build`.
 2. [Build the Angular test app](#test-app-build-structure).
-3. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
+3. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng17`).
 4. Install dependencies using `npm install`.
 5. Sync your local changes using `npm run sync`.
 
@@ -56,15 +56,15 @@ Unlike other test applications, these test apps are broken up into multiple dire
 Usage:
 
 ```shell
-# Build a test app using apps/ng14 as a reference
-./build.sh ng14
+# Build a test app using apps/ng17 as a reference
+./build.sh ng17
 ```
 
 ## How to modify test apps
 
 To add new tests, components, or pages, modify the `base` project. This ensures that tests are run for every tested version.
 
-If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.spec.ts` in `apps/ng14`, make sure you place the file in `apps/ng14/e2e/src/test.spec.ts`.
+If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.spec.ts` in `apps/ng17`, make sure you place the file in `apps/ng17/e2e/src/test.spec.ts`.
 
 ### Version-specific tests
 
@@ -108,9 +108,9 @@ Note: You may encounter some other peer dependency issues not covered by the Ang
 `src/app/form/form.component.ts`
 `src/app/modal-example/modal-example.component.ts`
 
-5. Create a directory in `apps` named `ng14`.
-6. Copy the modified files to the `apps/ng14` directory.
+5. Create a directory in `apps` named `ng17`.
+6. Copy the modified files to the `apps/ng17` directory.
 7. Open `./github/workflows/build.yml` and find the `test-angular-e2e` job.
 8. Find the `apps` field under `matrix`.
-9. Add "ng14" to the `apps` field.
+9. Add "ng17" to the `apps` field.
 10. Commit these changes and push.
