@@ -21,12 +21,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
 
       const modal = page.locator('ion-modal');
 
-      const initialAnimations = await page.evaluate(() => {
-        return document.querySelector('ion-modal')!.shadowRoot!.getAnimations();
+      const initialAnimations = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.shadowRoot!.getAnimations();
       });
 
       // While the modal is open, it should have animations
-      await expect(initialAnimations.length).toBeGreaterThan(0);
+     expect(initialAnimations.length).toBeGreaterThan(0);
 
       await modal.evaluate((el: HTMLIonModalElement) => {
         el.dismiss();
@@ -34,12 +34,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
 
       await ionModalDidDismiss.next();
 
-      const currentAnimations = await page.evaluate(() => {
-        return document.querySelector('ion-modal')!.shadowRoot!.getAnimations();
+      const currentAnimations = await modal.evaluate((el: HTMLIonModalElement) => {
+        return el.shadowRoot!.getAnimations();
       });
 
       // Once the modal has finished closing, there should be no animations
-      await expect(currentAnimations.length).toBe(0);
+     expect(currentAnimations.length).toBe(0);
     });
   });
 });
