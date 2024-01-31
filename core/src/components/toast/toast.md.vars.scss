@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Background of the toast
-$toast-md-background: $text-color-step-200 !default;
+$toast-md-background: $background-color-step-800 !default;
 
 /// @prop - Box shadow of the toast
 $toast-md-box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14),
@@ -14,7 +14,7 @@ $toast-md-box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0,
 $toast-md-font-size: dynamic-font(14px) !default;
 
 /// @prop - Color of the toast
-$toast-md-color: $background-color-step-50 !default;
+$toast-md-color: $text-color-step-950 !default;
 
 /// @prop - Border radius of the toast wrapper
 $toast-md-border-radius: 4px !default;
