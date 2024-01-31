@@ -4,13 +4,13 @@
 // --------------------------------------------------
 
 /// @prop - Color of the breadcrumb
-$breadcrumb-md-color:                               var(--ion-color-step-600, var(--ion-background-color-step-600, #677483)) !default;
+$breadcrumb-md-color:                               var(--ion-color-step-600, var(--ion-text-color-step-400, #677483)) !default;
 
 /// @prop - Color of the active breadcrumb
 $breadcrumb-md-color-active:                        var(--ion-text-color, #03060b) !default;
 
 /// @prop - Color of the focused breadcrumb
-$breadcrumb-md-color-focused:                        var(--ion-color-step-800, var(--ion-background-color-step-800, #35404e)) !default;
+$breadcrumb-md-color-focused:                        var(--ion-color-step-800, var(--ion-text-color-step-200, #35404e)) !default;
 
 /// @prop - Background color of the focused breadcrumb
 $breadcrumb-md-background-focused:                  var(--ion-color-step-50, var(--ion-background-color-step-50, #fff)) !default;

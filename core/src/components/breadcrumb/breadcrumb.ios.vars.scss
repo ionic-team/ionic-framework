@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Color of the breadcrumb
-$breadcrumb-ios-color:                             var(--ion-color-step-850, var(--ion-background-color-step-850, #2d4665)) !default;
+$breadcrumb-ios-color:                             var(--ion-color-step-850, var(--ion-text-color-step-150, #2d4665)) !default;
 
 /// @prop - Color of the active breadcrumb
 $breadcrumb-ios-color-active:                      var(--ion-text-color, #03060b) !default;
