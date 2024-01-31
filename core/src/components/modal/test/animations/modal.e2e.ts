@@ -26,7 +26,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
       });
 
       // While the modal is open, it should have animations
-     expect(initialAnimations.length).toBeGreaterThan(0);
+      expect(initialAnimations.length).toBeGreaterThan(0);
 
       await modal.evaluate((el: HTMLIonModalElement) => {
         el.dismiss();
@@ -39,7 +39,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
       });
 
       // Once the modal has finished closing, there should be no animations
-     expect(currentAnimations.length).toBe(0);
+      expect(currentAnimations.length).toBe(0);
     });
   });
 });
