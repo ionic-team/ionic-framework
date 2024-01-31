@@ -297,6 +297,7 @@ export abstract class IonRouterOutlet implements OnDestroy, OnInit {
 
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       enteringView = this.stackCtrl.createView(this.activated!, activatedRoute);
 
       // Store references to the proxy by component
