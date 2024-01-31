@@ -175,7 +175,7 @@ const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
  * element inside of ion-button's shadow root, not
  * the host element itself.
  */
-const focusElementInOverlay = (hostToFocus: HTMLElement | null, overlay: HTMLIonOverlayElement) => {
+const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, overlay: HTMLIonOverlayElement) => {
   let elementToFocus = hostToFocus;
 
   const shadowRoot = hostToFocus?.shadowRoot;
@@ -276,6 +276,20 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        */
       if (overlayWrapper.contains(target) || target === overlayRoot.querySelector('ion-backdrop')) {
         lastOverlay.lastFocus = target;
+        /**
+         * Toasts can be presented from an overlay.
+         * However, focus should still be returned to
+         * the overlay when clicking a toast. Normally,
+         * focus would be returned to the last focusable
+         * descendant in the overlay which may not always be
+         * the button that the toast was presented from. In this case,
+         * the focus may be returned to an unexpected element.
+         * To account for this, we make sure to return focus to the
+         * last focused element in the overlay if focus is
+         * moved to the toast.
+         */
+      } else if (target.tagName === 'ION-TOAST') {
+        focusElementInOverlay(lastOverlay.lastFocus, lastOverlay);
       } else {
         /**
          * Otherwise, we must have focused one of the focus traps.
@@ -305,7 +319,6 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
          * last focus to equal the active element.
          */
         if (lastFocus === doc.activeElement) {
-          console.log('LAST FOCUS');
           focusLastDescendant(overlayWrapper, lastOverlay);
         }
         lastOverlay.lastFocus = doc.activeElement as HTMLElement;
@@ -319,9 +332,20 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
      */
     if (lastOverlay.contains(target)) {
       lastOverlay.lastFocus = target;
+      /**
+       * Toasts can be presented from an overlay.
+       * However, focus should still be returned to
+       * the overlay when clicking a toast. Normally,
+       * focus would be returned to the last focusable
+       * descendant in the overlay which may not always be
+       * the button that the toast was presented from. In this case,
+       * the focus may be returned to an unexpected element.
+       * To account for this, we make sure to return focus to the
+       * last focused element in the overlay if focus is
+       * moved to the toast.
+       */
     } else if (target.tagName === 'ION-TOAST') {
-      console.log('trying to focus toast', lastOverlay.lastFocus);
-      lastOverlay.lastFocus?.focus();
+      focusElementInOverlay(lastOverlay.lastFocus, lastOverlay);
     } else {
       /**
        * Otherwise, we are about to have focus
