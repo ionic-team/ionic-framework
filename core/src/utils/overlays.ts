@@ -376,7 +376,6 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * last focus to equal the active element.
        */
       if (lastFocus === doc.activeElement) {
-        console.log('LAST FOCUS');
         focusLastDescendant(lastOverlay, lastOverlay);
       }
       lastOverlay.lastFocus = doc.activeElement as HTMLElement;
