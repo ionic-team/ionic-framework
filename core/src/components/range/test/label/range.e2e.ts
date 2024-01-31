@@ -7,7 +7,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a range with no visible label', async ({ page }) => {
         await page.setContent(
           `
-          <ion-range legacy="true"></ion-range>
+          <ion-range style="padding-inline-start: 20px;" aria-label="Range"></ion-range>
         `,
           config
         );
@@ -80,7 +80,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a range with no visible label', async ({ page }) => {
         await page.setContent(
           `
-          <ion-range legacy="true">
+          <ion-range aria-label="Range">
             <ion-icon name="volume-off" slot="start"></ion-icon>
             <ion-icon name="volume-high" slot="end"></ion-icon>
           </ion-range>

@@ -214,8 +214,7 @@
           <ion-popover class="options-popover" trigger="popover-trigger">
             <ion-list lines="none">
               <ion-item>
-                <ion-label>Dark Mode</ion-label>
-                <ion-checkbox slot="end"></ion-checkbox>
+                <ion-checkbox>Dark Mode</ion-checkbox>
               </ion-item>
               <ion-item detail="true" href="?ionic:mode=ios">
                 <ion-label>iOS Mode</ion-label>
@@ -225,23 +224,19 @@
               </ion-item>
 
               <ion-item>
-                <ion-label>Show Default Title</ion-label>
-                <ion-toggle id="titleToggle"></ion-toggle>
+                <ion-toggle id="titleToggle">Show Default Title</ion-toggle>
               </ion-item>
 
               <ion-item>
-                <ion-label>Show Default Buttons</ion-label>
-                <ion-toggle id="buttonsToggle"></ion-toggle>
+                <ion-toggle id="buttonsToggle">Show Default Buttons</ion-toggle>
               </ion-item>
 
               <ion-item>
-                <ion-label>Locale</ion-label>
-                <ion-input placeholder="default" id="locale"></ion-input>
+                <ion-input label="Locale" placeholder="default" id="locale"></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label>Color</ion-label>
-                <ion-select id="color" value="primary">
+                <ion-select label="Color" id="color" value="primary">
                   <ion-select-option value="primary">Primary</ion-select-option>
                   <ion-select-option value="secondary">Secondary</ion-select-option>
                   <ion-select-option value="tertiary">Tertiary</ion-select-option>
