@@ -138,6 +138,7 @@ This allows components to inherit the color properly when used outside of Ionic 
 <h4 id="version-8x-input">Input</h4>
 
 - `size` has been removed from the `ion-input` component. Developers should use CSS to specify the visible width of the input.
+- `accept` has been removed from the `ion-input` component.
 
 <h4 id="version-8x-nav">Nav</h4>
 
