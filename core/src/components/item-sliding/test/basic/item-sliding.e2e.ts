@@ -69,11 +69,67 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
     });
 
     test('the dynamic element should be clicked', async ({ page }) => {
-      await page.goto(`/src/components/item-sliding/test/basic`, config);
-      const item = page.locator('#item43');
+      await page.setContent(
+        `
+        <ion-list>
+          <ion-item-sliding id="item43">
+            <ion-item detail>
+              <ion-label class="ion-text-wrap">
+                <h2>RIGHT SIDE - Add element</h2>
+                <p id="target-text">Add dynamic element as item-option</p>
+              </ion-label>
+            </ion-item>
 
-      // Scroll page in view and drag the item-sliding
-      await page.setIonViewport();
+            <ion-item-options id="target-element">
+              <ion-item-option>ARCHIVE</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+
+        <ion-button id="add-element-btn" onclick="addElement()">Add element</ion-button>
+        <script>
+          function changeTargetText() {
+            var item = document.getElementById('target-text');
+
+            var newTargetText = document.createTextNode(' - ADDED');
+            item.appendChild(newTargetText);
+          }
+          function addElement() {
+            var item = document.getElementById('item43');
+            var isAddedElement = item.querySelector('.element-added');
+
+            // If element exists, stop the function call
+            if (isAddedElement) {
+              return;
+            }
+
+            // Define and create the elements to add on DOM
+            var itemSliding = document.getElementById('target-element');
+            var newIonItemOption = document.createElement('ion-item-option');
+
+            var newIonItemOptionText = document.createTextNode('DELETE');
+
+            newIonItemOption.setAttribute('onclick', 'changeTargetText()');
+            newIonItemOption.setAttribute('color', 'danger');
+            newIonItemOption.setAttribute('id', 'element-added-delete');
+            newIonItemOption.classList.add('element-added');
+            newIonItemOption.appendChild(newIonItemOptionText);
+            itemSliding.appendChild(newIonItemOption);
+
+            // Close the item-sliding to update the values
+            item.close();
+
+            // Make async call of the open method of item-sliding
+            setTimeout(function () {
+              item.open();
+            }, 0);
+          }
+        </script>
+      `,
+        config
+      );
+
+      const item = page.locator('#item43');
       await dragElementBy(item, page, -150);
 
       // Trigger the button to add the dynamic content
@@ -84,10 +140,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const elementAdded = page.locator('#element-added-delete');
       await elementAdded.click();
 
-      await page.waitForChanges();
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28662',
+      });
 
-      // item-sliding doesn't have an easy way to tell whether it's fully open so just screenshot it
-      await expect(item).toHaveScreenshot(screenshot(`dynamic-element-clicked`));
     });
 
     test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {

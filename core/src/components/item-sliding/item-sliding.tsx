@@ -296,6 +296,15 @@ export class ItemSliding implements ComponentInterface {
     return !!(this.rightOptions || this.leftOptions);
   }
 
+  // Method to reset item-sliding state
+  private resetCloseState() {
+    if(this.tmr !== undefined) {
+      clearTimeout(this.tmr);
+      this.tmr = undefined;
+      this.el.classList.remove('item-sliding-closing');
+    }
+  }
+
   private onStart() {
     /**
      * We need to query for the ion-item
@@ -311,10 +320,8 @@ export class ItemSliding implements ComponentInterface {
 
     openSlidingItem = this.el;
 
-    if (this.tmr !== undefined) {
-      clearTimeout(this.tmr);
-      this.tmr = undefined;
-    }
+    this.resetCloseState();
+
     if (this.openAmount === 0) {
       this.optsDirty = true;
       this.state = SlidingState.Enabled;
@@ -409,11 +416,9 @@ export class ItemSliding implements ComponentInterface {
   private setOpenAmount(openAmount: number, isFinal: boolean) {
     const { el } = this;
 
-    if (this.tmr !== undefined) {
-      clearTimeout(this.tmr);
-      el.classList.remove('item-sliding-closing');
-      this.tmr = undefined;
-    }
+
+    this.resetCloseState();
+
     if (!this.item) {
       return;
     }
