@@ -22,7 +22,13 @@ import type {
 
 import { CoreDelegate } from './framework-delegate';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
-import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
+import {
+  addEventListener,
+  componentOnReady,
+  focusVisibleElement,
+  getElementRoot,
+  removeEventListener,
+} from './helpers';
 import { printIonWarning } from './logging';
 
 let lastOverlayIndex = 0;
@@ -131,38 +137,55 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
  */
 const focusableQueryString =
   '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
-
-export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
-  let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
-
-  const shadowRoot = firstInput?.shadowRoot;
-  if (shadowRoot) {
-    // If there are no inner focusable elements, just focus the host element.
-    firstInput = shadowRoot.querySelector(focusableQueryString) || firstInput;
-  }
-
-  if (firstInput) {
-    focusElement(firstInput);
-  } else {
-    // Focus overlay instead of letting focus escape
-    overlay.focus();
-  }
-};
-
 const isOverlayHidden = (overlay: Element) => overlay.classList.contains('overlay-hidden');
 
+/**
+ * Focuses the first descendant in an overlay
+ * that can receive focus. If none exists,
+ * the entire overlay will be focused.
+ */
+export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
+  const firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
+
+  focusElementInOverlay(firstInput, overlay);
+};
+
+/**
+ * Focuses the last descendant in an overlay
+ * that can receive focus. If none exists,
+ * the entire overlay will be focused.
+ */
 const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
-  let lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
+  const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
 
-  const shadowRoot = lastInput?.shadowRoot;
+  focusElementInOverlay(lastInput, overlay);
+};
+
+/**
+ * Focuses a particular element in an overlay. If the element
+ * doesn't have anything focusable associated with it then
+ * the overlay itself will be focused.
+ * This should be used instead of the focus() method
+ * on most elements because the focusable element
+ * may not be the host element.
+ *
+ * For example, if an ion-button should be focused
+ * then we should actually focus the native <button>
+ * element inside of ion-button's shadow root, not
+ * the host element itself.
+ */
+const focusElementInOverlay = (hostToFocus: HTMLElement | null, overlay: HTMLIonOverlayElement) => {
+  let elementToFocus = hostToFocus;
+
+  const shadowRoot = hostToFocus?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
-    lastInput = shadowRoot.querySelector(focusableQueryString) || lastInput;
+    elementToFocus = shadowRoot.querySelector<HTMLElement>(focusableQueryString) || hostToFocus;
   }
 
-  if (lastInput) {
-    lastInput.focus();
+  if (elementToFocus) {
+    focusVisibleElement(elementToFocus);
   } else {
     // Focus overlay instead of letting focus escape
     overlay.focus();
@@ -282,6 +305,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
          * last focus to equal the active element.
          */
         if (lastFocus === doc.activeElement) {
+          console.log('LAST FOCUS');
           focusLastDescendant(overlayWrapper, lastOverlay);
         }
         lastOverlay.lastFocus = doc.activeElement as HTMLElement;
@@ -295,6 +319,9 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
      */
     if (lastOverlay.contains(target)) {
       lastOverlay.lastFocus = target;
+    } else if (target.tagName === 'ION-TOAST') {
+      console.log('trying to focus toast', lastOverlay.lastFocus);
+      lastOverlay.lastFocus?.focus();
     } else {
       /**
        * Otherwise, we are about to have focus
@@ -325,6 +352,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * last focus to equal the active element.
        */
       if (lastFocus === doc.activeElement) {
+        console.log('LAST FOCUS');
         focusLastDescendant(lastOverlay, lastOverlay);
       }
       lastOverlay.lastFocus = doc.activeElement as HTMLElement;
