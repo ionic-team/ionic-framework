@@ -10,7 +10,6 @@ import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
   GESTURE,
   BACKDROP,
-  activeAnimations,
   dismiss,
   eventMethod,
   prepareOverlay,
@@ -705,8 +704,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.keyboardOpenCallback = undefined;
     }
 
-    const enteringAnimation = activeAnimations.get(this) || [];
-
     const dismissed = await dismiss<ModalDismissOptions>(
       this,
       data,
@@ -733,8 +730,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.gesture) {
         this.gesture.destroy();
       }
-
-      enteringAnimation.forEach((ani) => ani.destroy());
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
