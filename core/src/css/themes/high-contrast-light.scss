@@ -74,7 +74,10 @@ $colors:  (
 /// The darker the $lightest-text-color is, the darker each
 /// stepped color is. If you want to increase text contrast,
 /// make $lightest-text-color darker.
-$darkest-text-color: #000000;
+$background-color: #ffffff;
+$text-color: #000000;
+
+$darkest-text-color: $text-color;
 $lightest-text-color: #888888;
 
 /// Loop through each color object above
@@ -96,6 +99,12 @@ $lightest-text-color: #888888;
       --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
     }
+
+    --ion-background-color: #{$background-color};
+    --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
+
+    --ion-text-color: #{$text-color};
+    --ion-text-color-rgb: #{color-to-rgb-list($text-color)};
 
     --ion-placeholder-opacity: 0.8;
 
@@ -127,6 +136,10 @@ $lightest-text-color: #888888;
   // Toast
   // --------------------------------------------------
 
+  & ion-toast {
+    --color: var(--ion-background-color);
+  }
+
   & ion-toast::part(button) {
     // Fallback for browsers that don't support color-mix
     color: var(--color);
@@ -135,7 +148,7 @@ $lightest-text-color: #888888;
   /* stylelint-disable-next-line order/order */
   @supports (color: color-mix(in lch, plum, pink)) {
     & ion-toast::part(button) {
-      color: color-mix(in srgb, var(--color) 60%, var(--button-color));
+      color: color-mix(in srgb, var(--color) 70%, var(--button-color));
     }
   }
 

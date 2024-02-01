@@ -110,6 +110,10 @@ $lightest-text-color: $text-color;
   // Toast
   // --------------------------------------------------
 
+  & ion-toast {
+    --color: var(--ion-background-color);
+  }
+
   & ion-toast::part(button) {
     // Fallback for browsers that don't support color-mix
     color: var(--color);
@@ -118,7 +122,7 @@ $lightest-text-color: $text-color;
   /* stylelint-disable-next-line order/order */
   @supports (color: color-mix(in lch, plum, pink)) {
     & ion-toast::part(button) {
-      color: color-mix(in srgb, var(--color) 67%, var(--button-color));
+      color: color-mix(in srgb, var(--color) 73%, var(--button-color));
     }
   }
 
