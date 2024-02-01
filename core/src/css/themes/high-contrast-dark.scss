@@ -106,29 +106,6 @@ $lightest-text-color: $text-color;
 
     --ion-placeholder-opacity: 0.8;
   }
-
-  // Toast
-  // --------------------------------------------------
-
-  & ion-toast {
-    --color: var(--ion-background-color);
-  }
-
-  & ion-toast::part(button) {
-    // Fallback for browsers that don't support color-mix
-    color: var(--color);
-  }
-
-  /* stylelint-disable-next-line order/order */
-  @supports (color: color-mix(in lch, plum, pink)) {
-    & ion-toast::part(button) {
-      color: color-mix(in srgb, var(--color) 73%, var(--button-color));
-    }
-  }
-
-  & ion-toast::part(button cancel) {
-    color: var(--color);
-  }
 }
 
 @mixin high-contrast-dark-ios-theme() {
@@ -259,5 +236,28 @@ $lightest-text-color: $text-color;
     --ion-background-color-step-850: #{mix($text-color, $background-color, 85%)};
     --ion-background-color-step-900: #{mix($text-color, $background-color, 90%)};
     --ion-background-color-step-950: #{mix($text-color, $background-color, 95%)};
+  }
+
+  // Toast
+  // --------------------------------------------------
+
+  & ion-toast {
+    --color: var(--ion-background-color);
+  }
+
+  & ion-toast::part(button) {
+    // Fallback for browsers that don't support color-mix
+    color: var(--color);
+  }
+
+  /* stylelint-disable-next-line order/order */
+  @supports (color: color-mix(in lch, plum, pink)) {
+    & ion-toast::part(button) {
+      color: color-mix(in srgb, var(--color) 73%, var(--button-color));
+    }
+  }
+
+  & ion-toast::part(button cancel) {
+    color: var(--color);
   }
 }

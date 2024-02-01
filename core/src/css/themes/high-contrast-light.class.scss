@@ -3,3 +3,7 @@
 .ion-theme-high-contrast-light {
   @include high-contrast-light-base-theme();
 }
+
+.ion-theme-high-contrast-light.md {
+  @include high-contrast-light-md-theme();
+}

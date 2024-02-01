@@ -3,3 +3,7 @@
 :root {
   @include high-contrast-light-base-theme();
 }
+
+.md body {
+  @include high-contrast-light-md-theme();
+}
