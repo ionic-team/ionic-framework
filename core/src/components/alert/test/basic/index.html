@@ -31,7 +31,9 @@
         <button class="custom-accordion-button" id="basic" onclick="presentAlert()">Alert</button>
         <button id="longMessage" onclick="presentAlertLongMessage()">Alert Long Message</button>
         <button id="multipleButtons" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</button>
-        <button id="multipleCancelButtons" onclick="presentAlertMultipleCancelButtons()">Multiple Cancel Buttons (>2)</button>
+        <button id="multipleCancelButtons" onclick="presentAlertMultipleCancelButtons()">
+          Multiple Cancel Buttons (>2)
+        </button>
         <button id="noMessage" onclick="presentAlertNoMessage()">Alert No Message</button>
         <button id="asyncHandler" onclick="presentAlertAsyncHandler()">Alert Async Handler</button>
         <button id="confirm" onclick="presentAlertConfirm()">Confirm</button>
@@ -115,7 +117,7 @@
           ],
         });
       }
-      
+
       function presentAlertMultipleCancelButtons() {
         openAlert({
           header: 'Alert',
@@ -127,14 +129,14 @@
               role: 'cancel',
               handler: () => {
                 console.log('Cancel btn 1');
-              }
-            }, 
+              },
+            },
             {
               text: 'Cancel 2',
               role: 'cancel',
               handler: () => {
                 console.log('Cancel btn 2');
-              }
+              },
             },
             {
               text: 'Cancel 3',

@@ -672,7 +672,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const button = ev.detail;
     const role = button.role;
     if (isCancel(role)) {
-      const cancelButton = this.processedButtons.find((b) => { 
+      const cancelButton = this.processedButtons.find((b) => {
         return b === button && b.role === 'cancel';
       });
       this.callButtonHandler(cancelButton);
