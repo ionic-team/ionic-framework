@@ -153,7 +153,7 @@ $item-md-icon-end-slot-margin-start:        16px !default;
 $item-md-icon-end-slot-margin-end:          null !default;
 
 /// @prop - Color for an icon in the start/end slot
-$item-md-icon-slot-color:                   var(--ion-text-color-step-650, #666666) !default;
+$item-md-icon-slot-color:                   rgba($text-color-rgb, 0.54) !default;
 
 /// @prop - Font size of an icon in the start/end slot
 $item-md-icon-slot-font-size:               24px !default;
