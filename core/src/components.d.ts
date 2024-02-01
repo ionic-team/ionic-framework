@@ -1145,11 +1145,6 @@ export namespace Components {
     }
     interface IonInput {
         /**
-          * This attribute is ignored.
-          * @deprecated
-         */
-        "accept"?: string;
-        /**
           * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize": string;
@@ -5888,11 +5883,6 @@ declare namespace LocalJSX {
         "loadingText"?: string | IonicSafeString;
     }
     interface IonInput {
-        /**
-          * This attribute is ignored.
-          * @deprecated
-         */
-        "accept"?: string;
         /**
           * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */

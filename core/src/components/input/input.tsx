@@ -75,12 +75,6 @@ export class Input implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * This attribute is ignored.
-   * @deprecated
-   */
-  @Prop() accept?: string;
-
-  /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
    * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
@@ -784,7 +778,6 @@ export class Input implements ComponentInterface {
               ref={(input) => (this.nativeInput = input)}
               id={inputId}
               disabled={disabled}
-              accept={this.accept}
               autoCapitalize={this.autocapitalize}
               autoComplete={this.autocomplete}
               autoCorrect={this.autocorrect}
@@ -892,7 +885,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           ref={(input) => (this.nativeInput = input)}
           aria-labelledby={label ? label.id : null}
           disabled={this.disabled}
-          accept={this.accept}
           autoCapitalize={this.autocapitalize}
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
