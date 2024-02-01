@@ -13,7 +13,7 @@ $action-sheet-ios-padding-top:                                    0 !default;
 $action-sheet-ios-padding-end:                                    8px !default;
 
 /// @prop - Padding bottom of the action sheet
-$action-sheet-ios-padding-bottom:                                 var(--ion-safe-area-bottom, 0) !default;
+$action-sheet-ios-padding-bottom:                                 $action-sheet-ios-padding-top !default;
 
 /// @prop - Padding start of the action sheet
 $action-sheet-ios-padding-start:                                  $action-sheet-ios-padding-end !default;
