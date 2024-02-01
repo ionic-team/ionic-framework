@@ -97,6 +97,8 @@ $lightest-text-color: #888888;
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
     }
 
+    --ion-placeholder-opacity: 0.8;
+
     /// Only the item borders should increase in contrast
     /// Borders for elements like toolbars should remain the same
     --ion-item-border-color: #7a7a7a;
