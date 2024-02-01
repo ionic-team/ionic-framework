@@ -68,6 +68,15 @@ $colors:  (
   )
 ) !default;
 
+///
+/// Text step colors are generated based on
+/// how dark or light text can be. The darkest
+/// text color is usually the default text color (white or black).
+/// The darker the $lightest-text-color is, the darker each
+/// stepped color is. If you want to increase text contrast,
+/// make $lightest-text-color darker.
+$darkest-text-color: #000000;
+$lightest-text-color: #888888;
 
 /// Loop through each color object above
 /// and generate CSS Variables for each
@@ -89,47 +98,27 @@ $colors:  (
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
     }
 
-    --ion-item-border-color: var(--ion-background-color-step-400);
+    --ion-item-border-color: #7a7a7a;
 
-    --ion-text-color-step-50: #070707;
-    --ion-text-color-step-100: #0e0e0e;
-    --ion-text-color-step-150: #141414;
-    --ion-text-color-step-200: #1b1b1b;
-    --ion-text-color-step-250: #222222;
-    --ion-text-color-step-300: #292929;
-    --ion-text-color-step-350: #303030;
-    --ion-text-color-step-400: #363636;
-    --ion-text-color-step-450: #3d3d3d;
-    --ion-text-color-step-500: #444444;
-    --ion-text-color-step-550: #4b4b4b;
-    --ion-text-color-step-600: #525252;
-    --ion-text-color-step-650: #585858;
-    --ion-text-color-step-700: #5f5f5f;
-    --ion-text-color-step-750: #666666;
-    --ion-text-color-step-800: #6d6d6d;
-    --ion-text-color-step-850: #747474;
-    --ion-text-color-step-900: #7a7a7a;
-    --ion-text-color-step-950: #818181;
-
-    --ion-background-color-step-50: #f2f2f2;
-    --ion-background-color-step-100: #e6e6e6;
-    --ion-background-color-step-150: #d9d9d9;
-    --ion-background-color-step-200: #cccccc;
-    --ion-background-color-step-250: #bfbfbf;
-    --ion-background-color-step-300: #b3b3b3;
-    --ion-background-color-step-350: #a6a6a6;
-    --ion-background-color-step-400: #999999;
-    --ion-background-color-step-450: #8c8c8c;
-    --ion-background-color-step-500: #808080;
-    --ion-background-color-step-550: #737373;
-    --ion-background-color-step-600: #666666;
-    --ion-background-color-step-650: #595959;
-    --ion-background-color-step-700: #4d4d4d;
-    --ion-background-color-step-750: #404040;
-    --ion-background-color-step-800: #333333;
-    --ion-background-color-step-850: #262626;
-    --ion-background-color-step-900: #191919;
-    --ion-background-color-step-950: #0d0d0d;
+    --ion-text-color-step-50: #{mix($lightest-text-color, $darkest-text-color, 5%)};
+    --ion-text-color-step-100: #{mix($lightest-text-color, $darkest-text-color, 10%)};
+    --ion-text-color-step-150: #{mix($lightest-text-color, $darkest-text-color, 15%)};
+    --ion-text-color-step-200: #{mix($lightest-text-color, $darkest-text-color, 20%)};
+    --ion-text-color-step-250: #{mix($lightest-text-color, $darkest-text-color, 25%)};
+    --ion-text-color-step-300: #{mix($lightest-text-color, $darkest-text-color, 30%)};
+    --ion-text-color-step-350: #{mix($lightest-text-color, $darkest-text-color, 35%)};
+    --ion-text-color-step-400: #{mix($lightest-text-color, $darkest-text-color, 40%)};
+    --ion-text-color-step-450: #{mix($lightest-text-color, $darkest-text-color, 45%)};
+    --ion-text-color-step-500: #{mix($lightest-text-color, $darkest-text-color, 50%)};
+    --ion-text-color-step-550: #{mix($lightest-text-color, $darkest-text-color, 55%)};
+    --ion-text-color-step-600: #{mix($lightest-text-color, $darkest-text-color, 60%)};
+    --ion-text-color-step-650: #{mix($lightest-text-color, $darkest-text-color, 65%)};
+    --ion-text-color-step-700: #{mix($lightest-text-color, $darkest-text-color, 70%)};
+    --ion-text-color-step-750: #{mix($lightest-text-color, $darkest-text-color, 75%)};
+    --ion-text-color-step-800: #{mix($lightest-text-color, $darkest-text-color, 80%)};
+    --ion-text-color-step-850: #{mix($lightest-text-color, $darkest-text-color, 85%)};
+    --ion-text-color-step-900: #{mix($lightest-text-color, $darkest-text-color, 90%)};
+    --ion-text-color-step-950: #{mix($lightest-text-color, $darkest-text-color, 95%)};
   }
 
   // Toast
