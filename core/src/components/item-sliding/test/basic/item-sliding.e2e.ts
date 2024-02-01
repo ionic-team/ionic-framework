@@ -69,6 +69,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
     });
 
     test('the dynamic element should be clicked', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28662',
+      });
+      
       await page.setContent(
         `
         <ion-list>
@@ -138,13 +143,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       // Check if the element added is clicked
       const elementAdded = page.locator('#element-added-delete');
+
+      // If the element is not clickable then this will timeout
       await elementAdded.click();
-
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/28662',
-      });
-
     });
 
     test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
