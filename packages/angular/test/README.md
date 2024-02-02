@@ -9,7 +9,7 @@ The Angular test app supports syncing your locally built changes for validation.
 1. [Build](../README.md#building) the `core` and `packages/angular` projects using `pnpm build`.
 2. Watch for changes made in `packages/angular` by using `pnpm build.watch`.
 3. [Build the Angular test app](#test-app-build-structure).
-4. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
+4. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng17`).
 5. Install dependencies using `pnpm install`.
 
 From here you can either build the application or start a local dev server.
@@ -53,8 +53,8 @@ Unlike other test applications, these test apps are broken up into multiple dire
 Usage:
 
 ```shell
-# Build a test app using apps/ng14 as a reference
-./build.sh ng14
+# Build a test app using apps/ng17 as a reference
+./build.sh ng17
 ```
 
 ## How to modify test apps
