@@ -75,12 +75,6 @@ export class Input implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * This attribute is ignored.
-   * @deprecated
-   */
-  @Prop() accept?: string;
-
-  /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
    * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
@@ -121,6 +115,9 @@ export class Input implements ComponentInterface {
   /**
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
 
@@ -277,9 +274,6 @@ export class Input implements ComponentInterface {
    * Possible values are: `"any"` or a positive floating point number.
    */
   @Prop() step?: string;
-
-  // FW-4914 Remove this property in Ionic 8
-  @Prop() size?: number;
 
   /**
    * The type of control to display. The default type is text.
@@ -784,7 +778,6 @@ export class Input implements ComponentInterface {
               ref={(input) => (this.nativeInput = input)}
               id={inputId}
               disabled={disabled}
-              accept={this.accept}
               autoCapitalize={this.autocapitalize}
               autoComplete={this.autocomplete}
               autoCorrect={this.autocorrect}
@@ -803,7 +796,6 @@ export class Input implements ComponentInterface {
               required={this.required}
               spellcheck={this.spellcheck}
               step={this.step}
-              size={this.size}
               type={this.type}
               value={value}
               onInput={this.onInput}
@@ -893,7 +885,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           ref={(input) => (this.nativeInput = input)}
           aria-labelledby={label ? label.id : null}
           disabled={this.disabled}
-          accept={this.accept}
           autoCapitalize={this.autocapitalize}
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
@@ -912,7 +903,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           required={this.required}
           spellcheck={this.spellcheck}
           step={this.step}
-          size={this.size}
           type={this.type}
           value={value}
           onInput={this.onInput}

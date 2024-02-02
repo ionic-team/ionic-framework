@@ -274,9 +274,6 @@ export class StackController {
     if (enteringEl && enteringEl !== leavingEl) {
       enteringEl.classList.add('ion-page');
       enteringEl.classList.add('ion-page-invisible');
-      if (enteringEl.parentElement !== containerEl) {
-        containerEl.appendChild(enteringEl);
-      }
 
       if ((containerEl as any).commit) {
         return containerEl.commit(enteringEl, leavingEl, {

@@ -943,7 +943,7 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
@@ -1145,11 +1145,6 @@ export namespace Components {
     }
     interface IonInput {
         /**
-          * This attribute is ignored.
-          * @deprecated
-         */
-        "accept"?: string;
-        /**
           * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize": string;
@@ -1182,7 +1177,7 @@ export namespace Components {
          */
         "counter": boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -1281,7 +1276,6 @@ export namespace Components {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
-        "size"?: number;
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -1701,7 +1695,7 @@ export namespace Components {
          */
         "breakpoints"?: number[];
         /**
-          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "canDismiss": boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
@@ -1822,6 +1816,10 @@ export namespace Components {
           * @param index The index of the view.
          */
         "getByIndex": (index: number) => Promise<ViewController | undefined>;
+        /**
+          * Returns the number of views in the stack.
+         */
+        "getLength": () => Promise<number>;
         /**
           * Get the previous view.
           * @param view The view to get.
@@ -2350,7 +2348,7 @@ export namespace Components {
          */
         "pin": boolean;
         /**
-          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.
+          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "pinFormatter": PinFormatter;
         /**
@@ -2391,6 +2389,10 @@ export namespace Components {
           * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
          */
         "getProgress": () => Promise<number>;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
         /**
           * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
@@ -2852,6 +2854,7 @@ export namespace Components {
           * If `true`, the split pane will be hidden.
          */
         "disabled": boolean;
+        "isVisible": () => Promise<boolean>;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
@@ -2988,7 +2991,7 @@ export namespace Components {
          */
         "counter": boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -5667,7 +5670,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
@@ -5881,11 +5884,6 @@ declare namespace LocalJSX {
     }
     interface IonInput {
         /**
-          * This attribute is ignored.
-          * @deprecated
-         */
-        "accept"?: string;
-        /**
           * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize"?: string;
@@ -5918,7 +5916,7 @@ declare namespace LocalJSX {
          */
         "counter"?: boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
@@ -6029,7 +6027,6 @@ declare namespace LocalJSX {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
-        "size"?: number;
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -6449,7 +6446,7 @@ declare namespace LocalJSX {
          */
         "breakpoints"?: number[];
         /**
-          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+          * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "canDismiss"?: boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
@@ -7091,7 +7088,7 @@ declare namespace LocalJSX {
          */
         "pin"?: boolean;
         /**
-          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.
+          * A callback used to format the pin text. By default the pin text is set to `Math.round(value)`.  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "pinFormatter"?: PinFormatter;
         /**
@@ -7120,6 +7117,10 @@ declare namespace LocalJSX {
           * If `true`, the refresher will be hidden.
          */
         "disabled"?: boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
         /**
           * Emitted while the user is pulling down the content and exposing the refresher.
          */
@@ -7781,7 +7782,7 @@ declare namespace LocalJSX {
          */
         "counter"?: boolean;
         /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "counterFormatter"?: (inputLength: number, maxLength: number) => string;
         /**
