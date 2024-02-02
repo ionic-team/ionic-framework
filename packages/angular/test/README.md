@@ -6,19 +6,16 @@ Ionic Framework supports multiple versions of Angular. As a result, we need to v
 
 The Angular test app supports syncing your locally built changes for validation.
 
-1. Build the `core` and `packages/angular` directories using `npm run build`.
-2. [Build the Angular test app](#test-app-build-structure).
-3. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
-4. Install dependencies using `npm install`.
-5. Sync your local changes using `npm run sync`.
+1. [Build](../README.md#building) the `core` and `packages/angular` projects using `pnpm build`.
+2. Watch for changes made in `packages/angular` by using `pnpm build.watch`.
+3. [Build the Angular test app](#test-app-build-structure).
+4. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
+5. Install dependencies using `pnpm install`.
 
-From here you can either build the application or start a local dev server. When re-syncing changes, you will need to [wipe or disable the application cache](#application-cache).
+From here you can either build the application or start a local dev server.
 
-## Application Cache
-
-Angular CLI creates a cache of several files on disk by default in the `.angular` directory. This decreases the time taken to build the test application. However, the cache makes it difficult to quickly sync and check local changes of Ionic. As a result, the `.angular` cache is disabled by default in the test app projects.
-
-See https://angular.io/cli/cache for more information.
+> [!NOTE]
+> Making changes to the `test` app will require you to rebuild the app and restart the dev server.
 
 ### Disable Cache
 

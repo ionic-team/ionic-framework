@@ -101,6 +101,7 @@ Before creating a pull request, please read our requirements that explains the m
 5. Create a new branch from main for your change.
 6. Navigate into the directory of the package you wish to modify (core, angular, etc.).
 7. Run `pnpm install` to install dependencies for this package.
+  - If you prefer to install all dependencies (core, angular, etc.) at once, run `pnpm -r install` from the root of the repository.
 8. Follow the steps for the specific package below.
 
 ### Core
@@ -269,6 +270,9 @@ See [Ionic's E2E testing guide](../core/src/utils/test/playwright/docs/README.md
 3. Make sure the build has finished before committing. If you made changes to the documentation, properties, methods, or anything else that requires an update to a generate file, this needs to be committed.
 4. After the changes have been pushed, publish the branch and [create a pull request](#creating-a-pull-request).
 
+> [!WARNING]
+> If you are receiving errors about missing packages, you may need to run `pnpm install --force` to force the installation of the missing packages.
+
 ### Angular, React, and Vue
 
 #### Modifying Files
@@ -281,7 +285,8 @@ See [Ionic's E2E testing guide](../core/src/utils/test/playwright/docs/README.md
 
 2. Make your changes to the files. If the change is overly complex or out of the ordinary, add comments so we can understand the changes.
 3. Run lint on the directory and make sure there are no errors.
-4. Build the project.
+4. Build the project with `pnpm build`.
+  - If you prefer to build all packages (core, angular, etc.) at once, run `pnpm -r build` from the root of the repository.
 5. After the build is finished, commit the changes. Please follow the [commit message format](#commit-message-format) for every commit.
 6. [Submit a Pull Request](#submit-pull-request) of your changes.
 
