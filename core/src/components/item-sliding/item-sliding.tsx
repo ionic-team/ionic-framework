@@ -296,9 +296,23 @@ export class ItemSliding implements ComponentInterface {
     return !!(this.rightOptions || this.leftOptions);
   }
 
-  // Method to reset item-sliding state
+  /**
+   * Resets any state related to the item closing.
+   * We run code in a timeout to clean up the item state
+   * after the closing animation has finished.
+   * As part of the item sliding closing, we apply the
+   * "item-sliding-closing" class which makes item options
+   * not clickable so they can't be accidentally clicked
+   * during the close animation. This class is removed
+   * once the animation is complete.
+   *
+   * However, if the animation is interrupted (such as when `open()`
+   * is called during the close animation), the timeout needs to be cleared.
+   * We also need to manually remove the previously noted class otherwise item
+   * options will not be clickable.
+   */
   private resetCloseState() {
-    if(this.tmr !== undefined) {
+    if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
       this.tmr = undefined;
       this.el.classList.remove('item-sliding-closing');
@@ -415,7 +429,6 @@ export class ItemSliding implements ComponentInterface {
 
   private setOpenAmount(openAmount: number, isFinal: boolean) {
     const { el } = this;
-
 
     this.resetCloseState();
 

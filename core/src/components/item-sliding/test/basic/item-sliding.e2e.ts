@@ -73,7 +73,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/28662',
       });
-      
+
       await page.setContent(
         `
         <ion-list>
