@@ -1,12 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { IonicVue, IonApp, IonRouterOutlet, IonPage, IonTabs, IonTabBar } from '@ionic/vue';
-
-const App = {
-  components: { IonApp, IonRouterOutlet },
-  template: '<ion-app><ion-router-outlet /></ion-app>',
-}
+import { IonicVue, IonRouterOutlet, IonPage, IonTabs, IonTabBar } from '@ionic/vue';
 
 describe('ion-tab-bar', () => {
   it('should render in the top slot', async () => {
@@ -31,7 +26,7 @@ describe('ion-tab-bar', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(Tabs, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -67,7 +62,7 @@ describe('ion-tab-bar', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(Tabs, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -102,7 +97,7 @@ describe('ion-tab-bar', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(Tabs, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -141,16 +136,15 @@ describe('ion-tab-bar', () => {
 
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(Tabs, {
       global: {
         plugins: [router, IonicVue]
       }
     });
 
-    const innerHTML = wrapper.find('ion-tabs').html();
-
-    const tabs = wrapper.findComponent(IonTabBar);
-    const children = tabs.vm.$el.childNodes;
+    const tabs = wrapper.findComponent(IonTabs);
+    const tabbar = tabs.vm.$el.children[1];
+    const children = tabbar.childNodes;
 
     // 8 is a comment node: https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
     expect(children[0].nodeType).toEqual(8);
