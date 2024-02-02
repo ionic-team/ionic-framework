@@ -117,16 +117,13 @@ This allows components to inherit the color properly when used outside of Ionic 
 
 <h4 id="version-8x-dynamic-font">Dynamic Font</h4>
 
-The `core.css` file has been updated to enable dynamic font scaling by default:
+The `core.css` file has been updated to enable dynamic font scaling by default.
 
-```diff
-html {
-- --ion-default-dynamic-font: -apple-system-body;
-+ --ion-dynamic-font: -apple-system-body;
-}
-```
+The `--ion-default-dynamic-font` variable has been removed and replaced with `--ion-dynamic-font`.
 
-The `--ion-default-dynamic-font` variable has been removed and replaced with `--ion-dynamic-font`. This change may have unintentional side effects in apps if the font was not expected to scale dynamically.
+Developers who had previously chosen dynamic font scaling by activating it in their global stylesheets can revert to the default setting by removing their custom CSS. In doing so, their application will seamlessly continue utilizing dynamic font scaling as it did before. It's essential to note that altering the font-size of the html element should be avoided, as it may disrupt the proper functioning of dynamic font scaling.
+
+Developers who want to disable dynamic font scaling can set `--ion-dynamic-font: unset;` in their global stylesheets. However, this is not recommended because it may introduce accessibility challenges for users who depend on enlarged font sizes.
 
 <h2 id="version-8x-components">Components</h2>
 
