@@ -304,8 +304,8 @@ importers:
   ../../../../react-router:
     dependencies:
       '@ionic/react':
-        specifier: ^7.6.6
-        version: 7.7.0(react-dom@16.14.0)(react@18.2.0)
+        specifier: workspace:*
+        version: link:../react
       history:
         specifier: ^4.9.0
         version: 4.10.1
@@ -2401,14 +2401,6 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@ionic/core@7.7.0:
-    resolution: {integrity: sha512-ewbvX8u4+FNRBAw1nqBuCy4dI8OLTxoqZgm4qRs4zbrNLJInwTpYjCPzYueN0KE9ufP0n9HhS23lfcrQzJC7Hg==}
-    dependencies:
-      '@stencil/core': 4.12.0
-      ionicons: 7.2.2
-      tslib: 2.4.0
-    dev: false
-
   /@ionic/eslint-config@0.3.0(eslint@7.32.0)(typescript@4.9.5):
     resolution: {integrity: sha512-Uf1hS2YIoHlcvXPF5LnsPM6auMewEdChQhR117Rt3sVEAutbyKMpFP4slNC2a6up3a5Q34zepqlf61Qgkf9XeQ==}
     peerDependencies:
@@ -2450,19 +2442,6 @@ packages:
     dependencies:
       prettier: 2.8.8
     dev: true
-
-  /@ionic/react@7.7.0(react-dom@16.14.0)(react@18.2.0):
-    resolution: {integrity: sha512-ULZLQwuUDz/qDzzdBAn15zKs9LUEp5nl6hMIx8kdWgsEzW95vSKwGaH5Rf1GmYjIhmZfQrW1by02mmho4ahSQg==}
-    peerDependencies:
-      react: ^18.2.0
-      react-dom: '>=16.8.6'
-    dependencies:
-      '@ionic/core': 7.7.0
-      ionicons: 7.2.2
-      react: 18.2.0
-      react-dom: 16.14.0(react@18.2.0)
-      tslib: 2.4.0
-    dev: false
 
   /@istanbuljs/load-nyc-config@1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
@@ -11001,6 +10980,7 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       scheduler: 0.19.1
+    dev: true
     bundledDependencies: false
 
   /react-dom@18.2.0(react@18.2.0):
@@ -11529,6 +11509,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    dev: true
 
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
