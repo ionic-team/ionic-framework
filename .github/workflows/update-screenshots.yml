@@ -2,6 +2,11 @@ name: 'Update Reference Screenshots'
 
 on:
   workflow_dispatch:
+    inputs:
+      component:
+        description: 'What component(s) should be updated? (leave blank to update all or use a space-separated list for multiple components)'
+        required: false
+        default: ''
 
 jobs:
   build-core:
@@ -34,6 +39,7 @@ jobs:
           shard: ${{ matrix.shard }}
           totalShards: ${{ matrix.totalShards }}
           update: true
+          component: ${{ inputs.component }}
 
   update-reference-screenshots:
     runs-on: ubuntu-latest
