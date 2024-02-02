@@ -23,10 +23,5 @@ export default defineConfig({
      * include that dependency for optimization.
      */
     include: ['@ionic/react > react-dom']
-  },
-  build: {
-    rollupOptions: {
-      external: ['@stencil/core/internal/client'],
-    }
   }
 })
