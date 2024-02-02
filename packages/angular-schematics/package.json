@@ -1,0 +1,22 @@
+{
+  "name": "angular-schematics",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Schematics for Angular",
+  "scripts": {
+    "copy": "node scripts/copy.js",
+    "build": "tsc -p tsconfig.json && pnpm copy"
+  },
+  "dependencies": {
+    "@schematics/angular": "^17.0.0",
+    "jsonc-parser": "^3.0.0"
+  },
+  "devDependencies": {
+    "@angular/cli": "^17.0.7",
+    "@angular-devkit/core": "^17.0.0",
+    "@angular-devkit/schematics": "^17.0.0",
+    "@types/node": "^18.0.0",
+    "fs-extra": "^7.0.0",
+    "typescript": "~4.7.2"
+  }
+}

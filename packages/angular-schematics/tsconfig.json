@@ -10,10 +10,10 @@
     "moduleResolution": "node",
     "sourceMap": false,
     "pretty": true,
-    "rootDir": "src/schematics",
+    "rootDir": "src",
     "target": "es2017",
-    "outDir": "dist/schematics"
+    "outDir": "dist"
   },
   "exclude": ["node_modules"],
-  "include": ["src/schematics/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }

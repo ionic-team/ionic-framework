@@ -1,7 +1,7 @@
+import type { SchematicOptions } from '@angular/cli/lib/config/workspace-schema';
 import type { JsonObject } from '@angular-devkit/core';
 import { WorkspaceDefinition } from '@angular-devkit/core/src/workspace';
 import { Tree, SchematicsException } from '@angular-devkit/schematics';
-import type { SchematicOptions } from '@angular/cli/lib/config/workspace-schema';
 import { parse } from 'jsonc-parser';
 
 const ANGULAR_JSON_PATH = 'angular.json';

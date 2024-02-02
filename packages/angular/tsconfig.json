@@ -40,6 +40,6 @@
       "@ionic/angular/common": ["common/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "src/schematics"],
+  "exclude": ["node_modules"],
   "files": ["src/index.ts", "common/src/index.ts", "standalone/src/index.ts"]
 }

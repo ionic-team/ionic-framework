@@ -24,10 +24,13 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "pnpm run clean && pnpm run build.ng && pnpm run build.core && pnpm run clean-generated",
-    "build.core": "node scripts/build-core.js",
+    "build": "pnpm clean && pnpm build.ng && pnpm build.schematics && pnpm copy && pnpm clean-generated",
+    "build.schematics": "cd ../angular-schematics && pnpm build",
     "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
-    "build.watch": "pnpm build.core && pnpm build.ng --watch",
+    "build.watch": "pnpm copy.css && pnpm build.ng --watch",
+    "copy": "pnpm copy.css && pnpm copy.schematics",
+    "copy.css": "node scripts/copy-css.js",
+    "copy.schematics": "cp -r ../angular-schematics/dist/ ./dist/schematics",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "pnpm run eslint && pnpm run prettier --write --cache",
@@ -48,7 +51,6 @@
   "dependencies": {
     "@ionic/core": "workspace:*",
     "ionicons": "^7.0.0",
-    "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
@@ -75,7 +77,6 @@
     "@angular/router": "^14.3.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@schematics/angular": "^17.0.0",
     "@types/node": "12.12.5",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
