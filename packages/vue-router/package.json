@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "dependencies": {
-    "@ionic/vue": "^7.6.6"
+    "@ionic/vue": "workspace:*"
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",

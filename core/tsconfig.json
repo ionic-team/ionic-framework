@@ -17,6 +17,7 @@
       "es2020",
       "es2021"
     ],
+    "skipLibCheck": true,
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
