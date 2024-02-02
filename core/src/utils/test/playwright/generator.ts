@@ -111,4 +111,5 @@ const DEFAULT_THEMES: Theme[] = ['light'];
 const DEFAULT_TEST_CONFIG_OPTION = {
   modes: DEFAULT_MODES,
   directions: DEFAULT_DIRECTIONS,
+  themes: DEFAULT_THEMES,
 };

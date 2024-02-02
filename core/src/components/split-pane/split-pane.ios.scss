@@ -9,17 +9,3 @@
   --side-min-width: #{$split-pane-ios-side-min-width};
   --side-max-width: #{$split-pane-ios-side-max-width};
 }
-
-:host(.split-pane-visible) ::slotted(.split-pane-side) {
-  @include border(0, var(--border), 0, 0);
-
-  min-width: var(--side-min-width);
-  max-width: var(--side-max-width);
-}
-
-:host(.split-pane-visible) ::slotted(.split-pane-side[side=end]) {
-  @include border(0, 0, 0, var(--border));
-  
-  min-width: var(--side-min-width);
-  max-width: var(--side-max-width);
-}

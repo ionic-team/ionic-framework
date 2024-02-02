@@ -397,7 +397,6 @@ export const IonInfiniteScrollContent = /*@__PURE__*/ defineContainer<JSX.IonInf
 
 export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput["value"]>('ion-input', defineIonInput, [
   'color',
-  'accept',
   'autocapitalize',
   'autocomplete',
   'autocorrect',
@@ -429,7 +428,6 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'shape',
   'spellcheck',
   'step',
-  'size',
   'type',
   'value',
   'ionInput',
