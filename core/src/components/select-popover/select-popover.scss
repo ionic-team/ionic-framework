@@ -12,7 +12,7 @@ ion-label {
 
 /**
  * The main content inside of a popover has overflow: hidden
- * so that scrolling scroll a descendant ion-content.
+ * so that a descendant ion-content can be scrolled.
  * However, select-popover does not use ion-content so we need
  * to explicitly make this container scrollable.
  */
