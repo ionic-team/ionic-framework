@@ -6,13 +6,16 @@ Ionic Framework supports multiple versions of Vue. As a result, we need to verif
 
 The Vue test app supports syncing your locally built changes for validation.
 
-1. [Build](../README.md#building) the `core`, `packages/vue`, and `packages/vue-router` projects using `npm run build`.
-2. [Build the Vue test app](#test-app-build-structure).
-3. Navigate to the built test app directory (e.g. `packages/vue/test/build/vue3`).
-4. Install dependencies using `npm install`.
-5. Sync your local changes using `npm run sync`.
+1. [Build](../README.md#building) the `core`, `packages/vue`, and `packages/vue-router` projects using `pnpm build`.
+2. Watch for changes made in `packages/vue` by using `pnpm build.watch`.
+3. [Build the Vue test app](#test-app-build-structure).
+4. Navigate to the built test app directory (e.g. `packages/vue/test/build/vue3`).
+5. Install dependencies using `pnpm install`.
 
-From here you can either build the application or start a local dev server. When re-syncing changes, you will need to wipe the build cache in `node_modules/.cache` and restart the dev server/re-build.
+From here you can either build the application or start a local dev server. 
+
+> [!NOTE]
+> Making changes to the `test` app will require you to rebuild the app and restart the dev server.
 
 ## Test App Build Structure
 
