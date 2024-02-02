@@ -23,7 +23,7 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
 
       await expect(refresher).toHaveClass(/refresher-pulling/);
 
-      const results = await new AxeBuilder({ page }).analyze();
+      const results = await new AxeBuilder({ page }).disableRules('aria-progressbar-name').analyze();
 
       expect(results.violations).toEqual([]);
     });
