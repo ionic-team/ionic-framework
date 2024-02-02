@@ -8,3 +8,14 @@ ion-list-header,
 ion-label {
   @include margin(0);
 }
+
+
+/**
+ * The main content inside of a popover has overflow: hidden
+ * so that scrolling scroll a descendant ion-content.
+ * However, select-popover does not use ion-content so we need
+ * to explicitly make this container scrollable.
+ */
+:host {
+  overflow-y: auto;
+}
