@@ -151,8 +151,8 @@
                 <ion-segment-button value="default">
                   <ion-label>Default</ion-label>
                 </ion-segment-button>
-                <ion-segment-button value="oceanic">
-                  <ion-label>Oceanic</ion-label>
+                <ion-segment-button value="dark">
+                  <ion-label>Dark</ion-label>
                 </ion-segment-button>
                 <ion-segment-button value="high-contrast-light">
                   <ion-label>High Contrast</ion-label>
@@ -160,11 +160,11 @@
                 <ion-segment-button value="high-contrast-dark">
                   <ion-label>High Contrast (Dark)</ion-label>
                 </ion-segment-button>
+                <ion-segment-button value="oceanic">
+                  <ion-label>Oceanic</ion-label>
+                </ion-segment-button>
                 <ion-segment-button value="vibrant">
                   <ion-label>Vibrant</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="dark">
-                  <ion-label>Dark</ion-label>
                 </ion-segment-button>
                 <ion-segment-button value="toolbar">
                   <ion-label>Toolbar</ion-label>
@@ -306,6 +306,13 @@
                     <ion-label>
                       <h2>Street Fighter II</h2>
                       <p>The Sequel</p>
+                    </ion-label>
+                    <ion-note slot="end">Note</ion-note>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>
+                      <h2>Battle Royale Open World Pac-Man</h2>
+                      <p>More buzzwords</p>
                     </ion-label>
                     <ion-note slot="end">Note</ion-note>
                   </ion-item>
@@ -496,9 +503,12 @@
                 <ion-label>Select a Theme:</ion-label>
                 <ion-select interface="popover" class="theme-picker">
                   <ion-select-option value="default" selected>Default</ion-select-option>
+                  <ion-select-option value="dark">Dark</ion-select-option>
+                  <ion-select-option value="high-contrast-light">High Contrast</ion-select-option>
+                  <ion-select-option value="high-contrast-dark">High Contrast (Dark)</ion-select-option>
+                  <ion-select-option value="default" selected>Default</ion-select-option>
                   <ion-select-option value="oceanic">Oceanic</ion-select-option>
                   <ion-select-option value="vibrant">Vibrant</ion-select-option>
-                  <ion-select-option value="dark">Dark</ion-select-option>
                 </ion-select>
               </div>
             </ion-toolbar>
@@ -925,9 +935,12 @@
                 <ion-label>Select a Theme:</ion-label>
                 <ion-select interface="popover" class="theme-picker">
                   <ion-select-option value="default" selected>Default</ion-select-option>
+                  <ion-select-option value="dark">Dark</ion-select-option>
+                  <ion-select-option value="high-contrast-light">High Contrast</ion-select-option>
+                  <ion-select-option value="high-contrast-dark">High Contrast (Dark)</ion-select-option>
+                  <ion-select-option value="default" selected>Default</ion-select-option>
                   <ion-select-option value="oceanic">Oceanic</ion-select-option>
                   <ion-select-option value="vibrant">Vibrant</ion-select-option>
-                  <ion-select-option value="dark">Dark</ion-select-option>
                 </ion-select>
               </div>
             </ion-toolbar>
@@ -992,10 +1005,7 @@
 
         // The default and dark themes are official Ionic
         // themes so they are located outside of this test
-        switch(theme) {
-          case 'default':
-            themeFilesDir = '/css/themes';
-            break;
+        switch (theme) {
           case 'dark':
           case 'high-contrast-light':
           case 'high-contrast-dark':
@@ -1014,7 +1024,11 @@
         newLink.setAttribute('id', 'theme');
         newLink.setAttribute('rel', 'stylesheet');
         newLink.setAttribute('type', 'text/css');
-        newLink.setAttribute('href', cssFile);
+
+        // The default light theme is built in to Ionic, so no need to import a separate stylesheet
+        if (theme !== 'default') {
+          newLink.setAttribute('href', cssFile);
+        }
 
         document.getElementsByTagName('head').item(0).replaceChild(newLink, oldLink);
 
