@@ -103,6 +103,8 @@ For more information on the new dark theme files, refer to the [Dark Mode docume
 
 <h2 id="version-8x-global-styles">Global Styles</h2>
 
+<h4 id="version-8x-text-color">Text Color</h4>
+
 The `core.css` file has been updated to set the text color on the `body` element:
 
 ```diff
@@ -112,6 +114,19 @@ body {
 ```
 
 This allows components to inherit the color properly when used outside of Ionic Framework and is required for custom themes to work properly. However, it may have unintentional side effects in apps if the color was not expected to inherit.
+
+<h4 id="version-8x-dynamic-font">Dynamic Font</h4>
+
+The `core.css` file has been updated to enable dynamic font scaling by default:
+
+```diff
+html {
+- --ion-default-dynamic-font: -apple-system-body;
++ --ion-dynamic-font: -apple-system-body;
+}
+```
+
+The `--ion-default-dynamic-font` variable has been removed and replaced with `--ion-dynamic-font`. This change may have unintentional side effects in apps if the font was not expected to scale dynamically.
 
 <h2 id="version-8x-components">Components</h2>
 
