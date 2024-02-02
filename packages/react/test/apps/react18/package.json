@@ -49,7 +49,6 @@
   "pnpm": {
     "overrides": {
       "@types/react": "^18.0.27",
-      "@ionic/core": "link:../../../../../core",
       "react": "^18.2.0"
     }
   }

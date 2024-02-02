@@ -63,7 +63,6 @@
   "pnpm": {
     "overrides": {
       "@types/react": "^17.0.53",
-      "@ionic/core": "workspace:../../core",
       "react": "^17.0.2"
     }
   }
