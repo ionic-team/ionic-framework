@@ -397,8 +397,8 @@ importers:
   packages/react-router:
     dependencies:
       '@ionic/react':
-        specifier: ^7.6.6
-        version: 7.7.0(react-dom@16.9.0)(react@16.9.0)
+        specifier: workspace:*
+        version: link:../react
       history:
         specifier: ^4.9.0
         version: 4.10.1
@@ -1897,19 +1897,6 @@ packages:
     dependencies:
       prettier: 2.8.3
     dev: true
-
-  /@ionic/react@7.7.0(react-dom@16.9.0)(react@16.9.0):
-    resolution: {integrity: sha512-ULZLQwuUDz/qDzzdBAn15zKs9LUEp5nl6hMIx8kdWgsEzW95vSKwGaH5Rf1GmYjIhmZfQrW1by02mmho4ahSQg==}
-    peerDependencies:
-      react: '>=16.8.6'
-      react-dom: '>=16.8.6'
-    dependencies:
-      '@ionic/core': 7.7.0
-      ionicons: 7.2.2
-      react: 16.9.0
-      react-dom: 16.9.0(react@16.9.0)
-      tslib: 2.6.2
-    dev: false
 
   /@ionic/vue@7.7.0:
     resolution: {integrity: sha512-Uf+z7h0LbYV0ljBEewkSwScRIXVzKqbSSBcEzji1Hrkefoymwyiw+8uVF9wN0uNlC+sXLDSiPp/VF0vq3+dzpQ==}
@@ -13615,6 +13602,7 @@ packages:
   /object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
+    dev: true
 
   /object-copy@0.1.0:
     resolution: {integrity: sha512-79LYn6VAb63zgtmAteVOWo9Vdj71ZVBy3Pbse+VqxDpEP83XuujMrGqHIwAXJ5I/aM0zU7dIyIAhifVTPrNItQ==}
@@ -14828,6 +14816,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
+    dev: true
 
   /proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
@@ -14970,6 +14959,7 @@ packages:
       prop-types: 15.8.1
       react: 16.9.0
       scheduler: 0.15.0
+    dev: true
 
   /react-error-boundary@3.1.4(react@16.9.0):
     resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
@@ -14983,6 +14973,7 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: true
 
   /react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
@@ -15032,6 +15023,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       prop-types: 15.8.1
+    dev: true
 
   /read-cmd-shim@3.0.1:
     resolution: {integrity: sha512-kEmDUoYf/CDy8yZbLTmhB1X9kkjf9Q80PCNsDMb7ufrGd6zZSQA1+UyjrO+pZm5K/S4OXCWJeiIt1JA8kAsa6g==}
@@ -15576,6 +15568,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    dev: true
 
   /scoped-regex@2.1.0:
     resolution: {integrity: sha512-g3WxHrqSWCZHGHlSrF51VXFdjImhwvH8ZO/pryFH56Qi0cDsZfylQa/t0jCzVQFNbNvM00HfHjkDPEuarKDSWQ==}
