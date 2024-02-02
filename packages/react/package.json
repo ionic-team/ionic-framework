@@ -38,7 +38,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^7.6.6",
+    "@ionic/core": "workspace:*",
     "ionicons": "^7.0.0",
     "tslib": "*"
   },
