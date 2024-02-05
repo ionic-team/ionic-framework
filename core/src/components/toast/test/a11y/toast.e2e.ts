@@ -234,7 +234,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 /**
  * High contrast mode tests
  */
-configs({ directions: ['ltr'], themes: ['high-contrast-dark', 'high-contrast-light'] }).forEach(
+configs({ directions: ['ltr'], themes: ['high-contrast-dark', 'high-contrast'] }).forEach(
   ({ title, config, screenshot }) => {
     test.describe(title('toast: high contrast: buttons'), () => {
       test.beforeEach(async ({ page }) => {
