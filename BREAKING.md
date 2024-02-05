@@ -125,6 +125,7 @@ Developers who had previously chosen dynamic font scaling by activating it in th
 
 Developers who want to disable dynamic font scaling can set `--ion-dynamic-font: initial;` in their global stylesheets. However, this is not recommended because it may introduce accessibility challenges for users who depend on enlarged font sizes.
 
+For more information on the dynamic font, refer to the [Dynamic Font Scaling documentation](https://ionicframework.com/docs/layout/dynamic-font-scaling).
 <h2 id="version-8x-components">Components</h2>
 
 <h4 id="version-8x-button">Button</h4>
