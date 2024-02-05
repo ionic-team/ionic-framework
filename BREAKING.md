@@ -153,3 +153,5 @@ This allows components to inherit the color properly when used outside of Ionic 
 <h4 id="version-8x-toast">Toast</h4>
 
 - `cssClass` has been removed from the `ToastButton` interface. This was previously used to apply a custom class to the toast buttons. Developers can use the "button" shadow part to style the buttons.
+
+For more information on styling toast buttons, refer to the [Toast Theming documentation](https://ionicframework.com/docs/api/toast#theming).
