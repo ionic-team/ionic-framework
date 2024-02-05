@@ -49,6 +49,29 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
    */
   @HostListener('click', ['$event'])
   onClick(ev: UIEvent): void {
+    /**
+     * Using a target different from _self will
+     * open another browser tab.
+     * Therefore, use default
+     * behaviour of this event.
+     */
+    if (this.elementRef.nativeElement.target === undefined || this.elementRef.nativeElement.target !== '_self') {
+      return;
+    }
+
+    /**
+     * Using a keyboard modifier will
+     * open another browser tab.
+     * Therefore, use default
+     * behaviour of this event.
+     */
+    if (
+      (ev instanceof MouseEvent || ev instanceof TouchEvent)
+      && (ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey)
+    ) {
+      return;
+    }
+
     this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.routerAnimation);
 
     /**
