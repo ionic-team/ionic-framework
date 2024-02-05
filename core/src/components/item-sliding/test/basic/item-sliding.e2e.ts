@@ -68,7 +68,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(item).toHaveScreenshot(screenshot(`item-sliding-gesture`));
     });
 
-    test('the dynamic element should be clicked', async ({ page }) => {
+    test.only('the dynamic element should be clicked', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/28662',
@@ -77,15 +77,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <ion-list>
-          <ion-item-sliding id="item43">
-            <ion-item detail>
-              <ion-label class="ion-text-wrap">
-                <h2>RIGHT SIDE - Add element</h2>
-                <p id="target-text">Add dynamic element as item-option</p>
-              </ion-label>
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>Item</ion-label>
             </ion-item>
 
-            <ion-item-options id="target-element">
+            <ion-item-options>
               <ion-item-option>ARCHIVE</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -93,40 +90,24 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
         <ion-button id="add-element-btn" onclick="addElement()">Add element</ion-button>
         <script>
-          function changeTargetText() {
-            var item = document.getElementById('target-text');
-
-            var newTargetText = document.createTextNode(' - ADDED');
-            item.appendChild(newTargetText);
-          }
           function addElement() {
-            var item = document.getElementById('item43');
-            var isAddedElement = item.querySelector('.element-added');
-
-            // If element exists, stop the function call
-            if (isAddedElement) {
-              return;
-            }
+            const itemSliding = document.querySelector('ion-item-sliding');
 
             // Define and create the elements to add on DOM
-            var itemSliding = document.getElementById('target-element');
-            var newIonItemOption = document.createElement('ion-item-option');
+            const itemOptions = document.querySelector('ion-item-options');
+            const newIonItemOption = document.createElement('ion-item-option');
 
-            var newIonItemOptionText = document.createTextNode('DELETE');
+            newIonItemOption.innerText = 'DELETE';
+            newIonItemOption.id = 'element-added-delete';
 
-            newIonItemOption.setAttribute('onclick', 'changeTargetText()');
-            newIonItemOption.setAttribute('color', 'danger');
-            newIonItemOption.setAttribute('id', 'element-added-delete');
-            newIonItemOption.classList.add('element-added');
-            newIonItemOption.appendChild(newIonItemOptionText);
-            itemSliding.appendChild(newIonItemOption);
+            itemOptions.appendChild(newIonItemOption);
 
             // Close the item-sliding to update the values
-            item.close();
+            itemSliding.close();
 
             // Make async call of the open method of item-sliding
             setTimeout(function () {
-              item.open();
+              itemSliding.open();
             }, 0);
           }
         </script>
@@ -134,8 +115,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         config
       );
 
-      const item = page.locator('#item43');
-      await dragElementBy(item, page, -150);
+      const itemSliding = page.locator('ion-item-sliding');
+      await dragElementBy(itemSliding, page, -150);
 
       // Trigger the button to add the dynamic content
       const button = page.locator('#add-element-btn');
