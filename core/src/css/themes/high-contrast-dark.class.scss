@@ -1,13 +1,13 @@
 @import "./high-contrast-dark";
 
-.ion-theme-high-contrast-dark {
+.ion-theme-high-contrast.ion-theme-dark {
   @include high-contrast-dark-base-theme();
 }
 
-.ion-theme-high-contrast-dark.ios {
+.ion-theme-high-contrast.ion-theme-dark.ios {
   @include high-contrast-dark-ios-theme();
 }
 
-.ion-theme-high-contrast-dark.md {
+.ion-theme-high-contrast.ion-theme-dark.md {
   @include high-contrast-dark-md-theme();
 }

@@ -1,9 +1,9 @@
 @import "./high-contrast";
 
-.ion-theme-high-contrast-light {
+.ion-theme-high-contrast {
   @include high-contrast-light-base-theme();
 }
 
-.ion-theme-high-contrast-light.md {
+.ion-theme-high-contrast.md {
   @include high-contrast-light-md-theme();
 }
