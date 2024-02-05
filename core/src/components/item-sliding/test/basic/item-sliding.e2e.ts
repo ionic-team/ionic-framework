@@ -68,7 +68,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(item).toHaveScreenshot(screenshot(`item-sliding-gesture`));
     });
 
-    test.only('the dynamic element should be clicked', async ({ page }) => {
+    test('the dynamic element should be clicked', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/28662',
