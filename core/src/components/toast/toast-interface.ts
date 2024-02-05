@@ -4,7 +4,6 @@ import type { IonicSafeString } from '../../utils/sanitization';
 export interface ToastOptions {
   header?: string;
   message?: string | IonicSafeString;
-  cssClass?: string | string[];
   duration?: number;
   buttons?: (ToastButton | string)[];
   position?: 'top' | 'bottom' | 'middle';
@@ -27,18 +26,12 @@ export interface ToastOptions {
 
 export type ToastLayout = 'baseline' | 'stacked';
 
-// TODO FW-4923 remove cssClass property
-
 export interface ToastButton {
   text?: string;
   icon?: string;
   side?: 'start' | 'end';
   role?: 'cancel' | string;
 
-  /**
-   * @deprecated Use the toast button's CSS Shadow Parts instead.
-   */
-  cssClass?: string | string[];
   htmlAttributes?: { [key: string]: any };
   handler?: () => boolean | void | Promise<boolean | void>;
 }
