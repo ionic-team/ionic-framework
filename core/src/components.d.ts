@@ -19,7 +19,7 @@ import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
-import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+import { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
@@ -55,7 +55,7 @@ export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
-export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+export { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
@@ -1639,7 +1639,7 @@ export namespace Components {
         /**
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
-        "type"?: string;
+        "type"?: MenuType;
     }
     interface IonMenuButton {
         /**
@@ -6390,7 +6390,7 @@ declare namespace LocalJSX {
         /**
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
-        "type"?: string;
+        "type"?: MenuType;
     }
     interface IonMenuButton {
         /**

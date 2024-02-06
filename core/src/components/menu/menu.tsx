@@ -12,7 +12,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 
-import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
+import type { MenuChangeEventDetail, MenuI, MenuType, Side } from './menu-interface';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
@@ -107,7 +107,7 @@ export class Menu implements ComponentInterface, MenuI {
    * The display type of the menu.
    * Available options: `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type?: string;
+  @Prop({ mutable: true }) type?: MenuType;
 
   @Watch('type')
   typeChanged(type: string, oldType: string | undefined) {
