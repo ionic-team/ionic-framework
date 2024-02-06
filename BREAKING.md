@@ -104,6 +104,8 @@ For more information on the new dark theme files, refer to the [Dark Mode docume
 
 <h2 id="version-8x-global-styles">Global Styles</h2>
 
+<h4 id="version-8x-text-color">Text Color</h4>
+
 The `core.css` file has been updated to set the text color on the `body` element:
 
 ```diff
@@ -114,6 +116,17 @@ body {
 
 This allows components to inherit the color properly when used outside of Ionic Framework and is required for custom themes to work properly. However, it may have unintentional side effects in apps if the color was not expected to inherit.
 
+<h4 id="version-8x-dynamic-font">Dynamic Font</h4>
+
+The `core.css` file has been updated to enable dynamic font scaling by default.
+
+The `--ion-default-dynamic-font` variable has been removed and replaced with `--ion-dynamic-font`.
+
+Developers who had previously chosen dynamic font scaling by activating it in their global stylesheets can revert to the default setting by removing their custom CSS. In doing so, their application will seamlessly continue utilizing dynamic font scaling as it did before. It's essential to note that altering the font-size of the html element should be avoided, as it may disrupt the proper functioning of dynamic font scaling.
+
+Developers who want to disable dynamic font scaling can set `--ion-dynamic-font: initial;` in their global stylesheets. However, this is not recommended because it may introduce accessibility challenges for users who depend on enlarged font sizes.
+
+For more information on the dynamic font, refer to the [Dynamic Font Scaling documentation](https://ionicframework.com/docs/layout/dynamic-font-scaling).
 <h2 id="version-8x-components">Components</h2>
 
 <h4 id="version-8x-button">Button</h4>
@@ -154,3 +167,9 @@ This allows components to inherit the color properly when used outside of Ionic 
 <h4 id="version-8x-progress-bar">Progress bar</h4>
 
 - The `--buffer-background` CSS variable has been removed. Use `--background` instead.
+
+<h4 id="version-8x-toast">Toast</h4>
+
+- `cssClass` has been removed from the `ToastButton` interface. This was previously used to apply a custom class to the toast buttons. Developers can use the "button" shadow part to style the buttons.
+
+For more information on styling toast buttons, refer to the [Toast Theming documentation](https://ionicframework.com/docs/api/toast#theming).
