@@ -255,7 +255,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(modalInputOne).toBeFocused();
     });
 
-    test.only('focusing toast from a shadow overlay should return focus to the last focused element', async ({
+    test('focusing toast from a shadow overlay should return focus to the last focused element', async ({
       page,
       skip,
     }) => {
@@ -310,7 +310,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(showToastButton).toBeFocused();
     });
 
-    test.only('focusing toast from a scoped overlay should return focus to the last focused element', async ({
+    test('focusing toast from a scoped overlay should return focus to the last focused element', async ({
       page,
       skip,
     }) => {
