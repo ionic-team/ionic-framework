@@ -254,5 +254,125 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(modalInputOne).toBeFocused();
     });
+
+    test.only('focusing toast from a shadow overlay should return focus to the last focused element', async ({
+      page,
+      skip,
+    }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28261',
+      });
+      skip.browser('webkit', 'WebKit does not consider buttons to be focusable');
+
+      await page.setContent(
+        `
+        <ion-modal>
+          <ion-content>
+            <button id="show-toast">Button A</button>
+            <button>Button B</button>
+            <ion-toast trigger="show-toast"></ion-toast>
+          </ion-content>
+        </ion-modal>
+
+        <script>
+          const toast = document.querySelector('ion-toast');
+          toast.buttons = ['Ok'];
+        </script>
+      `,
+        config
+      );
+
+      const modal = page.locator('ion-modal');
+      const showToastButton = page.locator('#show-toast');
+
+      const toast = page.locator('ion-toast');
+      const toastButton = toast.locator('button');
+
+      const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+
+      // Show overlay
+      await modal.evaluate((el: HTMLIonModalElement) => el.present());
+
+      // Click button to open toast
+      await showToastButton.click();
+
+      // Wait for toast to be presented
+      await ionToastDidPresent.next();
+
+      // Verify button in overlay is focused
+      await expect(showToastButton).toBeFocused();
+
+      // Click a button in the toast and therefore attempt to move focus
+      await toastButton.click();
+
+      // Verify button in overlay is still focused
+      await expect(showToastButton).toBeFocused();
+    });
+
+    test.only('focusing toast from a scoped overlay should return focus to the last focused element', async ({
+      page,
+      skip,
+    }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28261',
+      });
+      skip.browser('webkit', 'WebKit does not consider buttons to be focusable');
+
+      await page.setContent(
+        `
+        <ion-action-sheet></ion-action-sheet>
+        <ion-toast></ion-toast>
+
+        <script>
+          const actionSheet = document.querySelector('ion-action-sheet');
+          actionSheet.buttons = [
+            'Other Button',
+            {
+              text: 'Button',
+              id: 'show-toast',
+              handler: () => {
+                document.querySelector('ion-toast').present();
+                return false;
+              }
+            }
+          ];
+
+          const toast = document.querySelector('ion-toast');
+          toast.buttons = ['Ok'];
+        </script>
+      `,
+        config
+      );
+
+      const actionSheet = page.locator('ion-action-sheet');
+      const showToastButton = page.locator('#show-toast');
+
+      const toast = page.locator('ion-toast');
+      const toastButton = toast.locator('button');
+
+      const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+
+      // Show overlay
+      await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.present());
+
+      // Click button to open toast
+      await showToastButton.click();
+
+      // Wait for toast to be presented
+      await ionToastDidPresent.next();
+
+      // Verify button in overlay is focused
+      await expect(showToastButton).toBeFocused();
+
+      // Click a button in the toast and therefore attempt to move focus
+      await toastButton.click();
+
+      await page.pause();
+
+      // Verify button in overlay is still focused
+      await expect(showToastButton).toBeFocused();
+    });
   });
 });
