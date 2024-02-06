@@ -153,7 +153,7 @@ configs({ modes: ['md'], directions: ['ltr'], themes: ['light', 'dark'] }).forEa
   });
 });
 
-configs({ modes: ['md'], directions: ['ltr'], themes: ['high-contrast-light', 'high-contrast-dark'] }).forEach(
+configs({ modes: ['md'], directions: ['ltr'], themes: ['high-contrast', 'high-contrast-dark'] }).forEach(
   ({ config, title }) => {
     const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 

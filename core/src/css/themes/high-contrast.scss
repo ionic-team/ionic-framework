@@ -68,6 +68,17 @@ $colors:  (
   )
 ) !default;
 
+/// Text step colors are generated based on
+/// how dark or light text can be. The darkest
+/// text color is usually the default text color (white or black).
+/// The darker the $lightest-text-color is, the darker each
+/// stepped color is. If you want to increase text contrast,
+/// make $lightest-text-color darker.
+$background-color: #ffffff;
+$text-color: #000000;
+
+$darkest-text-color: $text-color;
+$lightest-text-color: #888888;
 
 /// Loop through each color object above
 /// and generate CSS Variables for each
@@ -89,11 +100,47 @@ $colors:  (
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
     }
 
-    --ion-placeholder-opacity: 0.8;
-  }
+    --ion-background-color: #{$background-color};
+    --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
 
+    --ion-text-color: #{$text-color};
+    --ion-text-color-rgb: #{color-to-rgb-list($text-color)};
+
+    --ion-placeholder-opacity: 0.8;
+
+    /// Only the item borders should increase in contrast
+    /// Borders for elements like toolbars should remain the same
+    --ion-item-border-color: #7a7a7a;
+
+    --ion-text-color-step-50: #{mix($lightest-text-color, $darkest-text-color, 5%)};
+    --ion-text-color-step-100: #{mix($lightest-text-color, $darkest-text-color, 10%)};
+    --ion-text-color-step-150: #{mix($lightest-text-color, $darkest-text-color, 15%)};
+    --ion-text-color-step-200: #{mix($lightest-text-color, $darkest-text-color, 20%)};
+    --ion-text-color-step-250: #{mix($lightest-text-color, $darkest-text-color, 25%)};
+    --ion-text-color-step-300: #{mix($lightest-text-color, $darkest-text-color, 30%)};
+    --ion-text-color-step-350: #{mix($lightest-text-color, $darkest-text-color, 35%)};
+    --ion-text-color-step-400: #{mix($lightest-text-color, $darkest-text-color, 40%)};
+    --ion-text-color-step-450: #{mix($lightest-text-color, $darkest-text-color, 45%)};
+    --ion-text-color-step-500: #{mix($lightest-text-color, $darkest-text-color, 50%)};
+    --ion-text-color-step-550: #{mix($lightest-text-color, $darkest-text-color, 55%)};
+    --ion-text-color-step-600: #{mix($lightest-text-color, $darkest-text-color, 60%)};
+    --ion-text-color-step-650: #{mix($lightest-text-color, $darkest-text-color, 65%)};
+    --ion-text-color-step-700: #{mix($lightest-text-color, $darkest-text-color, 70%)};
+    --ion-text-color-step-750: #{mix($lightest-text-color, $darkest-text-color, 75%)};
+    --ion-text-color-step-800: #{mix($lightest-text-color, $darkest-text-color, 80%)};
+    --ion-text-color-step-850: #{mix($lightest-text-color, $darkest-text-color, 85%)};
+    --ion-text-color-step-900: #{mix($lightest-text-color, $darkest-text-color, 90%)};
+    --ion-text-color-step-950: #{mix($lightest-text-color, $darkest-text-color, 95%)};
+  }
+}
+
+@mixin high-contrast-light-md-theme() {
   // Toast
   // --------------------------------------------------
+
+  & ion-toast {
+    --color: var(--ion-background-color);
+  }
 
   & ion-toast::part(button) {
     // Fallback for browsers that don't support color-mix
@@ -103,7 +150,7 @@ $colors:  (
   /* stylelint-disable-next-line order/order */
   @supports (color: color-mix(in lch, plum, pink)) {
     & ion-toast::part(button) {
-      color: color-mix(in srgb, var(--color) 60%, var(--button-color));
+      color: color-mix(in srgb, var(--color) 70%, var(--button-color));
     }
   }
 
