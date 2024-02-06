@@ -23,6 +23,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input](#version-8x-input)
   - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
+  - [Progress bar](#version-8x-progress-bar)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -161,7 +162,11 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 
 - `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
   - Only the component names have been changed. Usages such as `ion-picker` or `IonPicker` should be changed to `ion-picker-legacy` and `IonPickerLegacy`, respectively.
-  - Non-component usages such as `pickerController` or `useIonPicker` remain unchanged. The new picker displays inline with your page content and does not have equivalents for these non-component usages.
+  - Non-component usages such as `pickerController` or `useIonPicker` remain unchanged. The new picker displays inline with your page content and does not have equivalents for these non-component usages. 
+
+<h4 id="version-8x-progress-bar">Progress bar</h4>
+
+- The `--buffer-background` CSS variable has been removed. Use `--background` instead.
 
 <h4 id="version-8x-toast">Toast</h4>
 
