@@ -30,11 +30,12 @@
 .popover-arrow {
   display: block;
   position: absolute;
-  z-index: 12;
+
   width: 20px;
   height: 10px;
 
   overflow: hidden;
+  z-index: 12;
 }
 
 .popover-arrow::after {
