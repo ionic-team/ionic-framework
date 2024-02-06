@@ -4,10 +4,10 @@
   @include high-contrast-dark-base-theme();
 }
 
-.ios body {
+:root.ios {
   @include high-contrast-dark-ios-theme();
 }
 
-.md body {
+:root.md {
   @include high-contrast-dark-md-theme();
 }

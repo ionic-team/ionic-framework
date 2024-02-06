@@ -5,7 +5,7 @@
     @include high-contrast-light-base-theme();
   }
 
-  .md body {
+  :root.md {
     @include high-contrast-light-md-theme();
   }
 }
