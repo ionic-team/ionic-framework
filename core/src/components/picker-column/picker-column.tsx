@@ -69,6 +69,8 @@ export class PickerColumn implements ComponentInterface {
    */
   @Event() ionChange!: EventEmitter<PickerColumnChangeEventDetail>;
 
+  @Event() ionValueChange!: EventEmitter<void>
+
   @Watch('value')
   valueChange() {
     if (this.isColumnVisible) {
@@ -78,6 +80,7 @@ export class PickerColumn implements ComponentInterface {
        */
       this.scrollActiveItemIntoView(true);
     }
+    this.ionValueChange.emit();
   }
 
   /**
@@ -475,6 +478,51 @@ export class PickerColumn implements ComponentInterface {
       >
         <slot name="prefix"></slot>
         <div
+          onKeyDown={(ev) => {
+            console.log('helloooo',ev)
+
+            const buttons = Array.from(this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option'));
+
+            let index = buttons.findIndex((option) => {
+
+              /**
+               * If the whole picker column is disabled, the current value should appear active
+               * If the current value item is specifically disabled, it should not appear active
+               */
+              if (!this.disabled && option.disabled) {
+                return false;
+              }
+
+              return option.value === this.value;
+            });
+
+            if (index > -1) {
+              if (ev.key === 'ArrowDown') {
+                index += 1;
+              } else if (ev.key === 'ArrowUp') {
+                index -= 1;
+              }
+
+              if (index < 0) {
+                index = 0;
+              } else if (index - 1 > buttons.length) {
+                index = buttons.length - 1;
+              }
+
+              const buttonToFocus = buttons[index];
+              if (buttonToFocus) {
+                this.value = buttonToFocus.value;
+                setTimeout(() => {
+                  buttonToFocus.tabIndex = 0;
+                  buttonToFocus.focus();
+                }, 500);
+              }
+
+              ev.preventDefault();
+
+            }
+
+          }}
           class="picker-opts"
           tabindex={disabled ? undefined : 0}
           ref={(el) => {

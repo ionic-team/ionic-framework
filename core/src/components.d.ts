@@ -4067,6 +4067,7 @@ declare global {
     };
     interface HTMLIonPickerColumnElementEventMap {
         "ionChange": PickerColumnChangeEventDetail;
+        "ionValueChange": void;
     }
     interface HTMLIonPickerColumnElement extends Components.IonPickerColumn, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6648,6 +6649,7 @@ declare namespace LocalJSX {
           * Emitted when the value has changed.
          */
         "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnChangeEventDetail>) => void;
+        "onIonValueChange"?: (event: IonPickerColumnCustomEvent<void>) => void;
         /**
           * The selected option in the picker.
          */

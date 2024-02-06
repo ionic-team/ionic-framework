@@ -33,6 +33,7 @@ export class PickerColumnOption implements ComponentInterface {
    * after the component is loaded.
    */
   @State() ariaLabel?: string | null = null;
+  @State() selected = false;
 
   /**
    * If `true`, the user cannot interact with the picker column option.
@@ -72,11 +73,27 @@ export class PickerColumnOption implements ComponentInterface {
     this.ariaLabel = inheritedAttributes['aria-label'] || null;
   }
 
+  private columnValueChange = () => {
+    const { pickerColumn } = this;
+    if (pickerColumn) {
+      this.selected = pickerColumn.value === this.value;
+    }
+  }
+
   connectedCallback() {
-    this.pickerColumn = this.el.closest('ion-picker-column');
+    const pickerColumn = this.pickerColumn = this.el.closest('ion-picker-column');
+
+    if (pickerColumn) {
+      pickerColumn.addEventListener('ionValueChange', this.columnValueChange)
+      this.columnValueChange();
+    }
   }
 
   disconnectedCallback() {
+    if (this.pickerColumn) {
+     this. pickerColumn.removeEventListener('ionValueChange', this.columnValueChange)
+    }
+
     this.pickerColumn = null;
   }
 
@@ -114,7 +131,7 @@ export class PickerColumnOption implements ComponentInterface {
   }
 
   render() {
-    const { color, disabled, ariaLabel } = this;
+    const { color, disabled, ariaLabel, selected } = this;
     const mode = getIonMode(this);
 
     return (
@@ -124,7 +141,16 @@ export class PickerColumnOption implements ComponentInterface {
           ['option-disabled']: disabled,
         })}
       >
-        <button tabindex="-1" aria-label={ariaLabel} disabled={disabled} onClick={() => this.onClick()}>
+        <button
+          aria-label={ariaLabel}
+          aria-selected={selected ? 'true' : 'false'}
+          role={selected ? 'spinbutton' : undefined}
+          aria-hidden={selected ? undefined : 'true'}
+          aria-valuetext={ariaLabel ?? this.el.innerText}
+          tabindex="-1"
+          disabled={disabled}
+          onClick={() => this.onClick()}
+        >
           <slot></slot>
         </button>
       </Host>
