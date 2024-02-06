@@ -241,8 +241,7 @@
 // Content: Fixed
 // --------------------------------------------------
 
-::slotted([slot="fixed"]),
-::slotted([slot="new"]) {
+::slotted([slot="fixed"]) {
   position: absolute;
 
   /**
@@ -255,4 +254,10 @@
    * still allow the fixed content to appear under the scroll content if specified.
    */
   transform: translateZ(0);
+}
+
+::slotted([slot="new"]) {
+  position: absolute;
+
+  z-index: $z-index-fixed-content;
 }
