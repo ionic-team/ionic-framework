@@ -4,6 +4,7 @@ import type { IonicSafeString } from '../../utils/sanitization';
 export interface ToastOptions {
   header?: string;
   message?: string | IonicSafeString;
+  cssClass?: string | string[];
   duration?: number;
   buttons?: (ToastButton | string)[];
   position?: 'top' | 'bottom' | 'middle';
