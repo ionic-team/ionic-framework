@@ -597,6 +597,12 @@ export const dismiss = async <OverlayDismissOptions>(
     overlay.didDismiss.emit({ data, role });
     overlay.didDismissShorthand?.emit({ data, role });
 
+    // Get a reference to all animations currently assigned to this overlay
+    // Then tear them down to return the overlay to its initial visual state
+    const animations = activeAnimations.get(overlay) || [];
+
+    animations.forEach((ani) => ani.destroy());
+
     activeAnimations.delete(overlay);
 
     /**

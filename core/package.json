@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.7.0",
+  "version": "7.7.1",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.8.4",
     "@capacitor/core": "^5.6.0",
-    "@capacitor/haptics": "^5.0.6",
+    "@capacitor/haptics": "^5.0.7",
     "@capacitor/keyboard": "^5.0.8",
     "@capacitor/status-bar": "^5.0.7",
     "@ionic/eslint-config": "^0.3.0",
@@ -46,7 +46,7 @@
     "@playwright/test": "^1.39.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
-    "@stencil/angular-output-target": "^0.8.3",
+    "@stencil/angular-output-target": "^0.8.4",
     "@stencil/react-output-target": "^0.5.3",
     "@stencil/sass": "^3.0.9",
     "@stencil/vue-output-target": "^0.8.7",
