@@ -498,7 +498,7 @@ export const present = async <OverlayPresentOptions>(
    */
   if (doc !== undefined) {
     const presentedOverlays = getPresentedOverlays(doc);
-    presentedOverlays.forEach(o => o.setAttribute('aria-hidden', 'true'));
+    presentedOverlays.forEach((o) => o.setAttribute('aria-hidden', 'true'));
   }
 
   overlay.presented = true;

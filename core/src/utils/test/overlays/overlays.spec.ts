@@ -137,7 +137,7 @@ describe('aria-hidden on individual overlays', () => {
       html: `
         <ion-modal id="one"></ion-modal>
         <ion-modal id="two"></ion-modal>
-      `
+      `,
     });
 
     const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
@@ -156,7 +156,7 @@ describe('aria-hidden on individual overlays', () => {
       html: `
         <ion-modal id="one"></ion-modal>
         <ion-modal id="two"></ion-modal>
-      `
+      `,
     });
 
     const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
@@ -177,7 +177,7 @@ describe('aria-hidden on individual overlays', () => {
       html: `
         <ion-modal id="one"></ion-modal>
         <ion-modal id="two"></ion-modal>
-      `
+      `,
     });
 
     const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;

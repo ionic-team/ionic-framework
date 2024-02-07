@@ -41,9 +41,13 @@
             <ion-button id="create" onclick="createModal()">Create a Modal</ion-button>
             <ion-button id="create-nested" onclick="createNestedOverlayModal()">Create Nested Overlay Modal</ion-button>
             <ion-button id="present" onclick="presentHiddenModal()">Present a Hidden Modal</ion-button>
-            <ion-button id="create-and-present" onclick="createAndPresentModal()">Create and Present a Modal</ion-button>
+            <ion-button id="create-and-present" onclick="createAndPresentModal()"
+              >Create and Present a Modal</ion-button
+            >
             <ion-button id="simulate" onclick="backButton()">Simulate Hardware Back Button</ion-button>
-            <ion-button id="create-and-present-toast" onclick="createAndPresentToast()">Create and Present Toast</ion-button>
+            <ion-button id="create-and-present-toast" onclick="createAndPresentToast()"
+              >Create and Present Toast</ion-button
+            >
             <ion-button id="present-inline">Present Inline Modal</ion-button>
 
             <ion-modal trigger="present-inline">
@@ -54,9 +58,7 @@
             </ion-modal>
 
             <ion-modal trigger="present-inline-nested">
-              <ion-content>
-                Nested inline modal
-              </ion-content>
+              <ion-content> Nested inline modal </ion-content>
             </ion-modal>
           </ion-content>
         </div>
