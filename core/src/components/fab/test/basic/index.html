@@ -22,13 +22,9 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding">
+      <ion-content class="ion-padding" fixed-slot-placement="beforeContent">
         <ion-fab slot="fixed" vertical="top" horizontal="start">
-          <ion-fab-button> "fixed"<br />slot </ion-fab-button>
-        </ion-fab>
-
-        <ion-fab slot="new" vertical="bottom" horizontal="end">
-          <ion-fab-button> new<br />slot </ion-fab-button>
+          <ion-fab-button>fixed<br />slot </ion-fab-button>
         </ion-fab>
 
         <ion-list>
@@ -37,9 +33,7 @@
           <ion-item button>List</ion-item>
         </ion-list>
 
-        <ion-button id="fixed-button-new" slot="new">Fixed Button in new slot</ion-button>
-
-        <ion-button id="fixed-button-fixed" slot="fixed">Fixed Button in "fixed" slot</ion-button>
+        <ion-button id="fixed-button" slot="fixed">Fixed Button</ion-button>
 
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed tellus nec mauris auctor dignissim
@@ -109,13 +103,9 @@
       </script>
 
       <style>
-        #fixed-button-new {
+        #fixed-button {
           right: 0px;
           top: 50%;
-        }
-        #fixed-button-fixed {
-          bottom: 0px;
-          left: 50%;
         }
       </style>
     </ion-app>

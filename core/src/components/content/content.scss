@@ -255,9 +255,3 @@
    */
   transform: translateZ(0);
 }
-
-::slotted([slot="new"]) {
-  position: absolute;
-
-  z-index: $z-index-fixed-content;
-}

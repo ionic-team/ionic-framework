@@ -75,6 +75,8 @@ export class Content implements ComponentInterface {
    */
   @Prop() fullscreen = false;
 
+  @Prop() fixedSlotPlacement: 'afterContent' | 'beforeContent' = 'afterContent';
+
   /**
    * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
    * If the content exceeds the bounds of ionContent, nothing will change.
@@ -423,7 +425,7 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { isMainContent, scrollX, scrollY, el } = this;
+    const { fixedSlotPlacement, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
@@ -447,7 +449,7 @@ export class Content implements ComponentInterface {
       >
         <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
 
-        <slot name="new"></slot>
+        {fixedSlotPlacement === 'beforeContent' ? <slot name="fixed"></slot> : null}
 
         <TagType
           class={{
@@ -470,7 +472,7 @@ export class Content implements ComponentInterface {
           </div>
         ) : null}
 
-        <slot name="fixed"></slot>
+        {fixedSlotPlacement !== 'beforeContent' ? <slot name="fixed"></slot> : null}
       </Host>
     );
   }
