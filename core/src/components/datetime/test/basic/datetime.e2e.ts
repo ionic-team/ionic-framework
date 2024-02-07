@@ -110,7 +110,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
       const datetime = page.locator('ion-datetime');
       const ionChange = await page.spyOnEvent('ionChange');
 
@@ -255,7 +255,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -275,7 +275,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -297,7 +297,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -331,7 +331,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const monthYearButton = page.locator('ion-datetime .calendar-month-year');
       const monthYearInterface = page.locator('ion-datetime .datetime-year');
@@ -349,7 +349,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
       await expect(datetime).toBeVisible();
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       // month/year interface should be reset
       await expect(monthYearInterface).toBeHidden();
@@ -399,7 +399,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const selectedDay = page.locator('ion-datetime .calendar-day-active');
 
@@ -428,7 +428,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const ionChange = await page.spyOnEvent('ionChange');
       const calendarButtons = page.locator('.calendar-day:not([disabled])');
@@ -447,7 +447,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const ionChange = await page.spyOnEvent('ionChange');
       const datetime = page.locator('ion-datetime');
@@ -487,7 +487,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const datetime = page.locator('ion-datetime');
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(datetime.locator('.calendar-day-today')).toHaveScreenshot(
         screenshot(`datetime-today-calendar-button`)
@@ -517,7 +517,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       const datetime = page.locator('ion-datetime');
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(datetime).toHaveScreenshot(screenshot(`date-highlight-start-of-month`));
 
@@ -543,7 +543,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
 

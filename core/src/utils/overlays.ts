@@ -1,5 +1,6 @@
 import { doc } from '@utils/browser';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
+import { shoudUseCloseWatcher } from '@utils/hardware-back-button';
 
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
@@ -359,20 +360,39 @@ const connectListeners = (doc: Document) => {
       const lastOverlay = getPresentedOverlay(doc);
       if (lastOverlay?.backdropDismiss) {
         (ev as BackButtonEvent).detail.register(OVERLAY_BACK_BUTTON_PRIORITY, () => {
-          return lastOverlay.dismiss(undefined, BACKDROP);
+          /**
+           * Do not return this promise otherwise
+           * the hardware back button utility will
+           * be blocked until the overlay dismisses.
+           * This is important for a modal with canDismiss.
+           * If the application presents a confirmation alert
+           * in the "canDismiss" callback, then it will be impossible
+           * to use the hardware back button to dismiss the alert
+           * dialog because the hardware back button utility
+           * is blocked on waiting for the modal to dismiss.
+           */
+          lastOverlay.dismiss(undefined, BACKDROP);
         });
       }
     });
 
-    // handle ESC to close overlay
-    doc.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Escape') {
-        const lastOverlay = getPresentedOverlay(doc);
-        if (lastOverlay?.backdropDismiss) {
-          lastOverlay.dismiss(undefined, BACKDROP);
+    /**
+     * Handle ESC to close overlay.
+     * CloseWatcher also handles pressing the Esc
+     * key, so if a browser supports CloseWatcher then
+     * this behavior will be handled via the ionBackButton
+     * event.
+     */
+    if (!shoudUseCloseWatcher()) {
+      doc.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape') {
+          const lastOverlay = getPresentedOverlay(doc);
+          if (lastOverlay?.backdropDismiss) {
+            lastOverlay.dismiss(undefined, BACKDROP);
+          }
         }
-      }
-    });
+      });
+    }
   }
 };
 
@@ -588,6 +608,12 @@ export const dismiss = async <OverlayDismissOptions>(
 
     overlay.didDismiss.emit({ data, role });
     overlay.didDismissShorthand?.emit({ data, role });
+
+    // Get a reference to all animations currently assigned to this overlay
+    // Then tear them down to return the overlay to its initial visual state
+    const animations = activeAnimations.get(overlay) || [];
+
+    animations.forEach((ani) => ani.destroy());
 
     activeAnimations.delete(overlay);
 
