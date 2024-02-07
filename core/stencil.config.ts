@@ -257,4 +257,8 @@ export const config: Config = {
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
   transformAliasedImportPaths: true,
+  extras: {
+    experimentalSlotFixes: true,
+    experimentalScopedSlotChanges: true,
+  }
 };
