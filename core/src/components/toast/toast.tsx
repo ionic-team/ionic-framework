@@ -318,6 +318,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   disconnectedCallback() {
     this.triggerController.removeClickListener();
+
+    const { durationTimeout } = this;
+    if (durationTimeout) {
+      clearTimeout(durationTimeout);
+    }
   }
 
   componentWillLoad() {
