@@ -491,6 +491,16 @@ export const present = async <OverlayPresentOptions>(
 
   setRootAriaHidden(true);
 
+  /**
+   * Hide all other overlays from screen readers so only this one
+   * can be read. Note that presenting an overlay always makes
+   * it the topmost one.
+   */
+  if (doc !== undefined) {
+    const presentedOverlays = getPresentedOverlays(doc);
+    presentedOverlays.forEach(o => o.setAttribute('aria-hidden', 'true'));
+  }
+
   overlay.presented = true;
   overlay.willPresent.emit();
   overlay.willPresentShorthand?.emit();
@@ -528,6 +538,15 @@ export const present = async <OverlayPresentOptions>(
   if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
     overlay.el.focus();
   }
+
+  /**
+   * If this overlay was previously dismissed without being
+   * the topmost one (such as by manually calling dismiss()),
+   * it would still have aria-hidden on being presented again.
+   * Removing it here ensures the overlay is visible to screen
+   * readers.
+   */
+  overlay.el.removeAttribute('aria-hidden');
 };
 
 /**
@@ -625,6 +644,15 @@ export const dismiss = async <OverlayDismissOptions>(
   }
 
   overlay.el.remove();
+
+  /**
+   * If there are other overlays presented, unhide the new
+   * topmost one from screen readers.
+   */
+  if (doc !== undefined) {
+    getPresentedOverlay(doc)?.removeAttribute('aria-hidden');
+  }
+
   return true;
 };
 

@@ -20,33 +20,47 @@
 
   <body>
     <ion-app>
-      <ion-menu content-id="main-content">
-        <ion-content>
-          <ion-button onclick="openModal(event)">Open Modal</ion-button>
-        </ion-content>
-      </ion-menu>
-      <div class="ion-page" id="main-content">
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Modal - Inline</ion-title>
-          </ion-toolbar>
-        </ion-header>
+      <ion-router-outlet>
+        <ion-menu content-id="main-content">
+          <ion-content>
+            <ion-button onclick="openModal(event)">Open Modal</ion-button>
+          </ion-content>
+        </ion-menu>
+        <div class="ion-page" id="main-content">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Modal - Inline</ion-title>
+            </ion-toolbar>
+          </ion-header>
 
-        <ion-content class="ion-padding">
-          <ion-item>
-            <ion-input label="Text Input" id="root-input"></ion-input>
-          </ion-item>
+          <ion-content class="ion-padding">
+            <ion-item>
+              <ion-input label="Text Input" id="root-input"></ion-input>
+            </ion-item>
 
-          <ion-button id="create" onclick="createModal()">Create a Modal</ion-button>
-          <ion-button id="create-nested" onclick="createNestedOverlayModal()">Create Nested Overlay Modal</ion-button>
-          <ion-button id="present" onclick="presentHiddenModal()">Present a Hidden Modal</ion-button>
-          <ion-button id="create-and-present" onclick="createAndPresentModal()">Create and Present a Modal</ion-button>
-          <ion-button id="simulate" onclick="backButton()">Simulate Hardware Back Button</ion-button>
-          <ion-button id="create-and-present-toast" onclick="createAndPresentToast()"
-            >Create and Present Toast</ion-button
-          >
-        </ion-content>
-      </div>
+            <ion-button id="create" onclick="createModal()">Create a Modal</ion-button>
+            <ion-button id="create-nested" onclick="createNestedOverlayModal()">Create Nested Overlay Modal</ion-button>
+            <ion-button id="present" onclick="presentHiddenModal()">Present a Hidden Modal</ion-button>
+            <ion-button id="create-and-present" onclick="createAndPresentModal()">Create and Present a Modal</ion-button>
+            <ion-button id="simulate" onclick="backButton()">Simulate Hardware Back Button</ion-button>
+            <ion-button id="create-and-present-toast" onclick="createAndPresentToast()">Create and Present Toast</ion-button>
+            <ion-button id="present-inline">Present Inline Modal</ion-button>
+
+            <ion-modal trigger="present-inline">
+              <ion-content>
+                Inline modal
+                <ion-button id="present-inline-nested">Present Nested Inline Modal</ion-button>
+              </ion-content>
+            </ion-modal>
+
+            <ion-modal trigger="present-inline-nested">
+              <ion-content>
+                Nested inline modal
+              </ion-content>
+            </ion-modal>
+          </ion-content>
+        </div>
+      </ion-router-outlet>
     </ion-app>
 
     <script>
@@ -62,7 +76,7 @@
             </ion-toolbar>
           </ion-header>
           <ion-content class="ion-padding">
-            Modal Content
+            Modal ${id}
 
             <ion-item>
               <ion-input label="Text Input" class="modal-input modal-input-${id}"></ion-input>
