@@ -12,6 +12,7 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
   </head>
 
   <body>
@@ -19,42 +20,49 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>Infinite Scroll - Basic</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onclick="doScroll()">scroll to top</ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
       <ion-content class="ion-padding" id="content">
-        <ion-button onclick="toggleInfiniteScroll()" expand="block"> Toggle InfiniteScroll </ion-button>
-
-        <ion-list id="list"></ion-list>
-
-        <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+        <ion-infinite-scroll position="top" threshold="100px" id="infinite-scroll">
           <ion-infinite-scroll-content loading-spinner="crescent" loading-text="Loading more data...">
           </ion-infinite-scroll-content>
         </ion-infinite-scroll>
+
+        <ion-list id="list"></ion-list>
       </ion-content>
     </ion-app>
 
     <script>
       const list = document.getElementById('list');
       const infiniteScroll = document.getElementById('infinite-scroll');
+      const content = document.querySelector('ion-content');
 
+      let count = 0;
       function toggleInfiniteScroll() {
         infiniteScroll.disabled = !infiniteScroll.disabled;
       }
 
       infiniteScroll.addEventListener('ionInfinite', async function () {
         await wait(500);
-        infiniteScroll.complete();
+
         appendItems();
+        infiniteScroll.complete();
+
         // Custom event consumed in the e2e tests
         window.dispatchEvent(new CustomEvent('ionInfiniteComplete'));
       });
 
       function appendItems() {
-        for (var i = 0; i < 30; i++) {
+        const c = count;
+        for (var i = count; i < c + 30; i++) {
           const el = document.createElement('ion-item');
           el.textContent = `${1 + i}`;
-          list.appendChild(el);
+          list.prepend(el);
+          count += 1;
         }
       }
 
@@ -67,6 +75,25 @@
       }
 
       appendItems();
+
+    // this piece is only needed if items are Ionic components instead of divs
+      // wait for Angular to load items into the DOM
+      const observer = new MutationObserver(async () => {
+        const firstItem = document.querySelector('ion-item');
+
+        // wait for item component to be hydrated
+        await firstItem.componentOnReady();
+
+        observer.disconnect();
+
+        content.scrollToBottom();
+      });
+
+      observer.observe(list, { childList: true });
+
+      const doScroll = () => {
+        content.scrollToTop();
+      }
     </script>
   </body>
 </html>

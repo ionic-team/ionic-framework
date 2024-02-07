@@ -84,6 +84,9 @@ export class InfiniteScroll implements ComponentInterface {
    */
   @Event() ionInfinite!: EventEmitter<void>;
 
+
+  private scrollHeight: number = 0;
+
   async connectedCallback() {
     const contentEl = findClosestIonContent(this.el);
     if (!contentEl) {
@@ -100,6 +103,33 @@ export class InfiniteScroll implements ComponentInterface {
         }
       });
     }
+  }
+
+  async componentDidLoad() {
+    const contentEl = findClosestIonContent(this.el)!;
+    const scrollEl = await getScrollElement(contentEl);
+    const mo = new MutationObserver(async () => {
+      // wait for items to by hydrated so they have a dimension
+      const item = document.querySelectorAll('ion-item');
+      const lastItem = item[0];
+      await lastItem.componentOnReady();
+
+      // restore scroll position
+      const newScrollTop = scrollEl.scrollHeight - this.scrollHeight;
+
+      // TODO not sure why we need to set scrollTop twice
+      // TODO every once in a while the first ionInfinite callback
+      // still has a flicker
+      scrollEl.scrollTop = newScrollTop;
+      requestAnimationFrame(() => {
+        scrollEl.scrollTop = newScrollTop;
+      });
+
+      this.isBusy = false;
+      this.didFire = false;
+    });
+
+    mo.observe(findClosestIonContent(this.el)!, { subtree: true, characterData: true, childList: true });
   }
 
   disconnectedCallback() {
@@ -132,6 +162,10 @@ export class InfiniteScroll implements ComponentInterface {
       if (!this.didFire) {
         this.isLoading = true;
         this.didFire = true;
+
+        // cache the scroll position before the DOM updates
+        this.scrollHeight = scrollEl.scrollHeight;
+
         this.ionInfinite.emit();
         return 3;
       }
@@ -179,28 +213,6 @@ export class InfiniteScroll implements ComponentInterface {
        *    Done.
        */
       this.isBusy = true;
-      // ******** DOM READ ****************
-      // Save the current content dimensions before the UI updates
-      const prev = scrollEl.scrollHeight - scrollEl.scrollTop;
-
-      // ******** DOM READ ****************
-      requestAnimationFrame(() => {
-        readTask(() => {
-          // UI has updated, save the new content dimensions
-          const scrollHeight = scrollEl.scrollHeight;
-          // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
-          const newScrollTop = scrollHeight - prev;
-
-          // ******** DOM WRITE ****************
-          requestAnimationFrame(() => {
-            writeTask(() => {
-              scrollEl.scrollTop = newScrollTop;
-              this.isBusy = false;
-              this.didFire = false;
-            });
-          });
-        });
-      });
     } else {
       this.didFire = false;
     }
