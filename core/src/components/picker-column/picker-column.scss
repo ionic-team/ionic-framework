@@ -4,6 +4,9 @@
 // --------------------------------------------------
 
 :host {
+
+  position: relative;
+
   display: flex;
 
   align-items: center;
@@ -17,6 +20,18 @@
   font-size: 22px;
 
   text-align: center;
+}
+
+.focusable {
+  position: absolute;
+  pointer-events: none;
+
+  background: rgba(0, 255, 0, 0.1);
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .picker-opts {

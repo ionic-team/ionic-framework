@@ -215,6 +215,7 @@ export class PickerColumn implements ComponentInterface {
 
   private setPickerItemActiveState = (item: HTMLIonPickerColumnOptionElement, isActive: boolean) => {
     if (isActive) {
+      this.el.shadowRoot!.querySelector('.focusable')!.setAttribute('aria-valuetext', item.innerText)
       item.classList.add(PICKER_ITEM_ACTIVE_CLASS);
     } else {
       item.classList.remove(PICKER_ITEM_ACTIVE_CLASS);
@@ -403,6 +404,8 @@ export class PickerColumn implements ComponentInterface {
           this.canExitInputMode = true;
 
           this.setValue(newActiveElement.value);
+          //newActiveElement.tabIndex = 0;
+          //newActiveElement.focus();
         }, 250);
       });
     };
@@ -466,6 +469,20 @@ export class PickerColumn implements ComponentInterface {
   render() {
     const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
+    const opts = Array.from(this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option'));
+
+    const index = opts.findIndex((option) => {
+      /**
+       * If the whole picker column is disabled, the current value should appear active
+       * If the current value item is specifically disabled, it should not appear active
+       */
+      if (!this.disabled && option.disabled) {
+        return false;
+      }
+
+      return option.value === this.value;
+    });
+
 
     return (
       <Host
@@ -477,7 +494,7 @@ export class PickerColumn implements ComponentInterface {
         })}
       >
         <slot name="prefix"></slot>
-        <div
+        <div class="focusable"
           onKeyDown={(ev) => {
             console.log('helloooo',ev)
 
@@ -498,9 +515,32 @@ export class PickerColumn implements ComponentInterface {
 
             if (index > -1) {
               if (ev.key === 'ArrowDown') {
-                index += 1;
+
+                let el = buttons[index + 1];
+                while(el && el.disabled === true) {
+                  index += 1;
+                  el = buttons[index];
+                }
+
+                console.log('FOUND',el)
+                if (el) {
+                  this.value = el.value;
+                }
+                ev.preventDefault();
+
               } else if (ev.key === 'ArrowUp') {
-                index -= 1;
+                let el = buttons[index - 1];
+                while(el && el.disabled === true) {
+                  index -= 1;
+                  el = buttons[index];
+                }
+
+                console.log('FOUND',el)
+                if (el) {
+                  this.value = el.value;
+                }
+                ev.preventDefault();
+
               }
 
               if (index < 0) {
@@ -511,20 +551,33 @@ export class PickerColumn implements ComponentInterface {
 
               const buttonToFocus = buttons[index];
               if (buttonToFocus) {
-                this.value = buttonToFocus.value;
+                //this.value = buttonToFocus.value;
                 setTimeout(() => {
-                  buttonToFocus.tabIndex = 0;
-                  buttonToFocus.focus();
+                  //buttonToFocus.tabIndex = 0;
+                  //buttonToFocus.focus();
                 }, 500);
               }
 
-              ev.preventDefault();
 
             }
 
           }}
-          class="picker-opts"
+          aria-label="select a month"
+          aria-valuenow={index}
+          aria-valuemax={opts.length - 1}
+          aria-valuemin={0}
+          aria-orientation="vertical"
+          aria-valuetext={this.activeItem?.innerText}
+          role="slider"
           tabindex={disabled ? undefined : 0}
+          onInput={(ev) => {
+            console.log('tEST',ev)
+          }}
+
+        ></div>
+        <div
+          aria-hidden="true"
+          class="picker-opts"
           ref={(el) => {
             this.scrollEl = el;
           }}

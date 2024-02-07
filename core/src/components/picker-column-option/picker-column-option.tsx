@@ -143,10 +143,6 @@ export class PickerColumnOption implements ComponentInterface {
       >
         <button
           aria-label={ariaLabel}
-          aria-selected={selected ? 'true' : 'false'}
-          role={selected ? 'spinbutton' : undefined}
-          aria-hidden={selected ? undefined : 'true'}
-          aria-valuetext={ariaLabel ?? this.el.innerText}
           tabindex="-1"
           disabled={disabled}
           onClick={() => this.onClick()}
