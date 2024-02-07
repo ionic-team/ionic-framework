@@ -35,7 +35,13 @@
   height: 10px;
 
   overflow: hidden;
-  z-index: 12;
+  /*
+   * Required for the arrow to render above the backdrop.
+   * Otherwise, the arrow will appear slightly transparent.
+   * The value is set to 11 since it's the minimum value that
+   * will allow the arrow to render above the backdrop.
+   */
+  z-index: 11;
 }
 
 .popover-arrow::after {
