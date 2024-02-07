@@ -65,11 +65,6 @@
             </ion-item>
 
             <ion-item>
-              <ion-label>Textarea</ion-label>
-              <ion-textarea name="textarea" id="textarea" placeholder="Textarea"></ion-textarea>
-            </ion-item>
-
-            <ion-item>
               <ion-label>Toggle</ion-label>
               <ion-toggle name="toggle" id="toggle" slot="end"></ion-toggle>
             </ion-item>
@@ -107,10 +102,10 @@
     </ion-app>
 
     <script>
-      const formControlIds = ['input', 'textarea', 'checkbox', 'toggle', 'select', 'datetime', 'range'];
+      const formControlIds = ['input', 'checkbox', 'toggle', 'select', 'datetime', 'range'];
       let isDisabled = false;
 
-      const inputs = document.querySelectorAll('ion-input, ion-textarea');
+      const inputs = document.querySelectorAll('ion-input');
 
       function toggleDisabled() {
         isDisabled = !isDisabled;
@@ -118,8 +113,8 @@
       }
 
       function setSomeValue() {
-        const { datetime, select, toggle, input, textarea, checkbox, range } = getFormControls();
-        input.value = textarea.value = 'Some value';
+        const { datetime, select, toggle, input, checkbox, range } = getFormControls();
+        input.value = 'Some value';
         toggle.checked = checkbox.checked = true;
         datetime.value = '2022-04-01T10:00';
         range.value = 20;
@@ -127,8 +122,8 @@
       }
 
       function setEmptyValue() {
-        const { datetime, select, toggle, input, textarea, checkbox, range } = getFormControls();
-        input.value = textarea.value = '';
+        const { datetime, select, toggle, input, checkbox, range } = getFormControls();
+        input.value = '';
         toggle.checked = checkbox.checked = false;
         datetime.value = '';
         range.value = 0;
