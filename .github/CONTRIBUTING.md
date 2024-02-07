@@ -258,10 +258,10 @@ See [Ionic's E2E testing guide](../core/src/utils/test/playwright/docs/README.md
 1. If the test exists in screenshot, there will be a file named `e2e.ts` in the directory of the test.
 2. A screenshot test can be added by including this file and adding one or more `test()` calls that include a call to `page.compareScreenshot()`. See [Stencil end-to-end testing](https://stenciljs.com/docs/end-to-end-testing) and existing tests in `core/` for examples.
 3. **Important:** each `test()` should have only one screenshot (`page.compareScreenshot()`) call **or** it should check the expect at the end of each test. If there is a mismatch it will fail the test which will prevent the rest of the test from running, i.e. if the first screenshot fails the remaining screenshot calls would not be called _unless_ they are in a separate test or all of the expects are called at the end.
-4. To run screenshot locally, use the following command: `pnpm test.screenshot`.
+4. To run screenshot locally, use the following command: `pnpm test.e2e`.
    - To run screenshot for a specific test, pass the path to the test or a string to search for.
-   - For example, running all `alert` tests: `pnpm test.screenshot alert`.
-   - Or, running the basic `alert` tests: `pnpm test.screenshot src/components/alert/test/basic/e2e.ts`.
+   - For example, running all `alert` tests: `pnpm test.e2e alert`.
+   - Or, running the basic `alert` tests: `pnpm test.e2e src/components/alert/test/basic/e2e.ts`.
 
 #### Building Changes
 
