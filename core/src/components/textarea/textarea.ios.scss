@@ -16,14 +16,6 @@
   font-size: $textarea-ios-font-size;
 }
 
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea) {
-  --padding-top: #{$textarea-ios-padding-top};
-  --padding-end: #{$textarea-ios-padding-end};
-  --padding-bottom: #{$textarea-ios-padding-bottom};
-  --padding-start: #{$textarea-ios-padding-start};
-}
-
 :host-context(.item-label-stacked),
 :host-context(.item-label-floating) {
   --padding-top: 8px;
