@@ -2,8 +2,8 @@
   "metadata": {
     "actualWorkers": 3
   },
-  "startTime": 1705702497339,
-  "duration": 7171.688,
+  "startTime": 1707334282875,
+  "duration": 4084.619,
   "files": [
     {
       "fileId": "f6ea308e81510890fd6f",
@@ -18,7 +18,7 @@
             "line": 9,
             "column": 10
           },
-          "duration": 887,
+          "duration": 613,
           "annotations": [
             {
               "type": "theme",
@@ -33,246 +33,16 @@
               "description": "ltr"
             }
           ],
-          "outcome": "unexpected",
+          "outcome": "expected",
           "path": [
             "chip: rendering - ios/ltr"
           ],
+          "ok": true,
           "results": [
             {
-              "status": "failed",
-              "duration": 887,
-              "errors": [
-                {
-                  "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  49 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
-                  "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  49 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
-                  "location": {
-                    "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
-                    "column": 26,
-                    "line": 26
-                  },
-                  "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
-                }
-              ],
-              "retry": 0,
-              "steps": [
-                {
-                  "title": "Before Hooks",
-                  "startTime": "2024-01-19T22:14:57.669Z",
-                  "duration": 787,
-                  "steps": [
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:57.683Z",
-                      "duration": 461,
-                      "steps": [
-                        {
-                          "title": "browserType.launch",
-                          "startTime": "2024-01-19T22:14:57.684Z",
-                          "duration": 460,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:58.144Z",
-                      "duration": 37,
-                      "steps": [
-                        {
-                          "title": "browser.newContext",
-                          "startTime": "2024-01-19T22:14:58.145Z",
-                          "duration": 12,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.182Z",
-                      "duration": 249,
-                      "steps": [
-                        {
-                          "title": "browserContext.newPage",
-                          "startTime": "2024-01-19T22:14:58.182Z",
-                          "duration": 249,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.431Z",
-                      "duration": 25,
-                      "steps": [
-                        {
-                          "title": "page.exposeFunction",
-                          "startTime": "2024-01-19T22:14:58.433Z",
-                          "duration": 23,
-                          "steps": [],
-                          "location": {
-                            "file": "src/utils/test/playwright/page/event-spy.ts",
-                            "line": 82,
-                            "column": 14
-                          }
-                        }
-                      ],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    }
-                  ]
-                },
-                {
-                  "title": "page.route",
-                  "startTime": "2024-01-19T22:14:58.457Z",
-                  "duration": 9,
-                  "steps": [],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                    "line": 68,
-                    "column": 16
-                  }
-                },
-                {
-                  "title": "page.waitForFunction",
-                  "startTime": "2024-01-19T22:14:58.467Z",
-                  "duration": 266,
-                  "steps": [
-                    {
-                      "title": "page.originalFn(http://localhost:3333#?ionic:_testing=true&ionic:mode=ios&rtl=undefined)",
-                      "startTime": "2024-01-19T22:14:58.468Z",
-                      "duration": 259,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/goto.ts",
-                        "line": 83,
-                        "column": 5
-                      }
-                    },
-                    {
-                      "title": "route.fulfill",
-                      "startTime": "2024-01-19T22:14:58.505Z",
-                      "duration": 15,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                        "line": 74,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/goto.ts",
-                    "line": 82,
-                    "column": 10
-                  }
-                },
-                {
-                  "title": "expect.toHaveScreenshot(chip-basic-ios-ltr.png)",
-                  "startTime": "2024-01-19T22:14:58.734Z",
-                  "duration": 223,
-                  "steps": [
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-expected.png\"",
-                      "startTime": "2024-01-19T22:14:58.955Z",
-                      "duration": 1,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-actual.png\"",
-                      "startTime": "2024-01-19T22:14:58.956Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-diff.png\"",
-                      "startTime": "2024-01-19T22:14:58.956Z",
-                      "duration": 1,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 26
-                  },
-                  "error": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  49 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 49 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n"
-                },
-                {
-                  "title": "page._expectScreenshot",
-                  "startTime": "2024-01-19T22:14:58.736Z",
-                  "duration": 219,
-                  "steps": [],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 7
-                  }
-                },
-                {
-                  "title": "After Hooks",
-                  "startTime": "2024-01-19T22:14:58.957Z",
-                  "duration": 2012,
-                  "steps": [
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.957Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.957Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:58.957Z",
-                      "duration": 1,
-                      "steps": []
-                    },
-                    {
-                      "title": "attach \"trace\"",
-                      "startTime": "2024-01-19T22:14:59.016Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:59.017Z",
-                      "duration": 1952,
-                      "steps": []
-                    }
-                  ]
-                }
-              ],
-              "startTime": "2024-01-19T22:14:57.667Z"
+              "attachments": []
             }
-          ],
-          "ok": false
+          ]
         },
         {
           "testId": "f6ea308e81510890fd6f-97b9bb68a1d72ff9e021",
@@ -283,7 +53,7 @@
             "line": 9,
             "column": 10
           },
-          "duration": 774,
+          "duration": 300,
           "annotations": [
             {
               "type": "theme",
@@ -298,246 +68,16 @@
               "description": "rtl"
             }
           ],
-          "outcome": "unexpected",
+          "outcome": "expected",
           "path": [
             "chip: rendering - ios/rtl"
           ],
+          "ok": true,
           "results": [
             {
-              "status": "failed",
-              "duration": 774,
-              "errors": [
-                {
-                  "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
-                  "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
-                  "location": {
-                    "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
-                    "column": 26,
-                    "line": 26
-                  },
-                  "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
-                }
-              ],
-              "retry": 0,
-              "steps": [
-                {
-                  "title": "Before Hooks",
-                  "startTime": "2024-01-19T22:15:01.132Z",
-                  "duration": 630,
-                  "steps": [
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:15:01.144Z",
-                      "duration": 324,
-                      "steps": [
-                        {
-                          "title": "browserType.launch",
-                          "startTime": "2024-01-19T22:15:01.145Z",
-                          "duration": 323,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:15:01.469Z",
-                      "duration": 17,
-                      "steps": [
-                        {
-                          "title": "browser.newContext",
-                          "startTime": "2024-01-19T22:15:01.469Z",
-                          "duration": 13,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:15:01.486Z",
-                      "duration": 256,
-                      "steps": [
-                        {
-                          "title": "browserContext.newPage",
-                          "startTime": "2024-01-19T22:15:01.487Z",
-                          "duration": 255,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:15:01.742Z",
-                      "duration": 20,
-                      "steps": [
-                        {
-                          "title": "page.exposeFunction",
-                          "startTime": "2024-01-19T22:15:01.744Z",
-                          "duration": 18,
-                          "steps": [],
-                          "location": {
-                            "file": "src/utils/test/playwright/page/event-spy.ts",
-                            "line": 82,
-                            "column": 14
-                          }
-                        }
-                      ],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    }
-                  ]
-                },
-                {
-                  "title": "page.route",
-                  "startTime": "2024-01-19T22:15:01.763Z",
-                  "duration": 12,
-                  "steps": [],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                    "line": 68,
-                    "column": 16
-                  }
-                },
-                {
-                  "title": "page.waitForFunction",
-                  "startTime": "2024-01-19T22:15:01.776Z",
-                  "duration": 190,
-                  "steps": [
-                    {
-                      "title": "page.originalFn(http://localhost:3333#?ionic:_testing=true&ionic:mode=ios&rtl=true)",
-                      "startTime": "2024-01-19T22:15:01.776Z",
-                      "duration": 171,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/goto.ts",
-                        "line": 83,
-                        "column": 5
-                      }
-                    },
-                    {
-                      "title": "route.fulfill",
-                      "startTime": "2024-01-19T22:15:01.810Z",
-                      "duration": 2,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                        "line": 74,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/goto.ts",
-                    "line": 82,
-                    "column": 10
-                  }
-                },
-                {
-                  "title": "expect.toHaveScreenshot(chip-basic-ios-rtl.png)",
-                  "startTime": "2024-01-19T22:15:01.967Z",
-                  "duration": 207,
-                  "steps": [
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-expected.png\"",
-                      "startTime": "2024-01-19T22:15:02.173Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-actual.png\"",
-                      "startTime": "2024-01-19T22:15:02.173Z",
-                      "duration": 1,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-diff.png\"",
-                      "startTime": "2024-01-19T22:15:02.174Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 26
-                  },
-                  "error": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Firefox-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Firefox/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n"
-                },
-                {
-                  "title": "page._expectScreenshot",
-                  "startTime": "2024-01-19T22:15:01.969Z",
-                  "duration": 203,
-                  "steps": [],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 7
-                  }
-                },
-                {
-                  "title": "After Hooks",
-                  "startTime": "2024-01-19T22:15:02.174Z",
-                  "duration": 2328,
-                  "steps": [
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:15:02.175Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:15:02.175Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:15:02.175Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "attach \"trace\"",
-                      "startTime": "2024-01-19T22:15:02.230Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:15:02.231Z",
-                      "duration": 2271,
-                      "steps": []
-                    }
-                  ]
-                }
-              ],
-              "startTime": "2024-01-19T22:15:01.130Z"
+              "attachments": []
             }
-          ],
-          "ok": false
+          ]
         },
         {
           "testId": "f6ea308e81510890fd6f-751b82aa32271aaed540",
@@ -548,7 +88,7 @@
             "line": 9,
             "column": 10
           },
-          "duration": 482,
+          "duration": 278,
           "annotations": [
             {
               "type": "theme",
@@ -563,246 +103,16 @@
               "description": "ltr"
             }
           ],
-          "outcome": "unexpected",
+          "outcome": "expected",
           "path": [
             "chip: rendering - ios/ltr"
           ],
+          "ok": true,
           "results": [
             {
-              "status": "failed",
-              "duration": 482,
-              "errors": [
-                {
-                  "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
-                  "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
-                  "location": {
-                    "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
-                    "column": 26,
-                    "line": 26
-                  },
-                  "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
-                }
-              ],
-              "retry": 0,
-              "steps": [
-                {
-                  "title": "Before Hooks",
-                  "startTime": "2024-01-19T22:14:57.669Z",
-                  "duration": 273,
-                  "steps": [
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:57.681Z",
-                      "duration": 199,
-                      "steps": [
-                        {
-                          "title": "browserType.launch",
-                          "startTime": "2024-01-19T22:14:57.684Z",
-                          "duration": 196,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:57.881Z",
-                      "duration": 6,
-                      "steps": [
-                        {
-                          "title": "browser.newContext",
-                          "startTime": "2024-01-19T22:14:57.882Z",
-                          "duration": 3,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:57.888Z",
-                      "duration": 46,
-                      "steps": [
-                        {
-                          "title": "browserContext.newPage",
-                          "startTime": "2024-01-19T22:14:57.888Z",
-                          "duration": 46,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:57.934Z",
-                      "duration": 8,
-                      "steps": [
-                        {
-                          "title": "page.exposeFunction",
-                          "startTime": "2024-01-19T22:14:57.936Z",
-                          "duration": 6,
-                          "steps": [],
-                          "location": {
-                            "file": "src/utils/test/playwright/page/event-spy.ts",
-                            "line": 82,
-                            "column": 14
-                          }
-                        }
-                      ],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    }
-                  ]
-                },
-                {
-                  "title": "page.route",
-                  "startTime": "2024-01-19T22:14:57.943Z",
-                  "duration": 1,
-                  "steps": [],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                    "line": 68,
-                    "column": 16
-                  }
-                },
-                {
-                  "title": "page.waitForFunction",
-                  "startTime": "2024-01-19T22:14:57.945Z",
-                  "duration": 124,
-                  "steps": [
-                    {
-                      "title": "page.originalFn(http://localhost:3333#?ionic:_testing=true&ionic:mode=ios&rtl=undefined)",
-                      "startTime": "2024-01-19T22:14:57.946Z",
-                      "duration": 70,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/goto.ts",
-                        "line": 83,
-                        "column": 5
-                      }
-                    },
-                    {
-                      "title": "route.fulfill",
-                      "startTime": "2024-01-19T22:14:57.954Z",
-                      "duration": 2,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                        "line": 74,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/goto.ts",
-                    "line": 82,
-                    "column": 10
-                  }
-                },
-                {
-                  "title": "expect.toHaveScreenshot(chip-basic-ios-ltr.png)",
-                  "startTime": "2024-01-19T22:14:58.070Z",
-                  "duration": 221,
-                  "steps": [
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-expected.png\"",
-                      "startTime": "2024-01-19T22:14:58.290Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-actual.png\"",
-                      "startTime": "2024-01-19T22:14:58.290Z",
-                      "duration": 1,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-diff.png\"",
-                      "startTime": "2024-01-19T22:14:58.291Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 26
-                  },
-                  "error": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n"
-                },
-                {
-                  "title": "page._expectScreenshot",
-                  "startTime": "2024-01-19T22:14:58.071Z",
-                  "duration": 218,
-                  "steps": [],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 7
-                  }
-                },
-                {
-                  "title": "After Hooks",
-                  "startTime": "2024-01-19T22:14:58.291Z",
-                  "duration": 72,
-                  "steps": [
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.292Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.292Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:58.292Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "attach \"trace\"",
-                      "startTime": "2024-01-19T22:14:58.349Z",
-                      "duration": 1,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:58.350Z",
-                      "duration": 13,
-                      "steps": []
-                    }
-                  ]
-                }
-              ],
-              "startTime": "2024-01-19T22:14:57.667Z"
+              "attachments": []
             }
-          ],
-          "ok": false
+          ]
         },
         {
           "testId": "f6ea308e81510890fd6f-a4719e169983b96d8814",
@@ -813,7 +123,7 @@
             "line": 9,
             "column": 10
           },
-          "duration": 540,
+          "duration": 231,
           "annotations": [
             {
               "type": "theme",
@@ -828,246 +138,16 @@
               "description": "rtl"
             }
           ],
-          "outcome": "unexpected",
+          "outcome": "expected",
           "path": [
             "chip: rendering - ios/rtl"
           ],
+          "ok": true,
           "results": [
             {
-              "status": "failed",
-              "duration": 540,
-              "errors": [
-                {
-                  "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
-                  "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
-                  "location": {
-                    "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
-                    "column": 26,
-                    "line": 26
-                  },
-                  "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
-                }
-              ],
-              "retry": 0,
-              "steps": [
-                {
-                  "title": "Before Hooks",
-                  "startTime": "2024-01-19T22:14:58.551Z",
-                  "duration": 215,
-                  "steps": [
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:58.561Z",
-                      "duration": 122,
-                      "steps": [
-                        {
-                          "title": "browserType.launch",
-                          "startTime": "2024-01-19T22:14:58.564Z",
-                          "duration": 119,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:58.684Z",
-                      "duration": 8,
-                      "steps": [
-                        {
-                          "title": "browser.newContext",
-                          "startTime": "2024-01-19T22:14:58.685Z",
-                          "duration": 3,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.692Z",
-                      "duration": 65,
-                      "steps": [
-                        {
-                          "title": "browserContext.newPage",
-                          "startTime": "2024-01-19T22:14:58.693Z",
-                          "duration": 64,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.757Z",
-                      "duration": 9,
-                      "steps": [
-                        {
-                          "title": "page.exposeFunction",
-                          "startTime": "2024-01-19T22:14:58.759Z",
-                          "duration": 7,
-                          "steps": [],
-                          "location": {
-                            "file": "src/utils/test/playwright/page/event-spy.ts",
-                            "line": 82,
-                            "column": 14
-                          }
-                        }
-                      ],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    }
-                  ]
-                },
-                {
-                  "title": "page.route",
-                  "startTime": "2024-01-19T22:14:58.767Z",
-                  "duration": 1,
-                  "steps": [],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                    "line": 68,
-                    "column": 16
-                  }
-                },
-                {
-                  "title": "page.waitForFunction",
-                  "startTime": "2024-01-19T22:14:58.770Z",
-                  "duration": 126,
-                  "steps": [
-                    {
-                      "title": "page.originalFn(http://localhost:3333#?ionic:_testing=true&ionic:mode=ios&rtl=true)",
-                      "startTime": "2024-01-19T22:14:58.770Z",
-                      "duration": 59,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/goto.ts",
-                        "line": 83,
-                        "column": 5
-                      }
-                    },
-                    {
-                      "title": "route.fulfill",
-                      "startTime": "2024-01-19T22:14:58.779Z",
-                      "duration": 2,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                        "line": 74,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/goto.ts",
-                    "line": 82,
-                    "column": 10
-                  }
-                },
-                {
-                  "title": "expect.toHaveScreenshot(chip-basic-ios-rtl.png)",
-                  "startTime": "2024-01-19T22:14:58.897Z",
-                  "duration": 260,
-                  "steps": [
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-expected.png\"",
-                      "startTime": "2024-01-19T22:14:59.156Z",
-                      "duration": 1,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-actual.png\"",
-                      "startTime": "2024-01-19T22:14:59.157Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-diff.png\"",
-                      "startTime": "2024-01-19T22:14:59.157Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 26
-                  },
-                  "error": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  55 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Chrome-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Chrome/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 55 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n"
-                },
-                {
-                  "title": "page._expectScreenshot",
-                  "startTime": "2024-01-19T22:14:58.900Z",
-                  "duration": 256,
-                  "steps": [],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 7
-                  }
-                },
-                {
-                  "title": "After Hooks",
-                  "startTime": "2024-01-19T22:14:59.158Z",
-                  "duration": 67,
-                  "steps": [
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:59.158Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:59.158Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:59.158Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "attach \"trace\"",
-                      "startTime": "2024-01-19T22:14:59.212Z",
-                      "duration": 1,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:59.213Z",
-                      "duration": 12,
-                      "steps": []
-                    }
-                  ]
-                }
-              ],
-              "startTime": "2024-01-19T22:14:58.550Z"
+              "attachments": []
             }
-          ],
-          "ok": false
+          ]
         },
         {
           "testId": "f6ea308e81510890fd6f-187cf4920e9edb6dfc42",
@@ -1078,7 +158,7 @@
             "line": 9,
             "column": 10
           },
-          "duration": 562,
+          "duration": 339,
           "annotations": [
             {
               "type": "theme",
@@ -1093,246 +173,16 @@
               "description": "ltr"
             }
           ],
-          "outcome": "unexpected",
+          "outcome": "expected",
           "path": [
             "chip: rendering - ios/ltr"
           ],
+          "ok": true,
           "results": [
             {
-              "status": "failed",
-              "duration": 562,
-              "errors": [
-                {
-                  "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  50 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
-                  "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  50 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
-                  "location": {
-                    "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
-                    "column": 26,
-                    "line": 26
-                  },
-                  "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
-                }
-              ],
-              "retry": 0,
-              "steps": [
-                {
-                  "title": "Before Hooks",
-                  "startTime": "2024-01-19T22:14:57.669Z",
-                  "duration": 274,
-                  "steps": [
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:57.681Z",
-                      "duration": 98,
-                      "steps": [
-                        {
-                          "title": "browserType.launch",
-                          "startTime": "2024-01-19T22:14:57.683Z",
-                          "duration": 96,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:57.780Z",
-                      "duration": 23,
-                      "steps": [
-                        {
-                          "title": "browser.newContext",
-                          "startTime": "2024-01-19T22:14:57.781Z",
-                          "duration": 19,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:57.803Z",
-                      "duration": 133,
-                      "steps": [
-                        {
-                          "title": "browserContext.newPage",
-                          "startTime": "2024-01-19T22:14:57.804Z",
-                          "duration": 131,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:57.936Z",
-                      "duration": 7,
-                      "steps": [
-                        {
-                          "title": "page.exposeFunction",
-                          "startTime": "2024-01-19T22:14:57.937Z",
-                          "duration": 6,
-                          "steps": [],
-                          "location": {
-                            "file": "src/utils/test/playwright/page/event-spy.ts",
-                            "line": 82,
-                            "column": 14
-                          }
-                        }
-                      ],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    }
-                  ]
-                },
-                {
-                  "title": "page.route",
-                  "startTime": "2024-01-19T22:14:57.944Z",
-                  "duration": 1,
-                  "steps": [],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                    "line": 68,
-                    "column": 16
-                  }
-                },
-                {
-                  "title": "page.waitForFunction",
-                  "startTime": "2024-01-19T22:14:57.947Z",
-                  "duration": 133,
-                  "steps": [
-                    {
-                      "title": "page.originalFn(http://localhost:3333#?ionic:_testing=true&ionic:mode=ios&rtl=undefined)",
-                      "startTime": "2024-01-19T22:14:57.947Z",
-                      "duration": 99,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/goto.ts",
-                        "line": 83,
-                        "column": 5
-                      }
-                    },
-                    {
-                      "title": "route.fulfill",
-                      "startTime": "2024-01-19T22:14:57.963Z",
-                      "duration": 2,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                        "line": 74,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/goto.ts",
-                    "line": 82,
-                    "column": 10
-                  }
-                },
-                {
-                  "title": "expect.toHaveScreenshot(chip-basic-ios-ltr.png)",
-                  "startTime": "2024-01-19T22:14:58.081Z",
-                  "duration": 195,
-                  "steps": [
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-expected.png\"",
-                      "startTime": "2024-01-19T22:14:58.274Z",
-                      "duration": 1,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-actual.png\"",
-                      "startTime": "2024-01-19T22:14:58.275Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-ltr-diff.png\"",
-                      "startTime": "2024-01-19T22:14:58.275Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 26
-                  },
-                  "error": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  50 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-ltr-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-852a4-ng---ios-ltr-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-ltr-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 50 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n"
-                },
-                {
-                  "title": "page._expectScreenshot",
-                  "startTime": "2024-01-19T22:14:58.083Z",
-                  "duration": 191,
-                  "steps": [],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 7
-                  }
-                },
-                {
-                  "title": "After Hooks",
-                  "startTime": "2024-01-19T22:14:58.276Z",
-                  "duration": 60,
-                  "steps": [
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.276Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.276Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:58.276Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "attach \"trace\"",
-                      "startTime": "2024-01-19T22:14:58.330Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:58.331Z",
-                      "duration": 5,
-                      "steps": []
-                    }
-                  ]
-                }
-              ],
-              "startTime": "2024-01-19T22:14:57.668Z"
+              "attachments": []
             }
-          ],
-          "ok": false
+          ]
         },
         {
           "testId": "f6ea308e81510890fd6f-85335ae9072da05e3657",
@@ -1343,7 +193,7 @@
             "line": 9,
             "column": 10
           },
-          "duration": 562,
+          "duration": 300,
           "annotations": [
             {
               "type": "theme",
@@ -1358,248 +208,26 @@
               "description": "rtl"
             }
           ],
-          "outcome": "unexpected",
+          "outcome": "expected",
           "path": [
             "chip: rendering - ios/rtl"
           ],
+          "ok": true,
           "results": [
             {
-              "status": "failed",
-              "duration": 562,
-              "errors": [
-                {
-                  "message": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  51 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n",
-                  "stack": "Error: \u001b[31mScreenshot comparison failed:\u001b[39m\n\n  51 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\n    at /Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts:26:26",
-                  "location": {
-                    "file": "/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts",
-                    "column": 26,
-                    "line": 26
-                  },
-                  "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m       \u001b[36mconst\u001b[39m chip \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'ion-chip'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       \u001b[36mawait\u001b[39m expect(chip)\u001b[33m.\u001b[39mtoHaveScreenshot(screenshot(\u001b[32m`chip-basic`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 28 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
-                }
-              ],
-              "retry": 0,
-              "steps": [
-                {
-                  "title": "Before Hooks",
-                  "startTime": "2024-01-19T22:14:58.534Z",
-                  "duration": 275,
-                  "steps": [
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:58.545Z",
-                      "duration": 105,
-                      "steps": [
-                        {
-                          "title": "browserType.launch",
-                          "startTime": "2024-01-19T22:14:58.546Z",
-                          "duration": 104,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:58.651Z",
-                      "duration": 26,
-                      "steps": [
-                        {
-                          "title": "browser.newContext",
-                          "startTime": "2024-01-19T22:14:58.652Z",
-                          "duration": 20,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.677Z",
-                      "duration": 124,
-                      "steps": [
-                        {
-                          "title": "browserContext.newPage",
-                          "startTime": "2024-01-19T22:14:58.677Z",
-                          "duration": 124,
-                          "steps": []
-                        }
-                      ]
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:58.801Z",
-                      "duration": 8,
-                      "steps": [
-                        {
-                          "title": "page.exposeFunction",
-                          "startTime": "2024-01-19T22:14:58.803Z",
-                          "duration": 6,
-                          "steps": [],
-                          "location": {
-                            "file": "src/utils/test/playwright/page/event-spy.ts",
-                            "line": 82,
-                            "column": 14
-                          }
-                        }
-                      ],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    }
-                  ]
-                },
-                {
-                  "title": "page.route",
-                  "startTime": "2024-01-19T22:14:58.810Z",
-                  "duration": 1,
-                  "steps": [],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                    "line": 68,
-                    "column": 16
-                  }
-                },
-                {
-                  "title": "page.waitForFunction",
-                  "startTime": "2024-01-19T22:14:58.813Z",
-                  "duration": 132,
-                  "steps": [
-                    {
-                      "title": "page.originalFn(http://localhost:3333#?ionic:_testing=true&ionic:mode=ios&rtl=true)",
-                      "startTime": "2024-01-19T22:14:58.813Z",
-                      "duration": 76,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/goto.ts",
-                        "line": 83,
-                        "column": 5
-                      }
-                    },
-                    {
-                      "title": "route.fulfill",
-                      "startTime": "2024-01-19T22:14:58.829Z",
-                      "duration": 2,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/page/utils/set-content.ts",
-                        "line": 74,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/utils/test/playwright/page/utils/goto.ts",
-                    "line": 82,
-                    "column": 10
-                  }
-                },
-                {
-                  "title": "expect.toHaveScreenshot(chip-basic-ios-rtl.png)",
-                  "startTime": "2024-01-19T22:14:58.946Z",
-                  "duration": 196,
-                  "steps": [
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-expected.png\"",
-                      "startTime": "2024-01-19T22:14:59.141Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-actual.png\"",
-                      "startTime": "2024-01-19T22:14:59.141Z",
-                      "duration": 1,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    },
-                    {
-                      "title": "attach \"chip-basic-ios-rtl-diff.png\"",
-                      "startTime": "2024-01-19T22:14:59.142Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/components/chip/test/basic/chip.e2e.ts",
-                        "line": 26,
-                        "column": 7
-                      }
-                    }
-                  ],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 26
-                  },
-                  "error": "\u001b[31mScreenshot comparison failed:\u001b[39m\n\n  51 pixels (ratio 0.02 of all image pixels) are different.\n\nExpected: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/src/components/chip/test/basic/chip.e2e.ts-snapshots/chip-basic-ios-rtl-Mobile-Safari-darwin.png\u001b[39m\nReceived: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-actual.png\u001b[39m\n    Diff: \u001b[33m/Users/maria/Desktop/projects/ionic-framework/core/test-results/src-components-chip-test-basic-chip.e2e.ts-chi-7387e-ng---ios-rtl-should-not-have-visual-regressions-Mobile-Safari/chip-basic-ios-rtl-diff.png\u001b[39m\n\nCall log:\n  \u001b[2m- page._expectScreenshot with timeout 5000ms\u001b[22m\n\u001b[2m  -   verifying given screenshot expectation\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - waiting for locator('ion-chip')\u001b[22m\n\u001b[2m  -   locator resolved to <ion-chip class=\"ios ion-activatable hydrated\">…</ion-chip>\u001b[22m\n\u001b[2m  - taking element screenshot\u001b[22m\n\u001b[2m  -   disabled all CSS animations\u001b[22m\n\u001b[2m  -   waiting for element to be visible and stable\u001b[22m\n\u001b[2m  -   element is visible and stable\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 51 pixels (ratio 0.02 of all image pixels) are different.\u001b[22m\n"
-                },
-                {
-                  "title": "page._expectScreenshot",
-                  "startTime": "2024-01-19T22:14:58.948Z",
-                  "duration": 192,
-                  "steps": [],
-                  "location": {
-                    "file": "src/components/chip/test/basic/chip.e2e.ts",
-                    "line": 26,
-                    "column": 7
-                  }
-                },
-                {
-                  "title": "After Hooks",
-                  "startTime": "2024-01-19T22:14:59.142Z",
-                  "duration": 60,
-                  "steps": [
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:59.143Z",
-                      "duration": 0,
-                      "steps": [],
-                      "location": {
-                        "file": "src/utils/test/playwright/playwright-page.ts",
-                        "line": 62,
-                        "column": 26
-                      }
-                    },
-                    {
-                      "title": "fixture: page",
-                      "startTime": "2024-01-19T22:14:59.143Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: context",
-                      "startTime": "2024-01-19T22:14:59.143Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "attach \"trace\"",
-                      "startTime": "2024-01-19T22:14:59.196Z",
-                      "duration": 0,
-                      "steps": []
-                    },
-                    {
-                      "title": "fixture: browser",
-                      "startTime": "2024-01-19T22:14:59.197Z",
-                      "duration": 5,
-                      "steps": []
-                    }
-                  ]
-                }
-              ],
-              "startTime": "2024-01-19T22:14:58.529Z"
+              "attachments": []
             }
-          ],
-          "ok": false
+          ]
         }
-      ]
+      ],
+      "stats": {
+        "total": 6,
+        "expected": 6,
+        "unexpected": 0,
+        "flaky": 0,
+        "skipped": 0,
+        "ok": true
+      }
     }
   ],
   "projectNames": [
@@ -1609,11 +237,11 @@
   ],
   "stats": {
     "total": 6,
-    "expected": 0,
-    "unexpected": 6,
+    "expected": 6,
+    "unexpected": 0,
     "flaky": 0,
     "skipped": 0,
-    "ok": false
+    "ok": true
   },
   "errors": []
 }

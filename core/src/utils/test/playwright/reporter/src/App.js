@@ -25,15 +25,15 @@ function App() {
                   <p>{`${location.file}:${location.line}`}</p>
                   <p>{`Duration: ${duration}ms`}</p>
                   {results.map((result) => {
-                    const { status, errors } = result;
+                    const { attachments } = result;
                     return (
                       <div>
-                        <p>{status}</p>
-                        {errors.map((error) => {
-                          const { message, stack } = error;
+                        {attachments.map((attachment) => {
+                          const { name, path } = attachment;
                           return (
                             <div>
-                              <pre>{message}</pre>
+                              <p>{name}</p>
+                              <img src={`/playwright-report/${path}`} alt={name} />
                             </div>
                           );
                         })}

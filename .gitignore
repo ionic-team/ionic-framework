@@ -68,6 +68,7 @@ core/www/
 # playwright
 core/test-results/
 core/playwright-report/
+core/src/utils/test/playwright/reporter/public/playwright-report
 core/**/*-snapshots
 !core/src/components/chip/test/basic/*-snapshots
 
