@@ -61,9 +61,6 @@ export class Textarea implements ComponentInterface {
 
   private notchController?: NotchController;
 
-  // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
-
   /**
    * The value of the textarea when the textarea is focused.
    */
