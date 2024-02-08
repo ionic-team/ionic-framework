@@ -87,7 +87,7 @@ export const createAnimation = (animationId?: string): Animation => {
     typeof (Element as any) === 'function' &&
     typeof (Element as any).prototype!.animate === 'function' &&
     supportsAnimationEffect;
-  const ANIMATION_END_FALLBACK_PADDING_MS = 100;
+  // const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   const getWebAnimations = () => {
     return webAnimations;
@@ -925,16 +925,17 @@ export const createAnimation = (animationId?: string): Animation => {
        * accounts for this, but using raw CSS Animations requires
        * this workaround.
        */
-      const animationDelay = getDelay() || 0;
-      const animationDuration = getDuration() || 0;
+      // const animationDelay = getDelay() || 0;
+      // const animationDuration = getDuration() || 0;
       const animationIterations = getIterations() || 1;
 
       // No need to set a timeout when animation has infinite iterations
       if (isFinite(animationIterations)) {
-        cssAnimationsTimerFallback = setTimeout(
-          onAnimationEndFallback,
-          animationDelay + animationDuration * animationIterations + ANIMATION_END_FALLBACK_PADDING_MS
-        );
+        // cssAnimationsTimerFallback = setTimeout(
+        //   onAnimationEndFallback,
+        //   animationDelay + animationDuration * animationIterations + ANIMATION_END_FALLBACK_PADDING_MS
+        // );
+        onAnimationEndFallback();
       }
 
       animationEnd(elements[0], () => {
