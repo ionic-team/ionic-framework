@@ -60,6 +60,7 @@ export class Range implements ComponentInterface {
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
   private legacyFormController!: LegacyFormController;
+  private isScrolling = false;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -419,41 +420,64 @@ export class Range implements ComponentInterface {
   }
 
   private onStart(detail: GestureDetail) {
+    console.log('onStart', detail);
+
+    this.ionKnobMoveStart.emit({ value: this.ensureValueInBounds(this.value) });
+  }
+
+  private onMove(detail: GestureDetail) {
     const { contentEl } = this;
-    if (contentEl) {
+    const deltaY = detail.deltaY;
+    const currentX = detail.currentX;
+
+    // dont proceed if the user is scrolling on the page
+    const isScrolling = Math.abs(deltaY) > Math.abs(detail.deltaX);
+    if (isScrolling) {
+      console.log('isScrolling', isScrolling);
+      this.isScrolling = true;
+      this.pressedKnob = undefined;
+      return;
+    }
+
+    if (this.pressedKnob === undefined) {
+      this.setPressedKnob(currentX);
+    }
+
+    // the page should not scroll when dragging the range slider
+    if (contentEl && this.initialContentScrollY === undefined) {
       this.initialContentScrollY = disableContentScrollY(contentEl);
     }
 
-    const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
+    console.log('onMove', detail);
+    this.update(currentX);
+  }
+
+  private onEnd(detail: GestureDetail) {
+    console.log('onEnd', detail);
+    const { contentEl, initialContentScrollY } = this;
     const currentX = detail.currentX;
 
-    // figure out which knob they started closer to
-    let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (isRTL(this.el)) {
-      ratio = 1 - ratio;
+    if (contentEl) {
+      resetContentScrollY(contentEl, initialContentScrollY);
     }
 
-    this.pressedKnob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
+    // the user is done scrolling on the page
+    if (this.isScrolling) {
+      this.isScrolling = false;
+      return;
+    }
+
+    // The pressed knob can be undefined if the user doesn't drag the knob
+    if (this.pressedKnob === undefined) {
+      this.setPressedKnob(currentX);
+    }
 
     this.setFocus(this.pressedKnob);
 
     // update the active knob's position
     this.update(currentX);
 
-    this.ionKnobMoveStart.emit({ value: this.ensureValueInBounds(this.value) });
-  }
-
-  private onMove(detail: GestureDetail) {
-    this.update(detail.currentX);
-  }
-
-  private onEnd(detail: GestureDetail) {
-    const { contentEl, initialContentScrollY } = this;
-    if (contentEl) {
-      resetContentScrollY(contentEl, initialContentScrollY);
-    }
-
-    this.update(detail.currentX);
+    // this.update(detail.currentX);
     this.pressedKnob = undefined;
 
     this.emitValueChange();
@@ -483,6 +507,18 @@ export class Range implements ComponentInterface {
 
     // Update input value
     this.updateValue();
+  }
+
+  private setPressedKnob(currentX: number) {
+    // this.rect = this.rangeSlider!.getBoundingClientRect();
+    const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
+
+    // figure out which knob they started closer to
+    let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    if (isRTL(this.el)) {
+      ratio = 1 - ratio;
+    }
+    this.pressedKnob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
   }
 
   private get valA() {
