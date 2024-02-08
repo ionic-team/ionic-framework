@@ -1406,7 +1406,6 @@ ion-textarea,prop,helperText,string | undefined,undefined,false,false
 ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-textarea,prop,label,string | undefined,undefined,false,false
 ion-textarea,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
-ion-textarea,prop,legacy,boolean | undefined,undefined,false,false
 ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false

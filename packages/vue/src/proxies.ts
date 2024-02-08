@@ -840,7 +840,6 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea, JSX.Io
   'helperText',
   'label',
   'labelPlacement',
-  'legacy',
   'shape',
   'ionChange',
   'ionInput',
