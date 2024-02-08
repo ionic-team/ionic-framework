@@ -5,194 +5,192 @@ import { Nav } from '../../../components/nav/nav';
 import { RouterOutlet } from '../../../components/router-outlet/router-outlet';
 import { setRootAriaHidden } from '../../overlays';
 
-describe('overlays', () => {
-  describe('setRootAriaHidden()', () => {
-    it('should correctly remove and re-add router outlet from accessibility tree', async () => {
-      const page = await newSpecPage({
-        components: [RouterOutlet],
-        html: `
-          <ion-router-outlet></ion-router-outlet>
-        `,
-      });
-
-      const routerOutlet = page.body.querySelector('ion-router-outlet')!;
-
-      expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
-
-      setRootAriaHidden(true);
-      expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
-
-      setRootAriaHidden(false);
-      expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
+describe('setRootAriaHidden()', () => {
+  it('should correctly remove and re-add router outlet from accessibility tree', async () => {
+    const page = await newSpecPage({
+      components: [RouterOutlet],
+      html: `
+        <ion-router-outlet></ion-router-outlet>
+      `,
     });
 
-    it('should correctly remove and re-add nav from accessibility tree', async () => {
-      const page = await newSpecPage({
-        components: [Nav],
-        html: `
-          <ion-nav></ion-nav>
-        `,
-      });
+    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
 
-      const nav = page.body.querySelector('ion-nav')!;
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
 
-      expect(nav.hasAttribute('aria-hidden')).toEqual(false);
+    setRootAriaHidden(true);
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
 
-      setRootAriaHidden(true);
-      expect(nav.hasAttribute('aria-hidden')).toEqual(true);
-
-      setRootAriaHidden(false);
-      expect(nav.hasAttribute('aria-hidden')).toEqual(false);
-    });
-
-    it('should correctly remove and re-add custom container from accessibility tree', async () => {
-      const page = await newSpecPage({
-        components: [],
-        html: `
-          <div id="ion-view-container-root"></div>
-          <div id="not-container-root"></div>
-        `,
-      });
-
-      const containerRoot = page.body.querySelector('#ion-view-container-root')!;
-      const notContainerRoot = page.body.querySelector('#not-container-root')!;
-
-      expect(containerRoot.hasAttribute('aria-hidden')).toEqual(false);
-      expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
-
-      setRootAriaHidden(true);
-      expect(containerRoot.hasAttribute('aria-hidden')).toEqual(true);
-      expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
-
-      setRootAriaHidden(false);
-      expect(containerRoot.hasAttribute('aria-hidden')).toEqual(false);
-      expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
-    });
-
-    it('should not error if router outlet was not found', async () => {
-      await newSpecPage({
-        components: [],
-        html: `
-          <div></div>
-        `,
-      });
-
-      setRootAriaHidden(true);
-    });
-
-    it('should remove router-outlet from accessibility tree when overlay is presented', async () => {
-      const page = await newSpecPage({
-        components: [RouterOutlet, Modal],
-        html: `
-          <ion-router-outlet>
-            <ion-modal></ion-modal>
-          </ion-router-outlet>
-        `,
-      });
-
-      const routerOutlet = page.body.querySelector('ion-router-outlet')!;
-      const modal = page.body.querySelector('ion-modal')!;
-
-      await modal.present();
-
-      expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
-    });
-
-    it('should add router-outlet from accessibility tree when then final overlay is dismissed', async () => {
-      const page = await newSpecPage({
-        components: [RouterOutlet, Modal],
-        html: `
-          <ion-router-outlet>
-            <ion-modal id="one"></ion-modal>
-            <ion-modal id="two"></ion-modal>
-          </ion-router-outlet>
-        `,
-      });
-
-      const routerOutlet = page.body.querySelector('ion-router-outlet')!;
-      const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
-      const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
-
-      await modalOne.present();
-
-      expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
-
-      await modalTwo.present();
-
-      expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
-
-      await modalOne.dismiss();
-
-      expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
-
-      await modalTwo.dismiss();
-
-      expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
-    });
+    setRootAriaHidden(false);
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
   });
 
-  describe('aria-hidden on individual overlays', () => {
-    it('should hide non-topmost overlays from screen readers', async () => {
-      const page = await newSpecPage({
-        components: [Modal],
-        html: `
-          <ion-modal id="one"></ion-modal>
-          <ion-modal id="two"></ion-modal>
-        `,
-      });
-
-      const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
-      const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
-
-      await modalOne.present();
-      await modalTwo.present();
-
-      expect(modalOne.hasAttribute('aria-hidden')).toEqual(true);
-      expect(modalTwo.hasAttribute('aria-hidden')).toEqual(false);
+  it('should correctly remove and re-add nav from accessibility tree', async () => {
+    const page = await newSpecPage({
+      components: [Nav],
+      html: `
+        <ion-nav></ion-nav>
+      `,
     });
 
-    it('should unhide new topmost overlay from screen readers when topmost is dismissed', async () => {
-      const page = await newSpecPage({
-        components: [Modal],
-        html: `
-          <ion-modal id="one"></ion-modal>
-          <ion-modal id="two"></ion-modal>
-        `,
-      });
+    const nav = page.body.querySelector('ion-nav')!;
 
-      const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
-      const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+    expect(nav.hasAttribute('aria-hidden')).toEqual(false);
 
-      await modalOne.present();
-      await modalTwo.present();
+    setRootAriaHidden(true);
+    expect(nav.hasAttribute('aria-hidden')).toEqual(true);
 
-      // dismiss modalTwo so that modalOne becomes the new topmost overlay
-      await modalTwo.dismiss();
+    setRootAriaHidden(false);
+    expect(nav.hasAttribute('aria-hidden')).toEqual(false);
+  });
 
-      expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
+  it('should correctly remove and re-add custom container from accessibility tree', async () => {
+    const page = await newSpecPage({
+      components: [],
+      html: `
+        <div id="ion-view-container-root"></div>
+        <div id="not-container-root"></div>
+      `,
     });
 
-    it('should not keep overlays hidden from screen readers if presented after being dismissed while non-topmost', async () => {
-      const page = await newSpecPage({
-        components: [Modal],
-        html: `
+    const containerRoot = page.body.querySelector('#ion-view-container-root')!;
+    const notContainerRoot = page.body.querySelector('#not-container-root')!;
+
+    expect(containerRoot.hasAttribute('aria-hidden')).toEqual(false);
+    expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
+
+    setRootAriaHidden(true);
+    expect(containerRoot.hasAttribute('aria-hidden')).toEqual(true);
+    expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
+
+    setRootAriaHidden(false);
+    expect(containerRoot.hasAttribute('aria-hidden')).toEqual(false);
+    expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
+  });
+
+  it('should not error if router outlet was not found', async () => {
+    await newSpecPage({
+      components: [],
+      html: `
+        <div></div>
+      `,
+    });
+
+    setRootAriaHidden(true);
+  });
+
+  it('should remove router-outlet from accessibility tree when overlay is presented', async () => {
+    const page = await newSpecPage({
+      components: [RouterOutlet, Modal],
+      html: `
+        <ion-router-outlet>
+          <ion-modal></ion-modal>
+        </ion-router-outlet>
+      `,
+    });
+
+    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
+    const modal = page.body.querySelector('ion-modal')!;
+
+    await modal.present();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+  });
+
+  it('should add router-outlet from accessibility tree when then final overlay is dismissed', async () => {
+    const page = await newSpecPage({
+      components: [RouterOutlet, Modal],
+      html: `
+        <ion-router-outlet>
           <ion-modal id="one"></ion-modal>
           <ion-modal id="two"></ion-modal>
-        `,
-      });
-
-      const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
-      const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
-
-      await modalOne.present();
-      await modalTwo.present();
-
-      // modalOne is not the topmost overlay at this point and is hidden from screen readers
-      await modalOne.dismiss();
-
-      // modalOne will become the topmost overlay; ensure it isn't still hidden from screen readers
-      await modalOne.present();
-      expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
+        </ion-router-outlet>
+      `,
     });
+
+    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
+    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
+    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+
+    await modalOne.present();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+
+    await modalTwo.present();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+
+    await modalOne.dismiss();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+
+    await modalTwo.dismiss();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
+  });
+});
+
+describe('aria-hidden on individual overlays', () => {
+  it('should hide non-topmost overlays from screen readers', async () => {
+    const page = await newSpecPage({
+      components: [Modal],
+      html: `
+        <ion-modal id="one"></ion-modal>
+        <ion-modal id="two"></ion-modal>
+      `,
+    });
+
+    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
+    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+
+    await modalOne.present();
+    await modalTwo.present();
+
+    expect(modalOne.hasAttribute('aria-hidden')).toEqual(true);
+    expect(modalTwo.hasAttribute('aria-hidden')).toEqual(false);
+  });
+
+  it('should unhide new topmost overlay from screen readers when topmost is dismissed', async () => {
+    const page = await newSpecPage({
+      components: [Modal],
+      html: `
+        <ion-modal id="one"></ion-modal>
+        <ion-modal id="two"></ion-modal>
+      `,
+    });
+
+    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
+    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+
+    await modalOne.present();
+    await modalTwo.present();
+
+    // dismiss modalTwo so that modalOne becomes the new topmost overlay
+    await modalTwo.dismiss();
+
+    expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
+  });
+
+  it('should not keep overlays hidden from screen readers if presented after being dismissed while non-topmost', async () => {
+    const page = await newSpecPage({
+      components: [Modal],
+      html: `
+        <ion-modal id="one"></ion-modal>
+        <ion-modal id="two"></ion-modal>
+      `,
+    });
+
+    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
+    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+
+    await modalOne.present();
+    await modalTwo.present();
+
+    // modalOne is not the topmost overlay at this point and is hidden from screen readers
+    await modalOne.dismiss();
+
+    // modalOne will become the topmost overlay; ensure it isn't still hidden from screen readers
+    await modalOne.present();
+    expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
   });
 });
