@@ -93,6 +93,19 @@ describe('toast: a11y smoke test', () => {
 });
 
 describe('toast: duration config', () => {
+  afterEach(() => {
+    /**
+     * Important: Reset the config
+     * after each test as it is not
+     * automatically reset.
+     * Otherwise, toasts in other tests
+     * will take on any toastDuration value
+     * set and timeouts will potentially run
+     * after tests are finished.
+     */
+    config.reset({});
+  });
+
   it('should have duration set to 0', async () => {
     const page = await newSpecPage({
       components: [Toast],
