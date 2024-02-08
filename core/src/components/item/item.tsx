@@ -358,15 +358,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private getFirstInteractive() {
-    if (Build.isTesting) {
-      /**
-       * Pseudo selectors can't be tested in unit tests.
-       * It will cause an error when running the tests.
-       *
-       * TODO: FW-5205 - Remove the build conditional when this is fixed in Stencil
-       */
-      return undefined;
-    }
     const controls = this.el.querySelectorAll<HTMLElement>(
       'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled]), ion-select:not([disabled])'
     );
