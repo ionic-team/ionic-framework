@@ -18,24 +18,6 @@
   font-size: $textarea-md-font-size;
 }
 
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea) {
-  --padding-top: #{$textarea-md-padding-top};
-  --padding-end: #{$textarea-md-padding-end};
-  --padding-bottom: #{$textarea-md-padding-bottom};
-  --padding-start: #{$textarea-md-padding-start};
-
-  @include margin(8px, 0, 0, 0);
-}
-
-// TODO: FW-2876 - Re-evaluate this selector, it may not be needed
-:host-context(.item-label-stacked),
-:host-context(.item-label-floating) {
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  --padding-start: 0;
-}
-
 // Textarea Max Length Counter
 // ----------------------------------------------------------------
 .textarea-bottom .counter {
