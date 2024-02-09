@@ -3035,10 +3035,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
@@ -7821,10 +7817,6 @@ declare namespace LocalJSX {
           * Where to place the label relative to the textarea. `"start"`: The label will appear to the left of the textarea in LTR and to the right in RTL. `"end"`: The label will appear to the right of the textarea in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
-        /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
         /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */

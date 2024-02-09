@@ -37,7 +37,7 @@
   --placeholder-opacity: #{$placeholder-opacity};
   --padding-top: 0;
   --padding-end: 0;
-  --padding-bottom: 0;
+  --padding-bottom: #{$textarea-padding-bottom};
   --padding-start: 0;
   --border-radius: 0;
   --border-style: solid;
@@ -58,6 +58,8 @@
 
   width: 100%;
 
+  min-height: 44px;
+
   color: var(--color);
 
   font-family: $font-family-base;
@@ -69,11 +71,6 @@
 
 // Textarea Wrapper
 // ----------------------------------------------------------------
-
-// TODO: FW-2876 - Make this style a :host style, remove :not selector
-:host(:not(.legacy-textarea)) {
-  min-height: 44px;
-}
 
 /**
  * Since the label sits on top of the element,
@@ -104,25 +101,6 @@
  */
 :host([cols]:not([auto-grow])) {
   width: fit-content;
-}
-
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea) {
-  flex: 1;
-
-  background: var(--background);
-
-  white-space: pre-wrap;
-}
-
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea.ion-color) {
-  color: current-color(base);
-}
-
-// TODO: FW-2876 - Remove this selector, move styles to :host
-:host(:not(.legacy-textarea)) {
-  --padding-bottom: #{$textarea-padding-bottom};
 }
 
 :host(.ion-color) {
@@ -200,18 +178,6 @@
   }
 }
 
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea) .native-textarea {
-  white-space: inherit;
-}
-
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea) .native-textarea,
-:host(.legacy-textarea) .textarea-legacy-wrapper::after {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include border-radius(var(--border-radius));
-}
-
 .native-textarea {
   color: inherit;
 
@@ -227,15 +193,6 @@
   text-indent: inherit;
   text-overflow: inherit;
   text-transform: inherit;
-
-  grid-area: 1 / 1 / 2 / 2;
-
-  word-break: break-word;
-}
-
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea) .textarea-legacy-wrapper::after {
-  @include text-inherit();
 
   grid-area: 1 / 1 / 2 / 2;
 
@@ -265,11 +222,6 @@
  */
 .cloned-input:disabled {
   opacity: 1;
-}
-
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea[auto-grow]) .cloned-input {
-  @include margin(0, 0, 0, 0);
 }
 
 :host([auto-grow]) .cloned-input {
@@ -348,9 +300,7 @@
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
 
-.native-wrapper,
-// TODO: FW-2876 - Remove this selector, keep .native-wrapper
-.textarea-legacy-wrapper {
+.native-wrapper {
   display: grid;
 
   min-width: inherit;
