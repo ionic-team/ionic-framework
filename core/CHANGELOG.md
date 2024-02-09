@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.1](https://github.com/ionic-team/ionic-framework/compare/v7.7.0...v7.7.1) (2024-02-07)
+
+
+### Bug Fixes
+
+* **action-sheet:** iOS dismiss animation respects safe area ([#28915](https://github.com/ionic-team/ionic-framework/issues/28915)) ([7449fb4](https://github.com/ionic-team/ionic-framework/commit/7449fb4fed4048f5d01ba068dc6f8e2d7727e95d)), closes [#28541](https://github.com/ionic-team/ionic-framework/issues/28541)
+* **overlays:** tear down animations after dismiss ([#28907](https://github.com/ionic-team/ionic-framework/issues/28907)) ([950fa40](https://github.com/ionic-team/ionic-framework/commit/950fa40c5597c81d5cbaeb9276b09adfea5e79fb)), closes [#28352](https://github.com/ionic-team/ionic-framework/issues/28352)
+* **select:** popover can be scrolled ([#28965](https://github.com/ionic-team/ionic-framework/issues/28965)) ([35ab6b4](https://github.com/ionic-team/ionic-framework/commit/35ab6b4816bd627239de8d8b25ce0c86db8c74b4)), closes [#28963](https://github.com/ionic-team/ionic-framework/issues/28963)
+
+
+
+
+
 # [7.7.0](https://github.com/ionic-team/ionic-framework/compare/v7.6.7...v7.7.0) (2024-01-31)
 
 
