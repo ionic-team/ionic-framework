@@ -1,8 +1,14 @@
 @import "./progress-bar";
+@import "./progress-bar.md.vars";
 
 // Material Design Progress bar
 // --------------------------------------------------
 
 :host {
-  height: 4px;
+  height: $progress-bar-md-height;
+}
+
+
+:host(.ion-color) .progress-buffer-bar {
+  background: #{current-color(base, 0.3)};
 }

@@ -15,11 +15,11 @@
 
     <style>
       .custom-bar-background {
-        --buffer-background: red;
+        --background: red;
       }
 
       .no-bar-background {
-        --buffer-background: none;
+        --background: none;
       }
 
       ion-content ion-progress-bar {
@@ -69,7 +69,7 @@
           <ion-progress-bar id="progressBar"></ion-progress-bar>
 
           <ion-item>
-            <ion-range legacy="true" pin="true" value="0" id="progressValue">
+            <ion-range aria-label="Buffer" pin="true" value="0" id="progressValue">
               <ion-label slot="start">0</ion-label>
               <ion-label slot="end">100</ion-label>
             </ion-range>

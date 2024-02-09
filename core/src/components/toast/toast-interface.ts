@@ -1,4 +1,4 @@
-import type { AnimationBuilder, Color, Mode } from '../../interface';
+import type { AnimationBuilder, Color, LiteralUnion, Mode } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface ToastOptions {
@@ -27,18 +27,11 @@ export interface ToastOptions {
 
 export type ToastLayout = 'baseline' | 'stacked';
 
-// TODO FW-4923 remove cssClass property
-
 export interface ToastButton {
   text?: string;
   icon?: string;
   side?: 'start' | 'end';
-  role?: 'cancel' | string;
-
-  /**
-   * @deprecated Use the toast button's CSS Shadow Parts instead.
-   */
-  cssClass?: string | string[];
+  role?: LiteralUnion<'cancel', string>;
   htmlAttributes?: { [key: string]: any };
   handler?: () => boolean | void | Promise<boolean | void>;
 }

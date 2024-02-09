@@ -1,4 +1,4 @@
-import type { AnimationBuilder, Mode } from '../../interface';
+import type { AnimationBuilder, LiteralUnion, Mode } from '../../interface';
 
 export interface ActionSheetOptions {
   header?: string;
@@ -19,11 +19,19 @@ export interface ActionSheetOptions {
 
 export interface ActionSheetButton<T = any> {
   text?: string;
-  role?: 'cancel' | 'destructive' | 'selected' | string;
+  role?: LiteralUnion<'cancel' | 'destructive' | 'selected', string>;
   icon?: string;
   cssClass?: string | string[];
   id?: string;
   htmlAttributes?: { [key: string]: any };
   handler?: () => boolean | void | Promise<boolean | void>;
   data?: T;
+  /**
+   * When `disabled` is `true` the action
+   * sheet button will not be interactive. Note
+   * that buttons with a 'cancel' role cannot
+   * be disabled as that would make it difficult for
+   * users to dismiss the action sheet.
+   */
+  disabled?: boolean;
 }

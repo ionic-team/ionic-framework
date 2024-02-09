@@ -60,6 +60,7 @@ ion-action-sheet,css-prop,--button-background-selected
 ion-action-sheet,css-prop,--button-background-selected-opacity
 ion-action-sheet,css-prop,--button-color
 ion-action-sheet,css-prop,--button-color-activated
+ion-action-sheet,css-prop,--button-color-disabled
 ion-action-sheet,css-prop,--button-color-focused
 ion-action-sheet,css-prop,--button-color-hover
 ion-action-sheet,css-prop,--button-color-selected
@@ -547,7 +548,6 @@ ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circula
 ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-input,scoped
-ion-input,prop,accept,string | undefined,undefined,false,false
 ion-input,prop,autocapitalize,string,'off',false,false
 ion-input,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
 ion-input,prop,autocorrect,"off" | "on",'off',false,false
@@ -579,7 +579,6 @@ ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,false
 ion-input,prop,required,boolean,false,false,false
 ion-input,prop,shape,"round" | undefined,undefined,false,false
-ion-input,prop,size,number | undefined,undefined,false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
 ion-input,prop,type,"date" | "datetime-local" | "email" | "month" | "number" | "password" | "search" | "tel" | "text" | "time" | "url" | "week",'text',false,false
@@ -1028,7 +1027,6 @@ ion-progress-bar,prop,reversed,boolean,false,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
 ion-progress-bar,prop,value,number,0,false,false
 ion-progress-bar,css-prop,--background
-ion-progress-bar,css-prop,--buffer-background
 ion-progress-bar,css-prop,--progress-background
 ion-progress-bar,part,progress
 ion-progress-bar,part,stream
@@ -1408,7 +1406,6 @@ ion-textarea,prop,helperText,string | undefined,undefined,false,false
 ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-textarea,prop,label,string | undefined,undefined,false,false
 ion-textarea,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
-ion-textarea,prop,legacy,boolean | undefined,undefined,false,false
 ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
