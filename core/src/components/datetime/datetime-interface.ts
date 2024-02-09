@@ -23,13 +23,13 @@ export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;
 
 export type DatetimeHighlightStyle =
   | {
-      textColor: string;
-      backgroundColor?: string;
-    }
+    textColor: string;
+    backgroundColor?: string;
+  }
   | {
-      textColor?: string;
-      backgroundColor: string;
-    };
+    textColor?: string;
+    backgroundColor: string;
+  };
 
 export type DatetimeHighlight = { date: string } & DatetimeHighlightStyle;
 
@@ -37,7 +37,6 @@ export type DatetimeHighlightCallback = (dateIsoString: string) => DatetimeHighl
 
 export type DatetimeHourCycle = 'h11' | 'h12' | 'h23' | 'h24';
 
-// export type TimeFormatOptions = { time: Intl.DateTimeFormatOptions };
-// export type DateFormatOptions = { date: Intl.DateTimeFormatOptions };
-// export type DatetimeFormatOptions = TimeFormatOptions | DateFormatOptions;
-export type DatetimeFormatOptions = { date?: Intl.DateTimeFormatOptions; time?: Intl.DateTimeFormatOptions };
+export type TimeFormatOptions = { time: Intl.DateTimeFormatOptions };
+export type DateFormatOptions = { date: Intl.DateTimeFormatOptions };
+export type DatetimeFormatOptions = TimeFormatOptions | DateFormatOptions;

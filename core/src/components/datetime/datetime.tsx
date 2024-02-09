@@ -21,6 +21,8 @@ import type {
   DatetimeHighlightCallback,
   DatetimeHourCycle,
   DatetimeFormatOptions,
+  TimeFormatOptions,
+  DateFormatOptions,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -178,8 +180,8 @@ export class Datetime implements ComponentInterface {
   @Prop() formatOptions?: DatetimeFormatOptions;
 
   @Watch('formatOptions')
-  protected formatOptionsChanged(formatOptions: DatetimeFormatOptions) {
-    this.errorIfTimeZoneProvided(formatOptions);
+  protected formatOptionsChanged() {
+    this.errorIfTimeZoneProvided();
   }
 
   /**
@@ -1394,7 +1396,7 @@ export class Datetime implements ComponentInterface {
     }
 
     if (formatOptions) {
-      this.errorIfTimeZoneProvided(formatOptions);
+      this.errorIfTimeZoneProvided();
     }
 
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
@@ -1424,12 +1426,23 @@ export class Datetime implements ComponentInterface {
     this.emitStyle();
   }
 
-  private errorIfTimeZoneProvided(formatOptions: DatetimeFormatOptions) {
+  get timeFormatOptions(): Intl.DateTimeFormatOptions | undefined {
+    const timeOptions = (this.formatOptions as TimeFormatOptions)?.time;
+    return timeOptions;
+  }
+
+  get dateFormatOptions(): Intl.DateTimeFormatOptions | undefined {
+    const dateOptions = (this.formatOptions as DateFormatOptions)?.date;
+    return dateOptions;
+  }
+
+  private errorIfTimeZoneProvided() {
+    const { timeFormatOptions, dateFormatOptions } = this;
     if (
-      formatOptions?.date?.timeZone ||
-      formatOptions?.time?.timeZone ||
-      formatOptions?.date?.timeZoneName ||
-      formatOptions?.time?.timeZoneName
+      dateFormatOptions?.timeZone ||
+      timeFormatOptions?.timeZone ||
+      dateFormatOptions?.timeZoneName ||
+      timeFormatOptions?.timeZoneName
     ) {
       printIonWarning('Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".');
     }
@@ -2380,11 +2393,11 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const { disabled, formatOptions, hourCycle, isTimePopoverOpen, locale } = this;
+    const { disabled, timeFormatOptions, hourCycle, isTimePopoverOpen, locale } = this;
     const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
-    const timeButtonFormatOptions = formatOptions?.time || {
+    const timeButtonFormatOptions = timeFormatOptions || {
       hour: 'numeric',
       minute: 'numeric',
       computedHourCycle,
@@ -2456,7 +2469,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private getHeaderSelectedDateText() {
-    const { activeParts, formatOptions, multiple, titleSelectedDatesFormatter } = this;
+    const { activeParts, dateFormatOptions, multiple, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
@@ -2470,7 +2483,7 @@ export class Datetime implements ComponentInterface {
         }
       }
     } else {
-      const headerFormatOptions: Intl.DateTimeFormatOptions = formatOptions?.date ?? {
+      const headerFormatOptions: Intl.DateTimeFormatOptions = dateFormatOptions ?? {
         weekday: 'short',
         month: 'short',
         day: 'numeric',
