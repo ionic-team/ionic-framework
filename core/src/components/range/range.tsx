@@ -301,7 +301,7 @@ export class Range implements ComponentInterface {
         gestureName: 'range',
         gesturePriority: 100,
         threshold: 0,
-        onStart: (ev) => this.onStart(ev),
+        onStart: () => this.onStart(),
         onMove: (ev) => this.onMove(ev),
         onEnd: (ev) => this.onEnd(ev),
       });
@@ -419,65 +419,124 @@ export class Range implements ComponentInterface {
     this.ionChange.emit({ value: this.value });
   }
 
-  private onStart(detail: GestureDetail) {
-    console.log('onStart', detail);
-
+  /**
+   * The value should be updated on touch end.
+   * This follows the native behavior of mobile devices.
+   *
+   * For example: When the user lifts their finger from the
+   * screen after tapping the bar or dragging the knob.
+   */
+  private onStart() {
     this.ionKnobMoveStart.emit({ value: this.ensureValueInBounds(this.value) });
   }
 
+  /**
+   * The value should be updated on touch end:
+   * - When the user lifts their finger from the screen after
+   * dragging the knob.
+   *
+   * While the user is dragging the knob, the view
+   * should not scroll. This is to prevent the user from
+   * feeling disoriented while dragging.
+   *
+   * The user can scroll on the view if the knob is not being dragged.
+   *
+   * @param detail The details of the gesture event.
+   */
   private onMove(detail: GestureDetail) {
-    const { contentEl } = this;
+    const { contentEl, pressedKnob } = this;
     const deltaY = detail.deltaY;
     const currentX = detail.currentX;
 
-    // dont proceed if the user is scrolling on the page
-    const isScrolling = Math.abs(deltaY) > Math.abs(detail.deltaX);
-    if (isScrolling) {
-      console.log('isScrolling', isScrolling);
+    /**
+     * The user is scrolling on the view.
+     * When scrolling, the range should not be dragged.
+     */
+    const isScrolling = deltaY != 0;
+    if (isScrolling && pressedKnob === undefined) {
       this.isScrolling = true;
-      this.pressedKnob = undefined;
       return;
     }
 
-    if (this.pressedKnob === undefined) {
-      this.setPressedKnob(currentX);
-    }
-
-    // the page should not scroll when dragging the range slider
+    /**
+     * It's been determined that the user is not scrolling on the view.
+     * Since the user is dragging the knob, the view should not scroll.
+     *
+     * This only needs to be done once.
+     */
     if (contentEl && this.initialContentScrollY === undefined) {
       this.initialContentScrollY = disableContentScrollY(contentEl);
     }
 
-    console.log('onMove', detail);
+    /**
+     * The `pressedKnob` can be undefined if the user just
+     * started dragging the knob.
+     *
+     * This is necessary to determine which knob the user is dragging,
+     * especially when it's a dual knob.
+     * Plus, it determines when to apply certain styles.
+     *
+     * This only needs to be done once since the knob won't change
+     * while the user is dragging.
+     */
+    if (pressedKnob === undefined) {
+      this.setPressedKnob(currentX);
+    }
+
     this.update(currentX);
   }
 
+  /**
+   * The value should be updated on touch end:
+   * - When the user lifts their finger from the screen after
+   * tapping the bar or dragging the knob.
+   *
+   *
+   *
+   * @param detail The details of the gesture event.
+   */
   private onEnd(detail: GestureDetail) {
-    console.log('onEnd', detail);
     const { contentEl, initialContentScrollY } = this;
     const currentX = detail.currentX;
 
-    if (contentEl) {
-      resetContentScrollY(contentEl, initialContentScrollY);
-    }
-
-    // the user is done scrolling on the page
-    if (this.isScrolling) {
+    /**
+     * The user is no longer scrolling on the view.
+     *
+     * The user can now scroll on the view or drag the range or knob
+     * in the next gesture event.
+     */
+    if (this.isScrolling && this.pressedKnob === undefined) {
       this.isScrolling = false;
       return;
     }
 
-    // The pressed knob can be undefined if the user doesn't drag the knob
+    /**
+     * The `pressedKnob` can be undefined if the user never
+     * dragged the knob. They just clicked on the range.
+     *
+     * This is necessary to determine which knob the user is changing,
+     * especially when it's a dual knob.
+     * Plus, it determines when to apply certain styles.
+     */
     if (this.pressedKnob === undefined) {
       this.setPressedKnob(currentX);
     }
 
-    this.setFocus(this.pressedKnob);
+    /**
+     * The user is no longer dragging the range or knob.
+     *
+     * The user can now scroll on the view in the next gesture event.
+     */
+    if (contentEl && initialContentScrollY !== undefined) {
+      resetContentScrollY(contentEl, initialContentScrollY);
+    }
 
     // update the active knob's position
     this.update(currentX);
-
-    // this.update(detail.currentX);
+    /**
+     * Reset the pressed knob to undefined since the user
+     * may start dragging a different knob in the next gesture event.
+     */
     this.pressedKnob = undefined;
 
     this.emitValueChange();
@@ -510,7 +569,6 @@ export class Range implements ComponentInterface {
   }
 
   private setPressedKnob(currentX: number) {
-    // this.rect = this.rangeSlider!.getBoundingClientRect();
     const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
 
     // figure out which knob they started closer to
@@ -519,6 +577,8 @@ export class Range implements ComponentInterface {
       ratio = 1 - ratio;
     }
     this.pressedKnob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
+
+    this.setFocus(this.pressedKnob);
   }
 
   private get valA() {
