@@ -1948,6 +1948,9 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
     }
+    interface IonPasswordStrength {
+        "strength"?: 'weak' | 'medium' | 'strong';
+    }
     interface IonPicker {
         /**
           * If `true`, the picker will animate.
@@ -4035,6 +4038,12 @@ declare global {
         prototype: HTMLIonNoteElement;
         new (): HTMLIonNoteElement;
     };
+    interface HTMLIonPasswordStrengthElement extends Components.IonPasswordStrength, HTMLStencilElement {
+    }
+    var HTMLIonPasswordStrengthElement: {
+        prototype: HTMLIonPasswordStrengthElement;
+        new (): HTMLIonPasswordStrengthElement;
+    };
     interface HTMLIonPickerElementEventMap {
         "ionPickerDidPresent": void;
         "ionPickerWillPresent": void;
@@ -4672,6 +4681,7 @@ declare global {
         "ion-nav": HTMLIonNavElement;
         "ion-nav-link": HTMLIonNavLinkElement;
         "ion-note": HTMLIonNoteElement;
+        "ion-password-strength": HTMLIonPasswordStrengthElement;
         "ion-picker": HTMLIonPickerElement;
         "ion-picker-column": HTMLIonPickerColumnElement;
         "ion-picker-column-internal": HTMLIonPickerColumnInternalElement;
@@ -6606,6 +6616,9 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
     }
+    interface IonPasswordStrength {
+        "strength"?: 'weak' | 'medium' | 'strong';
+    }
     interface IonPicker {
         /**
           * If `true`, the picker will animate.
@@ -8127,6 +8140,7 @@ declare namespace LocalJSX {
         "ion-nav": IonNav;
         "ion-nav-link": IonNavLink;
         "ion-note": IonNote;
+        "ion-password-strength": IonPasswordStrength;
         "ion-picker": IonPicker;
         "ion-picker-column": IonPickerColumn;
         "ion-picker-column-internal": IonPickerColumnInternal;
@@ -8224,6 +8238,7 @@ declare module "@stencil/core" {
             "ion-nav": LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
             "ion-nav-link": LocalJSX.IonNavLink & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
             "ion-note": LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
+            "ion-password-strength": LocalJSX.IonPasswordStrength & JSXBase.HTMLAttributes<HTMLIonPasswordStrengthElement>;
             "ion-picker": LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
             "ion-picker-column": LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
             "ion-picker-column-internal": LocalJSX.IonPickerColumnInternal & JSXBase.HTMLAttributes<HTMLIonPickerColumnInternalElement>;

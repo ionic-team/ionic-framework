@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Password Strength - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body class="ion-padding">
+    <ion-input label="Password" type="password" fill="outline"></ion-input>
+
+    <br />
+
+    <ion-password-strength>
+      <div slot="weak">Your password is weak</div>
+      <div slot="medium">Your password is medium</div>
+      <div slot="strong">Your password is strong</div>
+    </ion-password-strength>
+
+    <script>
+      const input = document.querySelector('ion-input');
+      const ps = document.querySelector('ion-password-strength');
+      input.addEventListener('ionInput', () => {
+        const val = input.value;
+
+        if (val.length === 0) {
+          ps.strength = undefined;
+        } else if (val.length < 4) {
+          ps.strength = 'weak';
+        } else if (val.length < 8) {
+          ps.strength = 'medium';
+        } else {
+          ps.strength = 'strong';
+        }
+      });
+    </script>
+  </body>
+</html>
