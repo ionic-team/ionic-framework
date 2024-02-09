@@ -60,7 +60,7 @@ export class Range implements ComponentInterface {
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
   private legacyFormController!: LegacyFormController;
-  private isScrolling = false;
+  private isScrollingView = false;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -447,14 +447,24 @@ export class Range implements ComponentInterface {
     const { contentEl, pressedKnob } = this;
     const deltaY = detail.deltaY;
     const currentX = detail.currentX;
+    /**
+     * Provide a threshold since the drag will not be
+     * smooth. The finger might move a few pixels up or down
+     * while dragging the knob.
+     */
+    const threshold = 3;
+    const isScrollingView = Math.abs(deltaY) > threshold;
 
     /**
-     * The user is scrolling on the view.
-     * When scrolling, the range should not be dragged.
+     * The user is scrolling on the view while not dragging the knob.
+     * During this scenario, the view should scroll and
+     * the knob should not move.
+     *
+     * The user might be dragging the knob and then start
+     * scrolling on the view. This is why the `pressedKnob` is checked.
      */
-    const isScrolling = deltaY != 0;
-    if (isScrolling && pressedKnob === undefined) {
-      this.isScrolling = true;
+    if (isScrollingView && pressedKnob === undefined) {
+      this.isScrollingView = true;
       return;
     }
 
@@ -502,17 +512,17 @@ export class Range implements ComponentInterface {
     /**
      * The user is no longer scrolling on the view.
      *
-     * The user can now scroll on the view or drag the range or knob
+     * The user can now scroll on the view again or drag the knob
      * in the next gesture event.
      */
-    if (this.isScrolling && this.pressedKnob === undefined) {
-      this.isScrolling = false;
+    if (this.isScrollingView) {
+      this.isScrollingView = false;
       return;
     }
 
     /**
      * The `pressedKnob` can be undefined if the user never
-     * dragged the knob. They just clicked on the range.
+     * dragged the knob. They just tapped on the bar.
      *
      * This is necessary to determine which knob the user is changing,
      * especially when it's a dual knob.
@@ -523,7 +533,7 @@ export class Range implements ComponentInterface {
     }
 
     /**
-     * The user is no longer dragging the range or knob.
+     * The user is no longer dragging the knob (if they were dragging it).
      *
      * The user can now scroll on the view in the next gesture event.
      */
