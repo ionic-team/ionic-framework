@@ -1290,6 +1290,7 @@ export namespace Components {
           * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
          */
         "step"?: string;
+        "togglePassword": boolean;
         /**
           * The type of control to display. The default type is text.
          */
@@ -6021,6 +6022,7 @@ declare namespace LocalJSX {
           * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
          */
         "step"?: string;
+        "togglePassword"?: boolean;
         /**
           * The type of control to display. The default type is text.
          */

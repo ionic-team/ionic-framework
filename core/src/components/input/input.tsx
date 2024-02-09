@@ -153,6 +153,8 @@ export class Input implements ComponentInterface {
     this.emitStyle();
   }
 
+  @Prop() togglePassword = false;
+
   /**
    * A hint to the browser for which enter key to display.
    * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
@@ -836,7 +838,9 @@ export class Input implements ComponentInterface {
                 <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
-            <slot name="end"></slot>
+            <slot name="end">
+              { this.togglePassword && <button>Hello World</button> }
+            </slot>
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
         </label>
