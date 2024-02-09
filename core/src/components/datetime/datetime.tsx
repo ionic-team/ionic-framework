@@ -20,6 +20,7 @@ import type {
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
   DatetimeHourCycle,
+  DatetimeFormatOptions,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -174,13 +175,10 @@ export class Datetime implements ComponentInterface {
   /**
    * Formatting options, separated by date and time.
    */
-  @Prop() formatOptions?: { date?: Intl.DateTimeFormatOptions; time?: Intl.DateTimeFormatOptions };
+  @Prop() formatOptions?: DatetimeFormatOptions;
 
   @Watch('formatOptions')
-  protected formatOptionsChanged(formatOptions: {
-    date?: Intl.DateTimeFormatOptions;
-    time?: Intl.DateTimeFormatOptions;
-  }) {
+  protected formatOptionsChanged(formatOptions: DatetimeFormatOptions) {
     this.errorIfTimeZoneProvided(formatOptions);
   }
 
@@ -1426,10 +1424,7 @@ export class Datetime implements ComponentInterface {
     this.emitStyle();
   }
 
-  private errorIfTimeZoneProvided(formatOptions: {
-    date?: Intl.DateTimeFormatOptions;
-    time?: Intl.DateTimeFormatOptions;
-  }) {
+  private errorIfTimeZoneProvided(formatOptions: DatetimeFormatOptions) {
     if (
       formatOptions?.date?.timeZone ||
       formatOptions?.time?.timeZone ||
