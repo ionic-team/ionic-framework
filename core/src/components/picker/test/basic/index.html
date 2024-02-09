@@ -22,6 +22,9 @@
     <ion-app>
       <ion-content class="ion-padding">
         <ion-button id="basic" expand="block" onclick="presentPicker()">Show Picker</ion-button>
+        <ion-button id="basicMultipleCancelBtns" expand="block" onclick="presentPicker('', false)"
+          >Show Picker w/ Multiple Cancel btns</ion-button
+        >
         <ion-button id="custom" expand="block" onclick="presentPicker('my-custom-class')"
           >Show Custom Picker</ion-button
         >
@@ -97,22 +100,52 @@
         },
       ];
 
-      async function presentPicker(customClass) {
+      const btns = {
+        basic: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+          {
+            text: 'Save',
+            cssClass: 'save-btn',
+            handler: (ev) => {
+              const v = ev.hours.value;
+              selectedIndex = options.findIndex((opt) => opt.value === v);
+            },
+          },
+        ],
+
+        multipleCancelBtns: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel btn');
+            },
+          },
+          {
+            text: 'Cancel2',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel2 btn');
+              return false;
+            },
+          },
+          {
+            text: 'Save',
+            cssClass: 'save-btn',
+            handler: (ev) => {
+              const v = ev.hours.value;
+              selectedIndex = options.findIndex((opt) => opt.value === v);
+            },
+          },
+        ],
+      };
+
+      async function presentPicker(customClass, isBasic = true) {
         const pickerElement = await pickerController.create({
-          buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel',
-            },
-            {
-              text: 'Save',
-              cssClass: 'save-btn',
-              handler: (ev) => {
-                const v = ev.hours.value;
-                selectedIndex = options.findIndex((opt) => opt.value === v);
-              },
-            },
-          ],
+          buttons: isBasic ? btns.basic : btns.multipleCancelBtns,
           columns: [
             {
               name: 'hours',

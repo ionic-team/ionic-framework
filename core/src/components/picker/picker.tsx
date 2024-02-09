@@ -295,12 +295,9 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   private async buttonClick(button: PickerButton) {
     const role = button.role;
-    if (isCancel(role)) {
-      return this.dismiss(undefined, role);
-    }
     const shouldDismiss = await this.callButtonHandler(button);
-    if (shouldDismiss) {
-      return this.dismiss(this.getSelected(), button.role);
+    if (isCancel(role) || shouldDismiss) {
+      return this.dismiss(this.getSelected(), role);
     }
     return Promise.resolve();
   }
@@ -336,9 +333,12 @@ export class Picker implements ComponentInterface, OverlayInterface {
   };
 
   private dispatchCancelHandler = (ev: CustomEvent) => {
-    const role = ev.detail.role;
+    const button = ev.detail;
+    const role = button.role;
     if (isCancel(role)) {
-      const cancelButton = this.buttons.find((b) => b.role === 'cancel');
+      const cancelButton = this.buttons.find((b) => {
+        return b === button && b.role === 'cancel';
+      });
       this.callButtonHandler(cancelButton);
     }
   };
