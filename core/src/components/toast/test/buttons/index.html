@@ -35,6 +35,10 @@
           Multiple Buttons
         </ion-button>
 
+        <ion-button id="multipleButtons" expand="block" onclick="presentToastWithMultipleCancelButtons()">
+          Multiple Cancel Buttons
+        </ion-button>
+
         <ion-button id="longButton" expand="block" onclick="presentToastWithLongButton()">
           Really Long Button
         </ion-button>
@@ -110,6 +114,38 @@
               role: 'cancel',
               handler: () => {
                 console.log('close button clicked!');
+              },
+            },
+          ],
+        };
+
+        return await presentToastWithOptions(opts);
+      }
+
+      async function presentToastWithMultipleCancelButtons() {
+        const opts = {
+          message: 'Warning.',
+          buttons: [
+            {
+              text: 'Cancel',
+              side: 'start',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel btn');
+              },
+            },
+            {
+              text: 'Cancel1',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel1 btn');
+              },
+            },
+            {
+              text: 'Cancel2',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel2 btn');
               },
             },
           ],
