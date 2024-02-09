@@ -53,6 +53,46 @@ describe('getMonthAndDay()', () => {
   it('should return sáb, 1 abr', () => {
     expect(getMonthAndDay('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('sáb, 1 abr');
   });
+
+  it('should use formatOptions', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      day: '2-digit',
+      weekday: 'long',
+      month: 'narrow',
+      hour: '2-digit',
+      minute: '2-digit',
+    };
+
+    // Even though this method is intended to be used for date, the time may be displayed as well when passing formatOptions
+    expect(getMonthAndDay('en-US', datetimeParts, formatOptions)).toEqual('Saturday, J 01, 09:40 AM');
+  });
+
+  it('should override provided time zone with UTC', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 23,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      timeZone: 'Australia/Sydney',
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    };
+
+    expect(getMonthAndDay('en-US', datetimeParts, formatOptions)).toEqual('Sat, Jan 1');
+  });
 });
 
 describe('getFormattedHour()', () => {
@@ -144,6 +184,7 @@ describe('getLocalizedTime', () => {
 
     expect(getLocalizedTime('en-GB', datetimeParts, 'h12')).toEqual('12:00 am');
   });
+
   it('should parse time-only values correctly', () => {
     const datetimeParts: Partial<DatetimeParts> = {
       hour: 22,
@@ -152,5 +193,43 @@ describe('getLocalizedTime', () => {
 
     expect(getLocalizedTime('en-US', datetimeParts as DatetimeParts, 'h12')).toEqual('10:40 PM');
     expect(getLocalizedTime('en-US', datetimeParts as DatetimeParts, 'h23')).toEqual('22:40');
+  });
+
+  it('should use formatOptions', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      hour: '2-digit',
+      minute: '2-digit',
+      dayPeriod: 'short',
+      day: '2-digit',
+    };
+
+    // Even though this method is intended to be used for time, the date may be displayed as well when passing formatOptions
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12', formatOptions)).toEqual('01, 09:40 in the morning');
+  });
+
+  it('should override provided time zone with UTC', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      timeZone: 'Australia/Sydney',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12', formatOptions)).toEqual('9:40 AM');
   });
 });

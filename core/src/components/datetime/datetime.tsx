@@ -172,6 +172,19 @@ export class Datetime implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * Formatting options, separated by date and time.
+   */
+  @Prop() formatOptions?: { date?: Intl.DateTimeFormatOptions; time?: Intl.DateTimeFormatOptions };
+
+  @Watch('formatOptions')
+  protected formatOptionsChanged(formatOptions: {
+    date?: Intl.DateTimeFormatOptions;
+    time?: Intl.DateTimeFormatOptions;
+  }) {
+    this.errorIfTimeZoneProvided(formatOptions);
+  }
+
+  /**
    * If `true`, the datetime appears normal but the selected date cannot be changed.
    */
   @Prop() readonly = false;
@@ -1357,7 +1370,7 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, highlightedDates, multiple, presentation, preferWheel } = this;
+    const { el, formatOptions, highlightedDates, multiple, presentation, preferWheel } = this;
 
     if (multiple) {
       if (presentation !== 'date') {
@@ -1380,6 +1393,10 @@ export class Datetime implements ComponentInterface {
       if (preferWheel) {
         printIonWarning('The highlightedDates property is not supported with preferWheel="true".', el);
       }
+    }
+
+    if (formatOptions) {
+      this.errorIfTimeZoneProvided(formatOptions);
     }
 
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
@@ -1407,6 +1424,20 @@ export class Datetime implements ComponentInterface {
     this.processValue(this.value);
 
     this.emitStyle();
+  }
+
+  private errorIfTimeZoneProvided(formatOptions: {
+    date?: Intl.DateTimeFormatOptions;
+    time?: Intl.DateTimeFormatOptions;
+  }) {
+    if (
+      formatOptions?.date?.timeZone ||
+      formatOptions?.time?.timeZone ||
+      formatOptions?.date?.timeZoneName ||
+      formatOptions?.time?.timeZoneName
+    ) {
+      printIonWarning('Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".');
+    }
   }
 
   private emitStyle() {
@@ -2354,9 +2385,15 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const { disabled, hourCycle, isTimePopoverOpen, locale } = this;
+    const { disabled, formatOptions, hourCycle, isTimePopoverOpen, locale } = this;
     const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
+
+    const timeButtonFormatOptions = formatOptions?.time || {
+      hour: 'numeric',
+      minute: 'numeric',
+      computedHourCycle,
+    };
 
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
@@ -2389,7 +2426,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(locale, activePart, computedHourCycle)}
+        {getLocalizedTime(locale, activePart, computedHourCycle, timeButtonFormatOptions)}
       </button>,
       <ion-popover
         alignment="center"
@@ -2424,7 +2461,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private getHeaderSelectedDateText() {
-    const { activeParts, multiple, titleSelectedDatesFormatter } = this;
+    const { activeParts, formatOptions, multiple, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
@@ -2438,8 +2475,15 @@ export class Datetime implements ComponentInterface {
         }
       }
     } else {
+      const headerFormatOptions: Intl.DateTimeFormatOptions = formatOptions?.date ?? {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC',
+      };
+
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback());
+      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback(), headerFormatOptions);
     }
 
     return headerText;

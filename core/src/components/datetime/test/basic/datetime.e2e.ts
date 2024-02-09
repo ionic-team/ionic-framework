@@ -565,3 +565,89 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not differ across
+ * directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: formatOptions'), () => {
+    test('should format header and time button', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const datetime = page.locator('ion-datetime');
+
+      await datetime.evaluate(
+        (el: HTMLIonDatetimeElement) =>
+          (el.formatOptions = {
+            time: { hour: '2-digit', minute: '2-digit' },
+            date: { day: '2-digit', month: 'long', era: 'short' },
+          })
+      );
+
+      await page.waitForChanges();
+
+      const headerDate = page.locator('ion-datetime .datetime-selected-date');
+      await expect(headerDate).toHaveText('February 01 AD');
+
+      const timeBody = page.locator('ion-datetime .time-body');
+      await expect(timeBody).toHaveText('04:30 PM');
+
+      await expect(datetime).toHaveScreenshot(screenshot('datetime-format-options'));
+    });
+  });
+});
+
+/**
+ * This behavior does not differ across
+ * modes/directions.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: formatOptions timeZone error'), () => {
+    test('should throw a warning if time zone is provided', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+      `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+
+      await datetime.evaluate(
+        (el: HTMLIonDatetimeElement) =>
+          (el.formatOptions = {
+            time: { timeZone: 'UTC' },
+          })
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await page.waitForChanges();
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        '[Ionic Warning]: Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".'
+      );
+    });
+  });
+});

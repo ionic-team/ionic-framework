@@ -859,6 +859,10 @@ export namespace Components {
          */
         "firstDayOfWeek": number;
         /**
+          * Formatting options, separated by date and time.
+         */
+        "formatOptions"?: { date?: Intl.DateTimeFormatOptions; time?: Intl.DateTimeFormatOptions };
+        /**
           * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
          */
         "highlightedDates"?: DatetimeHighlight[] | DatetimeHighlightCallback;
@@ -5541,6 +5545,10 @@ declare namespace LocalJSX {
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
          */
         "firstDayOfWeek"?: number;
+        /**
+          * Formatting options, separated by date and time.
+         */
+        "formatOptions"?: { date?: Intl.DateTimeFormatOptions; time?: Intl.DateTimeFormatOptions };
         /**
           * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
          */

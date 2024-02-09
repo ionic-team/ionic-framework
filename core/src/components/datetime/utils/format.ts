@@ -11,7 +11,12 @@ const getFormattedDayPeriod = (dayPeriod?: string) => {
   return dayPeriod.toUpperCase();
 };
 
-export const getLocalizedTime = (locale: string, refParts: DatetimeParts, hourCycle: DatetimeHourCycle): string => {
+export const getLocalizedTime = (
+  locale: string,
+  refParts: DatetimeParts,
+  hourCycle: DatetimeHourCycle,
+  formatOptions?: Intl.DateTimeFormatOptions
+): string => {
   const timeParts: Pick<DatetimeParts, 'hour' | 'minute'> = {
     hour: refParts.hour,
     minute: refParts.minute,
@@ -21,9 +26,18 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, hourCy
     return 'Invalid Time';
   }
 
+  const defaultFormatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
+
+  // If any options are provided, don't use any of the defaults.
+  const options: Intl.DateTimeFormatOptions = formatOptions ?? defaultFormatOptions;
+
   return new Intl.DateTimeFormat(locale, {
-    hour: 'numeric',
-    minute: 'numeric',
+    ...options,
+    /**
+     * We use hourCycle here instead of hour12 due to:
+     * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
+     */
+    hourCycle,
     /**
      * Setting the timeZone to UTC prevents
      * new Intl.DatetimeFormat from subtracting
@@ -31,11 +45,6 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, hourCy
      * when formatting the time.
      */
     timeZone: 'UTC',
-    /**
-     * We use hourCycle here instead of hour12 due to:
-     * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
-     */
-    hourCycle,
     /**
      * Setting Z at the end indicates that this
      * date string is in the UTC time zone. This
@@ -150,11 +159,17 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
  * Gets the day of the week, month, and day
  * Used for the header in MD mode.
  */
-export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
+export const getMonthAndDay = (locale: string, refParts: DatetimeParts, formatOptions?: Intl.DateTimeFormatOptions) => {
+  const defaultFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+
+  // If any options are provided, don't use any of the defaults. This way the developer can (for example) choose to not have the weekday displayed at all.
+  const options: Intl.DateTimeFormatOptions = formatOptions ?? defaultFormatOptions;
+
   const date = getNormalizedDate(refParts);
-  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
-    date
-  );
+  return new Intl.DateTimeFormat(locale, {
+    ...options,
+    timeZone: 'UTC',
+  }).format(date);
 };
 
 /**
