@@ -48,32 +48,15 @@
  * toolbar which is why we do not
  * limit the below behavior to just ion-item.
  */
-:host([slot="start"]:not(.legacy-checkbox)),
-:host([slot="end"]:not(.legacy-checkbox)) {
+:host([slot="start"]),
+:host([slot="end"]) {
   width: auto;
-}
-
-// TODO(FW-3100): remove this
-:host(.legacy-checkbox) {
-  width: var(--size);
-  height: var(--size);
 }
 
 :host(.ion-color) {
   --checkbox-background-checked: #{current-color(base)};
   --border-color-checked: #{current-color(base)};
   --checkmark-color: #{current-color(contrast)};
-}
-
-// TODO(FW-3100): remove this
-:host(.legacy-checkbox) label {
-  @include input-cover();
-
-  display: flex;
-
-  align-items: center;
-
-  opacity: 0;
 }
 
 .checkbox-wrapper {
@@ -96,7 +79,7 @@
   overflow: hidden;
 }
 
-:host(.in-item:not(.legacy-checkbox)) .label-text-wrapper {
+:host(.in-item) .label-text-wrapper {
   @include margin($checkbox-item-label-margin-top, null, $checkbox-item-label-margin-bottom, null);
 }
 
@@ -141,18 +124,7 @@ input {
   background: var(--checkbox-background);
 
   box-sizing: border-box;
-}
 
-// TODO(FW-3100): remove this
-:host(.legacy-checkbox) .checkbox-icon {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-}
-
-// TODO(FW-3100): merge this with other .checkbox-icon styles above
-:host(:not(.legacy-checkbox)) .checkbox-icon {
   width: var(--size);
   height: var(--size);
 }
