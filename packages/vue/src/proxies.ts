@@ -644,7 +644,6 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange
   'disabled',
   'value',
   'labelPlacement',
-  'legacy',
   'ionChange',
   'ionInput',
   'ionFocus',
