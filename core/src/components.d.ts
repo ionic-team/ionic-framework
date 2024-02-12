@@ -3655,7 +3655,6 @@ declare global {
         "ionChange": CheckboxChangeEventDetail;
         "ionFocus": void;
         "ionBlur": void;
-        "ionStyle": StyleEventDetail;
     }
     interface HTMLIonCheckboxElement extends Components.IonCheckbox, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonCheckboxElementEventMap>(type: K, listener: (this: HTMLIonCheckboxElement, ev: IonCheckboxCustomEvent<HTMLIonCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5365,10 +5364,6 @@ declare namespace LocalJSX {
           * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonCheckboxCustomEvent<StyleEventDetail>) => void;
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
