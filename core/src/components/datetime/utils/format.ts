@@ -29,7 +29,7 @@ export const getLocalizedTime = (
   const defaultFormatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
 
   // If any options are provided, don't use any of the defaults.
-  const options: Intl.DateTimeFormatOptions = formatOptions ?? defaultFormatOptions;
+  const options = formatOptions ?? defaultFormatOptions;
 
   return new Intl.DateTimeFormat(locale, {
     ...options,
@@ -163,7 +163,7 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts, formatOp
   const defaultFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
 
   // If any options are provided, don't use any of the defaults. This way the developer can (for example) choose to not have the weekday displayed at all.
-  const options: Intl.DateTimeFormatOptions = formatOptions ?? defaultFormatOptions;
+  const options = formatOptions ?? defaultFormatOptions;
 
   const date = getNormalizedDate(refParts);
   return new Intl.DateTimeFormat(locale, {
