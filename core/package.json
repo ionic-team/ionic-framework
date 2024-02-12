@@ -36,7 +36,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.8.4",
+    "@axe-core/playwright": "^4.8.5",
     "@capacitor/core": "^5.7.0",
     "@capacitor/haptics": "^5.0.7",
     "@capacitor/keyboard": "^5.0.8",
