@@ -122,12 +122,6 @@ export class Toggle implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
-
   @Watch('disabled')
   disabledChanged() {
     if (this.gesture) {
