@@ -115,6 +115,9 @@ input {
 
   position: relative;
 
+  width: var(--size);
+  height: var(--size);
+
   transition: var(--transition);
 
   border-width: var(--border-width);
@@ -124,9 +127,6 @@ input {
   background: var(--checkbox-background);
 
   box-sizing: border-box;
-
-  width: var(--size);
-  height: var(--size);
 }
 
 .checkbox-icon path {

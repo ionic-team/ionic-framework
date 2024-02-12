@@ -18,6 +18,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Global Styles](#version-8x-global-styles)
 - [Components](#version-8x-components)
   - [Button](#version-8x-button)
+  - [Checkbox](#version-8x-checkbox)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
   - [Input](#version-8x-input)
@@ -133,6 +134,10 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 <h4 id="version-8x-button">Button</h4>
 
 - Button text now wraps by default. If this behavior is not desired, add the `ion-text-nowrap` class from the [CSS Utilities](https://ionicframework.com/docs/layout/css-utilities).
+
+<h4 id="version-8x-checkbox">Checkbox</h4>
+
+ The `legacy` property and support for the legacy syntax, which involved placing an `ion-checkbox` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy checkbox syntax, refer to the [Checkbox documentation](https://ionicframework.com/docs/api/checkbox#migrating-from-legacy-checkbox-syntax).
 
 <h4 id="version-8x-content">Content</h4>
 
