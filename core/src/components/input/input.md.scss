@@ -14,6 +14,13 @@
   font-size: $input-md-font-size;
 }
 
+:host-context(.item-label-stacked),
+:host-context(.item-label-floating) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0;
+}
+
 .input-clear-icon ion-icon {
   width: 22px;
   height: 22px;

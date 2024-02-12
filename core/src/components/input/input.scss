@@ -69,6 +69,10 @@
   z-index: $z-index-item-input;
 }
 
+:host-context(ion-item:not(.item-label):not(.item-has-modern-input)) {
+  --padding-start: 0;
+}
+
 :host-context(ion-item)[slot="start"],
 :host-context(ion-item)[slot="end"] {
   width: auto;
@@ -224,6 +228,21 @@
   visibility: visible;
 }
 
+
+// Item Floating: Placeholder
+// ----------------------------------------------------------------
+// When used with a floating item the placeholder should hide
+
+:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value)) {
+  opacity: 0;
+}
+
+:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value).item-has-focus) {
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+  opacity: 1;
+}
+
 // Input Wrapper
 // ----------------------------------------------------------------
 
@@ -339,7 +358,7 @@
 .input-bottom .helper-text {
   display: block;
 
-  color: #{$text-color-step-450};
+  color: #{$background-color-step-550};
 }
 
 :host(.ion-touched.ion-invalid) .input-bottom .error-text {
@@ -361,7 +380,7 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: #{$text-color-step-450};
+  color: #{$background-color-step-550};
 
   white-space: nowrap;
 
