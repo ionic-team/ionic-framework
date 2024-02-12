@@ -20,14 +20,20 @@
   <body>
     <ion-app>
       <ion-content>
-        <p style="text-align: center">Click everywhere to open the popover.</p>
+        <div style="text-align: center">
+          <p>Click everywhere to open the popover.</p>
+          <ion-checkbox id="safe-area-cb">Enable Safe Area</ion-checkbox>
+        </div>
       </ion-content>
     </ion-app>
 
     <script>
       document.querySelector('ion-content').addEventListener('click', handleButtonClick);
+      document.querySelector('#safe-area-cb').addEventListener('ionChange', toggleSafeArea);
 
       async function handleButtonClick(ev) {
+        if (ev.target.tagName === 'ION-CHECKBOX') return;
+
         const popover = await popoverController.create({
           component: 'popover-example-page',
           event: ev,
@@ -35,6 +41,28 @@
         });
 
         popover.present();
+      }
+
+      function toggleSafeArea(ev) {
+        if (ev.detail.checked) {
+          document.head.insertAdjacentHTML('beforeend', `
+            <style id="safe-area-styles">
+              html {
+                --ion-safe-area-top: 50px;
+                --ion-safe-area-right: 50px;
+                --ion-safe-area-bottom: 50px;
+                --ion-safe-area-left: 50px;
+              }
+
+              ion-content::part(background) {
+                box-shadow: inset 0 0 0 50px lightblue;
+              }
+            </style>
+          `);
+        } else {
+          const styles = document.querySelector('#safe-area-styles');
+          if (styles) styles.remove();
+        }
       }
 
       customElements.define(
