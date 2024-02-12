@@ -4196,7 +4196,6 @@ declare global {
     interface HTMLIonRangeElementEventMap {
         "ionChange": RangeChangeEventDetail;
         "ionInput": RangeChangeEventDetail;
-        "ionStyle": StyleEventDetail;
         "ionFocus": void;
         "ionBlur": void;
         "ionKnobMoveStart": RangeKnobMoveStartEventDetail;
@@ -7075,10 +7074,6 @@ declare namespace LocalJSX {
           * Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
          */
         "onIonKnobMoveStart"?: (event: IonRangeCustomEvent<RangeKnobMoveStartEventDetail>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonRangeCustomEvent<StyleEventDetail>) => void;
         /**
           * If `true`, a pin with integer value is shown when the knob is pressed.
          */
