@@ -199,14 +199,8 @@
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
 }
 
-:host(.select-ltr.select-fill-outline) .select-outline-start {
-  // stylelint-disable-next-line property-disallowed-list
-  border-radius: var(--border-radius) 0px 0px var(--border-radius);
-}
-
-:host(.select-rtl.select-fill-outline) .select-outline-start {
-  // stylelint-disable-next-line property-disallowed-list
-  border-radius: 0px var(--border-radius) var(--border-radius) 0px;
+:host(.select-fill-outline) .select-outline-start {
+  @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
 }
 
 :host(.select-fill-outline) .select-outline-start {
@@ -225,14 +219,8 @@
   @include border(null, var(--border-width) var(--border-style) var(--border-color), null, null);
 }
 
-:host(.select-ltr.select-fill-outline) .select-outline-end {
-  // stylelint-disable-next-line property-disallowed-list
-  border-radius: 0px var(--border-radius) var(--border-radius) 0px;
-}
-
-:host(.select-rtl.select-fill-outline) .select-outline-end {
-  // stylelint-disable-next-line property-disallowed-list
-  border-radius: var(--border-radius) 0px 0px var(--border-radius);
+:host(.select-fill-outline) .select-outline-end {
+  @include border-radius(0px, var(--border-radius), var(--border-radius), 0px);
 }
 
 :host(.select-fill-outline) .select-outline-end {
