@@ -178,6 +178,7 @@
     @include position(null, null, -1px, 50%);
     @include margin-horizontal(-13px, null);
 
+    // Border radius for the pin should not change based on the direction
     @include multi-dir() {
       /* stylelint-disable-next-line property-disallowed-list */
       border-radius: 50% 50% 50% 0;
