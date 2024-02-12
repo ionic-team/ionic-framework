@@ -1,10 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
-import { getAriaLabel, renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
+import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
-import { printIonWarning } from '@utils/logging';
 import { hapticSelection } from '@utils/native/haptic';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -38,13 +35,9 @@ export class Toggle implements ComponentInterface {
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
   private lastDrag = 0;
-  private legacyFormController!: LegacyFormController;
   private inheritedAttributes: Attributes = {};
   private toggleTrack?: HTMLElement;
   private didLoad = false;
-
-  // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonToggleElement;
 
@@ -96,17 +89,6 @@ export class Toggle implements ComponentInterface {
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   /**
-   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
-   * Ionic will only opt components in to the modern form markup when they are
-   * using either the `aria-label` attribute or the default slot that contains
-   * the label text. As a result, the `legacy` property should only be used as
-   * an escape hatch when you want to avoid this automatic opt-in behavior.
-   * Note that this property will be removed in an upcoming major release
-   * of Ionic, and all form components will be opted-in to using the modern form markup.
-   */
-  @Prop() legacy?: boolean;
-
-  /**
    * How to pack the label and toggle within a line.
    * `"start"`: The label and toggle will appear on the left in LTR and
    * on the right in RTL.
@@ -148,7 +130,6 @@ export class Toggle implements ComponentInterface {
 
   @Watch('disabled')
   disabledChanged() {
-    this.emitStyle();
     if (this.gesture) {
       this.gesture.enable(!this.disabled);
     }
@@ -167,8 +148,6 @@ export class Toggle implements ComponentInterface {
   }
 
   async connectedCallback() {
-    this.legacyFormController = createLegacyFormController(this.el);
-
     /**
      * If we have not yet rendered
      * ion-toggle, then toggleTrack is not defined.
@@ -211,23 +190,9 @@ export class Toggle implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.emitStyle();
-
-    if (!this.legacyFormController.hasLegacyControl()) {
-      this.inheritedAttributes = {
-        ...inheritAriaAttributes(this.el),
-      };
-    }
-  }
-
-  private emitStyle() {
-    if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        'interactive-disabled': this.disabled,
-        // TODO(FW-2990): remove this
-        legacy: !!this.legacy,
-      });
-    }
+    this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
+    };
   }
 
   private onStart() {
@@ -328,12 +293,6 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { legacyFormController } = this;
-
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyToggle() : this.renderToggle();
-  }
-
-  private renderToggle() {
     const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment } = this;
 
     const mode = getIonMode(this);
@@ -384,72 +343,6 @@ export class Toggle implements ComponentInterface {
           </div>
           <div class="native-wrapper">{this.renderToggleControl()}</div>
         </label>
-      </Host>
-    );
-  }
-
-  private renderLegacyToggle() {
-    if (!this.hasLoggedDeprecationWarning) {
-      printIonWarning(
-        `ion-toggle now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
-
-Example: <ion-toggle>Email</ion-toggle>
-Example with aria-label: <ion-toggle aria-label="Email"></ion-toggle>
-
-Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
-        this.el
-      );
-
-      if (this.legacy) {
-        printIonWarning(
-          `ion-toggle is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
-
-Developers can dismiss this warning by removing their usage of the "legacy" property and using the new toggle syntax.`,
-          this.el
-        );
-      }
-
-      this.hasLoggedDeprecationWarning = true;
-    }
-
-    const { activated, color, checked, disabled, el, inputId, name } = this;
-    const mode = getIonMode(this);
-    const { label, labelId, labelText } = getAriaLabel(el, inputId);
-    const value = this.getValue();
-    const rtl = isRTL(el) ? 'rtl' : 'ltr';
-
-    renderHiddenInput(true, el, name, checked ? value : '', disabled);
-
-    return (
-      <Host
-        onClick={this.onClick}
-        aria-labelledby={label ? labelId : null}
-        aria-checked={`${checked}`}
-        aria-hidden={disabled ? 'true' : null}
-        role="switch"
-        class={createColorClasses(color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'toggle-activated': activated,
-          'toggle-checked': checked,
-          'toggle-disabled': disabled,
-          'legacy-toggle': true,
-          interactive: true,
-          [`toggle-${rtl}`]: true,
-        })}
-      >
-        {this.renderToggleControl()}
-        <label htmlFor={inputId}>{labelText}</label>
-        <input
-          type="checkbox"
-          role="switch"
-          aria-checked={`${checked}`}
-          disabled={disabled}
-          id={inputId}
-          onFocus={() => this.onFocus()}
-          onBlur={() => this.onBlur()}
-          ref={(focusEl) => (this.focusEl = focusEl)}
-        />
       </Host>
     );
   }
