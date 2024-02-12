@@ -5,7 +5,7 @@ import { addEventListener, removeEventListener } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, StyleEventDetail } from '../../interface';
+import type { Color } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -99,12 +99,6 @@ export class Radio implements ComponentInterface {
    * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
    */
   @Prop() alignment: 'start' | 'center' = 'center';
-
-  /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the radio button has focus.
