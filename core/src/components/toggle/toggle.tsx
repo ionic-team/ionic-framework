@@ -9,7 +9,7 @@ import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons'
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail } from '../../interface';
+import type { Color, Gesture, GestureDetail, Mode } from '../../interface';
 
 import type { ToggleChangeEventDetail } from './toggle-interface';
 
