@@ -57,6 +57,8 @@
 
   width: 100%;
 
+  min-height: 44px;
+
   /* stylelint-disable-next-line all */
   padding: 0 !important;
 
@@ -65,22 +67,6 @@
   font-family: $font-family-base;
 
   z-index: $z-index-item-input;
-}
-
-// TODO FW-2764 Remove this
-:host(.legacy-input) {
-  display: flex;
-
-  flex: 1;
-  align-items: center;
-
-  background: var(--background);
-}
-
-// TODO FW-2764 Remove this
-:host(.legacy-input) .native-input {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include border-radius(var(--border-radius));
 }
 
 :host-context(ion-item:not(.item-label):not(.item-has-modern-input)) {
@@ -92,21 +78,12 @@
   width: auto;
 }
 
-// TODO FW-2764 Remove this
-:host(.legacy-input.ion-color) {
-  color: current-color(base);
-}
-
 :host(.ion-color) {
   --highlight-color-focused: #{current-color(base)};
 }
 
 // Input Wrapper
 // ----------------------------------------------------------------
-
-:host(:not(.legacy-input)) {
-  min-height: 44px;
-}
 
 /**
  * Since the label sits on top of the element,
@@ -206,11 +183,6 @@
 // Clear Input Icon
 // --------------------------------------------------
 
-// TODO FW-2764 Remove this
-:host(.legacy-input) .input-clear-icon {
-  @include margin(0);
-}
-
 .input-clear-icon {
   @include margin(auto);
   @include padding(0);
@@ -254,22 +226,6 @@
 
 :host(.has-value) .input-clear-icon {
   visibility: visible;
-}
-
-
-// Input Has focus
-// --------------------------------------------------
-
-// TODO FW-2764 Remove this
-:host(.has-focus.legacy-input) {
-  pointer-events: none;
-}
-
-// TODO FW-2764 Remove this
-:host(.has-focus.legacy-input) input,
-:host(.has-focus.legacy-input) a,
-:host(.has-focus.legacy-input) button {
-  pointer-events: auto;
 }
 
 

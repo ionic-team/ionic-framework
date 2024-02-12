@@ -414,7 +414,6 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'helperText',
   'label',
   'labelPlacement',
-  'legacy',
   'max',
   'maxlength',
   'min',

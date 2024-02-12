@@ -14,14 +14,6 @@
   font-size: $input-md-font-size;
 }
 
-// TODO FW-2764 Remove this
-:host(.legacy-input) {
-  --padding-top: #{$input-md-padding-top};
-  --padding-end: #{$input-md-padding-end};
-  --padding-bottom: #{$input-md-padding-bottom};
-  --padding-start: #{$input-md-padding-start};
-}
-
 :host-context(.item-label-stacked),
 :host-context(.item-label-floating) {
   --padding-top: 8px;
@@ -39,7 +31,6 @@
 // The input, label, helper text, char counter and placeholder
 // should use the same opacity and match the other form controls
 
-:host(.legacy-input) .native-input[disabled],
 :host(.input-disabled) {
   opacity: #{$input-md-disabled-opacity};
 }
