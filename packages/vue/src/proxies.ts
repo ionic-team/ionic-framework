@@ -216,7 +216,6 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox, JSX.Io
   'labelPlacement',
   'justify',
   'alignment',
-  'legacy',
   'ionChange',
   'ionFocus',
   'ionBlur'

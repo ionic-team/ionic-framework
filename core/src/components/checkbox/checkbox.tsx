@@ -96,19 +96,6 @@ export class Checkbox implements ComponentInterface {
    */
   @Prop() alignment: 'start' | 'center' = 'center';
 
-  // TODO(FW-3100): remove this
-  /**
-   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
-   * Ionic will only opt checkboxes in to the modern form markup when they are
-   * using either the `aria-label` attribute or have text in the default slot. As a result,
-   * the `legacy` property should only be used as an escape hatch when you want to
-   * avoid this automatic opt-in behavior.
-   *
-   * Note that this property will be removed in an upcoming major release
-   * of Ionic, and all form components will be opted-in to using the modern form markup.
-   */
-  @Prop() legacy?: boolean;
-
   /**
    * Emitted when the checked property has changed
    * as a result of a user action such as a click.
