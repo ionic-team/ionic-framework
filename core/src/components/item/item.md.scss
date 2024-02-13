@@ -319,7 +319,6 @@
 // Material Design Fixed Labels
 // --------------------------------------------------
 
-:host(.item-label-fixed) ::slotted(ion-select.legacy-select),
 :host(.item-label-fixed) ::slotted(ion-datetime) {
   --padding-start: 8px;
 }
@@ -363,13 +362,6 @@
 :host(.item-label-floating),
 :host(.item-label-stacked) {
   --min-height: 55px;
-}
-
-:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
-:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  --padding-start: 0;
 }
 
 :host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
