@@ -394,7 +394,7 @@ ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,fal
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
 ion-datetime,prop,firstDayOfWeek,number,0,false,false
-ion-datetime,prop,formatOptions,undefined | { date: DateTimeFormatOptions; } | { time: DateTimeFormatOptions; },undefined,false,false
+ion-datetime,prop,formatOptions,undefined | { date: DateTimeFormatOptions; time?: DateTimeFormatOptions | undefined; } | { date?: DateTimeFormatOptions | undefined; time: DateTimeFormatOptions; },undefined,false,false
 ion-datetime,prop,highlightedDates,((dateIsoString: string) => DatetimeHighlightStyle | undefined) | DatetimeHighlight[] | undefined,undefined,false,false
 ion-datetime,prop,hourCycle,"h11" | "h12" | "h23" | "h24" | undefined,undefined,false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false

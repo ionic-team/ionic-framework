@@ -20,9 +20,7 @@ import type {
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
   DatetimeHourCycle,
-  DatetimeFormatOptions,
-  TimeFormatOptions,
-  DateFormatOptions,
+  FormatOptions,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -179,19 +177,11 @@ export class Datetime implements ComponentInterface {
    * Should include a 'date' and/or 'time' object, each of which is of type [Intl.DateTimeFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options).
    *
    */
-  @Prop() formatOptions?: DatetimeFormatOptions;
+  @Prop() formatOptions?: FormatOptions;
 
   @Watch('formatOptions')
   protected formatOptionsChanged() {
     this.errorIfTimeZoneProvided();
-  }
-
-  get dateFormatOptions(): Intl.DateTimeFormatOptions | undefined {
-    return (this.formatOptions as DateFormatOptions)?.date;
-  }
-
-  get timeFormatOptions(): Intl.DateTimeFormatOptions | undefined {
-    return (this.formatOptions as TimeFormatOptions)?.time;
   }
 
   /**
@@ -1442,12 +1432,12 @@ export class Datetime implements ComponentInterface {
    * confusion.
    */
   private errorIfTimeZoneProvided() {
-    const { dateFormatOptions, timeFormatOptions } = this;
+    const { formatOptions } = this;
     if (
-      dateFormatOptions?.timeZone ||
-      dateFormatOptions?.timeZoneName ||
-      timeFormatOptions?.timeZone ||
-      timeFormatOptions?.timeZoneName
+      formatOptions?.date?.timeZone ||
+      formatOptions?.date?.timeZoneName ||
+      formatOptions?.time?.timeZone ||
+      formatOptions?.time?.timeZoneName
     ) {
       printIonWarning('Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".');
     }
@@ -2398,7 +2388,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const { disabled, hourCycle, isTimePopoverOpen, locale, timeFormatOptions } = this;
+    const { disabled, hourCycle, isTimePopoverOpen, locale, formatOptions } = this;
     const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
@@ -2433,7 +2423,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(locale, activePart, computedHourCycle, timeFormatOptions)}
+        {getLocalizedTime(locale, activePart, computedHourCycle, formatOptions?.time)}
       </button>,
       <ion-popover
         alignment="center"
@@ -2468,7 +2458,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private getHeaderSelectedDateText() {
-    const { activeParts, dateFormatOptions, multiple, titleSelectedDatesFormatter } = this;
+    const { activeParts, formatOptions, multiple, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
@@ -2483,7 +2473,7 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback(), dateFormatOptions);
+      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback(), formatOptions?.date);
     }
 
     return headerText;

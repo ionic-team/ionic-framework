@@ -37,6 +37,15 @@ export type DatetimeHighlightCallback = (dateIsoString: string) => DatetimeHighl
 
 export type DatetimeHourCycle = 'h11' | 'h12' | 'h23' | 'h24';
 
-export type TimeFormatOptions = { time: Intl.DateTimeFormatOptions };
-export type DateFormatOptions = { date: Intl.DateTimeFormatOptions };
-export type DatetimeFormatOptions = TimeFormatOptions | DateFormatOptions;
+/**
+ * FormatOptions must include date and/or time; it cannot be an empty object
+ */
+export type FormatOptions =
+  | {
+      date: Intl.DateTimeFormatOptions;
+      time?: Intl.DateTimeFormatOptions;
+    }
+  | {
+      date?: Intl.DateTimeFormatOptions;
+      time: Intl.DateTimeFormatOptions;
+    };
