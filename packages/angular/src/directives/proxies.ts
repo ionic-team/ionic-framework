@@ -1578,14 +1578,14 @@ export declare interface IonProgressBar extends Components.IonProgressBar {}
 
 
 @ProxyCmp({
-  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-radio',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value'],
 })
 export class IonRadio {
   protected el: HTMLElement;
