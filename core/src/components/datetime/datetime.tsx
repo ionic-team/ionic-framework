@@ -1662,14 +1662,6 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={todayString}
         onIonChange={(ev: CustomEvent) => {
-          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
-          // Due to a Safari 14 issue we need to destroy
-          // the scroll listener before we update state
-          // and trigger a re-render.
-          if (this.destroyCalendarListener) {
-            this.destroyCalendarListener();
-          }
-
           const { value } = ev.detail;
           const findPart = parts.find(({ month, day, year }) => value === `${year}-${month}-${day}`);
 
@@ -1682,10 +1674,6 @@ export class Datetime implements ComponentInterface {
             ...activePart,
             ...findPart,
           });
-
-          // We can re-attach the scroll listener after
-          // the working parts have been updated.
-          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1793,14 +1781,6 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={pickerColumnValue}
         onIonChange={(ev: CustomEvent) => {
-          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
-          // Due to a Safari 14 issue we need to destroy
-          // the scroll listener before we update state
-          // and trigger a re-render.
-          if (this.destroyCalendarListener) {
-            this.destroyCalendarListener();
-          }
-
           this.setWorkingParts({
             ...workingParts,
             day: ev.detail.value,
@@ -1810,10 +1790,6 @@ export class Datetime implements ComponentInterface {
             ...activePart,
             day: ev.detail.value,
           });
-
-          // We can re-attach the scroll listener after
-          // the working parts have been updated.
-          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1848,14 +1824,6 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
-          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
-          // Due to a Safari 14 issue we need to destroy
-          // the scroll listener before we update state
-          // and trigger a re-render.
-          if (this.destroyCalendarListener) {
-            this.destroyCalendarListener();
-          }
-
           this.setWorkingParts({
             ...workingParts,
             month: ev.detail.value,
@@ -1865,10 +1833,6 @@ export class Datetime implements ComponentInterface {
             ...activePart,
             month: ev.detail.value,
           });
-
-          // We can re-attach the scroll listener after
-          // the working parts have been updated.
-          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
@@ -1902,14 +1866,6 @@ export class Datetime implements ComponentInterface {
         disabled={disabled}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
-          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
-          // Due to a Safari 14 issue we need to destroy
-          // the scroll listener before we update state
-          // and trigger a re-render.
-          if (this.destroyCalendarListener) {
-            this.destroyCalendarListener();
-          }
-
           this.setWorkingParts({
             ...workingParts,
             year: ev.detail.value,
@@ -1919,10 +1875,6 @@ export class Datetime implements ComponentInterface {
             ...activePart,
             year: ev.detail.value,
           });
-
-          // We can re-attach the scroll listener after
-          // the working parts have been updated.
-          this.initializeCalendarListener();
 
           ev.stopPropagation();
         }}
