@@ -496,7 +496,7 @@ export const present = async <OverlayPresentOptions>(
    * from returning focus as a result.
    */
   if (overlay.el.tagName !== 'ION-TOAST') {
-    focusPreviousElementOnDismissIfNeeded(overlay.el);
+    restoreElementFocus(overlay.el);
   }
 
   /**
@@ -520,7 +520,7 @@ export const present = async <OverlayPresentOptions>(
  * to where they were before they
  * opened the overlay.
  */
-const focusPreviousElementOnDismissIfNeeded = async (overlayEl: any) => {
+const restoreElementFocus = async (overlayEl: any) => {
   let previousElement = document.activeElement as HTMLElement | null;
   if (!previousElement) {
     return;
@@ -535,11 +535,28 @@ const focusPreviousElementOnDismissIfNeeded = async (overlayEl: any) => {
   await overlayEl.onDidDismiss();
 
   /**
-   * If the user has already removed focus
-   * from the overlay (For example, focusing
-   * a text box after tapping a button in an
-   * action sheet) then don't restore focus
-   * to previous element
+   * After onDidDismiss, the overlay loses focus
+   * because it is removed from the document
+   *
+   * > An element will also lose focus [...]
+   * > if the element is removed from the document)
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event
+   *
+   * Additionally, `document.activeElement` returns:
+   *
+   * > The Element which currently has focus,
+   * > `<body>` or null if there is
+   * > no focused element.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement#value
+   *
+   * However, if the user has already focused
+   * an element sometime between onWillDismiss
+   * and onDidDismiss (for example, focusing a
+   * text box after tapping a button in an
+   * action sheet) then don't restore focus to
+   * previous element
    */
   if (document.activeElement === null || document.activeElement === document.body) {
     previousElement.focus();
