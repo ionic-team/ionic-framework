@@ -121,39 +121,6 @@
 }
 
 /**
- * Safari 14 has an issue where a scroll event
- * is incorrectly fired when unhiding the calendar content.
- * To workaround this, we set the opacity
- * of the content to 0 and hide it offscreen.
- *
- * -webkit-named-image is something only WebKit supports
- * so we use this to detect general WebKit support.
- * aspect-ratio is only supported in Safari 15+
- * so by checking lack of aspect-ratio support, we know
- * that we are in a pre-Safari 15 browser.
- *
- * TODO(FW-554): Remove when iOS 14 support is dropped.
- */
-@supports (background: -webkit-named-image(apple-pay-logo-black)) and (not (aspect-ratio: 1/1)) {
-  :host(.show-month-and-year) .calendar-next-prev,
-  :host(.show-month-and-year) .calendar-days-of-week,
-  :host(.show-month-and-year) .calendar-body,
-  :host(.show-month-and-year) .datetime-time {
-    @include position(null, null, null, -99999px);
-
-    position: absolute;
-
-    /**
-     * Use visibility instead of
-     * opacity to ensure element
-     * cannot receive focus
-     */
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-
-/**
  * This support check two cases:
  * 1. A WebKit browser that supports aspect-ratio (Safari 15+)
  * 2. Any non-WebKit browser.
@@ -161,13 +128,11 @@
  * sufficient to resolve the issue mentioned above, which
  * is why we do another set of @supports checks.
  */
-@supports (not (background: -webkit-named-image(apple-pay-logo-black))) or ((background: -webkit-named-image(apple-pay-logo-black)) and (aspect-ratio: 1/1)) {
-  :host(.show-month-and-year) .calendar-next-prev,
-  :host(.show-month-and-year) .calendar-days-of-week,
-  :host(.show-month-and-year) .calendar-body,
-  :host(.show-month-and-year) .datetime-time {
-    display: none;
-  }
+:host(.show-month-and-year) .calendar-next-prev,
+:host(.show-month-and-year) .calendar-days-of-week,
+:host(.show-month-and-year) .calendar-body,
+:host(.show-month-and-year) .datetime-time {
+  display: none;
 }
 
 :host(.month-year-picker-open) .datetime-footer {
