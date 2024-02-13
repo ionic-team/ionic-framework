@@ -40,7 +40,6 @@ const INPUT_INPUTS = [
   'inputmode',
   'label',
   'labelPlacement',
-  'legacy',
   'max',
   'maxlength',
   'min',
