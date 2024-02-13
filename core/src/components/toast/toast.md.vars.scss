@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Background of the toast
-$toast-md-background: $text-color-step-200 !default;
+$toast-md-background: $background-color-step-800 !default;
 
 /// @prop - Box shadow of the toast
 $toast-md-box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14),
@@ -14,7 +14,7 @@ $toast-md-box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0,
 $toast-md-font-size: dynamic-font(14px) !default;
 
 /// @prop - Color of the toast
-$toast-md-color: $background-color-step-50 !default;
+$toast-md-color: $text-color-step-950 !default;
 
 /// @prop - Border radius of the toast wrapper
 $toast-md-border-radius: 4px !default;
@@ -77,7 +77,7 @@ $toast-md-button-opacity-hover: 0.08 !default;
 $toast-md-button-background-color-hover: ion-color(primary, base, $toast-md-button-opacity-hover) !default;
 
 /// @prop - Text color of the cancel toast button
-$toast-md-button-cancel-text-color: $background-color-step-100 !default;
+$toast-md-button-cancel-text-color: $text-color-step-900 !default;
 
 /// @prop - Background color of the cancel toast button on hover
 $toast-md-button-cancel-background-color-hover: rgba($background-color-rgb, $toast-md-button-opacity-hover) !default;
