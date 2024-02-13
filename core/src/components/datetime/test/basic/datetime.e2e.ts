@@ -606,7 +606,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: formatOptions timeZone error'), () => {
-    test('should throw a warning if time zone is provided', async ({ page }) => {
+    test('should log a warning if time zone is provided', async ({ page }) => {
       const logs: string[] = [];
 
       page.on('console', (msg) => {

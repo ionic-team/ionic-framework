@@ -2395,12 +2395,6 @@ export class Datetime implements ComponentInterface {
     const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
-    const timeButtonFormatOptions = timeFormatOptions || {
-      hour: 'numeric',
-      minute: 'numeric',
-      computedHourCycle,
-    };
-
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
       <button
@@ -2432,7 +2426,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(locale, activePart, computedHourCycle, timeButtonFormatOptions)}
+        {getLocalizedTime(locale, activePart, computedHourCycle, timeFormatOptions)}
       </button>,
       <ion-popover
         alignment="center"
@@ -2481,15 +2475,8 @@ export class Datetime implements ComponentInterface {
         }
       }
     } else {
-      const headerFormatOptions: Intl.DateTimeFormatOptions = dateFormatOptions ?? {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        timeZone: 'UTC',
-      };
-
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback(), headerFormatOptions);
+      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback(), dateFormatOptions);
     }
 
     return headerText;
