@@ -51,6 +51,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | iOS      | 15+                    |
 | Android  | 5.1+ with Chromium 89+ |
 
+Ionic Framework v8 removes backwards support for CSS Animations in favor of the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API). All minimum browser versions listed above support the Web Animations API.
+
 <h2 id="version-8x-dark-theme">Dark Theme</h2>
 
 In previous versions, it was recommended to define the dark theme in the following way:
