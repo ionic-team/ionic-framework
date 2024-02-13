@@ -254,5 +254,52 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(modalInputOne).toBeFocused();
     });
+
+    test('should not return focus to another element if focus already manually returned', async ({
+      page,
+      skip,
+    }, testInfo) => {
+      skip.browser(
+        'webkit',
+        'WebKit does not consider buttons to be focusable, so this test always passes since the input is the only focusable element.'
+      );
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28849',
+      });
+      await page.setContent(
+        `
+        <button id="open-action-sheet">open</button>
+        <ion-action-sheet trigger="open-action-sheet"></ion-action-sheet>
+        <input id="test-input" />
+
+        <script>
+          const actionSheet = document.querySelector('ion-action-sheet');
+
+          actionSheet.addEventListener('ionActionSheetWillDismiss', () => {
+            requestAnimationFrame(() => {
+              document.querySelector('#test-input').focus();
+            });
+          });
+        </script>
+      `,
+        config
+      );
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const actionSheet = page.locator('ion-action-sheet');
+      const input = page.locator('#test-input');
+      const trigger = page.locator('#open-action-sheet');
+
+      // present action sheet
+      await trigger.click();
+      await ionActionSheetDidPresent.next();
+
+      // dismiss action sheet
+      await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.dismiss());
+
+      // verify focus is in correct location
+      await expect(input).toBeFocused();
+    });
   });
 });
