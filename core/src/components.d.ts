@@ -2258,10 +2258,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -4157,7 +4153,6 @@ declare global {
         new (): HTMLIonProgressBarElement;
     };
     interface HTMLIonRadioElementEventMap {
-        "ionStyle": StyleEventDetail;
         "ionFocus": void;
         "ionBlur": void;
     }
@@ -6948,10 +6943,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -6967,10 +6958,6 @@ declare namespace LocalJSX {
           * Emitted when the radio button has focus.
          */
         "onIonFocus"?: (event: IonRadioCustomEvent<void>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonRadioCustomEvent<StyleEventDetail>) => void;
         /**
           * the value of the radio.
          */
