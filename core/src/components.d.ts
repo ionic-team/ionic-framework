@@ -1217,10 +1217,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
         "max"?: string | number;
@@ -2740,10 +2736,6 @@ export namespace Components {
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -3227,10 +3219,6 @@ export namespace Components {
           * Where to place the label relative to the input. `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL. `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). `"stacked"`: The label will appear above the toggle regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
-        /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -4608,7 +4596,6 @@ declare global {
         "ionChange": ToggleChangeEventDetail;
         "ionFocus": void;
         "ionBlur": void;
-        "ionStyle": StyleEventDetail;
     }
     interface HTMLIonToggleElement extends Components.IonToggle, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonToggleElementEventMap>(type: K, listener: (this: HTMLIonToggleElement, ev: IonToggleCustomEvent<HTMLIonToggleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5938,10 +5925,6 @@ declare namespace LocalJSX {
           * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
-        /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -7494,10 +7477,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -8036,10 +8015,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -8059,10 +8034,6 @@ declare namespace LocalJSX {
           * Emitted when the toggle has focus.
          */
         "onIonFocus"?: (event: IonToggleCustomEvent<void>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonToggleCustomEvent<StyleEventDetail>) => void;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */

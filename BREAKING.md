@@ -25,7 +25,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
   - [Progress bar](#version-8x-progress-bar)
+  - [Select](#version-8x-select)
   - [Textarea](#version-8x-textarea)
+  - [Toggle](#version-8x-toggle)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -159,6 +161,7 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 
 - `size` has been removed from the `ion-input` component. Developers should use CSS to specify the visible width of the input.
 - `accept` has been removed from the `ion-input` component. This was previously used in conjunction with the `type="file"`. However, the `file` value for `type` is not a valid value in Ionic Framework.
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-input` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy input syntax, refer to the [Input documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax).
 
 <h4 id="version-8x-nav">Nav</h4>
 
@@ -180,6 +183,14 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 
 For more information on styling toast buttons, refer to the [Toast Theming documentation](https://ionicframework.com/docs/api/toast#theming).
 
+<h4 id="version-8x-select">Select</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
+
 <h4 id="version-8x-textarea">Textarea</h4>
 
 - The `legacy` property and support for the legacy syntax, which involved placing an `ion-textarea` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy textarea syntax, refer to the [Textarea documentation](https://ionicframework.com/docs/api/textarea#migrating-from-legacy-textarea-syntax).
+
+<h4 id="version-8x-toggle">Toggle</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-toggle` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy toggle syntax, refer to the [Toggle documentation](https://ionicframework.com/docs/api/toggle#migrating-from-legacy-toggle-syntax).
