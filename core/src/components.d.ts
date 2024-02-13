@@ -859,7 +859,7 @@ export namespace Components {
          */
         "firstDayOfWeek": number;
         /**
-          * Formatting options, separated by date and time.
+          * Formatting options, separated by date and time. Should include a 'date' and/or 'time' object, each of which is of type [Intl.DateTimeFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options).
          */
         "formatOptions"?: DatetimeFormatOptions;
         /**
@@ -5546,7 +5546,7 @@ declare namespace LocalJSX {
          */
         "firstDayOfWeek"?: number;
         /**
-          * Formatting options, separated by date and time.
+          * Formatting options, separated by date and time. Should include a 'date' and/or 'time' object, each of which is of type [Intl.DateTimeFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options).
          */
         "formatOptions"?: DatetimeFormatOptions;
         /**
