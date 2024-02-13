@@ -498,10 +498,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                 flip-rtl={detailIcon === chevronForward}
               ></ion-icon>
             )}
-            <div class="item-inner-highlight"></div>
           </div>
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-          <div class="item-highlight"></div>
         </TagType>
         <div class="item-bottom">
           <slot name="error"></slot>

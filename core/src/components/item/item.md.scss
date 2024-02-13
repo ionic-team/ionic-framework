@@ -21,10 +21,6 @@
   --padding-start: #{$item-md-padding-start};
   --inner-padding-end: #{$item-md-padding-end};
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
-  --highlight-height: 1px;
-  --highlight-color-focused: #{$item-md-input-highlight-color};
-  --highlight-color-valid: #{$item-md-input-highlight-color-valid};
-  --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
 
   font-size: dynamic-font($item-md-font-size);
   font-weight: normal;
@@ -32,22 +28,8 @@
   text-transform: none;
 }
 
-:host(.item-fill-outline) {
-  --highlight-height: 2px;
-}
-
 // Item Fill: None
 // --------------------------------------------------
-
-:host(.item-fill-none.item-interactive.ion-focus) .item-highlight,
-:host(.item-fill-none.item-interactive.item-has-focus) .item-highlight,
-:host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-highlight {
-  transform: scaleX(1);
-
-  border-width: 0 0 var(--full-highlight-height) 0;
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
 
 :host(.item-fill-none.item-interactive.ion-focus) .item-native,
 :host(.item-fill-none.item-interactive.item-has-focus) .item-native,
@@ -58,35 +40,12 @@
 // Item Fill: Outline
 // --------------------------------------------------
 
-:host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
-:host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight {
-  transform: scaleX(1);
-}
-
-:host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
-:host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight,
-:host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-highlight {
-  border-width: var(--full-highlight-height);
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
-
 :host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-native {
   border-color: var(--highlight-background);
 }
 
 // Item Fill: Solid
 // --------------------------------------------------
-
-:host(.item-fill-solid.item-interactive.ion-focus) .item-highlight,
-:host(.item-fill-solid.item-interactive.item-has-focus) .item-highlight,
-:host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-highlight {
-  transform: scaleX(1);
-
-  border-width: 0 0 var(--full-highlight-height) 0;
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
 
 :host(.item-fill-solid.item-interactive.ion-focus) .item-native,
 :host(.item-fill-solid.item-interactive.item-has-focus) .item-native,
@@ -114,22 +73,16 @@
 :host(.item-interactive) {
   --border-width: #{0 0 $item-md-border-bottom-width 0};
   --inner-border-width: 0;
-  --show-full-highlight: 1;
-  --show-inset-highlight: 0;
 }
 
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 :host(.item-lines-full) {
   --border-width: #{0 0 $item-md-border-bottom-width 0};
-  --show-full-highlight: 1;
-  --show-inset-highlight: 0;
 }
 
 :host(.item-lines-inset) {
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
-  --show-full-highlight: 0;
-  --show-inset-highlight: 1;
 }
 
 // Full lines - remove the border from the item inner (inset list items)
@@ -138,27 +91,11 @@
 :host(.item-lines-inset),
 :host(.item-lines-none) {
   --border-width: 0;
-  --show-full-highlight: 0;
 }
 
 :host(.item-lines-full),
 :host(.item-lines-none) {
   --inner-border-width: 0;
-  --show-inset-highlight: 0;
-}
-
-/**
- * When `fill="outline"`, reposition the highlight element to cover everything but the `.item-bottom`
- */
-:host(.item-fill-outline) .item-highlight {
-  --position-offset: calc(-1 * var(--border-width));
-
-  @include position(var(--position-offset), null, null, var(--position-offset));
-
-  width: calc(100% + 2 * var(--border-width));
-  height: calc(100% + 2 * var(--border-width));
-
-  transition: none;
 }
 
 :host(.item-fill-outline.ion-focused) .item-native,
@@ -377,22 +314,6 @@
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
-}
-
-// Material Design Inputs: Highlight Color
-// --------------------------------------------------
-
-:host(.ion-color) {
-  --highlight-color-focused: #{current-color(contrast)};
-}
-
-:host(.item-label-color) {
-  --highlight-color-focused: #{current-color(base)};
-}
-
-:host(.item-fill-solid.ion-color),
-:host(.item-fill-outline.ion-color) {
-  --highlight-color-focused: #{current-color(base)};
 }
 
 // Material Design Item: Fill Solid
