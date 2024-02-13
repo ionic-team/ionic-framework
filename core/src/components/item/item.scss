@@ -535,29 +535,6 @@ button, a {
   display: block;
 }
 
-// Item Select
-// --------------------------------------------------
-
-:host(:not(.item-label)) ::slotted(ion-select.legacy-select) {
-  --padding-start: 0;
-
-  max-width: none;
-}
-
-:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
-:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  --padding-start: 0;
-
-  align-self: stretch;
-
-  width: 100%;
-
-  max-width: 100%;
-}
-
-
 // Item Datetime
 // --------------------------------------------------
 
@@ -580,8 +557,7 @@ button, a {
 
 :host(.item-multiple-inputs) ::slotted(ion-checkbox),
 :host(.item-multiple-inputs) ::slotted(ion-datetime),
-:host(.item-multiple-inputs) ::slotted(ion-radio),
-:host(.item-multiple-inputs) ::slotted(ion-select.legacy-select) {
+:host(.item-multiple-inputs) ::slotted(ion-radio) {
   position: relative;
 }
 
