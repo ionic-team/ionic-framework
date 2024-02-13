@@ -35,7 +35,7 @@ $screen-breakpoints: (
 // Input placeholder opacity
 // Ensures that the placeholder has the
 // correct color contrast against the background.
-$placeholder-opacity: 0.6 !default;
+$placeholder-opacity: var(--ion-placeholder-opacity, 0.6) !default;
 
 $form-control-label-margin: 16px !default;
 
