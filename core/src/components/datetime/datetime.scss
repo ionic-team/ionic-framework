@@ -120,14 +120,6 @@
   display: flex;
 }
 
-/**
- * This support check two cases:
- * 1. A WebKit browser that supports aspect-ratio (Safari 15+)
- * 2. Any non-WebKit browser.
- * Note that just overriding this display: none is not
- * sufficient to resolve the issue mentioned above, which
- * is why we do another set of @supports checks.
- */
 :host(.show-month-and-year) .calendar-next-prev,
 :host(.show-month-and-year) .calendar-days-of-week,
 :host(.show-month-and-year) .calendar-body,
