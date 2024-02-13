@@ -26,6 +26,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Progress bar](#version-8x-progress-bar)
   - [Select](#version-8x-select)
   - [Textarea](#version-8x-textarea)
+  - [Toggle](#version-8x-toggle)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -184,3 +185,7 @@ For more information on styling toast buttons, refer to the [Toast Theming docum
 <h4 id="version-8x-textarea">Textarea</h4>
 
 - The `legacy` property and support for the legacy syntax, which involved placing an `ion-textarea` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy textarea syntax, refer to the [Textarea documentation](https://ionicframework.com/docs/api/textarea#migrating-from-legacy-textarea-syntax).
+
+<h4 id="version-8x-toggle">Toggle</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-toggle` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy toggle syntax, refer to the [Toggle documentation](https://ionicframework.com/docs/api/toggle#migrating-from-legacy-toggle-syntax).

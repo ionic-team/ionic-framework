@@ -3224,10 +3224,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -4605,7 +4601,6 @@ declare global {
         "ionChange": ToggleChangeEventDetail;
         "ionFocus": void;
         "ionBlur": void;
-        "ionStyle": StyleEventDetail;
     }
     interface HTMLIonToggleElement extends Components.IonToggle, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonToggleElementEventMap>(type: K, listener: (this: HTMLIonToggleElement, ev: IonToggleCustomEvent<HTMLIonToggleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -8033,10 +8028,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -8056,10 +8047,6 @@ declare namespace LocalJSX {
           * Emitted when the toggle has focus.
          */
         "onIonFocus"?: (event: IonToggleCustomEvent<void>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonToggleCustomEvent<StyleEventDetail>) => void;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
