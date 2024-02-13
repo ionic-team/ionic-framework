@@ -1275,7 +1275,6 @@ ion-select,prop,interfaceOptions,any,{},false,false
 ion-select,prop,justify,"end" | "space-between" | "start",'space-between',false,false
 ion-select,prop,label,string | undefined,undefined,false,false
 ion-select,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start" | undefined,'start',false,false
-ion-select,prop,legacy,boolean | undefined,undefined,false,false
 ion-select,prop,mode,"ios" | "md",undefined,false,false
 ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false

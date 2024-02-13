@@ -4,18 +4,6 @@
 // iOS Select
 // --------------------------------------------------
 
-/// @prop - Padding top of the select
-$select-ios-padding-top:            $item-ios-padding-top !default;
-
-/// @prop - Padding end of the select
-$select-ios-padding-end:            ($item-ios-padding-end * 0.5) !default;
-
-/// @prop - Padding bottom of the select
-$select-ios-padding-bottom:         $item-ios-padding-bottom !default;
-
-/// @prop - Padding start of the select
-$select-ios-padding-start:          $item-ios-padding-start !default;
-
 /// @prop - Size of the select icon
 $select-ios-icon-size:              dynamic-font(18px) !default;
 

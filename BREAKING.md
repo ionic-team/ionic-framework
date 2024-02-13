@@ -24,6 +24,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
   - [Progress bar](#version-8x-progress-bar)
+  - [Select](#version-8x-select)
   - [Textarea](#version-8x-textarea)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
@@ -175,6 +176,10 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 - `cssClass` has been removed from the `ToastButton` interface. This was previously used to apply a custom class to the toast buttons. Developers can use the "button" shadow part to style the buttons.
 
 For more information on styling toast buttons, refer to the [Toast Theming documentation](https://ionicframework.com/docs/api/toast#theming).
+
+<h4 id="version-8x-select">Select</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
 
 <h4 id="version-8x-textarea">Textarea</h4>
 
