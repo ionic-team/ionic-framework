@@ -93,6 +93,26 @@ describe('getMonthAndDay()', () => {
 
     expect(getMonthAndDay('en-US', datetimeParts, formatOptions)).toEqual('Sat, Jan 1');
   });
+
+  it('should not include time zone name', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      timeZone: 'America/Los_Angeles',
+      timeZoneName: 'long',
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    };
+
+    expect(getMonthAndDay('en-US', datetimeParts, formatOptions)).toEqual('Sat, Jan 1');
+  });
 });
 
 describe('getFormattedHour()', () => {
@@ -226,6 +246,26 @@ describe('getLocalizedTime', () => {
 
     const formatOptions: Intl.DateTimeFormatOptions = {
       timeZone: 'Australia/Sydney',
+      timeZoneName: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12', formatOptions)).toEqual('9:40 AM');
+  });
+
+  it('should not include time zone name', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      timeZone: 'America/Los_Angeles',
+      timeZoneName: 'long',
       hour: 'numeric',
       minute: 'numeric',
     };

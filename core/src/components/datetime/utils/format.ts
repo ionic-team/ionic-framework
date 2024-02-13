@@ -11,6 +11,29 @@ const getFormattedDayPeriod = (dayPeriod?: string) => {
   return dayPeriod.toUpperCase();
 };
 
+/**
+ * Including time zone options may lead to the rendered text showing a
+ * different time from what was selected in the Datetime, which could cause
+ * confusion.
+ */
+const stripTimeZone = (formatOptions?: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions | undefined => {
+  if (!formatOptions) return formatOptions;
+
+  /**
+   * We do not want to display the time zone name
+   */
+  delete formatOptions.timeZoneName;
+
+  /**
+   * Setting the time zone to UTC ensures that the value shown is always the
+   * same as what was selected and safeguards against older Safari bugs with
+   * Intl.DateTimeFormat.
+   */
+  formatOptions.timeZone = 'UTC';
+
+  return formatOptions;
+};
+
 export const getLocalizedTime = (
   locale: string,
   refParts: DatetimeParts,
@@ -28,8 +51,10 @@ export const getLocalizedTime = (
 
   const defaultFormatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
 
-  // If any options are provided, don't use any of the defaults.
-  const options = formatOptions ?? defaultFormatOptions;
+  /**
+   * If any options are provided, don't use any of the defaults.
+   */
+  const options = stripTimeZone(formatOptions ?? defaultFormatOptions);
 
   return new Intl.DateTimeFormat(locale, {
     ...options,
@@ -38,19 +63,6 @@ export const getLocalizedTime = (
      * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
      */
     hourCycle,
-    /**
-     * Setting the timeZone to UTC prevents
-     * new Intl.DatetimeFormat from subtracting
-     * the user's current timezone offset
-     * when formatting the time.
-     */
-    timeZone: 'UTC',
-    /**
-     * Setting Z at the end indicates that this
-     * date string is in the UTC time zone. This
-     * prevents new Date from adding the time zone
-     * offset when getting the ISO string.
-     */
   }).format(
     new Date(
       convertDataToISO({
@@ -163,13 +175,10 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts, formatOp
   const defaultFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
 
   // If any options are provided, don't use any of the defaults. This way the developer can (for example) choose to not have the weekday displayed at all.
-  const options = formatOptions ?? defaultFormatOptions;
+  const options = stripTimeZone(formatOptions ?? defaultFormatOptions);
 
   const date = getNormalizedDate(refParts);
-  return new Intl.DateTimeFormat(locale, {
-    ...options,
-    timeZone: 'UTC',
-  }).format(date);
+  return new Intl.DateTimeFormat(locale, options).format(date);
 };
 
 /**
