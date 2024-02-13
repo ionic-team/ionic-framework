@@ -1,0 +1,15 @@
+@import "./high-contrast-dark";
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root {
+    @include high-contrast-dark-base-theme();
+  }
+
+  :root.ios {
+    @include high-contrast-dark-ios-theme();
+  }
+
+  :root.md {
+    @include high-contrast-dark-md-theme();
+  }
+}
