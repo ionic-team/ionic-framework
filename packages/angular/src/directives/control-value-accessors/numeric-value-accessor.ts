@@ -27,6 +27,8 @@ export class NumericValueAccessorDirective extends ValueAccessor {
       super.registerOnChange((value: string) => {
         fn(value === '' ? null : parseFloat(value));
       });
+    } else {
+      super.registerOnChange(fn);
     }
   }
 }
