@@ -414,7 +414,6 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'helperText',
   'label',
   'labelPlacement',
-  'legacy',
   'max',
   'maxlength',
   'min',
@@ -759,7 +758,6 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'justify',
   'label',
   'labelPlacement',
-  'legacy',
   'multiple',
   'name',
   'okText',
@@ -868,13 +866,11 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'value',
   'enableOnOffLabels',
   'labelPlacement',
-  'legacy',
   'justify',
   'alignment',
   'ionChange',
   'ionFocus',
-  'ionBlur',
-  'ionStyle'
+  'ionBlur'
 ],
 'checked', 'ion-change');
 

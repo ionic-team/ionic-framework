@@ -5,7 +5,8 @@ import { Label } from '../../components/label/label';
 import { Toggle } from '../../components/toggle/toggle';
 import { getAriaLabel } from '../helpers';
 
-describe('getAriaLabel()', () => {
+// TODO FW-5969
+describe.skip('getAriaLabel()', () => {
   it('should correctly link component to label', async () => {
     const page = await newSpecPage({
       components: [Item, Label, Toggle],

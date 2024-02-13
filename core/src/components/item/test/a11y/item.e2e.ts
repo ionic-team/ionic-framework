@@ -94,56 +94,6 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
 
       await expect(item).toHaveScreenshot(screenshot(`item-detail-icon-scale`));
     });
-    test('should scale counter text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
-        <style>
-          html {
-            font-size: 310%;
-          }
-        </style>
-
-        <ion-item counter="true">
-          <ion-label position="stacked">Counter</ion-label>
-          <ion-input maxlength="20"></ion-input>
-        </ion-item>
-      `,
-        config
-      );
-
-      const item = page.locator('ion-item');
-
-      await expect(item).toHaveScreenshot(screenshot(`item-counter-text-scale`));
-    });
-    test('should scale helper and error text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
-        <style>
-          html {
-            font-size: 310%;
-          }
-        </style>
-
-        <ion-list>
-          <ion-item>
-            <ion-label>Helper</ion-label>
-            <ion-input></ion-input>
-            <ion-note slot="helper">Helper Text</ion-note>
-          </ion-item>
-          <ion-item class="ion-invalid">
-            <ion-label>Error</ion-label>
-            <ion-input></ion-input>
-            <ion-note slot="error">Error Text</ion-note>
-          </ion-item>
-        </ion-list>
-      `,
-        config
-      );
-
-      const list = page.locator('ion-list');
-
-      await expect(list).toHaveScreenshot(screenshot(`item-helper-error-text-scale`));
-    });
     test('should scale buttons in an item on larger font sizes', async ({ page }) => {
       await page.setContent(
         `
