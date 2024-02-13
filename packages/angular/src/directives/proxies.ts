@@ -1975,7 +1975,7 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
 
 
 @ProxyCmp({
-  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
   methods: ['open']
 })
 @Component({
@@ -1983,7 +1983,7 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
 })
 export class IonSelect {
   protected el: HTMLElement;

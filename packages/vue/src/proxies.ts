@@ -758,7 +758,6 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'justify',
   'label',
   'labelPlacement',
-  'legacy',
   'multiple',
   'name',
   'okText',

@@ -213,18 +213,9 @@
   --min-height: 68px;
 }
 
-:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
-:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  --padding-start: 0px;
-}
-
-
 // iOS Fixed Labels
 // --------------------------------------------------
 
-:host(.item-label-fixed) ::slotted(ion-select.legacy-select),
 :host(.item-label-fixed) ::slotted(ion-datetime) {
   --padding-start: 0;
 }
