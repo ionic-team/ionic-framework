@@ -218,5 +218,23 @@
         </div>
       </ion-content>
     </ion-app>
+
+    <script>
+      const datetimes = document.querySelectorAll('ion-datetime');
+
+      datetimes.forEach((datetime) => {
+        datetime.formatOptions = {
+          date: {
+            weekday: 'short',
+            month: 'long',
+            day: '2-digit',
+          },
+          time: {
+            hour: '2-digit',
+            minute: '2-digit',
+          },
+        };
+      });
+    </script>
   </body>
 </html>

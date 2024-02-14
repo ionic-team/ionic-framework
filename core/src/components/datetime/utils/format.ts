@@ -254,7 +254,7 @@ export const getLocalizedDateTime = (
   options: Intl.DateTimeFormatOptions
 ): string => {
   const date = getNormalizedDate(refParts);
-  return getDateTimeFormat(locale, options).format(date);
+  return getDateTimeFormat(locale, stripTimeZone(options)).format(date);
 };
 
 /**
