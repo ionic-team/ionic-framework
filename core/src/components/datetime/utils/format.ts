@@ -61,6 +61,12 @@ export const getLocalizedTime = (
      * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
      */
     hourCycle,
+    /**
+     * Setting Z at the end indicates that this
+     * date string is in the UTC time zone. This
+     * prevents new Date from adding the time zone
+     * offset when getting the ISO string.
+     */
   }).format(
     new Date(
       convertDataToISO({
