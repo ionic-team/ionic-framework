@@ -21,6 +21,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
   - [Input](#version-8x-input)
+  - [Item](#version-8x-item)
   - [Modal](#version-8x-modal)
   - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
@@ -161,6 +162,51 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 - `size` has been removed from the `ion-input` component. Developers should use CSS to specify the visible width of the input.
 - `accept` has been removed from the `ion-input` component. This was previously used in conjunction with the `type="file"`. However, the `file` value for `type` is not a valid value in Ionic Framework.
 - The `legacy` property and support for the legacy syntax, which involved placing an `ion-input` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy input syntax, refer to the [Input documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax).
+
+<h4 id="version-8x-item">Item</h4>
+
+The following deprecated CSS variables have been removed: `--highlight-height`, `--highlight-color-focused`, `--highlight-color-valid`, and `--highlight-color-invalid`. These variables were used on the bottom border highlight of an item when the form control inside of that item was focused. The form control syntax was [simplified in v7](https://ionic.io/blog/ionic-7-is-here#simplified-form-control-syntax) so that inputs, selects, and textareas would no longer be required to be used inside of an item.
+
+If you have not yet migrated to the modern form control syntax, migration guides for each of the form controls that added a highlight to item can be found below:
+- [Input migration documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax)
+- [Select migration documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax)
+- [Textarea migration documentation](https://ionicframework.com/docs/api/textarea#migrating-from-legacy-textarea-syntax)
+
+Once all form controls are using the modern syntax, the same variables can be used to customize them from the form control itself:
+
+| Name                        | Description                             |
+| ----------------------------| ----------------------------------------|
+| `--highlight-color-focused` | The color of the highlight when focused |
+| `--highlight-color-invalid` | The color of the highlight when invalid |
+| `--highlight-color-valid`   | The color of the highlight when valid   |
+| `--highlight-height`        | The height of the highlight indicator   |
+
+The following styles for item:
+
+```css
+ion-item {
+  --highlight-color-focused: purple;
+  --highlight-color-valid: blue;
+  --highlight-color-invalid: orange;
+  --highlight-height: 6px;
+}
+```
+
+will instead be applied on the form controls:
+
+```css
+ion-input,
+ion-textarea,
+ion-select {
+  --highlight-color-focused: purple;
+  --highlight-color-valid: blue;
+  --highlight-color-invalid: orange;
+  --highlight-height: 6px;
+}
+```
+
+> [!NOTE]
+> The input and textarea components are scoped, which means they will automatically scope their CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector. Targeting the `ion-input` or `ion-textarea` for customization will not work; therefore we recommend adding a class and customizing it that way.
 
 <h4 id="version-8x-modal">Modal</h4>
 
