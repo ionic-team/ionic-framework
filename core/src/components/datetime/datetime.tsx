@@ -34,7 +34,7 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import { formatValue, getLocalizedDateTime, getLocalizedTime, getMonthAndYear } from './utils/format';
 import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -2473,7 +2473,11 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback(), formatOptions?.date);
+      headerText = getLocalizedDateTime(
+        this.locale,
+        this.getActivePartsWithFallback(),
+        formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' }
+      );
     }
 
     return headerText;

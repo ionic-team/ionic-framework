@@ -54,66 +54,6 @@ describe('getMonthAndDay()', () => {
   it('should return sáb, 1 abr', () => {
     expect(getMonthAndDay('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('sáb, 1 abr');
   });
-
-  it('should use formatOptions', () => {
-    const datetimeParts: DatetimeParts = {
-      day: 1,
-      month: 1,
-      year: 2022,
-      hour: 9,
-      minute: 40,
-    };
-
-    const formatOptions: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      weekday: 'long',
-      month: 'narrow',
-      hour: '2-digit',
-      minute: '2-digit',
-    };
-
-    // Even though this method is intended to be used for date, the time may be displayed as well when passing formatOptions
-    expect(getMonthAndDay('en-US', datetimeParts, formatOptions)).toEqual('Saturday, J 01, 09:40 AM');
-  });
-
-  it('should override provided time zone with UTC', () => {
-    const datetimeParts: DatetimeParts = {
-      day: 1,
-      month: 1,
-      year: 2022,
-      hour: 23,
-      minute: 40,
-    };
-
-    const formatOptions: Intl.DateTimeFormatOptions = {
-      timeZone: 'Australia/Sydney',
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-    };
-
-    expect(getMonthAndDay('en-US', datetimeParts, formatOptions)).toEqual('Sat, Jan 1');
-  });
-
-  it('should not include time zone name', () => {
-    const datetimeParts: DatetimeParts = {
-      day: 1,
-      month: 1,
-      year: 2022,
-      hour: 9,
-      minute: 40,
-    };
-
-    const formatOptions: Intl.DateTimeFormatOptions = {
-      timeZone: 'America/Los_Angeles',
-      timeZoneName: 'long',
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-    };
-
-    expect(getMonthAndDay('en-US', datetimeParts, formatOptions)).toEqual('Sat, Jan 1');
-  });
 });
 
 describe('getFormattedHour()', () => {

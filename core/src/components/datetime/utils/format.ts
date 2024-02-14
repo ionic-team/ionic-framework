@@ -169,14 +169,11 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
  * Gets the day of the week, month, and day
  * Used for the header in MD mode.
  */
-export const getMonthAndDay = (locale: string, refParts: DatetimeParts, formatOptions?: Intl.DateTimeFormatOptions) => {
-  const defaultFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
-
-  // If any options are provided, don't use any of the defaults. This way the developer can (for example) choose to not have the weekday displayed at all.
-  const options = stripTimeZone(formatOptions ?? defaultFormatOptions);
-
+export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
   const date = getNormalizedDate(refParts);
-  return new Intl.DateTimeFormat(locale, options).format(date);
+  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
+    date
+  );
 };
 
 /**
