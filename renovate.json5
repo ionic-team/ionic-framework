@@ -3,6 +3,11 @@
   extends: ["config:base", ":semanticCommitTypeAll(chore)"],
   packageRules: [
     {
+      // Group these two as they may rely on one another during major version bumps
+      matchPackageNames: ["actions/download-artifact", "actions/upload-artifact"],
+      groupName: "Download + Upload Artifacts"
+    },
+    {
       matchPackagePatterns: ["@stencil/core", "@stencil/angular-output-target", "@stencil/react-output-target", "@stencil/sass", "@stencil/vue-output-target"],
       groupName: "stencil",
       matchFileNames: [
@@ -74,8 +79,6 @@
   schedule: ["every weekday before 11am"],
   semanticCommits: "enabled",
   ignorePaths: [
-    // GitHub Actions
-    ".github",
     // Ionic Packages
     "packages/angular",
     "packages/angular-server",
