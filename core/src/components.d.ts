@@ -631,10 +631,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -3639,7 +3635,6 @@ declare global {
         "ionChange": CheckboxChangeEventDetail;
         "ionFocus": void;
         "ionBlur": void;
-        "ionStyle": StyleEventDetail;
     }
     interface HTMLIonCheckboxElement extends Components.IonCheckbox, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonCheckboxElementEventMap>(type: K, listener: (this: HTMLIonCheckboxElement, ev: IonCheckboxCustomEvent<HTMLIonCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5324,10 +5319,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -5347,10 +5338,6 @@ declare namespace LocalJSX {
           * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonCheckboxCustomEvent<StyleEventDetail>) => void;
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
