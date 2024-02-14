@@ -69,6 +69,7 @@ import {
   isNextMonthDisabled,
   isPrevMonthDisabled,
 } from './utils/state';
+import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './utils/warn';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -181,8 +182,9 @@ export class Datetime implements ComponentInterface {
 
   @Watch('formatOptions')
   protected formatOptionsChanged() {
-    this.checkForPresentationFormatMismatch();
-    this.warnIfTimeZoneProvided();
+    const { formatOptions, presentation } = this;
+    checkForPresentationFormatMismatch(presentation, formatOptions);
+    warnIfTimeZoneProvided(formatOptions);
   }
 
   /**
@@ -251,7 +253,8 @@ export class Datetime implements ComponentInterface {
 
   @Watch('presentation')
   protected presentationChanged() {
-    this.checkForPresentationFormatMismatch();
+    const { formatOptions, presentation } = this;
+    checkForPresentationFormatMismatch(presentation, formatOptions);
   }
 
   private get isGridStyle() {
@@ -1402,8 +1405,8 @@ export class Datetime implements ComponentInterface {
     }
 
     if (formatOptions) {
-      this.checkForPresentationFormatMismatch();
-      this.warnIfTimeZoneProvided();
+      checkForPresentationFormatMismatch(presentation, formatOptions);
+      warnIfTimeZoneProvided(formatOptions);
     }
 
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
@@ -1432,59 +1435,6 @@ export class Datetime implements ComponentInterface {
 
     this.emitStyle();
   }
-
-  /**
-   * If a time zone is provided in the format options, the rendered text could
-   * differ from what was selected in the Datetime, which could cause
-   * confusion.
-   */
-  private warnIfTimeZoneProvided() {
-    const { formatOptions } = this;
-    if (
-      formatOptions?.date?.timeZone ||
-      formatOptions?.date?.timeZoneName ||
-      formatOptions?.time?.timeZone ||
-      formatOptions?.time?.timeZoneName
-    ) {
-      printIonWarning('Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".');
-    }
-  }
-
-  private checkForPresentationFormatMismatch = () => {
-    const { formatOptions, presentation } = this;
-
-    // formatOptions is not required
-    if (!formatOptions) return;
-
-    // If formatOptions is provided, the date and/or time objects are required, depending on the presentation
-    switch (presentation) {
-      case 'date':
-      case 'month-year':
-      case 'month':
-      case 'year':
-        if (formatOptions.date === undefined) {
-          printIonWarning(
-            `Datetime: The '${presentation}' presentation requires a date object in formatOptions.`,
-            this.el
-          );
-        }
-        break;
-      case 'time':
-        if (formatOptions.time === undefined) {
-          printIonWarning(`Datetime: The 'time' presentation requires a time object in formatOptions.`, this.el);
-        }
-        break;
-      case 'date-time':
-      case 'time-date':
-        if (formatOptions.date === undefined || formatOptions.time === undefined) {
-          printIonWarning(
-            `Datetime: The '${presentation}' presentation requires both a date and time object in formatOptions.`,
-            this.el
-          );
-        }
-        break;
-    }
-  };
 
   private emitStyle() {
     this.ionStyle.emit({
