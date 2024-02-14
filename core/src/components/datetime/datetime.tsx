@@ -182,7 +182,7 @@ export class Datetime implements ComponentInterface {
   @Watch('formatOptions')
   protected formatOptionsChanged() {
     this.checkForPresentationFormatMismatch();
-    this.errorIfTimeZoneProvided();
+    this.warnIfTimeZoneProvided();
   }
 
   /**
@@ -1403,7 +1403,7 @@ export class Datetime implements ComponentInterface {
 
     if (formatOptions) {
       this.checkForPresentationFormatMismatch();
-      this.errorIfTimeZoneProvided();
+      this.warnIfTimeZoneProvided();
     }
 
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
@@ -1438,7 +1438,7 @@ export class Datetime implements ComponentInterface {
    * differ from what was selected in the Datetime, which could cause
    * confusion.
    */
-  private errorIfTimeZoneProvided() {
+  private warnIfTimeZoneProvided() {
     const { formatOptions } = this;
     if (
       formatOptions?.date?.timeZone ||
