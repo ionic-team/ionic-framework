@@ -36,7 +36,7 @@ export const getLocalizedTime = (
   locale: string,
   refParts: DatetimeParts,
   hourCycle: DatetimeHourCycle,
-  formatOptions?: Intl.DateTimeFormatOptions
+  formatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' }
 ): string => {
   const timeParts: Pick<DatetimeParts, 'hour' | 'minute'> = {
     hour: refParts.hour,
@@ -47,15 +47,8 @@ export const getLocalizedTime = (
     return 'Invalid Time';
   }
 
-  const defaultFormatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
-
-  /**
-   * If any options are provided, don't use any of the defaults.
-   */
-  const options = stripTimeZone(formatOptions ?? defaultFormatOptions);
-
   return new Intl.DateTimeFormat(locale, {
-    ...options,
+    ...stripTimeZone(formatOptions),
     /**
      * We use hourCycle here instead of hour12 due to:
      * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
