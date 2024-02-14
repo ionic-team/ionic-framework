@@ -5,8 +5,6 @@ export { SelectValueAccessorDirective as SelectValueAccessor } from './directive
 export { TextValueAccessorDirective as TextValueAccessor } from './directives/control-value-accessors/text-value-accessor';
 export { IonTabs } from './directives/navigation/ion-tabs';
 export { IonBackButton } from './directives/navigation/ion-back-button';
-// TODO FW-5889
-export { IonBackButton as IonBackButtonDelegate } from './directives/navigation/ion-back-button';
 export { IonNav } from './directives/navigation/ion-nav';
 export { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 export {
