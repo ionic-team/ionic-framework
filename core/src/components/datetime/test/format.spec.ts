@@ -1,7 +1,6 @@
 import type { DatetimeParts } from '../datetime-interface';
 import {
   generateDayAriaLabel,
-  getMonthAndDay,
   getFormattedHour,
   addTimePadding,
   getMonthAndYear,
@@ -35,24 +34,6 @@ describe('generateDayAriaLabel()', () => {
     const reference = { month: 4, day: 1, year: 2006 };
 
     expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Saturday, April 1');
-  });
-});
-
-describe('getMonthAndDay()', () => {
-  it('should return Tue, May 11', () => {
-    expect(getMonthAndDay('en-US', { month: 5, day: 11, year: 2021 })).toEqual('Tue, May 11');
-  });
-
-  it('should return mar, 11 may', () => {
-    expect(getMonthAndDay('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mar, 11 may');
-  });
-
-  it('should return Sat, Apr 1', () => {
-    expect(getMonthAndDay('en-US', { month: 4, day: 1, year: 2006 })).toEqual('Sat, Apr 1');
-  });
-
-  it('should return sáb, 1 abr', () => {
-    expect(getMonthAndDay('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('sáb, 1 abr');
   });
 });
 

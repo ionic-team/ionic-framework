@@ -166,17 +166,6 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
 };
 
 /**
- * Gets the day of the week, month, and day
- * Used for the header in MD mode.
- */
-export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
-  const date = getNormalizedDate(refParts);
-  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
-    date
-  );
-};
-
-/**
  * Given a locale and a date object,
  * return a formatted string that includes
  * the month name and full year.
