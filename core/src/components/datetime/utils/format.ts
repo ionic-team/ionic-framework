@@ -16,9 +16,7 @@ const getFormattedDayPeriod = (dayPeriod?: string) => {
  * different time from what was selected in the Datetime, which could cause
  * confusion.
  */
-const stripTimeZone = (formatOptions?: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions | undefined => {
-  if (!formatOptions) return formatOptions;
-
+export const stripTimeZone = (formatOptions: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions => {
   /**
    * We do not want to display the time zone name
    */

@@ -7,6 +7,7 @@ import {
   getMonthAndYear,
   getLocalizedDayPeriod,
   getLocalizedTime,
+  stripTimeZone,
 } from '../utils/format';
 
 describe('generateDayAriaLabel()', () => {
@@ -271,5 +272,22 @@ describe('getLocalizedTime', () => {
     };
 
     expect(getLocalizedTime('en-US', datetimeParts, 'h12', formatOptions)).toEqual('9:40 AM');
+  });
+});
+
+describe('stripTimeZone', () => {
+  it('should remove the time zone name from the options and set the time zone to UTC', () => {
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      timeZone: 'America/Los_Angeles',
+      timeZoneName: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+
+    expect(stripTimeZone(formatOptions)).toEqual({
+      timeZone: 'UTC',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
   });
 });
