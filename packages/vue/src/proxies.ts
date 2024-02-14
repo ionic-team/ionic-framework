@@ -605,10 +605,8 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio, JSX.IonRadio
   'disabled',
   'value',
   'labelPlacement',
-  'legacy',
   'justify',
   'alignment',
-  'ionStyle',
   'ionFocus',
   'ionBlur'
 ],
@@ -866,13 +864,11 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'value',
   'enableOnOffLabels',
   'labelPlacement',
-  'legacy',
   'justify',
   'alignment',
   'ionChange',
   'ionFocus',
-  'ionBlur',
-  'ionStyle'
+  'ionBlur'
 ],
 'checked', 'ion-change');
 

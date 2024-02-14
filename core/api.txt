@@ -1033,7 +1033,6 @@ ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secon
 ion-radio,prop,disabled,boolean,false,false,false
 ion-radio,prop,justify,"end" | "space-between" | "start",'space-between',false,false
 ion-radio,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
-ion-radio,prop,legacy,boolean | undefined,undefined,false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
 ion-radio,prop,value,any,undefined,false,false
@@ -1510,7 +1509,6 @@ ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
 ion-toggle,prop,justify,"end" | "space-between" | "start",'space-between',false,false
 ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
-ion-toggle,prop,legacy,boolean | undefined,undefined,false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
