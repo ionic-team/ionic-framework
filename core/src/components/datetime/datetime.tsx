@@ -1453,8 +1453,6 @@ export class Datetime implements ComponentInterface {
   private checkForPresentationFormatMismatch = () => {
     const { formatOptions, presentation } = this;
 
-    console.log('checkForPresentationFormatMismatch', formatOptions, presentation);
-
     // formatOptions is not required
     if (!formatOptions) return;
 
