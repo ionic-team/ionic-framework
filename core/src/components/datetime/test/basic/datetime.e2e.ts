@@ -654,9 +654,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         </ion-datetime>
         <script>
           const datetime = document.querySelector('ion-datetime');
-          datetime.formatOptions = {
-            time: { hour: '2-digit', minute: '2-digit' },
-          }
+          datetime.formatOptions = {}
         </script>
       `,
         config
@@ -666,7 +664,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
-        "[Ionic Warning]: Datetime: The 'date-time' presentation requires both a date and time object in formatOptions."
+        "[Ionic Warning]: Datetime: The 'date-time' presentation requires either a date or time object (or both) in formatOptions."
       );
     });
   });

@@ -36,7 +36,7 @@ export const getLocalizedTime = (
   locale: string,
   refParts: DatetimeParts,
   hourCycle: DatetimeHourCycle,
-  formatOptions?: Intl.DateTimeFormatOptions
+  formatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' }
 ): string => {
   const timeParts: Pick<DatetimeParts, 'hour' | 'minute'> = {
     hour: refParts.hour,
@@ -47,20 +47,19 @@ export const getLocalizedTime = (
     return 'Invalid Time';
   }
 
-  const defaultFormatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
-
-  /**
-   * If any options are provided, don't use any of the defaults.
-   */
-  const options = stripTimeZone(formatOptions ?? defaultFormatOptions);
-
   return new Intl.DateTimeFormat(locale, {
-    ...options,
+    ...stripTimeZone(formatOptions),
     /**
      * We use hourCycle here instead of hour12 due to:
      * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
      */
     hourCycle,
+    /**
+     * Setting Z at the end indicates that this
+     * date string is in the UTC time zone. This
+     * prevents new Date from adding the time zone
+     * offset when getting the ISO string.
+     */
   }).format(
     new Date(
       convertDataToISO({
@@ -163,17 +162,6 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
    * that the date is today.
    */
   return today ? `Today, ${labelString}` : labelString;
-};
-
-/**
- * Gets the day of the week, month, and day
- * Used for the header in MD mode.
- */
-export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
-  const date = getNormalizedDate(refParts);
-  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
-    date
-  );
 };
 
 /**
