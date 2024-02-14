@@ -42,9 +42,9 @@ export const checkForPresentationFormatMismatch = (
       break;
     case 'date-time':
     case 'time-date':
-      if (formatOptions.date === undefined || formatOptions.time === undefined) {
+      if (formatOptions.date === undefined && formatOptions.time === undefined) {
         printIonWarning(
-          `Datetime: The '${presentation}' presentation requires both a date and time object in formatOptions.`
+          `Datetime: The '${presentation}' presentation requires either a date or time object (or both) in formatOptions.`
         );
       }
       break;
