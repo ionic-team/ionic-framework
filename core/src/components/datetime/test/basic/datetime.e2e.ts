@@ -605,8 +605,40 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
  * modes/directions.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('datetime: formatOptions timeZone error'), () => {
+  test.describe(title('datetime: formatOptions misconfiguration errors'), () => {
     test('should log a warning if time zone is provided', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00" presentation="date">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            date: { timeZone: 'UTC' },
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        '[Ionic Warning]: Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".'
+      );
+    });
+
+    test('should log a warning if the required formatOptions are not provided for a presentation', async ({ page }) => {
       const logs: string[] = [];
 
       page.on('console', (msg) => {
@@ -623,7 +655,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         <script>
           const datetime = document.querySelector('ion-datetime');
           datetime.formatOptions = {
-            time: { timeZone: 'UTC' },
+            time: { hour: '2-digit', minute: '2-digit' },
           }
         </script>
       `,
@@ -634,7 +666,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
-        '[Ionic Warning]: Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".'
+        "[Ionic Warning]: Datetime: The 'date-time' presentation requires both a date and time object in formatOptions."
       );
     });
   });

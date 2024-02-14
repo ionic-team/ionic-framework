@@ -181,6 +181,7 @@ export class Datetime implements ComponentInterface {
 
   @Watch('formatOptions')
   protected formatOptionsChanged() {
+    this.checkForPresentationFormatMismatch();
     this.errorIfTimeZoneProvided();
   }
 
@@ -247,6 +248,11 @@ export class Datetime implements ComponentInterface {
    * `"time-date"` will show the time picker first and date picker second.
    */
   @Prop() presentation: DatetimePresentation = 'date-time';
+
+  @Watch('presentation')
+  protected presentationChanged() {
+    this.checkForPresentationFormatMismatch();
+  }
 
   private get isGridStyle() {
     const { presentation, preferWheel } = this;
@@ -1396,6 +1402,7 @@ export class Datetime implements ComponentInterface {
     }
 
     if (formatOptions) {
+      this.checkForPresentationFormatMismatch();
       this.errorIfTimeZoneProvided();
     }
 
@@ -1442,6 +1449,44 @@ export class Datetime implements ComponentInterface {
       printIonWarning('Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".');
     }
   }
+
+  private checkForPresentationFormatMismatch = () => {
+    const { formatOptions, presentation } = this;
+
+    console.log('checkForPresentationFormatMismatch', formatOptions, presentation);
+
+    // formatOptions is not required
+    if (!formatOptions) return;
+
+    // If formatOptions is provided, the date and/or time objects are required, depending on the presentation
+    switch (presentation) {
+      case 'date':
+      case 'month-year':
+      case 'month':
+      case 'year':
+        if (formatOptions.date === undefined) {
+          printIonWarning(
+            `Datetime: The '${presentation}' presentation requires a date object in formatOptions.`,
+            this.el
+          );
+        }
+        break;
+      case 'time':
+        if (formatOptions.time === undefined) {
+          printIonWarning(`Datetime: The 'time' presentation requires a time object in formatOptions.`, this.el);
+        }
+        break;
+      case 'date-time':
+      case 'time-date':
+        if (formatOptions.date === undefined || formatOptions.time === undefined) {
+          printIonWarning(
+            `Datetime: The '${presentation}' presentation requires both a date and time object in formatOptions.`,
+            this.el
+          );
+        }
+        break;
+    }
+  };
 
   private emitStyle() {
     this.ionStyle.emit({
