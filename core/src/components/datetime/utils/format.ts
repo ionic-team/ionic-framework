@@ -190,16 +190,6 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
 /**
  * Given a locale and a date object,
  * return a formatted string that includes
- * the short month, numeric day, and full year.
- * Example: Apr 22, 2021
- */
-export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
-  return getLocalizedDateTime(locale, refParts, { month: 'short', day: 'numeric', year: 'numeric' });
-};
-
-/**
- * Given a locale and a date object,
- * return a formatted string that includes
  * the numeric day.
  * Note: Some languages will add literal characters
  * to the end. This function removes those literals.
