@@ -48,18 +48,15 @@
   display: block;
   position: relative;
 
+  width: 100%;
+  min-height: 44px;
+
   font-family: $font-family-base;
 
   white-space: nowrap;
 
   cursor: pointer;
   z-index: $z-index-item-input;
-}
-
-// TODO FW-3194 - Move this to host
-:host(:not(.legacy-select)) {
-  width: 100%;
-  min-height: 44px;
 }
 
 /**
@@ -76,34 +73,14 @@
   --highlight-color-focused: #{current-color(base)};
 }
 
-// TODO FW-3194 - Remove this
-:host(.legacy-select) {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-
-  display: flex;
-
-  align-items: center;
-
-  overflow: hidden;
-}
-
 // Select Used in ion-item
 // --------------------------------------------------
 
-// TODO FW-3194 - Remove the :not(.legacy-select) piece
-//
 // The flex property is required here in order to allow
 // the select to shrink inside of an item otherwise it
 // always wraps to the next line even when it can shrink
-:host(.in-item:not(.legacy-select)) {
+:host(.in-item) {
   flex: 1 1 0;
-}
-
-// TODO FW-3194 - Remove this
-:host(.in-item.legacy-select) {
-  position: static;
-
-  max-width: 45%;
 }
 
 :host(.select-disabled) {
@@ -114,15 +91,14 @@
   border: 2px solid #5e9ed6;
 }
 
-// TODO FW-3194 - Remove :not(.legacy-select) piece
 /**
  * Select can be slotted
  * in components such as item and
  * toolbar which is why we do not
  * limit the below behavior to just ion-item.
  */
-:host([slot="start"]:not(.legacy-select)),
-:host([slot="end"]:not(.legacy-select)) {
+:host([slot="start"]),
+:host([slot="end"]) {
   width: auto;
 }
 
@@ -130,17 +106,6 @@
   color: var(--placeholder-color);
 
   opacity: var(--placeholder-opacity);
-}
-
-// TODO FW-3194 - Remove this
-:host(.legacy-select) label {
-  @include input-cover();
-
-  display: flex;
-
-  align-items: center;
-
-  opacity: 0;
 }
 
 button {

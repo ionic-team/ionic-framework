@@ -37,9 +37,6 @@ $toggle-ios-handle-box-shadow:         0 3px 4px rgba(0, 0, 0, .06), 0 3px 8px r
 /// @prop - Background color of the toggle handle
 $toggle-ios-handle-background-color:   #ffffff !default;
 
-/// @prop - Margin of the toggle handle
-$toggle-ios-media-margin:              0 !default;
-
 /// @prop - Transition duration of the toggle icon
 $toggle-ios-transition-duration:       300ms !default;
 
@@ -48,30 +45,6 @@ $toggle-ios-transition:                transform $toggle-ios-transition-duration
 
 /// @prop - Opacity of the disabled toggle
 $toggle-ios-disabled-opacity:          .3 !default;
-
-/// @prop - Padding top of the toggle positioned on the start in an item
-$toggle-ios-item-start-padding-top:    6px !default;
-
-/// @prop - Padding end of the toggle positioned on the start in an item
-$toggle-ios-item-start-padding-end:    16px !default;
-
-/// @prop - Padding bottom of the toggle positioned on the start in an item
-$toggle-ios-item-start-padding-bottom: 5px !default;
-
-/// @prop - Padding start of the toggle positioned on the start in an item
-$toggle-ios-item-start-padding-start:  0 !default;
-
-/// @prop - Padding top of the toggle positioned on the end in an item
-$toggle-ios-item-end-padding-top:      6px !default;
-
-/// @prop - Padding end of the toggle positioned on the end in an item
-$toggle-ios-item-end-padding-end:      0 !default;
-
-/// @prop - Padding bottom of the toggle positioned on the end in an item
-$toggle-ios-item-end-padding-bottom:   5px !default;
-
-/// @prop - Padding start of the toggle positioned on the end in an item
-$toggle-ios-item-end-padding-start:    $item-ios-padding-start !default;
 
 /// @prop - The text color of the on/off labels when the toggle is checked
 $toggle-ios-on-off-label-checked-color: #fff !default;
