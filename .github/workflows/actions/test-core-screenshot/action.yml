@@ -32,10 +32,10 @@ runs:
       # - run all the instances of the specified component(s) in the `src/components` folder
       # -- For example: if the `component` value is "item", then the following command will be: `npm run test.e2e item`
       # - run the specified file path
-      # -- For example: if the `component` value is "src/components/item/basic", then the following command will be: `npm run test.e2e src/components/item/basic`
+      # -- For example: if the `component` value is "src/components/item/test/basic", then the following command will be: `npm run test.e2e src/components/item/test/basic`
       # - run multiple specified components based on the space-separated value
       # -- For example: if the `component` value is "item basic", then the following command will be: `npm run test.e2e item basic`
-      # -- For example: if the `component` value is "src/components/item/basic src/components/item/advanced", then the following command will be: `npm run test.e2e src/components/item/basic src/components/item/advanced`
+      # -- For example: if the `component` value is "src/components/item/test/basic src/components/item/test/a11y", then the following command will be: `npm run test.e2e src/components/item/test/basic src/components/item/test/a11y`
       #
       # More common options can be found at the Playwright Command line page: https://playwright.dev/docs/test-cli
       run: |
