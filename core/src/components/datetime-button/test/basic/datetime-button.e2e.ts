@@ -324,7 +324,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await page.locator('.datetime-ready').waitFor();
 
-
       await expect(page.locator('ion-datetime-button')).toContainText('Thu, November 02 01:22 AM');
     });
   });
