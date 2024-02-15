@@ -8,8 +8,6 @@ import type { ReactComponentOrElement } from '../models/ReactComponentOrElement'
 import type { HookOverlayOptions } from './HookOverlayOptions';
 import { useOverlay } from './useOverlay';
 
-// TODO(FW-2959): types
-
 /**
  * A hook for presenting/dismissing an IonPicker component
  * @param component The component that the popover will show. Can be a React Component, a functional component, or a JSX Element
@@ -18,6 +16,9 @@ import { useOverlay } from './useOverlay';
  */
 export function useIonPopover(component: JSX.Element, componentProps?: any): UseIonPopoverResult;
 export function useIonPopover<P extends undefined>(
+  component: React.ComponentClass<P> | React.FC<P>
+): UseIonPopoverResult;
+export function useIonPopover<P extends Record<string, never>>(
   component: React.ComponentClass<P> | React.FC<P>
 ): UseIonPopoverResult;
 export function useIonPopover<P>(

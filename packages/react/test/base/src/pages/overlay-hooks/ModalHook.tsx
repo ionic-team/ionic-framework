@@ -11,10 +11,10 @@ import {
 import { useContext } from 'react';
 
 const Body: React.FC<{
-  type: string;
-  count: number;
+  type?: string;
+  count?: number;
   onDismiss: (data?: any, role?: string) => void;
-  onIncrement: () => void;
+  onIncrement?: () => void;
 }> = ({ count, onDismiss, onIncrement, type }) => (
   <IonPage>
     <IonHeader>
@@ -24,7 +24,7 @@ const Body: React.FC<{
     </IonHeader>
     <IonContent>
       Count in modal: {count}
-      <IonButton expand="block" onClick={() => onIncrement()}>
+      <IonButton expand="block" onClick={() => onIncrement?.()}>
         Increment Count
       </IonButton>
       <IonButton expand="block" onClick={() => onDismiss({ test: true }, 'close')}>
@@ -51,7 +51,7 @@ const ModalHook: React.FC = () => {
     setCount(count + 1);
   }, [count, setCount]);
 
-  const handleDismissWithComponent = useCallback((data: any, role: string) => {
+  const handleDismissWithComponent = useCallback((data?: any, role?: string) => {
     dismissWithComponent(data, role);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
