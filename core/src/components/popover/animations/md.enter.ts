@@ -79,7 +79,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
   wrapperAnimation.addElement(root.querySelector('.popover-wrapper')!).duration(150).fromTo('opacity', 0.01, 1);
 
   /**
-   * NOTE: See ios.enter.ts for details on what this is doing. For MD, this works perfectly.
+   * NOTE: See ios.enter.ts for details on what this is doing. For MD, this should work great.
    * Technically, the logic for whether to flip the direction of the opening animation doesn't
    * account for safe area, so there's a safe-area-margin-sized window where it flips in
    * the wrong direction. However, because the margin is usually pretty small, this is barely

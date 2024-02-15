@@ -152,6 +152,11 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
        * The left position is the same, but using x-axis values instead. We do this through
        * pure CSS to avoid needing to call window.getComputedStyle() to figure out the computed
        * safe area, which is very expensive and would introduce performance issues.
+       *
+       * The clamp() function is available in all browsers we support as of Ionic v7, except for
+       * Firefox. The function was introduced in Firefox 75, which is conveniently the new minimum
+       * supported version in Ionic v8. As such, we'll probably want to just push the fix to v8,
+       * if v8 isn't already out by the time we get to this.
        */
       contentEl.style.setProperty('top', `clamp(calc(var(--ion-safe-area-top, 0px) + var(--offset-y, 0px) + ${arrowHeight}px), calc(${top}px + var(--offset-y, 0px)), calc(100% - ${contentHeight + arrowHeight}px - var(--ion-safe-area-bottom) + var(--offset-y, 0px)))`);
       contentEl.style.setProperty('left', `clamp(calc(var(--ion-safe-area-left, 0px) + var(--offset-x, 0px)), calc(${left}px + var(--offset-x, 0px)), calc(100% - ${contentWidth}px - var(--ion-safe-area-right) + var(--offset-x, 0px)))`);
@@ -178,7 +183,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
            * The problem with this approach is that the popover content hits the max value
            * sooner than the arrow, due to being taller. If you present a popover low enough
            * on the screen to need safe area adjustment, but not so low that the popover flips
-           * to present above the trigger, the arrow will render inside the popover because
+           * to present above the trigger, the arrow will render overlapping the popover because
            * the content has been adjusted for safe area but the arrow has not.
            *
            * In theory, the most straightforward way of fixing this would be to calculate the
