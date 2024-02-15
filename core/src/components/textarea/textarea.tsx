@@ -13,17 +13,10 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { LegacyFormController, NotchController } from '@utils/forms';
-import { createLegacyFormController, createNotchController } from '@utils/forms';
+import type { NotchController } from '@utils/forms';
+import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import {
-  inheritAriaAttributes,
-  debounceEvent,
-  findItemLabel,
-  inheritAttributes,
-  componentOnReady,
-} from '@utils/helpers';
-import { printIonWarning } from '@utils/logging';
+import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -38,6 +31,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
+ * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)
+ * @slot end - Content to display at the trailing edge of the textarea. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-textarea',
@@ -60,15 +55,11 @@ export class Textarea implements ComponentInterface {
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
-  private legacyFormController!: LegacyFormController;
   private notchSpacerEl: HTMLElement | undefined;
 
   private slotMutationController?: SlotMutationController;
 
   private notchController?: NotchController;
-
-  // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
 
   /**
    * The value of the textarea when the textarea is focused.
@@ -124,11 +115,6 @@ export class Textarea implements ComponentInterface {
    * If `true`, the user cannot interact with the textarea.
    */
   @Prop() disabled = false;
-
-  @Watch('disabled')
-  protected disabledChanged() {
-    this.emitStyle();
-  }
 
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
@@ -220,6 +206,9 @@ export class Textarea implements ComponentInterface {
   /**
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
 
@@ -253,17 +242,6 @@ export class Textarea implements ComponentInterface {
   @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
   /**
-   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
-   * Ionic will only opt components in to the modern form markup when they are
-   * using either the `aria-label` attribute or the default slot that contains
-   * the label text. As a result, the `legacy` property should only be used as
-   * an escape hatch when you want to avoid this automatic opt-in behavior.
-   * Note that this property will be removed in an upcoming major release
-   * of Ionic, and all form components will be opted-in to using the modern form markup.
-   */
-  @Prop() legacy?: boolean;
-
-  /**
    * The shape of the textarea. If "round" it will have an increased border radius.
    */
   @Prop() shape?: 'round';
@@ -279,7 +257,6 @@ export class Textarea implements ComponentInterface {
       nativeInput.value = value;
     }
     this.runAutoGrow();
-    this.emitStyle();
   }
 
   /**
@@ -317,14 +294,12 @@ export class Textarea implements ComponentInterface {
 
   connectedCallback() {
     const { el } = this;
-    this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
-    this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
       document.dispatchEvent(
@@ -399,20 +374,6 @@ export class Textarea implements ComponentInterface {
     return Promise.resolve(this.nativeInput!);
   }
 
-  private emitStyle() {
-    if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        interactive: true,
-        textarea: true,
-        input: true,
-        'interactive-disabled': this.disabled,
-        'has-placeholder': this.placeholder !== undefined,
-        'has-value': this.hasValue(),
-        'has-focus': this.hasFocus,
-      });
-    }
-  }
-
   /**
    * Emits an `ionChange` event.
    *
@@ -455,19 +416,41 @@ export class Textarea implements ComponentInterface {
     if (!this.clearOnEdit) {
       return;
     }
+
+    /**
+     * The following keys do not modify the
+     * contents of the input. As a result, pressing
+     * them should not edit the textarea.
+     *
+     * We can't check to see if the value of the textarea
+     * was changed because we call checkClearOnEdit
+     * in a keydown listener, and the key has not yet
+     * been added to the textarea.
+     *
+     * Unlike ion-input, the "Enter" key does modify the
+     * textarea by adding a new line, so "Enter" is not
+     * included in the IGNORED_KEYS array.
+     */
+    const IGNORED_KEYS = ['Tab', 'Shift', 'Meta', 'Alt', 'Control'];
+    const pressedIgnoredKey = IGNORED_KEYS.includes(ev.key);
+
     /**
      * Clear the textarea if the control has not been previously cleared
      * during focus.
      */
-    if (!this.didTextareaClearOnEdit && this.hasValue() && ev.key !== 'Tab') {
+    if (!this.didTextareaClearOnEdit && this.hasValue() && !pressedIgnoredKey) {
       this.value = '';
       this.emitInputChange(ev);
     }
-    this.didTextareaClearOnEdit = true;
-  }
 
-  private focusChange() {
-    this.emitStyle();
+    /**
+     * Pressing an IGNORED_KEYS first and
+     * then an allowed key will cause the input to not
+     * be cleared.
+     */
+    if (!pressedIgnoredKey) {
+      this.didTextareaClearOnEdit = true;
+    }
   }
 
   private hasValue(): boolean {
@@ -498,14 +481,12 @@ export class Textarea implements ComponentInterface {
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusedValue = this.value;
-    this.focusChange();
 
     this.ionFocus.emit(ev);
   };
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
-    this.focusChange();
 
     if (this.focusedValue !== this.value) {
       /**
@@ -521,73 +502,6 @@ export class Textarea implements ComponentInterface {
   private onKeyDown = (ev: KeyboardEvent) => {
     this.checkClearOnEdit(ev);
   };
-
-  // TODO: FW-2876 - Remove this render function
-  private renderLegacyTextarea() {
-    if (!this.hasLoggedDeprecationWarning) {
-      printIonWarning(
-        `ion-textarea now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
-
-Example: <ion-textarea label="Comments"></ion-textarea>
-Example with aria-label: <ion-textarea aria-label="Comments"></ion-textarea>
-
-For textareas that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the textarea by using "aria-labelledby".
-
-Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
-        this.el
-      );
-      this.hasLoggedDeprecationWarning = true;
-    }
-
-    const mode = getIonMode(this);
-    const value = this.getValue();
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
-    if (label) {
-      label.id = labelId;
-    }
-
-    return (
-      <Host
-        aria-disabled={this.disabled ? 'true' : null}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'legacy-textarea': true,
-        })}
-      >
-        <div class="textarea-legacy-wrapper" ref={(el) => (this.textareaWrapper = el)}>
-          <textarea
-            class="native-textarea"
-            aria-labelledby={label ? label.id : null}
-            ref={(el) => (this.nativeInput = el)}
-            autoCapitalize={this.autocapitalize}
-            autoFocus={this.autofocus}
-            enterKeyHint={this.enterkeyhint}
-            inputMode={this.inputmode}
-            disabled={this.disabled}
-            maxLength={this.maxlength}
-            minLength={this.minlength}
-            name={this.name}
-            placeholder={this.placeholder || ''}
-            readOnly={this.readonly}
-            required={this.required}
-            spellcheck={this.spellcheck}
-            cols={this.cols}
-            rows={this.rows}
-            wrap={this.wrap}
-            onInput={this.onInput}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-            onFocus={this.onFocus}
-            onKeyDown={this.onKeyDown}
-            {...this.inheritedAttributes}
-          >
-            {value}
-          </textarea>
-        </div>
-      </Host>
-    );
-  }
 
   private renderLabel() {
     const { label } = this;
@@ -706,68 +620,107 @@ Developers can use the "legacy" property to continue using the legacy form marku
     );
   }
 
-  private renderTextarea() {
-    const { inputId, disabled, fill, shape, labelPlacement } = this;
+  render() {
+    const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
+    /**
+     * If the label is stacked, it should always sit above the textarea.
+     * For floating labels, the label should move above the textarea if
+     * the textarea has a value, is focused, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the textarea is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     *
+     * TODO(FW-5592): Remove hasStartEndSlots condition
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+
     return (
       <Host
         class={createColorClasses(this.color, {
           [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
+          'has-value': hasValue,
+          'has-focus': hasFocus,
+          'label-floating': labelShouldFloat,
           [`textarea-fill-${fill}`]: fill !== undefined,
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
         })}
       >
-        <label class="textarea-wrapper">
+        {/**
+         * htmlFor is needed so that clicking the label always focuses
+         * the textarea. Otherwise, if the start slot has something
+         * interactable, clicking the label would focus that instead
+         * since it comes before the textarea in the DOM.
+         */}
+        <label class="textarea-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
-            <textarea
-              class="native-textarea"
-              ref={(el) => (this.nativeInput = el)}
-              id={inputId}
-              disabled={disabled}
-              autoCapitalize={this.autocapitalize}
-              autoFocus={this.autofocus}
-              enterKeyHint={this.enterkeyhint}
-              inputMode={this.inputmode}
-              minLength={this.minlength}
-              maxLength={this.maxlength}
-              name={this.name}
-              placeholder={this.placeholder || ''}
-              readOnly={this.readonly}
-              required={this.required}
-              spellcheck={this.spellcheck}
-              cols={this.cols}
-              rows={this.rows}
-              wrap={this.wrap}
-              onInput={this.onInput}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-              onFocus={this.onFocus}
-              onKeyDown={this.onKeyDown}
-              {...this.inheritedAttributes}
-            >
-              {value}
-            </textarea>
+          <div class="textarea-wrapper-inner">
+            {/**
+             * Some elements have their own padding styles which may
+             * interfere with slot content alignment (such as icon-
+             * only buttons setting --padding-top=0). To avoid this,
+             * we wrap both the start and end slots in separate
+             * elements and apply our padding styles to that instead.
+             */}
+            <div class="start-slot-wrapper">
+              <slot name="start"></slot>
+            </div>
+            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+              <textarea
+                class="native-textarea"
+                ref={(el) => (this.nativeInput = el)}
+                id={inputId}
+                disabled={disabled}
+                autoCapitalize={this.autocapitalize}
+                autoFocus={this.autofocus}
+                enterKeyHint={this.enterkeyhint}
+                inputMode={this.inputmode}
+                minLength={this.minlength}
+                maxLength={this.maxlength}
+                name={this.name}
+                placeholder={this.placeholder || ''}
+                readOnly={this.readonly}
+                required={this.required}
+                spellcheck={this.spellcheck}
+                cols={this.cols}
+                rows={this.rows}
+                wrap={this.wrap}
+                onInput={this.onInput}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                onKeyDown={this.onKeyDown}
+                {...this.inheritedAttributes}
+              >
+                {value}
+              </textarea>
+            </div>
+            <div class="end-slot-wrapper">
+              <slot name="end"></slot>
+            </div>
           </div>
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>
         {this.renderBottomContent()}
       </Host>
     );
-  }
-
-  render() {
-    const { legacyFormController } = this;
-
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderTextarea();
   }
 }
 

@@ -1,16 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import type { LegacyFormController, NotchController } from '@utils/forms';
-import { createLegacyFormController, createNotchController } from '@utils/forms';
+import type { NotchController } from '@utils/forms';
+import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import {
-  inheritAriaAttributes,
-  debounceEvent,
-  findItemLabel,
-  inheritAttributes,
-  componentOnReady,
-} from '@utils/helpers';
-import { printIonWarning } from '@utils/logging';
+import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -26,6 +19,8 @@ import { getCounterText } from './input.utils';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
+ * @slot start - Content to display at the leading edge of the input. (EXPERIMENTAL)
+ * @slot end - Content to display at the trailing edge of the input. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-input',
@@ -40,13 +35,10 @@ export class Input implements ComponentInterface {
   private inputId = `ion-input-${inputIds++}`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
-  private legacyFormController!: LegacyFormController;
   private slotMutationController?: SlotMutationController;
   private notchController?: NotchController;
   private notchSpacerEl: HTMLElement | undefined;
 
-  // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
   /**
@@ -71,12 +63,6 @@ export class Input implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop({ reflect: true }) color?: Color;
-
-  /**
-   * This attribute is ignored.
-   * @deprecated
-   */
-  @Prop() accept?: string;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
@@ -119,6 +105,9 @@ export class Input implements ComponentInterface {
   /**
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
 
@@ -142,11 +131,6 @@ export class Input implements ComponentInterface {
    * If `true`, the user cannot interact with the input.
    */
   @Prop() disabled = false;
-
-  @Watch('disabled')
-  protected disabledChanged() {
-    this.emitStyle();
-  }
 
   /**
    * A hint to the browser for which enter key to display.
@@ -196,17 +180,6 @@ export class Input implements ComponentInterface {
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
-
-  /**
-   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
-   * Ionic will only opt components in to the modern form markup when they are
-   * using either the `aria-label` attribute or the `label` property. As a result,
-   * the `legacy` property should only be used as an escape hatch when you want to
-   * avoid this automatic opt-in behavior.
-   * Note that this property will be removed in an upcoming major release
-   * of Ionic, and all form components will be opted-in to using the modern form markup.
-   */
-  @Prop() legacy?: boolean;
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -276,9 +249,6 @@ export class Input implements ComponentInterface {
    */
   @Prop() step?: string;
 
-  // FW-4914 Remove this property in Ionic 8
-  @Prop() size?: number;
-
   /**
    * The type of control to display. The default type is text.
    */
@@ -332,14 +302,6 @@ export class Input implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
-   * Update the item classes when the placeholder changes
-   */
-  @Watch('placeholder')
-  protected placeholderChanged() {
-    this.emitStyle();
-  }
-
-  /**
    * Update the native input element when the value changes
    */
   @Watch('value')
@@ -357,7 +319,6 @@ export class Input implements ComponentInterface {
        */
       nativeInput.value = value;
     }
-    this.emitStyle();
   }
 
   componentWillLoad() {
@@ -370,15 +331,13 @@ export class Input implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
 
-    this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
       () => this.labelSlot
     );
 
-    this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
       document.dispatchEvent(
@@ -487,19 +446,6 @@ export class Input implements ComponentInterface {
     return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
   }
 
-  private emitStyle() {
-    if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        interactive: true,
-        input: true,
-        'has-placeholder': this.placeholder !== undefined,
-        'has-value': this.hasValue(),
-        'has-focus': this.hasFocus,
-        'interactive-disabled': this.disabled,
-      });
-    }
-  }
-
   private onInput = (ev: InputEvent | Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
@@ -514,7 +460,6 @@ export class Input implements ComponentInterface {
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
-    this.emitStyle();
 
     if (this.focusedValue !== this.value) {
       /**
@@ -532,7 +477,6 @@ export class Input implements ComponentInterface {
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusedValue = this.value;
-    this.emitStyle();
 
     this.ionFocus.emit(ev);
   };
@@ -545,15 +489,37 @@ export class Input implements ComponentInterface {
     if (!this.shouldClearOnEdit()) {
       return;
     }
+
+    /**
+     * The following keys do not modify the
+     * contents of the input. As a result, pressing
+     * them should not edit the input.
+     *
+     * We can't check to see if the value of the input
+     * was changed because we call checkClearOnEdit
+     * in a keydown listener, and the key has not yet
+     * been added to the input.
+     */
+    const IGNORED_KEYS = ['Enter', 'Tab', 'Shift', 'Meta', 'Alt', 'Control'];
+    const pressedIgnoredKey = IGNORED_KEYS.includes(ev.key);
+
     /**
      * Clear the input if the control has not been previously cleared during focus.
      * Do not clear if the user hitting enter to submit a form.
      */
-    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter' && ev.key !== 'Tab') {
+    if (!this.didInputClearOnEdit && this.hasValue() && !pressedIgnoredKey) {
       this.value = '';
       this.emitInputChange(ev);
     }
-    this.didInputClearOnEdit = true;
+
+    /**
+     * Pressing an IGNORED_KEYS first and
+     * then an allowed key will cause the input to not
+     * be cleared.
+     */
+    if (!pressedIgnoredKey) {
+      this.didInputClearOnEdit = true;
+    }
   }
 
   private onCompositionStart = () => {
@@ -698,19 +664,43 @@ export class Input implements ComponentInterface {
     return this.renderLabel();
   }
 
-  private renderInput() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
+  render() {
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
+    /**
+     * If the label is stacked, it should always sit above the input.
+     * For floating labels, the label should move above the input if
+     * the input has a value, is focused, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the input is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     *
+     * TODO(FW-5592): Remove hasStartEndSlots condition
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+
     return (
       <Host
         class={createColorClasses(this.color, {
           [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
+          'has-value': hasValue,
+          'has-focus': hasFocus,
+          'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
@@ -719,15 +709,21 @@ export class Input implements ComponentInterface {
           'input-disabled': disabled,
         })}
       >
-        <label class="input-wrapper">
+        {/**
+         * htmlFor is needed so that clicking the label always focuses
+         * the input. Otherwise, if the start slot has something
+         * interactable, clicking the label would focus that instead
+         * since it comes before the input in the DOM.
+         */}
+        <label class="input-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="native-wrapper">
+            <slot name="start"></slot>
             <input
               class="native-input"
               ref={(input) => (this.nativeInput = input)}
               id={inputId}
               disabled={disabled}
-              accept={this.accept}
               autoCapitalize={this.autocapitalize}
               autoComplete={this.autocomplete}
               autoCorrect={this.autocorrect}
@@ -746,7 +742,6 @@ export class Input implements ComponentInterface {
               required={this.required}
               spellcheck={this.spellcheck}
               step={this.step}
-              size={this.size}
               type={this.type}
               value={value}
               onInput={this.onInput}
@@ -776,120 +771,13 @@ export class Input implements ComponentInterface {
                 <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
+            <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
         </label>
         {this.renderBottomContent()}
       </Host>
     );
-  }
-
-  // TODO FW-2764 Remove this
-  private renderLegacyInput() {
-    if (!this.hasLoggedDeprecationWarning) {
-      printIonWarning(
-        `ion-input now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
-
-Example: <ion-input label="Email"></ion-input>
-Example with aria-label: <ion-input aria-label="Email"></ion-input>
-
-For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".
-
-Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
-        this.el
-      );
-
-      if (this.legacy) {
-        printIonWarning(
-          `ion-input is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
-
-Developers can dismiss this warning by removing their usage of the "legacy" property and using the new input syntax.`,
-          this.el
-        );
-      }
-
-      this.hasLoggedDeprecationWarning = true;
-    }
-
-    const mode = getIonMode(this);
-    const value = this.getValue();
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
-    if (label) {
-      label.id = labelId;
-    }
-
-    return (
-      <Host
-        aria-disabled={this.disabled ? 'true' : null}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
-          'legacy-input': true,
-          'in-item-color': hostContext('ion-item.ion-color', this.el),
-        })}
-      >
-        <input
-          class="native-input"
-          ref={(input) => (this.nativeInput = input)}
-          aria-labelledby={label ? label.id : null}
-          disabled={this.disabled}
-          accept={this.accept}
-          autoCapitalize={this.autocapitalize}
-          autoComplete={this.autocomplete}
-          autoCorrect={this.autocorrect}
-          autoFocus={this.autofocus}
-          enterKeyHint={this.enterkeyhint}
-          inputMode={this.inputmode}
-          min={this.min}
-          max={this.max}
-          minLength={this.minlength}
-          maxLength={this.maxlength}
-          multiple={this.multiple}
-          name={this.name}
-          pattern={this.pattern}
-          placeholder={this.placeholder || ''}
-          readOnly={this.readonly}
-          required={this.required}
-          spellcheck={this.spellcheck}
-          step={this.step}
-          size={this.size}
-          type={this.type}
-          value={value}
-          onInput={this.onInput}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          onKeyDown={this.onKeydown}
-          {...this.inheritedAttributes}
-        />
-        {this.clearInput && !this.readonly && !this.disabled && (
-          <button
-            aria-label="reset"
-            type="button"
-            class="input-clear-icon"
-            onPointerDown={(ev) => {
-              /**
-               * This prevents mobile browsers from
-               * blurring the input when the clear
-               * button is activated.
-               */
-              ev.preventDefault();
-            }}
-            onClick={this.clearTextInput}
-          >
-            <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
-          </button>
-        )}
-      </Host>
-    );
-  }
-
-  render() {
-    const { legacyFormController } = this;
-
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyInput() : this.renderInput();
   }
 }
 

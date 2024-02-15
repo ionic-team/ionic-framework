@@ -60,6 +60,7 @@ ion-action-sheet,css-prop,--button-background-selected
 ion-action-sheet,css-prop,--button-background-selected-opacity
 ion-action-sheet,css-prop,--button-color
 ion-action-sheet,css-prop,--button-color-activated
+ion-action-sheet,css-prop,--button-color-disabled
 ion-action-sheet,css-prop,--button-color-focused
 ion-action-sheet,css-prop,--button-color-hover
 ion-action-sheet,css-prop,--button-color-selected
@@ -296,7 +297,6 @@ ion-checkbox,prop,disabled,boolean,false,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,justify,"end" | "space-between" | "start",'space-between',false,false
 ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
-ion-checkbox,prop,legacy,boolean | undefined,undefined,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
 ion-checkbox,prop,value,any,'on',false,false
@@ -315,6 +315,7 @@ ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
 ion-checkbox,part,container
+ion-checkbox,part,label
 ion-checkbox,part,mark
 
 ion-chip,shadow
@@ -546,7 +547,6 @@ ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circula
 ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-input,scoped
-ion-input,prop,accept,string | undefined,undefined,false,false
 ion-input,prop,autocapitalize,string,'off',false,false
 ion-input,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
 ion-input,prop,autocorrect,"off" | "on",'off',false,false
@@ -565,7 +565,6 @@ ion-input,prop,helperText,string | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input,prop,label,string | undefined,undefined,false,false
 ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
-ion-input,prop,legacy,boolean | undefined,undefined,false,false
 ion-input,prop,max,number | string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
 ion-input,prop,min,number | string | undefined,undefined,false,false
@@ -578,7 +577,6 @@ ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,false
 ion-input,prop,required,boolean,false,false,false
 ion-input,prop,shape,"round" | undefined,undefined,false,false
-ion-input,prop,size,number | undefined,undefined,false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
 ion-input,prop,type,"date" | "datetime-local" | "email" | "month" | "number" | "password" | "search" | "tel" | "text" | "time" | "url" | "week",'text',false,false
@@ -883,6 +881,7 @@ ion-nav,prop,swipeGesture,boolean | undefined,undefined,false,false
 ion-nav,method,canGoBack,canGoBack(view?: ViewController) => Promise<boolean>
 ion-nav,method,getActive,getActive() => Promise<ViewController | undefined>
 ion-nav,method,getByIndex,getByIndex(index: number) => Promise<ViewController | undefined>
+ion-nav,method,getLength,getLength() => Promise<number>
 ion-nav,method,getPrevious,getPrevious(view?: ViewController) => Promise<ViewController | undefined>
 ion-nav,method,insert,insert<T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
 ion-nav,method,insertPages,insertPages(insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
@@ -1026,7 +1025,6 @@ ion-progress-bar,prop,reversed,boolean,false,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
 ion-progress-bar,prop,value,number,0,false,false
 ion-progress-bar,css-prop,--background
-ion-progress-bar,css-prop,--buffer-background
 ion-progress-bar,css-prop,--progress-background
 ion-progress-bar,part,progress
 ion-progress-bar,part,stream
@@ -1038,7 +1036,6 @@ ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secon
 ion-radio,prop,disabled,boolean,false,false,false
 ion-radio,prop,justify,"end" | "space-between" | "start",'space-between',false,false
 ion-radio,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
-ion-radio,prop,legacy,boolean | undefined,undefined,false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
 ion-radio,prop,value,any,undefined,false,false
@@ -1049,10 +1046,12 @@ ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 ion-radio,css-prop,--inner-border-radius
 ion-radio,part,container
+ion-radio,part,label
 ion-radio,part,mark
 
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
+ion-radio-group,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-radio-group,prop,name,string,this.inputId,false,false
 ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
@@ -1065,7 +1064,6 @@ ion-range,prop,disabled,boolean,false,false,false
 ion-range,prop,dualKnobs,boolean,false,false,false
 ion-range,prop,label,string | undefined,undefined,false,false
 ion-range,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
-ion-range,prop,legacy,boolean | undefined,undefined,false,false
 ion-range,prop,max,number,100,false,false
 ion-range,prop,min,number,0,false,false
 ion-range,prop,mode,"ios" | "md",undefined,false,false
@@ -1096,6 +1094,7 @@ ion-range,css-prop,--pin-color
 ion-range,part,bar
 ion-range,part,bar-active
 ion-range,part,knob
+ion-range,part,label
 ion-range,part,pin
 ion-range,part,tick
 ion-range,part,tick-active
@@ -1103,6 +1102,7 @@ ion-range,part,tick-active
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
 ion-refresher,prop,disabled,boolean,false,false,false
+ion-refresher,prop,mode,"ios" | "md",undefined,false,false
 ion-refresher,prop,pullFactor,number,1,false,false
 ion-refresher,prop,pullMax,number,this.pullMin + 60,false,false
 ion-refresher,prop,pullMin,number,60,false,false
@@ -1272,7 +1272,6 @@ ion-select,prop,interfaceOptions,any,{},false,false
 ion-select,prop,justify,"end" | "space-between" | "start",'space-between',false,false
 ion-select,prop,label,string | undefined,undefined,false,false
 ion-select,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start" | undefined,'start',false,false
-ion-select,prop,legacy,boolean | undefined,undefined,false,false
 ion-select,prop,mode,"ios" | "md",undefined,false,false
 ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false
@@ -1402,7 +1401,6 @@ ion-textarea,prop,helperText,string | undefined,undefined,false,false
 ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-textarea,prop,label,string | undefined,undefined,false,false
 ion-textarea,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
-ion-textarea,prop,legacy,boolean | undefined,undefined,false,false
 ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
@@ -1466,6 +1464,7 @@ ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,fals
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,positionAnchor,HTMLElement | string | undefined,undefined,false,false
+ion-toast,prop,swipeGesture,"vertical" | undefined,undefined,false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,prop,trigger,string | undefined,undefined,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
@@ -1512,7 +1511,6 @@ ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
 ion-toggle,prop,justify,"end" | "space-between" | "start",'space-between',false,false
 ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
-ion-toggle,prop,legacy,boolean | undefined,undefined,false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
@@ -1532,6 +1530,7 @@ ion-toggle,css-prop,--handle-width
 ion-toggle,css-prop,--track-background
 ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
+ion-toggle,part,label
 ion-toggle,part,track
 
 ion-toolbar,shadow

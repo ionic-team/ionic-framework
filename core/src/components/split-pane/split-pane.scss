@@ -24,49 +24,28 @@
   contain: strict;
 }
 
-/**
- * Do not pass CSS Variables down on larger
- * screens as we want them to affect the outer
- * `ion-menu` rather than the inner content
- */
-::slotted(ion-menu.menu-pane-visible) {
-  flex: 0 1 auto;
-
-  width: var(--side-width);
-  min-width: var(--side-min-width);
-  max-width: var(--side-max-width);
-}
-
-:host(.split-pane-visible) ::slotted(.split-pane-side),
 :host(.split-pane-visible) ::slotted(.split-pane-main) {
   @include position(0, 0, 0, 0);
 
   position: relative;
 
-  /* stylelint-disable-next-line declaration-no-important */
-  box-shadow: none !important;
-  z-index: 0;
-}
-
-:host(.split-pane-visible) ::slotted(.split-pane-main) {
   flex: 1;
-}
 
-:host(.split-pane-visible) ::slotted(.split-pane-side:not(ion-menu)),
-:host(.split-pane-visible) ::slotted(ion-menu.split-pane-side.menu-enabled) {
-  display: flex;
+  box-shadow: none;
 
-  flex-shrink: 0;
+  /**
+   * Content can overflow outside of a router outlet
+   * or a nav container to allow for the translucent
+   * tab bar effect to work. However, this can cause
+   * iOS page transitions to flow outside of the container
+   * and overlap the menu on larger viewports. As a result,
+   * we disable the overflow when that is the case.
+   */
+  overflow: hidden;
+
+  z-index: 0;
 }
 
 ::slotted(.split-pane-side:not(ion-menu)) {
   display: none;
-}
-
-:host(.split-pane-visible) ::slotted(.split-pane-side) {
-  order: -1;
-}
-
-:host(.split-pane-visible) ::slotted(.split-pane-side[side=end]) {
-  order: 1;
 }

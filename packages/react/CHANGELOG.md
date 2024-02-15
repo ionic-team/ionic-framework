@@ -3,6 +3,100 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.1](https://github.com/ionic-team/ionic-framework/compare/v7.7.0...v7.7.1) (2024-02-07)
+
+
+### Bug Fixes
+
+* **react:** route with redirect will mount page ([#28961](https://github.com/ionic-team/ionic-framework/issues/28961)) ([5777ce2](https://github.com/ionic-team/ionic-framework/commit/5777ce258119d2715b1326cdc103bd4ad7612bd1)), closes [#28838](https://github.com/ionic-team/ionic-framework/issues/28838)
+
+
+
+
+
+# [7.7.0](https://github.com/ionic-team/ionic-framework/compare/v7.6.7...v7.7.0) (2024-01-31)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.7](https://github.com/ionic-team/ionic-framework/compare/v7.6.6...v7.6.7) (2024-01-31)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.4...v7.6.5) (2024-01-17)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* **react:** avoid type collision with @types/react@18.2.43 and greater ([#28687](https://github.com/ionic-team/ionic-framework/issues/28687)) ([92f1b86](https://github.com/ionic-team/ionic-framework/commit/92f1b8627a240c93891205f75adcb5ce3d46596d))
+
+
+
+
+
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 **Note:** Version bump only for package @ionic/react

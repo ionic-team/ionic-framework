@@ -150,6 +150,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   @State() counterString: string | null | undefined;
 
+  @Watch('button')
+  buttonChanged() {
+    // Update the focusable option when the button option is changed
+    this.focusable = this.isFocusable();
+  }
+
   @Watch('counterFormatter')
   counterFormatterChanged() {
     this.updateCounterOutput(this.getFirstInput());

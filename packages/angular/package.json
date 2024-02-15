@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "7.5.7",
+  "version": "7.7.1",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -26,7 +26,6 @@
   "scripts": {
     "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
-    "build.link": "npm run build && node scripts/link-copy.js",
     "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
     "build.watch": "npm run build.ng -- --watch",
     "clean": "node scripts/clean.js",
@@ -48,7 +47,7 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^7.5.7",
+    "@ionic/core": "^7.7.1",
     "ionicons": "^7.0.0",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"

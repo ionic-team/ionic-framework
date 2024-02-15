@@ -16,11 +16,6 @@
   --height: #{$range-ios-slider-height};
 }
 
-// TODO FW-2997 remove this
-:host(.legacy-range) {
-  @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
-}
-
 :host(.range-item-start-adjustment) {
   @include padding(null, null, null, $range-ios-item-padding-horizontal);
 }

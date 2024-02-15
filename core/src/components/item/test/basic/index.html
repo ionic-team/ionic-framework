@@ -43,11 +43,13 @@
         </ion-item>
 
         <ion-item>
-          <ion-label> Single line text that should have ellipses when it doesn't all fit in the item</ion-label>
+          <ion-label class="ion-text-nowrap">
+            Single line text that should have ellipses when it doesn't all fit in the item
+          </ion-label>
         </ion-item>
 
         <ion-item lines="none">
-          <ion-label> Single line item with no lines</ion-label>
+          <ion-label>Single line item with no lines</ion-label>
         </ion-item>
 
         <ion-item>
@@ -57,21 +59,21 @@
         </ion-item>
 
         <ion-item color="secondary">
-          <ion-label class="ion-text-wrap">
+          <ion-label>
             <h1>H1 Title Text</h1>
             <p>Paragraph line 1</p>
           </ion-label>
         </ion-item>
 
         <ion-item>
-          <ion-label class="ion-text-wrap">
+          <ion-label>
             <h2>H2 Title Text</h2>
             <p>Paragraph line 1</p>
           </ion-label>
         </ion-item>
 
         <ion-item>
-          <ion-label class="ion-text-wrap">
+          <ion-label>
             <ion-text color="primary">
               <h3>H3 Title Text</h3>
             </ion-text>
@@ -83,7 +85,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label class="ion-text-wrap">
+          <ion-label>
             <h4>H4 Title Text</h4>
             <p>Paragraph line 1</p>
             <p>Paragraph line 2</p>
@@ -92,12 +94,13 @@
         </ion-item>
 
         <ion-item>
-          <ion-label> Item using inner ion-label </ion-label>
+          <ion-label>Item using inner ion-label </ion-label>
         </ion-item>
 
         <ion-item class="overflow-visible">
-          <ion-label position="fixed">PIN:</ion-label>
           <ion-input
+            label="PIN:"
+            label-placement="fixed"
             type="number"
             pattern="[0-9]*"
             inputmode="numeric"

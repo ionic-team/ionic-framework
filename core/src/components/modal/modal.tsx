@@ -10,7 +10,6 @@ import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
   GESTURE,
   BACKDROP,
-  activeAnimations,
   dismiss,
   eventMethod,
   prepareOverlay,
@@ -264,6 +263,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    *
    * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
    * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() canDismiss: boolean | ((data?: any, role?: string) => Promise<boolean>) = true;
 
@@ -702,8 +704,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.keyboardOpenCallback = undefined;
     }
 
-    const enteringAnimation = activeAnimations.get(this) || [];
-
     const dismissed = await dismiss<ModalDismissOptions>(
       this,
       data,
@@ -730,8 +730,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.gesture) {
         this.gesture.destroy();
       }
-
-      enteringAnimation.forEach((ani) => ani.destroy());
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;

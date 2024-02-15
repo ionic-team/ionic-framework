@@ -1,6 +1,23 @@
+@use "sass:map";
 @import "../themes/ionic.globals";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
+
+:root {
+  /**
+   * Loop through each color object from the
+   * `ionic.theme.default.scss` file
+   * and generate CSS Variables for each color.
+   */
+  @each $color-name, $value in $colors {
+    --ion-color-#{$color-name}: #{map.get($value, base)};
+    --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+    --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+    --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+    --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+    --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+  }
+}
 
 // Ionic Font Family
 // --------------------------------------------------
@@ -13,12 +30,13 @@ html.md {
 }
 
 html {
-  --ion-default-dynamic-font: -apple-system-body;
+  --ion-dynamic-font: -apple-system-body;
   --ion-font-family: var(--ion-default-font);
 }
 
 body {
   background: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 body.backdrop-no-scroll {
@@ -220,16 +238,6 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
   }
 }
 
-// TODO: remove once Safari 11.2 is no longer supported
-@supports (padding-top: constant(safe-area-inset-top)) {
-  html {
-    --ion-safe-area-top: constant(safe-area-inset-top);
-    --ion-safe-area-bottom: constant(safe-area-inset-bottom);
-    --ion-safe-area-left: constant(safe-area-inset-left);
-    --ion-safe-area-right: constant(safe-area-inset-right);
-  }
-}
-
 @supports (padding-top: env(safe-area-inset-top)) {
   html {
     --ion-safe-area-top: env(safe-area-inset-top);
@@ -260,9 +268,36 @@ ion-card-header.ion-color .ion-inherit-color {
   cursor: pointer;
   touch-action: manipulation;
 
-  // the containing element itself should be clickable but
-  // everything inside of it should not clickable when menu is open
+  /**
+   * The containing element itself should be clickable but
+   * everything inside of it should not clickable when menu is open
+   *
+   * Setting pointer-events after scrolling has already started
+   * will not cancel scrolling which is why we also set
+   * overflow-y below.
+   */
   pointer-events: none;
+
+  /**
+   * This accounts for scenarios where the main content itself
+   * is scrollable.
+   */
+  overflow-y: hidden;
+}
+
+/**
+ * Setting overflow cancels any in-progress scrolling
+ * when the menu opens. This prevents users from accidentally
+ * scrolling the main content while also dragging the menu open.
+ * The code below accounts for both ion-content and then custom
+ * scroll containers within ion-content (such as virtual scroll)
+ */
+.menu-content-open ion-content {
+  --overflow: hidden;
+}
+
+.menu-content-open .ion-content-scroll-host {
+  overflow: hidden;
 }
 
 .ios .menu-content-reveal {

@@ -57,6 +57,8 @@
 
   width: 100%;
 
+  min-height: 44px;
+
   /* stylelint-disable-next-line all */
   padding: 0 !important;
 
@@ -67,34 +69,9 @@
   z-index: $z-index-item-input;
 }
 
-// TODO FW-2764 Remove this
-:host(.legacy-input) {
-  display: flex;
-
-  flex: 1;
-  align-items: center;
-
-  background: var(--background);
-}
-
-// TODO FW-2764 Remove this
-:host(.legacy-input) .native-input {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include border-radius(var(--border-radius));
-}
-
-:host-context(ion-item:not(.item-label):not(.item-has-modern-input)) {
-  --padding-start: 0;
-}
-
 :host-context(ion-item)[slot="start"],
 :host-context(ion-item)[slot="end"] {
   width: auto;
-}
-
-// TODO FW-2764 Remove this
-:host(.legacy-input.ion-color) {
-  color: current-color(base);
 }
 
 :host(.ion-color) {
@@ -103,10 +80,6 @@
 
 // Input Wrapper
 // ----------------------------------------------------------------
-
-:host(:not(.legacy-input)) {
-  min-height: 44px;
-}
 
 /**
  * Since the label sits on top of the element,
@@ -206,11 +179,6 @@
 // Clear Input Icon
 // --------------------------------------------------
 
-// TODO FW-2764 Remove this
-:host(.legacy-input) .input-clear-icon {
-  @include margin(0);
-}
-
 .input-clear-icon {
   @include margin(auto);
   @include padding(0);
@@ -256,36 +224,6 @@
   visibility: visible;
 }
 
-
-// Input Has focus
-// --------------------------------------------------
-// When the input has focus, then the input cover should be hidden
-
-:host(.has-focus) {
-  pointer-events: none;
-}
-
-:host(.has-focus) input,
-:host(.has-focus) a,
-:host(.has-focus) button {
-  pointer-events: auto;
-}
-
-
-// Item Floating: Placeholder
-// ----------------------------------------------------------------
-// When used with a floating item the placeholder should hide
-
-:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value)) {
-  opacity: 0;
-}
-
-:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value).item-has-focus) {
-  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-
-  opacity: 1;
-}
-
 // Input Wrapper
 // ----------------------------------------------------------------
 
@@ -321,6 +259,9 @@
   position: relative;
 
   flex-grow: 1;
+
+  // ensure start/end slot content is vertically centered
+  align-items: center;
 
   width: 100%;
 }
@@ -398,7 +339,7 @@
 .input-bottom .helper-text {
   display: block;
 
-  color: #{$background-color-step-550};
+  color: #{$text-color-step-450};
 }
 
 :host(.ion-touched.ion-invalid) .input-bottom .error-text {
@@ -420,7 +361,7 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: #{$background-color-step-550};
+  color: #{$text-color-step-450};
 
   white-space: nowrap;
 
@@ -641,9 +582,7 @@
 /**
  * This makes the label sit above the input.
  */
-:host(.input-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.input-label-placement-floating) .label-text-wrapper,
-:host(.has-value.input-label-placement-floating) .label-text-wrapper {
+:host(.label-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
@@ -651,4 +590,17 @@
    * beyond the bounds of the input.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
 }

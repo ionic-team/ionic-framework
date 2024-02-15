@@ -238,9 +238,10 @@
   background: var(--background);
 
   overflow: inherit;
-  box-sizing: border-box;
 
   z-index: 1;
+
+  box-sizing: border-box;
 }
 
 .item-native::-moz-focus-inner {
@@ -288,7 +289,9 @@ button, a {
   position: relative;
 
   flex: 1;
+
   flex-direction: inherit;
+
   align-items: inherit;
   align-self: stretch;
 
@@ -302,7 +305,6 @@ button, a {
   overflow: inherit;
   box-sizing: border-box;
 }
-
 
 // Item Bottom
 // --------------------------------------------------
@@ -370,6 +372,18 @@ button, a {
 
 ::slotted(ion-label:not([slot="end"])) {
   flex: 1;
+
+  // Setting width to min-content allows the label to
+  // shrink and wrap its text instead of moving to its
+  // own row if there are slotted elements next to it
+  width: min-content;
+
+  /**
+   * We allow labels in the default
+   * slot to grow. However, we do not
+   * want them to grow indefinitely.
+   */
+  max-width: 100%;
 }
 
 // Item Input
@@ -382,7 +396,11 @@ button, a {
 .input-wrapper {
   display: flex;
 
+  // This flex property is required in order to keep
+  // the label from shrinking when there are wide
+  // elements next to it
   flex: 1;
+
   flex-direction: inherit;
 
   align-items: inherit;
@@ -517,29 +535,6 @@ button, a {
   display: block;
 }
 
-// Item Select
-// --------------------------------------------------
-
-:host(:not(.item-label)) ::slotted(ion-select.legacy-select) {
-  --padding-start: 0;
-
-  max-width: none;
-}
-
-:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
-:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  --padding-start: 0;
-
-  align-self: stretch;
-
-  width: 100%;
-
-  max-width: 100%;
-}
-
-
 // Item Datetime
 // --------------------------------------------------
 
@@ -562,8 +557,7 @@ button, a {
 
 :host(.item-multiple-inputs) ::slotted(ion-checkbox),
 :host(.item-multiple-inputs) ::slotted(ion-datetime),
-:host(.item-multiple-inputs) ::slotted(ion-radio),
-:host(.item-multiple-inputs) ::slotted(ion-select.legacy-select) {
+:host(.item-multiple-inputs) ::slotted(ion-radio) {
   position: relative;
 }
 

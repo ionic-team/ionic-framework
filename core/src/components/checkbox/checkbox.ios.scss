@@ -16,6 +16,9 @@
 
   // Size
   --size: #{$checkbox-ios-icon-size};
+
+  // Checkmark width
+  --checkmark-width: #{$checkbox-ios-icon-checkmark-width};
 }
 
 
@@ -27,22 +30,4 @@
 
 :host(.checkbox-disabled) {
   opacity: $checkbox-ios-disabled-opacity;
-}
-
-
-// iOS Checkbox Within An Item
-// TODO(FW-3100): remove this
-// -----------------------------------------
-
-:host(.in-item.legacy-checkbox) {
-  // end position by default
-  @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
-
-  display: block;
-
-  position: static;
-}
-
-:host(.in-item.legacy-checkbox[slot="start"]) {
-  @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
 }

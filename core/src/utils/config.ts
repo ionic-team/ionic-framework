@@ -208,6 +208,13 @@ export interface IonicConfig {
    * @experimental
    */
   experimentalFocusManagerPriority?: FocusManagerPriority[];
+  /**
+   * @experimental
+   * If `true`, the [CloseWatcher API](https://github.com/WICG/close-watcher) will be used to handle
+   * all Escape key and hardware back button presses to dismiss menus and overlays and to navigate.
+   * Note that the `hardwareBackButton` config option must also be `true`.
+   */
+  experimentalCloseWatcher?: boolean;
 
   // PRIVATE configs
   keyboardHeight?: number;

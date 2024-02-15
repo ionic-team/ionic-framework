@@ -48,18 +48,15 @@
   display: block;
   position: relative;
 
+  width: 100%;
+  min-height: 44px;
+
   font-family: $font-family-base;
 
   white-space: nowrap;
 
   cursor: pointer;
   z-index: $z-index-item-input;
-}
-
-// TODO FW-3194 - Move this to host
-:host(:not(.legacy-select)) {
-  width: 100%;
-  min-height: 44px;
 }
 
 /**
@@ -76,24 +73,14 @@
   --highlight-color-focused: #{current-color(base)};
 }
 
-// TODO FW-3194 - Remove this
-:host(.legacy-select) {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-
-  display: flex;
-
-  align-items: center;
-
-  overflow: hidden;
-}
-
 // Select Used in ion-item
 // --------------------------------------------------
-// TODO FW-3194 - Remove this
-:host(.in-item.legacy-select) {
-  position: static;
 
-  max-width: 45%;
+// The flex property is required here in order to allow
+// the select to shrink inside of an item otherwise it
+// always wraps to the next line even when it can shrink
+:host(.in-item) {
+  flex: 1 1 0;
 }
 
 :host(.select-disabled) {
@@ -104,15 +91,14 @@
   border: 2px solid #5e9ed6;
 }
 
-// TODO FW-3194 - Remove :not(.legacy-select) piece
 /**
  * Select can be slotted
  * in components such as item and
  * toolbar which is why we do not
  * limit the below behavior to just ion-item.
  */
-:host([slot="start"]:not(.legacy-select)),
-:host([slot="end"]:not(.legacy-select)) {
+:host([slot="start"]),
+:host([slot="end"]) {
   width: auto;
 }
 
@@ -120,17 +106,6 @@
   color: var(--placeholder-color);
 
   opacity: var(--placeholder-opacity);
-}
-
-// TODO FW-3194 - Remove this
-:host(.legacy-select) label {
-  @include input-cover();
-
-  display: flex;
-
-  align-items: center;
-
-  opacity: 0;
 }
 
 button {
@@ -144,6 +119,13 @@ button {
   @include margin(0, 0, 0, $select-icon-margin-start);
 
   position: relative;
+
+  /**
+   * Prevent the icon from shrinking when the label and/or
+   * selected item text is long enough to fill the rest of
+   * the container.
+   */
+  flex-shrink: 0;
 }
 
 /**
@@ -244,6 +226,25 @@ button {
    * label does not overlap with the placeholder.
    */
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.select-wrapper-inner {
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+}
+
+:host(.select-label-placement-stacked) .select-wrapper-inner,
+:host(.select-label-placement-floating) .select-wrapper-inner {
+  /**
+   * When using a stacked/floating label, the inner wrapper is
+   * stacked vertically under the label container. This line
+   * ensures that the inner wrapper fills all the remaining height
+   * of the component.
+   */
+  flex-grow: 1;
 }
 
 // Select Highlight
@@ -506,11 +507,23 @@ button {
  * The placeholder should be hidden when the label
  * is on top of the select. This prevents the label
  * from overlapping any placeholder value.
+ *
+ * TODO(FW-5592): Remove :not(.label-floating) piece
  */
-:host(.select-label-placement-floating) .native-wrapper .select-placeholder {
+:host(.select-label-placement-floating:not(.label-floating)) .native-wrapper .select-placeholder {
   opacity: 0;
 }
 
+/**
+ * We don't use .label-floating here because that would
+ * also include the case where the label is floating due
+ * to content in the start/end slot. We want the opacity
+ * to remain at the default in this case, since the select
+ * isn't being actively interacted with.
+ *
+ * TODO(FW-5592): Change entire selector to:
+ * :host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder
+ */
 :host(.select-expanded.select-label-placement-floating) .native-wrapper .select-placeholder,
 :host(.ion-focused.select-label-placement-floating) .native-wrapper .select-placeholder,
 :host(.has-value.select-label-placement-floating) .native-wrapper .select-placeholder {
@@ -520,10 +533,7 @@ button {
 /**
  * This makes the label sit above the input.
  */
-:host(.select-label-placement-stacked) .label-text-wrapper,
-:host(.select-expanded.select-label-placement-floating) .label-text-wrapper,
-:host(.ion-focused.select-label-placement-floating) .label-text-wrapper,
-:host(.has-value.select-label-placement-floating) .label-text-wrapper {
+:host(.label-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
@@ -531,4 +541,26 @@ button {
    * beyond the bounds of the input.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]), ::slotted([slot="end"]) {
+  /**
+   * Prevent the slots from shrinking when the label and/or
+   * selected item text is long enough to fill the rest of
+   * the container.
+   */
+  flex-shrink: 0;
+}
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
 }

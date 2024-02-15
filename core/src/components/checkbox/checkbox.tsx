@@ -1,14 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
+import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
-import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
-import { printIonWarning } from '@utils/logging';
+import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Mode, StyleEventDetail } from '../../interface';
+import type { Color, Mode } from '../../interface';
 
 import type { CheckboxChangeEventDetail } from './checkbox-interface';
 
@@ -18,6 +15,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  * @slot - The label text to associate with the checkbox. Use the "labelPlacement" property to control where the label is placed relative to the checkbox.
  *
  * @part container - The container for the checkbox mark.
+ * @part label - The label text describing the checkbox.
  * @part mark - The checkmark used to indicate the checked state.
  */
 @Component({
@@ -31,12 +29,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
-  private legacyFormController!: LegacyFormController; // TODO(FW-3100): remove this
   private inheritedAttributes: Attributes = {};
-
-  // TODO(FW-3100): remove this
-  // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonCheckboxElement;
 
@@ -103,19 +96,6 @@ export class Checkbox implements ComponentInterface {
    */
   @Prop() alignment: 'start' | 'center' = 'center';
 
-  // TODO(FW-3100): remove this
-  /**
-   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
-   * Ionic will only opt checkboxes in to the modern form markup when they are
-   * using either the `aria-label` attribute or have text in the default slot. As a result,
-   * the `legacy` property should only be used as an escape hatch when you want to
-   * avoid this automatic opt-in behavior.
-   *
-   * Note that this property will be removed in an upcoming major release
-   * of Ionic, and all form components will be opted-in to using the modern form markup.
-   */
-  @Prop() legacy?: boolean;
-
   /**
    * Emitted when the checked property has changed
    * as a result of a user action such as a click.
@@ -134,44 +114,10 @@ export class Checkbox implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
-
-  connectedCallback() {
-    this.legacyFormController = createLegacyFormController(this.el); // TODO(FW-3100): remove this
-  }
-
   componentWillLoad() {
-    this.emitStyle();
-
-    // TODO(FW-3100): remove check
-    if (!this.legacyFormController.hasLegacyControl()) {
-      this.inheritedAttributes = {
-        ...inheritAriaAttributes(this.el),
-      };
-    }
-  }
-
-  @Watch('checked')
-  @Watch('disabled')
-  protected styleChanged() {
-    this.emitStyle();
-  }
-
-  private emitStyle() {
-    const style: StyleEventDetail = {
-      'interactive-disabled': this.disabled,
+    this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
     };
-
-    // TODO(FW-3100): remove this
-    if (this.legacyFormController.hasLegacyControl()) {
-      style['checkbox-checked'] = this.checked;
-    }
-
-    this.ionStyle.emit(style);
   }
 
   private setFocus() {
@@ -218,14 +164,7 @@ export class Checkbox implements ComponentInterface {
     this.toggleChecked(ev);
   };
 
-  // TODO(FW-3100): run contents of renderCheckbox directly instead
   render() {
-    const { legacyFormController } = this;
-
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyCheckbox() : this.renderCheckbox();
-  }
-
-  private renderCheckbox() {
     const {
       color,
       checked,
@@ -282,6 +221,7 @@ export class Checkbox implements ComponentInterface {
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': el.textContent === '',
             }}
+            part="label"
           >
             <slot></slot>
           </div>
@@ -291,72 +231,6 @@ export class Checkbox implements ComponentInterface {
             </svg>
           </div>
         </label>
-      </Host>
-    );
-  }
-
-  // TODO(FW-3100): remove this
-  private renderLegacyCheckbox() {
-    if (!this.hasLoggedDeprecationWarning) {
-      printIonWarning(
-        `ion-checkbox now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
-
-Example: <ion-checkbox>Label</ion-checkbox>
-Example with aria-label: <ion-checkbox aria-label="Label"></ion-checkbox>
-
-Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
-        this.el
-      );
-
-      if (this.legacy) {
-        printIonWarning(
-          `ion-checkbox is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
-Developers can dismiss this warning by removing their usage of the "legacy" property and using the new checkbox syntax.`,
-          this.el
-        );
-      }
-
-      this.hasLoggedDeprecationWarning = true;
-    }
-
-    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
-    const mode = getIonMode(this);
-    const { label, labelId, labelText } = getAriaLabel(el, inputId);
-    const path = getSVGPath(mode, indeterminate);
-
-    renderHiddenInput(true, el, name, checked ? value : '', disabled);
-
-    return (
-      <Host
-        aria-labelledby={label ? labelId : null}
-        aria-checked={`${checked}`}
-        aria-hidden={disabled ? 'true' : null}
-        role="checkbox"
-        class={createColorClasses(color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'checkbox-checked': checked,
-          'checkbox-disabled': disabled,
-          'checkbox-indeterminate': indeterminate,
-          'legacy-checkbox': true,
-          interactive: true,
-        })}
-        onClick={this.onClick}
-      >
-        <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
-          {path}
-        </svg>
-        <label htmlFor={inputId}>{labelText}</label>
-        <input
-          type="checkbox"
-          aria-checked={`${checked}`}
-          disabled={disabled}
-          id={inputId}
-          onChange={this.toggleChecked}
-          onFocus={() => this.onFocus()}
-          onBlur={() => this.onBlur()}
-          ref={(focusEl) => (this.focusEl = focusEl)}
-        />
       </Host>
     );
   }
