@@ -537,68 +537,6 @@ export class Range implements ComponentInterface {
     return this.el.querySelector('[slot="end"]') !== null;
   }
 
-  private renderRange() {
-    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label } = this;
-
-    const inItem = hostContext('ion-item', el);
-
-    /**
-     * If there is no start content then the knob at
-     * the min value will be cut off by the item margin.
-     */
-    const hasStartContent =
-      (hasLabel && (labelPlacement === 'start' || labelPlacement === 'fixed')) || this.hasStartSlotContent;
-
-    const needsStartAdjustment = inItem && !hasStartContent;
-
-    /**
-     * If there is no end content then the knob at
-     * the max value will be cut off by the item margin.
-     */
-    const hasEndContent = (hasLabel && labelPlacement === 'end') || this.hasEndSlotContent;
-
-    const needsEndAdjustment = inItem && !hasEndContent;
-
-    const mode = getIonMode(this);
-
-    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
-
-    return (
-      <Host
-        onFocusin={this.onFocus}
-        onFocusout={this.onBlur}
-        id={rangeId}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'in-item': inItem,
-          'range-disabled': disabled,
-          'range-pressed': pressedKnob !== undefined,
-          'range-has-pin': pin,
-          [`range-label-placement-${labelPlacement}`]: true,
-          'range-item-start-adjustment': needsStartAdjustment,
-          'range-item-end-adjustment': needsEndAdjustment,
-        })}
-      >
-        <label class="range-wrapper" id="range-label">
-          <div
-            class={{
-              'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !hasLabel,
-            }}
-            part="label"
-          >
-            {label !== undefined ? <div class="label-text">{label}</div> : <slot name="label"></slot>}
-          </div>
-          <div class="native-wrapper">
-            <slot name="start"></slot>
-            {this.renderRangeSlider()}
-            <slot name="end"></slot>
-          </div>
-        </label>
-      </Host>
-    );
-  }
-
   private get hasLabel() {
     return this.label !== undefined || this.el.querySelector('[slot="label"]') !== null;
   }
@@ -767,7 +705,65 @@ export class Range implements ComponentInterface {
   }
 
   render() {
-    return this.renderRange();
+    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label } = this;
+
+    const inItem = hostContext('ion-item', el);
+
+    /**
+     * If there is no start content then the knob at
+     * the min value will be cut off by the item margin.
+     */
+    const hasStartContent =
+      (hasLabel && (labelPlacement === 'start' || labelPlacement === 'fixed')) || this.hasStartSlotContent;
+
+    const needsStartAdjustment = inItem && !hasStartContent;
+
+    /**
+     * If there is no end content then the knob at
+     * the max value will be cut off by the item margin.
+     */
+    const hasEndContent = (hasLabel && labelPlacement === 'end') || this.hasEndSlotContent;
+
+    const needsEndAdjustment = inItem && !hasEndContent;
+
+    const mode = getIonMode(this);
+
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+
+    return (
+      <Host
+        onFocusin={this.onFocus}
+        onFocusout={this.onBlur}
+        id={rangeId}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'in-item': inItem,
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin,
+          [`range-label-placement-${labelPlacement}`]: true,
+          'range-item-start-adjustment': needsStartAdjustment,
+          'range-item-end-adjustment': needsEndAdjustment,
+        })}
+      >
+        <label class="range-wrapper" id="range-label">
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': !hasLabel,
+            }}
+            part="label"
+          >
+            {label !== undefined ? <div class="label-text">{label}</div> : <slot name="label"></slot>}
+          </div>
+          <div class="native-wrapper">
+            <slot name="start"></slot>
+            {this.renderRangeSlider()}
+            <slot name="end"></slot>
+          </div>
+        </label>
+      </Host>
+    );
   }
 }
 
