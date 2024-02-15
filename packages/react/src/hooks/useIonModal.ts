@@ -16,6 +16,9 @@ import { useOverlay } from './useOverlay';
  * @param componentProps The props that will be passed to the component, if required
  * @returns Returns the present and dismiss methods in an array
  */
+export function useIonModal(component: JSX.Element, componentProps?: any): UseIonModalResult;
+export function useIonModal<P extends undefined>(component: React.ComponentClass<P> | React.FC<P>): UseIonModalResult;
+export function useIonModal<P>(component: React.ComponentClass<P> | React.FC<P>, componentProps: P): UseIonModalResult;
 export function useIonModal(component: ReactComponentOrElement, componentProps?: any): UseIonModalResult {
   const controller = useOverlay<ModalOptions, HTMLIonModalElement>(
     'IonModal',
