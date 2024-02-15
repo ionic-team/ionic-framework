@@ -28,6 +28,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Picker](#version-8x-picker)
   - [Progress bar](#version-8x-progress-bar)
   - [Radio](#version-8x-radio)
+  - [Range](#version-8x-range)
   - [Select](#version-8x-select)
   - [Textarea](#version-8x-textarea)
   - [Toggle](#version-8x-toggle)
@@ -240,6 +241,10 @@ For more information on styling toast buttons, refer to the [Toast Theming docum
 <h4 id="version-8x-radio">Radio</h4>
 
 - The `legacy` property and support for the legacy syntax, which involved placing an `ion-radio` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy radio syntax, refer to the [Radio documentation](https://ionicframework.com/docs/api/radio#migrating-from-legacy-radio-syntax).
+
+<h4 id="version-8x-range">Range</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
 
 <h4 id="version-8x-select">Select</h4>
 
