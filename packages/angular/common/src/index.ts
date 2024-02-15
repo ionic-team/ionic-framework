@@ -5,7 +5,7 @@ export { NavController } from './providers/nav-controller';
 export { Config, ConfigToken } from './providers/config';
 export { Platform } from './providers/platform';
 
-export { bindLifecycleEvents, AngularDelegate } from './providers/angular-delegate';
+export { bindLifecycleEvents, AngularDelegate, AngularDelegateWithSignalsSupport } from './providers/angular-delegate';
 
 export type { IonicWindow } from './types/interfaces';
 export type { ViewWillEnter, ViewWillLeave, ViewDidEnter, ViewDidLeave } from './types/ionic-lifecycle-hooks';

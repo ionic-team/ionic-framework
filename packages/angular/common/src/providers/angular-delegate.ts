@@ -42,6 +42,27 @@ export class AngularDelegate {
   }
 }
 
+@Injectable()
+export class AngularDelegateWithSignalsSupport {
+  private zone = inject(NgZone);
+  private applicationRef = inject(ApplicationRef);
+
+  create(
+    environmentInjector: EnvironmentInjector,
+    injector: Injector,
+    elementReferenceKey?: string
+  ): AngularFrameworkDelegate {
+    return new AngularFrameworkDelegate(
+      environmentInjector,
+      injector,
+      this.applicationRef,
+      this.zone,
+      elementReferenceKey,
+      true
+    );
+  }
+}
+
 export class AngularFrameworkDelegate implements FrameworkDelegate {
   private elRefMap = new WeakMap<HTMLElement, ComponentRef<any>>();
   private elEventsMap = new WeakMap<HTMLElement, () => void>();
@@ -51,7 +72,8 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     private injector: Injector,
     private applicationRef: ApplicationRef,
     private zone: NgZone,
-    private elementReferenceKey?: string
+    private elementReferenceKey?: string,
+    private enableSignalsSupport?: boolean
   ) {}
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
@@ -84,7 +106,8 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
           component,
           componentProps,
           cssClasses,
-          this.elementReferenceKey
+          this.elementReferenceKey,
+          this.enableSignalsSupport
         );
         resolve(el);
       });
@@ -121,7 +144,8 @@ export const attachView = (
   component: any,
   params: any,
   cssClasses: string[] | undefined,
-  elementReferenceKey: string | undefined
+  elementReferenceKey: string | undefined,
+  enableSignalsSupport: boolean | undefined
 ): any => {
   /**
    * Wraps the injector with a custom injector that
@@ -169,7 +193,7 @@ export const attachView = (
      * so we need to fall back to Object.assign
      * for Angular 14.0.
      */
-    if (componentRef.setInput !== undefined) {
+    if (enableSignalsSupport === true && componentRef.setInput !== undefined) {
       const { modal, popover, ...otherParams } = params;
       /**
        * Any key/value pairs set in componentProps

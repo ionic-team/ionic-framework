@@ -1,6 +1,11 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
-import { ConfigToken, AngularDelegate, provideComponentInputBinding } from '@ionic/angular/common';
+import {
+  ConfigToken,
+  AngularDelegate,
+  AngularDelegateWithSignalsSupport,
+  provideComponentInputBinding,
+} from '@ionic/angular/common';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
@@ -52,20 +57,26 @@ const DECLARATIONS = [
   IonMaxValidator,
 ];
 
+type OptInAngularFeatures = {
+  useSetInputAPI: boolean;
+};
+
 @NgModule({
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
-  providers: [AngularDelegate, ModalController, PopoverController],
+  providers: [ModalController, PopoverController],
   imports: [CommonModule],
 })
 export class IonicModule {
-  static forRoot(config?: IonicConfig): ModuleWithProviders<IonicModule> {
+  static forRoot(config?: IonicConfig & OptInAngularFeatures): ModuleWithProviders<IonicModule> {
+    const { useSetInputAPI, ...rest } = config || {};
+
     return {
       ngModule: IonicModule,
       providers: [
         {
           provide: ConfigToken,
-          useValue: config,
+          useValue: rest,
         },
         {
           provide: APP_INITIALIZER,
@@ -73,6 +84,7 @@ export class IonicModule {
           multi: true,
           deps: [ConfigToken, DOCUMENT, NgZone],
         },
+        useSetInputAPI ? AngularDelegateWithSignalsSupport : AngularDelegate,
         provideComponentInputBinding(),
       ],
     };
