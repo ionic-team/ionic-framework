@@ -2312,10 +2312,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * Maximum integer value of the range.
          */
         "max": number;
@@ -4174,7 +4170,6 @@ declare global {
     interface HTMLIonRangeElementEventMap {
         "ionChange": RangeChangeEventDetail;
         "ionInput": RangeChangeEventDetail;
-        "ionStyle": StyleEventDetail;
         "ionFocus": void;
         "ionBlur": void;
         "ionKnobMoveStart": RangeKnobMoveStartEventDetail;
@@ -6989,10 +6984,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * Maximum integer value of the range.
          */
         "max"?: number;
@@ -7032,10 +7023,6 @@ declare namespace LocalJSX {
           * Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
          */
         "onIonKnobMoveStart"?: (event: IonRangeCustomEvent<RangeKnobMoveStartEventDetail>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonRangeCustomEvent<StyleEventDetail>) => void;
         /**
           * If `true`, a pin with integer value is shown when the knob is pressed.
          */
