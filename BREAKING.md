@@ -18,13 +18,21 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Global Styles](#version-8x-global-styles)
 - [Components](#version-8x-components)
   - [Button](#version-8x-button)
+  - [Checkbox](#version-8x-checkbox)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
   - [Input](#version-8x-input)
+  - [Modal](#version-8x-modal)
   - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
   - [Progress bar](#version-8x-progress-bar)
+  - [Radio](#version-8x-radio)
+  - [Range](#version-8x-range)
+  - [Select](#version-8x-select)
   - [Textarea](#version-8x-textarea)
+  - [Toggle](#version-8x-toggle)
+- [Framework Specific](#version-8x-framework-specific)
+  - [Angular](#version-8x-angular)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -134,6 +142,10 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 
 - Button text now wraps by default. If this behavior is not desired, add the `ion-text-nowrap` class from the [CSS Utilities](https://ionicframework.com/docs/layout/css-utilities).
 
+<h4 id="version-8x-checkbox">Checkbox</h4>
+
+ The `legacy` property and support for the legacy syntax, which involved placing an `ion-checkbox` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy checkbox syntax, refer to the [Checkbox documentation](https://ionicframework.com/docs/api/checkbox#migrating-from-legacy-checkbox-syntax).
+
 <h4 id="version-8x-content">Content</h4>
 
 - Content no longer sets the `--background` custom property when the `.outer-content` class is set on the host.
@@ -154,6 +166,11 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 
 - `size` has been removed from the `ion-input` component. Developers should use CSS to specify the visible width of the input.
 - `accept` has been removed from the `ion-input` component. This was previously used in conjunction with the `type="file"`. However, the `file` value for `type` is not a valid value in Ionic Framework.
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-input` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy input syntax, refer to the [Input documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax).
+
+<h4 id="version-8x-modal">Modal</h4>
+
+- Detection for Capacitor <= 2 with applying status bar styles has been removed. Developers should ensure they are using Capacitor 3 or later when using the card modal presentation.
 
 <h4 id="version-8x-nav">Nav</h4>
 
@@ -175,6 +192,33 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 
 For more information on styling toast buttons, refer to the [Toast Theming documentation](https://ionicframework.com/docs/api/toast#theming).
 
+<h4 id="version-8x-radio">Radio</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-radio` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy radio syntax, refer to the [Radio documentation](https://ionicframework.com/docs/api/radio#migrating-from-legacy-radio-syntax).
+
+<h4 id="version-8x-range">Range</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
+
+<h4 id="version-8x-select">Select</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
+
 <h4 id="version-8x-textarea">Textarea</h4>
 
 - The `legacy` property and support for the legacy syntax, which involved placing an `ion-textarea` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy textarea syntax, refer to the [Textarea documentation](https://ionicframework.com/docs/api/textarea#migrating-from-legacy-textarea-syntax).
+
+<h4 id="version-8x-toggle">Toggle</h4>
+
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-toggle` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy toggle syntax, refer to the [Toggle documentation](https://ionicframework.com/docs/api/toggle#migrating-from-legacy-toggle-syntax).
+
+<h2 id="version-8x-framework-specific">Framework Specific</h2>
+
+<h4 id="version-8x-angular">Angular</h4>
+
+- The `IonBackButtonDelegate` class has been removed in favor of `IonBackButton`.
+
+  ```diff
+  - import { IonBackButtonDelegate } from '@ionic/angular';
+  + import { IonBackButton } from '@ionic/angular';
+  ```

@@ -26,29 +26,5 @@ $checkbox-ios-icon-border-radius:         50% !default;
 /// @prop - Opacity of the disabled checkbox
 $checkbox-ios-disabled-opacity:           $form-control-ios-disabled-opacity !default;
 
-/// @prop - Margin top of the left checkbox item
-$checkbox-ios-item-start-margin-top:      8px !default;
-
-/// @prop - Margin end of the left checkbox item
-$checkbox-ios-item-start-margin-end:      $item-ios-padding-end !default;
-
-/// @prop - Margin bottom of the left checkbox item
-$checkbox-ios-item-start-margin-bottom:   $checkbox-ios-item-start-margin-top !default;
-
-/// @prop - Margin start of the left checkbox item
-$checkbox-ios-item-start-margin-start:    2px !default;
-
-/// @prop - Margin top of the right checkbox item
-$checkbox-ios-item-end-margin-top:        10px !default;
-
-/// @prop - Margin end of the right checkbox item
-$checkbox-ios-item-end-margin-end:        8px !default;
-
-/// @prop - Margin bottom of the right checkbox item
-$checkbox-ios-item-end-margin-bottom:     9px !default;
-
-/// @prop - Margin start of the right checkbox item
-$checkbox-ios-item-end-margin-start:      0 !default;
-
 /// @prop - Checkmark width of the checkbox icon
 $checkbox-ios-icon-checkmark-width:       1.5px !default;

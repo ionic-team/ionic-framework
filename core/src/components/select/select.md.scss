@@ -11,14 +11,6 @@
   --border-color: #{$item-md-border-color};
 }
 
-// TODO FW-3194 - Remove this
-:host(.legacy-select) {
-  --padding-top: #{$select-md-padding-top};
-  --padding-end: #{$select-md-padding-end};
-  --padding-bottom: #{$select-md-padding-bottom};
-  --padding-start: #{$select-md-padding-start};
-}
-
 .select-icon {
   width: $select-md-icon-size;
 
@@ -89,7 +81,7 @@
  * when the select is activated.
  * This should only happen on MD.
  */
-:host(.select-expanded:not(.legacy-select):not(.has-expanded-icon)) .select-icon {
+:host(.select-expanded:not(.has-expanded-icon)) .select-icon {
   @include transform(rotate(180deg));
 }
 
