@@ -68,14 +68,9 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
  * is not transformed, so we do not need to
  * adjust the status bar color.
  *
- * Note: We check supportsDefaultStatusBarStyle so that
- * Capacitor <= 2 users do not get their status bar
- * stuck in an inconsistent state due to a lack of
- * support for Style.Default.
  */
 export const setCardStatusBarDark = () => {
-  // TODO FW-4696 Remove supportDefaultStatusBarStyle in Ionic v8
-  if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
+  if (!win || win.innerWidth >= 768) {
     return;
   }
 
@@ -83,8 +78,7 @@ export const setCardStatusBarDark = () => {
 };
 
 export const setCardStatusBarDefault = (defaultStyle = Style.Default) => {
-  // TODO FW-4696 Remove supportDefaultStatusBarStyle in Ionic v8
-  if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
+  if (!win || win.innerWidth >= 768) {
     return;
   }
 

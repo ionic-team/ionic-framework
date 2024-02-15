@@ -117,7 +117,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
       const monthYearButton = page.locator('ion-datetime .calendar-month-year');
@@ -189,7 +189,7 @@ class DatetimePresentationFixture {
     `,
       config
     );
-    await this.page.waitForSelector('.datetime-ready');
+    await this.page.locator('.datetime-ready').waitFor();
     this.datetime = this.page.locator('ion-datetime');
   }
 
@@ -214,7 +214,7 @@ class TimePickerFixture {
     `,
       config
     );
-    await this.page.waitForSelector('.datetime-ready');
+    await this.page.locator('.datetime-ready').waitFor();
     this.timePicker = this.page.locator('ion-datetime');
   }
 

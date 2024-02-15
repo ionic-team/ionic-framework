@@ -438,23 +438,12 @@
 // ----------------------------------------------------------
 @mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
   @if $top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start {
-    @include multi-dir() {
-      border-radius: $top-start;
-    }
+    border-radius: $top-start;
   } @else {
-    @include ltr() {
-      border-top-left-radius: $top-start;
-      border-top-right-radius: $top-end;
-      border-bottom-right-radius: $bottom-end;
-      border-bottom-left-radius: $bottom-start;
-    }
-
-    @include rtl() {
-      border-top-left-radius: $top-end;
-      border-top-right-radius: $top-start;
-      border-bottom-right-radius: $bottom-start;
-      border-bottom-left-radius: $bottom-end;
-    }
+    border-start-start-radius: $top-start;
+    border-start-end-radius: $top-end;
+    border-end-end-radius: $bottom-end;
+    border-end-start-radius: $bottom-start;
   }
 }
 

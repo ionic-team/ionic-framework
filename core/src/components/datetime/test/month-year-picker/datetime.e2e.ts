@@ -8,7 +8,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   test.describe(title('datetime: month-year picker'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/datetime/test/month-year-picker', config);
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').first().waitFor();
     });
 
     test('should hide the footer when picker is open', async ({ page }) => {

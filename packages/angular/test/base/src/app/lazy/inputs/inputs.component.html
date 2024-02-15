@@ -99,6 +99,12 @@
       <ion-note slot="end">{{radio}}</ion-note>
     </ion-item>
 
+    <ion-item>
+      <ion-range [(ngModel)]="range" min="0" max="100" id="first-range">
+        <ion-label slot="start">Range</ion-label>
+      </ion-range>
+    </ion-item>
+
   </ion-list>
   <p>
     <ion-button (click)="setValues()" id="set-button">Set values</ion-button>

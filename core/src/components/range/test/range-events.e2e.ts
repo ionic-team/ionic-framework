@@ -20,7 +20,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.setContent(
           `
           <div style="padding: 0 20px">
-            <ion-range value="20"></ion-range>
+            <ion-range aria-label="Range" value="20"></ion-range>
           </div>
         `,
           config
@@ -52,7 +52,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
 
       test('should emit start/end events, keyboard', async ({ page }) => {
-        await page.setContent(`<ion-range value="20"></ion-range>`, config);
+        await page.setContent(`<ion-range aria-label="Range" value="20"></ion-range>`, config);
 
         const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
         const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
@@ -71,7 +71,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
         skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
-        await page.goto(`/src/components/range/test/legacy/basic`, config);
+        await page.goto(`/src/components/range/test/basic`, config);
 
         const knobEl = page.locator('ion-range#stacked-range .range-knob-handle');
         const scrollEl = page.locator('ion-content .inner-scroll');

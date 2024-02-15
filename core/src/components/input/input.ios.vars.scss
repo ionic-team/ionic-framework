@@ -7,17 +7,5 @@
 /// @prop - Font size of the input
 $input-ios-font-size:                     inherit !default;
 
-/// @prop - Margin top of the input
-$input-ios-padding-top:                    $item-ios-padding-top !default;
-
-/// @prop - Margin end of the input
-$input-ios-padding-end:                    ($item-ios-padding-end * 0.5) !default;
-
-/// @prop - Margin bottom of the input
-$input-ios-padding-bottom:                 $item-ios-padding-bottom !default;
-
-/// @prop - Margin start of the input
-$input-ios-padding-start:                  0 !default;
-
 /// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled input
 $input-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;
