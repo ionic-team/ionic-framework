@@ -596,6 +596,7 @@ ion-input,css-prop,--color
 ion-input,css-prop,--highlight-color-focused
 ion-input,css-prop,--highlight-color-invalid
 ion-input,css-prop,--highlight-color-valid
+ion-input,css-prop,--highlight-height
 ion-input,css-prop,--padding-bottom
 ion-input,css-prop,--padding-end
 ion-input,css-prop,--padding-start
