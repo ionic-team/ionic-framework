@@ -694,6 +694,21 @@ export class Popover implements ComponentInterface, PopoverInterface {
         {!parentPopover && <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop} part="backdrop" />}
 
         <div class="popover-wrapper ion-overlay-wrapper" onClick={dismissOnSelect ? () => this.dismiss() : undefined}>
+          {/**
+           * NOTE: One possibility is moving the arrow inside .popover-content and positioning the arrow relative
+           * to the content instead of to the whole screen. This has a few issues that we didn't have time to
+           * sort out:
+           * 1. The content hides overflow, so the arrow is no longer visible. However, setting overflow:visible
+           *    also breaks the border radius for some reason. (Unsure why yet since border radius is set on the
+           *    content el itself, so in theory overflow:hidden shouldn't be needed.)
+           * 2. Additional logic is needed to handle the arrow being above or below the content based on whether
+           *    the popover has to flip due to being close to the bottom edge of the screen. calculateWindowAdjustment
+           *    returns an addPopoverBottomClass var in the iOS enter animation that we may be able to use for this.
+           *    (There are additional considerations for when popover's side prop is used to move the arrow, though.)
+           * 3. Additional logic is needed to handle the arrow moving horizontally to point at the trigger/event
+           *    position. For example, if the popover is presented near the right edge of the screen, the arrow
+           *    might be positioned more to the right instead of centered.
+           */}
           {enableArrow && <div class="popover-arrow" part="arrow"></div>}
           <div class="popover-content" part="content">
             <slot></slot>

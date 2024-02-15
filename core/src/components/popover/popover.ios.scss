@@ -42,6 +42,9 @@
    * will allow the arrow to render above the backdrop.
    */
   z-index: 11;
+
+  // NOTE: Useful for debugging purposes when the arrow overlaps the content.
+  // --background: pink;
 }
 
 .popover-arrow::after {
