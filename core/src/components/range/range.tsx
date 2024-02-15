@@ -10,7 +10,7 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Gesture, StyleEventDetail } from '../../interface';
+import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
 import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
 import type {
@@ -49,6 +49,7 @@ import type {
 })
 export class Range implements ComponentInterface {
   private rangeId = `ion-r-${rangeIds++}`;
+  private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
@@ -59,8 +60,6 @@ export class Range implements ComponentInterface {
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
   private legacyFormController!: LegacyFormController;
-  private isScrollingView = false;
-  private isTouching = false;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -293,6 +292,28 @@ export class Range implements ComponentInterface {
    */
   @Event() ionKnobMoveEnd!: EventEmitter<RangeKnobMoveEndEventDetail>;
 
+  private setupGesture = async () => {
+    const rangeSlider = this.rangeSlider;
+    if (rangeSlider) {
+      this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: rangeSlider,
+        gestureName: 'range',
+        gesturePriority: 100,
+        /**
+         * Provide a threshold since the drag movement
+         * might be a user scrolling the view.
+         * If this is true, then the range
+         * should not move.
+         */
+        threshold: 10,
+        onStart: () => this.onStart(),
+        onMove: (ev) => this.onMove(ev),
+        onEnd: (ev) => this.onEnd(ev),
+      });
+      this.gesture.enable(!this.disabled);
+    }
+  };
+
   componentWillLoad() {
     /**
      * If user has custom ID set then we should
@@ -307,7 +328,9 @@ export class Range implements ComponentInterface {
 
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
+    this.setupGesture();
     this.updateRatio();
+    this.didLoad = true;
   }
 
   connectedCallback() {
@@ -319,6 +342,16 @@ export class Range implements ComponentInterface {
     this.debounceChanged();
     this.disabledChanged();
     this.activeBarStartChanged();
+
+    /**
+     * If we have not yet rendered
+     * ion-range, then rangeSlider is not defined.
+     * But if we are moving ion-range via appendChild,
+     * then rangeSlider will be defined.
+     */
+    if (this.didLoad) {
+      this.setupGesture();
+    }
 
     this.contentEl = findClosestIonContent(this.el);
   }
@@ -392,41 +425,41 @@ export class Range implements ComponentInterface {
   }
 
   /**
-   * The value should be updated on touch end.
+   * The value should be updated on touch end or
+   * when the component is being dragged.
    * This follows the native behavior of mobile devices.
    *
    * For example: When the user lifts their finger from the
-   * screen after tapping the bar or dragging the knob.
+   * screen after tapping the bar or dragging the bar or knob.
    */
-  private handlePointerDown = () => {
-    this.isTouching = true;
+  private onStart() {
     this.ionKnobMoveStart.emit({ value: this.ensureValueInBounds(this.value) });
-  };
+  }
 
   /**
-   * The value should be updated on touch end:
-   * - When the user lifts their finger from the screen after
-   * dragging the knob.
+   * The value should be updated while dragging the
+   * bar or knob.
    *
-   * While the user is dragging the knob, the view
+   * While the user is dragging, the view
    * should not scroll. This is to prevent the user from
    * feeling disoriented while dragging.
    *
-   * The user can scroll on the view if the knob is not being dragged.
+   * The user can scroll on the view if the knob or
+   * bar is not being dragged.
    *
-   * @param ev The pointer event.
+   * @param detail The details of the gesture event.
    */
-  private handlePointerMove = (ev: PointerEvent) => {
-    console.log('handlePointerMove', this.isTouching);
-    const { pressedKnob } = this;
-    const currentX = ev.clientX;
+  private onMove(detail: GestureDetail) {
+    const { contentEl, pressedKnob } = this;
+    const currentX = detail.currentX;
 
-    // if (ev.pressure === 0) {
-    //   return;
-    // }
-
-    if (!this.isTouching) {
-      return;
+    /**
+     * Since the user is dragging on the bar or knob, the view should not scroll.
+     *
+     * This only needs to be done once.
+     */
+    if (contentEl && this.initialContentScrollY === undefined) {
+      this.initialContentScrollY = disableContentScrollY(contentEl);
     }
 
     /**
@@ -445,19 +478,18 @@ export class Range implements ComponentInterface {
     }
 
     this.update(currentX);
-  };
+  }
 
   /**
    * The value should be updated on touch end:
    * - When the user lifts their finger from the screen after
-   * tapping the bar or dragging the knob.
+   * tapping the bar.
    *
-   * @param ev The pointer event.
+   * @param detail The details of the gesture or mouse event.
    */
-  private handlePointerUp = (ev: PointerEvent) => {
-    const currentX = ev.clientX;
-
-    this.isTouching = false;
+  private onEnd(detail: GestureDetail | MouseEvent) {
+    const { contentEl, initialContentScrollY } = this;
+    const currentX = (detail as GestureDetail).currentX || (detail as MouseEvent).clientX;
 
     /**
      * The `pressedKnob` can be undefined if the user never
@@ -471,6 +503,16 @@ export class Range implements ComponentInterface {
       this.setPressedKnob(currentX);
     }
 
+    /**
+     * The user is no longer dragging the bar or
+     * knob (if they were dragging it).
+     *
+     * The user can now scroll on the view in the next gesture event.
+     */
+    if (contentEl && initialContentScrollY !== undefined) {
+      resetContentScrollY(contentEl, initialContentScrollY);
+    }
+
     // update the active knob's position
     this.update(currentX);
     /**
@@ -481,7 +523,7 @@ export class Range implements ComponentInterface {
 
     this.emitValueChange();
     this.ionKnobMoveEnd.emit({ value: this.ensureValueInBounds(this.value) });
-  };
+  }
 
   private update(currentX: number) {
     // figure out where the pointer is currently at
@@ -748,9 +790,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       inheritedAttributes,
       rangeId,
       pinFormatter,
-      handlePointerUp,
-      handlePointerDown,
-      handlePointerMove,
     } = this;
 
     /**
@@ -841,14 +880,17 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       <div
         class="range-slider"
         ref={(rangeEl) => (this.rangeSlider = rangeEl)}
-        onPointerUp={handlePointerUp}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerCancel={(ev: PointerEvent) => {
-          console.log('onPointerCancel', ev);
-          this.isTouching = false;
-          this.pressedKnob = undefined;
-        }}
+        /**
+         * Since the gesture has a threshold, the value
+         * won't change until the user has dragged past
+         * the threshold. This is to prevent the range
+         * from moving when the user is scrolling.
+         *
+         * However, this causes the value to not update
+         * if the user taps on the range. This is why
+         * we need to listen for the "click" event.
+         */
+        onClick={(ev: MouseEvent) => this.onEnd(ev)}
       >
         {ticks.map((tick) => (
           <div
@@ -889,7 +931,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           max,
           labelText,
           labelledBy,
-          handlePointerMove: this.handlePointerMove,
         })}
 
         {this.dualKnobs &&
@@ -906,7 +947,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
             max,
             labelText,
             labelledBy,
-            handlePointerMove: this.handlePointerMove,
           })}
       </div>
     );
@@ -931,7 +971,6 @@ interface RangeKnob {
   labelText?: string | null;
   labelledBy?: string;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
-  handlePointerMove: (ev: PointerEvent) => void;
 }
 
 const renderKnob = (
@@ -949,7 +988,6 @@ const renderKnob = (
     labelText,
     labelledBy,
     pinFormatter,
-    handlePointerMove,
   }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
