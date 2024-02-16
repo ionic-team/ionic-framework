@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, test, Viewports } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across modes/directions.
@@ -32,6 +32,46 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const box = (await popoverContent.boundingBox())!;
 
       expect(box.y > 0).toBe(true);
+    });
+
+    test('should account for vertical safe area approximation in portrait mode', async ({ page }) => {
+      await page.goto('/src/components/popover/test/adjustment', config);
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.mouse.click(0, 0);
+      await ionPopoverDidPresent.next();
+
+      const popoverContent = page.locator('ion-popover .popover-content');
+      const box = (await popoverContent.boundingBox())!;
+
+      /**
+       * The safe area approximation should move the y position by 5%
+       * of the screen height. We use 10px as the threshold to give
+       * wiggle room and help prevent flakiness.
+       */
+      expect(box.x < 10).toBe(true);
+      expect(box.y > 10).toBe(true);
+    });
+
+    test('should account for vertical and horizontal safe area approximation in landscape mode', async ({ page }) => {
+      await page.goto('/src/components/popover/test/adjustment', config);
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+      await page.setViewportSize(Viewports.tablet.landscape);
+
+      await page.mouse.click(0, 0);
+      await ionPopoverDidPresent.next();
+
+      const popoverContent = page.locator('ion-popover .popover-content');
+      const box = (await popoverContent.boundingBox())!;
+
+      /**
+       * The safe area approximation should move the y position by 5%
+       * of the screen height. We use 10px as the threshold to give
+       * wiggle room and help prevent flakiness.
+       */
+      expect(box.x > 10).toBe(true);
+      expect(box.y > 10).toBe(true);
     });
   });
 });
