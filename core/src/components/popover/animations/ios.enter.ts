@@ -53,7 +53,6 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
   );
 
   const padding = size === 'cover' ? 0 : POPOVER_IOS_BODY_PADDING;
-  const margin = size === 'cover' ? 0 : 25;
 
   const {
     originX,
@@ -61,8 +60,6 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     top,
     left,
     bottom,
-    checkSafeAreaLeft,
-    checkSafeAreaRight,
     arrowTop,
     arrowLeft,
     addPopoverBottomClass,
@@ -75,7 +72,6 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     bodyHeight,
     contentWidth,
     contentHeight,
-    margin,
     results.originX,
     results.originY,
     results.referenceCoordinates,
@@ -122,20 +118,8 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         contentEl.style.setProperty('bottom', `${bottom}px`);
       }
 
-      const safeAreaLeft = ' + var(--ion-safe-area-left, 0)';
-      const safeAreaRight = ' - var(--ion-safe-area-right, 0)';
-
-      let leftValue = `${left}px`;
-
-      if (checkSafeAreaLeft) {
-        leftValue = `${left}px${safeAreaLeft}`;
-      }
-      if (checkSafeAreaRight) {
-        leftValue = `${left}px${safeAreaRight}`;
-      }
-
       contentEl.style.setProperty('top', `calc(${top}px + var(--offset-y, 0))`);
-      contentEl.style.setProperty('left', `calc(${leftValue} + var(--offset-x, 0))`);
+      contentEl.style.setProperty('left', `calc(${left}px + var(--offset-x, 0))`);
       contentEl.style.setProperty('transform-origin', `${originY} ${originX}`);
 
       if (arrowEl !== null) {

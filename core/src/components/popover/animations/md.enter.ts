@@ -56,7 +56,6 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => 
     bodyHeight,
     contentWidth,
     contentHeight,
-    0,
     results.originX,
     results.originY,
     results.referenceCoordinates

@@ -1,3 +1,4 @@
+import { win } from '@utils/browser';
 import { getElementRoot, raf } from '@utils/helpers';
 
 import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from './popover-interface';
@@ -814,7 +815,6 @@ export const calculateWindowAdjustment = (
   bodyHeight: number,
   contentWidth: number,
   contentHeight: number,
-  safeAreaMargin: number,
   contentOriginX: string,
   contentOriginY: string,
   triggerCoordinates?: ReferenceCoordinates,
@@ -838,21 +838,58 @@ export const calculateWindowAdjustment = (
   let addPopoverBottomClass = false;
 
   /**
+   * Approximate the safe area margins. Getting exact values would necessitate
+   * using window.getComputedStyle(), which is very expensive, so we use "close
+   * enough" values for now.
+   *
+   * 5% is derived from the iPhone 14 top safe area margin (47pt / 844 pt ~= 0.05).
+   * Source: https://useyourloaf.com/blog/iphone-14-screen-sizes/
+   *
+   * TODO(FW-5982): Investigate a more robust solution that uses the actual
+   * safe area margins through alternate means.
+   */
+  let horizontalSafeAreaApprox = 0;
+  let verticalSafeAreaApprox = 0;
+  if (win !== undefined && win.matchMedia !== undefined) {
+    verticalSafeAreaApprox = win.innerHeight * 0.05;
+
+    /**
+     * We only want to check horizontal safe area on landscape.
+     * Most devices do not have horizontal safe area margins in
+     * portrait mode, so enforcing it would lead to popovers
+     * being misaligned with the trigger when we don't want them
+     * to move.
+     */
+    if (win.matchMedia('(orientation: landscape)').matches) {
+      horizontalSafeAreaApprox = win.innerWidth * 0.05;
+    }
+  }
+
+  /**
    * Adjust popover so it does not
    * go off the left of the screen.
    */
-  if (left < bodyPadding + safeAreaMargin) {
-    left = bodyPadding;
+  if (left < bodyPadding + horizontalSafeAreaApprox) {
+    left = bodyPadding + horizontalSafeAreaApprox;
     checkSafeAreaLeft = true;
     originX = 'left';
     /**
      * Adjust popover so it does not
      * go off the right of the screen.
      */
-  } else if (contentWidth + bodyPadding + left + safeAreaMargin > bodyWidth) {
+  } else if (contentWidth + bodyPadding + left + horizontalSafeAreaApprox > bodyWidth) {
     checkSafeAreaRight = true;
-    left = bodyWidth - contentWidth - bodyPadding;
+    left = bodyWidth - contentWidth - bodyPadding - horizontalSafeAreaApprox;
     originX = 'right';
+  }
+
+  /**
+   * Ensure the popover doesn't sit above the safe area approxmation.
+   * If popover is on the left or right of the trigger, we should not
+   * adjust top margins.
+   */
+  if (side === 'top' || side === 'bottom') {
+    top = Math.max(top, verticalSafeAreaApprox + bodyPadding);
   }
 
   /**
@@ -862,7 +899,7 @@ export const calculateWindowAdjustment = (
    * the trigger, then we should not adjust top
    * margins.
    */
-  if (triggerTop + triggerHeight + contentHeight > bodyHeight && (side === 'top' || side === 'bottom')) {
+  if (triggerTop + triggerHeight + contentHeight + verticalSafeAreaApprox > bodyHeight && (side === 'top' || side === 'bottom')) {
     if (triggerTop - contentHeight > 0) {
       /**
        * While we strive to align the popover with the trigger
@@ -875,6 +912,12 @@ export const calculateWindowAdjustment = (
        * it is not right up against the edge of the screen.
        */
       top = Math.max(12, triggerTop - contentHeight - triggerHeight - (arrowHeight - 1));
+
+      /**
+       * Ensure the popover doesn't sit below the safe area approxmation.
+       */
+      top = Math.min(top, bodyHeight - verticalSafeAreaApprox - contentHeight - bodyPadding);
+
       arrowTop = top + contentHeight;
       originY = 'bottom';
       addPopoverBottomClass = true;
