@@ -1014,7 +1014,6 @@ const renderKnob = (
           ev.stopPropagation();
         }
       }}
-      // onPointerMove={handlePointerMove}
       class={{
         'range-knob-handle': true,
         'range-knob-a': knob === 'A',
