@@ -850,7 +850,7 @@ export const calculateWindowAdjustment = (
    */
   let horizontalSafeAreaApprox = 0;
   let verticalSafeAreaApprox = 0;
-  if (win !== undefined && win.matchMedia !== undefined) {
+  if (win?.matchMedia !== undefined) {
     verticalSafeAreaApprox = win.innerHeight * 0.05;
 
     /**
@@ -899,7 +899,10 @@ export const calculateWindowAdjustment = (
    * the trigger, then we should not adjust top
    * margins.
    */
-  if (triggerTop + triggerHeight + contentHeight + verticalSafeAreaApprox > bodyHeight && (side === 'top' || side === 'bottom')) {
+  if (
+    triggerTop + triggerHeight + contentHeight + verticalSafeAreaApprox > bodyHeight &&
+    (side === 'top' || side === 'bottom')
+  ) {
     if (triggerTop - contentHeight > 0) {
       /**
        * While we strive to align the popover with the trigger
