@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-buttons',
@@ -27,11 +27,11 @@ export class Buttons implements ComponentInterface {
   @Prop() collapse = false;
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           ['buttons-collapse']: this.collapse,
         }}
       ></Host>

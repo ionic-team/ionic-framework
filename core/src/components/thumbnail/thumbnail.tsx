@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-thumbnail',
@@ -10,8 +10,13 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class Thumbnail implements ComponentInterface {
   render() {
+    const theme = getIonTheme(this);
     return (
-      <Host class={getIonMode(this)}>
+      <Host
+        class={{
+          [theme]: true,
+        }}
+      >
         <slot></slot>
       </Host>
     );

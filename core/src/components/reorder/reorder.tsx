@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, h } from '@stencil/core';
 import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 /**
  * @part icon - The icon of the reorder handle (uses ion-icon).
@@ -32,10 +32,14 @@ export class Reorder implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
-    const reorderIcon = mode === 'ios' ? reorderThreeOutline : reorderTwoSharp;
+    const theme = getIonTheme(this);
+    const reorderIcon = theme === 'ios' ? reorderThreeOutline : reorderTwoSharp;
     return (
-      <Host class={mode}>
+      <Host
+        class={{
+          [theme]: true,
+        }}
+      >
         <slot>
           <ion-icon icon={reorderIcon} lazy={false} class="reorder-icon" part="icon" aria-hidden="true" />
         </slot>

@@ -5,7 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import {
   cloneElement,
@@ -71,9 +71,9 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
-    if (mode !== 'ios') {
+    if (theme !== 'ios') {
       return;
     }
 
@@ -206,7 +206,7 @@ export class Header implements ComponentInterface {
 
   render() {
     const { translucent, inheritedAttributes } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const collapse = this.collapse || 'none';
 
     // banner role must be at top level, so remove role if inside a menu
@@ -216,18 +216,18 @@ export class Header implements ComponentInterface {
       <Host
         role={roleType}
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`header-${mode}`]: true,
+          [`header-${theme}`]: true,
 
           [`header-translucent`]: this.translucent,
           [`header-collapse-${collapse}`]: true,
-          [`header-translucent-${mode}`]: this.translucent,
+          [`header-translucent-${theme}`]: this.translucent,
         }}
         {...inheritedAttributes}
       >
-        {mode === 'ios' && translucent && <div class="header-background"></div>}
+        {theme === 'ios' && translucent && <div class="header-background"></div>}
         <slot></slot>
       </Host>
     );

@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
 
 /**
@@ -82,7 +82,7 @@ export class Toolbar implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const childStyles = {};
     this.childrenStyles.forEach((value) => {
       Object.assign(childStyles, value);
@@ -92,7 +92,7 @@ export class Toolbar implements ComponentInterface {
         class={{
           ...childStyles,
           ...createColorClasses(this.color, {
-            [mode]: true,
+            [theme]: true,
             'in-toolbar': hostContext('ion-toolbar', this.el),
           }),
         }}

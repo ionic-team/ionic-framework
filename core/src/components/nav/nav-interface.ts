@@ -1,4 +1,4 @@
-import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Platform } from '../../interface';
 
 import type { ViewController } from './view-controller';
 
@@ -34,7 +34,7 @@ export interface RouterOutletOptions {
   showGoBack?: boolean;
   direction?: NavDirection;
   deepWait?: boolean;
-  mode?: Mode;
+  platform?: Platform;
   keyboardClose?: boolean;
   skipIfBusy?: boolean;
   progressAnimation?: boolean;

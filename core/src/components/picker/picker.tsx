@@ -16,7 +16,7 @@ import {
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
@@ -349,7 +349,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   render() {
     const { htmlAttributes } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         aria-modal="true"
@@ -359,10 +359,10 @@ export class Picker implements ComponentInterface, OverlayInterface {
           zIndex: `${20000 + this.overlayIndex}`,
         }}
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`picker-${mode}`]: true,
+          [`picker-${theme}`]: true,
           'overlay-hidden': true,
           ...getClassMap(this.cssClass),
         }}

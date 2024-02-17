@@ -4,7 +4,7 @@ import { componentOnReady, addEventListener } from '@utils/helpers';
 import { printIonError } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
@@ -413,12 +413,12 @@ export class DatetimeButton implements ComponentInterface {
   render() {
     const { color, dateText, timeText, selectedButton, datetimeActive, disabled } = this;
 
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     return (
       <Host
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           [`${selectedButton}-active`]: datetimeActive,
           ['datetime-button-disabled']: disabled,
         })}
@@ -434,7 +434,7 @@ export class DatetimeButton implements ComponentInterface {
             ref={(el) => (this.dateTargetEl = el)}
           >
             <slot name="date-target">{dateText}</slot>
-            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         )}
 
@@ -449,7 +449,7 @@ export class DatetimeButton implements ComponentInterface {
             ref={(el) => (this.timeTargetEl = el)}
           >
             <slot name="time-target">{timeText}</slot>
-            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         )}
       </Host>

@@ -6,7 +6,7 @@ import { createColorClasses } from '@utils/theme';
 import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail } from '../../interface';
 
 import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './searchbar-interface';
@@ -423,11 +423,11 @@ export class Searchbar implements ComponentInterface {
   private positionElements() {
     const value = this.getValue();
     const prevAlignLeft = this.shouldAlignLeft;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const shouldAlignLeft = !this.animated || value.trim() !== '' || !!this.focused;
     this.shouldAlignLeft = shouldAlignLeft;
 
-    if (mode !== 'ios') {
+    if (theme !== 'ios') {
       return;
     }
 
@@ -559,9 +559,9 @@ export class Searchbar implements ComponentInterface {
   render() {
     const { cancelButtonText } = this;
     const animated = this.animated && config.getBoolean('animated', true);
-    const mode = getIonMode(this);
-    const clearIcon = this.clearIcon || (mode === 'ios' ? closeCircle : closeSharp);
-    const searchIcon = this.searchIcon || (mode === 'ios' ? searchOutline : searchSharp);
+    const theme = getIonTheme(this);
+    const clearIcon = this.clearIcon || (theme === 'ios' ? closeCircle : closeSharp);
+    const searchIcon = this.searchIcon || (theme === 'ios' ? searchOutline : searchSharp);
     const shouldShowCancelButton = this.shouldShowCancelButton();
 
     const cancelButton = this.showCancelButton !== 'never' && (
@@ -570,14 +570,15 @@ export class Searchbar implements ComponentInterface {
         // Screen readers should not announce button if it is not visible on screen
         aria-hidden={shouldShowCancelButton ? undefined : 'true'}
         type="button"
-        tabIndex={mode === 'ios' && !shouldShowCancelButton ? -1 : undefined}
+        tabIndex={theme === 'ios' && !shouldShowCancelButton ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
         <div aria-hidden="true">
-          {mode === 'md' ? (
-            <ion-icon aria-hidden="true" mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+          {theme === 'md' ? (
+            // TODO look into the mode/theme
+            <ion-icon aria-hidden="true" mode={theme} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
           ) : (
             cancelButtonText
           )}
@@ -590,7 +591,7 @@ export class Searchbar implements ComponentInterface {
         role="search"
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'searchbar-animated': animated,
           'searchbar-disabled': this.disabled,
           'searchbar-no-animate': animated && this.noAnimate,
@@ -622,11 +623,11 @@ export class Searchbar implements ComponentInterface {
             spellcheck={this.spellcheck}
           />
 
-          {mode === 'md' && cancelButton}
+          {theme === 'md' && cancelButton}
 
           <ion-icon
             aria-hidden="true"
-            mode={mode}
+            mode={theme}
             icon={searchIcon}
             lazy={false}
             class="searchbar-search-icon"
@@ -649,14 +650,14 @@ export class Searchbar implements ComponentInterface {
           >
             <ion-icon
               aria-hidden="true"
-              mode={mode}
+              mode={theme}
               icon={clearIcon}
               lazy={false}
               class="searchbar-clear-icon"
             ></ion-icon>
           </button>
         </div>
-        {mode === 'ios' && cancelButton}
+        {theme === 'ios' && cancelButton}
       </Host>
     );
   }

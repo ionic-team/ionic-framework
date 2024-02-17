@@ -4,7 +4,7 @@ import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 import type { TabBarChangedEventDetail } from './tab-bar-interface';
@@ -96,7 +96,7 @@ export class TabBar implements ComponentInterface {
 
   render() {
     const { color, translucent, keyboardVisible } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
     return (
@@ -104,7 +104,7 @@ export class TabBar implements ComponentInterface {
         role="tablist"
         aria-hidden={shouldHide ? 'true' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
         })}

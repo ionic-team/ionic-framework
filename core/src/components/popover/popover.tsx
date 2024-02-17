@@ -17,7 +17,7 @@ import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
@@ -350,7 +350,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.parentPopover = el.closest(`ion-popover:not(#${popoverId})`) as HTMLIonPopoverElement | null;
 
     if (this.alignment === undefined) {
-      this.alignment = getIonMode(this) === 'ios' ? 'center' : 'start';
+      this.alignment = getIonTheme(this) === 'ios' ? 'center' : 'start';
     }
   }
 
@@ -662,7 +662,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   };
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const { onLifecycle, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
@@ -678,7 +678,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
         }}
         class={{
           ...getClassMap(this.cssClass),
-          [mode]: true,
+          [theme]: true,
           'popover-translucent': this.translucent,
           'overlay-hidden': true,
           'popover-desktop': desktop,

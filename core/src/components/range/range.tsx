@@ -9,7 +9,7 @@ import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
 import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
@@ -592,7 +592,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
     const { el, pressedKnob, disabled, pin, rangeId } = this;
 
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
@@ -602,7 +602,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         onFocusout={this.onBlur}
         id={rangeId}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': hostContext('ion-item', el),
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
@@ -653,7 +653,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
     const needsEndAdjustment = inItem && !hasEndContent;
 
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
@@ -663,7 +663,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         onFocusout={this.onBlur}
         id={rangeId}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': inItem,
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,

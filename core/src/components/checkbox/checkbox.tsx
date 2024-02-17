@@ -7,8 +7,8 @@ import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '@utils/h
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
-import type { Color, Mode, StyleEventDetail } from '../../interface';
+import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
+import type { Color, Platform, StyleEventDetail } from '../../interface';
 
 import type { CheckboxChangeEventDetail } from './checkbox-interface';
 
@@ -244,15 +244,17 @@ export class Checkbox implements ComponentInterface {
       value,
       alignment,
     } = this;
-    const mode = getIonMode(this);
-    const path = getSVGPath(mode, indeterminate);
+    const theme = getIonTheme(this);
+    const platform = getIonPlatform(this);
+
+    const path = getSVGPath(platform, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (
       <Host
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
@@ -324,9 +326,10 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     }
 
     const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
+    const platform = getIonPlatform(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
-    const path = getSVGPath(mode, indeterminate);
+    const path = getSVGPath(platform, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -337,7 +340,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         aria-hidden={disabled ? 'true' : null}
         role="checkbox"
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
@@ -365,14 +368,14 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     );
   }
 
-  private getSVGPath(mode: Mode, indeterminate: boolean): HTMLElement {
+  private getSVGPath(platform: Platform, indeterminate: boolean): HTMLElement {
     let path = indeterminate ? (
       <path d="M6 12L18 12" part="mark" />
     ) : (
       <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
     );
 
-    if (mode === 'md') {
+    if (platform === 'md') {
       path = indeterminate ? (
         <path d="M2 12H22" part="mark" />
       ) : (

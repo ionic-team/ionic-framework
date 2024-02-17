@@ -21,7 +21,7 @@ import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -493,7 +493,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * start of the animation so that it completes
      * by the time the card animation is done.
      */
-    if (hasCardModal && getIonMode(this) === 'ios') {
+    if (hasCardModal && getIonPlatform(this) === 'ios') {
       // Cache the original status bar color before the modal is presented
       this.statusBarStyle = await StatusBar.getStyle();
       setCardStatusBarDark();
@@ -547,7 +547,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSwipeToClose() {
-    if (getIonMode(this) !== 'ios') {
+    if (getIonPlatform(this) !== 'ios') {
       return;
     }
 
@@ -698,7 +698,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * finishes when the dismiss animation does.
      */
     const hasCardModal = presentingElement !== undefined;
-    if (hasCardModal && getIonMode(this) === 'ios') {
+    if (hasCardModal && getIonPlatform(this) === 'ios') {
       setCardStatusBarDefault(this.statusBarStyle);
     }
 
@@ -871,8 +871,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
-    const mode = getIonMode(this);
-    const isCardModal = presentingElement !== undefined && mode === 'ios';
+    const theme = getIonTheme(this);
+    const isCardModal = presentingElement !== undefined && theme === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';
 
     return (
@@ -884,7 +884,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           zIndex: `${20000 + this.overlayIndex}`,
         }}
         class={{
-          [mode]: true,
+          [theme]: true,
           ['modal-default']: !isCardModal && !isSheetModal,
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
@@ -904,7 +904,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           part="backdrop"
         />
 
-        {mode === 'ios' && <div class="modal-shadow"></div>}
+        {theme === 'ios' && <div class="modal-shadow"></div>}
 
         <div
           /*

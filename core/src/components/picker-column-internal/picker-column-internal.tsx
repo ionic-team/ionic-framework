@@ -5,7 +5,7 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
 import { isPlatform } from '@utils/platform';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
@@ -422,7 +422,7 @@ export class PickerColumnInternal implements ComponentInterface {
 
   render() {
     const { items, color, disabled: pickerDisabled, isActive, numericInput } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     /**
      * exportparts is needed so ion-datetime can expose the parts
@@ -437,7 +437,7 @@ export class PickerColumnInternal implements ComponentInterface {
         disabled={pickerDisabled}
         tabindex={pickerDisabled ? null : 0}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
         })}

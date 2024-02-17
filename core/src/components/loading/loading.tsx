@@ -17,7 +17,7 @@ import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -211,8 +211,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      const mode = getIonMode(this);
-      this.spinner = config.get('loadingSpinner', config.get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
+      const theme = getIonTheme(this);
+      this.spinner = config.get('loadingSpinner', config.get('spinner', theme === 'ios' ? 'lines' : 'crescent'));
     }
     setOverlayId(this.el);
   }
@@ -326,7 +326,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   render() {
     const { message, spinner, htmlAttributes, overlayIndex } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const msgId = `loading-${overlayIndex}-msg`;
     /**
      * If the message is defined, use that as the label.
@@ -347,7 +347,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
         class={{
           ...getClassMap(this.cssClass),
-          [mode]: true,
+          [theme]: true,
           'overlay-hidden': true,
           'loading-translucent': this.translucent,
         }}

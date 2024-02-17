@@ -7,7 +7,7 @@ import { createLockController } from '@utils/lock-controller';
 import { transition } from '@utils/transition';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonPlatform } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -37,9 +37,13 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Element() el!: HTMLElement;
 
   /**
+   * @deprecated
+   *
    * The mode determines which platform styles to use.
    */
   @Prop({ mutable: true }) mode = getIonMode(this);
+
+  @Prop() platform = getIonPlatform(this);
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -226,12 +230,12 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     // emit nav will change event
     this.ionNavWillChange.emit();
 
-    const { el, mode } = this;
+    const { el, platform } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const animationBuilder = opts.animationBuilder || this.animation || config.get('navAnimation');
 
     await transition({
-      mode,
+      platform,
       animated,
       enteringEl,
       leavingEl,

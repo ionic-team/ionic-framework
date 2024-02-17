@@ -4,7 +4,7 @@ import { findClosestIonContent, getScrollElement } from '@utils/content';
 import { raf } from '@utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
 
 import type { ItemReorderEventDetail } from './reorder-group-interface';
@@ -301,11 +301,11 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'reorder-enabled': !this.disabled,
           'reorder-list-active': this.state !== ReorderGroupState.Idle,
         }}

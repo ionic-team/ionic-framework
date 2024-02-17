@@ -328,7 +328,7 @@ The ripple effect should be added to elements for Material Design. It *requires*
 
 ```jsx
  render() {
-  const mode = getIonMode(this);
+  const theme = getIonTheme(this);
 
 return (
   <Host
@@ -338,7 +338,7 @@ return (
   >
     <button>
       <slot></slot>
-      {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
     </button>
   </Host>
 );

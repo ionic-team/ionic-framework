@@ -1,6 +1,6 @@
 import type { SpinnerTypes } from '../components/spinner/spinner-configs';
 import type { TabButtonLayout } from '../components/tab-bar/tab-bar-interface';
-import type { AnimationBuilder, Mode } from '../interface';
+import type { AnimationBuilder, Mode, Theme } from '../interface';
 
 import type { PlatformConfig } from './platform';
 
@@ -21,6 +21,11 @@ export interface IonicConfig {
    * The mode determines which platform styles to use for the whole application.
    */
   mode?: Mode;
+
+  /**
+   * The theme determines the appearance of components.
+   */
+  theme?: Theme;
 
   /**
    * Wherever ionic will respond to hardware go back buttons in an Android device.

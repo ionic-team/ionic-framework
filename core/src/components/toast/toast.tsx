@@ -21,7 +21,7 @@ import { sanitizeDOMString } from '@utils/sanitization';
 import { createColorClasses, getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -350,13 +350,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
+    const platform = getIonPlatform(this);
     const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
     const { el, position } = this;
     const anchor = this.getAnchorElement();
-    const animationPosition = getAnimationPosition(position, anchor, getIonMode(this), el);
+    const animationPosition = getAnimationPosition(position, anchor, platform, el);
 
     /**
      * Cache the calculated position of the toast, so we can re-use it
@@ -608,7 +609,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const mode = getIonMode(this);
+    const platform = getIonPlatform(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
       [`toast-button-group-${side}`]: true,
@@ -635,7 +636,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
               )}
               {b.text}
             </div>
-            {mode === 'md' && (
+            {platform === 'md' && (
               <ion-ripple-effect
                 type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}
               ></ion-ripple-effect>
@@ -690,7 +691,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const wrapperClass = {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true,
@@ -716,7 +717,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           zIndex: `${60000 + this.overlayIndex}`,
         }}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           ...getClassMap(this.cssClass),
           'overlay-hidden': true,
           'toast-translucent': this.translucent,

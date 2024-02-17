@@ -6,7 +6,7 @@ import { addEventListener, getAriaLabel, removeEventListener } from '@utils/help
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 
 /**
@@ -267,7 +267,7 @@ export class Radio implements ComponentInterface {
 
   private renderRadio() {
     const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, alignment } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const inItem = hostContext('ion-item', el);
 
     return (
@@ -276,7 +276,7 @@ export class Radio implements ComponentInterface {
         onBlur={this.onBlur}
         onClick={this.onClick}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': inItem,
           'radio-checked': checked,
           'radio-disabled': disabled,
@@ -333,7 +333,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     }
 
     const { inputId, disabled, checked, color, el, buttonTabindex } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
 
     return (
@@ -347,7 +347,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         onBlur={this.onBlur}
         onClick={this.onClick}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': hostContext('ion-item', el),
           interactive: true,
           'radio-checked': checked,

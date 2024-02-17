@@ -7,7 +7,7 @@ import { printIonError, printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { InputInputEventDetail } from '../input/input-interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -384,7 +384,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       multipleInputs,
     } = this;
     const childStyles = {} as StyleEventDetail;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
@@ -433,7 +433,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       };
     }
 
-    const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
+    const showDetail = detail !== undefined ? detail : theme === 'ios' && clickable;
     this.itemStyles.forEach((value) => {
       Object.assign(childStyles, value);
     });
@@ -449,7 +449,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           ...labelColorStyles,
           ...createColorClasses(this.color, {
             item: true,
-            [mode]: true,
+            [theme]: true,
             'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
@@ -491,7 +491,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             )}
             <div class="item-inner-highlight"></div>
           </div>
-          {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {canActivate && theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           <div class="item-highlight"></div>
         </TagType>
         <div class="item-bottom">

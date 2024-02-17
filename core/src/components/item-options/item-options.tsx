@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 import { isEndSide } from '@utils/helpers';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Side } from '../menu/menu-interface';
 
 @Component({
@@ -35,15 +35,15 @@ export class ItemOptions implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const isEnd = isEndSide(this.side);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`item-options-${mode}`]: true,
+          [`item-options-${theme}`]: true,
 
           /**
            * Note: The "start" and "end" terms refer to the

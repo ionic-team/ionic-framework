@@ -5,7 +5,7 @@ import { raf } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 
 import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface';
@@ -558,13 +558,13 @@ export class Segment implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         role="tablist"
         onClick={this.onClick}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'segment-activated': this.activated,

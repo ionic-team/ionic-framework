@@ -1,6 +1,6 @@
 import { win } from '@utils/browser';
 import { printIonWarning } from '@utils/logging';
-import type { Mode } from 'src/interface';
+import type { Platform } from 'src/interface';
 
 import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
 
@@ -18,13 +18,13 @@ import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
  * @param position The value of the toast's position prop.
  * @param positionAnchor The element the toast should be anchored to,
  * if applicable.
- * @param mode The toast component's mode (md, ios, etc).
+ * @param mode The toast component's platform (md or ios).
  * @param toast A reference to the toast element itself.
  */
 export function getAnimationPosition(
   position: ToastPosition,
   positionAnchor: HTMLElement | undefined,
-  mode: Mode,
+  platform: Platform,
   toast: HTMLElement
 ): ToastAnimationPosition {
   /**
@@ -32,7 +32,7 @@ export function getAnimationPosition(
    * positioned relative to, whether on the screen or anchor element.
    */
   let offset: number;
-  if (mode === 'md') {
+  if (platform === 'md') {
     offset = position === 'top' ? 8 : -8;
   } else {
     offset = position === 'top' ? 10 : -10;

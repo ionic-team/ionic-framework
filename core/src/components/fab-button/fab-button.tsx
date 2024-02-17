@@ -6,7 +6,7 @@ import type { Attributes } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { close } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
@@ -153,7 +153,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   render() {
     const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
     const inList = hostContext('ion-fab-list', el);
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
@@ -170,7 +170,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
         onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'fab-button-in-list': inList,
           'fab-button-translucent-in-list': inList && translucent,
           'fab-button-close-active': activated,
@@ -202,7 +202,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           <span class="button-inner">
             <slot></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </TagType>
       </Host>
     );

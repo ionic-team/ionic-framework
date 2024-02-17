@@ -4,7 +4,7 @@ import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@util
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import { handleFooterFade } from './footer.utils';
 
@@ -73,8 +73,8 @@ export class Footer implements ComponentInterface {
   }
 
   private checkCollapsibleFooter = () => {
-    const mode = getIonMode(this);
-    if (mode !== 'ios') {
+    const theme = getIonTheme(this);
+    if (theme !== 'ios') {
       return;
     }
 
@@ -119,7 +119,7 @@ export class Footer implements ComponentInterface {
 
   render() {
     const { translucent, collapse } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const tabs = this.el.closest('ion-tabs');
     const tabBar = tabs?.querySelector(':scope > ion-tab-bar');
 
@@ -127,19 +127,19 @@ export class Footer implements ComponentInterface {
       <Host
         role="contentinfo"
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`footer-${mode}`]: true,
+          [`footer-${theme}`]: true,
 
           [`footer-translucent`]: translucent,
-          [`footer-translucent-${mode}`]: translucent,
+          [`footer-translucent-${theme}`]: translucent,
           ['footer-toolbar-padding']: !this.keyboardVisible && (!tabBar || tabBar.slot !== 'bottom'),
 
           [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
       >
-        {mode === 'ios' && translucent && <div class="footer-background"></div>}
+        {theme === 'ios' && translucent && <div class="footer-background"></div>}
         <slot></slot>
       </Host>
     );

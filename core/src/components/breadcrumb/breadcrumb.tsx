@@ -5,7 +5,7 @@ import { inheritAriaAttributes } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
@@ -168,7 +168,7 @@ export class Breadcrumb implements ComponentInterface {
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
     const href = disabled ? undefined : this.href;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const attrs =
       TagType === 'span'
         ? {}
@@ -188,7 +188,7 @@ export class Breadcrumb implements ComponentInterface {
         onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'breadcrumb-active': active,
           'breadcrumb-collapsed': collapsed,
           'breadcrumb-disabled': disabled,
@@ -233,7 +233,7 @@ export class Breadcrumb implements ComponentInterface {
            */
           <span class="breadcrumb-separator" part="separator" aria-hidden="true">
             <slot name="separator">
-              {mode === 'ios' ? (
+              {theme === 'ios' ? (
                 <ion-icon icon={chevronForwardOutline} lazy={false} flip-rtl></ion-icon>
               ) : (
                 <span>/</span>

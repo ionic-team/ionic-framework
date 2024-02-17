@@ -18,7 +18,7 @@ import {
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
@@ -314,15 +314,16 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   componentDidLoad() {
+    const platform = getIonPlatform(this);
     /**
      * Only create gesture if:
      * 1. A gesture does not already exist
-     * 2. App is running in iOS mode
+     * 2. App is running on iOS platform
      * 3. A wrapper ref exists
      * 4. A group ref exists
      */
     const { groupEl, wrapperEl } = this;
-    if (!this.gesture && getIonMode(this) === 'ios' && wrapperEl && groupEl) {
+    if (!this.gesture && platform === 'ios' && wrapperEl && groupEl) {
       readTask(() => {
         const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
         if (!isScrollable) {
@@ -356,7 +357,8 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   render() {
     const { header, htmlAttributes, overlayIndex } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
+    const platform = getIonPlatform(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
     const buttons = allButtons.filter((b) => b.role !== 'cancel');
@@ -373,7 +375,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           zIndex: `${20000 + this.overlayIndex}`,
         }}
         class={{
-          [mode]: true,
+          [theme]: true,
           ...getClassMap(this.cssClass),
           'overlay-hidden': true,
           'action-sheet-translucent': this.translucent,
@@ -412,7 +414,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                     {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
                     {b.text}
                   </span>
-                  {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+                  {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
                 </button>
               ))}
             </div>
@@ -431,7 +433,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                     )}
                     {cancelButton.text}
                   </span>
-                  {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+                  {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
                 </button>
               </div>
             )}

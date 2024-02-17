@@ -6,12 +6,14 @@ import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - [DEPRECATED] The mode determines which platform styles to use. Use "theme" instead.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines which styles to use.
+ * @virtualProp {"ios" | "md"} platform - The platform behaviors to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot icon-only - Should be used on an icon in a button that has no text.
@@ -25,6 +27,7 @@ import type { RouterDirection } from '../router/utils/interface';
   styleUrls: {
     ios: 'button.ios.scss',
     md: 'button.md.scss',
+    ionic: 'button.ionic.scss',
   },
   shadow: true,
 })
@@ -296,7 +299,9 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
+    const platform = getIonPlatform(this);
+
     const {
       buttonType,
       type,
@@ -312,6 +317,9 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       strong,
       inheritedAttributes,
     } = this;
+
+    console.log(`theme: ${theme}, platform: ${platform}`);
+
     const finalSize = size === undefined && this.inItem ? 'small' : size;
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
@@ -348,7 +356,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         onClick={this.handleClick}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           [buttonType]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
           [`${buttonType}-${finalSize}`]: finalSize !== undefined,
@@ -379,7 +387,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             <slot></slot>
             <slot name="end"></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {platform === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </TagType>
       </Host>
     );

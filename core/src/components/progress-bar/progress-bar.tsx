@@ -4,7 +4,7 @@ import { clamp } from '@utils/helpers';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
@@ -58,7 +58,7 @@ export class ProgressBar implements ComponentInterface {
   render() {
     const { color, type, reversed, value, buffer } = this;
     const paused = config.getBoolean('_testing');
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         role="progressbar"
@@ -66,7 +66,7 @@ export class ProgressBar implements ComponentInterface {
         aria-valuemin="0"
         aria-valuemax="1"
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,

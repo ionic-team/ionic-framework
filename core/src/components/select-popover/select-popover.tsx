@@ -3,7 +3,7 @@ import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
 import { safeCall } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 
@@ -181,9 +181,14 @@ export class SelectPopover implements ComponentInterface {
   render() {
     const { header, message, options, subHeader } = this;
     const hasSubHeaderOrMessage = subHeader !== undefined || message !== undefined;
+    const theme = getIonTheme(this);
 
     return (
-      <Host class={getIonMode(this)}>
+      <Host
+        class={{
+          [theme]: true,
+        }}
+      >
         <ion-list>
           {header !== undefined && <ion-list-header>{header}</ion-list-header>}
           {hasSubHeaderOrMessage && (

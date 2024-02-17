@@ -473,9 +473,13 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines which platform styles to use.
+          * [DEPRECATED] The mode determines which platform styles to use. Use "theme" instead.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The platform behaviors to use.
+         */
+        "platform"?: "ios" | "md";
         /**
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
@@ -504,6 +508,10 @@ export namespace Components {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target": string | undefined;
+        /**
+          * The theme determines which styles to use.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -1804,7 +1812,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimationBuilder` functions.
+          * By default `ion-nav` animates transition between pages based on the platform (ios or md). However, this property allows to create custom transition using `AnimationBuilder` functions.
          */
         "animation"?: AnimationBuilder;
         /**
@@ -2535,9 +2543,10 @@ export namespace Components {
         "delegate"?: FrameworkDelegate;
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
-          * The mode determines which platform styles to use.
+          * @deprecated The mode determines which platform styles to use.
          */
-        "mode": "ios" | "md";
+        "mode": "ios" | "md" | "ionic";
+        "platform": "ios" | "md";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
     }
@@ -5160,7 +5169,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines which platform styles to use.
+          * [DEPRECATED] The mode determines which platform styles to use. Use "theme" instead.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5171,6 +5180,10 @@ declare namespace LocalJSX {
           * Emitted when the button has focus.
          */
         "onIonFocus"?: (event: IonButtonCustomEvent<void>) => void;
+        /**
+          * The platform behaviors to use.
+         */
+        "platform"?: "ios" | "md";
         /**
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
@@ -5199,6 +5212,10 @@ declare namespace LocalJSX {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target"?: string | undefined;
+        /**
+          * The theme determines which styles to use.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -6549,7 +6566,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimationBuilder` functions.
+          * By default `ion-nav` animates transition between pages based on the platform (ios or md). However, this property allows to create custom transition using `AnimationBuilder` functions.
          */
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
@@ -7257,12 +7274,13 @@ declare namespace LocalJSX {
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
         /**
-          * The mode determines which platform styles to use.
+          * @deprecated The mode determines which platform styles to use.
          */
-        "mode"?: "ios" | "md";
+        "mode"?: "ios" | "md" | "ionic";
         "onIonNavDidChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillLoad"?: (event: IonRouterOutletCustomEvent<void>) => void;
+        "platform"?: "ios" | "md";
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {

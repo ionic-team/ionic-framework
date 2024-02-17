@@ -28,7 +28,7 @@ import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 import { getCounterText } from '../input/input.utils';
 
@@ -572,7 +572,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
@@ -584,7 +584,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'legacy-textarea': true,
         })}
       >
@@ -659,8 +659,8 @@ Developers can use the "legacy" property to continue using the legacy form marku
    * Renders the border container when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const theme = getIonTheme(this);
+    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -741,10 +741,10 @@ Developers can use the "legacy" property to continue using the legacy form marku
 
   private renderTextarea() {
     const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -772,7 +772,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
     return (
       <Host
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'has-value': hasValue,
           'has-focus': hasFocus,
           'label-floating': labelShouldFloat,

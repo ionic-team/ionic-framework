@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
@@ -32,13 +32,13 @@ export class CardHeader implements ComponentInterface {
   @Prop() translucent = false;
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={createColorClasses(this.color, {
           'card-header-translucent': this.translucent,
           'ion-inherit-color': true,
-          [mode]: true,
+          [theme]: true,
         })}
       >
         <slot></slot>

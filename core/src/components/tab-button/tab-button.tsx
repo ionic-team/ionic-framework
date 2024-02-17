@@ -5,7 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type {
   TabBarChangedEventDetail,
   TabButtonClickEventDetail,
@@ -138,7 +138,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
 
   render() {
     const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const attrs = {
       download: this.download,
       href,
@@ -152,7 +152,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
         onKeyup={this.onKeyUp}
         id={tab !== undefined ? `tab-button-${tab}` : null}
         class={{
-          [mode]: true,
+          [theme]: true,
           'tab-selected': selected,
           'tab-disabled': disabled,
           'tab-has-label': hasLabel,
@@ -178,7 +178,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           <span class="button-inner">
             <slot></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </a>
       </Host>
     );

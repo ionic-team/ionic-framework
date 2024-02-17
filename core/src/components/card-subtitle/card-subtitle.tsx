@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
@@ -25,14 +25,14 @@ export class CardSubtitle implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         role="heading"
         aria-level="3"
         class={createColorClasses(this.color, {
           'ion-inherit-color': true,
-          [mode]: true,
+          [theme]: true,
         })}
       >
         <slot></slot>

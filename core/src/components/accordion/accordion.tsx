@@ -4,7 +4,7 @@ import { addEventListener, getElementRoot, raf, removeEventListener, transitionE
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 const enum AccordionState {
   Collapsed = 1 << 0,
@@ -402,7 +402,7 @@ export class Accordion implements ComponentInterface {
 
   render() {
     const { disabled, readonly } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const expanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';
@@ -412,7 +412,7 @@ export class Accordion implements ComponentInterface {
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'accordion-expanding': this.state === AccordionState.Expanding,
           'accordion-expanded': this.state === AccordionState.Expanded,
           'accordion-collapsing': this.state === AccordionState.Collapsing,

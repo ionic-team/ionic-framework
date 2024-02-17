@@ -5,7 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { addEventListener, removeEventListener, inheritAttributes } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { SegmentValue } from '../segment/segment-interface';
 
 import type { SegmentButtonLayout } from './segment-button-interface';
@@ -124,12 +124,12 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const hasSegmentColor = () => segmentEl?.color !== undefined;
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'in-segment': hostContext('ion-segment', this.el),
@@ -159,7 +159,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           <span class="button-inner">
             <slot></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
         <div
           part="indicator"

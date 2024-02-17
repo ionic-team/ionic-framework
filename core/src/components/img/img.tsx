@@ -3,7 +3,7 @@ import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 /**
  * @part image - The inner `img` element.
@@ -110,8 +110,13 @@ export class Img implements ComponentInterface {
   render() {
     const { loadSrc, alt, onLoad, loadError, inheritedAttributes } = this;
     const { draggable } = inheritedAttributes;
+    const theme = getIonTheme(this);
     return (
-      <Host class={getIonMode(this)}>
+      <Host
+        class={{
+          [theme]: true,
+        }}
+      >
         <img
           decoding="async"
           src={loadSrc}

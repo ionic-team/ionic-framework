@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 import { createColorClasses, openURL } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
@@ -55,7 +55,7 @@ export class RouterLink implements ComponentInterface {
   };
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const attrs = {
       href: this.href,
       rel: this.rel,
@@ -65,7 +65,7 @@ export class RouterLink implements ComponentInterface {
       <Host
         onClick={this.onClick}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'ion-activatable': true,
         })}
       >

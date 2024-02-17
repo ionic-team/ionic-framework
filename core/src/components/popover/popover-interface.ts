@@ -5,6 +5,7 @@ import type {
   FrameworkDelegate,
   Mode,
   OverlayInterface,
+  Theme,
 } from '../../interface';
 
 export interface PopoverInterface extends OverlayInterface {
@@ -22,7 +23,11 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   delegate?: FrameworkDelegate;
   animated?: boolean;
 
+  /**
+   * @deprecated
+   */
   mode?: Mode;
+  theme?: Theme;
   keyboardClose?: boolean;
   id?: string;
   htmlAttributes?: { [key: string]: any };

@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
@@ -88,7 +88,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   render() {
     const { disabled, expandable, href } = this;
     const TagType = href === undefined ? 'button' : ('a' as any);
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const attrs =
       TagType === 'button'
         ? { type: this.type }
@@ -102,7 +102,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
       <Host
         onClick={this.onClick}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'item-option-disabled': disabled,
           'item-option-expandable': expandable,
           'ion-activatable': true,
@@ -119,7 +119,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
             </div>
             <slot name="bottom"></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </TagType>
       </Host>
     );

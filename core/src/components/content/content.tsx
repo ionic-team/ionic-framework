@@ -5,7 +5,7 @@ import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
@@ -216,8 +216,8 @@ export class Content implements ComponentInterface {
 
   private shouldForceOverscroll() {
     const { forceOverscroll } = this;
-    const mode = getIonMode(this);
-    return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
+    const platform = getIonPlatform(this);
+    return forceOverscroll === undefined ? platform === 'ios' && isPlatform('ios') : forceOverscroll;
   }
 
   private resize() {
@@ -425,9 +425,9 @@ export class Content implements ComponentInterface {
   render() {
     const { isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const forceOverscroll = this.shouldForceOverscroll();
-    const transitionShadow = mode === 'ios';
+    const transitionShadow = theme === 'ios';
     const TagType = isMainContent ? 'main' : ('div' as any);
 
     this.resize();
@@ -435,7 +435,7 @@ export class Content implements ComponentInterface {
     return (
       <Host
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'content-sizing': hostContext('ion-popover', this.el),
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,

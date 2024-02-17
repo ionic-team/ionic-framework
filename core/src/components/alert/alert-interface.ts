@@ -1,4 +1,4 @@
-import type { AnimationBuilder, LiteralUnion, Mode, TextFieldTypes } from '../../interface';
+import type { AnimationBuilder, LiteralUnion, Mode, TextFieldTypes, Theme } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface AlertOptions {
@@ -13,7 +13,12 @@ export interface AlertOptions {
   animated?: boolean;
   htmlAttributes?: { [key: string]: any };
 
+  /**
+   * @deprecated
+   */
   mode?: Mode;
+  theme?: Theme;
+
   keyboardClose?: boolean;
   id?: string;
 

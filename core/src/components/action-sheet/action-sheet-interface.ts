@@ -1,4 +1,4 @@
-import type { AnimationBuilder, LiteralUnion, Mode } from '../../interface';
+import type { AnimationBuilder, LiteralUnion, Mode, Theme } from '../../interface';
 
 export interface ActionSheetOptions {
   header?: string;
@@ -8,7 +8,11 @@ export interface ActionSheetOptions {
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
+  /**
+   * @deprecated
+   */
   mode?: Mode;
+  theme?: Theme;
   keyboardClose?: boolean;
   id?: string;
   htmlAttributes?: { [key: string]: any };

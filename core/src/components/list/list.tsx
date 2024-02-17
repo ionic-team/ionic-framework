@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -42,20 +42,20 @@ export class List implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const { lines, inset } = this;
     return (
       <Host
         role="list"
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`list-${mode}`]: true,
+          [`list-${theme}`]: true,
 
           'list-inset': inset,
           [`list-lines-${lines}`]: lines !== undefined,
-          [`list-${mode}-lines-${lines}`]: lines !== undefined,
+          [`list-${theme}-lines-${lines}`]: lines !== undefined,
         }}
       ></Host>
     );

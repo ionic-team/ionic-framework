@@ -16,7 +16,7 @@ import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
@@ -690,8 +690,8 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const theme = getIonTheme(this);
+    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -729,10 +729,10 @@ export class Input implements ComponentInterface {
 
   private renderInput() {
     const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -760,7 +760,7 @@ export class Input implements ComponentInterface {
     return (
       <Host
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'has-value': hasValue,
           'has-focus': hasFocus,
           'label-floating': labelShouldFloat,
@@ -833,7 +833,7 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                <ion-icon aria-hidden="true" icon={theme === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>
@@ -872,7 +872,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
@@ -884,7 +884,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
           'legacy-input': true,
@@ -940,7 +940,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
             }}
             onClick={this.clearTextInput}
           >
-            <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+            <ion-icon aria-hidden="true" icon={theme === 'ios' ? closeCircle : closeSharp}></ion-icon>
           </button>
         )}
       </Host>

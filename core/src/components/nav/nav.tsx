@@ -7,7 +7,7 @@ import type { TransitionOptions } from '@utils/transition';
 import { lifecycle, setPageHidden, transition } from '@utils/transition';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonPlatform } from '../../global/ionic-global';
 import type { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture } from '../../interface';
 import type { NavOutlet, RouteID, RouteWrite, RouterDirection } from '../router/utils/interface';
 
@@ -61,7 +61,7 @@ export class Nav implements NavOutlet {
   @Prop() animated = true;
 
   /**
-   * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
+   * By default `ion-nav` animates transition between pages based on the platform (ios or md).
    * However, this property allows to create custom transition using `AnimationBuilder` functions.
    */
   @Prop() animation?: AnimationBuilder;
@@ -119,8 +119,8 @@ export class Nav implements NavOutlet {
     this.useRouter = document.querySelector('ion-router') !== null && this.el.closest('[no-router]') === null;
 
     if (this.swipeGesture === undefined) {
-      const mode = getIonMode(this);
-      this.swipeGesture = config.getBoolean('swipeBackEnabled', mode === 'ios');
+      const platform = getIonPlatform(this);
+      this.swipeGesture = config.getBoolean('swipeBackEnabled', platform === 'ios');
     }
 
     this.ionNavWillLoad.emit();
@@ -899,12 +899,12 @@ export class Nav implements NavOutlet {
           }
         }
       : undefined;
-    const mode = getIonMode(this);
+    const platform = getIonPlatform(this);
     const enteringEl = enteringView.element!;
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const leavingEl = leavingView && leavingView.element!;
     const animationOpts: TransitionOptions = {
-      mode,
+      platform,
       showGoBack: this.canGoBackSync(enteringView),
       baseEl: this.el,
       progressCallback,
