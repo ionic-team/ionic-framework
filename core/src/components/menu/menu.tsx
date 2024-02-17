@@ -9,7 +9,7 @@ import { menuController } from '@utils/menu-controller';
 import { getPresentedOverlay } from '@utils/overlays';
 
 import { config } from '../../global/config';
-import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 
 import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
@@ -500,9 +500,9 @@ export class Menu implements ComponentInterface, MenuI {
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-    const platform = getIonPlatform(this);
-    const easing = platform === 'ios' ? iosEasing : mdEasing;
-    const easingReverse = platform === 'ios' ? iosEasingReverse : mdEasingReverse;
+    const mode = getIonMode(this);
+    const easing = mode === 'ios' ? iosEasing : mdEasing;
+    const easingReverse = mode === 'ios' ? iosEasingReverse : mdEasingReverse;
     const ani = (this.animation as Animation)!
       .direction(isReversed ? 'reverse' : 'normal')
       .easing(isReversed ? easingReverse : easing);

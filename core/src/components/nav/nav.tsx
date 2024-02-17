@@ -7,7 +7,7 @@ import type { TransitionOptions } from '@utils/transition';
 import { lifecycle, setPageHidden, transition } from '@utils/transition';
 
 import { config } from '../../global/config';
-import { getIonPlatform } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture } from '../../interface';
 import type { NavOutlet, RouteID, RouteWrite, RouterDirection } from '../router/utils/interface';
 
@@ -119,8 +119,8 @@ export class Nav implements NavOutlet {
     this.useRouter = document.querySelector('ion-router') !== null && this.el.closest('[no-router]') === null;
 
     if (this.swipeGesture === undefined) {
-      const platform = getIonPlatform(this);
-      this.swipeGesture = config.getBoolean('swipeBackEnabled', platform === 'ios');
+      const mode = getIonMode(this);
+      this.swipeGesture = config.getBoolean('swipeBackEnabled', mode === 'ios');
     }
 
     this.ionNavWillLoad.emit();
@@ -899,12 +899,12 @@ export class Nav implements NavOutlet {
           }
         }
       : undefined;
-    const platform = getIonPlatform(this);
+    const mode = getIonMode(this);
     const enteringEl = enteringView.element!;
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const leavingEl = leavingView && leavingView.element!;
     const animationOpts: TransitionOptions = {
-      platform,
+      mode,
       showGoBack: this.canGoBackSync(enteringView),
       baseEl: this.el,
       progressCallback,

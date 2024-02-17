@@ -7,8 +7,8 @@ import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '@utils/h
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
-import type { Color, Platform, StyleEventDetail } from '../../interface';
+import { getIonTheme } from '../../global/ionic-global';
+import type { Color, StyleEventDetail, Theme } from '../../interface';
 
 import type { CheckboxChangeEventDetail } from './checkbox-interface';
 
@@ -245,9 +245,8 @@ export class Checkbox implements ComponentInterface {
       alignment,
     } = this;
     const theme = getIonTheme(this);
-    const platform = getIonPlatform(this);
 
-    const path = getSVGPath(platform, indeterminate);
+    const path = getSVGPath(theme, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -327,9 +326,8 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
     const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
     const theme = getIonTheme(this);
-    const platform = getIonPlatform(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
-    const path = getSVGPath(platform, indeterminate);
+    const path = getSVGPath(theme, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -368,14 +366,14 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     );
   }
 
-  private getSVGPath(platform: Platform, indeterminate: boolean): HTMLElement {
+  private getSVGPath(theme: Theme, indeterminate: boolean): HTMLElement {
     let path = indeterminate ? (
       <path d="M6 12L18 12" part="mark" />
     ) : (
       <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
     );
 
-    if (platform === 'md') {
+    if (theme === 'md') {
       path = indeterminate ? (
         <path d="M2 12H22" part="mark" />
       ) : (

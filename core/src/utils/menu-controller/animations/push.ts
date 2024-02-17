@@ -1,5 +1,5 @@
 import type { MenuI } from '../../../components/menu/menu-interface';
-import { getIonPlatform } from '../../../global/ionic-global';
+import { getIonMode } from '../../../global/ionic-global';
 import { createAnimation } from '../../animation/animation';
 import type { Animation } from '../../animation/animation-interface';
 
@@ -14,9 +14,9 @@ export const menuPushAnimation = (menu: MenuI): Animation => {
   let contentOpenedX: string;
   let menuClosedX: string;
 
-  const platform = getIonPlatform(menu);
+  const mode = getIonMode(menu);
   const width = menu.width;
-  const isIos = platform === 'ios';
+  const isIos = mode === 'ios';
 
   if (menu.isEndSide) {
     contentOpenedX = -width + 'px';

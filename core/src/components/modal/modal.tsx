@@ -21,7 +21,7 @@ import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
 import { config } from '../../global/config';
-import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -493,7 +493,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * start of the animation so that it completes
      * by the time the card animation is done.
      */
-    if (hasCardModal && getIonPlatform(this) === 'ios') {
+    if (hasCardModal && getIonMode(this) === 'ios') {
       // Cache the original status bar color before the modal is presented
       this.statusBarStyle = await StatusBar.getStyle();
       setCardStatusBarDark();
@@ -547,7 +547,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSwipeToClose() {
-    if (getIonPlatform(this) !== 'ios') {
+    if (getIonMode(this) !== 'ios') {
       return;
     }
 
@@ -698,7 +698,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * finishes when the dismiss animation does.
      */
     const hasCardModal = presentingElement !== undefined;
-    if (hasCardModal && getIonPlatform(this) === 'ios') {
+    if (hasCardModal && getIonMode(this) === 'ios') {
       setCardStatusBarDefault(this.statusBarStyle);
     }
 

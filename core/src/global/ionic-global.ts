@@ -1,19 +1,15 @@
 import { getMode, setMode, setPlatformHelpers, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 
-import type { IonicConfig, Mode, Platform, Theme } from '../interface';
+import type { IonicConfig, Mode, Theme } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { config, configFromSession, configFromURL, saveConfig } from './config';
 
 let defaultMode: Mode;
 let defaultTheme: Theme;
-let defaultPlatform: Platform;
 
-/**
- * @deprecated
- */
-export const getIonMode = (ref?: any): Mode | Theme => {
+export const getIonMode = (ref?: any): Mode => {
   if (ref?.mode) {
     return ref.mode;
   }
@@ -24,26 +20,28 @@ export const getIonMode = (ref?: any): Mode | Theme => {
     return theme;
   }
 
-  return defaultTheme;
+  const el = getElement(ref);
+  return el.closest('[mode]')?.getAttribute('mode') as Mode || defaultMode;
+
 };
 
 export const getIonTheme = (ref?: any): Theme => {
   return (ref && getMode(ref)) || getIonMode(ref) || defaultTheme;
 }
 
-export const getIonPlatform = (ref?: any): Platform => {
-  if (ref?.platform) {
-    return ref.platform;
-  }
+// export const getIonPlatform = (ref?: any): Platform => {
+//   if (ref?.platform) {
+//     return ref.platform;
+//   }
 
-  // TODO remove mode in the future
-  if (ref?.mode) {
-    return ref.mode;
-  }
+//   // TODO remove mode in the future
+//   if (ref?.mode) {
+//     return ref.mode;
+//   }
 
-  const el = getElement(ref);
-  return el.closest('[platform]')?.getAttribute('platform') as Platform || defaultPlatform;
-}
+//   const el = getElement(ref);
+//   return el.closest('[platform]')?.getAttribute('platform') as Platform || defaultPlatform;
+// }
 
 
 /**
@@ -52,6 +50,8 @@ export const getIonPlatform = (ref?: any): Platform => {
 const isModeSupported = (elmMode: string) => ['ios', 'md'].includes(elmMode);
 
 const isThemeSupported = (theme: string) => ['ios', 'md'].includes(theme);
+
+const isIonicElement = (elm: HTMLElement) => elm.tagName?.startsWith('ION-');
 
 export const initialize = (userConfig: IonicConfig = {}) => {
   if (typeof (window as any) === 'undefined') {
@@ -97,35 +97,29 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   // otherwise get the mode via config settings, and fallback to md
   Ionic.config = config;
 
-  /**
-   * @deprecated
-   */
-  Ionic.mode = defaultMode = config.get(
-    'mode',
-    doc.documentElement.getAttribute('mode') || (isPlatform(win, 'ios') ? 'ios' : 'md')
-  );
-  config.set('mode', defaultMode);
-  doc.documentElement.setAttribute('mode', defaultMode);
-  doc.documentElement.classList.add(defaultMode);
+  const theme = config.get('theme', doc.documentElement.getAttribute('theme'));
 
-  Ionic.theme = defaultTheme = config.get(
-    'theme',
-    // TODO: Remove Ionic.mode
-    Ionic.mode || doc.documentElement.getAttribute('theme') || (isPlatform(win, 'ios') ? 'ios' : 'md')
-  );
-  config.set('theme', defaultTheme);
-  doc.documentElement.setAttribute('theme', defaultTheme);
-  doc.documentElement.classList.add(defaultTheme);
+  if (theme) {
+    Ionic.theme = defaultTheme = theme;
+    config.set('theme', defaultTheme);
+    doc.documentElement.setAttribute('theme', defaultTheme);
+    doc.documentElement.classList.add(defaultTheme);
+  } else {
+    Ionic.mode = defaultMode = config.get(
+      'mode',
+      doc.documentElement.getAttribute('mode') || (isPlatform(win, 'ios') ? 'ios' : 'md')
+    );
+    config.set('mode', defaultMode);
+    doc.documentElement.setAttribute('mode', defaultMode);
+    doc.documentElement.classList.add(defaultMode);
+  }
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);
   }
 
-  const isIonicElement = (elm: HTMLElement) => elm.tagName?.startsWith('ION-');
-
   setMode((elm: any) => {
     while (elm) {
-      const elmMode = (elm as any).mode || elm.getAttribute('mode');
       const theme = (elm as any).theme || elm.getAttribute('theme');
 
       if (theme) {
@@ -136,6 +130,12 @@ export const initialize = (userConfig: IonicConfig = {}) => {
         }
       }
 
+      /**
+       * If a theme is not detected, then fallback to using the
+       * `mode` attribute to determine the style sheets to use.
+       */
+      const elmMode = (elm as any).mode || elm.getAttribute('mode');
+
       if (elmMode) {
         if (isModeSupported(elmMode)) {
           return elmMode;
@@ -143,9 +143,10 @@ export const initialize = (userConfig: IonicConfig = {}) => {
           printIonWarning(`Invalid mode: "${elmMode}". Ionic modes can be only "ios" or "md"`);
         }
       }
+
       elm = elm.parentElement;
     }
-    return defaultTheme || defaultMode;
+    return defaultTheme;
   });
 };
 

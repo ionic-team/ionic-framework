@@ -2543,10 +2543,9 @@ export namespace Components {
         "delegate"?: FrameworkDelegate;
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
-          * @deprecated The mode determines which platform styles to use.
+          * The mode determines which platform styles to use.
          */
-        "mode": "ios" | "md" | "ionic";
-        "platform": "ios" | "md";
+        "mode": "ios" | "md";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
     }
@@ -7274,13 +7273,12 @@ declare namespace LocalJSX {
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
         /**
-          * @deprecated The mode determines which platform styles to use.
+          * The mode determines which platform styles to use.
          */
-        "mode"?: "ios" | "md" | "ionic";
+        "mode"?: "ios" | "md";
         "onIonNavDidChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
         "onIonNavWillLoad"?: (event: IonRouterOutletCustomEvent<void>) => void;
-        "platform"?: "ios" | "md";
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {

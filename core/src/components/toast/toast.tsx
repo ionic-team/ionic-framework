@@ -21,7 +21,7 @@ import { sanitizeDOMString } from '@utils/sanitization';
 import { createColorClasses, getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -350,14 +350,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    const platform = getIonPlatform(this);
+    const mode = getIonMode(this);
     const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
     const { el, position } = this;
     const anchor = this.getAnchorElement();
-    const animationPosition = getAnimationPosition(position, anchor, platform, el);
+    const animationPosition = getAnimationPosition(position, anchor, mode, el);
 
     /**
      * Cache the calculated position of the toast, so we can re-use it
@@ -609,7 +609,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const platform = getIonPlatform(this);
+    const theme = getIonTheme(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
       [`toast-button-group-${side}`]: true,
@@ -636,7 +636,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
               )}
               {b.text}
             </div>
-            {platform === 'md' && (
+            {theme === 'md' && (
               <ion-ripple-effect
                 type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}
               ></ion-ripple-effect>

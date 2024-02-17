@@ -6,7 +6,7 @@ import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 
-import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
@@ -300,7 +300,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   render() {
     const theme = getIonTheme(this);
-    const platform = getIonPlatform(this);
 
     const {
       buttonType,
@@ -317,8 +316,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       strong,
       inheritedAttributes,
     } = this;
-
-    console.log(`theme: ${theme}, platform: ${platform}`);
 
     const finalSize = size === undefined && this.inItem ? 'small' : size;
     const TagType = href === undefined ? 'button' : ('a' as any);
@@ -387,7 +384,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             <slot></slot>
             <slot name="end"></slot>
           </span>
-          {platform === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </TagType>
       </Host>
     );

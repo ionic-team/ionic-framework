@@ -1,5 +1,5 @@
 import type { MenuI } from '../../../components/menu/menu-interface';
-import { getIonPlatform } from '../../../global/ionic-global';
+import { getIonMode } from '../../../global/ionic-global';
 import { createAnimation } from '../../animation/animation';
 import type { Animation } from '../../animation/animation-interface';
 
@@ -29,8 +29,8 @@ export const menuOverlayAnimation = (menu: MenuI): Animation => {
 
   menuAnimation.addElement(menu.menuInnerEl!).fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
-  const platform = getIonPlatform(menu);
-  const isIos = platform === 'ios';
+  const mode = getIonMode(menu);
+  const isIos = mode === 'ios';
   const opacity = isIos ? 0.2 : 0.25;
 
   backdropAnimation.addElement(menu.backdropEl!).fromTo('opacity', 0.01, opacity);

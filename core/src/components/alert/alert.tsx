@@ -21,7 +21,7 @@ import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -362,7 +362,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
      * 2. App is running in iOS mode
      * 3. A wrapper ref exists
      */
-    if (!this.gesture && getIonPlatform(this) === 'ios' && this.wrapperEl) {
+    if (!this.gesture && getIonMode(this) === 'ios' && this.wrapperEl) {
       this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
         refEl.classList.contains('alert-button')
       );

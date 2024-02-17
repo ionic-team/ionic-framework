@@ -10,7 +10,7 @@ import {
 import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '@utils/helpers';
 import { ImpactStyle, hapticImpact } from '@utils/native/haptic';
 
-import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 
 import type { RefresherEventDetail } from './refresher-interface';
@@ -145,7 +145,7 @@ export class Refresher implements ComponentInterface {
   @Event() ionStart!: EventEmitter<void>;
 
   private async checkNativeRefresher() {
-    const useNativeRefresher = await shouldUseNativeRefresher(this.el, getIonPlatform(this));
+    const useNativeRefresher = await shouldUseNativeRefresher(this.el, getIonMode(this));
     if (useNativeRefresher && !this.nativeRefresher) {
       const contentEl = this.el.closest('ion-content');
       this.setupNativeRefresher(contentEl);
@@ -166,7 +166,7 @@ export class Refresher implements ComponentInterface {
   private async resetNativeRefresher(el: HTMLElement | undefined, state: RefresherState) {
     this.state = state;
 
-    if (getIonPlatform(this) === 'ios') {
+    if (getIonMode(this) === 'ios') {
       await translateElement(el, undefined, 300);
     } else {
       await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'), 200);
@@ -438,7 +438,7 @@ export class Refresher implements ComponentInterface {
       'ion-refresher-content .refresher-refreshing ion-spinner'
     ) as HTMLIonSpinnerElement;
 
-    if (getIonPlatform(this) === 'ios') {
+    if (getIonMode(this) === 'ios') {
       this.setupiOSNativeRefresher(pullingSpinner, refreshingSpinner);
     } else {
       this.setupMDNativeRefresher(contentEl, pullingSpinner, refreshingSpinner);
@@ -477,7 +477,7 @@ export class Refresher implements ComponentInterface {
        */
       this.backgroundContentEl = await contentEl.getBackgroundElement();
 
-      if (await shouldUseNativeRefresher(this.el, getIonPlatform(this))) {
+      if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
         this.setupNativeRefresher(contentEl);
       } else {
         this.gesture = (await import('../../utils/gesture')).createGesture({

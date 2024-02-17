@@ -7,8 +7,8 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
-import { getIonPlatform, getIonTheme } from '../../global/ionic-global';
-import type { Color, Platform, StyleEventDetail } from '../../interface';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import type { Color, StyleEventDetail, Theme } from '../../interface';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
 import type {
@@ -851,9 +851,8 @@ export class Datetime implements ComponentInterface {
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
-    const platform = getIonPlatform(this);
-    const needsiOSRubberBandFix =
-      platform === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
+    const mode = getIonMode(this);
+    const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**
      * Before setting up the scroll listener,
@@ -2049,10 +2048,10 @@ export class Datetime implements ComponentInterface {
    * Grid Render Methods
    */
 
-  private renderCalendarHeader(platform: Platform) {
+  private renderCalendarHeader(theme: Theme) {
     const { disabled } = this;
-    const expandedIcon = platform === 'ios' ? chevronDown : caretUpSharp;
-    const collapsedIcon = platform === 'ios' ? chevronForward : caretDownSharp;
+    const expandedIcon = theme === 'ios' ? chevronDown : caretUpSharp;
+    const collapsedIcon = theme === 'ios' ? chevronForward : caretDownSharp;
 
     const prevMonthDisabled = disabled || isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
@@ -2130,7 +2129,7 @@ export class Datetime implements ComponentInterface {
           </div>
         </div>
         <div class="calendar-days-of-week" aria-hidden="true">
-          {getDaysOfWeek(this.locale, platform, this.firstDayOfWeek % 7).map((d) => {
+          {getDaysOfWeek(this.locale, theme, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}
         </div>
@@ -2337,10 +2336,10 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-  private renderCalendar(platform: Platform) {
+  private renderCalendar(theme: Theme) {
     return (
       <div class="datetime-calendar" key="datetime-calendar">
-        {this.renderCalendarHeader(platform)}
+        {this.renderCalendarHeader(theme)}
         {this.renderCalendarBody()}
       </div>
     );
@@ -2495,7 +2494,7 @@ export class Datetime implements ComponentInterface {
    * All presentation types are rendered from here.
    */
 
-  private renderDatetime(platform: Platform) {
+  private renderDatetime(theme: Theme) {
     const { presentation, preferWheel } = this;
 
     /**
@@ -2511,7 +2510,7 @@ export class Datetime implements ComponentInterface {
       case 'date-time':
         return [
           this.renderHeader(),
-          this.renderCalendar(platform),
+          this.renderCalendar(theme),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
           this.renderFooter(),
@@ -2520,7 +2519,7 @@ export class Datetime implements ComponentInterface {
         return [
           this.renderHeader(),
           this.renderTime(),
-          this.renderCalendar(platform),
+          this.renderCalendar(theme),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
@@ -2533,7 +2532,7 @@ export class Datetime implements ComponentInterface {
       default:
         return [
           this.renderHeader(),
-          this.renderCalendar(platform),
+          this.renderCalendar(theme),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
@@ -2555,7 +2554,6 @@ export class Datetime implements ComponentInterface {
       isGridStyle,
     } = this;
     const theme = getIonTheme(this);
-    const platform = getIonPlatform(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
@@ -2584,7 +2582,7 @@ export class Datetime implements ComponentInterface {
           }),
         }}
       >
-        {this.renderDatetime(platform)}
+        {this.renderDatetime(theme)}
       </Host>
     );
   }

@@ -92,7 +92,7 @@ const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBu
   }
 
   const getAnimation =
-    opts.platform === 'ios'
+    opts.mode === 'ios'
       ? (await iosTransitionAnimation()).iosTransitionAnimation
       : (await mdTransitionAnimation()).mdTransitionAnimation;
 
