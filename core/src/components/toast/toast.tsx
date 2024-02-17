@@ -45,7 +45,8 @@ import type {
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @part button - Any button element that is displayed inside of the toast.
  * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.

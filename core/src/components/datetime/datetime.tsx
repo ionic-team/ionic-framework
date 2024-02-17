@@ -70,7 +70,8 @@ import {
 } from './utils/state';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @slot title - The title of the datetime.
  * @slot buttons - The buttons in the datetime.

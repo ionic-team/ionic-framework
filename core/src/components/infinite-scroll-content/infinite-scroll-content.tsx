@@ -8,6 +8,9 @@ import { getIonTheme } from '../../global/ionic-global';
 import type { IonicSafeString } from '../../utils/sanitization';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 
+/**
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ */
 @Component({
   tag: 'ion-infinite-scroll-content',
   styleUrls: {

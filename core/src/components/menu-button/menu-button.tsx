@@ -13,7 +13,8 @@ import type { Color } from '../../interface';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @part native - The native HTML button element that wraps all child elements.
  * @part icon - The menu button icon (uses ion-icon).

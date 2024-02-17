@@ -23,7 +23,8 @@ import type { InputChangeEventDetail, InputInputEventDetail } from './input-inte
 import { getCounterText } from './input.utils';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @slot label - The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  * @slot start - Content to display at the leading edge of the input. (EXPERIMENTAL)

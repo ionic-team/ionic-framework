@@ -22,6 +22,8 @@ const focusableQueryString =
   '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 
 /**
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ *
  * @part container - The container for the menu content.
  * @part backdrop - The backdrop that appears over the main content when the menu is open.
  */

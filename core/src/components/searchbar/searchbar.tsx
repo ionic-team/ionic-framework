@@ -12,7 +12,8 @@ import type { AutocompleteTypes, Color, StyleEventDetail } from '../../interface
 import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './searchbar-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  */
 @Component({
   tag: 'ion-searchbar',

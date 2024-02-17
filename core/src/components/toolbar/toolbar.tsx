@@ -6,7 +6,8 @@ import { getIonTheme } from '../../global/ionic-global';
 import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.

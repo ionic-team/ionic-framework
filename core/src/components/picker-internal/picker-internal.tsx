@@ -5,7 +5,9 @@ import { getElementRoot } from '@utils/helpers';
 import type { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ *
  * @internal
  */
 @Component({

@@ -12,7 +12,8 @@ import type { RouterDirection } from '../router/utils/interface';
 import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @part native - The native HTML anchor or div element that wraps all child elements.
  * @part separator - The separator element between each breadcrumb.

@@ -47,7 +47,8 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @slot - Content is placed inside of the `.modal-content` element.
  *

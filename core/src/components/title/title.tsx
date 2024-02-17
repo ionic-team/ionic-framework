@@ -5,6 +5,9 @@ import { createColorClasses } from '@utils/theme';
 import { getIonTheme } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 
+/**
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ */
 @Component({
   tag: 'ion-title',
   styleUrls: {

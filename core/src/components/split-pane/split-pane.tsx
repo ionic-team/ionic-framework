@@ -16,6 +16,9 @@ const QUERY: { [key: string]: string } = {
   never: '',
 };
 
+/**
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ */
 @Component({
   tag: 'ion-split-pane',
   styleUrls: {

@@ -9,6 +9,8 @@ import type { Gesture, GestureDetail } from '../../interface';
 import type { PickerColumn } from '../picker/picker-interface';
 
 /**
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ *
  * @internal
  */
 @Component({

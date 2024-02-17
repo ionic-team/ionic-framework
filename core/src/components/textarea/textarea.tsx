@@ -35,7 +35,8 @@ import { getCounterText } from '../input/input.utils';
 import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)

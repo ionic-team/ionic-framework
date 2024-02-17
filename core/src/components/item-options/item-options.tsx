@@ -5,6 +5,9 @@ import { isEndSide } from '@utils/helpers';
 import { getIonTheme } from '../../global/ionic-global';
 import type { Side } from '../menu/menu-interface';
 
+/**
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ */
 @Component({
   tag: 'ion-item-options',
   styleUrls: {

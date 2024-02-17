@@ -11,9 +11,8 @@ import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - [DEPRECATED] The mode determines which platform styles to use. Use "theme" instead.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines which styles to use.
- * @virtualProp {"ios" | "md"} platform - The platform behaviors to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot icon-only - Should be used on an icon in a button that has no text.

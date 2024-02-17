@@ -10,7 +10,8 @@ import type { Color } from '../../interface';
 import type { TabBarChangedEventDetail } from './tab-bar-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  */
 @Component({
   tag: 'ion-tab-bar',

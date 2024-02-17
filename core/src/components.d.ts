@@ -84,13 +84,17 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * If `true`, the accordion cannot be interacted with, but does not alter the opacity.
          */
         "readonly": boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed.
          */
@@ -119,7 +123,7 @@ export namespace Components {
         "expand": 'compact' | 'inset';
         "getAccordions": () => Promise<HTMLIonAccordionElement[]>;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -134,6 +138,10 @@ export namespace Components {
           * This method is used to ensure that the value of ion-accordion-group is being set in a valid way. This method should only be called in response to a user generated action.
          */
         "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
@@ -189,7 +197,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -209,6 +217,10 @@ export namespace Components {
           * Subtitle for the action sheet.
          */
         "subHeader"?: string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -276,7 +288,7 @@ export namespace Components {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -297,6 +309,10 @@ export namespace Components {
          */
         "subHeader"?: string;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
@@ -309,6 +325,10 @@ export namespace Components {
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
     }
     interface IonAvatar {
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonBackButton {
         /**
@@ -328,7 +348,7 @@ export namespace Components {
          */
         "icon"?: string | null;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -339,6 +359,10 @@ export namespace Components {
           * The text to display in the back button.
          */
         "text"?: string | null;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -354,6 +378,10 @@ export namespace Components {
          */
         "tappable": boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the backdrop will be visible.
          */
         "visible": boolean;
@@ -364,9 +392,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonBreadcrumb {
         /**
@@ -392,7 +424,7 @@ export namespace Components {
         "href": string | undefined;
         "last": boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -416,6 +448,10 @@ export namespace Components {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target": string | undefined;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonBreadcrumbs {
         /**
@@ -435,9 +471,13 @@ export namespace Components {
          */
         "maxItems"?: number;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonButton {
         /**
@@ -473,13 +513,9 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * [DEPRECATED] The mode determines which platform styles to use. Use "theme" instead.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
-        /**
-          * The platform behaviors to use.
-         */
-        "platform"?: "ios" | "md";
         /**
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
@@ -509,7 +545,7 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
-          * The theme determines which styles to use.
+          * The theme determines the appearance of components.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -522,6 +558,10 @@ export namespace Components {
           * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse": boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCard {
         /**
@@ -545,7 +585,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -565,15 +605,23 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The type of the button. Only used when an `onclick` or `button` property is present.
          */
         "type": 'submit' | 'reset' | 'button';
     }
     interface IonCardContent {
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCardHeader {
         /**
@@ -581,9 +629,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the card header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -595,9 +647,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCardTitle {
         /**
@@ -605,9 +661,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCheckbox {
         /**
@@ -643,13 +703,17 @@ export namespace Components {
          */
         "legacy"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
@@ -665,13 +729,17 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * Display an outline style button.
          */
         "outline": boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCol {
         /**
@@ -899,7 +967,7 @@ export namespace Components {
          */
         "minuteValues"?: number[] | number | string;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -951,6 +1019,10 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
@@ -977,9 +1049,13 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonFab {
         /**
@@ -1033,7 +1109,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1061,6 +1137,10 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the fab button will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
@@ -1085,9 +1165,13 @@ export namespace Components {
          */
         "collapse"?: 'fade';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
          */
@@ -1105,9 +1189,13 @@ export namespace Components {
          */
         "collapse"?: 'condense' | 'fade';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
          */
@@ -1150,6 +1238,10 @@ export namespace Components {
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "loadingText"?: string | IonicSafeString;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonInput {
         /**
@@ -1254,7 +1346,7 @@ export namespace Components {
          */
         "minlength"?: number;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1298,6 +1390,10 @@ export namespace Components {
           * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
          */
         "step"?: string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of control to display. The default type is text.
          */
@@ -1356,7 +1452,7 @@ export namespace Components {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1380,6 +1476,10 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The type of the button. Only used when an `onclick` or `button` property is present.
          */
         "type": 'submit' | 'reset' | 'button';
@@ -1390,15 +1490,23 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * When it's set to `true`, the item-divider will stay visible when it reaches the top of the viewport until the next `ion-item-divider` replaces it.  This feature relies in `position:sticky`: https://caniuse.com/#feat=css-sticky
          */
         "sticky": boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemGroup {
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemOption {
         /**
@@ -1422,7 +1530,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1434,6 +1542,10 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The type of the button.
          */
         "type": 'submit' | 'reset' | 'button';
@@ -1444,6 +1556,10 @@ export namespace Components {
           * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
          */
         "side": Side;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemSliding {
         /**
@@ -1478,13 +1594,17 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * The position determines where and how the label behaves inside an item.
          */
         "position"?: 'fixed' | 'stacked' | 'floating';
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonList {
         /**
@@ -1500,9 +1620,13 @@ export namespace Components {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonListHeader {
         /**
@@ -1514,9 +1638,13 @@ export namespace Components {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonLoading {
         /**
@@ -1568,7 +1696,7 @@ export namespace Components {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1592,6 +1720,10 @@ export namespace Components {
           * The name of the spinner to display.
          */
         "spinner"?: SpinnerTypes | null;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -1647,6 +1779,10 @@ export namespace Components {
          */
         "swipeGesture": boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it. If the operation can't be completed successfully, it returns `false`.
          */
         "toggle": (animated?: boolean) => Promise<boolean>;
@@ -1673,9 +1809,13 @@ export namespace Components {
          */
         "menu"?: string;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -1773,7 +1913,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1801,6 +1941,10 @@ export namespace Components {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
@@ -1952,9 +2096,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonPicker {
         /**
@@ -2015,7 +2163,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2036,6 +2184,10 @@ export namespace Components {
          */
         "showBackdrop": boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * An ID corresponding to the trigger element that causes the picker to open when clicked.
          */
         "trigger": string | undefined;
@@ -2045,6 +2197,10 @@ export namespace Components {
           * Picker column data
          */
         "col": PickerColumn;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonPickerColumnInternal {
         /**
@@ -2060,7 +2216,7 @@ export namespace Components {
          */
         "items": PickerColumnItem[];
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2073,6 +2229,10 @@ export namespace Components {
          */
         "setValue": (value?: string | number) => Promise<void>;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The selected option in the picker.
          */
         "value"?: string | number;
@@ -2080,9 +2240,13 @@ export namespace Components {
     interface IonPickerInternal {
         "exitInputMode": () => Promise<void>;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonPopover {
         /**
@@ -2157,7 +2321,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2194,6 +2358,10 @@ export namespace Components {
          */
         "size": PopoverSize;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
@@ -2216,13 +2384,17 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * If true, reverse the progress bar direction.
          */
         "reversed": boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
          */
@@ -2258,7 +2430,7 @@ export namespace Components {
          */
         "legacy"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2267,6 +2439,10 @@ export namespace Components {
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
         "setFocus": (ev: globalThis.Event) => Promise<void>;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * the value of the radio.
          */
@@ -2332,7 +2508,7 @@ export namespace Components {
          */
         "min": number;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2355,6 +2531,10 @@ export namespace Components {
           * Specifies the value granularity.
          */
         "step": number;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
          */
@@ -2386,7 +2566,7 @@ export namespace Components {
          */
         "getProgress": () => Promise<number>;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2405,6 +2585,10 @@ export namespace Components {
           * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration": string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonRefresherContent {
         /**
@@ -2425,6 +2609,10 @@ export namespace Components {
         "refreshingText"?: string | IonicSafeString;
     }
     interface IonReorder {
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonReorderGroup {
         /**
@@ -2601,7 +2789,7 @@ export namespace Components {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2633,6 +2821,10 @@ export namespace Components {
          */
         "spellcheck": boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * Set the type of the input.
          */
         "type": 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
@@ -2651,7 +2843,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2667,6 +2859,10 @@ export namespace Components {
          */
         "swipeGesture": boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * the value of the segment.
          */
         "value"?: SegmentValue;
@@ -2681,10 +2877,14 @@ export namespace Components {
          */
         "layout"?: SegmentButtonLayout;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         "setFocus": () => Promise<void>;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -2744,7 +2944,7 @@ export namespace Components {
          */
         "legacy"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2776,6 +2976,10 @@ export namespace Components {
           * The shape of the select. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
          */
@@ -2816,6 +3020,10 @@ export namespace Components {
           * The subheader text of the popover
          */
         "subHeader"?: string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonSkeletonText {
         /**
@@ -2851,6 +3059,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
         "when": string | boolean;
@@ -2877,13 +3089,17 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * The selected tab component
          */
         "selectedTab"?: string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the tab bar will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -2907,7 +3123,7 @@ export namespace Components {
          */
         "layout"?: TabButtonLayout;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2926,6 +3142,10 @@ export namespace Components {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target": string | undefined;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTabs {
         "getRouteId": () => Promise<RouteID | undefined>;
@@ -2952,7 +3172,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
     }
@@ -3042,7 +3262,7 @@ export namespace Components {
          */
         "minlength"?: number;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3078,6 +3298,10 @@ export namespace Components {
          */
         "spellcheck": boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The value of the textarea.
          */
         "value"?: string | null;
@@ -3097,6 +3321,10 @@ export namespace Components {
           * The size of the toolbar title.
          */
         "size"?: 'large' | 'small';
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonToast {
         /**
@@ -3164,7 +3392,7 @@ export namespace Components {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3192,6 +3420,10 @@ export namespace Components {
           * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
          */
         "swipeGesture"?: ToastSwipeGestureDirection;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -3235,13 +3467,17 @@ export namespace Components {
          */
         "legacy"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
@@ -3253,9 +3489,13 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
 }
 export interface IonAccordionGroupCustomEvent<T> extends CustomEvent<T> {
@@ -4729,13 +4969,17 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * If `true`, the accordion cannot be interacted with, but does not alter the opacity.
          */
         "readonly"?: boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed.
          */
@@ -4763,7 +5007,7 @@ declare namespace LocalJSX {
          */
         "expand"?: 'compact' | 'inset';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -4782,6 +5026,10 @@ declare namespace LocalJSX {
           * If `true`, the accordion group cannot be interacted with, but does not alter the opacity.
          */
         "readonly"?: boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
@@ -4831,7 +5079,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -4871,6 +5119,10 @@ declare namespace LocalJSX {
           * Subtitle for the action sheet.
          */
         "subHeader"?: string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -4932,7 +5184,7 @@ declare namespace LocalJSX {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -4973,6 +5225,10 @@ declare namespace LocalJSX {
          */
         "subHeader"?: string;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
@@ -4984,6 +5240,10 @@ declare namespace LocalJSX {
     interface IonApp {
     }
     interface IonAvatar {
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonBackButton {
         /**
@@ -5003,7 +5263,7 @@ declare namespace LocalJSX {
          */
         "icon"?: string | null;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5014,6 +5274,10 @@ declare namespace LocalJSX {
           * The text to display in the back button.
          */
         "text"?: string | null;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -5033,6 +5297,10 @@ declare namespace LocalJSX {
          */
         "tappable"?: boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the backdrop will be visible.
          */
         "visible"?: boolean;
@@ -5043,9 +5311,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonBreadcrumb {
         /**
@@ -5071,7 +5343,7 @@ declare namespace LocalJSX {
         "href"?: string | undefined;
         "last": boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5107,6 +5379,10 @@ declare namespace LocalJSX {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target"?: string | undefined;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonBreadcrumbs {
         /**
@@ -5126,13 +5402,17 @@ declare namespace LocalJSX {
          */
         "maxItems"?: number;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * Emitted when the collapsed indicator is clicked on.
          */
         "onIonCollapsedClick"?: (event: IonBreadcrumbsCustomEvent<BreadcrumbCollapsedClickEventDetail>) => void;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonButton {
         /**
@@ -5168,7 +5448,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * [DEPRECATED] The mode determines which platform styles to use. Use "theme" instead.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5179,10 +5459,6 @@ declare namespace LocalJSX {
           * Emitted when the button has focus.
          */
         "onIonFocus"?: (event: IonButtonCustomEvent<void>) => void;
-        /**
-          * The platform behaviors to use.
-         */
-        "platform"?: "ios" | "md";
         /**
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
@@ -5212,7 +5488,7 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
-          * The theme determines which styles to use.
+          * The theme determines the appearance of components.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5225,6 +5501,10 @@ declare namespace LocalJSX {
           * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCard {
         /**
@@ -5248,7 +5528,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5268,15 +5548,23 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The type of the button. Only used when an `onclick` or `button` property is present.
          */
         "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonCardContent {
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCardHeader {
         /**
@@ -5284,9 +5572,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the card header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -5298,9 +5590,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCardTitle {
         /**
@@ -5308,9 +5604,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCheckbox {
         /**
@@ -5346,7 +5646,7 @@ declare namespace LocalJSX {
          */
         "legacy"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5370,6 +5670,10 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonCheckboxCustomEvent<StyleEventDetail>) => void;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
         "value"?: any | null;
@@ -5384,13 +5688,17 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * Display an outline style button.
          */
         "outline"?: boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonCol {
         /**
@@ -5590,7 +5898,7 @@ declare namespace LocalJSX {
          */
         "minuteValues"?: number[] | number | string;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5666,6 +5974,10 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".  See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this if you need to access `this` from within the callback.
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
@@ -5692,9 +6004,13 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonFab {
         /**
@@ -5740,7 +6056,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5776,6 +6092,10 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the fab button will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
@@ -5800,9 +6120,13 @@ declare namespace LocalJSX {
          */
         "collapse"?: 'fade';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
          */
@@ -5820,9 +6144,13 @@ declare namespace LocalJSX {
          */
         "collapse"?: 'condense' | 'fade';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
          */
@@ -5877,6 +6205,10 @@ declare namespace LocalJSX {
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "loadingText"?: string | IonicSafeString;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonInput {
         /**
@@ -5977,7 +6309,7 @@ declare namespace LocalJSX {
          */
         "minlength"?: number;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6038,6 +6370,10 @@ declare namespace LocalJSX {
          */
         "step"?: string;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The type of control to display. The default type is text.
          */
         "type"?: TextFieldTypes;
@@ -6095,7 +6431,7 @@ declare namespace LocalJSX {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6119,6 +6455,10 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The type of the button. Only used when an `onclick` or `button` property is present.
          */
         "type"?: 'submit' | 'reset' | 'button';
@@ -6129,15 +6469,23 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * When it's set to `true`, the item-divider will stay visible when it reaches the top of the viewport until the next `ion-item-divider` replaces it.  This feature relies in `position:sticky`: https://caniuse.com/#feat=css-sticky
          */
         "sticky"?: boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemGroup {
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemOption {
         /**
@@ -6161,7 +6509,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6172,6 +6520,10 @@ declare namespace LocalJSX {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target"?: string | undefined;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -6186,6 +6538,10 @@ declare namespace LocalJSX {
           * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
          */
         "side"?: Side;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemSliding {
         /**
@@ -6203,7 +6559,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6218,6 +6574,10 @@ declare namespace LocalJSX {
           * The position determines where and how the label behaves inside an item.
          */
         "position"?: 'fixed' | 'stacked' | 'floating';
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonList {
         /**
@@ -6229,9 +6589,13 @@ declare namespace LocalJSX {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonListHeader {
         /**
@@ -6243,9 +6607,13 @@ declare namespace LocalJSX {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonLoading {
         /**
@@ -6291,7 +6659,7 @@ declare namespace LocalJSX {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6335,6 +6703,10 @@ declare namespace LocalJSX {
           * The name of the spinner to display.
          */
         "spinner"?: SpinnerTypes | null;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -6390,6 +6762,10 @@ declare namespace LocalJSX {
          */
         "swipeGesture"?: boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
         "type"?: string;
@@ -6412,9 +6788,13 @@ declare namespace LocalJSX {
          */
         "menu"?: string;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -6502,7 +6882,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6554,6 +6934,10 @@ declare namespace LocalJSX {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
@@ -6618,9 +7002,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonPicker {
         /**
@@ -6670,7 +7058,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6711,6 +7099,10 @@ declare namespace LocalJSX {
          */
         "showBackdrop"?: boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * An ID corresponding to the trigger element that causes the picker to open when clicked.
          */
         "trigger"?: string | undefined;
@@ -6724,6 +7116,10 @@ declare namespace LocalJSX {
           * Emitted when the selected value has changed
          */
         "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn>) => void;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonPickerColumnInternal {
         /**
@@ -6739,7 +7135,7 @@ declare namespace LocalJSX {
          */
         "items"?: PickerColumnItem[];
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6751,16 +7147,24 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: IonPickerColumnInternalCustomEvent<PickerColumnItem>) => void;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The selected option in the picker.
          */
         "value"?: string | number;
     }
     interface IonPickerInternal {
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         "onIonInputModeChange"?: (event: IonPickerInternalCustomEvent<PickerInternalChangeEventDetail>) => void;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonPopover {
         /**
@@ -6827,7 +7231,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6884,6 +7288,10 @@ declare namespace LocalJSX {
          */
         "size"?: PopoverSize;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
@@ -6906,13 +7314,17 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
           * If true, reverse the progress bar direction.
          */
         "reversed"?: boolean;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
          */
@@ -6948,7 +7360,7 @@ declare namespace LocalJSX {
          */
         "legacy"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6967,6 +7379,10 @@ declare namespace LocalJSX {
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: IonRadioCustomEvent<StyleEventDetail>) => void;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * the value of the radio.
          */
@@ -7040,7 +7456,7 @@ declare namespace LocalJSX {
          */
         "min"?: number;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7092,6 +7508,10 @@ declare namespace LocalJSX {
          */
         "step"?: number;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.
          */
         "ticks"?: boolean;
@@ -7110,7 +7530,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7141,6 +7561,10 @@ declare namespace LocalJSX {
           * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration"?: string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonRefresherContent {
         /**
@@ -7161,6 +7585,10 @@ declare namespace LocalJSX {
         "refreshingText"?: string | IonicSafeString;
     }
     interface IonReorder {
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonReorderGroup {
         /**
@@ -7329,7 +7757,7 @@ declare namespace LocalJSX {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7385,6 +7813,10 @@ declare namespace LocalJSX {
          */
         "spellcheck"?: boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * Set the type of the input.
          */
         "type"?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
@@ -7403,7 +7835,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7431,6 +7863,10 @@ declare namespace LocalJSX {
          */
         "swipeGesture"?: boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * the value of the segment.
          */
         "value"?: SegmentValue;
@@ -7445,9 +7881,13 @@ declare namespace LocalJSX {
          */
         "layout"?: SegmentButtonLayout;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * The type of the button.
          */
@@ -7507,7 +7947,7 @@ declare namespace LocalJSX {
          */
         "legacy"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7559,6 +7999,10 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round';
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
          */
         "toggleIcon"?: string;
@@ -7598,6 +8042,10 @@ declare namespace LocalJSX {
           * The subheader text of the popover
          */
         "subHeader"?: string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonSkeletonText {
         /**
@@ -7641,6 +8089,10 @@ declare namespace LocalJSX {
          */
         "onIonSplitPaneVisible"?: (event: IonSplitPaneCustomEvent<{ visible: boolean }>) => void;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
         "when"?: string | boolean;
@@ -7663,7 +8115,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         "onIonTabBarChanged"?: (event: IonTabBarCustomEvent<TabBarChangedEventDetail>) => void;
@@ -7672,6 +8124,10 @@ declare namespace LocalJSX {
           * The selected tab component
          */
         "selectedTab"?: string;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
         /**
           * If `true`, the tab bar will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -7695,7 +8151,7 @@ declare namespace LocalJSX {
          */
         "layout"?: TabButtonLayout;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7718,6 +8174,10 @@ declare namespace LocalJSX {
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target"?: string | undefined;
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonTabs {
         /**
@@ -7740,7 +8200,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
     }
@@ -7826,7 +8286,7 @@ declare namespace LocalJSX {
          */
         "minlength"?: number;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7878,6 +8338,10 @@ declare namespace LocalJSX {
          */
         "spellcheck"?: boolean;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The value of the textarea.
          */
         "value"?: string | null;
@@ -7901,6 +8365,10 @@ declare namespace LocalJSX {
           * The size of the toolbar title.
          */
         "size"?: 'large' | 'small';
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IonToast {
         /**
@@ -7962,7 +8430,7 @@ declare namespace LocalJSX {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8011,6 +8479,10 @@ declare namespace LocalJSX {
          */
         "swipeGesture"?: ToastSwipeGestureDirection;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
@@ -8053,7 +8525,7 @@ declare namespace LocalJSX {
          */
         "legacy"?: boolean;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8077,6 +8549,10 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonToggleCustomEvent<StyleEventDetail>) => void;
         /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+        /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
         "value"?: string | null;
@@ -8087,9 +8563,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines which platform styles to use.
+          * The mode determines the platform behaviors of components.
          */
         "mode"?: "ios" | "md";
+        /**
+          * The theme determines the appearance of components.
+         */
+        "theme"?: "ios" | "md" | "ionic";
     }
     interface IntrinsicElements {
         "ion-accordion": IonAccordion;

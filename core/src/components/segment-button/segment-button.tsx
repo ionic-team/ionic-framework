@@ -13,7 +13,8 @@ import type { SegmentButtonLayout } from './segment-button-interface';
 let ids = 0;
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
  *
  * @part native - The native HTML button element that wraps all child elements.
  * @part indicator - The indicator displayed on the checked segment button.
