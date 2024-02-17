@@ -11,6 +11,7 @@ import { getIonTheme } from '../../global/ionic-global';
   styleUrls: {
     ios: 'card-content.ios.scss',
     md: 'card-content.md.scss',
+    ionic: 'card-content.md.scss',
   },
 })
 export class CardContent implements ComponentInterface {

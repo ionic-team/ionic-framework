@@ -31,6 +31,7 @@ import type { CounterFormatter } from './item-interface';
   styleUrls: {
     ios: 'item.ios.scss',
     md: 'item.md.scss',
+    ionic: 'item.md.scss',
   },
   shadow: {
     delegatesFocus: true,

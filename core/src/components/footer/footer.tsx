@@ -16,6 +16,7 @@ import { handleFooterFade } from './footer.utils';
   styleUrls: {
     ios: 'footer.ios.scss',
     md: 'footer.md.scss',
+    ionic: 'footer.md.scss',
   },
 })
 export class Footer implements ComponentInterface {

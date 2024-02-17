@@ -9,6 +9,7 @@ import { getIonTheme } from '../../global/ionic-global';
   styleUrls: {
     ios: 'backdrop.ios.scss',
     md: 'backdrop.md.scss',
+    ionic: 'backdrop.md.scss',
   },
   shadow: true,
 })

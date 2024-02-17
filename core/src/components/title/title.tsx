@@ -10,6 +10,7 @@ import type { Color, StyleEventDetail } from '../../interface';
   styleUrls: {
     ios: 'title.ios.scss',
     md: 'title.md.scss',
+    ionic: 'title.md.scss',
   },
   shadow: true,
 })

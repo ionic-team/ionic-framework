@@ -19,6 +19,7 @@ import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './se
   styleUrls: {
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss',
+    ionic: 'searchbar.md.scss',
   },
   scoped: true,
 })

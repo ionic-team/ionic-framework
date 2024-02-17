@@ -8,6 +8,7 @@ import { getIonTheme } from '../../global/ionic-global';
   styleUrls: {
     ios: 'buttons.ios.scss',
     md: 'buttons.md.scss',
+    ionic: 'buttons.md.scss',
   },
   scoped: true,
 })

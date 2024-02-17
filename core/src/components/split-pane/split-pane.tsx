@@ -21,6 +21,7 @@ const QUERY: { [key: string]: string } = {
   styleUrls: {
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss',
+    ionic: 'split-pane.md.scss',
   },
   shadow: true,
 })

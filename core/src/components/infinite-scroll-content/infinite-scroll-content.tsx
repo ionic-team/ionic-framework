@@ -13,6 +13,7 @@ import type { SpinnerTypes } from '../spinner/spinner-configs';
   styleUrls: {
     ios: 'infinite-scroll-content.ios.scss',
     md: 'infinite-scroll-content.md.scss',
+    ionic: 'infinite-scroll-content.md.scss',
   },
 })
 export class InfiniteScrollContent implements ComponentInterface {

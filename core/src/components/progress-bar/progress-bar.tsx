@@ -20,6 +20,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'progress-bar.ios.scss',
     md: 'progress-bar.md.scss',
+    ionic: 'progress-bar.md.scss',
   },
   shadow: true,
 })

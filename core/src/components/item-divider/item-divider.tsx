@@ -17,6 +17,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'item-divider.ios.scss',
     md: 'item-divider.md.scss',
+    ionic: 'item-divider.md.scss',
   },
   shadow: true,
 })

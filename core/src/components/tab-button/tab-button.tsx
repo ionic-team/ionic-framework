@@ -22,6 +22,7 @@ import type {
   styleUrls: {
     ios: 'tab-button.ios.scss',
     md: 'tab-button.md.scss',
+    ionic: 'tab-button.md.scss',
   },
   shadow: true,
 })

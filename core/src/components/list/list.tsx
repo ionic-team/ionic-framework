@@ -11,6 +11,7 @@ import { getIonTheme } from '../../global/ionic-global';
   styleUrls: {
     ios: 'list.ios.scss',
     md: 'list.md.scss',
+    ionic: 'list.md.scss',
   },
 })
 export class List implements ComponentInterface {

@@ -23,6 +23,7 @@ import type { Color, StyleEventDetail } from '../../interface';
   styleUrls: {
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
+    ionic: 'radio.md.scss',
   },
   shadow: true,
 })

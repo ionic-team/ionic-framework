@@ -17,6 +17,7 @@ import type { SelectPopoverOption } from './select-popover-interface';
   styleUrls: {
     ios: 'select-popover.ios.scss',
     md: 'select-popover.md.scss',
+    ionic: 'select-popover.md.scss',
   },
   scoped: true,
 })

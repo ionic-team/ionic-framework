@@ -8,6 +8,7 @@ import { getIonTheme } from '../../global/ionic-global';
   styleUrls: {
     ios: 'item-group.ios.scss',
     md: 'item-group.md.scss',
+    ionic: 'item-group.md.scss',
   },
 })
 export class ItemGroup implements ComponentInterface {

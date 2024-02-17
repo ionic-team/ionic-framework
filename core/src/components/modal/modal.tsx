@@ -60,6 +60,7 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
   styleUrls: {
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
+    ionic: 'modal.md.scss',
   },
   shadow: true,
 })

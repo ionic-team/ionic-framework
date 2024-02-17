@@ -13,6 +13,7 @@ import type { Color, StyleEventDetail } from '../../interface';
   styleUrls: {
     ios: 'label.ios.scss',
     md: 'label.md.scss',
+    ionic: 'label.md.scss',
   },
   scoped: true,
 })

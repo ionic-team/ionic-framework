@@ -44,6 +44,7 @@ import type {
   styleUrls: {
     ios: 'range.ios.scss',
     md: 'range.md.scss',
+    ionic: 'range.md.scss',
   },
   shadow: true,
 })

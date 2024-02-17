@@ -34,6 +34,7 @@ import { getCounterText } from './input.utils';
   styleUrls: {
     ios: 'input.ios.scss',
     md: 'input.md.scss',
+    ionic: 'input.md.scss',
   },
   scoped: true,
 })

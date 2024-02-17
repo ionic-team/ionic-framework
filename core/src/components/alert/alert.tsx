@@ -42,6 +42,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'alert.ios.scss',
     md: 'alert.md.scss',
+    ionic: 'alert.md.scss',
   },
   scoped: true,
 })

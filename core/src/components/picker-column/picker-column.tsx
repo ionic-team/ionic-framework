@@ -16,6 +16,7 @@ import type { PickerColumn } from '../picker/picker-interface';
   styleUrls: {
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',
+    ionic: 'picker-column.md.scss',
   },
 })
 export class PickerColumnCmp implements ComponentInterface {

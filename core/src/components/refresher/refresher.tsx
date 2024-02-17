@@ -33,6 +33,7 @@ import {
   styleUrls: {
     ios: 'refresher.ios.scss',
     md: 'refresher.md.scss',
+    ionic: 'refresher.md.scss',
   },
 })
 export class Refresher implements ComponentInterface {

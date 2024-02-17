@@ -30,6 +30,7 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
   styleUrls: {
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss',
+    ionic: 'toggle.md.scss',
   },
   shadow: true,
 })

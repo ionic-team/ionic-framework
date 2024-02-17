@@ -14,6 +14,7 @@ import type { AccordionGroupChangeEventDetail } from './accordion-group-interfac
   styleUrls: {
     ios: 'accordion-group.ios.scss',
     md: 'accordion-group.md.scss',
+    ionic: 'accordion-group.md.scss',
   },
   shadow: true,
 })

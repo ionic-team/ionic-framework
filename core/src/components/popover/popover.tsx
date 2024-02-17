@@ -51,6 +51,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss',
+    ionic: 'popover.md.scss',
   },
   shadow: true,
 })

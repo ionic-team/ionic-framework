@@ -22,6 +22,7 @@ import type { AnimationBuilder, Color } from '../../interface';
   styleUrls: {
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss',
+    ionic: 'back-button.md.scss',
   },
   shadow: true,
 })

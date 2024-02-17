@@ -23,6 +23,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
   styleUrls: {
     ios: 'menu-button.ios.scss',
     md: 'menu-button.md.scss',
+    ionic: 'menu-button.md.scss',
   },
   shadow: true,
 })

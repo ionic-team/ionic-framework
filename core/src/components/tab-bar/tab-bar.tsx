@@ -17,6 +17,7 @@ import type { TabBarChangedEventDetail } from './tab-bar-interface';
   styleUrls: {
     ios: 'tab-bar.ios.scss',
     md: 'tab-bar.md.scss',
+    ionic: 'tab-bar.md.scss',
   },
   shadow: true,
 })

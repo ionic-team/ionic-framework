@@ -21,6 +21,7 @@ import type { RouterDirection } from '../router/utils/interface';
   styleUrls: {
     ios: 'fab-button.ios.scss',
     md: 'fab-button.md.scss',
+    ionic: 'fab-button.md.scss',
   },
   shadow: true,
 })

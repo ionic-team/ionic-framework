@@ -8,6 +8,7 @@ import { getIonTheme } from '../../global/ionic-global';
   styleUrls: {
     ios: 'avatar.ios.scss',
     md: 'avatar.md.scss',
+    ionic: 'avatar.md.scss',
   },
   shadow: true,
 })

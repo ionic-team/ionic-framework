@@ -23,6 +23,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss',
+    ionic: 'item-option.md.scss',
   },
   shadow: true,
 })

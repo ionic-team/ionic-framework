@@ -19,6 +19,7 @@ import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
   styleUrls: {
     ios: 'toolbar.ios.scss',
     md: 'toolbar.md.scss',
+    ionic: 'toolbar.md.scss',
   },
   shadow: true,
 })

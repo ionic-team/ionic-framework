@@ -10,6 +10,7 @@ import type { Side } from '../menu/menu-interface';
   styleUrls: {
     ios: 'item-options.ios.scss',
     md: 'item-options.md.scss',
+    ionic: 'item-options.md.scss',
   },
 })
 export class ItemOptions implements ComponentInterface {

@@ -13,6 +13,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'badge.ios.scss',
     md: 'badge.md.scss',
+    ionic: 'badge.md.scss',
   },
   shadow: true,
 })

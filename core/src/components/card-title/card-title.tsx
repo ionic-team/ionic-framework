@@ -13,6 +13,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'card-title.ios.scss',
     md: 'card-title.md.scss',
+    ionic: 'card-title.md.scss',
   },
   shadow: true,
 })

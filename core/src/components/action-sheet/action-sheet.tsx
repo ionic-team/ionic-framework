@@ -36,6 +36,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss',
+    ionic: 'action-sheet.md.scss',
   },
   scoped: true,
 })

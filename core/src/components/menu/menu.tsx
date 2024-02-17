@@ -30,6 +30,7 @@ const focusableQueryString =
   styleUrls: {
     ios: 'menu.ios.scss',
     md: 'menu.md.scss',
+    ionic: 'menu.md.scss',
   },
   shadow: true,
 })

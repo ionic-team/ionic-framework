@@ -34,6 +34,7 @@ import type { PickerButton, PickerColumn } from './picker-interface';
   styleUrls: {
     ios: 'picker.ios.scss',
     md: 'picker.md.scss',
+    ionic: 'picker.md.scss',
   },
   scoped: true,
 })

@@ -25,6 +25,7 @@ import {
   styleUrls: {
     ios: 'header.ios.scss',
     md: 'header.md.scss',
+    ionic: 'header.md.scss',
   },
 })
 export class Header implements ComponentInterface {

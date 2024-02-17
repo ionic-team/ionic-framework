@@ -18,6 +18,7 @@ import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface
   styleUrls: {
     ios: 'segment.ios.scss',
     md: 'segment.md.scss',
+    ionic: 'segment.md.scss',
   },
   shadow: true,
 })

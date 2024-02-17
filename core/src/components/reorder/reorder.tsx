@@ -12,6 +12,7 @@ import { getIonTheme } from '../../global/ionic-global';
   styleUrls: {
     ios: 'reorder.ios.scss',
     md: 'reorder.md.scss',
+    ionic: 'reorder.md.scss',
   },
   shadow: true,
 })

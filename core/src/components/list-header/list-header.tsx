@@ -13,6 +13,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'list-header.ios.scss',
     md: 'list-header.md.scss',
+    ionic: 'list-header.md.scss',
   },
   shadow: true,
 })

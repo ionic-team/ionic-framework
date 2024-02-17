@@ -46,6 +46,7 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
   styleUrls: {
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss',
+    ionic: 'textarea.md.scss',
   },
   scoped: true,
 })

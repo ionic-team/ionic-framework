@@ -23,6 +23,7 @@ import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface
   styleUrls: {
     ios: 'breadcrumb.ios.scss',
     md: 'breadcrumb.md.scss',
+    ionic: 'breadcrumb.md.scss',
   },
   shadow: true,
 })

@@ -20,6 +20,7 @@ import type { PickerColumnItem } from './picker-column-internal-interfaces';
   styleUrls: {
     ios: 'picker-column-internal.ios.scss',
     md: 'picker-column-internal.md.scss',
+    ionic: 'picker-column-internal.md.scss',
   },
   shadow: true,
 })

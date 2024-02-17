@@ -13,6 +13,7 @@ import type { PickerInternalChangeEventDetail } from './picker-internal-interfac
   styleUrls: {
     ios: 'picker-internal.ios.scss',
     md: 'picker-internal.md.scss',
+    ionic: 'picker-internal.md.scss',
   },
   shadow: true,
 })

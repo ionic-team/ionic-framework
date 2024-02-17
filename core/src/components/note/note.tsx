@@ -13,6 +13,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'note.ios.scss',
     md: 'note.md.scss',
+    ionic: 'note.md.scss',
   },
   shadow: true,
 })
