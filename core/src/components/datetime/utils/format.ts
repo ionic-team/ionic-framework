@@ -17,19 +17,19 @@ const getFormattedDayPeriod = (dayPeriod?: string) => {
  * confusion.
  */
 export const stripTimeZone = (formatOptions: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions => {
-  /**
-   * We do not want to display the time zone name
-   */
-  delete formatOptions.timeZoneName;
-
-  /**
-   * Setting the time zone to UTC ensures that the value shown is always the
-   * same as what was selected and safeguards against older Safari bugs with
-   * Intl.DateTimeFormat.
-   */
-  formatOptions.timeZone = 'UTC';
-
-  return formatOptions;
+  return {
+    ...formatOptions,
+    /**
+     * Setting the time zone to UTC ensures that the value shown is always the
+     * same as what was selected and safeguards against older Safari bugs with
+     * Intl.DateTimeFormat.
+     */
+    timeZone: 'UTC',
+    /**
+     * We do not want to display the time zone name
+     */
+    timeZoneName: undefined,
+  };
 };
 
 export const getLocalizedTime = (
