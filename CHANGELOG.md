@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
+
+
+### Bug Fixes
+
+* **label:** do not grow when in end slot ([#29036](https://github.com/ionic-team/ionic-framework/issues/29036)) ([1fc4b76](https://github.com/ionic-team/ionic-framework/commit/1fc4b76f5940b38fd89e19561d6b4738dfb8ae5d)), closes [#29033](https://github.com/ionic-team/ionic-framework/issues/29033)
+* **overlays:** focus is returned to last focus element when focusing toast ([#28950](https://github.com/ionic-team/ionic-framework/issues/28950)) ([2ed0ada](https://github.com/ionic-team/ionic-framework/commit/2ed0ada9237b3f4dbf5959746ce2d1744936eebe)), closes [#28261](https://github.com/ionic-team/ionic-framework/issues/28261)
+
+
+
+
+
 ## [7.7.2](https://github.com/ionic-team/ionic-framework/compare/v7.7.1...v7.7.2) (2024-02-14)
 
 
