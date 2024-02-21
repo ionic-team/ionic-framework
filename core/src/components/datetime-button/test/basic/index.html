@@ -215,8 +215,41 @@
               ></ion-datetime>
             </ion-popover>
           </div>
+
+          <div class="grid-item">
+            <h2>formatOptions</h2>
+
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime-button datetime="format-options" slot="end"></ion-datetime-button>
+            </ion-item>
+
+            <ion-popover arrow="false">
+              <ion-datetime
+                id="format-options"
+                presentation="date-time"
+                value="2023-11-02T01:22:00"
+                locale="en-US"
+              ></ion-datetime>
+            </ion-popover>
+          </div>
         </div>
       </ion-content>
     </ion-app>
   </body>
+
+  <script>
+    const formatOptionsDatetime = document.querySelector('#format-options');
+    formatOptionsDatetime.formatOptions = {
+      date: {
+        weekday: 'short',
+        month: 'long',
+        day: '2-digit',
+      },
+      time: {
+        hour: '2-digit',
+        minute: '2-digit',
+      },
+    };
+  </script>
 </html>
