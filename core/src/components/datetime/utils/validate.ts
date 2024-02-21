@@ -7,18 +7,19 @@ import type { DatetimePresentation, FormatOptions } from '../datetime-interface'
  * differ from what was selected in the Datetime, which could cause
  * confusion.
  */
-export const warnIfTimeZoneProvided = (formatOptions?: FormatOptions) => {
+export const warnIfTimeZoneProvided = (el: HTMLElement, formatOptions?: FormatOptions) => {
   if (
     formatOptions?.date?.timeZone ||
     formatOptions?.date?.timeZoneName ||
     formatOptions?.time?.timeZone ||
     formatOptions?.time?.timeZoneName
   ) {
-    printIonWarning('Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".');
+    printIonWarning('Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".', el);
   }
 };
 
 export const checkForPresentationFormatMismatch = (
+  el: HTMLElement,
   presentation: DatetimePresentation,
   formatOptions?: FormatOptions
 ) => {
@@ -32,19 +33,20 @@ export const checkForPresentationFormatMismatch = (
     case 'month':
     case 'year':
       if (formatOptions.date === undefined) {
-        printIonWarning(`Datetime: The '${presentation}' presentation requires a date object in formatOptions.`);
+        printIonWarning(`Datetime: The '${presentation}' presentation requires a date object in formatOptions.`, el);
       }
       break;
     case 'time':
       if (formatOptions.time === undefined) {
-        printIonWarning(`Datetime: The 'time' presentation requires a time object in formatOptions.`);
+        printIonWarning(`Datetime: The 'time' presentation requires a time object in formatOptions.`, el);
       }
       break;
     case 'date-time':
     case 'time-date':
       if (formatOptions.date === undefined && formatOptions.time === undefined) {
         printIonWarning(
-          `Datetime: The '${presentation}' presentation requires either a date or time object (or both) in formatOptions.`
+          `Datetime: The '${presentation}' presentation requires either a date or time object (or both) in formatOptions.`,
+          el
         );
       }
       break;

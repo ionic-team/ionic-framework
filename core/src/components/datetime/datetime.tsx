@@ -69,7 +69,7 @@ import {
   isNextMonthDisabled,
   isPrevMonthDisabled,
 } from './utils/state';
-import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './utils/warn';
+import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './utils/validate';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -182,9 +182,9 @@ export class Datetime implements ComponentInterface {
 
   @Watch('formatOptions')
   protected formatOptionsChanged() {
-    const { formatOptions, presentation } = this;
-    checkForPresentationFormatMismatch(presentation, formatOptions);
-    warnIfTimeZoneProvided(formatOptions);
+    const { el, formatOptions, presentation } = this;
+    checkForPresentationFormatMismatch(el, presentation, formatOptions);
+    warnIfTimeZoneProvided(el, formatOptions);
   }
 
   /**
@@ -253,8 +253,8 @@ export class Datetime implements ComponentInterface {
 
   @Watch('presentation')
   protected presentationChanged() {
-    const { formatOptions, presentation } = this;
-    checkForPresentationFormatMismatch(presentation, formatOptions);
+    const { el, formatOptions, presentation } = this;
+    checkForPresentationFormatMismatch(el, presentation, formatOptions);
   }
 
   private get isGridStyle() {
@@ -1405,8 +1405,8 @@ export class Datetime implements ComponentInterface {
     }
 
     if (formatOptions) {
-      checkForPresentationFormatMismatch(presentation, formatOptions);
-      warnIfTimeZoneProvided(formatOptions);
+      checkForPresentationFormatMismatch(el, presentation, formatOptions);
+      warnIfTimeZoneProvided(el, formatOptions);
     }
 
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
