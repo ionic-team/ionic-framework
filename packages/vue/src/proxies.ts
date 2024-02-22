@@ -274,6 +274,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime, JSX.Io
   'color',
   'name',
   'disabled',
+  'formatOptions',
   'readonly',
   'isDateEnabled',
   'min',
