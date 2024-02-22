@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
+
+
+### Bug Fixes
+
+* **label:** do not grow when in end slot ([#29036](https://github.com/ionic-team/ionic-framework/issues/29036)) ([1fc4b76](https://github.com/ionic-team/ionic-framework/commit/1fc4b76f5940b38fd89e19561d6b4738dfb8ae5d)), closes [#29033](https://github.com/ionic-team/ionic-framework/issues/29033)
+* **overlays:** focus is returned to last focus element when focusing toast ([#28950](https://github.com/ionic-team/ionic-framework/issues/28950)) ([2ed0ada](https://github.com/ionic-team/ionic-framework/commit/2ed0ada9237b3f4dbf5959746ce2d1744936eebe)), closes [#28261](https://github.com/ionic-team/ionic-framework/issues/28261)
+
+
+
+
+
+## [7.7.2](https://github.com/ionic-team/ionic-framework/compare/v7.7.1...v7.7.2) (2024-02-14)
+
+
+### Bug Fixes
+
+* **overlays:** do not return focus if application has already moved focus manually ([#28850](https://github.com/ionic-team/ionic-framework/issues/28850)) ([a016670](https://github.com/ionic-team/ionic-framework/commit/a016670a8a46e101d23235b17bc8a2081fb992eb)), closes [#28849](https://github.com/ionic-team/ionic-framework/issues/28849)
+* **overlays:** ensure that only topmost overlay is announced by screen readers ([#28997](https://github.com/ionic-team/ionic-framework/issues/28997)) ([ba4ba61](https://github.com/ionic-team/ionic-framework/commit/ba4ba6161c1a6c67f7804b07f49c64ac9ad2b14c)), closes [#23472](https://github.com/ionic-team/ionic-framework/issues/23472)
+* **popover:** render arrow above backdrop ([#28986](https://github.com/ionic-team/ionic-framework/issues/28986)) ([0a8964d](https://github.com/ionic-team/ionic-framework/commit/0a8964d30c76218fe62f7f4aed4f81df7bb80cd0)), closes [#28985](https://github.com/ionic-team/ionic-framework/issues/28985)
+
+
+
+
+
 ## [7.7.1](https://github.com/ionic-team/ionic-framework/compare/v7.7.0...v7.7.1) (2024-02-07)
 
 
