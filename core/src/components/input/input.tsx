@@ -35,7 +35,7 @@ import { getCounterText } from './input.utils';
   styleUrls: {
     ios: 'input.ios.scss',
     md: 'input.md.scss',
-    ionic: 'input.md.scss',
+    ionic: 'input.ionic.scss',
   },
   scoped: true,
 })
@@ -270,7 +270,7 @@ export class Input implements ComponentInterface {
   /**
    * The shape of the input. If "round" it will have an increased border radius.
    */
-  @Prop() shape?: 'round';
+  @Prop() shape?: 'none' | 'large' | 'round';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -283,8 +283,7 @@ export class Input implements ComponentInterface {
    */
   @Prop() step?: string;
 
-  // FW-4914 Remove this property in Ionic 8
-  @Prop() size?: number;
+  @Prop() size?: 'large' | 'xlarge';
 
   /**
    * The type of control to display. The default type is text.
@@ -295,6 +294,13 @@ export class Input implements ComponentInterface {
    * The value of the input.
    */
   @Prop({ mutable: true }) value?: string | number | null = '';
+
+  /**
+   * Icon to use as the clear button.
+   * If a value is given, the clear button will use that icon.
+   * Else, it will use the default clear icon for the platform the input is on.
+   */
+  @Prop() clearIcon?: any;
 
   /**
    * The `ionInput` event is fired each time the user modifies the input's value.
@@ -656,12 +662,16 @@ export class Input implements ComponentInterface {
 
   private renderLabel() {
     const { label } = this;
+    const theme = getIonTheme(this);
+    const hasStartEndSlots = this.el.querySelector('[slot="start"], [slot="end"]') !== null;
+    console.log('theme', theme);
 
     return (
       <div
         class={{
           'label-text-wrapper': true,
           'label-text-wrapper-hidden': !this.hasLabel,
+          'label-start': theme === 'ionic' && hasStartEndSlots,
         }}
       >
         {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
@@ -693,7 +703,7 @@ export class Input implements ComponentInterface {
    */
   private renderLabelContainer() {
     const theme = getIonTheme(this);
-    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
+    const hasOutlineFill = (theme === 'md' || theme === 'ionic') && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -730,7 +740,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, size } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -759,6 +769,8 @@ export class Input implements ComponentInterface {
     const labelShouldFloat =
       labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
 
+    const finalSize = theme === 'ionic' ? size : undefined;
+
     return (
       <Host
         class={createColorClasses(this.color, {
@@ -772,6 +784,7 @@ export class Input implements ComponentInterface {
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
+          [`input-size-${finalSize}`]: finalSize !== undefined,
         })}
       >
         {/**
@@ -808,7 +821,6 @@ export class Input implements ComponentInterface {
               required={this.required}
               spellcheck={this.spellcheck}
               step={this.step}
-              size={this.size}
               type={this.type}
               value={value}
               onInput={this.onInput}
@@ -835,7 +847,16 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" icon={theme === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                {theme !== 'ionic' && (
+                  <ion-icon aria-hidden="true" icon={theme === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                )}
+                {/* The `ionic` theme may be used, but that doesn't
+                guarantee that a custom clear icon will be provided.
+                Default to `md` */}
+                {theme === 'ionic' && this.clearIcon === undefined && (
+                  <ion-icon aria-hidden="true" icon={closeSharp}></ion-icon>
+                )}
+                {theme === 'ionic' && this.clearIcon}
               </button>
             )}
             <slot name="end"></slot>
@@ -917,7 +938,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           required={this.required}
           spellcheck={this.spellcheck}
           step={this.step}
-          size={this.size}
           type={this.type}
           value={value}
           onInput={this.onInput}

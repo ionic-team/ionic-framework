@@ -1266,6 +1266,10 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
+          * Icon to use as the clear button. If a value is given, the clear button will use that icon. Else, it will use the default clear icon for the platform the input is on.
+         */
+        "clearIcon"?: any;
+        /**
           * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
          */
         "clearInput": boolean;
@@ -1380,8 +1384,8 @@ export namespace Components {
         /**
           * The shape of the input. If "round" it will have an increased border radius.
          */
-        "shape"?: 'round';
-        "size"?: number;
+        "shape"?: 'none' | 'large' | 'round';
+        "size"?: 'large' | 'xlarge';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -6233,6 +6237,10 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
+          * Icon to use as the clear button. If a value is given, the clear button will use that icon. Else, it will use the default clear icon for the platform the input is on.
+         */
+        "clearIcon"?: any;
+        /**
           * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
          */
         "clearInput"?: boolean;
@@ -6359,8 +6367,8 @@ declare namespace LocalJSX {
         /**
           * The shape of the input. If "round" it will have an increased border radius.
          */
-        "shape"?: 'round';
-        "size"?: number;
+        "shape"?: 'none' | 'large' | 'round';
+        "size"?: 'large' | 'xlarge';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */

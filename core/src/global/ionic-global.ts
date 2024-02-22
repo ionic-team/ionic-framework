@@ -21,13 +21,12 @@ export const getIonMode = (ref?: any): Mode => {
   }
 
   const el = getElement(ref);
-  return el.closest('[mode]')?.getAttribute('mode') as Mode || defaultMode;
-
+  return (el.closest('[mode]')?.getAttribute('mode') as Mode) || defaultMode;
 };
 
 export const getIonTheme = (ref?: any): Theme => {
   return (ref && getMode(ref)) || getIonMode(ref) || defaultTheme;
-}
+};
 
 // export const getIonPlatform = (ref?: any): Platform => {
 //   if (ref?.platform) {
@@ -42,7 +41,6 @@ export const getIonTheme = (ref?: any): Theme => {
 //   const el = getElement(ref);
 //   return el.closest('[platform]')?.getAttribute('platform') as Platform || defaultPlatform;
 // }
-
 
 /**
  * @deprecated
