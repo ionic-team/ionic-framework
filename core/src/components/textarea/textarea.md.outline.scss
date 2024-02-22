@@ -43,7 +43,7 @@
  * the textarea is focused.
  */
 :host(.textarea-fill-outline.has-focus) {
-  --border-width: 2px;
+  --border-width: var(--highlight-height);
   --border-color: var(--highlight-color);
 }
 

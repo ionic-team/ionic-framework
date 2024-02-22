@@ -1430,6 +1430,7 @@ ion-textarea,css-prop,--color
 ion-textarea,css-prop,--highlight-color-focused
 ion-textarea,css-prop,--highlight-color-invalid
 ion-textarea,css-prop,--highlight-color-valid
+ion-textarea,css-prop,--highlight-height
 ion-textarea,css-prop,--padding-bottom
 ion-textarea,css-prop,--padding-end
 ion-textarea,css-prop,--padding-start
