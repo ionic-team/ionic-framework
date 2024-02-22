@@ -43,7 +43,7 @@
  */
 @media (any-hover: hover) {
   :host(.input-fill-outline:hover) {
-    --border-color: #{$background-color-step-750};
+    --border-color: #535353;
   }
 }
 
@@ -55,6 +55,12 @@
 :host(.input-fill-outline.has-focus) {
   --border-width: 2px;
   --border-color: var(--highlight-color);
+
+  box-shadow: none;
+}
+
+:host(.input-fill-outline:active) {
+  --highlight-color: #1068EB;
 }
 
 /**

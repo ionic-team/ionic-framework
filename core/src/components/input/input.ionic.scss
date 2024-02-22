@@ -9,8 +9,18 @@
 :host {
   --border-width: 1px;
   --border-color: #{$item-md-border-color};
+  --highlight-color: #9EC4FD;
+  --highlight-color-valid: #52A518;
+  --highlight-color-invalid: #F72C2C;
+  --highlight-color-warning: #CE7A06;
 
   font-size: $input-md-font-size;
+}
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --border-color: #939393;
+  }
 }
 
 .native-wrapper {
@@ -46,7 +56,26 @@
 // should use the same opacity and match the other form controls
 
 :host(.input-disabled) {
-  opacity: #{$input-md-disabled-opacity};
+  --background: #F5F5F5;
+  --border-color: #B8B8B8;
+
+  color: #9A9A9A;
+}
+
+:host(.has-focus) {
+  box-shadow: 0 0 0 2px #9EC4FD;
+}
+
+:host(:active) {
+  --border-color: #1068EB;
+  --border-width: 3px;
+}
+
+:host([readonly]) {
+  --background: #F5F5F5;
+  --border-color: #B8B8B8;
+
+  color: #373737;
 }
 
 // Input Bottom
@@ -57,8 +86,13 @@
  * border and label should reflect that as a color.
  */
 :host(.has-focus.ion-valid),
-:host(.ion-touched.ion-invalid) {
+:host(.ion-touched.ion-invalid),
+:host(.ion-touched.ion-warning) {
   --border-color: var(--highlight-color);
+}
+
+:host(.ion-touched.ion-warning) {
+  --highlight-color: var(--highlight-color-warning);
 }
 
 .input-bottom .counter {
@@ -68,21 +102,23 @@
 // Input Label
 // ----------------------------------------------------------------
 
-/**
- * When the input is focused the label should
- * take on the highlight color. This should
- * only apply to floating or stacked labels.
- */
-:host(.input-label-placement-floating.has-focus) .label-text-wrapper,
-:host(.input-label-placement-stacked.has-focus) .label-text-wrapper {
-  color: var(--highlight-color);
+// :host(.has-focus.input-label-placement-floating.ion-valid) .label-text-wrapper,
+// :host(.input-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
+// :host(.has-focus.input-label-placement-stacked.ion-valid) .label-text-wrapper,
+// :host(.input-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
+//   color: var(--highlight-color);
+// }
+
+:host(.ion-valid) .helper-text {
+  color: #144B05;
 }
 
-:host(.has-focus.input-label-placement-floating.ion-valid) .label-text-wrapper,
-:host(.input-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
-:host(.has-focus.input-label-placement-stacked.ion-valid) .label-text-wrapper,
-:host(.input-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
-  color: var(--highlight-color);
+:host(.ion-warning) .helper-text {
+  color: #6B430C;
+}
+
+:host(.ion-invalid) .error-text {
+  color: #970606;
 }
 
 :host(.input-label-placement-floating) .label-start,
