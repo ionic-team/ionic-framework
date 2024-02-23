@@ -662,16 +662,12 @@ export class Input implements ComponentInterface {
 
   private renderLabel() {
     const { label } = this;
-    const theme = getIonTheme(this);
-    const hasStartEndSlots = this.el.querySelector('[slot="start"], [slot="end"]') !== null;
-    console.log('theme', theme);
 
     return (
       <div
         class={{
           'label-text-wrapper': true,
           'label-text-wrapper-hidden': !this.hasLabel,
-          'label-start': theme === 'ionic' && hasStartEndSlots,
         }}
       >
         {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}

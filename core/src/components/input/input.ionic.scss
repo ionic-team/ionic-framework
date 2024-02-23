@@ -23,8 +23,8 @@
   }
 }
 
-.native-wrapper {
-  height: 40px;
+.native-wrapper  {
+  min-height: 40px;
 }
 
 :host-context(.item-label-stacked),
@@ -121,12 +121,6 @@
   color: #970606;
 }
 
-:host(.input-label-placement-floating) .label-start,
-:host(.input-label-placement-stacked) .label-start {
-  // 1em is the size of the icon
-  margin-inline-start: calc(1em + $form-control-label-margin);
-}
-
 // Input Highlight
 // ----------------------------------------------------------------
 
@@ -187,4 +181,25 @@
   aspect-ratio: 1;
 
   min-height: 40px;
+}
+
+// Touch Area
+// --------------------------------------------------
+
+:host::after {
+  position: absolute;
+
+  top: 50%;
+  /* stylelint-disable property-disallowed-list */
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  min-height: 48px;
+
+  transform: translateY(-50%);
+
+  content: "";
+
+  cursor: pointer;
 }

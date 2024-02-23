@@ -9,12 +9,30 @@
   --padding-start: 16px;
   --padding-end: 16px;
 
-  min-height: 56px;
+  min-height: 40px;
 }
 
 :host(.input-fill-outline.input-label-placement-stacked) {
   /* stylelint-disable declaration-no-important */
   padding-top: 20px !important;
+}
+
+:host(.input-label-placement-floating.input-size-large),
+:host(.input-label-placement-stacked.input-size-large) {
+  height: 48px;
+}
+
+:host(.input-label-placement-floating.input-size-large) .label-text-wrapper  {
+  @include transform(translateY(79%));
+}
+
+:host(.input-label-placement-floating.input-size-xlarge),
+:host(.input-label-placement-stacked.input-size-xlarge) {
+  height: 56px;
+}
+
+:host(.input-label-placement-floating.input-size-xlarge) .label-text-wrapper  {
+  @include transform(translateY(100%));
 }
 
 // Shape
@@ -102,8 +120,9 @@
  * The label should appear on top of an outline
  * container that overlaps it so it is always clickable.
  */
-:host(.input-fill-outline) .label-text-wrapper,
 :host(.input-fill-outline) .label-text-wrapper {
+  @include transform(translateY(60%));
+
   position: relative;
 }
 
