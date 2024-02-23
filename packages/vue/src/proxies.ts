@@ -429,6 +429,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'size',
   'type',
   'value',
+  'clearIcon',
   'ionInput',
   'ionChange',
   'ionBlur',
