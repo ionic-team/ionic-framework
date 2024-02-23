@@ -27,7 +27,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
   styleUrls: {
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
-    ionic: 'checkbox.md.scss',
+    ionic: 'checkbox.ionic.scss',
   },
   shadow: true,
 })
@@ -69,6 +69,11 @@ export class Checkbox implements ComponentInterface {
    * If `true`, the user cannot interact with the checkbox.
    */
   @Prop() disabled = false;
+
+  /**
+   * If `true`, the checkbox will be presented with an error style when it is unchecked.
+   */
+  @Prop() required = false;
 
   /**
    * The value of the checkbox does not mean if it's checked or not, use the `checked`
@@ -243,6 +248,7 @@ export class Checkbox implements ComponentInterface {
       justify,
       labelPlacement,
       name,
+      required,
       value,
       alignment,
     } = this;
@@ -260,6 +266,7 @@ export class Checkbox implements ComponentInterface {
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
+          'checkbox-required': required,
           interactive: true,
           [`checkbox-justify-${justify}`]: true,
           [`checkbox-alignment-${alignment}`]: true,
@@ -281,6 +288,8 @@ export class Checkbox implements ComponentInterface {
             onFocus={() => this.onFocus()}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
+            aria-checked={indeterminate ? 'mixed' : `${checked}`}
+            required={required}
             {...inheritedAttributes}
           />
           <div
@@ -380,6 +389,14 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         <path d="M2 12H22" part="mark" />
       ) : (
         <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+      );
+    }
+
+    if (theme === 'ionic') {
+      path = indeterminate ? (
+        <path d="M6.5 12H17.5" stroke-linecap="round" part="mark" />
+      ) : (
+        <path d="M6 12.5L10 16.5L18.5 8" stroke-linecap="round" stroke-linejoin="round" part="mark" />
       );
     }
 

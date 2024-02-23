@@ -1,0 +1,73 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// Material Design Checkbox
+// --------------------------------------------------
+
+/// @prop - Opacity of the disabled checkbox label
+$checkbox-ionic-disabled-opacity: $form-control-md-disabled-opacity !default;
+
+/// @prop - Background color of the checkbox icon when off
+$checkbox-ionic-icon-background-color-off: $item-md-background !default;
+
+/// @prop - Size of the checkbox icon
+/// The icon size does not use dynamic font
+/// because it does not scale in native.
+$checkbox-ionic-icon-size: 24px !default;
+
+/// @prop - Border width of the checkbox icon
+$checkbox-ionic-icon-border-width: 1px !default;
+
+/// @prop - Border style of the checkbox icon
+$checkbox-ionic-icon-border-style: solid !default;
+
+/// @prop - Border color of the checkbox icon when off
+$checkbox-ionic-icon-border-color-off: #9a9a9a !default;
+
+/// @prop - Outline width of the checkbox
+$checkbox-ionic-outline-width: 2px !default;
+
+/// @prop - Outline color of the checkbox
+$checkbox-ionic-outline-color: #9ec4fd !default;
+
+/// @prop - Padding to provide space between the checkbox and label and the outline
+$checkbox-ionic-outline-padding: 2px !default;
+
+/// @prop - Transition duration of the checkbox
+$checkbox-ionic-transition-duration: 180ms !default;
+
+/// @prop - Transition easing of the checkbox
+$checkbox-ionic-transition-easing: cubic-bezier(0.4, 0, 0.2, 1) !default;
+
+/// @prop - Margin top of the start checkbox item
+$checkbox-ionic-item-start-margin-top: 18px !default;
+
+/// @prop - Margin end of the start checkbox item
+$checkbox-ionic-item-start-margin-end: 36px !default;
+
+/// @prop - Margin bottom of the start checkbox item
+$checkbox-ionic-item-start-margin-bottom: $checkbox-ionic-item-start-margin-top !default;
+
+/// @prop - Margin start of the start checkbox item
+$checkbox-ionic-item-start-margin-start: 4px !default;
+
+/// @prop - Margin top of the end checkbox item
+$checkbox-ionic-item-end-margin-top: 18px !default;
+
+/// @prop - Margin end of the end checkbox item
+$checkbox-ionic-item-end-margin-end: 0 !default;
+
+/// @prop - Margin bottom of the end checkbox item
+$checkbox-ionic-item-end-margin-bottom: $checkbox-ionic-item-end-margin-top !default;
+
+/// @prop - Margin start of the end checkbox item
+$checkbox-ionic-item-end-margin-start: 0 !default;
+
+/// @prop - Opacity of the disabled checkbox
+/// This value is used because the checkbox color is set to
+/// `rgb(0, 0, 0, 0.60)` when enabled and we need it to be
+/// `rgb(0, 0, 0, 0.38)` when disabled but the disabled
+/// opacity is applied on top of the transparent color so
+/// this opacity gets us the equivalent of applying `0.38`
+/// on top of an opaque checkbox `rgb(0, 0, 0, 1.0)`
+$checkbox-ionic-icon-disabled-opacity: 0.63 !default;

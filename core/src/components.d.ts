@@ -711,6 +711,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * If `true`, the checkbox will be presented with an error style when it is unchecked.
+         */
+        "required": boolean;
+        /**
           * The theme determines the appearance of components.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -5669,6 +5673,10 @@ declare namespace LocalJSX {
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: IonCheckboxCustomEvent<StyleEventDetail>) => void;
+        /**
+          * If `true`, the checkbox will be presented with an error style when it is unchecked.
+         */
+        "required"?: boolean;
         /**
           * The theme determines the appearance of components.
          */

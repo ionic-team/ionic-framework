@@ -316,6 +316,7 @@ ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',f
 ion-checkbox,prop,legacy,boolean | undefined,undefined,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
+ion-checkbox,prop,required,boolean,false,false,false
 ion-checkbox,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-checkbox,prop,value,any,'on',false,false
 ion-checkbox,event,ionBlur,void,true

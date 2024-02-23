@@ -1,0 +1,167 @@
+@import "./checkbox";
+@import "./checkbox.ionic.vars";
+
+// Material Design Checkbox
+// --------------------------------------------------
+
+:host {
+  // Border
+  --border-radius: calc(var(--size) * 0.125);
+  --border-width: #{$checkbox-ionic-icon-border-width};
+  --border-style: #{$checkbox-ionic-icon-border-style};
+  --border-color: #{$checkbox-ionic-icon-border-color-off};
+  --checkmark-width: 1.5;
+
+  // Background
+  --checkbox-background: #{$checkbox-ionic-icon-background-color-off};
+  --checkbox-background-checked: #1068eb;
+  --border-color-checked: #1068eb;
+
+  // Transition
+  --transition: #{background $checkbox-ionic-transition-duration $checkbox-ionic-transition-easing};
+
+  // Size
+  --size: #{$checkbox-ionic-icon-size};
+
+  // margin is required to make room for outline on focus, otherwise the outline may get cut off
+  @include margin($checkbox-ionic-outline-width);
+}
+
+:host(.in-item) {
+  @include padding($checkbox-ionic-outline-padding);
+}
+
+:host(:not(.in-item)) {
+  .checkbox-wrapper {
+    @include padding($checkbox-ionic-outline-padding);
+  }
+}
+
+// :host(.in-item) {
+//   @include padding($checkbox-ionic-in-item-padding);
+//   height: calc(100% - #{$checkbox-ionic-in-item-padding} * 2);
+// }
+
+.checkbox-icon path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+}
+
+// Checkbox: Focused
+// --------------------------------------------------------
+
+:host(:focus) .checkbox-wrapper {
+  outline: $checkbox-ionic-outline-width solid $checkbox-ionic-outline-color;
+}
+
+:host(:focus.checkbox-checked) .checkbox-wrapper,
+:host(:focus.checkbox-indeterminate) .checkbox-wrapper {
+  outline: $checkbox-ionic-outline-width solid $checkbox-ionic-outline-color;
+}
+
+// unchecked checkbox with `required` property set to true
+:host(:focus.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) .checkbox-wrapper {
+  outline-color: #ffafaf;
+}
+
+// Checkbox: Active
+// --------------------------------------------------------
+
+:host(:active) .checkbox-icon {
+  background-color: #e3e3e3;
+}
+
+:host(:active.checkbox-checked) .checkbox-icon,
+:host(:active.checkbox-indeterminate) .checkbox-icon {
+  background-color: #105ed1;
+}
+
+// Checkbox: Hover
+// --------------------------------------------------------
+
+:host(:hover) .checkbox-icon {
+  background-color: #ececec;
+}
+
+:host(:hover.checkbox-checked) .checkbox-icon,
+:host(:hover.checkbox-indeterminate) .checkbox-icon {
+  background-color: #1061da;
+}
+
+// Material Design Checkbox: Checked / Indeterminate
+// --------------------------------------------------------
+
+:host(.checkbox-checked) .checkbox-icon path,
+:host(.checkbox-indeterminate) .checkbox-icon path {
+  stroke-dashoffset: 0;
+
+  transition: stroke-dashoffset 90ms linear 90ms;
+}
+
+// Material Design Checkbox: Disabled
+// --------------------------------------------------------
+// The checkbox itself should use the disabled
+// opacity set by its spec, while the label
+// should match the other form controls
+
+:host(.legacy-checkbox.checkbox-disabled),
+:host(.checkbox-disabled) .label-text-wrapper {
+  opacity: $checkbox-ionic-disabled-opacity;
+}
+
+:host(.checkbox-disabled) .native-wrapper {
+  opacity: $checkbox-ionic-icon-disabled-opacity;
+}
+
+:host(.checkbox-disabled.checkbox-checked) .checkbox-icon {
+  border-width: 0;
+
+  background-color: #c9c9c9;
+}
+
+:host(.checkbox-disabled.checkbox-indeterminate) .checkbox-icon {
+  border-width: 0;
+
+  background-color: #74aafc;
+}
+
+// disabled, unchecked checkbox
+:host(.checkbox-disabled) .checkbox-icon {
+  border-color: #c9c9c9;
+
+  background-color: #f5f5f5;
+}
+
+// unchecked checkbox with `required` property set to true
+:host(.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) {
+  .checkbox-icon {
+    border-color: #f72c2c;
+  }
+}
+
+// Material Design Checkbox Within An Item
+// TODO(FW-3100): remove this
+// --------------------------------------------------------
+
+:host(.in-item.legacy-checkbox) {
+  // end position by default
+  @include margin(
+    $checkbox-ionic-item-end-margin-top,
+    $checkbox-ionic-item-end-margin-end,
+    $checkbox-ionic-item-end-margin-bottom,
+    $checkbox-ionic-item-end-margin-start
+  );
+
+  display: block;
+
+  position: static;
+}
+
+:host(.in-item.legacy-checkbox[slot="start"]) {
+  @include margin(
+    $checkbox-ionic-item-start-margin-top,
+    $checkbox-ionic-item-start-margin-end,
+    $checkbox-ionic-item-start-margin-bottom,
+    $checkbox-ionic-item-start-margin-start
+  );
+}
