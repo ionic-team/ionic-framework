@@ -10,6 +10,9 @@
   --padding-end: 16px;
 
   min-height: 56px;
+
+  /* stylelint-disable declaration-no-important */
+  padding-top: 20px !important;
 }
 
 // Shape
@@ -106,7 +109,7 @@
  * This makes the label sit above the input.
  */
 :host(.label-floating.input-fill-outline) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
+  @include transform(translateY(-100%));
   @include margin(0);
 
   /**
@@ -114,6 +117,12 @@
    * beyond the bounds of the input.
    */
   max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale});
+}
+
+:host(.label-floating.input-fill-outline:not(.input-shape-round)) .label-text-wrapper {
+  top: 0;
+  /* stylelint-disable property-disallowed-list */
+  left: 0;
 }
 
 /**
@@ -230,6 +239,6 @@
  * the floating/stacked label. We simulate this "cut out"
  * by removing the top border from the notch fragment.
  */
-:host(.label-floating.input-fill-outline) .input-outline-notch {
-  border-top: none;
-}
+// :host(.label-floating.input-fill-outline) .input-outline-notch {
+//   border-top: none;
+// }
