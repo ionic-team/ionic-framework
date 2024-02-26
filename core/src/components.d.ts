@@ -2553,6 +2553,10 @@ export namespace Components {
          */
         "animated": boolean;
         /**
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+         */
+        "autocapitalize": string;
+        /**
           * Set the input's autocomplete property.
          */
         "autocomplete": AutocompleteTypes;
@@ -2581,6 +2585,10 @@ export namespace Components {
          */
         "debounce"?: number;
         /**
+          * The direction of the searchbar's text.
+         */
+        "dir"?: 'ltr' | 'rtl' | 'auto';
+        /**
           * If `true`, the user cannot interact with the input.
          */
         "disabled": boolean;
@@ -2596,6 +2604,18 @@ export namespace Components {
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The language of the searchbar's text.
+         */
+        "lang"?: string;
+        /**
+          * This attribute specifies the maximum number of characters that the user can enter.
+         */
+        "maxlength"?: number;
+        /**
+          * This attribute specifies the minimum number of characters that the user can enter.
+         */
+        "minlength"?: number;
         /**
           * The mode determines which platform styles to use.
          */
@@ -7281,6 +7301,10 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+         */
+        "autocapitalize"?: string;
+        /**
           * Set the input's autocomplete property.
          */
         "autocomplete"?: AutocompleteTypes;
@@ -7309,6 +7333,10 @@ declare namespace LocalJSX {
          */
         "debounce"?: number;
         /**
+          * The direction of the searchbar's text.
+         */
+        "dir"?: 'ltr' | 'rtl' | 'auto';
+        /**
           * If `true`, the user cannot interact with the input.
          */
         "disabled"?: boolean;
@@ -7320,6 +7348,18 @@ declare namespace LocalJSX {
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The language of the searchbar's text.
+         */
+        "lang"?: string;
+        /**
+          * This attribute specifies the maximum number of characters that the user can enter.
+         */
+        "maxlength"?: number;
+        /**
+          * This attribute specifies the minimum number of characters that the user can enter.
+         */
+        "minlength"?: number;
         /**
           * The mode determines which platform styles to use.
          */

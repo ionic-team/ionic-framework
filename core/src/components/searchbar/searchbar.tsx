@@ -52,6 +52,12 @@ export class Searchbar implements ComponentInterface {
   @Prop() animated = false;
 
   /**
+   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+   * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+   */
+  @Prop() autocapitalize = 'off';
+
+  /**
    * Set the input's autocomplete property.
    */
   @Prop() autocomplete: AutocompleteTypes = 'off';
@@ -94,6 +100,11 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
+   * The direction of the searchbar's text.
+   */
+  @Prop() dir?: 'ltr' | 'rtl' | 'auto';
+
+  /**
    * If `true`, the user cannot interact with the input.
    */
   @Prop() disabled = false;
@@ -111,6 +122,21 @@ export class Searchbar implements ComponentInterface {
    * `"previous"`, `"search"`, and `"send"`.
    */
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
+   * The language of the searchbar's text.
+   */
+  @Prop() lang?: string;
+
+  /**
+   * This attribute specifies the maximum number of characters that the user can enter.
+   */
+  @Prop() maxlength?: number;
+
+  /**
+   * This attribute specifies the minimum number of characters that the user can enter.
+   */
+  @Prop() minlength?: number;
 
   /**
    * If used in a form, set the name of the control, which is submitted with the form data.
