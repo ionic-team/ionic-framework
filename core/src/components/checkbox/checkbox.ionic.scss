@@ -27,21 +27,6 @@
   @include margin($checkbox-ionic-outline-width);
 }
 
-:host(.in-item) {
-  @include padding($checkbox-ionic-outline-padding);
-}
-
-:host(:not(.in-item)) {
-  .checkbox-wrapper {
-    @include padding($checkbox-ionic-outline-padding);
-  }
-}
-
-// :host(.in-item) {
-//   @include padding($checkbox-ionic-in-item-padding);
-//   height: calc(100% - #{$checkbox-ionic-in-item-padding} * 2);
-// }
-
 .checkbox-icon path {
   stroke-dasharray: 30;
   stroke-dashoffset: 30;
@@ -50,17 +35,17 @@
 // Checkbox: Focused
 // --------------------------------------------------------
 
-:host(:focus) .checkbox-wrapper {
+:host(:focus) .checkbox-icon {
   outline: $checkbox-ionic-outline-width solid $checkbox-ionic-outline-color;
 }
 
-:host(:focus.checkbox-checked) .checkbox-wrapper,
-:host(:focus.checkbox-indeterminate) .checkbox-wrapper {
+:host(:focus.checkbox-checked) .checkbox-icon,
+:host(:focus.checkbox-indeterminate) .checkbox-icon {
   outline: $checkbox-ionic-outline-width solid $checkbox-ionic-outline-color;
 }
 
 // unchecked checkbox with `required` property set to true
-:host(:focus.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) .checkbox-wrapper {
+:host(:focus.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) .checkbox-icon {
   outline-color: #ffafaf;
 }
 
