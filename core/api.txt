@@ -1297,6 +1297,7 @@ ion-select,css-prop,--border-width
 ion-select,css-prop,--highlight-color-focused
 ion-select,css-prop,--highlight-color-invalid
 ion-select,css-prop,--highlight-color-valid
+ion-select,css-prop,--highlight-height
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
