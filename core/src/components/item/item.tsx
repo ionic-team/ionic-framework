@@ -32,9 +32,7 @@ import type { CounterFormatter } from './item-interface';
     ios: 'item.ios.scss',
     md: 'item.md.scss',
   },
-  shadow: {
-    delegatesFocus: true,
-  },
+  shadow: true,
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
   private labelColorStyles = {};
