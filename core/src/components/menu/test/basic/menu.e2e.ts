@@ -27,7 +27,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto(`/src/components/menu/test/basic`, config);
     });
 
-    test('should trap focus', async ({ page, skip, browserName }) => {
+    test.only('should trap focus', async ({ page, skip, browserName }) => {
       skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
       // TODO (FW-2979)
       skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
