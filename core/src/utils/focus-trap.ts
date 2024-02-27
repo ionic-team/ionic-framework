@@ -45,9 +45,13 @@ export const focusLastDescendant = <T extends HTMLElement>(ref: Element, fallbac
 };
 
 /**
- * Focuses a particular element in an overlay. If the element
+ * Focuses a particular element in a context. If the element
  * doesn't have anything focusable associated with it then
- * the overlay itself will be focused.
+ * a fallback element will be focused.
+ *
+ * This fallback is typically an ancestor
+ * container such as a menu or overlay so focus does not
+ * leave the container we are trying to trap focus in.
  * This should be used instead of the focus() method
  * on most elements because the focusable element
  * may not be the host element.
