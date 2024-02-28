@@ -18,11 +18,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **toggle:** set switch icon color correctly ([#28812](https://github.com/ionic-team/ionic-framework/issues/28812)) ([749df5b](https://github.com/ionic-team/ionic-framework/commit/749df5bdcec95e718199c4915c2a762ee29cdefb))
 
 
-### chore
-
-* remove unused code ([#28503](https://github.com/ionic-team/ionic-framework/issues/28503)) ([5aafd68](https://github.com/ionic-team/ionic-framework/commit/5aafd68f03bb6daefa9bfe58ce68459c3068fc5d))
-
-
 ### Code Refactoring
 
 * **checkbox:** remove legacy property and support for legacy syntax ([#29043](https://github.com/ionic-team/ionic-framework/issues/29043)) ([fb5ae5b](https://github.com/ionic-team/ionic-framework/commit/fb5ae5b07f98a3b62a35ab07192a0fc7898ecbea))
@@ -31,11 +26,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **range:** remove legacy property and support for legacy syntax ([#29040](https://github.com/ionic-team/ionic-framework/issues/29040)) ([58c795f](https://github.com/ionic-team/ionic-framework/commit/58c795f31583800c86253fb11bd4dc19370883b0))
 * **toast:** remove cssClass from ToastButton ([#28977](https://github.com/ionic-team/ionic-framework/issues/28977)) ([9856295](https://github.com/ionic-team/ionic-framework/commit/9856295915f1460ba1cd4b6f8c8d420627a533e6))
 * **toggle:** remove legacy property and support for legacy syntax ([#29037](https://github.com/ionic-team/ionic-framework/issues/29037)) ([c72eced](https://github.com/ionic-team/ionic-framework/commit/c72ecedc09fff0af9af8e077fc816110549fca57))
-
-
-### Documentation
-
-* **breaking:** add v8 browser and platform support ([#28368](https://github.com/ionic-team/ionic-framework/issues/28368)) ([409df1b](https://github.com/ionic-team/ionic-framework/commit/409df1bea59d81698d257c66019c1a6d12a52a9d))
 
 
 ### Features
@@ -62,11 +52,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * **angular:** views are not moved on mount ([#28544](https://github.com/ionic-team/ionic-framework/issues/28544)) ([77a0640](https://github.com/ionic-team/ionic-framework/commit/77a0640e92dc4300b9e89221ef03e96206eca9ae)), closes [#28534](https://github.com/ionic-team/ionic-framework/issues/28534)
-
-
-### Reverts
-
-* Revert "chore(): add updated snapshots" ([613bd54](https://github.com/ionic-team/ionic-framework/commit/613bd54adf519cef74e30066d549bd2ccc011b6a))
 
 
 ### BREAKING CHANGES
