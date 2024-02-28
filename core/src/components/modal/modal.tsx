@@ -345,10 +345,47 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    const { breakpoints, initialBreakpoint, el } = this;
+    const { breakpoints, initialBreakpoint, el, htmlAttributes } = this;
     const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
-    this.inheritedAttributes = inheritAttributes(el, ['aria-label', 'role']);
+    const attributesToInherit = ['aria-label', 'role'];
+    this.inheritedAttributes = inheritAttributes(el, attributesToInherit);
+
+    /**
+     * When using a controller modal you can set attributes
+     * using the htmlAttributes property. Since the above attributes
+     * need to be inherited inside of the modal, we need to look
+     * and see if these attributes are being set via htmlAttributes.
+     *
+     * We could alternatively move this to componentDidLoad to simplify the work
+     * here, but we'd then need to make inheritedAttributes a State variable,
+     * thus causing another render to always happen after the first render.
+     */
+    if (htmlAttributes !== undefined) {
+      attributesToInherit.forEach((attribute) => {
+        const attributeValue = htmlAttributes[attribute];
+        if (attributeValue) {
+          /**
+           * If an attribute we need to inherit was
+           * set using htmlAttributes then add it to
+           * inheritedAttributes and remove it from htmlAttributes.
+           * This ensures the attribute is inherited and not
+           * set on the host.
+           *
+           * In this case, if an inherited attribute is set
+           * on the host element and using htmlAttributes then
+           * htmlAttributes wins, but that's not a pattern that we recommend.
+           * The only time you'd need htmlAttributes is when using modalController.
+           */
+          this.inheritedAttributes = {
+            ...this.inheritedAttributes,
+            [attribute]: htmlAttributes[attribute]
+          }
+
+          delete htmlAttributes[attribute];
+        }
+      });
+    }
 
     if (isSheetModal) {
       this.currentBreakpoint = this.initialBreakpoint;
