@@ -43,7 +43,7 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * lang and dir are globally enumerated attributes.
-   * As a result, creating these are properties
+   * As a result, creating these as properties
    * can have unintended side effects. Instead, we
    * listen for attribute changes and inherit them
    * to the inner `<input>` element.
