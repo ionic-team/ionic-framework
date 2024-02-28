@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import { debounceEvent, raf, componentOnReady } from '@utils/helpers';
+import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
@@ -28,6 +29,7 @@ export class Searchbar implements ComponentInterface {
   private shouldAlignLeft = true;
   private originalIonInput?: EventEmitter<SearchbarInputEventDetail>;
   private inputId = `ion-searchbar-${searchbarIds++}`;
+  private inheritedAttributes: Attributes = {};
 
   /**
    * The value of the input when the textarea is focused.
@@ -38,6 +40,31 @@ export class Searchbar implements ComponentInterface {
 
   @State() focused = false;
   @State() noAnimate = true;
+
+  /**
+   * lang and dir are globally enumerated attributes.
+   * As a result, creating these are properties
+   * can have unintended side effects. Instead, we
+   * listen for attribute changes and inherit them
+   * to the inner `<input>` element.
+   */
+  @Watch('lang')
+  onLangChanged(newValue: string) {
+    this.inheritedAttributes = {
+      ...this.inheritedAttributes,
+      lang: newValue,
+    };
+    forceUpdate(this);
+  }
+
+  @Watch('dir')
+  onDirChanged(newValue: string) {
+    this.inheritedAttributes = {
+      ...this.inheritedAttributes,
+      dir: newValue,
+    };
+    forceUpdate(this);
+  }
 
   /**
    * The color to use from your application's color palette.
@@ -100,11 +127,6 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * The direction of the searchbar's text.
-   */
-  @Prop() dir?: 'ltr' | 'rtl' | 'auto';
-
-  /**
    * If `true`, the user cannot interact with the input.
    */
   @Prop() disabled = false;
@@ -122,11 +144,6 @@ export class Searchbar implements ComponentInterface {
    * `"previous"`, `"search"`, and `"send"`.
    */
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
-
-  /**
-   * The language of the searchbar's text.
-   */
-  @Prop() lang?: string;
 
   /**
    * This attribute specifies the maximum number of characters that the user can enter.
@@ -256,6 +273,12 @@ export class Searchbar implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = {
+      ...inheritAttributes(this.el, ['lang', 'dir']),
+    };
   }
 
   componentDidLoad() {
@@ -640,12 +663,16 @@ export class Searchbar implements ComponentInterface {
             onChange={this.onChange}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
+            minLength={this.minlength}
+            maxLength={this.maxlength}
             placeholder={this.placeholder}
             type={this.type}
             value={this.getValue()}
+            autoCapitalize={this.autocapitalize}
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
             spellcheck={this.spellcheck}
+            {...this.inheritedAttributes}
           />
 
           {mode === 'md' && cancelButton}

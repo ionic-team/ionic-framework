@@ -2585,10 +2585,6 @@ export namespace Components {
          */
         "debounce"?: number;
         /**
-          * The direction of the searchbar's text.
-         */
-        "dir"?: 'ltr' | 'rtl' | 'auto';
-        /**
           * If `true`, the user cannot interact with the input.
          */
         "disabled": boolean;
@@ -2604,10 +2600,6 @@ export namespace Components {
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-        /**
-          * The language of the searchbar's text.
-         */
-        "lang"?: string;
         /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
@@ -7333,10 +7325,6 @@ declare namespace LocalJSX {
          */
         "debounce"?: number;
         /**
-          * The direction of the searchbar's text.
-         */
-        "dir"?: 'ltr' | 'rtl' | 'auto';
-        /**
           * If `true`, the user cannot interact with the input.
          */
         "disabled"?: boolean;
@@ -7348,10 +7336,6 @@ declare namespace LocalJSX {
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-        /**
-          * The language of the searchbar's text.
-         */
-        "lang"?: string;
         /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
