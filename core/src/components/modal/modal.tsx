@@ -379,8 +379,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
            */
           this.inheritedAttributes = {
             ...this.inheritedAttributes,
-            [attribute]: htmlAttributes[attribute]
-          }
+            [attribute]: htmlAttributes[attribute],
+          };
 
           delete htmlAttributes[attribute];
         }
