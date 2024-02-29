@@ -39,6 +39,7 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
    * this feature is disabled by default as of Ionic 8.0. Developers are
    * able to re-enabled it temporarily. The team may remove this utility
    * if it is determined that doing so would not bring any adverse side effects.
+   * TODO FW-6014 remove input blurring utility (including implementation)
    */
   const inputBlurring = config.getBoolean('inputBlurring', false);
   const scrollPadding = config.getBoolean('scrollPadding', true);
@@ -120,6 +121,7 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
     }
   };
 
+console.log(inputBlurring, INPUT_BLURRING)
   if (inputBlurring && INPUT_BLURRING) {
     enableInputBlurring();
   }
