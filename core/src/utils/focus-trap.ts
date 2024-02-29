@@ -22,11 +22,13 @@ export const focusableQueryString =
  * This fallback is typically an ancestor
  * container such as a menu or overlay so focus does not
  * leave the container we are trying to trap focus in.
+ *
+ * If no fallback is specified then we focus the container itself.
  */
-export const focusFirstDescendant = <R extends HTMLElement, T extends HTMLElement>(ref: R, fallbackElement: T) => {
+export const focusFirstDescendant = <R extends HTMLElement, T extends HTMLElement>(ref: R, fallbackElement?: T) => {
   const firstInput = ref.querySelector<HTMLElement>(focusableQueryString);
 
-  focusElementInContext(firstInput, fallbackElement);
+  focusElementInContext(firstInput, fallbackElement ?? ref);
 };
 
 /**
@@ -36,12 +38,14 @@ export const focusFirstDescendant = <R extends HTMLElement, T extends HTMLElemen
  * This fallback is typically an ancestor
  * container such as a menu or overlay so focus does not
  * leave the container we are trying to trap focus in.
+ *
+ * If no fallback is specified then we focus the container itself.
  */
-export const focusLastDescendant = <R extends HTMLElement, T extends HTMLElement>(ref: R, fallbackElement: T) => {
+export const focusLastDescendant = <R extends HTMLElement, T extends HTMLElement>(ref: R, fallbackElement?: T) => {
   const inputs = Array.from(ref.querySelectorAll<HTMLElement>(focusableQueryString));
   const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
 
-  focusElementInContext(lastInput, fallbackElement);
+  focusElementInContext(lastInput, fallbackElement ?? ref);
 };
 
 /**

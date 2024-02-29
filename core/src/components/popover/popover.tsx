@@ -505,7 +505,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * descendant inside of the popover.
      */
     if (this.focusDescendantOnPresent) {
-      focusFirstDescendant(el, el);
+      focusFirstDescendant(el);
     }
 
     unlock();
