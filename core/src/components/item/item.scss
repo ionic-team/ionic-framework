@@ -521,20 +521,6 @@ button, a {
   --highlight-background: var(--highlight-color-invalid);
 }
 
-:host(.item-interactive.ion-invalid) ::slotted([slot="helper"]) {
-  display: none;
-}
-
-::slotted([slot="error"]) {
-  display: none;
-
-  color: var(--highlight-color-invalid);
-}
-
-:host(.item-interactive.ion-invalid) ::slotted([slot="error"]) {
-  display: block;
-}
-
 // Item Datetime
 // --------------------------------------------------
 
@@ -591,8 +577,6 @@ ion-ripple-effect {
   align-self: center;
 }
 
-::slotted([slot="helper"]),
-::slotted([slot="error"]),
 .item-counter {
   padding-top: 5px;
 

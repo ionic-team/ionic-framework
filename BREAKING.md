@@ -21,6 +21,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Checkbox](#version-8x-checkbox)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
+  - [Item](#version-8x-item)
   - [Input](#version-8x-input)
   - [Modal](#version-8x-modal)
   - [Nav](#version-8x-nav)
@@ -161,6 +162,10 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
       +  background: red;
       }
       ```
+<h4 id="version-8x-item">Item</h4>
+
+- The `helper` slot has been removed. Developers should use the `helperText` property on `ion-input` and `ion-textarea` instead.
+- The `error` slot has been removed. Developers should use the `errorText` property on `ion-input` and `ion-textarea` instead.
 
 <h4 id="version-8x-input">Input</h4>
 
