@@ -101,10 +101,10 @@ $item-md-fill-outline-label-padding:        4px !default;
 $item-md-start-slot-margin-start:           null !default;
 
 /// @prop - Margin end for the start slot
-$item-md-start-slot-margin-end:             32px !default;
+$item-md-start-slot-margin-end:             16px !default;
 
 /// @prop - Margin start for the end slot
-$item-md-end-slot-margin-start:             32px !default;
+$item-md-end-slot-margin-start:             16px !default;
 
 /// @prop - Margin end for the end slot
 $item-md-end-slot-margin-end:               null !default;
@@ -192,19 +192,6 @@ $item-md-note-slot-padding-bottom:          10px !default;
 
 /// @prop - Padding start for a note in the start/end slot
 $item-md-note-slot-padding-start:           $item-md-note-slot-padding-end !default;
-
-/// @prop - Padding start for a note in the start slot
-$item-md-note-start-slot-padding-start:     null !default;
-
-/// @prop - Padding end for a note in the start slot
-$item-md-note-start-slot-padding-end:       16px !default;
-
-/// @prop - Padding start for a note in the end slot
-$item-md-note-end-slot-padding-start:       16px !default;
-
-/// @prop - Padding end for a note in the end slot
-$item-md-note-end-slot-padding-end:         null !default;
-
 
 // Avatar/Thumbnail Slots
 // --------------------------------------------------
