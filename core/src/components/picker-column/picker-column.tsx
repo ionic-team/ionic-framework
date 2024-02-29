@@ -87,6 +87,8 @@ export class PickerColumn implements ComponentInterface {
    * height of 0px.
    */
   componentWillLoad() {
+    const parentEl = (this.parentEl = this.el.closest('ion-picker') as HTMLIonPickerElement | null);
+
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
       const ev = entries[0];
 
@@ -94,6 +96,7 @@ export class PickerColumn implements ComponentInterface {
         const { activeItem, el } = this;
 
         this.isColumnVisible = true;
+
         /**
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
@@ -119,9 +122,17 @@ export class PickerColumn implements ComponentInterface {
         }
       }
     };
-    new IntersectionObserver(visibleCallback, { threshold: 0.001 }).observe(this.el);
+    /**
+     * Set the root to be the parent picker element
+     * This causes the IO callback
+     * to be fired in WebKit as soon as the element
+     * is visible. If we used the default root value
+     * then WebKit would only fire the IO callback
+     * after any animations (such as a modal transition)
+     * finished, and there would potentially be a flicker.
+     */
+    new IntersectionObserver(visibleCallback, { threshold: 0.001, root: this.parentEl }).observe(this.el);
 
-    const parentEl = (this.parentEl = this.el.closest('ion-picker') as HTMLIonPickerElement | null);
     if (parentEl !== null) {
       // TODO(FW-2832): type
       parentEl.addEventListener('ionInputModeChange', (ev: any) => this.inputModeChange(ev));
