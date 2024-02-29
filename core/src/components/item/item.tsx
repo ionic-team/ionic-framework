@@ -78,13 +78,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() download: string | undefined;
 
   /**
-   * The fill for the item. If `"solid"` the item will have a background. If
-   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
-   * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
-   */
-  @Prop() fill?: 'outline' | 'solid';
-
-  /**
    * The shape of the item. If "round" it will have increased
    * border radius.
    */
@@ -185,14 +178,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    const { el, fill, shape } = this;
-
-    if (fill !== undefined) {
-      printIonWarning(
-        'The "fill" property has been deprecated in favor of using the "fill" property on ion-input or ion-textarea.',
-        el
-      );
-    }
+    const { el, shape } = this;
 
     if (shape !== undefined) {
       printIonWarning(
@@ -275,7 +261,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       detail,
       detailIcon,
       download,
-      fill,
       labelColorStyles,
       lines,
       disabled,
@@ -343,7 +328,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       Object.assign(childStyles, value);
     });
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
-    const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el) && !hostContext('ion-radio-group', this.el);
 
     return (
@@ -357,7 +341,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [mode]: true,
             'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
-            [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
             'item-has-interactive-control': firstInteractive !== undefined,
             'item-disabled': disabled,

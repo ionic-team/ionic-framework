@@ -99,13 +99,13 @@
 // Item: Color
 // --------------------------------------------------
 
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native {
+:host(.ion-color) .item-native {
   background: current-color(base);
   color: current-color(contrast);
 }
 
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native,
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-inner {
+:host(.ion-color) .item-native,
+:host(.ion-color) .item-inner {
   border-color: current-color(shade);
 }
 
@@ -484,15 +484,10 @@ button, a {
   opacity: var(--show-inset-highlight);
 }
 
-:host(.ion-focused.item-fill-solid) .item-highlight,
-:host(.item-has-focus.item-fill-solid) .item-highlight {
-  border-width: calc(var(--full-highlight-height) - 1px);
-}
-
 :host(.ion-focused) .item-inner-highlight,
-:host(.ion-focused:not(.item-fill-outline)) .item-highlight,
+:host(.ion-focused) .item-highlight,
 :host(.item-has-focus) .item-inner-highlight,
-:host(.item-has-focus:not(.item-fill-outline)) .item-highlight {
+:host(.item-has-focus) .item-highlight {
   border-top: none;
   border-right: none;
   border-left: none;
@@ -568,13 +563,6 @@ button, a {
 
 ion-ripple-effect {
   color: var(--ripple-color);
-}
-
-:host(.item-fill-solid) ::slotted([slot="start"]),
-:host(.item-fill-solid) ::slotted([slot="end"]),
-:host(.item-fill-outline) ::slotted([slot="start"]),
-:host(.item-fill-outline) ::slotted([slot="end"]) {
-  align-self: center;
 }
 
 // Item: Reduced Motion
