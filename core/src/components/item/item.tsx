@@ -3,7 +3,6 @@ import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } 
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes, raf } from '@utils/helpers';
-import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
@@ -173,8 +172,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    const { el } = this;
-
     raf(() => {
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
