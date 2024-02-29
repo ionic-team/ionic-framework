@@ -18,7 +18,6 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { CounterFormatter } from "./components/item/item-interface";
 import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -54,7 +53,6 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { CounterFormatter } from "./components/item/item-interface";
 export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -1294,16 +1292,6 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
-        /**
-          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counter": boolean;
-        /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
-          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counterFormatter"?: CounterFormatter;
         /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
@@ -6009,16 +5997,6 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
-        /**
-          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counter"?: boolean;
-        /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
-          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counterFormatter"?: CounterFormatter;
         /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */

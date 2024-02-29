@@ -577,27 +577,6 @@ ion-ripple-effect {
   align-self: center;
 }
 
-.item-counter {
-  padding-top: 5px;
-
-  font-size: dynamic-font(12px);
-
-  z-index: 1;
-}
-
-// Item Max Length Counter
-// --------------------------------------------------
-
-.item-counter {
-  @include margin-horizontal(auto, null);
-
-  color: #{$background-color-step-550};
-
-  white-space: nowrap;
-
-  padding-inline-start: 16px;
-}
-
 // Item: Reduced Motion
 // --------------------------------------------------
 

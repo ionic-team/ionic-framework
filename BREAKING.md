@@ -164,8 +164,9 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
       ```
 <h4 id="version-8x-item">Item</h4>
 
-- The `helper` slot has been removed. Developers should use the `helperText` property on `ion-input` and `ion-textarea` instead.
-- The `error` slot has been removed. Developers should use the `errorText` property on `ion-input` and `ion-textarea` instead.
+- The `helper` slot has been removed. Developers should use the `helperText` property on `ion-input` and `ion-textarea`.
+- The `error` slot has been removed. Developers should use the `errorText` property on `ion-input` and `ion-textarea`.
+- Counter functionality has been removed including the `counter` and `counterFormatter` properties. Developers should use the properties of the same name on `ion-input` and `ion-textarea`.
 
 <h4 id="version-8x-input">Input</h4>
 

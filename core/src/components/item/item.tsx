@@ -3,16 +3,13 @@ import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } 
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes, raf } from '@utils/helpers';
-import { printIonError, printIonWarning } from '@utils/logging';
+import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
-import type { InputInputEventDetail } from '../input/input-interface';
 import type { RouterDirection } from '../router/utils/interface';
-
-import type { CounterFormatter } from './item-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -110,12 +107,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-   * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-   */
-  @Prop() counter = false;
-
-  /**
    * When using a router, it specifies the transition animation when navigating to
    * another page using `href`.
    */
@@ -139,31 +130,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  /**
-   * A callback used to format the counter text.
-   * By default the counter text is set to "itemLength / maxLength".
-   * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-   */
-  @Prop() counterFormatter?: CounterFormatter;
-
-  @State() counterString: string | null | undefined;
-
   @Watch('button')
   buttonChanged() {
     // Update the focusable option when the button option is changed
     this.focusable = this.isFocusable();
-  }
-
-  @Watch('counterFormatter')
-  counterFormatterChanged() {
-    this.updateCounterOutput(this.getFirstInput());
-  }
-
-  @Listen('ionInput')
-  handleIonInput(ev: CustomEvent<InputInputEventDetail>) {
-    if (this.counter && ev.target === this.getFirstInput()) {
-      this.updateCounterOutput(ev.target as HTMLIonInputElement | HTMLIonTextareaElement);
-    }
   }
 
   @Listen('ionColor')
@@ -207,10 +177,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   connectedCallback() {
-    if (this.counter) {
-      this.updateCounterOutput(this.getFirstInput());
-    }
-
     this.hasStartEl();
   }
 
@@ -219,21 +185,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    const { el, counter, counterFormatter, fill, shape } = this;
-
-    if (counter === true) {
-      printIonWarning(
-        'The "counter" property has been deprecated in favor of using the "counter" property on ion-input or ion-textarea.',
-        el
-      );
-    }
-
-    if (counterFormatter !== undefined) {
-      printIonWarning(
-        'The "counterFormatter" property has been deprecated in favor of using the "counterFormatter" property on ion-input or ion-textarea.',
-        el
-      );
-    }
+    const { el, fill, shape } = this;
 
     if (fill !== undefined) {
       printIonWarning(
@@ -304,35 +256,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.canActivate() || focusableChild !== null;
   }
 
-  private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
-    const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<
-      HTMLIonInputElement | HTMLIonTextareaElement
-    >;
-    return inputs[0];
-  }
-
-  private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
-    const { counter, counterFormatter, defaultCounterFormatter } = this;
-    if (counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
-      const length = inputEl?.value?.toString().length ?? 0;
-      if (counterFormatter === undefined) {
-        this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
-      } else {
-        try {
-          this.counterString = counterFormatter(length, inputEl.maxlength);
-        } catch (e) {
-          printIonError('Exception in provided `counterFormatter`.', e);
-          // Fallback to the default counter formatter when an exception happens
-          this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
-        }
-      }
-    }
-  }
-
-  private defaultCounterFormatter(length: number, maxlength: number) {
-    return `${length} / ${maxlength}`;
-  }
-
   private hasStartEl() {
     const startEl = this.el.querySelector('[slot="start"]');
     if (startEl !== null) {
@@ -349,7 +272,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   render() {
     const {
-      counterString,
       detail,
       detailIcon,
       download,
@@ -477,9 +399,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           <div class="item-highlight"></div>
         </TagType>
-        <div class="item-bottom">
-          {counterString && <ion-note class="item-counter">{counterString}</ion-note>}
-        </div>
       </Host>
     );
   }

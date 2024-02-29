@@ -448,12 +448,10 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', de
   'href',
   'rel',
   'lines',
-  'counter',
   'routerAnimation',
   'routerDirection',
   'target',
-  'type',
-  'counterFormatter'
+  'type'
 ]);
 
 
