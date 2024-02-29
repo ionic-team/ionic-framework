@@ -424,7 +424,7 @@ export class Menu implements ComponentInterface, MenuI {
        * before we can run the code after that. We cache the value
        * here to avoid that.
        */
-      focusFirstDescendant<HTMLIonMenuElement>(el, el);
+      focusFirstDescendant(el, el);
 
       /**
        * If the cached last focused element is the same as the now-
@@ -433,7 +433,7 @@ export class Menu implements ComponentInterface, MenuI {
        * last descendant.
        */
       if (this.lastFocus === doc.activeElement) {
-        focusLastDescendant<HTMLIonMenuElement>(el, el);
+        focusLastDescendant(el, el);
       }
     }
   }

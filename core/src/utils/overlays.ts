@@ -277,7 +277,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
         const lastFocus = lastOverlay.lastFocus;
 
         // Focus the first element in the overlay wrapper
-        focusFirstDescendant<HTMLIonOverlayElement>(overlayWrapper, lastOverlay);
+        focusFirstDescendant(overlayWrapper, lastOverlay);
 
         /**
          * If the cached last focused element is the
@@ -289,7 +289,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
          * last focus to equal the active element.
          */
         if (lastFocus === doc.activeElement) {
-          focusLastDescendant<HTMLIonOverlayElement>(overlayWrapper, lastOverlay);
+          focusLastDescendant(overlayWrapper, lastOverlay);
         }
         lastOverlay.lastFocus = doc.activeElement as HTMLElement;
       }
@@ -346,7 +346,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * last focus to equal the active element.
        */
       if (lastFocus === doc.activeElement) {
-        focusLastDescendant<HTMLIonOverlayElement>(lastOverlay, lastOverlay);
+        focusLastDescendant(lastOverlay, lastOverlay);
       }
       lastOverlay.lastFocus = doc.activeElement as HTMLElement;
     }
