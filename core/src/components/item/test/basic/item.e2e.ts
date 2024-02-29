@@ -26,8 +26,7 @@ configs().forEach(({ title, screenshot, config }) => {
         </style>
         <ion-list>
           <ion-item>
-            <ion-label>Item with helper</ion-label>
-            <div slot="helper">Helper</div>
+            <ion-label>Item</ion-label>
           </ion-item>
 
           <ion-item>
