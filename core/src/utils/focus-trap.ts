@@ -23,8 +23,8 @@ export const focusableQueryString =
  * container such as a menu or overlay so focus does not
  * leave the container we are trying to trap focus in.
  */
-export const focusFirstDescendant = <T extends HTMLElement>(ref: Element, fallbackElement: T) => {
-  const firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
+export const focusFirstDescendant = <T extends HTMLElement>(ref: HTMLElement, fallbackElement: T) => {
+  const firstInput = ref.querySelector<HTMLElement>(focusableQueryString);
 
   focusElementInContext(firstInput, fallbackElement);
 };
@@ -37,8 +37,8 @@ export const focusFirstDescendant = <T extends HTMLElement>(ref: Element, fallba
  * container such as a menu or overlay so focus does not
  * leave the container we are trying to trap focus in.
  */
-export const focusLastDescendant = <T extends HTMLElement>(ref: Element, fallbackElement: T) => {
-  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
+export const focusLastDescendant = <T extends HTMLElement>(ref: HTMLElement, fallbackElement: T) => {
+  const inputs = Array.from(ref.querySelectorAll<HTMLElement>(focusableQueryString));
   const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
 
   focusElementInContext(lastInput, fallbackElement);

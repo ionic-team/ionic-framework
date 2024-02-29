@@ -246,7 +246,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
         return;
       }
 
-      const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
+      const overlayWrapper = overlayRoot.querySelector<HTMLElement>('.ion-overlay-wrapper');
       if (!overlayWrapper) {
         return;
       }
