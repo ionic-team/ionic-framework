@@ -257,14 +257,6 @@
   @include padding($item-md-note-slot-padding-top, $item-md-note-slot-padding-end, $item-md-note-slot-padding-bottom, $item-md-note-slot-padding-start);
 }
 
-::slotted(ion-note[slot="start"]) {
-  @include padding-horizontal($item-md-note-start-slot-padding-start, $item-md-note-start-slot-padding-end);
-}
-
-::slotted(ion-note[slot="end"]) {
-  @include padding-horizontal($item-md-note-end-slot-padding-start, $item-md-note-end-slot-padding-end);
-}
-
 // Material Design Item Avatar
 // --------------------------------------------------
 
