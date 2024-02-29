@@ -121,7 +121,7 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
     }
   };
 
-console.log(inputBlurring, INPUT_BLURRING)
+  console.log(inputBlurring, INPUT_BLURRING);
   if (inputBlurring && INPUT_BLURRING) {
     enableInputBlurring();
   }
