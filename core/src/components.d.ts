@@ -1333,10 +1333,6 @@ export namespace Components {
          */
         "routerDirection": RouterDirection;
         /**
-          * The shape of the item. If "round" it will have increased border radius.
-         */
-        "shape"?: 'round';
-        /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target": string | undefined;
@@ -6032,10 +6028,6 @@ declare namespace LocalJSX {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
-        /**
-          * The shape of the item. If "round" it will have increased border radius.
-         */
-        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */

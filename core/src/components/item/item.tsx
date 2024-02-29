@@ -78,11 +78,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() download: string | undefined;
 
   /**
-   * The shape of the item. If "round" it will have increased
-   * border radius.
-   */
-  @Prop() shape?: 'round';
-  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
@@ -178,14 +173,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    const { el, shape } = this;
-
-    if (shape !== undefined) {
-      printIonWarning(
-        'The "shape" property has been deprecated in favor of using the "shape" property on ion-input or ion-textarea.',
-        el
-      );
-    }
+    const { el } = this;
 
     raf(() => {
       this.setMultipleInputs();
@@ -266,7 +254,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       disabled,
       href,
       rel,
-      shape,
       target,
       routerAnimation,
       routerDirection,
@@ -341,7 +328,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [mode]: true,
             'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
-            [`item-shape-${shape}`]: shape !== undefined,
             'item-has-interactive-control': firstInteractive !== undefined,
             'item-disabled': disabled,
             'in-list': inList,
