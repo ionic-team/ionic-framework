@@ -412,18 +412,6 @@ button, a {
   box-sizing: border-box;
 }
 
-:host(.item-label-stacked),
-:host(.item-label-floating) {
-  align-items: start;
-}
-
-:host(.item-label-stacked) .input-wrapper,
-:host(.item-label-floating) .input-wrapper {
-  flex: 1;
-  flex-direction: column;
-}
-
-
 // Item Input Highlight
 // --------------------------------------------------
 
@@ -515,21 +503,6 @@ button, a {
 :host(.item-interactive.ion-invalid) {
   --highlight-background: var(--highlight-color-invalid);
 }
-
-// Item Datetime
-// --------------------------------------------------
-
-:host(:not(.item-label)) ::slotted(ion-datetime) {
-  --padding-start: 0;
-}
-
-:host(.item-label-stacked) ::slotted(ion-datetime),
-:host(.item-label-floating) ::slotted(ion-datetime) {
-  --padding-start: 0;
-
-  width: 100%;
-}
-
 
 // Item w/ Multiple Inputs
 // --------------------------------------------------
