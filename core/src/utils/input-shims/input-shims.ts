@@ -37,7 +37,7 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
   /**
    * The team is evaluating if inputBlurring is still needed. As a result
    * this feature is disabled by default as of Ionic 8.0. Developers are
-   * able to re-enabled it temporarily. The team may remove this utility
+   * able to re-enable it temporarily. The team may remove this utility
    * if it is determined that doing so would not bring any adverse side effects.
    * TODO FW-6014 remove input blurring utility (including implementation)
    */
