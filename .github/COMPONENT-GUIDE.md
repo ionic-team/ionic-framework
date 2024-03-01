@@ -93,7 +93,7 @@ The following styles should be set for the CSS to work properly. Note that the `
 
 The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
 
-`:active` should not be used here as mobile Safari does use it unless the element has a `touchstart` listener (which we don't necessarily want to have to add to every element). From [Safari Web Content Guide](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/AdjustingtheTextSize/AdjustingtheTextSize.html):
+`:active` should not be used here as it is not received on mobile Safari unless the element has a `touchstart` listener (which we don't necessarily want to have to add to every element). From [Safari Web Content Guide](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/AdjustingtheTextSize/AdjustingtheTextSize.html):
 
 > On iOS, mouse events are sent so quickly that the down or active state is never received. Therefore, the :active pseudo state is triggered only when there is a touch event set on the HTML element
 
