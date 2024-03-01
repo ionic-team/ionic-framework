@@ -93,6 +93,10 @@ The following styles should be set for the CSS to work properly. Note that the `
 
 The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
 
+`:active` should not be used here as mobile Safari does use it unless the element has a `touchstart` listener (which we don't necessarily want to have to add to every element). From [Safari Web Content Guide](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/AdjustingtheTextSize/AdjustingtheTextSize.html):
+
+> On iOS, mouse events are sent so quickly that the down or active state is never received. Therefore, the :active pseudo state is triggered only when there is a touch event set on the HTML element
+
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
 #### JavaScript
@@ -109,7 +113,7 @@ render() {
 }
 ```
 
-Once that is done, the element will get the `ion-activated` class added on press.
+Once that is done, the element will get the `ion-activated` class added on press after a small delay. This delay exists so that the active state does not show up when an activatable element is tapped while scrolling.
 
 In addition to setting that class, `ion-activatable-instant` can be set in order to have an instant press with no delay:
 
@@ -212,7 +216,7 @@ TODO
 
 ### Focused
 
-The focused state should be enabled for elements with actions when tabbed to via the keyboard. This will only work inside of an `ion-app`. It usually changes the opacity or background of an element.
+The focused state should be enabled for elements with actions when tabbed to via the keyboard. This will only work inside of an `ion-app`. It usually changes the opacity or background of an element. Do not use `:focus` because that will cause the focus to apply even when an element is tapped (because the element is now focused). Instead, we only want the focus state to be shown when it makes sense which is what the `.ion-focusable` utility mentioned below does. Note that the [`:focus-visible`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible) pseudo-class mostly does the same thing as our JavaScript-driven utility. However, it does not work well with Shadow DOM components as the element that receivs focus is typically inside of the Shadow DOM, but we usually want to set the `:focus-visible` state on the host so we can style other parts of the component. Using other combinations such as `:has(:focus-visible)` does not work because `:has` does not pierce the Shadow DOM (as that would leak implementation details about the Shadow DOM contents). `:focus-within` does work with the Shadow DOM, but that has the same problem as `:focus` that was mentioned before. Unfortunately, a [`:focus-visible-within` pseudo-class does not exist yet].(https://github.com/WICG/focus-visible/issues/151).
 
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
@@ -275,7 +279,7 @@ ion-button {
 
 ### Hover
 
-The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover.
+The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover. Note that [some Android devices incorrectly report their devices inputs](https://issues.chromium.org/issues/40855702) which can result in certain devices receiving hover events when they should not.
 
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
