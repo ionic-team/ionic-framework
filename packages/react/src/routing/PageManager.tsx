@@ -54,7 +54,13 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
       this.ionPageElementRef.current.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler);
       this.ionPageElementRef.current.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler);
       this.ionPageElementRef.current.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler);
-      this.ionPageElementRef.current.removeEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler);
+      /**
+       * We deliberately do not remove the `ionViewDidLeave` listener.
+       * The registered callback is used to unmount and remove the page.
+       * Removing the event listener prevents the callback from being called.
+       * The browser will automatically remove the event listener when the
+       * page element is removed from the DOM and garbage collected.
+       */
     }
   }
 
