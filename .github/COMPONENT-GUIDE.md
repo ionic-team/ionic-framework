@@ -281,7 +281,7 @@ ion-button {
 
 ### Hover
 
-The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover. Note that [some Android devices incorrectly report their devices inputs](https://issues.chromium.org/issues/40855702) which can result in certain devices receiving hover events when they should not.
+The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover. Note that [some Android devices incorrectly report their inputs](https://issues.chromium.org/issues/40855702) which can result in certain devices receiving hover events when they should not.
 
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
