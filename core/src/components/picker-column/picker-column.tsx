@@ -87,6 +87,12 @@ export class PickerColumn implements ComponentInterface {
    * height of 0px.
    */
   componentWillLoad() {
+    /**
+     * We cache parentEl in a local variable
+     * so we don't need to keep accessing
+     * the class variable (which comes with
+     * a small performance hit)
+     */
     const parentEl = (this.parentEl = this.el.closest('ion-picker') as HTMLIonPickerElement | null);
 
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
