@@ -47,7 +47,7 @@ configs().forEach(({ title, screenshot, config }) => {
 });
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.only(title('input: item functionality'), () => {
+  test.describe(title('input: item functionality'), () => {
     test('clicking padded space within item should focus the input', async ({ page }) => {
       await page.setContent(
         `
