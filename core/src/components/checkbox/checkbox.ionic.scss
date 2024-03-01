@@ -35,42 +35,44 @@
 // Checkbox: Focused
 // --------------------------------------------------------
 
-:host(:focus) .checkbox-icon {
+:host(.ion-focusable) .checkbox-icon {
   outline: $checkbox-ionic-outline-width solid $checkbox-ionic-outline-color;
 }
 
-:host(:focus.checkbox-checked) .checkbox-icon,
-:host(:focus.checkbox-indeterminate) .checkbox-icon {
+:host(.ion-focusable.checkbox-checked) .checkbox-icon,
+:host(.ion-focusable.checkbox-indeterminate) .checkbox-icon {
   outline: $checkbox-ionic-outline-width solid $checkbox-ionic-outline-color;
 }
 
 // unchecked checkbox with `required` property set to true
-:host(:focus.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) .checkbox-icon {
+:host(.ion-focusable.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) .checkbox-icon {
   outline-color: #ffafaf;
-}
-
-// Checkbox: Active
-// --------------------------------------------------------
-
-:host(:active) .checkbox-icon {
-  background-color: #e3e3e3;
-}
-
-:host(:active.checkbox-checked) .checkbox-icon,
-:host(:active.checkbox-indeterminate) .checkbox-icon {
-  background-color: #105ed1;
 }
 
 // Checkbox: Hover
 // --------------------------------------------------------
 
-:host(:hover) .checkbox-icon {
-  background-color: #ececec;
+@media (any-hover: hover) {
+  :host(:hover) .checkbox-icon {
+    background-color: #ececec;
+  }
+
+  :host(:hover.checkbox-checked) .checkbox-icon,
+  :host(:hover.checkbox-indeterminate) .checkbox-icon {
+    background-color: #1061da;
+  }
 }
 
-:host(:hover.checkbox-checked) .checkbox-icon,
-:host(:hover.checkbox-indeterminate) .checkbox-icon {
-  background-color: #1061da;
+// Checkbox: Active
+// --------------------------------------------------------
+
+:host(.ion-activated) .checkbox-icon {
+  background-color: #e3e3e3;
+}
+
+:host(.ion-activated.checkbox-checked) .checkbox-icon,
+:host(.ion-activated.checkbox-indeterminate) .checkbox-icon {
+  background-color: #105ed1;
 }
 
 // Material Design Checkbox: Checked / Indeterminate

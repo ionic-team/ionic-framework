@@ -271,6 +271,8 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-justify-${justify}`]: true,
           [`checkbox-alignment-${alignment}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
+          'ion-activatable': true,
+          'ion-focusable': true,
         })}
         onClick={this.onClick}
       >
