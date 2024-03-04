@@ -199,7 +199,7 @@ Style the `ion-focused` class based on the spec for that element:
 ```
 
 > [!IMPORTANT]
-> Order matters! Focused should be before the activated and hover states.
+> Order matters! Focused should be **before** the activated and hover states.
 
 
 #### User Customization
@@ -252,7 +252,7 @@ Style the `:hover` based on the spec for that element:
 ```
 
 > [!IMPORTANT]
-> Order matters! Hover should be before the activated state.
+> Order matters! Hover should be **before** the activated state.
 
 
 #### User Customization
@@ -325,7 +325,7 @@ Style the `ion-activated` class based on the spec for that element:
 ```
 
 > [!IMPORTANT]
-> Order matters! Activated should be after the focused & hover states.
+> Order matters! Activated should be **after** the focused & hover states.
 
 #### User Customization
 
