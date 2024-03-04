@@ -2,10 +2,10 @@
 
 - [Button States](#button-states)
   * [Component Structure](#component-structure)
-  * [Activated](#activated)
   * [Disabled](#disabled)
   * [Focused](#focused)
   * [Hover](#hover)
+  * [Activated](#activated)
   * [Ripple Effect](#ripple-effect)
   * [Example Components](#example-components)
   * [References](#references)
@@ -21,7 +21,7 @@
 
 ## Button States
 
-Any component that renders a button should have the following states: [`activated`](#activated), [`disabled`](#disabled), [`focused`](#focused), [`hover`](#hover). It should also have a [Ripple Effect](#ripple-effect) component added for Material Design.
+Any component that renders a button should have the following states: [`disabled`](#disabled), [`focused`](#focused), [`hover`](#hover), [`activated`](#activated). It should also have a [Ripple Effect](#ripple-effect) component added for Material Design.
 
 ### Component Structure
 
@@ -89,6 +89,60 @@ The following styles should be set for the CSS to work properly. Note that the `
 ```
 
 
+### Disabled
+
+The disabled state should be set via prop on all components that render a native button. Setting a disabled state will change the opacity or color of the button and remove click events from firing.
+
+#### JavaScript
+
+The `disabled` property should be set on the component:
+
+```jsx
+/**
+  * If `true`, the user cannot interact with the button.
+  */
+@Prop({ reflectToAttr: true }) disabled = false;
+```
+
+Then, the render function should add the [`aria-disabled`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-disabled) role to the host, a class that is the element tag name followed by `disabled`, and pass the `disabled` attribute to the native button:
+
+```jsx
+render() {
+  const { disabled } = this;
+
+  return (
+    <Host
+      aria-disabled={disabled ? 'true' : null}
+      class={{
+        'button-disabled': disabled
+      }}
+    >
+      <button disabled={disabled}>
+        <slot></slot>
+      </button>
+    </Host>
+  );
+}
+```
+
+> Note: if the class being added was for `ion-back-button` it would be `back-button-disabled`.
+
+#### CSS
+
+The following CSS _at the bare minimum_ should be added for the disabled class, but it should be styled to match the spec:
+
+```css
+:host(.button-disabled) {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+```
+
+#### User Customization
+
+TODO
+
 ### Activated
 
 The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
@@ -146,8 +200,8 @@ Style the `ion-activated` class based on the spec for that element:
 }
 ```
 
-> Order is important! Activated should be after the focused & hover states.
-
+> [!IMPORTANT]
+> Order matters! Activated should be after the focused & hover states.
 
 #### User Customization
 
@@ -161,63 +215,9 @@ ion-button {
 ```
 
 
-### Disabled
-
-The disabled state should be set via prop on all components that render a native button. Setting a disabled state will change the opacity or color of the button and remove click events from firing.
-
-#### JavaScript
-
-The `disabled` property should be set on the component:
-
-```jsx
-/**
-  * If `true`, the user cannot interact with the button.
-  */
-@Prop({ reflectToAttr: true }) disabled = false;
-```
-
-Then, the render function should add the [`aria-disabled`](https://www.w3.org/WAI/PF/aria/states_and_properties#aria-disabled) role to the host, a class that is the element tag name followed by `disabled`, and pass the `disabled` attribute to the native button:
-
-```jsx
-render() {
-  const { disabled } = this;
-
-  return (
-    <Host
-      aria-disabled={disabled ? 'true' : null}
-      class={{
-        'button-disabled': disabled
-      }}
-    >
-      <button disabled={disabled}>
-        <slot></slot>
-      </button>
-    </Host>
-  );
-}
-```
-
-> Note: if the class being added was for `ion-back-button` it would be `back-button-disabled`.
-
-#### CSS
-
-The following CSS _at the bare minimum_ should be added for the disabled class, but it should be styled to match the spec:
-
-```css
-:host(.button-disabled) {
-  cursor: default;
-  opacity: .5;
-  pointer-events: none;
-}
-```
-
-#### User Customization
-
-TODO
-
 ### Focused
 
-The focused state should be enabled for elements with actions when tabbed to via the keyboard. This will only work inside of an `ion-app`. It usually changes the opacity or background of an element. 
+The focused state should be enabled for elements with actions when tabbed to via the keyboard. This will only work inside of an `ion-app`. It usually changes the opacity or background of an element.
 
 > [!WARNING]
 > Do not use `:focus` because that will cause the focus to apply even when an element is tapped (because the element is now focused). Instead, we only want the focus state to be shown when it makes sense which is what the `.ion-focusable` utility mentioned below does.
@@ -269,7 +269,8 @@ Style the `ion-focused` class based on the spec for that element:
 }
 ```
 
-> Order is important! Focused should be after the activated and before the hover state.
+> [!IMPORTANT]
+> Order matters! Focused should be before the activated and hover states.
 
 
 #### User Customization
@@ -286,7 +287,7 @@ ion-button {
 
 ### Hover
 
-The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover. 
+The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover.
 
 > [!NOTE]
 > Some Android devices [incorrectly report their inputs](https://issues.chromium.org/issues/40855702) which can result in certain devices receiving hover events when they should not.
@@ -321,7 +322,8 @@ Style the `:hover` based on the spec for that element:
 }
 ```
 
-> Order is important! Hover should be before the activated state.
+> [!IMPORTANT]
+> Order matters! Hover should be before the activated state.
 
 
 #### User Customization
