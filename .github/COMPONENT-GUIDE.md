@@ -143,77 +143,6 @@ The following CSS _at the bare minimum_ should be added for the disabled class, 
 
 TODO
 
-### Activated
-
-The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
-
-> [!WARNING]
->`:active` should not be used here as it is not received on mobile Safari unless the element has a `touchstart` listener (which we don't necessarily want to have to add to every element). From [Safari Web Content Guide](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/AdjustingtheTextSize/AdjustingtheTextSize.html):
->
->> On iOS, mouse events are sent so quickly that the down or active state is never received. Therefore, the `:active` pseudo state is triggered only when there is a touch event set on the HTML element
-
-> Make sure the component has the correct [component structure](#component-structure) before continuing.
-
-#### JavaScript
-
-The `ion-activatable` class needs to be set on an element that can be activated:
-
-```jsx
-render() {
-  return (
-    <Host class='ion-activatable'>
-      <slot></slot>
-    </Host>
-  );
-}
-```
-
-Once that is done, the element will get the `ion-activated` class added on press after a small delay. This delay exists so that the active state does not show up when an activatable element is tapped while scrolling.
-
-In addition to setting that class, `ion-activatable-instant` can be set in order to have an instant press with no delay:
-
-```jsx
-<Host class='ion-activatable ion-activatable-instant'>
-```
-
-#### CSS
-
-```css
- /**
-   * @prop --color-activated: Color of the button when pressed
-   * @prop --background-activated: Background of the button when pressed
-   * @prop --background-activated-opacity: Opacity of the background when pressed
-   */
-```
-
-Style the `ion-activated` class based on the spec for that element:
-
-```scss
-:host(.ion-activated) .button-native {
-  color: var(--color-activated);
-
-  &::after {
-    background: var(--background-activated);
-
-    opacity: var(--background-activated-opacity);
-  }
-}
-```
-
-> [!IMPORTANT]
-> Order matters! Activated should be after the focused & hover states.
-
-#### User Customization
-
-Setting the activated state on the `::after` pseudo-element allows the user to customize the activated state without knowing what the default opacity is set at. A user can customize in the following ways to have a solid red background on press, or they can leave out `--background-activated-opacity` and the button will use the default activated opacity to match the spec.
-
-```css
-ion-button {
-  --background-activated: red;
-  --background-activated-opacity: 1;
-}
-```
-
 
 ### Focused
 
@@ -334,6 +263,78 @@ Setting the hover state on the `::after` pseudo-element allows the user to custo
 ion-button {
   --background-hover: red;
   --background-hover-opacity: 1;
+}
+```
+
+
+### Activated
+
+The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
+
+> [!WARNING]
+>`:active` should not be used here as it is not received on mobile Safari unless the element has a `touchstart` listener (which we don't necessarily want to have to add to every element). From [Safari Web Content Guide](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/AdjustingtheTextSize/AdjustingtheTextSize.html):
+>
+>> On iOS, mouse events are sent so quickly that the down or active state is never received. Therefore, the `:active` pseudo state is triggered only when there is a touch event set on the HTML element
+
+> Make sure the component has the correct [component structure](#component-structure) before continuing.
+
+#### JavaScript
+
+The `ion-activatable` class needs to be set on an element that can be activated:
+
+```jsx
+render() {
+  return (
+    <Host class='ion-activatable'>
+      <slot></slot>
+    </Host>
+  );
+}
+```
+
+Once that is done, the element will get the `ion-activated` class added on press after a small delay. This delay exists so that the active state does not show up when an activatable element is tapped while scrolling.
+
+In addition to setting that class, `ion-activatable-instant` can be set in order to have an instant press with no delay:
+
+```jsx
+<Host class='ion-activatable ion-activatable-instant'>
+```
+
+#### CSS
+
+```css
+ /**
+   * @prop --color-activated: Color of the button when pressed
+   * @prop --background-activated: Background of the button when pressed
+   * @prop --background-activated-opacity: Opacity of the background when pressed
+   */
+```
+
+Style the `ion-activated` class based on the spec for that element:
+
+```scss
+:host(.ion-activated) .button-native {
+  color: var(--color-activated);
+
+  &::after {
+    background: var(--background-activated);
+
+    opacity: var(--background-activated-opacity);
+  }
+}
+```
+
+> [!IMPORTANT]
+> Order matters! Activated should be after the focused & hover states.
+
+#### User Customization
+
+Setting the activated state on the `::after` pseudo-element allows the user to customize the activated state without knowing what the default opacity is set at. A user can customize in the following ways to have a solid red background on press, or they can leave out `--background-activated-opacity` and the button will use the default activated opacity to match the spec.
+
+```css
+ion-button {
+  --background-activated: red;
+  --background-activated-opacity: 1;
 }
 ```
 
