@@ -244,4 +244,87 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('#time-button')).not.toBeVisible();
     });
   });
+
+  test.describe(title('datetime-button: formatOptions'), () => {
+    test('should include date and time for presentation date-time', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" presentation="date-time" value="2023-11-02T01:22:00" locale="en-US"></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            date: {
+              weekday: "short",
+              month: "long",
+              day: "2-digit"
+            },
+            time: {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(page.locator('#date-button')).toContainText('Thu, November 02');
+      await expect(page.locator('#time-button')).toContainText('01:22 AM');
+    });
+
+    test('should include date for presentation date', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" presentation="date" value="2023-11-02" locale="en-US"></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            date: {
+              weekday: "short",
+              month: "long",
+              day: "2-digit"
+            }
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(page.locator('#date-button')).toContainText('Thu, November 02');
+    });
+
+    test('should include date and time in same button for preferWheel', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" presentation="date-time" value="2023-11-02T01:22:00" locale="en-US" prefer-wheel="true"></ion-datetime>
+        <script>
+        const datetime = document.querySelector('ion-datetime');
+        datetime.formatOptions = {
+          date: {
+            weekday: "short",
+            month: "long",
+            day: "2-digit"
+          },
+          time: {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(page.locator('ion-datetime-button')).toContainText('Thu, November 02 01:22 AM');
+    });
+  });
 });
