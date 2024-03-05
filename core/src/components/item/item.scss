@@ -176,7 +176,8 @@
 // Item: Interactive
 // --------------------------------------------------
 
-:host(.item-has-interactive-control) {
+// Inputs and textareas do not need the cursor, but other components like checkbox or toggle do.
+:host(.item-interactive-control-needs-cursor) {
   cursor: pointer;
 }
 
