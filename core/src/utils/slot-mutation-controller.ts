@@ -50,6 +50,7 @@ export const createSlotMutationController = (
 
     hostMutationObserver.observe(el, {
       childList: true,
+      subtree: true,
     });
   }
 
