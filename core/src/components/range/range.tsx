@@ -886,11 +886,15 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
          * the threshold. This is to prevent the range
          * from moving when the user is scrolling.
          *
-         * However, this causes the value to not update
+         * This results in the value not being updated
+         * and the event emitters not being triggered
          * if the user taps on the range. This is why
          * we need to listen for the "click" event.
          */
-        onClick={(ev: MouseEvent) => this.onEnd(ev)}
+        onClick={(ev: MouseEvent) => {
+          this.onStart();
+          this.onEnd(ev);
+        }}
       >
         {ticks.map((tick) => (
           <div
