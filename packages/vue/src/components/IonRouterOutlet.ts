@@ -420,13 +420,9 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
       } else {
         /**
          * If there is no leaving element, just show
-         * the entering element. Wrap it in an raf
-         * in case ion-content's fullscreen callback
-         * is running. Otherwise we'd have a flicker.
+         * the entering element.
          */
-        requestAnimationFrame(() =>
-          enteringEl.classList.remove("ion-page-invisible")
-        );
+        enteringEl.classList.remove("ion-page-invisible");
       }
 
       fireLifecycle(
