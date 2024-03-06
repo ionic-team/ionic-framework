@@ -891,7 +891,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
          * if the user taps on the range. This is why
          * we need to listen for the "pointerUp" event.
          */
-        onPointerUp={(ev: MouseEvent) => {
+        onPointerUp={(ev: PointerEvent) => {
           /**
            * If the user drags the knob on the web
            * version (does not occur on mobile),
