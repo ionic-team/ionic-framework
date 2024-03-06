@@ -32,9 +32,7 @@ import type { CounterFormatter } from './item-interface';
     ios: 'item.ios.scss',
     md: 'item.md.scss',
   },
-  shadow: {
-    delegatesFocus: true,
-  },
+  shadow: true,
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
   private labelColorStyles = {};
@@ -359,7 +357,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   private getFirstInteractive() {
     const controls = this.el.querySelectorAll<HTMLElement>(
-      'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled]), ion-select:not([disabled])'
+      'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled]), ion-select:not([disabled]), ion-input:not([disabled]), ion-textarea:not([disabled])'
     );
     return controls[0];
   }
@@ -425,7 +423,16 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                */
               const clickedWithinShadowRoot = this.el.shadowRoot!.contains(target);
               if (clickedWithinShadowRoot) {
-                firstInteractive.click();
+                /**
+                 * For input/textarea clicking the padding should focus the
+                 * text field (thus making it editable). For everything else,
+                 * we want to click the control so it activates.
+                 */
+                if (firstInteractive.tagName === 'ION-INPUT' || firstInteractive.tagName === 'ION-TEXTAREA') {
+                  (firstInteractive as HTMLIonInputElement | HTMLIonTextareaElement).setFocus();
+                } else {
+                  firstInteractive.click();
+                }
               }
             }
           }
@@ -441,6 +448,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el) && !hostContext('ion-radio-group', this.el);
 
+    /**
+     * Inputs and textareas do not need to show a cursor pointer.
+     * However, other form controls such as checkboxes and radios do.
+     */
+    const firstInteractiveNeedsPointerCursor =
+      firstInteractive !== undefined && !['ION-INPUT', 'ION-TEXTAREA'].includes(firstInteractive.tagName);
+
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -454,7 +468,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
-            'item-has-interactive-control': firstInteractive !== undefined,
+            'item-control-needs-pointer-cursor': firstInteractiveNeedsPointerCursor,
             'item-disabled': disabled,
             'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,
