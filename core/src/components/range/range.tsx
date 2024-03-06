@@ -889,11 +889,25 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
          * This results in the value not being updated
          * and the event emitters not being triggered
          * if the user taps on the range. This is why
-         * we need to listen for the "click" event.
+         * we need to listen for the "pointerUp" event.
          */
-        onClick={(ev: MouseEvent) => {
-          this.onStart();
-          this.onEnd(ev);
+        onPointerUp={(ev: MouseEvent) => {
+          /**
+           * If the user drags the knob on the web
+           * version (does not occur on mobile),
+           * the "pointerUp" event will be triggered
+           * along with the gesture's events.
+           * This leads to duplicate events.
+           *
+           * By checking if the pressedKnob is undefined,
+           * we can determine if the "pointerUp" event was
+           * triggered by a tap or a drag. If it was
+           * dragged, the pressedKnob will be defined.
+           */
+          if (this.pressedKnob === undefined) {
+            this.onStart();
+            this.onEnd(ev);
+          }
         }}
       >
         {ticks.map((tick) => (
