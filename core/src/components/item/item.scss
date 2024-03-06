@@ -412,7 +412,7 @@ button, a {
   box-sizing: border-box;
 }
 
-
+:host(.item-label-stacked),
 :host(.item-label-floating) {
   align-items: start;
 }
