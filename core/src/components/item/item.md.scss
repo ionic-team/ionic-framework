@@ -203,6 +203,14 @@
   @include margin($item-md-label-margin-top, $item-md-label-margin-end, $item-md-label-margin-bottom, $item-md-label-margin-start);
 }
 
+// Material Design Floating/Stacked Label
+// --------------------------------------------------
+
+:host(.item-label-stacked) ::slotted([slot="end"]),
+:host(.item-label-floating) ::slotted([slot="end"]) {
+  @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
+}
+
 // Material Design Toggle/Radio Item
 // --------------------------------------------------
 
@@ -211,6 +219,13 @@
   @include margin-horizontal(0, null);
 }
 
+// Material Design Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.item-label-floating),
+:host(.item-label-stacked) {
+  --min-height: 55px;
+}
 
 // Material Design Item Button
 // --------------------------------------------------
