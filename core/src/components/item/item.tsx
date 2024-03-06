@@ -452,7 +452,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
      * Inputs and textareas do not need to show a cursor pointer.
      * However, other form controls such as checkboxes and radios do.
      */
-    const firstInteractiveNeedsCursor =
+    const firstInteractiveNeedsPointerCursor =
       firstInteractive !== undefined && !['ION-INPUT', 'ION-TEXTAREA'].includes(firstInteractive.tagName);
 
     return (
@@ -468,7 +468,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
-            'item-control-needs-pointer-cursor': firstInteractiveNeedsCursor,
+            'item-control-needs-pointer-cursor': firstInteractiveNeedsPointerCursor,
             'item-disabled': disabled,
             'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,
