@@ -412,6 +412,17 @@ button, a {
   box-sizing: border-box;
 }
 
+
+:host(.item-label-floating) {
+  align-items: start;
+}
+
+:host(.item-label-stacked) .input-wrapper,
+:host(.item-label-floating) .input-wrapper {
+  flex: 1;
+  flex-direction: column;
+}
+
 // Item Input Highlight
 // --------------------------------------------------
 
