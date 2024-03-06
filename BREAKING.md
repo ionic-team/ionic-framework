@@ -23,6 +23,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Datetime](#version-8x-datetime)
   - [Item](#version-8x-item)
   - [Input](#version-8x-input)
+  - [Item](#version-8x-item)
   - [Modal](#version-8x-modal)
   - [Nav](#version-8x-nav)
   - [Picker](#version-8x-picker)
@@ -175,6 +176,10 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 - `size` has been removed from the `ion-input` component. Developers should use CSS to specify the visible width of the input.
 - `accept` has been removed from the `ion-input` component. This was previously used in conjunction with the `type="file"`. However, the `file` value for `type` is not a valid value in Ionic Framework.
 - The `legacy` property and support for the legacy syntax, which involved placing an `ion-input` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy input syntax, refer to the [Input documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax).
+
+<h4 id="version-8x-item">Item</h4>
+
+- Item no longer automatically delegates focus to the first focusable element. While most developers should not need to make any changes to account for this update, usages of `ion-item` with interactive elements such as form controls (inputs, textareas, etc) should be evaluated to verify that interactions still work as expected.
 
 <h4 id="version-8x-modal">Modal</h4>
 
