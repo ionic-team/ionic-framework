@@ -219,14 +219,6 @@
   @include margin-horizontal(0, null);
 }
 
-// Material Design Stacked & Floating Inputs
-// --------------------------------------------------
-
-:host(.item-label-floating),
-:host(.item-label-stacked) {
-  --min-height: 55px;
-}
-
 // Material Design Item Button
 // --------------------------------------------------
 
@@ -249,6 +241,13 @@
 //   color: $radio-md-color-on;
 // }
 
+// Material Design Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.item-label-floating),
+:host(.item-label-stacked) {
+  --min-height: 55px;
+}
 
 :host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
 :host(.ion-focused:not(.ion-color)) ::slotted(.label-floating),
