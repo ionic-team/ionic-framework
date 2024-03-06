@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-beta.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.0...v8.0.0-beta.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* **input-shims:** disable input blurring util by default ([#29104](https://github.com/ionic-team/ionic-framework/issues/29104)) ([bf1701e](https://github.com/ionic-team/ionic-framework/commit/bf1701ed39ee3895040ff741f45e215e2696143a)), closes [#29072](https://github.com/ionic-team/ionic-framework/issues/29072)
+* **item, item-divider:** slotted spacing is correct ([#29103](https://github.com/ionic-team/ionic-framework/issues/29103)) ([ac72531](https://github.com/ionic-team/ionic-framework/commit/ac7253108a91945803ea4a01d1c90f0e576c25d7))
+
+
+### Code Refactoring
+
+* **item:** do not automatically delegate focus ([#29091](https://github.com/ionic-team/ionic-framework/issues/29091)) ([05e721d](https://github.com/ionic-team/ionic-framework/commit/05e721db1cd777880719ebb2345193a266522121)), closes [#21982](https://github.com/ionic-team/ionic-framework/issues/21982)
+
+
+### Performance Improvements
+
+* **picker:** avoid flicker on ios ([#29101](https://github.com/ionic-team/ionic-framework/issues/29101)) ([94c3ffc](https://github.com/ionic-team/ionic-framework/commit/94c3ffcffe63e1285e968bbc0d69bba5207e65bb))
+
+
+### BREAKING CHANGES
+
+* **item:** - Item no longer automatically delegates focus to the first focusable element. While most developers should not need to make any changes to account for this update, usages of `ion-item` with interactive elements such as form controls (inputs, textareas, etc) should be evaluated to verify that interactions still work as expected.
+
+
+
 # [8.0.0-beta.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v8.0.0-beta.0) (2024-02-28)
 
 
