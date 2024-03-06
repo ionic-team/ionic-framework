@@ -32,23 +32,6 @@
   text-transform: none;
 }
 
-
-:host(.item-interactive.ion-focus) .item-highlight,
-:host(.item-interactive.item-has-focus) .item-highlight,
-:host(.item-interactive.ion-touched.ion-invalid) .item-highlight {
-  transform: scaleX(1);
-
-  border-width: 0 0 var(--full-highlight-height) 0;
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
-
-:host(.item-interactive.ion-focus) .item-native,
-:host(.item-interactive.item-has-focus) .item-native,
-:host(.item-interactive.ion-touched.ion-invalid) .item-native {
-  border-bottom-color: var(--highlight-background);
-}
-
 // Material Design Item: States
 // --------------------------------------------------
 
