@@ -73,6 +73,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+
+### Bug Fixes
+
+* **modal:** ariaLabel and role are inherited when set via htmlAttributes ([#29099](https://github.com/ionic-team/ionic-framework/issues/29099)) ([de13633](https://github.com/ionic-team/ionic-framework/commit/de13633a182d963876434db773aa346833f956fd))
+
+
+
+
+
 ## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
 
 
@@ -943,7 +954,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 # [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
- 
+
 **Note:** Version bump only for package @ionic/core
 
 
@@ -1358,7 +1369,7 @@ Developers can add the following CSS to their global stylesheet if they need the
   display: none !important;
 }
 ```
-* **overlays:** Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+* **overlays:** Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
 
 
 
