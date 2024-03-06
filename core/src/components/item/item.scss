@@ -306,32 +306,6 @@ button, a {
   box-sizing: border-box;
 }
 
-// Item Bottom
-// --------------------------------------------------
-
-.item-bottom {
-  @include margin(0);
-  @include padding(0, null);
-
-  /* stylelint-disable */
-  @include ltr() {
-    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
-    padding-right: calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px));
-  }
-
-  @include rtl() {
-    padding-left: calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px));
-    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
-  }
-  /* stylelint-enable */
-
-  display: flex;
-
-  justify-content: space-between;
-
-}
-
-
 // Item Detail Icon
 // --------------------------------------------------
 
