@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+
+### Bug Fixes
+
+* **modal:** ariaLabel and role are inherited when set via htmlAttributes ([#29099](https://github.com/ionic-team/ionic-framework/issues/29099)) ([de13633](https://github.com/ionic-team/ionic-framework/commit/de13633a182d963876434db773aa346833f956fd))
+
+
+
+
+
 ## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
 
 
