@@ -12,7 +12,6 @@
   --highlight-color: #9EC4FD;
   --highlight-color-valid: #52A518;
   --highlight-color-invalid: #F72C2C;
-  --highlight-color-warning: #CE7A06;
 
   font-size: $input-md-font-size;
 }
@@ -87,35 +86,32 @@
  * border and label should reflect that as a color.
  */
 :host(.has-focus.ion-valid),
-:host(.ion-touched.ion-invalid),
-:host(.ion-touched.ion-warning) {
+:host(.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
-}
-
-:host(.ion-touched.ion-warning) {
-  --highlight-color: var(--highlight-color-warning);
 }
 
 .input-bottom .counter {
   letter-spacing: .0333333333em;
 }
 
+:host(.ion-color) {
+  --highlight-color: #{current-color(base)};
+  --border-color: #{current-color(base)};
+}
+
+:host(.ion-color) .label-text-wrapper {
+  color: #{current-color(base)};
+}
+
+:host(.ion-color) .helper-text {
+  color: #{current-color(base)};
+}
+
 // Input Label
 // ----------------------------------------------------------------
 
-// :host(.has-focus.input-label-placement-floating.ion-valid) .label-text-wrapper,
-// :host(.input-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
-// :host(.has-focus.input-label-placement-stacked.ion-valid) .label-text-wrapper,
-// :host(.input-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
-//   color: var(--highlight-color);
-// }
-
 :host(.ion-valid) .helper-text {
   color: #144B05;
-}
-
-:host(.ion-warning) .helper-text {
-  color: #6B430C;
 }
 
 :host(.ion-invalid) .error-text {

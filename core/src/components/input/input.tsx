@@ -202,7 +202,8 @@ export class Input implements ComponentInterface {
    * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' =
+    getIonTheme(this) === 'ionic' ? 'stacked' : 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -698,7 +699,7 @@ export class Input implements ComponentInterface {
     const { shape } = this;
 
     if ((theme === 'ios' || theme === 'md') && (shape === 'rectangular' || shape === 'soft')) {
-      console.warn(`The "${shape}" shape is not supported in the ${theme} theme.`);
+      printIonWarning(`The "${shape}" shape is not supported in the ${theme} theme.`);
       return undefined;
     }
     return shape;
@@ -709,10 +710,22 @@ export class Input implements ComponentInterface {
     const { size } = this;
 
     if ((theme === 'ios' || theme === 'md') && (size === 'large' || size === 'xlarge')) {
-      console.warn(`The "${size}" size is not supported in the ${theme} theme.`);
+      printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
       return undefined;
     }
     return size;
+  }
+
+  private getLabelPlacement() {
+    const theme = getIonTheme(this);
+    const { labelPlacement } = this;
+
+    if (theme === 'ionic' && labelPlacement !== 'stacked' && labelPlacement !== 'floating') {
+      printIonWarning(`The "${labelPlacement}" label placement is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+
+    return labelPlacement;
   }
 
   /**
@@ -789,6 +802,7 @@ export class Input implements ComponentInterface {
 
     const finalSize = this.getSize();
     const finalShape = this.getShape();
+    const finalLabelPlacement = this.getLabelPlacement();
 
     return (
       <Host
@@ -799,7 +813,7 @@ export class Input implements ComponentInterface {
           'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: finalShape !== undefined,
-          [`input-label-placement-${labelPlacement}`]: true,
+          [`input-label-placement-${finalLabelPlacement}`]: finalLabelPlacement !== undefined,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,

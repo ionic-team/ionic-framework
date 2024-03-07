@@ -590,7 +590,7 @@ ion-input,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-input,prop,helperText,string | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input,prop,label,string | undefined,undefined,false,false
-ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
+ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",getIonTheme(this) === 'ionic' ? 'stacked' : 'start',false,false
 ion-input,prop,legacy,boolean | undefined,undefined,false,false
 ion-input,prop,max,number | string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
