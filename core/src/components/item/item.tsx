@@ -3,16 +3,12 @@ import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } 
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes, raf } from '@utils/helpers';
-import { printIonError, printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
-import type { InputInputEventDetail } from '../input/input-interface';
 import type { RouterDirection } from '../router/utils/interface';
-
-import type { CounterFormatter } from './item-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -20,8 +16,6 @@ import type { CounterFormatter } from './item-interface';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
- * @slot helper - Content is placed under the item and displayed when no error is detected. **DEPRECATED** Use the "helperText" property on ion-input or ion-textarea instead.
- * @slot error - Content is placed under the item and displayed when an error is detected. **DEPRECATED** Use the "errorText" property on ion-input or ion-textarea instead.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
@@ -81,18 +75,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() download: string | undefined;
 
   /**
-   * The fill for the item. If `"solid"` the item will have a background. If
-   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
-   * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
-   */
-  @Prop() fill?: 'outline' | 'solid';
-
-  /**
-   * The shape of the item. If "round" it will have increased
-   * border radius.
-   */
-  @Prop() shape?: 'round';
-  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
@@ -108,12 +90,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * How the bottom border should be displayed on the item.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
-
-  /**
-   * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-   * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-   */
-  @Prop() counter = false;
 
   /**
    * When using a router, it specifies the transition animation when navigating to
@@ -139,31 +115,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  /**
-   * A callback used to format the counter text.
-   * By default the counter text is set to "itemLength / maxLength".
-   * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-   */
-  @Prop() counterFormatter?: CounterFormatter;
-
-  @State() counterString: string | null | undefined;
-
   @Watch('button')
   buttonChanged() {
     // Update the focusable option when the button option is changed
     this.focusable = this.isFocusable();
-  }
-
-  @Watch('counterFormatter')
-  counterFormatterChanged() {
-    this.updateCounterOutput(this.getFirstInput());
-  }
-
-  @Listen('ionInput')
-  handleIonInput(ev: CustomEvent<InputInputEventDetail>) {
-    if (this.counter && ev.target === this.getFirstInput()) {
-      this.updateCounterOutput(ev.target as HTMLIonInputElement | HTMLIonTextareaElement);
-    }
   }
 
   @Listen('ionColor')
@@ -207,10 +162,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   connectedCallback() {
-    if (this.counter) {
-      this.updateCounterOutput(this.getFirstInput());
-    }
-
     this.hasStartEl();
   }
 
@@ -219,51 +170,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    const { el, counter, counterFormatter, fill, shape } = this;
-    const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
-    if (hasHelperSlot) {
-      printIonWarning(
-        'The "helper" slot has been deprecated in favor of using the "helperText" property on ion-input or ion-textarea.',
-        el
-      );
-    }
-
-    const hasErrorSlot = el.querySelector('[slot="error"]') !== null;
-    if (hasErrorSlot) {
-      printIonWarning(
-        'The "error" slot has been deprecated in favor of using the "errorText" property on ion-input or ion-textarea.',
-        el
-      );
-    }
-
-    if (counter === true) {
-      printIonWarning(
-        'The "counter" property has been deprecated in favor of using the "counter" property on ion-input or ion-textarea.',
-        el
-      );
-    }
-
-    if (counterFormatter !== undefined) {
-      printIonWarning(
-        'The "counterFormatter" property has been deprecated in favor of using the "counterFormatter" property on ion-input or ion-textarea.',
-        el
-      );
-    }
-
-    if (fill !== undefined) {
-      printIonWarning(
-        'The "fill" property has been deprecated in favor of using the "fill" property on ion-input or ion-textarea.',
-        el
-      );
-    }
-
-    if (shape !== undefined) {
-      printIonWarning(
-        'The "shape" property has been deprecated in favor of using the "shape" property on ion-input or ion-textarea.',
-        el
-      );
-    }
-
     raf(() => {
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
@@ -319,35 +225,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.canActivate() || focusableChild !== null;
   }
 
-  private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
-    const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<
-      HTMLIonInputElement | HTMLIonTextareaElement
-    >;
-    return inputs[0];
-  }
-
-  private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
-    const { counter, counterFormatter, defaultCounterFormatter } = this;
-    if (counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
-      const length = inputEl?.value?.toString().length ?? 0;
-      if (counterFormatter === undefined) {
-        this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
-      } else {
-        try {
-          this.counterString = counterFormatter(length, inputEl.maxlength);
-        } catch (e) {
-          printIonError('Exception in provided `counterFormatter`.', e);
-          // Fallback to the default counter formatter when an exception happens
-          this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
-        }
-      }
-    }
-  }
-
-  private defaultCounterFormatter(length: number, maxlength: number) {
-    return `${length} / ${maxlength}`;
-  }
-
   private hasStartEl() {
     const startEl = this.el.querySelector('[slot="start"]');
     if (startEl !== null) {
@@ -364,17 +241,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   render() {
     const {
-      counterString,
       detail,
       detailIcon,
       download,
-      fill,
       labelColorStyles,
       lines,
       disabled,
       href,
       rel,
-      shape,
       target,
       routerAnimation,
       routerDirection,
@@ -445,7 +319,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       Object.assign(childStyles, value);
     });
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
-    const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el) && !hostContext('ion-radio-group', this.el);
 
     /**
@@ -466,8 +339,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [mode]: true,
             'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
-            [`item-fill-${fillValue}`]: true,
-            [`item-shape-${shape}`]: shape !== undefined,
             'item-control-needs-pointer-cursor': firstInteractiveNeedsPointerCursor,
             'item-disabled': disabled,
             'in-list': inList,
@@ -508,11 +379,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           <div class="item-highlight"></div>
         </TagType>
-        <div class="item-bottom">
-          <slot name="error"></slot>
-          <slot name="helper"></slot>
-          {counterString && <ion-note class="item-counter">{counterString}</ion-note>}
-        </div>
       </Host>
     );
   }
