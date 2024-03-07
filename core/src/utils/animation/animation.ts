@@ -12,7 +12,7 @@ import type {
   AnimationLifecycle,
   AnimationPlayOptions,
 } from './animation-interface';
-import { addClassToArray, animationEnd, removeStyleProperty, setStyleProperty } from './animation-utils';
+import { addClassToArray, animationEnd, setStyleProperty } from './animation-utils';
 
 // TODO(FW-2832): types
 
@@ -804,14 +804,6 @@ export const createAnimation = (animationId?: string): Animation => {
   const playCSSAnimations = () => {
     clearCSSAnimationsTimeout();
 
-    // raf(() => {
-    //   elements.forEach((element) => {
-    //     // if (_keyframes.length > 0) {
-    //     //   setStyleProperty(element, 'animation-play-state', 'running');
-    //     // }
-    //   });
-    // });
-
     if (_keyframes.length === 0 || elements.length === 0) {
       animationFinish();
     } else {
@@ -848,19 +840,10 @@ export const createAnimation = (animationId?: string): Animation => {
          * element too quickly
          */
         raf(() => {
-          clearCSSAnimationPlayState();
           raf(animationFinish);
         });
       });
     }
-  };
-
-  const clearCSSAnimationPlayState = () => {
-    elements.forEach((element) => {
-      removeStyleProperty(element, 'animation-duration');
-      removeStyleProperty(element, 'animation-delay');
-      removeStyleProperty(element, 'animation-play-state');
-    });
   };
 
   const playWebAnimations = () => {
