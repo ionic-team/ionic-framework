@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-beta.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.0...v8.0.0-beta.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* **input-shims:** disable input blurring util by default ([#29104](https://github.com/ionic-team/ionic-framework/issues/29104)) ([bf1701e](https://github.com/ionic-team/ionic-framework/commit/bf1701ed39ee3895040ff741f45e215e2696143a)), closes [#29072](https://github.com/ionic-team/ionic-framework/issues/29072)
+* **item, item-divider:** slotted spacing is correct ([#29103](https://github.com/ionic-team/ionic-framework/issues/29103)) ([ac72531](https://github.com/ionic-team/ionic-framework/commit/ac7253108a91945803ea4a01d1c90f0e576c25d7))
+
+
+### Code Refactoring
+
+* **item:** do not automatically delegate focus ([#29091](https://github.com/ionic-team/ionic-framework/issues/29091)) ([05e721d](https://github.com/ionic-team/ionic-framework/commit/05e721db1cd777880719ebb2345193a266522121)), closes [#21982](https://github.com/ionic-team/ionic-framework/issues/21982)
+
+
+### Performance Improvements
+
+* **picker:** avoid flicker on ios ([#29101](https://github.com/ionic-team/ionic-framework/issues/29101)) ([94c3ffc](https://github.com/ionic-team/ionic-framework/commit/94c3ffcffe63e1285e968bbc0d69bba5207e65bb))
+
+
+### BREAKING CHANGES
+
+* **item:** - Item no longer automatically delegates focus to the first focusable element. While most developers should not need to make any changes to account for this update, usages of `ion-item` with interactive elements such as form controls (inputs, textareas, etc) should be evaluated to verify that interactions still work as expected.
+
+
+
 # [8.0.0-beta.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v8.0.0-beta.0) (2024-02-28)
 
 
@@ -68,6 +93,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **nav:** `getLength` returns `Promise<number>` instead of `<number>`. This method was not previously available in Nav's TypeScript interface, but developers could still access it by casting Nav as `any`. Developers should ensure they `await` their `getLength` call before accessing the returned value.
 * **button:** Button text now wraps by default.
 * Content no longer sets the `--background` custom property when the `.outer-content` class is set on the host.
+
+
+
+
+
+## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+
+### Bug Fixes
+
+* **modal:** ariaLabel and role are inherited when set via htmlAttributes ([#29099](https://github.com/ionic-team/ionic-framework/issues/29099)) ([de13633](https://github.com/ionic-team/ionic-framework/commit/de13633a182d963876434db773aa346833f956fd))
 
 
 
@@ -943,7 +979,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 # [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
- 
+
 **Note:** Version bump only for package @ionic/core
 
 
@@ -1358,7 +1394,7 @@ Developers can add the following CSS to their global stylesheet if they need the
   display: none !important;
 }
 ```
-* **overlays:** Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+* **overlays:** Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
 
 
 
