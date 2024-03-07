@@ -1,4 +1,12 @@
-import { ElementRef, Injector, EnvironmentInjector, NgZone, ChangeDetectorRef, Directive, EventEmitter } from '@angular/core';
+import {
+  ElementRef,
+  Injector,
+  EnvironmentInjector,
+  NgZone,
+  ChangeDetectorRef,
+  Directive,
+  EventEmitter,
+} from '@angular/core';
 import type { Components } from '@ionic/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
