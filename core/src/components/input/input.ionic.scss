@@ -63,7 +63,8 @@
 }
 
 :host(.has-focus) {
-  box-shadow: 0 0 0 2px #9EC4FD;
+  outline: 2px solid #9EC4FD;
+  outline-offset: 4px;
 }
 
 :host(:active) {

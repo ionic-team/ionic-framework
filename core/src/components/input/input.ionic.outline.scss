@@ -79,7 +79,7 @@
   --border-width: 2px;
   --border-color: var(--highlight-color);
 
-  box-shadow: none;
+  outline: none;
 }
 
 :host(.input-fill-outline:active) {
