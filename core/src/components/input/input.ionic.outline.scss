@@ -5,7 +5,7 @@
 
 :host(.input-fill-outline) {
   --border-color: #{$background-color-step-300};
-  --border-radius: 4px;
+  --border-radius: 8px;
   --padding-start: 16px;
   --padding-end: 16px;
 
@@ -17,18 +17,8 @@
   padding-top: 20px !important;
 }
 
-:host(.input-label-placement-floating.input-size-large),
-:host(.input-label-placement-stacked.input-size-large) {
-  height: 48px;
-}
-
 :host(.input-label-placement-floating.input-size-large) .label-text-wrapper  {
   @include transform(translateY(79%));
-}
-
-:host(.input-label-placement-floating.input-size-xlarge),
-:host(.input-label-placement-stacked.input-size-xlarge) {
-  height: 56px;
 }
 
 :host(.input-label-placement-floating.input-size-xlarge) .label-text-wrapper  {
@@ -43,11 +33,11 @@
   --padding-end: 32px;
 }
 
-:host(.input-fill-outline.input-shape-large) {
-  --border-radius: 8px;
+:host(.input-fill-outline.input-shape-soft) {
+  --border-radius: 4px;
 }
 
-:host(.input-fill-outline.input-shape-none) {
+:host(.input-fill-outline.input-shape-rectangular) {
   --border-radius: 0px;
 }
 

@@ -270,7 +270,7 @@ export class Input implements ComponentInterface {
   /**
    * The shape of the input. If "round" it will have an increased border radius.
    */
-  @Prop() shape?: 'none' | 'large' | 'round';
+  @Prop() shape?: 'rectangular' | 'soft' | 'round';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -693,6 +693,28 @@ export class Input implements ComponentInterface {
     return this.label !== undefined || this.labelSlot !== null;
   }
 
+  private getShape() {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    if ((theme === 'ios' || theme === 'md') && (shape === 'rectangular' || shape === 'soft')) {
+      console.warn(`The "${shape}" shape is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+    return shape;
+  }
+
+  private getSize() {
+    const theme = getIonTheme(this);
+    const { size } = this;
+
+    if ((theme === 'ios' || theme === 'md') && (size === 'large' || size === 'xlarge')) {
+      console.warn(`The "${size}" size is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+    return size;
+  }
+
   /**
    * Renders the border container
    * when fill="outline".
@@ -736,7 +758,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, size } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -765,7 +787,8 @@ export class Input implements ComponentInterface {
     const labelShouldFloat =
       labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
 
-    const finalSize = theme === 'ionic' ? size : undefined;
+    const finalSize = this.getSize();
+    const finalShape = this.getShape();
 
     return (
       <Host
@@ -775,7 +798,7 @@ export class Input implements ComponentInterface {
           'has-focus': hasFocus,
           'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
-          [`input-shape-${shape}`]: shape !== undefined,
+          [`input-shape-${shape}`]: finalShape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),

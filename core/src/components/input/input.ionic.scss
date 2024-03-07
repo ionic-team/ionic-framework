@@ -43,11 +43,11 @@
 // ----------------------------------------------------------------
 
 :host(.input-size-large) .native-wrapper {
-  height: 48px;
+  min-height: 48px;
 }
 
 :host(.input-size-xlarge) .native-wrapper {
-  height: 56px;
+  min-height: 56px;
 }
 
 // Input - Disabled

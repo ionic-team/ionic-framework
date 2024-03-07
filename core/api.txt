@@ -603,7 +603,7 @@ ion-input,prop,pattern,string | undefined,undefined,false,false
 ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,false
 ion-input,prop,required,boolean,false,false,false
-ion-input,prop,shape,"large" | "none" | "round" | undefined,undefined,false,false
+ion-input,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-input,prop,size,"large" | "xlarge" | undefined,undefined,false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false

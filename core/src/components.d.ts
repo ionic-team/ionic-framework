@@ -1384,7 +1384,7 @@ export namespace Components {
         /**
           * The shape of the input. If "round" it will have an increased border radius.
          */
-        "shape"?: 'none' | 'large' | 'round';
+        "shape"?: 'rectangular' | 'soft' | 'round';
         "size"?: 'large' | 'xlarge';
         /**
           * If `true`, the element will have its spelling and grammar checked.
@@ -6367,7 +6367,7 @@ declare namespace LocalJSX {
         /**
           * The shape of the input. If "round" it will have an increased border radius.
          */
-        "shape"?: 'none' | 'large' | 'round';
+        "shape"?: 'rectangular' | 'soft' | 'round';
         "size"?: 'large' | 'xlarge';
         /**
           * If `true`, the element will have its spelling and grammar checked.
