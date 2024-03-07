@@ -22,7 +22,7 @@ export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0)
  */
 const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
-  let animationTimeout: any;
+  let animationTimeout: number | undefined;
   const opts: AddEventListenerOptions = { passive: true };
   const ANIMATION_FALLBACK_TIMEOUT = 500;
 
@@ -45,7 +45,7 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
     animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
 
     unRegTrans = () => {
-      if (animationTimeout) {
+      if (animationTimeout !== undefined) {
         clearTimeout(animationTimeout);
         animationTimeout = undefined;
       }
@@ -262,7 +262,7 @@ export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | n
   return null;
 };
 
-export const focusElement = (el: HTMLElement) => {
+export const focusVisibleElement = (el: HTMLElement) => {
   el.focus();
 
   /**

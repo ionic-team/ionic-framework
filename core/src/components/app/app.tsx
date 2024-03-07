@@ -1,6 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, h } from '@stencil/core';
 import type { FocusVisibleUtility } from '@utils/focus-visible';
+import { shoudUseCloseWatcher } from '@utils/hardware-back-button';
+import { printIonWarning } from '@utils/logging';
 import { isPlatform } from '@utils/platform';
 
 import { config } from '../../global/config';
@@ -34,9 +36,20 @@ export class App implements ComponentInterface {
           import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
         }
         const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
-        if (config.getBoolean('hardwareBackButton', isHybrid)) {
+        const supportsHardwareBackButtonEvents = isHybrid || shoudUseCloseWatcher();
+        if (config.getBoolean('hardwareBackButton', supportsHardwareBackButtonEvents)) {
           hardwareBackButtonModule.startHardwareBackButton();
         } else {
+          /**
+           * If an app sets hardwareBackButton: false and experimentalCloseWatcher: true
+           * then the close watcher will not be used.
+           */
+          if (shoudUseCloseWatcher()) {
+            printIonWarning(
+              'experimentalCloseWatcher was set to `true`, but hardwareBackButton was set to `false`. Both config options must be `true` for the Close Watcher API to be used.'
+            );
+          }
+
           hardwareBackButtonModule.blockHardwareBackButton();
         }
         if (typeof (window as any) !== 'undefined') {

@@ -13,7 +13,7 @@ runs:
     - name: Create Archive
       run: zip -q -r ${{ inputs.output }} ${{ inputs.paths }}
       shell: bash
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.name }}
         path: ${{ inputs.output }}

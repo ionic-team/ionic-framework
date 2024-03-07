@@ -34,8 +34,7 @@
 
         <ion-content class="ion-padding">
           <ion-item>
-            <ion-label>Text Input</ion-label>
-            <ion-input id="root-input"></ion-input>
+            <ion-input label="Text Input" id="root-input"></ion-input>
           </ion-item>
 
           <ion-button id="create" onclick="createModal()">Create a Modal</ion-button>
@@ -63,11 +62,10 @@
             </ion-toolbar>
           </ion-header>
           <ion-content class="ion-padding">
-            Modal Content
+            Modal ${id}
 
             <ion-item>
-              <ion-label>Text Input</ion-label>
-              <ion-input class="modal-input modal-input-${id}"></ion-input>
+              <ion-input label="Text Input" class="modal-input modal-input-${id}"></ion-input>
             </ion-item>
 
             <ion-button id="modal-create">Create a Modal</ion-button>
