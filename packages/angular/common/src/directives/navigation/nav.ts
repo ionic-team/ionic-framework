@@ -1,4 +1,4 @@
-import { ElementRef, Injector, EnvironmentInjector, NgZone, ChangeDetectorRef, Directive } from '@angular/core';
+import { ElementRef, Injector, EnvironmentInjector, NgZone, ChangeDetectorRef, Directive, EventEmitter } from '@angular/core';
 import type { Components } from '@ionic/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
@@ -23,7 +23,16 @@ const NAV_METHODS = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export declare interface IonNav extends Components.IonNav {}
+export declare interface IonNav extends Components.IonNav {
+  /**
+   * Event fired when the nav will change components
+   */
+  ionNavWillChange: EventEmitter<CustomEvent<void>>;
+  /**
+   * Event fired when the nav has changed components
+   */
+  ionNavDidChange: EventEmitter<CustomEvent<void>>;
+}
 
 @ProxyCmp({
   inputs: NAV_INPUTS,
