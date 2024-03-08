@@ -1,12 +1,13 @@
 export type Mode = 'ios' | 'md';
 export type Direction = 'ltr' | 'rtl';
+
 /**
  * The theme to use for the playwright test.
  *
  * - `light`: The fallback theme values. Theme stylesheet will not be included.
  * - `dark`: The dark theme values.
  */
-export type Theme = 'light' | 'dark';
+export type ThemeMode = 'light' | 'dark';
 
 export type TitleFn = (title: string) => string;
 export type ScreenshotFn = (fileName: string) => string;
@@ -14,7 +15,7 @@ export type ScreenshotFn = (fileName: string) => string;
 export interface TestConfig {
   mode: Mode;
   direction: Direction;
-  theme: Theme;
+  themeMode: ThemeMode;
 }
 
 interface TestUtilities {
@@ -26,7 +27,7 @@ interface TestUtilities {
 interface TestConfigOption {
   modes?: Mode[];
   directions?: Direction[];
-  themes?: Theme[];
+  themeModes?: ThemeMode[];
 }
 
 /**
@@ -36,9 +37,9 @@ interface TestConfigOption {
  * each test title is unique.
  */
 const generateTitle = (title: string, config: TestConfig): string => {
-  const { mode, direction, theme } = config;
+  const { mode, direction, themeMode } = config;
 
-  if (theme === 'light') {
+  if (themeMode === 'light') {
     /**
      * Ionic has many existing tests that existed prior to
      * the introduction of theme testing. To maintain backwards
@@ -48,7 +49,7 @@ const generateTitle = (title: string, config: TestConfig): string => {
     return `${title} - ${mode}/${direction}`;
   }
 
-  return `${title} - ${mode}/${direction}/${theme}`;
+  return `${title} - ${mode}/${direction}/${themeMode}`;
 };
 
 /**
@@ -56,9 +57,9 @@ const generateTitle = (title: string, config: TestConfig): string => {
  * and a test config.
  */
 const generateScreenshotName = (fileName: string, config: TestConfig): string => {
-  const { mode, direction, theme } = config;
+  const { mode, direction, themeMode } = config;
 
-  if (theme === 'light') {
+  if (themeMode === 'light') {
     /**
      * Ionic has many existing tests that existed prior to
      * the introduction of theme testing. To maintain backwards
@@ -68,7 +69,7 @@ const generateScreenshotName = (fileName: string, config: TestConfig): string =>
     return `${fileName}-${mode}-${direction}.png`;
   }
 
-  return `${fileName}-${mode}-${direction}-${theme}.png`;
+  return `${fileName}-${mode}-${direction}-${themeMode}.png`;
 };
 
 /**
@@ -85,12 +86,12 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
    */
   const processedMode = modes ?? DEFAULT_MODES;
   const processedDirection = directions ?? DEFAULT_DIRECTIONS;
-  const processedTheme = testConfig.themes ?? DEFAULT_THEMES;
+  const processedThemeMode = testConfig.themeModes ?? DEFAULT_THEME_MODES;
 
   processedMode.forEach((mode) => {
     processedDirection.forEach((direction) => {
-      processedTheme.forEach((theme) => {
-        configs.push({ mode, direction, theme });
+      processedThemeMode.forEach((themeMode) => {
+        configs.push({ mode, direction, themeMode });
       });
     });
   });
@@ -106,7 +107,7 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
 
 const DEFAULT_MODES: Mode[] = ['ios', 'md'];
 const DEFAULT_DIRECTIONS: Direction[] = ['ltr', 'rtl'];
-const DEFAULT_THEMES: Theme[] = ['light'];
+const DEFAULT_THEME_MODES: ThemeMode[] = ['light'];
 
 const DEFAULT_TEST_CONFIG_OPTION = {
   modes: DEFAULT_MODES,
