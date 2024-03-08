@@ -29,8 +29,7 @@
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "copy": "node scripts/copy.js",
-    "test.spec": "jest --ci",
-    "sync": "sh ./scripts/sync.sh"
+    "test.spec": "jest --ci"
   },
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -39,7 +38,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^7.7.4",
+    "@ionic/core": "file:../../core",
     "ionicons": "^7.0.0",
     "tslib": "*"
   },
