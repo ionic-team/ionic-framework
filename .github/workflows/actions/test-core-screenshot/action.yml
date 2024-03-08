@@ -68,18 +68,18 @@ runs:
       # We have extra logic added so that job runners
       # that do not have any new screenshots do not create
       # an unnecessary .zip.
-      # Note that we need to unzip directory to be "core"
+      # Note that we need to unzip directory to be "packages/core"
       # which is why we not using the upload-archive
       # composite step here.
       run: |
         pnpm run test.e2e ${{ steps.set-test-file.outputs.testFile }} --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
-        cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
-        if [ -d core/updated-screenshots/core ]; then
+        cd ../ && rsync -R --progress $(git diff --name-only --cached) packages/core/updated-screenshots
+        if [ -d packages/core/updated-screenshots/core ]; then
           echo "hasUpdatedScreenshots=$(echo 'true')" >> $GITHUB_OUTPUT
-          cd core/updated-screenshots
-          zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
+          cd packages/core/updated-screenshots
+          zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip packages/core
         fi
       shell: bash
       working-directory: ./packages/core
@@ -100,5 +100,5 @@ runs:
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
-        output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
-        paths: core/playwright-report
+        output: packages/core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        paths: packages/core/playwright-report
