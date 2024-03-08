@@ -27,20 +27,6 @@ runs:
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      # Screenshots can be updated for all components or specified component(s).
-      # If the `component` variable is set, then the test has the option to
-      # - run all the instances of the specified component(s) in the `src/components` folder
-      # -- For example: if the `component` value is "item", then the following command will be: `npm run test.e2e item`
-      # - run the specified file path
-      # -- For example: if the `component` value is "src/components/item/test/basic", then the following command will be: `npm run test.e2e src/components/item/test/basic`
-      # - run multiple specified components based on the space-separated value
-      # -- For example: if the `component` value is "item basic", then the following command will be: `npm run test.e2e item basic`
-      # -- For example: if the `component` value is "src/components/item/test/basic src/components/item/test/a11y", then the following command will be: `npm run test.e2e src/components/item/test/basic src/components/item/test/a11y`
-      #
-      # If the `component` variable is not set, then the test will run all the instances of the components in the `src/components` folder.
-      # - For example: `npm run test.e2e`
-      #
-      # More common options can be found at the Playwright Command line page: https://playwright.dev/docs/test-cli
       run: npm run test.e2e ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
@@ -63,7 +49,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npm run test.e2e ${{ steps.set-test-file.outputs.testFile }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
