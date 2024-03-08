@@ -30,10 +30,10 @@ export const menuOverlayAnimation = (menu: MenuI): Animation => {
   menuAnimation.addElement(menu.menuInnerEl!).fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
   const mode = getIonMode(menu);
-  const isIos = mode === 'ios';
-  const opacity = isIos ? 0.2 : 0.25;
+  const isIOS = mode === 'ios';
+  const opacity = isIOS ? 0.2 : 0.25;
 
   backdropAnimation.addElement(menu.backdropEl!).fromTo('opacity', 0.01, opacity);
 
-  return baseAnimation(isIos).addAnimation([menuAnimation, backdropAnimation]);
+  return baseAnimation(isIOS).addAnimation([menuAnimation, backdropAnimation]);
 };

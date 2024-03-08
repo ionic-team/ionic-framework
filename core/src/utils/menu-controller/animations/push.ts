@@ -16,7 +16,7 @@ export const menuPushAnimation = (menu: MenuI): Animation => {
 
   const mode = getIonMode(menu);
   const width = menu.width;
-  const isIos = mode === 'ios';
+  const isIOS = mode === 'ios';
 
   if (menu.isEndSide) {
     contentOpenedX = -width + 'px';
@@ -36,5 +36,5 @@ export const menuPushAnimation = (menu: MenuI): Animation => {
 
   const backdropAnimation = createAnimation().addElement(menu.backdropEl!).fromTo('opacity', 0.01, 0.32);
 
-  return baseAnimation(isIos).addAnimation([menuAnimation, contentAnimation, backdropAnimation]);
+  return baseAnimation(isIOS).addAnimation([menuAnimation, contentAnimation, backdropAnimation]);
 };
