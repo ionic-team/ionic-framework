@@ -1,9 +1,0 @@
-packages:
-  - 'core'
-  - 'docs'
-  - 'packages/angular'
-  - 'packages/angular-server'
-  - 'packages/vue'
-  - 'packages/vue-router'
-  - 'packages/react'
-  - 'packages/react-router'

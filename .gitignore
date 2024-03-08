@@ -20,9 +20,9 @@ dist-transpiled/
 node_modules/
 tmp/
 temp/
-core/theme-builder/
-core/test-components/
-core/css/
+packages/core/theme-builder/
+packages/core/test-components/
+packages/core/css/
 $RECYCLE.BIN/
 
 .DS_Store
@@ -58,17 +58,17 @@ prerender-static.html
 # stencil
 packages/react/css/
 packages/vue/css/
-core/components/
-core/css/
-core/hydrate/
-core/loader/
-core/www/
+packages/core/components/
+packages/core/css/
+packages/core/hydrate/
+packages/core/loader/
+packages/core/www/
 .stencil/
 
 # playwright
-core/test-results/
-core/playwright-report/
-core/**/*-snapshots
+packages/core/test-results/
+packages/core/playwright-report/
+packages/core/**/*-snapshots
 
 # angular
 packages/angular/css/
