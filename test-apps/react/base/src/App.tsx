@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
+import { IonApp, IonRouterOutlet, setupIonicReact, ReactFoo } from '@ionic/react';
+import { IonReactRouter, ReactRouterFoo } from '@ionic/react-router';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -18,9 +18,6 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-
-import { ReactFoo } from '@ionic/react';
-import { ReactRouterFoo } from '@ionic/react-router';
 
 console.log('[react-test-app] ReactFoo', ReactFoo);
 console.log('[react-test-app] ReactRouterFoo', ReactRouterFoo);
