@@ -596,6 +596,7 @@ ion-input,css-prop,--color
 ion-input,css-prop,--highlight-color-focused
 ion-input,css-prop,--highlight-color-invalid
 ion-input,css-prop,--highlight-color-valid
+ion-input,css-prop,--highlight-height
 ion-input,css-prop,--padding-bottom
 ion-input,css-prop,--padding-end
 ion-input,css-prop,--padding-start
@@ -1287,6 +1288,7 @@ ion-select,css-prop,--border-width
 ion-select,css-prop,--highlight-color-focused
 ion-select,css-prop,--highlight-color-invalid
 ion-select,css-prop,--highlight-color-valid
+ion-select,css-prop,--highlight-height
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
@@ -1420,6 +1422,7 @@ ion-textarea,css-prop,--color
 ion-textarea,css-prop,--highlight-color-focused
 ion-textarea,css-prop,--highlight-color-invalid
 ion-textarea,css-prop,--highlight-color-valid
+ion-textarea,css-prop,--highlight-height
 ion-textarea,css-prop,--padding-bottom
 ion-textarea,css-prop,--padding-end
 ion-textarea,css-prop,--padding-start
