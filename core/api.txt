@@ -609,20 +609,16 @@ ion-input,css-prop,--placeholder-opacity
 ion-item,shadow
 ion-item,prop,button,boolean,false,false,false
 ion-item,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-item,prop,counter,boolean,false,false,false
-ion-item,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-item,prop,detail,boolean | undefined,undefined,false,false
 ion-item,prop,detailIcon,string,chevronForward,false,false
 ion-item,prop,disabled,boolean,false,false,false
 ion-item,prop,download,string | undefined,undefined,false,false
-ion-item,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
 ion-item,prop,rel,string | undefined,undefined,false,false
 ion-item,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-item,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-item,prop,shape,"round" | undefined,undefined,false,false
 ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background

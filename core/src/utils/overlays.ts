@@ -1,4 +1,5 @@
 import { doc } from '@utils/browser';
+import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
 import { shoudUseCloseWatcher } from '@utils/hardware-back-button';
 
@@ -129,44 +130,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   return Promise.resolve() as any;
 };
 
-/**
- * This query string selects elements that
- * are eligible to receive focus. We select
- * interactive elements that meet the following
- * criteria:
- * 1. Element does not have a negative tabindex
- * 2. Element does not have `hidden`
- * 3. Element does not have `disabled` for non-Ionic components.
- * 4. Element does not have `disabled` or `disabled="true"` for Ionic components.
- * Note: We need this distinction because `disabled="false"` is
- * valid usage for the disabled property on ion-button.
- */
-const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
 const isOverlayHidden = (overlay: Element) => overlay.classList.contains('overlay-hidden');
-
-/**
- * Focuses the first descendant in an overlay
- * that can receive focus. If none exists,
- * the entire overlay will be focused.
- */
-export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
-  const firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
-
-  focusElementInOverlay(firstInput, overlay);
-};
-
-/**
- * Focuses the last descendant in an overlay
- * that can receive focus. If none exists,
- * the entire overlay will be focused.
- */
-const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
-  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
-  const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
-
-  focusElementInOverlay(lastInput, overlay);
-};
 
 /**
  * Focuses a particular element in an overlay. If the element
@@ -282,7 +246,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
         return;
       }
 
-      const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
+      const overlayWrapper = overlayRoot.querySelector<HTMLElement>('.ion-overlay-wrapper');
       if (!overlayWrapper) {
         return;
       }
@@ -370,7 +334,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
       const lastFocus = lastOverlay.lastFocus;
 
       // Focus the first element in the overlay wrapper
-      focusFirstDescendant(lastOverlay, lastOverlay);
+      focusFirstDescendant(lastOverlay);
 
       /**
        * If the cached last focused element is the
@@ -382,7 +346,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * last focus to equal the active element.
        */
       if (lastFocus === doc.activeElement) {
-        focusLastDescendant(lastOverlay, lastOverlay);
+        focusLastDescendant(lastOverlay);
       }
       lastOverlay.lastFocus = doc.activeElement as HTMLElement;
     }
