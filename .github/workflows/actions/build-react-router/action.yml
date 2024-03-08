@@ -20,10 +20,6 @@ runs:
       run: npm ci
       shell: bash
       working-directory: ./packages/react-router
-    - name: Sync
-      run: npm run sync
-      shell: bash
-      working-directory: ./packages/react-router
     - name: Lint
       run: npm run lint
       shell: bash

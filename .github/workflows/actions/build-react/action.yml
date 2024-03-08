@@ -15,10 +15,6 @@ runs:
       run: npm ci
       shell: bash
       working-directory: ./packages/react
-    - name: Sync
-      run: npm run sync
-      shell: bash
-      working-directory: ./packages/react
     - name: Lint
       run: npm run lint
       shell: bash
