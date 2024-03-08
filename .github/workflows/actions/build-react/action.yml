@@ -31,8 +31,25 @@ runs:
       run: git diff --exit-code
       shell: bash
       working-directory: ./packages/react
+    - name: Install Dependencies
+      run: npm ci
+      shell: bash
+      working-directory: ./packages/react-router
+    - name: Lint
+      run: npm run lint
+      shell: bash
+      working-directory: ./packages/react-router
+    - name: Build
+      run: npm run build
+      shell: bash
+      working-directory: ./packages/react-router
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react
         output: packages/react/ReactBuild.zip
         paths: packages/react/dist packages/react/css
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-react-router
+        output: packages/react-router/ReactRouterBuild.zip
+        paths: packages/react-router/dist

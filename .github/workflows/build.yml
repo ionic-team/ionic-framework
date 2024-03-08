@@ -165,19 +165,12 @@ jobs:
     - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/build-react
 
-  build-react-router:
-    needs: [build-react]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: ./.github/workflows/actions/build-react-router
-
   test-react-router-e2e:
     strategy:
       fail-fast: false
       matrix:
         apps: [reactrouter5]
-    needs: [build-react, build-react-router]
+    needs: [build-react]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -199,7 +192,7 @@ jobs:
       fail-fast: false
       matrix:
         apps: [react17, react18]
-    needs: [build-react, build-react-router]
+    needs: [build-react]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
