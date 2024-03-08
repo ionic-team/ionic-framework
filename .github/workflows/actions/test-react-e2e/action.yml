@@ -14,16 +14,14 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-react
-        path: ./packages/react
-        filename: ReactBuild.zip
-    - uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-react-router
-        path: ./packages/react-router
-        filename: ReactRouterBuild.zip
+    - name: Build React
+      run: npm ci && npm run build
+      shell: bash
+      working-directory: ./packages/react
+    - name: Build React Router
+      run: npm ci && npm run build
+      shell: bash
+      working-directory: ./packages/react-router
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
