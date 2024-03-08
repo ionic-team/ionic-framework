@@ -22,12 +22,12 @@ runs:
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - name: Install Playwright Dependencies
       run: pnpm install && pnpm exec playwright install && pnpm exec playwright install-deps
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core
     - id: clean-component-name
       name: Clean Component Name
       # Remove `ion-` prefix from the `component` variable if it exists.
@@ -52,7 +52,7 @@ runs:
       if: inputs.update != 'true'
       run: pnpm run test.e2e ${{ steps.set-test-file.outputs.testFile }} --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core
     - name: Test and Update
       id: test-and-update
       if: inputs.update == 'true'
@@ -82,7 +82,7 @@ runs:
           zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
         fi
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core
     - name: Archive Updated Screenshots
       if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
       uses: actions/upload-artifact@v4

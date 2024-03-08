@@ -15,7 +15,7 @@ runs:
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - uses: ./.github/workflows/actions/download-archive
       with:

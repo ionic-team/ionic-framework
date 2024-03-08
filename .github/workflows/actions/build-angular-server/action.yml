@@ -12,7 +12,7 @@ runs:
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - name: Install Angular Server Dependencies
       run: pnpm install

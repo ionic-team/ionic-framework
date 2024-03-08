@@ -11,16 +11,16 @@ runs:
         version: 8
     - name: Install Dependencies
       run: pnpm install
-      working-directory: ./core
+      working-directory: ./packages/core
       shell: bash
     - name: Lint
       run: pnpm run lint
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core
     # Lint changes should be pushed
     # to the branch before the branch
     # is merge eligible.
     - name: Check Lint Results
       run: git diff --exit-code
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core

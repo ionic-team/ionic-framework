@@ -14,19 +14,19 @@ runs:
         version: 8
     - name: Install Dependencies
       run: pnpm install
-      working-directory: ./core
+      working-directory: ./packages/core
       shell: bash
     - name: Install Stencil ${{ inputs.stencil-version }}
       run: pnpm install @stencil/core@${{ inputs.stencil-version }}
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core
       if: ${{ inputs.stencil-version != '' }}
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - name: Test
       run: pnpm run test.spec --ci
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core

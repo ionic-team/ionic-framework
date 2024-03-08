@@ -10,7 +10,7 @@ runs:
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - name: Check Diff
       run: |
@@ -24,4 +24,4 @@ runs:
           exit 1
         }
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core
