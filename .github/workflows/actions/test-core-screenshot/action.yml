@@ -25,8 +25,8 @@ runs:
       run: npm install && npx playwright install && npx playwright install-deps
       shell: bash
       working-directory: ./core
-    - id: set-test-file
-      name: Set Test File
+    - name: Test
+      if: inputs.update != 'true'
       # Screenshots can be updated for all components or specified component(s).
       # If the `component` variable is set, then the test has the option to
       # - run all the instances of the specified component(s) in the `src/components` folder
@@ -37,17 +37,11 @@ runs:
       # -- For example: if the `component` value is "item basic", then the following command will be: `npm run test.e2e item basic`
       # -- For example: if the `component` value is "src/components/item/test/basic src/components/item/test/a11y", then the following command will be: `npm run test.e2e src/components/item/test/basic src/components/item/test/a11y`
       #
+      # If the `component` variable is not set, then the test will run all the instances of the components in the `src/components` folder.
+      # - For example: `npm run test.e2e`
+      #
       # More common options can be found at the Playwright Command line page: https://playwright.dev/docs/test-cli
-      run: |
-        if [ -n "${{ inputs.component }}" ]; then
-          echo "testFile=\$(echo '${{ inputs.component }}' | awk '{for(i=1;i<=NF;i++) \$i=\"src/components/\"\$i}1')" >> $GITHUB_OUTPUT
-        else
-          echo "testFile=$(echo '')" >> $GITHUB_OUTPUT
-        fi
-      shell: bash
-    - name: Test
-      if: inputs.update != 'true'
-      run: npm run test.e2e ${{ steps.set-test-file.outputs.testFile }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: npm run test.e2e ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
