@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction, Theme } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction, Theme, ThemeMode } from '@utils/test/playwright';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -20,15 +20,18 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   let mode: Mode;
   let direction: Direction;
   let theme: Theme;
+  let themeMode: ThemeMode;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
     theme = testInfo.project.metadata.theme;
+    themeMode = testInfo.project.metadata.themeMode;
   } else {
     mode = options.mode;
     direction = options.direction;
     theme = options.theme;
+    themeMode = options.themeMode;
   }
 
   const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
@@ -42,13 +45,16 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
-        ${theme !== 'light' ? `<link href="${baseUrl}/scripts/testing/themes/${theme}.css" rel="stylesheet" />` : ''}
+        ${
+          themeMode !== 'light' ? `<link href="${baseUrl}/scripts/testing/themes/${theme}.css" rel="stylesheet" />` : ''
+        }
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
         <script>
           window.Ionic = {
             config: {
-              mode: '${mode}'
+              mode: '${mode}',
+              theme: '${theme}'
             }
           }
         </script>
@@ -60,8 +66,18 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   `;
 
   testInfo.annotations.push({
+    type: 'mode',
+    description: mode,
+  });
+
+  testInfo.annotations.push({
     type: 'theme',
     description: theme,
+  });
+
+  testInfo.annotations.push({
+    type: 'themeMode',
+    description: themeMode,
   });
 
   if (baseUrl) {
