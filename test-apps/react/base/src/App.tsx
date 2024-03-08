@@ -19,9 +19,6 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-console.log('[react-test-app] ReactFoo', ReactFoo);
-console.log('[react-test-app] ReactRouterFoo', ReactRouterFoo);
-
 /* Theme variables */
 import './theme/variables.css';
 import Main from './pages/Main';
@@ -36,6 +33,9 @@ import IonModalConditional from './pages/overlay-components/IonModalConditional'
 import IonModalDatetimeButton from './pages/overlay-components/IonModalDatetimeButton';
 import IonPopoverNested from './pages/overlay-components/IonPopoverNested';
 import IonModalMultipleChildren from './pages/overlay-components/IonModalMultipleChildren';
+
+console.log('[react-test-app] ReactFoo', ReactFoo);
+console.log('[react-test-app] ReactRouterFoo', ReactRouterFoo);
 
 setupIonicReact();
 
