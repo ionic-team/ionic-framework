@@ -30,17 +30,17 @@ runs:
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
-      working-directory: ./packages/react/test
+      working-directory: ./test-apps/react
     - name: Install Dependencies
       run: pnpm install
       shell: bash
-      working-directory: ./packages/react/test/build/${{ inputs.app }}
+      working-directory: ./test-apps/react/build/${{ inputs.app }}
     - name: Build
       run: pnpm run build
       shell: bash
-      working-directory: ./packages/react/test/build/${{ inputs.app }}
+      working-directory: ./test-apps/react/build/${{ inputs.app }}
     - name: Run Tests
       run: pnpm run e2e
       shell: bash
-      working-directory: ./packages/react/test/build/${{ inputs.app }}
+      working-directory: ./test-apps/react/build/${{ inputs.app }}
 
