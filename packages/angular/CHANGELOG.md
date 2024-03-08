@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-beta.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.0...v8.0.0-beta.1) (2024-03-06)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [8.0.0-beta.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v8.0.0-beta.0) (2024-02-28)
+
+
+### Bug Fixes
+
+* **angular:** transition plays when using browser buttons ([#28530](https://github.com/ionic-team/ionic-framework/issues/28530)) ([9883eac](https://github.com/ionic-team/ionic-framework/commit/9883eac0f74b4ebce6de02d88941cf1ce3efecb3)), closes [#16569](https://github.com/ionic-team/ionic-framework/issues/16569)
+
+
+### Code Refactoring
+
+* **checkbox:** remove legacy property and support for legacy syntax ([#29043](https://github.com/ionic-team/ionic-framework/issues/29043)) ([fb5ae5b](https://github.com/ionic-team/ionic-framework/commit/fb5ae5b07f98a3b62a35ab07192a0fc7898ecbea))
+* **input:** remove accept property ([#28946](https://github.com/ionic-team/ionic-framework/issues/28946)) ([2816b87](https://github.com/ionic-team/ionic-framework/commit/2816b87ba6b3a7b6bc13e802a0076ad7fb696b81))
+* **radio:** remove legacy property and support for legacy syntax ([#29038](https://github.com/ionic-team/ionic-framework/issues/29038)) ([58d7315](https://github.com/ionic-team/ionic-framework/commit/58d731580237363be039d9b08ed5268cdae94629))
+* **range:** remove legacy property and support for legacy syntax ([#29040](https://github.com/ionic-team/ionic-framework/issues/29040)) ([58c795f](https://github.com/ionic-team/ionic-framework/commit/58c795f31583800c86253fb11bd4dc19370883b0))
+* **toggle:** remove legacy property and support for legacy syntax ([#29037](https://github.com/ionic-team/ionic-framework/issues/29037)) ([c72eced](https://github.com/ionic-team/ionic-framework/commit/c72ecedc09fff0af9af8e077fc816110549fca57))
+
+
+### Features
+
+* **angular:** remove IonBackButtonDelegate ([#29030](https://github.com/ionic-team/ionic-framework/issues/29030)) ([6baf005](https://github.com/ionic-team/ionic-framework/commit/6baf005da5be8c244a781bbffbcffca1a2ff90dc))
+* **input:** remove size property in favor of CSS styling ([#28903](https://github.com/ionic-team/ionic-framework/issues/28903)) ([a393d2a](https://github.com/ionic-team/ionic-framework/commit/a393d2a86c37165f35eb556a6150170b5338c40d))
+* **picker:** add inline picker ([#28689](https://github.com/ionic-team/ionic-framework/issues/28689)) ([cd5c099](https://github.com/ionic-team/ionic-framework/commit/cd5c099dd32ac1283de26a27ef572d05952538b2)), closes [#24905](https://github.com/ionic-team/ionic-framework/issues/24905) [#26840](https://github.com/ionic-team/ionic-framework/issues/26840) [#15710](https://github.com/ionic-team/ionic-framework/issues/15710)
+
+
+### Performance Improvements
+
+* **angular:** views are not moved on mount ([#28544](https://github.com/ionic-team/ionic-framework/issues/28544)) ([77a0640](https://github.com/ionic-team/ionic-framework/commit/77a0640e92dc4300b9e89221ef03e96206eca9ae)), closes [#28534](https://github.com/ionic-team/ionic-framework/issues/28534)
+
+
+### BREAKING CHANGES
+
+* **range:** The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed from range. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
+* **checkbox:** The `legacy` property and support for the legacy syntax, which involved placing an `ion-checkbox` inside of an `ion-item` with an `ion-label`, have been removed from checkbox. For more information on migrating from the legacy checkbox syntax, refer to the [Checkbox documentation](https://ionicframework.com/docs/api/checkbox#migrating-from-legacy-checkbox-syntax).
+* **radio:** The `legacy` property and support for the legacy syntax, which involved placing an `ion-radio` inside of an `ion-item` with an `ion-label`, have been removed from radio. For more information on migrating from the legacy radio syntax, refer to the [Radio documentation](https://ionicframework.com/docs/api/radio#migrating-from-legacy-radio-syntax).
+* **toggle:** The `legacy` property and support for the legacy syntax, which involved placing an `ion-toggle` inside of an `ion-item` with an `ion-label`, have been removed from toggle. For more information on migrating from the legacy toggle syntax, refer to the [Toggle documentation](https://ionicframework.com/docs/api/toggle#migrating-from-legacy-toggle-syntax).
+* **input:** The `accept` property has been removed from `ion-input`.
+
+
+
+
+
+## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.7.2](https://github.com/ionic-team/ionic-framework/compare/v7.7.1...v7.7.2) (2024-02-14)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [7.7.1](https://github.com/ionic-team/ionic-framework/compare/v7.7.0...v7.7.1) (2024-02-07)
 
 **Note:** Version bump only for package @ionic/angular
@@ -633,7 +706,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
 
-### Features 
+### Features
 
 * **angular,angular-server:** angular v14 minimum support ([#26822](https://github.com/ionic-team/ionic/issues/26822)) ([1dee16f](https://github.com/ionic-team/ionic/commit/1dee16f3a25dedf831afc09f9c400a42e861beea))
 * **searchbar:** ionInput now emits value payload ([#26831](https://github.com/ionic-team/ionic/issues/26831)) ([865f8de](https://github.com/ionic-team/ionic/commit/865f8de9dc2d533b08730846f8d76bf165e8bc1d)), closes [#26828](https://github.com/ionic-team/ionic/issues/26828)

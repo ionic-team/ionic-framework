@@ -29,7 +29,6 @@
   --background-hover-opacity: .04;
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
-  --bottom-padding-start: 0px;
 
   font-size: $item-ios-font-size;
 }
@@ -121,7 +120,6 @@
   @include margin($item-ios-label-slot-end-margin-top, $item-ios-label-slot-end-margin-end, $item-ios-label-slot-end-margin-bottom, $item-ios-label-slot-end-margin-start);
 }
 
-
 // iOS Item Button
 // --------------------------------------------------
 
@@ -176,18 +174,10 @@
   @include margin(10px, 8px, 10px, 0);
 }
 
-
 // iOS Stacked & Floating Inputs
 // --------------------------------------------------
 
 :host(.item-label-floating),
 :host(.item-label-stacked) {
   --min-height: 68px;
-}
-
-// iOS Fixed Labels
-// --------------------------------------------------
-
-:host(.item-label-fixed) ::slotted(ion-datetime) {
-  --padding-start: 0;
 }

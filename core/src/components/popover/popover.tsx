@@ -1,18 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { focusFirstDescendant } from '@utils/focus-trap';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
-import {
-  BACKDROP,
-  dismiss,
-  eventMethod,
-  focusFirstDescendant,
-  prepareOverlay,
-  present,
-  setOverlayId,
-} from '@utils/overlays';
+import { BACKDROP, dismiss, eventMethod, prepareOverlay, present, setOverlayId } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
@@ -512,7 +505,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * descendant inside of the popover.
      */
     if (this.focusDescendantOnPresent) {
-      focusFirstDescendant(this.el, this.el);
+      focusFirstDescendant(el);
     }
 
     unlock();
@@ -525,6 +518,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
    * @param dismissParentPopover If `true`, dismissing this popover will also dismiss
    * a parent popover if this popover is nested. Defaults to `true`.
+   *
+   * This is a no-op if the overlay has not been presented yet. If you want
+   * to remove an overlay from the DOM that was never presented, use the
+   * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
   async dismiss(data?: any, role?: string, dismissParentPopover = true): Promise<boolean> {

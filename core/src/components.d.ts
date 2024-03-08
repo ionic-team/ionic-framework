@@ -18,7 +18,6 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { CounterFormatter } from "./components/item/item-interface";
 import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -54,7 +53,6 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { CounterFormatter } from "./components/item/item-interface";
 export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
@@ -160,7 +158,7 @@ export namespace Components {
         /**
           * Dismiss the action sheet overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+          * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -239,7 +237,7 @@ export namespace Components {
         /**
           * Dismiss the alert overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+          * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -1295,16 +1293,6 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counter": boolean;
-        /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
-          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counterFormatter"?: CounterFormatter;
-        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -1320,11 +1308,6 @@ export namespace Components {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download": string | undefined;
-        /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
-          * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
-         */
-        "fill"?: 'outline' | 'solid';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -1349,10 +1332,6 @@ export namespace Components {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection": RouterDirection;
-        /**
-          * The shape of the item. If "round" it will have increased border radius.
-         */
-        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -1513,7 +1492,7 @@ export namespace Components {
         /**
           * Dismiss the loading overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+          * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -1706,7 +1685,7 @@ export namespace Components {
         /**
           * Dismiss the modal overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
+          * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -2114,7 +2093,7 @@ export namespace Components {
           * Dismiss the popover overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
           * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
-          * @param dismissParentPopover If `true`, dismissing this popover will also dismiss a parent popover if this popover is nested. Defaults to `true`.
+          * @param dismissParentPopover If `true`, dismissing this popover will also dismiss a parent popover if this popover is nested. Defaults to `true`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string, dismissParentPopover?: boolean) => Promise<boolean>;
         /**
@@ -3100,7 +3079,7 @@ export namespace Components {
         /**
           * Dismiss the toast overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+          * @param role The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -6010,16 +5989,6 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counter"?: boolean;
-        /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
-          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counterFormatter"?: CounterFormatter;
-        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -6035,11 +6004,6 @@ declare namespace LocalJSX {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download"?: string | undefined;
-        /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
-          * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
-         */
-        "fill"?: 'outline' | 'solid';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -6064,10 +6028,6 @@ declare namespace LocalJSX {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
-        /**
-          * The shape of the item. If "round" it will have increased border radius.
-         */
-        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */

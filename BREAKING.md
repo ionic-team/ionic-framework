@@ -137,6 +137,7 @@ Developers who had previously chosen dynamic font scaling by activating it in th
 Developers who want to disable dynamic font scaling can set `--ion-dynamic-font: initial;` in their global stylesheets. However, this is not recommended because it may introduce accessibility challenges for users who depend on enlarged font sizes.
 
 For more information on the dynamic font, refer to the [Dynamic Font Scaling documentation](https://ionicframework.com/docs/layout/dynamic-font-scaling).
+
 <h2 id="version-8x-components">Components</h2>
 
 <h4 id="version-8x-button">Button</h4>
@@ -170,6 +171,15 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 - The `legacy` property and support for the legacy syntax, which involved placing an `ion-input` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy input syntax, refer to the [Input documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax).
 
 <h4 id="version-8x-item">Item</h4>
+
+- The `helper` slot has been removed. Developers should use the `helperText` property on `ion-input` and `ion-textarea`.
+- The `error` slot has been removed. Developers should use the `errorText` property on `ion-input` and `ion-textarea`.
+- Counter functionality has been removed including the `counter` and `counterFormatter` properties. Developers should use the properties of the same name on `ion-input` and `ion-textarea`.
+- The `fill` property has been removed. Developers should use the property of the same name on `ion-input`, `ion-select`, and `ion-textarea`.
+- The `shape` property has been removed. Developers should use the property of the same name on `ion-input`, `ion-select`, and `ion-textarea`.
+- Item no longer automatically delegates focus to the first focusable element. While most developers should not need to make any changes to account for this update, usages of `ion-item` with interactive elements such as form controls (inputs, textareas, etc) should be evaluated to verify that interactions still work as expected.
+
+<h5>CSS variables</h4>
 
 The following deprecated CSS variables have been removed: `--highlight-height`, `--highlight-color-focused`, `--highlight-color-valid`, and `--highlight-color-invalid`. These variables were used on the bottom border highlight of an item when the form control inside of that item was focused. The form control syntax was [simplified in v7](https://ionic.io/blog/ionic-7-is-here#simplified-form-control-syntax) so that inputs, selects, and textareas would no longer be required to be used inside of an item.
 
