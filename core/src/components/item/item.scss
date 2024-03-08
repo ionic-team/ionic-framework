@@ -384,29 +384,6 @@ a {
   flex-direction: column;
 }
 
-// Item Input Highlight
-// --------------------------------------------------
-
-.item-highlight,
-.item-inner-highlight {
-  @include position(0, 0, 0, 0);
-  @include border-radius(inherit);
-  position: absolute;
-
-  width: 100%;
-
-  height: 100%;
-
-  transform: scaleX(0);
-
-  transition: transform 200ms, border-bottom-width 200ms;
-
-  z-index: 2;
-
-  box-sizing: border-box;
-  pointer-events: none;
-}
-
 // Item Input Focused
 // --------------------------------------------------
 
@@ -419,40 +396,6 @@ a {
   // If the item has an inset border and highlight is enabled, show the inset item highlight
   --inset-highlight-height: #{calc(var(--highlight-height) * var(--show-inset-highlight))};
 }
-
-:host(.ion-focused) .item-highlight,
-:host(.ion-focused) .item-inner-highlight,
-:host(.item-has-focus) .item-highlight,
-:host(.item-has-focus) .item-inner-highlight {
-  transform: scaleX(1);
-
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
-
-:host(.ion-focused) .item-highlight,
-:host(.item-has-focus) .item-highlight {
-  border-width: var(--full-highlight-height);
-
-  opacity: var(--show-full-highlight);
-}
-
-:host(.ion-focused) .item-inner-highlight,
-:host(.item-has-focus) .item-inner-highlight {
-  border-bottom-width: var(--inset-highlight-height);
-
-  opacity: var(--show-inset-highlight);
-}
-
-:host(.ion-focused) .item-inner-highlight,
-:host(.ion-focused) .item-highlight,
-:host(.item-has-focus) .item-inner-highlight,
-:host(.item-has-focus) .item-highlight {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-}
-
 
 // Item Input Focus
 // --------------------------------------------------
@@ -508,12 +451,3 @@ ion-ripple-effect {
   color: var(--ripple-color);
 }
 
-// Item: Reduced Motion
-// --------------------------------------------------
-
-@media (prefers-reduced-motion: reduce) {
-  .item-highlight,
-  .item-inner-highlight {
-    transition: none;
-  }
-}
