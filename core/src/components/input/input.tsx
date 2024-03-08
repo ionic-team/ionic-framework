@@ -35,7 +35,7 @@ import { getCounterText } from './input.utils';
   styleUrls: {
     ios: 'input.ios.scss',
     md: 'input.md.scss',
-    ionic: 'input.md.scss',
+    ionic: 'input.ionic.scss',
   },
   scoped: true,
 })
@@ -202,7 +202,8 @@ export class Input implements ComponentInterface {
    * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' =
+    getIonTheme(this) === 'ionic' ? 'stacked' : 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -270,7 +271,7 @@ export class Input implements ComponentInterface {
   /**
    * The shape of the input. If "round" it will have an increased border radius.
    */
-  @Prop() shape?: 'round';
+  @Prop() shape?: 'rectangular' | 'soft' | 'round';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -283,8 +284,7 @@ export class Input implements ComponentInterface {
    */
   @Prop() step?: string;
 
-  // FW-4914 Remove this property in Ionic 8
-  @Prop() size?: number;
+  @Prop() size?: 'large' | 'xlarge';
 
   /**
    * The type of control to display. The default type is text.
@@ -295,6 +295,13 @@ export class Input implements ComponentInterface {
    * The value of the input.
    */
   @Prop({ mutable: true }) value?: string | number | null = '';
+
+  /**
+   * Icon to use as the clear button.
+   * If a value is given, the clear button will use that icon.
+   * Else, it will use the default clear icon for the platform the input is on.
+   */
+  @Prop() clearIcon?: any;
 
   /**
    * The `ionInput` event is fired each time the user modifies the input's value.
@@ -687,13 +694,47 @@ export class Input implements ComponentInterface {
     return this.label !== undefined || this.labelSlot !== null;
   }
 
+  private getShape() {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    if ((theme === 'ios' || theme === 'md') && (shape === 'rectangular' || shape === 'soft')) {
+      printIonWarning(`The "${shape}" shape is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+    return shape;
+  }
+
+  private getSize() {
+    const theme = getIonTheme(this);
+    const { size } = this;
+
+    if ((theme === 'ios' || theme === 'md') && (size === 'large' || size === 'xlarge')) {
+      printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+    return size;
+  }
+
+  private getLabelPlacement() {
+    const theme = getIonTheme(this);
+    const { labelPlacement } = this;
+
+    if (theme === 'ionic' && labelPlacement !== 'stacked' && labelPlacement !== 'floating') {
+      printIonWarning(`The "${labelPlacement}" label placement is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+
+    return labelPlacement;
+  }
+
   /**
    * Renders the border container
    * when fill="outline".
    */
   private renderLabelContainer() {
     const theme = getIonTheme(this);
-    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
+    const hasOutlineFill = (theme === 'md' || theme === 'ionic') && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -759,6 +800,10 @@ export class Input implements ComponentInterface {
     const labelShouldFloat =
       labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
 
+    const finalSize = this.getSize();
+    const finalShape = this.getShape();
+    const finalLabelPlacement = this.getLabelPlacement();
+
     return (
       <Host
         class={createColorClasses(this.color, {
@@ -767,11 +812,12 @@ export class Input implements ComponentInterface {
           'has-focus': hasFocus,
           'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
-          [`input-shape-${shape}`]: shape !== undefined,
-          [`input-label-placement-${labelPlacement}`]: true,
+          [`input-shape-${shape}`]: finalShape !== undefined,
+          [`input-label-placement-${finalLabelPlacement}`]: finalLabelPlacement !== undefined,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
+          [`input-size-${finalSize}`]: finalSize !== undefined,
         })}
       >
         {/**
@@ -808,7 +854,6 @@ export class Input implements ComponentInterface {
               required={this.required}
               spellcheck={this.spellcheck}
               step={this.step}
-              size={this.size}
               type={this.type}
               value={value}
               onInput={this.onInput}
@@ -835,7 +880,16 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" icon={theme === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                {theme !== 'ionic' && (
+                  <ion-icon aria-hidden="true" icon={theme === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                )}
+                {/* The `ionic` theme may be used, but that doesn't
+                guarantee that a custom clear icon will be provided.
+                Default to `md` */}
+                {theme === 'ionic' && this.clearIcon === undefined && (
+                  <ion-icon aria-hidden="true" icon={closeSharp}></ion-icon>
+                )}
+                {theme === 'ionic' && this.clearIcon}
               </button>
             )}
             <slot name="end"></slot>
@@ -917,7 +971,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           required={this.required}
           spellcheck={this.spellcheck}
           step={this.step}
-          size={this.size}
           type={this.type}
           value={value}
           onInput={this.onInput}
