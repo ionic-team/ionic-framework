@@ -6,7 +6,7 @@ import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 
-import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
@@ -26,7 +26,7 @@ import type { RouterDirection } from '../router/utils/interface';
   styleUrls: {
     ios: 'button.ios.scss',
     md: 'button.md.scss',
-    ionic: 'button.ionic.scss',
+    ionic: 'button.md.scss',
   },
   shadow: true,
 })
@@ -346,10 +346,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     {
       type !== 'button' && this.renderHiddenButton();
     }
-
-    const mode = getIonMode(this);
-
-    console.log(`theme: ${theme}, mode: ${mode}`);
 
     return (
       <Host
