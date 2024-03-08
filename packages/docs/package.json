@@ -17,8 +17,5 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic-docs/issues"
   },
-  "scripts": {
-    "build": "echo noop"
-  },
   "homepage": "https://ionicframework.com/docs"
 }
