@@ -60,7 +60,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select value="apple" class="custom ion-touched ion-invalid" label="Favorite Fruit">
+            <ion-select value="apple" class="custom ion-touched ion-invalid ion-focused" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
@@ -133,7 +133,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select fill="solid" value="apple" class="custom ion-touched ion-invalid" label="Favorite Fruit">
+            <ion-select fill="solid" value="apple" class="custom ion-touched ion-invalid ion-focused" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
@@ -206,7 +206,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select fill="outline" value="apple" class="custom ion-touched ion-invalid" label="Favorite Fruit">
+            <ion-select fill="outline" value="apple" class="custom ion-touched ion-invalid ion-focused" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
