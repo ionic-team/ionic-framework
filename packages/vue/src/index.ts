@@ -1,3 +1,5 @@
+import { CoreFoo } from "@ionic/core/components";
+
 export * from "./proxies";
 
 export { UseBackButtonResult, useBackButton } from "./hooks/back-button";
@@ -128,8 +130,6 @@ export {
   TransitionOptions,
 } from "@ionic/core/components";
 
-import { CoreFoo } from '@ionic/core/components';
-
 console.log(`[@ionic/vue]: CoreFoo`, CoreFoo);
 
-export const VueFoo = 'VueFoo';
+export const VueFoo = "VueFoo";
