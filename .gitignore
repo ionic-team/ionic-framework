@@ -72,16 +72,9 @@ packages/core/**/*-snapshots
 
 # angular
 packages/angular/css/
-packages/angular/test/build/
 .angular/
 
-# vue
-packages/vue/test/build/
-
-# react
-packages/react/test/build/
-
-# react router
-packages/react-router/test/build/
+# test apps
+test-apps/**/*/build/
 
 .npmrc
