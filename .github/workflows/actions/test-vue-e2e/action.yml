@@ -30,16 +30,16 @@ runs:
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
-      working-directory: ./packages/vue/test
+      working-directory: ./test-apps/vue
     - name: Install Dependencies
       run: pnpm install
       shell: bash
-      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+      working-directory: ./test-apps/vue/build/${{ inputs.app }}
     - name: Run Spec Tests
       run: pnpm run test:unit
       shell: bash
-      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+      working-directory: ./test-apps/vue/build/${{ inputs.app }}
     - name: Run E2E Tests
       run: pnpm run test:e2e
       shell: bash
-      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+      working-directory: ./test-apps/vue/build/${{ inputs.app }}

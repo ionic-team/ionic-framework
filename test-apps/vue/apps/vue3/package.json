@@ -15,8 +15,8 @@
     "start": "pnpm run dev"
   },
   "dependencies": {
-    "@ionic/vue": "file:../../../",
-    "@ionic/vue-router": "file:../../../../vue-router",
+    "@ionic/vue": "workspace:*",
+    "@ionic/vue-router": "workspace:*",
     "ionicons": "^6.0.4",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
