@@ -34,14 +34,14 @@ const getAngularOutputTargets = () => {
   return [
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
-      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
+      directivesProxyFile: '../angular/src/directives/proxies.ts',
+      directivesArrayFile: '../angular/src/directives/proxies-list.ts',
       excludeComponents,
       outputType: 'component',
     }),
     angularOutputTarget({
       componentCorePackage,
-      directivesProxyFile: '../packages/angular/standalone/src/directives/proxies.ts',
+      directivesProxyFile: '../angular/standalone/src/directives/proxies.ts',
       excludeComponents: [
         ...excludeComponents,
         /**
@@ -130,7 +130,7 @@ export const config: Config = {
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
-      proxiesFile: '../packages/react/src/components/proxies.ts',
+      proxiesFile: '../react/src/components/proxies.ts',
       excludeComponents: [
         // Routing
         'ion-router',
@@ -167,7 +167,7 @@ export const config: Config = {
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
-      proxiesFile: '../packages/vue/src/proxies.ts',
+      proxiesFile: '../vue/src/proxies.ts',
       excludeComponents: [
         // Routing
         'ion-router',
