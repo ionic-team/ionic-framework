@@ -183,20 +183,15 @@
 // Touch Area
 // --------------------------------------------------
 
-:host::after {
+.native-wrapper::after {
   position: absolute;
-
-  top: 50%;
+  top: 0;
   /* stylelint-disable property-disallowed-list */
-  right: 0;
-  bottom: 0;
   left: 0;
+
+  width: 100%;
 
   min-height: 48px;
 
-  transform: translateY(-50%);
-
   content: "";
-
-  cursor: pointer;
 }
