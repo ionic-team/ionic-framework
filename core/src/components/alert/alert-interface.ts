@@ -14,9 +14,12 @@ export interface AlertOptions {
   htmlAttributes?: { [key: string]: any };
 
   /**
-   * @deprecated
+   * The platform behavior of the alert.
    */
   mode?: Mode;
+  /**
+   * The visual appearance of the alert.
+   */
   theme?: Theme;
 
   keyboardClose?: boolean;

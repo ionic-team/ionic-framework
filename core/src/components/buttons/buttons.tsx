@@ -4,7 +4,7 @@ import { Component, Host, Prop, h } from '@stencil/core';
 import { getIonTheme } from '../../global/ionic-global';
 
 /**
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
  */
 @Component({
   tag: 'ion-buttons',

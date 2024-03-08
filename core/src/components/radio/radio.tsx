@@ -11,7 +11,7 @@ import type { Color, StyleEventDetail } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
  *
  * @slot - The label text to associate with the radio. Use the "labelPlacement" property to control where the label is placed relative to the radio.
  *

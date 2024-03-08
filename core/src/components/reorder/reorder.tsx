@@ -5,7 +5,7 @@ import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
 import { getIonTheme } from '../../global/ionic-global';
 
 /**
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
  *
  * @part icon - The icon of the reorder handle (uses ion-icon).
  */

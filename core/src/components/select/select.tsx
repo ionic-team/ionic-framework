@@ -31,7 +31,7 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
  *
  * @slot label - The label text to associate with the select. Use the `labelPlacement` property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
  * @slot start - Content to display at the leading edge of the select.

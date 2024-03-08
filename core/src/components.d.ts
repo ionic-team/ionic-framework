@@ -92,7 +92,7 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -139,7 +139,7 @@ export namespace Components {
          */
         "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -218,7 +218,7 @@ export namespace Components {
          */
         "subHeader"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -309,7 +309,7 @@ export namespace Components {
          */
         "subHeader"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -326,7 +326,7 @@ export namespace Components {
     }
     interface IonAvatar {
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -360,7 +360,7 @@ export namespace Components {
          */
         "text"?: string | null;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -378,7 +378,7 @@ export namespace Components {
          */
         "tappable": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -396,7 +396,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -449,7 +449,7 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -475,7 +475,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -545,7 +545,7 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -559,7 +559,7 @@ export namespace Components {
          */
         "collapse": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -605,7 +605,7 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -619,7 +619,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -633,7 +633,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -651,7 +651,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -665,7 +665,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -711,7 +711,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -737,7 +737,7 @@ export namespace Components {
          */
         "outline": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -1019,7 +1019,7 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1053,7 +1053,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -1137,7 +1137,7 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1169,7 +1169,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1193,7 +1193,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1239,7 +1239,7 @@ export namespace Components {
          */
         "loadingText"?: string | IonicSafeString;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -1391,7 +1391,7 @@ export namespace Components {
          */
         "step"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1476,7 +1476,7 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1498,13 +1498,13 @@ export namespace Components {
          */
         "sticky": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemGroup {
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -1542,7 +1542,7 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1557,7 +1557,7 @@ export namespace Components {
          */
         "side": Side;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -1602,7 +1602,7 @@ export namespace Components {
          */
         "position"?: 'fixed' | 'stacked' | 'floating';
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -1624,7 +1624,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -1642,7 +1642,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -1721,7 +1721,7 @@ export namespace Components {
          */
         "spinner"?: SpinnerTypes | null;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1779,7 +1779,7 @@ export namespace Components {
          */
         "swipeGesture": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1813,7 +1813,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -1942,7 +1942,7 @@ export namespace Components {
          */
         "showBackdrop": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2100,7 +2100,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -2184,7 +2184,7 @@ export namespace Components {
          */
         "showBackdrop": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2198,7 +2198,7 @@ export namespace Components {
          */
         "col": PickerColumn;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -2229,7 +2229,7 @@ export namespace Components {
          */
         "setValue": (value?: string | number) => Promise<void>;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2244,7 +2244,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -2358,7 +2358,7 @@ export namespace Components {
          */
         "size": PopoverSize;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2392,7 +2392,7 @@ export namespace Components {
          */
         "reversed": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2440,7 +2440,7 @@ export namespace Components {
         "setButtonTabindex": (value: number) => Promise<void>;
         "setFocus": (ev: globalThis.Event) => Promise<void>;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2532,7 +2532,7 @@ export namespace Components {
          */
         "step": number;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2586,7 +2586,7 @@ export namespace Components {
          */
         "snapbackDuration": string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -2610,7 +2610,7 @@ export namespace Components {
     }
     interface IonReorder {
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -2821,7 +2821,7 @@ export namespace Components {
          */
         "spellcheck": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2859,7 +2859,7 @@ export namespace Components {
          */
         "swipeGesture": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2882,7 +2882,7 @@ export namespace Components {
         "mode"?: "ios" | "md";
         "setFocus": () => Promise<void>;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -2977,7 +2977,7 @@ export namespace Components {
          */
         "shape"?: 'round';
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -3021,7 +3021,7 @@ export namespace Components {
          */
         "subHeader"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -3059,7 +3059,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -3097,7 +3097,7 @@ export namespace Components {
          */
         "selectedTab"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -3143,7 +3143,7 @@ export namespace Components {
          */
         "target": string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -3298,7 +3298,7 @@ export namespace Components {
          */
         "spellcheck": boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -3322,7 +3322,7 @@ export namespace Components {
          */
         "size"?: 'large' | 'small';
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -3421,7 +3421,7 @@ export namespace Components {
          */
         "swipeGesture"?: ToastSwipeGestureDirection;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -3475,7 +3475,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -3493,7 +3493,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -4977,7 +4977,7 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5027,7 +5027,7 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5120,7 +5120,7 @@ declare namespace LocalJSX {
          */
         "subHeader"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5225,7 +5225,7 @@ declare namespace LocalJSX {
          */
         "subHeader"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5241,7 +5241,7 @@ declare namespace LocalJSX {
     }
     interface IonAvatar {
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5275,7 +5275,7 @@ declare namespace LocalJSX {
          */
         "text"?: string | null;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5297,7 +5297,7 @@ declare namespace LocalJSX {
          */
         "tappable"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5315,7 +5315,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5380,7 +5380,7 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5410,7 +5410,7 @@ declare namespace LocalJSX {
          */
         "onIonCollapsedClick"?: (event: IonBreadcrumbsCustomEvent<BreadcrumbCollapsedClickEventDetail>) => void;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5488,7 +5488,7 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5502,7 +5502,7 @@ declare namespace LocalJSX {
          */
         "collapse"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5548,7 +5548,7 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5562,7 +5562,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5576,7 +5576,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5594,7 +5594,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5608,7 +5608,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5670,7 +5670,7 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonCheckboxCustomEvent<StyleEventDetail>) => void;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -5696,7 +5696,7 @@ declare namespace LocalJSX {
          */
         "outline"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -5974,7 +5974,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6008,7 +6008,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -6092,7 +6092,7 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6124,7 +6124,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6148,7 +6148,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6206,7 +6206,7 @@ declare namespace LocalJSX {
          */
         "loadingText"?: string | IonicSafeString;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -6370,7 +6370,7 @@ declare namespace LocalJSX {
          */
         "step"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6455,7 +6455,7 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6477,13 +6477,13 @@ declare namespace LocalJSX {
          */
         "sticky"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
     interface IonItemGroup {
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -6521,7 +6521,7 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6539,7 +6539,7 @@ declare namespace LocalJSX {
          */
         "side"?: Side;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -6575,7 +6575,7 @@ declare namespace LocalJSX {
          */
         "position"?: 'fixed' | 'stacked' | 'floating';
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -6593,7 +6593,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -6611,7 +6611,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -6704,7 +6704,7 @@ declare namespace LocalJSX {
          */
         "spinner"?: SpinnerTypes | null;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6762,7 +6762,7 @@ declare namespace LocalJSX {
          */
         "swipeGesture"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6792,7 +6792,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -6935,7 +6935,7 @@ declare namespace LocalJSX {
          */
         "showBackdrop"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7006,7 +7006,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -7099,7 +7099,7 @@ declare namespace LocalJSX {
          */
         "showBackdrop"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7117,7 +7117,7 @@ declare namespace LocalJSX {
          */
         "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn>) => void;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -7147,7 +7147,7 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: IonPickerColumnInternalCustomEvent<PickerColumnItem>) => void;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7162,7 +7162,7 @@ declare namespace LocalJSX {
         "mode"?: "ios" | "md";
         "onIonInputModeChange"?: (event: IonPickerInternalCustomEvent<PickerInternalChangeEventDetail>) => void;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -7288,7 +7288,7 @@ declare namespace LocalJSX {
          */
         "size"?: PopoverSize;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7322,7 +7322,7 @@ declare namespace LocalJSX {
          */
         "reversed"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7380,7 +7380,7 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonRadioCustomEvent<StyleEventDetail>) => void;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7508,7 +7508,7 @@ declare namespace LocalJSX {
          */
         "step"?: number;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7562,7 +7562,7 @@ declare namespace LocalJSX {
          */
         "snapbackDuration"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -7586,7 +7586,7 @@ declare namespace LocalJSX {
     }
     interface IonReorder {
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -7813,7 +7813,7 @@ declare namespace LocalJSX {
          */
         "spellcheck"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7863,7 +7863,7 @@ declare namespace LocalJSX {
          */
         "swipeGesture"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7885,7 +7885,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -7999,7 +7999,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round';
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -8043,7 +8043,7 @@ declare namespace LocalJSX {
          */
         "subHeader"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -8089,7 +8089,7 @@ declare namespace LocalJSX {
          */
         "onIonSplitPaneVisible"?: (event: IonSplitPaneCustomEvent<{ visible: boolean }>) => void;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -8125,7 +8125,7 @@ declare namespace LocalJSX {
          */
         "selectedTab"?: string;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -8175,7 +8175,7 @@ declare namespace LocalJSX {
          */
         "target"?: string | undefined;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -8338,7 +8338,7 @@ declare namespace LocalJSX {
          */
         "spellcheck"?: boolean;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -8366,7 +8366,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'large' | 'small';
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }
@@ -8479,7 +8479,7 @@ declare namespace LocalJSX {
          */
         "swipeGesture"?: ToastSwipeGestureDirection;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -8549,7 +8549,7 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonToggleCustomEvent<StyleEventDetail>) => void;
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
@@ -8567,7 +8567,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The theme determines the appearance of components.
+          * The visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
     }

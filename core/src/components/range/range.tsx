@@ -26,7 +26,7 @@ import type {
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the appearance of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
  *
  * @slot label - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.

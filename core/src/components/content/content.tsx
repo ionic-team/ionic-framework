@@ -6,7 +6,7 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
-import type { Color } from '../../interface';
+import type { Color, Mode } from '../../interface';
 
 import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
 
@@ -214,9 +214,8 @@ export class Content implements ComponentInterface {
     }, 100);
   }
 
-  private shouldForceOverscroll() {
+  private shouldForceOverscroll(mode: Mode) {
     const { forceOverscroll } = this;
-    const mode = getIonMode(this);
     return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
   }
 
@@ -426,7 +425,8 @@ export class Content implements ComponentInterface {
     const { isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const theme = getIonTheme(this);
-    const forceOverscroll = this.shouldForceOverscroll();
+    const mode = getIonMode(this, theme);
+    const forceOverscroll = this.shouldForceOverscroll(mode);
     const transitionShadow = theme === 'ios';
     const TagType = isMainContent ? 'main' : ('div' as any);
 

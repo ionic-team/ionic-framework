@@ -9,9 +9,12 @@ export interface ActionSheetOptions {
   translucent?: boolean;
   animated?: boolean;
   /**
-   * @deprecated
+   * The platform behavior of the action sheet.
    */
   mode?: Mode;
+  /**
+   * The visual appearance of the action sheet.
+   */
   theme?: Theme;
   keyboardClose?: boolean;
   id?: string;
