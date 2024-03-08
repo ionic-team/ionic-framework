@@ -30,3 +30,5 @@ export {
   toastController,
 } from './utils/overlays';
 export { IonicSlides } from './components/slides/IonicSlides';
+
+export const CoreFoo = 'CoreBar';
