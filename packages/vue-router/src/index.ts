@@ -9,6 +9,7 @@ import {
 import { createIonRouter } from "./router";
 import type { IonicVueRouterOptions } from "./types";
 import { createViewStacks } from "./viewStacks";
+import { VueFoo } from '@ionic/vue';
 
 export const createRouter = (opts: IonicVueRouterOptions) => {
   const routerOptions = { ...opts };
@@ -37,3 +38,7 @@ export const createWebHashHistory = (base?: string) =>
   createVueWebHashHistory(base);
 export const createMemoryHistory = (base?: string) =>
   createVueMemoryHistory(base);
+
+console.log('[@ionic/vue-router] VueFoo', VueFoo);
+
+export const VueRouterFoo = 'VueRouterFoo';

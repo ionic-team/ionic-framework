@@ -127,3 +127,9 @@ export {
   ToggleCustomEvent,
   TransitionOptions,
 } from "@ionic/core/components";
+
+import { CoreFoo } from '@ionic/core/components';
+
+console.log(`[@ionic/vue]: CoreFoo`, CoreFoo);
+
+export const VueFoo = 'VueFoo';

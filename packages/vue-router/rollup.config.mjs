@@ -10,5 +10,5 @@ export default {
     }
   ],
   plugins: [typescript()],
-  external: ['vue-router', 'vue']
+  external: ['vue-router', 'vue', '@ionic/vue']
 };

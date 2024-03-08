@@ -2,7 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
 
-import { IonicVue } from '@ionic/vue';
+import { IonicVue, VueFoo } from '@ionic/vue';
+import { VueRouterFoo } from '@ionic/vue-router';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -22,6 +23,9 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
+console.log(`[vue-test-app] VueFoo`, VueFoo);
+console.log(`[vue-test-app] VueRouterFoo`, VueRouterFoo);
 
 /**
  * Vue 3 has its own error handling.
