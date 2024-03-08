@@ -5,6 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
+import { getIonTheme } from 'src/global/ionic-global';
 
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -25,7 +26,6 @@ import type { RouterDirection } from '../router/utils/interface';
   styleUrls: {
     ios: 'button.ios.scss',
     md: 'button.md.scss',
-    ionic: 'button.md.scss',
   },
   shadow: true,
 })
@@ -313,6 +313,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       inheritedAttributes,
     } = this;
 
+    const theme = getIonTheme(this);
     const finalSize = size === undefined && this.inItem ? 'small' : size;
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
