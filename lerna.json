@@ -1,7 +1,5 @@
 {
   "packages": [
-    "core",
-    "docs",
     "packages/*"
   ],
   "version": "7.7.4"
