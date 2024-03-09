@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonTheme } from '../../global/ionic-global';
 
@@ -62,8 +62,15 @@ export class SplitPane implements ComponentInterface {
 
   @Watch('visible')
   visibleChanged(visible: boolean) {
-    const detail = { visible, isPane: this.isPane.bind(this) };
-    this.ionSplitPaneVisible.emit(detail);
+    this.ionSplitPaneVisible.emit({ visible });
+  }
+
+  /**
+   * @internal
+   */
+  @Method()
+  async isVisible(): Promise<boolean> {
+    return Promise.resolve(this.visible);
   }
 
   async connectedCallback() {
@@ -72,7 +79,7 @@ export class SplitPane implements ComponentInterface {
     if (typeof customElements !== 'undefined' && customElements != null) {
       await customElements.whenDefined('ion-split-pane');
     }
-    this.styleChildren();
+    this.styleMainElement();
     this.updateState();
   }
 
@@ -128,17 +135,20 @@ export class SplitPane implements ComponentInterface {
     this.visible = mediaList.matches;
   }
 
-  private isPane(element: HTMLElement): boolean {
-    if (!this.visible) {
-      return false;
-    }
-    return element.parentElement === this.el && element.classList.contains(SPLIT_PANE_SIDE);
-  }
-
-  private styleChildren() {
+  /**
+   * Attempt to find the main content
+   * element inside of the split pane.
+   * If found, set it as the main node.
+   *
+   * We assume that the main node
+   * is available in the DOM on split
+   * pane load.
+   */
+  private styleMainElement() {
     if (!Build.isBrowser) {
       return;
     }
+
     const contentId = this.contentId;
     const children = this.el.children;
     const nu = this.el.childElementCount;
@@ -150,10 +160,11 @@ export class SplitPane implements ComponentInterface {
         if (foundMain) {
           console.warn('split pane cannot have more than one main node');
           return;
+        } else {
+          setPaneClass(child, isMain);
+          foundMain = true;
         }
-        foundMain = true;
       }
-      setPaneClass(child, isMain);
     }
     if (!foundMain) {
       console.warn('split pane does not have a specified main node');

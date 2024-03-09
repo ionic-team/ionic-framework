@@ -32,7 +32,8 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
-        checkbox: false
+        checkbox: false,
+        radio: null
       });
     });
 
@@ -59,7 +60,8 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
-        checkbox: false
+        checkbox: false,
+        radio: null
       });
     });
 
@@ -73,7 +75,8 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
-        checkbox: false
+        checkbox: false,
+        radio: null
       });
     });
 
@@ -87,7 +90,23 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
-        checkbox: true
+        checkbox: true,
+        radio: null
+      });
+    });
+
+    it('ion-radio should change', () => {
+      cy.get('ion-radio').click();
+      testData({
+        datetime: '2010-08-20',
+        select: null,
+        toggle: false,
+        input: '',
+        input2: 'Default Value',
+        inputMin: 1,
+        inputMax: 1,
+        checkbox: false,
+        radio: 'nes'
       });
     });
 
@@ -109,7 +128,8 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
-        checkbox: false
+        checkbox: false,
+        radio: null
       });
       cy.get('ion-checkbox').click();
       testData({
@@ -120,7 +140,8 @@ describe('Form', () => {
         input2: 'Default Value',
         inputMin: 1,
         inputMax: 1,
-        checkbox: true
+        checkbox: true,
+        radio: null
       });
     });
   });

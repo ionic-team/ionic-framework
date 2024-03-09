@@ -9,7 +9,7 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 18.x
 
@@ -22,7 +22,7 @@ runs:
       run: npm i @stencil/core@${{ inputs.stencil-version }}
       shell: bash
     - name: Build Core
-      run: npm run build -- --ci
+      run: npm run build -- --ci --debug --verbose
       working-directory: ./core
       shell: bash
     - uses: ./.github/workflows/actions/upload-archive

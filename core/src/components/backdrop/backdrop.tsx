@@ -1,6 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
-import { GESTURE_CONTROLLER } from '@utils/gesture';
 
 import { getIonTheme } from '../../global/ionic-global';
 
@@ -17,10 +16,6 @@ import { getIonTheme } from '../../global/ionic-global';
   shadow: true,
 })
 export class Backdrop implements ComponentInterface {
-  private blocker = GESTURE_CONTROLLER.createBlocker({
-    disableScroll: true,
-  });
-
   /**
    * If `true`, the backdrop will be visible.
    */
@@ -40,16 +35,6 @@ export class Backdrop implements ComponentInterface {
    * Emitted when the backdrop is tapped.
    */
   @Event() ionBackdropTap!: EventEmitter<void>;
-
-  connectedCallback() {
-    if (this.stopPropagation) {
-      this.blocker.block();
-    }
-  }
-
-  disconnectedCallback() {
-    this.blocker.unblock();
-  }
 
   @Listen('click', { passive: false, capture: true })
   protected onMouseDown(ev: TouchEvent) {

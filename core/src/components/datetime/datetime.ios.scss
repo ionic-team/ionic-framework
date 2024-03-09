@@ -3,8 +3,8 @@
 @import "../../themes/ionic.globals.ios";
 
 :host {
-  --background: var(--ion-color-light, #ffffff);
-  --background-rgb: var(--ion-color-light-rgb);
+  --background: #{ion-color(light, base)};
+  --background-rgb: #{ion-color(light, base, null, true)};
   --title-color: #{$text-color-step-400};
 }
 
@@ -34,16 +34,24 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-:host .calendar-action-buttons ion-item {
-  --padding-start: #{$datetime-ios-padding};
-  --background-hover: transparent;
-  --background-activated: transparent;
+.calendar-month-year-toggle {
+  @include padding(0px, 16px, 0px, #{$datetime-ios-padding});
+
+  min-height: 44px;
 
   font-size: dynamic-font-max(16px, 1.6);
   font-weight: 600;
+
+  &.ion-focused::after {
+    opacity: 0.15;
+  }
 }
 
-:host .calendar-action-buttons ion-item ion-icon,
+.calendar-month-year-toggle #toggle-wrapper {
+  @include margin(10px, 8px, 10px, 0);
+}
+
+:host .calendar-action-buttons .calendar-month-year-toggle ion-icon,
 :host .calendar-action-buttons ion-buttons ion-button {
   color: current-color(base);
 }
@@ -226,6 +234,8 @@
 
 .calendar-day.calendar-day-active {
   background: current-color(base, 0.2);
+
+  font-size: dynamic-font-max(22px, 1.6);
 }
 
 /**

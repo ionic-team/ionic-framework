@@ -2,8 +2,8 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Datetime } from '../../../datetime/datetime';
-import { PickerColumnInternal } from '../../../picker-column-internal/picker-column-internal';
-import { PickerInternal } from '../../../picker-internal/picker-internal';
+import { PickerColumn } from '../../../picker-column/picker-column';
+import { Picker } from '../../../picker/picker';
 
 describe('ion-datetime disabled', () => {
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('ion-datetime disabled', () => {
 
   it('picker should be disabled in prefer wheel mode', async () => {
     const page = await newSpecPage({
-      components: [Datetime, PickerColumnInternal, PickerInternal],
+      components: [Datetime, PickerColumn, Picker],
       template: () => (
         <ion-datetime id="inline-datetime-wheel" disabled prefer-wheel value="2022-04-21T00:00:00"></ion-datetime>
       ),
@@ -28,7 +28,7 @@ describe('ion-datetime disabled', () => {
     await page.waitForChanges();
 
     const datetime = page.body.querySelector('ion-datetime')!;
-    const columns = datetime.shadowRoot!.querySelectorAll('ion-picker-column-internal');
+    const columns = datetime.shadowRoot!.querySelectorAll('ion-picker-column');
 
     await expect(columns.length).toEqual(4);
 

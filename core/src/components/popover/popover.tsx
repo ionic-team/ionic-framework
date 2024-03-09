@@ -1,18 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { focusFirstDescendant } from '@utils/focus-trap';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
-import {
-  BACKDROP,
-  dismiss,
-  eventMethod,
-  focusFirstDescendant,
-  prepareOverlay,
-  present,
-  setOverlayId,
-} from '@utils/overlays';
+import { BACKDROP, dismiss, eventMethod, prepareOverlay, present, setOverlayId } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
@@ -514,7 +507,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * descendant inside of the popover.
      */
     if (this.focusDescendantOnPresent) {
-      focusFirstDescendant(this.el, this.el);
+      focusFirstDescendant(el);
     }
 
     unlock();

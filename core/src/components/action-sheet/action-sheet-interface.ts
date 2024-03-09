@@ -34,4 +34,12 @@ export interface ActionSheetButton<T = any> {
   htmlAttributes?: { [key: string]: any };
   handler?: () => boolean | void | Promise<boolean | void>;
   data?: T;
+  /**
+   * When `disabled` is `true` the action
+   * sheet button will not be interactive. Note
+   * that buttons with a 'cancel' role cannot
+   * be disabled as that would make it difficult for
+   * users to dismiss the action sheet.
+   */
+  disabled?: boolean;
 }

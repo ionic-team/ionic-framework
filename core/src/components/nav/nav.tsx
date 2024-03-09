@@ -483,8 +483,12 @@ export class Nav implements NavOutlet {
     return this.getPreviousSync(view);
   }
 
-  getLength() {
-    return this.views.length;
+  /**
+   * Returns the number of views in the stack.
+   */
+  @Method()
+  async getLength(): Promise<number> {
+    return Promise.resolve(this.views.length);
   }
 
   private getActiveSync(): ViewController | undefined {

@@ -1,0 +1,9 @@
+@import "./high-contrast";
+
+:root {
+  @include high-contrast-light-base-theme();
+}
+
+:root.md {
+  @include high-contrast-light-md-theme();
+}

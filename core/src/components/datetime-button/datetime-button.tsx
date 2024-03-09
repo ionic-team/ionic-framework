@@ -23,8 +23,8 @@ import { parseDate } from '../datetime/utils/parse';
 @Component({
   tag: 'ion-datetime-button',
   styleUrls: {
-    ios: 'datetime-button.scss',
-    md: 'datetime-button.scss',
+    ios: 'datetime-button.ios.scss',
+    md: 'datetime-button.md.scss',
   },
   shadow: true,
 })

@@ -11,6 +11,8 @@ ignoreFiles:
   - src/themes/ionic.mixins.scss
   - src/themes/ionic.functions.color.scss
   - src/themes/ionic.functions.string.scss
+  - src/themes/ionic.theme.default.scss
+  - src/css/themes/*.scss
 
 indentation: 2
 

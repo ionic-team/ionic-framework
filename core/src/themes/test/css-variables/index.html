@@ -13,7 +13,7 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <link id="theme" href="/src/themes/test/css-variables/css/default.css" rel="stylesheet" />
+    <link id="theme" href="/src/themes/test/default.css" rel="stylesheet" />
 
     <style>
       .wrapper {
@@ -151,14 +151,20 @@
                 <ion-segment-button value="default">
                   <ion-label>Default</ion-label>
                 </ion-segment-button>
+                <ion-segment-button value="dark">
+                  <ion-label>Dark</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="high-contrast">
+                  <ion-label>High Contrast</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="high-contrast-dark">
+                  <ion-label>High Contrast (Dark)</ion-label>
+                </ion-segment-button>
                 <ion-segment-button value="oceanic">
                   <ion-label>Oceanic</ion-label>
                 </ion-segment-button>
                 <ion-segment-button value="vibrant">
                   <ion-label>Vibrant</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="dark">
-                  <ion-label>Dark</ion-label>
                 </ion-segment-button>
                 <ion-segment-button value="toolbar">
                   <ion-label>Toolbar</ion-label>
@@ -300,6 +306,13 @@
                     </ion-label>
                     <ion-note slot="end">Note</ion-note>
                   </ion-item>
+                  <ion-item>
+                    <ion-label>
+                      <h2>Battle Royale Open World Pac-Man</h2>
+                      <p>More buzzwords</p>
+                    </ion-label>
+                    <ion-note slot="end">Note</ion-note>
+                  </ion-item>
                   <ion-item-divider>Sliding Items</ion-item-divider>
                   <ion-item-sliding>
                     <ion-item>
@@ -342,6 +355,8 @@
                     </ion-item-options>
                   </ion-item-sliding>
                 </ion-list>
+
+                <ion-datetime></ion-datetime>
               </section>
 
               <section>
@@ -464,9 +479,12 @@
               <div slot="end" class="right-container">
                 <ion-select label="Select a Theme:" interface="popover" class="theme-picker">
                   <ion-select-option value="default" selected>Default</ion-select-option>
+                  <ion-select-option value="dark">Dark</ion-select-option>
+                  <ion-select-option value="high-contrast">High Contrast</ion-select-option>
+                  <ion-select-option value="high-contrast-dark">High Contrast (Dark)</ion-select-option>
+                  <ion-select-option value="default" selected>Default</ion-select-option>
                   <ion-select-option value="oceanic">Oceanic</ion-select-option>
                   <ion-select-option value="vibrant">Vibrant</ion-select-option>
-                  <ion-select-option value="dark">Dark</ion-select-option>
                 </ion-select>
               </div>
             </ion-toolbar>
@@ -892,9 +910,12 @@
               <div slot="end" class="right-container">
                 <ion-select label="Select a Theme:" interface="popover" class="theme-picker">
                   <ion-select-option value="default" selected>Default</ion-select-option>
+                  <ion-select-option value="dark">Dark</ion-select-option>
+                  <ion-select-option value="high-contrast">High Contrast</ion-select-option>
+                  <ion-select-option value="high-contrast-dark">High Contrast (Dark)</ion-select-option>
+                  <ion-select-option value="default" selected>Default</ion-select-option>
                   <ion-select-option value="oceanic">Oceanic</ion-select-option>
                   <ion-select-option value="vibrant">Vibrant</ion-select-option>
-                  <ion-select-option value="dark">Dark</ion-select-option>
                 </ion-select>
               </div>
             </ion-toolbar>
@@ -951,7 +972,25 @@
       }
 
       function toggleTheme(theme) {
-        var cssFile = `/src/themes/test/css-variables/css/${theme}.css`;
+        // The path to the directory containing the
+        // custom theme files for this test
+        var themeFilesDir = '/src/themes/test/css-variables/css';
+        let modifier = '';
+
+        // The default and dark themes are official Ionic
+        // themes so they are located outside of this test
+        switch (theme) {
+          case 'dark':
+          case 'high-contrast':
+          case 'high-contrast-dark':
+            themeFilesDir = '/css/themes';
+            modifier = '.always';
+            break;
+          default:
+            break;
+        }
+
+        var cssFile = `${themeFilesDir}/${theme}${modifier}.css`;
 
         var oldLink = document.getElementById('theme');
 
@@ -959,7 +998,11 @@
         newLink.setAttribute('id', 'theme');
         newLink.setAttribute('rel', 'stylesheet');
         newLink.setAttribute('type', 'text/css');
-        newLink.setAttribute('href', cssFile);
+
+        // The default light theme is built in to Ionic, so no need to import a separate stylesheet
+        if (theme !== 'default') {
+          newLink.setAttribute('href', cssFile);
+        }
 
         document.getElementsByTagName('head').item(0).replaceChild(newLink, oldLink);
 

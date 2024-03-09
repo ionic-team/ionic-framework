@@ -7,8 +7,10 @@ export type Theme = 'ios' | 'md' | 'ionic';
  *
  * - `light`: The fallback theme values. Theme stylesheet will not be included.
  * - `dark`: The dark theme values.
+ * - `high-contrast`: The high contrast light theme values.
+ * - `high-contrast-dark`: The high contrast dark theme values.
  */
-export type ThemeMode = 'light' | 'dark';
+export type ThemeMode = 'light' | 'dark' | 'high-contrast' | 'high-contrast-dark';
 
 export type TitleFn = (title: string) => string;
 export type ScreenshotFn = (fileName: string) => string;
@@ -45,24 +47,6 @@ interface TestConfigOption {
  */
 const generateTitle = (title: string, config: TestConfig): string => {
   const { direction, themeMode, theme, mode } = config;
-
-  if (themeMode === 'light') {
-    /**
-     * Ionic has many existing tests that existed prior to
-     * the introduction of theme testing. To maintain backwards
-     * compatibility, we will not include the theme in the test
-     * title if the theme is set to light.
-     */
-    return `${title} - ${mode}/${direction}`;
-  }
-
-  if (theme === mode) {
-    /**
-     * Fallback to the old test title naming convention
-     * when the theme and mode are the same.
-     */
-    return `${title} - ${theme}/${direction}/${themeMode}`;
-  }
 
   return `${title} - ${theme}/${mode}/${direction}/${themeMode}`;
 };
@@ -138,4 +122,5 @@ const DEFAULT_THEME_MODES: ThemeMode[] = ['light'];
 const DEFAULT_TEST_CONFIG_OPTION = {
   themes: DEFAULT_THEMES,
   directions: DEFAULT_DIRECTIONS,
+  DEFAULT_THEME_MODES: DEFAULT_THEME_MODES,
 };

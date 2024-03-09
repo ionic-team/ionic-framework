@@ -32,17 +32,11 @@ export interface ToastOptions {
 
 export type ToastLayout = 'baseline' | 'stacked';
 
-// TODO FW-4923 remove cssClass property
-
 export interface ToastButton {
   text?: string;
   icon?: string;
   side?: 'start' | 'end';
   role?: LiteralUnion<'cancel', string>;
-  /**
-   * @deprecated Use the toast button's CSS Shadow Parts instead.
-   */
-  cssClass?: string | string[];
   htmlAttributes?: { [key: string]: any };
   handler?: () => boolean | void | Promise<boolean | void>;
 }

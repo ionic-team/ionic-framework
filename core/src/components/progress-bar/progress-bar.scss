@@ -8,11 +8,9 @@
   /**
    * @prop --background: Background of the progress track, or the buffer bar if `buffer` is set
    * @prop --progress-background: Background of the progress bar representing the current value
-   * @prop --buffer-background: DEPRECATED, use `--background` instead
    */
   --background: #{ion-color(primary, base, 0.3)};
   --progress-background: #{ion-color(primary, base)};
-  --buffer-background: var(--background);
 
   display: block;
 
@@ -75,7 +73,7 @@
 }
 
 .progress-buffer-bar {
-  background: var(--buffer-background);
+  background: var(--background);
 
   z-index: 1;
 }
@@ -123,7 +121,7 @@
 // ------------------------------------------------------------------------
 
 .buffer-circles {
-  background-image: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%);
+  background-image: radial-gradient(ellipse at center, var(--background) 0%, var(--background) 30%, transparent 30%);
 
   /* stylelint-disable property-disallowed-list */
   background-repeat: repeat-x;
@@ -157,10 +155,6 @@
 
 // Progress Bar: Color
 // ------------------------------------------------------------------------
-
-:host(.ion-color) .progress-buffer-bar {
-  background: #{current-color(base, 0.3)};
-}
 
 :host(.ion-color) .buffer-circles {
   background-image: radial-gradient(ellipse at center, #{current-color(base, 0.3)} 0%, #{current-color(base, 0.3)} 30%, transparent 30%);

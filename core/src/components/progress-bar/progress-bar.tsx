@@ -61,6 +61,8 @@ export class ProgressBar implements ComponentInterface {
     const { color, type, reversed, value, buffer } = this;
     const paused = config.getBoolean('_testing');
     const theme = getIonTheme(this);
+    // If the progress is displayed as a solid bar.
+    const progressSolid = buffer === 1;
     return (
       <Host
         role="progressbar"
@@ -72,6 +74,7 @@ export class ProgressBar implements ComponentInterface {
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
+          'progress-bar-solid': progressSolid,
         })}
       >
         {type === 'indeterminate' ? renderIndeterminate() : renderProgress(value, buffer)}

@@ -45,9 +45,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
-        ${
-          themeMode !== 'light' ? `<link href="${baseUrl}/scripts/testing/themes/${theme}.css" rel="stylesheet" />` : ''
-        }
+        ${themeMode !== 'light' ? `<link href="${baseUrl}/css/themes/${themeMode}.always.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
         <script>

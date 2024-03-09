@@ -29,7 +29,7 @@ const getAngularOutputTargets = () => {
     'ion-tab',
 
     // auxiliar
-    'ion-picker-column',
+    'ion-picker-legacy-column',
   ]
   return [
     angularOutputTarget({
@@ -58,7 +58,6 @@ const getAngularOutputTargets = () => {
         'ion-textarea',
         'ion-searchbar',
         'ion-datetime',
-        'ion-radio',
         'ion-segment',
         'ion-checkbox',
         'ion-toggle',
@@ -87,7 +86,7 @@ export const config: Config = {
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title', 'ion-card-subtitle'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip'] },
-    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column'] },
+    { components: ['ion-datetime', 'ion-picker-legacy', 'ion-picker-legacy-column'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
@@ -154,7 +153,7 @@ export const config: Config = {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker',
+        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 
@@ -186,7 +185,7 @@ export const config: Config = {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker',
+        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 

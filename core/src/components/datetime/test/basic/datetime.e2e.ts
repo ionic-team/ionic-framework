@@ -323,7 +323,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: visibility'), () => {
-    test('should reset month/year interface when hiding datetime', async ({ page }) => {
+    // TODO FW-6015 re-enable on webkit when bug is fixed
+    test('should reset month/year interface when hiding datetime', async ({ page, skip }) => {
+      skip.browser(
+        'webkit',
+        'This is buggy in a headless Linux environment: https://bugs.webkit.org/show_bug.cgi?id=270358'
+      );
       await page.setContent(
         `
         <ion-datetime></ion-datetime>
@@ -562,6 +567,22 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(nextDay).toBeFocused();
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-focus-calendar-day`));
+    });
+  });
+
+  test.describe(title('datetime: calendar month toggle'), () => {
+    test('should have focus styles', async ({ page }) => {
+      await page.setContent('<ion-datetime value="2021-01-01"></ion-datetime>', config);
+
+      const datetime = page.locator('ion-datetime');
+
+      await page.waitForSelector('.datetime-ready');
+
+      const monthYearToggle = datetime.locator('.calendar-month-year-toggle');
+
+      monthYearToggle.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
+
+      await expect(datetime).toHaveScreenshot(screenshot(`date-month-toggle-focused`));
     });
   });
 });
