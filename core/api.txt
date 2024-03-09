@@ -596,6 +596,7 @@ ion-input,css-prop,--color
 ion-input,css-prop,--highlight-color-focused
 ion-input,css-prop,--highlight-color-invalid
 ion-input,css-prop,--highlight-color-valid
+ion-input,css-prop,--highlight-height
 ion-input,css-prop,--padding-bottom
 ion-input,css-prop,--padding-end
 ion-input,css-prop,--padding-start
@@ -608,20 +609,16 @@ ion-input,css-prop,--placeholder-opacity
 ion-item,shadow
 ion-item,prop,button,boolean,false,false,false
 ion-item,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-item,prop,counter,boolean,false,false,false
-ion-item,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-item,prop,detail,boolean | undefined,undefined,false,false
 ion-item,prop,detailIcon,string,chevronForward,false,false
 ion-item,prop,disabled,boolean,false,false,false
 ion-item,prop,download,string | undefined,undefined,false,false
-ion-item,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
 ion-item,prop,rel,string | undefined,undefined,false,false
 ion-item,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-item,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-item,prop,shape,"round" | undefined,undefined,false,false
 ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
@@ -774,7 +771,7 @@ ion-menu,prop,maxEdgeStart,number,50,false,false
 ion-menu,prop,menuId,string | undefined,undefined,false,true
 ion-menu,prop,side,"end" | "start",'start',false,true
 ion-menu,prop,swipeGesture,boolean,true,false,false
-ion-menu,prop,type,string | undefined,undefined,false,false
+ion-menu,prop,type,"overlay" | "push" | "reveal" | undefined,undefined,false,false
 ion-menu,method,close,close(animated?: boolean) => Promise<boolean>
 ion-menu,method,isActive,isActive() => Promise<boolean>
 ion-menu,method,isOpen,isOpen() => Promise<boolean>
@@ -1295,6 +1292,7 @@ ion-select,css-prop,--border-width
 ion-select,css-prop,--highlight-color-focused
 ion-select,css-prop,--highlight-color-invalid
 ion-select,css-prop,--highlight-color-valid
+ion-select,css-prop,--highlight-height
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
@@ -1428,6 +1426,7 @@ ion-textarea,css-prop,--color
 ion-textarea,css-prop,--highlight-color-focused
 ion-textarea,css-prop,--highlight-color-invalid
 ion-textarea,css-prop,--highlight-color-valid
+ion-textarea,css-prop,--highlight-height
 ion-textarea,css-prop,--padding-bottom
 ion-textarea,css-prop,--padding-end
 ion-textarea,css-prop,--padding-start
