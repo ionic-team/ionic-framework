@@ -45,6 +45,25 @@ interface TestConfigOption {
  */
 const generateTitle = (title: string, config: TestConfig): string => {
   const { direction, themeMode, theme, mode } = config;
+
+  if (themeMode === 'light') {
+    /**
+     * Ionic has many existing tests that existed prior to
+     * the introduction of theme testing. To maintain backwards
+     * compatibility, we will not include the theme in the test
+     * title if the theme is set to light.
+     */
+    return `${title} - ${mode}/${direction}`;
+  }
+
+  if (theme === mode) {
+    /**
+     * Fallback to the old test title naming convention
+     * when the theme and mode are the same.
+     */
+    return `${title} - ${theme}/${direction}/${themeMode}`;
+  }
+
   return `${title} - ${theme}/${mode}/${direction}/${themeMode}`;
 };
 
@@ -54,6 +73,23 @@ const generateTitle = (title: string, config: TestConfig): string => {
  */
 const generateScreenshotName = (fileName: string, config: TestConfig): string => {
   const { theme, direction, themeMode, mode } = config;
+  if (themeMode === 'light') {
+    /**
+     * Ionic has many existing tests that existed prior to
+     * the introduction of theme testing. To maintain backwards
+     * compatibility, we will not include the theme in the screenshot
+     * name if the theme is set to light.
+     */
+    return `${fileName}-${mode}-${direction}.png`;
+  }
+
+  if (theme === mode) {
+    /**
+     * Fallback to the old screenshot naming convention
+     * when the theme and mode are the same.
+     */
+    return `${fileName}-${theme}-${direction}-${themeMode}.png`;
+  }
 
   return `${fileName}-${theme}-${mode}-${direction}-${themeMode}.png`;
 };

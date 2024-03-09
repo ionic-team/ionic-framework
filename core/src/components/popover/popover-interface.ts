@@ -22,9 +22,9 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   event?: Event;
   delegate?: FrameworkDelegate;
   animated?: boolean;
-
   /**
-   * @deprecated
+   * @deprecated To change the default appearance of the popover, use the `theme` option.
+   * `mode` is deprecated and the ability to set the platform mode will be removed in a major release.
    */
   mode?: Mode;
   theme?: Theme;

@@ -14,7 +14,8 @@ export interface AlertOptions {
   htmlAttributes?: { [key: string]: any };
 
   /**
-   * The platform behavior of the alert.
+   * @deprecated To change the default appearance of the popover, use the `theme` option.
+   * `mode` is deprecated and the ability to set the platform mode will be removed in a major release.
    */
   mode?: Mode;
   /**

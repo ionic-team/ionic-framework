@@ -9,7 +9,8 @@ export interface ActionSheetOptions {
   translucent?: boolean;
   animated?: boolean;
   /**
-   * The platform behavior of the action sheet.
+   * @deprecated To change the default appearance of the popover, use the `theme` option.
+   * `mode` is deprecated and the ability to set the platform mode will be removed in a major release.
    */
   mode?: Mode;
   /**

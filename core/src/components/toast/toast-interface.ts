@@ -1,4 +1,4 @@
-import type { AnimationBuilder, Color, LiteralUnion, Mode } from '../../interface';
+import type { AnimationBuilder, Color, LiteralUnion, Mode, Theme } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface ToastOptions {
@@ -17,7 +17,12 @@ export interface ToastOptions {
   layout?: ToastLayout;
 
   color?: Color;
+  /**
+   * @deprecated To change the default appearance of the popover, use the `theme` option.
+   * `mode` is deprecated and the ability to set the platform mode will be removed in a major release.
+   */
   mode?: Mode;
+  theme?: Theme;
   keyboardClose?: boolean;
   id?: string;
 
