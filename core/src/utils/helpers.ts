@@ -254,15 +254,7 @@ export const hasShadowDom = (el: HTMLElement) => {
   return !!el.shadowRoot && !!(el as any).attachShadow;
 };
 
-export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | null => {
-  const itemEl = componentEl.closest('ion-item');
-  if (itemEl) {
-    return itemEl.querySelector('ion-label');
-  }
-  return null;
-};
-
-export const focusElement = (el: HTMLElement) => {
+export const focusVisibleElement = (el: HTMLElement) => {
   el.focus();
 
   /**
@@ -310,8 +302,7 @@ export const getAriaLabel = (
 
   let labelId = labelledBy !== null && labelledBy.trim() !== '' ? labelledBy : inputId + '-lbl';
 
-  let label =
-    labelledBy !== null && labelledBy.trim() !== '' ? document.getElementById(labelledBy) : findItemLabel(componentEl);
+  let label = labelledBy !== null && labelledBy.trim() !== '' ? document.getElementById(labelledBy) : null;
 
   if (label) {
     if (labelledBy === null) {

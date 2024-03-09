@@ -99,13 +99,13 @@
 // Item: Color
 // --------------------------------------------------
 
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native {
+:host(.ion-color) .item-native {
   background: current-color(base);
   color: current-color(contrast);
 }
 
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native,
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-inner {
+:host(.ion-color) .item-native,
+:host(.ion-color) .item-inner {
   border-color: current-color(shade);
 }
 
@@ -176,7 +176,8 @@
 // Item: Interactive
 // --------------------------------------------------
 
-:host(.item-has-interactive-control) {
+// Inputs and textareas do not need the cursor, but other components like checkbox or toggle do.
+:host(.item-control-needs-pointer-cursor) {
   cursor: pointer;
 }
 
@@ -306,32 +307,6 @@ button, a {
   box-sizing: border-box;
 }
 
-// Item Bottom
-// --------------------------------------------------
-
-.item-bottom {
-  @include margin(0);
-  @include padding(0, null);
-
-  /* stylelint-disable */
-  @include ltr() {
-    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
-    padding-right: calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px));
-  }
-
-  @include rtl() {
-    padding-left: calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px));
-    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
-  }
-  /* stylelint-enable */
-
-  display: flex;
-
-  justify-content: space-between;
-
-}
-
-
 // Item Detail Icon
 // --------------------------------------------------
 
@@ -423,7 +398,6 @@ button, a {
   flex-direction: column;
 }
 
-
 // Item Input Highlight
 // --------------------------------------------------
 
@@ -484,15 +458,10 @@ button, a {
   opacity: var(--show-inset-highlight);
 }
 
-:host(.ion-focused.item-fill-solid) .item-highlight,
-:host(.item-has-focus.item-fill-solid) .item-highlight {
-  border-width: calc(var(--full-highlight-height) - 1px);
-}
-
 :host(.ion-focused) .item-inner-highlight,
-:host(.ion-focused:not(.item-fill-outline)) .item-highlight,
+:host(.ion-focused) .item-highlight,
 :host(.item-has-focus) .item-inner-highlight,
-:host(.item-has-focus:not(.item-fill-outline)) .item-highlight {
+:host(.item-has-focus) .item-highlight {
   border-top: none;
   border-right: none;
   border-left: none;
@@ -520,35 +489,6 @@ button, a {
 :host(.item-interactive.ion-invalid) {
   --highlight-background: var(--highlight-color-invalid);
 }
-
-:host(.item-interactive.ion-invalid) ::slotted([slot="helper"]) {
-  display: none;
-}
-
-::slotted([slot="error"]) {
-  display: none;
-
-  color: var(--highlight-color-invalid);
-}
-
-:host(.item-interactive.ion-invalid) ::slotted([slot="error"]) {
-  display: block;
-}
-
-// Item Datetime
-// --------------------------------------------------
-
-:host(:not(.item-label)) ::slotted(ion-datetime) {
-  --padding-start: 0;
-}
-
-:host(.item-label-stacked) ::slotted(ion-datetime),
-:host(.item-label-floating) ::slotted(ion-datetime) {
-  --padding-start: 0;
-
-  width: 100%;
-}
-
 
 // Item w/ Multiple Inputs
 // --------------------------------------------------
@@ -582,36 +522,6 @@ button, a {
 
 ion-ripple-effect {
   color: var(--ripple-color);
-}
-
-:host(.item-fill-solid) ::slotted([slot="start"]),
-:host(.item-fill-solid) ::slotted([slot="end"]),
-:host(.item-fill-outline) ::slotted([slot="start"]),
-:host(.item-fill-outline) ::slotted([slot="end"]) {
-  align-self: center;
-}
-
-::slotted([slot="helper"]),
-::slotted([slot="error"]),
-.item-counter {
-  padding-top: 5px;
-
-  font-size: dynamic-font(12px);
-
-  z-index: 1;
-}
-
-// Item Max Length Counter
-// --------------------------------------------------
-
-.item-counter {
-  @include margin-horizontal(auto, null);
-
-  color: #{$background-color-step-550};
-
-  white-space: nowrap;
-
-  padding-inline-start: 16px;
 }
 
 // Item: Reduced Motion
