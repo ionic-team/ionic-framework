@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { LegacyFormController, NotchController } from '@utils/forms';
 import { compareOptions, createLegacyFormController, createNotchController, isOptionSelected } from '@utils/forms';
-import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import { findItemLabel, focusVisibleElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController } from '@utils/overlays';
@@ -329,7 +329,7 @@ export class Select implements ComponentInterface {
         );
 
         if (selectedItem) {
-          focusElement(selectedItem);
+          focusVisibleElement(selectedItem);
 
           /**
            * Browsers such as Firefox do not
@@ -355,7 +355,7 @@ export class Select implements ComponentInterface {
           'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
         );
         if (firstEnabledOption) {
-          focusElement(firstEnabledOption.closest('ion-item')!);
+          focusVisibleElement(firstEnabledOption.closest('ion-item')!);
 
           /**
            * Focus the option for the same reason as we do above.
