@@ -37,10 +37,6 @@
   }
 }
 
-:host(.item-has-focus) .item-native {
-  caret-color: var(--highlight-background);
-}
-
 // Material Design Item Lines
 // --------------------------------------------------
 
@@ -71,7 +67,6 @@
 :host(.item-lines-full),
 :host(.item-lines-none) {
   --inner-border-width: 0;
-  --show-inset-highlight: 0;
 }
 
 // Material Design Multi-line Item
@@ -235,15 +230,4 @@
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
-}
-
-// Material Design Inputs: Highlight Color
-// --------------------------------------------------
-
-:host(.ion-color) {
-  --highlight-color-focused: #{current-color(contrast)};
-}
-
-:host(.item-label-color) {
-  --highlight-color-focused: #{current-color(base)};
 }
