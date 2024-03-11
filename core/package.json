@@ -96,9 +96,9 @@
     "test.treeshake": "node scripts/treeshaking.js dist/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake",
     "docker.build": "docker build -t ionic-playwright .",
-    "test.e2e.docker": "sh ./scripts/run-playwright-docker.sh",
-    "test.e2e.docker.update-snapshots": "npm run test.e2e.docker -- --update-snapshots",
-    "test.e2e.docker.ci": "sh ./scripts/run-playwright-docker-ci.sh",
+    "test.e2e.docker": "npm run docker.build && sh ./scripts/run-playwright-docker.sh",
+    "test.e2e.docker.update-snapshots": "npm run docker.build && npm run test.e2e.docker -- --update-snapshots",
+    "test.e2e.docker.ci": "npm run docker.build && sh ./scripts/run-playwright-docker-ci.sh",
     "test.report": "npx playwright show-report"
   },
   "author": "Ionic Team",

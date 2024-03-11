@@ -1,5 +1,4 @@
-# Build docker image
-npm run docker.build
+#!/bin/bash
 
 # Run docker container and execute playwright tests
 # Do not pass -it since we do not need this session to be interactive (since it will run on CI)

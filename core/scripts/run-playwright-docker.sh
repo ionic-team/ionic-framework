@@ -1,5 +1,4 @@
-# Build docker image
-npm run docker.build
+#!/bin/bash
 
 # Run docker container and execute playwright tests
 # -e and -v allow us to run playwright in a headed environment
