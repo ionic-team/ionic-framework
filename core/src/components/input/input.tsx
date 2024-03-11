@@ -770,7 +770,7 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" ios={closeCircle} md={closeSharp}></ion-icon>
+                <ion-icon aria-hidden="true" icon={theme === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>
