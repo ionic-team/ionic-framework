@@ -5,6 +5,7 @@ E2E tests verify Ionic components in a real browser. This is useful for testing 
 ## Table of Contents
 
 - [Installing Dependencies](#installing-dependencies)
+- [Configuring Docker](#configuring-docker)
 - [Running Tests](#running-tests)
 - [Managing Screenshots](#managing-screenshots)
 - [Further Reading](#further-reading)
@@ -15,6 +16,54 @@ Follow these steps to install Playwright dependencies. These steps must also be 
 
 1. Install the Playwright dependency in the `core` directory: `npm ci` 
 2. Download the correct browsers: `npx playwright install`
+
+## Configuring Docker
+
+Ionic uses [Docker](https://www.docker.com) to provide a way to run tests locally in the same environment that is used on CI. Using Docker is **optional** as all tests can be run locally on your host machine, but there are a few reasons why you might want to use Docker to run tests locally:
+
+1. You want to run screenshot tests against the same ground truths used on CI to test your work. Screenshots must be tested in a consistent environment otherwise there will be screenshot mismatches. Without Docker, you would first need to generate ground truths in your local environment.
+2. You want to update ground truths locally. Ground truths can be updated using a GitHub Action on CI, but this can take ~15 minutes.
+3. You are a community contributor and you do not have access to the GitHub Action to update ground truths.
+4. You want to debug an issue that only happen on CI. While this is rare, there are sometimes Linux-specific issues that pop up during development.
+
+The [Running Tests](#running-tests) and [Managing Screenshots](#managing-screenshots) sections show how to perform various tasks in Playwright with Docker. The section below shows how to configure your environment to get set up with Docker.
+
+### Installing Docker
+
+Docker can be installed by [following the steps on the Docker website](https://docs.docker.com/get-docker/).
+
+### Configuring Docker for Headed Tests (Optional)
+
+Additional software is needed to run headed tests inside of Docker. The Docker-specific test commands such as `npm run test.e2e.docker` are configured to use this additional software, but it is up to the developer to ensure that the software is installed and running.
+
+Playwright relies on [XServer](https://www.x.org/wiki/XServer/), a windowing system used to draw and move windows on a display, in order to run tests in headed mode. Follow the steps below to install XServer on your computer.
+
+> [!NOTE]
+> The following instructions are based off https://www.oddbird.net/2022/11/30/headed-playwright-in-docker/
+
+#### macOS
+
+macOS uses [XQuartz](https://www.xquartz.org) to use XServer on macOS.
+
+1. Install [Homebrew](https://brew.sh) if not already installed. You can run `brew --version` to check if Homebrew is installed.
+2. Install XQuartz: `brew install --cask xquartz`
+3. Open XQuartz, go to `Preferences > Security`, and check “Allow connections from network clients”.
+4. Restart your computer.
+5. Start XQuartz from the command line: `xhost +localhost`
+6. Open Docker Desktop and edit settings to give access to `/tmp/.X11-unix` in `Preferences > Resources > File sharing`.
+7. In the `core` directory run `echo host.docker.internal:0 > docker-display.txt`. This information is used to set the `DISPLAY` environment variable which tells Playwright how to render a headed UI from the Docker container.
+8. In the `core` directory run `echo /tmp/.X11-unix:/tmp/.X11-unix > docker-display-volume.txt`. This information is used to make XServer available inside of the Docker container.
+
+#### Windows
+
+Windows has a native XServer called [WSLg](https://github.com/microsoft/wslg#readme) that is included as part of the [Windows Subsystem for Linux (WSL)](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US). If you are running Docker Desktop on Windows 10 or 11 you likely already have both WSL and WSLg installed. The following steps show how to verify the WSL and WSLg are installed as well as how to configure your environment for headed tests in Docker.
+
+If either of the below verification checks fail, then developers should [download the latest version of WSL](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US).
+
+1. To verify WSL is installed, launch "WSL" from the start menu. If "WSL" does not show up in the start menu then you do not have WSL installed.
+2. With WSL open, verify that WSLg is installed: `ls -a -w 1 /mnt/wslg`. If the command fails with `No such file or directory` then your system is either missing WSL or running an old version.
+3. In the `core` directory run `echo :0 > docker-display.txt`. This information is used to set the `DISPLAY` environment variable which tells Playwright how to render a headed UI from the Docker container.
+4. In the `core` directory run `echo /tmp/.X11-unix:/tmp/.X11-unix > docker-display-volume.txt`. This information is used to make XServer available inside of the Docker container.
 
 ## Running Tests
 
@@ -48,8 +97,6 @@ npm run test.e2e src/components/button/test
 
 ### Running Tests Inside Docker
 
-Ionic uses [Docker](https://www.docker.com) to provide a way to run tests locally in the same environment that is used on CI.
-
 While `npm run test.e2e` can be used to run tests in the same environment that you are developing in, `npm run test.e2e.docker` can be used to run tests in a Docker environment provided by the Ionic team. This command supports all the same features as `npm run test.e2e` detailed in the previous section.
 
 This command builds a Docker image before tests run. It will also re-build the Docker image in the event that a Playwright update was merged into the repo.
@@ -59,7 +106,7 @@ Note that the Playwright report will not automatically open in your web browser 
 > [!NOTE]
 > Additional setup is needed to run Playwright tests with headed mode in Docker. See below for more information.
 
-## Headed vs. Headless Tests
+### Headed vs. Headless Tests
 
 Playwright tests in Ionic are run in headless mode by default. This means that a visual representation of the browser does not appear on your computer while running.
 
@@ -76,39 +123,6 @@ npm run test.e2e src/components/chip
  # Will run tests in headed mode
  npm run test.e2e src/components/chip -- --headed
  ```
-
-### Running Headed Tests Inside Docker
-
-Additional software is needed to run headed tests inside of Docker. The Docker-specific test commands such as `npm run test.e2e.docker` are configured to use this additional software, but it is up to the developer to ensure that the software is installed and running.
-
-Playwright relies on [XServer](https://www.x.org/wiki/XServer/), a windowing system used to draw and move windows on a display, in order to run tests in headed mode. Follow the steps below to install XServer on your computer.
-
-> [!NOTE]
-> The following instructions are based off https://www.oddbird.net/2022/11/30/headed-playwright-in-docker/
-
-#### macOS
-
-macOS uses [XQuartz](https://www.xquartz.org) to use XServer on macOS.
-
-1. Install XQuartz: `brew install --cask xquartz`
-2. Open XQuartz, go to `Preferences > Security`, and check “Allow connections from network clients”.
-3. Restart your computer.
-4. Start XQuartz from the command line: `xhost +localhost`
-5. Open Docker Desktop and edit settings to give access to `/tmp/.X11-unix` in `Preferences > Resources > File sharing`.
-
-#### Windows
-
-Windows has a native XServer called [WSLg](https://github.com/microsoft/wslg#readme) that is included as part of the [Windows Subsystem for Linux (WSL)](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US). If you are running Docker Desktop on Windows 10 or 11 you likely already have both WSL and WSLg installed.
-
-If either of the below verification checks fail, then developers should [download the latest version of WSL](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US).
-
-**Verify WSL is installed**
-
-To verify WSL is installed, launch "WSL" from the start menu. If "WSL" does not show up in the start menu then you do not have WSL installed.
-
-**Verify WSLg is installed**
-
-With WSL open, verify that WSLg is installed: `ls -a -w 1 /mnt/wslg`. If the command fails with `No such file or directory` then your system is either missing WSL or running an old version.
 
 ## Managing Screenshots
 
@@ -134,7 +148,7 @@ The resulting screenshots should be committed and pushed to your branch.
 
 ### Generating or Updating Ground Truths Without Docker (Local Development)
 
-While we recommend generating ground truths insider of Docker it is possible to generate ground truths without it. Note that these generated ground truths can only be used for local testing and will not update the ground truths stored in the repo.
+While we recommend generating ground truths inside of Docker it is possible to generate ground truths without it. Note that these generated ground truths can only be used for local testing and will not update the ground truths stored in the repo.
 
 If the reference branch has changed since the last time you generated ground truths you may need to update your local ground truths.
 
