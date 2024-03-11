@@ -30,7 +30,6 @@ const NAV_METHODS = [
   'getPrevious',
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export declare interface IonNav extends Components.IonNav {
   /**
    * Event fired when the nav will change components
