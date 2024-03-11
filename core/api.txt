@@ -767,7 +767,7 @@ ion-menu,prop,maxEdgeStart,number,50,false,false
 ion-menu,prop,menuId,string | undefined,undefined,false,true
 ion-menu,prop,side,"end" | "start",'start',false,true
 ion-menu,prop,swipeGesture,boolean,true,false,false
-ion-menu,prop,type,string | undefined,undefined,false,false
+ion-menu,prop,type,"overlay" | "push" | "reveal" | undefined,undefined,false,false
 ion-menu,method,close,close(animated?: boolean) => Promise<boolean>
 ion-menu,method,isActive,isActive() => Promise<boolean>
 ion-menu,method,isOpen,isOpen() => Promise<boolean>
