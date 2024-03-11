@@ -6,7 +6,7 @@ import { getIonTheme } from '../../global/ionic-global';
 import type { Side } from '../menu/menu-interface';
 
 /**
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-item-options',

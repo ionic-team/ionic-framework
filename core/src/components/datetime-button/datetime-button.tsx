@@ -13,7 +13,7 @@ import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot date-target - Content displayed inside of the date button.
  * @slot time-target - Content displayed inside of the time button.

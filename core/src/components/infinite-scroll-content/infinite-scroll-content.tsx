@@ -9,7 +9,7 @@ import type { IonicSafeString } from '../../utils/sanitization';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 
 /**
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-infinite-scroll-content',

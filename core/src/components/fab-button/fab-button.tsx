@@ -12,7 +12,7 @@ import type { RouterDirection } from '../router/utils/interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
  * @part close-icon - The close icon that is displayed when a fab list opens (uses ion-icon).

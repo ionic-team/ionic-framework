@@ -14,7 +14,7 @@ import type { PickerColumnChangeEventDetail, PickerColumnValue } from './picker-
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot prefix - Content to show on the left side of the picker options.
  * @slot suffix - Content to show on the right side of the picker options.

@@ -921,7 +921,7 @@ export declare interface IonImg extends Components.IonImg {
 
 @ProxyCmp({
   defineCustomElementFn: defineIonInfiniteScroll,
-  inputs: ['disabled', 'position', 'threshold'],
+  inputs: ['disabled', 'position', 'theme', 'threshold'],
   methods: ['complete']
 })
 @Component({
@@ -929,7 +929,7 @@ export declare interface IonImg extends Components.IonImg {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'position', 'threshold'],
+  inputs: ['disabled', 'position', 'theme', 'threshold'],
   standalone: true
 })
 export class IonInfiniteScroll {
@@ -1989,14 +1989,15 @@ export declare interface IonText extends Components.IonText {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonThumbnail
+  defineCustomElementFn: defineIonThumbnail,
+  inputs: ['theme']
 })
 @Component({
   selector: 'ion-thumbnail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['theme'],
   standalone: true
 })
 export class IonThumbnail {

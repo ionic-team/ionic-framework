@@ -48,7 +48,7 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed inside of the `.modal-content` element.
  *

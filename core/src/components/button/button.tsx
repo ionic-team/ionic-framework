@@ -12,7 +12,7 @@ import type { RouterDirection } from '../router/utils/interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot icon-only - Should be used on an icon in a button that has no text.

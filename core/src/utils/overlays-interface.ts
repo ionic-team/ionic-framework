@@ -17,7 +17,7 @@ export interface OverlayOptions {
    */
   mode?: Mode;
   /**
-   * The visual appearance of the overlay.
+   * The theme determines the visual appearance of components.
    */
   theme?: Theme;
   /**

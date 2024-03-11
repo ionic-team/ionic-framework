@@ -7,8 +7,8 @@ import { getIonTheme } from '../../global/ionic-global';
 import type { AccordionGroupChangeEventDetail } from './accordion-group-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-accordion-group',

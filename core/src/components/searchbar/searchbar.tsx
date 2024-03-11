@@ -13,7 +13,7 @@ import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './se
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-searchbar',
@@ -579,8 +579,7 @@ export class Searchbar implements ComponentInterface {
       >
         <div aria-hidden="true">
           {theme === 'md' ? (
-            // TODO look into the mode/theme
-            <ion-icon aria-hidden="true" mode={theme} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+            <ion-icon aria-hidden="true" icon={this.cancelButtonIcon} lazy={false}></ion-icon>
           ) : (
             cancelButtonText
           )}

@@ -40,7 +40,7 @@ export interface RouterOutletOptions {
    */
   mode?: Mode;
   /**
-   * The visual appearance of the component.
+   * The theme determines the visual appearance of the component.
    */
   theme?: Theme;
   keyboardClose?: boolean;

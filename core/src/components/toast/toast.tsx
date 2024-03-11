@@ -46,7 +46,7 @@ import type {
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part button - Any button element that is displayed inside of the toast.
  * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.

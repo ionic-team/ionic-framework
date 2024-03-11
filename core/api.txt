@@ -562,6 +562,7 @@ ion-img,part,image
 ion-infinite-scroll,none
 ion-infinite-scroll,prop,disabled,boolean,false,false,false
 ion-infinite-scroll,prop,position,"bottom" | "top",'bottom',false,false
+ion-infinite-scroll,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-infinite-scroll,prop,threshold,string,'15%',false,false
 ion-infinite-scroll,method,complete,complete() => Promise<void>
 ion-infinite-scroll,event,ionInfinite,void,true
@@ -1492,6 +1493,7 @@ ion-textarea,css-prop,--placeholder-font-weight
 ion-textarea,css-prop,--placeholder-opacity
 
 ion-thumbnail,shadow
+ion-thumbnail,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-thumbnail,css-prop,--border-radius
 ion-thumbnail,css-prop,--size
 

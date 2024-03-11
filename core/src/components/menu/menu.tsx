@@ -22,7 +22,7 @@ const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
 
 /**
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part container - The container for the menu content.
  * @part backdrop - The backdrop that appears over the main content when the menu is open.

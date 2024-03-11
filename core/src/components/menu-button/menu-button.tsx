@@ -14,7 +14,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
- * @virtualProp {"ios" | "md" | "ionic"} theme - The visual appearance of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part native - The native HTML button element that wraps all child elements.
  * @part icon - The menu button icon (uses ion-icon).
@@ -111,8 +111,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         <button {...attrs} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
           <span class="button-inner">
             <slot>
-              {/* TODO double check the mode/theme attribute */}
-              <ion-icon part="icon" icon={menuIcon} mode={theme} lazy={false} aria-hidden="true"></ion-icon>
+              <ion-icon part="icon" icon={menuIcon} lazy={false} aria-hidden="true"></ion-icon>
             </slot>
           </span>
           {theme === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}

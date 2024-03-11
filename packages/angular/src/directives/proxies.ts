@@ -902,7 +902,7 @@ export declare interface IonImg extends Components.IonImg {
 
 
 @ProxyCmp({
-  inputs: ['disabled', 'position', 'threshold'],
+  inputs: ['disabled', 'position', 'theme', 'threshold'],
   methods: ['complete']
 })
 @Component({
@@ -910,7 +910,7 @@ export declare interface IonImg extends Components.IonImg {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'position', 'threshold'],
+  inputs: ['disabled', 'position', 'theme', 'threshold'],
 })
 export class IonInfiniteScroll {
   protected el: HTMLElement;
@@ -2236,13 +2236,14 @@ the user clears the textarea by performing a keydown event.
 
 
 @ProxyCmp({
+  inputs: ['theme']
 })
 @Component({
   selector: 'ion-thumbnail',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['theme'],
 })
 export class IonThumbnail {
   protected el: HTMLElement;
