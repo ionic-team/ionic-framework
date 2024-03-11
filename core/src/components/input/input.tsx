@@ -1,18 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import {
-  Build,
-  Component,
-  Element,
-  Event,
-  Fragment,
-  Host,
-  Method,
-  Prop,
-  State,
-  Watch,
-  forceUpdate,
-  h,
-} from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { LegacyFormController, NotchController } from '@utils/forms';
 import { createLegacyFormController, createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
@@ -197,6 +184,11 @@ export class Input implements ComponentInterface {
   @Prop() helperText?: string;
 
   /**
+   * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
+   */
+  @Prop() hidePasswordIcon?: string;
+
+  /**
    * The visible label associated with the input.
    *
    * Use this if you need to render a plaintext label.
@@ -283,11 +275,16 @@ export class Input implements ComponentInterface {
    */
   @Prop() shape?: 'round';
 
-  @Prop() showPasswordIcon = false;
+  /**
+   * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+   */
+  @Prop() showPasswordIcon?: string;
 
-  @Prop() showPasswordStrength = false;
-
-  @Prop() showPasswordValidations = false;
+  /**
+   * If `true`, a password icon will appear in the input and the input type will change to `password`.
+   * Clicking it changes the input to `text` and reveals the text value.
+   */
+  @Prop() showPasswordToggle = false;
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -306,7 +303,7 @@ export class Input implements ComponentInterface {
   /**
    * The type of control to display. The default type is text.
    */
-  @Prop() type: TextFieldTypes = 'text';
+  @Prop({ mutable: true }) type: TextFieldTypes = 'text';
 
   /**
    * The value of the input.
@@ -649,136 +646,6 @@ export class Input implements ComponentInterface {
 
     return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
   }
-
-  private renderPasswordValidations() {
-    if (this.showPasswordValidations === false) {
-      return null;
-    }
-    const value = this.getValue();
-    const validationItems = [];
-    const patternRegex = this.pattern!.slice(1, -1); // Remove leading and trailing slashes from pattern attribute
-
-    if (/.{(\d+),}/.test(patternRegex)) {
-      validationItems.push({ condition: /.{(\d+),}/.test(value), text: 'Must have minimum of 8 characters' });
-    }
-
-    if (/[A-Z]/.test(patternRegex)) {
-      validationItems.push({ condition: /[A-Z]/.test(value), text: 'Must have a uppercase character' });
-    }
-
-    if (/[a-z]/.test(patternRegex)) {
-      validationItems.push({ condition: /[a-z]/.test(value), text: 'Must have a lowercase character' });
-    }
-
-    if (/\d/.test(patternRegex)) {
-      validationItems.push({ condition: /\d/.test(value), text: 'Must have a digit' });
-    }
-
-    if (/(?=.*[@#$%^&+=])/.test(patternRegex)) {
-      validationItems.push({ condition: /(?=.*[@#$%^&+=])/.test(value), text: 'Must have a special character' });
-    }
-
-    return (
-      <ion-list>
-        {validationItems.map((item, index) => (
-          <ion-item aria-describedby={this.inputId} key={index} lines="none" class="ion-no-padding">
-            <ion-icon
-              color={item.condition ? 'success' : 'medium'}
-              aria-hidden="true"
-              name="checkmark-circle-outline"
-              slot="start"
-            ></ion-icon>
-            <ion-label color={item.condition ? 'success' : 'medium'}>{item.text}</ion-label>
-          </ion-item>
-        ))}
-      </ion-list>
-    );
-  }
-
-  private renderPasswordIndicator() {
-    if (this.showPasswordStrength === false) {
-      return null;
-    }
-
-    const { value } = this;
-
-    const passwordStrength = this.checkPasswordStrength(value as string);
-
-    if (passwordStrength.value === 0) {
-      return null;
-    }
-
-    return (
-      <Fragment>
-        <ion-progress-bar
-          aria-label="Password strength indicator"
-          value={passwordStrength.value}
-          class={'password-strength-indicator ' + 'password-strength-level-' + passwordStrength.level}
-        ></ion-progress-bar>
-        <ion-note
-          color={
-            passwordStrength.level === 'weak' ? 'danger' : passwordStrength.level === 'moderate' ? 'warning' : 'success'
-          }
-          aria-live="polite"
-        >
-          Your Password is {passwordStrength.level}
-        </ion-note>
-      </Fragment>
-    );
-  }
-
-  private checkPasswordStrength(password: string) {
-    const passwordStrength = { value: 0, level: '' };
-
-    // Check length
-    if (password.length >= 8) {
-      passwordStrength.value += 1;
-    }
-
-    // Check for uppercase letters
-    if (/[A-Z]/.test(password)) {
-      passwordStrength.value += 1;
-    }
-
-    // Check for lowercase letters
-    if (/[a-z]/.test(password)) {
-      passwordStrength.value += 1;
-    }
-
-    // Check for digits
-    if (/\d/.test(password)) {
-      passwordStrength.value += 1;
-    }
-
-    // Check for special characters
-    if (/[$@$!%*?&#]/.test(password)) {
-      passwordStrength.value += 1;
-    }
-
-    // Display the password strength
-    switch (passwordStrength.value) {
-      case 0:
-        passwordStrength.value = 0;
-        passwordStrength.level = 'weak';
-        break;
-      case 1:
-        passwordStrength.value = 0.33;
-        passwordStrength.level = 'weak';
-        break;
-      case 2:
-      case 3:
-        passwordStrength.value = 0.66;
-        passwordStrength.level = 'moderate';
-        break;
-      case 4:
-      case 5:
-        passwordStrength.value = 1;
-        passwordStrength.level = 'strong';
-        break;
-    }
-    return passwordStrength;
-  }
-
   /**
    * Responsible for rendering helper text,
    * error text, and counter. This element should only
@@ -793,24 +660,15 @@ export class Input implements ComponentInterface {
      */
     const hasHintText = !!helperText || !!errorText;
     const hasCounter = counter === true && maxlength !== undefined;
-    if (!hasHintText && !hasCounter && !this.showPasswordStrength && !this.showPasswordValidations) {
+    if (!hasHintText && !hasCounter) {
       return;
     }
 
     return (
-      <Fragment>
-        <div class="input-bottom">
-          {this.renderHintText()}
-          {this.renderCounter()}
-        </div>
-
-        {(this.showPasswordStrength || this.showPasswordValidations) && (
-          <div class="input-bottom-password-info">
-            {this.renderPasswordIndicator()}
-            {this.renderPasswordValidations()}
-          </div>
-        )}
-      </Fragment>
+      <div class="input-bottom">
+        {this.renderHintText()}
+        {this.renderCounter()}
+      </div>
     );
   }
 
@@ -895,6 +753,8 @@ export class Input implements ComponentInterface {
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const showPasswordIcon = this.showPasswordIcon || eyeOutline;
+    const hidePasswordIcon = this.hidePasswordIcon || eyeOffOutline;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -997,13 +857,14 @@ export class Input implements ComponentInterface {
                 <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
-            {this.showPasswordIcon && !readonly && !disabled && (
+            {this.showPasswordToggle && !readonly && !disabled && (
               <button
-                aria-label="show password"
-                aria-expanded={this.type === 'text' ? 'true' : 'false'}
+                aria-label='show password'
+                aria-checked={this.type === 'text' ? 'true' : 'false'}
                 aria-controls={this.inputId}
+                role="switch"
                 type="button"
-                class="input-show-password"
+                class="input-toggle-password"
                 onPointerDown={(ev) => {
                   /**
                    * This prevents mobile browsers from
@@ -1014,7 +875,10 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.showPassword}
               >
-                <ion-icon aria-hidden="true" icon={this.type === 'text' ? eyeOutline : eyeOffOutline}></ion-icon>
+                <ion-icon
+                  aria-hidden="true"
+                  icon={this.type === 'text' ? hidePasswordIcon : showPasswordIcon}
+                ></ion-icon>
               </button>
             )}
             <slot name="end"></slot>
