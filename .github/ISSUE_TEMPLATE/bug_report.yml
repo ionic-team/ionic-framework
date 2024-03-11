@@ -20,12 +20,10 @@ body:
     id: affected-versions
     attributes:
       label: Ionic Framework Version
-      description: Which version(s) of Ionic Framework does this issue impact? For Ionic Framework 1.x issues, please use https://github.com/ionic-team/ionic-v1. For Ionic Framework 2.x and 3.x issues, please use https://github.com/ionic-team/ionic-v3.
+      description: Which version(s) of Ionic Framework does this issue impact? [Ionic Framework 1.x to 6.x are no longer supported](https://ionicframework.com/docs/reference/support#framework-maintenance-and-support-status). For extended support, considering visiting [Ionic's Enterprise offering](https://ionic.io/enterprise).
       options:
-        - v4.x
-        - v5.x
-        - v6.x
         - v7.x
+        - v8.x (Beta)
         - Nightly
       multiple: true
     validations:
@@ -51,11 +49,11 @@ body:
     id: steps-to-reproduce
     attributes:
       label: Steps to Reproduce
-      description: Please explain the steps required to duplicate this issue.
+      description: Explain the steps required to reproduce this issue.
       placeholder: |
-        1.
-        2.
-        3.
+        1. Go to '...'
+        2. Click on '...'
+        3. Observe: '...'
     validations:
       required: true
 
@@ -63,8 +61,15 @@ body:
     id: reproduction-url
     attributes:
       label: Code Reproduction URL
-      description: Please reproduce this issue in a blank Ionic Framework starter application and provide a link to the repo. Try out our [Getting Started Wizard](https://ionicframework.com/start#basics) to quickly spin up an Ionic Framework starter app. This is the best way to ensure this issue is triaged quickly. Issues without a code reproduction may be closed if the Ionic Team cannot reproduce the issue you are reporting.
+      description: |
+        Reproduce this issue in a blank [Ionic Framework starter application](https://ionicframework.com/start#basics) or a Stackblitz example.
+
+        You can use the Stackblitz button available on any of the component docs pages to open an editable example. Remember to save your changes to obtain a link to copy.
+
+        Reproductions cases must be minimal and focused around the specific problem you are experiencing. This is the best way to ensure this issue is triaged quickly. Issues without a code reproduction may be closed if the Ionic Team cannot reproduce the issue you are reporting.
       placeholder: https://github.com/...
+    validations:
+      required: true
 
   - type: textarea
     id: ionic-info
