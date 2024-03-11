@@ -1,28 +1,16 @@
-import type { AnimationBuilder, LiteralUnion, Mode, Theme } from '../../interface';
+import type { OverlayOptions } from '@utils/overlays-interface';
 
-export interface ActionSheetOptions {
+import type { LiteralUnion } from '../../interface';
+
+export interface ActionSheetOptions extends OverlayOptions {
   header?: string;
   subHeader?: string;
   cssClass?: string | string[];
   buttons: (ActionSheetButton | string)[];
   backdropDismiss?: boolean;
   translucent?: boolean;
-  animated?: boolean;
-  /**
-   * @deprecated To change the default appearance of the popover, use the `theme` option.
-   * `mode` is deprecated and the ability to set the platform mode will be removed in a major release.
-   */
-  mode?: Mode;
-  /**
-   * The visual appearance of the action sheet.
-   */
-  theme?: Theme;
   keyboardClose?: boolean;
-  id?: string;
   htmlAttributes?: { [key: string]: any };
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 }
 
 export interface ActionSheetButton<T = any> {

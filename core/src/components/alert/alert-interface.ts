@@ -1,7 +1,9 @@
-import type { AnimationBuilder, LiteralUnion, Mode, TextFieldTypes, Theme } from '../../interface';
+import type { OverlayOptions } from '@utils/overlays-interface';
+
+import type { LiteralUnion, TextFieldTypes } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
-export interface AlertOptions {
+export interface AlertOptions extends OverlayOptions {
   header?: string;
   subHeader?: string;
   message?: string | IonicSafeString;
@@ -10,24 +12,9 @@ export interface AlertOptions {
   buttons?: (AlertButton | string)[];
   backdropDismiss?: boolean;
   translucent?: boolean;
-  animated?: boolean;
   htmlAttributes?: { [key: string]: any };
 
-  /**
-   * @deprecated To change the default appearance of the popover, use the `theme` option.
-   * `mode` is deprecated and the ability to set the platform mode will be removed in a major release.
-   */
-  mode?: Mode;
-  /**
-   * The visual appearance of the alert.
-   */
-  theme?: Theme;
-
   keyboardClose?: boolean;
-  id?: string;
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 }
 
 export interface AlertInput {

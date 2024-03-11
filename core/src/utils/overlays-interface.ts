@@ -1,10 +1,41 @@
 import type { EventEmitter } from '@stencil/core';
 
-import type { AnimationBuilder, HTMLStencilElement } from '../interface';
+import type { AnimationBuilder, HTMLStencilElement, Mode, Theme } from '../interface';
 
 export interface OverlayEventDetail<T = any> {
   data?: T;
   role?: string;
+}
+
+/**
+ * The shared configuration options for all overlays.
+ */
+export interface OverlayOptions {
+  /**
+   * To change the default appearance of the overlay, use the `theme` option.
+   * Mode is used to change the platform behavior of the component.
+   */
+  mode?: Mode;
+  /**
+   * The visual appearance of the overlay.
+   */
+  theme?: Theme;
+  /**
+   * If `true`, the overlay will be animated when it is presented and dismissed.
+   */
+  animated?: boolean;
+  /**
+   * The `id` of the overlay.
+   */
+  id?: string;
+  /**
+   * The custom enter animation to use for the overlay.
+   */
+  enterAnimation?: AnimationBuilder;
+  /**
+   * The custom leave animation to use for the overlay.
+   */
+  leaveAnimation?: AnimationBuilder;
 }
 
 export interface OverlayInterface {

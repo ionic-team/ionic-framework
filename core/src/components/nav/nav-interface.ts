@@ -35,10 +35,13 @@ export interface RouterOutletOptions {
   direction?: NavDirection;
   deepWait?: boolean;
   /**
-   * @deprecated To change the default appearance of the popover, use the `theme` option.
-   * `mode` is deprecated and the ability to set the platform mode will be removed in a major release.
+   * To change the default appearance of the component, use the `theme` option.
+   * Mode is used to change the platform behavior of the component.
    */
   mode?: Mode;
+  /**
+   * The visual appearance of the component.
+   */
   theme?: Theme;
   keyboardClose?: boolean;
   skipIfBusy?: boolean;

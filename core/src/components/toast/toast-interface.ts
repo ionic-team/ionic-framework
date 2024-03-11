@@ -1,7 +1,9 @@
-import type { AnimationBuilder, Color, LiteralUnion, Mode, Theme } from '../../interface';
+import type { OverlayOptions } from '@utils/overlays-interface';
+
+import type { Color, LiteralUnion } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
-export interface ToastOptions {
+export interface ToastOptions extends OverlayOptions {
   header?: string;
   message?: string | IonicSafeString;
   cssClass?: string | string[];
@@ -11,23 +13,12 @@ export interface ToastOptions {
   positionAnchor?: HTMLElement | string;
   swipeGesture?: ToastSwipeGestureDirection;
   translucent?: boolean;
-  animated?: boolean;
   icon?: string;
   htmlAttributes?: { [key: string]: any };
   layout?: ToastLayout;
 
   color?: Color;
-  /**
-   * @deprecated To change the default appearance of the popover, use the `theme` option.
-   * `mode` is deprecated and the ability to set the platform mode will be removed in a major release.
-   */
-  mode?: Mode;
-  theme?: Theme;
   keyboardClose?: boolean;
-  id?: string;
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 }
 
 export type ToastLayout = 'baseline' | 'stacked';
