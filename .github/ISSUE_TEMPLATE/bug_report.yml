@@ -64,7 +64,7 @@ body:
       description: |
         Reproduce this issue in a blank [Ionic Framework starter application](https://ionicframework.com/start#basics) or a Stackblitz example.
 
-        You can use the Stackblitz button available on any of the component docs pages to open an editable example. Remember to save your changes to obtain a link to copy.
+        You can use the Stackblitz button available on any of the [component playgrounds](https://ionicframework.com/docs/components) to open an editable example. Remember to save your changes to obtain a link to copy.
 
         Reproductions cases must be minimal and focused around the specific problem you are experiencing. This is the best way to ensure this issue is triaged quickly. Issues without a code reproduction may be closed if the Ionic Team cannot reproduce the issue you are reporting.
       placeholder: https://github.com/...
