@@ -69,6 +69,8 @@ core/www/
 core/test-results/
 core/playwright-report/
 core/**/*-snapshots
+core/docker-display.txt
+core/docker-display-volumn.txt
 
 # angular
 packages/angular/css/
