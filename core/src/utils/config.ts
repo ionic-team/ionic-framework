@@ -18,10 +18,10 @@ export interface IonicConfig {
   rippleEffect?: boolean;
 
   /**
-   * The mode determines the platform behaviors to use for the whole application.
+   * The mode determines the platform behaviors to use for the entire application.
    *
-   * Without a theme specified, mode will fallback to determining which platform
-   * styles to use for the whole application.
+   * Without a specified theme, the mode will be used to determine which platform
+   * styles to use throughout the application.
    */
   mode?: Mode;
 
