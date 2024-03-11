@@ -50,11 +50,65 @@ npm run test.e2e src/components/button/test
 
 Ionic uses [Docker](https://www.docker.com) to provide a way to run tests locally in the same environment that is used on CI.
 
-While `npm run test.e2e` can be used to run tests in the same environment that you are developing in, `npm run test.e2e.docker` can be used to run tests in a Docker environment provided by the Ionic team. This command supports all the same features as `npm run test.e2e` detailed in the previous section with the exception of the `--headed` flag. Tests run inside of Docker cannot be run in headed mode.
+While `npm run test.e2e` can be used to run tests in the same environment that you are developing in, `npm run test.e2e.docker` can be used to run tests in a Docker environment provided by the Ionic team. This command supports all the same features as `npm run test.e2e` detailed in the previous sectio.
 
 This command builds a Docker image before tests run. It will also re-build the Docker image in the event that a Playwright update was merged into the repo.
 
 Note that the Playwright report will not automatically open in your web browser when tests are complete because the tests were run in Docker. Run `npm run test.report` outside of Docker to open the most recent test report.
+
+> [!NOTE]
+> Additional setup is needed to run Playwright tests with headed mode in Docker. See below for more information.
+
+## Headed vs. Headless Tests
+
+Playwright tests in Ionic are run in headless mode by default. This means that a visual representation of the browser does not appear on your computer while running.
+
+No additional steps are needed in order to run the tests in headless mode:
+
+```shell
+# Will run tests in headless mode
+npm run test.e2e src/components/chip
+```
+
+ Playwright supports the `--headed` flag to run in headed mode which causes the visual representation of the browser to appear:
+ 
+ ```shell
+ # Will run tests in headed mode
+ npm run test.e2e src/components/chip -- --headed
+ ```
+
+### Running Headed Tests Inside Docker
+
+Additional software is needed to run headed tests inside of Docker. The Docker-specific test commands such as `npm run test.e2e.docker` are configured to use this additional software, but it is up to the developer to ensure that the software is installed and running.
+
+Playwright relies on [XServer](https://www.x.org/wiki/XServer/), a windowing system used to draw and move windows on a display, in order to run tests in headed mode. Follow the steps below to install XServer on your computer.
+
+> [!NOTE]
+> The following instructions are based off https://www.oddbird.net/2022/11/30/headed-playwright-in-docker/
+
+#### macOS
+
+macOS uses [XQuartz](https://www.xquartz.org) to use XServer on macOS.
+
+1. Install XQuartz: `brew install --cask xquartz`
+2. Open XQuartz, go to `Preferences > Security`, and check “Allow connections from network clients”.
+3. Restart your computer.
+4. Start XQuartz from the command line: `xhost +localhost`
+5. Open Docker Desktop and edit settings to give access to `/tmp/.X11-unix` in `Preferences > Resources > File sharing`.
+
+#### Windows
+
+Windows has a native XServer called [WSLg](https://github.com/microsoft/wslg#readme) that is included as part of the [Windows Subsystem for Linux (WSL)](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US). If you are running Docker Desktop on Windows 10 or 11 you likely already have both WSL and WSLg installed.
+
+If either of the below verification checks fail, then developers should [download the latest version of WSL](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US).
+
+**Verify WSL is installed**
+
+To verify WSL is installed, launch "WSL" from the start menu. If "WSL" does not show up in the start menu then you do not have WSL installed.
+
+**Verify WSLg is installed**
+
+With WSL open, verify that WSLg is installed: `ls -a -w 1 /mnt/wslg`. If the command fails with `No such file or directory` then your system is either missing WSL or running an old version.
 
 ## Managing Screenshots
 
