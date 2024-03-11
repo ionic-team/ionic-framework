@@ -3,6 +3,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+
+### Bug Fixes
+
+* **modal:** ariaLabel and role are inherited when set via htmlAttributes ([#29099](https://github.com/ionic-team/ionic-framework/issues/29099)) ([de13633](https://github.com/ionic-team/ionic-framework/commit/de13633a182d963876434db773aa346833f956fd))
+
+
+
+
+
+## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
+
+
+### Bug Fixes
+
+* **label:** do not grow when in end slot ([#29036](https://github.com/ionic-team/ionic-framework/issues/29036)) ([1fc4b76](https://github.com/ionic-team/ionic-framework/commit/1fc4b76f5940b38fd89e19561d6b4738dfb8ae5d)), closes [#29033](https://github.com/ionic-team/ionic-framework/issues/29033)
+* **overlays:** focus is returned to last focus element when focusing toast ([#28950](https://github.com/ionic-team/ionic-framework/issues/28950)) ([2ed0ada](https://github.com/ionic-team/ionic-framework/commit/2ed0ada9237b3f4dbf5959746ce2d1744936eebe)), closes [#28261](https://github.com/ionic-team/ionic-framework/issues/28261)
+
+
+
+
+
+## [7.7.2](https://github.com/ionic-team/ionic-framework/compare/v7.7.1...v7.7.2) (2024-02-14)
+
+
+### Bug Fixes
+
+* **overlays:** do not return focus if application has already moved focus manually ([#28850](https://github.com/ionic-team/ionic-framework/issues/28850)) ([a016670](https://github.com/ionic-team/ionic-framework/commit/a016670a8a46e101d23235b17bc8a2081fb992eb)), closes [#28849](https://github.com/ionic-team/ionic-framework/issues/28849)
+* **overlays:** ensure that only topmost overlay is announced by screen readers ([#28997](https://github.com/ionic-team/ionic-framework/issues/28997)) ([ba4ba61](https://github.com/ionic-team/ionic-framework/commit/ba4ba6161c1a6c67f7804b07f49c64ac9ad2b14c)), closes [#23472](https://github.com/ionic-team/ionic-framework/issues/23472)
+* **popover:** render arrow above backdrop ([#28986](https://github.com/ionic-team/ionic-framework/issues/28986)) ([0a8964d](https://github.com/ionic-team/ionic-framework/commit/0a8964d30c76218fe62f7f4aed4f81df7bb80cd0)), closes [#28985](https://github.com/ionic-team/ionic-framework/issues/28985)
+
+
+
+
+
+## [7.7.1](https://github.com/ionic-team/ionic-framework/compare/v7.7.0...v7.7.1) (2024-02-07)
+
+
+### Bug Fixes
+
+* **action-sheet:** iOS dismiss animation respects safe area ([#28915](https://github.com/ionic-team/ionic-framework/issues/28915)) ([7449fb4](https://github.com/ionic-team/ionic-framework/commit/7449fb4fed4048f5d01ba068dc6f8e2d7727e95d)), closes [#28541](https://github.com/ionic-team/ionic-framework/issues/28541)
+* **overlays:** tear down animations after dismiss ([#28907](https://github.com/ionic-team/ionic-framework/issues/28907)) ([950fa40](https://github.com/ionic-team/ionic-framework/commit/950fa40c5597c81d5cbaeb9276b09adfea5e79fb)), closes [#28352](https://github.com/ionic-team/ionic-framework/issues/28352)
+* **select:** popover can be scrolled ([#28965](https://github.com/ionic-team/ionic-framework/issues/28965)) ([35ab6b4](https://github.com/ionic-team/ionic-framework/commit/35ab6b4816bd627239de8d8b25ce0c86db8c74b4)), closes [#28963](https://github.com/ionic-team/ionic-framework/issues/28963)
+
+
+
+
+
+# [7.7.0](https://github.com/ionic-team/ionic-framework/compare/v7.6.7...v7.7.0) (2024-01-31)
+
+
+### Features
+
+* add experimental hardware back button support in browsers ([#28705](https://github.com/ionic-team/ionic-framework/issues/28705)) ([658d1ca](https://github.com/ionic-team/ionic-framework/commit/658d1caccd530350843b85c0e24544ec27dd9eb4)), closes [#28703](https://github.com/ionic-team/ionic-framework/issues/28703)
+
+
+
+
+
+## [7.6.7](https://github.com/ionic-team/ionic-framework/compare/v7.6.6...v7.6.7) (2024-01-31)
+
+
+### Bug Fixes
+
+* **accordion:** prevent opening of readonly accordion using keyboard ([#28865](https://github.com/ionic-team/ionic-framework/issues/28865)) ([e10f49c](https://github.com/ionic-team/ionic-framework/commit/e10f49c43daa11fe7deb5a9b9bfd34897542b6b1)), closes [#28344](https://github.com/ionic-team/ionic-framework/issues/28344)
+* **action-sheet, alert, toast:** button roles autocomplete with available options ([#27940](https://github.com/ionic-team/ionic-framework/issues/27940)) ([f6fc22b](https://github.com/ionic-team/ionic-framework/commit/f6fc22bba60388701b80a9421510e3d843d39e9e)), closes [#27965](https://github.com/ionic-team/ionic-framework/issues/27965)
+* **item:** ensure button focus state on property change ([#28892](https://github.com/ionic-team/ionic-framework/issues/28892)) ([bf7922c](https://github.com/ionic-team/ionic-framework/commit/bf7922c8b37b32dbf90650cb74a2e77bedf0c118)), closes [#28525](https://github.com/ionic-team/ionic-framework/issues/28525)
+* **item:** only default slot content wraps ([#28773](https://github.com/ionic-team/ionic-framework/issues/28773)) ([9448783](https://github.com/ionic-team/ionic-framework/commit/9448783bb19b187f867054c86d215e3dc97952c1)), closes [#28769](https://github.com/ionic-team/ionic-framework/issues/28769)
+
+
+
+
+
 ## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
 
 
