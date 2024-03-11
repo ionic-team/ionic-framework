@@ -63,8 +63,10 @@ body:
     id: reproduction-url
     attributes:
       label: Code Reproduction URL
-      description: Please reproduce this issue in a blank Ionic Framework starter application and provide a link to the repo. Try out our [Getting Started Wizard](https://ionicframework.com/start#basics) to quickly spin up an Ionic Framework starter app. This is the best way to ensure this issue is triaged quickly. Issues without a code reproduction may be closed if the Ionic Team cannot reproduce the issue you are reporting.
+      description: Please create a minimal reproduction of the issue. The minimial reproduction should include only the code required to reproduce the issue. Try out our [Getting Started Wizard](https://ionicframework.com/start#basics) to quickly spin up an Ionic Framework starter app. Alternatively, try forking one of the [component playgrounds](https://ionicframework.com/docs/components). Issues without a code reproduction URL may be closed by the Ionic Team.
       placeholder: https://github.com/...
+    validations:
+      required: true
 
   - type: textarea
     id: ionic-info
