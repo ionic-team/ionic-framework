@@ -144,7 +144,7 @@ configs().forEach(({ config, screenshot, title }) => {
       alertFixture = new AlertFixture(page, screenshot);
     });
 
-    test('cancel', async ({ page }) => {
+    test('cancel button 1', async ({ page }) => {
       await alertFixture.open('#multipleCancelButtons');
       const optBtn1 = page.locator('ion-alert button.cancel1-btn');
       await optBtn1.click();
@@ -153,7 +153,9 @@ configs().forEach(({ config, screenshot, title }) => {
       const optBtn1AlertOkBtn = confirmOptBtn1Alert.locator('.alert-button-group button');
       expect(await optBtn1AlertInfo).toBe('cancel1-btn-clicked');
       await optBtn1AlertOkBtn.click();
+    });
 
+    test('cancel button 2', async ({ page }) => {
       await alertFixture.open('#multipleCancelButtons');
       const optBtn2 = page.locator('ion-alert button.cancel2-btn');
       await optBtn2.click();
@@ -162,7 +164,9 @@ configs().forEach(({ config, screenshot, title }) => {
       const optBtn2AlertOkBtn = confirmOptBtn2Alert.locator('.alert-button-group button');
       expect(await optBtn2AlertInfo).toBe('cancel2-btn-clicked');
       await optBtn2AlertOkBtn.click();
+    });
 
+    test('cancel button 3', async ({ page }) => {
       await alertFixture.open('#multipleCancelButtons');
       const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
       const optBtn3 = page.locator('ion-alert button.cancel3-btn');
