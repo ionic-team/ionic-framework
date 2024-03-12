@@ -26,10 +26,9 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 
-  test.describe(title('Test cancel buttons'), () => {
-    test('cancel', async ({ page }) => {
+  test.describe(title('Test cancel buttons'), () => {      
+    test('cancel button 1', async ({ page }) => {
       await page.goto('/src/components/picker/test/basic', config);
-
       await page.click('#basicMultipleCancelBtns');
       const optBtn1 = page.locator('ion-picker button.cancel1-btn');
       await optBtn1.click();
@@ -38,7 +37,10 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn1AlertOkBtn = confirmOptBtn1Alert.locator('.alert-button-group button');
       expect(await optBtn1AlertInfo).toBe('cancel1-btn-clicked');
       await optBtn1AlertOkBtn.click();
+    });
 
+    test('cancel button 2', async ({ page }) => {
+      await page.goto('/src/components/picker/test/basic', config);
       await page.click('#basicMultipleCancelBtns');
       const optBtn2 = page.locator('ion-picker button.cancel2-btn');
       await optBtn2.click();
@@ -47,7 +49,10 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn2AlertOkBtn = confirmOptBtn2Alert.locator('.alert-button-group button');
       expect(await optBtn2AlertInfo).toBe('cancel2-btn-clicked');
       await optBtn2AlertOkBtn.click();
+    });
 
+    test('cancel button 3', async ({ page }) => {
+      await page.goto('/src/components/picker/test/basic', config);
       await page.click('#basicMultipleCancelBtns');
       const ionPickerDidDismiss = await page.spyOnEvent('ionPickerDidDismiss');
       const optBtn3 = page.locator('ion-picker button.cancel3-btn');
