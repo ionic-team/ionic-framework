@@ -64,18 +64,18 @@ export class Searchbar implements ComponentInterface {
   @Prop() autocorrect: 'on' | 'off' = 'off';
 
   /**
-   * Set the cancel button icon. Only applies to `md` mode.
-   * Defaults to `arrow-back-sharp`.
+   * Set the cancel button icon. Only available when the theme is `"md"`.
+   * Defaults to `"arrow-back-sharp"`.
    */
   @Prop() cancelButtonIcon = config.get('backButtonIcon', arrowBackSharp) as string;
 
   /**
-   * Set the the cancel button text. Only applies to `ios` mode.
+   * Set the the cancel button text. Only available when the theme is `"ios"`.
    */
   @Prop() cancelButtonText = 'Cancel';
 
   /**
-   * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
+   * Set the clear icon. Defaults to `"close-circle"` for `"ios"` theme and `"close-sharp"` for `"md"` and `"ionic"` theme.
    */
   @Prop() clearIcon?: string;
 
@@ -131,8 +131,8 @@ export class Searchbar implements ComponentInterface {
   @Prop() placeholder = 'Search';
 
   /**
-   * The icon to use as the search icon. Defaults to `search-outline` in
-   * `ios` mode and `search-sharp` in `md` mode.
+   * The icon to use as the search icon. Defaults to `"search-outline"` in
+   * the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
    */
   @Prop() searchIcon?: string;
 
@@ -626,13 +626,7 @@ export class Searchbar implements ComponentInterface {
 
           {theme === 'md' && cancelButton}
 
-          <ion-icon
-            aria-hidden="true"
-            mode={theme}
-            icon={searchIcon}
-            lazy={false}
-            class="searchbar-search-icon"
-          ></ion-icon>
+          <ion-icon aria-hidden="true" icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
           <button
             aria-label="reset"
@@ -649,13 +643,7 @@ export class Searchbar implements ComponentInterface {
             }}
             onClick={() => this.onClearInput(true)}
           >
-            <ion-icon
-              aria-hidden="true"
-              mode={theme}
-              icon={clearIcon}
-              lazy={false}
-              class="searchbar-clear-icon"
-            ></ion-icon>
+            <ion-icon aria-hidden="true" icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
           </button>
         </div>
         {theme === 'ios' && cancelButton}

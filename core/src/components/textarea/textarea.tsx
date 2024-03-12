@@ -120,7 +120,7 @@ export class Textarea implements ComponentInterface {
 
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
-   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
+   * `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
    */
   @Prop() fill?: 'outline' | 'solid';
 

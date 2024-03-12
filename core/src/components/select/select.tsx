@@ -95,7 +95,7 @@ export class Select implements ComponentInterface {
 
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
-   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
+   * `"outline"` the item will be transparent with a border. Only available in the `"md"` theme.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -175,14 +175,14 @@ export class Select implements ComponentInterface {
   @Prop() selectedText?: string | null;
 
   /**
-   * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode,
-   * or `caretDownSharp` for `md` mode.
+   * The toggle icon to use. Defaults to `"chevronExpand"` for the `"ios"` theme,
+   * or `"caretDownSharp"` for the `"md"` and `"ionic"` themes.
    */
   @Prop() toggleIcon?: string;
 
   /**
    * The toggle icon to show when the select is open. If defined, the icon
-   * rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon`
+   * rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon`
    * will be used for when the select is both open and closed.
    */
   @Prop() expandedIcon?: string;

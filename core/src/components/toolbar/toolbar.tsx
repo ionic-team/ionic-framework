@@ -11,8 +11,8 @@ import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.
- * @slot secondary - Content is placed to the left of the toolbar text in `ios` mode, and directly to the right in `md` mode.
- * @slot primary - Content is placed to the right of the toolbar text in `ios` mode, and to the far right in `md` mode.
+ * @slot secondary - Content is placed to the left of the toolbar text in the `"ios"` theme, and directly to the right in the `"md"` theme.
+ * @slot primary - Content is placed to the right of the toolbar text in the `"ios"` theme, and to the far right in the `"md"` theme.
  * @slot end - Content is placed to the right of the toolbar text in LTR, and to the left in RTL.
  */
 @Component({

@@ -40,7 +40,7 @@ export class Header implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the header.
-   * Only applies in iOS mode.
+   * Only applies when the team is `"ios"`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    */
@@ -48,7 +48,7 @@ export class Header implements ComponentInterface {
 
   /**
    * If `true`, the header will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    *
    * Note: In order to scroll content behind the header, the `fullscreen`

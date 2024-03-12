@@ -53,8 +53,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() button = false;
 
   /**
-   * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
-   * is `ios` and an `href` or `button` property is present.
+   * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `theme`
+   * is `"ios"` and an `href` or `button` property is present.
    */
   @Prop() detail?: boolean;
 

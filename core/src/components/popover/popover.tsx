@@ -37,7 +37,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
  * @slot - Content is placed inside of the `.popover-content` element.
  *
  * @part backdrop - The `ion-backdrop` element.
- * @part arrow - The arrow that points to the reference element. Only applies on `ios` mode.
+ * @part arrow - The arrow that points to the reference element. Only applies on `"ios"` theme.
  * @part content - The wrapper element for the default slot.
  */
 @Component({
@@ -138,7 +138,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * If `true`, the popover will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
@@ -206,13 +206,13 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes how to align the popover content with the `reference` point.
-   * Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
+   * Defaults to `"center"` for `"ios"` theme, and `"start"` for `"md"` theme.
    */
   @Prop({ mutable: true }) alignment?: PositionAlign;
 
   /**
    * If `true`, the popover will display an arrow that points at the
-   * `reference` when running in `ios` mode. Does not apply in `md` mode.
+   * `reference` on `"ios"` theme.
    */
   @Prop() arrow = true;
 

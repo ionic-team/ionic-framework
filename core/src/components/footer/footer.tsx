@@ -31,13 +31,13 @@ export class Footer implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the footer.
-   * Only applies in iOS mode.
+   * Only applies when the theme is `"ios"`.
    */
   @Prop() collapse?: 'fade';
 
   /**
    * If `true`, the footer will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    *
    * Note: In order to scroll content behind the footer, the `fullscreen`

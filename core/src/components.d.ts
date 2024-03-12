@@ -220,7 +220,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the action sheet will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
         /**
@@ -311,7 +311,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the alert will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
         /**
@@ -635,7 +635,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the card header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the card header will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
     }
@@ -1135,7 +1135,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the fab button will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the fab button will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
         /**
@@ -1155,7 +1155,7 @@ export namespace Components {
     }
     interface IonFooter {
         /**
-          * Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
+          * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
          */
         "collapse"?: 'fade';
         /**
@@ -1167,7 +1167,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
+          * If `true`, the footer will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
          */
         "translucent": boolean;
     }
@@ -1179,7 +1179,7 @@ export namespace Components {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies when the team is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: 'condense' | 'fade';
         /**
@@ -1191,7 +1191,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
+          * If `true`, the header will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
          */
         "translucent": boolean;
     }
@@ -1295,7 +1295,7 @@ export namespace Components {
          */
         "errorText"?: string;
         /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -1401,7 +1401,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
+          * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `theme` is `"ios"` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
         /**
@@ -1694,7 +1694,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the loading indicator will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
         /**
@@ -2229,7 +2229,7 @@ export namespace Components {
     }
     interface IonPopover {
         /**
-          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
+          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `"ios"` theme, and `"start"` for `"md"` theme.
          */
         "alignment"?: PositionAlign;
         /**
@@ -2237,7 +2237,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
+          * If `true`, the popover will display an arrow that points at the `reference` on `"ios"` theme.
          */
         "arrow": boolean;
         /**
@@ -2341,7 +2341,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the popover will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
         /**
@@ -2724,15 +2724,15 @@ export namespace Components {
          */
         "autocorrect": 'on' | 'off';
         /**
-          * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
+          * Set the cancel button icon. Only available when the theme is `"md"`. Defaults to `"arrow-back-sharp"`.
          */
         "cancelButtonIcon": string;
         /**
-          * Set the the cancel button text. Only applies to `ios` mode.
+          * Set the the cancel button text. Only available when the theme is `"ios"`.
          */
         "cancelButtonText": string;
         /**
-          * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
+          * Set the clear icon. Defaults to `"close-circle"` for `"ios"` theme and `"close-sharp"` for `"md"` and `"ionic"` theme.
          */
         "clearIcon"?: string;
         /**
@@ -2772,7 +2772,7 @@ export namespace Components {
          */
         "placeholder": string;
         /**
-          * The icon to use as the search icon. Defaults to `search-outline` in `ios` mode and `search-sharp` in `md` mode.
+          * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
          */
         "searchIcon"?: string;
         /**
@@ -2883,11 +2883,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
+          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
         /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in the `"md"` theme.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -2948,7 +2948,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
+          * The toggle icon to use. Defaults to `"chevronExpand"` for the `"ios"` theme, or `"caretDownSharp"` for the `"md"` and `"ionic"` themes.
          */
         "toggleIcon"?: string;
         /**
@@ -3069,7 +3069,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the tab bar will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the tab bar will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
     }
@@ -3194,7 +3194,7 @@ export namespace Components {
          */
         "errorText"?: string;
         /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -3393,7 +3393,7 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the toast will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
         /**
@@ -5091,7 +5091,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the action sheet will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
         /**
@@ -5196,7 +5196,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the alert will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
         /**
@@ -5547,7 +5547,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the card header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the card header will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
     }
@@ -6055,7 +6055,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the fab button will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the fab button will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
         /**
@@ -6075,7 +6075,7 @@ declare namespace LocalJSX {
     }
     interface IonFooter {
         /**
-          * Describes the scroll effect that will be applied to the footer. Only applies in iOS mode.
+          * Describes the scroll effect that will be applied to the footer. Only applies when the theme is `"ios"`.
          */
         "collapse"?: 'fade';
         /**
@@ -6087,7 +6087,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the footer will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
+          * If `true`, the footer will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content.
          */
         "translucent"?: boolean;
     }
@@ -6099,7 +6099,7 @@ declare namespace LocalJSX {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies when the team is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: 'condense' | 'fade';
         /**
@@ -6111,7 +6111,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
+          * If `true`, the header will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content.
          */
         "translucent"?: boolean;
     }
@@ -6227,7 +6227,7 @@ declare namespace LocalJSX {
          */
         "errorText"?: string;
         /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -6345,7 +6345,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
+          * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `theme` is `"ios"` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
         /**
@@ -6642,7 +6642,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the loading indicator will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
         /**
@@ -7104,7 +7104,7 @@ declare namespace LocalJSX {
     }
     interface IonPopover {
         /**
-          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
+          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `"ios"` theme, and `"start"` for `"md"` theme.
          */
         "alignment"?: PositionAlign;
         /**
@@ -7112,7 +7112,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode. Does not apply in `md` mode.
+          * If `true`, the popover will display an arrow that points at the `reference` on `"ios"` theme.
          */
         "arrow"?: boolean;
         /**
@@ -7228,7 +7228,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the popover will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
         /**
@@ -7645,15 +7645,15 @@ declare namespace LocalJSX {
          */
         "autocorrect"?: 'on' | 'off';
         /**
-          * Set the cancel button icon. Only applies to `md` mode. Defaults to `arrow-back-sharp`.
+          * Set the cancel button icon. Only available when the theme is `"md"`. Defaults to `"arrow-back-sharp"`.
          */
         "cancelButtonIcon"?: string;
         /**
-          * Set the the cancel button text. Only applies to `ios` mode.
+          * Set the the cancel button text. Only available when the theme is `"ios"`.
          */
         "cancelButtonText"?: string;
         /**
-          * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
+          * Set the clear icon. Defaults to `"close-circle"` for `"ios"` theme and `"close-sharp"` for `"md"` and `"ionic"` theme.
          */
         "clearIcon"?: string;
         /**
@@ -7717,7 +7717,7 @@ declare namespace LocalJSX {
          */
         "placeholder"?: string;
         /**
-          * The icon to use as the search icon. Defaults to `search-outline` in `ios` mode and `search-sharp` in `md` mode.
+          * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
          */
         "searchIcon"?: string;
         /**
@@ -7835,11 +7835,11 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
+          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
         /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in the `"md"` theme.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -7919,7 +7919,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
+          * The toggle icon to use. Defaults to `"chevronExpand"` for the `"ios"` theme, or `"caretDownSharp"` for the `"md"` and `"ionic"` themes.
          */
         "toggleIcon"?: string;
         /**
@@ -8045,7 +8045,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the tab bar will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the tab bar will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
     }
@@ -8170,7 +8170,7 @@ declare namespace LocalJSX {
          */
         "errorText"?: string;
         /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -8399,7 +8399,7 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
         /**
-          * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+          * If `true`, the toast will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
         /**
