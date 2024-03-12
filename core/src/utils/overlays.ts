@@ -1003,15 +1003,14 @@ const revealOverlaysToScreenReaders = () => {
      * could be more Toasts underneath. Additionally, we need to unhide the closest non-Toast
      * overlay too so focus can move there since focus is never automatically moved to the Toast.
      */
-    if (currentOverlay.tagName === 'ION-TOAST') {
-      currentOverlay.removeAttribute('aria-hidden');
-      /**
-       * If we found a non-Toast element then we can just remove aria-hidden and stop searching entirely
-       * since this overlay should always receive focus. As a result, all underlying overlays should still
-       * be hidden from screen readers.
-       */
-    } else {
-      currentOverlay.removeAttribute('aria-hidden');
+    currentOverlay.removeAttribute('aria-hidden');
+    
+    /**
+     * If we found a non-Toast element then we can just remove aria-hidden and stop searching entirely
+     * since this overlay should always receive focus. As a result, all underlying overlays should still
+     * be hidden from screen readers.
+     */
+    if (currentOverlay.tagName !== 'ION-TOAST') {
       break;
     }
   }
