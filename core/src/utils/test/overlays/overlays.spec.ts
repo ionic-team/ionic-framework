@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Modal } from '../../../components/modal/modal';
+import { Toast } from '../../../components/toast/toast';
 import { Nav } from '../../../components/nav/nav';
 import { RouterOutlet } from '../../../components/router-outlet/router-outlet';
 import { setRootAriaHidden } from '../../overlays';
@@ -191,6 +192,38 @@ describe('aria-hidden on individual overlays', () => {
 
     // modalOne will become the topmost overlay; ensure it isn't still hidden from screen readers
     await modalOne.present();
+    expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
+  });
+
+  it('should not hide previous overlay is top-most overlay is toast', async () => {
+    const page = await newSpecPage({
+      components: [Modal, Toast],
+      html: `
+        <ion-modal id="one"></ion-modal>
+        <ion-toast></ion-toast>
+        <ion-modal id="two"></ion-modal>
+      `,
+    });
+
+    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
+    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+    const toast = page.body.querySelector<HTMLIonModalElement>('ion-toast')!;
+
+    await modalOne.present();
+    await toast.present();
+
+    expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
+
+    await modalTwo.present();
+
+    expect(modalOne.hasAttribute('aria-hidden')).toEqual(true);
+    expect(toast.hasAttribute('aria-hidden')).toEqual(true);
+    expect(modalTwo.hasAttribute('aria-hidden')).toEqual(false);
+
+    await modalTwo.dismiss();
+
+    expect(toast.hasAttribute('aria-hidden')).toEqual(false);
+
     expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
   });
 });

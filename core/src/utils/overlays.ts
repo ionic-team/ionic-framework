@@ -549,7 +549,13 @@ export const present = async <OverlayPresentOptions>(
    */
   if (doc !== undefined) {
     const presentedOverlays = getPresentedOverlays(doc);
-    presentedOverlays.forEach((o) => o.setAttribute('aria-hidden', 'true'));
+    presentedOverlays.forEach((o, i) => {
+      if (i === presentedOverlays.length - 1 && overlay.el.tagName === 'ION-TOAST') {
+        return;
+      }
+
+      o.setAttribute('aria-hidden', 'true');
+    });
   }
 
   overlay.presented = true;
@@ -728,7 +734,18 @@ export const dismiss = async <OverlayDismissOptions>(
    * topmost one from screen readers.
    */
   if (doc !== undefined) {
-    getPresentedOverlay(doc)?.removeAttribute('aria-hidden');
+    const overlays = getPresentedOverlays(doc);
+
+    for (let i = overlays.length - 1; i >= 0; i--) {
+      const overlay = overlays[i];
+
+      if (overlay.tagName === 'ION-TOAST') {
+        overlay.removeAttribute('aria-hidden');
+      } else {
+        overlay.removeAttribute('aria-hidden');
+        break;
+      }
+    }
   }
 
   return true;
