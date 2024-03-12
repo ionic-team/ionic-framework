@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '@utils/helpers';
+import { inheritAriaAttributes, clamp, debounceEvent, renderHiddenInput } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -624,27 +624,15 @@ export class Range implements ComponentInterface {
       min,
       max,
       step,
-      el,
       handleKeyboard,
       pressedKnob,
       disabled,
       pin,
       ratioLower,
       ratioUpper,
-      inheritedAttributes,
-      rangeId,
       pinFormatter,
+      inheritedAttributes,
     } = this;
-
-    /**
-     * Look for external label, ion-label, or aria-labelledby.
-     * If none, see if user placed an aria-label on the host
-     * and use that instead.
-     */
-    let { labelText } = getAriaLabel(el, rangeId!);
-    if (labelText === undefined || labelText === null) {
-      labelText = inheritedAttributes['aria-label'];
-    }
 
     let barStart = `${ratioLower * 100}%`;
     let barEnd = `${100 - ratioUpper * 100}%`;
@@ -713,11 +701,6 @@ export class Range implements ComponentInterface {
 
         ticks.push(tick);
       }
-    }
-
-    let labelledBy: string | undefined;
-    if (this.hasLabel) {
-      labelledBy = 'range-label';
     }
 
     return (
@@ -791,8 +774,7 @@ export class Range implements ComponentInterface {
           handleKeyboard,
           min,
           max,
-          labelText,
-          labelledBy,
+          inheritedAttributes,
         })}
 
         {this.dualKnobs &&
@@ -807,8 +789,7 @@ export class Range implements ComponentInterface {
             handleKeyboard,
             min,
             max,
-            labelText,
-            labelledBy,
+            inheritedAttributes,
           })}
       </div>
     );
@@ -887,27 +868,13 @@ interface RangeKnob {
   pressed: boolean;
   pin: boolean;
   pinFormatter: PinFormatter;
-  labelText?: string | null;
-  labelledBy?: string;
+  inheritedAttributes: Attributes;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
 const renderKnob = (
   rtl: boolean,
-  {
-    knob,
-    value,
-    ratio,
-    min,
-    max,
-    disabled,
-    pressed,
-    pin,
-    handleKeyboard,
-    labelText,
-    labelledBy,
-    pinFormatter,
-  }: RangeKnob
+  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, pinFormatter, inheritedAttributes }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
@@ -918,6 +885,8 @@ const renderKnob = (
 
     return style;
   };
+
+  const ariaLabel = inheritedAttributes['aria-label'];
 
   return (
     <div
@@ -946,8 +915,8 @@ const renderKnob = (
       style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
-      aria-label={labelledBy === undefined ? labelText : null}
-      aria-labelledby={labelledBy !== undefined ? labelledBy : null}
+      aria-label={ariaLabel !== undefined ? ariaLabel : null}
+      aria-labelledby={ariaLabel === undefined ? 'range-label' : null}
       aria-valuemin={min}
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}
