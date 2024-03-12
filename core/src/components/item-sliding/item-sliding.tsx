@@ -30,6 +30,10 @@ const enum SlidingState {
 
 let openSlidingItem: HTMLIonItemSlidingElement | undefined;
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-item-sliding',
   styleUrl: 'item-sliding.scss',

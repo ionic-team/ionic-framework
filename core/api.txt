@@ -115,8 +115,11 @@ ion-alert,css-prop,--min-width
 ion-alert,css-prop,--width
 
 ion-app,none
+ion-app,prop,mode,"ios" | "md",undefined,false,false
+ion-app,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-avatar,shadow
+ion-avatar,prop,mode,"ios" | "md",undefined,false,false
 ion-avatar,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-avatar,css-prop,--border-radius
 
@@ -167,6 +170,7 @@ ion-back-button,part,native
 ion-back-button,part,text
 
 ion-backdrop,shadow
+ion-backdrop,prop,mode,"ios" | "md",undefined,false,false
 ion-backdrop,prop,stopPropagation,boolean,true,false,false
 ion-backdrop,prop,tappable,boolean,true,false,false
 ion-backdrop,prop,theme,"ios" | "md" | "ionic",undefined,false,false
@@ -265,6 +269,7 @@ ion-button,part,native
 
 ion-buttons,scoped
 ion-buttons,prop,collapse,boolean,false,false,false
+ion-buttons,prop,mode,"ios" | "md",undefined,false,false
 ion-buttons,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-card,shadow
@@ -346,6 +351,7 @@ ion-chip,css-prop,--background
 ion-chip,css-prop,--color
 
 ion-col,shadow
+ion-col,prop,mode,"ios" | "md",undefined,false,false
 ion-col,prop,offset,string | undefined,undefined,false,false
 ion-col,prop,offsetLg,string | undefined,undefined,false,false
 ion-col,prop,offsetMd,string | undefined,undefined,false,false
@@ -370,6 +376,7 @@ ion-col,prop,sizeMd,string | undefined,undefined,false,false
 ion-col,prop,sizeSm,string | undefined,undefined,false,false
 ion-col,prop,sizeXl,string | undefined,undefined,false,false
 ion-col,prop,sizeXs,string | undefined,undefined,false,false
+ion-col,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-col,css-prop,--ion-grid-column-padding
 ion-col,css-prop,--ion-grid-column-padding-lg
 ion-col,css-prop,--ion-grid-column-padding-md
@@ -382,9 +389,11 @@ ion-content,shadow
 ion-content,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-content,prop,forceOverscroll,boolean | undefined,undefined,false,false
 ion-content,prop,fullscreen,boolean,false,false,false
+ion-content,prop,mode,"ios" | "md",undefined,false,false
 ion-content,prop,scrollEvents,boolean,false,false,false
 ion-content,prop,scrollX,boolean,false,false,false
 ion-content,prop,scrollY,boolean,true,false,false
+ion-content,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-content,method,getScrollElement,getScrollElement() => Promise<HTMLElement>
 ion-content,method,scrollByPoint,scrollByPoint(x: number, y: number, duration: number) => Promise<void>
 ion-content,method,scrollToBottom,scrollToBottom(duration?: number) => Promise<void>
@@ -472,6 +481,8 @@ ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
 ion-fab,prop,edge,boolean,false,false,false
 ion-fab,prop,horizontal,"center" | "end" | "start" | undefined,undefined,false,false
+ion-fab,prop,mode,"ios" | "md",undefined,false,false
+ion-fab,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-fab,prop,vertical,"bottom" | "center" | "top" | undefined,undefined,false,false
 ion-fab,method,close,close() => Promise<void>
 
@@ -522,7 +533,9 @@ ion-fab-button,part,native
 
 ion-fab-list,shadow
 ion-fab-list,prop,activated,boolean,false,false,false
+ion-fab-list,prop,mode,"ios" | "md",undefined,false,false
 ion-fab-list,prop,side,"bottom" | "end" | "start" | "top",'bottom',false,false
+ion-fab-list,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-footer,none
 ion-footer,prop,collapse,"fade" | undefined,undefined,false,false
@@ -532,6 +545,8 @@ ion-footer,prop,translucent,boolean,false,false,false
 
 ion-grid,shadow
 ion-grid,prop,fixed,boolean,false,false,false
+ion-grid,prop,mode,"ios" | "md",undefined,false,false
+ion-grid,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-grid,css-prop,--ion-grid-padding
 ion-grid,css-prop,--ion-grid-padding-lg
 ion-grid,css-prop,--ion-grid-padding-md
@@ -553,7 +568,9 @@ ion-header,prop,translucent,boolean,false,false,false
 
 ion-img,shadow
 ion-img,prop,alt,string | undefined,undefined,false,false
+ion-img,prop,mode,"ios" | "md",undefined,false,false
 ion-img,prop,src,string | undefined,undefined,false,false
+ion-img,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 ion-img,event,ionImgWillLoad,void,true
@@ -561,6 +578,7 @@ ion-img,part,image
 
 ion-infinite-scroll,none
 ion-infinite-scroll,prop,disabled,boolean,false,false,false
+ion-infinite-scroll,prop,mode,"ios" | "md",undefined,false,false
 ion-infinite-scroll,prop,position,"bottom" | "top",'bottom',false,false
 ion-infinite-scroll,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-infinite-scroll,prop,threshold,string,'15%',false,false
@@ -704,6 +722,7 @@ ion-item-divider,css-prop,--padding-start
 ion-item-divider,css-prop,--padding-top
 
 ion-item-group,none
+ion-item-group,prop,mode,"ios" | "md",undefined,false,false
 ion-item-group,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-item-option,shadow
@@ -722,12 +741,15 @@ ion-item-option,css-prop,--color
 ion-item-option,part,native
 
 ion-item-options,none
+ion-item-options,prop,mode,"ios" | "md",undefined,false,false
 ion-item-options,prop,side,"end" | "start",'end',false,false
 ion-item-options,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-item-options,event,ionSwipe,any,true
 
 ion-item-sliding,none
 ion-item-sliding,prop,disabled,boolean,false,false,false
+ion-item-sliding,prop,mode,"ios" | "md",undefined,false,false
+ion-item-sliding,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-item-sliding,method,close,close() => Promise<void>
 ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>
 ion-item-sliding,method,getOpenAmount,getOpenAmount() => Promise<number>
@@ -805,6 +827,7 @@ ion-menu,prop,contentId,string | undefined,undefined,false,true
 ion-menu,prop,disabled,boolean,false,false,false
 ion-menu,prop,maxEdgeStart,number,50,false,false
 ion-menu,prop,menuId,string | undefined,undefined,false,true
+ion-menu,prop,mode,"ios" | "md",undefined,false,false
 ion-menu,prop,side,"end" | "start",'start',false,true
 ion-menu,prop,swipeGesture,boolean,true,false,false
 ion-menu,prop,theme,"ios" | "md" | "ionic",undefined,false,false
@@ -856,6 +879,8 @@ ion-menu-button,part,native
 ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
 ion-menu-toggle,prop,menu,string | undefined,undefined,false,false
+ion-menu-toggle,prop,mode,"ios" | "md",undefined,false,false
+ion-menu-toggle,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-modal,shadow
 ion-modal,prop,animated,boolean,true,false,false
@@ -911,9 +936,11 @@ ion-modal,part,handle
 ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false
 ion-nav,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-nav,prop,mode,"ios" | "md",undefined,false,false
 ion-nav,prop,root,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
 ion-nav,prop,rootParams,undefined | { [key: string]: any; },undefined,false,false
 ion-nav,prop,swipeGesture,boolean | undefined,undefined,false,false
+ion-nav,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-nav,method,canGoBack,canGoBack(view?: ViewController) => Promise<boolean>
 ion-nav,method,getActive,getActive() => Promise<ViewController | undefined>
 ion-nav,method,getByIndex,getByIndex(index: number) => Promise<ViewController | undefined>
@@ -934,8 +961,10 @@ ion-nav,event,ionNavWillChange,void,false
 ion-nav-link,none
 ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,mode,"ios" | "md",undefined,false,false
 ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-nav-link,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-note,shadow
 ion-note,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -962,6 +991,8 @@ ion-picker-column,event,ionChange,PickerColumnChangeEventDetail,true
 ion-picker-column-option,shadow
 ion-picker-column-option,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
 ion-picker-column-option,prop,disabled,boolean,false,false,false
+ion-picker-column-option,prop,mode,"ios" | "md",undefined,false,false
+ion-picker-column-option,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-picker-column-option,prop,value,any,undefined,false,false
 
 ion-picker-legacy,scoped
@@ -978,6 +1009,7 @@ ion-picker-legacy,prop,keyboardClose,boolean,true,false,false
 ion-picker-legacy,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker-legacy,prop,mode,"ios" | "md",undefined,false,false
 ion-picker-legacy,prop,showBackdrop,boolean,true,false,false
+ion-picker-legacy,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-picker-legacy,prop,trigger,string | undefined,undefined,false,false
 ion-picker-legacy,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-picker-legacy,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
@@ -1094,7 +1126,9 @@ ion-radio,part,mark
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
 ion-radio-group,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
+ion-radio-group,prop,mode,"ios" | "md",undefined,false,false
 ion-radio-group,prop,name,string,this.inputId,false,false
+ion-radio-group,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
 
@@ -1159,21 +1193,28 @@ ion-refresher,event,ionRefresh,RefresherEventDetail,true
 ion-refresher,event,ionStart,void,true
 
 ion-refresher-content,none
+ion-refresher-content,prop,mode,"ios" | "md",undefined,false,false
 ion-refresher-content,prop,pullingIcon,null | string | undefined,undefined,false,false
 ion-refresher-content,prop,pullingText,IonicSafeString | string | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingText,IonicSafeString | string | undefined,undefined,false,false
+ion-refresher-content,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-reorder,shadow
+ion-reorder,prop,mode,"ios" | "md",undefined,false,false
 ion-reorder,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-reorder,part,icon
 
 ion-reorder-group,none
 ion-reorder-group,prop,disabled,boolean,true,false,false
+ion-reorder-group,prop,mode,"ios" | "md",undefined,false,false
+ion-reorder-group,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[]) => Promise<any>
 ion-reorder-group,event,ionItemReorder,ItemReorderEventDetail,true
 
 ion-ripple-effect,shadow
+ion-ripple-effect,prop,mode,"ios" | "md",undefined,false,false
+ion-ripple-effect,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
 ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
 
@@ -1182,6 +1223,8 @@ ion-route,prop,beforeEnter,(() => NavigationHookResult | Promise<NavigationHookR
 ion-route,prop,beforeLeave,(() => NavigationHookResult | Promise<NavigationHookResult>) | undefined,undefined,false,false
 ion-route,prop,component,string,undefined,true,false
 ion-route,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-route,prop,mode,"ios" | "md",undefined,false,false
+ion-route,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-route,prop,url,string,'',false,false
 ion-route,event,ionRouteDataChanged,any,true
 
@@ -1191,7 +1234,9 @@ ion-route-redirect,prop,to,null | string | undefined,undefined,true,false
 ion-route-redirect,event,ionRouteRedirectChanged,any,true
 
 ion-router,none
+ion-router,prop,mode,"ios" | "md",undefined,false,false
 ion-router,prop,root,string,'/',false,false
+ion-router,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-router,prop,useHash,boolean,true,false,false
 ion-router,method,back,back() => Promise<void>
 ion-router,method,push,push(path: string, direction?: RouterDirection, animation?: AnimationBuilder) => Promise<boolean>
@@ -1201,10 +1246,12 @@ ion-router,event,ionRouteWillChange,RouterEventDetail,true
 ion-router-link,shadow
 ion-router-link,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-router-link,prop,href,string | undefined,undefined,false,false
+ion-router-link,prop,mode,"ios" | "md",undefined,false,false
 ion-router-link,prop,rel,string | undefined,undefined,false,false
 ion-router-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-router-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-router-link,prop,target,string | undefined,undefined,false,false
+ion-router-link,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-router-link,css-prop,--background
 ion-router-link,css-prop,--color
 
@@ -1212,8 +1259,12 @@ ion-router-outlet,shadow
 ion-router-outlet,prop,animated,boolean,true,false,false
 ion-router-outlet,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-router-outlet,prop,mode,"ios" | "md",getIonMode(this),false,false
+ion-router-outlet,prop,mode,"ios" | "md",undefined,false,false
+ion-router-outlet,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-row,shadow
+ion-row,prop,mode,"ios" | "md",undefined,false,false
+ion-row,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
@@ -1360,10 +1411,14 @@ ion-select,part,text
 
 ion-select-option,shadow
 ion-select-option,prop,disabled,boolean,false,false,false
+ion-select-option,prop,mode,"ios" | "md",undefined,false,false
+ion-select-option,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-select-option,prop,value,any,undefined,false,false
 
 ion-skeleton-text,shadow
 ion-skeleton-text,prop,animated,boolean,false,false,false
+ion-skeleton-text,prop,mode,"ios" | "md",undefined,false,false
+ion-skeleton-text,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-skeleton-text,css-prop,--background
 ion-skeleton-text,css-prop,--background-rgb
 ion-skeleton-text,css-prop,--border-radius
@@ -1371,13 +1426,16 @@ ion-skeleton-text,css-prop,--border-radius
 ion-spinner,shadow
 ion-spinner,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-spinner,prop,duration,number | undefined,undefined,false,false
+ion-spinner,prop,mode,"ios" | "md",undefined,false,false
 ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | undefined,undefined,false,false
 ion-spinner,prop,paused,boolean,false,false,false
+ion-spinner,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-spinner,css-prop,--color
 
 ion-split-pane,shadow
 ion-split-pane,prop,contentId,string | undefined,undefined,false,true
 ion-split-pane,prop,disabled,boolean,false,false,false
+ion-split-pane,prop,mode,"ios" | "md",undefined,false,false
 ion-split-pane,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
@@ -1388,7 +1446,9 @@ ion-split-pane,css-prop,--side-width
 
 ion-tab,shadow
 ion-tab,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
+ion-tab,prop,mode,"ios" | "md",undefined,false,false
 ion-tab,prop,tab,string,undefined,true,false
+ion-tab,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-tab,method,setActive,setActive() => Promise<void>
 
 ion-tab-bar,shadow
@@ -1426,6 +1486,8 @@ ion-tab-button,css-prop,--ripple-color
 ion-tab-button,part,native
 
 ion-tabs,shadow
+ion-tabs,prop,mode,"ios" | "md",undefined,false,false
+ion-tabs,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-tabs,method,getSelected,getSelected() => Promise<string | undefined>
 ion-tabs,method,getTab,getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>
 ion-tabs,method,select,select(tab: string | HTMLIonTabElement) => Promise<boolean>
@@ -1435,6 +1497,7 @@ ion-tabs,event,ionTabsWillChange,{ tab: string; },false
 ion-text,shadow
 ion-text,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-text,prop,mode,"ios" | "md",undefined,false,false
+ion-text,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-textarea,scoped
 ion-textarea,prop,autoGrow,boolean,false,false,true
@@ -1493,12 +1556,14 @@ ion-textarea,css-prop,--placeholder-font-weight
 ion-textarea,css-prop,--placeholder-opacity
 
 ion-thumbnail,shadow
+ion-thumbnail,prop,mode,"ios" | "md",undefined,false,false
 ion-thumbnail,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-thumbnail,css-prop,--border-radius
 ion-thumbnail,css-prop,--size
 
 ion-title,shadow
 ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-title,prop,mode,"ios" | "md",undefined,false,false
 ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-title,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-title,css-prop,--color

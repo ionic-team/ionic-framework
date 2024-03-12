@@ -10,6 +10,7 @@ import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface
 import type { SelectPopoverOption } from './select-popover-interface';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @internal

@@ -17,6 +17,10 @@ const enum ReorderGroupState {
   Complete = 2,
 }
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-reorder-group',
   styleUrl: 'reorder-group.scss',

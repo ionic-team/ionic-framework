@@ -14,6 +14,10 @@ import { findChainForIDs, findChainForSegments, findRouteRedirect } from './util
 import { readRedirects, readRoutes } from './utils/parser';
 import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from './utils/path';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-router',
 })

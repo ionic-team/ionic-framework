@@ -7,7 +7,7 @@ import type { TransitionOptions } from '@utils/transition';
 import { lifecycle, setPageHidden, transition } from '@utils/transition';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture } from '../../interface';
 import type { NavOutlet, RouteID, RouteWrite, RouterDirection } from '../router/utils/interface';
 
@@ -23,6 +23,10 @@ import type {
 import type { ViewController } from './view-controller';
 import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToViews, matches } from './view-controller';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-nav',
   styleUrl: 'nav.scss',
@@ -903,12 +907,14 @@ export class Nav implements NavOutlet {
           }
         }
       : undefined;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
+    const mode = getIonMode(this, theme);
     const enteringEl = enteringView.element!;
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const leavingEl = leavingView && leavingView.element!;
     const animationOpts: TransitionOptions = {
       mode,
+      theme,
       showGoBack: this.canGoBackSync(enteringView),
       baseEl: this.el,
       progressCallback,

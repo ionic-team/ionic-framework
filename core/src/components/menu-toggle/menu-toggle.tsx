@@ -7,6 +7,9 @@ import { getIonTheme } from '../../global/ionic-global';
 import { updateVisibility } from './menu-toggle-util';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
  * @slot - Content is placed inside the toggle to act as the click target.
  */
 @Component({

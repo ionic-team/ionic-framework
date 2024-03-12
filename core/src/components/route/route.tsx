@@ -5,6 +5,10 @@ import type { NavigationHookCallback } from './route-interface';
 
 // TODO(FW-2832): types
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-route',
 })

@@ -11,6 +11,10 @@ import { supportsRubberBandScrolling } from '../refresher/refresher.utils';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 import { SPINNERS } from '../spinner/spinner-configs';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-refresher-content',
 })
