@@ -210,7 +210,7 @@
 :host(.legacy-input) .input-clear-icon {
   @include margin(0);
 }
-.input-clear-icon, .input-toggle-password {
+.input-clear-icon, .input-password-toggle {
   @include margin(auto);
   @include padding(0);
   @include background-position(center);
@@ -236,7 +236,7 @@
 }
 
 :host(.in-item-color) .input-clear-icon,
-:host(.in-item-color) .input-toggle-password {
+:host(.in-item-color) .input-password-toggle {
   color: inherit;
 }
 
@@ -248,7 +248,7 @@
  * being activated, so we never get to that state.
  */
 .input-clear-icon:focus,
-.input-toggle-password:focus {
+.input-password-toggle:focus {
   opacity: 0.5;
 }
 

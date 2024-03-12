@@ -14,7 +14,7 @@ import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
-import { closeCircle, closeSharp, eyeOffOutline, eyeOutline } from 'ionicons/icons';
+import { closeCircle, closeSharp, eyeOff, eyeOutline } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
@@ -276,13 +276,13 @@ export class Input implements ComponentInterface {
   @Prop() shape?: 'round';
 
   /**
-   * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+   * Set the icon that can be used to represent showing a password. Defaults to `eyeOutline`.
    */
   @Prop() showPasswordIcon?: string;
 
   /**
-   * If `true`, a password icon will appear in the input and the input type will change to `password`.
-   * Clicking it changes the input to `text` and reveals the text value.
+   * If `true`, a password toggle icon will appear in the input.
+   * Clicking the icon toggles the input type between `"text"` and `"password"`, allowing the user to view or hide the input value.
    */
   @Prop() showPasswordToggle = false;
 
@@ -754,7 +754,7 @@ export class Input implements ComponentInterface {
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
     const showPasswordIcon = this.showPasswordIcon || eyeOutline;
-    const hidePasswordIcon = this.hidePasswordIcon || eyeOffOutline;
+    const hidePasswordIcon = this.hidePasswordIcon || eyeOff;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -864,11 +864,11 @@ export class Input implements ComponentInterface {
                 aria-controls={this.inputId}
                 role="switch"
                 type="button"
-                class="input-toggle-password"
+                class="input-password-toggle"
                 onPointerDown={(ev) => {
                   /**
                    * This prevents mobile browsers from
-                   * blurring the input when the clear
+                   * blurring the input when the password toggle
                    * button is activated.
                    */
                   ev.preventDefault();

@@ -1286,11 +1286,11 @@ export namespace Components {
          */
         "shape"?: 'round';
         /**
-          * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+          * Set the icon that can be used to represent showing a password. Defaults to `eyeOutline`.
          */
         "showPasswordIcon"?: string;
         /**
-          * If `true`, a password icon will appear in the input and the input type will change to `password`. Clicking it changes the input to `text` and reveals the text value.
+          * If `true`, a password toggle icon will appear in the input. Clicking the icon toggles the input type between `"text"` and `"password"`, allowing the user to view or hide the input value.
          */
         "showPasswordToggle": boolean;
         "size"?: number;
@@ -6029,11 +6029,11 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round';
         /**
-          * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+          * Set the icon that can be used to represent showing a password. Defaults to `eyeOutline`.
          */
         "showPasswordIcon"?: string;
         /**
-          * If `true`, a password icon will appear in the input and the input type will change to `password`. Clicking it changes the input to `text` and reveals the text value.
+          * If `true`, a password toggle icon will appear in the input. Clicking the icon toggles the input type between `"text"` and `"password"`, allowing the user to view or hide the input value.
          */
         "showPasswordToggle"?: boolean;
         "size"?: number;
