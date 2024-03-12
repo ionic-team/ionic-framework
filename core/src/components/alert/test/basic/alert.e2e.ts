@@ -151,7 +151,7 @@ configs().forEach(({ config, screenshot, title }) => {
       const confirmOptBtn1Alert = page.locator('ion-alert[data-testid=cancel1-btn-clicked]');
       const optBtn1AlertInfo = confirmOptBtn1Alert.locator('.alert-message').innerText();
       const optBtn1AlertOkBtn = confirmOptBtn1Alert.locator('.alert-button-group button');
-      expect(await optBtn1AlertInfo).toBe("cancel1-btn-clicked");
+      expect(await optBtn1AlertInfo).toBe('cancel1-btn-clicked');
       await optBtn1AlertOkBtn.click();
 
       await alertFixture.open('#multipleCancelButtons');
@@ -160,7 +160,7 @@ configs().forEach(({ config, screenshot, title }) => {
       const confirmOptBtn2Alert = page.locator('ion-alert[data-testid=cancel2-btn-clicked]');
       const optBtn2AlertInfo = confirmOptBtn2Alert.locator('.alert-message').innerText();
       const optBtn2AlertOkBtn = confirmOptBtn2Alert.locator('.alert-button-group button');
-      expect(await optBtn2AlertInfo).toBe("cancel2-btn-clicked");
+      expect(await optBtn2AlertInfo).toBe('cancel2-btn-clicked');
       await optBtn2AlertOkBtn.click();
 
       await alertFixture.open('#multipleCancelButtons');
