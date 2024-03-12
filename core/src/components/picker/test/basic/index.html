@@ -14,7 +14,8 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
   <script type="module">
-    import { pickerController } from '../../../../dist/ionic/index.esm.js';
+    import { alertController, pickerController } from '../../../../dist/ionic/index.esm.js';
+    window.alertController = alertController;
     window.pickerController = pickerController;
   </script>
 
@@ -47,6 +48,11 @@
     </style>
 
     <script>
+      async function openAlert(opts) {
+        const alert = await alertController.create(opts);
+        await alert.present();
+      }
+
       selectedIndex = 0;
 
       const options = [
@@ -100,6 +106,18 @@
         },
       ];
 
+      function confirmpAlertCancelBtns(expectedDataTestId) {
+        openAlert({
+          header: 'Alert',
+          subHeader: 'CancelBtnClicked',
+          message: expectedDataTestId,
+          buttons: ['OK'],
+          htmlAttributes: {
+            'data-testid': expectedDataTestId,
+          },
+        });
+      }
+
       const btns = {
         basic: [
           {
@@ -118,19 +136,25 @@
 
         multipleCancelBtns: [
           {
-            text: 'Cancel',
+            text: 'Cancel 1',
             role: 'cancel',
+            cssClass: 'cancel1-btn',
             handler: () => {
-              console.log('Cancel btn');
+              confirmpAlertCancelBtns('cancel1-btn-clicked');
             },
           },
           {
-            text: 'Cancel2',
+            text: 'Cancel 2',
             role: 'cancel',
+            cssClass: 'cancel2-btn',
             handler: () => {
-              console.log('Cancel2 btn');
-              return false;
+              confirmpAlertCancelBtns('cancel2-btn-clicked');
             },
+          },
+          {
+            text: 'Cancel 3',
+            role: 'cancel',
+            cssClass: 'cancel3-btn',
           },
           {
             text: 'Save',
