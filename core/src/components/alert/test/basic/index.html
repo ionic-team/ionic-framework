@@ -118,14 +118,14 @@
         });
       }
 
-      function confirmpresentAlertMultipleCancelButtons(dataTestIdExpected) {
+      function confirmpAlertCancelBtns(expectedDataTestId) {
         openAlert({
           header: 'Alert',
           subHeader: 'CancelBtnClicked',
-          message: dataTestIdExpected,
+          message: expectedDataTestId,
           buttons: ['OK'],
           htmlAttributes: {
-            'data-testid': dataTestIdExpected,
+            'data-testid': expectedDataTestId,
           },
         });
       }
@@ -141,7 +141,7 @@
               role: 'cancel',
               cssClass: 'cancel1-btn',
               handler: () => {
-                confirmpresentAlertMultipleCancelButtons('cancel1-btn-clicked');
+                confirmpAlertCancelBtns('cancel1-btn-clicked');
               },
             },
             {
@@ -149,7 +149,7 @@
               role: 'cancel',
               cssClass: 'cancel2-btn',
               handler: () => {
-                confirmpresentAlertMultipleCancelButtons('cancel2-btn-clicked');
+                confirmpAlertCancelBtns('cancel2-btn-clicked');
               },
             },
             {
