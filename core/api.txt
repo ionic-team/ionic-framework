@@ -639,10 +639,6 @@ ion-item,css-prop,--color-hover
 ion-item,css-prop,--detail-icon-color
 ion-item,css-prop,--detail-icon-font-size
 ion-item,css-prop,--detail-icon-opacity
-ion-item,css-prop,--highlight-color-focused
-ion-item,css-prop,--highlight-color-invalid
-ion-item,css-prop,--highlight-color-valid
-ion-item,css-prop,--highlight-height
 ion-item,css-prop,--inner-border-width
 ion-item,css-prop,--inner-box-shadow
 ion-item,css-prop,--inner-padding-bottom
