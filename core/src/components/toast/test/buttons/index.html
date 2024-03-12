@@ -14,7 +14,8 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
   <script type="module">
-    import { toastController } from '../../../../dist/ionic/index.esm.js';
+    import { alertController, toastController } from '../../../../dist/ionic/index.esm.js';
+    window.alertController = alertController;
     window.toastController = toastController;
   </script>
   <body>
@@ -35,7 +36,7 @@
           Multiple Buttons
         </ion-button>
 
-        <ion-button id="multipleButtons" expand="block" onclick="presentToastWithMultipleCancelButtons()">
+        <ion-button id="multipleCancelButtons" expand="block" onclick="presentToastWithMultipleCancelButtons()">
           Multiple Cancel Buttons
         </ion-button>
 
@@ -49,9 +50,15 @@
       window.addEventListener('ionToastDidDismiss', function (e) {
         console.log('didDismiss', e);
       });
+
       window.addEventListener('ionToastWillDismiss', function (e) {
         console.log('willDismiss', e);
       });
+
+      async function openAlert(opts) {
+        const alert = await alertController.create(opts);
+        await alert.present();
+      }
 
       async function presentCloseArrayToast() {
         const opts = {
@@ -122,32 +129,44 @@
         return await presentToastWithOptions(opts);
       }
 
+      function confirmpAlertCancelBtns(expectedDataTestId) {
+        openAlert({
+          header: 'Alert',
+          subHeader: 'CancelBtnClicked',
+          message: expectedDataTestId,
+          buttons: ['OK'],
+          htmlAttributes: {
+            'data-testid': expectedDataTestId,
+          },
+        });
+      }
+
       async function presentToastWithMultipleCancelButtons() {
         const opts = {
           message: 'Warning.',
           buttons: [
             {
-              text: 'Cancel',
-              side: 'start',
+              text: 'C1',
               role: 'cancel',
+              cssClass: 'cancel1-btn',
               handler: () => {
-                console.log('Cancel btn');
+                confirmpAlertCancelBtns('cancel1-btn-clicked');
               },
             },
             {
-              text: 'Cancel1',
+              text: 'C2',
               role: 'cancel',
+              cssClass: 'cancel2-btn',
               handler: () => {
-                console.log('Cancel1 btn');
+                confirmpAlertCancelBtns('cancel2-btn-clicked');
               },
             },
             {
-              text: 'Cancel2',
+              text: 'C3',
               role: 'cancel',
-              handler: () => {
-                console.log('Cancel2 btn');
-              },
+              cssClass: 'cancel3-btn',
             },
+            'Cancel',
           ],
         };
 
