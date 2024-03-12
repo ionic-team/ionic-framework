@@ -195,7 +195,7 @@ describe('aria-hidden on individual overlays', () => {
     expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
   });
 
-  it('should not hide previous overlay is top-most overlay is toast', async () => {
+  it('should not hide previous overlay if top-most overlay is toast', async () => {
     const page = await newSpecPage({
       components: [Modal, Toast],
       html: `
