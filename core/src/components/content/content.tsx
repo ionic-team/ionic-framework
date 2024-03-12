@@ -11,7 +11,7 @@ import type { Color, Mode } from '../../interface';
 import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed in the scrollable area if provided without a slot.

@@ -4,7 +4,7 @@ import { Component, Host, h } from '@stencil/core';
 import { getIonTheme } from '../../global/ionic-global';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({

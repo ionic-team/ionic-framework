@@ -121,7 +121,7 @@ export namespace Components {
         "expand": 'compact' | 'inset';
         "getAccordions": () => Promise<HTMLIonAccordionElement[]>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -321,7 +321,7 @@ export namespace Components {
     }
     interface IonApp {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
@@ -332,7 +332,7 @@ export namespace Components {
     }
     interface IonAvatar {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -380,7 +380,7 @@ export namespace Components {
     }
     interface IonBackdrop {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -573,7 +573,7 @@ export namespace Components {
          */
         "collapse": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -757,7 +757,7 @@ export namespace Components {
     }
     interface IonCol {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -883,7 +883,7 @@ export namespace Components {
          */
         "getScrollElement": () => Promise<HTMLElement>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1105,7 +1105,7 @@ export namespace Components {
          */
         "horizontal"?: 'start' | 'end' | 'center';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1193,7 +1193,7 @@ export namespace Components {
          */
         "activated": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1229,7 +1229,7 @@ export namespace Components {
          */
         "fixed": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1261,7 +1261,7 @@ export namespace Components {
          */
         "alt"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1283,7 +1283,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1545,7 +1545,7 @@ export namespace Components {
     }
     interface IonItemGroup {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1598,7 +1598,7 @@ export namespace Components {
     interface IonItemOptions {
         "fireSwipeEvent": () => Promise<void>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1632,7 +1632,7 @@ export namespace Components {
          */
         "getSlidingRatio": () => Promise<number>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1820,7 +1820,7 @@ export namespace Components {
          */
         "menuId"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1892,7 +1892,7 @@ export namespace Components {
          */
         "menu"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2074,7 +2074,7 @@ export namespace Components {
          */
         "insertPages": (insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2163,7 +2163,7 @@ export namespace Components {
          */
         "componentProps"?: ComponentProps;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2249,7 +2249,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2320,7 +2320,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2561,7 +2561,7 @@ export namespace Components {
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2699,7 +2699,7 @@ export namespace Components {
     }
     interface IonRefresherContent {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2725,7 +2725,7 @@ export namespace Components {
     }
     interface IonReorder {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2744,7 +2744,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2760,7 +2760,7 @@ export namespace Components {
          */
         "addRipple": (x: number, y: number) => Promise<() => void>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2790,7 +2790,7 @@ export namespace Components {
          */
         "componentProps"?: { [key: string]: any };
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2819,7 +2819,7 @@ export namespace Components {
         "back": () => Promise<void>;
         "canTransition": () => Promise<string | boolean>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         "navChanged": (direction: RouterDirection) => Promise<boolean>;
@@ -2853,7 +2853,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2894,7 +2894,7 @@ export namespace Components {
          */
         "mode": "ios" | "md";
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
@@ -2906,7 +2906,7 @@ export namespace Components {
     }
     interface IonRow {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3166,7 +3166,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3188,7 +3188,7 @@ export namespace Components {
          */
         "message"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3214,7 +3214,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3232,7 +3232,7 @@ export namespace Components {
          */
         "duration"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3259,7 +3259,7 @@ export namespace Components {
         "disabled": boolean;
         "isVisible": () => Promise<boolean>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3279,7 +3279,7 @@ export namespace Components {
         "component"?: ComponentRef;
         "delegate"?: FrameworkDelegate;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3371,7 +3371,7 @@ export namespace Components {
          */
         "getTab": (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3532,7 +3532,7 @@ export namespace Components {
     }
     interface IonThumbnail {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3546,7 +3546,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5238,7 +5238,7 @@ declare namespace LocalJSX {
          */
         "expand"?: 'compact' | 'inset';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5470,7 +5470,7 @@ declare namespace LocalJSX {
     }
     interface IonApp {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5480,7 +5480,7 @@ declare namespace LocalJSX {
     }
     interface IonAvatar {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5528,7 +5528,7 @@ declare namespace LocalJSX {
     }
     interface IonBackdrop {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5749,7 +5749,7 @@ declare namespace LocalJSX {
          */
         "collapse"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5945,7 +5945,7 @@ declare namespace LocalJSX {
     }
     interface IonCol {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6063,7 +6063,7 @@ declare namespace LocalJSX {
          */
         "fullscreen"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6285,7 +6285,7 @@ declare namespace LocalJSX {
          */
         "horizontal"?: 'start' | 'end' | 'center';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6377,7 +6377,7 @@ declare namespace LocalJSX {
          */
         "activated"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6413,7 +6413,7 @@ declare namespace LocalJSX {
          */
         "fixed"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6445,7 +6445,7 @@ declare namespace LocalJSX {
          */
         "alt"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6475,7 +6475,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6753,7 +6753,7 @@ declare namespace LocalJSX {
     }
     interface IonItemGroup {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6805,7 +6805,7 @@ declare namespace LocalJSX {
     }
     interface IonItemOptions {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6827,7 +6827,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7020,7 +7020,7 @@ declare namespace LocalJSX {
          */
         "menuId"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7100,7 +7100,7 @@ declare namespace LocalJSX {
          */
         "menu"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7252,7 +7252,7 @@ declare namespace LocalJSX {
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7294,7 +7294,7 @@ declare namespace LocalJSX {
          */
         "componentProps"?: ComponentProps;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7375,7 +7375,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7435,7 +7435,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7718,7 +7718,7 @@ declare namespace LocalJSX {
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7888,7 +7888,7 @@ declare namespace LocalJSX {
     }
     interface IonRefresherContent {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7914,7 +7914,7 @@ declare namespace LocalJSX {
     }
     interface IonReorder {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7928,7 +7928,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7942,7 +7942,7 @@ declare namespace LocalJSX {
     }
     interface IonRippleEffect {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7972,7 +7972,7 @@ declare namespace LocalJSX {
          */
         "componentProps"?: { [key: string]: any };
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8004,7 +8004,7 @@ declare namespace LocalJSX {
     }
     interface IonRouter {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8038,7 +8038,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8077,7 +8077,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         "onIonNavDidChange"?: (event: IonRouterOutletCustomEvent<void>) => void;
@@ -8091,7 +8091,7 @@ declare namespace LocalJSX {
     }
     interface IonRow {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8401,7 +8401,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8423,7 +8423,7 @@ declare namespace LocalJSX {
          */
         "message"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8449,7 +8449,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8471,7 +8471,7 @@ declare namespace LocalJSX {
          */
         "duration"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8497,7 +8497,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8521,7 +8521,7 @@ declare namespace LocalJSX {
         "component"?: ComponentRef;
         "delegate"?: FrameworkDelegate;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8605,7 +8605,7 @@ declare namespace LocalJSX {
     }
     interface IonTabs {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8784,7 +8784,7 @@ declare namespace LocalJSX {
     }
     interface IonThumbnail {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8798,7 +8798,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
