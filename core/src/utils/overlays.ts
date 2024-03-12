@@ -975,7 +975,7 @@ const hideOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement)
     if (nextPresentedOverlay.hasAttribute('aria-hidden')) {
       presentedOverlay.setAttribute('aria-hidden', 'true');
       /**
-       * If the next overlay is a Toast this does not have aria-hidden then current overlay
+       * If the next overlay is a Toast that does not have aria-hidden then current overlay
        * should not have aria-hidden either so focus can remain in the current overlay.
        */
     } else if (nextPresentedOverlay.tagName !== 'ION-TOAST') {
