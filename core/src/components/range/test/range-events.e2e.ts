@@ -67,6 +67,39 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
       });
 
+      test('should emit end event on tap', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/28487',
+        });
+
+        await page.setContent(`<ion-range aria-label="Range" value="20"></ion-range>`, config);
+
+        const range = page.locator('ion-range');
+        const rangeEndSpy = await page.spyOnEvent('ionKnobMoveEnd');
+        const rangeBoundingBox = await range.boundingBox();
+        /**
+         * Coordinates for the click event.
+         * These need to be near the end of the range
+         * (or anything that isn't the current value).
+         *
+         * The number 50 is arbitrary, but it should be
+         * less than the width of the range.
+         */
+        const x = rangeBoundingBox!.width - 50;
+        // The y coordinate is the middle of the range.
+        const y = rangeBoundingBox!.height / 2;
+
+        // Click near the end of the range.
+        await range.click({
+          position: { x, y },
+        });
+
+        await rangeEndSpy.next();
+
+        expect(rangeEndSpy.length).toBe(1);
+      });
+
       // TODO FW-2873
       test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
         skip.browser('webkit', 'mouse.wheel is not available in WebKit');

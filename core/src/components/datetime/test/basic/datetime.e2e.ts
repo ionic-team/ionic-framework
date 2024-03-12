@@ -323,7 +323,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: visibility'), () => {
-    test('should reset month/year interface when hiding datetime', async ({ page }) => {
+    // TODO FW-6015 re-enable on webkit when bug is fixed
+    test('should reset month/year interface when hiding datetime', async ({ page, skip }) => {
+      skip.browser(
+        'webkit',
+        'This is buggy in a headless Linux environment: https://bugs.webkit.org/show_bug.cgi?id=270358'
+      );
       await page.setContent(
         `
         <ion-datetime></ion-datetime>
