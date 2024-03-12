@@ -992,7 +992,6 @@ const hideOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement)
 const revealOverlaysToScreenReaders = () => {
   if (doc === undefined) return;
 
-  // If there are other overlays presented, unhide the new topmost one from screen readers.
   const overlays = getPresentedOverlays(doc);
 
   for (let i = overlays.length - 1; i >= 0; i--) {
