@@ -50,6 +50,17 @@ export const createSlotMutationController = (
 
     hostMutationObserver.observe(el, {
       childList: true,
+      /**
+       * This fixes an issue with the `ion-input` component
+       * not re-rendering in some cases when using the
+       * label slot functionality.
+       *
+       * HTML element patches in Stencil that are enabled
+       * by the `experimentalSlotFixes` flag in Stencil v4
+       * result in DOM manipulations that won't trigger
+       * the current mutation observer configuration and
+       * callback.
+       */
       subtree: true,
     });
   }
