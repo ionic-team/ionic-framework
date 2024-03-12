@@ -543,19 +543,29 @@ export const present = async <OverlayPresentOptions>(
   setRootAriaHidden(true);
 
   /**
-   * Hide all other overlays from screen readers so only this one
-   * can be read. Note that presenting an overlay always makes
-   * it the topmost one.
+   * Ensure that underlying overlays have aria-hidden if necessary so that screen readers
+   * cannot move focus to these elements. Note that we cannot rely on focus/focusin/focusout
+   * events here because those events do not fire when the screen readers moves to a non-focusable
+   * element such as text.
    */
   if (doc !== undefined) {
-    const presentedOverlays = getPresentedOverlays(doc);
-    presentedOverlays.forEach((o, i) => {
-      if (i === presentedOverlays.length - 1 && overlay.el.tagName === 'ION-TOAST') {
-        return;
-      }
+    const overlays = getPresentedOverlays(doc);
 
-      o.setAttribute('aria-hidden', 'true');
-    });
+    for (let i = overlays.length - 1; i >= 0; i--) {
+      const presentedOverlay = overlays[i];
+      const nextPresentedOverlay = overlays[i + 1] ?? overlay.el;
+
+      // If next overlay has aria-hidden then all remaining overlays will have it too.
+      if (nextPresentedOverlay.hasAttribute('aria-hidden')) {
+        presentedOverlay.setAttribute('aria-hidden', 'true');
+        /**
+         * If the next overlay is a Toast this does not have aria-hidden then current overlay
+         * should not have aria-hidden either so focus can remain in the current overlay.
+         */
+      } else if (nextPresentedOverlay.tagName !== 'ION-TOAST') {
+        presentedOverlay.setAttribute('aria-hidden', 'true');
+      }
+    }
   }
 
   overlay.presented = true;
@@ -729,20 +739,28 @@ export const dismiss = async <OverlayDismissOptions>(
 
   overlay.el.remove();
 
-  /**
-   * If there are other overlays presented, unhide the new
-   * topmost one from screen readers.
-   */
+  // If there are other overlays presented, unhide the new topmost one from screen readers.
   if (doc !== undefined) {
     const overlays = getPresentedOverlays(doc);
 
     for (let i = overlays.length - 1; i >= 0; i--) {
-      const overlay = overlays[i];
+      const currentOverlay = overlays[i];
 
-      if (overlay.tagName === 'ION-TOAST') {
-        overlay.removeAttribute('aria-hidden');
+      /**
+       * If the current we are looking at is a Toast then we can remove aria-hidden.
+       * However, we potentially need to keep looking at the overlay stack because there
+       * could be more Toasts underneath. Additionally, we need to unhide the closest non-Toast
+       * overlay too so focus can move there since focus is never automatically moved to the Toast.
+       */
+      if (currentOverlay.tagName === 'ION-TOAST') {
+        currentOverlay.removeAttribute('aria-hidden');
+        /**
+         * If we found a non-Toast element then we can just remove aria-hidden and stop searching entirely
+         * since this overlay should always receive focus. As a result, all underlying overlays should still
+         * be hidden from screen readers.
+         */
       } else {
-        overlay.removeAttribute('aria-hidden');
+        currentOverlay.removeAttribute('aria-hidden');
         break;
       }
     }
