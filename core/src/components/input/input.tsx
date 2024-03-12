@@ -859,7 +859,7 @@ export class Input implements ComponentInterface {
             )}
             {this.showPasswordToggle && !readonly && !disabled && (
               <button
-                aria-label='show password'
+                aria-label="show password"
                 aria-checked={this.type === 'text' ? 'true' : 'false'}
                 aria-controls={this.inputId}
                 role="switch"

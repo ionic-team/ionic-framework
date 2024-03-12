@@ -11,7 +11,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const input = page.locator('ion-input'); 
+      const input = page.locator('ion-input');
       await expect(input).toHaveScreenshot(screenshot(`input-with-password-toggle`));
     });
 
@@ -23,7 +23,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const input = page.locator('ion-input'); 
+      const input = page.locator('ion-input');
       const nativeInput = page.locator('.native-input');
       const toggle = input.locator('.input-password-toggle');
 
@@ -53,9 +53,9 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const input = page.locator('ion-input'); 
+      const input = page.locator('ion-input');
       const toggle = input.locator('.input-password-toggle');
-      const icon = toggle.locator("ion-icon");
+      const icon = toggle.locator('ion-icon');
 
       await expect(icon).toHaveJSProperty('icon', 'bus');
 
@@ -66,4 +66,3 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
-
