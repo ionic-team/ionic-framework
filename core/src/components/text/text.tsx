@@ -6,7 +6,7 @@ import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of components.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  */
 @Component({
   tag: 'ion-text',

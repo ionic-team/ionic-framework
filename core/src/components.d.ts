@@ -82,7 +82,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -195,7 +195,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -286,7 +286,7 @@ export namespace Components {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -346,7 +346,7 @@ export namespace Components {
          */
         "icon"?: string | null;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -390,7 +390,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -422,7 +422,7 @@ export namespace Components {
         "href": string | undefined;
         "last": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -469,7 +469,7 @@ export namespace Components {
          */
         "maxItems"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -511,7 +511,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -583,7 +583,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -613,7 +613,7 @@ export namespace Components {
     }
     interface IonCardContent {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -627,7 +627,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -645,7 +645,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -659,7 +659,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -697,7 +697,7 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -723,7 +723,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -961,7 +961,7 @@ export namespace Components {
          */
         "minuteValues"?: number[] | number | string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1043,7 +1043,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1103,7 +1103,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1159,7 +1159,7 @@ export namespace Components {
          */
         "collapse"?: 'fade';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1183,7 +1183,7 @@ export namespace Components {
          */
         "collapse"?: 'condense' | 'fade';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1335,7 +1335,7 @@ export namespace Components {
          */
         "minlength"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1425,7 +1425,7 @@ export namespace Components {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1459,7 +1459,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1499,7 +1499,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1563,7 +1563,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1589,7 +1589,7 @@ export namespace Components {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1607,7 +1607,7 @@ export namespace Components {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1665,7 +1665,7 @@ export namespace Components {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1778,7 +1778,7 @@ export namespace Components {
          */
         "menu"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -1882,7 +1882,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2069,7 +2069,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2080,7 +2080,7 @@ export namespace Components {
     interface IonPicker {
         "exitInputMode": () => Promise<void>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2098,7 +2098,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2300,7 +2300,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2363,7 +2363,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2405,7 +2405,7 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2479,7 +2479,7 @@ export namespace Components {
          */
         "min": number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2537,7 +2537,7 @@ export namespace Components {
          */
         "getProgress": () => Promise<number>;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2760,7 +2760,7 @@ export namespace Components {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2814,7 +2814,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -2848,7 +2848,7 @@ export namespace Components {
          */
         "layout"?: SegmentButtonLayout;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         "setFocus": () => Promise<void>;
@@ -2911,7 +2911,7 @@ export namespace Components {
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3057,7 +3057,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3091,7 +3091,7 @@ export namespace Components {
          */
         "layout"?: TabButtonLayout;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3140,7 +3140,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
     }
@@ -3226,7 +3226,7 @@ export namespace Components {
          */
         "minlength"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3360,7 +3360,7 @@ export namespace Components {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3431,7 +3431,7 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -3453,7 +3453,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -4936,7 +4936,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5046,7 +5046,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5151,7 +5151,7 @@ declare namespace LocalJSX {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5230,7 +5230,7 @@ declare namespace LocalJSX {
          */
         "icon"?: string | null;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5278,7 +5278,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5310,7 +5310,7 @@ declare namespace LocalJSX {
         "href"?: string | undefined;
         "last": boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5369,7 +5369,7 @@ declare namespace LocalJSX {
          */
         "maxItems"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5415,7 +5415,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5495,7 +5495,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5525,7 +5525,7 @@ declare namespace LocalJSX {
     }
     interface IonCardContent {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5539,7 +5539,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5557,7 +5557,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5571,7 +5571,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5609,7 +5609,7 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5647,7 +5647,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5857,7 +5857,7 @@ declare namespace LocalJSX {
          */
         "minuteValues"?: number[] | number | string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -5963,7 +5963,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6015,7 +6015,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6079,7 +6079,7 @@ declare namespace LocalJSX {
          */
         "collapse"?: 'fade';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6103,7 +6103,7 @@ declare namespace LocalJSX {
          */
         "collapse"?: 'condense' | 'fade';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6263,7 +6263,7 @@ declare namespace LocalJSX {
          */
         "minlength"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6369,7 +6369,7 @@ declare namespace LocalJSX {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6403,7 +6403,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6443,7 +6443,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6493,7 +6493,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6523,7 +6523,7 @@ declare namespace LocalJSX {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6541,7 +6541,7 @@ declare namespace LocalJSX {
          */
         "lines"?: 'full' | 'inset' | 'none';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6593,7 +6593,7 @@ declare namespace LocalJSX {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6722,7 +6722,7 @@ declare namespace LocalJSX {
          */
         "menu"?: string;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6816,7 +6816,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6936,7 +6936,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -6946,7 +6946,7 @@ declare namespace LocalJSX {
     }
     interface IonPicker {
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         "onIonInputModeChange"?: (event: IonPickerCustomEvent<PickerChangeEventDetail>) => void;
@@ -6965,7 +6965,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7167,7 +7167,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7250,7 +7250,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7292,7 +7292,7 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7380,7 +7380,7 @@ declare namespace LocalJSX {
          */
         "min"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7450,7 +7450,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7677,7 +7677,7 @@ declare namespace LocalJSX {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7755,7 +7755,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7801,7 +7801,7 @@ declare namespace LocalJSX {
          */
         "layout"?: SegmentButtonLayout;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -7863,7 +7863,7 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8031,7 +8031,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         "onIonTabBarChanged"?: (event: IonTabBarCustomEvent<TabBarChangedEventDetail>) => void;
@@ -8067,7 +8067,7 @@ declare namespace LocalJSX {
          */
         "layout"?: TabButtonLayout;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8116,7 +8116,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
     }
@@ -8198,7 +8198,7 @@ declare namespace LocalJSX {
          */
         "minlength"?: number;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8346,7 +8346,7 @@ declare namespace LocalJSX {
          */
         "message"?: string | IonicSafeString;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8437,7 +8437,7 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
@@ -8471,7 +8471,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * The mode determines the platform behaviors of components.
+          * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
         /**
