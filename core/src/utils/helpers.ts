@@ -262,7 +262,7 @@ export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | n
   return null;
 };
 
-export const focusElement = (el: HTMLElement) => {
+export const focusVisibleElement = (el: HTMLElement) => {
   el.focus();
 
   /**
