@@ -971,14 +971,12 @@ const hideOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement)
     const presentedOverlay = overlays[i];
     const nextPresentedOverlay = overlays[i + 1] ?? newTopMostOverlay;
 
-    // If next overlay has aria-hidden then all remaining overlays will have it too.
-    if (nextPresentedOverlay.hasAttribute('aria-hidden')) {
-      presentedOverlay.setAttribute('aria-hidden', 'true');
-      /**
-       * If the next overlay is a Toast that does not have aria-hidden then current overlay
-       * should not have aria-hidden either so focus can remain in the current overlay.
-       */
-    } else if (nextPresentedOverlay.tagName !== 'ION-TOAST') {
+    /**
+     * If next overlay has aria-hidden then all remaining overlays will have it too.
+     * Or, if the next overlay is a Toast that does not have aria-hidden then current overlay
+     * should not have aria-hidden either so focus can remain in the current overlay.
+     */
+    if (nextPresentedOverlay.hasAttribute('aria-hidden') || nextPresentedOverlay.tagName !== 'ION-TOAST') {
       presentedOverlay.setAttribute('aria-hidden', 'true');
     }
   }
@@ -1004,7 +1002,7 @@ const revealOverlaysToScreenReaders = () => {
      * overlay too so focus can move there since focus is never automatically moved to the Toast.
      */
     currentOverlay.removeAttribute('aria-hidden');
-    
+
     /**
      * If we found a non-Toast element then we can just remove aria-hidden and stop searching entirely
      * since this overlay should always receive focus. As a result, all underlying overlays should still
