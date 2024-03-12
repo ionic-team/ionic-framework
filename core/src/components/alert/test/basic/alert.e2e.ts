@@ -135,6 +135,44 @@ configs({ themes: ['light', 'dark'] }).forEach(({ config, screenshot, title }) =
   });
 });
 
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('Test cancel buttons'), () => {
+    let alertFixture!: AlertFixture;
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/alert/test/basic', config);
+      alertFixture = new AlertFixture(page, screenshot);
+    });
+
+    test('cancel', async ({ page }) => {
+      await alertFixture.open('#multipleCancelButtons');
+      const optBtn1 = page.locator('ion-alert button.cancel1-btn');
+      await optBtn1.click();
+      const confirmOptBtn1Alert = page.locator('ion-alert[data-testid=cancel1-btn-clicked]');
+      const optBtn1AlertInfo = confirmOptBtn1Alert.locator('.alert-message').innerText();
+      const optBtn1AlertOkBtn = confirmOptBtn1Alert.locator('.alert-button-group button');
+      expect(await optBtn1AlertInfo).toBe("cancel1-btn-clicked");
+      await optBtn1AlertOkBtn.click();
+
+      await alertFixture.open('#multipleCancelButtons');
+      const optBtn2 = page.locator('ion-alert button.cancel2-btn');
+      await optBtn2.click();
+      const confirmOptBtn2Alert = page.locator('ion-alert[data-testid=cancel2-btn-clicked]');
+      const optBtn2AlertInfo = confirmOptBtn2Alert.locator('.alert-message').innerText();
+      const optBtn2AlertOkBtn = confirmOptBtn2Alert.locator('.alert-button-group button');
+      expect(await optBtn2AlertInfo).toBe("cancel2-btn-clicked");
+      await optBtn2AlertOkBtn.click();
+
+      await alertFixture.open('#multipleCancelButtons');
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+      const optBtn3 = page.locator('ion-alert button.cancel3-btn');
+      await optBtn3.click();
+      await ionAlertDidDismiss.next();
+      expect(ionAlertDidDismiss).toHaveReceivedEventDetail({ data: { values: undefined }, role: 'cancel' });
+    });
+  });
+});
+
 class AlertFixture {
   readonly page: E2EPage;
   readonly screenshotFn?: (file: string) => string;
