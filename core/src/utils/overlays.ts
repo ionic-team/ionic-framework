@@ -1,6 +1,6 @@
 import { doc } from '@utils/browser';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
-import { shoudUseCloseWatcher } from '@utils/hardware-back-button';
+import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
@@ -428,7 +428,7 @@ const connectListeners = (doc: Document) => {
      * this behavior will be handled via the ionBackButton
      * event.
      */
-    if (!shoudUseCloseWatcher()) {
+    if (!shouldUseCloseWatcher()) {
       doc.addEventListener('keydown', (ev) => {
         if (ev.key === 'Escape') {
           const lastOverlay = getPresentedOverlay(doc);
