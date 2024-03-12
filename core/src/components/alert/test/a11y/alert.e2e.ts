@@ -291,7 +291,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       /**
        * The borders on the text fields may not be visible in the screenshot 
        * when using Safari, this is due to a WebKit rendering quirk.
-       * 
        */
       await expect(page).toHaveScreenshot(screenshot(`alert-text-fields-scale`));
     });
