@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios'], directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('loading: a11y'), () => {
     test('should set aria-labelledby with a message', async ({ page }) => {
       await page.setContent(
