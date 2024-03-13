@@ -125,7 +125,8 @@ render() {
 }
 ```
 
-> Note: if the class being added was for `ion-back-button` it would be `back-button-disabled`.
+> [!NOTE]
+> If the class being added was for `ion-back-button` it would be `back-button-disabled`.
 
 #### CSS
 
@@ -154,6 +155,7 @@ The focused state should be enabled for elements with actions when tabbed to via
 > [!NOTE]
 > The [`:focus-visible`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible) pseudo-class mostly does the same thing as our JavaScript-driven utility. However, it does not work well with Shadow DOM components as the element that receives focus is typically inside of the Shadow DOM, but we usually want to set the `:focus-visible` state on the host so we can style other parts of the component. Using other combinations such as `:has(:focus-visible)` does not work because `:has` does not pierce the Shadow DOM (as that would leak implementation details about the Shadow DOM contents). `:focus-within` does work with the Shadow DOM, but that has the same problem as `:focus` that was mentioned before. Unfortunately, a [`:focus-visible-within` pseudo-class does not exist yet](https://github.com/WICG/focus-visible/issues/151).
 
+> [!IMPORTANT]
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
 #### JavaScript
@@ -221,6 +223,7 @@ The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happe
 > [!NOTE]
 > Some Android devices [incorrectly report their inputs](https://issues.chromium.org/issues/40855702) which can result in certain devices receiving hover events when they should not.
 
+> [!IMPORTANT]
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
 #### CSS
@@ -276,6 +279,7 @@ The activated state should be enabled for elements with actions on "press". It u
 >
 >> On iOS, mouse events are sent so quickly that the down or active state is never received. Therefore, the `:active` pseudo state is triggered only when there is a touch event set on the HTML element
 
+> [!IMPORTANT]
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
 #### JavaScript
