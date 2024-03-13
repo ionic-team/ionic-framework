@@ -152,6 +152,7 @@ configs().forEach(({ config, screenshot, title }) => {
       const optBtn1AlertInfo = confirmOptBtn1Alert.locator('.alert-message').innerText();
       const optBtn1AlertOkBtn = confirmOptBtn1Alert.locator('.alert-button-group button');
       expect(await optBtn1AlertInfo).toBe('cancel1-btn-clicked');
+      await alertFixture.screenshot('alertCancelBtn1');
       await optBtn1AlertOkBtn.click();
     });
 
@@ -163,6 +164,7 @@ configs().forEach(({ config, screenshot, title }) => {
       const optBtn2AlertInfo = confirmOptBtn2Alert.locator('.alert-message').innerText();
       const optBtn2AlertOkBtn = confirmOptBtn2Alert.locator('.alert-button-group button');
       expect(await optBtn2AlertInfo).toBe('cancel2-btn-clicked');
+      await alertFixture.screenshot('alertCancelBtn2');
       await optBtn2AlertOkBtn.click();
     });
 
