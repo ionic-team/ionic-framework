@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.5](https://github.com/ionic-team/ionic-framework/compare/v7.7.4...v7.7.5) (2024-03-13)
+
+
+### Bug Fixes
+
+* **angular:** add ionNavWillChange and ionNavDidChange types for nav ([#29122](https://github.com/ionic-team/ionic-framework/issues/29122)) ([85b9d5c](https://github.com/ionic-team/ionic-framework/commit/85b9d5c35f626ffc273d220549b0126ddc1f7e4b)), closes [#29114](https://github.com/ionic-team/ionic-framework/issues/29114)
+* **checkbox:** set aria-checked of indeterminate checkbox to 'mixed' ([#29115](https://github.com/ionic-team/ionic-framework/issues/29115)) ([b2d636f](https://github.com/ionic-team/ionic-framework/commit/b2d636f14dcd33313f6604cfd4a64b542c831b34))
+* **overlay:** do not hide overlay if toast is presented ([#29140](https://github.com/ionic-team/ionic-framework/issues/29140)) ([c0f5e5e](https://github.com/ionic-team/ionic-framework/commit/c0f5e5ebc0c9d45d71e10e09903b00b3ba8e6bba)), closes [#29139](https://github.com/ionic-team/ionic-framework/issues/29139)
+
+
+
+
+
 ## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
 
 

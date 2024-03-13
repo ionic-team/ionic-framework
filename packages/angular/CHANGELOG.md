@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.7.5](https://github.com/ionic-team/ionic-framework/compare/v7.7.4...v7.7.5) (2024-03-13)
+
+
+### Bug Fixes
+
+* **angular:** add ionNavWillChange and ionNavDidChange types for nav ([#29122](https://github.com/ionic-team/ionic-framework/issues/29122)) ([85b9d5c](https://github.com/ionic-team/ionic-framework/commit/85b9d5c35f626ffc273d220549b0126ddc1f7e4b)), closes [#29114](https://github.com/ionic-team/ionic-framework/issues/29114)
+
+
+
+
+
 ## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
 
 **Note:** Version bump only for package @ionic/angular
