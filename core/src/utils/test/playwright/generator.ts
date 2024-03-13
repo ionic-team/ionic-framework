@@ -1,3 +1,5 @@
+import { isModeValidForTheme } from '../../../global/ionic-global';
+
 export type Mode = 'ios' | 'md';
 export type Direction = 'ltr' | 'rtl';
 export type Theme = 'ios' | 'md' | 'ionic';
@@ -117,12 +119,7 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
 
   processedModes.forEach((mode) => {
     processedTheme.forEach((theme) => {
-      if (mode === 'md' && theme === 'ios') {
-        // Prevent using Android platform with iOS theme
-        return;
-      }
-      if (mode === 'ios' && theme === 'md') {
-        // Prevent using iOS platform with Material Design theme
+      if (!isModeValidForTheme(mode, theme)) {
         return;
       }
       processedDirection.forEach((direction) => {
@@ -148,6 +145,7 @@ const DEFAULT_DIRECTIONS: Direction[] = ['ltr', 'rtl'];
 const DEFAULT_THEME_MODES: ThemeMode[] = ['light'];
 
 const DEFAULT_TEST_CONFIG_OPTION = {
+  modes: DEFAULT_MODES,
   themes: DEFAULT_THEMES,
   directions: DEFAULT_DIRECTIONS,
   DEFAULT_THEME_MODES: DEFAULT_THEME_MODES,

@@ -30,7 +30,7 @@ const printInvalidModeWarning = (mode: Mode, theme: Theme, ref?: any) => {
  * @param theme The theme the mode is being used with.
  * @returns `true` if the mode is valid for the theme, `false` if invalid.
  */
-const isModeValidForTheme = (mode: Mode, theme: Theme) => {
+export const isModeValidForTheme = (mode: Mode, theme: Theme) => {
   if (mode === 'md') {
     return theme === 'md' || theme === 'ionic';
   } else if (mode === 'ios') {
@@ -108,7 +108,27 @@ export const getIonMode = (ref?: any, theme = getIonTheme(ref)): Mode => {
  * the default theme if it cannot be determined.
  */
 export const getIonTheme = (ref?: any): Theme => {
-  return (ref && getMode(ref)) || defaultTheme;
+  const theme: Theme = ref && getMode<Theme>(ref);
+  if (theme) {
+    return theme;
+  }
+
+  /**
+   * If the theme cannot be detected, then fallback to using
+   * the `mode` attribute to determine the style sheets to use.
+   */
+  const el = getElement(ref);
+  const mode = el.closest('[mode]')?.getAttribute('mode') as Mode;
+
+  if (mode) {
+    return getDefaultThemeForMode(mode);
+  }
+
+  /**
+   * If a mode is not detected, then fallback to using the
+   * default theme.
+   */
+  return defaultTheme;
 };
 
 export const initialize = (userConfig: IonicConfig = {}) => {
