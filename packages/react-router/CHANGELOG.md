@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [8.0.0-beta.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.0...v8.0.0-beta.1) (2024-03-06)
+# [7.8.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.5...v7.8.0) (2024-03-13)
 
 **Note:** Version bump only for package @ionic/react-router
 
@@ -11,7 +11,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [8.0.0-beta.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v8.0.0-beta.0) (2024-02-28)
+## [7.7.5](https://github.com/ionic-team/ionic-framework/compare/v7.7.4...v7.7.5) (2024-03-13)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [8.0.0-beta.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.0...v8.0.0-beta.1) (2024-03-06)
+
 
 **Note:** Version bump only for package @ionic/react-router
 
@@ -20,6 +29,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [8.0.0-beta.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v8.0.0-beta.0) (2024-02-28)
 
 **Note:** Version bump only for package @ionic/react-router
 
