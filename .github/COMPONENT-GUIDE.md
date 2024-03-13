@@ -165,7 +165,7 @@ The `ion-focusable` class needs to be set on an element that can be focused:
 ```jsx
 render() {
   return (
-    <Host class='ion-focusable'>
+    <Host class="ion-focusable">
       <slot></slot>
     </Host>
   );
