@@ -89,7 +89,7 @@ $lightest-text-color: #888888;
 /// --ion-color-primary: #{ion-color(primary, base)};
 /// Maps to:
 /// --ion-color-primary: var(--ion-color-primary, #...);
-@mixin high-contrast-light-base-theme() {
+@mixin high-contrast-light-base-palette() {
   & {
     @each $color-name, $value in $colors {
       --ion-color-#{$color-name}: #{map.get($value, base)};
@@ -134,7 +134,7 @@ $lightest-text-color: #888888;
   }
 }
 
-@mixin high-contrast-light-md-theme() {
+@mixin high-contrast-light-md-palette() {
   // Toast
   // --------------------------------------------------
 

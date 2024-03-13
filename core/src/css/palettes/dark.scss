@@ -1,4 +1,4 @@
-@mixin dark-base-theme() {
+@mixin dark-base-palette() {
   & {
     --ion-color-primary: #4d8dff;
     --ion-color-primary-rgb: 77, 141, 255;
@@ -65,7 +65,7 @@
   }
 }
 
-@mixin dark-ios-theme() {
+@mixin dark-ios-palette() {
   & {
     --ion-background-color: #000000;
     --ion-background-color-rgb: 0, 0, 0;
@@ -124,7 +124,7 @@
   }
 }
 
-@mixin dark-md-theme() {
+@mixin dark-md-palette() {
   & {
     --ion-background-color: #121212;
     --ion-background-color-rgb: 18, 18, 18;

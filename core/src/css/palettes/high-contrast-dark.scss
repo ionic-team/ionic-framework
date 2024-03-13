@@ -93,7 +93,7 @@ $lightest-text-color: $text-color;
 /// as opposed to setting everything in :root
 // so any high contrast dark styles override the standard
 /// contrast dark styles.
-@mixin high-contrast-dark-base-theme() {
+@mixin high-contrast-dark-base-palette() {
   & {
     @each $color-name, $value in $colors {
       --ion-color-#{$color-name}: #{map.get($value, base)};
@@ -108,7 +108,7 @@ $lightest-text-color: $text-color;
   }
 }
 
-@mixin high-contrast-dark-ios-theme() {
+@mixin high-contrast-dark-ios-palette() {
   & {
     $background-color: #000000;
 
@@ -176,7 +176,7 @@ $lightest-text-color: $text-color;
   }
 }
 
-@mixin high-contrast-dark-md-theme() {
+@mixin high-contrast-dark-md-palette() {
   & {
     $background-color: #121212;
 
