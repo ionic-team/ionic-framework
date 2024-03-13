@@ -45,7 +45,7 @@ class ToastFixture {
 }
 
 configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('toast: position rendering'), () => {
+  test.describe(title('Test cancel buttons'), () => {
     let toastFixture: ToastFixture;
 
     test.beforeEach(async ({ page }) => {
@@ -61,7 +61,7 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn1AlertInfo = confirmOptBtn1Alert.locator('.alert-message').innerText();
       const optBtn1AlertOkBtn = confirmOptBtn1Alert.locator('.alert-button-group button');
       expect(await optBtn1AlertInfo).toBe('cancel1-btn-clicked');
-      await toastFixture.screenshot('cancelBtn1', screenshot);
+      await toastFixture.screenshot('toastCancelBtn1', screenshot);
       await optBtn1AlertOkBtn.click();
     });
 
@@ -73,7 +73,7 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn2AlertInfo = confirmOptBtn2Alert.locator('.alert-message').innerText();
       const optBtn2AlertOkBtn = confirmOptBtn2Alert.locator('.alert-button-group button');
       expect(await optBtn2AlertInfo).toBe('cancel2-btn-clicked');
-      await toastFixture.screenshot('cancelBtn2', screenshot);
+      await toastFixture.screenshot('toastCancelBtn2', screenshot);
       await optBtn2AlertOkBtn.click();
     });
 
