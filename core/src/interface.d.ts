@@ -18,7 +18,7 @@ export { LoadingOptions } from './components/loading/loading-interface';
 export { MenuCustomEvent, MenuI, MenuControllerI } from './components/menu/menu-interface';
 export { ModalOptions, ModalCustomEvent } from './components/modal/modal-interface';
 export { NavDirection, NavCustomEvent } from './components/nav/nav-interface';
-export { PickerOptions, PickerColumnOption } from './components/picker/picker-interface';
+export { PickerOptions, PickerColumnOption } from './components/picker-legacy/picker-interface';
 export { PopoverOptions } from './components/popover/popover-interface';
 export { RadioGroupCustomEvent } from './components/radio-group/radio-group-interface';
 export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';

@@ -1,0 +1,13 @@
+@import "./dark";
+
+.ion-theme-dark {
+  @include dark-base-theme();
+}
+
+.ion-theme-dark.ios {
+  @include dark-ios-theme();
+}
+
+.ion-theme-dark.md {
+  @include dark-md-theme();
+}

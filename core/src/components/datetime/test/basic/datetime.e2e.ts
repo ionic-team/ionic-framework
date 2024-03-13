@@ -569,4 +569,20 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-focus-calendar-day`));
     });
   });
+
+  test.describe(title('datetime: calendar month toggle'), () => {
+    test('should have focus styles', async ({ page }) => {
+      await page.setContent('<ion-datetime value="2021-01-01"></ion-datetime>', config);
+
+      const datetime = page.locator('ion-datetime');
+
+      await page.waitForSelector('.datetime-ready');
+
+      const monthYearToggle = datetime.locator('.calendar-month-year-toggle');
+
+      monthYearToggle.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
+
+      await expect(datetime).toHaveScreenshot(screenshot(`date-month-toggle-focused`));
+    });
+  });
 });

@@ -16,7 +16,7 @@ describe('item', () => {
 
     await page.waitForChanges();
 
-    // Check if it has the expected class that gives the highlight style to .item-highlight element
+    // Check if it has the expected class that gives the focused styles to the item element
     expect(item).toHaveClass('ion-focusable');
   });
 });

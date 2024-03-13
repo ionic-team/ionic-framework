@@ -2,25 +2,38 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('range: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
-      await page.goto(`/src/components/range/test/a11y`, config);
+      await page.setContent(
+        `
+        <main>
+          <ion-range value="50"><span slot="label">my label</span></ion-range>
+          <ion-range label="my label"></ion-range>
+          <ion-range aria-label="my aria label"></ion-range>
+          <ion-range>
+            <span slot="label">temperature</span>
+            <ion-icon name="snow" slot="start" aria-hidden="true"></ion-icon>
+            <ion-icon name="flame" slot="end" aria-hidden="true"></ion-icon>
+          </ion-range>
+        </main>
+      `,
+        config
+      );
 
-      /**
-       * Axe does not take <slot> elements into account
-       * when checking color-contrast. As a result, it will
-       * incorrectly report color-contrast issues: https://github.com/dequelabs/axe-core/issues/3329
-       */
-      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+      const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
+  });
+});
 
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('range: a11y'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="80" legacy="true"></ion-range>
+            <ion-range min="0" max="100" value="80" aria-label="Range"></ion-range>
           </ion-content>
         </ion-app>
           `,
@@ -54,7 +67,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="50" pin="true" legacy="true"></ion-range>
+            <ion-range min="0" max="100" value="50" pin="true" aria-label="Range"></ion-range>
           </ion-content>
         </ion-app>
         `,

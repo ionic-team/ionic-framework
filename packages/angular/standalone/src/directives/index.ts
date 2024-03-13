@@ -3,7 +3,6 @@ export * from './datetime';
 export * from './icon';
 export * from './input';
 export * from './radio-group';
-export * from './radio';
 export * from './range';
 export * from './searchbar';
 export * from './segment';
