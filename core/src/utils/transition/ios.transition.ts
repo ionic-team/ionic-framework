@@ -275,6 +275,7 @@ const animateBackButton = (
 
   clonedBackButtonEl.text = backButtonEl.text;
   clonedBackButtonEl.mode = backButtonEl.mode;
+  clonedBackButtonEl.theme = backButtonEl.theme;
   clonedBackButtonEl.icon = backButtonEl.icon;
   clonedBackButtonEl.color = backButtonEl.color;
   clonedBackButtonEl.disabled = backButtonEl.disabled;

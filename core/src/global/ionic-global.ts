@@ -118,7 +118,7 @@ export const getIonTheme = (ref?: any): Theme => {
    * the `mode` attribute to determine the style sheets to use.
    */
   const el = getElement(ref);
-  const mode = el.closest('[mode]')?.getAttribute('mode') as Mode;
+  const mode = ref?.mode ?? (el.closest('[mode]')?.getAttribute('mode') as Mode);
 
   if (mode) {
     return getDefaultThemeForMode(mode);
