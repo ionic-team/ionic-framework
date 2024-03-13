@@ -26,7 +26,7 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 
-  test.describe(title('Test cancel buttons'), () => {      
+  test.describe(title('Test cancel buttons'), () => {
     test('cancel button 1', async ({ page }) => {
       await page.goto('/src/components/picker/test/basic', config);
       await page.click('#basicMultipleCancelBtns');
@@ -36,6 +36,7 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn1AlertInfo = confirmOptBtn1Alert.locator('.alert-message').innerText();
       const optBtn1AlertOkBtn = confirmOptBtn1Alert.locator('.alert-button-group button');
       expect(await optBtn1AlertInfo).toBe('cancel1-btn-clicked');
+      await expect(page).toHaveScreenshot(screenshot(`pickerCancelBtn1`));
       await optBtn1AlertOkBtn.click();
     });
 
@@ -48,6 +49,7 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn2AlertInfo = confirmOptBtn2Alert.locator('.alert-message').innerText();
       const optBtn2AlertOkBtn = confirmOptBtn2Alert.locator('.alert-button-group button');
       expect(await optBtn2AlertInfo).toBe('cancel2-btn-clicked');
+      await expect(page).toHaveScreenshot(screenshot(`pickerCancelBtn2`));
       await optBtn2AlertOkBtn.click();
     });
 
