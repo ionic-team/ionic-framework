@@ -52,7 +52,7 @@ configs().forEach(({ title, screenshot, config }) => {
       toastFixture = new ToastFixture(page);
       await toastFixture.goto(config);
     });
-    
+
     test('cancel button 1', async ({ page }) => {
       await toastFixture.openToast('#multipleCancelButtons');
       const optBtn1 = page.locator('ion-toast button.cancel1-btn');
@@ -61,6 +61,7 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn1AlertInfo = confirmOptBtn1Alert.locator('.alert-message').innerText();
       const optBtn1AlertOkBtn = confirmOptBtn1Alert.locator('.alert-button-group button');
       expect(await optBtn1AlertInfo).toBe('cancel1-btn-clicked');
+      await toastFixture.screenshot('cancelBtn1', screenshot);
       await optBtn1AlertOkBtn.click();
     });
 
@@ -72,6 +73,7 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn2AlertInfo = confirmOptBtn2Alert.locator('.alert-message').innerText();
       const optBtn2AlertOkBtn = confirmOptBtn2Alert.locator('.alert-button-group button');
       expect(await optBtn2AlertInfo).toBe('cancel2-btn-clicked');
+      await toastFixture.screenshot('cancelBtn2', screenshot);
       await optBtn2AlertOkBtn.click();
     });
 
@@ -81,9 +83,7 @@ configs().forEach(({ title, screenshot, config }) => {
       const optBtn3 = page.locator('ion-toast button.cancel3-btn');
       await optBtn3.click();
       await ionToastDidDismiss.next();
-      expect(ionToastDidDismiss).toHaveReceivedEventDetail({ data: { values: undefined }, role: 'cancel' });
+      expect(ionToastDidDismiss).toHaveReceivedEventDetail({ data: undefined, role: 'cancel' });
     });
-    
   });
-  
 });
