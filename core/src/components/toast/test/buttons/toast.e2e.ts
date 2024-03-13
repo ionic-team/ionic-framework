@@ -7,7 +7,6 @@ class ToastFixture {
   readonly page: E2EPage;
 
   private ionToastDidPresent!: EventSpy;
-  private ionToastDidDismiss!: EventSpy;
 
   constructor(page: E2EPage) {
     this.page = page;
@@ -17,7 +16,6 @@ class ToastFixture {
     const { page } = this;
     await page.goto(`/src/components/toast/test/buttons`, config);
     this.ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
-    this.ionToastDidDismiss = await page.spyOnEvent('ionToastDidDismiss');
   }
 
   async openToast(selector: string) {
