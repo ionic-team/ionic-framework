@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-beta.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.1...v8.0.0-beta.2) (2024-03-13)
+
+
+### Code Refactoring
+
+* **item:** remove deprecated apis ([#29102](https://github.com/ionic-team/ionic-framework/issues/29102)) ([743f517](https://github.com/ionic-team/ionic-framework/commit/743f517fec3a559646eb03d29477bc16af789d40))
+
+
+### Features
+
+* **input,textarea,select:** add --highlight-height variable ([#29090](https://github.com/ionic-team/ionic-framework/issues/29090)) ([13b7f8a](https://github.com/ionic-team/ionic-framework/commit/13b7f8ac3ab3b8d436400993d9a7c62d1670f475))
+* **menu:** apply strict type for menu type ([#28982](https://github.com/ionic-team/ionic-framework/issues/28982)) ([03d2670](https://github.com/ionic-team/ionic-framework/commit/03d26702f6444c195f54d3d2ab5aac490fb972b0))
+
+
+### BREAKING CHANGES
+
+* **item:** - The `helper` slot has been removed. Developers should use the `helperText` property on `ion-input` and `ion-textarea`.
+- The `error` slot has been removed. Developers should use the `errorText` property on `ion-input` and `ion-textarea`.
+- Counter functionality has been removed including the `counter` and `counterFormatter` properties. Developers should use the properties of the same name on `ion-input` and `ion-textarea`.
+- The `fill` property has been removed. Developers should use the property of the same name on `ion-input`, `ion-select`, and `ion-textarea`.
+- The `shape` property has been removed. Developers should use the property of the same name on `ion-input`, `ion-select`, and `ion-textarea`.
+
+
+
+
+
 # [7.8.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.5...v7.8.0) (2024-03-13)
 
 
