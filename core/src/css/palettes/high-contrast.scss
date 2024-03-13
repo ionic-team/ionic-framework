@@ -91,15 +91,6 @@ $lightest-text-color: #888888;
 /// --ion-color-primary: var(--ion-color-primary, #...);
 @mixin high-contrast-light-base-palette() {
   & {
-    @each $color-name, $value in $colors {
-      --ion-color-#{$color-name}: #{map.get($value, base)};
-      --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
-      --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
-      --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
-      --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
-      --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
-    }
-
     --ion-background-color: #{$background-color};
     --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
     --ion-text-color: #{$text-color};
@@ -128,6 +119,15 @@ $lightest-text-color: #888888;
     --ion-text-color-step-850: #{mix($lightest-text-color, $darkest-text-color, 85%)};
     --ion-text-color-step-900: #{mix($lightest-text-color, $darkest-text-color, 90%)};
     --ion-text-color-step-950: #{mix($lightest-text-color, $darkest-text-color, 95%)};
+
+    @each $color-name, $value in $colors {
+      --ion-color-#{$color-name}: #{map.get($value, base)};
+      --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+      --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+      --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+      --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+      --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+    }
   }
 }
 

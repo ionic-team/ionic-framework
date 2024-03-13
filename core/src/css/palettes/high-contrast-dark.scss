@@ -95,6 +95,8 @@ $lightest-text-color: $text-color;
 /// contrast dark styles.
 @mixin high-contrast-dark-base-palette() {
   & {
+    --ion-placeholder-opacity: 0.8;
+
     @each $color-name, $value in $colors {
       --ion-color-#{$color-name}: #{map.get($value, base)};
       --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
@@ -104,14 +106,13 @@ $lightest-text-color: $text-color;
       --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
     }
 
-    --ion-placeholder-opacity: 0.8;
   }
 }
 
 @mixin high-contrast-dark-ios-palette() {
+  $background-color: #000000;
+  
   & {
-    $background-color: #000000;
-
     --ion-background-color: #{$background-color};
     --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
     --ion-text-color: #{$text-color};
@@ -173,9 +174,9 @@ $lightest-text-color: $text-color;
 }
 
 @mixin high-contrast-dark-md-palette() {
+  $background-color: #121212;
+  
   & {
-    $background-color: #121212;
-
     --ion-background-color: #{$background-color};
     --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
     --ion-text-color: #{$text-color};
