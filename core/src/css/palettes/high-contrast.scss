@@ -102,16 +102,13 @@ $lightest-text-color: #888888;
 
     --ion-background-color: #{$background-color};
     --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
-
     --ion-text-color: #{$text-color};
     --ion-text-color-rgb: #{color-to-rgb-list($text-color)};
-
     --ion-placeholder-opacity: 0.8;
 
     /// Only the item borders should increase in contrast
     /// Borders for elements like toolbars should remain the same
     --ion-item-border-color: #7a7a7a;
-
     --ion-text-color-step-50: #{mix($lightest-text-color, $darkest-text-color, 5%)};
     --ion-text-color-step-100: #{mix($lightest-text-color, $darkest-text-color, 10%)};
     --ion-text-color-step-150: #{mix($lightest-text-color, $darkest-text-color, 15%)};
