@@ -685,7 +685,7 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, type } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -763,7 +763,7 @@ export class Input implements ComponentInterface {
               required={this.required}
               spellcheck={this.spellcheck}
               step={this.step}
-              type={this.type}
+              type={type}
               value={value}
               onInput={this.onInput}
               onChange={this.onChange}
@@ -795,7 +795,7 @@ export class Input implements ComponentInterface {
             {this.showPasswordToggle && !readonly && !disabled && (
               <button
                 aria-label="show password"
-                aria-checked={this.type === 'text' ? 'true' : 'false'}
+                aria-checked={type === 'text' ? 'true' : 'false'}
                 aria-controls={this.inputId}
                 role="switch"
                 type="button"
@@ -812,7 +812,7 @@ export class Input implements ComponentInterface {
               >
                 <ion-icon
                   aria-hidden="true"
-                  icon={this.type === 'text' ? hidePasswordIcon : showPasswordIcon}
+                  icon={type === 'text' ? hidePasswordIcon : showPasswordIcon}
                 ></ion-icon>
               </button>
             )}
