@@ -113,12 +113,6 @@
   font-size: #{$button-md-small-font-size};
 }
 
-:host(.button-has-icon-only) {
-  --padding-top: 0;
-  --padding-bottom: 0;
-}
-
-
 // MD strong Button
 // --------------------------------------------------
 
@@ -126,10 +120,35 @@
   font-weight: #{$button-md-strong-font-weight};
 }
 
+// MD Icon Only Button
+//
+// These styles must be after the .button-round styles
+// in order to take priority. The styles are not applied
+// only when the .button-round class exists because the
+// size changes will also improve the look of the Rectangular
+// and Soft buttons containing only an icon.
+// --------------------------------------------------
+
 ::slotted(ion-icon[slot="icon-only"]) {
   @include padding(0);
+
+  font-size: 1.4em;
 }
 
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: var(--padding-top);
+  --padding-end: 8px;
+  --padding-start: var(--padding-end);
+}
+
+:host(.button-small.button-has-icon-only) {
+  --padding-end: 4px;
+}
+
+:host(.button-large.button-has-icon-only) {
+  --padding-end: 14px;
+}
 
 // Material Design Button: Hover
 // --------------------------------------------------

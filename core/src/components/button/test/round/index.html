@@ -12,6 +12,14 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+      }
+    </style>
   </head>
 
   <body>
@@ -22,45 +30,130 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
-        <ion-button shape="round">Default</ion-button>
-        <ion-button shape="round" color="primary">Primary</ion-button>
-        <ion-button shape="round" color="secondary">Secondary</ion-button>
-        <ion-button shape="round" color="tertiary">Tertiary</ion-button>
-        <ion-button shape="round" color="success">Success</ion-button>
-        <ion-button shape="round" color="warning">Warning</ion-button>
-        <ion-button shape="round" color="danger">Danger</ion-button>
-        <ion-button shape="round" color="light">Light</ion-button>
-        <ion-button shape="round" color="medium">Medium</ion-button>
-        <ion-button shape="round" color="dark">Dark</ion-button>
+      <ion-content class="ion-padding" no-bounce>
+        <h1>Default</h1>
+        <div id="default" class="grid">
+          <div>
+            <ion-button size="small" shape="round">Button</ion-button>
+          </div>
+          <div>
+            <ion-button shape="round">Button</ion-button>
+          </div>
+          <div>
+            <ion-button size="large" shape="round">Button</ion-button>
+          </div>
 
-        <ion-button fill="outline" shape="round">Default</ion-button>
-        <ion-button fill="outline" shape="round" color="primary">Primary</ion-button>
-        <ion-button fill="outline" shape="round" color="secondary">Secondary</ion-button>
-        <ion-button fill="outline" shape="round" color="tertiary">Tertiary</ion-button>
-        <ion-button fill="outline" shape="round" color="success">Success</ion-button>
-        <ion-button fill="outline" shape="round" color="warning">Warning</ion-button>
-        <ion-button fill="outline" shape="round" color="danger">Danger</ion-button>
-        <ion-button fill="outline" shape="round" color="light">Light</ion-button>
-        <ion-button fill="outline" shape="round" color="medium">Medium</ion-button>
-        <ion-button fill="outline" shape="round" color="dark">Dark</ion-button>
+          <div>
+            <ion-button size="small" shape="round">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+          <div>
+            <ion-button shape="round">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+          <div>
+            <ion-button size="large" shape="round">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
 
-        <ion-button shape="round" fill="clear">Clear</ion-button>
-        <ion-button shape="round" expand="block">Block</ion-button>
-        <ion-button shape="round" expand="full" color="danger">Full</ion-button>
+        <h1>Outline</h1>
+        <div id="outline" class="grid">
+          <div>
+            <ion-button size="small" shape="round" fill="outline">Button</ion-button>
+          </div>
+          <div>
+            <ion-button shape="round" fill="outline">Button</ion-button>
+          </div>
+          <div>
+            <ion-button size="large" shape="round" fill="outline">Button</ion-button>
+          </div>
+          <div>
+            <ion-button size="small" shape="round" fill="outline">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+          <div>
+            <ion-button shape="round" fill="outline">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+          <div>
+            <ion-button size="large" shape="round" fill="outline">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
 
-        <ion-button shape="round" fill="outline" expand="block">Block - Outline</ion-button>
-        <ion-button shape="round" fill="outline" expand="full" color="danger">Full - Outline</ion-button>
+        <h1>Clear</h1>
+        <div id="clear" class="grid">
+          <div>
+            <ion-button size="small" shape="round" fill="clear">Button</ion-button>
+          </div>
+          <div>
+            <ion-button shape="round" fill="clear">Button</ion-button>
+          </div>
+          <div>
+            <ion-button size="large" shape="round" fill="clear">Button</ion-button>
+          </div>
+          <div>
+            <ion-button size="small" shape="round" fill="clear">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+          <div>
+            <ion-button shape="round" fill="clear">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+          <div>
+            <ion-button size="large" shape="round" fill="clear">
+              <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
 
-        <ion-button shape="round" strong>Strong</ion-button>
+        <h1>Color</h1>
+        <div id="color">
+          <ion-button shape="round">Default</ion-button>
+          <ion-button shape="round" color="primary">Primary</ion-button>
+          <ion-button shape="round" color="secondary">Secondary</ion-button>
+          <ion-button shape="round" color="tertiary">Tertiary</ion-button>
+          <ion-button shape="round" color="success">Success</ion-button>
+          <ion-button shape="round" color="warning">Warning</ion-button>
+          <ion-button shape="round" color="danger">Danger</ion-button>
+          <ion-button shape="round" color="light">Light</ion-button>
+          <ion-button shape="round" color="medium">Medium</ion-button>
+          <ion-button shape="round" color="dark">Dark</ion-button>
+
+          <ion-button fill="outline" shape="round">Default</ion-button>
+          <ion-button fill="outline" shape="round" color="primary">Primary</ion-button>
+          <ion-button fill="outline" shape="round" color="secondary">Secondary</ion-button>
+          <ion-button fill="outline" shape="round" color="tertiary">Tertiary</ion-button>
+          <ion-button fill="outline" shape="round" color="success">Success</ion-button>
+          <ion-button fill="outline" shape="round" color="warning">Warning</ion-button>
+          <ion-button fill="outline" shape="round" color="danger">Danger</ion-button>
+          <ion-button fill="outline" shape="round" color="light">Light</ion-button>
+          <ion-button fill="outline" shape="round" color="medium">Medium</ion-button>
+          <ion-button fill="outline" shape="round" color="dark">Dark</ion-button>
+        </div>
+
+        <h1>Expand</h1>
+        <div id="expand">
+          <ion-button shape="round" expand="block">Block</ion-button>
+          <ion-button shape="round" expand="full" color="danger">Full</ion-button>
+          <ion-button shape="round" fill="outline" expand="block">Block - Outline</ion-button>
+          <ion-button shape="round" fill="outline" expand="full" color="danger">Full - Outline</ion-button>
+        </div>
+
+        <h1>Strong</h1>
+        <div id="strong">
+          <ion-button shape="round" strong>Strong</ion-button>
+        </div>
       </ion-content>
     </ion-app>
-
-    <style>
-      ion-button {
-        display: block !important;
-        margin: 8px auto !important;
-      }
-    </style>
   </body>
 </html>

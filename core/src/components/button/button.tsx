@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, State, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
@@ -37,6 +37,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
+
+  /**
+   * Tracks whether the button is a full
+   * circle shape.
+   */
+  @State() isCircle: boolean = false;
 
   /**
    * The color to use from your application's color palette.
@@ -295,6 +301,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.ionBlur.emit();
   };
 
+  private slotChanged = () => {
+    this.isCircle = this.hasIconOnly;
+  };
+
   render() {
     const mode = getIonMode(this);
     const {
@@ -374,7 +384,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           {...inheritedAttributes}
         >
           <span class="button-inner">
-            <slot name="icon-only"></slot>
+            <slot name="icon-only" onSlotchange={this.slotChanged}></slot>
             <slot name="start"></slot>
             <slot></slot>
             <slot name="end"></slot>

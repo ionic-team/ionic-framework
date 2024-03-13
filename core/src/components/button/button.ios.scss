@@ -114,11 +114,6 @@
   font-size: #{$button-ios-small-font-size};
 }
 
-:host(.button-has-icon-only) {
-  --padding-top: 0;
-  --padding-bottom: 0;
-}
-
 
 // iOS Round Button
 // --------------------------------------------------
@@ -131,7 +126,6 @@
   --padding-bottom: #{$button-ios-round-padding-bottom};
 }
 
-
 // iOS Strong Button
 // --------------------------------------------------
 
@@ -139,6 +133,37 @@
   font-weight: #{$button-ios-strong-font-weight};
 }
 
+// iOS Icon Only Button
+//
+// These styles must be after the .button-round styles
+// in order to take priority. The styles are not applied
+// only when the .button-round class exists because the
+// size changes will also improve the look of the Rectangular
+// and Soft buttons containing only an icon.
+// --------------------------------------------------
+
+::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.1em;
+}
+
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: var(--padding-top);
+  --padding-end: 15px;
+  --padding-start: var(--padding-end);
+}
+
+:host(.button-small.button-has-icon-only) {
+  --padding-end: 6px;
+}
+
+:host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.2em;
+}
+
+:host(.button-large.button-has-icon-only) {
+  --padding-end: 19px;
+}
 
 // iOS Button Focused
 // --------------------------------------------------
