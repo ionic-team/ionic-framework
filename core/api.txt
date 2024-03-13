@@ -1259,7 +1259,6 @@ ion-router-outlet,shadow
 ion-router-outlet,prop,animated,boolean,true,false,false
 ion-router-outlet,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-router-outlet,prop,mode,"ios" | "md",getIonMode(this),false,false
-ion-router-outlet,prop,mode,"ios" | "md",undefined,false,false
 ion-router-outlet,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-row,shadow

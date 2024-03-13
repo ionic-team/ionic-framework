@@ -2890,13 +2890,9 @@ export namespace Components {
         "delegate"?: FrameworkDelegate;
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
-          * The mode determines which platform styles to use.
-         */
-        "mode": "ios" | "md";
-        /**
           * The mode determines the platform behaviors of the component.
          */
-        "mode"?: "ios" | "md";
+        "mode": "ios" | "md";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
         /**
@@ -8072,10 +8068,6 @@ declare namespace LocalJSX {
          */
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
         /**
           * The mode determines the platform behaviors of the component.
          */

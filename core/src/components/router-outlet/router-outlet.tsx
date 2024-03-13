@@ -20,7 +20,6 @@ import type { RouterOutletOptions, SwipeGestureHandler } from '../nav/nav-interf
 import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '../router/utils/interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
  * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
@@ -41,7 +40,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Element() el!: HTMLElement;
 
   /**
-   * The mode determines which platform styles to use.
+   * The mode determines the platform behaviors of the component.
    */
   @Prop({ mutable: true }) mode = getIonMode(this);
 
