@@ -285,7 +285,7 @@ The `ion-activatable` class needs to be set on an element that can be activated:
 ```jsx
 render() {
   return (
-    <Host class='ion-activatable'>
+    <Host class="ion-activatable">
       <slot></slot>
     </Host>
   );
