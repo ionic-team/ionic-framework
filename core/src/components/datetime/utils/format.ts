@@ -11,7 +11,33 @@ const getFormattedDayPeriod = (dayPeriod?: string) => {
   return dayPeriod.toUpperCase();
 };
 
-export const getLocalizedTime = (locale: string, refParts: DatetimeParts, hourCycle: DatetimeHourCycle): string => {
+/**
+ * Including time zone options may lead to the rendered text showing a
+ * different time from what was selected in the Datetime, which could cause
+ * confusion.
+ */
+export const stripTimeZone = (formatOptions: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions => {
+  return {
+    ...formatOptions,
+    /**
+     * Setting the time zone to UTC ensures that the value shown is always the
+     * same as what was selected and safeguards against older Safari bugs with
+     * Intl.DateTimeFormat.
+     */
+    timeZone: 'UTC',
+    /**
+     * We do not want to display the time zone name
+     */
+    timeZoneName: undefined,
+  };
+};
+
+export const getLocalizedTime = (
+  locale: string,
+  refParts: DatetimeParts,
+  hourCycle: DatetimeHourCycle,
+  formatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' }
+): string => {
   const timeParts: Pick<DatetimeParts, 'hour' | 'minute'> = {
     hour: refParts.hour,
     minute: refParts.minute,
@@ -22,15 +48,7 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, hourCy
   }
 
   return new Intl.DateTimeFormat(locale, {
-    hour: 'numeric',
-    minute: 'numeric',
-    /**
-     * Setting the timeZone to UTC prevents
-     * new Intl.DatetimeFormat from subtracting
-     * the user's current timezone offset
-     * when formatting the time.
-     */
-    timeZone: 'UTC',
+    ...stripTimeZone(formatOptions),
     /**
      * We use hourCycle here instead of hour12 due to:
      * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
@@ -147,17 +165,6 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
 };
 
 /**
- * Gets the day of the week, month, and day
- * Used for the header in MD mode.
- */
-export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
-  const date = getNormalizedDate(refParts);
-  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
-    date
-  );
-};
-
-/**
  * Given a locale and a date object,
  * return a formatted string that includes
  * the month name and full year.
@@ -166,16 +173,6 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
 export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
   const date = getNormalizedDate(refParts);
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
-};
-
-/**
- * Given a locale and a date object,
- * return a formatted string that includes
- * the short month, numeric day, and full year.
- * Example: Apr 22, 2021
- */
-export const getMonthDayAndYear = (locale: string, refParts: DatetimeParts) => {
-  return getLocalizedDateTime(locale, refParts, { month: 'short', day: 'numeric', year: 'numeric' });
 };
 
 /**
@@ -235,7 +232,7 @@ export const getLocalizedDateTime = (
   options: Intl.DateTimeFormatOptions
 ): string => {
   const date = getNormalizedDate(refParts);
-  return getDateTimeFormat(locale, options).format(date);
+  return getDateTimeFormat(locale, stripTimeZone(options)).format(date);
 };
 
 /**
