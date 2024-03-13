@@ -19,7 +19,11 @@
  * ```
  */
 export class NavParams {
-  constructor(public data: { [key: string]: any } = {}) {}
+  constructor(public data: { [key: string]: any } = {}) {
+    console.warn(
+      `[Ionic Warning]: NavParams has been deprecated in favor of using Angular's input API. Developers should migrate to either the @Input decorator or the Signals-based input API.`
+    );
+  }
 
   /**
    * Get the value of a nav-parameter for the current view

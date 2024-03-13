@@ -1,6 +1,5 @@
 import { Component, NgZone } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { NavComponent } from '../nav/nav.component';
 
 @Component({
   selector: 'app-alert',

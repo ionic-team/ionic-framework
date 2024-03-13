@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalExampleComponent } from '../modal-example/modal-example.component';
-import { NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-nav',
@@ -10,11 +9,13 @@ export class NavComponent {
   rootPage = ModalExampleComponent;
   rootParams: any;
 
-  constructor(
-    params: NavParams
-  ) {
+  @Input() value?: string;
+  @Input() prop?: string;
+
+  ngOnInit() {
     this.rootParams = {
-      ...params.data
+      value: this.value,
+      prop: this.prop
     };
   }
 }
