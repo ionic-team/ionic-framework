@@ -463,7 +463,7 @@ render() {
     <Host>
       <label>
         {this.labelText}
-        <button role="checkbox" {...this.inheritedAttributes}></button> 
+        <input type="checkbox" {...this.inheritedAttributes} /> 
       </label>
     </Host>
   )
@@ -549,56 +549,36 @@ render() {
 
 #### Labels
 
-A helper function has been created to get the proper `aria-label` for the switch. This can be imported as `getAriaLabel` like the following:
+Labels should be passed directly to the component in the form of either visible text or an `aria-label`. The visible text can be set inside of a `label` element, and the `aria-label` can be set directly on the interactive element.
+
+In the following example the `aria-label` can be inherited from the Host using the `inheritAttributes` or `inheritAriaAttributes` utilities. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
 
 ```tsx
-const { label, labelId, labelText } = getAriaLabel(el, inputId);
-```
+import { Prop } from '@stencil/core';
+import { inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 
-where `el` and `inputId` are the following:
+...
 
-```tsx
-export class Toggle implements ComponentInterface {
-  private inputId = `ion-tg-${toggleIds++}`;
+private inheritedAttributes: Attributes = {};
 
-  @Element() el!: HTMLElement;
+@Prop() labelText?: string;
 
-  ...
+componentWillLoad() {
+  this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+}
+
+render() {
+  return (
+    <Host>
+      <label>
+        {this.labelText}
+        <input type="checkbox" role="switch" {...this.inheritedAttributes} /> 
+      </label>
+    </Host>
+  )
 }
 ```
-
-This can then be added to the `Host` like the following:
-
-```tsx
-<Host
-  aria-labelledby={label ? labelId : null}
-  aria-checked={`${checked}`}
-  aria-hidden={disabled ? 'true' : null}
-  role="switch"
->
-```
-
-In addition to that, the checkbox input should have a label added:
-
-```tsx
-<Host
-  aria-labelledby={label ? labelId : null}
-  aria-checked={`${checked}`}
-  aria-hidden={disabled ? 'true' : null}
-  role="switch"
->
-  <label htmlFor={inputId}>
-    {labelText}
-  </label>
-  <input
-    type="checkbox"
-    role="switch"
-    aria-checked={`${checked}`}
-    disabled={disabled}
-    id={inputId}
-  />
-```
-
 
 #### Hidden Input
 
