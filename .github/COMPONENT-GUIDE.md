@@ -297,7 +297,7 @@ Once that is done, the element will get the `ion-activated` class added on press
 In addition to setting that class, `ion-activatable-instant` can be set in order to have an instant press with no delay:
 
 ```jsx
-<Host class='ion-activatable ion-activatable-instant'>
+<Host class="ion-activatable ion-activatable-instant">
 ```
 
 #### CSS
