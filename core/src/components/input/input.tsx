@@ -558,7 +558,7 @@ export class Input implements ComponentInterface {
     this.emitInputChange(ev);
   };
 
-  private showPassword = () => {
+  private togglePasswordVisibility = () => {
     this.type = this.type === 'text' ? 'password' : 'text';
   };
 
@@ -808,7 +808,7 @@ export class Input implements ComponentInterface {
                    */
                   ev.preventDefault();
                 }}
-                onClick={this.showPassword}
+                onClick={this.togglePasswordVisibility}
               >
                 <ion-icon
                   aria-hidden="true"
