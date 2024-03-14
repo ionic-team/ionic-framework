@@ -1,12 +1,12 @@
 import type { DatetimeParts } from '../datetime-interface';
 import {
   generateDayAriaLabel,
-  getMonthAndDay,
   getFormattedHour,
   addTimePadding,
   getMonthAndYear,
   getLocalizedDayPeriod,
   getLocalizedTime,
+  stripTimeZone,
 } from '../utils/format';
 
 describe('generateDayAriaLabel()', () => {
@@ -34,24 +34,6 @@ describe('generateDayAriaLabel()', () => {
     const reference = { month: 4, day: 1, year: 2006 };
 
     expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Saturday, April 1');
-  });
-});
-
-describe('getMonthAndDay()', () => {
-  it('should return Tue, May 11', () => {
-    expect(getMonthAndDay('en-US', { month: 5, day: 11, year: 2021 })).toEqual('Tue, May 11');
-  });
-
-  it('should return mar, 11 may', () => {
-    expect(getMonthAndDay('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mar, 11 may');
-  });
-
-  it('should return Sat, Apr 1', () => {
-    expect(getMonthAndDay('en-US', { month: 4, day: 1, year: 2006 })).toEqual('Sat, Apr 1');
-  });
-
-  it('should return sáb, 1 abr', () => {
-    expect(getMonthAndDay('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('sáb, 1 abr');
   });
 });
 
@@ -144,6 +126,7 @@ describe('getLocalizedTime', () => {
 
     expect(getLocalizedTime('en-GB', datetimeParts, 'h12')).toEqual('12:00 am');
   });
+
   it('should parse time-only values correctly', () => {
     const datetimeParts: Partial<DatetimeParts> = {
       hour: 22,
@@ -152,5 +135,80 @@ describe('getLocalizedTime', () => {
 
     expect(getLocalizedTime('en-US', datetimeParts as DatetimeParts, 'h12')).toEqual('10:40 PM');
     expect(getLocalizedTime('en-US', datetimeParts as DatetimeParts, 'h23')).toEqual('22:40');
+  });
+
+  it('should use formatOptions', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      hour: '2-digit',
+      minute: '2-digit',
+      dayPeriod: 'short',
+      day: '2-digit',
+    };
+
+    // Even though this method is intended to be used for time, the date may be displayed as well when passing formatOptions
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12', formatOptions)).toEqual('01, 09:40 in the morning');
+  });
+
+  it('should override provided time zone with UTC', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      timeZone: 'Australia/Sydney',
+      timeZoneName: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12', formatOptions)).toEqual('9:40 AM');
+  });
+
+  it('should not include time zone name', () => {
+    const datetimeParts: DatetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+    };
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      timeZone: 'America/Los_Angeles',
+      timeZoneName: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12', formatOptions)).toEqual('9:40 AM');
+  });
+});
+
+describe('stripTimeZone', () => {
+  it('should remove the time zone name from the options and set the time zone to UTC', () => {
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      timeZone: 'America/Los_Angeles',
+      timeZoneName: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+
+    expect(stripTimeZone(formatOptions)).toEqual({
+      timeZone: 'UTC',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
   });
 });

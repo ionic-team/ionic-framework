@@ -8,7 +8,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
-import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
+import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
 /**
@@ -196,7 +196,7 @@ export class DatetimeButton implements ComponentInterface {
       return;
     }
 
-    const { value, locale, hourCycle, preferWheel, multiple, titleSelectedDatesFormatter } = datetimeEl;
+    const { value, locale, formatOptions, hourCycle, preferWheel, multiple, titleSelectedDatesFormatter } = datetimeEl;
 
     const parsedValues = this.getParsedDateValues(value);
 
@@ -225,8 +225,12 @@ export class DatetimeButton implements ComponentInterface {
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        const dateText = getMonthDayAndYear(locale, firstParsedDatetime);
-        const timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle);
+        const dateText = getLocalizedDateTime(
+          locale,
+          firstParsedDatetime,
+          formatOptions?.date ?? { month: 'short', day: 'numeric', year: 'numeric' }
+        );
+        const timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle, formatOptions?.time);
         if (preferWheel) {
           this.dateText = `${dateText} ${timeText}`;
         } else {
@@ -246,20 +250,28 @@ export class DatetimeButton implements ComponentInterface {
           }
           this.dateText = headerText;
         } else {
-          this.dateText = getMonthDayAndYear(locale, firstParsedDatetime);
+          this.dateText = getLocalizedDateTime(
+            locale,
+            firstParsedDatetime,
+            formatOptions?.date ?? { month: 'short', day: 'numeric', year: 'numeric' }
+          );
         }
         break;
       case 'time':
-        this.timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle);
+        this.timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle, formatOptions?.time);
         break;
       case 'month-year':
-        this.dateText = getMonthAndYear(locale, firstParsedDatetime);
+        this.dateText = getLocalizedDateTime(
+          locale,
+          firstParsedDatetime,
+          formatOptions?.date ?? { month: 'long', year: 'numeric' }
+        );
         break;
       case 'month':
-        this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, { month: 'long' });
+        this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, formatOptions?.time ?? { month: 'long' });
         break;
       case 'year':
-        this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, { year: 'numeric' });
+        this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, formatOptions?.time ?? { year: 'numeric' });
         break;
     }
   };

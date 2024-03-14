@@ -394,6 +394,7 @@ ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,fal
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
 ion-datetime,prop,firstDayOfWeek,number,0,false,false
+ion-datetime,prop,formatOptions,undefined | { date: DateTimeFormatOptions; time?: DateTimeFormatOptions | undefined; } | { date?: DateTimeFormatOptions | undefined; time: DateTimeFormatOptions; },undefined,false,false
 ion-datetime,prop,highlightedDates,((dateIsoString: string) => DatetimeHighlightStyle | undefined) | DatetimeHighlight[] | undefined,undefined,false,false
 ion-datetime,prop,hourCycle,"h11" | "h12" | "h23" | "h24" | undefined,undefined,false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false
@@ -596,6 +597,7 @@ ion-input,css-prop,--color
 ion-input,css-prop,--highlight-color-focused
 ion-input,css-prop,--highlight-color-invalid
 ion-input,css-prop,--highlight-color-valid
+ion-input,css-prop,--highlight-height
 ion-input,css-prop,--padding-bottom
 ion-input,css-prop,--padding-end
 ion-input,css-prop,--padding-start
@@ -608,20 +610,16 @@ ion-input,css-prop,--placeholder-opacity
 ion-item,shadow
 ion-item,prop,button,boolean,false,false,false
 ion-item,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-item,prop,counter,boolean,false,false,false
-ion-item,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-item,prop,detail,boolean | undefined,undefined,false,false
 ion-item,prop,detailIcon,string,chevronForward,false,false
 ion-item,prop,disabled,boolean,false,false,false
 ion-item,prop,download,string | undefined,undefined,false,false
-ion-item,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
 ion-item,prop,rel,string | undefined,undefined,false,false
 ion-item,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-item,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-item,prop,shape,"round" | undefined,undefined,false,false
 ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
@@ -642,10 +640,6 @@ ion-item,css-prop,--color-hover
 ion-item,css-prop,--detail-icon-color
 ion-item,css-prop,--detail-icon-font-size
 ion-item,css-prop,--detail-icon-opacity
-ion-item,css-prop,--highlight-color-focused
-ion-item,css-prop,--highlight-color-invalid
-ion-item,css-prop,--highlight-color-valid
-ion-item,css-prop,--highlight-height
 ion-item,css-prop,--inner-border-width
 ion-item,css-prop,--inner-box-shadow
 ion-item,css-prop,--inner-padding-bottom
@@ -774,7 +768,7 @@ ion-menu,prop,maxEdgeStart,number,50,false,false
 ion-menu,prop,menuId,string | undefined,undefined,false,true
 ion-menu,prop,side,"end" | "start",'start',false,true
 ion-menu,prop,swipeGesture,boolean,true,false,false
-ion-menu,prop,type,string | undefined,undefined,false,false
+ion-menu,prop,type,"overlay" | "push" | "reveal" | undefined,undefined,false,false
 ion-menu,method,close,close(animated?: boolean) => Promise<boolean>
 ion-menu,method,isActive,isActive() => Promise<boolean>
 ion-menu,method,isOpen,isOpen() => Promise<boolean>
@@ -1172,6 +1166,7 @@ ion-row,shadow
 
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
+ion-searchbar,prop,autocapitalize,string,undefined,true,false
 ion-searchbar,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
 ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
@@ -1182,6 +1177,8 @@ ion-searchbar,prop,debounce,number | undefined,undefined,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
+ion-searchbar,prop,maxlength,number | undefined,undefined,false,false
+ion-searchbar,prop,minlength,number | undefined,undefined,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,name,string,this.inputId,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
@@ -1295,6 +1292,7 @@ ion-select,css-prop,--border-width
 ion-select,css-prop,--highlight-color-focused
 ion-select,css-prop,--highlight-color-invalid
 ion-select,css-prop,--highlight-color-valid
+ion-select,css-prop,--highlight-height
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
@@ -1428,6 +1426,7 @@ ion-textarea,css-prop,--color
 ion-textarea,css-prop,--highlight-color-focused
 ion-textarea,css-prop,--highlight-color-invalid
 ion-textarea,css-prop,--highlight-color-valid
+ion-textarea,css-prop,--highlight-height
 ion-textarea,css-prop,--padding-bottom
 ion-textarea,css-prop,--padding-end
 ion-textarea,css-prop,--padding-start

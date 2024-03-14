@@ -21,77 +21,11 @@
   --padding-start: #{$item-md-padding-start};
   --inner-padding-end: #{$item-md-padding-end};
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
-  --highlight-height: 1px;
-  --highlight-color-focused: #{$item-md-input-highlight-color};
-  --highlight-color-valid: #{$item-md-input-highlight-color-valid};
-  --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
 
   font-size: dynamic-font($item-md-font-size);
   font-weight: normal;
 
   text-transform: none;
-}
-
-:host(.item-fill-outline) {
-  --highlight-height: 2px;
-}
-
-// Item Fill: None
-// --------------------------------------------------
-
-:host(.item-fill-none.item-interactive.ion-focus) .item-highlight,
-:host(.item-fill-none.item-interactive.item-has-focus) .item-highlight,
-:host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-highlight {
-  transform: scaleX(1);
-
-  border-width: 0 0 var(--full-highlight-height) 0;
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
-
-:host(.item-fill-none.item-interactive.ion-focus) .item-native,
-:host(.item-fill-none.item-interactive.item-has-focus) .item-native,
-:host(.item-fill-none.item-interactive.ion-touched.ion-invalid) .item-native {
-  border-bottom-color: var(--highlight-background);
-}
-
-// Item Fill: Outline
-// --------------------------------------------------
-
-:host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
-:host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight {
-  transform: scaleX(1);
-}
-
-:host(.item-fill-outline.item-interactive.ion-focus) .item-highlight,
-:host(.item-fill-outline.item-interactive.item-has-focus) .item-highlight,
-:host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-highlight {
-  border-width: var(--full-highlight-height);
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
-
-:host(.item-fill-outline.item-interactive.ion-touched.ion-invalid) .item-native {
-  border-color: var(--highlight-background);
-}
-
-// Item Fill: Solid
-// --------------------------------------------------
-
-:host(.item-fill-solid.item-interactive.ion-focus) .item-highlight,
-:host(.item-fill-solid.item-interactive.item-has-focus) .item-highlight,
-:host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-highlight {
-  transform: scaleX(1);
-
-  border-width: 0 0 var(--full-highlight-height) 0;
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
-
-:host(.item-fill-solid.item-interactive.ion-focus) .item-native,
-:host(.item-fill-solid.item-interactive.item-has-focus) .item-native,
-:host(.item-fill-solid.item-interactive.ion-touched.ion-invalid) .item-native {
-  border-bottom-color: var(--highlight-background);
 }
 
 // Material Design Item: States
@@ -103,10 +37,6 @@
   }
 }
 
-:host(.item-has-focus) .item-native {
-  caret-color: var(--highlight-background);
-}
-
 // Material Design Item Lines
 // --------------------------------------------------
 
@@ -114,22 +44,16 @@
 :host(.item-interactive) {
   --border-width: #{0 0 $item-md-border-bottom-width 0};
   --inner-border-width: 0;
-  --show-full-highlight: 1;
-  --show-inset-highlight: 0;
 }
 
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 :host(.item-lines-full) {
   --border-width: #{0 0 $item-md-border-bottom-width 0};
-  --show-full-highlight: 1;
-  --show-inset-highlight: 0;
 }
 
 :host(.item-lines-inset) {
   --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
-  --show-full-highlight: 0;
-  --show-inset-highlight: 1;
 }
 
 // Full lines - remove the border from the item inner (inset list items)
@@ -138,32 +62,11 @@
 :host(.item-lines-inset),
 :host(.item-lines-none) {
   --border-width: 0;
-  --show-full-highlight: 0;
 }
 
 :host(.item-lines-full),
 :host(.item-lines-none) {
   --inner-border-width: 0;
-  --show-inset-highlight: 0;
-}
-
-/**
- * When `fill="outline"`, reposition the highlight element to cover everything but the `.item-bottom`
- */
-:host(.item-fill-outline) .item-highlight {
-  --position-offset: calc(-1 * var(--border-width));
-
-  @include position(var(--position-offset), null, null, var(--position-offset));
-
-  width: calc(100% + 2 * var(--border-width));
-  height: calc(100% + 2 * var(--border-width));
-
-  transition: none;
-}
-
-:host(.item-fill-outline.ion-focused) .item-native,
-:host(.item-fill-outline.item-has-focus) .item-native {
-  border-color: transparent;
 }
 
 // Material Design Multi-line Item
@@ -188,14 +91,6 @@
   @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
 }
 
-:host(.item-fill-solid) ::slotted([slot="start"]),
-:host(.item-fill-solid) ::slotted([slot="end"]),
-:host(.item-fill-outline) ::slotted([slot="start"]),
-:host(.item-fill-outline) ::slotted([slot="end"]) {
-  align-self: center;
-}
-
-
 // Material Design Slotted Icon
 // --------------------------------------------------
 
@@ -211,7 +106,7 @@
   font-size: math.div($item-md-icon-slot-font-size, $item-md-font-size) * 1em;
 }
 
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) ::slotted(ion-icon) {
+:host(.ion-color) ::slotted(ion-icon) {
   color: current-color(contrast);
 }
 
@@ -226,12 +121,6 @@
 ::slotted(ion-icon[slot="end"]) {
   @include margin-horizontal($item-md-icon-end-slot-margin-start, $item-md-icon-end-slot-margin-end);
 }
-
-:host(.item-fill-solid) ::slotted(ion-icon[slot="start"]),
-:host(.item-fill-outline) ::slotted(ion-icon[slot="start"]) {
-  @include margin-horizontal($item-md-icon-start-slot-margin-start, $item-md-input-icon-start-slot-margin-end);
-}
-
 
 // Material Design Slotted Toggle
 // --------------------------------------------------
@@ -253,7 +142,7 @@
   font-size: $item-md-note-slot-font-size;
 }
 
-::slotted(ion-note[slot]:not([slot="helper"]):not([slot="error"])) {
+::slotted(ion-note[slot]) {
   @include padding($item-md-note-slot-padding-top, $item-md-note-slot-padding-end, $item-md-note-slot-padding-bottom, $item-md-note-slot-padding-start);
 }
 
@@ -298,7 +187,6 @@
   @include margin($item-md-label-margin-top, $item-md-label-margin-end, $item-md-label-margin-bottom, $item-md-label-margin-start);
 }
 
-
 // Material Design Floating/Stacked Label
 // --------------------------------------------------
 
@@ -307,15 +195,6 @@
   @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
 }
 
-
-// Material Design Fixed Labels
-// --------------------------------------------------
-
-:host(.item-label-fixed) ::slotted(ion-datetime) {
-  --padding-start: 8px;
-}
-
-
 // Material Design Toggle/Radio Item
 // --------------------------------------------------
 
@@ -323,7 +202,6 @@
 :host(.item-radio) ::slotted(ion-label) {
   @include margin-horizontal(0, null);
 }
-
 
 // Material Design Item Button
 // --------------------------------------------------
@@ -339,15 +217,6 @@
   font-size: dynamic-font(12px);
 }
 
-
-// Material Design Radio Item Label: Checked
-// -----------------------------------------
-
-// .item-radio-checked.item-md ion-label {
-//   color: $radio-md-color-on;
-// }
-
-
 // Material Design Stacked & Floating Inputs
 // --------------------------------------------------
 
@@ -361,106 +230,4 @@
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
-}
-
-// Material Design Inputs: Highlight Color
-// --------------------------------------------------
-
-:host(.ion-color) {
-  --highlight-color-focused: #{current-color(contrast)};
-}
-
-:host(.item-label-color) {
-  --highlight-color-focused: #{current-color(base)};
-}
-
-:host(.item-fill-solid.ion-color),
-:host(.item-fill-outline.ion-color) {
-  --highlight-color-focused: #{current-color(base)};
-}
-
-// Material Design Item: Fill Solid
-// --------------------------------------------------
-
-:host(.item-fill-solid) {
-  --background: #{$item-md-input-fill-solid-background-color};
-  --background-hover: #{$item-md-input-fill-solid-background-color-hover};
-  --background-focused: #{$item-md-input-fill-solid-background-color-focus};
-  --border-width: 0 0 #{$item-md-border-bottom-width} 0;
-  --inner-border-width: 0;
-
-  @include border-radius(4px, 4px, 0, 0);
-}
-
-:host(.item-fill-solid) .item-native {
-  --border-color: #{$item-md-input-fill-border-color};
-}
-
-:host(.item-fill-solid.ion-focused) .item-native,
-:host(.item-fill-solid.item-has-focus) .item-native {
-  --background: var(--background-focused);
-}
-
-:host(.item-fill-solid.item-shape-round) {
-  @include border-radius(16px, 16px, 0, 0);
-}
-
-@media (any-hover: hover) {
-  :host(.item-fill-solid:hover) .item-native {
-    --background: var(--background-hover);
-    --border-color: #{$item-md-input-fill-border-color-hover};
-  }
-}
-
-// Material Design Item: Fill Outline
-// --------------------------------------------------
-
-:host(.item-fill-outline) {
-  --ripple-color: transparent;
-  --background-focused: transparent;
-  --background-hover: transparent;
-  --border-color: #{$item-md-input-fill-border-color};
-  --border-width: #{$item-md-border-bottom-width};
-
-  border: none;
-
-  overflow: visible;
-}
-
-:host(.item-fill-outline) .item-native {
-  --native-padding-left: 16px;
-
-  @include border-radius(4px);
-}
-
-:host(.item-fill-outline.item-shape-round) .item-native {
-  --inner-padding-start: 16px;
-
-  @include border-radius(28px);
-}
-
-:host(.item-fill-outline.item-shape-round) .item-bottom {
-  @include padding-horizontal(32px, null);
-}
-
-:host(.item-fill-outline.item-label-floating.ion-focused) .item-native ::slotted(ion-input:not(:first-child)),
-:host(.item-fill-outline.item-label-floating.ion-focused) .item-native ::slotted(ion-textarea:not(:first-child)),
-:host(.item-fill-outline.item-label-floating.item-has-focus) .item-native ::slotted(ion-input:not(:first-child)),
-:host(.item-fill-outline.item-label-floating.item-has-focus) .item-native ::slotted(ion-textarea:not(:first-child)),
-:host(.item-fill-outline.item-label-floating.item-has-value) .item-native ::slotted(ion-input:not(:first-child)),
-:host(.item-fill-outline.item-label-floating.item-has-value) .item-native ::slotted(ion-textarea:not(:first-child)) {
-  transform: translateY(-14px);
-}
-
-@media (any-hover: hover) {
-  :host(.item-fill-outline:hover) .item-native {
-    --border-color: #{$item-md-input-fill-border-color-hover};
-  }
-}
-
-// Material Design Text Field Character Counter
-// --------------------------------------------------
-
-.item-counter {
-  letter-spacing: #{$item-md-input-counter-letter-spacing};
 }
