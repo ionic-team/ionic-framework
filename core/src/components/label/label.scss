@@ -22,13 +22,6 @@
   box-sizing: border-box;
 }
 
-// TODO(FW-5289): remove
-:host-context(.item-legacy) {
-  white-space: nowrap;
-
-  overflow: hidden;
-}
-
 :host(.ion-color) {
   color: current-color(base);
 }

@@ -275,6 +275,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime, JSX.Io
   'color',
   'name',
   'disabled',
+  'formatOptions',
   'readonly',
   'isDateEnabled',
   'min',
@@ -443,17 +444,13 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', de
   'detailIcon',
   'disabled',
   'download',
-  'fill',
-  'shape',
   'href',
   'rel',
   'lines',
-  'counter',
   'routerAnimation',
   'routerDirection',
   'target',
-  'type',
-  'counterFormatter'
+  'type'
 ]);
 
 
@@ -690,6 +687,7 @@ export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row', defin
 export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.IonSearchbar["value"]>('ion-searchbar', defineIonSearchbar, [
   'color',
   'animated',
+  'autocapitalize',
   'autocomplete',
   'autocorrect',
   'cancelButtonIcon',
@@ -699,6 +697,8 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.
   'disabled',
   'inputmode',
   'enterkeyhint',
+  'maxlength',
+  'minlength',
   'name',
   'placeholder',
   'searchIcon',

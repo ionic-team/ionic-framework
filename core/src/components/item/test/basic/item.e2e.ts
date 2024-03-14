@@ -26,11 +26,6 @@ configs().forEach(({ title, screenshot, config }) => {
         </style>
         <ion-list>
           <ion-item>
-            <ion-label>Item with helper</ion-label>
-            <div slot="helper">Helper</div>
-          </ion-item>
-
-          <ion-item>
             <ion-label class="ion-text-nowrap"> Single line text that should have ellipses when it doesn't all fit in the item</ion-label>
           </ion-item>
         </ion-list>

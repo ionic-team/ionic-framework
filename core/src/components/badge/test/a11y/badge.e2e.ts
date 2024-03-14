@@ -25,7 +25,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
   test.describe(title('badge: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       /**

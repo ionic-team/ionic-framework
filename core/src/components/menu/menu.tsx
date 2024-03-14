@@ -3,7 +3,7 @@ import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Wa
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { focusFirstDescendant, focusLastDescendant } from '@utils/focus-trap';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
-import { shoudUseCloseWatcher } from '@utils/hardware-back-button';
+import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
@@ -14,7 +14,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 
-import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
+import type { MenuChangeEventDetail, MenuI, MenuType, Side } from './menu-interface';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
@@ -107,7 +107,7 @@ export class Menu implements ComponentInterface, MenuI {
    * The display type of the menu.
    * Available options: `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type?: string;
+  @Prop({ mutable: true }) type?: MenuType;
 
   @Watch('type')
   typeChanged(type: string, oldType: string | undefined) {
@@ -782,7 +782,7 @@ export class Menu implements ComponentInterface, MenuI {
      */
     return (
       <Host
-        onKeyDown={shoudUseCloseWatcher() ? null : this.onKeydown}
+        onKeyDown={shouldUseCloseWatcher() ? null : this.onKeydown}
         role="navigation"
         aria-label={inheritedAttributes['aria-label'] || 'menu'}
         class={{

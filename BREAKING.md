@@ -140,6 +140,7 @@ Developers who had previously chosen dynamic font scaling by activating it in th
 Developers who want to disable dynamic font scaling can set `--ion-dynamic-font: initial;` in their global stylesheets. However, this is not recommended because it may introduce accessibility challenges for users who depend on enlarged font sizes.
 
 For more information on the dynamic font, refer to the [Dynamic Font Scaling documentation](https://ionicframework.com/docs/layout/dynamic-font-scaling).
+
 <h2 id="version-8x-components">Components</h2>
 
 <h4 id="version-8x-button">Button</h4>
@@ -174,7 +175,57 @@ For more information on the dynamic font, refer to the [Dynamic Font Scaling doc
 
 <h4 id="version-8x-item">Item</h4>
 
+- The `helper` slot has been removed. Developers should use the `helperText` property on `ion-input` and `ion-textarea`.
+- The `error` slot has been removed. Developers should use the `errorText` property on `ion-input` and `ion-textarea`.
+- Counter functionality has been removed including the `counter` and `counterFormatter` properties. Developers should use the properties of the same name on `ion-input` and `ion-textarea`.
+- The `fill` property has been removed. Developers should use the property of the same name on `ion-input`, `ion-select`, and `ion-textarea`.
+- The `shape` property has been removed. Developers should use the property of the same name on `ion-input`, `ion-select`, and `ion-textarea`.
 - Item no longer automatically delegates focus to the first focusable element. While most developers should not need to make any changes to account for this update, usages of `ion-item` with interactive elements such as form controls (inputs, textareas, etc) should be evaluated to verify that interactions still work as expected.
+
+<h5>CSS variables</h4>
+
+The following deprecated CSS variables have been removed: `--highlight-height`, `--highlight-color-focused`, `--highlight-color-valid`, and `--highlight-color-invalid`. These variables were used on the bottom border highlight of an item when the form control inside of that item was focused. The form control syntax was [simplified in v7](https://ionic.io/blog/ionic-7-is-here#simplified-form-control-syntax) so that inputs, selects, and textareas would no longer be required to be used inside of an item.
+
+If you have not yet migrated to the modern form control syntax, migration guides for each of the form controls that added a highlight to item can be found below:
+- [Input migration documentation](https://ionicframework.com/docs/api/input#migrating-from-legacy-input-syntax)
+- [Select migration documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax)
+- [Textarea migration documentation](https://ionicframework.com/docs/api/textarea#migrating-from-legacy-textarea-syntax)
+
+Once all form controls are using the modern syntax, the same variables can be used to customize them from the form control itself:
+
+| Name                        | Description                             |
+| ----------------------------| ----------------------------------------|
+| `--highlight-color-focused` | The color of the highlight when focused |
+| `--highlight-color-invalid` | The color of the highlight when invalid |
+| `--highlight-color-valid`   | The color of the highlight when valid   |
+| `--highlight-height`        | The height of the highlight indicator   |
+
+The following styles for item:
+
+```css
+ion-item {
+  --highlight-color-focused: purple;
+  --highlight-color-valid: blue;
+  --highlight-color-invalid: orange;
+  --highlight-height: 6px;
+}
+```
+
+will instead be applied on the form controls:
+
+```css
+ion-input,
+ion-textarea,
+ion-select {
+  --highlight-color-focused: purple;
+  --highlight-color-valid: blue;
+  --highlight-color-invalid: orange;
+  --highlight-height: 6px;
+}
+```
+
+> [!NOTE]
+> The input and textarea components are scoped, which means they will automatically scope their CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector. Targeting the `ion-input` or `ion-textarea` for customization will not work; therefore we recommend adding a class and customizing it that way.
 
 <h4 id="version-8x-modal">Modal</h4>
 
@@ -206,11 +257,11 @@ For more information on styling toast buttons, refer to the [Toast Theming docum
 
 <h4 id="version-8x-range">Range</h4>
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
 
 <h4 id="version-8x-select">Select</h4>
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
 
 <h4 id="version-8x-textarea">Textarea</h4>
 
