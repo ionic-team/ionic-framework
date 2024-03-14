@@ -877,8 +877,8 @@ export class Select implements ComponentInterface {
     const { placeholder, inheritedAttributes } = this;
     const displayValue = this.getText();
 
-    // Developers should provide either visible text or an aria-label
-    const definedLabel = this.labelText ?? inheritedAttributes['aria-label'];
+    // The aria label should be preferred over visible text if both are specified
+    const definedLabel = inheritedAttributes['aria-label'] ?? this.labelText;
 
     /**
      * If developer has specified a placeholder
