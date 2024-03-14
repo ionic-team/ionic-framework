@@ -1,5 +1,3 @@
-// import type { AnimationKeyFrames } from './animation-interface';
-
 let animationPrefix: string | undefined;
 
 export const getAnimationPrefix = (el: HTMLElement): string => {
@@ -14,11 +12,6 @@ export const getAnimationPrefix = (el: HTMLElement): string => {
 export const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
   const prefix = propertyName.startsWith('animation') ? getAnimationPrefix(element) : '';
   element.style.setProperty(prefix + propertyName, value);
-};
-
-export const removeStyleProperty = (element: HTMLElement, propertyName: string) => {
-  const prefix = propertyName.startsWith('animation') ? getAnimationPrefix(element) : '';
-  element.style.removeProperty(prefix + propertyName);
 };
 
 export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
@@ -49,13 +42,6 @@ export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionE
   }
 
   return unregister;
-};
-
-export const getStyleContainer = (element: HTMLElement) => {
-  // getRootNode is not always available in SSR environments.
-  // TODO(FW-2832): types
-  const rootNode = element.getRootNode !== undefined ? (element.getRootNode() as any) : element;
-  return rootNode.head || rootNode;
 };
 
 export const addClassToArray = (classes: string[] = [], className: string | string[] | undefined): string[] => {
