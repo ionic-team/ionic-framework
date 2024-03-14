@@ -65,14 +65,14 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   testInfo.annotations.push({
     type: 'mode',
-    description: mode
+    description: mode,
   });
 
   testInfo.annotations.push({
     type: 'palette',
     description: palette,
   });
-  
+
   testInfo.annotations.push({
     type: 'theme',
     description: theme,
