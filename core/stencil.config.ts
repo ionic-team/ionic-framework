@@ -257,4 +257,18 @@ export const config: Config = {
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
   transformAliasedImportPaths: true,
+  extras: {
+    /**
+     * `experimentalSlotFixes` is necessary in Stencil v4 until the fixes described in
+     * {@link https://stenciljs.com/docs/config-extras#experimentalslotfixes the Stencil docs for the flag} are the
+     * default behavior (slated for a future Stencil major version).
+     */
+    experimentalSlotFixes: true,
+    /**
+     * `experimentalScopedSlotChanges` is necessary in Stencil v4 until the fixes described in
+     * {@link https://stenciljs.com/docs/config-extras#experimentalscopedslotchanges the Stencil docs for the flag} are
+     * the default behavior (slated for a future Stencil major version).
+     */
+    experimentalScopedSlotChanges: true,
+  }
 };

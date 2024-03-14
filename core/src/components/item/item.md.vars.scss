@@ -42,18 +42,6 @@ $item-md-border-bottom-style:               solid !default;
 /// @prop - Border bottom color for the item when lines are displayed
 $item-md-border-bottom-color:               $item-md-border-color !default;
 
-// Item Input
-// --------------------------------------------------
-
-/// @prop - Color of the item input highlight
-$item-md-input-highlight-color:             ion-color(primary, base) !default;
-
-/// @prop - Color of the item input highlight when valid
-$item-md-input-highlight-color-valid:       ion-color(success, base) !default;
-
-/// @prop - Color of the item input highlight when invalid
-$item-md-input-highlight-color-invalid:     ion-color(danger, base) !default;
-
 // Item Label
 // --------------------------------------------------
 

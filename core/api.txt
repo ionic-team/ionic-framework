@@ -394,6 +394,7 @@ ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,fal
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
 ion-datetime,prop,firstDayOfWeek,number,0,false,false
+ion-datetime,prop,formatOptions,undefined | { date: DateTimeFormatOptions; time?: DateTimeFormatOptions | undefined; } | { date?: DateTimeFormatOptions | undefined; time: DateTimeFormatOptions; },undefined,false,false
 ion-datetime,prop,highlightedDates,((dateIsoString: string) => DatetimeHighlightStyle | undefined) | DatetimeHighlight[] | undefined,undefined,false,false
 ion-datetime,prop,hourCycle,"h11" | "h12" | "h23" | "h24" | undefined,undefined,false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false
@@ -639,10 +640,6 @@ ion-item,css-prop,--color-hover
 ion-item,css-prop,--detail-icon-color
 ion-item,css-prop,--detail-icon-font-size
 ion-item,css-prop,--detail-icon-opacity
-ion-item,css-prop,--highlight-color-focused
-ion-item,css-prop,--highlight-color-invalid
-ion-item,css-prop,--highlight-color-valid
-ion-item,css-prop,--highlight-height
 ion-item,css-prop,--inner-border-width
 ion-item,css-prop,--inner-box-shadow
 ion-item,css-prop,--inner-padding-bottom
@@ -1169,6 +1166,7 @@ ion-row,shadow
 
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
+ion-searchbar,prop,autocapitalize,string,undefined,true,false
 ion-searchbar,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
 ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
@@ -1179,6 +1177,8 @@ ion-searchbar,prop,debounce,number | undefined,undefined,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
+ion-searchbar,prop,maxlength,number | undefined,undefined,false,false
+ion-searchbar,prop,minlength,number | undefined,undefined,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,name,string,this.inputId,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false

@@ -29,10 +29,6 @@
   --background-hover-opacity: .04;
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
-  --highlight-height: 0px;
-  --highlight-color-focused: #{$item-ios-input-highlight-color};
-  --highlight-color-valid: #{$item-ios-input-highlight-color-valid};
-  --highlight-color-invalid: #{$item-ios-input-highlight-color-invalid};
 
   font-size: $item-ios-font-size;
 }
@@ -63,24 +59,15 @@
 // iOS Item Lines
 // --------------------------------------------------
 
-// Default input items have an inset border
-:host(.item-interactive) {
-  --show-full-highlight: 0;
-  --show-inset-highlight: 1;
-}
 
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 :host(.item-lines-full) {
   --border-width: #{0px 0px $item-ios-border-bottom-width 0px};
-  --show-full-highlight: 1;
-  --show-inset-highlight: 0;
 }
 
 :host(.item-lines-inset) {
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
-  --show-full-highlight: 0;
-  --show-inset-highlight: 1;
 }
 
 // Full lines - remove the border from the item inner (inset list items)
@@ -89,27 +76,12 @@
 :host(.item-lines-inset),
 :host(.item-lines-none) {
   --border-width: 0px;
-  --show-full-highlight: 0;
 }
 
 :host(.item-lines-full),
 :host(.item-lines-none) {
   --inner-border-width: 0px;
-  --show-inset-highlight: 0;
 }
-
-.item-highlight,
-.item-inner-highlight {
-  transition: none;
-}
-
-:host(.item-has-focus) .item-inner-highlight,
-:host(.item-has-focus) .item-highlight {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-}
-
 
 // iOS Item Slots
 // --------------------------------------------------
