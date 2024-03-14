@@ -85,3 +85,91 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     });
   });
 });
+
+/**
+ * This test only impacts MD applications
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe.only(title('header: translucent'), () => {
+    test('should not hide MD headers when using a descendant iOS header in an MD app', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28867',
+      });
+      await page.setContent(
+        `
+        <ion-header id="main-header">
+          <ion-toolbar>
+            <ion-title>Header</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-header collapse="condense">
+            <ion-toolbar>
+              <ion-title size="large">Header</ion-title>
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-header mode="ios">
+            <ion-toolbar>
+              <ion-title>Welcome</ion-title>
+            </ion-toolbar>
+          </ion-header>
+        </ion-content>
+      `,
+        config
+      );
+
+      const header = page.locator('ion-header#main-header');
+
+      /**
+       * The existence of the iOS header in an MD app should not cause the main MD header
+       * to be hidden. We do not have toHaveVisible because the behavior that hides
+       * the header under correct circumstances does it using opacity: 0.
+       * Playwright considers an element with opacity: 0 to still be visible
+       * because it has a non-zero bounding box.
+       */
+      await expect(header).toHaveScreenshot(screenshot('header-md-visibility-ios-descendant'));
+    });
+    test('should not hide MD headers when using a root iOS header in an MD app', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28867',
+      });
+      await page.setContent(
+        `
+        <ion-header id="main-header" mode="ios">
+          <ion-toolbar>
+            <ion-title>Header</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-header collapse="condense">
+            <ion-toolbar>
+              <ion-title size="large">Header</ion-title>
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Welcome</ion-title>
+            </ion-toolbar>
+          </ion-header>
+        </ion-content>
+      `,
+        config
+      );
+
+      const header = page.locator('ion-header#main-header');
+
+      /**
+       * The existence of the iOS header in an MD app should not cause the main MD header
+       * to be hidden. We do not have toHaveVisible because the behavior that hides
+       * the header under correct circumstances does it using opacity: 0.
+       * Playwright considers an element with opacity: 0 to still be visible
+       * because it has a non-zero bounding box.
+       */
+      await expect(header).toHaveScreenshot(screenshot('header-md-visibility-ios-main'));
+    });
+  });
+});
