@@ -886,6 +886,7 @@ const renderKnob = (
     return style;
   };
 
+  // The aria label should be preferred over visible text if both are specified
   const ariaLabel = inheritedAttributes['aria-label'];
 
   return (
