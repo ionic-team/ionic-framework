@@ -68,8 +68,8 @@ core/www/
 # playwright
 core/test-results/
 core/playwright-report/
-core/**/*-snapshots
-!core/**/*-snapshots/*-linux.*
+core/**/*-snapshots/*
+!core/**/*-snapshots/*-linux.png
 core/docker-display.txt
 core/docker-display-volume.txt
 
