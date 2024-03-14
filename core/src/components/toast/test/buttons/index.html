@@ -129,7 +129,7 @@
         return await presentToastWithOptions(opts);
       }
 
-      function confirmpAlertCancelBtns(expectedDataTestId) {
+      function confirmAlertCancelBtns(expectedDataTestId) {
         openAlert({
           header: 'Alert',
           subHeader: 'CancelBtnClicked',
@@ -150,7 +150,7 @@
               role: 'cancel',
               cssClass: 'cancel1-btn',
               handler: () => {
-                confirmpAlertCancelBtns('cancel1-btn-clicked');
+                confirmAlertCancelBtns('cancel1-btn-clicked');
               },
             },
             {
@@ -158,7 +158,7 @@
               role: 'cancel',
               cssClass: 'cancel2-btn',
               handler: () => {
-                confirmpAlertCancelBtns('cancel2-btn-clicked');
+                confirmAlertCancelBtns('cancel2-btn-clicked');
               },
             },
             {
