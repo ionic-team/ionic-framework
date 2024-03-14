@@ -1087,7 +1087,11 @@ Developers can use the "legacy" property to continue using the legacy form marku
       icon = toggleIcon ?? defaultIcon;
     }
 
-    return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
+    return (
+      <slot name={isExpanded ? 'expanded-icon' : 'toggle-icon'}>
+        <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>
+      </slot>
+    )
   }
 
   private get ariaLabel() {

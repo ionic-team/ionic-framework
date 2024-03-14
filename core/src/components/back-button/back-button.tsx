@@ -156,13 +156,15 @@ export class BackButton implements ComponentInterface, ButtonInterface {
         <button type={type} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
           <span class="button-inner">
             {backButtonIcon && (
-              <ion-icon
-                part="icon"
-                icon={backButtonIcon}
-                aria-hidden="true"
-                lazy={false}
-                flip-rtl={icon === undefined}
-              ></ion-icon>
+              <slot name="icon">
+                <ion-icon
+                  part="icon"
+                  icon={backButtonIcon}
+                  aria-hidden="true"
+                  lazy={false}
+                  flip-rtl={icon === undefined}
+                ></ion-icon>
+              </slot>
             )}
             {backButtonText && (
               <span part="text" aria-hidden="true" class="button-text">

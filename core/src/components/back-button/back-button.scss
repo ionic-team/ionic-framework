@@ -178,7 +178,7 @@ ion-ripple-effect {
 // Back Button Icon
 // --------------------------------------------------
 
-ion-icon {
+::slotted([slot="icon"]) {
   @include padding(var(--icon-padding-top), var(--icon-padding-end), var(--icon-padding-bottom), var(--icon-padding-start));
   @include margin(var(--icon-margin-top), var(--icon-margin-end), var(--icon-margin-bottom), var(--icon-margin-start));
 

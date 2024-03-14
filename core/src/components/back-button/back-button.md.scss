@@ -48,7 +48,7 @@
   @include padding(0, 4px);
 }
 
-ion-icon {
+::slotted([slot="icon"]) {
   line-height: .67;
 
   text-align: start;

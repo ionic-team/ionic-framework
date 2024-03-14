@@ -136,7 +136,8 @@
   justify-content: center;
 }
 
-.toast-icon {
+.toast-icon,
+::slotted([slot="icon"]) {
   @include margin(null, null, null, 16px);
 }
 

@@ -727,9 +727,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
           <div class="toast-container" part="container">
             {this.renderButtons(startButtons, 'start')}
 
-            {this.icon !== undefined && (
-              <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
-            )}
+            <slot name="icon">
+              {this.icon !== undefined && (
+                <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
+              )}
+            </slot>
 
             {/*
               This creates a live region where screen readers

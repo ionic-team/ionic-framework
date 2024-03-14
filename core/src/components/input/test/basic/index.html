@@ -12,6 +12,7 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
       .grid {
         display: grid;
@@ -40,6 +41,17 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button text="Go Back" default-href="/">
+              <i class="ph-fill ph-heart" slot="icon" style="color: hotpink"></i>
+            </ion-back-button>
+          </ion-buttons>
+          <ion-title>Input - Basic</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button text="Go Back" default-href="/"></ion-back-button>
+          </ion-buttons>
           <ion-title>Input - Basic</ion-title>
         </ion-toolbar>
       </ion-header>
@@ -47,10 +59,42 @@
       <ion-content id="content" class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Default</h2>
-            <ion-input value="hi@ionic.io" label="Email"></ion-input>
+            <h2>Input / Clear Input</h2>
+            <ion-input value="hi@ionic.io" label="Email" clear-input="true">
+              <i class="ph-fill ph-heart" slot="clear-input-icon" style="color: hotpink"></i>
+            </ion-input>
+            <ion-input value="hi@ionic.io" label="Email" clear-input="true"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Select</h2>
+
+            <ion-select label="Select Value" toggle-icon="arrow-down" expanded-icon="arrow-up"></ion-select>
+            <ion-select label="Select Value" toggle-icon="arrow-down" expanded-icon="arrow-up">
+              <i class="ph-fill ph-heart" slot="toggle-icon" style="color: red"></i>
+              <i class="ph-fill ph-heart" slot="expanded-icon" style="color: green"></i>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Searchbar / Clear and Search</h2>
+
+            <ion-searchbar clear-icon="trash" cancel-button-icon="sad" show-cancel-button="focus" show-clear-button="always" search-icon="send" value="search"></ion-searchbar>
+            <ion-searchbar clear-icon="trash" cancel-button-icon="sad" show-cancel-button="focus" show-clear-button="always" search-icon="send" value="search">
+              <i class="ph-fill ph-trash" slot="clear-icon" style="color: red"></i>
+              <i class="ph-fill ph-paper-plane" slot="search-icon" style="color: red"></i>
+              <i class="ph-fill ph-smiley-sad" slot="cancel-icon" style="color: red"></i>
+            </ion-searchbar>
           </div>
         </div>
+
+        <ion-button id="open-icon-prop-toast">Open Toast with Icon Prop</ion-button>
+        <ion-toast trigger="open-icon-prop-toast" icon="airplane" duration="3000" message="Icon Property"></ion-toast>
+
+        <ion-button id="open-icon-slot-toast">Open Toast with Icon Slot</ion-button>
+        <ion-toast trigger="open-icon-slot-toast" duration="0" message="Icon Property">
+          <i class="ph-fill ph-heart" slot="icon" style="color: hotpink"></i>
+        </ion-toast>
       </ion-content>
     </ion-app>
   </body>
