@@ -84,7 +84,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ directions: ['ltr'], modes: ['md'], themeModes: ['light', 'dark'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], modes: ['md'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('label: a11y for ion-color()'), () => {
     test('should not have accessibility violations when focused', async ({ page }) => {
       /**

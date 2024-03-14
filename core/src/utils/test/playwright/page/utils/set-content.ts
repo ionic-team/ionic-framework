@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction, Theme, ThemeMode } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction, Theme, Palette } from '@utils/test/playwright';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -20,18 +20,18 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   let mode: Mode;
   let direction: Direction;
   let theme: Theme;
-  let themeMode: ThemeMode;
+  let palette: Palette;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
     theme = testInfo.project.metadata.theme;
-    themeMode = testInfo.project.metadata.themeMode;
+    palette = testInfo.project.metadata.palette;
   } else {
     mode = options.mode;
     direction = options.direction;
     theme = options.theme;
-    themeMode = options.themeMode;
+    palette = options.palette;
   }
 
   const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
@@ -45,7 +45,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
-        ${themeMode !== 'light' ? `<link href="${baseUrl}/css/themes/${themeMode}.always.css" rel="stylesheet" />` : ''}
+        ${palette !== 'light' ? `<link href="${baseUrl}/css/themes/${palette}.always.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
         <script>
@@ -65,17 +65,17 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   testInfo.annotations.push({
     type: 'mode',
-    description: mode,
+    description: mode
   });
 
+  testInfo.annotations.push({
+    type: 'palette',
+    description: palette,
+  });
+  
   testInfo.annotations.push({
     type: 'theme',
     description: theme,
-  });
-
-  testInfo.annotations.push({
-    type: 'themeMode',
-    description: themeMode,
   });
 
   if (baseUrl) {

@@ -35,7 +35,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
   });
 });
 
-configs({ directions: ['ltr'], themeModes: ['light', 'dark'] }).forEach(({ config, title }) => {
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
   test.describe(title('typography: a11y'), () => {
     test('should not have accessibility violations for anchor tags', async ({ page }) => {
       /**

@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * Only md mode uses ion-color() for the segment button
  */
-configs({ directions: ['ltr'], modes: ['md'], themeModes: ['light', 'dark'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], modes: ['md'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('segment: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(

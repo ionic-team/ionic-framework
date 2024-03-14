@@ -109,7 +109,9 @@ export class Label implements ComponentInterface {
           [`label-no-animate`]: this.noAnimate,
           'label-rtl': document.dir === 'rtl',
         })}
-      ></Host>
+      >
+        <slot></slot>
+      </Host>
     );
   }
 }

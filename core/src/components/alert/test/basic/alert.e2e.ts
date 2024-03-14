@@ -100,7 +100,7 @@ configs().forEach(({ config, screenshot, title }) => {
   });
 });
 
-configs({ themeModes: ['light', 'dark'] }).forEach(({ config, screenshot, title }) => {
+configs({ palettes: ['light', 'dark'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('should not have visual regressions'), () => {
     test('more than two buttons', async ({ page }) => {
       await page.setContent(

@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], themeModes: ['dark', 'light'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], palettes: ['dark', 'light'] }).forEach(({ title, config }) => {
   test.describe(title('toast: Axe testing'), () => {
     test('should not have any axe violations with inline toasts', async ({ page }) => {
       await page.setContent(
@@ -234,7 +234,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 /**
  * High contrast mode tests
  */
-configs({ directions: ['ltr'], themeModes: ['high-contrast-dark', 'high-contrast'] }).forEach(
+configs({ directions: ['ltr'], palettes: ['high-contrast-dark', 'high-contrast'] }).forEach(
   ({ title, config, screenshot }) => {
     test.describe(title('toast: high contrast: buttons'), () => {
       test.beforeEach(async ({ page }) => {

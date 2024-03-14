@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 
 import { testSlidingItem } from '../test.utils';
 
-configs({ directions: ['ltr'], themeModes: ['light', 'dark'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('item-sliding: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
