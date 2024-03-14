@@ -796,7 +796,7 @@ export class Input implements ComponentInterface {
               <button
                 aria-label="show password"
                 aria-checked={type === 'text' ? 'true' : 'false'}
-                aria-controls={this.inputId}
+                aria-controls={inputId}
                 role="switch"
                 type="button"
                 class="input-password-toggle"
