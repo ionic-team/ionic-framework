@@ -13,10 +13,6 @@
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <script type="module">
-      if (forceCSSAnimations) {
-        Element.prototype.animate = null;
-      }
-
       import { createAnimation } from '../../../../dist/ionic/index.esm.js';
 
       const squareA = document.querySelector('.square-a');
