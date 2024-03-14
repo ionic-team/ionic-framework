@@ -40,7 +40,7 @@ export class Header implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the header.
-   * Only applies when the team is `"ios"`.
+   * Only applies when the theme is `"ios"`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    */

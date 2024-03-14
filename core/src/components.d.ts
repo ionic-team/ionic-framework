@@ -1243,7 +1243,7 @@ export namespace Components {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies when the team is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: 'condense' | 'fade';
         /**
@@ -6439,7 +6439,7 @@ declare namespace LocalJSX {
     }
     interface IonHeader {
         /**
-          * Describes the scroll effect that will be applied to the header. Only applies when the team is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+          * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: 'condense' | 'fade';
         /**
