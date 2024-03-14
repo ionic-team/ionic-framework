@@ -69,6 +69,7 @@ core/www/
 core/test-results/
 core/playwright-report/
 core/**/*-snapshots
+!core/**/*-snapshots/*-linux.*
 core/docker-display.txt
 core/docker-display-volume.txt
 
