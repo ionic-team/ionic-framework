@@ -443,6 +443,9 @@ Labels should be passed directly to the component in the form of either visible 
 
 In the following example the `aria-label` can be inherited from the Host using the `inheritAttributes` or `inheritAriaAttributes` utilities. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
 
+> [!NOTE]
+> Use `inheritAttributes` to specify which attributes should be inherited or `inheritAriaAttributes` to inherit all of the possible `aria` attributes.
+
 ```tsx
 import { Prop } from '@stencil/core';
 import { inheritAttributes } from '@utils/helpers';
@@ -552,6 +555,9 @@ render() {
 Labels should be passed directly to the component in the form of either visible text or an `aria-label`. The visible text can be set inside of a `label` element, and the `aria-label` can be set directly on the interactive element.
 
 In the following example the `aria-label` can be inherited from the Host using the `inheritAttributes` or `inheritAriaAttributes` utilities. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
+
+> [!NOTE]
+> Use `inheritAttributes` to specify which attributes should be inherited or `inheritAriaAttributes` to inherit all of the possible `aria` attributes.
 
 ```tsx
 import { Prop } from '@stencil/core';
