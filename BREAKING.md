@@ -254,11 +254,11 @@ For more information on styling toast buttons, refer to the [Toast Theming docum
 
 <h4 id="version-8x-range">Range</h4>
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
 
 <h4 id="version-8x-select">Select</h4>
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
 
 <h4 id="version-8x-textarea">Textarea</h4>
 
