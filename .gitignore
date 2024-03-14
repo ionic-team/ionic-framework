@@ -70,7 +70,7 @@ core/test-results/
 core/playwright-report/
 core/**/*-snapshots
 core/docker-display.txt
-core/docker-display-volumn.txt
+core/docker-display-volume.txt
 
 # angular
 packages/angular/css/
