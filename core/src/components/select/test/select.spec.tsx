@@ -68,6 +68,34 @@ describe('ion-select', () => {
     expect(propEl).not.toBe(null);
     expect(slotEl).toBe(null);
   });
+  it('should prefer aria label if both attribute and visible text provided', async () => {
+    const page = await newSpecPage({
+      components: [Select],
+      html: `
+        <ion-select aria-label="Aria Label Text" label="Label Prop Text"></ion-select>
+      `,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+
+    const nativeButton = select.shadowRoot!.querySelector('button');
+
+    expect(nativeButton.getAttribute('aria-label')).toBe('Aria Label Text');
+  });
+  it('should prefer visible label if only visible text provided', async () => {
+    const page = await newSpecPage({
+      components: [Select],
+      html: `
+        <ion-select label="Label Prop Text"></ion-select>
+      `,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+
+    const nativeButton = select.shadowRoot!.querySelector('button');
+
+    expect(nativeButton.getAttribute('aria-label')).toBe('Label Prop Text');
+  });
 });
 
 describe('select: slot interactivity', () => {
