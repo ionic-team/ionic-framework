@@ -90,7 +90,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
  * This test only impacts MD applications
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('header: translucent'), () => {
+  test.describe(title('header: translucent'), () => {
     test('should not hide MD headers when using a descendant iOS header in an MD app', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
