@@ -68,7 +68,11 @@ core/www/
 # playwright
 core/test-results/
 core/playwright-report/
+
+# ground truths generated outside of docker should not be committed to the repo
 core/**/*-snapshots/*
+
+# new ground truths should only be generated inside of docker which will result in -linux.png screenshots
 !core/**/*-snapshots/*-linux.png
 core/docker-display.txt
 core/docker-display-volume.txt
