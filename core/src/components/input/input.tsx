@@ -7,7 +7,7 @@ import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnRea
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
-import { closeCircle, closeSharp, eyeOff, eyeOutline } from 'ionicons/icons';
+import { closeCircle, closeSharp, eyeOff, eye } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
@@ -244,7 +244,7 @@ export class Input implements ComponentInterface {
   @Prop() shape?: 'round';
 
   /**
-   * Set the icon that can be used to represent showing a password. Defaults to `eyeOutline`.
+   * Set the icon that can be used to represent showing a password. Defaults to `eye`.
    */
   @Prop() showPasswordIcon?: string;
 
@@ -690,7 +690,7 @@ export class Input implements ComponentInterface {
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
-    const showPasswordIcon = this.showPasswordIcon || eyeOutline;
+    const showPasswordIcon = this.showPasswordIcon || eye;
     const hidePasswordIcon = this.hidePasswordIcon || eyeOff;
 
     const hasValue = this.hasValue();

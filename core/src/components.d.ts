@@ -1275,7 +1275,7 @@ export namespace Components {
          */
         "shape"?: 'round';
         /**
-          * Set the icon that can be used to represent showing a password. Defaults to `eyeOutline`.
+          * Set the icon that can be used to represent showing a password. Defaults to `eye`.
          */
         "showPasswordIcon"?: string;
         /**
@@ -5999,7 +5999,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round';
         /**
-          * Set the icon that can be used to represent showing a password. Defaults to `eyeOutline`.
+          * Set the icon that can be used to represent showing a password. Defaults to `eye`.
          */
         "showPasswordIcon"?: string;
         /**
