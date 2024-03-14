@@ -30,7 +30,7 @@ describe('range: label', () => {
 
     const range = page.body.querySelector('ion-range')!;
 
-    const nativeSlider = range.shadowRoot!.querySelector('.range-knob-handle');
+    const nativeSlider = range.shadowRoot!.querySelector('.range-knob-handle')!;
 
     expect(nativeSlider.getAttribute('aria-label')).toBe('Aria Label Text');
     expect(nativeSlider.getAttribute('aria-labelledby')).toBe(null);
@@ -45,7 +45,7 @@ describe('range: label', () => {
 
     const range = page.body.querySelector('ion-range')!;
 
-    const nativeSlider = range.shadowRoot!.querySelector('.range-knob-handle');
+    const nativeSlider = range.shadowRoot!.querySelector('.range-knob-handle')!;
 
     expect(nativeSlider.getAttribute('aria-label')).toBe(null);
     expect(nativeSlider.getAttribute('aria-labelledby')).toBe('range-label');

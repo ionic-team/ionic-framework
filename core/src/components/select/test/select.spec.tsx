@@ -78,7 +78,7 @@ describe('ion-select', () => {
 
     const select = page.body.querySelector('ion-select')!;
 
-    const nativeButton = select.shadowRoot!.querySelector('button');
+    const nativeButton = select.shadowRoot!.querySelector('button')!;
 
     expect(nativeButton.getAttribute('aria-label')).toBe('Aria Label Text');
   });
@@ -92,7 +92,7 @@ describe('ion-select', () => {
 
     const select = page.body.querySelector('ion-select')!;
 
-    const nativeButton = select.shadowRoot!.querySelector('button');
+    const nativeButton = select.shadowRoot!.querySelector('button')!;
 
     expect(nativeButton.getAttribute('aria-label')).toBe('Label Prop Text');
   });
