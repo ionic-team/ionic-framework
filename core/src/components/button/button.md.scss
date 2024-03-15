@@ -132,22 +132,30 @@
 ::slotted(ion-icon[slot="icon-only"]) {
   @include padding(0);
 
-  font-size: 1.4em;
+  font-size: 1.6em;
 }
 
 :host(.button-has-icon-only) {
   --padding-top: 0;
   --padding-bottom: var(--padding-top);
-  --padding-end: 8px;
+  --padding-end: 0.65em;
   --padding-start: var(--padding-end);
 }
 
 :host(.button-small.button-has-icon-only) {
-  --padding-end: 4px;
+  --padding-end: 0.42em;
+}
+
+:host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.31em;
 }
 
 :host(.button-large.button-has-icon-only) {
-  --padding-end: 14px;
+  --padding-end: 0.6em;
+}
+
+:host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.3em;
 }
 
 // Material Design Button: Hover
