@@ -121,12 +121,6 @@
 }
 
 // MD Icon Only Button
-//
-// These styles must be after the .button-round styles
-// in order to take priority. The styles are not applied
-// only when the .button-round class exists because the
-// size changes will also improve the look of the Rectangular
-// and Soft buttons containing only an icon.
 // --------------------------------------------------
 
 ::slotted(ion-icon[slot="icon-only"]) {
@@ -142,18 +136,26 @@
   --padding-start: var(--padding-end);
 }
 
+// MD does not specify a small size, these
+// styles are based on the iOS small size.
 :host(.button-small.button-has-icon-only) {
   --padding-end: 0.42em;
 }
 
+// MD does not specify a small size, these
+// styles are based on the iOS small size.
 :host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
   font-size: 1.31em;
 }
 
+// MD does not specify a large size, these
+// styles are based on the iOS large size.
 :host(.button-large.button-has-icon-only) {
   --padding-end: 0.6em;
 }
 
+// MD does not specify a large size, these
+// styles are based on the iOS large size.
 :host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
   font-size: 1.3em;
 }

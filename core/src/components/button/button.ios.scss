@@ -134,12 +134,6 @@
 }
 
 // iOS Icon Only Button
-//
-// These styles must be after the .button-round styles
-// in order to take priority. The styles are not applied
-// only when the .button-round class exists because the
-// size changes will also improve the look of the Rectangular
-// and Soft buttons containing only an icon.
 // --------------------------------------------------
 
 ::slotted(ion-icon[slot="icon-only"]) {
