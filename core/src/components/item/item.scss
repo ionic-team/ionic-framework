@@ -347,13 +347,6 @@ a {
   max-width: 100%;
 }
 
-// Item Input
-// --------------------------------------------------
-
-:host(.item-input) {
-  align-items: center;
-}
-
 .input-wrapper {
   display: flex;
 
@@ -393,13 +386,6 @@ a {
 :host(.item-multiple-inputs) ::slotted(ion-datetime),
 :host(.item-multiple-inputs) ::slotted(ion-radio) {
   position: relative;
-}
-
-// Item Textarea
-// --------------------------------------------------
-
-:host(.item-textarea) {
-  align-items: stretch;
 }
 
 // Item Reorder

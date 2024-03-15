@@ -122,15 +122,6 @@
   @include margin-horizontal($item-md-icon-end-slot-margin-start, $item-md-icon-end-slot-margin-end);
 }
 
-// Material Design Slotted Toggle
-// --------------------------------------------------
-
-::slotted(ion-toggle[slot="start"]),
-::slotted(ion-toggle[slot="end"]) {
-  @include margin(0);
-}
-
-
 // Material Design Slotted Note
 // --------------------------------------------------
 
@@ -195,14 +186,6 @@
   @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
 }
 
-// Material Design Toggle/Radio Item
-// --------------------------------------------------
-
-:host(.item-toggle) ::slotted(ion-label),
-:host(.item-radio) ::slotted(ion-label) {
-  @include margin-horizontal(0, null);
-}
-
 // Material Design Item Button
 // --------------------------------------------------
 
@@ -226,8 +209,6 @@
 }
 
 :host(.ion-focused:not(.ion-color)) ::slotted(.label-stacked),
-:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating),
-:host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
-:host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
+:host(.ion-focused:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
 }

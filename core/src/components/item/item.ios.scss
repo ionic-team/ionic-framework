@@ -103,15 +103,6 @@
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
 }
 
-
-// iOS Slotted Toggle
-// --------------------------------------------------
-
-::slotted(ion-toggle[slot="start"]),
-::slotted(ion-toggle[slot="end"]) {
-  @include margin(0);
-}
-
 // iOS Stacked / Floating Labels
 // --------------------------------------------------
 
@@ -156,16 +147,6 @@
 ::slotted(ion-thumbnail[slot="end"]) {
   @include margin(($item-ios-padding-end * 0.5));
 }
-
-
-// iOS Radio / Toggle Item Label
-// -----------------------------------------
-
-:host(.item-radio) ::slotted(ion-label),
-:host(.item-toggle) ::slotted(ion-label) {
-  @include margin-horizontal(0px, null);
-}
-
 
 // iOS Slotted Label
 // --------------------------------------------------

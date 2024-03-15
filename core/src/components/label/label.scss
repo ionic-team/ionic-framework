@@ -36,17 +36,6 @@
   pointer-events: none;
 }
 
-:host-context(.item-input) {
-  flex: initial;
-
-  max-width: 200px;
-  pointer-events: none;
-}
-
-:host-context(.item-textarea) {
-  align-self: baseline;
-}
-
 // Overflow hidden is required for the proper
 // margins between skeleton text elements
 :host-context(.item-skeleton-text) {

@@ -45,30 +45,18 @@
     transform 150ms $label-md-transition-timing-function;
 }
 
-:host-context(.ion-focused).label-floating,
-:host-context(.item-has-focus).label-floating,
-:host-context(.item-has-placeholder:not(.item-input)).label-floating,
-:host-context(.item-has-value).label-floating {
+:host-context(.ion-focused).label-floating {
   @include transform(translateY(50%), scale(.75));
 }
 
 :host-context(.ion-focused).label-stacked:not(.ion-color),
-:host-context(.ion-focused).label-floating:not(.ion-color),
-:host-context(.item-has-focus).label-stacked:not(.ion-color),
-:host-context(.item-has-focus).label-floating:not(.ion-color) {
+:host-context(.ion-focused).label-floating:not(.ion-color) {
   color: $label-md-text-color-focused;
 }
 
 :host-context(.ion-focused.ion-color).label-stacked:not(.ion-color),
-:host-context(.ion-focused.ion-color).label-floating:not(.ion-color),
-:host-context(.item-has-focus.ion-color).label-stacked:not(.ion-color),
-:host-context(.item-has-focus.ion-color).label-floating:not(.ion-color) {
+:host-context(.ion-focused.ion-color).label-floating:not(.ion-color) {
   color: #{current-color(contrast)};
-}
-
-:host-context(.ion-invalid.ion-touched).label-stacked:not(.ion-color),
-:host-context(.ion-invalid.ion-touched).label-floating:not(.ion-color) {
-  color: var(--highlight-color-invalid);
 }
 
 // MD Typography
