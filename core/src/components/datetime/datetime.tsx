@@ -2619,7 +2619,7 @@ export class Datetime implements ComponentInterface {
         {/*
           WebKit has a quirk where IntersectionObserver callbacks are delayed until after
           an accelerated animation finishes if the "root" specified in the config is the
-          browser viewport (the default behavior if "root" is not specified) This means
+          browser viewport (the default behavior if "root" is not specified). This means
           that when presenting a datetime in a modal on iOS the calendar body appears
           blank until the modal animation finishes.
 
