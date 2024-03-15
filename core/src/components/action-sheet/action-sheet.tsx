@@ -320,7 +320,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     /**
      * Only create gesture if:
      * 1. A gesture does not already exist
-     * 2. App is running on iOS platform
+     * 2. App is running in iOS mode
      * 3. A wrapper ref exists
      * 4. A group ref exists
      */
