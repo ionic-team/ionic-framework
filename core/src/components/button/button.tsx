@@ -39,8 +39,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Element() el!: HTMLElement;
 
   /**
-   * Tracks whether the button is a full
-   * circle shape.
+   * Ensures that the 'has-icon-only' class is properly added
+   * or removed from `ion-button` when manipulating the
+   * `icon-only` slot.
+   *
+   * Without this, the 'has-icon-only' class is only checked
+   * or added when `ion-button` component first renders.
    */
   @State() isCircle: boolean = false;
 
