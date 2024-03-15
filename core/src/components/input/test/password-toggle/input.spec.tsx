@@ -5,9 +5,9 @@ import { Input } from '../../input';
 describe('input: password toggle button', () => {
   it('should toggle the input type when pressed', async () => {
     const page = await newSpecPage({
-        components: [Input],
-        html: '<ion-input value="abc" type="password" show-password-toggle="true"></ion-input>',
-      });
+      components: [Input],
+      html: '<ion-input value="abc" type="password" show-password-toggle="true"></ion-input>',
+    });
 
     const input = page.body.querySelector('ion-input .native-input')!;
     const passwordToggleButton = page.body.querySelector<HTMLButtonElement>('ion-input .input-password-toggle')!;
@@ -24,8 +24,8 @@ describe('input: password toggle button', () => {
   });
   it('should change icon when using showPasswordIcon and hidePasswordIcon props', async () => {
     const page = await newSpecPage({
-        components: [Input],
-        html: `
+      components: [Input],
+      html: `
             <ion-input 
                 value="abc" 
                 type="password" 

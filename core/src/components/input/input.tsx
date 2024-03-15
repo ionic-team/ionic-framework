@@ -810,10 +810,7 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.togglePasswordVisibility}
               >
-                <ion-icon
-                  aria-hidden="true"
-                  icon={type === 'text' ? hidePasswordIcon : showPasswordIcon}
-                ></ion-icon>
+                <ion-icon aria-hidden="true" icon={type === 'text' ? hidePasswordIcon : showPasswordIcon}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>
