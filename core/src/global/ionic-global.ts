@@ -204,6 +204,21 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   }
 
   setMode((elm: any) => {
+    /**
+     * Iterate over all the element nodes, to both validate and
+     * set the "mode" that is used for determining the styles to
+     * apply to the element.
+     *
+     * setMode refers to Stencil's internal metadata for "mode",
+     * which is used to set the correct styleUrl for the component.
+     *
+     * If the "theme" attribute or property is set, then use it
+     * to determine the style sheets to use.
+     *
+     * If the "mode" attribute or property is set, then use it
+     * to determine the style sheets to use. This is fallback
+     * behavior for applications that are not setting the "theme".
+     */
     while (elm) {
       const theme = (elm as any).theme || elm.getAttribute('theme');
 
