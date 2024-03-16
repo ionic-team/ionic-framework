@@ -75,7 +75,7 @@ runs:
         pnpm run test.e2e ${{ steps.set-test-file.outputs.testFile }} --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
-        cd ../ && rsync -R --progress $(git diff --name-only --cached) packages/core/updated-screenshots
+        cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
         if [ -d packages/core/updated-screenshots/core ]; then
           echo "hasUpdatedScreenshots=$(echo 'true')" >> $GITHUB_OUTPUT
           cd packages/core/updated-screenshots
