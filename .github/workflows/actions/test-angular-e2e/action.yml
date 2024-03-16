@@ -30,12 +30,12 @@ runs:
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
-      working-directory: ./packages/angular/test
+      working-directory: ./test-apps/angular
     - name: Install Dependencies
       run: pnpm install
       shell: bash
-      working-directory: ./packages/angular/test/build/${{ inputs.app }}
+      working-directory: ./test-apps/angular/build/${{ inputs.app }}
     - name: Run Tests
       run: pnpm run test
       shell: bash
-      working-directory: ./packages/angular/test/build/${{ inputs.app }}
+      working-directory: ./test-apps/angular/build/${{ inputs.app }}
