@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.8.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.5...v7.8.0) (2024-03-13)
+
+
+### Features
+
+* **datetime:** formatOptions property for Datetime ([#29065](https://github.com/ionic-team/ionic-framework/issues/29065)) ([7cdbc1b](https://github.com/ionic-team/ionic-framework/commit/7cdbc1b5ad004e17a7c51363653e0e67f50e6860))
+* **searchbar:** autocapitalize, dir, lang, maxlength, and minlength are inherited to native input ([#29098](https://github.com/ionic-team/ionic-framework/issues/29098)) ([a0a77f7](https://github.com/ionic-team/ionic-framework/commit/a0a77f799df0732d9f7182f15866035a3ce5a1eb)), closes [#27606](https://github.com/ionic-team/ionic-framework/issues/27606)
+
+
+
+
+
+## [7.7.5](https://github.com/ionic-team/ionic-framework/compare/v7.7.4...v7.7.5) (2024-03-13)
+
+
+### Bug Fixes
+
+* **checkbox:** set aria-checked of indeterminate checkbox to 'mixed' ([#29115](https://github.com/ionic-team/ionic-framework/issues/29115)) ([b2d636f](https://github.com/ionic-team/ionic-framework/commit/b2d636f14dcd33313f6604cfd4a64b542c831b34))
+* **overlay:** do not hide overlay if toast is presented ([#29140](https://github.com/ionic-team/ionic-framework/issues/29140)) ([c0f5e5e](https://github.com/ionic-team/ionic-framework/commit/c0f5e5ebc0c9d45d71e10e09903b00b3ba8e6bba)), closes [#29139](https://github.com/ionic-team/ionic-framework/issues/29139)
+
+
+
+
+
 ## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
 
 
