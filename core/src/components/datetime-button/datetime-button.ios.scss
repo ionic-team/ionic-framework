@@ -1,0 +1,12 @@
+@import "./datetime-button";
+
+// iOS Datetime Button
+// --------------------------------------------------
+
+:host button {
+  @include padding(7px, 13px, 7px, 13px);
+}
+
+:host button.ion-activated {
+  color: $text-color-step-400;
+}

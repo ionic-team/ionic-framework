@@ -216,11 +216,9 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox, JSX.Io
   'labelPlacement',
   'justify',
   'alignment',
-  'legacy',
   'ionChange',
   'ionFocus',
-  'ionBlur',
-  'ionStyle'
+  'ionBlur'
 ],
 'checked', 'ion-change');
 
@@ -277,6 +275,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime, JSX.Io
   'color',
   'name',
   'disabled',
+  'formatOptions',
   'readonly',
   'isDateEnabled',
   'min',
@@ -397,7 +396,6 @@ export const IonInfiniteScrollContent = /*@__PURE__*/ defineContainer<JSX.IonInf
 
 export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput["value"]>('ion-input', defineIonInput, [
   'color',
-  'accept',
   'autocapitalize',
   'autocomplete',
   'autocorrect',
@@ -415,7 +413,6 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'helperText',
   'label',
   'labelPlacement',
-  'legacy',
   'max',
   'maxlength',
   'min',
@@ -429,7 +426,6 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'shape',
   'spellcheck',
   'step',
-  'size',
   'type',
   'value',
   'ionInput',
@@ -448,17 +444,13 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', de
   'detailIcon',
   'disabled',
   'download',
-  'fill',
-  'shape',
   'href',
   'rel',
   'lines',
-  'counter',
   'routerAnimation',
   'routerDirection',
   'target',
-  'type',
-  'counterFormatter'
+  'type'
 ]);
 
 
@@ -608,10 +600,8 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio, JSX.IonRadio
   'disabled',
   'value',
   'labelPlacement',
-  'legacy',
   'justify',
   'alignment',
-  'ionStyle',
   'ionFocus',
   'ionBlur'
 ],
@@ -646,10 +636,8 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange
   'disabled',
   'value',
   'labelPlacement',
-  'legacy',
   'ionChange',
   'ionInput',
-  'ionStyle',
   'ionFocus',
   'ionBlur',
   'ionKnobMoveStart',
@@ -699,6 +687,7 @@ export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row', defin
 export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.IonSearchbar["value"]>('ion-searchbar', defineIonSearchbar, [
   'color',
   'animated',
+  'autocapitalize',
   'autocomplete',
   'autocorrect',
   'cancelButtonIcon',
@@ -708,6 +697,8 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.
   'disabled',
   'inputmode',
   'enterkeyhint',
+  'maxlength',
+  'minlength',
   'name',
   'placeholder',
   'searchIcon',
@@ -761,7 +752,6 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'justify',
   'label',
   'labelPlacement',
-  'legacy',
   'multiple',
   'name',
   'okText',
@@ -842,7 +832,6 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea, JSX.Io
   'helperText',
   'label',
   'labelPlacement',
-  'legacy',
   'shape',
   'ionChange',
   'ionInput',
@@ -871,13 +860,11 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'value',
   'enableOnOffLabels',
   'labelPlacement',
-  'legacy',
   'justify',
   'alignment',
   'ionChange',
   'ionFocus',
-  'ionBlur',
-  'ionStyle'
+  'ionBlur'
 ],
 'checked', 'ion-change');
 

@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('range: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
@@ -33,7 +33,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="80" legacy="true"></ion-range>
+            <ion-range min="0" max="100" value="80" aria-label="Range"></ion-range>
           </ion-content>
         </ion-app>
           `,
@@ -67,7 +67,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="50" pin="true" legacy="true"></ion-range>
+            <ion-range min="0" max="100" value="50" pin="true" aria-label="Range"></ion-range>
           </ion-content>
         </ion-app>
         `,

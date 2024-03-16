@@ -1,7 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
+import { focusFirstDescendant, focusLastDescendant } from '@utils/focus-trap';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
+import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
@@ -12,14 +14,12 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 
-import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
+import type { MenuChangeEventDetail, MenuI, MenuType, Side } from './menu-interface';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
 const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
-const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 
 /**
  * @part container - The container for the menu content.
@@ -107,7 +107,7 @@ export class Menu implements ComponentInterface, MenuI {
    * The display type of the menu.
    * Available options: `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type?: string;
+  @Prop({ mutable: true }) type?: MenuType;
 
   @Watch('type')
   typeChanged(type: string, oldType: string | undefined) {
@@ -336,7 +336,6 @@ export class Menu implements ComponentInterface, MenuI {
     }
   }
 
-  @Listen('keydown')
   onKeydown(ev: KeyboardEvent) {
     if (ev.key === 'Escape') {
       this.close();
@@ -398,31 +397,9 @@ export class Menu implements ComponentInterface, MenuI {
     return menuController._setOpen(this, shouldOpen, animated);
   }
 
-  private focusFirstDescendant() {
-    const { el } = this;
-    const firstInput = el.querySelector(focusableQueryString) as HTMLElement | null;
-
-    if (firstInput) {
-      firstInput.focus();
-    } else {
-      el.focus();
-    }
-  }
-
-  private focusLastDescendant() {
-    const { el } = this;
-    const inputs = Array.from(el.querySelectorAll<HTMLElement>(focusableQueryString));
-    const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
-
-    if (lastInput) {
-      lastInput.focus();
-    } else {
-      el.focus();
-    }
-  }
-
   private trapKeyboardFocus(ev: Event, doc: Document) {
     const target = ev.target as HTMLElement | null;
+
     if (!target) {
       return;
     }
@@ -439,13 +416,15 @@ export class Menu implements ComponentInterface, MenuI {
        * Wrap the focus to either the first or last element.
        */
 
+      const { el } = this;
+
       /**
        * Once we call `focusFirstDescendant`, another focus event
        * will fire, which will cause `lastFocus` to be updated
        * before we can run the code after that. We cache the value
        * here to avoid that.
        */
-      this.focusFirstDescendant();
+      focusFirstDescendant(el);
 
       /**
        * If the cached last focused element is the same as the now-
@@ -454,7 +433,7 @@ export class Menu implements ComponentInterface, MenuI {
        * last descendant.
        */
       if (this.lastFocus === doc.activeElement) {
-        this.focusLastDescendant();
+        focusLastDescendant(el);
       }
     }
   }
@@ -796,8 +775,14 @@ export class Menu implements ComponentInterface, MenuI {
     const { type, disabled, el, isPaneVisible, inheritedAttributes, side } = this;
     const mode = getIonMode(this);
 
+    /**
+     * If the Close Watcher is enabled then
+     * the ionBackButton listener in the menu controller
+     * will handle closing the menu when Escape is pressed.
+     */
     return (
       <Host
+        onKeyDown={shouldUseCloseWatcher() ? null : this.onKeydown}
         role="navigation"
         aria-label={inheritedAttributes['aria-label'] || 'menu'}
         class={{

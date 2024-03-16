@@ -110,7 +110,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
       const datetime = page.locator('ion-datetime');
       const ionChange = await page.spyOnEvent('ionChange');
 
@@ -255,7 +255,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -275,7 +275,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -297,7 +297,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const calendarBody = page.locator('ion-datetime .calendar-body');
       const calendarHeader = page.locator('ion-datetime .calendar-month-year');
@@ -323,7 +323,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: visibility'), () => {
-    test('should reset month/year interface when hiding datetime', async ({ page }) => {
+    // TODO FW-6015 re-enable on webkit when bug is fixed
+    test('should reset month/year interface when hiding datetime', async ({ page, skip }) => {
+      skip.browser(
+        'webkit',
+        'This is buggy in a headless Linux environment: https://bugs.webkit.org/show_bug.cgi?id=270358'
+      );
       await page.setContent(
         `
         <ion-datetime></ion-datetime>
@@ -331,7 +336,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const monthYearButton = page.locator('ion-datetime .calendar-month-year');
       const monthYearInterface = page.locator('ion-datetime .datetime-year');
@@ -349,7 +354,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
       await expect(datetime).toBeVisible();
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       // month/year interface should be reset
       await expect(monthYearInterface).toBeHidden();
@@ -399,7 +404,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const selectedDay = page.locator('ion-datetime .calendar-day-active');
 
@@ -428,7 +433,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const ionChange = await page.spyOnEvent('ionChange');
       const calendarButtons = page.locator('.calendar-day:not([disabled])');
@@ -447,7 +452,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const ionChange = await page.spyOnEvent('ionChange');
       const datetime = page.locator('ion-datetime');
@@ -487,7 +492,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const datetime = page.locator('ion-datetime');
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(datetime.locator('.calendar-day-today')).toHaveScreenshot(
         screenshot(`datetime-today-calendar-button`)
@@ -517,7 +522,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       const datetime = page.locator('ion-datetime');
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(datetime).toHaveScreenshot(screenshot(`date-highlight-start-of-month`));
 
@@ -543,7 +548,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
 
@@ -578,6 +583,110 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       monthYearToggle.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
 
       await expect(datetime).toHaveScreenshot(screenshot(`date-month-toggle-focused`));
+    });
+  });
+});
+
+/**
+ * This behavior does not differ across
+ * directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: formatOptions'), () => {
+    test('should format header and time button', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            time: { hour: '2-digit', minute: '2-digit' },
+            date: { day: '2-digit', month: 'long', era: 'short' },
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const headerDate = page.locator('ion-datetime .datetime-selected-date');
+      await expect(headerDate).toHaveText('February 01 AD');
+
+      const timeBody = page.locator('ion-datetime .time-body');
+      await expect(timeBody).toHaveText('04:30 PM');
+    });
+  });
+});
+
+/**
+ * This behavior does not differ across
+ * modes/directions.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: formatOptions misconfiguration errors'), () => {
+    test('should log a warning if time zone is provided', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00" presentation="date">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            date: { timeZone: 'UTC' },
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        '[Ionic Warning]: Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".'
+      );
+    });
+
+    test('should log a warning if the required formatOptions are not provided for a presentation', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {}
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        "[Ionic Warning]: Datetime: The 'date-time' presentation requires either a date or time object (or both) in formatOptions."
+      );
     });
   });
 });

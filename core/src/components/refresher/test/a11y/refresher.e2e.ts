@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
+configs({ directions: ['ltr'], modes: ['md'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
   test.describe(title('refresher: a11y for ion-color()'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.setContent(
@@ -23,7 +23,8 @@ configs({ directions: ['ltr'], modes: ['md'], themes: ['light', 'dark'] }).forEa
 
       await expect(refresher).toHaveClass(/refresher-pulling/);
 
-      const results = await new AxeBuilder({ page }).analyze();
+      // TODO(FW-5937): Remove the disableRules once the ticket is resolved.
+      const results = await new AxeBuilder({ page }).disableRules('aria-progressbar-name').analyze();
 
       expect(results.violations).toEqual([]);
     });

@@ -2,12 +2,17 @@ name: 'Update Reference Screenshots'
 
 on:
   workflow_dispatch:
+    inputs:
+      component:
+        description: 'What component(s) should be updated? (leave blank to update all or use a space-separated list for multiple components)'
+        required: false
+        default: ''
 
 jobs:
   build-core:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/actions/build-core
 
   test-core-screenshot:
@@ -28,18 +33,19 @@ jobs:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/actions/test-core-screenshot
         with:
           shard: ${{ matrix.shard }}
           totalShards: ${{ matrix.totalShards }}
           update: true
+          component: ${{ inputs.component }}
 
   update-reference-screenshots:
     runs-on: ubuntu-latest
     needs: [test-core-screenshot]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         # Normally, we could just push with the
         # default GITHUB_TOKEN, but that will
         # not cause the build workflow

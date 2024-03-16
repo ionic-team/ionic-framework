@@ -1,16 +1,14 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '@utils/helpers';
+import { inheritAriaAttributes, clamp, debounceEvent, renderHiddenInput } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
+import type { Color, Gesture, GestureDetail } from '../../interface';
 import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
 import type {
@@ -59,10 +57,6 @@ export class Range implements ComponentInterface {
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
-  private legacyFormController!: LegacyFormController;
-
-  // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -198,7 +192,6 @@ export class Range implements ComponentInterface {
     if (this.gesture) {
       this.gesture.enable(!this.disabled);
     }
-    this.emitStyle();
   }
 
   /**
@@ -237,17 +230,6 @@ export class Range implements ComponentInterface {
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   /**
-   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
-   * Ionic will only opt components in to the modern form markup when they are
-   * using either the `aria-label` attribute or the `label` property. As a result,
-   * the `legacy` property should only be used as an escape hatch when you want to
-   * avoid this automatic opt-in behavior.
-   * Note that this property will be removed in an upcoming major release
-   * of Ionic, and all form components will be opted-in to using the modern form markup.
-   */
-  @Prop() legacy?: boolean;
-
-  /**
    * The `ionChange` event is fired for `<ion-range>` elements when the user
    * modifies the element's value:
    * - When the user releases the knob after dragging;
@@ -263,12 +245,6 @@ export class Range implements ComponentInterface {
    * while the user is dragging the knob.
    */
   @Event() ionInput!: EventEmitter<RangeChangeEventDetail>;
-
-  /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the range has focus.
@@ -299,8 +275,14 @@ export class Range implements ComponentInterface {
         el: rangeSlider,
         gestureName: 'range',
         gesturePriority: 100,
-        threshold: 0,
-        onStart: (ev) => this.onStart(ev),
+        /**
+         * Provide a threshold since the drag movement
+         * might be a user scrolling the view.
+         * If this is true, then the range
+         * should not move.
+         */
+        threshold: 10,
+        onStart: () => this.onStart(),
         onMove: (ev) => this.onMove(ev),
         onEnd: (ev) => this.onEnd(ev),
       });
@@ -328,10 +310,6 @@ export class Range implements ComponentInterface {
   }
 
   connectedCallback() {
-    const { el } = this;
-
-    this.legacyFormController = createLegacyFormController(el);
-
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
@@ -395,18 +373,6 @@ export class Range implements ComponentInterface {
     }
   }
 
-  // TODO FW-2997 remove this
-  private emitStyle() {
-    if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        interactive: true,
-        'interactive-disabled': this.disabled,
-        // TODO(FW-2997): remove this
-        legacy: !!this.legacy,
-      });
-    }
-  }
-
   /**
    * Emits an `ionChange` event.
    *
@@ -418,42 +384,101 @@ export class Range implements ComponentInterface {
     this.ionChange.emit({ value: this.value });
   }
 
-  private onStart(detail: GestureDetail) {
-    const { contentEl } = this;
-    if (contentEl) {
-      this.initialContentScrollY = disableContentScrollY(contentEl);
-    }
-
-    const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
-    const currentX = detail.currentX;
-
-    // figure out which knob they started closer to
-    let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (isRTL(this.el)) {
-      ratio = 1 - ratio;
-    }
-
-    this.pressedKnob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
-
-    this.setFocus(this.pressedKnob);
-
-    // update the active knob's position
-    this.update(currentX);
-
+  /**
+   * The value should be updated on touch end or
+   * when the component is being dragged.
+   * This follows the native behavior of mobile devices.
+   *
+   * For example: When the user lifts their finger from the
+   * screen after tapping the bar or dragging the bar or knob.
+   */
+  private onStart() {
     this.ionKnobMoveStart.emit({ value: this.ensureValueInBounds(this.value) });
   }
 
+  /**
+   * The value should be updated while dragging the
+   * bar or knob.
+   *
+   * While the user is dragging, the view
+   * should not scroll. This is to prevent the user from
+   * feeling disoriented while dragging.
+   *
+   * The user can scroll on the view if the knob or
+   * bar is not being dragged.
+   *
+   * @param detail The details of the gesture event.
+   */
   private onMove(detail: GestureDetail) {
-    this.update(detail.currentX);
+    const { contentEl, pressedKnob } = this;
+    const currentX = detail.currentX;
+
+    /**
+     * Since the user is dragging on the bar or knob, the view should not scroll.
+     *
+     * This only needs to be done once.
+     */
+    if (contentEl && this.initialContentScrollY === undefined) {
+      this.initialContentScrollY = disableContentScrollY(contentEl);
+    }
+
+    /**
+     * The `pressedKnob` can be undefined if the user just
+     * started dragging the knob.
+     *
+     * This is necessary to determine which knob the user is dragging,
+     * especially when it's a dual knob.
+     * Plus, it determines when to apply certain styles.
+     *
+     * This only needs to be done once since the knob won't change
+     * while the user is dragging.
+     */
+    if (pressedKnob === undefined) {
+      this.setPressedKnob(currentX);
+    }
+
+    this.update(currentX);
   }
 
-  private onEnd(detail: GestureDetail) {
+  /**
+   * The value should be updated on touch end:
+   * - When the user lifts their finger from the screen after
+   * tapping the bar.
+   *
+   * @param detail The details of the gesture or mouse event.
+   */
+  private onEnd(detail: GestureDetail | MouseEvent) {
     const { contentEl, initialContentScrollY } = this;
-    if (contentEl) {
+    const currentX = (detail as GestureDetail).currentX || (detail as MouseEvent).clientX;
+
+    /**
+     * The `pressedKnob` can be undefined if the user never
+     * dragged the knob. They just tapped on the bar.
+     *
+     * This is necessary to determine which knob the user is changing,
+     * especially when it's a dual knob.
+     * Plus, it determines when to apply certain styles.
+     */
+    if (this.pressedKnob === undefined) {
+      this.setPressedKnob(currentX);
+    }
+
+    /**
+     * The user is no longer dragging the bar or
+     * knob (if they were dragging it).
+     *
+     * The user can now scroll on the view in the next gesture event.
+     */
+    if (contentEl && initialContentScrollY !== undefined) {
       resetContentScrollY(contentEl, initialContentScrollY);
     }
 
-    this.update(detail.currentX);
+    // update the active knob's position
+    this.update(currentX);
+    /**
+     * Reset the pressed knob to undefined since the user
+     * may start dragging a different knob in the next gesture event.
+     */
     this.pressedKnob = undefined;
 
     this.emitValueChange();
@@ -483,6 +508,19 @@ export class Range implements ComponentInterface {
 
     // Update input value
     this.updateValue();
+  }
+
+  private setPressedKnob(currentX: number) {
+    const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
+
+    // figure out which knob they started closer to
+    let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
+    if (isRTL(this.el)) {
+      ratio = 1 - ratio;
+    }
+    this.pressedKnob = !this.dualKnobs || Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio) ? 'A' : 'B';
+
+    this.setFocus(this.pressedKnob);
   }
 
   private get valA() {
@@ -553,7 +591,6 @@ export class Range implements ComponentInterface {
     if (this.hasFocus) {
       this.hasFocus = false;
       this.ionBlur.emit();
-      this.emitStyle();
     }
   };
 
@@ -561,61 +598,8 @@ export class Range implements ComponentInterface {
     if (!this.hasFocus) {
       this.hasFocus = true;
       this.ionFocus.emit();
-      this.emitStyle();
     }
   };
-
-  // TODO FW-2997 remove this
-  private renderLegacyRange() {
-    if (!this.hasLoggedDeprecationWarning) {
-      printIonWarning(
-        `ion-range now requires providing a label with either the label slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
-
-Example: <ion-range><div slot="label">Volume</div></ion-range>
-Example with aria-label: <ion-range aria-label="Volume"></ion-range>
-
-Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
-        this.el
-      );
-
-      if (this.legacy) {
-        printIonWarning(
-          `ion-range is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
-
-Developers can dismiss this warning by removing their usage of the "legacy" property and using the new range syntax.`,
-          this.el
-        );
-      }
-
-      this.hasLoggedDeprecationWarning = true;
-    }
-
-    const { el, pressedKnob, disabled, pin, rangeId } = this;
-
-    const mode = getIonMode(this);
-
-    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
-
-    return (
-      <Host
-        onFocusin={this.onFocus}
-        onFocusout={this.onBlur}
-        id={rangeId}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'range-disabled': disabled,
-          'range-pressed': pressedKnob !== undefined,
-          'range-has-pin': pin,
-          'legacy-range': true,
-        })}
-      >
-        <slot name="start"></slot>
-        {this.renderRangeSlider()}
-        <slot name="end"></slot>
-      </Host>
-    );
-  }
 
   /**
    * Returns true if content was passed to the "start" slot
@@ -631,68 +615,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     return this.el.querySelector('[slot="end"]') !== null;
   }
 
-  private renderRange() {
-    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label } = this;
-
-    const inItem = hostContext('ion-item', el);
-
-    /**
-     * If there is no start content then the knob at
-     * the min value will be cut off by the item margin.
-     */
-    const hasStartContent =
-      (hasLabel && (labelPlacement === 'start' || labelPlacement === 'fixed')) || this.hasStartSlotContent;
-
-    const needsStartAdjustment = inItem && !hasStartContent;
-
-    /**
-     * If there is no end content then the knob at
-     * the max value will be cut off by the item margin.
-     */
-    const hasEndContent = (hasLabel && labelPlacement === 'end') || this.hasEndSlotContent;
-
-    const needsEndAdjustment = inItem && !hasEndContent;
-
-    const mode = getIonMode(this);
-
-    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
-
-    return (
-      <Host
-        onFocusin={this.onFocus}
-        onFocusout={this.onBlur}
-        id={rangeId}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'in-item': inItem,
-          'range-disabled': disabled,
-          'range-pressed': pressedKnob !== undefined,
-          'range-has-pin': pin,
-          [`range-label-placement-${labelPlacement}`]: true,
-          'range-item-start-adjustment': needsStartAdjustment,
-          'range-item-end-adjustment': needsEndAdjustment,
-        })}
-      >
-        <label class="range-wrapper" id="range-label">
-          <div
-            class={{
-              'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !hasLabel,
-            }}
-            part="label"
-          >
-            {label !== undefined ? <div class="label-text">{label}</div> : <slot name="label"></slot>}
-          </div>
-          <div class="native-wrapper">
-            <slot name="start"></slot>
-            {this.renderRangeSlider()}
-            <slot name="end"></slot>
-          </div>
-        </label>
-      </Host>
-    );
-  }
-
   private get hasLabel() {
     return this.label !== undefined || this.el.querySelector('[slot="label"]') !== null;
   }
@@ -702,27 +624,15 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       min,
       max,
       step,
-      el,
       handleKeyboard,
       pressedKnob,
       disabled,
       pin,
       ratioLower,
       ratioUpper,
-      inheritedAttributes,
-      rangeId,
       pinFormatter,
+      inheritedAttributes,
     } = this;
-
-    /**
-     * Look for external label, ion-label, or aria-labelledby.
-     * If none, see if user placed an aria-label on the host
-     * and use that instead.
-     */
-    let { labelText } = getAriaLabel(el, rangeId!);
-    if (labelText === undefined || labelText === null) {
-      labelText = inheritedAttributes['aria-label'];
-    }
 
     let barStart = `${ratioLower * 100}%`;
     let barEnd = `${100 - ratioUpper * 100}%`;
@@ -793,13 +703,40 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       }
     }
 
-    let labelledBy: string | undefined;
-    if (!this.legacyFormController.hasLegacyControl() && this.hasLabel) {
-      labelledBy = 'range-label';
-    }
-
     return (
-      <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
+      <div
+        class="range-slider"
+        ref={(rangeEl) => (this.rangeSlider = rangeEl)}
+        /**
+         * Since the gesture has a threshold, the value
+         * won't change until the user has dragged past
+         * the threshold. This is to prevent the range
+         * from moving when the user is scrolling.
+         *
+         * This results in the value not being updated
+         * and the event emitters not being triggered
+         * if the user taps on the range. This is why
+         * we need to listen for the "pointerUp" event.
+         */
+        onPointerUp={(ev: PointerEvent) => {
+          /**
+           * If the user drags the knob on the web
+           * version (does not occur on mobile),
+           * the "pointerUp" event will be triggered
+           * along with the gesture's events.
+           * This leads to duplicate events.
+           *
+           * By checking if the pressedKnob is undefined,
+           * we can determine if the "pointerUp" event was
+           * triggered by a tap or a drag. If it was
+           * dragged, the pressedKnob will be defined.
+           */
+          if (this.pressedKnob === undefined) {
+            this.onStart();
+            this.onEnd(ev);
+          }
+        }}
+      >
         {ticks.map((tick) => (
           <div
             style={tickStyle(tick)}
@@ -837,8 +774,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           handleKeyboard,
           min,
           max,
-          labelText,
-          labelledBy,
+          inheritedAttributes,
         })}
 
         {this.dualKnobs &&
@@ -853,16 +789,72 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
             handleKeyboard,
             min,
             max,
-            labelText,
-            labelledBy,
+            inheritedAttributes,
           })}
       </div>
     );
   }
 
   render() {
-    const { legacyFormController } = this;
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyRange() : this.renderRange();
+    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label } = this;
+
+    const inItem = hostContext('ion-item', el);
+
+    /**
+     * If there is no start content then the knob at
+     * the min value will be cut off by the item margin.
+     */
+    const hasStartContent =
+      (hasLabel && (labelPlacement === 'start' || labelPlacement === 'fixed')) || this.hasStartSlotContent;
+
+    const needsStartAdjustment = inItem && !hasStartContent;
+
+    /**
+     * If there is no end content then the knob at
+     * the max value will be cut off by the item margin.
+     */
+    const hasEndContent = (hasLabel && labelPlacement === 'end') || this.hasEndSlotContent;
+
+    const needsEndAdjustment = inItem && !hasEndContent;
+
+    const mode = getIonMode(this);
+
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+
+    return (
+      <Host
+        onFocusin={this.onFocus}
+        onFocusout={this.onBlur}
+        id={rangeId}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'in-item': inItem,
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin,
+          [`range-label-placement-${labelPlacement}`]: true,
+          'range-item-start-adjustment': needsStartAdjustment,
+          'range-item-end-adjustment': needsEndAdjustment,
+        })}
+      >
+        <label class="range-wrapper" id="range-label">
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': !hasLabel,
+            }}
+            part="label"
+          >
+            {label !== undefined ? <div class="label-text">{label}</div> : <slot name="label"></slot>}
+          </div>
+          <div class="native-wrapper">
+            <slot name="start"></slot>
+            {this.renderRangeSlider()}
+            <slot name="end"></slot>
+          </div>
+        </label>
+      </Host>
+    );
   }
 }
 
@@ -876,27 +868,13 @@ interface RangeKnob {
   pressed: boolean;
   pin: boolean;
   pinFormatter: PinFormatter;
-  labelText?: string | null;
-  labelledBy?: string;
+  inheritedAttributes: Attributes;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
 const renderKnob = (
   rtl: boolean,
-  {
-    knob,
-    value,
-    ratio,
-    min,
-    max,
-    disabled,
-    pressed,
-    pin,
-    handleKeyboard,
-    labelText,
-    labelledBy,
-    pinFormatter,
-  }: RangeKnob
+  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, pinFormatter, inheritedAttributes }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
@@ -907,6 +885,9 @@ const renderKnob = (
 
     return style;
   };
+
+  // The aria label should be preferred over visible text if both are specified
+  const ariaLabel = inheritedAttributes['aria-label'];
 
   return (
     <div
@@ -935,8 +916,8 @@ const renderKnob = (
       style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
-      aria-label={labelledBy === undefined ? labelText : null}
-      aria-labelledby={labelledBy !== undefined ? labelledBy : null}
+      aria-label={ariaLabel !== undefined ? ariaLabel : null}
+      aria-labelledby={ariaLabel === undefined ? 'range-label' : null}
       aria-valuemin={min}
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}

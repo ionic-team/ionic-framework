@@ -401,6 +401,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * This can be useful in a button handler for determining which button was
    * clicked to dismiss the toast.
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+   *
+   * This is a no-op if the overlay has not been presented yet. If you want
+   * to remove an overlay from the DOM that was never presented, use the
+   * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -778,7 +782,6 @@ const buttonClass = (button: ToastButton): CssClassMap => {
     [`toast-button-${button.role}`]: button.role !== undefined,
     'ion-focusable': true,
     'ion-activatable': true,
-    ...getClassMap(button.cssClass),
   };
 };
 

@@ -62,7 +62,7 @@ class DatetimeMultipleFixture {
     );
 
     this.datetime = this.page.locator('ion-datetime');
-    await this.page.waitForSelector('.datetime-ready');
+    await this.page.locator('.datetime-ready').waitFor();
 
     return this.datetime;
   }
@@ -304,7 +304,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector(`.datetime-ready`);
+      await page.locator(`.datetime-ready`).waitFor();
       const datetime = page.locator('ion-datetime');
       const header = datetime.locator('.datetime-selected-date');
 

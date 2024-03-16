@@ -17,6 +17,7 @@
   --button-background-focused: currentColor;
   --button-background-focused-opacity: .12;
   --button-color: #{$action-sheet-md-button-text-color};
+  --button-color-disabled: var(--button-color);
   --color: #{$action-sheet-md-title-color};
 }
 

@@ -1,6 +1,23 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('datetime-button: basic'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" value="2022-01-01T06:30:00" presentation="date-time"></ion-datetime>
+      `,
+        config
+      );
+      const datetimeButton = page.locator('ion-datetime-button');
+
+      await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-basic`));
+    });
+  });
+});
+
 /**
  * The tested behavior does not
  * vary across modes/directions
@@ -15,7 +32,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
     });
     test('should switch to a date-only view when the date button is clicked', async ({ page }) => {
       const datetime = page.locator('ion-datetime');
@@ -45,7 +62,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('Jan 1, 2022');
       await expect(page.locator('#time-button')).toContainText('6:30 AM');
@@ -58,7 +75,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('January 2022');
       await expect(page.locator('#time-button')).toBeHidden();
@@ -71,7 +88,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('2022');
       await expect(page.locator('#time-button')).toBeHidden();
@@ -84,7 +101,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('January');
       await expect(page.locator('#time-button')).toBeHidden();
@@ -97,7 +114,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#time-button')).toContainText('6:30 AM');
       await expect(page.locator('#date-button')).toBeHidden();
@@ -110,7 +127,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetime = page.locator('ion-datetime');
       const dateTarget = page.locator('#date-button');
@@ -135,7 +152,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('January 2022');
       await expect(page.locator('#time-button')).toBeHidden();
@@ -153,7 +170,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('2022');
       await expect(page.locator('#time-button')).toBeHidden();
@@ -169,7 +186,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       /**
        * The entire text reads 1 ene 2022, but some browsers will add
@@ -187,7 +204,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#time-button')).toContainText('16:30');
     });
@@ -199,7 +216,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const timeTarget = page.locator('#time-button');
       await expect(timeTarget).toContainText('6:30');
@@ -223,7 +240,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('Jan 1, 2022 6:30 AM');
       await expect(page.locator('#time-button')).not.toBeVisible();
@@ -238,10 +255,93 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toContainText('Jan 1, 2022 6:30 AM');
       await expect(page.locator('#time-button')).not.toBeVisible();
+    });
+  });
+
+  test.describe(title('datetime-button: formatOptions'), () => {
+    test('should include date and time for presentation date-time', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" presentation="date-time" value="2023-11-02T01:22:00" locale="en-US"></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            date: {
+              weekday: "short",
+              month: "long",
+              day: "2-digit"
+            },
+            time: {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(page.locator('#date-button')).toContainText('Thu, November 02');
+      await expect(page.locator('#time-button')).toContainText('01:22 AM');
+    });
+
+    test('should include date for presentation date', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" presentation="date" value="2023-11-02" locale="en-US"></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            date: {
+              weekday: "short",
+              month: "long",
+              day: "2-digit"
+            }
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(page.locator('#date-button')).toContainText('Thu, November 02');
+    });
+
+    test('should include date and time in same button for preferWheel', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" presentation="date-time" value="2023-11-02T01:22:00" locale="en-US" prefer-wheel="true"></ion-datetime>
+        <script>
+        const datetime = document.querySelector('ion-datetime');
+        datetime.formatOptions = {
+          date: {
+            weekday: "short",
+            month: "long",
+            day: "2-digit"
+          },
+          time: {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      await expect(page.locator('ion-datetime-button')).toContainText('Thu, November 02 01:22 AM');
     });
   });
 });

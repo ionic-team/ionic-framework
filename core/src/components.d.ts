@@ -15,11 +15,10 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { CounterFormatter } from "./components/item/item-interface";
-import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+import { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
@@ -51,11 +50,10 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { CounterFormatter } from "./components/item/item-interface";
-export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+export { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
@@ -160,7 +158,7 @@ export namespace Components {
         /**
           * Dismiss the action sheet overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+          * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -239,7 +237,7 @@ export namespace Components {
         /**
           * Dismiss the alert overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+          * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -631,10 +629,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -858,6 +852,10 @@ export namespace Components {
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
          */
         "firstDayOfWeek": number;
+        /**
+          * Formatting options for dates and times. Should include a 'date' and/or 'time' object, each of which is of type [Intl.DateTimeFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options).
+         */
+        "formatOptions"?: FormatOptions;
         /**
           * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
          */
@@ -1145,11 +1143,6 @@ export namespace Components {
     }
     interface IonInput {
         /**
-          * This attribute is ignored.
-          * @deprecated
-         */
-        "accept"?: string;
-        /**
           * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize": string;
@@ -1226,10 +1219,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
         "max"?: string | number;
@@ -1281,7 +1270,6 @@ export namespace Components {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
-        "size"?: number;
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -1309,16 +1297,6 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counter": boolean;
-        /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
-          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counterFormatter"?: CounterFormatter;
-        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -1334,11 +1312,6 @@ export namespace Components {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download": string | undefined;
-        /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
-          * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
-         */
-        "fill"?: 'outline' | 'solid';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -1363,10 +1336,6 @@ export namespace Components {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection": RouterDirection;
-        /**
-          * The shape of the item. If "round" it will have increased border radius.
-         */
-        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -1527,7 +1496,7 @@ export namespace Components {
         /**
           * Dismiss the loading overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+          * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -1645,7 +1614,7 @@ export namespace Components {
         /**
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
-        "type"?: string;
+        "type"?: MenuType;
     }
     interface IonMenuButton {
         /**
@@ -1720,7 +1689,7 @@ export namespace Components {
         /**
           * Dismiss the modal overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
+          * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -2128,7 +2097,7 @@ export namespace Components {
           * Dismiss the popover overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
           * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
-          * @param dismissParentPopover If `true`, dismissing this popover will also dismiss a parent popover if this popover is nested. Defaults to `true`.
+          * @param dismissParentPopover If `true`, dismissing this popover will also dismiss a parent popover if this popover is nested. Defaults to `true`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string, dismissParentPopover?: boolean) => Promise<boolean>;
         /**
@@ -2264,10 +2233,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -2329,10 +2294,6 @@ export namespace Components {
           * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). `"stacked"`: The label will appear above the range regardless of the direction.
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
-        /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
         /**
           * Maximum integer value of the range.
          */
@@ -2567,6 +2528,10 @@ export namespace Components {
          */
         "animated": boolean;
         /**
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+         */
+        "autocapitalize": string;
+        /**
           * Set the input's autocomplete property.
          */
         "autocomplete": AutocompleteTypes;
@@ -2610,6 +2575,14 @@ export namespace Components {
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * This attribute specifies the maximum number of characters that the user can enter.
+         */
+        "maxlength"?: number;
+        /**
+          * This attribute specifies the minimum number of characters that the user can enter.
+         */
+        "minlength"?: number;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2749,10 +2722,6 @@ export namespace Components {
           * Where to place the label relative to the select. `"start"`: The label will appear to the left of the select in LTR and to the right in RTL. `"end"`: The label will appear to the right of the select in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `"stacked"`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
-        /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3041,10 +3010,6 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
@@ -3130,7 +3095,7 @@ export namespace Components {
         /**
           * Dismiss the toast overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
-          * @param role The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+          * @param role The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.  This is a no-op if the overlay has not been presented yet. If you want to remove an overlay from the DOM that was never presented, use the [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
          */
         "dismiss": (data?: any, role?: string) => Promise<boolean>;
         /**
@@ -3241,10 +3206,6 @@ export namespace Components {
           * Where to place the label relative to the input. `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL. `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). `"stacked"`: The label will appear above the toggle regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
          */
         "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
-        /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3665,7 +3626,6 @@ declare global {
         "ionChange": CheckboxChangeEventDetail;
         "ionFocus": void;
         "ionBlur": void;
-        "ionStyle": StyleEventDetail;
     }
     interface HTMLIonCheckboxElement extends Components.IonCheckbox, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonCheckboxElementEventMap>(type: K, listener: (this: HTMLIonCheckboxElement, ev: IonCheckboxCustomEvent<HTMLIonCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4167,7 +4127,6 @@ declare global {
         new (): HTMLIonProgressBarElement;
     };
     interface HTMLIonRadioElementEventMap {
-        "ionStyle": StyleEventDetail;
         "ionFocus": void;
         "ionBlur": void;
     }
@@ -4206,7 +4165,6 @@ declare global {
     interface HTMLIonRangeElementEventMap {
         "ionChange": RangeChangeEventDetail;
         "ionInput": RangeChangeEventDetail;
-        "ionStyle": StyleEventDetail;
         "ionFocus": void;
         "ionBlur": void;
         "ionKnobMoveStart": RangeKnobMoveStartEventDetail;
@@ -4623,7 +4581,6 @@ declare global {
         "ionChange": ToggleChangeEventDetail;
         "ionFocus": void;
         "ionBlur": void;
-        "ionStyle": StyleEventDetail;
     }
     interface HTMLIonToggleElement extends Components.IonToggle, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonToggleElementEventMap>(type: K, listener: (this: HTMLIonToggleElement, ev: IonToggleCustomEvent<HTMLIonToggleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5352,10 +5309,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -5375,10 +5328,6 @@ declare namespace LocalJSX {
           * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonCheckboxCustomEvent<StyleEventDetail>) => void;
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
@@ -5567,6 +5516,10 @@ declare namespace LocalJSX {
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
          */
         "firstDayOfWeek"?: number;
+        /**
+          * Formatting options for dates and times. Should include a 'date' and/or 'time' object, each of which is of type [Intl.DateTimeFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options).
+         */
+        "formatOptions"?: FormatOptions;
         /**
           * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
          */
@@ -5890,11 +5843,6 @@ declare namespace LocalJSX {
     }
     interface IonInput {
         /**
-          * This attribute is ignored.
-          * @deprecated
-         */
-        "accept"?: string;
-        /**
           * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize"?: string;
@@ -5967,10 +5915,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
         "max"?: string | number;
@@ -6038,7 +5982,6 @@ declare namespace LocalJSX {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
-        "size"?: number;
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -6066,16 +6009,6 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counter"?: boolean;
-        /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
-          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counterFormatter"?: CounterFormatter;
-        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -6091,11 +6024,6 @@ declare namespace LocalJSX {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download"?: string | undefined;
-        /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
-          * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
-         */
-        "fill"?: 'outline' | 'solid';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -6120,10 +6048,6 @@ declare namespace LocalJSX {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
-        /**
-          * The shape of the item. If "round" it will have increased border radius.
-         */
-        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -6402,7 +6326,7 @@ declare namespace LocalJSX {
         /**
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
-        "type"?: string;
+        "type"?: MenuType;
     }
     interface IonMenuButton {
         /**
@@ -6964,10 +6888,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -6983,10 +6903,6 @@ declare namespace LocalJSX {
           * Emitted when the radio button has focus.
          */
         "onIonFocus"?: (event: IonRadioCustomEvent<void>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonRadioCustomEvent<StyleEventDetail>) => void;
         /**
           * the value of the radio.
          */
@@ -7048,10 +6964,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * Maximum integer value of the range.
          */
         "max"?: number;
@@ -7091,10 +7003,6 @@ declare namespace LocalJSX {
           * Emitted when the user starts moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
          */
         "onIonKnobMoveStart"?: (event: IonRangeCustomEvent<RangeKnobMoveStartEventDetail>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonRangeCustomEvent<StyleEventDetail>) => void;
         /**
           * If `true`, a pin with integer value is shown when the knob is pressed.
          */
@@ -7309,6 +7217,10 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+         */
+        "autocapitalize": string;
+        /**
           * Set the input's autocomplete property.
          */
         "autocomplete"?: AutocompleteTypes;
@@ -7348,6 +7260,14 @@ declare namespace LocalJSX {
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * This attribute specifies the maximum number of characters that the user can enter.
+         */
+        "maxlength"?: number;
+        /**
+          * This attribute specifies the minimum number of characters that the user can enter.
+         */
+        "minlength"?: number;
         /**
           * The mode determines which platform styles to use.
          */
@@ -7522,10 +7442,6 @@ declare namespace LocalJSX {
           * Where to place the label relative to the select. `"start"`: The label will appear to the left of the select in LTR and to the right in RTL. `"end"`: The label will appear to the right of the select in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `"stacked"`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
-        /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -7834,10 +7750,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
@@ -8069,10 +7981,6 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
-          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
-         */
-        "legacy"?: boolean;
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -8092,10 +8000,6 @@ declare namespace LocalJSX {
           * Emitted when the toggle has focus.
          */
         "onIonFocus"?: (event: IonToggleCustomEvent<void>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonToggleCustomEvent<StyleEventDetail>) => void;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */

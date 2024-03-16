@@ -1,0 +1,8 @@
+@import "./datetime-button";
+
+// Material Design Datetime Button
+// --------------------------------------------------
+
+:host button {
+  @include padding(6px, 12px, 6px, 12px);
+}
