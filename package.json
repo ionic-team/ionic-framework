@@ -7,5 +7,9 @@
   },
   "engines": {
     "node": ">= 16"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "echo noop"
   }
 }

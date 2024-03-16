@@ -6,7 +6,6 @@
     "ng": "ng",
     "start": "ng serve",
     "sync:build": "sh scripts/build-ionic.sh",
-    "sync": "sh scripts/sync.sh",
     "build": "ng build --configuration production --no-progress",
     "lint": "ng lint",
     "postinstall": "ngcc",
@@ -16,8 +15,8 @@
     "prerender": "ng run test-app:prerender",
     "cy.open": "cypress open",
     "cy.run": "cypress run",
-    "test": "concurrently \"npm run start -- --configuration production\" \"wait-on http-get://localhost:4200 && npm run cy.run\" --kill-others --success first",
-    "test.watch": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.open\" --kill-others --success first"
+    "test": "concurrently \"pnpm run start --configuration production\" \"wait-on http-get://localhost:4200 && pnpm run cy.run\" --kill-others --success first",
+    "test.watch": "concurrently \"pnpm run start\" \"wait-on http-get://localhost:4200 && pnpm run cy.open\" --kill-others --success first"
   },
   "dependencies": {
     "@angular/animations": "^15.0.0",
@@ -29,8 +28,8 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/platform-server": "^15.0.0",
     "@angular/router": "^15.0.0",
-    "@ionic/angular": "^6.1.15",
-    "@ionic/angular-server": "^6.1.15",
+    "@ionic/angular": "file:../../../dist",
+    "@ionic/angular-server": "file:../../../../angular-server/dist",
     "@nguniversal/express-engine": "^15.0.0",
     "core-js": "^2.6.11",
     "express": "^4.15.2",

@@ -1,0 +1,3 @@
+packages:
+  - ../../../
+  - ../../../../react-router

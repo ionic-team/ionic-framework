@@ -21,7 +21,7 @@ Ionic Angular specific building blocks on top of [@ionic/core](https://www.npmjs
 ## Testing ng-add in ionic
 
 1. Pull the latest from `main`
-2. Build ionic/angular: `npm run build`
+2. Build ionic/angular: `pnpm build`
 3. Run `npm link` from `ionic/angular/dist` directory
 4. Create a blank angular project
 
@@ -72,3 +72,35 @@ Ionic developers can access this by importing from `@ionic/angular/standalone`.
 This is where the lazy loaded component implementations live.
 
 Ionic developers can access this by importing from `@ionic/angular`.
+
+## Building
+
+1. Install dependencies in `@ionic/core`:
+
+```shell
+cd core && pnpm install
+```
+
+2. Build `@ionic/core`. This will generate Angular component bindings in the `packages/angular` directory:
+
+```shell
+pnpm build
+```
+
+> [!WARNING]
+> If you are receiving errors about missing packages, you may need to run `pnpm install --force` to force the installation of the missing packages.
+
+3. Install dependencies in `@ionic/angular`:
+
+```shell
+cd packages/angular && pnpm install
+```
+
+4. Build `@ionic/angular`:
+
+```shell
+pnpm build
+```
+
+> [!WARNING]
+> If you are receiving errors about missing packages, you may need to run `pnpm install --force` to force the installation of the missing packages.

@@ -20,5 +20,8 @@ export default defineConfig({
   // Preview applies to "vite preview" command
   preview: {
     port: 8080
+  },
+  optimizeDeps: {
+    exclude: ['@ionic/vue', '@ionic/vue-router']
   }
 })

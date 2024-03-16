@@ -10,7 +10,7 @@ const distGeneratedNodeModules = path.join(distDir, 'node_modules');
 
 function doGlob(globString) {
   return new Promise((resolve, reject) => {
-    glob(globString, (err, matches) => {
+    glob.glob(globString, (err, matches) => {
       if (err) {
         return reject(err);
       }

@@ -5,18 +5,17 @@
   "scripts": {
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
-    "lint": "npm run eslint && npm run prettier -- --write --cache",
-    "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "lint": "pnpm run eslint && pnpm run prettier --write --cache",
+    "lint.fix": "pnpm run eslint --fix && pnpm run prettier --write --cache",
     "test": "jest",
-    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run bundle && npm run build.vetur && npm run build.web-types",
-    "build.watch": "npm run bundle -- --watch",
+    "build": "pnpm run clean && pnpm run copy && pnpm run copy.overlays && pnpm run bundle && pnpm run build.vetur && pnpm run build.web-types",
+    "build.watch": "pnpm copy && pnpm bundle --watch",
     "bundle": "rollup --config rollup.config.mjs",
     "clean": "rimraf dist",
     "build.web-types": "node ./scripts/build-web-types.js",
     "build.vetur": "node ./scripts/build-vetur.js",
     "copy": "node ./scripts/copy-css.js",
-    "copy.overlays": "node ./scripts/copy-overlays.js",
-    "sync": "sh ./scripts/sync.sh"
+    "copy.overlays": "node ./scripts/copy-overlays.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/types/index.d.ts",

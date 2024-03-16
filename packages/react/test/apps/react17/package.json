@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@ionic/react": "^6.6.1",
-    "@ionic/react-router": "^6.6.1",
+    "@ionic/react": "workspace:*",
+    "@ionic/react-router": "workspace:*",
     "@types/react": "^17.0.53",
     "@types/react-dom": "^17.0.19",
     "@types/react-router": "^5.1.20",
@@ -22,10 +22,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject",
-    "sync": "sh ./scripts/sync.sh",
     "cypress": "cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
-    "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
+    "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && pnpm run cypress\" --kill-others --success first"
   },
   "eslintConfig": {
     "extends": [
@@ -60,5 +59,9 @@
   "description": "An Ionic project",
   "engines": {
     "node": ">= 16"
+  },
+  "resolutions": {
+    "@types/react": "^17.0.53",
+    "react": "^17.0.2"
   }
 }
