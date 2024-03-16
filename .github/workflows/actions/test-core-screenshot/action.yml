@@ -76,9 +76,9 @@ runs:
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
-        if [ -d packages/core/updated-screenshots/core ]; then
+        if [ -d core/updated-screenshots/core ]; then
           echo "hasUpdatedScreenshots=$(echo 'true')" >> $GITHUB_OUTPUT
-          cd packages/core/updated-screenshots
+          cd core/updated-screenshots
           zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip packages/core
         fi
       shell: bash
