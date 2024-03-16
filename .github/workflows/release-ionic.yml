@@ -29,7 +29,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
-        working-directory: 'core'
+        working-directory: 'packages/core'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/core
       uses: ./.github/workflows/actions/upload-archive
@@ -53,7 +53,7 @@ jobs:
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-docs
-        path: ./docs
+        path: ./packages/docs
         filename: DocsBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
@@ -61,7 +61,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
-        working-directory: 'docs'
+        working-directory: 'packages/docs'
         token: ${{ secrets.NPM_TOKEN }}
 
   release-angular:
@@ -73,7 +73,7 @@ jobs:
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
@@ -100,7 +100,7 @@ jobs:
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
@@ -126,7 +126,7 @@ jobs:
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
@@ -152,7 +152,7 @@ jobs:
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
@@ -172,7 +172,7 @@ jobs:
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - name: Restore @ionic/react built cache
       uses: ./.github/workflows/actions/download-archive
@@ -198,7 +198,7 @@ jobs:
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
-        path: ./core
+        path: ./packages/core
         filename: CoreBuild.zip
     - name: Restore @ionic/vue built cache
       uses: ./.github/workflows/actions/download-archive

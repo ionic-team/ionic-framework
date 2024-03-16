@@ -1,0 +1,4 @@
+packages:
+  - ../../../../packages/core
+  - ../../../../packages/angular
+  - ../../../../packages/angular-server

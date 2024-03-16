@@ -1,0 +1,43 @@
+{
+  "name": "test-app",
+  "version": "0.0.1",
+  "private": true,
+  "description": "An Ionic project",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "test:unit": "vitest",
+    "test:e2e": "concurrently \"pnpm run build && pnpm run serve\" \"wait-on http-get://localhost:8080 && pnpm run cypress\" --kill-others --success first",
+    "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix src",
+    "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
+    "cypress.open": "cypress open",
+    "start": "pnpm run dev"
+  },
+  "dependencies": {
+    "@ionic/vue": "workspace:*",
+    "@ionic/vue-router": "workspace:*",
+    "ionicons": "^6.0.4",
+    "vue": "^3.4.14",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "@vue/test-utils": "^2.0.0-rc.18",
+    "concurrently": "^6.0.0",
+    "cypress": "^13.2.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "jsdom": "^20.0.0",
+    "typescript": "~4.5.5",
+    "vite": "^3.1.4",
+    "vitest": "^1.2.1",
+    "wait-on": "^5.3.0"
+  },
+  "engines": {
+    "node": ">= 16"
+  }
+}

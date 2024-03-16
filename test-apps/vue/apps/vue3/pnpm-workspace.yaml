@@ -1,0 +1,4 @@
+packages:
+  - ../../../../packages/core
+  - ../../../../packages/vue
+  - ../../../../packages/vue-router

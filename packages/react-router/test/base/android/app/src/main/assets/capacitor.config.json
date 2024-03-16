@@ -1,8 +1,0 @@
-{
-  "appId": "io.ionic.starter",
-  "appName": "react-router-new",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "build",
-  "cordova": {}
-}

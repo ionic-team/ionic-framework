@@ -17,21 +17,21 @@ runs:
         version: 8
     - name: Install Dependencies
       run: pnpm install
-      working-directory: ./core
+      working-directory: ./packages/core
       shell: bash
     # If an Ionicons version was specified install that.
     # Otherwise just use the version defined in the package.json.
     - name: Install Ionicons Version
       if: inputs.ionicons-version != ''
       run: pnpm install ionicons@${{ inputs.ionicons-version }}
-      working-directory: ./core
+      working-directory: ./packages/core
       shell: bash
     - name: Build Core
       run: pnpm run build --ci
-      working-directory: ./core
+      working-directory: ./packages/core
       shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-core
-        output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts core/api.txt
+        output: packages/core/CoreBuild.zip
+        paths: packages/core/dist packages/core/components packages/core/css packages/core/hydrate packages/core/loader packages/core/src/components.d.ts packages/core/api.txt

@@ -54,4 +54,4 @@ runs:
         fi
 
       shell: bash
-      working-directory: ./core
+      working-directory: ./packages/core

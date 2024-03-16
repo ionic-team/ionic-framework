@@ -1,3 +1,4 @@
+import { VueFoo } from "@ionic/vue";
 import type { App } from "vue";
 import {
   createRouter as createVueRouter,
@@ -37,3 +38,7 @@ export const createWebHashHistory = (base?: string) =>
   createVueWebHashHistory(base);
 export const createMemoryHistory = (base?: string) =>
   createVueMemoryHistory(base);
+
+console.log("[@ionic/vue-router] VueFoo", VueFoo);
+
+export const VueRouterFoo = "VueRouterFoo";

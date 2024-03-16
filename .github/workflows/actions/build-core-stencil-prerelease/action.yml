@@ -17,18 +17,18 @@ runs:
         version: 8
     - name: Install Dependencies
       run: pnpm install
-      working-directory: ./core
+      working-directory: ./packages/core
       shell: bash
     - name: Install Stencil ${{ inputs.stencil-version }}
-      working-directory: ./core
+      working-directory: ./packages/core
       run: pnpm i @stencil/core@${{ inputs.stencil-version }}
       shell: bash
     - name: Build Core
       run: pnpm npm run build -- --ci --debug --verbose
-      working-directory: ./core
+      working-directory: ./packages/core
       shell: bash
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-core
-        output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
+        output: packages/packages/core/CoreBuild.zip
+        paths: packages/core/dist packages/core/components packages/core/css packages/core/hydrate packages/core/loader packages/core/src/components.d.ts
