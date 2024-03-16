@@ -12,7 +12,8 @@
     "pretty": true,
     "rootDir": "src/schematics",
     "target": "es2017",
-    "outDir": "dist/schematics"
+    "outDir": "dist/schematics",
+    "skipLibCheck": true
   },
   "exclude": ["node_modules"],
   "include": ["src/schematics/**/*.ts"]
