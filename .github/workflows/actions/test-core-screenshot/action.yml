@@ -79,7 +79,7 @@ runs:
         if [ -d core/updated-screenshots/core ]; then
           echo "hasUpdatedScreenshots=$(echo 'true')" >> $GITHUB_OUTPUT
           cd core/updated-screenshots
-          zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip packages/core
+          zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
         fi
       shell: bash
       working-directory: ./packages/core
