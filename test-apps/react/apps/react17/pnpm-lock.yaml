@@ -204,7 +204,7 @@ importers:
   ../../../../packages/react:
     dependencies:
       '@ionic/core':
-        specifier: ^7.7.4
+        specifier: ^7.8.0
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -289,7 +289,7 @@ importers:
   ../../../../packages/react-router:
     dependencies:
       '@ionic/react':
-        specifier: ^7.7.4
+        specifier: ^7.8.0
         version: link:../react
       history:
         specifier: ^4.9.0
