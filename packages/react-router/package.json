@@ -35,12 +35,8 @@
     "dist/"
   ],
   "dependencies": {
-<<<<<<< HEAD
-    "@ionic/react": "^7.7.4",
-    "history": "^4.9.0",
-=======
     "@ionic/react": "^7.8.0",
->>>>>>> origin/main
+    "history": "^4.9.0",
     "tslib": "*"
   },
   "peerDependencies": {
