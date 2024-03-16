@@ -9,7 +9,7 @@ importers:
   angular:
     dependencies:
       '@ionic/core':
-        specifier: ^7.7.4
+        specifier: ^7.8.0
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -115,7 +115,7 @@ importers:
   angular-server:
     dependencies:
       '@ionic/core':
-        specifier: ^7.7.4
+        specifier: ^7.8.0
         version: link:../core
       zone.js:
         specifier: '>=0.11.0'
@@ -300,7 +300,7 @@ importers:
   react:
     dependencies:
       '@ionic/core':
-        specifier: ^7.7.4
+        specifier: ^7.8.0
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -385,7 +385,7 @@ importers:
   react-router:
     dependencies:
       '@ionic/react':
-        specifier: ^7.7.4
+        specifier: ^7.8.0
         version: link:../react
       history:
         specifier: ^4.9.0
@@ -458,7 +458,7 @@ importers:
   vue:
     dependencies:
       '@ionic/core':
-        specifier: ^7.7.4
+        specifier: ^7.8.0
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -513,7 +513,7 @@ importers:
   vue-router:
     dependencies:
       '@ionic/vue':
-        specifier: ^7.7.4
+        specifier: ^7.8.0
         version: link:../vue
     devDependencies:
       '@ionic/eslint-config':
