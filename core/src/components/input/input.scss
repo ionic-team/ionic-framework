@@ -596,12 +596,12 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-::slotted([slot="start"]:last-of-type) {
+::slotted([slot="start"]:last-child) {
   margin-inline-end: $form-control-label-margin;
   margin-inline-start: 0;
 }
 
-::slotted([slot="end"]:first-of-type) {
+::slotted([slot="end"]:first-child) {
   margin-inline-start: $form-control-label-margin;
   margin-inline-end: 0;
 }

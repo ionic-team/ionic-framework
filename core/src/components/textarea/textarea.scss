@@ -684,12 +684,12 @@
   margin-top: 0; // ensure slot content is vertically aligned with label
 }
 
-::slotted([slot="start"]:last-of-type) {
+::slotted([slot="start"]:last-child) {
   margin-inline-end: $form-control-label-margin;
   margin-inline-start: 0;
 }
 
-::slotted([slot="end"]:first-of-type) {
+::slotted([slot="end"]:first-child) {
   margin-inline-start: $form-control-label-margin;
   margin-inline-end: 0;
 }
