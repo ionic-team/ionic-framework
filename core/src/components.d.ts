@@ -1289,6 +1289,10 @@ export namespace Components {
     }
     interface IonInputPasswordToggle {
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
           * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
          */
         "hidePasswordIcon"?: string;
@@ -6021,6 +6025,10 @@ declare namespace LocalJSX {
         "value"?: string | number | null;
     }
     interface IonInputPasswordToggle {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
         /**
           * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
          */

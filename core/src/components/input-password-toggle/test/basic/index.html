@@ -49,13 +49,23 @@
           <div class="grid-item">
             <h2>Default</h2>
             <ion-input type="Password" value="supersecurepassword" label="Password">
-              <ion-button slot="end" fill="clear">
-                <ion-icon name="trash" slot="icon-only"></ion-icon>
-              </ion-button>
-              <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+              <ion-input-password-toggle mode="ios" slot="end"></ion-input-password-toggle>
+            </ion-input>
+          </div>
+          <div class="grid-item">
+            <h2>Custom Icon</h2>
+            <ion-input type="Password" value="supersecurepassword" label="Password">
+              <ion-input-password-toggle show-password-icon="trash" slot="end"></ion-input-password-toggle>
+            </ion-input>
+          </div>
+          <div class="grid-item">
+            <h2>Custom Mode/Color</h2>
+            <ion-input type="Password" value="supersecurepassword" label="Password">
+              <ion-input-password-toggle color="danger" mode="ios" show-password-icon="trash" slot="end"></ion-input-password-toggle>
             </ion-input>
           </div>
         </div>
+      </div>
       </ion-content>
     </ion-app>
   </body>
