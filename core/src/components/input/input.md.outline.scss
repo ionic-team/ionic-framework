@@ -90,7 +90,7 @@
  * This makes the label sit above the input.
  */
 :host(.label-floating.input-fill-outline) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
+  @include transform(translate(var(--start-slot-adjustment), -32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**

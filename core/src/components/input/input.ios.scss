@@ -14,6 +14,14 @@
   height: 18px;
 }
 
+// Native Text Input
+// --------------------------------------------------
+
+:host(.input-label-placement-floating) .native-input,
+:host(.input-label-placement-stacked) .native-input {
+  padding-top: 1em;
+}
+
 // Input - Disabled
 // ----------------------------------------------------------------
 // The input, label, helper text, char counter and placeholder

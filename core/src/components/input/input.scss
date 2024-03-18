@@ -238,7 +238,7 @@
 
   flex-grow: 1;
 
-  align-items: stretch;
+  align-items: center;
 
   height: inherit;
 
@@ -260,9 +260,6 @@
   position: relative;
 
   flex-grow: 1;
-
-  // ensure start/end slot content is vertically centered
-  align-items: center;
 
   width: 100%;
 }
@@ -526,8 +523,8 @@
  */
 :host(.input-label-placement-stacked) .input-wrapper,
 :host(.input-label-placement-floating) .input-wrapper {
-  flex-direction: column;
-  align-items: start;
+  flex-direction: row;
+  align-items: stretch;
 }
 
 /**
@@ -547,6 +544,8 @@
    * autofill background too.
    */
   z-index: 2;
+
+  position: absolute;
 }
 
 /**
@@ -595,6 +594,12 @@
 
 // Start/End Slots
 // ----------------------------------------------------------------
+
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  flex-shrink: 0;
+  align-self: center;
+}
 
 ::slotted([slot="start"]) {
   margin-inline-end: $form-control-label-margin;

@@ -626,7 +626,7 @@ export class Input implements ComponentInterface {
    * Renders the border container
    * when fill="outline".
    */
-  private renderLabelContainer() {
+  private renderOutlineLabelContainer() {
     const mode = getIonMode(this);
     const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
@@ -653,15 +653,10 @@ export class Input implements ComponentInterface {
           </div>
           <div class="input-outline-end"></div>
         </div>,
-        this.renderLabel(),
       ];
     }
 
-    /**
-     * If not using the outline style,
-     * we can render just the label.
-     */
-    return this.renderLabel();
+    return null;
   }
 
   render() {
@@ -672,27 +667,18 @@ export class Input implements ComponentInterface {
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
 
     /**
      * If the label is stacked, it should always sit above the input.
      * For floating labels, the label should move above the input if
      * the input has a value, is focused, or has anything in either
      * the start or end slot.
-     *
-     * If there is content in the start slot, the label would overlap
-     * it if not forced to float. This is also applied to the end slot
-     * because with the default or solid fills, the input is not
-     * vertically centered in the container, but the label is. This
-     * causes the slots and label to appear vertically offset from each
-     * other when the label isn't floating above the input. This doesn't
-     * apply to the outline fill, but this was not accounted for to keep
-     * things consistent.
-     *
-     * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus));
+
+    const startSlotEl = el.querySelector('[slot="start"]');
+    const startSlotWidth = startSlotEl ? startSlotEl.clientWidth + 16 : 0;
 
     return (
       <Host
@@ -708,6 +694,9 @@ export class Input implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
         })}
+        style={{
+          '--start-slot-adjustment': `-${startSlotWidth}px`
+        }}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -716,9 +705,10 @@ export class Input implements ComponentInterface {
          * since it comes before the input in the DOM.
          */}
         <label class="input-wrapper" htmlFor={inputId}>
-          {this.renderLabelContainer()}
+          <slot name="start"></slot>
+          {this.renderOutlineLabelContainer()}
           <div class="native-wrapper">
-            <slot name="start"></slot>
+            {this.renderLabel()}
             <input
               class="native-input"
               ref={(input) => (this.nativeInput = input)}
@@ -771,8 +761,8 @@ export class Input implements ComponentInterface {
                 <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
-            <slot name="end"></slot>
           </div>
+          <slot name="end"></slot>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
         </label>
         {this.renderBottomContent()}
