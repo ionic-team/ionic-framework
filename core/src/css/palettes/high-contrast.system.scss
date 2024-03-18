@@ -2,10 +2,10 @@
 
 @media (prefers-contrast: more) {
   :root {
-    @include high-contrast-light-base-theme();
+    @include high-contrast-light-base-palette();
   }
 
   :root.md {
-    @include high-contrast-light-md-theme();
+    @include high-contrast-light-md-palette();
   }
 }
