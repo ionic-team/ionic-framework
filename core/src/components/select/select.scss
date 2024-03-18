@@ -229,7 +229,7 @@ button {
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.select-wrapper-inner {
+.select-wrapper-inner, .select-wrapper-inner-start {
   display: flex;
 
   align-items: center;
@@ -508,26 +508,12 @@ button {
  * The placeholder should be hidden when the label
  * is on top of the select. This prevents the label
  * from overlapping any placeholder value.
- *
- * TODO(FW-5592): Remove :not(.label-floating) piece
  */
-:host(.select-label-placement-floating:not(.label-floating)) .native-wrapper .select-placeholder {
+:host(.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 0;
 }
 
-/**
- * We don't use .label-floating here because that would
- * also include the case where the label is floating due
- * to content in the start/end slot. We want the opacity
- * to remain at the default in this case, since the select
- * isn't being actively interacted with.
- *
- * TODO(FW-5592): Change entire selector to:
- * :host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder
- */
-:host(.select-expanded.select-label-placement-floating) .native-wrapper .select-placeholder,
-:host(.ion-focused.select-label-placement-floating) .native-wrapper .select-placeholder,
-:host(.has-value.select-label-placement-floating) .native-wrapper .select-placeholder {
+:host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 1;
 }
 

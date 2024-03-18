@@ -785,7 +785,7 @@ export class Select implements ComponentInterface {
    * Renders the border container
    * when fill="outline".
    */
-  private renderLabelContainer() {
+  private renderOutlineLabelContainer() {
     const mode = getIonMode(this);
     const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
@@ -811,16 +811,11 @@ export class Select implements ComponentInterface {
             </div>
           </div>
           <div class="select-outline-end"></div>
-        </div>,
-        this.renderLabel(),
+        </div>
       ];
     }
 
-    /**
-     * If not using the outline style,
-     * we can render just the label.
-     */
-    return this.renderLabel();
+    return null;
   }
 
   /**
@@ -932,7 +927,6 @@ export class Select implements ComponentInterface {
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);
 
@@ -941,20 +935,12 @@ export class Select implements ComponentInterface {
      * For floating labels, the label should move above the select if
      * the select has a value, is open, or has anything in either
      * the start or end slot.
-     *
-     * If there is content in the start slot, the label would overlap
-     * it if not forced to float. This is also applied to the end slot
-     * because with the default or solid fills, the select is not
-     * vertically centered in the container, but the label is. This
-     * causes the slots and label to appear vertically offset from each
-     * other when the label isn't floating above the input. This doesn't
-     * apply to the outline fill, but this was not accounted for to keep
-     * things consistent.
-     *
-     * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded || hasStartEndSlots));
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded));
+
+    const startSlotEl = el.querySelector('[slot="start"]');
+    const startSlotWidth = startSlotEl ? startSlotEl.clientWidth + 16 : 0;
 
     return (
       <Host
@@ -976,11 +962,22 @@ export class Select implements ComponentInterface {
           [`select-shape-${shape}`]: shape !== undefined,
           [`select-label-placement-${labelPlacement}`]: true,
         })}
+        style={{
+          '--start-slot-adjustment': `-${startSlotWidth}px`
+        }}
       >
         <label class="select-wrapper" id="select-label">
-          {this.renderLabelContainer()}
-          <div class="select-wrapper-inner">
+          {/**
+           * Wrapping the start slot and label together ensures
+           * they sit on the same side of the container when using
+           * justify="space-between".
+           */}
+          <div class="select-wrapper-inner-start">
             <slot name="start"></slot>
+            {this.renderOutlineLabelContainer()}
+            {this.renderLabel()}
+          </div>
+          <div class="select-wrapper-inner">
             <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
               {this.renderSelectText()}
               {this.renderListbox()}
