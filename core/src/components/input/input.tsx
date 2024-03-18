@@ -9,14 +9,15 @@ import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
 import { getCounterText } from './input.utils';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot label - The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  * @slot start - Content to display at the leading edge of the input. (EXPERIMENTAL)
@@ -27,6 +28,7 @@ import { getCounterText } from './input.utils';
   styleUrls: {
     ios: 'input.ios.scss',
     md: 'input.md.scss',
+    ionic: 'input.md.scss',
   },
   scoped: true,
 })
@@ -146,7 +148,7 @@ export class Input implements ComponentInterface {
 
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
-   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
+   * `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -627,8 +629,8 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const theme = getIonTheme(this);
+    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -666,10 +668,10 @@ export class Input implements ComponentInterface {
 
   render() {
     const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -697,7 +699,7 @@ export class Input implements ComponentInterface {
     return (
       <Host
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'has-value': hasValue,
           'has-focus': hasFocus,
           'label-floating': labelShouldFloat,
@@ -768,7 +770,7 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                <ion-icon aria-hidden="true" icon={theme === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>

@@ -4,11 +4,12 @@ import { clamp } from '@utils/helpers';
 import { createColorClasses } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part progress - The progress bar that shows the current value when `type` is `"determinate"` and slides back and forth when `type` is `"indeterminate"`.
  * @part stream - The animated circles that appear while buffering. This only shows when `buffer` is set and `type` is `"determinate"`.
@@ -20,6 +21,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'progress-bar.ios.scss',
     md: 'progress-bar.md.scss',
+    ionic: 'progress-bar.md.scss',
   },
   shadow: true,
 })
@@ -58,7 +60,7 @@ export class ProgressBar implements ComponentInterface {
   render() {
     const { color, type, reversed, value, buffer } = this;
     const paused = config.getBoolean('_testing');
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     // If the progress is displayed as a solid bar.
     const progressSolid = buffer === 1;
     return (
@@ -68,7 +70,7 @@ export class ProgressBar implements ComponentInterface {
         aria-valuemin="0"
         aria-valuemax="1"
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,

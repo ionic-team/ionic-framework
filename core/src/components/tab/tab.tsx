@@ -4,6 +4,10 @@ import { attachComponent } from '@utils/framework-delegate';
 
 import type { ComponentRef, FrameworkDelegate } from '../../interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-tab',
   styleUrl: 'tab.scss',

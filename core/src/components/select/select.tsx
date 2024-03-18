@@ -11,7 +11,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type {
   ActionSheetOptions,
   AlertOptions,
@@ -29,7 +29,8 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot label - The label text to associate with the select. Use the `labelPlacement` property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
  * @slot start - Content to display at the leading edge of the select.
@@ -46,6 +47,7 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
   styleUrls: {
     ios: 'select.ios.scss',
     md: 'select.md.scss',
+    ionic: 'select.md.scss',
   },
   shadow: true,
 })
@@ -93,7 +95,7 @@ export class Select implements ComponentInterface {
 
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
-   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
+   * `"outline"` the item will be transparent with a border. Only available in the `"md"` theme.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -173,14 +175,14 @@ export class Select implements ComponentInterface {
   @Prop() selectedText?: string | null;
 
   /**
-   * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode,
-   * or `caretDownSharp` for `md` mode.
+   * The toggle icon to use. Defaults to `"chevronExpand"` for the `"ios"` theme,
+   * or `"caretDownSharp"` for the `"md"` and `"ionic"` themes.
    */
   @Prop() toggleIcon?: string;
 
   /**
    * The toggle icon to show when the select is open. If defined, the icon
-   * rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon`
+   * rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon`
    * will be used for when the select is both open and closed.
    */
   @Prop() expandedIcon?: string;
@@ -490,8 +492,8 @@ export class Select implements ComponentInterface {
   private async openPopover(ev: UIEvent) {
     const { fill, labelPlacement } = this;
     const interfaceOptions = this.interfaceOptions;
-    const mode = getIonMode(this);
-    const showBackdrop = mode === 'md' ? false : true;
+    const theme = getIonTheme(this);
+    const showBackdrop = theme === 'md' ? false : true;
     const multiple = this.multiple;
     const value = this.value;
 
@@ -504,7 +506,7 @@ export class Select implements ComponentInterface {
      * when using a fill in MD mode or if the
      * label is floating/stacked.
      */
-    if (hasFloatingOrStackedLabel || (mode === 'md' && fill !== undefined)) {
+    if (hasFloatingOrStackedLabel || (theme === 'md' && fill !== undefined)) {
       size = 'cover';
 
       /**
@@ -522,7 +524,7 @@ export class Select implements ComponentInterface {
     }
 
     const popoverOpts: PopoverOptions = {
-      mode,
+      theme,
       event,
       alignment: 'center',
       size,
@@ -558,10 +560,10 @@ export class Select implements ComponentInterface {
   }
 
   private async openActionSheet() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
-      mode,
+      theme,
       ...interfaceOptions,
 
       buttons: this.createActionSheetButtons(this.childOpts, this.value),
@@ -586,10 +588,10 @@ export class Select implements ComponentInterface {
   private async openAlert() {
     const interfaceOptions = this.interfaceOptions;
     const inputType = this.multiple ? 'checkbox' : 'radio';
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     const alertOpts: AlertOptions = {
-      mode,
+      theme,
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : this.labelText,
@@ -786,8 +788,8 @@ export class Select implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const theme = getIonTheme(this);
+    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -859,14 +861,14 @@ export class Select implements ComponentInterface {
    * next to the select text.
    */
   private renderSelectIcon() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const { isExpanded, toggleIcon, expandedIcon } = this;
     let icon: string;
 
     if (isExpanded && expandedIcon !== undefined) {
       icon = expandedIcon;
     } else {
-      const defaultIcon = mode === 'ios' ? chevronExpand : caretDownSharp;
+      const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
       icon = toggleIcon ?? defaultIcon;
     }
 
@@ -923,12 +925,12 @@ export class Select implements ComponentInterface {
   render() {
     const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, shape, name, value } =
       this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -959,7 +961,7 @@ export class Select implements ComponentInterface {
       <Host
         onClick={this.onClick}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,

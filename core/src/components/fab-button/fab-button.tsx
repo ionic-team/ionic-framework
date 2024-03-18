@@ -6,12 +6,13 @@ import type { Attributes } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { close } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
  * @part close-icon - The close icon that is displayed when a fab list opens (uses ion-icon).
@@ -21,6 +22,7 @@ import type { RouterDirection } from '../router/utils/interface';
   styleUrls: {
     ios: 'fab-button.ios.scss',
     md: 'fab-button.md.scss',
+    ionic: 'fab-button.md.scss',
   },
   shadow: true,
 })
@@ -93,7 +95,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   /**
    * If `true`, the fab button will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
@@ -153,7 +155,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   render() {
     const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
     const inList = hostContext('ion-fab-list', el);
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
@@ -170,7 +172,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
         onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'fab-button-in-list': inList,
           'fab-button-translucent-in-list': inList && translucent,
           'fab-button-close-active': activated,
@@ -202,7 +204,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           <span class="button-inner">
             <slot></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </TagType>
       </Host>
     );

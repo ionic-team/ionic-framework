@@ -12,10 +12,11 @@ import { baseAnimation } from './base';
  */
 export const menuRevealAnimation = (menu: MenuI): Animation => {
   const mode = getIonMode(menu);
+  const isIOS = mode === 'ios';
   const openedX = menu.width * (menu.isEndSide ? -1 : 1) + 'px';
   const contentOpen = createAnimation()
     .addElement(menu.contentEl!) // REVIEW
     .fromTo('transform', 'translateX(0px)', `translateX(${openedX})`);
 
-  return baseAnimation(mode === 'ios').addAnimation(contentOpen);
+  return baseAnimation(isIOS).addAnimation(contentOpen);
 };

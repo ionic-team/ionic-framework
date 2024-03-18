@@ -5,13 +5,15 @@ import { getElementRoot } from '@utils/helpers';
 import type { PickerChangeEventDetail } from './picker-interfaces';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-picker',
   styleUrls: {
     ios: 'picker.ios.scss',
     md: 'picker.md.scss',
+    ionic: 'picker.md.scss',
   },
   shadow: true,
 })

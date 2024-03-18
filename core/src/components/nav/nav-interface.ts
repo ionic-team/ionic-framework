@@ -1,4 +1,4 @@
-import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode, Theme } from '../../interface';
 
 import type { ViewController } from './view-controller';
 
@@ -34,7 +34,15 @@ export interface RouterOutletOptions {
   showGoBack?: boolean;
   direction?: NavDirection;
   deepWait?: boolean;
+  /**
+   * To change the default appearance of the component, use the `theme` option.
+   * Mode is used to change the platform behavior of the component.
+   */
   mode?: Mode;
+  /**
+   * The theme determines the visual appearance of the component.
+   */
+  theme?: Theme;
   keyboardClose?: boolean;
   skipIfBusy?: boolean;
   progressAnimation?: boolean;

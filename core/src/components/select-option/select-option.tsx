@@ -1,8 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-select-option',
   shadow: true,
@@ -24,7 +28,16 @@ export class SelectOption implements ComponentInterface {
   @Prop() value?: any | null;
 
   render() {
-    return <Host role="option" id={this.inputId} class={getIonMode(this)}></Host>;
+    const theme = getIonTheme(this);
+    return (
+      <Host
+        class={{
+          [theme]: true,
+        }}
+        role="option"
+        id={this.inputId}
+      ></Host>
+    );
   }
 }
 

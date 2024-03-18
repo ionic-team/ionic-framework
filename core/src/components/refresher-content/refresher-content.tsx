@@ -5,12 +5,16 @@ import { sanitizeDOMString } from '@utils/sanitization';
 import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { supportsRubberBandScrolling } from '../refresher/refresher.utils';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 import { SPINNERS } from '../spinner/spinner-configs';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-refresher-content',
 })
@@ -62,6 +66,8 @@ export class RefresherContent implements ComponentInterface {
   @Prop() refreshingText?: string | IonicSafeString;
 
   componentWillLoad() {
+    const theme = getIonTheme(this);
+
     if (this.pullingIcon === undefined) {
       /**
        * The native iOS refresher uses a spinner instead of
@@ -69,18 +75,16 @@ export class RefresherContent implements ComponentInterface {
        * the native iOS refresher.
        */
       const hasRubberBandScrolling = supportsRubberBandScrolling();
-      const mode = getIonMode(this);
       const overflowRefresher = hasRubberBandScrolling ? 'lines' : arrowDown;
       this.pullingIcon = config.get(
         'refreshingIcon',
-        mode === 'ios' && hasRubberBandScrolling ? config.get('spinner', overflowRefresher) : 'circular'
+        theme === 'ios' && hasRubberBandScrolling ? config.get('spinner', overflowRefresher) : 'circular'
       );
     }
     if (this.refreshingSpinner === undefined) {
-      const mode = getIonMode(this);
       this.refreshingSpinner = config.get(
         'refreshingSpinner',
-        config.get('spinner', mode === 'ios' ? 'lines' : 'circular')
+        config.get('spinner', theme === 'ios' ? 'lines' : 'circular')
       );
     }
   }
@@ -106,16 +110,20 @@ export class RefresherContent implements ComponentInterface {
   render() {
     const pullingIcon = this.pullingIcon;
     const hasSpinner = pullingIcon != null && (SPINNERS[pullingIcon] as any) !== undefined;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     return (
-      <Host class={mode}>
+      <Host
+        class={{
+          [theme]: true,
+        }}
+      >
         <div class="refresher-pulling">
           {this.pullingIcon && hasSpinner && (
             <div class="refresher-pulling-icon">
               <div class="spinner-arrow-container">
                 <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
-                {mode === 'md' && this.pullingIcon === 'circular' && (
+                {theme === 'md' && this.pullingIcon === 'circular' && (
                   <div class="arrow-container">
                     <ion-icon icon={caretBackSharp} aria-hidden="true"></ion-icon>
                   </div>

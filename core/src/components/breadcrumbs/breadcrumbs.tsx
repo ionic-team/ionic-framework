@@ -2,19 +2,20 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { BreadcrumbCollapsedClickEventDetail } from '../breadcrumb/breadcrumb-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
- *
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-breadcrumbs',
   styleUrls: {
     ios: 'breadcrumbs.ios.scss',
     md: 'breadcrumbs.md.scss',
+    ionic: 'breadcrumbs.md.scss',
   },
   shadow: true,
 })
@@ -170,12 +171,12 @@ export class Breadcrumbs implements ComponentInterface {
 
   render() {
     const { color, collapsed } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     return (
       <Host
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'breadcrumbs-collapsed': collapsed,

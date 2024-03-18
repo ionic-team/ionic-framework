@@ -18,6 +18,7 @@
   * [Component Structure](#component-structure-1)
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
 - [RTL](#rtl)
+- [Themes vs. Modes](#themes-vs-modes)
 
 ## Button States
 
@@ -342,7 +343,7 @@ The ripple effect should be added to elements for Material Design. It *requires*
 
 ```jsx
  render() {
-  const mode = getIonMode(this);
+  const theme = getIonTheme(this);
 
 return (
   <Host
@@ -352,7 +353,7 @@ return (
   >
     <button>
       <slot></slot>
-      {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
     </button>
   </Host>
 );
@@ -768,3 +769,37 @@ class={{
   transform-origin: right center;
 }
 ```
+
+## Themes vs. Modes
+
+Themes and modes are two different concepts in Ionic. Themes refer to the "look" of the component, such as the stylesheet that is used. Modes refer to the "behavior" of the component, such as the platform specific behaviors on iOS and Android.
+
+To detect the theme, you can use the `getIonTheme` function:
+
+```tsx
+const theme = getIonTheme(this);
+
+return (
+  <Host class={theme}>
+    {theme === "md" && <ion-ripple-effect></ion-ripple-effect>}
+  </Host>
+);
+```
+
+Theme can be both used for styling decisions and conditional rendering of elements. For example, the ripple effect is only used in the Material Design theme.
+
+To detect the mode, you can use the `getIonMode` function:
+
+```tsx
+const mode = getIonMode(this);
+
+if (mode === "ios") {
+  enableRubberBandScrolling();
+}
+```
+
+Mode can be used for behavior tied to the platform the app is running on. For example, iOS has rubber band scrolling, while Android does not.
+
+Use mode for functionality that remains consistent across all themes but is intended specifically for a certain platform.
+
+Functionality that is applied only to a specific theme should use theme.

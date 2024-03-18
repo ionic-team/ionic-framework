@@ -2,10 +2,14 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
 import { renderHiddenInput } from '@utils/helpers';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-group-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-radio-group',
 })
@@ -215,11 +219,20 @@ export class RadioGroup implements ComponentInterface {
 
   render() {
     const { label, labelId, el, name, value } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     renderHiddenInput(true, el, name, value, false);
 
-    return <Host role="radiogroup" aria-labelledby={label ? labelId : null} onClick={this.onClick} class={mode}></Host>;
+    return (
+      <Host
+        class={{
+          [theme]: true,
+        }}
+        role="radiogroup"
+        aria-labelledby={label ? labelId : null}
+        onClick={this.onClick}
+      ></Host>
+    );
   }
 }
 

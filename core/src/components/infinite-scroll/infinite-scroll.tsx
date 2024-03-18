@@ -2,8 +2,12 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-infinite-scroll',
   styleUrl: 'infinite-scroll.scss',
@@ -221,12 +225,12 @@ export class InfiniteScroll implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const disabled = this.disabled;
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'infinite-scroll-loading': this.isLoading,
           'infinite-scroll-enabled': !disabled,
         }}

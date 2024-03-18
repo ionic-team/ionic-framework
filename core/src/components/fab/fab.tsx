@@ -1,8 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-fab',
   styleUrl: 'fab.scss',
@@ -76,11 +80,11 @@ export class Fab implements ComponentInterface {
 
   render() {
     const { horizontal, vertical, edge } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           [`fab-horizontal-${horizontal}`]: horizontal !== undefined,
           [`fab-vertical-${vertical}`]: vertical !== undefined,
           'fab-edge': edge,

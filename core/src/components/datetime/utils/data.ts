@@ -1,4 +1,4 @@
-import type { Mode } from '../../../interface';
+import type { Theme } from '../../../interface';
 import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
@@ -63,20 +63,20 @@ const hour23 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
 const hour24 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0];
 
 /**
- * Given a locale and a mode,
+ * Given a locale and a theme,
  * return an array with formatted days
  * of the week. iOS should display days
  * such as "Mon" or "Tue".
  * MD should display days such as "M"
  * or "T".
  */
-export const getDaysOfWeek = (locale: string, mode: Mode, firstDayOfWeek = 0) => {
+export const getDaysOfWeek = (locale: string, theme: Theme, firstDayOfWeek = 0) => {
   /**
    * Nov 1st, 2020 starts on a Sunday.
    * ion-datetime assumes weeks start on Sunday,
    * but is configurable via `firstDayOfWeek`.
    */
-  const weekdayFormat = mode === 'ios' ? 'short' : 'narrow';
+  const weekdayFormat = theme === 'ios' ? 'short' : 'narrow';
   const intl = new Intl.DateTimeFormat(locale, { weekday: weekdayFormat });
   const startDate = new Date('11/01/2020');
   const daysOfWeek = [];

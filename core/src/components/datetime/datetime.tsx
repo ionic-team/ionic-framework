@@ -7,8 +7,8 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
-import type { Color, Mode, StyleEventDetail } from '../../interface';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import type { Color, StyleEventDetail, Theme } from '../../interface';
 
 import type {
   DatetimePresentation,
@@ -72,7 +72,8 @@ import {
 import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './utils/validate';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot title - The title of the datetime.
  * @slot buttons - The buttons in the datetime.
@@ -100,6 +101,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
   styleUrls: {
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss',
+    ionic: 'datetime.md.scss',
   },
   shadow: true,
 })
@@ -2099,10 +2101,10 @@ export class Datetime implements ComponentInterface {
    * Grid Render Methods
    */
 
-  private renderCalendarHeader(mode: Mode) {
+  private renderCalendarHeader(theme: Theme) {
     const { disabled } = this;
-    const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
-    const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
+    const expandedIcon = theme === 'ios' ? chevronDown : caretUpSharp;
+    const collapsedIcon = theme === 'ios' ? chevronForward : caretDownSharp;
 
     const prevMonthDisabled = disabled || isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
@@ -2134,7 +2136,7 @@ export class Datetime implements ComponentInterface {
                   flipRtl={true}
                 ></ion-icon>
               </span>
-              {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+              {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
             </button>
           </div>
 
@@ -2164,7 +2166,7 @@ export class Datetime implements ComponentInterface {
           </div>
         </div>
         <div class="calendar-days-of-week" aria-hidden="true">
-          {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map((d) => {
+          {getDaysOfWeek(this.locale, theme, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}
         </div>
@@ -2371,10 +2373,10 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-  private renderCalendar(mode: Mode) {
+  private renderCalendar(theme: Theme) {
     return (
       <div class="datetime-calendar" key="datetime-calendar">
-        {this.renderCalendarHeader(mode)}
+        {this.renderCalendarHeader(theme)}
         {this.renderCalendarBody()}
       </div>
     );
@@ -2533,7 +2535,7 @@ export class Datetime implements ComponentInterface {
    * All presentation types are rendered from here.
    */
 
-  private renderDatetime(mode: Mode) {
+  private renderDatetime(theme: Theme) {
     const { presentation, preferWheel } = this;
 
     /**
@@ -2549,7 +2551,7 @@ export class Datetime implements ComponentInterface {
       case 'date-time':
         return [
           this.renderHeader(),
-          this.renderCalendar(mode),
+          this.renderCalendar(theme),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
           this.renderFooter(),
@@ -2558,7 +2560,7 @@ export class Datetime implements ComponentInterface {
         return [
           this.renderHeader(),
           this.renderTime(),
-          this.renderCalendar(mode),
+          this.renderCalendar(theme),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
@@ -2571,7 +2573,7 @@ export class Datetime implements ComponentInterface {
       default:
         return [
           this.renderHeader(),
-          this.renderCalendar(mode),
+          this.renderCalendar(theme),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
@@ -2592,7 +2594,7 @@ export class Datetime implements ComponentInterface {
       size,
       isGridStyle,
     } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
@@ -2609,7 +2611,7 @@ export class Datetime implements ComponentInterface {
         onBlur={this.onBlur}
         class={{
           ...createColorClasses(color, {
-            [mode]: true,
+            [theme]: true,
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
             'show-month-and-year': shouldShowMonthAndYear,
@@ -2621,7 +2623,7 @@ export class Datetime implements ComponentInterface {
           }),
         }}
       >
-        {this.renderDatetime(mode)}
+        {this.renderDatetime(theme)}
       </Host>
     );
   }

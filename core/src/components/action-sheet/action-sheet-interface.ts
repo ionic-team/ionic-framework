@@ -1,20 +1,16 @@
-import type { AnimationBuilder, LiteralUnion, Mode } from '../../interface';
+import type { OverlayOptions } from '@utils/overlays-interface';
 
-export interface ActionSheetOptions {
+import type { LiteralUnion } from '../../interface';
+
+export interface ActionSheetOptions extends OverlayOptions {
   header?: string;
   subHeader?: string;
   cssClass?: string | string[];
   buttons: (ActionSheetButton | string)[];
   backdropDismiss?: boolean;
   translucent?: boolean;
-  animated?: boolean;
-  mode?: Mode;
   keyboardClose?: boolean;
-  id?: string;
   htmlAttributes?: { [key: string]: any };
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 }
 
 export interface ActionSheetButton<T = any> {

@@ -57,7 +57,7 @@ export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${comp
  * Changes made to this file will be overwritten on build.
  */
 
-import {
+import type {
   JSX,
 } from '@ionic/core/components';
 

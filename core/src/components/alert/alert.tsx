@@ -21,7 +21,7 @@ import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -35,13 +35,15 @@ import { mdLeaveAnimation } from './animations/md.leave';
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-alert',
   styleUrls: {
     ios: 'alert.ios.scss',
     md: 'alert.md.scss',
+    ionic: 'alert.md.scss',
   },
   scoped: true,
 })
@@ -135,7 +137,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the alert will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
@@ -533,7 +535,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderCheckbox() {
     const inputs = this.processedInputs;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     if (inputs.length === 0) {
       return null;
@@ -565,7 +567,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
               </div>
               <div class="alert-checkbox-label">{i.label}</div>
             </div>
-            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         ))}
       </div>
@@ -682,7 +684,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderAlertButtons() {
     const buttons = this.processedButtons;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const alertButtonGroupClass = {
       'alert-button-group': true,
       'alert-button-group-vertical': buttons.length > 2,
@@ -699,7 +701,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             onClick={() => this.buttonClick(button)}
           >
             <span class="alert-button-inner">{button.text}</span>
-            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         ))}
       </div>
@@ -721,7 +723,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   render() {
     const { overlayIndex, header, subHeader, message, htmlAttributes } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
@@ -746,7 +748,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         }}
         class={{
           ...getClassMap(this.cssClass),
-          [mode]: true,
+          [theme]: true,
           'overlay-hidden': true,
           'alert-translucent': this.translucent,
         }}

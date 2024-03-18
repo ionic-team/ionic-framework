@@ -1,13 +1,18 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-buttons',
   styleUrls: {
     ios: 'buttons.ios.scss',
     md: 'buttons.md.scss',
+    ionic: 'buttons.md.scss',
   },
   scoped: true,
 })
@@ -19,7 +24,7 @@ export class Buttons implements ComponentInterface {
    * first toolbar, the buttons will be hidden and will
    * only be shown once all toolbars have fully collapsed.
    *
-   * Only applies in `ios` mode with `collapse` set to
+   * Only applies in the `ios` theme with `collapse` set to
    * `true` on `ion-header`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
@@ -27,11 +32,11 @@ export class Buttons implements ComponentInterface {
   @Prop() collapse = false;
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           ['buttons-collapse']: this.collapse,
         }}
       >

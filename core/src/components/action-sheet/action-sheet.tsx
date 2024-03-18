@@ -18,7 +18,7 @@ import {
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
@@ -29,13 +29,15 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-action-sheet',
   styleUrls: {
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss',
+    ionic: 'action-sheet.md.scss',
   },
   scoped: true,
 })
@@ -105,7 +107,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the action sheet will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
@@ -314,6 +316,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 
   componentDidLoad() {
+    const mode = getIonMode(this);
     /**
      * Only create gesture if:
      * 1. A gesture does not already exist
@@ -322,7 +325,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
      * 4. A group ref exists
      */
     const { groupEl, wrapperEl } = this;
-    if (!this.gesture && getIonMode(this) === 'ios' && wrapperEl && groupEl) {
+    if (!this.gesture && mode === 'ios' && wrapperEl && groupEl) {
       readTask(() => {
         const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
         if (!isScrollable) {
@@ -356,7 +359,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   render() {
     const { header, htmlAttributes, overlayIndex } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
     const buttons = allButtons.filter((b) => b.role !== 'cancel');
@@ -373,7 +376,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           zIndex: `${20000 + this.overlayIndex}`,
         }}
         class={{
-          [mode]: true,
+          [theme]: true,
           ...getClassMap(this.cssClass),
           'overlay-hidden': true,
           'action-sheet-translucent': this.translucent,
@@ -413,7 +416,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                     {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
                     {b.text}
                   </span>
-                  {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+                  {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
                 </button>
               ))}
             </div>
@@ -437,7 +440,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                     )}
                     {cancelButton.text}
                   </span>
-                  {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+                  {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
                 </button>
               </div>
             )}

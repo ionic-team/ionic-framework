@@ -21,14 +21,15 @@ import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 import { getCounterText } from '../input/input.utils';
 
 import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)
@@ -39,6 +40,7 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
   styleUrls: {
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss',
+    ionic: 'textarea.md.scss',
   },
   scoped: true,
 })
@@ -118,7 +120,7 @@ export class Textarea implements ComponentInterface {
 
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
-   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
+   * `"outline"` the item will be transparent with a border. Only available when the theme is `"md"`.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -540,8 +542,8 @@ export class Textarea implements ComponentInterface {
    * Renders the border container when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const theme = getIonTheme(this);
+    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -622,10 +624,10 @@ export class Textarea implements ComponentInterface {
 
   render() {
     const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -653,7 +655,7 @@ export class Textarea implements ComponentInterface {
     return (
       <Host
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'has-value': hasValue,
           'has-focus': hasFocus,
           'label-floating': labelShouldFloat,

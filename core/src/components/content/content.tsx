@@ -5,12 +5,15 @@ import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
-import type { Color } from '../../interface';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
+import type { Color, Mode } from '../../interface';
 
 import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
  * @slot - Content is placed in the scrollable area if provided without a slot.
  * @slot fixed - Should be used for fixed content that should not scroll.
  *
@@ -214,9 +217,8 @@ export class Content implements ComponentInterface {
     }, 100);
   }
 
-  private shouldForceOverscroll() {
+  private shouldForceOverscroll(mode: Mode) {
     const { forceOverscroll } = this;
-    const mode = getIonMode(this);
     return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
   }
 
@@ -425,9 +427,10 @@ export class Content implements ComponentInterface {
   render() {
     const { isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const mode = getIonMode(this);
-    const forceOverscroll = this.shouldForceOverscroll();
-    const transitionShadow = mode === 'ios';
+    const theme = getIonTheme(this);
+    const mode = getIonMode(this, theme);
+    const forceOverscroll = this.shouldForceOverscroll(mode);
+    const transitionShadow = theme === 'ios';
 
     this.resize();
 
@@ -435,7 +438,7 @@ export class Content implements ComponentInterface {
       <Host
         role={isMainContent ? 'main' : undefined}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'content-sizing': hostContext('ion-popover', this.el),
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,

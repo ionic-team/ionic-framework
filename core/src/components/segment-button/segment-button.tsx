@@ -5,7 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { addEventListener, removeEventListener, inheritAttributes } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { SegmentValue } from '../segment/segment-interface';
 
 import type { SegmentButtonLayout } from './segment-button-interface';
@@ -13,7 +13,8 @@ import type { SegmentButtonLayout } from './segment-button-interface';
 let ids = 0;
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part native - The native HTML button element that wraps all child elements.
  * @part indicator - The indicator displayed on the checked segment button.
@@ -24,6 +25,7 @@ let ids = 0;
   styleUrls: {
     ios: 'segment-button.ios.scss',
     md: 'segment-button.md.scss',
+    ionic: 'segment-button.md.scss',
   },
   shadow: true,
 })
@@ -124,12 +126,12 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const hasSegmentColor = () => segmentEl?.color !== undefined;
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'in-segment': hostContext('ion-segment', this.el),
@@ -159,7 +161,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           <span class="button-inner">
             <slot></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
         <div
           part="indicator"

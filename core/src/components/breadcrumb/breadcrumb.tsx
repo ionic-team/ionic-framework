@@ -5,14 +5,15 @@ import { inheritAriaAttributes } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part native - The native HTML anchor or div element that wraps all child elements.
  * @part separator - The separator element between each breadcrumb.
@@ -23,6 +24,7 @@ import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface
   styleUrls: {
     ios: 'breadcrumb.ios.scss',
     md: 'breadcrumb.md.scss',
+    ionic: 'breadcrumb.md.scss',
   },
   shadow: true,
 })
@@ -168,7 +170,7 @@ export class Breadcrumb implements ComponentInterface {
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
     const href = disabled ? undefined : this.href;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const attrs =
       TagType === 'span'
         ? {}
@@ -188,7 +190,7 @@ export class Breadcrumb implements ComponentInterface {
         onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'breadcrumb-active': active,
           'breadcrumb-collapsed': collapsed,
           'breadcrumb-disabled': disabled,
@@ -233,7 +235,7 @@ export class Breadcrumb implements ComponentInterface {
            */
           <span class="breadcrumb-separator" part="separator" aria-hidden="true">
             <slot name="separator">
-              {mode === 'ios' ? (
+              {theme === 'ios' ? (
                 <ion-icon icon={chevronForwardOutline} lazy={false} flip-rtl></ion-icon>
               ) : (
                 <span>/</span>

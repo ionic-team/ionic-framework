@@ -4,7 +4,7 @@ import { addEventListener, getElementRoot, raf, removeEventListener, transitionE
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 const enum AccordionState {
   Collapsed = 1 << 0,
@@ -14,7 +14,8 @@ const enum AccordionState {
 }
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot header - Content is placed at the top and is used to
  * expand or collapse the accordion item.
@@ -31,6 +32,7 @@ const enum AccordionState {
   styleUrls: {
     ios: 'accordion.ios.scss',
     md: 'accordion.md.scss',
+    ionic: 'accordion.md.scss',
   },
   shadow: {
     delegatesFocus: true,
@@ -402,7 +404,7 @@ export class Accordion implements ComponentInterface {
 
   render() {
     const { disabled, readonly } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const expanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';
@@ -412,7 +414,7 @@ export class Accordion implements ComponentInterface {
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'accordion-expanding': this.state === AccordionState.Expanding,
           'accordion-expanded': this.state === AccordionState.Expanded,
           'accordion-collapsing': this.state === AccordionState.Collapsing,

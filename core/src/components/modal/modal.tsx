@@ -21,7 +21,7 @@ import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -47,7 +47,8 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed inside of the `.modal-content` element.
  *
@@ -60,6 +61,7 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
   styleUrls: {
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
+    ionic: 'modal.md.scss',
   },
   shadow: true,
 })
@@ -908,8 +910,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
-    const mode = getIonMode(this);
-    const isCardModal = presentingElement !== undefined && mode === 'ios';
+    const theme = getIonTheme(this);
+    const isCardModal = presentingElement !== undefined && theme === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';
 
     return (
@@ -921,7 +923,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           zIndex: `${20000 + this.overlayIndex}`,
         }}
         class={{
-          [mode]: true,
+          [theme]: true,
           ['modal-default']: !isCardModal && !isSheetModal,
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
@@ -941,7 +943,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           part="backdrop"
         />
 
-        {mode === 'ios' && <div class="modal-shadow"></div>}
+        {theme === 'ios' && <div class="modal-shadow"></div>}
 
         <div
           /*

@@ -1,6 +1,8 @@
-import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import type { OverlayOptions } from '@utils/overlays-interface';
 
-export interface ModalOptions<T extends ComponentRef = ComponentRef> {
+import type { ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
+
+export interface ModalOptions<T extends ComponentRef = ComponentRef> extends OverlayOptions {
   component: T;
   componentProps?: ComponentProps<T>;
   presentingElement?: HTMLElement;
@@ -8,16 +10,9 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   backdropDismiss?: boolean;
   cssClass?: string | string[];
   delegate?: FrameworkDelegate;
-  animated?: boolean;
   canDismiss?: boolean | ((data?: any, role?: string) => Promise<boolean>);
-
-  mode?: Mode;
   keyboardClose?: boolean;
-  id?: string;
   htmlAttributes?: { [key: string]: any };
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 
   breakpoints?: number[];
   initialBreakpoint?: number;

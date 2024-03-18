@@ -2,17 +2,19 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-label',
   styleUrls: {
     ios: 'label.ios.scss',
     md: 'label.md.scss',
+    ionic: 'label.md.scss',
   },
   scoped: true,
 })
@@ -97,11 +99,11 @@ export class Label implements ComponentInterface {
 
   render() {
     const position = this.position;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           [`label-${position}`]: position !== undefined,
           [`label-no-animate`]: this.noAnimate,

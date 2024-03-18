@@ -8,12 +8,13 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { menuOutline, menuSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part native - The native HTML button element that wraps all child elements.
  * @part icon - The menu button icon (uses ion-icon).
@@ -23,6 +24,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
   styleUrls: {
     ios: 'menu-button.ios.scss',
     md: 'menu-button.md.scss',
+    ionic: 'menu-button.md.scss',
   },
   shadow: true,
 })
@@ -80,8 +82,8 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
 
   render() {
     const { color, disabled, inheritedAttributes } = this;
-    const mode = getIonMode(this);
-    const menuIcon = config.get('menuIcon', mode === 'ios' ? menuOutline : menuSharp);
+    const theme = getIonTheme(this);
+    const menuIcon = config.get('menuIcon', theme === 'ios' ? menuOutline : menuSharp);
     const hidden = this.autoHide && !this.visible;
 
     const attrs = {
@@ -96,7 +98,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         aria-disabled={disabled ? 'true' : null}
         aria-hidden={hidden ? 'true' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           button: true, // ion-buttons target .button
           'menu-button-hidden': hidden,
           'menu-button-disabled': disabled,
@@ -109,10 +111,10 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         <button {...attrs} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
           <span class="button-inner">
             <slot>
-              <ion-icon part="icon" icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
+              <ion-icon part="icon" icon={menuIcon} lazy={false} aria-hidden="true"></ion-icon>
             </slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
       </Host>
     );

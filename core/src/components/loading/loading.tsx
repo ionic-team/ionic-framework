@@ -17,7 +17,7 @@ import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -31,13 +31,15 @@ import { mdLeaveAnimation } from './animations/md.leave';
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-loading',
   styleUrls: {
     ios: 'loading.ios.scss',
     md: 'loading.md.scss',
+    ionic: 'loading.md.scss',
   },
   scoped: true,
 })
@@ -115,7 +117,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the loading indicator will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
@@ -211,8 +213,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      const mode = getIonMode(this);
-      this.spinner = config.get('loadingSpinner', config.get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
+      const theme = getIonTheme(this);
+      this.spinner = config.get('loadingSpinner', config.get('spinner', theme === 'ios' ? 'lines' : 'crescent'));
     }
     setOverlayId(this.el);
   }
@@ -326,7 +328,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   render() {
     const { message, spinner, htmlAttributes, overlayIndex } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const msgId = `loading-${overlayIndex}-msg`;
     /**
      * If the message is defined, use that as the label.
@@ -347,7 +349,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
         class={{
           ...getClassMap(this.cssClass),
-          [mode]: true,
+          [theme]: true,
           'overlay-hidden': true,
           'loading-translucent': this.translucent,
         }}

@@ -4,7 +4,7 @@ import { findClosestIonContent, disableContentScrollY, resetContentScrollY } fro
 import { isEndSide } from '@utils/helpers';
 import { watchForOptions } from '@utils/watch-options';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
 import type { Side } from '../menu/menu-interface';
 
@@ -30,6 +30,10 @@ const enum SlidingState {
 
 let openSlidingItem: HTMLIonItemSlidingElement | undefined;
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-item-sliding',
   styleUrl: 'item-sliding.scss',
@@ -482,11 +486,11 @@ export class ItemSliding implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'item-sliding-active-slide': this.state !== SlidingState.Disabled,
           'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
           'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,

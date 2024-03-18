@@ -2,18 +2,20 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import type { AccordionGroupChangeEventDetail } from './accordion-group-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-accordion-group',
   styleUrls: {
     ios: 'accordion-group.ios.scss',
     md: 'accordion-group.md.scss',
+    ionic: 'accordion-group.md.scss',
   },
   shadow: true,
 })
@@ -279,12 +281,12 @@ export class AccordionGroup implements ComponentInterface {
 
   render() {
     const { disabled, readonly, expand } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'accordion-group-disabled': disabled,
           'accordion-group-readonly': readonly,
           [`accordion-group-expand-${expand}`]: true,

@@ -10,7 +10,7 @@ import {
 import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '@utils/helpers';
 import { ImpactStyle, hapticImpact } from '@utils/native/haptic';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 
 import type { RefresherEventDetail } from './refresher-interface';
@@ -26,13 +26,15 @@ import {
 } from './refresher.utils';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-refresher',
   styleUrls: {
     ios: 'refresher.ios.scss',
     md: 'refresher.md.scss',
+    ionic: 'refresher.md.scss',
   },
 })
 export class Refresher implements ComponentInterface {
@@ -801,15 +803,15 @@ export class Refresher implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         slot="fixed"
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`refresher-${mode}`]: true,
+          [`refresher-${theme}`]: true,
           'refresher-native': this.nativeRefresher,
           'refresher-active': this.state !== RefresherState.Inactive,
           'refresher-pulling': this.state === RefresherState.Pulling,

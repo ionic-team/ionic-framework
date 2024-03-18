@@ -1,6 +1,6 @@
 import type { SpinnerTypes } from '../components/spinner/spinner-configs';
 import type { TabButtonLayout } from '../components/tab-bar/tab-bar-interface';
-import type { AnimationBuilder, Mode } from '../interface';
+import type { AnimationBuilder, Mode, Theme } from '../interface';
 
 import type { PlatformConfig } from './platform';
 
@@ -18,9 +18,25 @@ export interface IonicConfig {
   rippleEffect?: boolean;
 
   /**
-   * The mode determines which platform styles to use for the whole application.
+   * The mode determines the platform behaviors to use for the entire application,
+   * such as rubber-band scrolling on iOS or Android page transitions.
+   *
+   * Possible values are: `"ios"` or `"md"`.
+   *
+   * Without a specified theme, the mode will be used to determine which platform
+   * styles to use throughout the application. This is legacy behavior to prevent
+   * breaking changes, but we recommend the use of a specific theme to opt in to
+   * the new styles.
    */
   mode?: Mode;
+
+  /**
+   * The theme determines the visual appearance of components.
+   * - `"ios"` - iOS components aligning to the Cupertino guidelines
+   * - `"md"` - Material Design components aligning to Material Design 2 guidelines
+   * - `"ionic"` - **EXPERIMENTAL** Ionic's upcoming new design system
+   */
+  theme?: Theme;
 
   /**
    * Wherever ionic will respond to hardware go back buttons in an Android device.

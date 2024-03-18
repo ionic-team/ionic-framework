@@ -6,12 +6,13 @@ import { inheritAttributes, raf } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
@@ -25,6 +26,7 @@ import type { RouterDirection } from '../router/utils/interface';
   styleUrls: {
     ios: 'item.ios.scss',
     md: 'item.md.scss',
+    ionic: 'item.md.scss',
   },
   shadow: true,
 })
@@ -51,8 +53,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() button = false;
 
   /**
-   * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
-   * is `ios` and an `href` or `button` property is present.
+   * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `theme`
+   * is `"ios"` and an `href` or `button` property is present.
    */
   @Prop() detail?: boolean;
 
@@ -256,7 +258,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       multipleInputs,
     } = this;
     const childStyles = {} as StyleEventDetail;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
@@ -314,7 +316,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       };
     }
 
-    const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
+    const showDetail = detail !== undefined ? detail : theme === 'ios' && clickable;
     this.itemStyles.forEach((value) => {
       Object.assign(childStyles, value);
     });
@@ -336,7 +338,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           ...labelColorStyles,
           ...createColorClasses(this.color, {
             item: true,
-            [mode]: true,
+            [theme]: true,
             'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
             'item-control-needs-pointer-cursor': firstInteractiveNeedsPointerCursor,
@@ -375,7 +377,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               ></ion-icon>
             )}
           </div>
-          {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {canActivate && theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </TagType>
       </Host>
     );

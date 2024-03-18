@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction, Palette } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction, Theme, Palette } from '@utils/test/playwright';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -19,15 +19,18 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   let mode: Mode;
   let direction: Direction;
+  let theme: Theme;
   let palette: Palette;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
+    theme = testInfo.project.metadata.theme;
     palette = testInfo.project.metadata.palette;
   } else {
     mode = options.mode;
     direction = options.direction;
+    theme = options.theme;
     palette = options.palette;
   }
 
@@ -48,7 +51,8 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <script>
           window.Ionic = {
             config: {
-              mode: '${mode}'
+              mode: '${mode}',
+              theme: '${theme}'
             }
           }
         </script>
@@ -60,8 +64,18 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   `;
 
   testInfo.annotations.push({
+    type: 'mode',
+    description: mode,
+  });
+
+  testInfo.annotations.push({
     type: 'palette',
     description: palette,
+  });
+
+  testInfo.annotations.push({
+    type: 'theme',
+    description: theme,
   });
 
   if (baseUrl) {

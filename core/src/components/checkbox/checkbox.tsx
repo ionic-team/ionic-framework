@@ -4,13 +4,14 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
-import type { Color, Mode } from '../../interface';
+import { getIonTheme } from '../../global/ionic-global';
+import type { Color, Theme } from '../../interface';
 
 import type { CheckboxChangeEventDetail } from './checkbox-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - The label text to associate with the checkbox. Use the "labelPlacement" property to control where the label is placed relative to the checkbox.
  *
@@ -23,6 +24,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
   styleUrls: {
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
+    ionic: 'checkbox.md.scss',
   },
   shadow: true,
 })
@@ -180,8 +182,9 @@ export class Checkbox implements ComponentInterface {
       value,
       alignment,
     } = this;
-    const mode = getIonMode(this);
-    const path = getSVGPath(mode, indeterminate);
+    const theme = getIonTheme(this);
+
+    const path = getSVGPath(theme, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -189,7 +192,7 @@ export class Checkbox implements ComponentInterface {
       <Host
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
@@ -236,14 +239,14 @@ export class Checkbox implements ComponentInterface {
     );
   }
 
-  private getSVGPath(mode: Mode, indeterminate: boolean): HTMLElement {
+  private getSVGPath(theme: Theme, indeterminate: boolean): HTMLElement {
     let path = indeterminate ? (
       <path d="M6 12L18 12" part="mark" />
     ) : (
       <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
     );
 
-    if (mode === 'md') {
+    if (theme === 'md') {
       path = indeterminate ? (
         <path d="M2 12H22" part="mark" />
       ) : (

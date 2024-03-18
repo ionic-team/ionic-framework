@@ -17,7 +17,7 @@ import {
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
@@ -28,7 +28,8 @@ import type { PickerButton, PickerColumn } from './picker-interface';
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-picker-legacy',
@@ -351,7 +352,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   render() {
     const { htmlAttributes } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         aria-modal="true"
@@ -361,10 +362,10 @@ export class Picker implements ComponentInterface, OverlayInterface {
           zIndex: `${20000 + this.overlayIndex}`,
         }}
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`picker-${mode}`]: true,
+          [`picker-${theme}`]: true,
           'overlay-hidden': true,
           ...getClassMap(this.cssClass),
         }}

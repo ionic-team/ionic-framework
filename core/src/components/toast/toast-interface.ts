@@ -1,7 +1,9 @@
-import type { AnimationBuilder, Color, LiteralUnion, Mode } from '../../interface';
+import type { OverlayOptions } from '@utils/overlays-interface';
+
+import type { Color, LiteralUnion } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
-export interface ToastOptions {
+export interface ToastOptions extends OverlayOptions {
   header?: string;
   message?: string | IonicSafeString;
   cssClass?: string | string[];
@@ -11,18 +13,12 @@ export interface ToastOptions {
   positionAnchor?: HTMLElement | string;
   swipeGesture?: ToastSwipeGestureDirection;
   translucent?: boolean;
-  animated?: boolean;
   icon?: string;
   htmlAttributes?: { [key: string]: any };
   layout?: ToastLayout;
 
   color?: Color;
-  mode?: Mode;
   keyboardClose?: boolean;
-  id?: string;
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 }
 
 export type ToastLayout = 'baseline' | 'stacked';

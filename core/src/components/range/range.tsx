@@ -7,7 +7,7 @@ import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail } from '../../interface';
 import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
@@ -23,7 +23,8 @@ import type {
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot label - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
@@ -42,6 +43,7 @@ import type {
   styleUrls: {
     ios: 'range.ios.scss',
     md: 'range.md.scss',
+    ionic: 'range.md.scss',
   },
   shadow: true,
 })
@@ -836,7 +838,7 @@ export class Range implements ComponentInterface {
 
     const needsEndAdjustment = inItem && !hasEndContent;
 
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
@@ -846,7 +848,7 @@ export class Range implements ComponentInterface {
         onFocusout={this.onBlur}
         id={rangeId}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': inItem,
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,

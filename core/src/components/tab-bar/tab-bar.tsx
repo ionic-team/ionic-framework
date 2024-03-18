@@ -4,19 +4,21 @@ import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 import type { TabBarChangedEventDetail } from './tab-bar-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-tab-bar',
   styleUrls: {
     ios: 'tab-bar.ios.scss',
     md: 'tab-bar.md.scss',
+    ionic: 'tab-bar.md.scss',
   },
   shadow: true,
 })
@@ -49,7 +51,7 @@ export class TabBar implements ComponentInterface {
 
   /**
    * If `true`, the tab bar will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
@@ -96,7 +98,7 @@ export class TabBar implements ComponentInterface {
 
   render() {
     const { color, translucent, keyboardVisible } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
     return (
@@ -104,7 +106,7 @@ export class TabBar implements ComponentInterface {
         role="tablist"
         aria-hidden={shouldHide ? 'true' : null}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
         })}

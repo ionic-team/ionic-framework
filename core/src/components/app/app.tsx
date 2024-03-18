@@ -6,8 +6,12 @@ import { printIonWarning } from '@utils/logging';
 import { isPlatform } from '@utils/platform';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-app',
   styleUrl: 'app.scss',
@@ -78,11 +82,11 @@ export class App implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'ion-page': true,
           'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding'),
         }}

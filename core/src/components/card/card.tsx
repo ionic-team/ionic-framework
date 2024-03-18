@@ -5,12 +5,13 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
 import { createColorClasses, openURL } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, Mode } from '../../interface';
+import { getIonTheme } from '../../global/ionic-global';
+import type { AnimationBuilder, Color, Theme } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part native - The native HTML button, anchor, or div element that wraps all child elements.
  */
@@ -19,6 +20,7 @@ import type { RouterDirection } from '../router/utils/interface';
   styleUrls: {
     ios: 'card.ios.scss',
     md: 'card.md.scss',
+    ionic: 'card.md.scss',
   },
   shadow: true,
 })
@@ -95,7 +97,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.href !== undefined || this.button;
   }
 
-  private renderCard(mode: Mode) {
+  private renderCard(theme: Theme) {
     const clickable = this.isClickable();
 
     if (!clickable) {
@@ -123,22 +125,23 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
       >
         <slot></slot>
-        {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {clickable && theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
+
     return (
       <Host
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'card-disabled': this.disabled,
           'ion-activatable': this.isClickable(),
         })}
       >
-        {this.renderCard(mode)}
+        {this.renderCard(theme)}
       </Host>
     );
   }

@@ -1,5 +1,9 @@
+import { isModeValidForTheme } from '../../../global/ionic-global';
+
 export type Mode = 'ios' | 'md';
 export type Direction = 'ltr' | 'rtl';
+export type Theme = 'ios' | 'md' | 'ionic';
+
 /**
  * The theme to use for the playwright test.
  *
@@ -14,9 +18,10 @@ export type TitleFn = (title: string) => string;
 export type ScreenshotFn = (fileName: string) => string;
 
 export interface TestConfig {
-  mode: Mode;
   direction: Direction;
+  theme: Theme;
   palette: Palette;
+  mode: Mode;
 }
 
 interface TestUtilities {
@@ -29,6 +34,11 @@ interface TestConfigOption {
   modes?: Mode[];
   directions?: Direction[];
   palettes?: Palette[];
+  /**
+   * The individual themes (iOS, Material Design and Ionic) to test
+   * against. If unspecified, defaults iOS and Material Design
+   */
+  themes?: Theme[];
 }
 
 /**
@@ -38,19 +48,28 @@ interface TestConfigOption {
  * each test title is unique.
  */
 const generateTitle = (title: string, config: TestConfig): string => {
-  const { mode, direction, palette } = config;
+  const { direction, palette, theme, mode } = config;
 
-  if (palette === 'light') {
+  if (theme === mode) {
     /**
-     * Ionic has many existing tests that existed prior to
-     * the introduction of palette testing. To maintain backwards
-     * compatibility, we will not include the palette in the test
-     * title if the palette is set to light.
+     * Fallback to the old test title naming convention
+     * when the theme and mode are the same.
      */
-    return `${title} - ${mode}/${direction}`;
+
+    if (palette === 'light') {
+      /**
+       * Ionic has many existing tests that existed prior to
+       * the introduction of theme testing. To maintain backwards
+       * compatibility, we will not include the theme in the test
+       * title if the theme is set to light.
+       */
+      return `${title} - ${theme}/${direction}`;
+    }
+
+    return `${title} - ${theme}/${direction}/${palette}`;
   }
 
-  return `${title} - ${mode}/${direction}/${palette}`;
+  return `${title} - ${theme}/${mode}/${direction}/${palette}`;
 };
 
 /**
@@ -58,26 +77,34 @@ const generateTitle = (title: string, config: TestConfig): string => {
  * and a test config.
  */
 const generateScreenshotName = (fileName: string, config: TestConfig): string => {
-  const { mode, direction, palette } = config;
+  const { theme, direction, palette, mode } = config;
 
-  if (palette === 'light') {
+  if (theme === mode) {
     /**
-     * Ionic has many existing tests that existed prior to
-     * the introduction of palette testing. To maintain backwards
-     * compatibility, we will not include the palette in the screenshot
-     * name if the palette is set to light.
+     * Fallback to the old screenshot naming convention
+     * when the theme and mode are the same.
      */
-    return `${fileName}-${mode}-${direction}.png`;
+    if (palette === 'light') {
+      /**
+       * Ionic has many existing tests that existed prior to
+       * the introduction of theme testing. To maintain backwards
+       * compatibility, we will not include the theme in the screenshot
+       * name if the theme is set to light.
+       */
+      return `${fileName}-${theme}-${direction}.png`;
+    }
+
+    return `${fileName}-${theme}-${direction}-${palette}.png`;
   }
 
-  return `${fileName}-${mode}-${direction}-${palette}.png`;
+  return `${fileName}-${theme}-${mode}-${direction}-${palette}.png`;
 };
 
 /**
  * Given a config generate an array of test variants.
  */
 export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTION): TestUtilities[] => {
-  const { modes, directions } = testConfig;
+  const { modes, themes, directions } = testConfig;
 
   const configs: TestConfig[] = [];
 
@@ -85,14 +112,20 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
    * If certain options are not provided,
    * fall back to the defaults.
    */
-  const processedMode = modes ?? DEFAULT_MODES;
+  const processedModes = modes ?? DEFAULT_MODES;
+  const processedTheme = themes ?? DEFAULT_THEMES;
   const processedDirection = directions ?? DEFAULT_DIRECTIONS;
   const processedPalette = testConfig.palettes ?? DEFAULT_PALETTES;
 
-  processedMode.forEach((mode) => {
-    processedDirection.forEach((direction) => {
-      processedPalette.forEach((palette) => {
-        configs.push({ mode, direction, palette });
+  processedModes.forEach((mode) => {
+    processedTheme.forEach((theme) => {
+      if (!isModeValidForTheme(mode, theme)) {
+        return;
+      }
+      processedDirection.forEach((direction) => {
+        processedPalette.forEach((palette) => {
+          configs.push({ theme, direction, palette, mode });
+        });
       });
     });
   });
@@ -107,11 +140,13 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
 };
 
 const DEFAULT_MODES: Mode[] = ['ios', 'md'];
+const DEFAULT_THEMES: Theme[] = ['ios', 'md'];
 const DEFAULT_DIRECTIONS: Direction[] = ['ltr', 'rtl'];
 const DEFAULT_PALETTES: Palette[] = ['light'];
 
 const DEFAULT_TEST_CONFIG_OPTION = {
   modes: DEFAULT_MODES,
+  themes: DEFAULT_THEMES,
   directions: DEFAULT_DIRECTIONS,
   palettes: DEFAULT_PALETTES,
 };

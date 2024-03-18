@@ -1,17 +1,12 @@
-import type {
-  AnimationBuilder,
-  ComponentProps,
-  ComponentRef,
-  FrameworkDelegate,
-  Mode,
-  OverlayInterface,
-} from '../../interface';
+import type { OverlayOptions } from '@utils/overlays-interface';
+
+import type { ComponentProps, ComponentRef, FrameworkDelegate, OverlayInterface } from '../../interface';
 
 export interface PopoverInterface extends OverlayInterface {
   present: (event?: MouseEvent | TouchEvent | PointerEvent) => Promise<void>;
 }
 
-export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
+export interface PopoverOptions<T extends ComponentRef = ComponentRef> extends OverlayOptions {
   component: T;
   componentProps?: ComponentProps<T>;
   showBackdrop?: boolean;
@@ -20,15 +15,8 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   cssClass?: string | string[];
   event?: Event;
   delegate?: FrameworkDelegate;
-  animated?: boolean;
-
-  mode?: Mode;
   keyboardClose?: boolean;
-  id?: string;
   htmlAttributes?: { [key: string]: any };
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 
   size?: PopoverSize;
   dismissOnSelect?: boolean;

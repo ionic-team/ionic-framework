@@ -5,15 +5,16 @@ import { getElementRoot, raf } from '@utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
 import { isPlatform } from '@utils/platform';
 import { createColorClasses } from '@utils/theme';
+import { getIonTheme } from 'src/global/ionic-global';
 
-import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { PickerCustomEvent } from '../picker/picker-interfaces';
 
 import type { PickerColumnChangeEventDetail, PickerColumnValue } from './picker-column-interfaces';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot prefix - Content to show on the left side of the picker options.
  * @slot suffix - Content to show on the right side of the picker options.
@@ -479,12 +480,12 @@ export class PickerColumn implements ComponentInterface {
 
   render() {
     const { color, disabled, isActive, numericInput } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     return (
       <Host
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           ['picker-column-active']: isActive,
           ['picker-column-numeric-input']: numericInput,
           ['picker-column-disabled']: disabled,

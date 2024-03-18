@@ -10,7 +10,7 @@ import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
@@ -31,12 +31,13 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed inside of the `.popover-content` element.
  *
  * @part backdrop - The `ion-backdrop` element.
- * @part arrow - The arrow that points to the reference element. Only applies on `ios` mode.
+ * @part arrow - The arrow that points to the reference element. Only applies on `"ios"` theme.
  * @part content - The wrapper element for the default slot.
  */
 @Component({
@@ -44,6 +45,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss',
+    ionic: 'popover.md.scss',
   },
   shadow: true,
 })
@@ -136,7 +138,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * If `true`, the popover will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
@@ -204,13 +206,13 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes how to align the popover content with the `reference` point.
-   * Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
+   * Defaults to `"center"` for `"ios"` theme, and `"start"` for `"md"` theme.
    */
   @Prop({ mutable: true }) alignment?: PositionAlign;
 
   /**
    * If `true`, the popover will display an arrow that points at the
-   * `reference` when running in `ios` mode. Does not apply in `md` mode.
+   * `reference` on `"ios"` theme.
    */
   @Prop() arrow = true;
 
@@ -343,7 +345,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.parentPopover = el.closest(`ion-popover:not(#${popoverId})`) as HTMLIonPopoverElement | null;
 
     if (this.alignment === undefined) {
-      this.alignment = getIonMode(this) === 'ios' ? 'center' : 'start';
+      this.alignment = getIonTheme(this) === 'ios' ? 'center' : 'start';
     }
   }
 
@@ -655,7 +657,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   };
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const { onLifecycle, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
@@ -671,7 +673,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
         }}
         class={{
           ...getClassMap(this.cssClass),
-          [mode]: true,
+          [theme]: true,
           'popover-translucent': this.translucent,
           'overlay-hidden': true,
           'popover-desktop': desktop,

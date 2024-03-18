@@ -4,18 +4,20 @@ import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@util
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import { handleFooterFade } from './footer.utils';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-footer',
   styleUrls: {
     ios: 'footer.ios.scss',
     md: 'footer.md.scss',
+    ionic: 'footer.md.scss',
   },
 })
 export class Footer implements ComponentInterface {
@@ -29,13 +31,13 @@ export class Footer implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the footer.
-   * Only applies in iOS mode.
+   * Only applies when the theme is `"ios"`.
    */
   @Prop() collapse?: 'fade';
 
   /**
    * If `true`, the footer will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    *
    * Note: In order to scroll content behind the footer, the `fullscreen`
@@ -73,8 +75,8 @@ export class Footer implements ComponentInterface {
   }
 
   private checkCollapsibleFooter = () => {
-    const mode = getIonMode(this);
-    if (mode !== 'ios') {
+    const theme = getIonTheme(this);
+    if (theme !== 'ios') {
       return;
     }
 
@@ -119,7 +121,7 @@ export class Footer implements ComponentInterface {
 
   render() {
     const { translucent, collapse } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const tabs = this.el.closest('ion-tabs');
     const tabBar = tabs?.querySelector(':scope > ion-tab-bar');
 
@@ -127,19 +129,19 @@ export class Footer implements ComponentInterface {
       <Host
         role="contentinfo"
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`footer-${mode}`]: true,
+          [`footer-${theme}`]: true,
 
           [`footer-translucent`]: translucent,
-          [`footer-translucent-${mode}`]: translucent,
+          [`footer-translucent-${theme}`]: translucent,
           ['footer-toolbar-padding']: !this.keyboardVisible && (!tabBar || tabBar.slot !== 'bottom'),
 
           [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
       >
-        {mode === 'ios' && translucent && <div class="footer-background"></div>}
+        {theme === 'ios' && translucent && <div class="footer-background"></div>}
         <slot></slot>
       </Host>
     );

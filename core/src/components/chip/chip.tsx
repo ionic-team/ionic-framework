@@ -2,17 +2,19 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-chip',
   styleUrls: {
     ios: 'chip.ios.scss',
     md: 'chip.md.scss',
+    ionic: 'chip.md.scss',
   },
   shadow: true,
 })
@@ -35,20 +37,20 @@ export class Chip implements ComponentInterface {
   @Prop() disabled = false;
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
         })}
       >
         <slot></slot>
-        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </Host>
     );
   }

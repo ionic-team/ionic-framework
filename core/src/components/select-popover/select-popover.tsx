@@ -3,13 +3,16 @@ import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
 import { safeCall } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 
 import type { SelectPopoverOption } from './select-popover-interface';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
  * @internal
  */
 @Component({
@@ -17,6 +20,7 @@ import type { SelectPopoverOption } from './select-popover-interface';
   styleUrls: {
     ios: 'select-popover.ios.scss',
     md: 'select-popover.md.scss',
+    ionic: 'select-popover.md.scss',
   },
   scoped: true,
 })
@@ -181,9 +185,14 @@ export class SelectPopover implements ComponentInterface {
   render() {
     const { header, message, options, subHeader } = this;
     const hasSubHeaderOrMessage = subHeader !== undefined || message !== undefined;
+    const theme = getIonTheme(this);
 
     return (
-      <Host class={getIonMode(this)}>
+      <Host
+        class={{
+          [theme]: true,
+        }}
+      >
         <ion-list>
           {header !== undefined && <ion-list-header>{header}</ion-list-header>}
           {hasSubHeaderOrMessage && (

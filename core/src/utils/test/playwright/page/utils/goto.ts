@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction } from '@utils/test/playwright';
+import type { E2EPageOptions, Theme, Direction, Mode } from '@utils/test/playwright';
 
 /**
  * This is an extended version of Playwright's
@@ -27,13 +27,16 @@ configs().forEach(({ config, title }) => {
   }
 
   let mode: Mode;
+  let theme: Theme;
   let direction: Direction;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
+    theme = testInfo.project.metadata.theme;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
   } else {
     mode = options.mode;
+    theme = options.theme;
     direction = options.direction;
   }
 
@@ -48,6 +51,7 @@ configs().forEach(({ config, title }) => {
    */
   const urlToParams = new URLSearchParams(paramsString);
   const formattedMode = urlToParams.get('ionic:mode') ?? mode;
+  const formattedTheme = urlToParams.get('ionic:theme') ?? theme;
   const formattedRtl = urlToParams.get('rtl') ?? rtlString;
   const ionicTesting = urlToParams.get('ionic:_testing') ?? true;
 
@@ -55,6 +59,7 @@ configs().forEach(({ config, title }) => {
    * Pass through other custom query params
    */
   urlToParams.delete('ionic:mode');
+  urlToParams.delete('ionic:theme');
   urlToParams.delete('rtl');
   urlToParams.delete('ionic:_testing');
 
@@ -66,11 +71,16 @@ configs().forEach(({ config, title }) => {
   const remainingQueryParams = decodeURIComponent(urlToParams.toString());
   const remainingQueryParamsString = remainingQueryParams == '' ? '' : `&${remainingQueryParams}`;
 
-  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}${remainingQueryParamsString}`;
+  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&ionic:theme=${formattedTheme}&rtl=${formattedRtl}${remainingQueryParamsString}`;
 
   testInfo.annotations.push({
     type: 'mode',
     description: formattedMode,
+  });
+
+  testInfo.annotations.push({
+    type: 'theme',
+    description: formattedTheme,
   });
 
   testInfo.annotations.push({

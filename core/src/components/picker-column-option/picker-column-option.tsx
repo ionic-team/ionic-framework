@@ -3,14 +3,19 @@ import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import { inheritAttributes } from '@utils/helpers';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-picker-column-option',
   styleUrls: {
     ios: 'picker-column-option.ios.scss',
     md: 'picker-column-option.md.scss',
+    ionic: 'picker-column-option.md.scss',
   },
   shadow: true,
 })
@@ -115,12 +120,12 @@ export class PickerColumnOption implements ComponentInterface {
 
   render() {
     const { color, disabled, ariaLabel } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     return (
       <Host
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           ['option-disabled']: disabled,
         })}
       >

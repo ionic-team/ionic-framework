@@ -1,8 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-fab-list',
   styleUrl: 'fab-list.scss',
@@ -33,11 +37,11 @@ export class FabList implements ComponentInterface {
   @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'fab-list-active': this.activated,
           [`fab-list-side-${this.side}`]: true,
         }}

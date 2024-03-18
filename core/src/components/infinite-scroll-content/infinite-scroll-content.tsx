@@ -4,15 +4,20 @@ import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { sanitizeDOMString } from '@utils/sanitization';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { IonicSafeString } from '../../utils/sanitization';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-infinite-scroll-content',
   styleUrls: {
     ios: 'infinite-scroll-content.ios.scss',
     md: 'infinite-scroll-content.md.scss',
+    ionic: 'infinite-scroll-content.md.scss',
   },
 })
 export class InfiniteScrollContent implements ComponentInterface {
@@ -41,10 +46,10 @@ export class InfiniteScrollContent implements ComponentInterface {
 
   componentDidLoad() {
     if (this.loadingSpinner === undefined) {
-      const mode = getIonMode(this);
+      const theme = getIonTheme(this);
       this.loadingSpinner = config.get(
         'infiniteLoadingSpinner',
-        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
+        config.get('spinner', theme === 'ios' ? 'lines' : 'crescent')
       );
     }
   }
@@ -59,14 +64,14 @@ export class InfiniteScrollContent implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`infinite-scroll-content-${mode}`]: true,
+          [`infinite-scroll-content-${theme}`]: true,
         }}
       >
         <div class="infinite-loading">

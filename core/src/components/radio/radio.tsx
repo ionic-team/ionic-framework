@@ -4,11 +4,12 @@ import { isOptionSelected } from '@utils/forms';
 import { addEventListener, removeEventListener } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - The label text to associate with the radio. Use the "labelPlacement" property to control where the label is placed relative to the radio.
  *
@@ -21,6 +22,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
+    ionic: 'radio.md.scss',
   },
   shadow: true,
 })
@@ -198,7 +200,7 @@ export class Radio implements ComponentInterface {
 
   render() {
     const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, alignment } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const inItem = hostContext('ion-item', el);
 
     return (
@@ -207,7 +209,7 @@ export class Radio implements ComponentInterface {
         onBlur={this.onBlur}
         onClick={this.onClick}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': inItem,
           'radio-checked': checked,
           'radio-disabled': disabled,

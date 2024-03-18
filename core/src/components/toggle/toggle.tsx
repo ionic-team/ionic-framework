@@ -8,13 +8,14 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, Mode } from '../../interface';
+import { getIonTheme } from '../../global/ionic-global';
+import type { Color, Gesture, GestureDetail, Theme } from '../../interface';
 
 import type { ToggleChangeEventDetail } from './toggle-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - The label text to associate with the toggle. Use the "labelPlacement" property to control where the label is placed relative to the toggle.
  *
@@ -27,6 +28,7 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
   styleUrls: {
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss',
+    ionic: 'toggle.md.scss',
   },
   shadow: true,
 })
@@ -240,15 +242,15 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
-    if (mode === 'md') {
+  private getSwitchLabelIcon = (theme: Theme, checked: boolean) => {
+    if (theme === 'md') {
       return checked ? checkmarkOutline : removeOutline;
     }
     return checked ? removeOutline : ellipseOutline;
   };
 
-  private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
-    const icon = this.getSwitchLabelIcon(mode, checked);
+  private renderOnOffSwitchLabels(theme: Theme, checked: boolean) {
+    const icon = this.getSwitchLabelIcon(theme, checked);
 
     return (
       <ion-icon
@@ -263,7 +265,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderToggleControl() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     const { enableOnOffLabels, checked } = this;
     return (
@@ -272,10 +274,10 @@ export class Toggle implements ComponentInterface {
          since the wrapper is translated when the handle is interacted with and
          this would move the on/off labels outside of the view box */}
         {enableOnOffLabels &&
-          mode === 'ios' && [this.renderOnOffSwitchLabels(mode, true), this.renderOnOffSwitchLabels(mode, false)]}
+          theme === 'ios' && [this.renderOnOffSwitchLabels(theme, true), this.renderOnOffSwitchLabels(theme, false)]}
         <div class="toggle-icon-wrapper">
           <div class="toggle-inner" part="handle">
-            {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
+            {enableOnOffLabels && theme === 'md' && this.renderOnOffSwitchLabels(theme, checked)}
           </div>
         </div>
       </div>
@@ -289,7 +291,7 @@ export class Toggle implements ComponentInterface {
   render() {
     const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment } = this;
 
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const value = this.getValue();
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
@@ -298,7 +300,7 @@ export class Toggle implements ComponentInterface {
       <Host
         onClick={this.onClick}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           'in-item': hostContext('ion-item', el),
           'toggle-activated': activated,
           'toggle-checked': checked,

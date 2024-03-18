@@ -3,11 +3,12 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the option text in LTR, and to the right in RTL.
@@ -23,6 +24,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss',
+    ionic: 'item-option.md.scss',
   },
   shadow: true,
 })
@@ -88,7 +90,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   render() {
     const { disabled, expandable, href } = this;
     const TagType = href === undefined ? 'button' : ('a' as any);
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const attrs =
       TagType === 'button'
         ? { type: this.type }
@@ -102,7 +104,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
       <Host
         onClick={this.onClick}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'item-option-disabled': disabled,
           'item-option-expandable': expandable,
           'ion-activatable': true,
@@ -119,7 +121,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
             </div>
             <slot name="bottom"></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </TagType>
       </Host>
     );

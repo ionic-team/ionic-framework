@@ -4,7 +4,7 @@ import { componentOnReady, addEventListener } from '@utils/helpers';
 import { printIonError } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
@@ -12,7 +12,8 @@ import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format
 import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot date-target - Content displayed inside of the date button.
  * @slot time-target - Content displayed inside of the time button.
@@ -24,6 +25,7 @@ import { parseDate } from '../datetime/utils/parse';
   styleUrls: {
     ios: 'datetime-button.ios.scss',
     md: 'datetime-button.md.scss',
+    ionic: 'datetime-button.md.scss',
   },
   shadow: true,
 })
@@ -425,12 +427,12 @@ export class DatetimeButton implements ComponentInterface {
   render() {
     const { color, dateText, timeText, selectedButton, datetimeActive, disabled } = this;
 
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     return (
       <Host
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           [`${selectedButton}-active`]: datetimeActive,
           ['datetime-button-disabled']: disabled,
         })}
@@ -446,7 +448,7 @@ export class DatetimeButton implements ComponentInterface {
             ref={(el) => (this.dateTargetEl = el)}
           >
             <slot name="date-target">{dateText}</slot>
-            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         )}
 
@@ -461,7 +463,7 @@ export class DatetimeButton implements ComponentInterface {
             ref={(el) => (this.timeTargetEl = el)}
           >
             <slot name="time-target">{timeText}</slot>
-            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         )}
       </Host>

@@ -7,11 +7,12 @@ import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @part native - The native HTML button element that wraps all child elements.
  * @part icon - The back button icon (uses ion-icon).
@@ -22,6 +23,7 @@ import type { AnimationBuilder, Color } from '../../interface';
   styleUrls: {
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss',
+    ionic: 'back-button.md.scss',
   },
   shadow: true,
 })
@@ -84,7 +86,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       return icon;
     }
 
-    if (getIonMode(this) === 'ios') {
+    if (getIonTheme(this) === 'ios') {
       // default ios back button icon
       return config.get('backButtonIcon', chevronBack);
     }
@@ -94,7 +96,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   get backButtonText() {
-    const defaultBackButtonText = getIonMode(this) === 'ios' ? 'Back' : null;
+    const defaultBackButtonText = getIonTheme(this) === 'ios' ? 'Back' : null;
     return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
   }
 
@@ -135,14 +137,14 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       inheritedAttributes,
     } = this;
     const showBackButton = defaultHref !== undefined;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const ariaLabel = inheritedAttributes['aria-label'] || backButtonText || 'back';
 
     return (
       <Host
         onClick={this.onClick}
         class={createColorClasses(color, {
-          [mode]: true,
+          [theme]: true,
           button: true, // ion-buttons target .button
           'back-button-disabled': disabled,
           'back-button-has-icon-only': hasIconOnly,
@@ -170,7 +172,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
               </span>
             )}
           </span>
-          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {theme === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </button>
       </Host>
     );

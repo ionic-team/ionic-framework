@@ -5,7 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 import {
   cloneElement,
@@ -18,13 +18,15 @@ import {
 } from './header.utils';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-header',
   styleUrls: {
     ios: 'header.ios.scss',
     md: 'header.md.scss',
+    ionic: 'header.md.scss',
   },
 })
 export class Header implements ComponentInterface {
@@ -38,7 +40,7 @@ export class Header implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the header.
-   * Only applies in iOS mode.
+   * Only applies when the theme is `"ios"`.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    */
@@ -46,7 +48,7 @@ export class Header implements ComponentInterface {
 
   /**
    * If `true`, the header will be translucent.
-   * Only applies when the mode is `"ios"` and the device supports
+   * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    *
    * Note: In order to scroll content behind the header, the `fullscreen`
@@ -71,9 +73,9 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
-    if (mode !== 'ios') {
+    if (theme !== 'ios') {
       return;
     }
 
@@ -206,7 +208,7 @@ export class Header implements ComponentInterface {
 
   render() {
     const { translucent, inheritedAttributes } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const collapse = this.collapse || 'none';
 
     // banner role must be at top level, so remove role if inside a menu
@@ -216,18 +218,18 @@ export class Header implements ComponentInterface {
       <Host
         role={roleType}
         class={{
-          [mode]: true,
+          [theme]: true,
 
           // Used internally for styling
-          [`header-${mode}`]: true,
+          [`header-${theme}`]: true,
 
           [`header-translucent`]: this.translucent,
           [`header-collapse-${collapse}`]: true,
-          [`header-translucent-${mode}`]: this.translucent,
+          [`header-translucent-${theme}`]: this.translucent,
         }}
         {...inheritedAttributes}
       >
-        {mode === 'ios' && translucent && <div class="header-background"></div>}
+        {theme === 'ios' && translucent && <div class="header-background"></div>}
         <slot></slot>
       </Host>
     );

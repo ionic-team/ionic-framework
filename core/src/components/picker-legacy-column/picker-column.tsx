@@ -4,7 +4,7 @@ import { clamp } from '@utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
 import { getClassMap } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
 import type { PickerColumn } from '../picker-legacy/picker-interface';
 
@@ -394,11 +394,11 @@ export class PickerColumnCmp implements ComponentInterface {
 
   render() {
     const col = this.col;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={{
-          [mode]: true,
+          [theme]: true,
           'picker-col': true,
           'picker-opts-left': this.col.align === 'left',
           'picker-opts-right': this.col.align === 'right',

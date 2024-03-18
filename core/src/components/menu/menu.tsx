@@ -11,7 +11,7 @@ import { getPresentedOverlay } from '@utils/overlays';
 import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 
 import type { MenuChangeEventDetail, MenuI, MenuType, Side } from './menu-interface';
@@ -22,6 +22,9 @@ const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ *
  * @part container - The container for the menu content.
  * @part backdrop - The backdrop that appears over the main content when the menu is open.
  */
@@ -30,6 +33,7 @@ const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
   styleUrls: {
     ios: 'menu.ios.scss',
     md: 'menu.md.scss',
+    ionic: 'menu.md.scss',
   },
   shadow: true,
 })
@@ -773,7 +777,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   render() {
     const { type, disabled, el, isPaneVisible, inheritedAttributes, side } = this;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
 
     /**
      * If the Close Watcher is enabled then
@@ -786,7 +790,7 @@ export class Menu implements ComponentInterface, MenuI {
         role="navigation"
         aria-label={inheritedAttributes['aria-label'] || 'menu'}
         class={{
-          [mode]: true,
+          [theme]: true,
           [`menu-type-${type}`]: true,
           'menu-enabled': !disabled,
           [`menu-side-${side}`]: true,

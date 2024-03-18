@@ -1,8 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
+ */
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
@@ -78,12 +82,12 @@ export class RippleEffect implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         role="presentation"
         class={{
-          [mode]: true,
+          [theme]: true,
           unbounded: this.unbounded,
         }}
       ></Host>

@@ -2,11 +2,12 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the divider text in LTR, and to the right in RTL.
@@ -17,6 +18,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'item-divider.ios.scss',
     md: 'item-divider.md.scss',
+    ionic: 'item-divider.md.scss',
   },
   shadow: true,
 })
@@ -40,11 +42,11 @@ export class ItemDivider implements ComponentInterface {
   @Prop() sticky = false;
 
   render() {
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     return (
       <Host
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'item-divider-sticky': this.sticky,
           item: true,
         })}

@@ -7,19 +7,21 @@ import { createColorClasses } from '@utils/theme';
 import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail } from '../../interface';
 
 import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './searchbar-interface';
 
 /**
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
+ * @virtualProp {"ios" | "md" | "ionic"} theme - The theme determines the visual appearance of the component.
  */
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss',
+    ionic: 'searchbar.md.scss',
   },
   scoped: true,
 })
@@ -110,18 +112,18 @@ export class Searchbar implements ComponentInterface {
   @Prop() autocorrect: 'on' | 'off' = 'off';
 
   /**
-   * Set the cancel button icon. Only applies to `md` mode.
-   * Defaults to `arrow-back-sharp`.
+   * Set the cancel button icon. Only available when the theme is `"md"`.
+   * Defaults to `"arrow-back-sharp"`.
    */
   @Prop() cancelButtonIcon = config.get('backButtonIcon', arrowBackSharp) as string;
 
   /**
-   * Set the the cancel button text. Only applies to `ios` mode.
+   * Set the the cancel button text. Only available when the theme is `"ios"`.
    */
   @Prop() cancelButtonText = 'Cancel';
 
   /**
-   * Set the clear icon. Defaults to `close-circle` for `ios` and `close-sharp` for `md`.
+   * Set the clear icon. Defaults to `"close-circle"` for `"ios"` theme and `"close-sharp"` for `"md"` and `"ionic"` theme.
    */
   @Prop() clearIcon?: string;
 
@@ -187,8 +189,8 @@ export class Searchbar implements ComponentInterface {
   @Prop() placeholder = 'Search';
 
   /**
-   * The icon to use as the search icon. Defaults to `search-outline` in
-   * `ios` mode and `search-sharp` in `md` mode.
+   * The icon to use as the search icon. Defaults to `"search-outline"` in
+   * the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
    */
   @Prop() searchIcon?: string;
 
@@ -487,11 +489,11 @@ export class Searchbar implements ComponentInterface {
   private positionElements() {
     const value = this.getValue();
     const prevAlignLeft = this.shouldAlignLeft;
-    const mode = getIonMode(this);
+    const theme = getIonTheme(this);
     const shouldAlignLeft = !this.animated || value.trim() !== '' || !!this.focused;
     this.shouldAlignLeft = shouldAlignLeft;
 
-    if (mode !== 'ios') {
+    if (theme !== 'ios') {
       return;
     }
 
@@ -623,9 +625,9 @@ export class Searchbar implements ComponentInterface {
   render() {
     const { cancelButtonText } = this;
     const animated = this.animated && config.getBoolean('animated', true);
-    const mode = getIonMode(this);
-    const clearIcon = this.clearIcon || (mode === 'ios' ? closeCircle : closeSharp);
-    const searchIcon = this.searchIcon || (mode === 'ios' ? searchOutline : searchSharp);
+    const theme = getIonTheme(this);
+    const clearIcon = this.clearIcon || (theme === 'ios' ? closeCircle : closeSharp);
+    const searchIcon = this.searchIcon || (theme === 'ios' ? searchOutline : searchSharp);
     const shouldShowCancelButton = this.shouldShowCancelButton();
 
     const cancelButton = this.showCancelButton !== 'never' && (
@@ -634,14 +636,14 @@ export class Searchbar implements ComponentInterface {
         // Screen readers should not announce button if it is not visible on screen
         aria-hidden={shouldShowCancelButton ? undefined : 'true'}
         type="button"
-        tabIndex={mode === 'ios' && !shouldShowCancelButton ? -1 : undefined}
+        tabIndex={theme === 'ios' && !shouldShowCancelButton ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
         <div aria-hidden="true">
-          {mode === 'md' ? (
-            <ion-icon aria-hidden="true" mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+          {theme === 'md' ? (
+            <ion-icon aria-hidden="true" icon={this.cancelButtonIcon} lazy={false}></ion-icon>
           ) : (
             cancelButtonText
           )}
@@ -654,7 +656,7 @@ export class Searchbar implements ComponentInterface {
         role="search"
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
-          [mode]: true,
+          [theme]: true,
           'searchbar-animated': animated,
           'searchbar-disabled': this.disabled,
           'searchbar-no-animate': animated && this.noAnimate,
@@ -690,15 +692,9 @@ export class Searchbar implements ComponentInterface {
             {...this.inheritedAttributes}
           />
 
-          {mode === 'md' && cancelButton}
+          {theme === 'md' && cancelButton}
 
-          <ion-icon
-            aria-hidden="true"
-            mode={mode}
-            icon={searchIcon}
-            lazy={false}
-            class="searchbar-search-icon"
-          ></ion-icon>
+          <ion-icon aria-hidden="true" icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
           <button
             aria-label="reset"
@@ -715,16 +711,10 @@ export class Searchbar implements ComponentInterface {
             }}
             onClick={() => this.onClearInput(true)}
           >
-            <ion-icon
-              aria-hidden="true"
-              mode={mode}
-              icon={clearIcon}
-              lazy={false}
-              class="searchbar-clear-icon"
-            ></ion-icon>
+            <ion-icon aria-hidden="true" icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
           </button>
         </div>
-        {mode === 'ios' && cancelButton}
+        {theme === 'ios' && cancelButton}
       </Host>
     );
   }
