@@ -94,7 +94,12 @@
     "test.e2e.update-snapshots": "npm run test.e2e -- --update-snapshots",
     "test.watch": "jest --watch --no-cache",
     "test.treeshake": "node scripts/treeshaking.js dist/index.js",
-    "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake"
+    "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake",
+    "docker.build": "docker build -t ionic-playwright .",
+    "test.e2e.docker": "npm run docker.build && docker run -it --rm -e DISPLAY=$(cat docker-display.txt) -v $(cat docker-display-volume.txt) --ipc=host --mount=type=bind,source=./,target=/ionic ionic-playwright npm run test.e2e --",
+    "test.e2e.docker.update-snapshots": "npm run test.e2e.docker -- --update-snapshots",
+    "test.e2e.docker.ci": "npm run docker.build && docker run -e CI='true' --rm --ipc=host --mount=type=bind,source=./,target=/ionic ionic-playwright npm run test.e2e --",
+    "test.report": "npx playwright show-report"
   },
   "author": "Ionic Team",
   "license": "MIT",
