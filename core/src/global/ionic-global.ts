@@ -194,7 +194,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   );
 
   if (!isModeValidForTheme(defaultMode, defaultTheme)) {
-    printInvalidModeWarning(defaultMode, defaultTheme);
+    printInvalidModeWarning(defaultMode, defaultTheme, configObj);
     defaultMode = getDefaultModeForTheme(defaultTheme);
   }
 
