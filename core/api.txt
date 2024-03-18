@@ -589,6 +589,7 @@ ion-infinite-scroll,event,ionInfinite,void,true
 ion-infinite-scroll-content,none
 ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefined,undefined,false,false
+ion-infinite-scroll-content,prop,mode,"ios" | "md",undefined,false,false
 ion-infinite-scroll-content,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-input,scoped

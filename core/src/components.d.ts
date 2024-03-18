@@ -1313,6 +1313,10 @@ export namespace Components {
          */
         "loadingText"?: string | IonicSafeString;
         /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -6520,6 +6524,10 @@ declare namespace LocalJSX {
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "loadingText"?: string | IonicSafeString;
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The theme determines the visual appearance of the component.
          */
