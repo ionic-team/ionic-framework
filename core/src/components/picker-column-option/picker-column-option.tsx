@@ -15,6 +15,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'picker-column-option.ios.scss',
     md: 'picker-column-option.md.scss',
+    ionic: 'picker-column-option.md.scss',
   },
   shadow: true,
 })

@@ -25,6 +25,7 @@ import { parseDate } from '../datetime/utils/parse';
   styleUrls: {
     ios: 'datetime-button.ios.scss',
     md: 'datetime-button.md.scss',
+    ionic: 'datetime-button.md.scss',
   },
   shadow: true,
 })
