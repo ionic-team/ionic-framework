@@ -17,19 +17,38 @@ describe('input password toggle', () => {
     });
 
     const inputPasswordToggle = page.body.querySelector('ion-input-password-toggle')!;
+    const button = inputPasswordToggle.shadowRoot!.querySelector('ion-button')!;
     const input = page.body.querySelector('ion-input')!;
 
     expect(input.type).toBe('password');
 
-    await inputPasswordToggle.click();
+    await button.click();
     await page.waitForChanges();
 
     expect(input.type).toBe('text');
 
-    await inputPasswordToggle.click();
+    await button.click();
     await page.waitForChanges();
 
     expect(input.type).toBe('password');
   });
 
+  it.skip('should inherit the mode and color to internal ionic components', async () => {
+    const page = await newSpecPage({
+      components: [Input, InputPasswordToggle, Button],
+      template: () => (
+        <ion-input type="password" mode="md" color="primary">
+          <ion-input-password-toggle slot="end" mode="ios" color="danger"></ion-input-password-toggle>
+        </ion-input>
+      )
+    });
+
+    const inputPasswordToggle = page.body.querySelector('ion-input-password-toggle')!;
+    const button = inputPasswordToggle.shadowRoot!.querySelector('ion-button')!;
+
+    await page.waitForChanges();
+
+    expect(button.mode).toBe('ios');
+    expect(button.color).toBe('danger');
+  });
 });
