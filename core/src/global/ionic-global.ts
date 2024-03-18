@@ -181,9 +181,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     'mode',
     doc.documentElement.getAttribute('mode') || (isPlatform(win, 'ios') ? 'ios' : 'md')
   );
-  config.set('mode', defaultMode);
-  doc.documentElement.setAttribute('mode', defaultMode);
-  doc.documentElement.classList.add(defaultMode);
 
   /**
    * Check if the theme was set as an attribute on <html>
@@ -195,6 +192,16 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     'theme',
     doc.documentElement.getAttribute('theme') || getDefaultThemeForMode(defaultMode)
   );
+
+  if (!isModeValidForTheme(defaultMode, defaultTheme)) {
+    printInvalidModeWarning(defaultMode, defaultTheme);
+    defaultMode = getDefaultModeForTheme(defaultTheme);
+  }
+
+  config.set('mode', defaultMode);
+  doc.documentElement.setAttribute('mode', defaultMode);
+  doc.documentElement.classList.add(defaultMode);
+
   config.set('theme', defaultTheme);
   doc.documentElement.setAttribute('theme', defaultTheme);
   doc.documentElement.classList.add(defaultTheme);
