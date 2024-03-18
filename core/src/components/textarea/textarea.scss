@@ -589,7 +589,7 @@
  */
 :host(.textarea-label-placement-stacked) .textarea-wrapper,
 :host(.textarea-label-placement-floating) .textarea-wrapper {
-  flex-direction: column;
+  flex-direction: row;
   align-items: start;
 }
 
@@ -611,6 +611,8 @@
    * autofill background too.
    */
   z-index: 2;
+
+  position: absolute;
 }
 
 /**
@@ -628,7 +630,7 @@
 :host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
 :host(.textarea-label-placement-floating) ::slotted([slot="start"]),
 :host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
-  margin-top: 8px;
+  margin-top: calc(1em + 8px);
 }
 
 /**

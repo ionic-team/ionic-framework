@@ -17,6 +17,14 @@
   font-size: $textarea-ios-font-size;
 }
 
+// Native Textarea
+// --------------------------------------------------
+
+:host(.textarea-label-placement-floating) .native-textarea,
+:host(.textarea-label-placement-stacked) .native-textarea {
+  padding-top: 1em;
+}
+
 // Textarea - Disabled
 // ----------------------------------------------------------------
 // The textarea, label, helper text, char counter and placeholder

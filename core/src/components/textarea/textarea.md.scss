@@ -19,6 +19,14 @@
   font-size: $textarea-md-font-size;
 }
 
+// Native Textarea
+// --------------------------------------------------
+
+:host(.textarea-label-placement-floating:not(.textarea-fill-outline)) .native-textarea,
+:host(.textarea-label-placement-stacked:not(.textarea-fill-outline)) .native-textarea {
+  padding-top: 1em;
+}
+
 // Textarea Max Length Counter
 // ----------------------------------------------------------------
 .textarea-bottom .counter {
@@ -81,7 +89,7 @@
  * so it is not cut off by the
  * the item's line (if one is present).
  */
-:host(.in-item) .textarea-highlight {
+:host(.in-item) .textarea-highlight  {
   @include position(null, null, 0, 0);
 }
 
