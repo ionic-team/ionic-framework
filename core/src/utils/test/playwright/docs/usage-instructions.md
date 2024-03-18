@@ -104,7 +104,7 @@ This command builds a Docker image before tests run. It will also re-build the D
 Note that the Playwright report will not automatically open in your web browser when tests are complete because the tests were run in Docker. Run `npm run test.report` outside of Docker to open the most recent test report.
 
 > [!NOTE]
-> Additional setup is needed to run Playwright tests with headed mode in Docker. See below for more information.
+> Additional setup is needed to run Playwright tests with headed mode in Docker. See [Configuring Docker for Headed Tests](#configuring-docker-for-headed-tests-optional) for more information.
 
 ### Headed vs. Headless Tests
 
