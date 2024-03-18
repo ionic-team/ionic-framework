@@ -2,14 +2,14 @@
 
 @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
   :root {
-    @include high-contrast-dark-base-theme();
+    @include high-contrast-dark-base-palette();
   }
 
   :root.ios {
-    @include high-contrast-dark-ios-theme();
+    @include high-contrast-dark-ios-palette();
   }
 
   :root.md {
-    @include high-contrast-dark-md-theme();
+    @include high-contrast-dark-md-palette();
   }
 }

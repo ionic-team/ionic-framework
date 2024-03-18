@@ -2,14 +2,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    @include dark-base-theme();
+    @include dark-base-palette();
   }
 
   :root.ios {
-    @include dark-ios-theme();
+    @include dark-ios-palette();
   }
 
   :root.md {
-    @include dark-md-theme();
+    @include dark-md-palette();
   }
 }
