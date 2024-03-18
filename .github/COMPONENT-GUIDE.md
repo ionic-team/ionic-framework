@@ -800,6 +800,6 @@ if (mode === "ios") {
 
 Mode can be used for behavior tied to the platform the app is running on. For example, iOS has rubber band scrolling, while Android does not.
 
-Functionality that is consistently applied across all themes, but only on a specific platform should use mode.
+Use mode for functionality that remains consistent across all themes but is intended specifically for a certain platform.
 
 Functionality that is applied only to a specific theme should use theme.
