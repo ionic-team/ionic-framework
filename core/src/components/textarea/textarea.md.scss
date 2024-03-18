@@ -89,7 +89,7 @@
  * so it is not cut off by the
  * the item's line (if one is present).
  */
-:host(.in-item) .textarea-highlight  {
+:host(.in-item) .textarea-highlight {
   @include position(null, null, 0, 0);
 }
 

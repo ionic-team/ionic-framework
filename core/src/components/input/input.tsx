@@ -678,6 +678,8 @@ export class Input implements ComponentInterface {
       labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus));
 
     const startSlotEl = el.querySelector('[slot="start"]');
+
+    // 16px is the margin after the start slot content, which we also need to account for.
     const startSlotWidth = startSlotEl ? startSlotEl.clientWidth + 16 : 0;
 
     return (

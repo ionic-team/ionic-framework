@@ -630,6 +630,11 @@
 :host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
 :host(.textarea-label-placement-floating) ::slotted([slot="start"]),
 :host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
+  /**
+   * 1em accounts for the padding applied to the native textarea.
+   * This value may need adjusting to get everything lined up
+   * in all conditions.
+   */
   margin-top: calc(1em + 8px);
 }
 

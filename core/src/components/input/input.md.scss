@@ -23,7 +23,7 @@
 // Native Text Input
 // --------------------------------------------------
 
-:host(.input-label-placement-floating:not(.input-fill-outline))  .native-input,
+:host(.input-label-placement-floating:not(.input-fill-outline)) .native-input,
 :host(.input-label-placement-stacked:not(.input-fill-outline)) .native-input {
   padding-top: 1em;
 }
@@ -76,7 +76,7 @@
 // Input Highlight
 // ----------------------------------------------------------------
 
-.input-highlight  {
+.input-highlight {
   @include position(null, null, -1px, 0);
 
   position: absolute;
