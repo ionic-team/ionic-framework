@@ -1,0 +1,9 @@
+@import "./high-contrast";
+
+.ion-palette-high-contrast {
+  @include high-contrast-light-base-palette();
+}
+
+.ion-palette-high-contrast.md {
+  @include high-contrast-light-md-palette();
+}

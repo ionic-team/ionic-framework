@@ -46,9 +46,8 @@ export class IonRouterOutlet extends IonRouterOutletBase {
     router: Router,
     zone: NgZone,
     activatedRoute: ActivatedRoute,
-    outletContent: ViewContainerRef,
     @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
   ) {
-    super(name, tabs, commonLocation, elementRef, router, zone, activatedRoute, outletContent, parentOutlet);
+    super(name, tabs, commonLocation, elementRef, router, zone, activatedRoute, parentOutlet);
   }
 }

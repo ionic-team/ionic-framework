@@ -1,6 +1,5 @@
-import { HostListener, Input, Optional, ElementRef, NgZone, ChangeDetectorRef, Directive } from '@angular/core';
+import { HostListener, Optional, ElementRef, NgZone, ChangeDetectorRef, Directive } from '@angular/core';
 import type { Components } from '@ionic/core';
-import type { AnimationBuilder } from '@ionic/core/components';
 
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
@@ -22,12 +21,6 @@ export declare interface IonBackButton extends Components.IonBackButton {}
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonBackButton {
-  @Input()
-  defaultHref: string | undefined;
-
-  @Input()
-  routerAnimation: AnimationBuilder | undefined;
-
   protected el: HTMLElement;
 
   constructor(
