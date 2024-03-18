@@ -136,31 +136,39 @@
 // iOS Icon Only Button
 // --------------------------------------------------
 
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: var(--padding-top);
+  --padding-end: var(--padding-top);
+  --padding-start: var(--padding-top);
+
+  min-width: $button-ios-min-height;
+}
+
 ::slotted(ion-icon[slot="icon-only"]) {
   font-size: 1.125em;
 }
 
-:host(.button-has-icon-only) {
-  --padding-top: 0;
-  --padding-bottom: var(--padding-top);
-  --padding-end: 0.5em;
-  --padding-start: var(--padding-end);
-}
-
 :host(.button-small.button-has-icon-only) {
-  --padding-end: 0.42em;
+  // Opted out from creating a new variable since the
+  // value is only used here and it's based on the
+  // min-height variable.
+  min-width: $button-ios-small-min-height;
 }
 
 :host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: 1.31em;
+  font-size: 1.4em;
 }
 
 :host(.button-large.button-has-icon-only) {
-  --padding-end: 0.6em;
+  // Opted out from creating a new variable since the
+  // value is only used here and it's based on the
+  // min-height variable.
+  min-width: $button-ios-large-min-height;
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: 1.3em;
+  font-size: 1em;
 }
 
 // iOS Button Focused

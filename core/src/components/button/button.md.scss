@@ -121,43 +121,47 @@
 }
 
 // MD Icon Only Button
+//
+// MD does not specify a small size, these
+// styles are based on the iOS small size.
+//
+// MD does not specify a large size, these
+// styles are based on the iOS large size.
 // --------------------------------------------------
-
-::slotted(ion-icon[slot="icon-only"]) {
-  @include padding(0);
-
-  font-size: 1.6em;
-}
 
 :host(.button-has-icon-only) {
   --padding-top: 0;
   --padding-bottom: var(--padding-top);
-  --padding-end: 0.65em;
-  --padding-start: var(--padding-end);
+  --padding-end: var(--padding-top);
+  --padding-start: var(--padding-top);
+
+  min-width: $button-md-min-height;
 }
 
-// MD does not specify a small size, these
-// styles are based on the iOS small size.
+::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.6em;
+}
+
 :host(.button-small.button-has-icon-only) {
-  --padding-end: 0.42em;
+  // Opted out from creating a new variable since the
+  // value is only used here and it's based on the
+  // min-height variable.
+  min-width: $button-md-small-min-height;
 }
 
-// MD does not specify a small size, these
-// styles are based on the iOS small size.
 :host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: 1.31em;
+  font-size: 1.23em;
 }
 
-// MD does not specify a large size, these
-// styles are based on the iOS large size.
 :host(.button-large.button-has-icon-only) {
-  --padding-end: 0.6em;
+  // Opted out from creating a new variable since the
+  // value is only used here and it's based on the
+  // min-height variable.
+  min-width: $button-md-large-min-height;
 }
 
-// MD does not specify a large size, these
-// styles are based on the iOS large size.
 :host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: 1.3em;
+  font-size: 1.4em;
 }
 
 // Material Design Button: Hover
