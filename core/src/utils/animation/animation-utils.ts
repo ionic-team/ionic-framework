@@ -14,36 +14,6 @@ export const setStyleProperty = (element: HTMLElement, propertyName: string, val
   element.style.setProperty(prefix + propertyName, value);
 };
 
-export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
-  let unRegTrans: (() => void) | undefined;
-  const opts: AddEventListenerOptions = { passive: true };
-
-  const unregister = () => {
-    if (unRegTrans) {
-      unRegTrans();
-    }
-  };
-
-  const onTransitionEnd = (ev: Event) => {
-    if (el === ev.target) {
-      unregister();
-      callback(ev as TransitionEvent);
-    }
-  };
-
-  if (el) {
-    el.addEventListener('webkitAnimationEnd', onTransitionEnd, opts);
-    el.addEventListener('animationend', onTransitionEnd, opts);
-
-    unRegTrans = () => {
-      el.removeEventListener('webkitAnimationEnd', onTransitionEnd, opts);
-      el.removeEventListener('animationend', onTransitionEnd, opts);
-    };
-  }
-
-  return unregister;
-};
-
 export const addClassToArray = (classes: string[] = [], className: string | string[] | undefined): string[] => {
   if (className !== undefined) {
     const classNameToAppend = Array.isArray(className) ? className : [className];

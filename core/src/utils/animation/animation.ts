@@ -1,5 +1,4 @@
 import { win } from '../browser';
-import { raf } from '../helpers';
 
 import type {
   Animation,
@@ -12,7 +11,7 @@ import type {
   AnimationLifecycle,
   AnimationPlayOptions,
 } from './animation-interface';
-import { addClassToArray, animationEnd, setStyleProperty } from './animation-utils';
+import { addClassToArray, setStyleProperty } from './animation-utils';
 
 // TODO(FW-2832): types
 
@@ -73,11 +72,17 @@ export const createAnimation = (animationId?: string): Animation => {
   const supportsAnimationEffect =
     typeof (AnimationEffect as any) === 'function' ||
     (win !== undefined && typeof (win as any).AnimationEffect === 'function');
+  /**
+   * This is a feature detection for Web Animations.
+   *
+   * Certain environments such as emulated browser environments for testing,
+   * do not support Web Animations. As a result, we need to check for support
+   * and provide a fallback to test certain functionality related to Web Animations.
+   */
   const supportsWebAnimations =
     typeof (Element as any) === 'function' &&
     typeof (Element as any).prototype!.animate === 'function' &&
     supportsAnimationEffect;
-  const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   const getWebAnimations = () => {
     return webAnimations;
@@ -790,11 +795,6 @@ export const createAnimation = (animationId?: string): Animation => {
     return ani;
   };
 
-  const onAnimationEndFallback = () => {
-    cssAnimationsTimerFallback = undefined;
-    animationFinish();
-  };
-
   const clearCSSAnimationsTimeout = () => {
     if (cssAnimationsTimerFallback) {
       clearTimeout(cssAnimationsTimerFallback);
@@ -804,46 +804,7 @@ export const createAnimation = (animationId?: string): Animation => {
   const playCSSAnimations = () => {
     clearCSSAnimationsTimeout();
 
-    if (_keyframes.length === 0 || elements.length === 0) {
-      animationFinish();
-    } else {
-      /**
-       * This is a catchall in the event that a CSS Animation did not finish.
-       * The Web Animations API has mechanisms in place for preventing this.
-       * CSS Animations will not fire an `animationend` event
-       * for elements with `display: none`. The Web Animations API
-       * accounts for this, but using raw CSS Animations requires
-       * this workaround.
-       */
-      const animationDelay = getDelay() || 0;
-      const animationDuration = getDuration() || 0;
-      const animationIterations = getIterations() || 1;
-
-      // No need to set a timeout when animation has infinite iterations
-      if (isFinite(animationIterations)) {
-        cssAnimationsTimerFallback = setTimeout(
-          onAnimationEndFallback,
-          animationDelay + animationDuration * animationIterations + ANIMATION_END_FALLBACK_PADDING_MS
-        );
-      }
-
-      animationEnd(elements[0], () => {
-        clearCSSAnimationsTimeout();
-
-        /**
-         * Ensure that clean up
-         * is always done a frame
-         * before the onFinish handlers
-         * are fired. Otherwise, there
-         * may be flickering if a new
-         * animation is started on the same
-         * element too quickly
-         */
-        raf(() => {
-          raf(animationFinish);
-        });
-      });
-    }
+    animationFinish();
   };
 
   const playWebAnimations = () => {
