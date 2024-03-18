@@ -2033,7 +2033,7 @@ export namespace Components {
          */
         "animated": boolean;
         /**
-          * By default `ion-nav` animates transition between pages based on the mode (ios or md). However, this property allows to create custom transition using `AnimationBuilder` functions.
+          * By default `ion-nav` animates transition between pages based on the mode ("ios" or "md"). However, this property allows to create custom transition using `AnimationBuilder` functions.
          */
         "animation"?: AnimationBuilder;
         /**
@@ -7271,7 +7271,7 @@ declare namespace LocalJSX {
          */
         "animated"?: boolean;
         /**
-          * By default `ion-nav` animates transition between pages based on the mode (ios or md). However, this property allows to create custom transition using `AnimationBuilder` functions.
+          * By default `ion-nav` animates transition between pages based on the mode ("ios" or "md"). However, this property allows to create custom transition using `AnimationBuilder` functions.
          */
         "animation"?: AnimationBuilder;
         "delegate"?: FrameworkDelegate;
