@@ -130,7 +130,7 @@ export class Input implements ComponentInterface {
   /**
    * If `true`, the user cannot interact with the input.
    */
-  @Prop() disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * A hint to the browser for which enter key to display.
@@ -226,7 +226,7 @@ export class Input implements ComponentInterface {
   /**
    * If `true`, the user cannot modify the value.
    */
-  @Prop() readonly = false;
+  @Prop({ reflect: true }) readonly = false;
 
   /**
    * If `true`, the user must fill in a value before submitting a form.

@@ -605,3 +605,12 @@
   margin-inline-start: $form-control-label-margin;
   margin-inline-end: 0;
 }
+
+/**
+ * The input password toggle component should be hidden when the input is readonly/disabled
+ * because it is not possible to edit a password.
+ */
+:host([disabled]) ::slotted(ion-input-password-toggle),
+:host([readonly]) ::slotted(ion-input-password-toggle) {
+  display: none;
+}
