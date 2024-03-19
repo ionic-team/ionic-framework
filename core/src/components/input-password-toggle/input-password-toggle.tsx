@@ -95,7 +95,6 @@ export class InputPasswordToggle implements ComponentInterface {
   };
 
   render() {
-    // TODO aria-controls
     const { color, inputElRef } = this;
 
     const mode = getIonMode(this);
