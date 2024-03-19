@@ -10,7 +10,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
+import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
 import { getCounterText } from './input.utils';
