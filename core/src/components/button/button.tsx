@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
@@ -20,13 +20,14 @@ import type { RouterDirection } from '../router/utils/interface';
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
+ * @part focus-ring - The visual indicator that appears as an outline around the button when focused.
  */
 @Component({
   tag: 'ion-button',
   styleUrls: {
     ios: 'button.ios.scss',
     md: 'button.md.scss',
-    ionic: 'button.md.scss',
+    ionic: 'button.ionic.scss',
   },
   shadow: true,
 })
@@ -37,8 +38,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
-
+  
   @Element() el!: HTMLElement;
+
+  @State() isCircle: boolean = false;
 
   /**
    * The color to use from your application's color palette.
@@ -112,7 +115,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * Set to `"round"` for a button with more rounded corners.
    */
-  @Prop({ reflect: true }) shape?: 'round';
+  @Prop({ reflect: true }) shape?: 'round' | 'rectangular';
 
   /**
    * Set to `"small"` for a button with less height and padding, to `"default"`
@@ -120,8 +123,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * with more height and padding. By default the size is unset, unless the button
    * is inside of an item, where the size is `"small"` by default. Set the size to
    * `"default"` inside of an item to make it a standard size button.
+   * Option`"xsmall"` and `"xlarge"` are only availave for Ionic theme. 
+   * At ios and md if in they are in use undefined will be assume.
    */
-  @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
+  @Prop({ reflect: true }) size?:  'xsmall' | 'small' | 'default' | 'large' | 'xlarge';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -212,6 +217,21 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   /**
+   *  Check which size has been set, and once at ion & md,
+   * disable xsmall and xlarge styles!
+   */
+  private getSize(): string | undefined {
+    const theme = getIonTheme(this);
+    const { size } = this;
+  
+    if (size === undefined && this.inItem)
+      return 'small';
+    if ((theme === 'ios' || theme === 'md') && (size === 'xsmall' || size === 'xlarge'))
+      return undefined;
+    return size;
+  }
+
+  /**
    * Finds the form element based on the provided `form` selector
    * or element reference provided.
    */
@@ -269,6 +289,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     return this.el.closest('form');
   }
 
+  /**
+   * Makes button-has-icon-only class to update when an icon is added or removed from slot="icon-only"
+   */
+  private slotChanged = () => {
+    this.isCircle = this.hasIconOnly;
+  };
+
   private submitForm(ev: Event) {
     // this button wants to specifically submit a form
     // climb up the dom to see if we're in a <form>
@@ -304,7 +331,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       disabled,
       rel,
       target,
-      size,
       href,
       color,
       expand,
@@ -315,7 +341,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     } = this;
 
     const theme = getIonTheme(this);
-    const finalSize = size === undefined && this.inItem ? 'small' : size;
+    const finalSize = this.getSize();
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
@@ -377,12 +403,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           {...inheritedAttributes}
         >
           <span class="button-inner">
-            <slot name="icon-only"></slot>
+            <slot name="icon-only" onSlotchange={this.slotChanged}></slot>
             <slot name="start"></slot>
             <slot></slot>
             <slot name="end"></slot>
           </span>
           {theme === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {theme === 'ionic' && <div part="focus-ring" class="button-focus-ring"></div>}
         </TagType>
       </Host>
     );

@@ -1,0 +1,13 @@
+@use "sass:math";
+
+$browser-context: 16;
+
+/**
+ * Convert a pixels given value into em
+ * 
+ * @param pixels - Value in pixels to be converted (i.e. px)
+ * @param context (optional) - Baseline value
+ */
+@function pxToEm($pixels, $context: $browser-context) {
+  @return calc($pixels / $context) * 1em;
+}
