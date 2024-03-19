@@ -25,29 +25,9 @@ runs:
       run: npm install
       shell: bash
       working-directory: ./core
-    - id: clean-component-name
-      name: Clean Component Name
-      # Remove `ion-` prefix from the `component` variable if it exists.
-      run: |
-        echo "component=$(echo ${{ inputs.component }} | sed 's/ion-//g')" >> $GITHUB_OUTPUT
-      shell: bash
-    - id: set-test-file
-      name: Set Test File
-      # Screenshots can be updated for all components or specified component(s).
-      # If the `component` variable is set, then the test has the option to
-      # - run all the file paths that are in a component folder.
-      # -- For example: if the `component` value is "item", then the test will run all the file paths that are in the "src/components/item" folder.
-      # -- For example: if the `component` value is "item chip", then the test will run all the file paths that are in the "src/components/item" and "src/components/chip" folders.
-      run: |
-        if [ -n "${{ steps.clean-component-name.outputs.component }}" ]; then
-          echo "testFile=\$(echo '${{ steps.clean-component-name.outputs.component }}' | awk '{for(i=1;i<=NF;i++) \$i=\"src/components/\"\$i}1')" >> $GITHUB_OUTPUT
-        else
-          echo "testFile=$(echo '')" >> $GITHUB_OUTPUT
-        fi
-      shell: bash
     - name: Test
       if: inputs.update != 'true'
-      run: npm run test.e2e.docker.ci ${{ steps.set-test-file.outputs.testFile }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -69,7 +49,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npm run test.e2e.docker.ci ${{ steps.set-test-file.outputs.testFile }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
