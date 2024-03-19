@@ -140,7 +140,7 @@
   --padding-top: 0;
   --padding-bottom: var(--padding-top);
   --padding-end: var(--padding-top);
-  --padding-start: var(--padding-top);
+  --padding-start: var(--padding-end);
 
   min-width: $button-ios-min-height;
 }
