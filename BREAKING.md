@@ -16,6 +16,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Browser and Platform Support](#version-8x-browser-platform-support)
 - [Dark Mode](#version-8x-dark-mode)
 - [Global Styles](#version-8x-global-styles)
+- [Haptics](#version-8x-haptics)
 - [Components](#version-8x-components)
   - [Button](#version-8x-button)
   - [Checkbox](#version-8x-checkbox)
@@ -137,6 +138,10 @@ Developers who had previously chosen dynamic font scaling by activating it in th
 Developers who want to disable dynamic font scaling can set `--ion-dynamic-font: initial;` in their global stylesheets. However, this is not recommended because it may introduce accessibility challenges for users who depend on enlarged font sizes.
 
 For more information on the dynamic font, refer to the [Dynamic Font Scaling documentation](https://ionicframework.com/docs/layout/dynamic-font-scaling).
+
+<h2 id="version-8x-haptics">Haptics</h2>
+
+- Support for the Cordova Haptics plugin has been removed. Components that integrate with haptics, such as `ion-picker` and `ion-toggle`, will continue to function but will no longer play haptics in Cordova environments. Developers should migrate to Capacitor to continue to have haptics in these components.
 
 <h2 id="version-8x-components">Components</h2>
 
