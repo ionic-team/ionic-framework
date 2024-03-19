@@ -58,7 +58,7 @@ export class InputPasswordToggle implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    this.inputElRef?.addEventListener('ionTypeChange', this.onTypeChange);
+    this.inputElRef?.removeEventListener('ionTypeChange', this.onTypeChange);
     this.inputElRef = null;
   }
 
