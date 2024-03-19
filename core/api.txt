@@ -609,9 +609,9 @@ ion-input,css-prop,--placeholder-opacity
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-input-password-toggle,prop,hidePasswordIcon,string | undefined,undefined,false,false
+ion-input-password-toggle,prop,hideIcon,string | undefined,undefined,false,false
 ion-input-password-toggle,prop,mode,"ios" | "md",undefined,false,false
-ion-input-password-toggle,prop,showPasswordIcon,string | undefined,undefined,false,false
+ion-input-password-toggle,prop,showIcon,string | undefined,undefined,false,false
 
 ion-item,shadow
 ion-item,prop,button,boolean,false,false,false

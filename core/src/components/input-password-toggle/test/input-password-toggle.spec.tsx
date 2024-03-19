@@ -39,11 +39,7 @@ describe('input password toggle', () => {
       components: [Input, InputPasswordToggle, Button],
       template: () => (
         <ion-input type="password">
-          <ion-input-password-toggle
-            showPasswordIcon="show"
-            hidePasswordIcon="hide"
-            slot="end"
-          ></ion-input-password-toggle>
+          <ion-input-password-toggle showIcon="show" hideIcon="hide" slot="end"></ion-input-password-toggle>
         </ion-input>
       ),
     });
@@ -66,11 +62,7 @@ describe('input password toggle', () => {
       components: [Input, InputPasswordToggle, Button],
       template: () => (
         <ion-input type="password">
-          <ion-input-password-toggle
-            showPasswordIcon="show"
-            hidePasswordIcon="hide"
-            slot="end"
-          ></ion-input-password-toggle>
+          <ion-input-password-toggle showIcon="show" hideIcon="hide" slot="end"></ion-input-password-toggle>
         </ion-input>
       ),
     });

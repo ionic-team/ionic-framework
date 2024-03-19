@@ -33,12 +33,12 @@ export class InputPasswordToggle implements ComponentInterface {
   /**
    * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
    */
-  @Prop() showPasswordIcon?: string;
+  @Prop() showIcon?: string;
 
   /**
    * The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.
    */
-  @Prop() hidePasswordIcon?: string;
+  @Prop() hideIcon?: string;
 
   connectedCallback() {
     const { el } = this;
@@ -99,8 +99,8 @@ export class InputPasswordToggle implements ComponentInterface {
 
     const mode = getIonMode(this);
 
-    const showPasswordIcon = this.showPasswordIcon ?? eye;
-    const hidePasswordIcon = this.hidePasswordIcon ?? eyeOff;
+    const showPasswordIcon = this.showIcon ?? eye;
+    const hidePasswordIcon = this.hideIcon ?? eyeOff;
 
     const isPasswordVisible = inputElRef?.type === 'text';
 

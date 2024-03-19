@@ -1295,7 +1295,7 @@ export namespace Components {
         /**
           * The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.
          */
-        "hidePasswordIcon"?: string;
+        "hideIcon"?: string;
         /**
           * The mode determines which platform styles to use.
          */
@@ -1303,7 +1303,7 @@ export namespace Components {
         /**
           * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
          */
-        "showPasswordIcon"?: string;
+        "showIcon"?: string;
     }
     interface IonItem {
         /**
@@ -6037,7 +6037,7 @@ declare namespace LocalJSX {
         /**
           * The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.
          */
-        "hidePasswordIcon"?: string;
+        "hideIcon"?: string;
         /**
           * The mode determines which platform styles to use.
          */
@@ -6045,7 +6045,7 @@ declare namespace LocalJSX {
         /**
           * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
          */
-        "showPasswordIcon"?: string;
+        "showIcon"?: string;
     }
     interface IonItem {
         /**
