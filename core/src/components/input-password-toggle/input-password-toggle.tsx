@@ -1,10 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, forceUpdate } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
-import { eyeOff, eye }  from 'ionicons/icons';
 import { createColorClasses } from '@utils/theme';
-import type { Color } from '../../interface';
+import { eyeOff, eye } from 'ionicons/icons';
+
 import { getIonMode } from '../../global/ionic-global';
+import type { Color } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -13,7 +14,7 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-input-password-toggle',
   styleUrls: {
     ios: 'input-password-toggle.ios.scss',
-    md: 'input-password-toggle.md.scss'
+    md: 'input-password-toggle.md.scss',
   },
   shadow: true,
 })
@@ -42,10 +43,13 @@ export class InputPasswordToggle implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
 
-    const inputElRef = this.inputElRef = el.closest('ion-input');
+    const inputElRef = (this.inputElRef = el.closest('ion-input'));
 
     if (!inputElRef) {
-      printIonWarning('No ancestor ion-input found for ion-input-password-toggle. This component must be slotted inside of an ion-input.', el);
+      printIonWarning(
+        'No ancestor ion-input found for ion-input-password-toggle. This component must be slotted inside of an ion-input.',
+        el
+      );
     }
   }
 
@@ -56,7 +60,9 @@ export class InputPasswordToggle implements ComponentInterface {
   private togglePasswordVisibility = () => {
     const { inputElRef } = this;
 
-    if (!inputElRef) { return; }
+    if (!inputElRef) {
+      return;
+    }
 
     inputElRef.type = inputElRef.type === 'text' ? 'password' : 'text';
 
@@ -99,7 +105,11 @@ export class InputPasswordToggle implements ComponentInterface {
           }}
           onClick={this.togglePasswordVisibility}
         >
-          <ion-icon slot="icon-only" aria-hidden="true" icon={isPasswordVisible ? hidePasswordIcon : showPasswordIcon}></ion-icon>
+          <ion-icon
+            slot="icon-only"
+            aria-hidden="true"
+            icon={isPasswordVisible ? hidePasswordIcon : showPasswordIcon}
+          ></ion-icon>
         </ion-button>
       </Host>
     );

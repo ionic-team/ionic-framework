@@ -13,7 +13,7 @@ describe('input password toggle', () => {
         <ion-input type="password">
           <ion-input-password-toggle slot="end"></ion-input-password-toggle>
         </ion-input>
-      )
+      ),
     });
 
     const inputPasswordToggle = page.body.querySelector('ion-input-password-toggle')!;
@@ -40,7 +40,7 @@ describe('input password toggle', () => {
         <ion-input type="password" mode="md" color="primary">
           <ion-input-password-toggle slot="end" mode="ios" color="danger"></ion-input-password-toggle>
         </ion-input>
-      )
+      ),
     });
 
     const inputPasswordToggle = page.body.querySelector('ion-input-password-toggle')!;

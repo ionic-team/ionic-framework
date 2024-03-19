@@ -1015,6 +1015,28 @@ where the user's interaction is typing.
 
 
 @ProxyCmp({
+  inputs: ['color', 'hidePasswordIcon', 'mode', 'showPasswordIcon']
+})
+@Component({
+  selector: 'ion-input-password-toggle',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'hidePasswordIcon', 'mode', 'showPasswordIcon'],
+})
+export class IonInputPasswordToggle {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonInputPasswordToggle extends Components.IonInputPasswordToggle {}
+
+
+@ProxyCmp({
   inputs: ['button', 'color', 'detail', 'detailIcon', 'disabled', 'download', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type']
 })
 @Component({
