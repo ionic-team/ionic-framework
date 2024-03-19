@@ -34,7 +34,7 @@
         <h4>Preview options</h4>
         
         <p>
-          <ion-select id="select-size" justify="space-between" interface="action-sheet" label="Size" placeholder="">
+          <ion-select id="select-size" justify="space-between" interface="alert" label="Size" placeholder="">
             <ion-select-option selected="true" value="">default</ion-select-option>
             <ion-select-option value="xsmall">XSmall</ion-select-option>
             <ion-select-option value="small">Small</ion-select-option>
@@ -42,13 +42,13 @@
             <ion-select-option value="xlarge">Xlarge</ion-select-option>
           </ion-select>
 
-          <ion-select id="select-shape" justify="space-between" interface="action-sheet" label="Shape" placeholder="">
+          <ion-select id="select-shape" justify="space-between" interface="alert" label="Shape" placeholder="">
             <ion-select-option value="">default</ion-select-option>
             <ion-select-option value="rectangular">Rectangular</ion-select-option>
             <ion-select-option value="round">Round</ion-select-option>
           </ion-select>
 
-          <ion-select id="select-fill" justify="space-between" interface="action-sheet" label="Fill" placeholder="">
+          <ion-select id="select-fill" justify="space-between" interface="alert" label="Fill" placeholder="">
             <ion-select-option value="">default</ion-select-option>
             <ion-select-option value="outline">Outline</ion-select-option>
             <ion-select-option value="clear">Clear</ion-select-option>
@@ -128,7 +128,7 @@
       const listOfBtns = Array.from(document.querySelectorAll("ion-button"));
 
       function updateAttr(el, name, value) {
-        if(value === '') {
+        if(value === '' || value === undefined) {
             el.removeAttribute(name);
           } else {
             el.setAttribute(name, value);
