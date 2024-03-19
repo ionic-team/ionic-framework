@@ -39,12 +39,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Element() el!: HTMLElement;
 
   /**
-   * Ensures that the 'has-icon-only' class is properly added
-   * or removed from `ion-button` when manipulating the
-   * `icon-only` slot.
-   *
-   * Without this, the 'has-icon-only' class is only checked
-   * or added when `ion-button` component first renders.
+   * If `true`, the button only has an icon.
    */
   @State() isCircle: boolean = false;
 
@@ -306,6 +301,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   private slotChanged = () => {
+    /**
+     * Ensures that the 'has-icon-only' class is properly added
+     * or removed from `ion-button` when manipulating the
+     * `icon-only` slot.
+     *
+     * Without this, the 'has-icon-only' class is only checked
+     * or added when `ion-button` component first renders.
+     */
     this.isCircle = this.hasIconOnly;
   };
 
