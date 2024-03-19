@@ -4,22 +4,22 @@
 // --------------------------------------------------
 
 /// @prop - Min width of the modal inset
-$modal-inset-min-width:         768px !default;
+$modal-inset-min-width:         768px;
 
 /// @prop - Minimum height of the small modal inset
-$modal-inset-min-height-small:  600px !default;
+$modal-inset-min-height-small:  600px;
 
 /// @prop - Minimum height of the large modal inset
-$modal-inset-min-height-large:  768px !default;
+$modal-inset-min-height-large:  768px;
 
 /// @prop - Width of the large modal inset
-$modal-inset-width:             600px !default;
+$modal-inset-width:             600px;
 
 /// @prop - Height of the small modal inset
-$modal-inset-height-small:      500px !default;
+$modal-inset-height-small:      500px;
 
 /// @prop - Height of the large modal inset
-$modal-inset-height-large:      600px !default;
+$modal-inset-height-large:      600px;
 
 /// @prop - Text color of the modal content
-$modal-text-color:              $text-color !default;
+$modal-text-color:              $text-color;

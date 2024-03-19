@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the input
-$input-ios-font-size:                     inherit !default;
+$input-ios-font-size:                     inherit;
 
 /// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled input
-$input-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;
+$input-ios-disabled-opacity: $form-control-ios-disabled-opacity;

@@ -5,30 +5,30 @@
 // --------------------------------------------------
 
 /// @prop - Opacity of the disabled checkbox label
-$checkbox-md-disabled-opacity:           $form-control-md-disabled-opacity !default;
+$checkbox-md-disabled-opacity:           $form-control-md-disabled-opacity;
 
 /// @prop - Background color of the checkbox icon when off
-$checkbox-md-icon-background-color-off:  $item-md-background !default;
+$checkbox-md-icon-background-color-off:  $item-md-background;
 
 /// @prop - Size of the checkbox icon
 /// The icon size does not use dynamic font
 /// because it does not scale in native.
-$checkbox-md-icon-size:                  18px !default;
+$checkbox-md-icon-size:                  18px;
 
 /// @prop - Border width of the checkbox icon
-$checkbox-md-icon-border-width:          2px !default;
+$checkbox-md-icon-border-width:          2px;
 
 /// @prop - Border style of the checkbox icon
-$checkbox-md-icon-border-style:          solid !default;
+$checkbox-md-icon-border-style:          solid;
 
 /// @prop - Border color of the checkbox icon when off
-$checkbox-md-icon-border-color-off:      rgb($text-color-rgb, 0.60) !default;
+$checkbox-md-icon-border-color-off:      rgb($text-color-rgb, 0.60);
 
 /// @prop - Transition duration of the checkbox
-$checkbox-md-transition-duration:        180ms !default;
+$checkbox-md-transition-duration:        180ms;
 
 /// @prop - Transition easing of the checkbox
-$checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1) !default;
+$checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1);
 
 /// @prop - Opacity of the disabled checkbox
 /// This value is used because the checkbox color is set to
@@ -37,4 +37,4 @@ $checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1) !default;
 /// opacity is applied on top of the transparent color so
 /// this opacity gets us the equivalent of applying `0.38`
 /// on top of an opaque checkbox `rgb(0, 0, 0, 1.0)`
-$checkbox-md-icon-disabled-opacity:      0.63 !default;
+$checkbox-md-icon-disabled-opacity:      0.63;

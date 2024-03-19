@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 /// @prop - The padding for the grid
-$grid-padding:               var(--ion-grid-padding, 5px) !default;
+$grid-padding:               var(--ion-grid-padding, 5px);
 
 /// @prop - The padding for the grid at different breakpoints
 $grid-paddings: (
@@ -14,7 +14,7 @@ $grid-paddings: (
   md: var(--ion-grid-padding-md, $grid-padding),
   lg: var(--ion-grid-padding-lg, $grid-padding),
   xl: var(--ion-grid-padding-xl, $grid-padding)
-) !default;
+);
 
 /// @prop - Width of the grid for different screen sizes when fixed is enabled
 $grid-widths: (
@@ -23,4 +23,4 @@ $grid-widths: (
   md: var(--ion-grid-width-md, var(--ion-grid-width, 720px)),
   lg: var(--ion-grid-width-lg, var(--ion-grid-width, 960px)),
   xl: var(--ion-grid-width-xl, var(--ion-grid-width, 1140px))
-) !default;
+);

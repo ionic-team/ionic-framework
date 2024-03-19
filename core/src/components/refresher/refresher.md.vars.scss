@@ -1,19 +1,19 @@
 @import "../../themes/ionic.globals.md";
 
 /// @prop - Color of the refresher icon
-$refresher-md-icon-color:                     $text-color !default;
+$refresher-md-icon-color:                     $text-color;
 
 /// @prop - Text color of the refresher content
-$refresher-md-text-color:                     $text-color !default;
+$refresher-md-text-color:                     $text-color;
 
 /// @prop - Color of the native refresher spinner
-$refresher-md-native-spinner-color:           #{ion-color(primary, base)} !default;
+$refresher-md-native-spinner-color:           #{ion-color(primary, base)};
 
 /// @prop - Border of the native refresher spinner
-$refresher-md-native-spinner-border:          1px solid var(--ion-color-step-200, var(--ion-background-color-step-200, #ececec)) !default;
+$refresher-md-native-spinner-border:          1px solid var(--ion-color-step-200, var(--ion-background-color-step-200, #ececec));
 
 /// @prop - Background of the native refresher spinner
-$refresher-md-native-spinner-background:      var(--ion-color-step-250, var(--ion-background-color-step-250, #ffffff)) !default;
+$refresher-md-native-spinner-background:      var(--ion-color-step-250, var(--ion-background-color-step-250, #ffffff));
 
 /// @prop - Box shadow of the native refresher spinner
-$refresher-md-native-spinner-box-shadow:      0px 1px 6px rgba(0, 0, 0, 0.1) !default;
+$refresher-md-native-spinner-box-shadow:      0px 1px 6px rgba(0, 0, 0, 0.1);

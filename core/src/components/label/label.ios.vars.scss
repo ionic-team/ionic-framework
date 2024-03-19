@@ -5,13 +5,13 @@
 // --------------------------------------------------
 
 /// @prop - Text color of the stacked/floating label when it is focused
-$label-ios-text-color-focused:         null !default;
+$label-ios-text-color-focused:         null;
 
 /// @prop - Font size of the label when the text wraps
-$label-ios-text-wrap-font-size:        dynamic-font(14px) !default;
+$label-ios-text-wrap-font-size:        dynamic-font(14px);
 
 /// @prop - Line height of the label when the text wraps
-$label-ios-text-wrap-line-height:      1.5 !default;
+$label-ios-text-wrap-line-height:      1.5;
 
 /// @prop - Color of the item paragraph
-$item-ios-paragraph-text-color:        $text-color-step-600 !default;
+$item-ios-paragraph-text-color:        $text-color-step-600;

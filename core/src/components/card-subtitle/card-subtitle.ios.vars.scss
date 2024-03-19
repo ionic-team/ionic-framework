@@ -4,40 +4,40 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the card subtitle
-$card-ios-subtitle-font-size:            dynamic-font(12px) !default;
+$card-ios-subtitle-font-size:            dynamic-font(12px);
 
 /// @prop - Font weight of the card subtitle
-$card-ios-subtitle-font-weight:          700 !default;
+$card-ios-subtitle-font-weight:          700;
 
 /// @prop - Font weight of the card subtitle
-$card-ios-subtitle-text-transform:       uppercase !default;
+$card-ios-subtitle-text-transform:       uppercase;
 
 /// @prop - Letter spacing of the card subtitle
-$card-ios-subtitle-letter-spacing:       .4px !default;
+$card-ios-subtitle-letter-spacing:       .4px;
 
 /// @prop - Padding top of the card subtitle
-$card-ios-subtitle-padding-top:          0 !default;
+$card-ios-subtitle-padding-top:          0;
 
 /// @prop - Padding end of the card subtitle
-$card-ios-subtitle-padding-end:          $card-ios-subtitle-padding-top !default;
+$card-ios-subtitle-padding-end:          $card-ios-subtitle-padding-top;
 
 /// @prop - Padding bottom of the card subtitle
-$card-ios-subtitle-padding-bottom:       $card-ios-subtitle-padding-top !default;
+$card-ios-subtitle-padding-bottom:       $card-ios-subtitle-padding-top;
 
 /// @prop - Padding start of the card subtitle
-$card-ios-subtitle-padding-start:        $card-ios-subtitle-padding-end !default;
+$card-ios-subtitle-padding-start:        $card-ios-subtitle-padding-end;
 
 /// @prop - Margin top of the card subtitle
-$card-ios-subtitle-margin-top:           0 !default;
+$card-ios-subtitle-margin-top:           0;
 
 /// @prop - Margin end of the card subtitle
-$card-ios-subtitle-margin-end:           $card-ios-subtitle-margin-top !default;
+$card-ios-subtitle-margin-end:           $card-ios-subtitle-margin-top;
 
 /// @prop - Margin bottom of the card subtitle
-$card-ios-subtitle-margin-bottom:        4px !default;
+$card-ios-subtitle-margin-bottom:        4px;
 
 /// @prop - Margin start of the card subtitle
-$card-ios-subtitle-margin-start:         $card-ios-subtitle-margin-end !default;
+$card-ios-subtitle-margin-start:         $card-ios-subtitle-margin-end;
 
 /// @prop - Color of the card subtitle
-$card-ios-subtitle-color:                $text-color-step-400 !default;
+$card-ios-subtitle-color:                $text-color-step-400;

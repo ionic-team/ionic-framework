@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Width of the menu
-$menu-width:                 304px !default;
+$menu-width:                 304px;
 
 /// @prop - Width of the menu on small devices (under 340px)
-$menu-small-width:           $menu-width - 40px !default;
+$menu-small-width:           $menu-width - 40px;

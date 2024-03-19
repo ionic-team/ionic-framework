@@ -4,12 +4,12 @@
 // --------------------------------------------------
 
 /// @prop - Font weight of the breadcrumb
-$breadcrumb-font-weight:         400 !default;
+$breadcrumb-font-weight:         400;
 
-$breadcrumb-baseline-font-size: 16px !default;
+$breadcrumb-baseline-font-size: 16px;
 
 /// @prop - Font size of the breadcrumb
-$breadcrumb-font-size:           dynamic-font($breadcrumb-baseline-font-size) !default;
+$breadcrumb-font-size:           dynamic-font($breadcrumb-baseline-font-size);
 
 /// @prop - Color of the breadcrumb separator
-$breadcrumb-separator-color:     var(--ion-color-step-550, var(--ion-text-color-step-450, #73849a)) !default;
+$breadcrumb-separator-color:     var(--ion-color-step-550, var(--ion-text-color-step-450, #73849a));

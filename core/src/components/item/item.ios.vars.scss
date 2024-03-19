@@ -4,107 +4,107 @@
 // --------------------------------------------------
 
 /// @prop - Minimum height of the item
-$item-ios-min-height:                        44px !default;
+$item-ios-min-height:                        44px;
 
 /// @prop - Font size of the item
-$item-ios-font-size:                         dynamic-font(16px) !default;
+$item-ios-font-size:                         dynamic-font(16px);
 
 /// @prop - Margin top of the item paragraph
-$item-ios-paragraph-margin-top:              0 !default;
+$item-ios-paragraph-margin-top:              0;
 
 /// @prop - Margin end of the item paragraph
-$item-ios-paragraph-margin-end:              0 !default;
+$item-ios-paragraph-margin-end:              0;
 
 /// @prop - Margin bottom of the item paragraph
-$item-ios-paragraph-margin-bottom:           2px !default;
+$item-ios-paragraph-margin-bottom:           2px;
 
 /// @prop - Margin start of the item paragraph
-$item-ios-paragraph-margin-start:            $item-ios-paragraph-margin-end !default;
+$item-ios-paragraph-margin-start:            $item-ios-paragraph-margin-end;
 
 /// @prop - Font size of the item paragraph
-$item-ios-paragraph-font-size:               dynamic-font(14px) !default;
+$item-ios-paragraph-font-size:               dynamic-font(14px);
 
 /// @prop - Color of the item paragraph
-$item-ios-paragraph-text-color:              var(--ion-text-color-step-550, #a3a3a3) !default;
+$item-ios-paragraph-text-color:              var(--ion-text-color-step-550, #a3a3a3);
 
 /// @prop - Width of the avatar in the item
-$item-ios-avatar-width:                      36px !default;
+$item-ios-avatar-width:                      36px;
 
 /// @prop - Height of the avatar in the item
-$item-ios-avatar-height:                     $item-ios-avatar-width !default;
+$item-ios-avatar-height:                     $item-ios-avatar-width;
 
 /// @prop - Size of the thumbnail in the item
-$item-ios-thumbnail-size:                   56px !default;
+$item-ios-thumbnail-size:                   56px;
 
 /// @prop - Padding top for the item content
-$item-ios-padding-top:                       10px !default;
+$item-ios-padding-top:                       10px;
 
 /// @prop - Padding end for the item content
-$item-ios-padding-end:                       16px !default;
+$item-ios-padding-end:                       16px;
 
 /// @prop - Padding bottom for the item content
-$item-ios-padding-bottom:                    10px !default;
+$item-ios-padding-bottom:                    10px;
 
 /// @prop - Padding start for the item content
-$item-ios-padding-start:                     16px !default;
+$item-ios-padding-start:                     16px;
 
 /// @prop - Border bottom width for the item when lines are displayed
-$item-ios-border-bottom-width:               $hairlines-width !default;
+$item-ios-border-bottom-width:               $hairlines-width;
 
 /// @prop - Border bottom style for the item when lines are displayed
-$item-ios-border-bottom-style:               solid !default;
+$item-ios-border-bottom-style:               solid;
 
 /// @prop - Border bottom color for the item when lines are displayed
-$item-ios-border-bottom-color:               $item-ios-border-color !default;
+$item-ios-border-bottom-color:               $item-ios-border-color;
 
 
 // Item Slots
 // --------------------------------------------------
 
 /// @prop - Margin top for the start slot
-$item-ios-slot-start-margin-top:             2px !default;
+$item-ios-slot-start-margin-top:             2px;
 
 /// @prop - Margin end for the start slot
-$item-ios-slot-start-margin-end:             $item-ios-padding-end !default;
+$item-ios-slot-start-margin-end:             $item-ios-padding-end;
 
 /// @prop - Margin bottom for the start slot
-$item-ios-slot-start-margin-bottom:          $item-ios-slot-start-margin-top !default;
+$item-ios-slot-start-margin-bottom:          $item-ios-slot-start-margin-top;
 
 /// @prop - Margin start for the start slot
-$item-ios-slot-start-margin-start:           0 !default;
+$item-ios-slot-start-margin-start:           0;
 
 /// @prop - Margin top for the end slot
-$item-ios-slot-end-margin-top:               null !default;
+$item-ios-slot-end-margin-top:               null;
 
 /// @prop - Margin end for the end slot
-$item-ios-slot-end-margin-end:               null !default;
+$item-ios-slot-end-margin-end:               null;
 
 /// @prop - Margin bottom for the end slot
-$item-ios-slot-end-margin-bottom:            $item-ios-slot-end-margin-top !default;
+$item-ios-slot-end-margin-bottom:            $item-ios-slot-end-margin-top;
 
 /// @prop - Margin start for the end slot
-$item-ios-slot-end-margin-start:             null !default;
+$item-ios-slot-end-margin-start:             null;
 
 /// @prop - Margin top for an icon in the start/end slot
-$item-ios-icon-slot-margin-top:              7px !default;
+$item-ios-icon-slot-margin-top:              7px;
 
 /// @prop - Margin end for an icon in the start/end slot
-$item-ios-icon-slot-margin-end:              null !default;
+$item-ios-icon-slot-margin-end:              null;
 
 /// @prop - Margin bottom for an icon in the start/end slot
-$item-ios-icon-slot-margin-bottom:           7px !default;
+$item-ios-icon-slot-margin-bottom:           7px;
 
 /// @prop - Margin start for an icon in the start/end slot
-$item-ios-icon-slot-margin-start:            null !default;
+$item-ios-icon-slot-margin-start:            null;
 
 /// @prop - Margin top for the end slot inside of a floating/stacked label
-$item-ios-label-slot-end-margin-top:         7px !default;
+$item-ios-label-slot-end-margin-top:         7px;
 
 /// @prop - Margin end for the end slot inside of a floating/stacked label
-$item-ios-label-slot-end-margin-end:         null !default;
+$item-ios-label-slot-end-margin-end:         null;
 
 /// @prop - Margin bottom for the end slot inside of a floating/stacked label
-$item-ios-label-slot-end-margin-bottom:      $item-ios-label-slot-end-margin-top !default;
+$item-ios-label-slot-end-margin-bottom:      $item-ios-label-slot-end-margin-top;
 
 /// @prop - Margin start for the end slot inside of a floating/stacked label
-$item-ios-label-slot-end-margin-start:       $item-ios-label-slot-end-margin-end !default;
+$item-ios-label-slot-end-margin-start:       $item-ios-label-slot-end-margin-end;

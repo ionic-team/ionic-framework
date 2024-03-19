@@ -4,108 +4,108 @@
 // --------------------------------------------------
 
 /// @prop - Margin top of the button
-$button-ios-margin-top:                               4px !default;
+$button-ios-margin-top:                               4px;
 
 /// @prop - Margin end of the button
-$button-ios-margin-end:                               2px !default;
+$button-ios-margin-end:                               2px;
 
 /// @prop - Margin bottom of the button
-$button-ios-margin-bottom:                            4px !default;
+$button-ios-margin-bottom:                            4px;
 
 /// @prop - Margin start of the button
-$button-ios-margin-start:                             2px !default;
+$button-ios-margin-start:                             2px;
 
 /// @prop - Padding top of the button
-$button-ios-padding-top:                              13px !default;
+$button-ios-padding-top:                              13px;
 
 /// @prop - Padding end of the button
-$button-ios-padding-end:                              1em !default;
+$button-ios-padding-end:                              1em;
 
 /// @prop - Padding bottom of the button
-$button-ios-padding-bottom:                           $button-ios-padding-top !default;
+$button-ios-padding-bottom:                           $button-ios-padding-top;
 
 /// @prop - Padding start of the button
-$button-ios-padding-start:                            $button-ios-padding-end !default;
+$button-ios-padding-start:                            $button-ios-padding-end;
 
 /// @prop - Minimum height of the button
-$button-ios-min-height:                               3.1em !default;
+$button-ios-min-height:                               3.1em;
 
 /// @prop - Border radius of the button
-$button-ios-border-radius:                            14px !default;
+$button-ios-border-radius:                            14px;
 
 /// @prop - Font size of the button text
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-font-size:                                dynamic-font-max(16px, 3) !default;
+$button-ios-font-size:                                dynamic-font-max(16px, 3);
 
 /// @prop - Font weight of the button text
-$button-ios-font-weight:                              500 !default;
+$button-ios-font-weight:                              500;
 
 // iOS Large Button
 // --------------------------------------------------
 
 /// @prop - Padding top of the large button
-$button-ios-large-padding-top:                        17px !default;
+$button-ios-large-padding-top:                        17px;
 
 /// @prop - Padding end of the large button
-$button-ios-large-padding-end:                        1em !default;
+$button-ios-large-padding-end:                        1em;
 
 /// @prop - Padding bottom of the large button
-$button-ios-large-padding-bottom:                     $button-ios-large-padding-top !default;
+$button-ios-large-padding-bottom:                     $button-ios-large-padding-top;
 
 /// @prop - Padding start of the large button
-$button-ios-large-padding-start:                      $button-ios-large-padding-end !default;
+$button-ios-large-padding-start:                      $button-ios-large-padding-end;
 
 /// @prop - Minimum height of the large button
-$button-ios-large-min-height:                         3.1em !default;
+$button-ios-large-min-height:                         3.1em;
 
 /// @prop - Border radius of the large button
-$button-ios-large-border-radius:                      16px !default;
+$button-ios-large-border-radius:                      16px;
 
 /// @prop - Font size of the large button
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-large-font-size:                          dynamic-font-max(20px, 3) !default;
+$button-ios-large-font-size:                          dynamic-font-max(20px, 3);
 
 
 // iOS Small Button
 // --------------------------------------------------
 
 /// @prop - Padding top of the small button
-$button-ios-small-padding-top:                        4px !default;
+$button-ios-small-padding-top:                        4px;
 
 /// @prop - Padding end of the small button
-$button-ios-small-padding-end:                        .9em !default;
+$button-ios-small-padding-end:                        .9em;
 
 /// @prop - Padding bottom of the small button
-$button-ios-small-padding-bottom:                     $button-ios-small-padding-top !default;
+$button-ios-small-padding-bottom:                     $button-ios-small-padding-top;
 
 /// @prop - Padding start of the small button
-$button-ios-small-padding-start:                      $button-ios-small-padding-end !default;
+$button-ios-small-padding-start:                      $button-ios-small-padding-end;
 
 /// @prop - Minimum height of the small button
-$button-ios-small-min-height:                         2.1em !default;
+$button-ios-small-min-height:                         2.1em;
 
 /// @prop - Border radius of the small button
-$button-ios-small-border-radius:                      6px !default;
+$button-ios-small-border-radius:                      6px;
 
 /// @prop - Font size of the small button
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-small-font-size:                          dynamic-font-max(13px, 3) !default;
+$button-ios-small-font-size:                          dynamic-font-max(13px, 3);
 
 
 // iOS Outline Button
 // --------------------------------------------------
 
 /// @prop - Border width of the outline button
-$button-ios-outline-border-width:                     1px !default;
+$button-ios-outline-border-width:                     1px;
 
 /// @prop - Border style of the outline button
-$button-ios-outline-border-style:                     solid !default;
+$button-ios-outline-border-style:                     solid;
 
 /// @prop - Border radius of the outline button
-$button-ios-outline-border-radius:                    $button-ios-border-radius !default;
+$button-ios-outline-border-radius:                    $button-ios-border-radius;
 
 // iOS Clear Button
 // --------------------------------------------------
@@ -113,41 +113,41 @@ $button-ios-outline-border-radius:                    $button-ios-border-radius 
 /// @prop - Font size of the clear button
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-clear-font-size:                          dynamic-font-max(17px, 3) !default;
+$button-ios-clear-font-size:                          dynamic-font-max(17px, 3);
 
 /// @prop - Font weight of the clear button
-$button-ios-clear-font-weight:                        normal !default;
+$button-ios-clear-font-weight:                        normal;
 
 /// @prop - Letter spacing of the button
-$button-ios-letter-spacing:                           0 !default;
+$button-ios-letter-spacing:                           0;
 
 /// @prop - Opacity of the activated clear button
-$button-ios-clear-opacity-activated:                  .4 !default;
+$button-ios-clear-opacity-activated:                  .4;
 
 /// @prop - Opacity of the clear button on hover
-$button-ios-clear-opacity-hover:                      .6 !default;
+$button-ios-clear-opacity-hover:                      .6;
 
 // iOS Round Button
 // --------------------------------------------------
 
 /// @prop - Padding top of the round button
-$button-ios-round-padding-top:                        $button-round-padding-top !default;
+$button-ios-round-padding-top:                        $button-round-padding-top;
 
 /// @prop - Padding end of the round button
-$button-ios-round-padding-end:                        $button-round-padding-end !default;
+$button-ios-round-padding-end:                        $button-round-padding-end;
 
 /// @prop - Padding bottom of the round button
-$button-ios-round-padding-bottom:                     $button-round-padding-bottom !default;
+$button-ios-round-padding-bottom:                     $button-round-padding-bottom;
 
 /// @prop - Padding start of the round button
-$button-ios-round-padding-start:                      $button-round-padding-start !default;
+$button-ios-round-padding-start:                      $button-round-padding-start;
 
 /// @prop - Border radius of the round button
-$button-ios-round-border-radius:                      $button-round-border-radius !default;
+$button-ios-round-border-radius:                      $button-round-border-radius;
 
 
 // iOS Decorator Button
 // --------------------------------------------------
 
 /// @prop - Font weight of the strong button
-$button-ios-strong-font-weight:                       600 !default;
+$button-ios-strong-font-weight:                       600;

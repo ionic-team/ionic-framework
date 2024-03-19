@@ -5,28 +5,28 @@
 // --------------------------------------------------
 
 /// @prop - Font weight of all headings
-$headings-font-weight:         500 !default;
+$headings-font-weight:         500;
 
 /// @prop - Line height of all headings
-$headings-line-height:         1.2 !default;
+$headings-line-height:         1.2;
 
 /// @prop - Font size of heading level 1
-$h1-font-size:                 dynamic-font(26px) !default;
+$h1-font-size:                 dynamic-font(26px);
 
 /// @prop - Font size of heading level 2
-$h2-font-size:                 dynamic-font(24px) !default;
+$h2-font-size:                 dynamic-font(24px);
 
 /// @prop - Font size of heading level 3
-$h3-font-size:                 dynamic-font(22px) !default;
+$h3-font-size:                 dynamic-font(22px);
 
 /// @prop - Font size of heading level 4
-$h4-font-size:                 dynamic-font(20px) !default;
+$h4-font-size:                 dynamic-font(20px);
 
 /// @prop - Font size of heading level 5
-$h5-font-size:                 dynamic-font(18px) !default;
+$h5-font-size:                 dynamic-font(18px);
 
 /// @prop - Font size of heading level 6
-$h6-font-size:                 dynamic-font(16px) !default;
+$h6-font-size:                 dynamic-font(16px);
 
 html {
   font-family: var(--ion-font-family);

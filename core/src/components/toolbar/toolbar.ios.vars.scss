@@ -17,24 +17,24 @@ $toolbar-order-ios: (
 );
 
 /// @prop - Minimum height of the toolbar
-$toolbar-ios-min-height:                            44px !default;
+$toolbar-ios-min-height:                            44px;
 
 /// @prop - Padding top of the toolbar
-$toolbar-ios-padding-top:                           3px !default;
+$toolbar-ios-padding-top:                           3px;
 
 /// @prop - Padding end of the toolbar
-$toolbar-ios-padding-end:                           4px !default;
+$toolbar-ios-padding-end:                           4px;
 
 /// @prop - Padding bottom of the toolbar
-$toolbar-ios-padding-bottom:                        $toolbar-ios-padding-top !default;
+$toolbar-ios-padding-bottom:                        $toolbar-ios-padding-top;
 
 /// @prop - Padding start of the toolbar
-$toolbar-ios-padding-start:                         $toolbar-ios-padding-end !default;
+$toolbar-ios-padding-start:                         $toolbar-ios-padding-end;
 
 /// @prop - Font size of the toolbar button
 /// The minimum and maximum font sizes for a toolbar button are
 /// 100% and 135%, respectively, of their default font size
-$toolbar-ios-button-font-size:                      dynamic-font-clamp(1, 17px, 1.24) !default;
+$toolbar-ios-button-font-size:                      dynamic-font-clamp(1, 17px, 1.24);
 
 /// @prop - Border radius of the toolbar button
-$toolbar-ios-button-border-radius:                  4px !default;
+$toolbar-ios-button-border-radius:                  4px;

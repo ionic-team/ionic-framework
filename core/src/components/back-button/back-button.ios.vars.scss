@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Z index of the back button
-$back-button-ios-button-z-index:      $z-index-toolbar-buttons !default;
+$back-button-ios-button-z-index:      $z-index-toolbar-buttons;
 
 /// @prop - Text color of the back button
-$back-button-ios-color:               ion-color(primary, base) !default;
+$back-button-ios-color:               ion-color(primary, base);

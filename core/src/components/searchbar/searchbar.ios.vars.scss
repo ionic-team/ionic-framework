@@ -4,59 +4,59 @@
 // --------------------------------------------------
 
 /// @prop - Padding top of the searchbar
-$searchbar-ios-padding-top:                       12px !default;
+$searchbar-ios-padding-top:                       12px;
 
 /// @prop - Padding end of the searchbar
-$searchbar-ios-padding-end:                       $searchbar-ios-padding-top !default;
+$searchbar-ios-padding-end:                       $searchbar-ios-padding-top;
 
 /// @prop - Padding bottom of the searchbar
-$searchbar-ios-padding-bottom:                    $searchbar-ios-padding-top !default;
+$searchbar-ios-padding-bottom:                    $searchbar-ios-padding-top;
 
 /// @prop - Padding start of the searchbar
-$searchbar-ios-padding-start:                     $searchbar-ios-padding-end !default;
+$searchbar-ios-padding-start:                     $searchbar-ios-padding-end;
 
 /// @prop - Font size of the searchbar cancel button
 // The cancel button on iOS does not scale with Dynamic Type
-$searchbar-ios-cancel-button-font-size:           17px !default;
+$searchbar-ios-cancel-button-font-size:           17px;
 
 /// @prop - Color of the searchbar cancel button
-$searchbar-ios-cancel-button-color:               ion-color(primary, base) !default;
+$searchbar-ios-cancel-button-color:               ion-color(primary, base);
 
 /// @prop - Background color of the searchbar cancel button
-$searchbar-ios-cancel-button-background-color:    transparent !default;
+$searchbar-ios-cancel-button-background-color:    transparent;
 
 /// @prop - Size of the searchbar input search icon
-$searchbar-ios-input-search-icon-size:            dynamic-font(22px) !default;
+$searchbar-ios-input-search-icon-size:            dynamic-font(22px);
 
 /// @prop - Color of the searchbar input search icon
-$searchbar-ios-input-search-icon-color:           $text-color-step-400 !default;
+$searchbar-ios-input-search-icon-color:           $text-color-step-400;
 
 /// @prop - Minimum Height of the searchbar input
-$searchbar-ios-input-min-height:                      36px !default;
+$searchbar-ios-input-min-height:                      36px;
 
 /// @prop - Border radius of the searchbar input
-$searchbar-ios-input-border-radius:               10px !default;
+$searchbar-ios-input-border-radius:               10px;
 
 /// @prop - Color of the searchbar input text
-$searchbar-ios-input-text-color:                  $text-color !default;
+$searchbar-ios-input-text-color:                  $text-color;
 
 /// @prop - Background color alpha of the searchbar input
-$searchbar-ios-input-background-color-alpha:      .07 !default;
+$searchbar-ios-input-background-color-alpha:      .07;
 
 /// @prop - Background color of the searchbar input
-$searchbar-ios-input-background-color:            rgba($text-color-rgb, $searchbar-ios-input-background-color-alpha) !default;
+$searchbar-ios-input-background-color:            rgba($text-color-rgb, $searchbar-ios-input-background-color-alpha);
 
 /// @prop - Transition of the searchbar input
-$searchbar-ios-input-transition:                  all 300ms ease !default;
+$searchbar-ios-input-transition:                  all 300ms ease;
 
 /// @prop - Transition of the searchbar input cancel button
-$searchbar-ios-cancel-transition:                 all 300ms ease !default;
+$searchbar-ios-cancel-transition:                 all 300ms ease;
 
 /// @prop - Alpha of the searchbar input icons
-$searchbar-ios-input-icon-opacity:                .5 !default;
+$searchbar-ios-input-icon-opacity:                .5;
 
 /// @prop - Color of the searchbar input clear icon
-$searchbar-ios-input-clear-icon-color:            $text-color-step-400 !default;
+$searchbar-ios-input-clear-icon-color:            $text-color-step-400;
 
 /// @prop - Size of the searchbar input clear icon
-$searchbar-ios-input-clear-icon-size:             dynamic-font(18px) !default;
+$searchbar-ios-input-clear-icon-size:             dynamic-font(18px);

@@ -4,28 +4,28 @@
 // --------------------------------------------------
 
 /// @prop - Padding top on the tab button
-$tab-button-ios-padding-top:          0 !default;
+$tab-button-ios-padding-top:          0;
 
 /// @prop - Padding end on the tab button
-$tab-button-ios-padding-end:          2px !default;
+$tab-button-ios-padding-end:          2px;
 
 /// @prop - Padding bottom on the tab button
-$tab-button-ios-padding-bottom:       $tab-button-ios-padding-top !default;
+$tab-button-ios-padding-bottom:       $tab-button-ios-padding-top;
 
 /// @prop - Padding start on the tab button
-$tab-button-ios-padding-start:        $tab-button-ios-padding-end !default;
+$tab-button-ios-padding-start:        $tab-button-ios-padding-end;
 
 /// @prop - Max width of the tab button
-$tab-button-ios-max-width:            240px !default;
+$tab-button-ios-max-width:            240px;
 
 /// @prop - Text color of the inactive tab button
-$tab-button-ios-text-color:           $tabbar-ios-color !default;
+$tab-button-ios-text-color:           $tabbar-ios-color;
 
 /// @prop - Font size of the tab button text
-$tab-button-ios-font-size:            10px !default;
+$tab-button-ios-font-size:            10px;
 
 /// @prop - Size of the tab button icon when there is a label
-$tab-button-ios-icon-size:            24px !default;
+$tab-button-ios-icon-size:            24px;
 
 /// @prop - Size of the tab button icon when there is not a label
-$tab-button-ios-icon-only-size:       30px !default;
+$tab-button-ios-icon-only-size:       30px;

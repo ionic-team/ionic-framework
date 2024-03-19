@@ -4,46 +4,46 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the loading wrapper
-$loading-ios-font-size:                             dynamic-font(14px) !default;
+$loading-ios-font-size:                             dynamic-font(14px);
 
 /// @prop - Padding top of the loading wrapper
-$loading-ios-padding-top:                           24px !default;
+$loading-ios-padding-top:                           24px;
 
 /// @prop - Padding end of the loading wrapper
-$loading-ios-padding-end:                           34px !default;
+$loading-ios-padding-end:                           34px;
 
 /// @prop - Padding bottom of the loading wrapper
-$loading-ios-padding-bottom:                        $loading-ios-padding-top !default;
+$loading-ios-padding-bottom:                        $loading-ios-padding-top;
 
 /// @prop - Padding start of the loading wrapper
-$loading-ios-padding-start:                         $loading-ios-padding-end !default;
+$loading-ios-padding-start:                         $loading-ios-padding-end;
 
 /// @prop - Max width of the loading wrapper
-$loading-ios-max-width:                             270px !default;
+$loading-ios-max-width:                             270px;
 
 /// @prop - Maximum height of the loading wrapper
-$loading-ios-max-height:                            90% !default;
+$loading-ios-max-height:                            90%;
 
 /// @prop - Border radius of the loading wrapper
-$loading-ios-border-radius:                         8px !default;
+$loading-ios-border-radius:                         8px;
 
 /// @prop - Text color of the loading wrapper
-$loading-ios-text-color:                            $text-color !default;
+$loading-ios-text-color:                            $text-color;
 
 /// @prop - Background of the loading wrapper
-$loading-ios-background-color:                      $overlay-ios-background-color !default;
+$loading-ios-background-color:                      $overlay-ios-background-color;
 
 /// @prop - Background color alpha of the translucent loading wrapper
-$loading-ios-translucent-background-color-alpha:    .8 !default;
+$loading-ios-translucent-background-color-alpha:    .8;
 
 /// @prop - Background color of the translucent loading wrapper
-$loading-ios-translucent-background-color:          rgba($background-color-rgb, $loading-ios-translucent-background-color-alpha) !default;
+$loading-ios-translucent-background-color:          rgba($background-color-rgb, $loading-ios-translucent-background-color-alpha);
 
 /// @prop - Font weight of the loading content
-$loading-ios-content-font-weight:                   bold !default;
+$loading-ios-content-font-weight:                   bold;
 
 /// @prop - Color of the loading spinner
-$loading-ios-spinner-color:                         $text-color-step-400 !default;
+$loading-ios-spinner-color:                         $text-color-step-400;
 
 /// @prop - Filter of the translucent loading
-$loading-ios-translucent-filter:                    saturate(180%) blur(20px) !default;
+$loading-ios-translucent-filter:                    saturate(180%) blur(20px);

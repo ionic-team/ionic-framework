@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 /// @prop - Width of the avatar
-$avatar-ios-width:                   48px !default;
+$avatar-ios-width:                   48px;
 
 /// @prop - Height of the avatar
-$avatar-ios-height:                  $avatar-ios-width !default;
+$avatar-ios-height:                  $avatar-ios-width;
 
 /// @prop - Border radius of the avatar
-$avatar-ios-border-radius:           50% !default;
+$avatar-ios-border-radius:           50%;
