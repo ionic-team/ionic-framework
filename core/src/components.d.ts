@@ -3179,7 +3179,7 @@ export namespace Components {
     }
     interface IonToggle {
         /**
-          * How to control the alignment of the toggle and label on the cross axis. ``"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment": 'start' | 'center';
         /**
@@ -7943,7 +7943,7 @@ declare namespace LocalJSX {
     }
     interface IonToggle {
         /**
-          * How to control the alignment of the toggle and label on the cross axis. ``"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment"?: 'start' | 'center';
         /**
