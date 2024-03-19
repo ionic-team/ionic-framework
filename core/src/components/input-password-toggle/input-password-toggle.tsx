@@ -54,15 +54,11 @@ export class InputPasswordToggle implements ComponentInterface {
       return;
     }
 
-    if (inputElRef.type !== 'text' && inputElRef.type !== 'password') {
-      printIonWarning(
-        `ion-input-password-toggle only supports inputs that accept plain text. Input of type "${inputElRef.type}" is not compatible.`,
-        el
-      );
-    }
+    inputElRef.addEventListener('ionTypeChange', this.onTypeChange);
   }
 
   disconnectedCallback() {
+    this.inputElRef?.addEventListener('ionTypeChange', this.onTypeChange);
     this.inputElRef = null;
   }
 
@@ -74,13 +70,32 @@ export class InputPasswordToggle implements ComponentInterface {
     }
 
     inputElRef.type = inputElRef.type === 'text' ? 'password' : 'text';
+  };
+
+  /**
+   * Whenever the input type changes we need to re-run validation to ensure the password
+   * toggle is being used with the correct input type. If the application changes the type
+   * outside of this component we also need to re-render so the correct icon is shown.
+   */
+  private onTypeChange = () => {
+    const { el, inputElRef } = this;
+
+    if (!inputElRef) return;
+
+    if (inputElRef.type !== 'text' && inputElRef.type !== 'password') {
+      printIonWarning(
+        `ion-input-password-toggle only supports inputs that accept plain text. Input of type "${inputElRef.type}" is not compatible.`,
+        el
+      );
+
+      return;
+    }
 
     forceUpdate(this);
-  };
+  }
 
   render() {
     // TODO aria-controls
-    // TODO what happens when the type on the host element changes?
     const { color, inputElRef } = this;
 
     const mode = getIonMode(this);

@@ -253,6 +253,10 @@ export class Input implements ComponentInterface {
    * The type of control to display. The default type is text.
    */
   @Prop() type: TextFieldTypes = 'text';
+  @Watch('type')
+  onTypeChange() {
+    this.ionTypeChange.emit();
+  }
 
   /**
    * The value of the input.
@@ -300,6 +304,12 @@ export class Input implements ComponentInterface {
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  /**
+   * Emitted when the type property changes. Used for ion-input-password-toggle to show the correct icon.
+   * @internal
+   */
+  @Event() ionTypeChange!: EventEmitter<void>;
 
   /**
    * Update the native input element when the value changes
@@ -350,6 +360,7 @@ export class Input implements ComponentInterface {
 
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
+    this.onTypeChange();
   }
 
   componentDidRender() {

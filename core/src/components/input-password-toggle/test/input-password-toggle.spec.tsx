@@ -56,8 +56,7 @@ describe('input password toggle', () => {
     expect(icon.getAttribute('icon')).toBe('hide');
   });
 
-  // TODO now fix me
-  it.skip('changing the type on the input should update the icon used in password toggle', async () => {
+  it('changing the type on the input should update the icon used in password toggle', async () => {
     const page = await newSpecPage({
       components: [Input, InputPasswordToggle, Button],
       template: () => (
