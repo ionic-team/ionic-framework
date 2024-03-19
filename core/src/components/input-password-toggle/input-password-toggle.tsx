@@ -50,6 +50,15 @@ export class InputPasswordToggle implements ComponentInterface {
         'No ancestor ion-input found for ion-input-password-toggle. This component must be slotted inside of an ion-input.',
         el
       );
+
+      return;
+    }
+
+    if (inputElRef.type !== 'text' && inputElRef.type !== 'password') {
+      printIonWarning(
+        `ion-input-password-toggle only supports inputs that accept plain text. Input of type "${inputElRef.type}" is not compatible.`,
+        el
+      );
     }
   }
 
@@ -71,6 +80,7 @@ export class InputPasswordToggle implements ComponentInterface {
 
   render() {
     // TODO aria-controls
+    // TODO what happens when the type on the host element changes?
     const { color, inputElRef } = this;
 
     const mode = getIonMode(this);
