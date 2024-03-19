@@ -107,6 +107,7 @@ export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
+  private intersectionTrackerRef?: HTMLElement;
   private clearFocusVisible?: () => void;
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
@@ -1078,6 +1079,8 @@ export class Datetime implements ComponentInterface {
   }
 
   componentDidLoad() {
+    const { el, intersectionTrackerRef } = this;
+
     /**
      * If a scrollable element is hidden using `display: none`,
      * it will not have a scroll height meaning we cannot scroll elements
@@ -1105,7 +1108,7 @@ export class Datetime implements ComponentInterface {
         this.el.classList.add('datetime-ready');
       });
     };
-    const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
+    const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
 
     /**
      * Use raf to avoid a race condition between the component loading and
@@ -1113,7 +1116,7 @@ export class Datetime implements ComponentInterface {
      * could cause the datetime to start at a visibility of 0, erroneously
      * triggering the `hiddenIO` observer below.
      */
-    raf(() => visibleIO?.observe(this.el));
+    raf(() => visibleIO?.observe(intersectionTrackerRef!));
 
     /**
      * We need to clean up listeners when the datetime is hidden
@@ -1143,8 +1146,8 @@ export class Datetime implements ComponentInterface {
         this.el.classList.remove('datetime-ready');
       });
     };
-    const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
-    raf(() => hiddenIO?.observe(this.el));
+    const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0, root: el });
+    raf(() => hiddenIO?.observe(intersectionTrackerRef!));
 
     /**
      * Datetime uses Ionic components that emit
@@ -2621,6 +2624,20 @@ export class Datetime implements ComponentInterface {
           }),
         }}
       >
+        {/*
+          WebKit has a quirk where IntersectionObserver callbacks are delayed until after
+          an accelerated animation finishes if the "root" specified in the config is the
+          browser viewport (the default behavior if "root" is not specified). This means
+          that when presenting a datetime in a modal on iOS the calendar body appears
+          blank until the modal animation finishes.
+
+          We can work around this by observing .intersection-tracker and using the host
+          (ion-datetime) as the "root". This allows the IO callback to fire the moment
+          the datetime is visible. The .intersection-tracker element should not have
+          dimensions or additional styles, and it should not be positioned absolutely
+          otherwise the IO callback may fire at unexpected times.
+        */}
+        <div class="intersection-tracker" ref={(el) => (this.intersectionTrackerRef = el)}></div>
         {this.renderDatetime(mode)}
       </Host>
     );
