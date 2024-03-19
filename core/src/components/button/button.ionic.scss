@@ -6,7 +6,6 @@
 
 :host {
   --border-radius: #{$button-ionic-default-border-radius};
-
   --padding-top: #{$button-ionic-default-padding-top};
   --padding-end: #{$button-ionic-default-padding-end};
   --padding-bottom: var(--padding-top);
@@ -14,23 +13,26 @@
 
   position: relative;
 
-  font-size: #{$button-ionic-default-font-size};
   min-height: #{$button-ionic-default-min-height};
+
+  font-size: #{$button-ionic-default-font-size};
 
   // Target area
   &::after {
     position: absolute;
-  
-    content: "";
-  
+
     top: 50%;
-    left: 0;
+    /* stylelint-disable-next-line property-disallowed-list */
     right: 0;
     bottom: 0;
+    /* stylelint-disable-next-line property-disallowed-list */
+    left: 0;
+  
+    min-height: pxToEm(48);
   
     transform: translateY(-50%);
   
-    min-height: pxToEm(48);
+    content: "";
   
     cursor: pointer;
 
@@ -65,41 +67,40 @@
 /* Extra Small Button */
 :host(.button-xsmall) {
   --border-radius: #{$button-ionic-default-xsmall-border-radius};
-  
   --padding-top: #{$button-ionic-xsmall-padding-top};
   --padding-end: #{$button-ionic-xsmall-padding-end};
+  min-height: #{$button-ionic-xsmall-min-height};
   
   font-size: #{$button-ionic-xsmall-font-size};
-  min-height: #{$button-ionic-xsmall-min-height};
 }
 
 /* Small Button */
 :host(.button-small) {
   --border-radius: #{$button-ionic-default-small-border-radius};
-  
   --padding-top: #{$button-ionic-small-padding-top};
   --padding-end: #{$button-ionic-small-padding-end};
+
+  min-height: #{$button-ionic-small-min-height};
   
   font-size: #{$button-ionic-small-font-size};
-  min-height: #{$button-ionic-small-min-height};
 }
 
 /* Large Button */
 :host(.button-large) {
   --padding-top: #{$button-ionic-large-padding-top};
   --padding-end: #{$button-ionic-large-padding-end};
+  min-height: #{$button-ionic-large-min-height};
   
   font-size: #{$button-ionic-large-font-size};
-  min-height: #{$button-ionic-large-min-height};
 }
 
 /* Extra Large Button */
 :host(.button-xlarge) {
   --padding-top: #{$button-ionic-xlarge-padding-top};
   --padding-end: #{$button-ionic-xlarge-padding-end};
+  min-height: #{$button-ionic-xlarge-min-height};
 
   font-size: #{$button-ionic-xlarge-font-size};
-  min-height: #{$button-ionic-xlarge-min-height};
 }
 
 // Button with Icons
@@ -123,7 +124,7 @@
 }
 
 /* Default */
-:host(.button-has-icon-only) {  
+:host(.button-has-icon-only) {
   --padding-end: #{$button-ionic-default-padding-top};
 }
 
@@ -169,7 +170,8 @@
 :host(.ion-focused){
   --overflow: visible;
   
-  .button-native::after { 
+  .button-native::after {
+    /* stylelint-disable-next-line property-disallowed-list */
     border-radius: inherit;
   }
 }
@@ -179,21 +181,22 @@
 
   position: absolute;
 
-  content: '';
-
   top: -4px;
+  /* stylelint-disable-next-line property-disallowed-list */
   left: -4px;
 
   width: calc(100% + 8px);
   height: calc(100% + 8px);
 
-  // ToDo: NewTheme, check if this color can be placed as a variable!
+  transition: border-color 0.3s;
+
   border: 2px solid var(--focus-ring-color);
 
+  /* stylelint-disable-next-line property-disallowed-list */
   border-radius: inherit;
-  box-sizing: border-box;
 
-  transition: border-color 0.3s;
+  content: "";
+  box-sizing: border-box;
 }
 
 // Outline
@@ -213,7 +216,7 @@
   --background-activated-opacity: 0;
   --background-focused: #{ion-color(primary, base)};
   --background-hover: transparent;
-  --background-focused-opacity: .1;  
+  --background-focused-opacity: .1;
 }
 
 /* Hover */
@@ -225,14 +228,11 @@
 
 /* Disabled */
 :host(.button-disabled) {
-  opacity: 1; 
-
-  // ToDo: NewTheme, check if this color can be placed as a variable!
   --color: #c9c9c9;
   --border-color: var(--color);
+  opacity: 1;
 }
 
 :host(.button-solid.button-disabled) {
-  // ToDo: NewTheme, check if this color can be placed as a variable!
   --background: #f5f5f5;
 }
