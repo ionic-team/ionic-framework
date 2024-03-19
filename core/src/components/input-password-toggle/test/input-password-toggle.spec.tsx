@@ -4,6 +4,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Input } from '../../input/input';
 import { InputPasswordToggle } from '../input-password-toggle';
 import { Button } from '../../button/button';
+import { initialize } from '../../../global/ionic-global';
 
 describe('input password toggle', () => {
   it('should toggle input type when clicked', async () => {
@@ -93,6 +94,12 @@ describe('input password toggle', () => {
   });
 
   it('should inherit the mode and color to internal ionic components', async () => {
+    /**
+     * This initialize script tells Stencil how to determine the mode on components.
+     * This is required for any getIonMode internal logic to function properly in spec tests.
+     */
+    initialize();
+
     const page = await newSpecPage({
       components: [Input, InputPasswordToggle, Button],
       template: () => (
