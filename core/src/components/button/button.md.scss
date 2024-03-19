@@ -134,8 +134,11 @@
   --padding-bottom: var(--padding-top);
   --padding-end: var(--padding-top);
   --padding-start: var(--padding-end);
+  // TODO(FW-6053): replace with the min-height variable.
+  min-width: 2.86em;
 
-  min-width: $button-md-min-height;
+  // TODO(FW-6053): replace with the min-height variable.
+  min-height: 2.86em;
 }
 
 ::slotted(ion-icon[slot="icon-only"]) {
@@ -143,10 +146,10 @@
 }
 
 :host(.button-small.button-has-icon-only) {
-  // Opted out from creating a new variable since the
-  // value is only used here and it's based on the
-  // min-height variable.
-  min-width: $button-md-small-min-height;
+  // TODO(FW-6053): replace with the min-height variable.
+  min-width: 2.16em;
+  // TODO(FW-6053): replace with the min-height variable.
+  min-height: 2.16em;
 }
 
 :host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
@@ -154,10 +157,10 @@
 }
 
 :host(.button-large.button-has-icon-only) {
-  // Opted out from creating a new variable since the
-  // value is only used here and it's based on the
-  // min-height variable.
-  min-width: $button-md-large-min-height;
+  // TODO(FW-6053): replace with the min-height variable.
+  min-width: 2.5em;
+  // TODO(FW-6053): replace with the min-height variable.
+  min-height: 2.5em;
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
