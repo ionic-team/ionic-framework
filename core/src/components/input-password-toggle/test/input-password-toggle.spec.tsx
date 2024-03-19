@@ -107,8 +107,10 @@ describe('input password toggle', () => {
 
     await page.waitForChanges();
 
-    // TODO fix me
-    //expect(button.mode).toBe('ios');
+    // mode is a virtual prop so we need to access it as an attribute
+    expect(button.getAttribute('mode')).toBe('ios');
+
+    // color is an actual prop so we can access the element property
     expect(button.color).toBe('danger');
   });
 });
