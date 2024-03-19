@@ -71,7 +71,6 @@ export class InputPasswordToggle implements ComponentInterface {
 
   render() {
     // TODO aria-controls
-    // TODO hide this when disabled or readonly
     const { color, inputElRef } = this;
 
     const mode = getIonMode(this);
