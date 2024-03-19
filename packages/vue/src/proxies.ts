@@ -433,7 +433,8 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'ionChange',
   'ionBlur',
   'ionFocus',
-  'ionStyle'
+  'ionStyle',
+  'ionTypeChange'
 ],
 'value', 'ion-input');
 
