@@ -19,7 +19,7 @@ configs().forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], palettes: ['dark'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item: buttons dark'), () => {
     test('should not have visual regressions in dark', async ({ page }) => {
       test.info().annotations.push({
