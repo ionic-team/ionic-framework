@@ -296,12 +296,6 @@ export class Input implements ComponentInterface {
   @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
-
-  /**
    * Update the native input element when the value changes
    */
   @Watch('value')

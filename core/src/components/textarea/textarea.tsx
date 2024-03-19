@@ -277,12 +277,6 @@ export class Textarea implements ComponentInterface {
   @Event() ionInput!: EventEmitter<TextareaInputEventDetail>;
 
   /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
-
-  /**
    * Emitted when the input loses focus.
    */
   @Event() ionBlur!: EventEmitter<FocusEvent>;
