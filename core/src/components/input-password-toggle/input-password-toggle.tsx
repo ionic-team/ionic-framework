@@ -92,7 +92,7 @@ export class InputPasswordToggle implements ComponentInterface {
     }
 
     forceUpdate(this);
-  }
+  };
 
   render() {
     // TODO aria-controls

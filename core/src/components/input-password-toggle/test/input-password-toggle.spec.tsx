@@ -38,7 +38,11 @@ describe('input password toggle', () => {
       components: [Input, InputPasswordToggle, Button],
       template: () => (
         <ion-input type="password">
-          <ion-input-password-toggle showPasswordIcon="show" hidePasswordIcon="hide" slot="end"></ion-input-password-toggle>
+          <ion-input-password-toggle
+            showPasswordIcon="show"
+            hidePasswordIcon="hide"
+            slot="end"
+          ></ion-input-password-toggle>
         </ion-input>
       ),
     });
@@ -61,7 +65,11 @@ describe('input password toggle', () => {
       components: [Input, InputPasswordToggle, Button],
       template: () => (
         <ion-input type="password">
-          <ion-input-password-toggle showPasswordIcon="show" hidePasswordIcon="hide" slot="end"></ion-input-password-toggle>
+          <ion-input-password-toggle
+            showPasswordIcon="show"
+            hidePasswordIcon="hide"
+            slot="end"
+          ></ion-input-password-toggle>
         </ion-input>
       ),
     });
@@ -73,12 +81,12 @@ describe('input password toggle', () => {
     // Grab the attribute to test since we are not actually passing in a valid SVG
     expect(icon.getAttribute('icon')).toBe('show');
 
-    input.type = "text";
+    input.type = 'text';
     await page.waitForChanges();
 
     expect(icon.getAttribute('icon')).toBe('hide');
 
-    input.type = "password";
+    input.type = 'password';
     await page.waitForChanges();
 
     expect(icon.getAttribute('icon')).toBe('show');
