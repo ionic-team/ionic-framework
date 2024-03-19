@@ -31,12 +31,12 @@ export class InputPasswordToggle implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+   * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
    */
   @Prop() showPasswordIcon?: string;
 
   /**
-   * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
+   * The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.
    */
   @Prop() hidePasswordIcon?: string;
 

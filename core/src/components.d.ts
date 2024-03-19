@@ -1293,7 +1293,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
+          * The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.
          */
         "hidePasswordIcon"?: string;
         /**
@@ -1301,7 +1301,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+          * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
          */
         "showPasswordIcon"?: string;
     }
@@ -6030,7 +6030,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
+          * The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.
          */
         "hidePasswordIcon"?: string;
         /**
@@ -6038,7 +6038,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+          * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
          */
         "showPasswordIcon"?: string;
     }
