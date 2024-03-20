@@ -12,6 +12,10 @@ import type { Color, TextFieldTypes } from '../../interface';
  */
 @Component({
   tag: 'ion-input-password-toggle',
+  styleUrls: {
+    ios: 'input-password-toggle.ios.scss',
+    md: 'input-password-toggle.md.scss',
+  },
   shadow: true,
 })
 export class InputPasswordToggle implements ComponentInterface {
