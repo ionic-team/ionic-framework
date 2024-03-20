@@ -30,6 +30,15 @@
       ]
     },
     {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["mcr.microsoft.com/playwright"],
+      groupName: "playwright",
+      matchFileNames: [
+        "core/Dockerfile"
+      ],
+      versioning: "semver"
+    },
+    {
       matchPackagePatterns: ["ionicons"],
       groupName: "ionicons",
       matchFileNames: [
