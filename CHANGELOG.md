@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-beta.3](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.2...v8.0.0-beta.3) (2024-03-20)
+
+
+### Bug Fixes
+
+* **input, textarea, select:** account for multiple start/end slot elements ([#29172](https://github.com/ionic-team/ionic-framework/issues/29172)) ([acc1042](https://github.com/ionic-team/ionic-framework/commit/acc104212468e2324b94c85ba6eebc2934fba812))
+* **range, select:** prefer labels passed by developer ([#29145](https://github.com/ionic-team/ionic-framework/issues/29145)) ([56014cf](https://github.com/ionic-team/ionic-framework/commit/56014cf64c387bd4492270905327c570f6814a6b))
+
+
+### Features
+
+* rename dark/high-contrast themes to palettes ([#29149](https://github.com/ionic-team/ionic-framework/issues/29149)) ([761e1b4](https://github.com/ionic-team/ionic-framework/commit/761e1b47dd5d49ab44c81ddba5490b6d2106f123))
+
+
+
+
+
+## [7.8.1](https://github.com/ionic-team/ionic-framework/compare/v7.8.0...v7.8.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* **datetime:** wheel picker shows consistently in overlays ([#29147](https://github.com/ionic-team/ionic-framework/issues/29147)) ([19c1bc1](https://github.com/ionic-team/ionic-framework/commit/19c1bc16cbc6725463890382365203824b7fd353)), closes [#26234](https://github.com/ionic-team/ionic-framework/issues/26234)
+* **header:** iOS headers in MD app are not hidden ([#29164](https://github.com/ionic-team/ionic-framework/issues/29164)) ([fdfecd3](https://github.com/ionic-team/ionic-framework/commit/fdfecd32c33c41cf202d3b30c073bfb1b077e2d6)), closes [#28867](https://github.com/ionic-team/ionic-framework/issues/28867)
+* **react:** avoid definitely typed errors with @types/react@18 ([#29182](https://github.com/ionic-team/ionic-framework/issues/29182)) ([58d217d](https://github.com/ionic-team/ionic-framework/commit/58d217d0cf6b716da855c71c169fb1870d4067d3)), closes [#29178](https://github.com/ionic-team/ionic-framework/issues/29178)
+
+
+### Performance Improvements
+
+* **datetime:** calendar body shows immediately in modal on ios ([#29163](https://github.com/ionic-team/ionic-framework/issues/29163)) ([f759776](https://github.com/ionic-team/ionic-framework/commit/f75977699dae5aeea3d97d4318377633e935afb9)), closes [#24542](https://github.com/ionic-team/ionic-framework/issues/24542)
+
+
+
+
+
 # [8.0.0-beta.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.1...v8.0.0-beta.2) (2024-03-13)
 
 
