@@ -10,7 +10,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
+import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
 import { getCounterText } from './input.utils';
@@ -294,12 +294,6 @@ export class Input implements ComponentInterface {
    * Emitted when the input has focus.
    */
   @Event() ionFocus!: EventEmitter<FocusEvent>;
-
-  /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Update the native input element when the value changes
