@@ -217,8 +217,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   /**
-   *  Check which size has been set, and once at ion & md,
-   * disable xsmall and xlarge styles!
+   *  Check which size has been set, if ios or md disable xsmall and xlarge styles!
    */
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
