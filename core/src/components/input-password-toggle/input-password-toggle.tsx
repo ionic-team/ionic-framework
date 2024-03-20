@@ -117,7 +117,6 @@ export class InputPasswordToggle implements ComponentInterface {
           can style the button when InputPasswordToggle is slotted inside of the Input.
         */}
         <ion-button
-
           part="button"
           mode={mode}
           color={color}
