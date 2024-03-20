@@ -1,14 +1,13 @@
 import { doc } from '@utils/browser';
 
 import type { Config } from '../../interface';
-import { now, pointerCoord } from '../helpers';
+import { pointerCoord } from '../helpers';
 
 export const startTapClick = (config: Config) => {
   if (doc === undefined) {
     return;
   }
 
-  let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
 
   let activatableEle: HTMLElement | undefined;
@@ -17,36 +16,6 @@ export const startTapClick = (config: Config) => {
 
   const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
-
-  // Touch Events
-  const onTouchStart = (ev: TouchEvent) => {
-    lastTouch = now(ev);
-    pointerDown(ev);
-  };
-
-  const onTouchEnd = (ev: TouchEvent) => {
-    lastTouch = now(ev);
-    pointerUp(ev);
-  };
-
-  const onMouseDown = (ev: MouseEvent) => {
-    // Ignore right clicks
-    if (ev.button === 2) {
-      return;
-    }
-
-    const t = now(ev) - MOUSE_WAIT;
-    if (lastTouch < t) {
-      pointerDown(ev);
-    }
-  };
-
-  const onMouseUp = (ev: MouseEvent) => {
-    const t = now(ev) - MOUSE_WAIT;
-    if (lastTouch < t) {
-      pointerUp(ev);
-    }
-  };
 
   const cancelActive = () => {
     if (activeDefer) clearTimeout(activeDefer);
@@ -57,8 +26,9 @@ export const startTapClick = (config: Config) => {
     }
   };
 
-  const pointerDown = (ev: UIEvent) => {
-    if (activatableEle) {
+  const pointerDown = (ev: PointerEvent) => {
+    // Ignore right clicks
+    if (activatableEle || ev.button === 2) {
       return;
     }
     setActivatedElement(getActivatableTarget(ev), ev);
@@ -151,9 +121,8 @@ export const startTapClick = (config: Config) => {
 
   doc.addEventListener('ionGestureCaptured', cancelActive);
 
-  doc.addEventListener('touchstart', onTouchStart, true);
-  doc.addEventListener('touchcancel', onTouchEnd, true);
-  doc.addEventListener('touchend', onTouchEnd, true);
+  doc.addEventListener('pointerdown', pointerDown, true);
+  doc.addEventListener('pointerup', pointerUp, true);
 
   /**
    * Tap click effects such as the ripple effect should
@@ -168,9 +137,6 @@ export const startTapClick = (config: Config) => {
    * ion-content's scroll events.
    */
   doc.addEventListener('pointercancel', cancelActive, true);
-
-  doc.addEventListener('mousedown', onMouseDown, true);
-  doc.addEventListener('mouseup', onMouseUp, true);
 };
 
 // TODO(FW-2832): type
@@ -213,4 +179,3 @@ const getRippleEffect = (el: HTMLElement) => {
 const ACTIVATED = 'ion-activated';
 const ADD_ACTIVATED_DEFERS = 100;
 const CLEAR_STATE_DEFERS = 150;
-const MOUSE_WAIT = 2500;
