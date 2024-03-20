@@ -54,7 +54,7 @@ export class InputPasswordToggle implements ComponentInterface {
   onTypeChange(newValue: TextFieldTypes) {
     if (newValue !== 'text' && newValue !== 'password') {
       printIonWarning(
-        `ion-input-password-toggle only supports inputs that accept plain text. Input of type "${newValue}" is not compatible.`,
+        `ion-input-password-toggle only supports inputs of type "text" or "password". Input of type "${newValue}" is not compatible.`,
         this.el
       );
 
