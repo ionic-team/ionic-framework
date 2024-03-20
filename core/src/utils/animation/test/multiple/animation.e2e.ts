@@ -8,14 +8,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.goto('/src/utils/animation/test/multiple', config);
       await testMultiple(page);
     });
-
-    /**
-     * CSS animations will occasionally resolve out of order, so we skip for now
-     */
-    test.skip(`should resolve grouped animations using css animations`, async ({ page }) => {
-      await page.goto('/src/utils/animation/test/multiple?ionic:_forceCSSAnimations=true', config);
-      await testMultiple(page);
-    });
   });
 });
 
