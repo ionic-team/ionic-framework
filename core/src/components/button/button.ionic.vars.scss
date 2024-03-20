@@ -6,13 +6,13 @@
 /* Default Button */
 
 /// @prop - Border radius of the button for the default size
-$button-ionic-default-border-radius:                            pxToEm(8) !default;
+$button-ionic-default-border-radius:                            pxToRem(8) !default;
 
 /// @prop - Padding top of the button for the default size
-$button-ionic-default-padding-top:                              pxToEm(12) !default;
+$button-ionic-default-padding-top:                              pxToRem(12) !default;
 
 /// @prop - Padding end of the button for the default size
-$button-ionic-default-padding-end:                              pxToEm(16) !default;
+$button-ionic-default-padding-end:                              pxToRem(16) !default;
 
 /// @prop - Padding bottom of the button for the default size
 $button-ionic-default-padding-bottom:                           $button-ionic-default-padding-top !default;
@@ -21,7 +21,7 @@ $button-ionic-default-padding-bottom:                           $button-ionic-de
 $button-ionic-default-padding-start:                            $button-ionic-default-padding-end !default;
 
 /// @prop - Minimum height of the button for the default size
-$button-ionic-default-min-height:                               pxToEm(40) !default;
+$button-ionic-default-min-height:                               pxToRem(40) !default;
 
 /// @prop - Font size of the button text for the default size
 /// The maximum font size is calculated by taking the default font size
@@ -35,13 +35,13 @@ $button-ionic-default-font-size:                                dynamic-font-max
 /* Extra Small Button */
 
 /// @prop - Border radius of the button for the extra small size
-$button-ionic-default-xsmall-border-radius:                    pxToEm(4) !default;
+$button-ionic-default-xsmall-border-radius:                    pxToRem(4) !default;
 
 /// @prop - Padding top of the button for the extra small size
-$button-ionic-xsmall-padding-top:                              pxToEm(4) !default;
+$button-ionic-xsmall-padding-top:                              pxToRem(4) !default;
 
 /// @prop - Padding end of the button for the extra small size
-$button-ionic-xsmall-padding-end:                              pxToEm(12) !default;
+$button-ionic-xsmall-padding-end:                              pxToRem(12) !default;
 
 /// @prop - Padding bottom of the button for the extra small size
 $button-ionic-xsmall-padding-bottom:                           $button-ionic-xsmall-padding-top !default;
@@ -50,7 +50,7 @@ $button-ionic-xsmall-padding-bottom:                           $button-ionic-xsm
 $button-ionic-xsmall-padding-start:                            $button-ionic-xsmall-padding-end !default;
 
 /// @prop - Minimum height of the button for the extra small size
-$button-ionic-xsmall-min-height:                               pxToEm(24) !default;
+$button-ionic-xsmall-min-height:                               pxToRem(24) !default;
 
 /// @prop - Font size of the button text for the extra small size
 /// The maximum font size is calculated by taking the default font size
@@ -61,13 +61,13 @@ $button-ionic-xsmall-font-size:                                dynamic-font-max(
 /* Small Button */
 
 /// @prop - Border radius of the button for the small size
-$button-ionic-default-small-border-radius:                    pxToEm(4) !default;
+$button-ionic-default-small-border-radius:                    pxToRem(4) !default;
 
 /// @prop - Padding top of the button for the small size
-$button-ionic-small-padding-top:                              pxToEm(8) !default;
+$button-ionic-small-padding-top:                              pxToRem(8) !default;
 
 /// @prop - Padding end of the button for the small size
-$button-ionic-small-padding-end:                              pxToEm(16) !default;
+$button-ionic-small-padding-end:                              pxToRem(16) !default;
 
 /// @prop - Padding bottom of the button for the small size
 $button-ionic-small-padding-bottom:                           $button-ionic-small-padding-top !default;
@@ -76,7 +76,7 @@ $button-ionic-small-padding-bottom:                           $button-ionic-smal
 $button-ionic-small-padding-start:                            $button-ionic-small-padding-end !default;
 
 /// @prop - Minimum height of the button for the small size
-$button-ionic-small-min-height:                               pxToEm(32) !default;
+$button-ionic-small-min-height:                               pxToRem(32) !default;
 
 /// @prop - Font size of the button text for the small size
 /// The maximum font size is calculated by taking the default font size
@@ -87,10 +87,10 @@ $button-ionic-small-font-size:                                dynamic-font-max(1
 /* Large Button */
 
 /// @prop - Padding top of the button for the large size
-$button-ionic-large-padding-top:                              pxToEm(16) !default;
+$button-ionic-large-padding-top:                              pxToRem(16) !default;
 
 /// @prop - Padding end of the button for the large size
-$button-ionic-large-padding-end:                              pxToEm(24) !default;
+$button-ionic-large-padding-end:                              pxToRem(24) !default;
 
 /// @prop - Padding bottom of the button for the large size
 $button-ionic-large-padding-bottom:                           $button-ionic-large-padding-top !default;
@@ -99,7 +99,7 @@ $button-ionic-large-padding-bottom:                           $button-ionic-larg
 $button-ionic-large-padding-start:                            $button-ionic-large-padding-end !default;
 
 /// @prop - Minimum height of the button for the large size
-$button-ionic-large-min-height:                               pxToEm(48) !default;
+$button-ionic-large-min-height:                               pxToRem(48) !default;
 
 /// @prop - Font size of the button text for the large size
 /// The maximum font size is calculated by taking the default font size
@@ -110,10 +110,10 @@ $button-ionic-large-font-size:                                dynamic-font-max(1
 /* Extra Large Button */
 
 /// @prop - Padding top of the button for the xlarge size
-$button-ionic-xlarge-padding-top:                              pxToEm(20) !default;
+$button-ionic-xlarge-padding-top:                              pxToRem(16) !default;
 
 /// @prop - Padding end of the button for the xlarge size
-$button-ionic-xlarge-padding-end:                              pxToEm(32) !default;
+$button-ionic-xlarge-padding-end:                              pxToRem(32) !default;
 
 /// @prop - Padding bottom of the button for the xlarge size
 $button-ionic-xlarge-padding-bottom:                           $button-ionic-xlarge-padding-top !default;
@@ -122,7 +122,7 @@ $button-ionic-xlarge-padding-bottom:                           $button-ionic-xla
 $button-ionic-xlarge-padding-start:                            $button-ionic-xlarge-padding-end !default;
 
 /// @prop - Minimum height of the button for the xlarge size
-$button-ionic-xlarge-min-height:                               pxToEm(56) !default;
+$button-ionic-xlarge-min-height:                               pxToRem(56) !default;
 
 /// @prop - Font size of the button text for the xlarge size
 /// The maximum font size is calculated by taking the default font size
@@ -139,7 +139,7 @@ $button-ionic-default-rectangular-border:                      0 !default;
 
 /* Round */
 /// @prop - Round border radius of the button
-$button-ionic-default-round-border:                            pxToEm(999) !default;
+$button-ionic-default-round-border:                            pxToRem(999) !default;
 
 
 // Button Fill
@@ -152,3 +152,21 @@ $button-ionic-outline-border-width:                            1px !default;
 /// @prop - Border style of the outline button
 $button-ionic-outline-border-style:                            solid !default;
 
+
+// Button Has icon only
+// -------------------------------------------------------------------------------
+
+/// @prop - Button Default padding end when has icon only
+$button-has-icon-only-padding-end:                             pxToRem(13) !default;
+
+/// @prop - Button Xsmall padding end when has icon only
+$button-has-icon-only-padding-end-xsmall:                      pxToRem(6) !default;
+
+/// @prop - Button Small padding end when has icon only
+$button-has-icon-only-padding-end-small:                       pxToRem(10) !default;
+
+/// @prop - Button Large padding end when has icon only
+$button-has-icon-only-padding-end-large:                       pxToRem(16) !default;
+
+/// @prop - Button Xlarge padding end when has icon only
+$button-has-icon-only-padding-end-xlarge:                      pxToRem(18) !default;

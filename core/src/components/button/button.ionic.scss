@@ -27,9 +27,10 @@
     bottom: 0;
     /* stylelint-disable-next-line property-disallowed-list */
     left: 0;
-  
-    min-height: pxToEm(48);
-  
+
+    height: 100%;
+    min-height: pxToRem(48);
+    
     transform: translateY(-50%);
   
     content: "";
@@ -40,11 +41,11 @@
   }
 
   ::slotted(ion-icon[slot=start]) {
-    margin-inline-end: pxToEm(8);
+    margin-inline-end: pxToRem(8);
   }
   
   ::slotted(ion-icon[slot=end]) {
-    margin-inline-start: pxToEm(8);
+    margin-inline-start: pxToRem(8);
   }
 }
 
@@ -56,11 +57,11 @@
 :host(.button-xsmall),
 :host(.button-small) {
   ::slotted(ion-icon[slot=start]) {
-    margin-inline-end: pxToEm(4);
+    margin-inline-end: pxToRem(4);
   }
   
   ::slotted(ion-icon[slot=end]) {
-    margin-inline-start: pxToEm(4);
+    margin-inline-start: pxToRem(4);
   }
 }
 
@@ -115,27 +116,27 @@
 
 /* Button extra small */
 :host(.button-has-icon-only.button-xsmall) {
-  --padding-end: #{$button-ionic-xsmall-padding-top};
+  --padding-end: #{$button-has-icon-only-padding-end-xsmall};
 }
 
 /* Button small */
 :host(.button-has-icon-only.button-small) {
-  --padding-end: #{$button-ionic-small-padding-top};
+  --padding-end: #{$button-has-icon-only-padding-end-small};
 }
 
 /* Default */
 :host(.button-has-icon-only) {
-  --padding-end: #{$button-ionic-default-padding-top};
+  --padding-end: #{$button-has-icon-only-padding-end};
 }
 
 /* Button large */
 :host(.button-has-icon-only.button-large) {
-  --padding-end: #{$button-ionic-large-padding-top};
+  --padding-end: #{$button-has-icon-only-padding-end-large};
 }
 
 /* Button extra large */
 :host(.button-has-icon-only.button-xlarge) {
-  --padding-end: #{$button-ionic-xlarge-padding-top};
+  --padding-end: #{$button-has-icon-only-padding-end-xlarge};
 }
 
 // Button Shapes
