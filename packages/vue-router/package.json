@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "dependencies": {
-    "@ionic/vue": "^8.0.0-beta.2"
+    "@ionic/vue": "8.0.0-beta.2"
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
