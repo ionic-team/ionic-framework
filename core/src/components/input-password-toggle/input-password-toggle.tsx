@@ -1,11 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { Component, Element, Host, Prop, h, Watch } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 import { eyeOff, eye } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color } from '../../interface';
+import type { Color, TextFieldTypes } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -40,6 +40,28 @@ export class InputPasswordToggle implements ComponentInterface {
    */
   @Prop() hideIcon?: string;
 
+  /**
+   * @internal
+   */
+  @Prop({ mutable: true }) type: TextFieldTypes = 'password';
+
+  /**
+   * Whenever the input type changes we need to re-run validation to ensure the password
+   * toggle is being used with the correct input type. If the application changes the type
+   * outside of this component we also need to re-render so the correct icon is shown.
+   */
+  @Watch('type')
+  onTypeChange(newValue: TextFieldTypes) {
+    if (newValue !== 'text' && newValue !== 'password') {
+      printIonWarning(
+        `ion-input-password-toggle only supports inputs that accept plain text. Input of type "${newValue}" is not compatible.`,
+        this.el
+      );
+
+      return;
+    }
+  }
+
   connectedCallback() {
     const { el } = this;
 
@@ -54,11 +76,17 @@ export class InputPasswordToggle implements ComponentInterface {
       return;
     }
 
-    inputElRef.addEventListener('ionTypeChange', this.onTypeChange);
+    /**
+     * Important: Set the type in connectedCallback because the default value
+     * of this.type may not always be accurate. Usually inputs have the "password" type
+     * but it is possible to have the input to initially have the "text" type. In that scenario
+     * the wrong icon will show briefly before switching to the correct icon. Setting the
+     * type here allows us to avoid that flicker.
+     */
+    this.type = inputElRef.type;
   }
 
   disconnectedCallback() {
-    this.inputElRef?.removeEventListener('ionTypeChange', this.onTypeChange);
     this.inputElRef = null;
   }
 
@@ -72,37 +100,15 @@ export class InputPasswordToggle implements ComponentInterface {
     inputElRef.type = inputElRef.type === 'text' ? 'password' : 'text';
   };
 
-  /**
-   * Whenever the input type changes we need to re-run validation to ensure the password
-   * toggle is being used with the correct input type. If the application changes the type
-   * outside of this component we also need to re-render so the correct icon is shown.
-   */
-  private onTypeChange = () => {
-    const { el, inputElRef } = this;
-
-    if (!inputElRef) return;
-
-    if (inputElRef.type !== 'text' && inputElRef.type !== 'password') {
-      printIonWarning(
-        `ion-input-password-toggle only supports inputs that accept plain text. Input of type "${inputElRef.type}" is not compatible.`,
-        el
-      );
-
-      return;
-    }
-
-    forceUpdate(this);
-  };
-
   render() {
-    const { color, inputElRef } = this;
+    const { color, type } = this;
 
     const mode = getIonMode(this);
 
     const showPasswordIcon = this.showIcon ?? eye;
     const hidePasswordIcon = this.hideIcon ?? eyeOff;
 
-    const isPasswordVisible = inputElRef?.type === 'text';
+    const isPasswordVisible = type === 'text';
 
     return (
       <Host

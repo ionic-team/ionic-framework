@@ -433,8 +433,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'ionChange',
   'ionBlur',
   'ionFocus',
-  'ionStyle',
-  'ionTypeChange'
+  'ionStyle'
 ],
 'value', 'ion-input');
 
@@ -442,7 +441,8 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
 export const IonInputPasswordToggle = /*@__PURE__*/ defineContainer<JSX.IonInputPasswordToggle>('ion-input-password-toggle', defineIonInputPasswordToggle, [
   'color',
   'showIcon',
-  'hideIcon'
+  'hideIcon',
+  'type'
 ]);
 
 

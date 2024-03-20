@@ -1304,6 +1304,7 @@ export namespace Components {
           * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
          */
         "showIcon"?: string;
+        "type": TextFieldTypes;
     }
     interface IonItem {
         /**
@@ -3815,7 +3816,6 @@ declare global {
         "ionBlur": FocusEvent;
         "ionFocus": FocusEvent;
         "ionStyle": StyleEventDetail;
-        "ionTypeChange": void;
     }
     interface HTMLIonInputElement extends Components.IonInput, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonInputElementEventMap>(type: K, listener: (this: HTMLIonInputElement, ev: IonInputCustomEvent<HTMLIonInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5989,10 +5989,6 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonInputCustomEvent<StyleEventDetail>) => void;
         /**
-          * Emitted when the type property changes. Used for ion-input-password-toggle to show the correct icon.
-         */
-        "onIonTypeChange"?: (event: IonInputCustomEvent<void>) => void;
-        /**
           * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
          */
         "pattern"?: string;
@@ -6046,6 +6042,7 @@ declare namespace LocalJSX {
           * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
          */
         "showIcon"?: string;
+        "type"?: TextFieldTypes;
     }
     interface IonItem {
         /**

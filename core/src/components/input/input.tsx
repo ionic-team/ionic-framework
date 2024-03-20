@@ -253,9 +253,19 @@ export class Input implements ComponentInterface {
    * The type of control to display. The default type is text.
    */
   @Prop() type: TextFieldTypes = 'text';
+
+  /**
+   * Whenever the type on the input changes we need
+   * to update the internal type prop on the password
+   * toggle so that that correct icon is shown.
+   */
   @Watch('type')
   onTypeChange() {
-    this.ionTypeChange.emit();
+    const passwordToggle = this.el.querySelector('ion-input-password-toggle');
+
+    if (passwordToggle) {
+      passwordToggle.type = this.type;
+    }
   }
 
   /**
@@ -306,12 +316,6 @@ export class Input implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
-   * Emitted when the type property changes. Used for ion-input-password-toggle to show the correct icon.
-   * @internal
-   */
-  @Event() ionTypeChange!: EventEmitter<void>;
-
-  /**
    * Update the native input element when the value changes
    */
   @Watch('value')
@@ -360,6 +364,13 @@ export class Input implements ComponentInterface {
 
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
+
+    /**
+     * Set the type on the password toggle in the event that this input's
+     * type was set async and does not match the default type for the password toggle.
+     * This can happen when the type is bound using a JS framework binding syntax
+     * such as [type] in Angular.
+     */
     this.onTypeChange();
   }
 
