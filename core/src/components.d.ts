@@ -3815,7 +3815,6 @@ declare global {
         "ionChange": InputChangeEventDetail;
         "ionBlur": FocusEvent;
         "ionFocus": FocusEvent;
-        "ionStyle": StyleEventDetail;
     }
     interface HTMLIonInputElement extends Components.IonInput, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonInputElementEventMap>(type: K, listener: (this: HTMLIonInputElement, ev: IonInputCustomEvent<HTMLIonInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4537,7 +4536,6 @@ declare global {
     interface HTMLIonTextareaElementEventMap {
         "ionChange": TextareaChangeEventDetail;
         "ionInput": TextareaInputEventDetail;
-        "ionStyle": StyleEventDetail;
         "ionBlur": FocusEvent;
         "ionFocus": FocusEvent;
     }
@@ -5984,10 +5982,6 @@ declare namespace LocalJSX {
           * The `ionInput` event is fired each time the user modifies the input's value. Unlike the `ionChange` event, the `ionInput` event is fired for each alteration to the input's value. This typically happens for each keystroke as the user types.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If the input is cleared on edit, the type is `null`.
          */
         "onIonInput"?: (event: IonInputCustomEvent<InputInputEventDetail>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonInputCustomEvent<StyleEventDetail>) => void;
         /**
           * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
          */
@@ -7826,10 +7820,6 @@ declare namespace LocalJSX {
           * The `ionInput` event is fired each time the user modifies the textarea's value. Unlike the `ionChange` event, the `ionInput` event is fired for each alteration to the textarea's value. This typically happens for each keystroke as the user types.  When `clearOnEdit` is enabled, the `ionInput` event will be fired when the user clears the textarea by performing a keydown event.
          */
         "onIonInput"?: (event: IonTextareaCustomEvent<TextareaInputEventDetail>) => void;
-        /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonTextareaCustomEvent<StyleEventDetail>) => void;
         /**
           * Instructional text that shows before the input has a value.
          */
