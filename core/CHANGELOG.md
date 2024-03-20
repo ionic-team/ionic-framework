@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-beta.3](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v8.0.0-beta.3) (2024-03-20)
+
+
+### Bug Fixes
+
+* **input, textarea, select:** account for multiple start/end slot elements ([#29172](https://github.com/ionic-team/ionic-framework/issues/29172)) ([acc1042](https://github.com/ionic-team/ionic-framework/commit/acc104212468e2324b94c85ba6eebc2934fba812))
+* **range, select:** prefer labels passed by developer ([#29145](https://github.com/ionic-team/ionic-framework/issues/29145)) ([56014cf](https://github.com/ionic-team/ionic-framework/commit/56014cf64c387bd4492270905327c570f6814a6b))
+
+
+### Features
+
+* rename dark/high-contrast themes to palettes ([#29149](https://github.com/ionic-team/ionic-framework/issues/29149)) ([761e1b4](https://github.com/ionic-team/ionic-framework/commit/761e1b47dd5d49ab44c81ddba5490b6d2106f123))
+
+
+
+
 
 ## [7.8.1](https://github.com/ionic-team/ionic-framework/compare/v7.8.0...v7.8.1) (2024-03-20)
 
