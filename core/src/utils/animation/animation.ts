@@ -1,5 +1,3 @@
-import { raf } from '@utils/helpers';
-
 import { win } from '../browser';
 
 import type {
@@ -806,13 +804,7 @@ export const createAnimation = (animationId?: string): Animation => {
   const playCSSAnimations = () => {
     clearCSSAnimationsTimeout();
 
-    if (_keyframes.length === 0 || elements.length === 0) {
-      animationFinish();
-    } else {
-      raf(() => {
-        animationFinish();
-      });
-    }
+    animationFinish();
   };
 
   const playWebAnimations = () => {
