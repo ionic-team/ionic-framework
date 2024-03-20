@@ -15,9 +15,9 @@ class ButtonFixture {
     const selectElem = this.page.locator(`ion-select#select-${select}`);
     await selectElem.click();
 
-    const selectOptElem = this.page.locator(`ion-alert .alert-radio-group button:nth-child(${optIndex+1})`);
+    const selectOptElem = this.page.locator(`ion-alert .alert-radio-group button:nth-child(${optIndex + 1})`);
     await selectOptElem.click();
-    
+
     const selectOkBtn = this.page.locator(`ion-alert .alert-button-group button:nth-child(2)`);
     await selectOkBtn.click();
   }
@@ -35,9 +35,7 @@ class ButtonFixture {
   }
 }
 
-
 configs({ themes: ['ionic'] }).forEach(({ config, screenshot, title }) => {
-  
   test.describe(title('button: theme ionic'), () => {
     let buttonFixture!: ButtonFixture;
 
@@ -54,13 +52,13 @@ configs({ themes: ['ionic'] }).forEach(({ config, screenshot, title }) => {
     test('check sizes', async () => {
       await buttonFixture.selectOption('size', 1);
       await buttonFixture.checkScreenshot(`xsmall`);
-      
+
       await buttonFixture.selectOption('size', 2);
       await buttonFixture.checkScreenshot(`small`);
-      
+
       await buttonFixture.selectOption('size', 3);
       await buttonFixture.checkScreenshot(`large`);
-      
+
       await buttonFixture.selectOption('size', 4);
       await buttonFixture.checkScreenshot(`xlarge`);
     });
@@ -68,7 +66,7 @@ configs({ themes: ['ionic'] }).forEach(({ config, screenshot, title }) => {
     test('check shapes', async () => {
       await buttonFixture.selectOption('shape', 1);
       await buttonFixture.checkScreenshot(`rectangular`);
-      
+
       await buttonFixture.selectOption('shape', 2);
       await buttonFixture.checkScreenshot(`round`);
     });
@@ -76,12 +74,9 @@ configs({ themes: ['ionic'] }).forEach(({ config, screenshot, title }) => {
     test('check fills', async () => {
       await buttonFixture.selectOption('fill', 1);
       await buttonFixture.checkScreenshot(`outline`);
-      
+
       await buttonFixture.selectOption('fill', 2);
       await buttonFixture.checkScreenshot(`clear`);
     });
-
   });
-
 });
-

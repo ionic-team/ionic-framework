@@ -22,7 +22,6 @@
 
   <body>
     <ion-app>
-
       <ion-header>
         <ion-toolbar>
           <ion-title>Button - Ionic</ion-title>
@@ -30,9 +29,8 @@
       </ion-header>
 
       <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
-        
         <h4>Preview options</h4>
-        
+
         <p>
           <ion-select id="select-size" justify="space-between" interface="alert" label="Size" placeholder="">
             <ion-select-option selected="true" value="">default</ion-select-option>
@@ -54,8 +52,6 @@
             <ion-select-option value="clear">Clear</ion-select-option>
           </ion-select>
         </p>
-
-        
 
         <h4 class="ion-margin-top">Preview</h4>
 
@@ -79,7 +75,7 @@
             <ion-icon slot="end" name="rocket"></ion-icon>
           </ion-button>
         </p>
-       
+
         <p>
           <ion-button theme="ionic">
             Button
@@ -87,7 +83,6 @@
             <ion-icon slot="end" name="rocket"></ion-icon>
           </ion-button>
         </p>
-
 
         <h4 class="ion-margin-top">States</h4>
 
@@ -104,7 +99,7 @@
             <ion-icon slot="icon-only" name="rocket"></ion-icon>
           </ion-button>
         </p>
-        
+
         <p>
           <ion-button theme="ionic" class="ion-focused">Focused</ion-button>
           <ion-button theme="ionic" class="ion-focused ion-margin-start">
@@ -118,43 +113,40 @@
             <ion-icon slot="icon-only" name="rocket"></ion-icon>
           </ion-button>
         </p>
-
       </ion-content>
     </ion-app>
 
-
-
     <script>
-      const listOfBtns = Array.from(document.querySelectorAll("ion-button"));
+      const listOfBtns = Array.from(document.querySelectorAll('ion-button'));
 
       function updateAttr(el, name, value) {
-        if(value === '' || value === undefined) {
-            el.removeAttribute(name);
-          } else {
-            el.setAttribute(name, value);
-          }
+        if (value === '' || value === undefined) {
+          el.removeAttribute(name);
+        } else {
+          el.setAttribute(name, value);
+        }
       }
-      
+
       const selectSize = document.getElementById('select-size');
       selectSize.addEventListener('ionChange', (e) => {
-        for(const el of listOfBtns) {
+        for (const el of listOfBtns) {
           updateAttr(el, 'size', e.detail.value);
         }
       });
-      
+
       const selectShape = document.getElementById('select-shape');
       selectShape.addEventListener('ionChange', (e) => {
-        for(const el of listOfBtns) {
+        for (const el of listOfBtns) {
           updateAttr(el, 'shape', e.detail.value);
         }
       });
 
       const selectFill = document.getElementById('select-fill');
       selectFill.addEventListener('ionChange', (e) => {
-        for(const el of listOfBtns) {
+        for (const el of listOfBtns) {
           updateAttr(el, 'fill', e.detail.value);
         }
       });
-    </script> 
+    </script>
   </body>
 </html>

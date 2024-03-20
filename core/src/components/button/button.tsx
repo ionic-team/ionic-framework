@@ -38,7 +38,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private formButtonEl: HTMLButtonElement | null = null;
   private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
-  
+
   @Element() el!: HTMLElement;
 
   @State() isCircle: boolean = false;
@@ -123,10 +123,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * with more height and padding. By default the size is unset, unless the button
    * is inside of an item, where the size is `"small"` by default. Set the size to
    * `"default"` inside of an item to make it a standard size button.
-   * Option`"xsmall"` and `"xlarge"` are only availave for Ionic theme. 
+   * Option`"xsmall"` and `"xlarge"` are only availave for Ionic theme.
    * At ios and md if in they are in use undefined will be assume.
    */
-  @Prop({ reflect: true }) size?:  'xsmall' | 'small' | 'default' | 'large' | 'xlarge';
+  @Prop({ reflect: true }) size?: 'xsmall' | 'small' | 'default' | 'large' | 'xlarge';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -222,11 +222,9 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
     const { size } = this;
-  
-    if (size === undefined && this.inItem)
-      return 'small';
-    if ((theme === 'ios' || theme === 'md') && (size === 'xsmall' || size === 'xlarge'))
-      return undefined;
+
+    if (size === undefined && this.inItem) return 'small';
+    if ((theme === 'ios' || theme === 'md') && (size === 'xsmall' || size === 'xlarge')) return undefined;
     return size;
   }
 
