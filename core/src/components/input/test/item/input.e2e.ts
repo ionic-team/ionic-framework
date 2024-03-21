@@ -45,3 +45,30 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: item functionality'), () => {
+    test('clicking padded space within item should focus the input', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-input label="Input"></ion-input>
+        </ion-item>
+      `,
+        config
+      );
+      const itemNative = page.locator('.item-native');
+      const input = page.locator('ion-input input');
+
+      // Clicks the padded space within the item
+      await itemNative.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      await expect(input).toBeFocused();
+    });
+  });
+});

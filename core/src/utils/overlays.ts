@@ -1,6 +1,7 @@
 import { doc } from '@utils/browser';
+import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
-import { shoudUseCloseWatcher } from '@utils/hardware-back-button';
+import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
@@ -129,44 +130,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   return Promise.resolve() as any;
 };
 
-/**
- * This query string selects elements that
- * are eligible to receive focus. We select
- * interactive elements that meet the following
- * criteria:
- * 1. Element does not have a negative tabindex
- * 2. Element does not have `hidden`
- * 3. Element does not have `disabled` for non-Ionic components.
- * 4. Element does not have `disabled` or `disabled="true"` for Ionic components.
- * Note: We need this distinction because `disabled="false"` is
- * valid usage for the disabled property on ion-button.
- */
-const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
 const isOverlayHidden = (overlay: Element) => overlay.classList.contains('overlay-hidden');
-
-/**
- * Focuses the first descendant in an overlay
- * that can receive focus. If none exists,
- * the entire overlay will be focused.
- */
-export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
-  const firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
-
-  focusElementInOverlay(firstInput, overlay);
-};
-
-/**
- * Focuses the last descendant in an overlay
- * that can receive focus. If none exists,
- * the entire overlay will be focused.
- */
-const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
-  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
-  const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
-
-  focusElementInOverlay(lastInput, overlay);
-};
 
 /**
  * Focuses a particular element in an overlay. If the element
@@ -282,7 +246,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
         return;
       }
 
-      const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
+      const overlayWrapper = overlayRoot.querySelector<HTMLElement>('.ion-overlay-wrapper');
       if (!overlayWrapper) {
         return;
       }
@@ -370,7 +334,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
       const lastFocus = lastOverlay.lastFocus;
 
       // Focus the first element in the overlay wrapper
-      focusFirstDescendant(lastOverlay, lastOverlay);
+      focusFirstDescendant(lastOverlay);
 
       /**
        * If the cached last focused element is the
@@ -382,7 +346,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * last focus to equal the active element.
        */
       if (lastFocus === doc.activeElement) {
-        focusLastDescendant(lastOverlay, lastOverlay);
+        focusLastDescendant(lastOverlay);
       }
       lastOverlay.lastFocus = doc.activeElement as HTMLElement;
     }
@@ -434,7 +398,7 @@ const connectListeners = (doc: Document) => {
      * this behavior will be handled via the ionBackButton
      * event.
      */
-    if (!shoudUseCloseWatcher()) {
+    if (!shouldUseCloseWatcher()) {
       doc.addEventListener('keydown', (ev) => {
         if (ev.key === 'Escape') {
           const lastOverlay = getPresentedOverlay(doc);
@@ -550,15 +514,7 @@ export const present = async <OverlayPresentOptions>(
 
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
-  /**
-   * Hide all other overlays from screen readers so only this one
-   * can be read. Note that presenting an overlay always makes
-   * it the topmost one.
-   */
-  if (doc !== undefined) {
-    const presentedOverlays = getPresentedOverlays(doc);
-    presentedOverlays.forEach((o) => o.setAttribute('aria-hidden', 'true'));
-  }
+  hideOverlaysFromScreenReaders(overlay.el);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -735,13 +691,7 @@ export const dismiss = async <OverlayDismissOptions>(
 
   overlay.el.remove();
 
-  /**
-   * If there are other overlays presented, unhide the new
-   * topmost one from screen readers.
-   */
-  if (doc !== undefined) {
-    getPresentedOverlay(doc)?.removeAttribute('aria-hidden');
-  }
+  revealOverlaysToScreenReaders();
 
   return true;
 };
@@ -977,4 +927,66 @@ export const createTriggerController = () => {
     addClickListener,
     removeClickListener,
   };
+};
+
+/**
+ * Ensure that underlying overlays have aria-hidden if necessary so that screen readers
+ * cannot move focus to these elements. Note that we cannot rely on focus/focusin/focusout
+ * events here because those events do not fire when the screen readers moves to a non-focusable
+ * element such as text.
+ * Without this logic screen readers would be able to move focus outside of the top focus-trapped overlay.
+ *
+ * @param newTopMostOverlay - The overlay that is being presented. Since the overlay has not been
+ * fully presented yet at the time this function is called it will not be included in the getPresentedOverlays result.
+ */
+const hideOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement) => {
+  if (doc === undefined) return;
+
+  const overlays = getPresentedOverlays(doc);
+
+  for (let i = overlays.length - 1; i >= 0; i--) {
+    const presentedOverlay = overlays[i];
+    const nextPresentedOverlay = overlays[i + 1] ?? newTopMostOverlay;
+
+    /**
+     * If next overlay has aria-hidden then all remaining overlays will have it too.
+     * Or, if the next overlay is a Toast that does not have aria-hidden then current overlay
+     * should not have aria-hidden either so focus can remain in the current overlay.
+     */
+    if (nextPresentedOverlay.hasAttribute('aria-hidden') || nextPresentedOverlay.tagName !== 'ION-TOAST') {
+      presentedOverlay.setAttribute('aria-hidden', 'true');
+    }
+  }
+};
+
+/**
+ * When dismissing an overlay we need to reveal the new top-most overlay to screen readers.
+ * If the top-most overlay is a Toast we potentially need to reveal more overlays since
+ * focus is never automatically moved to the Toast.
+ */
+const revealOverlaysToScreenReaders = () => {
+  if (doc === undefined) return;
+
+  const overlays = getPresentedOverlays(doc);
+
+  for (let i = overlays.length - 1; i >= 0; i--) {
+    const currentOverlay = overlays[i];
+
+    /**
+     * If the current we are looking at is a Toast then we can remove aria-hidden.
+     * However, we potentially need to keep looking at the overlay stack because there
+     * could be more Toasts underneath. Additionally, we need to unhide the closest non-Toast
+     * overlay too so focus can move there since focus is never automatically moved to the Toast.
+     */
+    currentOverlay.removeAttribute('aria-hidden');
+
+    /**
+     * If we found a non-Toast element then we can just remove aria-hidden and stop searching entirely
+     * since this overlay should always receive focus. As a result, all underlying overlays should still
+     * be hidden from screen readers.
+     */
+    if (currentOverlay.tagName !== 'ION-TOAST') {
+      break;
+    }
+  }
 };

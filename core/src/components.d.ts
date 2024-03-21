@@ -18,8 +18,7 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { CounterFormatter } from "./components/item/item-interface";
-import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+import { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
@@ -54,8 +53,7 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { CounterFormatter } from "./components/item/item-interface";
-export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+export { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
@@ -1299,16 +1297,6 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counter": boolean;
-        /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
-          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counterFormatter"?: CounterFormatter;
-        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -1324,11 +1312,6 @@ export namespace Components {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download": string | undefined;
-        /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
-          * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
-         */
-        "fill"?: 'outline' | 'solid';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -1353,10 +1336,6 @@ export namespace Components {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection": RouterDirection;
-        /**
-          * The shape of the item. If "round" it will have increased border radius.
-         */
-        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -1635,7 +1614,7 @@ export namespace Components {
         /**
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
-        "type"?: string;
+        "type"?: MenuType;
     }
     interface IonMenuButton {
         /**
@@ -3200,7 +3179,7 @@ export namespace Components {
     }
     interface IonToggle {
         /**
-          * How to control the alignment of the toggle and label on the cross axis. ``"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment": 'start' | 'center';
         /**
@@ -3817,7 +3796,6 @@ declare global {
         "ionChange": InputChangeEventDetail;
         "ionBlur": FocusEvent;
         "ionFocus": FocusEvent;
-        "ionStyle": StyleEventDetail;
     }
     interface HTMLIonInputElement extends Components.IonInput, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonInputElementEventMap>(type: K, listener: (this: HTMLIonInputElement, ev: IonInputCustomEvent<HTMLIonInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4533,7 +4511,6 @@ declare global {
     interface HTMLIonTextareaElementEventMap {
         "ionChange": TextareaChangeEventDetail;
         "ionInput": TextareaInputEventDetail;
-        "ionStyle": StyleEventDetail;
         "ionBlur": FocusEvent;
         "ionFocus": FocusEvent;
     }
@@ -5980,10 +5957,6 @@ declare namespace LocalJSX {
          */
         "onIonInput"?: (event: IonInputCustomEvent<InputInputEventDetail>) => void;
         /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonInputCustomEvent<StyleEventDetail>) => void;
-        /**
           * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
          */
         "pattern"?: string;
@@ -6030,16 +6003,6 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
-          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counter"?: boolean;
-        /**
-          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
-          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
-         */
-        "counterFormatter"?: CounterFormatter;
-        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -6055,11 +6018,6 @@ declare namespace LocalJSX {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download"?: string | undefined;
-        /**
-          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
-          * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
-         */
-        "fill"?: 'outline' | 'solid';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -6084,10 +6042,6 @@ declare namespace LocalJSX {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
-        /**
-          * The shape of the item. If "round" it will have increased border radius.
-         */
-        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -6366,7 +6320,7 @@ declare namespace LocalJSX {
         /**
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
-        "type"?: string;
+        "type"?: MenuType;
     }
     interface IonMenuButton {
         /**
@@ -7822,10 +7776,6 @@ declare namespace LocalJSX {
          */
         "onIonInput"?: (event: IonTextareaCustomEvent<TextareaInputEventDetail>) => void;
         /**
-          * Emitted when the styles change.
-         */
-        "onIonStyle"?: (event: IonTextareaCustomEvent<StyleEventDetail>) => void;
-        /**
           * Instructional text that shows before the input has a value.
          */
         "placeholder"?: string;
@@ -7993,7 +7943,7 @@ declare namespace LocalJSX {
     }
     interface IonToggle {
         /**
-          * How to control the alignment of the toggle and label on the cross axis. ``"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment"?: 'start' | 'center';
         /**

@@ -1,0 +1,15 @@
+@import "./dark";
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include dark-base-palette();
+  }
+
+  :root.ios {
+    @include dark-ios-palette();
+  }
+
+  :root.md {
+    @include dark-md-palette();
+  }
+}

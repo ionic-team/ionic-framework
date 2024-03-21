@@ -431,8 +431,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'ionInput',
   'ionChange',
   'ionBlur',
-  'ionFocus',
-  'ionStyle'
+  'ionFocus'
 ],
 'value', 'ion-input');
 
@@ -444,17 +443,13 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', de
   'detailIcon',
   'disabled',
   'download',
-  'fill',
-  'shape',
   'href',
   'rel',
   'lines',
-  'counter',
   'routerAnimation',
   'routerDirection',
   'target',
-  'type',
-  'counterFormatter'
+  'type'
 ]);
 
 
@@ -839,7 +834,6 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea, JSX.Io
   'shape',
   'ionChange',
   'ionInput',
-  'ionStyle',
   'ionBlur',
   'ionFocus'
 ],

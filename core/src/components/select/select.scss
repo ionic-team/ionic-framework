@@ -14,6 +14,7 @@
    * @prop --placeholder-color: Color of the select placeholder text
    * @prop --placeholder-opacity: Opacity of the select placeholder text
    *
+   * @prop --highlight-height: The height of the highlight on the select. Only applies to md mode.
    * @prop --highlight-color-focused: The color of the highlight on the select when focused
    * @prop --highlight-color-invalid: The color of the highlight on the select when invalid
    * @prop --highlight-color-valid: The color of the highlight on the select when valid
@@ -555,12 +556,12 @@ button {
   flex-shrink: 0;
 }
 
-::slotted([slot="start"]) {
+::slotted([slot="start"]:last-of-type) {
   margin-inline-end: $form-control-label-margin;
   margin-inline-start: 0;
 }
 
-::slotted([slot="end"]) {
+::slotted([slot="end"]:first-of-type) {
   margin-inline-start: $form-control-label-margin;
   margin-inline-end: 0;
 }

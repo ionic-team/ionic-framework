@@ -8,8 +8,12 @@ configs().forEach(({ title, screenshot, config }) => {
         `
           <ion-input label-placement="start" fill="solid" value="100" label="Weight" clear-input="true">
             <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
             <ion-button slot="end" aria-label="Show/hide password">
               <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-button slot="end">
+              <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
             </ion-button>
           </ion-input>
         `,
@@ -25,8 +29,12 @@ configs().forEach(({ title, screenshot, config }) => {
         `
           <ion-input label-placement="floating" fill="solid" value="100" label="Weight" clear-input="true">
             <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+            <ion-icon slot="start" name="heart" aria-hidden="true"></ion-icon>
             <ion-button slot="end" aria-label="Show/hide password">
               <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-button slot="end">
+              <ion-icon slot="icon-only" name="trash" aria-hidden="true"></ion-icon>
             </ion-button>
           </ion-input>
         `,

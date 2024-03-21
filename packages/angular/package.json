@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "8.0.0-beta.0",
+  "version": "8.0.0-beta.3",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -47,33 +47,33 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^8.0.0-beta.0",
+    "@ionic/core": "^8.0.0-beta.3",
     "ionicons": "^7.0.0",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@angular/core": ">=14.0.0",
-    "@angular/forms": ">=14.0.0",
-    "@angular/router": ">=14.0.0",
+    "@angular/core": ">=16.0.0",
+    "@angular/forms": ">=16.0.0",
+    "@angular/router": ">=16.0.0",
     "rxjs": ">=7.5.0",
-    "zone.js": ">=0.11.0"
+    "zone.js": ">=0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/core": "^17.0.0",
     "@angular-devkit/schematics": "^17.0.0",
-    "@angular-eslint/eslint-plugin": "^14.0.0",
-    "@angular-eslint/eslint-plugin-template": "^14.0.0",
-    "@angular-eslint/template-parser": "^14.0.0",
-    "@angular/cli": "^14.0.0",
-    "@angular/common": "^14.0.0",
-    "@angular/compiler": "^14.0.0",
-    "@angular/compiler-cli": "^14.0.0",
-    "@angular/core": "^14.0.0",
-    "@angular/forms": "^14.0.0",
-    "@angular/platform-browser": "^14.0.0",
-    "@angular/platform-browser-dynamic": "^14.0.0",
-    "@angular/router": "^14.0.0",
+    "@angular-eslint/eslint-plugin": "^16.0.0",
+    "@angular-eslint/eslint-plugin-template": "^16.0.0",
+    "@angular-eslint/template-parser": "^16.0.0",
+    "@angular/cli": "^16.0.0",
+    "@angular/common": "^16.0.0",
+    "@angular/compiler": "^16.0.0",
+    "@angular/compiler-cli": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "@angular/forms": "^16.0.0",
+    "@angular/platform-browser": "^16.0.0",
+    "@angular/platform-browser-dynamic": "^16.0.0",
+    "@angular/router": "^16.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@schematics/angular": "^17.0.0",
@@ -83,12 +83,12 @@
     "eslint": "^8.0.0",
     "eslint-plugin-import": "^2.25.2",
     "fs-extra": "^7.0.0",
-    "ng-packagr": "^14.0.0",
+    "ng-packagr": "^16.0.0",
     "prettier": "^2.4.1",
     "rxjs": "~7.5.0",
-    "typescript": "~4.7.2",
+    "typescript": "~4.9.3",
     "typescript-eslint-language-service": "^5.0.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.13.0"
   },
   "prettier": "@ionic/prettier-config",
   "schematics": "./schematics/collection.json"

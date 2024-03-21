@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe, KeyValuePipe } from "@angular/common";
+import { NgFor, JsonPipe, KeyValuePipe } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -11,13 +11,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
     FormsModule,
     JsonPipe,
     KeyValuePipe,
-    /**
-     * NgFor directive is not available until Angular 15.
-     * We import the CommonModule for now.
-     *
-     * TODO: FW-5197 Replace with NgFor when dropping Angular 14 support.
-     */
-    CommonModule
+    NgFor
   ]
 })
 export class ValueAccessorTestComponent {
