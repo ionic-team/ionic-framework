@@ -5,17 +5,17 @@
 // -------------------------------------------------------------------------------
 
 :host {
-  --border-radius: #{$button-ionic-default-border-radius};
-  --padding-top: #{$button-ionic-default-padding-top};
-  --padding-end: #{$button-ionic-default-padding-end};
+  --border-radius: #{$button-ionic-border-radius};
+  --padding-top: #{$button-ionic-padding-top};
+  --padding-end: #{$button-ionic-padding-end};
   --padding-bottom: var(--padding-top);
   --padding-start: var(--padding-end);
 
   position: relative;
 
-  min-height: #{$button-ionic-default-min-height};
+  min-height: #{$button-ionic-min-height};
 
-  font-size: #{$button-ionic-default-font-size};
+  font-size: #{$button-ionic-font-size};
 
   // Target area
   &::after {
@@ -62,7 +62,7 @@
 
 /* Extra Small Button */
 :host(.button-xsmall) {
-  --border-radius: #{$button-ionic-default-xsmall-border-radius};
+  --border-radius: #{$button-ionic-xsmall-border-radius};
   --padding-top: #{$button-ionic-xsmall-padding-top};
   --padding-end: #{$button-ionic-xsmall-padding-end};
 
@@ -73,7 +73,7 @@
 
 /* Small Button */
 :host(.button-small) {
-  --border-radius: #{$button-ionic-default-small-border-radius};
+  --border-radius: #{$button-ionic-small-border-radius};
   --padding-top: #{$button-ionic-small-padding-top};
   --padding-end: #{$button-ionic-small-padding-end};
 
@@ -142,12 +142,12 @@
 
 /* Rectangular */
 :host(.button-rectangular) {
-  --border-radius: #{$button-ionic-default-rectangular-border};
+  --border-radius: #{$button-ionic-rectangular-border};
 }
 
 /* Round */
 :host(.button-round) {
-  --border-radius: #{$button-ionic-default-round-border};
+  --border-radius: #{$button-ionic-round-border};
 }
 
 // Button States
