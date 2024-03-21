@@ -12,9 +12,14 @@ import type { Color, TextFieldTypes } from '../../interface';
  */
 @Component({
   tag: 'ion-input-password-toggle',
+  /**
+   * Empty CSS files are required in order for the mode to be inherited to the
+   * inner ion-button. Otherwise, the setMode callback provided to Stencil will not get called
+   * and we will default to MD mode.
+   */
   styleUrls: {
-    ios: 'input-password-toggle.ios.scss',
-    md: 'input-password-toggle.md.scss',
+    ios: 'input-password-toggle.scss',
+    md: 'input-password-toggle.scss',
   },
   shadow: true,
 })
