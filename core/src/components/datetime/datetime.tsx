@@ -2640,7 +2640,7 @@ export class Datetime implements ComponentInterface {
           otherwise the IO callback may fire at unexpected times.
         */}
         <div class="intersection-tracker" ref={(el) => (this.intersectionTrackerRef = el)}></div>
-        {this.renderDatetime(mode)}
+        {this.renderDatetime(theme)}
       </Host>
     );
   }
