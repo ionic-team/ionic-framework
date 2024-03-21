@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, State, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
@@ -39,6 +39,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
+
+  /**
+   * If `true`, the button only has an icon.
+   */
+  @State() isCircle: boolean = false;
 
   /**
    * The color to use from your application's color palette.
@@ -297,6 +302,18 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.ionBlur.emit();
   };
 
+  private slotChanged = () => {
+    /**
+     * Ensures that the 'has-icon-only' class is properly added
+     * or removed from `ion-button` when manipulating the
+     * `icon-only` slot.
+     *
+     * Without this, the 'has-icon-only' class is only checked
+     * or added when `ion-button` component first renders.
+     */
+    this.isCircle = this.hasIconOnly;
+  };
+
   render() {
     const {
       buttonType,
@@ -377,7 +394,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           {...inheritedAttributes}
         >
           <span class="button-inner">
-            <slot name="icon-only"></slot>
+            <slot name="icon-only" onSlotchange={this.slotChanged}></slot>
             <slot name="start"></slot>
             <slot></slot>
             <slot name="end"></slot>
