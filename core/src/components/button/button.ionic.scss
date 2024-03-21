@@ -155,14 +155,8 @@
 // -------------------------------------------------------------------------------
 
 /* Activated */
-:host(.ion-activated) {
-  --background: #{ion-color(primary, shade)};
-}
-
-:host(.button-outline.ion-activated),
-:host(.button-clear.ion-activated) {
-  --color: #{ion-color(primary, base)};
-  --background: #e3e3e3;
+:host(.button-solid) {
+  --background-activated: #{ion-color(primary, shade)};
 }
 
 /* Focused */
