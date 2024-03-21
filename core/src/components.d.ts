@@ -547,7 +547,7 @@ export namespace Components {
          */
         "shape"?: 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button. Option `"xsmall"` and `"xlarge"` are only available for Ionic theme. At ios and md, if they are in use undefined will be assumed.
+          * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button. At ios and md, if they are in use undefined will be assumed.
          */
         "size"?: 'xsmall' | 'small' | 'default' | 'large' | 'xlarge';
         /**
@@ -5739,7 +5739,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button. Option `"xsmall"` and `"xlarge"` are only available for Ionic theme. At ios and md, if they are in use undefined will be assumed.
+          * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button. At ios and md, if they are in use undefined will be assumed.
          */
         "size"?: 'xsmall' | 'small' | 'default' | 'large' | 'xlarge';
         /**

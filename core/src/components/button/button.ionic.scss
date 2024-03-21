@@ -21,12 +21,7 @@
   &::after {
     position: absolute;
 
-    top: 50%;
-    /* stylelint-disable-next-line property-disallowed-list */
-    right: 0;
-    bottom: 0;
-    /* stylelint-disable-next-line property-disallowed-list */
-    left: 0;
+    @include position(50%, 0, null, 0);
 
     height: 100%;
     min-height: pxToRem(48);
@@ -41,11 +36,11 @@
   }
 
   ::slotted(ion-icon[slot=start]) {
-    margin-inline-end: pxToRem(8);
+    @include property-horizontal("margin", null, pxToRem(8));
   }
   
   ::slotted(ion-icon[slot=end]) {
-    margin-inline-start: pxToRem(8);
+    @include property-horizontal("margin", pxToRem(8), null);
   }
 }
 
@@ -57,11 +52,11 @@
 :host(.button-xsmall),
 :host(.button-small) {
   ::slotted(ion-icon[slot=start]) {
-    margin-inline-end: pxToRem(4);
+    @include property-horizontal("margin", null, pxToRem(4));
   }
   
   ::slotted(ion-icon[slot=end]) {
-    margin-inline-start: pxToRem(4);
+    @include property-horizontal("margin", pxToRem(4), null);
   }
 }
 
@@ -70,6 +65,7 @@
   --border-radius: #{$button-ionic-default-xsmall-border-radius};
   --padding-top: #{$button-ionic-xsmall-padding-top};
   --padding-end: #{$button-ionic-xsmall-padding-end};
+
   min-height: #{$button-ionic-xsmall-min-height};
   
   font-size: #{$button-ionic-xsmall-font-size};
@@ -90,6 +86,7 @@
 :host(.button-large) {
   --padding-top: #{$button-ionic-large-padding-top};
   --padding-end: #{$button-ionic-large-padding-end};
+
   min-height: #{$button-ionic-large-min-height};
   
   font-size: #{$button-ionic-large-font-size};
@@ -99,6 +96,7 @@
 :host(.button-xlarge) {
   --padding-top: #{$button-ionic-xlarge-padding-top};
   --padding-end: #{$button-ionic-xlarge-padding-end};
+
   min-height: #{$button-ionic-xlarge-min-height};
 
   font-size: #{$button-ionic-xlarge-font-size};
@@ -179,19 +177,15 @@
 
 .button-focus-ring {
   --focus-ring-color: #9ec4fd;
+  --focus-ring-width: 2px;
+  
+  @include position(-4px, -4px, -4px, -4px);
 
   position: absolute;
 
-  top: -4px;
-  /* stylelint-disable-next-line property-disallowed-list */
-  left: -4px;
-
-  width: calc(100% + 8px);
-  height: calc(100% + 8px);
-
   transition: border-color 0.3s;
 
-  border: 2px solid var(--focus-ring-color);
+  border: var(--focus-ring-width) solid var(--focus-ring-color);
 
   /* stylelint-disable-next-line property-disallowed-list */
   border-radius: inherit;
@@ -231,6 +225,7 @@
 :host(.button-disabled) {
   --color: #c9c9c9;
   --border-color: var(--color);
+
   opacity: 1;
 }
 

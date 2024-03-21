@@ -31,11 +31,13 @@ class ButtonFixture {
       );
     }
 
-    await expect(this.page).toHaveScreenshot(screenshotFn(`${modifier}-button`));
+    const wrapper = this.page.locator("#screenshot-wrapper");
+
+    await expect(wrapper).toHaveScreenshot(screenshotFn(`${modifier}-button`));
   }
 }
 
-configs({ themes: ['ionic'] }).forEach(({ config, screenshot, title }) => {
+configs({ themes: ['ionic'], modes: ['md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('button: theme ionic'), () => {
     let buttonFixture!: ButtonFixture;
 

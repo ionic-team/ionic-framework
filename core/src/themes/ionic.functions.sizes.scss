@@ -9,5 +9,5 @@ $browser-context: 16;
  * @param context (optional) - Baseline value
  */
 @function pxToRem($pixels, $context: $browser-context) {
-  @return calc($pixels / $context) * 1rem;
+  @return math.div($pixels, $context) * 1rem;
 }
