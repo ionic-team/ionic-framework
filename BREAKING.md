@@ -267,7 +267,7 @@ For more information on styling toast buttons, refer to the [Toast Theming docum
 
 <h4 id="version-8x-searchbar">Searchbar</h4>
 
-- The `autocapitalize` property now defaults to `'off'` instead of `undefined`.
+- The `autocapitalize` property now defaults to `'off'`.
 
 <h4 id="version-8x-select">Select</h4>
 
