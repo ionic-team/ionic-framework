@@ -6,10 +6,12 @@
 
 :host {
   --border-radius: #{$button-ionic-border-radius};
-  --padding-top: #{$button-ionic-padding-top};
-  --padding-end: #{$button-ionic-padding-end};
   --padding-bottom: var(--padding-top);
+  --padding-end: #{$button-ionic-padding-end};
   --padding-start: var(--padding-end);
+  --padding-top: #{$button-ionic-padding-top};
+  --focus-ring-color: #9ec4fd;
+  --focus-ring-width: 2px;
 
   position: relative;
 
@@ -19,12 +21,11 @@
 
   // Target area
   &::after {
+    @include position(50%, 0, null, 0);
     position: absolute;
 
-    @include position(50%, 0, null, 0);
-
     height: 100%;
-    min-height: pxToRem(48);
+    min-height: px-to-rem(48);
     
     transform: translateY(-50%);
   
@@ -36,11 +37,11 @@
   }
 
   ::slotted(ion-icon[slot=start]) {
-    @include margin-horizontal(null, pxToRem(8));
+    @include margin-horizontal(null, px-to-rem(8));
   }
   
   ::slotted(ion-icon[slot=end]) {
-    @include margin-horizontal(pxToRem(8), null);
+    @include margin-horizontal(px-to-rem(8), null);
   }
 }
 
@@ -52,11 +53,11 @@
 :host(.button-xsmall),
 :host(.button-small) {
   ::slotted(ion-icon[slot=start]) {
-    @include margin-horizontal(null, pxToRem(4));
+    @include margin-horizontal(null, px-to-rem(4));
   }
   
   ::slotted(ion-icon[slot=end]) {
-    @include margin-horizontal(pxToRem(4), null);
+    @include margin-horizontal(px-to-rem(4), null);
   }
 }
 
@@ -176,9 +177,6 @@
 }
 
 .button-focus-ring {
-  --focus-ring-color: #9ec4fd;
-  --focus-ring-width: 2px;
-  
   @include position(-4px, -4px, -4px, -4px);
 
   position: absolute;

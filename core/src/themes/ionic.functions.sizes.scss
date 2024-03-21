@@ -8,6 +8,6 @@ $browser-context: 16;
  * @param pixels - Value in pixels to be converted (i.e. px)
  * @param context (optional) - Baseline value
  */
-@function pxToRem($pixels, $context: $browser-context) {
+@function px-to-rem($pixels, $context: $browser-context) {
   @return math.div($pixels, $context) * 1rem;
 }
