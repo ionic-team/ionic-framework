@@ -4,31 +4,31 @@
 // --------------------------------------------------
 
 /// @prop - Margin top of the card
-$card-ios-margin-top:                  24px !default;
+$card-ios-margin-top:                  24px;
 
 /// @prop - Margin end of the card
-$card-ios-margin-end:                  16px !default;
+$card-ios-margin-end:                  16px;
 
 /// @prop - Margin bottom of the card
-$card-ios-margin-bottom:               $card-ios-margin-top !default;
+$card-ios-margin-bottom:               $card-ios-margin-top;
 
 /// @prop - Margin start of the card
-$card-ios-margin-start:                16px !default;
+$card-ios-margin-start:                16px;
 
 /// @prop - Box shadow color of the card
-$card-ios-box-shadow-color:            rgba(0, 0, 0, .12) !default;
+$card-ios-box-shadow-color:            rgba(0, 0, 0, .12);
 
 /// @prop - Box shadow of the card
-$card-ios-box-shadow:                  0 4px 16px $card-ios-box-shadow-color !default;
+$card-ios-box-shadow:                  0 4px 16px $card-ios-box-shadow-color;
 
 /// @prop - Border radius of the card
-$card-ios-border-radius:               8px !default;
+$card-ios-border-radius:               8px;
 
 /// @prop - Font size of the card
-$card-ios-font-size:                   dynamic-font(14px) !default;
+$card-ios-font-size:                   dynamic-font(14px);
 
 /// @prop - Transition timing function of the card
-$card-ios-transition-timing-function:  cubic-bezier(0.12, 0.72, 0.29, 1) !default;
+$card-ios-transition-timing-function:  cubic-bezier(0.12, 0.72, 0.29, 1);
 
 /// @prop - Transform of the card on activate
-$card-ios-transform-activated:         scale3d(.97, .97, 1) !default;
+$card-ios-transform-activated:         scale3d(.97, .97, 1);

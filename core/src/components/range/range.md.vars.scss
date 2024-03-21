@@ -4,44 +4,44 @@
 // --------------------------------------------------
 
 /// @prop - Padding top/bottom of the range
-$range-md-padding-vertical:                  8px !default;
+$range-md-padding-vertical:                  8px;
 
 /// @prop - Padding start/end of the range - modern range
 /**
  * 18px was chosen so the knob and its focus/active
  * effects do not get cut off by the item.
  */
-$range-md-item-padding-horizontal: 18px !default;
+$range-md-item-padding-horizontal: 18px;
 
 /// @prop - Height of the range slider
-$range-md-slider-height:                     42px !default;
+$range-md-slider-height:                     42px;
 
 /// @prop - Height of the range bar
-$range-md-bar-height:                        2px !default;
+$range-md-bar-height:                        2px;
 
 /// @prop - Background of the range bar
-$range-md-bar-background-color:              $background-color-step-250 !default;
+$range-md-bar-background-color:              $background-color-step-250;
 
 /// @prop - Font size of the range pin
-$range-md-pin-font-size:                     dynamic-font(12px) !default;
+$range-md-pin-font-size:                     dynamic-font(12px);
 
 /// @prop - Padding top/bottom of the range pin
-$range-md-pin-padding-vertical:              8px !default;
+$range-md-pin-padding-vertical:              8px;
 
 /// @prop - Padding start/end of the range pin
-$range-md-pin-padding-horizontal:            0 !default;
+$range-md-pin-padding-horizontal:            0;
 
 /// @prop - Width and height of the range pin
-$range-md-pin-dimension: dynamic-font(28px) !default;
+$range-md-pin-dimension: dynamic-font(28px);
 
 /// @prop - Opacity of the indicator shown when the range knob is hovered
-$range-md-knob-indicator-opacity-hover: 0.13 !default;
+$range-md-knob-indicator-opacity-hover: 0.13;
 
 /// @prop - Opacity of the indicator shown when the range knob is focused
-$range-md-knob-indicator-opacity-focus: 0.13 !default;
+$range-md-knob-indicator-opacity-focus: 0.13;
 
 /// @prop - Opacity of the indicator shown when the range knob is active
-$range-md-knob-indicator-opacity-active: 0.25 !default;
+$range-md-knob-indicator-opacity-active: 0.25;
 
 /// @prop - Opacity of the disabled range
-$range-md-disabled-opacity: $form-control-md-disabled-opacity !default;
+$range-md-disabled-opacity: $form-control-md-disabled-opacity;

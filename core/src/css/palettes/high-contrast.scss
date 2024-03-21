@@ -1,15 +1,15 @@
 @use "sass:map";
 @import "../../themes/ionic.functions.color";
 
-$primary:         #003fae !default;
-$secondary:       #01487b !default;
-$tertiary:        #3400e6 !default;
-$success:         #004314 !default;
-$warning:         #5f4100 !default;
-$danger:          #9c000c !default;
-$light:           #f4f5f8 !default;
-$medium:          #444446 !default;
-$dark:            #222428 !default;
+$primary:         #003fae;
+$secondary:       #01487b;
+$tertiary:        #3400e6;
+$success:         #004314;
+$warning:         #5f4100;
+$danger:          #9c000c;
+$light:           #f4f5f8;
+$medium:          #444446;
+$dark:            #222428;
 
 $colors:  (
   primary: (
@@ -66,7 +66,7 @@ $colors:  (
     shade:            get-color-shade($dark),
     tint:             get-color-tint($dark)
   )
-) !default;
+);
 
 /// Text step colors are generated based on
 /// how dark or light text can be. The darkest

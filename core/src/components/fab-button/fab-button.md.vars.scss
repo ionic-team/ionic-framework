@@ -4,31 +4,31 @@
 // --------------------------------------------------
 
 /// @prop - Box shadow of the FAB button
-$fab-md-box-shadow:                               0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12) !default;
+$fab-md-box-shadow:                               0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
 
 /// @prop - Box shadow of the activated FAB button
-$fab-md-box-shadow-activated:                     0 7px 8px -4px rgba(0, 0, 0, .2), 0 12px 17px 2px rgba(0, 0, 0, .14), 0 5px 22px 4px rgba(0, 0, 0, .12) !default;
+$fab-md-box-shadow-activated:                     0 7px 8px -4px rgba(0, 0, 0, .2), 0 12px 17px 2px rgba(0, 0, 0, .14), 0 5px 22px 4px rgba(0, 0, 0, .12);
 
 /// @prop - Background color of the button
-$fab-md-background-color:                         ion-color(primary, base) !default;
+$fab-md-background-color:                         ion-color(primary, base);
 
 /// @prop - Text color of the button
-$fab-md-text-color:                               ion-color(primary, contrast) !default;
+$fab-md-text-color:                               ion-color(primary, contrast);
 
 /// @prop - Font size of the button icon
-$fab-md-icon-font-size:                           24px !default;
+$fab-md-icon-font-size:                           24px;
 
 /// @prop - Background color of the button in a list
-$fab-md-list-button-background-color:             ion-color(light, base) !default;
+$fab-md-list-button-background-color:             ion-color(light, base);
 
 /// @prop - Background color of the activated button in a list
-$fab-md-list-button-background-color-activated:   ion-color(light, shade) !default;
+$fab-md-list-button-background-color-activated:   ion-color(light, shade);
 
 /// @prop - Background color of the activated button in a list
-$fab-md-list-button-background-color-hover:       ion-color(light, tint) !default;
+$fab-md-list-button-background-color-hover:       ion-color(light, tint);
 
 /// @prop - Text color of the button in a list
-$fab-md-list-button-text-color:                   rgba($text-color-rgb, 0.54) !default;
+$fab-md-list-button-text-color:                   rgba($text-color-rgb, 0.54);
 
 /// @prop - Font size of the button icon in a list
-$fab-md-list-button-icon-font-size:               18px !default;
+$fab-md-list-button-icon-font-size:               18px;

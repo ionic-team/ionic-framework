@@ -4,16 +4,16 @@
 // --------------------------------------------------
 
 /// @prop - Padding top of the round button
-$button-round-padding-top:        0 !default;
+$button-round-padding-top:        0;
 
 /// @prop - Padding end of the round button
-$button-round-padding-end:        26px !default;
+$button-round-padding-end:        26px;
 
 /// @prop - Padding bottom of the round button
-$button-round-padding-bottom:     $button-round-padding-top !default;
+$button-round-padding-bottom:     $button-round-padding-top;
 
 /// @prop - Padding start of the round button
-$button-round-padding-start:      $button-round-padding-end !default;
+$button-round-padding-start:      $button-round-padding-end;
 
 /// @prop - Border radius of the round button
-$button-round-border-radius:      64px !default;
+$button-round-border-radius:      64px;

@@ -5,19 +5,19 @@
 // --------------------------------------------------
 
 /// @prop - Padding start of the list header
-$list-header-ios-padding-start:       $item-ios-padding-start !default;
+$list-header-ios-padding-start:       $item-ios-padding-start;
 
 /// @prop - Font size of the list header
-$list-header-ios-font-size:           dynamic-font-max(22px, 2.55) !default;
+$list-header-ios-font-size:           dynamic-font-max(22px, 2.55);
 
 /// @prop - Font weight of the list header
-$list-header-ios-font-weight:         700 !default;
+$list-header-ios-font-weight:         700;
 
 /// @prop - Letter spacing of the list header
-$list-header-ios-letter-spacing:      0 !default;
+$list-header-ios-letter-spacing:      0;
 
 /// @prop - Text color of the list header
-$list-header-ios-color:               $text-color-step-150 !default;
+$list-header-ios-color:               $text-color-step-150;
 
 /// @prop - Background color of the list header
-$list-header-ios-background-color:    transparent !default;
+$list-header-ios-background-color:    transparent;

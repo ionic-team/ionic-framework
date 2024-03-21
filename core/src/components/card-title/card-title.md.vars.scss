@@ -4,31 +4,31 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the card title
-$card-md-title-font-size:             dynamic-font(20px) !default;
+$card-md-title-font-size:             dynamic-font(20px);
 
 /// @prop - Padding top of the card title
-$card-md-title-padding-top:           0 !default;
+$card-md-title-padding-top:           0;
 
 /// @prop - Padding end of the card title
-$card-md-title-padding-end:           $card-md-title-padding-top !default;
+$card-md-title-padding-end:           $card-md-title-padding-top;
 
 /// @prop - Padding bottom of the card title
-$card-md-title-padding-bottom:        $card-md-title-padding-top !default;
+$card-md-title-padding-bottom:        $card-md-title-padding-top;
 
 /// @prop - Padding start of the card title
-$card-md-title-padding-start:         $card-md-title-padding-end !default;
+$card-md-title-padding-start:         $card-md-title-padding-end;
 
 /// @prop - Margin top of the card title
-$card-md-title-margin-top:            0 !default;
+$card-md-title-margin-top:            0;
 
 /// @prop - Margin end of the card title
-$card-md-title-margin-end:            $card-md-title-margin-top !default;
+$card-md-title-margin-end:            $card-md-title-margin-top;
 
 /// @prop - Margin bottom of the card title
-$card-md-title-margin-bottom:         $card-md-title-margin-top !default;
+$card-md-title-margin-bottom:         $card-md-title-margin-top;
 
 /// @prop - Margin start of the card title
-$card-md-title-margin-start:          $card-md-title-margin-end !default;
+$card-md-title-margin-start:          $card-md-title-margin-end;
 
 /// @prop - Color of the card title
-$card-md-title-text-color:            $text-color-step-150 !default;
+$card-md-title-text-color:            $text-color-step-150;

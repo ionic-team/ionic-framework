@@ -4,22 +4,22 @@
 // --------------------------------------------------
 
 /// @prop - Box shadow color of the menu
-$menu-ios-box-shadow-color:      rgba(0, 0, 0, .08) !default;
+$menu-ios-box-shadow-color:      rgba(0, 0, 0, .08);
 
 /// @prop - Box shadow of the menu
-$menu-ios-box-shadow:            -8px 0 42px $menu-ios-box-shadow-color !default;
+$menu-ios-box-shadow:            -8px 0 42px $menu-ios-box-shadow-color;
 
 /// @prop - Box shadow of the menu in rtl mode
-$menu-ios-box-shadow-rtl:        8px 0 42px $menu-ios-box-shadow-color !default;
+$menu-ios-box-shadow-rtl:        8px 0 42px $menu-ios-box-shadow-color;
 
 /// @prop - Box shadow of the reveal menu
-$menu-ios-box-shadow-reveal:     $menu-ios-box-shadow !default;
+$menu-ios-box-shadow-reveal:     $menu-ios-box-shadow;
 
 /// @prop - Box shadow of the reveal menu
-$menu-ios-box-shadow-reveal-rtl: $menu-ios-box-shadow-rtl !default;
+$menu-ios-box-shadow-reveal-rtl: $menu-ios-box-shadow-rtl;
 
 /// @prop - Box shadow of the push menu
-$menu-ios-box-shadow-push:       null !default;
+$menu-ios-box-shadow-push:       null;
 
 /// @prop - Box shadow of the overlay menu
-$menu-ios-box-shadow-overlay:    null !default;
+$menu-ios-box-shadow-overlay:    null;

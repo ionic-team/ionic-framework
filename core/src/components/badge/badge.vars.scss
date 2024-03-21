@@ -4,25 +4,25 @@
 // --------------------------------------------------
 
 /// @prop - Padding top of the badge
-$badge-padding-top:               3px !default;
+$badge-padding-top:               3px;
 
 /// @prop - Padding end of the badge
-$badge-padding-end:               8px !default;
+$badge-padding-end:               8px;
 
 /// @prop - Padding bottom of the badge
-$badge-padding-bottom:            $badge-padding-top !default;
+$badge-padding-bottom:            $badge-padding-top;
 
 /// @prop - Padding start of the badge
-$badge-padding-start:             $badge-padding-end !default;
+$badge-padding-start:             $badge-padding-end;
 
 /// @prop - Minimum width of the badge
-$badge-min-width:                 10px !default;
+$badge-min-width:                 10px;
 
 /// @prop - Baseline font size of the badge
-$badge-baseline-font-size: 13px !default;
+$badge-baseline-font-size: 13px;
 
 /// @prop - Font size of the badge
-$badge-font-size:                 dynamic-font($badge-baseline-font-size) !default;
+$badge-font-size:                 dynamic-font($badge-baseline-font-size);
 
 /// @prop - Font weight of the badge
-$badge-font-weight:               bold !default;
+$badge-font-weight:               bold;

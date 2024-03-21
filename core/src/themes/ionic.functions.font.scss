@@ -1,7 +1,7 @@
 @use "sass:math";
 
-$baselineSize: 16px !default;
-$baselineUnit: 1rem !default;
+$baselineSize: 16px;
+$baselineUnit: 1rem;
 
 /**
  * Convert a font size to a dynamic font size.
