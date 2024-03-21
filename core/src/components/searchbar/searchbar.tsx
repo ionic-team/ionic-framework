@@ -84,20 +84,19 @@ export class Searchbar implements ComponentInterface {
    * and disabled by default on Android
    * for Searchbar. The autocapitalize type on HTMLElement
    * requires that it be a string and never undefined.
-   * However, setting it to a string value would be a breaking change
-   * in behavior, so we use "!" to tell TypeScript that this property
-   * is always defined so we can rely on the browser defaults. Browsers
-   * will automatically set a default value if the developer does not set one.
+   * However, setting it to one of the accepted values would be a breaking change
+   * in behavior, so we use the internal "default" keyword to ensure
+   * we use the default browser behavior for now.
    *
    * In the future, this property will default to "off" to align with
-   * Input and Textarea, and the "!" will not be needed.
+   * Input and Textarea, and the internal "default" keyword will not be needed.
    */
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
    * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
-  @Prop() autocapitalize!: string;
+  @Prop() autocapitalize: string = 'default';
 
   /**
    * Set the input's autocomplete property.
@@ -621,7 +620,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   render() {
-    const { cancelButtonText } = this;
+    const { cancelButtonText, autocapitalize } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? closeCircle : closeSharp);
@@ -683,7 +682,7 @@ export class Searchbar implements ComponentInterface {
             placeholder={this.placeholder}
             type={this.type}
             value={this.getValue()}
-            autoCapitalize={this.autocapitalize}
+            autoCapitalize={autocapitalize === 'default' ? undefined : autocapitalize}
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
             spellcheck={this.spellcheck}
