@@ -1,0 +1,13 @@
+@import "./dark";
+
+.ion-palette-dark {
+  @include dark-base-palette();
+}
+
+.ion-palette-dark.ios {
+  @include dark-ios-palette();
+}
+
+.ion-palette-dark.md {
+  @include dark-md-palette();
+}
