@@ -52,7 +52,7 @@
 :host(.button-xsmall),
 :host(.button-small) {
   ::slotted(ion-icon[slot=start]) {
-    @include property-horizontal("margin", null, pxToRem(4));
+    @include margin-horizontal(null, pxToRem(4));
   }
   
   ::slotted(ion-icon[slot=end]) {
