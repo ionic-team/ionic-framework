@@ -14,8 +14,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 8.x
 
 - [Browser and Platform Support](#version-8x-browser-platform-support)
-- [Dark Theme](#version-8x-dark-theme)
+- [Dark Mode](#version-8x-dark-mode)
 - [Global Styles](#version-8x-global-styles)
+- [Haptics](#version-8x-haptics)
 - [Components](#version-8x-components)
   - [Button](#version-8x-button)
   - [Checkbox](#version-8x-checkbox)
@@ -60,9 +61,12 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | iOS      | 15+                    |
 | Android  | 5.1+ with Chromium 89+ |
 
-<h2 id="version-8x-dark-theme">Dark Theme</h2>
+Ionic Framework v8 removes backwards support for CSS Animations in favor of the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API). All minimum browser versions listed above support the Web Animations API.
 
-In previous versions, it was recommended to define the dark theme in the following way:
+<h2 id="version-8x-dark-mode">Dark Mode</h2>
+
+
+In previous versions, it was recommended to define the dark palette in the following way:
 
 ```css
 @media (prefers-color-scheme: dark) {
@@ -80,15 +84,15 @@ In previous versions, it was recommended to define the dark theme in the followi
 }
 ```
 
-In Ionic Framework version 8, the dark theme is being distributed via css files that can be imported. Below is an example of importing a dark theme file in Angular:
+In Ionic Framework version 8, the dark palette is being distributed via css files that can be imported. Below is an example of importing a dark palette file in Angular:
 
 ```css
-/* @import '@ionic/angular/css/themes/dark.always.css'; */
-/* @import "@ionic/angular/css/themes/dark.class.css"; */
-@import "@ionic/angular/css/themes/dark.system.css";
+/* @import '@ionic/angular/css/palettes/dark.always.css'; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
 ```
 
-By importing the `dark.system.css` file, the dark theme variables will be defined like the following:
+By importing the `dark.system.css` file, the dark palette variables will be defined like the following:
 
 ```css
 @media (prefers-color-scheme: dark) {
@@ -106,11 +110,11 @@ By importing the `dark.system.css` file, the dark theme variables will be define
 }
 ```
 
-Notice that the dark theme is now applied to the `:root` selector instead of the `body` selector. The [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) selector represents the `<html>` element and is identical to the selector `html`, except that its specificity is higher.
+Notice that the dark palette is now applied to the `:root` selector instead of the `body` selector. The [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) selector represents the `<html>` element and is identical to the selector `html`, except that its specificity is higher.
 
-While migrating to include the new dark theme files is unlikely to cause breaking changes, these new selectors can lead to unexpected overrides if custom CSS variables are being set on the `body` element. We recommend updating any instances where global application variables are set to target the `:root` selector instead.
+While migrating to include the new dark palette files is unlikely to cause breaking changes, these new selectors can lead to unexpected overrides if custom CSS variables are being set on the `body` element. We recommend updating any instances where global application variables are set to target the `:root` selector instead.
 
-For more information on the new dark theme files, refer to the [Dark Mode documentation](https://ionicframework.com/docs/theming/dark-mode).
+For more information on the new dark palette files, refer to the [Dark Mode documentation](https://ionicframework.com/docs/theming/dark-mode).
 
 <h2 id="version-8x-global-styles">Global Styles</h2>
 
@@ -137,6 +141,10 @@ Developers who had previously chosen dynamic font scaling by activating it in th
 Developers who want to disable dynamic font scaling can set `--ion-dynamic-font: initial;` in their global stylesheets. However, this is not recommended because it may introduce accessibility challenges for users who depend on enlarged font sizes.
 
 For more information on the dynamic font, refer to the [Dynamic Font Scaling documentation](https://ionicframework.com/docs/layout/dynamic-font-scaling).
+
+<h2 id="version-8x-haptics">Haptics</h2>
+
+- Support for the Cordova Haptics plugin has been removed. Components that integrate with haptics, such as `ion-picker` and `ion-toggle`, will continue to function but will no longer play haptics in Cordova environments. Developers should migrate to Capacitor to continue to have haptics in these components.
 
 <h2 id="version-8x-components">Components</h2>
 
@@ -254,11 +262,11 @@ For more information on styling toast buttons, refer to the [Toast Theming docum
 
 <h4 id="version-8x-range">Range</h4>
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
 
 <h4 id="version-8x-select">Select</h4>
 
-- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
+- The `legacy` property and support for the legacy syntax, which involved placing an `ion-select` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy select syntax, refer to the [Select documentation](https://ionicframework.com/docs/api/select#migrating-from-legacy-select-syntax).
 
 <h4 id="version-8x-textarea">Textarea</h4>
 
