@@ -113,12 +113,6 @@
   font-size: #{$button-md-small-font-size};
 }
 
-:host(.button-has-icon-only) {
-  --padding-top: 0;
-  --padding-bottom: 0;
-}
-
-
 // MD strong Button
 // --------------------------------------------------
 
@@ -126,10 +120,52 @@
   font-weight: #{$button-md-strong-font-weight};
 }
 
-::slotted(ion-icon[slot="icon-only"]) {
-  @include padding(0);
+// MD Icon Only Button
+//
+// MD does not specify a small size, these
+// styles are based on the iOS small size.
+//
+// MD does not specify a large size, these
+// styles are based on the iOS large size.
+// --------------------------------------------------
+
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: var(--padding-top);
+  --padding-end: var(--padding-top);
+  --padding-start: var(--padding-end);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(30px, 2.86em, 60px);
+
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(30px, 2.86em, 60px);
 }
 
+::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.6em;
+}
+
+:host(.button-small.button-has-icon-only) {
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(23px, 2.16em, 54px);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(23px, 2.16em, 54px);
+}
+
+:host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.23em;
+}
+
+:host(.button-large.button-has-icon-only) {
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(46px, 2.5em, 78px);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(46px, 2.5em, 78px);
+}
+
+:host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1.4em;
+}
 
 // Material Design Button: Hover
 // --------------------------------------------------

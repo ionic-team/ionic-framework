@@ -31,7 +31,7 @@ class ButtonFixture {
       );
     }
 
-    const wrapper = this.page.locator("#screenshot-wrapper");
+    const wrapper = this.page.locator('#screenshot-wrapper');
 
     await expect(wrapper).toHaveScreenshot(screenshotFn(`${modifier}-button`));
   }
