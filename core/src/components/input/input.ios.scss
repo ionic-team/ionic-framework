@@ -35,8 +35,7 @@
  * don't look too crowded.
  */
 ::slotted(ion-button[slot="start"].button-has-icon-only),
-::slotted(ion-button[slot="end"].button-has-icon-only),
-::slotted(ion-input-password-toggle::part(button)) {
+::slotted(ion-button[slot="end"].button-has-icon-only) {
   --border-radius: 50%;
   --padding-start: 0;
   --padding-end: 0;

@@ -121,15 +121,11 @@ export class InputPasswordToggle implements ComponentInterface {
           [mode]: true,
         })}
       >
-        {/*
-          This part is intentionally undocumented. It only exists so that Input
-          can style the button when InputPasswordToggle is slotted inside of the Input.
-        */}
         <ion-button
-          part="button"
           mode={mode}
           color={color}
           fill="clear"
+          shape="round"
           aria-checked={isPasswordVisible ? 'true' : 'false'}
           aria-label="show password"
           role="switch"
