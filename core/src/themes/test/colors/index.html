@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Theme</title>
+    <title>Palette</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -12,7 +12,7 @@
     <script src="../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../dist/ionic/ionic.esm.js"></script>
-    <link id="theme" rel="stylesheet" />
+    <link id="palette" rel="stylesheet" />
 
     <style>
       .container {
@@ -85,10 +85,10 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Theme</ion-title>
+          <ion-title>Palette</ion-title>
         </ion-toolbar>
         <ion-toolbar>
-          <ion-segment value="default" class="theme-picker">
+          <ion-segment value="default" class="palette-picker">
             <ion-segment-button value="default">
               <ion-label>Default (Light)</ion-label>
             </ion-segment-button>
@@ -320,26 +320,26 @@
     </ion-app>
 
     <script>
-      const themePicker = document.querySelector('.theme-picker');
+      const palettePicker = document.querySelector('.palette-picker');
 
-      themePicker.addEventListener('ionChange', (ev) => {
-        const theme = event.detail && event.detail.value;
-        toggleTheme(theme);
+      palettePicker.addEventListener('ionChange', (ev) => {
+        const palette = event.detail && event.detail.value;
+        togglePalette(palette);
       });
 
-      function toggleTheme(theme) {
-        let cssFile = `/css/themes/${theme}.always.css`;
-        if (theme === 'default') {
+      function togglePalette(palette) {
+        let cssFile = `/css/palettes/${palette}.always.css`;
+        if (palette === 'default') {
           // TODO FW-5862 update this to not
           // load a file when default is set. The light
-          // theme is automatically set when importing ionic.bundle.css
-          cssFile = `/src/themes/test/${theme}.css`;
+          // palette is automatically set when importing ionic.bundle.css
+          cssFile = `/src/themes/test/default.css`;
         }
 
-        var oldLink = document.getElementById('theme');
+        var oldLink = document.getElementById('palette');
 
         var newLink = document.createElement('link');
-        newLink.setAttribute('id', 'theme');
+        newLink.setAttribute('id', 'palette');
         newLink.setAttribute('rel', 'stylesheet');
         newLink.setAttribute('type', 'text/css');
         newLink.setAttribute('href', cssFile);

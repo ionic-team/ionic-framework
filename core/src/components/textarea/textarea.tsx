@@ -22,7 +22,7 @@ import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
-import type { Color, StyleEventDetail } from '../../interface';
+import type { Color } from '../../interface';
 import { getCounterText } from '../input/input.utils';
 
 import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
@@ -277,12 +277,6 @@ export class Textarea implements ComponentInterface {
    * the user clears the textarea by performing a keydown event.
    */
   @Event() ionInput!: EventEmitter<TextareaInputEventDetail>;
-
-  /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the input loses focus.
