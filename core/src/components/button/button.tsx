@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, State, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
@@ -41,6 +41,9 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   @Element() el!: HTMLElement;
 
+  /**
+   * If `true`, the button only has an icon.
+   */
   @State() isCircle: boolean = false;
 
   /**
@@ -285,13 +288,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     return this.el.closest('form');
   }
 
-  /**
-   * Makes button-has-icon-only class to update when an icon is added or removed from slot="icon-only"
-   */
-  private slotChanged = () => {
-    this.isCircle = this.hasIconOnly;
-  };
-
   private submitForm(ev: Event) {
     // this button wants to specifically submit a form
     // climb up the dom to see if we're in a <form>
@@ -318,6 +314,18 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   private onBlur = () => {
     this.ionBlur.emit();
+  };
+
+  private slotChanged = () => {
+    /**
+     * Ensures that the 'has-icon-only' class is properly added
+     * or removed from `ion-button` when manipulating the
+     * `icon-only` slot.
+     *
+     * Without this, the 'has-icon-only' class is only checked
+     * or added when `ion-button` component first renders.
+     */
+    this.isCircle = this.hasIconOnly;
   };
 
   render() {
