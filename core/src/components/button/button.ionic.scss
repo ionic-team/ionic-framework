@@ -210,11 +210,10 @@
 
 // Clear
 :host(.button-clear) {
-  --background-activated: transparent;
-  --background-activated-opacity: 0;
-  --background-focused: #{ion-color(primary, base)};
+  --background-activated: #e3e3e3;
+  --background-activated-opacity: 1;
+  --background-focused: transparent;
   --background-hover: transparent;
-  --background-focused-opacity: .1;
 }
 
 /* Hover */
