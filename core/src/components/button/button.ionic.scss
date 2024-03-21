@@ -56,7 +56,7 @@
   }
   
   ::slotted(ion-icon[slot=end]) {
-    @include property-horizontal("margin", pxToRem(4), null);
+    @include margin-horizontal(pxToRem(4), null);
   }
 }
 
