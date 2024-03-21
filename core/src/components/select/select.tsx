@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
-import { focusVisibleElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { actionSheetController, alertController, popoverController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
@@ -876,10 +876,11 @@ export class Select implements ComponentInterface {
   }
 
   private get ariaLabel() {
-    const { placeholder, el, inputId, inheritedAttributes } = this;
+    const { placeholder, inheritedAttributes } = this;
     const displayValue = this.getText();
-    const { labelText } = getAriaLabel(el, inputId);
-    const definedLabel = this.labelText ?? inheritedAttributes['aria-label'] ?? labelText;
+
+    // The aria label should be preferred over visible text if both are specified
+    const definedLabel = inheritedAttributes['aria-label'] ?? this.labelText;
 
     /**
      * If developer has specified a placeholder

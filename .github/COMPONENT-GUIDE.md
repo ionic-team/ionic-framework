@@ -2,10 +2,10 @@
 
 - [Button States](#button-states)
   * [Component Structure](#component-structure)
-  * [Activated](#activated)
   * [Disabled](#disabled)
   * [Focused](#focused)
   * [Hover](#hover)
+  * [Activated](#activated)
   * [Ripple Effect](#ripple-effect)
   * [Example Components](#example-components)
   * [References](#references)
@@ -22,7 +22,7 @@
 
 ## Button States
 
-Any component that renders a button should have the following states: [`activated`](#activated), [`disabled`](#disabled), [`focused`](#focused), [`hover`](#hover). It should also have a [Ripple Effect](#ripple-effect) component added for Material Design.
+Any component that renders a button should have the following states: [`disabled`](#disabled), [`focused`](#focused), [`hover`](#hover), [`activated`](#activated). It should also have a [Ripple Effect](#ripple-effect) component added for Material Design.
 
 ### Component Structure
 
@@ -90,78 +90,6 @@ The following styles should be set for the CSS to work properly. Note that the `
 ```
 
 
-### Activated
-
-The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
-
-> [!WARNING]
->`:active` should not be used here as it is not received on mobile Safari unless the element has a `touchstart` listener (which we don't necessarily want to have to add to every element). From [Safari Web Content Guide](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/AdjustingtheTextSize/AdjustingtheTextSize.html):
->
->> On iOS, mouse events are sent so quickly that the down or active state is never received. Therefore, the `:active` pseudo state is triggered only when there is a touch event set on the HTML element
-
-> Make sure the component has the correct [component structure](#component-structure) before continuing.
-
-#### JavaScript
-
-The `ion-activatable` class needs to be set on an element that can be activated:
-
-```jsx
-render() {
-  return (
-    <Host class='ion-activatable'>
-      <slot></slot>
-    </Host>
-  );
-}
-```
-
-Once that is done, the element will get the `ion-activated` class added on press after a small delay. This delay exists so that the active state does not show up when an activatable element is tapped while scrolling.
-
-In addition to setting that class, `ion-activatable-instant` can be set in order to have an instant press with no delay:
-
-```jsx
-<Host class='ion-activatable ion-activatable-instant'>
-```
-
-#### CSS
-
-```css
- /**
-   * @prop --color-activated: Color of the button when pressed
-   * @prop --background-activated: Background of the button when pressed
-   * @prop --background-activated-opacity: Opacity of the background when pressed
-   */
-```
-
-Style the `ion-activated` class based on the spec for that element:
-
-```scss
-:host(.ion-activated) .button-native {
-  color: var(--color-activated);
-
-  &::after {
-    background: var(--background-activated);
-
-    opacity: var(--background-activated-opacity);
-  }
-}
-```
-
-> Order is important! Activated should be after the focused & hover states.
-
-
-#### User Customization
-
-Setting the activated state on the `::after` pseudo-element allows the user to customize the activated state without knowing what the default opacity is set at. A user can customize in the following ways to have a solid red background on press, or they can leave out `--background-activated-opacity` and the button will use the default activated opacity to match the spec.
-
-```css
-ion-button {
-  --background-activated: red;
-  --background-activated-opacity: 1;
-}
-```
-
-
 ### Disabled
 
 The disabled state should be set via prop on all components that render a native button. Setting a disabled state will change the opacity or color of the button and remove click events from firing.
@@ -198,7 +126,8 @@ render() {
 }
 ```
 
-> Note: if the class being added was for `ion-back-button` it would be `back-button-disabled`.
+> [!NOTE]
+> If the class being added was for `ion-back-button` it would be `back-button-disabled`.
 
 #### CSS
 
@@ -216,9 +145,10 @@ The following CSS _at the bare minimum_ should be added for the disabled class, 
 
 TODO
 
+
 ### Focused
 
-The focused state should be enabled for elements with actions when tabbed to via the keyboard. This will only work inside of an `ion-app`. It usually changes the opacity or background of an element. 
+The focused state should be enabled for elements with actions when tabbed to via the keyboard. This will only work inside of an `ion-app`. It usually changes the opacity or background of an element.
 
 > [!WARNING]
 > Do not use `:focus` because that will cause the focus to apply even when an element is tapped (because the element is now focused). Instead, we only want the focus state to be shown when it makes sense which is what the `.ion-focusable` utility mentioned below does.
@@ -226,6 +156,7 @@ The focused state should be enabled for elements with actions when tabbed to via
 > [!NOTE]
 > The [`:focus-visible`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible) pseudo-class mostly does the same thing as our JavaScript-driven utility. However, it does not work well with Shadow DOM components as the element that receives focus is typically inside of the Shadow DOM, but we usually want to set the `:focus-visible` state on the host so we can style other parts of the component. Using other combinations such as `:has(:focus-visible)` does not work because `:has` does not pierce the Shadow DOM (as that would leak implementation details about the Shadow DOM contents). `:focus-within` does work with the Shadow DOM, but that has the same problem as `:focus` that was mentioned before. Unfortunately, a [`:focus-visible-within` pseudo-class does not exist yet](https://github.com/WICG/focus-visible/issues/151).
 
+> [!IMPORTANT]
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
 #### JavaScript
@@ -235,7 +166,7 @@ The `ion-focusable` class needs to be set on an element that can be focused:
 ```jsx
 render() {
   return (
-    <Host class='ion-focusable'>
+    <Host class="ion-focusable">
       <slot></slot>
     </Host>
   );
@@ -270,7 +201,8 @@ Style the `ion-focused` class based on the spec for that element:
 }
 ```
 
-> Order is important! Focused should be after the activated and before the hover state.
+> [!IMPORTANT]
+> Order matters! Focused should be **before** the activated and hover states.
 
 
 #### User Customization
@@ -287,11 +219,12 @@ ion-button {
 
 ### Hover
 
-The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover. 
+The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover.
 
 > [!NOTE]
 > Some Android devices [incorrectly report their inputs](https://issues.chromium.org/issues/40855702) which can result in certain devices receiving hover events when they should not.
 
+> [!IMPORTANT]
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
 #### CSS
@@ -322,7 +255,8 @@ Style the `:hover` based on the spec for that element:
 }
 ```
 
-> Order is important! Hover should be before the activated state.
+> [!IMPORTANT]
+> Order matters! Hover should be **before** the activated state.
 
 
 #### User Customization
@@ -333,6 +267,79 @@ Setting the hover state on the `::after` pseudo-element allows the user to custo
 ion-button {
   --background-hover: red;
   --background-hover-opacity: 1;
+}
+```
+
+
+### Activated
+
+The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
+
+> [!WARNING]
+>`:active` should not be used here as it is not received on mobile Safari unless the element has a `touchstart` listener (which we don't necessarily want to have to add to every element). From [Safari Web Content Guide](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/AdjustingtheTextSize/AdjustingtheTextSize.html):
+>
+>> On iOS, mouse events are sent so quickly that the down or active state is never received. Therefore, the `:active` pseudo state is triggered only when there is a touch event set on the HTML element
+
+> [!IMPORTANT]
+> Make sure the component has the correct [component structure](#component-structure) before continuing.
+
+#### JavaScript
+
+The `ion-activatable` class needs to be set on an element that can be activated:
+
+```jsx
+render() {
+  return (
+    <Host class="ion-activatable">
+      <slot></slot>
+    </Host>
+  );
+}
+```
+
+Once that is done, the element will get the `ion-activated` class added on press after a small delay. This delay exists so that the active state does not show up when an activatable element is tapped while scrolling.
+
+In addition to setting that class, `ion-activatable-instant` can be set in order to have an instant press with no delay:
+
+```jsx
+<Host class="ion-activatable ion-activatable-instant">
+```
+
+#### CSS
+
+```css
+ /**
+   * @prop --color-activated: Color of the button when pressed
+   * @prop --background-activated: Background of the button when pressed
+   * @prop --background-activated-opacity: Opacity of the background when pressed
+   */
+```
+
+Style the `ion-activated` class based on the spec for that element:
+
+```scss
+:host(.ion-activated) .button-native {
+  color: var(--color-activated);
+
+  &::after {
+    background: var(--background-activated);
+
+    opacity: var(--background-activated-opacity);
+  }
+}
+```
+
+> [!IMPORTANT]
+> Order matters! Activated should be **after** the focused & hover states.
+
+#### User Customization
+
+Setting the activated state on the `::after` pseudo-element allows the user to customize the activated state without knowing what the default opacity is set at. A user can customize in the following ways to have a solid red background on press, or they can leave out `--background-activated-opacity` and the button will use the default activated opacity to match the spec.
+
+```css
+ion-button {
+  --background-activated: red;
+  --background-activated-opacity: 1;
 }
 ```
 
@@ -440,53 +447,38 @@ render() {
 
 #### Labels
 
-A helper function has been created to get the proper `aria-label` for the checkbox. This can be imported as `getAriaLabel` like the following:
+Labels should be passed directly to the component in the form of either visible text or an `aria-label`. The visible text can be set inside of a `label` element, and the `aria-label` can be set directly on the interactive element.
+
+In the following example the `aria-label` can be inherited from the Host using the `inheritAttributes` or `inheritAriaAttributes` utilities. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
+
+> [!NOTE]
+> Use `inheritAttributes` to specify which attributes should be inherited or `inheritAriaAttributes` to inherit all of the possible `aria` attributes.
 
 ```tsx
-const { label, labelId, labelText } = getAriaLabel(el, inputId);
-```
+import { Prop } from '@stencil/core';
+import { inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 
-where `el` and `inputId` are the following:
+...
 
-```tsx
-export class Checkbox implements ComponentInterface {
-  private inputId = `ion-cb-${checkboxIds++}`;
+private inheritedAttributes: Attributes = {};
 
-  @Element() el!: HTMLElement;
+@Prop() labelText?: string;
 
-  ...
+componentWillLoad() {
+  this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
 }
-```
 
-This can then be added to the `Host` like the following:
-
-```tsx
-<Host
-  aria-labelledby={label ? labelId : null}
-  aria-checked={`${checked}`}
-  aria-hidden={disabled ? 'true' : null}
-  role="checkbox"
->
-```
-
-In addition to that, the checkbox input should have a label added:
-
-```tsx
-<Host
-  aria-labelledby={label ? labelId : null}
-  aria-checked={`${checked}`}
-  aria-hidden={disabled ? 'true' : null}
-  role="checkbox"
->
-  <label htmlFor={inputId}>
-    {labelText}
-  </label>
-  <input
-    type="checkbox"
-    aria-checked={`${checked}`}
-    disabled={disabled}
-    id={inputId}
-  />
+render() {
+  return (
+    <Host>
+      <label>
+        {this.labelText}
+        <input type="checkbox" {...this.inheritedAttributes} /> 
+      </label>
+    </Host>
+  )
+}
 ```
 
 #### Hidden Input
@@ -568,56 +560,39 @@ render() {
 
 #### Labels
 
-A helper function has been created to get the proper `aria-label` for the switch. This can be imported as `getAriaLabel` like the following:
+Labels should be passed directly to the component in the form of either visible text or an `aria-label`. The visible text can be set inside of a `label` element, and the `aria-label` can be set directly on the interactive element.
+
+In the following example the `aria-label` can be inherited from the Host using the `inheritAttributes` or `inheritAriaAttributes` utilities. This allows developers to set `aria-label` on the host element since they do not have access to inside the shadow root.
+
+> [!NOTE]
+> Use `inheritAttributes` to specify which attributes should be inherited or `inheritAriaAttributes` to inherit all of the possible `aria` attributes.
 
 ```tsx
-const { label, labelId, labelText } = getAriaLabel(el, inputId);
-```
+import { Prop } from '@stencil/core';
+import { inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 
-where `el` and `inputId` are the following:
+...
 
-```tsx
-export class Toggle implements ComponentInterface {
-  private inputId = `ion-tg-${toggleIds++}`;
+private inheritedAttributes: Attributes = {};
 
-  @Element() el!: HTMLElement;
+@Prop() labelText?: string;
 
-  ...
+componentWillLoad() {
+  this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+}
+
+render() {
+  return (
+    <Host>
+      <label>
+        {this.labelText}
+        <input type="checkbox" role="switch" {...this.inheritedAttributes} /> 
+      </label>
+    </Host>
+  )
 }
 ```
-
-This can then be added to the `Host` like the following:
-
-```tsx
-<Host
-  aria-labelledby={label ? labelId : null}
-  aria-checked={`${checked}`}
-  aria-hidden={disabled ? 'true' : null}
-  role="switch"
->
-```
-
-In addition to that, the checkbox input should have a label added:
-
-```tsx
-<Host
-  aria-labelledby={label ? labelId : null}
-  aria-checked={`${checked}`}
-  aria-hidden={disabled ? 'true' : null}
-  role="switch"
->
-  <label htmlFor={inputId}>
-    {labelText}
-  </label>
-  <input
-    type="checkbox"
-    role="switch"
-    aria-checked={`${checked}`}
-    disabled={disabled}
-    id={inputId}
-  />
-```
-
 
 #### Hidden Input
 
