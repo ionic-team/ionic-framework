@@ -7213,7 +7213,7 @@ declare namespace LocalJSX {
         /**
           * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
-        "autocapitalize": string;
+        "autocapitalize"?: string;
         /**
           * Set the input's autocomplete property.
          */
