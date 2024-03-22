@@ -31,6 +31,9 @@
         <button class="custom-accordion-button" id="basic" onclick="presentAlert()">Alert</button>
         <button id="longMessage" onclick="presentAlertLongMessage()">Alert Long Message</button>
         <button id="multipleButtons" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</button>
+        <button id="multipleCancelButtons" onclick="presentAlertMultipleCancelButtons()">
+          Multiple Cancel Buttons (>2)
+        </button>
         <button id="noMessage" onclick="presentAlertNoMessage()">Alert No Message</button>
         <button id="asyncHandler" onclick="presentAlertAsyncHandler()">Alert Async Handler</button>
         <button id="confirm" onclick="presentAlertConfirm()">Confirm</button>
@@ -109,6 +112,50 @@
               text: 'Delete',
               id: 'delete-button',
               role: 'destructive',
+            },
+            'Cancel',
+          ],
+        });
+      }
+
+      function confirmAlertCancelBtns(expectedDataTestId) {
+        openAlert({
+          header: 'Alert',
+          subHeader: 'CancelBtnClicked',
+          message: expectedDataTestId,
+          buttons: ['OK'],
+          htmlAttributes: {
+            'data-testid': expectedDataTestId,
+          },
+        });
+      }
+
+      function presentAlertMultipleCancelButtons() {
+        openAlert({
+          header: 'Alert',
+          subHeader: 'Subtitle',
+          message: 'This is an alert message.',
+          buttons: [
+            {
+              text: 'Cancel 1',
+              role: 'cancel',
+              cssClass: 'cancel1-btn',
+              handler: () => {
+                confirmAlertCancelBtns('cancel1-btn-clicked');
+              },
+            },
+            {
+              text: 'Cancel 2',
+              role: 'cancel',
+              cssClass: 'cancel2-btn',
+              handler: () => {
+                confirmAlertCancelBtns('cancel2-btn-clicked');
+              },
+            },
+            {
+              text: 'Cancel 3',
+              role: 'cancel',
+              cssClass: 'cancel3-btn',
             },
             'Cancel',
           ],

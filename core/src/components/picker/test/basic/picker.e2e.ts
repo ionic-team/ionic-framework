@@ -26,3 +26,54 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr', 'rtl'] }).forEach(({ title, config }) => {
+  test.describe(title('picker: button handlers'), () => {
+    test('should call cancel button handler', async ({ page }) => {
+      await page.setContent(
+        `
+      <script type="module">
+        import { pickerController } from '../../../../dist/ionic/index.esm.js';
+        window.pickerController = pickerController;
+      </script>
+
+      <button id="open" onclick="openPicker()">Open Picker</button>
+
+      <div id="result"></div>
+
+      <script>
+        async function openPicker() {
+          const picker = await pickerController.create({
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                cssClass: 'cancel-btn',
+                handler: () => {
+                  document.querySelector('#result').textContent = 'cancelled';
+                }
+              }
+            ]
+          });
+          await picker.present();
+        }
+      </script>
+      `,
+        config
+      );
+
+      const didPresent = await page.spyOnEvent('ionPickerDidPresent');
+
+      const openBtn = page.locator('#open');
+      await openBtn.click();
+
+      await didPresent.next();
+
+      const cancelBtn = page.locator('ion-picker .cancel-btn');
+      await cancelBtn.click();
+
+      const result = page.locator('#result');
+      await expect(result).toHaveText('cancelled');
+    });
+  });
+});
