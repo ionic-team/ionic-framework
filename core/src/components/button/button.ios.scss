@@ -172,7 +172,7 @@
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: dynamic-font-clamp(0.844, 16px, 2.53, 1em);
+  font-size: dynamic-font-clamp(0.844, $button-ios-baseline-font-size, 2.53, 1em);
 }
 
 // iOS Button Focused
