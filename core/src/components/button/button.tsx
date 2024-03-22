@@ -126,7 +126,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * with more height and padding. By default the size is unset, unless the button
    * is inside of an item, where the size is `"small"` by default. Set the size to
    * `"default"` inside of an item to make it a standard size button.
-   * At ios and md, if they are in use undefined will be assumed.
    */
   @Prop({ reflect: true }) size?: 'xsmall' | 'small' | 'default' | 'large' | 'xlarge';
 
