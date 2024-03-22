@@ -225,8 +225,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     const theme = getIonTheme(this);
     const { size } = this;
 
-    if (size === undefined && this.inItem) return 'small';
-    if ((theme === 'ios' || theme === 'md') && (size === 'xsmall' || size === 'xlarge')) return undefined;
+    if (size === undefined && this.inItem) {
+       return 'small';
+    }
+    
+    if ((theme === 'ios' || theme === 'md') && (size === 'xsmall' || size === 'xlarge')) {
+       return undefined;
+    }
+    
     return size;
   }
 
