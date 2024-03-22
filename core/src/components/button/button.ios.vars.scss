@@ -33,10 +33,13 @@ $button-ios-min-height:                               3.1em !default;
 /// @prop - Border radius of the button
 $button-ios-border-radius:                            14px !default;
 
+/// @prop - Baseline font size of the button text
+$button-ios-baseline-font-size:                       16px !default;
+
 /// @prop - Font size of the button text
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-font-size:                                dynamic-font-max(16px, 3) !default;
+$button-ios-font-size:                                dynamic-font-max($button-ios-baseline-font-size, 3) !default;
 
 /// @prop - Font weight of the button text
 $button-ios-font-weight:                              500 !default;

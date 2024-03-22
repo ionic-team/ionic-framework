@@ -149,7 +149,7 @@
 }
 
 ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: clamp(13.5px, 1.125em, 40.5px);
+  font-size: dynamic-font-clamp(0.844, $button-ios-baseline-font-size, 2.53, 1.125em);
 }
 
 :host(.button-small.button-has-icon-only) {
@@ -161,7 +161,7 @@
 }
 
 :host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: clamp(13px, 1.31em, 38px);
+  font-size: dynamic-font-clamp(0.815, $button-ios-baseline-font-size, 2.4, 1.31em);
 }
 
 :host(.button-large.button-has-icon-only) {
@@ -172,7 +172,7 @@
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: clamp(13.5px, 1em, 40.5px);
+  font-size: dynamic-font-clamp(0.844, 16px, 2.53, 1em);
 }
 
 // iOS Button Focused

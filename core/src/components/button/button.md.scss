@@ -142,7 +142,7 @@
 }
 
 ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: clamp(13.5px, 1.6em, 40.5px);
+  font-size: dynamic-font-clamp(0.97, $button-md-baseline-font-size, 2.9, 1.831em);
 }
 
 :host(.button-small.button-has-icon-only) {
@@ -153,7 +153,7 @@
 }
 
 :host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: clamp(13px, 1.23em, 38px);
+  font-size: dynamic-font-clamp(0.93, $button-md-baseline-font-size, 2.72, 1.41em);
 }
 
 :host(.button-large.button-has-icon-only) {
@@ -164,7 +164,7 @@
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: clamp(13.5px, 1.4em, 40.5px);
+  font-size: dynamic-font-clamp(0.97, $button-md-baseline-font-size, 2.9, 1.6em);
 }
 
 // Material Design Button: Hover
