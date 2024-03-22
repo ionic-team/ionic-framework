@@ -225,13 +225,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     const { size } = this;
 
     if (size === undefined && this.inItem) {
-       return 'small';
+      return 'small';
     }
-    
+
     if ((theme === 'ios' || theme === 'md') && (size === 'xsmall' || size === 'xlarge')) {
-       return undefined;
+      return undefined;
     }
-    
+
     return size;
   }
 
