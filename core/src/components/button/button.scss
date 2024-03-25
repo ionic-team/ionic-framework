@@ -336,6 +336,6 @@ ion-ripple-effect {
 // --------------------------------------------------
 
 :host(.button-outline.ion-activated.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
-  background: var(--ion-toolbar-color, var(--color));
-  color: #{var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))};
+  background: var(--ion-toolbar-background, var(--color));
+  color: #{var(--ion-toolbar-color, var(--background), ion-color(primary, contrast))};
 }
