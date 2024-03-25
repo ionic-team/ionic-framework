@@ -1,0 +1,247 @@
+/*
+    All the CSS for typography are being on the text.scss temporarily because the correct architecture for the
+    new them implementation aren't been ready.
+
+    In the future, all these sass variable and css created needs to be putted on theme level in terms of architecture.
+
+    The typography of an app, needs to be spitted in ios, md and ionic themes.
+*/
+
+// Typography
+// --------------------------------------------------
+/// Font Family
+$os-font-family: "Inter", sans-serif;
+
+/// Font sizes
+/// @prop - Font size small
+$os-font-size-s: 12px;
+
+/// @prop - Font size base
+$os-font-size-base: 14px;
+
+/// @prop - Font size large
+$os-font-size-l: 16px;
+
+/// Font size displays
+/// @prop - Display font size small
+$os-display-s: 32px;
+
+/// @prop - Display font size medium
+$os-display-m: 36px;
+
+/// Headings
+/// @prop - Font size of heading level 1
+$os-h1-font-size: dynamic-font(28px) !default;
+
+/// @prop - Font size of heading level 2
+$os-h2-font-size: dynamic-font(26px) !default;
+
+/// @prop - Font size of heading level 3
+$os-h3-font-size: dynamic-font(24px) !default;
+
+/// @prop - Font size of heading level 4
+$os-h4-font-size: dynamic-font(22px) !default;
+
+/// @prop - Font size of heading level 5
+$os-h5-font-size: dynamic-font(20px) !default;
+
+/// @prop - Font size of heading level 6
+$os-h6-font-size: dynamic-font(18px) !default;
+
+/// Font Weights
+/// @prop - Font weight light
+$os-font-light: 300;
+
+/// @prop - Font weight regular
+$os-font-regular: 400;
+
+/// @prop - Font weight medium
+$os-font-medium: 500;
+
+/// @prop - Font weight semibold
+$os-font-semibold: 600;
+
+/// @prop - Font weight bold
+$os-font-bold: 700;
+
+/// Line heights
+/// @prop - Line height size xsmall
+$os-line-height-xs: 16px;
+
+/// @prop - Line height size small
+$os-line-height-s: 20px;
+
+/// @prop - Line height size medium
+$os-line-height-m: 24px;
+
+/// @prop - Line height size large
+$os-line-height-l: 28px;
+
+/// @prop - Line height size xlarge
+$os-line-height-xl: 32px;
+
+/// @prop - Line height size xxlarge
+$os-line-height-xxl: 36px;
+
+/// @prop - Display line height small
+$os-line-height-display-s: 44px;
+
+/// @prop - Display line height medium
+$os-line-height-display-m: 48px;
+
+/// Letter spacing
+/// @prop - Letter spacing none
+$os-letter-spacing-none: 0em;
+
+/// @prop - Letter spacing small
+$os-letter-spacing-s: 0.1em;
+
+/// @prop - Letter spacing medium
+$os-letter-spacing-m: 0.15em;
+
+html {
+  font-family: $os-font-family;
+  font-size: $os-font-size-base;
+  font-weight: $os-font-regular;
+  line-height: $os-line-height-m;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $os-font-semibold;
+}
+
+h1 {
+  font-size: $os-h1-font-size;
+  line-height: $os-line-height-xxl;
+}
+
+h2 {
+  font-size: $os-h2-font-size;
+  line-height: $os-line-height-xl;
+}
+
+h3 {
+  font-size: $os-h3-font-size;
+  line-height: $os-line-height-l;
+}
+
+h4 {
+  font-size: $os-h4-font-size;
+  line-height: $os-line-height-l;
+}
+
+h5 {
+  font-size: $os-h5-font-size;
+  line-height: $os-line-height-l;
+}
+
+h6 {
+  font-size: $os-h6-font-size;
+  line-height: $os-line-height-s;
+}
+
+/// Utility Classes
+/// Headings
+.os-heading1,
+.os-heading2,
+.os-heading3,
+.os-heading4,
+.os-heading5,
+.os-heading6 {
+  font-weight: $os-font-semibold;
+}
+
+.os-heading1 {
+  font-size: $os-heading1;
+  line-height: $os-line-height-xxl;
+}
+
+.os-heading2 {
+  font-size: $os-heading2;
+  line-height: $os-line-height-xl;
+}
+
+.os-heading3 {
+  font-size: $os-heading3;
+  line-height: $os-line-height-l;
+}
+
+.os-heading4 {
+  font-size: $os-heading4;
+  line-height: $os-line-height-l;
+}
+
+.os-heading5 {
+  font-size: $os-heading5;
+  line-height: $os-line-height-l;
+}
+
+.os-heading6 {
+  font-size: $os-heading6;
+  line-height: $os-line-height-s;
+}
+
+/// Font size display
+.os-font-display-s,
+.os-font-display-m {
+  font-weight: $os-font-regular;
+}
+
+.os-display-s {
+  font-size: $os-display-s;
+  line-height: $os-line-height-display-s;
+}
+
+.os-display-m {
+  font-size: $os-display-m;
+  line-height: $os-line-height-display-m;
+}
+
+/// Font sizes
+.os-font-size-s {
+  font-size: $os-font-size-s;
+}
+.os-font-size-base {
+  font-size: $os-font-size-base;
+}
+.os-font-size-l {
+  font-size: $os-font-size-l;
+}
+
+/// Font weights
+.os-font-light {
+  font-weight: $os-font-light;
+}
+.os-font-regular {
+  font-weight: $os-font-regular;
+}
+.os-font-medium {
+  font-weight: $os-font-medium;
+}
+.os-font-semibold {
+  font-weight: $os-font-semibold;
+}
+.os-font-bold {
+  font-weight: $os-font-bold;
+}
+
+/// Letter spacing
+.os-letter-spacing-none {
+  letter-spacing: var(--os-letter-spacing-none);
+}
+.os-letter-spacing-s {
+  letter-spacing: var(--os-letter-spacing-s);
+}
+.os-letter-spacing-m {
+  letter-spacing: var(--os-letter-spacing-m);
+}
+
+/// Common
+.os-font-italic {
+  font-style: italic;
+}
