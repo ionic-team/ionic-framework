@@ -171,15 +171,17 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
     test('should not have visual regressions with buttons with text only', async ({ page }) => {
       await page.setContent(
         `
-          <ion-toolbar>
-            <ion-buttons slot="secondary">
-              <ion-button>Go Back</ion-button>
-            </ion-buttons>
-            <ion-buttons slot="primary">
-              <ion-button href="#">Edit</ion-button>
-            </ion-buttons>
-            <ion-title>Text Only</ion-title>
-          </ion-toolbar>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="secondary">
+                <ion-button>Go Back</ion-button>
+              </ion-buttons>
+              <ion-buttons slot="primary">
+                <ion-button href="#">Edit</ion-button>
+              </ion-buttons>
+              <ion-title>Text Only</ion-title>
+            </ion-toolbar>
+          </ion-header>
         `,
         config
       );
