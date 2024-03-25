@@ -75,18 +75,7 @@
 .item-divider-inner {
   @include margin(0);
   @include padding(var(--inner-padding-top), null, var(--inner-padding-bottom), null);
-
-  /* stylelint-disable */
-  @include ltr() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
-    padding-left: var(--inner-padding-start);
-  }
-
-  @include rtl() {
-    padding-right: var(--inner-padding-start);
-    padding-left: calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-end));
-  }
-  /* stylelint-enable */
+  @include safe-area-padding(null, var(--inner-padding-end));
 
   display: flex;
 
