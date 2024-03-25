@@ -7,7 +7,7 @@ import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnRea
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
-import { closeCircle, closeSharp } from 'ionicons/icons';
+import { closeCircle, closeSharp, eyeOff, eye } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
@@ -163,6 +163,11 @@ export class Input implements ComponentInterface {
   @Prop() helperText?: string;
 
   /**
+   * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
+   */
+  @Prop() hidePasswordIcon?: string;
+
+  /**
    * The visible label associated with the input.
    *
    * Use this if you need to render a plaintext label.
@@ -239,6 +244,17 @@ export class Input implements ComponentInterface {
   @Prop() shape?: 'round';
 
   /**
+   * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+   */
+  @Prop() showPasswordIcon?: string;
+
+  /**
+   * If `true`, a password toggle icon will appear in the input.
+   * Clicking the icon toggles the input type between `"text"` and `"password"`, allowing the user to view or hide the input value.
+   */
+  @Prop() showPasswordToggle = false;
+
+  /**
    * If `true`, the element will have its spelling and grammar checked.
    */
   @Prop() spellcheck = false;
@@ -252,7 +268,7 @@ export class Input implements ComponentInterface {
   /**
    * The type of control to display. The default type is text.
    */
-  @Prop() type: TextFieldTypes = 'text';
+  @Prop({ mutable: true }) type: TextFieldTypes = 'text';
 
   /**
    * Whenever the type on the input changes we need
@@ -467,6 +483,7 @@ export class Input implements ComponentInterface {
     if (input) {
       this.value = input.value || '';
     }
+
     this.emitInputChange(ev);
   };
 
@@ -557,6 +574,10 @@ export class Input implements ComponentInterface {
     this.emitInputChange(ev);
   };
 
+  private togglePasswordVisibility = () => {
+    this.type = this.type === 'text' ? 'password' : 'text';
+  };
+
   private hasValue(): boolean {
     return this.getValue().length > 0;
   }
@@ -578,7 +599,6 @@ export class Input implements ComponentInterface {
 
     return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
   }
-
   /**
    * Responsible for rendering helper text,
    * error text, and counter. This element should only
@@ -681,11 +701,13 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, type } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const showPasswordIcon = this.showPasswordIcon || eye;
+    const hidePasswordIcon = this.hidePasswordIcon || eyeOff;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -709,7 +731,6 @@ export class Input implements ComponentInterface {
      */
     const labelShouldFloat =
       labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
-
     return (
       <Host
         class={createColorClasses(this.color, {
@@ -758,7 +779,7 @@ export class Input implements ComponentInterface {
               required={this.required}
               spellcheck={this.spellcheck}
               step={this.step}
-              type={this.type}
+              type={type}
               value={value}
               onInput={this.onInput}
               onChange={this.onChange}
@@ -785,6 +806,27 @@ export class Input implements ComponentInterface {
                 onClick={this.clearTextInput}
               >
                 <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+              </button>
+            )}
+            {this.showPasswordToggle && !readonly && !disabled && (
+              <button
+                aria-label="show password"
+                aria-checked={type === 'text' ? 'true' : 'false'}
+                aria-controls={inputId}
+                role="switch"
+                type="button"
+                class="input-password-toggle"
+                onPointerDown={(ev) => {
+                  /**
+                   * This prevents mobile browsers from
+                   * blurring the input when the password toggle
+                   * button is activated.
+                   */
+                  ev.preventDefault();
+                }}
+                onClick={this.togglePasswordVisibility}
+              >
+                <ion-icon aria-hidden="true" icon={type === 'text' ? hidePasswordIcon : showPasswordIcon}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>

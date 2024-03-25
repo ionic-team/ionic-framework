@@ -9,7 +9,8 @@
   font-size: $input-ios-font-size;
 }
 
-.input-clear-icon ion-icon {
+.input-clear-icon ion-icon,
+.input-password-toggle ion-icon {
   width: 18px;
   height: 18px;
 }

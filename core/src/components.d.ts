@@ -1207,6 +1207,10 @@ export namespace Components {
          */
         "helperText"?: string;
         /**
+          * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
+         */
+        "hidePasswordIcon"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
@@ -1270,6 +1274,14 @@ export namespace Components {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        /**
+          * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+         */
+        "showPasswordIcon"?: string;
+        /**
+          * If `true`, a password toggle icon will appear in the input. Clicking the icon toggles the input type between `"text"` and `"password"`, allowing the user to view or hide the input value.
+         */
+        "showPasswordToggle": boolean;
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -5927,6 +5939,10 @@ declare namespace LocalJSX {
          */
         "helperText"?: string;
         /**
+          * Set the icon that can be used to represent hiding a password. Defaults to `eyeOff`.
+         */
+        "hidePasswordIcon"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
@@ -6002,6 +6018,14 @@ declare namespace LocalJSX {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        /**
+          * Set the icon that can be used to represent showing a password. Defaults to `eye`.
+         */
+        "showPasswordIcon"?: string;
+        /**
+          * If `true`, a password toggle icon will appear in the input. Clicking the icon toggles the input type between `"text"` and `"password"`, allowing the user to view or hide the input value.
+         */
+        "showPasswordToggle"?: boolean;
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */

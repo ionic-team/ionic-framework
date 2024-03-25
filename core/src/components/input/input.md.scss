@@ -15,7 +15,8 @@
   font-size: $input-md-font-size;
 }
 
-.input-clear-icon ion-icon {
+.input-clear-icon ion-icon,
+.input-password-toggle ion-icon {
   width: 22px;
   height: 22px;
 }
@@ -42,7 +43,7 @@
 }
 
 .input-bottom .counter {
-  letter-spacing: .0333333333em;
+  letter-spacing: 0.0333333333em;
 }
 
 // Input Label

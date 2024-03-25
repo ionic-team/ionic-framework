@@ -180,7 +180,8 @@
 // Clear Input Icon
 // --------------------------------------------------
 
-.input-clear-icon {
+.input-clear-icon,
+.input-password-toggle {
   @include margin(auto);
   @include padding(0);
   @include background-position(center);
@@ -202,11 +203,11 @@
 
   color: $text-color-step-400;
 
-  visibility: hidden;
   appearance: none;
 }
 
-:host(.in-item-color) .input-clear-icon {
+:host(.in-item-color) .input-clear-icon,
+:host(.in-item-color) .input-password-toggle {
   color: inherit;
 }
 
@@ -217,12 +218,13 @@
  * However, the clear button always disappears after
  * being activated, so we never get to that state.
  */
-.input-clear-icon:focus {
+.input-clear-icon:focus,
+.input-password-toggle:focus {
   opacity: 0.5;
 }
 
-:host(.has-value) .input-clear-icon {
-  visibility: visible;
+:host(:not(.has-value)) .input-clear-icon {
+  visibility: hidden;
 }
 
 // Input Wrapper
@@ -399,7 +401,7 @@
    */
   max-width: 200px;
 
-  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /**
    * This ensures that double tapping this text
