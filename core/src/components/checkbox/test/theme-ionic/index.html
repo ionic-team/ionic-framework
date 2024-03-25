@@ -18,7 +18,7 @@
       transform: scale(0.5);
       transform-origin: center;
     }
-    ion-col{
+    ion-col {
       border: 1px solid cadetblue;
     }
   </style>
@@ -47,119 +47,144 @@
             </ion-row>
             <ion-row>
               <ion-col><ion-checkbox shape="rectangular" class="ion-margin-start">Rectangular</ion-checkbox></ion-col>
-              <ion-col><ion-checkbox size="small" shape="rectangular" class="ion-margin-start"> Rectangular</ion-checkbox></ion-col>
+              <ion-col>
+                <ion-checkbox size="small" shape="rectangular" class="ion-margin-start"> Rectangular</ion-checkbox>
+              </ion-col>
             </ion-row>
-            <ion-row> 
+            <ion-row>
               <ion-col><ion-checkbox class="ion-focused ion-margin-start">Focused</ion-checkbox></ion-col>
               <ion-col><ion-checkbox size="small" class="ion-focused ion-margin-start">Focused</ion-checkbox></ion-col>
             </ion-row>
-            <ion-row>  
-              <ion-col><ion-checkbox shape="rectangular" class="ion-focused ion-margin-start">Rect Focus</ion-checkbox></ion-col>
-              <ion-col><ion-checkbox size="small" shape="rectangular" class="ion-focused ion-margin-start">Rect Focus</ion-checkbox></ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox shape="rectangular" class="ion-focused ion-margin-start">Rect Focus</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox size="small" shape="rectangular" class="ion-focused ion-margin-start">
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
             </ion-row>
-          
-            <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center"><ion-title>Checked</ion-title></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-text-center">Default</ion-col>
-                <ion-col class="ion-text-center">Small</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox checked>Default</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" checked>Default</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox shape="rectangular" checked>Rectangular</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" shape="rectangular" checked>Rectangular</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox class="ion-focused" checked>Focused</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" class="ion-focused" checked>Focused</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox shape="rectangular" class="ion-focused" checked>Rect Focus</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" shape="rectangular" class="ion-focused" checked>Rect Focus</ion-checkbox></ion-col>
-              </ion-row>
-            </ion-grid>
-         
-            <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center"><ion-title>Disabled</ion-title></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-text-center">Default</ion-col>
-                <ion-col class="ion-text-center">Small</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox disabled>Default</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" disabled>Default</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox shape="rectangular" disabled>Rectangular</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" shape="rectangular" disabled>Rectangular</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox class="ion-focused" disabled>Focused</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" class="ion-focused" disabled>Focused</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox shape="rectangular" class="ion-focused" disabled>Rect Focus</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" shape="rectangular" class="ion-focused" disabled>Rect Focus</ion-checkbox></ion-col>
-              </ion-row>
-            </ion-grid>
-
-            <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center"><ion-title>Required</ion-title></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-text-center">Default</ion-col>
-                <ion-col class="ion-text-center">Small</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox required>Default</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" required>Default</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox shape="rectangular" required>Rectangular</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" shape="rectangular" required>Rectangular</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox class="ion-focused" required>Focused</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" class="ion-focused" required>Small Focused</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox shape="rectangular" class="ion-focused" required>Rect Focus</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" shape="rectangular" class="ion-focused" required>Rect Focus</ion-checkbox></ion-col>
-              </ion-row>
-            </ion-grid>
+          </ion-grid>
 
           <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center"><ion-title>Indeterminate</ion-title></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-text-center">Default</ion-col>
-                <ion-col class="ion-text-center">Small</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox indeterminate>Default</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" indeterminate>Default</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox shape="rectangular" indeterminate>Rectangular</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" shape="rectangular" indeterminate>Rectangular</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox class="ion-focused" indeterminate>Focused</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" class="ion-focused" indeterminate>Focused</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox shape="rectangular" class="ion-focused" indeterminate>Rect Focus</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox size="small" shape="rectangular" class="ion-focused" indeterminate>Rect Focus</ion-checkbox></ion-col>
-              </ion-row>  
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-title>Checked</ion-title></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">Default</ion-col>
+              <ion-col class="ion-text-center">Small</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox checked>Default</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" checked>Default</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox shape="rectangular" checked>Rectangular</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" shape="rectangular" checked>Rectangular</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox class="ion-focused" checked>Focused</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" class="ion-focused" checked>Focused</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox shape="rectangular" class="ion-focused" checked>Rect Focus</ion-checkbox></ion-col>
+              <ion-col>
+                <ion-checkbox size="small" shape="rectangular" class="ion-focused" checked>Rect Focus</ion-checkbox>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-title>Disabled</ion-title></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">Default</ion-col>
+              <ion-col class="ion-text-center">Small</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox disabled>Default</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" disabled>Default</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox shape="rectangular" disabled>Rectangular</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" shape="rectangular" disabled>Rectangular</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox class="ion-focused" disabled>Focused</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" class="ion-focused" disabled>Focused</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox shape="rectangular" class="ion-focused" disabled>Rect Focus</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox size="small" shape="rectangular" class="ion-focused" disabled>Rect Focus</ion-checkbox>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-title>Required</ion-title></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">Default</ion-col>
+              <ion-col class="ion-text-center">Small</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox required>Default</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" required>Default</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox shape="rectangular" required>Rectangular</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" shape="rectangular" required>Rectangular</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox class="ion-focused" required>Focused</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" class="ion-focused" required>Small Focused</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox shape="rectangular" class="ion-focused" required>Rect Focus</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox size="small" shape="rectangular" class="ion-focused" required>Rect Focus</ion-checkbox>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-title>Indeterminate</ion-title></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">Default</ion-col>
+              <ion-col class="ion-text-center">Small</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox indeterminate>Default</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" indeterminate>Default</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox shape="rectangular" indeterminate>Rectangular</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" shape="rectangular" indeterminate>Rectangular</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox class="ion-focused" indeterminate>Focused</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox size="small" class="ion-focused" indeterminate>Focused</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox shape="rectangular" class="ion-focused" indeterminate>Rect Focus</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox size="small" shape="rectangular" class="ion-focused" indeterminate>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+            </ion-row>
           </ion-grid>
         </div>
 
@@ -175,123 +200,217 @@
             </ion-row>
             <ion-row>
               <ion-col><ion-checkbox label-placement="end">Default</ion-checkbox></ion-col>
-              <ion-col><ion-checkbox label-placement="end" size="small" class="ion-margin-start">Default</ion-checkbox></ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" class="ion-margin-start">Default</ion-checkbox>
+              </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col><ion-checkbox label-placement="end" shape="rectangular" class="ion-margin-start">Rectangular</ion-checkbox></ion-col>
-              <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-margin-start"> Rectangular</ion-checkbox></ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" class="ion-margin-start">
+                  Rectangular
+                </ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-margin-start">
+                  Rectangular
+                </ion-checkbox>
+              </ion-col>
             </ion-row>
-            <ion-row> 
-              <ion-col><ion-checkbox label-placement="end" class="ion-focused ion-margin-start">Focused</ion-checkbox></ion-col>
-              <ion-col><ion-checkbox label-placement="end" size="small" class="ion-focused ion-margin-start">Focused</ion-checkbox></ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" class="ion-focused ion-margin-start">Focused</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" class="ion-focused ion-margin-start">
+                  Focused
+                </ion-checkbox>
+              </ion-col>
             </ion-row>
-            <ion-row>  
-              <ion-col><ion-checkbox label-placement="end" shape="rectangular" class="ion-focused ion-margin-start">Rect Focus</ion-checkbox></ion-col>
-              <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused ion-margin-start">Rect Focus</ion-checkbox></ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" class="ion-focused ion-margin-start">
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox
+                  label-placement="end"
+                  size="small"
+                  shape="rectangular"
+                  class="ion-focused ion-margin-start"
+                >
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
             </ion-row>
-          
-            <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center"><ion-title>Checked</ion-title></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-text-center">Default</ion-col>
-                <ion-col class="ion-text-center">Small</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" checked>Default</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" checked>Default</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" shape="rectangular" checked>Rectangular</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" checked>Rectangular</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" class="ion-focused" checked>Focused</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" class="ion-focused" checked>Focused</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" shape="rectangular" class="ion-focused" checked>Rect Focus</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused" checked>Rect Focus</ion-checkbox></ion-col>
-              </ion-row>
-            </ion-grid>
-         
-            <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center"><ion-title>Disabled</ion-title></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-text-center">Default</ion-col>
-                <ion-col class="ion-text-center">Small</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" disabled>Default</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" disabled>Default</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" shape="rectangular" disabled>Rectangular</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" disabled>Rectangular</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" class="ion-focused" disabled>Focused</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" class="ion-focused" disabled>Focused</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" shape="rectangular" class="ion-focused" disabled>Rect Focus</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused" disabled>Rect Focus</ion-checkbox></ion-col>
-              </ion-row>
-            </ion-grid>
-
-            <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center"><ion-title>Required</ion-title></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-text-center">Default</ion-col>
-                <ion-col class="ion-text-center">Small</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" required>Default</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" required>Default</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" shape="rectangular" required>Rectangular</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" required>Rectangular</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" class="ion-focused" required>Focused</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" class="ion-focused" required>Small Focused</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" shape="rectangular" class="ion-focused" required>Rect Focus</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused" required>Rect Focus</ion-checkbox></ion-col>
-              </ion-row>
-            </ion-grid>
+          </ion-grid>
 
           <ion-grid>
-              <ion-row>
-                <ion-col class="ion-text-center"><ion-title>Indeterminate</ion-title></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-text-center">Default</ion-col>
-                <ion-col class="ion-text-center">Small</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" indeterminate>Default</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" indeterminate>Default</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" shape="rectangular" indeterminate>Rectangular</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" indeterminate>Rectangular</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" class="ion-focused" indeterminate>Focused</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" class="ion-focused" indeterminate>Focused</ion-checkbox></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><ion-checkbox label-placement="end" shape="rectangular" class="ion-focused" indeterminate>Rect Focus</ion-checkbox></ion-col>
-                <ion-col><ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused" indeterminate>Rect Focus</ion-checkbox></ion-col>
-              </ion-row>  
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-title>Checked</ion-title></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">Default</ion-col>
+              <ion-col class="ion-text-center">Small</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox label-placement="end" checked>Default</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox label-placement="end" size="small" checked>Default</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" checked>Rectangular</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" checked>Rectangular</ion-checkbox>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox label-placement="end" class="ion-focused" checked>Focused</ion-checkbox></ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" class="ion-focused" checked>Focused</ion-checkbox>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" class="ion-focused" checked>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused" checked>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-title>Disabled</ion-title></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">Default</ion-col>
+              <ion-col class="ion-text-center">Small</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox label-placement="end" disabled>Default</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox label-placement="end" size="small" disabled>Default</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" disabled>Rectangular</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" disabled>Rectangular</ion-checkbox>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox label-placement="end" class="ion-focused" disabled>Focused</ion-checkbox></ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" class="ion-focused" disabled>Focused</ion-checkbox>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" class="ion-focused" disabled>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused" disabled>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-title>Required</ion-title></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">Default</ion-col>
+              <ion-col class="ion-text-center">Small</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox label-placement="end" required>Default</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox label-placement="end" size="small" required>Default</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" required>Rectangular</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" required>Rectangular</ion-checkbox>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox label-placement="end" class="ion-focused" required>Focused</ion-checkbox></ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" class="ion-focused" required>
+                  Small Focused
+                </ion-checkbox>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" class="ion-focused" required>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused" required>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-title>Indeterminate</ion-title></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">Default</ion-col>
+              <ion-col class="ion-text-center">Small</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-checkbox label-placement="end" indeterminate>Default</ion-checkbox></ion-col>
+              <ion-col><ion-checkbox label-placement="end" size="small" indeterminate>Default</ion-checkbox></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" indeterminate>Rectangular</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" indeterminate>
+                  Rectangular
+                </ion-checkbox>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" class="ion-focused" indeterminate>Focused</ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" class="ion-focused" indeterminate>
+                  Focused
+                </ion-checkbox>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-checkbox label-placement="end" shape="rectangular" class="ion-focused" indeterminate>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+              <ion-col>
+                <ion-checkbox label-placement="end" size="small" shape="rectangular" class="ion-focused" indeterminate>
+                  Rect Focus
+                </ion-checkbox>
+              </ion-col>
+            </ion-row>
           </ion-grid>
         </div>
       </ion-content>
