@@ -386,3 +386,16 @@ ion-input input::-webkit-date-and-time-value {
 .popover-viewport:has(> .ion-content-scroll-host) {
   overflow: hidden;
 }
+
+/**
+ * :has has cross-browser support, but it is still relatively new. As a result,
+ * we should fallback to the old behavior for environments that do not support :has.
+ * Developers can explicitly enable this behavior by setting overflow: visible
+ * on .popover-viewport if they know they are not going to use an ion-content.
+ * TODO FW-XXXX Remove this
+ */
+@supports not selector(:has(> ion-content)) {
+  .popover-viewport {
+    overflow: hidden;
+  }
+}
