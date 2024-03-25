@@ -558,7 +558,7 @@ ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secon
 ion-input,prop,counter,boolean,false,false,false
 ion-input,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-input,prop,debounce,number | undefined,undefined,false,false
-ion-input,prop,disabled,boolean,false,false,false
+ion-input,prop,disabled,boolean,false,false,true
 ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-input,prop,errorText,string | undefined,undefined,false,false
 ion-input,prop,fill,"outline" | "solid" | undefined,undefined,false,false
@@ -575,7 +575,7 @@ ion-input,prop,multiple,boolean | undefined,undefined,false,false
 ion-input,prop,name,string,this.inputId,false,false
 ion-input,prop,pattern,string | undefined,undefined,false,false
 ion-input,prop,placeholder,string | undefined,undefined,false,false
-ion-input,prop,readonly,boolean,false,false,false
+ion-input,prop,readonly,boolean,false,false,true
 ion-input,prop,required,boolean,false,false,false
 ion-input,prop,shape,"round" | undefined,undefined,false,false
 ion-input,prop,spellcheck,boolean,false,false,false
@@ -606,6 +606,12 @@ ion-input,css-prop,--placeholder-color
 ion-input,css-prop,--placeholder-font-style
 ion-input,css-prop,--placeholder-font-weight
 ion-input,css-prop,--placeholder-opacity
+
+ion-input-password-toggle,shadow
+ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-input-password-toggle,prop,hideIcon,string | undefined,undefined,false,false
+ion-input-password-toggle,prop,mode,"ios" | "md",undefined,false,false
+ion-input-password-toggle,prop,showIcon,string | undefined,undefined,false,false
 
 ion-item,shadow
 ion-item,prop,button,boolean,false,false,false
