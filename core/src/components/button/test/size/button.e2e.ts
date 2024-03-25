@@ -1,6 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+// TODO: FW-6077 - Limit this test to just the Ionic theme on MD mode.
 configs({ directions: ['ltr'], themes: ['ionic', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: size'), () => {
     test('should render small buttons', async ({ page }) => {

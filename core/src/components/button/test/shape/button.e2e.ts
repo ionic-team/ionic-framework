@@ -4,6 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * All content takes up the full width, so RTL has no effect.
  */
+// TODO: FW-6077 - Add ionic theme on MD mode to this test.
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: shape'), () => {
     test.describe('round', () => {
