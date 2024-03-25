@@ -380,7 +380,8 @@ ion-input input::-webkit-date-and-time-value {
  * If a popover has a child ion-content (or class equivalent) then the .popover-viewport element
  * should not be scrollable to ensure the inner content does scroll. However, if the popover
  * does not have a child ion-content (or class equivalent) then the .popover-viewport element
- * should remain scrollable.
+ * should remain scrollable. This code exists globally because popover targets
+ * .popover-viewport using ::slotted which only supports simple selectors.
  */
 .popover-viewport:has(> ion-content),
 .popover-viewport:has(> .ion-content-scroll-host) {
