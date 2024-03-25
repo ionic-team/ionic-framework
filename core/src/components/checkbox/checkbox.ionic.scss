@@ -1,0 +1,166 @@
+@import "./checkbox";
+@import "./checkbox.ionic.vars";
+
+// ionic Checkbox
+// --------------------------------------------------
+
+:host {
+  // Border
+  --border-radius: calc(var(--size) * .125);
+  --border-width: #{$checkbox-ionic-icon-border-width};
+  --border-style: #{$checkbox-ionic-icon-border-style};
+  --border-color: #{$checkbox-ionic-icon-border-color-off};
+  --checkmark-width: 3;
+  --padding-top: #{$checkbox-ionic-padding-top};
+  --padding-bottom: #{$checkbox-ionic-padding-bottom};
+
+  // Background
+  --checkbox-background: #{$checkbox-ionic-icon-background-color-off};
+
+  // Transition
+  --transition: #{background $checkbox-ionic-transition-duration $checkbox-ionic-transition-easing};
+
+  // Size
+  --size: #{$checkbox-ionic-icon-size};
+  // add to existing selector
+
+  // margin is required to make room for outline on focus, otherwise the outline may get cut off
+  @include margin($checkbox-ionic-outline-width);  
+  @include padding(--padding-top, null, --padding-bottom, null);
+
+  // Target area
+  &::after {
+    @include position(50%, 0, null, 0);
+
+    position: absolute;
+
+    height: 100%;
+    min-height: 48px;
+
+    transform: translateY(-50%);
+
+    content: "";
+
+    cursor: pointer;
+
+    z-index: 1;
+  }
+
+  .native-wrapper{
+    position: relative;
+  }
+}
+
+// Ionic Design Checkbox Sizes
+// --------------------------------------------------
+:host(.checkbox-small) {
+  --padding-top: #{$checkbox-ionic-small-padding-top};
+  --padding-bottom: #{$checkbox-ionic-small-padding-bottom};
+
+   // Size
+   --size: #{$checkbox-ionic-small-icon-size};
+}
+
+// Ionic Design Checkbox Shapes
+// --------------------------------------------------
+:host(.checkbox-rectangular) {
+  --border-radius: #{$checkbox-ionic-rectangular-border};
+}
+
+// Ionic Design Checkbox Disabled
+// --------------------------------------------------
+// disabled, indeterminate checkbox
+:host(.checkbox-disabled.checkbox-indeterminate) .checkbox-icon {
+  border-width: 0;
+
+  background-color: #74aafc;
+}
+
+// disabled, unchecked checkbox
+:host(.checkbox-disabled) .checkbox-icon {
+  border-color: #c9c9c9;
+
+  background-color: #f5f5f5;
+}
+// disabled, checked checkbox
+:host(.checkbox-disabled.checkbox-checked) .checkbox-icon {
+  border-width: 0;
+
+  background-color: #A8C8F8;
+}
+
+// Ionic Design Checkbox Required State
+// --------------------------------------------------
+// Unhecked checkbox with `required` property set to true
+:host(.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) {
+  .checkbox-icon {
+    border-color: #f72c2c;
+  }
+}
+
+// Focused: Unchecked checkbox with `required` property set to true
+:host(.ion-focusable.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) .checkbox-icon {
+  outline-color: #ffafaf;
+}
+
+// Ionic Design Checkbox Focus Ring
+// --------------------------------------------------
+:host(.ion-focused:not(.checkbox-disabled)) .focus-ring {
+  @include position(-4px, -4px, -4px, -4px);
+  position: absolute;
+
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+
+  transition: border-color 0.3s;
+
+  border: 2px solid $checkbox-ionic-focus-ring-color;
+
+  /* stylelint-disable-next-line property-disallowed-list */
+  border-radius: var(--border-radius);
+
+  content: "";
+  box-sizing: border-box;
+}
+
+// Required state
+:host(.ion-focused.checkbox-required) .focus-ring {
+  border-color:$checkbox-ionic-focus-required-ring-color;
+}
+
+// Checkbox: Hover
+// --------------------------------------------------------
+@media (any-hover: hover) {
+:host(:hover) .checkbox-icon {
+  background-color: #ececec; // mix of 'white', '#121212', 0.08, 'rgb'
+}
+
+:host(:hover.checkbox-checked) .checkbox-icon,
+:host(:hover.checkbox-indeterminate) .checkbox-icon {
+  background-color: #1061da; // mix of '#1068eb', '#121212', 0.08, 'rgb'
+}
+
+// unchecked checkbox with `required` property set to true
+:host(:hover.checkbox-required:not(.checkbox-checked):not(.checkbox-indeterminate)) {
+  .checkbox-icon {
+    border-color: #ee2b2b;
+  }
+}
+}
+
+// Checkbox: Active
+// --------------------------------------------------------
+:host(.ion-activated) .checkbox-icon {
+  background-color: #e3e3e3; // mix of 'white', '#121212', 0.12, 'rgb'
+}
+
+:host(.ion-activated.checkbox-checked) .checkbox-icon,
+:host(.ion-activated.checkbox-indeterminate) .checkbox-icon {
+  background-color: #105ed1; // mix of '#1068eb', '#121212', 0.12, 'rgb'
+}
+
+:host(.checkbox-label-placement-start) {
+  display: flex;
+
+  justify-content: space-between;
+}

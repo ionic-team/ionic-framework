@@ -24,7 +24,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
   styleUrls: {
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
-    ionic: 'checkbox.md.scss',
+    ionic: 'checkbox.ionic.scss',
   },
   shadow: true,
 })
@@ -97,6 +97,22 @@ export class Checkbox implements ComponentInterface {
    * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
    */
   @Prop() alignment: 'start' | 'center' = 'center';
+
+  /**
+   * If `true`, the checkbox will be presented with an error style when it is unchecked.
+   */
+  @Prop() required = false;
+
+  /**
+   * Set to `"soft"` for a checkbox with more rounded corners.
+   */
+  @Prop({ reflect: true }) shape?: 'soft' | 'rectangular' = 'soft';
+
+  /**
+   * Set to `"small"` for a checkbox with less height and padding or to `"default"`
+   * for a checkbox with the default height and padding.
+   */
+  @Prop({ reflect: true }) size?: 'small' | 'default' = 'default';
 
   /**
    * Emitted when the checked property has changed
@@ -181,6 +197,9 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
       alignment,
+      required,
+      size,
+      shape,
     } = this;
     const theme = getIonTheme(this);
 
@@ -201,6 +220,9 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-justify-${justify}`]: true,
           [`checkbox-alignment-${alignment}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
+          'checkbox-required': required,
+          [`checkbox-${size}`]: true,
+          [`checkbox-${shape}`]: true,
         })}
         onClick={this.onClick}
       >
@@ -233,6 +255,7 @@ export class Checkbox implements ComponentInterface {
             <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
               {path}
             </svg>
+            {theme === 'ionic' && <div part="focus-ring" class="focus-ring"></div>}
           </div>
         </label>
       </Host>
@@ -251,6 +274,12 @@ export class Checkbox implements ComponentInterface {
         <path d="M2 12H22" part="mark" />
       ) : (
         <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+      );
+    } else if (theme === 'ionic') {
+      path = indeterminate ? (
+        <path d="M6.5 12H17.5" stroke-linecap="round" part="mark" />
+      ) : (
+        <path d="M6 12.5L10 16.5L18.5 8" stroke-linecap="round" stroke-linejoin="round" part="mark" />
       );
     }
 

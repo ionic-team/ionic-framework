@@ -321,6 +321,9 @@ ion-checkbox,prop,justify,"end" | "space-between" | "start",'space-between',fals
 ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
+ion-checkbox,prop,required,boolean,false,false,false
+ion-checkbox,prop,shape,"rectangular" | "soft" | undefined,'soft',false,true
+ion-checkbox,prop,size,"default" | "small" | undefined,'default',false,true
 ion-checkbox,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-checkbox,prop,value,any,'on',false,false
 ion-checkbox,event,ionBlur,void,true
@@ -338,6 +341,7 @@ ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
 ion-checkbox,part,container
+ion-checkbox,part,focus-ring
 ion-checkbox,part,label
 ion-checkbox,part,mark
 
