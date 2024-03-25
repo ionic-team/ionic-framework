@@ -17,17 +17,23 @@ if [ "$updateTruths" = "y" ]; then
   # new line
   echo ""
 
-  # inform the user that the local changes are being stashed
-  echo "Stashing local changes temporarily to avoid conflicts..."
+  # keep track of whether there are uncommitted changes
+  hasUncommittedChanges=false
 
-  # new line
-  echo ""
+  # check if there are any uncommitted changes
+  if [ -n "$(git status --porcelain)" ]; then
+    # there are uncommitted changes
+    hasUncommittedChanges=true
 
-  # stash the local changes
-  git stash
+    # inform the user that there are uncommitted changes
+    echo "There are uncommitted changes in the current branch. Stashing the changes temporarily to avoid conflicts..."
 
-  # new line
-  echo ""
+    # new line
+    echo ""
+
+    # stash the local changes
+    git stash
+  fi
 
   # inform the user that the base branch is being updated
   echo "Updating the base branch..."
@@ -47,17 +53,17 @@ if [ "$updateTruths" = "y" ]; then
   # new line
   echo ""
 
-  # inform the user that the local changes are being popped
-  echo "Popping local changes..."
+  # if there were uncommitted changes then pop the stash
+  if [ "$hasUncommittedChanges" = true ]; then
+    # inform the user that the local changes are being popped
+    echo "Popping local changes..."
 
-  # new line
-  echo ""
+    # new line
+    echo ""
 
-  # pop the local changes
-  git stash pop
-
-  # new line
-  echo ""
+    # pop the local changes
+    git stash pop
+  fi
 
   # inform the user that the core is being built
   echo "Building core..."
