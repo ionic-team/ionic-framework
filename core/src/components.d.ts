@@ -1287,6 +1287,25 @@ export namespace Components {
          */
         "value"?: string | number | null;
     }
+    interface IonInputPasswordToggle {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.
+         */
+        "hideIcon"?: string;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
+         */
+        "showIcon"?: string;
+        "type": TextFieldTypes;
+    }
     interface IonItem {
         /**
           * If `true`, a button tag will be rendered and the item will be tappable.
@@ -3811,6 +3830,12 @@ declare global {
         prototype: HTMLIonInputElement;
         new (): HTMLIonInputElement;
     };
+    interface HTMLIonInputPasswordToggleElement extends Components.IonInputPasswordToggle, HTMLStencilElement {
+    }
+    var HTMLIonInputPasswordToggleElement: {
+        prototype: HTMLIonInputPasswordToggleElement;
+        new (): HTMLIonInputPasswordToggleElement;
+    };
     interface HTMLIonItemElement extends Components.IonItem, HTMLStencilElement {
     }
     var HTMLIonItemElement: {
@@ -4635,6 +4660,7 @@ declare global {
         "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
         "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
         "ion-input": HTMLIonInputElement;
+        "ion-input-password-toggle": HTMLIonInputPasswordToggleElement;
         "ion-item": HTMLIonItemElement;
         "ion-item-divider": HTMLIonItemDividerElement;
         "ion-item-group": HTMLIonItemGroupElement;
@@ -5993,6 +6019,25 @@ declare namespace LocalJSX {
          */
         "value"?: string | number | null;
     }
+    interface IonInputPasswordToggle {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The icon that can be used to represent hiding a password. If not set, the "eyeOff" Ionicon will be used.
+         */
+        "hideIcon"?: string;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * The icon that can be used to represent showing a password. If not set, the "eye" Ionicon will be used.
+         */
+        "showIcon"?: string;
+        "type"?: TextFieldTypes;
+    }
     interface IonItem {
         /**
           * If `true`, a button tag will be rendered and the item will be tappable.
@@ -7213,7 +7258,7 @@ declare namespace LocalJSX {
         /**
           * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
-        "autocapitalize": string;
+        "autocapitalize"?: string;
         /**
           * Set the input's autocomplete property.
          */
@@ -8040,6 +8085,7 @@ declare namespace LocalJSX {
         "ion-infinite-scroll": IonInfiniteScroll;
         "ion-infinite-scroll-content": IonInfiniteScrollContent;
         "ion-input": IonInput;
+        "ion-input-password-toggle": IonInputPasswordToggle;
         "ion-item": IonItem;
         "ion-item-divider": IonItemDivider;
         "ion-item-group": IonItemGroup;
@@ -8138,6 +8184,7 @@ declare module "@stencil/core" {
             "ion-infinite-scroll": LocalJSX.IonInfiniteScroll & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement>;
             "ion-infinite-scroll-content": LocalJSX.IonInfiniteScrollContent & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement>;
             "ion-input": LocalJSX.IonInput & JSXBase.HTMLAttributes<HTMLIonInputElement>;
+            "ion-input-password-toggle": LocalJSX.IonInputPasswordToggle & JSXBase.HTMLAttributes<HTMLIonInputPasswordToggleElement>;
             "ion-item": LocalJSX.IonItem & JSXBase.HTMLAttributes<HTMLIonItemElement>;
             "ion-item-divider": LocalJSX.IonItemDivider & JSXBase.HTMLAttributes<HTMLIonItemDividerElement>;
             "ion-item-group": LocalJSX.IonItemGroup & JSXBase.HTMLAttributes<HTMLIonItemGroupElement>;
