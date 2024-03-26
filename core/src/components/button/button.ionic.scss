@@ -159,11 +159,23 @@
 :host(.ion-focused) {
   --overflow: visible;
 
-  .button-native::after {
+  /**
+   * The ::after element is where the button background color exists
+   * We set the focus ring on the ::before element so that we can
+   * control the opacity of the button background (::after) independently of
+   * the focus ring opacity (::before).
+   */
+  .button-native::after,
+  .button-native::before {
     @include border-radius(inherit);
+  }
+
+  .button-native::before {
+    @include button-state();
 
     outline: var(--focus-ring-width) solid var(--focus-ring-color);
     outline-offset: 2px;
+    opacity: 1;
   }
 }
 
