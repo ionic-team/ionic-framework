@@ -1,0 +1,237 @@
+@import "./button";
+@import "./button.ionic.vars";
+
+// Ionic Button
+// -------------------------------------------------------------------------------
+
+:host {
+  --border-radius: #{$button-ionic-border-radius};
+  --padding-bottom: var(--padding-top);
+  --padding-end: #{$button-ionic-padding-end};
+  --padding-start: var(--padding-end);
+  --padding-top: #{$button-ionic-padding-top};
+  --focus-ring-color: #9ec4fd;
+  --focus-ring-width: 2px;
+
+  position: relative;
+
+  min-height: #{$button-ionic-min-height};
+
+  font-size: #{$button-ionic-font-size};
+
+  // Target area
+  &::after {
+    @include position(50%, 0, null, 0);
+    position: absolute;
+
+    height: 100%;
+    min-height: px-to-rem(48);
+
+    transform: translateY(-50%);
+
+    content: "";
+
+    cursor: pointer;
+
+    z-index: 1;
+  }
+
+  ::slotted(ion-icon[slot="start"]) {
+    @include margin-horizontal(null, px-to-rem(8));
+  }
+
+  ::slotted(ion-icon[slot="end"]) {
+    @include margin-horizontal(px-to-rem(8), null);
+  }
+}
+
+// Button Sizes
+// -------------------------------------------------------------------------------
+
+/* Extra Small and Small Button */
+:host(.button-xsmall),
+:host(.button-small) {
+  ::slotted(ion-icon[slot="start"]) {
+    @include margin-horizontal(null, px-to-rem(4));
+  }
+
+  ::slotted(ion-icon[slot="end"]) {
+    @include margin-horizontal(px-to-rem(4), null);
+  }
+}
+
+/* Extra Small Button */
+:host(.button-xsmall) {
+  --border-radius: #{$button-ionic-xsmall-border-radius};
+  --padding-top: #{$button-ionic-xsmall-padding-top};
+  --padding-end: #{$button-ionic-xsmall-padding-end};
+
+  min-height: #{$button-ionic-xsmall-min-height};
+
+  font-size: #{$button-ionic-xsmall-font-size};
+}
+
+/* Small Button */
+:host(.button-small) {
+  --border-radius: #{$button-ionic-small-border-radius};
+  --padding-top: #{$button-ionic-small-padding-top};
+  --padding-end: #{$button-ionic-small-padding-end};
+
+  min-height: #{$button-ionic-small-min-height};
+
+  font-size: #{$button-ionic-small-font-size};
+}
+
+/* Large Button */
+:host(.button-large) {
+  --padding-top: #{$button-ionic-large-padding-top};
+  --padding-end: #{$button-ionic-large-padding-end};
+
+  min-height: #{$button-ionic-large-min-height};
+
+  font-size: #{$button-ionic-large-font-size};
+}
+
+/* Extra Large Button */
+:host(.button-xlarge) {
+  --padding-top: #{$button-ionic-xlarge-padding-top};
+  --padding-end: #{$button-ionic-xlarge-padding-end};
+
+  min-height: #{$button-ionic-xlarge-min-height};
+
+  font-size: #{$button-ionic-xlarge-font-size};
+}
+
+// Button with Icons
+// -------------------------------------------------------------------------------
+
+/* Button containing only an icon */
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]),
+::slotted(ion-icon[slot="icon-only"]) {
+  font-size: 1em;
+}
+
+/* Button extra small */
+:host(.button-has-icon-only.button-xsmall) {
+  --padding-end: #{$button-has-icon-only-padding-end-xsmall};
+}
+
+/* Button small */
+:host(.button-has-icon-only.button-small) {
+  --padding-end: #{$button-has-icon-only-padding-end-small};
+}
+
+/* Default */
+:host(.button-has-icon-only) {
+  --padding-end: #{$button-has-icon-only-padding-end};
+}
+
+/* Button large */
+:host(.button-has-icon-only.button-large) {
+  --padding-end: #{$button-has-icon-only-padding-end-large};
+}
+
+/* Button extra large */
+:host(.button-has-icon-only.button-xlarge) {
+  --padding-end: #{$button-has-icon-only-padding-end-xlarge};
+}
+
+// Button Shapes
+// -------------------------------------------------------------------------------
+
+// Button Shape Rectangular
+// -------------------------------------------------------------------------------
+:host(.button-rectangular) {
+  --border-radius: #{$button-ionic-rectangular-border};
+}
+
+// Button Shape Round
+// -------------------------------------------------------------------------------
+:host(.button-round) {
+  --border-radius: #{$button-ionic-round-border};
+}
+
+// Button Focused
+// -------------------------------------------------------------------------------
+
+// Only show the focus ring when the button is focused
+:host(.ion-focused) {
+  --overflow: visible;
+
+  .button-native::after {
+    @include border-radius(inherit);
+  }
+}
+
+.button-focus-ring {
+  @include position(-4px, -4px, -4px, -4px);
+  @include border-radius(inherit);
+
+  position: absolute;
+
+  transition: border-color 0.3s;
+
+  border: var(--focus-ring-width) solid var(--focus-ring-color);
+
+  content: "";
+  box-sizing: border-box;
+}
+
+// Fill Solid Button
+// -------------------------------------------------------------------------------
+
+:host(.button-solid) {
+  --background-activated: #{ion-color(primary, shade)};
+}
+
+// Fill Outline Button
+// --------------------------------------------------
+
+:host(.button-outline) {
+  --border-width: #{$button-ionic-outline-border-width};
+  --border-style: #{$button-ionic-outline-border-style};
+  --background-activated: #e3e3e3;
+  --background-activated-opacity: 1;
+  --background-focused: transparent;
+  --background-hover: transparent;
+  --background-focused-opacity: 0.1;
+  --color-activated: #{ion-color(primary, base)};
+}
+
+:host(.button-outline.ion-focused) {
+  --border-color: transparent;
+}
+
+// Fill Clear Button
+// --------------------------------------------------
+
+:host(.button-clear) {
+  --background-activated: #e3e3e3;
+  --background-activated-opacity: 1;
+  --background-focused: transparent;
+  --background-hover: transparent;
+}
+
+// Button Hover
+// --------------------------------------------------
+
+:host(.button-outline),
+:host(.button-clear) {
+  --background-hover: #121212;
+  --background-hover-opacity: 0.04;
+}
+
+// Button: Disabled
+// --------------------------------------------------
+
+:host(.button-disabled) {
+  --color: #c9c9c9;
+  --border-color: var(--color);
+
+  opacity: 1;
+}
+
+:host(.button-solid.button-disabled) {
+  --background: #f5f5f5;
+}

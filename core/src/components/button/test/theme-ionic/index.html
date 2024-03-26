@@ -1,0 +1,155 @@
+<!-- TODO: FW-6077 This file can be removed once the additional test cases are added -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Button - Theme Ionic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .ion-margin-top {
+        margin-top: 32px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Button - Ionic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
+        <h4>Preview options</h4>
+
+        <p>
+          <ion-select id="select-size" justify="space-between" interface="alert" label="Size" placeholder="">
+            <ion-select-option selected="true" value="">default</ion-select-option>
+            <ion-select-option value="xsmall">XSmall</ion-select-option>
+            <ion-select-option value="small">Small</ion-select-option>
+            <ion-select-option value="large">Large</ion-select-option>
+            <ion-select-option value="xlarge">Xlarge</ion-select-option>
+          </ion-select>
+
+          <ion-select id="select-shape" justify="space-between" interface="alert" label="Shape" placeholder="">
+            <ion-select-option value="">default</ion-select-option>
+            <ion-select-option value="rectangular">Rectangular</ion-select-option>
+            <ion-select-option value="round">Round</ion-select-option>
+          </ion-select>
+
+          <ion-select id="select-fill" justify="space-between" interface="alert" label="Fill" placeholder="">
+            <ion-select-option value="">default</ion-select-option>
+            <ion-select-option value="outline">Outline</ion-select-option>
+            <ion-select-option value="clear">Clear</ion-select-option>
+          </ion-select>
+        </p>
+
+        <div id="screenshot-wrapper" class="ion-margin-top">
+          <h4>Preview</h4>
+
+          <p>
+            <ion-button theme="ionic">Button</ion-button>
+            <ion-button theme="ionic">
+              <ion-icon slot="icon-only" name="rocket"></ion-icon>
+            </ion-button>
+          </p>
+
+          <p>
+            <ion-button theme="ionic">
+              Button
+              <ion-icon slot="start" name="rocket"></ion-icon>
+            </ion-button>
+          </p>
+
+          <p>
+            <ion-button theme="ionic">
+              Button
+              <ion-icon slot="end" name="rocket"></ion-icon>
+            </ion-button>
+          </p>
+
+          <p>
+            <ion-button theme="ionic">
+              Button
+              <ion-icon slot="start" name="rocket"></ion-icon>
+              <ion-icon slot="end" name="rocket"></ion-icon>
+            </ion-button>
+          </p>
+
+          <h4 class="ion-margin-top">States</h4>
+
+          <p>
+            <ion-button theme="ionic">Default</ion-button>
+            <ion-button theme="ionic">
+              <ion-icon slot="icon-only" name="rocket"></ion-icon>
+            </ion-button>
+          </p>
+
+          <p>
+            <ion-button theme="ionic" class="ion-activated">Activated</ion-button>
+            <ion-button theme="ionic" class="ion-activated">
+              <ion-icon slot="icon-only" name="rocket"></ion-icon>
+            </ion-button>
+          </p>
+
+          <p>
+            <ion-button theme="ionic" class="ion-focused">Focused</ion-button>
+            <ion-button theme="ionic" class="ion-focused ion-margin-start">
+              <ion-icon slot="icon-only" name="rocket"></ion-icon>
+            </ion-button>
+          </p>
+
+          <p>
+            <ion-button theme="ionic" disabled="true">Disabled</ion-button>
+            <ion-button theme="ionic" disabled="true">
+              <ion-icon slot="icon-only" name="rocket"></ion-icon>
+            </ion-button>
+          </p>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const listOfBtns = Array.from(document.querySelectorAll('ion-button'));
+
+      function updateAttr(el, name, value) {
+        if (value === '' || value === undefined) {
+          el.removeAttribute(name);
+        } else {
+          el.setAttribute(name, value);
+        }
+      }
+
+      const selectSize = document.getElementById('select-size');
+      selectSize.addEventListener('ionChange', (e) => {
+        for (const el of listOfBtns) {
+          updateAttr(el, 'size', e.detail.value);
+        }
+      });
+
+      const selectShape = document.getElementById('select-shape');
+      selectShape.addEventListener('ionChange', (e) => {
+        for (const el of listOfBtns) {
+          updateAttr(el, 'shape', e.detail.value);
+        }
+      });
+
+      const selectFill = document.getElementById('select-fill');
+      selectFill.addEventListener('ionChange', (e) => {
+        for (const el of listOfBtns) {
+          updateAttr(el, 'fill', e.detail.value);
+        }
+      });
+    </script>
+  </body>
+</html>
