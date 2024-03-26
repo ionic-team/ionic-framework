@@ -164,18 +164,9 @@
   }
 }
 
-.button-focus-ring {
-  @include position(-4px, -4px, -4px, -4px);
-  @include border-radius(inherit);
-
-  position: absolute;
-
-  transition: border-color 0.3s;
-
-  border: var(--focus-ring-width) solid var(--focus-ring-color);
-
-  content: "";
-  box-sizing: border-box;
+:host(.ion-focused) .button-native::after {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
 }
 
 // Fill Solid Button
