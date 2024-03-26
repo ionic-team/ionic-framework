@@ -142,7 +142,12 @@
 }
 
 ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: dynamic-font-clamp(0.97, $button-md-baseline-font-size, 2.9, 1.831em);
+  /**
+    * The values were provided through MD design,
+    * large and small are based on the iOS sizes.
+    * min font size: 13.5px, default font size: 22.4px, max font size: 40.5px
+    */
+  font-size: dynamic-font-clamp(0.58, 23.15px, 1.75, 1em);
 }
 
 :host(.button-small.button-has-icon-only) {
@@ -153,7 +158,11 @@
 }
 
 :host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: dynamic-font-clamp(0.93, $button-md-baseline-font-size, 2.72, 1.41em);
+  /**
+    * The values are based on the iOS sizes through a native iOS app.
+    * min font size: 13px, default font size: 17px, max font size: 38px
+    */
+  font-size: dynamic-font-clamp(0.62, 21px, 1.81, 1em);
 }
 
 :host(.button-large.button-has-icon-only) {
@@ -164,7 +173,11 @@
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: dynamic-font-clamp(0.97, $button-md-baseline-font-size, 2.9, 1.6em);
+  /**
+    * The values are based on the iOS sizes through a native iOS app.
+    * min font size: 13.5px, default font size: 20px, max font size: 40.5px
+    */
+    font-size: dynamic-font-clamp(0.85, 16px, 2.53, 1em);
 }
 
 // Material Design Button: Hover

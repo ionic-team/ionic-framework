@@ -33,11 +33,8 @@ $button-md-min-height:                                  36px !default;
 /// @prop - Border radius of the button
 $button-md-border-radius:                               4px !default;
 
-/// @prop - Baseline font size of the button text
-$button-md-baseline-font-size:                       14px !default;
-
 /// @prop - Font size of the button text
-$button-md-font-size:                                   dynamic-font($button-md-baseline-font-size) !default;
+$button-md-font-size:                                   dynamic-font(14px) !default;
 
 /// @prop - Font weight of the button text
 $button-md-font-weight:                                 500 !default;
