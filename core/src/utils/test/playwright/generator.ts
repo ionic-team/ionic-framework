@@ -70,12 +70,15 @@ interface TestConfigOption {
 const generateTitle = (title: string, config: TestConfig): string => {
   const { direction, palette, mode, theme } = config;
 
+  /**
+   * The iOS theme can only be used with the iOS mode,
+   * and the MD theme can only be used with the MD mode.
+   *
+   * This logic enables the fallback behavior for existing tests,
+   * where we only tested against a mode, which accounted for both
+   * the theme and mode.
+   */
   if (theme === 'ios' || theme === 'md') {
-    /**
-     * Fallback to the old test title naming convention
-     * when the theme and mode are the same.
-     */
-
     if (palette === 'light') {
       /**
        * Ionic has many existing tests that existed prior to
@@ -85,7 +88,6 @@ const generateTitle = (title: string, config: TestConfig): string => {
        */
       return `${title} - ${mode}/${direction}`;
     }
-
     return `${title} - ${mode}/${direction}/${palette}`;
   }
 
@@ -98,12 +100,15 @@ const generateTitle = (title: string, config: TestConfig): string => {
  */
 const generateScreenshotName = (fileName: string, config: TestConfig): string => {
   const { direction, palette, mode, theme } = config;
-
+  /**
+   * The iOS theme can only be used with the iOS mode,
+   * and the MD theme can only be used with the MD mode.
+   *
+   * This logic enables the fallback behavior for existing tests,
+   * where we only tested against a mode, which accounted for both
+   * the theme and mode.
+   */
   if (theme === 'ios' || theme === 'md') {
-    /**
-     * Fallback to the old screenshot naming convention
-     * when the theme and mode are the same.
-     */
     if (palette === 'light') {
       /**
        * Ionic has many existing tests that existed prior to
@@ -113,7 +118,6 @@ const generateScreenshotName = (fileName: string, config: TestConfig): string =>
        */
       return `${fileName}-${mode}-${direction}.png`;
     }
-
     return `${fileName}-${mode}-${direction}-${palette}.png`;
   }
 
@@ -137,20 +141,26 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
   const processedPalette = testConfig.palettes ?? DEFAULT_PALETTES;
 
   processedModes.forEach((mode) => {
-    if (mode === 'ios' || mode === 'md') {
-      processedDirection.forEach((direction) => {
-        processedPalette.forEach((palette) => {
-          configs.push({ direction, palette, mode, theme: mode });
-        });
-      });
+    let theme: Theme;
+    let modeName: Mode;
+
+    if (mode.indexOf('-') === -1) {
+      /**
+       * If the mode does not contain a dash, then it is
+       * either the ios or md configuration, where both
+       * the mode and theme are the same.
+       */
+      theme = mode as Theme;
+      modeName = mode as Mode;
     } else {
-      const [theme, modeName] = mode.split('-');
-      processedDirection.forEach((direction) => {
-        processedPalette.forEach((palette) => {
-          configs.push({ direction, palette, mode: modeName as Mode, theme: theme as Theme });
-        });
-      });
+      [theme, modeName] = mode.split('-') as [Theme, Mode];
     }
+
+    processedDirection.forEach((direction) => {
+      processedPalette.forEach((palette) => {
+        configs.push({ direction, palette, mode: modeName, theme });
+      });
+    });
   });
 
   return configs.map((config) => {
