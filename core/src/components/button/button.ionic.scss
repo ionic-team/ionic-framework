@@ -142,6 +142,7 @@
 
 // Button Shape Rectangular
 // -------------------------------------------------------------------------------
+
 :host(.button-rectangular) {
   --border-radius: #{$button-ionic-rectangular-border};
 }
@@ -184,6 +185,11 @@
 :host(.button-solid) {
   --background-activated: #{ion-color(primary, shade)};
 }
+
+:host(.button-solid.ion-color.ion-activated) .button-native::after {
+  background: #{current-color(shade)};
+}
+
 
 // Fill Outline Button
 // --------------------------------------------------
