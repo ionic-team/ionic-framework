@@ -116,8 +116,7 @@
 
   border: 2px solid $checkbox-ionic-focus-ring-color;
 
-  /* stylelint-disable-next-line property-disallowed-list */
-  border-radius: var(--border-radius);
+  @include border-radius(var(--border-radius));
 
   content: "";
   box-sizing: border-box;

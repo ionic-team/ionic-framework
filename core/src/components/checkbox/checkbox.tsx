@@ -18,6 +18,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  * @part container - The container for the checkbox mark.
  * @part label - The label text describing the checkbox.
  * @part mark - The checkmark used to indicate the checked state.
+ * @part focus-ring - The visual indicator that appears as an outline around the checkbox when focused. Only available for the Ionic theme.
  */
 @Component({
   tag: 'ion-checkbox',
@@ -106,13 +107,13 @@ export class Checkbox implements ComponentInterface {
   /**
    * Set to `"soft"` for a checkbox with more rounded corners.
    */
-  @Prop({ reflect: true }) shape?: 'soft' | 'rectangular' = 'soft';
+  @Prop() shape?: 'soft' | 'rectangular' = 'soft';
 
   /**
    * Set to `"small"` for a checkbox with less height and padding or to `"default"`
    * for a checkbox with the default height and padding.
    */
-  @Prop({ reflect: true }) size?: 'small' | 'default' = 'default';
+  @Prop() size?: 'small' | 'default' = 'default';
 
   /**
    * Emitted when the checked property has changed
