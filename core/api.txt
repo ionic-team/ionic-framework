@@ -265,7 +265,6 @@ ion-button,css-prop,--padding-start
 ion-button,css-prop,--padding-top
 ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
-ion-button,part,focus-ring
 ion-button,part,native
 
 ion-buttons,scoped
