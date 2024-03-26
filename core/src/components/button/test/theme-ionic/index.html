@@ -18,16 +18,6 @@
       .ion-margin-top {
         margin-top: 32px;
       }
-
-      .custom-ionic {
-        --focus-ring-width: 3px;
-        --focus-ring-color: red;
-      }
-
-      .custom-ionic::part(native)::after {
-        outline-offset: -4px;
-      }
-
     </style>
   </head>
 
@@ -114,7 +104,6 @@
 
           <p>
             <ion-button theme="ionic" class="ion-focused">Focused</ion-button>
-            <ion-button theme="ionic" class="ion-focused custom-ionic">Custom Focused</ion-button>
             <ion-button theme="ionic" class="ion-focused ion-margin-start">
               <ion-icon slot="icon-only" name="rocket"></ion-icon>
             </ion-button>
