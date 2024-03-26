@@ -161,12 +161,10 @@
 
   .button-native::after {
     @include border-radius(inherit);
-  }
-}
 
-:host(.ion-focused) .button-native::after {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: 2px;
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: 2px;
+  }
 }
 
 // Fill Solid Button
