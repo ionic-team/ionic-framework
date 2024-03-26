@@ -156,26 +156,9 @@
 // -------------------------------------------------------------------------------
 
 // Only show the focus ring when the button is focused
-:host(.ion-focused) {
-  --overflow: visible;
-
-  .button-native::after {
-    @include border-radius(inherit);
-  }
-}
-
-.button-focus-ring {
-  @include position(-4px, -4px, -4px, -4px);
-  @include border-radius(inherit);
-
-  position: absolute;
-
-  transition: border-color 0.3s;
-
-  border: var(--focus-ring-width) solid var(--focus-ring-color);
-
-  content: "";
-  box-sizing: border-box;
+:host(.ion-focused) .button-native {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
 }
 
 // Fill Solid Button

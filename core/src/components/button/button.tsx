@@ -20,7 +20,6 @@ import type { RouterDirection } from '../router/utils/interface';
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
- * @part focus-ring - The visual indicator that appears as an outline around the button when focused. Only available for the Ionic theme.
  */
 @Component({
   tag: 'ion-button',
@@ -418,7 +417,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             <slot name="end"></slot>
           </span>
           {theme === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
-          {theme === 'ionic' && <div part="focus-ring" class="button-focus-ring"></div>}
         </TagType>
       </Host>
     );
