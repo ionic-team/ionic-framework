@@ -12,7 +12,8 @@ import type { Color } from '../../interface';
 @Component({
   tag: 'ion-text',
   styleUrls: {
-    ionic: 'text.ionic.scss',
+    ios: 'text.scss',
+    md: 'text.scss',
   },
   shadow: true,
 })
