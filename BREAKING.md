@@ -30,6 +30,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Progress bar](#version-8x-progress-bar)
   - [Radio](#version-8x-radio)
   - [Range](#version-8x-range)
+  - [Searchbar](#version-8x-searchbar)
   - [Select](#version-8x-select)
   - [Textarea](#version-8x-textarea)
   - [Toggle](#version-8x-toggle)
@@ -263,6 +264,10 @@ For more information on styling toast buttons, refer to the [Toast Theming docum
 <h4 id="version-8x-range">Range</h4>
 
 - The `legacy` property and support for the legacy syntax, which involved placing an `ion-range` inside of an `ion-item` with an `ion-label`, have been removed. Ionic will also no longer attempt to automatically associate form controls with sibling `<label>` elements as these label elements are now used inside the form control. Developers should provide a label (either visible text or `aria-label`) directly to the form control. For more information on migrating from the legacy range syntax, refer to the [Range documentation](https://ionicframework.com/docs/api/range#migrating-from-legacy-range-syntax).
+
+<h4 id="version-8x-searchbar">Searchbar</h4>
+
+- The `autocapitalize` property now defaults to `'off'`.
 
 <h4 id="version-8x-select">Select</h4>
 
