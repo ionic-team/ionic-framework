@@ -542,7 +542,7 @@ export class Datetime implements ComponentInterface {
     }
 
     if (closeOverlay) {
-      this.closeParentOverlay();
+      this.closeParentOverlay(CONFIRM_ROLE);
     }
   }
 
@@ -567,7 +567,7 @@ export class Datetime implements ComponentInterface {
     this.ionCancel.emit();
 
     if (closeOverlay) {
-      this.closeParentOverlay();
+      this.closeParentOverlay(CANCEL_ROLE);
     }
   }
 
@@ -617,13 +617,13 @@ export class Datetime implements ComponentInterface {
     return Array.isArray(activeParts) ? activeParts[0] : activeParts;
   };
 
-  private closeParentOverlay = () => {
+  private closeParentOverlay = (role: string) => {
     const popoverOrModal = this.el.closest('ion-modal, ion-popover') as
       | HTMLIonModalElement
       | HTMLIonPopoverElement
       | null;
     if (popoverOrModal) {
-      popoverOrModal.dismiss();
+      popoverOrModal.dismiss(undefined, role);
     }
   };
 
@@ -2637,3 +2637,5 @@ export class Datetime implements ComponentInterface {
 }
 
 let datetimeIds = 0;
+const CANCEL_ROLE = 'datetime-cancel';
+const CONFIRM_ROLE = 'datetime-confirm';
