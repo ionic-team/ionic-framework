@@ -227,7 +227,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
      * behavior for applications that are not setting the "theme".
      */
     while (elm) {
-      const theme = (elm as any).theme || elm.getAttribute('theme');
+      const theme = elm.getAttribute('theme');
 
       if (theme) {
         if (isThemeSupported(theme)) {
@@ -241,7 +241,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
        * If a theme is not detected, then fallback to using the
        * `mode` attribute to determine the style sheets to use.
        */
-      const elmMode = (elm as any).mode || elm.getAttribute('mode');
+      const elmMode = elm.getAttribute('mode');
 
       if (elmMode) {
         if (isModeSupported(elmMode)) {
