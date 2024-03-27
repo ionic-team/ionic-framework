@@ -68,6 +68,67 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(item).toHaveScreenshot(screenshot(`item-sliding-gesture`));
     });
 
+    test('the dynamic element should be clicked', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28662',
+      });
+
+      await page.setContent(
+        `
+        <ion-list>
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+
+            <ion-item-options>
+              <ion-item-option>ARCHIVE</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+
+        <ion-button id="add-element-btn" onclick="addElement()">Add element</ion-button>
+        <script>
+          function addElement() {
+            const itemSliding = document.querySelector('ion-item-sliding');
+
+            // Define and create the elements to add on DOM
+            const itemOptions = document.querySelector('ion-item-options');
+            const newIonItemOption = document.createElement('ion-item-option');
+
+            newIonItemOption.innerText = 'DELETE';
+            newIonItemOption.id = 'element-added-delete';
+
+            itemOptions.appendChild(newIonItemOption);
+
+            // Close the item-sliding to update the values
+            itemSliding.close();
+
+            // Make async call of the open method of item-sliding
+            setTimeout(function () {
+              itemSliding.open();
+            }, 0);
+          }
+        </script>
+      `,
+        config
+      );
+
+      const itemSliding = page.locator('ion-item-sliding');
+      await dragElementBy(itemSliding, page, -150);
+
+      // Trigger the button to add the dynamic content
+      const button = page.locator('#add-element-btn');
+      await button.click();
+
+      // Check if the element added is clicked
+      const elementAdded = page.locator('#element-added-delete');
+
+      // If the element is not clickable then this will timeout
+      await elementAdded.click();
+    });
+
     test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
