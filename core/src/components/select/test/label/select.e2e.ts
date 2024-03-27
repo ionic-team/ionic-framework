@@ -284,7 +284,32 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(select).toHaveScreenshot(screenshot(`select-label-slot-truncate`));
     });
   });
+
+  test.describe(title('select: floating label custom font size'), () => {
+    test('large label should be centered when field is not focused', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27194',
+      });
+      await page.setContent(
+        `
+        <ion-select
+          style="font-size: 30px"
+          fill="outline"
+          label="Large floating label"
+          label-placement="floating"
+        ></ion-select>
+      `,
+        config
+      );
+
+      const input = page.locator('ion-select');
+
+      await expect(input).toHaveScreenshot(screenshot('select-label-large-floating'));
+    });
+  });
 });
+
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('select: alert label'), () => {
     test('should use the label prop to set the default header in an alert', async ({ page }) => {
