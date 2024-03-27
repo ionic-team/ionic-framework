@@ -141,24 +141,13 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
   const processedPalette = testConfig.palettes ?? DEFAULT_PALETTES;
 
   processedModes.forEach((mode) => {
-    let theme: Theme;
-    let modeName: Mode;
-
-    if (mode.indexOf('-') === -1) {
-      /**
-       * If the mode does not contain a dash, then it is
-       * either the ios or md configuration, where both
-       * the mode and theme are the same.
-       */
-      theme = mode as Theme;
-      modeName = mode as Mode;
-    } else {
-      [theme, modeName] = mode.split('-') as [Theme, Mode];
-    }
+    const [themeOrCombinedMode, modeName] = mode.split('-') as [Theme, Mode];
+    const parsedTheme = themeOrCombinedMode;
+    const parsedMode = modeName ?? themeOrCombinedMode;
 
     processedDirection.forEach((direction) => {
       processedPalette.forEach((palette) => {
-        configs.push({ direction, palette, mode: modeName, theme });
+        configs.push({ direction, palette, mode: parsedMode, theme: parsedTheme });
       });
     });
   });
