@@ -608,7 +608,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   render() {
-    const { cancelButtonText } = this;
+    const { cancelButtonText, autocapitalize } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const theme = getIonTheme(this);
     const clearIcon = this.clearIcon || (theme === 'ios' ? closeCircle : closeSharp);
@@ -670,7 +670,7 @@ export class Searchbar implements ComponentInterface {
             placeholder={this.placeholder}
             type={this.type}
             value={this.getValue()}
-            autoCapitalize={this.autocapitalize}
+            autoCapitalize={autocapitalize === 'default' ? undefined : autocapitalize}
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
             spellcheck={this.spellcheck}
