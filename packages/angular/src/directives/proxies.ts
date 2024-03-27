@@ -1039,7 +1039,7 @@ export declare interface IonInputPasswordToggle extends Components.IonInputPassw
 
 
 @ProxyCmp({
-  inputs: ['button', 'color', 'detail', 'detailIcon', 'disabled', 'download', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type']
+  inputs: ['button', 'color', 'detail', 'detailIcon', 'disabled', 'download', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'theme', 'type']
 })
 @Component({
   selector: 'ion-item',
