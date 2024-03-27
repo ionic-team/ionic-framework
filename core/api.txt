@@ -234,8 +234,8 @@ ion-button,prop,mode,"ios" | "md",undefined,false,false
 ion-button,prop,rel,string | undefined,undefined,false,false
 ion-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-button,prop,shape,"round" | undefined,undefined,false,true
-ion-button,prop,size,"default" | "large" | "small" | undefined,undefined,false,true
+ion-button,prop,shape,"rectangular" | "round" | undefined,undefined,false,true
+ion-button,prop,size,"default" | "large" | "small" | "xlarge" | "xsmall" | undefined,undefined,false,true
 ion-button,prop,strong,boolean,false,false,false
 ion-button,prop,target,string | undefined,undefined,false,false
 ion-button,prop,theme,"ios" | "md" | "ionic",undefined,false,false
