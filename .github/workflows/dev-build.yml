@@ -1,4 +1,4 @@
-name: 'Ionic Dev Build'
+name: "Ionic Dev Build"
 
 on:
   workflow_dispatch:
@@ -40,3 +40,26 @@ jobs:
     steps:
       - run: echo ${{ needs.create-dev-hash.outputs.dev-hash }}
 
+  comment-on-pr:
+    runs-on: ubuntu-latest
+    needs: [create-dev-hash, release-ionic]
+    continue-on-error: true
+    outputs:
+      pr-number: ${{ steps.PR.outputs.number }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: 8BitJonny/gh-get-current-pr@2.2.0
+        id: PR
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            A dev build has been generated for this PR. To use the dev build, update your Ionic packages to the following version:
+            ```
+            ${{ needs.create-dev-hash.outputs.dev-hash }}
+            ```
+          pr_number: ${{ steps.PR.outputs.number }}
+          comment_tag: dev-build
