@@ -102,7 +102,6 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
                 </ion-button>
               </ion-buttons>
             </ion-toolbar>
-
             <ion-toolbar>
               <ion-buttons slot="secondary">
                 <ion-button href="#" fill="solid" class="ion-activated">
@@ -121,7 +120,6 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
                 </ion-button>
               </ion-buttons>
             </ion-toolbar>
-
             <ion-toolbar>
               <ion-buttons slot="secondary">
                 <ion-button fill="outline">
@@ -140,7 +138,6 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
               </ion-buttons>
               <ion-title>Outline</ion-title>
             </ion-toolbar>
-
             <ion-toolbar>
               <ion-buttons slot="secondary">
                 <ion-button fill="outline" class="ion-activated">
