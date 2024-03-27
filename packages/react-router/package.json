@@ -36,7 +36,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^8.0.0-beta.3",
+    "@ionic/react": "8.0.0-beta.3",
     "tslib": "*"
   },
   "peerDependencies": {
