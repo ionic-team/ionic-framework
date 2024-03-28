@@ -361,6 +361,7 @@ ion-col,css-prop,--ion-grid-columns
 
 ion-content,shadow
 ion-content,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-content,prop,fixedSlotPlacement,"afterContent" | "beforeContent",'afterContent',false,false
 ion-content,prop,forceOverscroll,boolean | undefined,undefined,false,false
 ion-content,prop,fullscreen,boolean,false,false,false
 ion-content,prop,scrollEvents,boolean,false,false,false

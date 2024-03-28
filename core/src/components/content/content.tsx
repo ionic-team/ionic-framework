@@ -76,6 +76,12 @@ export class Content implements ComponentInterface {
   @Prop() fullscreen = false;
 
   /**
+   * To place a FAB or other fixed content before the main page content in the
+   * DOM, set this property to `beforeContent`.
+   */
+  @Prop() fixedSlotPlacement: 'afterContent' | 'beforeContent' = 'afterContent';
+
+  /**
    * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
    * If the content exceeds the bounds of ionContent, nothing will change.
    * Note, this does not disable the system bounce on iOS. That is an OS level setting.
@@ -423,7 +429,7 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { isMainContent, scrollX, scrollY, el } = this;
+    const { fixedSlotPlacement, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
@@ -446,6 +452,9 @@ export class Content implements ComponentInterface {
         }}
       >
         <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
+
+        {fixedSlotPlacement === 'beforeContent' ? <slot name="fixed"></slot> : null}
+
         <div
           class={{
             'inner-scroll': true,
@@ -467,7 +476,7 @@ export class Content implements ComponentInterface {
           </div>
         ) : null}
 
-        <slot name="fixed"></slot>
+        {fixedSlotPlacement !== 'beforeContent' ? <slot name="fixed"></slot> : null}
       </Host>
     );
   }
