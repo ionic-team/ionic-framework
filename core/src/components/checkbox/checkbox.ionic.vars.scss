@@ -1,2 +1,20 @@
+@import "../../themes/ionic.globals.ionic";
+
 // Ionic Checkbox Variables
 // --------------------------------------------------
+
+/// @prop - The default width and height of the checkbox
+$checkbox-ionic-size: 24px !default;
+
+/// @prop - The background color of the checkbox icon when the checkbox is unchecked
+$checkbox-ionic-icon-background-color-off: $background-color-step-450 !default;
+
+/// @prop - Border style of the checkbox icon
+$checkbox-ionic-icon-border-style: solid !default;
+
+/// @prop - Border width of the checkbox icon
+$checkbox-ionic-icon-border-width: 1px !default;
+
+/// @prop - The border radius of the checkbox icon.
+/// With a default size of 24px, the border radius is calculated as 24px / 6 = 4px
+$checkbox-ionic-border-radius: calc(var(--size) / 6) !default;

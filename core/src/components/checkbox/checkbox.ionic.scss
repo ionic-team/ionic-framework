@@ -1,4 +1,17 @@
+@import "./checkbox";
 @import "./checkbox.ionic.vars";
 
 // Ionic Checkbox
 // --------------------------------------------------
+
+:host {
+  // Border
+  --border-radius: calc(var(--size) * (1 / 6));
+  --border-width: #{$checkbox-ionic-icon-border-width};
+  --border-style: #{$checkbox-ionic-icon-border-style};
+  --border-color: #{$checkbox-ionic-icon-background-color-off};
+  --checkmark-width: 3;
+
+  // Size
+  --size: #{$checkbox-ionic-size};
+}
