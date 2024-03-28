@@ -7,9 +7,9 @@
 :host {
   // Border
   --border-radius: #{$checkbox-ionic-border-radius};
-  --border-width: #{$checkbox-ionic-icon-border-width};
-  --border-style: #{$checkbox-ionic-icon-border-style};
-  --border-color: #{$checkbox-ionic-icon-background-color-off};
+  --border-width: #{$checkbox-ionic-border-width};
+  --border-style: #{$checkbox-ionic-border-style};
+  --border-color: #{$checkbox-ionic-background-color-off};
   --checkmark-width: 3;
 
   // Size
