@@ -7,7 +7,7 @@
 $checkbox-ionic-size: 24px !default;
 
 /// @prop - The background color of the checkbox when the checkbox is unchecked
-$checkbox-ionic-background-color-off: $background-color-step-450 !default;
+$checkbox-ionic-background-color-off: $background-color-step-400 !default;
 
 /// @prop - Border style of the checkbox
 $checkbox-ionic-border-style: solid !default;
@@ -16,5 +16,6 @@ $checkbox-ionic-border-style: solid !default;
 $checkbox-ionic-border-width: 1px !default;
 
 /// @prop - The border radius of the checkbox
-/// With a default size of 24px, the border radius is calculated as 24px / 6 = 4px
-$checkbox-ionic-border-radius: calc(var(--size) / 6) !default;
+/// With a default size of 24px, the border radius is calculated as 24px / 4 - 2px = 4px
+/// With a small size of 16px, the border radius is calculated as 16px / 4 - 2px = 2px;
+$checkbox-ionic-border-radius: calc(var(--size) / 4 - 2px) !default;
