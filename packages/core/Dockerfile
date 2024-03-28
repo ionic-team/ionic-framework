@@ -7,4 +7,4 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 # Set the working directory
-WORKDIR /ionic
+WORKDIR /ionic/core
