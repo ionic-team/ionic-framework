@@ -100,7 +100,7 @@
     "test.e2e.docker.update-snapshots": "npm run test.e2e.docker -- --update-snapshots",
     "test.e2e.docker.ci": "npm run docker.build && docker run -e CI='true' --rm --ipc=host --mount=type=bind,source=./,target=/ionic ionic-playwright npm run test.e2e --",
     "test.report": "npx playwright show-report",
-    "test.e2e.custom": "sh src/utils/test/playwright/custom-e2e.sh"
+    "test.e2e.script": "sh src/utils/test/playwright/e2e-script.sh"
   },
   "author": "Ionic Team",
   "license": "MIT",
