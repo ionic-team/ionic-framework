@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "7.8.0",
+  "version": "7.8.2",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -38,7 +38,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^7.8.0",
+    "@ionic/core": "^7.8.2",
     "ionicons": "^7.0.0",
     "tslib": "*"
   },
@@ -51,12 +51,12 @@
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-typescript": "^11.1.5",
     "@testing-library/jest-dom": "^6.1.5",
-    "@testing-library/react": "^11.2.2",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^7.0.1",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.0.14",
-    "@types/react": "16.14.0",
-    "@types/react-dom": "^16.9.0",
+    "@types/react": "^17.0.79",
+    "@types/react-dom": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "eslint": "^7.32.0",
@@ -65,8 +65,8 @@
     "jest-environment-jsdom": "^26.6.0",
     "np": "^6.4.0",
     "prettier": "^2.8.3",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
     "ts-jest": "^26.4.4",

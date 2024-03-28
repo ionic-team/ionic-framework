@@ -24,8 +24,8 @@ runs:
         name: ionic-core
         path: ./packages/core
         filename: CoreBuild.zip
-    - name: Install Playwright Dependencies
-      run: pnpm install && pnpm exec playwright install && pnpm exec playwright install-deps
+    - name: Install Dependencies
+      run: pnpm install
       shell: bash
       working-directory: ./packages/core
     - id: clean-component-name
@@ -48,9 +48,10 @@ runs:
           echo "testFile=$(echo '')" >> $GITHUB_OUTPUT
         fi
       shell: bash
+      working-directory: ./packages/core
     - name: Test
       if: inputs.update != 'true'
-      run: pnpm run test.e2e ${{ steps.set-test-file.outputs.testFile }} --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: pnpm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./packages/core
     - name: Test and Update
@@ -72,7 +73,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        pnpm run test.e2e ${{ steps.set-test-file.outputs.testFile }} --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        pnpm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
