@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+// TODO: FW-6077 - Limit this test to just the Ionic theme on MD mode.
+configs({ directions: ['ltr'], themes: ['ionic', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: size'), () => {
     test('should render small buttons', async ({ page }) => {
       await page.setContent(
@@ -57,6 +58,29 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const wrapper = page.locator('ion-button');
 
       await expect(wrapper).toHaveScreenshot(screenshot(`button-size-large-in-buttons`));
+    });
+  });
+});
+
+/**
+ * The following tests are specific to the Ionic theme and do not depend on the text direction.
+ */
+configs({ directions: ['ltr'], themes: ['ionic'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('button: size'), () => {
+    test('should render xsmall buttons', async ({ page }) => {
+      await page.setContent(`<ion-button size="xsmall" fill="solid">X-Small Button</ion-button>`, config);
+
+      const wrapper = page.locator('ion-button');
+
+      await expect(wrapper).toHaveScreenshot(screenshot(`button-size-x-small`));
+    });
+
+    test('should render xlarge buttons', async ({ page }) => {
+      await page.setContent(`<ion-button size="xlarge" fill="solid">X-Large Button</ion-button>`, config);
+
+      const wrapper = page.locator('ion-button');
+
+      await expect(wrapper).toHaveScreenshot(screenshot(`button-size-x-large`));
     });
   });
 });
