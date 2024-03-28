@@ -31,6 +31,7 @@ import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
 import { defineCustomElement as defineIonInput } from '@ionic/core/components/ion-input.js';
+import { defineCustomElement as defineIonInputPasswordToggle } from '@ionic/core/components/ion-input-password-toggle.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
 import { defineCustomElement as defineIonItemGroup } from '@ionic/core/components/ion-item-group.js';
 import { defineCustomElement as defineIonItemOptions } from '@ionic/core/components/ion-item-options.js';
@@ -44,6 +45,9 @@ import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/componen
 import { defineCustomElement as defineIonNav } from '@ionic/core/components/ion-nav.js';
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
+import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
+import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/components/ion-picker-column.js';
+import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
 import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
 import { defineCustomElement as defineIonRadioGroup } from '@ionic/core/components/ion-radio-group.js';
@@ -96,6 +100,7 @@ export const IonImg = /*@__PURE__*/createReactComponent<JSX.IonImg, HTMLIonImgEl
 export const IonInfiniteScroll = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScroll, HTMLIonInfiniteScrollElement>('ion-infinite-scroll', undefined, undefined, defineIonInfiniteScroll);
 export const IonInfiniteScrollContent = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScrollContent, HTMLIonInfiniteScrollContentElement>('ion-infinite-scroll-content', undefined, undefined, defineIonInfiniteScrollContent);
 export const IonInput = /*@__PURE__*/createReactComponent<JSX.IonInput, HTMLIonInputElement>('ion-input', undefined, undefined, defineIonInput);
+export const IonInputPasswordToggle = /*@__PURE__*/createReactComponent<JSX.IonInputPasswordToggle, HTMLIonInputPasswordToggleElement>('ion-input-password-toggle', undefined, undefined, defineIonInputPasswordToggle);
 export const IonItemDivider = /*@__PURE__*/createReactComponent<JSX.IonItemDivider, HTMLIonItemDividerElement>('ion-item-divider', undefined, undefined, defineIonItemDivider);
 export const IonItemGroup = /*@__PURE__*/createReactComponent<JSX.IonItemGroup, HTMLIonItemGroupElement>('ion-item-group', undefined, undefined, defineIonItemGroup);
 export const IonItemOptions = /*@__PURE__*/createReactComponent<JSX.IonItemOptions, HTMLIonItemOptionsElement>('ion-item-options', undefined, undefined, defineIonItemOptions);
@@ -109,6 +114,9 @@ export const IonMenuToggle = /*@__PURE__*/createReactComponent<JSX.IonMenuToggle
 export const IonNav = /*@__PURE__*/createReactComponent<JSX.IonNav, HTMLIonNavElement>('ion-nav', undefined, undefined, defineIonNav);
 export const IonNavLink = /*@__PURE__*/createReactComponent<JSX.IonNavLink, HTMLIonNavLinkElement>('ion-nav-link', undefined, undefined, defineIonNavLink);
 export const IonNote = /*@__PURE__*/createReactComponent<JSX.IonNote, HTMLIonNoteElement>('ion-note', undefined, undefined, defineIonNote);
+export const IonPicker = /*@__PURE__*/createReactComponent<JSX.IonPicker, HTMLIonPickerElement>('ion-picker', undefined, undefined, defineIonPicker);
+export const IonPickerColumn = /*@__PURE__*/createReactComponent<JSX.IonPickerColumn, HTMLIonPickerColumnElement>('ion-picker-column', undefined, undefined, defineIonPickerColumn);
+export const IonPickerColumnOption = /*@__PURE__*/createReactComponent<JSX.IonPickerColumnOption, HTMLIonPickerColumnOptionElement>('ion-picker-column-option', undefined, undefined, defineIonPickerColumnOption);
 export const IonProgressBar = /*@__PURE__*/createReactComponent<JSX.IonProgressBar, HTMLIonProgressBarElement>('ion-progress-bar', undefined, undefined, defineIonProgressBar);
 export const IonRadio = /*@__PURE__*/createReactComponent<JSX.IonRadio, HTMLIonRadioElement>('ion-radio', undefined, undefined, defineIonRadio);
 export const IonRadioGroup = /*@__PURE__*/createReactComponent<JSX.IonRadioGroup, HTMLIonRadioGroupElement>('ion-radio-group', undefined, undefined, defineIonRadioGroup);

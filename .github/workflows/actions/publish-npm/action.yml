@@ -39,7 +39,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Update Version
-      run: pnpm exec lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
+      run: pnpm exec lerna@5 version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Run Build

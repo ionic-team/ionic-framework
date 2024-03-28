@@ -1,4 +1,5 @@
 import { doc } from '@utils/browser';
+import { focusFirstDescendant, focusLastDescendant, focusableQueryString } from '@utils/focus-trap';
 import type { BackButtonEvent } from '@utils/hardware-back-button';
 import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 
@@ -21,6 +22,7 @@ import type {
 } from '../interface';
 
 import { CoreDelegate } from './framework-delegate';
+import { BACKDROP_NO_SCROLL } from './gesture/gesture-controller';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import {
   addEventListener,
@@ -56,7 +58,12 @@ export const actionSheetController = /*@__PURE__*/ createController<ActionSheetO
 );
 export const loadingController = /*@__PURE__*/ createController<LoadingOptions, HTMLIonLoadingElement>('ion-loading');
 export const modalController = /*@__PURE__*/ createController<ModalOptions, HTMLIonModalElement>('ion-modal');
-export const pickerController = /*@__PURE__*/ createController<PickerOptions, HTMLIonPickerElement>('ion-picker');
+/**
+ * @deprecated Use the inline ion-picker component instead.
+ */
+export const pickerController = /*@__PURE__*/ createController<PickerOptions, HTMLIonPickerLegacyElement>(
+  'ion-picker-legacy'
+);
 export const popoverController = /*@__PURE__*/ createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/ createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
@@ -123,44 +130,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   return Promise.resolve() as any;
 };
 
-/**
- * This query string selects elements that
- * are eligible to receive focus. We select
- * interactive elements that meet the following
- * criteria:
- * 1. Element does not have a negative tabindex
- * 2. Element does not have `hidden`
- * 3. Element does not have `disabled` for non-Ionic components.
- * 4. Element does not have `disabled` or `disabled="true"` for Ionic components.
- * Note: We need this distinction because `disabled="false"` is
- * valid usage for the disabled property on ion-button.
- */
-const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
 const isOverlayHidden = (overlay: Element) => overlay.classList.contains('overlay-hidden');
-
-/**
- * Focuses the first descendant in an overlay
- * that can receive focus. If none exists,
- * the entire overlay will be focused.
- */
-export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
-  const firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
-
-  focusElementInOverlay(firstInput, overlay);
-};
-
-/**
- * Focuses the last descendant in an overlay
- * that can receive focus. If none exists,
- * the entire overlay will be focused.
- */
-const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
-  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
-  const lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
-
-  focusElementInOverlay(lastInput, overlay);
-};
 
 /**
  * Focuses a particular element in an overlay. If the element
@@ -202,7 +172,7 @@ const focusElementInOverlay = (hostToFocus: HTMLElement | null | undefined, over
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
   const lastOverlay = getPresentedOverlay(
     doc,
-    'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker,ion-popover'
+    'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover'
   );
   const target = ev.target as HTMLElement | null;
 
@@ -276,7 +246,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
         return;
       }
 
-      const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
+      const overlayWrapper = overlayRoot.querySelector<HTMLElement>('.ion-overlay-wrapper');
       if (!overlayWrapper) {
         return;
       }
@@ -364,7 +334,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
       const lastFocus = lastOverlay.lastFocus;
 
       // Focus the first element in the overlay wrapper
-      focusFirstDescendant(lastOverlay, lastOverlay);
+      focusFirstDescendant(lastOverlay);
 
       /**
        * If the cached last focused element is the
@@ -376,7 +346,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * last focus to equal the active element.
        */
       if (lastFocus === doc.activeElement) {
-        focusLastDescendant(lastOverlay, lastOverlay);
+        focusLastDescendant(lastOverlay);
       }
       lastOverlay.lastFocus = doc.activeElement as HTMLElement;
     }
@@ -460,7 +430,7 @@ export const dismissOverlay = (
  */
 export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayElement[] => {
   if (selector === undefined) {
-    selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker,ion-popover,ion-toast';
+    selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker-legacy,ion-popover,ion-toast';
   }
   return (Array.from(doc.querySelectorAll(selector)) as HTMLIonOverlayElement[]).filter((c) => c.overlayIndex > 0);
 };
@@ -541,6 +511,9 @@ export const present = async <OverlayPresentOptions>(
   }
 
   setRootAriaHidden(true);
+
+  document.body.classList.add(BACKDROP_NO_SCROLL);
+
   hideOverlaysFromScreenReaders(overlay.el);
 
   overlay.presented = true;
@@ -657,12 +630,15 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
+  const lastOverlay = doc !== undefined && getPresentedOverlays(doc).length === 1;
+
   /**
    * If this is the last visible overlay then
    * we want to re-add the root to the accessibility tree.
    */
-  if (doc !== undefined && getPresentedOverlays(doc).length === 1) {
+  if (lastOverlay) {
     setRootAriaHidden(false);
+    document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 
   overlay.presented = false;
@@ -682,6 +658,7 @@ export const dismiss = async <OverlayDismissOptions>(
     if (role !== GESTURE) {
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
+
     overlay.didDismiss.emit({ data, role });
     overlay.didDismissShorthand?.emit({ data, role });
 

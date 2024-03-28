@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular-server",
-  "version": "7.8.2",
+  "version": "8.0.0-rc.0",
   "description": "Angular SSR Module for Ionic",
   "keywords": [
     "ionic",
@@ -35,33 +35,33 @@
     "prettier.fix": "prettier \"**/*.ts\" --write"
   },
   "peerDependencies": {
-    "@angular/core": ">=14.0.0",
-    "@angular/platform-server": ">=14.0.0",
+    "@angular/core": ">=16.0.0",
+    "@angular/platform-server": ">=16.0.0",
     "rxjs": ">=7.5.0",
-    "zone.js": ">=0.11.0"
+    "zone.js": ">=0.13.0"
   },
   "devDependencies": {
-    "@angular-eslint/eslint-plugin": "^14.0.0",
-    "@angular/animations": "^14.0.0",
-    "@angular/common": "^14.0.0",
-    "@angular/compiler": "^14.0.0",
-    "@angular/compiler-cli": "^14.0.0",
-    "@angular/core": "^14.0.0",
-    "@angular/platform-browser": "^14.0.0",
-    "@angular/platform-browser-dynamic": "^14.0.0",
-    "@angular/platform-server": "^14.0.0",
+    "@angular-eslint/eslint-plugin": "^16.0.0",
+    "@angular/animations": "^16.0.0",
+    "@angular/common": "^16.0.0",
+    "@angular/compiler": "^16.0.0",
+    "@angular/compiler-cli": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "@angular/platform-browser": "^16.0.0",
+    "@angular/platform-browser-dynamic": "^16.0.0",
+    "@angular/platform-server": "^16.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.2",
-    "ng-packagr": "^14.0.0",
+    "ng-packagr": "^16.0.0",
     "prettier": "^2.4.1",
     "rxjs": "^7.8.0",
-    "typescript": "~4.7.2"
+    "typescript": "~4.9.3"
   },
   "prettier": "@ionic/prettier-config",
   "dependencies": {
-    "@ionic/core": "^7.8.2"
+    "@ionic/core": "^8.0.0-rc.0"
   }
 }

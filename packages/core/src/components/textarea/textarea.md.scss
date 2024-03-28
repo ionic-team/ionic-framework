@@ -14,26 +14,9 @@
   --padding-end: 0px;
   --padding-bottom: #{$textarea-padding-bottom};
   --padding-start: 0px;
+  --highlight-height: 2px;
 
   font-size: $textarea-md-font-size;
-}
-
-// TODO: FW-2876 - Remove this selector
-:host(.legacy-textarea) {
-  --padding-top: #{$textarea-md-padding-top};
-  --padding-end: #{$textarea-md-padding-end};
-  --padding-bottom: #{$textarea-md-padding-bottom};
-  --padding-start: #{$textarea-md-padding-start};
-
-  @include margin(8px, 0, 0, 0);
-}
-
-// TODO: FW-2876 - Re-evaluate this selector, it may not be needed
-:host-context(.item-label-stacked),
-:host-context(.item-label-floating) {
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  --padding-start: 0;
 }
 
 // Textarea Max Length Counter
@@ -67,7 +50,6 @@
 // The textarea, label, helper text, char counter and placeholder
 // should use the same opacity and match the other form controls
 
-:host(.legacy-textarea) .native-textarea[disabled],
 :host(.textarea-disabled) {
   opacity: #{$textarea-md-disabled-opacity};
 }
@@ -81,7 +63,7 @@
   position: absolute;
 
   width: 100%;
-  height: 2px;
+  height: var(--highlight-height);
 
   transform: scale(0);
 

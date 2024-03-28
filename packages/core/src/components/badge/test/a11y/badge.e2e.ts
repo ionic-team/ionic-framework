@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
@@ -20,6 +21,29 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const badge = page.locator('ion-badge');
 
       await expect(badge).toHaveScreenshot(screenshot(`badge-scale`));
+    });
+  });
+});
+
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
+  test.describe(title('badge: a11y'), () => {
+    test('should not have accessibility violations', async ({ page }) => {
+      /**
+       * All page content should be contained by landmarks (main, nav, etc.)
+       * By containing the badge in a main element, we can avoid this violation.
+       */
+      await page.setContent(
+        `
+        <main>
+          <ion-badge>123</ion-badge>
+        </main>
+      `,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+
+      expect(results.violations).toEqual([]);
     });
   });
 });

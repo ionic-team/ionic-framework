@@ -126,7 +126,9 @@ jobs:
           "path": [
             "/npm/@ionic/core@6/dist/ionic/ionic.esm.js",
             "/npm/@ionic/core@latest/dist/ionic/ionic.esm.js",
+            "/npm/@ionic/core@next/dist/ionic/ionic.esm.js",
             "/npm/@ionic/core@6/css/ionic.bundle.css",
             "/npm/@ionic/core@latest/css/ionic.bundle.css"
+            "/npm/@ionic/core@next/css/ionic.bundle.css"
           ]}'
         shell: bash

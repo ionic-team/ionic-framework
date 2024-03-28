@@ -40,25 +40,39 @@ const testAriaButton = async (
   await expect(actionSheetButton).toHaveAttribute('aria-label', expectedAriaLabel);
 };
 
+configs({ directions: ['ltr'], palettes: ['dark', 'light'] }).forEach(({ config, title }) => {
+  test.describe(title('action-sheet: Axe testing'), () => {
+    test('should not have accessibility violations when header is defined', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-action-sheet></ion-action-sheet>
+
+          <script>
+            const actionSheet = document.querySelector('ion-action-sheet');
+            actionSheet.header = 'Header';
+            actionSheet.subHeader = 'Subtitle';
+            actionSheet.buttons = ['Confirm'];
+          </script>
+        `,
+        config
+      );
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const actionSheet = page.locator('ion-action-sheet');
+
+      await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.present());
+      await ionActionSheetDidPresent.next();
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
+
 configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
-  test.describe(title('action-sheet: a11y'), () => {
+  test.describe(title('action-sheet: aria attributes'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/action-sheet/test/a11y`, config);
-    });
-    test('should not have accessibility violations when header is defined', async ({ page }) => {
-      const button = page.locator('#bothHeaders');
-      const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
-
-      await button.click();
-      await didPresent.next();
-
-      /**
-       * action-sheet overlays the entire screen, so
-       * Axe will be unable to verify color contrast
-       * on elements under the backdrop.
-       */
-      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
-      expect(results.violations).toEqual([]);
     });
 
     test('should have aria-labelledby when header is set', async ({ page }) => {

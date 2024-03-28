@@ -2,10 +2,22 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, config }) => {
   test.describe(title('checkbox: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
-      await page.goto(`/src/components/checkbox/test/a11y`, config);
+      await page.setContent(
+        `
+        <main>
+          <ion-checkbox>Label</ion-checkbox>
+          <ion-checkbox aria-label="my aria label"></ion-checkbox>
+          <ion-checkbox checked="true">Checked</ion-checkbox>
+          <ion-item>
+            <ion-checkbox>Checkbox in item</ion-checkbox>
+          </ion-item>
+        </main>
+      `,
+        config
+      );
 
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);

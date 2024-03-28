@@ -1,6 +1,23 @@
+@use "sass:map";
 @import "../themes/ionic.globals";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
+
+:root {
+  /**
+   * Loop through each color object from the
+   * `ionic.theme.default.scss` file
+   * and generate CSS Variables for each color.
+   */
+  @each $color-name, $value in $colors {
+    --ion-color-#{$color-name}: #{map.get($value, base)};
+    --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+    --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+    --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+    --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+    --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+  }
+}
 
 // Ionic Font Family
 // --------------------------------------------------
@@ -13,12 +30,13 @@ html.md {
 }
 
 html {
-  --ion-default-dynamic-font: -apple-system-body;
+  --ion-dynamic-font: -apple-system-body;
   --ion-font-family: var(--ion-default-font);
 }
 
 body {
   background: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 body.backdrop-no-scroll {

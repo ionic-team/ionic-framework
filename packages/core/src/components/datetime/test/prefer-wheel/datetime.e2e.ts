@@ -82,7 +82,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('ion-datetime .day-column .picker-item[data-value]');
+        const dayValues = page.locator('ion-datetime .day-column ion-picker-column-option');
         expect(await dayValues.count()).toEqual(27);
       });
       test('should respect the max bounds', async ({ page }) => {
@@ -95,7 +95,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('ion-datetime .day-column .picker-item[data-value]');
+        const dayValues = page.locator('ion-datetime .day-column ion-picker-column-option');
         expect(await dayValues.count()).toEqual(1);
       });
       test('should respect isDateEnabled preference', async ({ page }) => {
@@ -118,9 +118,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const disabledMonths = page.locator('.month-column .picker-item[disabled]');
-        const disabledYears = page.locator('.year-column .picker-item[disabled]');
-        const disabledDays = page.locator('.day-column .picker-item[disabled]');
+        const disabledMonths = page.locator('.month-column ion-picker-column-option.option-disabled');
+        const disabledYears = page.locator('.year-column ion-picker-column-option.option-disabled');
+        const disabledDays = page.locator('.day-column ion-picker-column-option.option-disabled');
 
         expect(await disabledMonths.count()).toBe(0);
         expect(await disabledYears.count()).toBe(0);
@@ -143,9 +143,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
-        const yearValues = page.locator('.year-column .picker-item:not(.picker-item-empty)');
-        const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
+        const monthValues = page.locator('.month-column ion-picker-column-option');
+        const yearValues = page.locator('.year-column ion-picker-column-option');
+        const dayValues = page.locator('.day-column ion-picker-column-option');
 
         expect(await monthValues.count()).toBe(2);
         expect(await yearValues.count()).toBe(3);
@@ -178,7 +178,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await page.locator('.datetime-ready').waitFor();
 
         const ionChange = await page.spyOnEvent('ionChange');
-        const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+        const monthValues = page.locator('.month-column ion-picker-column-option');
 
         // Change month value
         await monthValues.nth(0).click();
@@ -212,7 +212,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await page.locator('.datetime-ready').waitFor();
 
         const ionChange = await page.spyOnEvent('ionChange');
-        const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
+        const dayValues = page.locator('.day-column ion-picker-column-option');
 
         // Change day value
         await dayValues.nth(0).click();
@@ -233,7 +233,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await page.locator('.datetime-ready').waitFor();
 
         const ionChange = await page.spyOnEvent('ionChange');
-        const yearValues = page.locator('.year-column .picker-item:not(.picker-item-empty)');
+        const yearValues = page.locator('.year-column ion-picker-column-option');
 
         /**
          * Change year value
@@ -259,9 +259,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-05-25T12:40:00.000Z'));
         await page.waitForChanges();
 
-        const selectedMonth = datetime.locator('.month-column .picker-item-active');
-        const selectedDay = datetime.locator('.day-column .picker-item-active');
-        const selectedYear = datetime.locator('.year-column .picker-item-active');
+        const selectedMonth = datetime.locator('.month-column ion-picker-column-option.option-active');
+        const selectedDay = datetime.locator('.day-column ion-picker-column-option.option-active');
+        const selectedYear = datetime.locator('.year-column ion-picker-column-option.option-active');
 
         await expect(selectedMonth).toHaveText(/May/);
         await expect(selectedDay).toHaveText(/25/);
@@ -287,9 +287,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
           await page.locator('.datetime-ready').waitFor();
 
-          const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
-          const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
-
+          const monthValues = page.locator('.month-column ion-picker-column-option');
+          const dayValues = page.locator('.day-column ion-picker-column-option');
           await expect(monthValues).toHaveText(['1月', '2月', '3月']);
           await expect(dayValues).toHaveText(['1日', '2日', '3日']);
         });
@@ -308,7 +307,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
           await page.locator('.datetime-ready').waitFor();
 
-          const columns = page.locator('ion-picker-column-internal');
+          const columns = page.locator('ion-picker-column');
 
           await expect(columns.nth(0)).toHaveClass(/month-column/);
           await expect(columns.nth(1)).toHaveClass(/day-column/);
@@ -329,7 +328,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
           await page.locator('.datetime-ready').waitFor();
 
-          const columns = page.locator('ion-picker-column-internal');
+          const columns = page.locator('ion-picker-column');
 
           await expect(columns.nth(0)).toHaveClass(/day-column/);
           await expect(columns.nth(1)).toHaveClass(/month-column/);
@@ -348,7 +347,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
+        const dayValues = page.locator('ion-datetime .date-column ion-picker-column-option');
         expect(await dayValues.count()).toEqual(57);
       });
       test('should respect the max bounds', async ({ page }) => {
@@ -361,7 +360,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
+        const dayValues = page.locator('ion-datetime .date-column ion-picker-column-option');
         expect(await dayValues.count()).toEqual(41);
       });
       test('should respect isDateEnabled preference', async ({ page }) => {
@@ -384,7 +383,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const disabledDates = page.locator('.date-column .picker-item[disabled]');
+        const disabledDates = page.locator('.date-column ion-picker-column-option.option-disabled');
 
         expect(await disabledDates.count()).toBe(44);
       });
@@ -405,7 +404,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+        const dateValues = page.locator('.date-column ion-picker-column-option');
 
         expect(await dateValues.count()).toBe(5);
       });
@@ -426,8 +425,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
-
+        const dateValues = page.locator('.date-column ion-picker-column-option');
         await expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
       });
       test('should respect min and max bounds even across years', async ({ page }) => {
@@ -447,18 +445,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await page.locator('.datetime-ready').waitFor();
 
         const dateColumn = page.locator('.date-column');
-        const dateValues = dateColumn.locator('.picker-item:not(.picker-item-empty)');
+        const dateColumnScrollEl = dateColumn.locator('.picker-opts');
+        const dateValues = dateColumn.locator('ion-picker-column-option');
 
         expect(await dateValues.count()).toBe(90);
 
         /**
          * Select 1st item to change the dates rendered
          */
-        await expect(dateValues.nth(0)).toHaveAttribute('data-value', '2022-1-1');
-        await dateColumn.evaluate((el: HTMLElement) => (el.scrollTop = 0));
+        await expect(dateValues.nth(0)).toHaveJSProperty('value', '2022-1-1');
+        await dateColumnScrollEl.evaluate((el: HTMLElement) => (el.scrollTop = 0));
         await page.waitForChanges();
 
-        await expect(dateValues.nth(0)).toHaveAttribute('data-value', '2021-12-1');
+        await expect(dateValues.nth(0)).toHaveJSProperty('value', '2021-12-1');
       });
       test('should keep sliding window if default window is within min and max constraints', async ({ page }) => {
         await page.setContent(
@@ -476,7 +475,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+        const dayValues = page.locator('.date-column ion-picker-column-option');
 
         expect(await dayValues.count()).toBe(92);
       });
@@ -496,7 +495,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+        const dayValues = page.locator('.date-column ion-picker-column-option');
 
         expect(await dayValues.count()).toBe(15);
       });
@@ -514,7 +513,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await page.locator('.datetime-ready').waitFor();
 
         const ionChange = await page.spyOnEvent('ionChange');
-        const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+        const dayValues = page.locator('.date-column ion-picker-column-option');
 
         // Change day/month value
         await dayValues.nth(0).click();
@@ -533,7 +532,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
+        const dayValues = page.locator('ion-datetime .date-column ion-picker-column-option');
         expect(await dayValues.count()).toEqual(57);
       });
       test('should respect the max bounds', async ({ page }) => {
@@ -546,7 +545,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('ion-datetime .date-column .picker-item[data-value]');
+        const dayValues = page.locator('ion-datetime .date-column ion-picker-column-option');
         expect(await dayValues.count()).toEqual(41);
       });
       test('should respect isDateEnabled preference', async ({ page }) => {
@@ -569,7 +568,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const disabledDates = page.locator('.date-column .picker-item[disabled]');
+        const disabledDates = page.locator('.date-column ion-picker-column-option.option-disabled');
 
         expect(await disabledDates.count()).toBe(44);
       });
@@ -590,7 +589,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+        const dateValues = page.locator('.date-column ion-picker-column-option');
 
         expect(await dateValues.count()).toBe(5);
       });
@@ -611,7 +610,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+        const dateValues = page.locator('.date-column ion-picker-column-option');
 
         await expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
       });
@@ -632,18 +631,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await page.locator('.datetime-ready').waitFor();
 
         const dateColumn = page.locator('.date-column');
-        const dateValues = dateColumn.locator('.picker-item:not(.picker-item-empty)');
+        const dateColumnScrollEl = dateColumn.locator('.picker-opts');
+        const dateValues = dateColumn.locator('ion-picker-column-option');
 
         expect(await dateValues.count()).toBe(90);
 
         /**
          * Select 1st item to change the dates rendered
          */
-        await expect(dateValues.nth(0)).toHaveAttribute('data-value', '2022-1-1');
-        await dateColumn.evaluate((el: HTMLElement) => (el.scrollTop = 0));
+        await expect(dateValues.nth(0)).toHaveJSProperty('value', '2022-1-1');
+        await dateColumnScrollEl.evaluate((el: HTMLElement) => (el.scrollTop = 0));
         await page.waitForChanges();
 
-        await expect(dateValues.nth(0)).toHaveAttribute('data-value', '2021-12-1');
+        await expect(dateValues.nth(0)).toHaveJSProperty('value', '2021-12-1');
       });
       test('should keep sliding window if default window is within min and max constraints', async ({ page }) => {
         await page.setContent(
@@ -661,7 +661,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+        const dayValues = page.locator('.date-column ion-picker-column-option');
 
         expect(await dayValues.count()).toBe(92);
       });
@@ -681,7 +681,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await page.locator('.datetime-ready').waitFor();
 
-        const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+        const dayValues = page.locator('.date-column ion-picker-column-option');
 
         expect(await dayValues.count()).toBe(15);
       });

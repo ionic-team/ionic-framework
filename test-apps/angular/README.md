@@ -6,11 +6,19 @@ Ionic Framework supports multiple versions of Angular. As a result, we need to v
 
 The Angular test app supports syncing your locally built changes for validation.
 
+<<<<<<< HEAD:test-apps/angular/README.md
 1. [Build](../README.md#building) the `core` and `packages/angular` projects using `pnpm build`.
 2. Watch for changes made in `packages/angular` by using `pnpm build.watch`.
 3. [Build the Angular test app](#test-app-build-structure).
 4. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng17`).
 5. Install dependencies using `pnpm install`.
+=======
+1. Build the `core` and `packages/angular` directories using `npm run build`.
+2. [Build the Angular test app](#test-app-build-structure).
+3. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng17`).
+4. Install dependencies using `npm install`.
+5. Sync your local changes using `npm run sync`.
+>>>>>>> origin/feature-8.0:packages/angular/test/README.md
 
 From here you can either build the application or start a local dev server.
 
@@ -61,7 +69,7 @@ Usage:
 
 To add new tests, components, or pages, modify the `base` project. This ensures that tests are run for every tested version.
 
-If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.spec.ts` in `apps/ng14`, make sure you place the file in `apps/ng14/e2e/src/test.spec.ts`.
+If you want to add a version-specific change, add the change inside of the appropriate projects in `apps`. Be sure to replicate the directory structure. For example, if you are adding a new E2E test file called `test.spec.ts` in `apps/ng17`, make sure you place the file in `apps/ng17/e2e/src/test.spec.ts`.
 
 ### Version-specific tests
 

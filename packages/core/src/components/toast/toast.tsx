@@ -782,7 +782,6 @@ const buttonClass = (button: ToastButton): CssClassMap => {
     [`toast-button-${button.role}`]: button.role !== undefined,
     'ion-focusable': true,
     'ion-activatable': true,
-    ...getClassMap(button.cssClass),
   };
 };
 

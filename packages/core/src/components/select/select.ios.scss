@@ -4,12 +4,8 @@
 // iOS Select
 // --------------------------------------------------
 
-// TODO FW-3194 - Remove this
-:host(.legacy-select) {
-  --padding-top: #{$select-ios-padding-top};
-  --padding-end: #{$select-ios-padding-end};
-  --padding-bottom: #{$select-ios-padding-bottom};
-  --padding-start: #{$select-ios-padding-start};
+:host {
+  --highlight-height: 0px;
 }
 
 .select-icon {
