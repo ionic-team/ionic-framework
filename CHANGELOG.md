@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.2](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v7.8.2) (2024-03-27)
+
+
+### Bug Fixes
+
+* **searchbar:** autocapitalize is initialized correctly ([#29197](https://github.com/ionic-team/ionic-framework/issues/29197)) ([8ad66c0](https://github.com/ionic-team/ionic-framework/commit/8ad66c03d777edcab19c97cba696b171acc2d2e8)), closes [#29193](https://github.com/ionic-team/ionic-framework/issues/29193)
+
+
+
+
+
+## [7.8.1](https://github.com/ionic-team/ionic-framework/compare/v7.8.0...v7.8.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* **datetime:** wheel picker shows consistently in overlays ([#29147](https://github.com/ionic-team/ionic-framework/issues/29147)) ([19c1bc1](https://github.com/ionic-team/ionic-framework/commit/19c1bc16cbc6725463890382365203824b7fd353)), closes [#26234](https://github.com/ionic-team/ionic-framework/issues/26234)
+* **header:** iOS headers in MD app are not hidden ([#29164](https://github.com/ionic-team/ionic-framework/issues/29164)) ([fdfecd3](https://github.com/ionic-team/ionic-framework/commit/fdfecd32c33c41cf202d3b30c073bfb1b077e2d6)), closes [#28867](https://github.com/ionic-team/ionic-framework/issues/28867)
+* **react:** avoid definitely typed errors with @types/react@18 ([#29182](https://github.com/ionic-team/ionic-framework/issues/29182)) ([58d217d](https://github.com/ionic-team/ionic-framework/commit/58d217d0cf6b716da855c71c169fb1870d4067d3)), closes [#29178](https://github.com/ionic-team/ionic-framework/issues/29178)
+
+
+### Performance Improvements
+
+* **datetime:** calendar body shows immediately in modal on ios ([#29163](https://github.com/ionic-team/ionic-framework/issues/29163)) ([f759776](https://github.com/ionic-team/ionic-framework/commit/f75977699dae5aeea3d97d4318377633e935afb9)), closes [#24542](https://github.com/ionic-team/ionic-framework/issues/24542)
+
+
+
+
+
 # [7.8.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.5...v7.8.0) (2024-03-13)
 
 

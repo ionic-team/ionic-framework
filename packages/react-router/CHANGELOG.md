@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.2](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v7.8.2) (2024-03-27)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [7.8.1](https://github.com/ionic-team/ionic-framework/compare/v7.8.0...v7.8.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* **react:** avoid definitely typed errors with @types/react@18 ([#29182](https://github.com/ionic-team/ionic-framework/issues/29182)) ([58d217d](https://github.com/ionic-team/ionic-framework/commit/58d217d0cf6b716da855c71c169fb1870d4067d3)), closes [#29178](https://github.com/ionic-team/ionic-framework/issues/29178)
+
+
+
+
+
 # [7.8.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.5...v7.8.0) (2024-03-13)
 
 **Note:** Version bump only for package @ionic/react-router
