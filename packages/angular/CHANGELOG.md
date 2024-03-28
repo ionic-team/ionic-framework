@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-rc.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.4...v8.0.0-rc.0) (2024-03-27)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [8.0.0-beta.4](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.3...v8.0.0-beta.4) (2024-03-27)
+
+
+### Bug Fixes
+
+* **angular:** schematics account for new theme files ([#29185](https://github.com/ionic-team/ionic-framework/issues/29185)) ([b0a10df](https://github.com/ionic-team/ionic-framework/commit/b0a10dfa56a65ee3905cc2c3d48d2221a42f222f))
+
+
+### Features
+
+* **input:** add input-password-toggle component ([#29175](https://github.com/ionic-team/ionic-framework/issues/29175)) ([6c500fd](https://github.com/ionic-team/ionic-framework/commit/6c500fd6b2e2553c11fcddc9d86ac9a29f76e172))
+
+
+
+
+
+## [7.8.2](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v7.8.2) (2024-03-27)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 # [8.0.0-beta.3](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v8.0.0-beta.3) (2024-03-20)
 
 **Note:** Version bump only for package @ionic/angular

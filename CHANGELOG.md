@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-rc.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.4...v8.0.0-rc.0) (2024-03-27)
+
+**Note:** Version bump only for package ionic-framework
+
+
+
+
+
+# [8.0.0-beta.4](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.3...v8.0.0-beta.4) (2024-03-27)
+
+
+### Bug Fixes
+
+* **angular:** schematics account for new theme files ([#29185](https://github.com/ionic-team/ionic-framework/issues/29185)) ([b0a10df](https://github.com/ionic-team/ionic-framework/commit/b0a10dfa56a65ee3905cc2c3d48d2221a42f222f))
+
+
+### Code Refactoring
+
+* **haptics:** remove cordova haptics support ([#29186](https://github.com/ionic-team/ionic-framework/issues/29186)) ([9efeb0a](https://github.com/ionic-team/ionic-framework/commit/9efeb0ad31aadee5f5ae542641d928ecf93fe82a))
+* **searchbar:** autocapitalize defaults to off ([#29107](https://github.com/ionic-team/ionic-framework/issues/29107)) ([6e477b7](https://github.com/ionic-team/ionic-framework/commit/6e477b743e41b2b37627c8208901704f599b762a))
+
+
+### Features
+
+* **button:** add circular shape as round ([#29161](https://github.com/ionic-team/ionic-framework/issues/29161)) ([44529f0](https://github.com/ionic-team/ionic-framework/commit/44529f0a62f1b1ce42750a20f19e829b2789febd))
+* **input:** add input-password-toggle component ([#29175](https://github.com/ionic-team/ionic-framework/issues/29175)) ([6c500fd](https://github.com/ionic-team/ionic-framework/commit/6c500fd6b2e2553c11fcddc9d86ac9a29f76e172))
+* remove css animations support for ionic animations ([#29123](https://github.com/ionic-team/ionic-framework/issues/29123)) ([892594d](https://github.com/ionic-team/ionic-framework/commit/892594de0665e8fc5c8a737d292812842ea03d64))
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `autocapitalize` property on Searchbar now defaults to `'off'`.
+* **haptics:** Support for the Cordova Haptics plugin has been removed. Components that integrate with haptics, such as `ion-picker` and `ion-toggle`, will continue to function but will no longer play haptics in Cordova environments. Developers should migrate to Capacitor to continue to have haptics in these components.
+
+
+
+
+
+## [7.8.2](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v7.8.2) (2024-03-27)
+
+### Bug Fixes
+
+* **searchbar:** autocapitalize is initialized correctly ([#29197](https://github.com/ionic-team/ionic-framework/issues/29197)) ([8ad66c0](https://github.com/ionic-team/ionic-framework/commit/8ad66c03d777edcab19c97cba696b171acc2d2e8)), closes [#29193](https://github.com/ionic-team/ionic-framework/issues/29193)
+
+
+
+
+
 # [8.0.0-beta.3](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.2...v8.0.0-beta.3) (2024-03-20)
 
 
