@@ -216,7 +216,7 @@ importers:
   ../../../../packages/react:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -238,11 +238,11 @@ importers:
         specifier: ^6.1.5
         version: 6.4.2(@types/jest@26.0.24)(jest@26.6.3)(vitest@0.32.4)
       '@testing-library/react':
-        specifier: ^11.2.2
-        version: 11.2.7(react-dom@16.14.0)(react@18.2.0)
+        specifier: ^12.1.5
+        version: 12.1.5(react-dom@17.0.2)(react@18.2.0)
       '@testing-library/react-hooks':
         specifier: ^7.0.1
-        version: 7.0.2(react-dom@16.14.0)(react@18.2.0)
+        version: 7.0.2(react-dom@17.0.2)(react@18.2.0)
       '@types/jest':
         specifier: ^26.0.15
         version: 26.0.24
@@ -253,8 +253,8 @@ importers:
         specifier: ^18.0.27
         version: 18.2.64
       '@types/react-dom':
-        specifier: ^16.9.0
-        version: 16.9.24
+        specifier: ^17.0.25
+        version: 17.0.25
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.48.2
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@7.32.0)(typescript@4.9.5)
@@ -283,8 +283,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^16.9.0
-        version: 16.14.0(react@18.2.0)
+        specifier: ^17.0.2
+        version: 17.0.2(react@18.2.0)
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -301,7 +301,7 @@ importers:
   ../../../../packages/react-router:
     dependencies:
       '@ionic/react':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../react
       history:
         specifier: ^4.9.0
@@ -329,8 +329,8 @@ importers:
         specifier: ^18.0.27
         version: 18.2.64
       '@types/react-dom':
-        specifier: ^16.9.0
-        version: 16.9.24
+        specifier: ^17.0.25
+        version: 17.0.25
       '@types/react-router':
         specifier: ^5.0.3
         version: 5.1.20
@@ -353,8 +353,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^16.9.0
-        version: 16.14.0(react@18.2.0)
+        specifier: ^17.0.2
+        version: 17.0.2(react@18.2.0)
       react-router:
         specifier: ^5.0.1
         version: 5.3.4(react@18.2.0)
@@ -1564,14 +1564,6 @@ packages:
 
   /@babel/regjsgen@0.8.0:
     resolution: {integrity: sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==}
-    dev: true
-
-  /@babel/runtime-corejs3@7.24.0:
-    resolution: {integrity: sha512-HxiRMOncx3ly6f3fcZ1GVKf+/EROcI9qwPgmij8Czqy6Okm/0T37T4y2ZIlLUuEUFjtM7NRsfdCO8Y3tAiJZew==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      core-js-pure: 3.36.0
-      regenerator-runtime: 0.14.1
     dev: true
 
   /@babel/runtime@7.24.0:
@@ -3250,18 +3242,18 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@testing-library/dom@7.31.2:
-    resolution: {integrity: sha512-3UqjCpey6HiTZT92vODYLPxTBWlM8ZOOjr3LX5F37/VRipW2M1kX6I/Cm4VXzteZqfGfagg8yXywpcOgQBlNsQ==}
-    engines: {node: '>=10'}
+  /@testing-library/dom@8.20.1:
+    resolution: {integrity: sha512-/DiOQ5xBxgdYRC8LNk7U+RWat0S3qRLeIw3ZIkMQ9kkVlRmwD/Eg8k8CqIpD6GW7u20JIUOfMKbxtiLutpjQ4g==}
+    engines: {node: '>=12'}
     dependencies:
       '@babel/code-frame': 7.23.5
       '@babel/runtime': 7.24.0
-      '@types/aria-query': 4.2.2
-      aria-query: 4.2.2
+      '@types/aria-query': 5.0.4
+      aria-query: 5.1.3
       chalk: 4.1.2
       dom-accessibility-api: 0.5.16
       lz-string: 1.5.0
-      pretty-format: 26.6.2
+      pretty-format: 27.5.1
     dev: true
 
   /@testing-library/dom@9.3.4:
@@ -3327,7 +3319,7 @@ packages:
       vitest: 0.32.4(jsdom@22.1.0)(terser@5.29.1)
     dev: true
 
-  /@testing-library/react-hooks@7.0.2(react-dom@16.14.0)(react@18.2.0):
+  /@testing-library/react-hooks@7.0.2(react-dom@17.0.2)(react@18.2.0):
     resolution: {integrity: sha512-dYxpz8u9m4q1TuzfcUApqi8iFfR6R0FaMbr2hjZJy1uC8z+bO/K4v8Gs9eogGKYQop7QsrBTFkv/BCF7MzD2Cg==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -3342,24 +3334,25 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.0
       '@types/react': 18.2.64
-      '@types/react-dom': 16.9.24
+      '@types/react-dom': 17.0.25
       '@types/react-test-renderer': 18.0.7
       react: 18.2.0
-      react-dom: 16.14.0(react@18.2.0)
+      react-dom: 17.0.2(react@18.2.0)
       react-error-boundary: 3.1.4(react@18.2.0)
     dev: true
 
-  /@testing-library/react@11.2.7(react-dom@16.14.0)(react@18.2.0):
-    resolution: {integrity: sha512-tzRNp7pzd5QmbtXNG/mhdcl7Awfu/Iz1RaVHY75zTdOkmHCuzMhRL83gWHSgOAcjS3CCbyfwUHMZgRJb4kAfpA==}
-    engines: {node: '>=10'}
+  /@testing-library/react@12.1.5(react-dom@17.0.2)(react@18.2.0):
+    resolution: {integrity: sha512-OfTXCJUFgjd/digLUuPxa0+/3ZxsQmE7ub9kcbW/wi96Bh3o/p5vrETcBGfP17NWPGqeYYl5LTRpwyGoMC4ysg==}
+    engines: {node: '>=12'}
     peerDependencies:
       react: ^18.2.0
-      react-dom: '*'
+      react-dom: <18.0.0
     dependencies:
       '@babel/runtime': 7.24.0
-      '@testing-library/dom': 7.31.2
+      '@testing-library/dom': 8.20.1
+      '@types/react-dom': 17.0.25
       react: 18.2.0
-      react-dom: 16.14.0(react@18.2.0)
+      react-dom: 17.0.2(react@18.2.0)
     dev: true
 
   /@testing-library/react@14.2.1(react-dom@18.2.0)(react@18.2.0):
@@ -3393,10 +3386,6 @@ packages:
   /@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
-    dev: true
-
-  /@types/aria-query@4.2.2:
-    resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
     dev: true
 
   /@types/aria-query@5.0.4:
@@ -3557,8 +3546,8 @@ packages:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
     dev: true
 
-  /@types/react-dom@16.9.24:
-    resolution: {integrity: sha512-Gcmq2JTDheyWn/1eteqyzzWKSqDjYU6KYsIvH7thb7CR5OYInAWOX+7WnKf6PaU/cbdOc4szJItcDEJO7UGmfA==}
+  /@types/react-dom@17.0.25:
+    resolution: {integrity: sha512-urx7A7UxkZQmThYA4So0NelOVjx3V4rNFVJwp0WZlbIK5eM4rNJDiN3R/E9ix0MBh6kAEojk/9YL+Te6D9zHNA==}
     dependencies:
       '@types/react': 18.2.64
     dev: true
@@ -4440,14 +4429,6 @@ packages:
 
   /argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
-    dev: true
-
-  /aria-query@4.2.2:
-    resolution: {integrity: sha512-o/HelwhuKpTj/frsOsbNLNgnNGVIFsVP/SW2BSF14gVl7kAfMOJ6/8wUAUvG1R1NHKrfG+2sHZTu0yauT1qBrA==}
-    engines: {node: '>=6.0'}
-    dependencies:
-      '@babel/runtime': 7.24.0
-      '@babel/runtime-corejs3': 7.24.0
     dev: true
 
   /aria-query@5.1.3:
@@ -5544,11 +5525,6 @@ packages:
       browserslist: 4.23.0
     dev: true
 
-  /core-js-pure@3.36.0:
-    resolution: {integrity: sha512-cN28qmhRNgbMZZMc/RFu5w8pK9VJzpb2rJVR/lHuZJKwmXnoWOpXmMkxqBB514igkp1Hu8WGROsiOAzUcKdHOQ==}
-    requiresBuild: true
-    dev: true
-
   /core-js@3.36.0:
     resolution: {integrity: sha512-mt7+TUBbTFg5+GngsAxeKBTl5/VS0guFeJacYge9OmHb+m058UwwIm41SE9T4Den7ClatV57B6TYTuJ0CX1MAw==}
     requiresBuild: true
@@ -6427,7 +6403,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.9.5)
+      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@5.4.2)
       debug: 3.2.7(supports-color@8.1.1)
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.9
@@ -6445,7 +6421,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.9.5)
+      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@5.4.2)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.4
       array.prototype.flat: 1.3.2
@@ -10875,16 +10851,15 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
-  /react-dom@16.14.0(react@18.2.0):
-    resolution: {integrity: sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==}
+  /react-dom@17.0.2(react@18.2.0):
+    resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-      prop-types: 15.8.1
       react: 18.2.0
-      scheduler: 0.19.1
+      scheduler: 0.20.2
     dev: true
 
   /react-dom@18.2.0(react@18.2.0):
@@ -11421,8 +11396,8 @@ packages:
       xmlchars: 2.2.0
     dev: true
 
-  /scheduler@0.19.1:
-    resolution: {integrity: sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==}
+  /scheduler@0.20.2:
+    resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1

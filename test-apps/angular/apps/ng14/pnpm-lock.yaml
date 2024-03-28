@@ -136,7 +136,7 @@ importers:
   ../../../../packages/angular:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -242,7 +242,7 @@ importers:
   ../../../../packages/angular-server:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       zone.js:
         specifier: '>=0.11.0'

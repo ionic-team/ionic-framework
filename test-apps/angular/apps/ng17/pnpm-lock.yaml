@@ -136,7 +136,7 @@ importers:
   ../../../../packages/angular:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -242,7 +242,7 @@ importers:
   ../../../../packages/angular-server:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       zone.js:
         specifier: '>=0.11.0'
@@ -7860,7 +7860,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
+      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@5.2.2)
       debug: 3.2.7(supports-color@8.1.1)
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.9
@@ -7965,7 +7965,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
+      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@5.2.2)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.4
       array.prototype.flat: 1.3.2
