@@ -24,7 +24,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
   styleUrls: {
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
-    ionic: 'checkbox.md.scss',
+    ionic: 'checkbox.ionic.scss',
   },
   shadow: true,
 })
