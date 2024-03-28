@@ -1,8 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-// TODO: FW-6077 - Limit this test to just the Ionic theme on MD mode.
-configs({ directions: ['ltr'], themes: ['ionic', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: size'), () => {
     test('should render small buttons', async ({ page }) => {
       await page.setContent(
@@ -65,7 +64,7 @@ configs({ directions: ['ltr'], themes: ['ionic', 'md', 'ios'] }).forEach(({ titl
 /**
  * The following tests are specific to the Ionic theme and do not depend on the text direction.
  */
-configs({ directions: ['ltr'], themes: ['ionic'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: size'), () => {
     test('should render xsmall buttons', async ({ page }) => {
       await page.setContent(`<ion-button size="xsmall" fill="solid">X-Small Button</ion-button>`, config);
