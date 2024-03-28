@@ -51,10 +51,10 @@ interface TestConfigOption {
   /**
    * The color palette to test against.
    *
-   * - "light": Test against light theme.
-   * - "dark": Test against dark theme.
-   * - "high-contrast": Test against high contrast light theme.
-   * - "high-contrast-dark": Test against high contrast dark theme.
+   * - "light": Test against light palette.
+   * - "dark": Test against dark palette.
+   * - "high-contrast": Test against high contrast light palette.
+   * - "high-contrast-dark": Test against high contrast dark palette.
    *
    * If unspecified, tests will run against light theme.
    */
