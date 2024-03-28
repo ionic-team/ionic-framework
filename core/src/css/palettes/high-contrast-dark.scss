@@ -1,5 +1,5 @@
 @use "sass:map";
-@import "../../themes/ionic.functions.color";
+@import "../../themes/functions";
 
 $primary:         #7cabff !default;
 $secondary:       #62bdff !default;
@@ -111,7 +111,7 @@ $lightest-text-color: $text-color;
 
 @mixin high-contrast-dark-ios-palette() {
   $background-color: #000000;
-  
+
   & {
     --ion-background-color: #{$background-color};
     --ion-background-color-rgb: #{color-to-rgb-list($background-color)};
@@ -175,7 +175,7 @@ $lightest-text-color: $text-color;
 
 @mixin high-contrast-dark-md-palette() {
   $background-color: #121212;
-  
+
   & {
     --ion-background-color: #{$background-color};
     --ion-background-color-rgb: #{color-to-rgb-list($background-color)};

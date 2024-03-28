@@ -1,6 +1,6 @@
 @import "./datetime.scss";
 @import "./datetime.md.vars.scss";
-@import "../../themes/ionic.globals.md";
+@import "../../themes/globals.md";
 
 :host {
   --background: var(--ion-color-step-100, var(--ion-background-color-step-100, #ffffff));

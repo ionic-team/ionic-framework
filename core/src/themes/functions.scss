@@ -1,0 +1,363 @@
+
+@use "sass:color";
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
+@use "sass:meta";
+@use "sass:string";
+
+// TODO can we combine the following two variables
+// and combine the functions that use them?
+$browser-context: 16;
+$baselineSize: 16px !default;
+$baselineUnit: 1rem !default;
+
+/**
+ * Convert a pixels given value into rem
+ *
+ * @param pixels - Value in pixels to be converted (i.e. px)
+ * @param context (optional) - Baseline value
+ */
+@function px-to-rem($pixels, $context: $browser-context) {
+  @return math.div($pixels, $context) * 1rem;
+}
+
+/**
+ * Convert a font size to a dynamic font size.
+ * Fonts that participate in Dynamic Type should use
+ * dynamic font sizes.
+ * @param size - The initial font size including the unit (i.e. px or pt)
+ * @param unit (optional) - The unit to convert to. Use this if you want to
+ * convert to a unit other than $baselineUnit.
+ */
+@function dynamic-font($size, $unit: $baselineUnit) {
+  @return (math.div($size, $baselineSize)) * $unit;
+}
+
+/**
+ * Convert a font size to a dynamic font size but impose
+ * a maximum font size.
+ * @param size - The initial font size including the unit (i.e. px or pt)
+ * @param maxScale - The maximum scale of the font (i.e. 2.5 for a maximum 250% scale).
+ * @param unit (optional) - The unit to convert the initial font size to. Use this if you want to
+ * convert to a unit other than $baselineUnit.
+ */
+@function dynamic-font-max($size, $maxScale, $unit: $baselineUnit) {
+  $baseScale: dynamic-font($size, $unit);
+  $maxScale: $size * $maxScale;
+
+  @return min($baseScale, $maxScale);
+}
+
+/**
+ * Convert a font size to a dynamic font size but impose
+ * a minimum font size.
+ * @param size - The initial font size including the unit (i.e. px or pt)
+ * @param minScale - The minimum scale of the font (i.e. 0.8 for a minimum 80% scale).
+ * @param unit (optional) - The unit to convert the initial font size to. Use this if you want to
+ * convert to a unit other than $baselineUnit.
+ */
+@function dynamic-font-min($minScale, $size, $unit: $baselineUnit) {
+  $baseScale: dynamic-font($size, $unit);
+  $minScale: $size * $minScale;
+
+  @return max($minScale, $baseScale);
+}
+
+/**
+ * Convert a font size to a dynamic font size but impose
+ * maximum and minimum font sizes.
+ * @param size - The initial font size including the unit (i.e. px or pt)
+ * @param minScale - The minimum scale of the font (i.e. 0.8 for a minimum 80% scale).
+ * @param maxScale - The maximum scale of the font (i.e. 2.5 for a maximum 250% scale).
+ * @param unit (optional) - The unit to convert the initial font size to. Use this if you want to
+ * convert to a unit other than $baselineUnit.
+ */
+@function dynamic-font-clamp($minScale, $baseSize, $maxScale, $unit: $baselineUnit) {
+  $baseScale: dynamic-font($baseSize, $unit);
+  $maxScale: $baseSize * $maxScale;
+  $minScale: $baseSize * $minScale;
+
+  @return clamp($minScale, $baseScale, $maxScale);
+}
+
+// Gets the active color's css variable from a variation. Alpha is optional.
+// --------------------------------------------------------------------------------------------
+// Example usage:
+// current-color(base) => var(--ion-color-base)
+// current-color(contrast, 0.1) => rgba(var(--ion-color-contrast-rgb), 0.1)
+// --------------------------------------------------------------------------------------------
+@function current-color($variation, $alpha: null) {
+  @if $alpha == null {
+    @return var(--ion-color-#{$variation});
+  } @else {
+    @return rgba(var(--ion-color-#{$variation}-rgb), #{$alpha});
+  }
+}
+
+// Gets the specific color's css variable from the name and variation. Alpha/rgb are optional.
+// --------------------------------------------------------------------------------------------
+// Example usage:
+// ion-color(primary, base) => var(--ion-color-primary, #3880ff)
+// ion-color(secondary, contrast) => var(--ion-color-secondary-contrast)
+// ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.5)
+// --------------------------------------------------------------------------------------------
+@function ion-color($name, $variation, $alpha: null, $rgb: null) {
+  $values: map.get($colors, $name);
+  $value: map.get($values, $variation);
+  $variable: --ion-color-#{$name}-#{$variation};
+
+  @if ($variation == base) {
+    $variable: --ion-color-#{$name};
+  }
+
+  @if ($alpha) {
+    $value: color-to-rgb-list($value);
+    @return rgba(var(#{$variable}-rgb, $value), $alpha);
+  }
+  @if ($rgb) {
+    $value: color-to-rgb-list($value);
+    $variable: #{$variable}-rgb;
+  }
+
+  @return var(#{$variable}, $value);
+}
+
+// Mixes a color with black to create its shade.
+// --------------------------------------------------------------------------------------------
+@function get-color-shade($color) {
+  @return color.mix(#000, $color, 12%);
+}
+
+// Mixes a color with white to create its tint.
+// --------------------------------------------------------------------------------------------
+@function get-color-tint($color) {
+  @return color.mix(#fff, $color, 10%);
+}
+
+// Converts a color to a comma separated rgb.
+// --------------------------------------------------------------------------------------------
+@function color-to-rgb-list($color) {
+  @return #{color.red($color)},#{color.green($color)},#{color.blue($color)};
+}
+
+// String Utility Functions
+// --------------------------------------------------------------------------------
+
+// String Replace Function
+// --------------------------------------------------------------------------------
+
+@function str-replace($string, $search, $replace: "") {
+  $index: string.index($string, $search);
+
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// String Split Function
+// --------------------------------------------------------------------------------
+
+
+@function str-split($string, $separator) {
+  // empty array/list
+  $split-arr: ();
+  // first index of separator in string
+  $index: string.index($string, $separator);
+  // loop through string
+  @while $index != null {
+    // get the substring from the first character to the separator
+    $item: string.slice($string, 1, $index - 1);
+    // push item to array
+    $split-arr: list.append($split-arr, $item);
+    // remove item and separator from string
+    $string: string.slice($string, $index + 1);
+    // find new index of separator
+    $index: string.index($string, $separator);
+  }
+  // add the remaining string to list (the last item)
+  $split-arr: list.append($split-arr, $string);
+
+  @return $split-arr;
+}
+
+
+// String Extract Function
+// --------------------------------------------------------------------------------
+
+@function str-extract($string, $start, $end) {
+  $start-index: string.index($string, $start);
+
+  @if $start-index {
+    $post: string.slice($string, $start-index + string.length($start));
+    $end-index: string.index($post, $end);
+
+    @if $end-index {
+      @return string.slice($post, 1, $end-index - 1);
+    }
+  }
+
+  @return null;
+}
+
+
+// String Contains Function
+// --------------------------------------------------------------------------------
+
+@function str-contains($string, $needle) {
+  @if (meta.type-of($string) == string) {
+    @return string.index($string, $needle) != null;
+  }
+
+  @return false;
+}
+
+
+// URL Encode Function
+// --------------------------------------------------------------------------------
+
+@function url-encode($val) {
+  $spaces: str-replace($val, " ", "%20");
+  $encoded: str-replace($spaces, "#", "%23");
+  @return $encoded;
+}
+
+
+// Add Root Selector
+// --------------------------------------------------------------------------------
+// Adds a root selector using host based on the selector passed
+// $root: The selector that needs to be updated to include the $add-host-selector.
+// - Example: ion-button
+// $add-host-selector: The selector that is used to add the host to the $root selector.
+// - Example: [dir=rtl]
+// $use-host-context: Whether to use host-context or not. Defaults to true.
+// --------------------------------------------------------------------------------
+
+
+@function add-root-selector($root, $add-host-selector, $use-host-context: true) {
+  $selectors: str-split($root, ",");
+
+  $list: ();
+
+  @each $selector in $selectors {
+    // If the selector contains :host( it means it is targeting a class on the host
+    // element so we need to change how we target it:
+    // Example with `use-host-context=true`
+    // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
+    // --> :host-context([dir=rtl]):host(.fixed)
+    // --> :host-context([dir=rtl]).fixed
+    // ---
+    // Example with `use-host-context=false`
+    // @include add-root(":host(.fixed)", ":dir(rtl)", false)
+    // --> :host(.fixed:dir(rtl))
+    @if str-contains($selector, ":host(") {
+      @if $use-host-context {
+        // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
+        // --> :host-context([dir=rtl]):host(.fixed)
+        $shadow-element: str-replace($selector, ":host(", ":host-context(#{$add-host-selector}):host(");
+        $list: list.append($list, $shadow-element, comma);
+      }
+
+      $new-element: ();
+      $elements: str-split($selector, " ");
+
+      @each $element in $elements {
+        @if str-contains($element, ":host(") {
+          $scoped-element: $element;
+
+          // Replace the :host( and ) so all we have left is the class
+          // inside of it:
+          // :host(.fixed) -> .fixed
+          $scoped-element: str-replace($scoped-element, ")", "");
+          $scoped-element: str-replace($scoped-element, ":host(", "");
+
+          // Add the class back inside of host with the add-host-selector:
+          @if $use-host-context {
+            // .fixed -> :host-context([dir=rtl]).fixed
+            $scoped-element: str-replace($scoped-element, $scoped-element, ":host-context(#{$add-host-selector})#{$scoped-element}");
+          } @else {
+            // .fixed -> :host(.fixed:dir(rtl))
+            $scoped-element: str-replace($scoped-element, $scoped-element, ":host(#{$scoped-element}#{$add-host-selector})");
+          }
+
+          // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
+          // --> :host-context([dir=rtl]).fixed
+          // @include add-root(":host(.fixed)", ":dir(rtl)", false)
+          // --> :host(.fixed:dir(rtl))
+          $new-element: list.append($new-element, $scoped-element, space);
+        } @else {
+          // Add back any selectors that followed the host
+          // after transforming the first selector:
+          // @include add-root-selector(":host(.fixed) ::slotted(ion-icon)", "[dir=rtl]")
+          // --> :host-context([dir=rtl]):host(.fixed) ::slotted(ion-icon)
+          // --> :host-context([dir=rtl]).fixed ::slotted(ion-icon)
+          // @include add-root(":host(.fixed) ::slotted(ion-icon)", ":dir(rtl)", false)
+          // --> :host(.fixed:dir(rtl)) ::slotted(ion-icon)
+          $new-element: list.append($new-element, $element, space);
+        }
+      }
+
+      $list: list.append($list, $new-element, comma);
+    // If the selector contains :host without a parantheses
+    // it means it is targeting just the host
+    // element so we can change it to look for host-context
+    // @include add-root-selector(":host", "[dir=rtl]")
+    // --> :host-context([dir=rtl])
+    // @include add-root(":host", ":dir(rtl)", false)
+    // --> :host(:dir(rtl))
+    } @else if str-contains($selector, ":host") {
+      $new-element: ();
+      $elements: str-split($selector, " ");
+
+      @each $element in $elements {
+        @if str-contains($element, ":host") {
+          $updated-element: '';
+
+          // Replace the :host with the add-host-selector:
+          @if $use-host-context {
+            // :host -> :host-context([dir=rtl])
+            $updated-element: str-replace($element, ":host", ":host-context(#{$add-host-selector})");
+          } @else {
+            // :host -> :host(:dir(rtl))
+            $updated-element: str-replace($element, ":host", ":host(#{$add-host-selector})");
+          }
+
+          // Add the final selector after all transformations:
+          // @include add-root-selector(":host", "[dir=rtl]")
+          // --> :host-context([dir=rtl])
+          // @include add-root(":host", ":dir(rtl)", false)
+          // --> :host(:dir(rtl))
+          $new-element: list.append($new-element, $updated-element, space);
+        } @else {
+          // Add back any selectors that followed the host
+          // after transforming the first selector:
+          // @include add-root-selector(":host ::slotted(ion-icon)", "[dir=rtl]")
+          // --> :host-context([dir=rtl]) ::slotted(ion-icon)
+          // @include add-root(":host ::slotted(ion-icon)", ":dir(rtl)", false)
+          // --> :host(:dir(rtl)) ::slotted(ion-icon)
+          $new-element: list.append($new-element, $element, space);
+        }
+      }
+
+      $list: list.append($list, $new-element, comma);
+    // If the selector does not contain host at all it is either a shadow
+    // or normal element so append both the add-host-selector and host-context
+    // @include add-root-selector("ion-component", "[dir=rtl]")
+    // --> :host-context([dir=rtl]) ion-component
+    // --> [dir=rtl] ion-component
+    // @include add-root("ion-component", ":dir(rtl)", false)
+    // --> ion-component:dir(rtl)
+    } @else {
+      @if ($use-host-context) {
+        $list: list.append($list, ":host-context(#{$add-host-selector}) #{$selector}", comma);
+        $list: list.append($list, "#{$add-host-selector} #{$selector}", comma);
+      } @else {
+        $list: list.append($list, "#{$selector}#{$add-host-selector}", comma);
+      }
+    }
+  }
+
+  @return $list;
+}
