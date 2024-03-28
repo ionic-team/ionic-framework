@@ -1,0 +1,63 @@
+@import "../../themes/ionic.globals.md";
+@import "../item/item.md.vars";
+
+// ionic Checkbox
+// --------------------------------------------------
+
+/// @prop - Background color of the checkbox icon when off
+$checkbox-ionic-icon-background-color-off:  $item-md-background !default;
+
+/// @prop - Size of the checkbox icon
+/// The icon size does not use dynamic font
+/// because it does not scale in native.
+$checkbox-ionic-icon-size: 24px !default;
+
+/// @prop - Icon size of the checkbox for the small size
+$checkbox-ionic-small-icon-size: 16px !default;
+
+/// @prop - Border width of the checkbox icon
+$checkbox-ionic-icon-border-width: 1px !default;
+
+/// @prop - Border style of the checkbox icon
+$checkbox-ionic-icon-border-style: solid !default;
+
+/// @prop - Border color of the checkbox icon when off
+$checkbox-ionic-icon-border-color-off: #9a9a9a !default;
+
+/// @prop - Outline width of the checkbox
+$checkbox-ionic-outline-width: 2px !default;
+
+/// @prop - Padding top of the checkbox for the default size
+$checkbox-ionic-padding-top: 12px !default;
+
+/// @prop - Padding bottom of the button for the default size
+$checkbox-ionic-padding-bottom: 12px !default;
+
+/// @prop - Padding top of the checkbox for the small size
+$checkbox-ionic-small-padding-top: 16px !default;
+
+/// @prop - Padding bottom of the button for the small size
+$checkbox-ionic-small-padding-bottom: 16px !default;
+
+/// @prop - Focus color of the checkbox
+$checkbox-ionic-focus-ring-color: #9ec4fd !default;
+
+/// @prop - Focus color of the required checkbox
+$checkbox-ionic-focus-required-ring-color: #FFAFAF !default;
+
+/// @prop - Transition duration of the checkbox
+$checkbox-ionic-transition-duration: 180ms !default;
+
+/// @prop - Transition easing of the checkbox
+$checkbox-ionic-transition-easing: cubic-bezier(.4, 0, .2, 1) !default;
+
+
+// Checkbox Shapes
+// -------------------------------------------------------------------------------
+
+/* Rectangular */
+/// @prop - Rectangular border radius of the checkbox
+$checkbox-ionic-rectangular-border: 0 !default;
+
+
+
