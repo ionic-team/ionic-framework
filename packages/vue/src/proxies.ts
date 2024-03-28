@@ -262,6 +262,7 @@ export const IonCol = /*@__PURE__*/ defineContainer<JSX.IonCol>('ion-col', defin
 export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-content', defineIonContent, [
   'color',
   'fullscreen',
+  'fixedSlotPlacement',
   'forceOverscroll',
   'scrollX',
   'scrollY',
