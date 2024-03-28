@@ -4,8 +4,8 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * Text does not have per-mode styles
  */
-configs({ themes: ['ionic'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('text: global styles'), () => {
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('typography: global styles'), () => {
     test('should apply the globals styles for each semantic tag', async ({ page }) => {
       await page.setContent(
         `

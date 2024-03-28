@@ -1,23 +1,42 @@
+// Global Font Functions
+@import "../themes/ionic.functions.font";
+
+$ionic-display-m:         dynamic-font(36px);
+$ionic-display-s:         dynamic-font(32px);
+
+$ionic-h1-font-size:      dynamic-font(28px) !default;
+$ionic-h2-font-size:      dynamic-font(26px) !default;
+$ionic-h3-font-size:      dynamic-font(24px) !default;
+$ionic-h4-font-size:      dynamic-font(22px) !default;
+$ionic-h5-font-size:      dynamic-font(20px) !default;
+$ionic-h6-font-size:      dynamic-font(18px) !default;
+
+$ionic-font-size-s:       dynamic-font(12px);
+$ionic-font-size-base:    dynamic-font(14px);
+$ionic-font-size-l:       dynamic-font(16px);
+
 :root {
   /* Font Family */
   --ionic-font-family: "Inter", sans-serif;
 
   /* Font sizes */
-  --ionic-font-size-s: 12px;
-  --ionic-font-size-base: 14px;
-  --ionic-font-size-l: 16px;
+  --ionic-font-size-s: #{$ionic-font-size-s};
+  --ionic-font-size-base: #{$ionic-font-size-base};
+  --ionic-font-size-l: #{$ionic-font-size-l};
 
   /* Font size displays */
-  --ionic-display-m: 36px;
-  --ionic-display-s: 32px;
+  --ionic-display-s: #{$ionic-display-s};
+  --ionic-display-m: #{$ionic-display-m};
+  --ionic-line-height-display-s: 44px;
+  --ionic-line-height-display-m: 48px;
 
   /* Headings */
-  --ionic-h1-font-size: 28px;
-  --ionic-h2-font-size: 26px;
-  --ionic-h3-font-size: 24px;
-  --ionic-h4-font-size: 22px;
-  --ionic-h5-font-size: 20px;
-  --ionic-h6-font-size: 18px;
+  --ionic-h1-font-size: #{$ionic-h1-font-size};
+  --ionic-h2-font-size: #{$ionic-h2-font-size};
+  --ionic-h3-font-size: #{$ionic-h3-font-size};
+  --ionic-h4-font-size: #{$ionic-h4-font-size};
+  --ionic-h5-font-size: #{$ionic-h5-font-size};
+  --ionic-h6-font-size: #{$ionic-h6-font-size};
 
   /* Font Weights */
   --ionic-font-light: 300;
@@ -33,8 +52,6 @@
   --ionic-line-height-l: 28px;
   --ionic-line-height-xl: 32px;
   --ionic-line-height-xxl: 36px;
-  --ionic-line-height-display-s: 44px;
-  --ionic-line-height-display-m: 48px;
 
   /* Letter spacing */
   --ionic-letter-spacing-none: 0em;
@@ -50,58 +67,87 @@ html {
 }
 
 h1,
-.ionic-heading1,
 h2,
-.ionic-heading2,
 h3,
-.ionic-heading3,
 h4,
-.ionic-heading4,
 h5,
+h6 {
+  color: var(--ionic-color-base);
+  font-weight: var(--ionic-font-semibold);
+}
+
+h1 {
+  font-size: var(--ionic-h1-font-size);
+  line-height: var(--ionic-line-height-xxl);
+}
+
+h2 {
+  font-size: var(--ionic-h2-font-size);
+  line-height: var(--ionic-line-height-xl);
+}
+
+h3 {
+  font-size: var(--ionic-h3-font-size);
+  line-height: var(--ionic-line-height-l);
+}
+
+h4 {
+  font-size: var(--ionic-h4-font-size);
+  line-height: var(--ionic-line-height-l);
+}
+
+h5 {
+  font-size: var(--ionic-h5-font-size);
+  line-height: var(--ionic-line-height-l);
+}
+
+h6 {
+  font-size: var(--ionic-h6-font-size);
+  line-height: var(--ionic-line-height-s);
+}
+
+/* Utility Classes */
+/* Headings */
+.ionic-heading1,
+.ionic-heading2,
+.ionic-heading3,
+.ionic-heading4,
 .ionic-heading5,
-h6,
 .ionic-heading6 {
   color: var(--ionic-color-base);
   font-weight: var(--ionic-font-semibold);
 }
 
-h1,
 .ionic-heading1 {
   font-size: var(--ionic-h1-font-size);
   line-height: var(--ionic-line-height-xxl);
 }
 
-h2,
 .ionic-heading2 {
   font-size: var(--ionic-h2-font-size);
   line-height: var(--ionic-line-height-xl);
 }
 
-h3,
 .ionic-heading3 {
   font-size: var(--ionic-h3-font-size);
-  line-height: var(--ionic-line-height-xl);
+  line-height: var(--ionic-line-height-l);
 }
 
-h4,
 .ionic-heading4 {
   font-size: var(--ionic-h4-font-size);
   line-height: var(--ionic-line-height-l);
 }
 
-h5,
 .ionic-heading5 {
   font-size: var(--ionic-h5-font-size);
   line-height: var(--ionic-line-height-l);
 }
 
-h6,
 .ionic-heading6 {
   font-size: var(--ionic-h6-font-size);
-  line-height: var(--ionic-line-height-m);
+  line-height: var(--ionic-line-height-s);
 }
 
-/* Utility Classes */
 /* Font size display */
 .ionic-font-display-s,
 .ionic-font-display-m {
