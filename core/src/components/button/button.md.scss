@@ -163,7 +163,7 @@
     * large and small are based on the iOS sizes.
     * min font size: 13px, default font size: 16px, max font size: 38px
     */
-  font-size: dynamic-font-clamp(0.62, 21px, 1.88, 1em);
+  font-size: dynamic-font-clamp(0.62, 19.7px, 1.88, 1em);
 }
 
 :host(.button-large.button-has-icon-only) {
