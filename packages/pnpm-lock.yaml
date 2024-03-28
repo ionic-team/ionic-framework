@@ -9,7 +9,7 @@ importers:
   angular:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -115,7 +115,7 @@ importers:
   angular-server:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       zone.js:
         specifier: '>=0.11.0'
@@ -300,7 +300,7 @@ importers:
   react:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -322,11 +322,11 @@ importers:
         specifier: ^6.1.5
         version: 6.4.2(@types/jest@26.0.24)(jest@26.6.3)
       '@testing-library/react':
-        specifier: ^11.2.2
-        version: 11.2.7(react-dom@16.14.0)(react@16.14.0)
+        specifier: ^12.1.5
+        version: 12.1.5(react-dom@17.0.2)(react@17.0.2)
       '@testing-library/react-hooks':
         specifier: ^7.0.1
-        version: 7.0.2(react-dom@16.14.0)(react@16.14.0)
+        version: 7.0.2(react-dom@17.0.2)(react@17.0.2)
       '@types/jest':
         specifier: ^26.0.15
         version: 26.0.24
@@ -334,11 +334,11 @@ importers:
         specifier: ^14.0.14
         version: 14.18.63
       '@types/react':
-        specifier: 16.14.0
-        version: 16.14.0
+        specifier: ^17.0.79
+        version: 17.0.80
       '@types/react-dom':
-        specifier: ^16.9.0
-        version: 16.9.24
+        specifier: ^17.0.25
+        version: 17.0.25
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.48.2
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@7.32.0)(typescript@4.7.4)
@@ -364,11 +364,11 @@ importers:
         specifier: ^2.8.3
         version: 2.8.8
       react:
-        specifier: ^16.9.0
-        version: 16.14.0
+        specifier: ^17.0.2
+        version: 17.0.2
       react-dom:
-        specifier: ^16.9.0
-        version: 16.14.0(react@16.14.0)
+        specifier: ^17.0.2
+        version: 17.0.2(react@17.0.2)
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -385,7 +385,7 @@ importers:
   react-router:
     dependencies:
       '@ionic/react':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../react
       history:
         specifier: ^4.9.0
@@ -410,11 +410,11 @@ importers:
         specifier: ^14.0.14
         version: 14.18.63
       '@types/react':
-        specifier: 16.14.0
-        version: 16.14.0
+        specifier: ^17.0.79
+        version: 17.0.80
       '@types/react-dom':
-        specifier: ^16.9.0
-        version: 16.9.24
+        specifier: ^17.0.25
+        version: 17.0.25
       '@types/react-router':
         specifier: ^5.0.3
         version: 5.1.20
@@ -434,17 +434,17 @@ importers:
         specifier: ^2.8.3
         version: 2.8.8
       react:
-        specifier: ^16.9.0
-        version: 16.14.0
+        specifier: ^17.0.2
+        version: 17.0.2
       react-dom:
-        specifier: ^16.9.0
-        version: 16.14.0(react@16.14.0)
+        specifier: ^17.0.2
+        version: 17.0.2(react@17.0.2)
       react-router:
         specifier: ^5.0.1
-        version: 5.3.4(react@16.14.0)
+        version: 5.3.4(react@17.0.2)
       react-router-dom:
         specifier: ^5.0.1
-        version: 5.3.4(react@16.14.0)
+        version: 5.3.4(react@17.0.2)
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -458,7 +458,7 @@ importers:
   vue:
     dependencies:
       '@ionic/core':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../core
       ionicons:
         specifier: ^7.0.0
@@ -513,7 +513,7 @@ importers:
   vue-router:
     dependencies:
       '@ionic/vue':
-        specifier: ^7.8.0
+        specifier: ^7.8.2
         version: link:../vue
     devDependencies:
       '@ionic/eslint-config':
@@ -1260,14 +1260,6 @@ packages:
     dependencies:
       '@babel/core': 7.24.0
       '@babel/helper-plugin-utils': 7.24.0
-    dev: true
-
-  /@babel/runtime-corejs3@7.24.0:
-    resolution: {integrity: sha512-HxiRMOncx3ly6f3fcZ1GVKf+/EROcI9qwPgmij8Czqy6Okm/0T37T4y2ZIlLUuEUFjtM7NRsfdCO8Y3tAiJZew==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      core-js-pure: 3.36.0
-      regenerator-runtime: 0.14.1
     dev: true
 
   /@babel/runtime@7.24.0:
@@ -2880,18 +2872,18 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@testing-library/dom@7.31.2:
-    resolution: {integrity: sha512-3UqjCpey6HiTZT92vODYLPxTBWlM8ZOOjr3LX5F37/VRipW2M1kX6I/Cm4VXzteZqfGfagg8yXywpcOgQBlNsQ==}
-    engines: {node: '>=10'}
+  /@testing-library/dom@8.20.1:
+    resolution: {integrity: sha512-/DiOQ5xBxgdYRC8LNk7U+RWat0S3qRLeIw3ZIkMQ9kkVlRmwD/Eg8k8CqIpD6GW7u20JIUOfMKbxtiLutpjQ4g==}
+    engines: {node: '>=12'}
     dependencies:
       '@babel/code-frame': 7.23.5
       '@babel/runtime': 7.24.0
-      '@types/aria-query': 4.2.2
-      aria-query: 4.2.2
+      '@types/aria-query': 5.0.4
+      aria-query: 5.1.3
       chalk: 4.1.2
       dom-accessibility-api: 0.5.16
       lz-string: 1.5.0
-      pretty-format: 26.6.2
+      pretty-format: 27.5.1
     dev: true
 
   /@testing-library/jest-dom@6.4.2(@types/jest@26.0.24)(jest@26.6.3):
@@ -2927,7 +2919,7 @@ packages:
       redent: 3.0.0
     dev: true
 
-  /@testing-library/react-hooks@7.0.2(react-dom@16.14.0)(react@16.14.0):
+  /@testing-library/react-hooks@7.0.2(react-dom@17.0.2)(react@17.0.2):
     resolution: {integrity: sha512-dYxpz8u9m4q1TuzfcUApqi8iFfR6R0FaMbr2hjZJy1uC8z+bO/K4v8Gs9eogGKYQop7QsrBTFkv/BCF7MzD2Cg==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -2941,25 +2933,26 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.24.0
-      '@types/react': 16.14.0
-      '@types/react-dom': 16.9.24
+      '@types/react': 17.0.80
+      '@types/react-dom': 17.0.25
       '@types/react-test-renderer': 18.0.7
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
-      react-error-boundary: 3.1.4(react@16.14.0)
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
+      react-error-boundary: 3.1.4(react@17.0.2)
     dev: true
 
-  /@testing-library/react@11.2.7(react-dom@16.14.0)(react@16.14.0):
-    resolution: {integrity: sha512-tzRNp7pzd5QmbtXNG/mhdcl7Awfu/Iz1RaVHY75zTdOkmHCuzMhRL83gWHSgOAcjS3CCbyfwUHMZgRJb4kAfpA==}
-    engines: {node: '>=10'}
+  /@testing-library/react@12.1.5(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-OfTXCJUFgjd/digLUuPxa0+/3ZxsQmE7ub9kcbW/wi96Bh3o/p5vrETcBGfP17NWPGqeYYl5LTRpwyGoMC4ysg==}
+    engines: {node: '>=12'}
     peerDependencies:
-      react: '*'
-      react-dom: '*'
+      react: <18.0.0
+      react-dom: <18.0.0
     dependencies:
       '@babel/runtime': 7.24.0
-      '@testing-library/dom': 7.31.2
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
+      '@testing-library/dom': 8.20.1
+      '@types/react-dom': 17.0.25
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
     dev: true
 
   /@tootallnate/once@1.1.2:
@@ -2985,8 +2978,8 @@ packages:
       minimatch: 9.0.3
     dev: true
 
-  /@types/aria-query@4.2.2:
-    resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
+  /@types/aria-query@5.0.4:
+    resolution: {integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==}
     dev: true
 
   /@types/babel__core@7.20.5:
@@ -3153,17 +3146,17 @@ packages:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
     dev: true
 
-  /@types/react-dom@16.9.24:
-    resolution: {integrity: sha512-Gcmq2JTDheyWn/1eteqyzzWKSqDjYU6KYsIvH7thb7CR5OYInAWOX+7WnKf6PaU/cbdOc4szJItcDEJO7UGmfA==}
+  /@types/react-dom@17.0.25:
+    resolution: {integrity: sha512-urx7A7UxkZQmThYA4So0NelOVjx3V4rNFVJwp0WZlbIK5eM4rNJDiN3R/E9ix0MBh6kAEojk/9YL+Te6D9zHNA==}
     dependencies:
-      '@types/react': 16.14.0
+      '@types/react': 17.0.80
     dev: true
 
   /@types/react-router-dom@5.3.3:
     resolution: {integrity: sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 16.14.0
+      '@types/react': 17.0.80
       '@types/react-router': 5.1.20
     dev: true
 
@@ -3171,19 +3164,20 @@ packages:
     resolution: {integrity: sha512-jGjmu/ZqS7FjSH6owMcD5qpq19+1RS9DeVRqfl1FeBMxTDQAGwlMWOcs52NDoXaNKyG3d1cYQFMs9rCrb88o9Q==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 16.14.0
+      '@types/react': 17.0.80
     dev: true
 
   /@types/react-test-renderer@18.0.7:
     resolution: {integrity: sha512-1+ANPOWc6rB3IkSnElhjv6VLlKg2dSv/OWClUyZimbLsQyBn8Js9Vtdsi3UICJ2rIQ3k2la06dkB+C92QfhKmg==}
     dependencies:
-      '@types/react': 16.14.0
+      '@types/react': 17.0.80
     dev: true
 
-  /@types/react@16.14.0:
-    resolution: {integrity: sha512-jJjHo1uOe+NENRIBvF46tJimUvPnmbQ41Ax0pEm7pRvhPg+wuj8VMOHHiMvaGmZRzRrCtm7KnL5OOE/6kHPK8w==}
+  /@types/react@17.0.80:
+    resolution: {integrity: sha512-LrgHIu2lEtIo8M7d1FcI3BdwXWoRQwMoXOZ7+dPTW0lYREjmlHl3P0U1VD0i/9tppOuv8/sam7sOjx34TxSFbA==}
     dependencies:
       '@types/prop-types': 15.7.11
+      '@types/scheduler': 0.16.8
       csstype: 3.1.3
     dev: true
 
@@ -3197,6 +3191,10 @@ packages:
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
     dependencies:
       '@types/node': 14.18.63
+    dev: true
+
+  /@types/scheduler@0.16.8:
+    resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
     dev: true
 
   /@types/semver@7.5.8:
@@ -4339,14 +4337,6 @@ packages:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: true
 
-  /aria-query@4.2.2:
-    resolution: {integrity: sha512-o/HelwhuKpTj/frsOsbNLNgnNGVIFsVP/SW2BSF14gVl7kAfMOJ6/8wUAUvG1R1NHKrfG+2sHZTu0yauT1qBrA==}
-    engines: {node: '>=6.0'}
-    dependencies:
-      '@babel/runtime': 7.24.0
-      '@babel/runtime-corejs3': 7.24.0
-    dev: true
-
   /aria-query@5.1.3:
     resolution: {integrity: sha512-R5iJ5lkuHybztUfuOAznmboyjWq8O6sqNqtK7CLOqdydi54VNbORp49mb14KbWgG1QD3JFO9hJdZ+y4KutfdOQ==}
     dependencies:
@@ -5431,11 +5421,6 @@ packages:
   /copy-descriptor@0.1.1:
     resolution: {integrity: sha512-XgZ0pFcakEUlbwQEVNg3+QAis1FyTL3Qel9FYy8pSkQqoG3PNoT0bOCQtOXcOkur21r2Eq2kI+IE+gsmAEVlYw==}
     engines: {node: '>=0.10.0'}
-    dev: true
-
-  /core-js-pure@3.36.0:
-    resolution: {integrity: sha512-cN28qmhRNgbMZZMc/RFu5w8pK9VJzpb2rJVR/lHuZJKwmXnoWOpXmMkxqBB514igkp1Hu8WGROsiOAzUcKdHOQ==}
-    requiresBuild: true
     dev: true
 
   /cosmiconfig@6.0.0:
@@ -12230,26 +12215,25 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
-  /react-dom@16.14.0(react@16.14.0):
-    resolution: {integrity: sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==}
+  /react-dom@17.0.2(react@17.0.2):
+    resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
     peerDependencies:
-      react: ^16.14.0
+      react: 17.0.2
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-      prop-types: 15.8.1
-      react: 16.14.0
-      scheduler: 0.19.1
+      react: 17.0.2
+      scheduler: 0.20.2
     dev: true
 
-  /react-error-boundary@3.1.4(react@16.14.0):
+  /react-error-boundary@3.1.4(react@17.0.2):
     resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
     engines: {node: '>=10', npm: '>=6'}
     peerDependencies:
       react: '>=16.13.1'
     dependencies:
       '@babel/runtime': 7.24.0
-      react: 16.14.0
+      react: 17.0.2
     dev: true
 
   /react-is@16.13.1:
@@ -12264,7 +12248,7 @@ packages:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
 
-  /react-router-dom@5.3.4(react@16.14.0):
+  /react-router-dom@5.3.4(react@17.0.2):
     resolution: {integrity: sha512-m4EqFMHv/Ih4kpcBCONHbkT68KoAeHN4p3lAGoNryfHi0dMy0kCzEZakiKRsvg5wHZ/JLrLW8o8KomWiz/qbYQ==}
     peerDependencies:
       react: '>=15'
@@ -12273,13 +12257,13 @@ packages:
       history: 4.10.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 16.14.0
-      react-router: 5.3.4(react@16.14.0)
+      react: 17.0.2
+      react-router: 5.3.4(react@17.0.2)
       tiny-invariant: 1.3.3
       tiny-warning: 1.0.3
     dev: true
 
-  /react-router@5.3.4(react@16.14.0):
+  /react-router@5.3.4(react@17.0.2):
     resolution: {integrity: sha512-Ys9K+ppnJah3QuaRiLxk+jDWOR1MekYQrlytiXxC1RyfbdsZkS5pvKAzCCr031xHixZwpnsYNT5xysdFHQaYsA==}
     peerDependencies:
       react: '>=15'
@@ -12290,19 +12274,18 @@ packages:
       loose-envify: 1.4.0
       path-to-regexp: 1.8.0
       prop-types: 15.8.1
-      react: 16.14.0
+      react: 17.0.2
       react-is: 16.13.1
       tiny-invariant: 1.3.3
       tiny-warning: 1.0.3
     dev: true
 
-  /react@16.14.0:
-    resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==}
+  /react@17.0.2:
+    resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-      prop-types: 15.8.1
     dev: true
 
   /read-package-json-fast@3.0.2:
@@ -12746,8 +12729,8 @@ packages:
       xmlchars: 2.2.0
     dev: true
 
-  /scheduler@0.19.1:
-    resolution: {integrity: sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==}
+  /scheduler@0.20.2:
+    resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
