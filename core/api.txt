@@ -1678,3 +1678,6 @@ ion-toolbar,css-prop,--padding-bottom
 ion-toolbar,css-prop,--padding-end
 ion-toolbar,css-prop,--padding-start
 ion-toolbar,css-prop,--padding-top
+
+test-header,scoped
+test-header,prop,testTitle,string | undefined,undefined,false,false

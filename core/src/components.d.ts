@@ -3760,6 +3760,9 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
     }
+    interface TestHeader {
+        "testTitle"?: string;
+    }
 }
 export interface IonAccordionGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5137,6 +5140,12 @@ declare global {
         prototype: HTMLIonToolbarElement;
         new (): HTMLIonToolbarElement;
     };
+    interface HTMLTestHeaderElement extends Components.TestHeader, HTMLStencilElement {
+    }
+    var HTMLTestHeaderElement: {
+        prototype: HTMLTestHeaderElement;
+        new (): HTMLTestHeaderElement;
+    };
     interface HTMLElementTagNameMap {
         "ion-accordion": HTMLIonAccordionElement;
         "ion-accordion-group": HTMLIonAccordionGroupElement;
@@ -5231,6 +5240,7 @@ declare global {
         "ion-toast": HTMLIonToastElement;
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
+        "test-header": HTMLTestHeaderElement;
     }
 }
 declare namespace LocalJSX {
@@ -9074,6 +9084,9 @@ declare namespace LocalJSX {
          */
         "theme"?: "ios" | "md" | "ionic";
     }
+    interface TestHeader {
+        "testTitle"?: string;
+    }
     interface IntrinsicElements {
         "ion-accordion": IonAccordion;
         "ion-accordion-group": IonAccordionGroup;
@@ -9168,6 +9181,7 @@ declare namespace LocalJSX {
         "ion-toast": IonToast;
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
+        "test-header": TestHeader;
     }
 }
 export { LocalJSX as JSX };
@@ -9267,6 +9281,7 @@ declare module "@stencil/core" {
             "ion-toast": LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
+            "test-header": LocalJSX.TestHeader & JSXBase.HTMLAttributes<HTMLTestHeaderElement>;
         }
     }
 }

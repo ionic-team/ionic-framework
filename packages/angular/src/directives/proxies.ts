@@ -2427,3 +2427,25 @@ export class IonToolbar {
 export declare interface IonToolbar extends Components.IonToolbar {}
 
 
+@ProxyCmp({
+  inputs: ['testTitle']
+})
+@Component({
+  selector: 'test-header',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['testTitle'],
+})
+export class TestHeader {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface TestHeader extends Components.TestHeader {}
+
+
