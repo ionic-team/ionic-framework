@@ -1,5 +1,5 @@
-@import "../../themes/globals";
-@import "./chip.vars";
+@use "../../migrated-themes/globals" as *;
+@use "chip.vars" as *;
 
 :host {
   /**
