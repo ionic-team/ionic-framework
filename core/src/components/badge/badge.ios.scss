@@ -1,5 +1,7 @@
-@import "./badge";
-@import "./badge.ios.vars";
+@use "./badge.vars" as *;
+@use "./badge" as *;
+@use "./badge.ios.vars" as *;
+@use "../../migrated-themes/globals.ios" as *;
 
 // iOS Badge
 // --------------------------------------------------

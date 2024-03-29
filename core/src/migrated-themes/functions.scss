@@ -6,6 +6,8 @@
 @use "sass:meta";
 @use "sass:string";
 
+@use "./default" as *;
+
 // TODO can we combine the following two variables
 // and combine the functions that use them?
 $browser-context: 16;

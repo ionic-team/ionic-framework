@@ -1,4 +1,5 @@
-@import "./badge.vars";
+@use "./badge.vars" as *;
+@use "../../migrated-themes/globals" as *;
 
 // Badge
 // --------------------------------------------------

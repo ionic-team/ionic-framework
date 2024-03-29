@@ -1,5 +1,6 @@
-@import "./badge";
-@import "./badge.md.vars";
+@use "./badge" as *;
+@use "./badge.md.vars" as *;
+@use "../../migrated-themes/globals.md" as *;
 
 // Material Design Badge
 // --------------------------------------------------
