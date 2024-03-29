@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('toolbar: basic'), () => {
+configs({ themes: ['light', 'dark'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toolbar: basic (LTR only)'), () => {
     test('should not have visual regressions with text only', async ({ page }) => {
       await page.setContent(
         `
@@ -18,7 +18,11 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
       const header = page.locator('ion-header');
       await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-only`));
     });
+  });
+});
 
+configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toolbar: basic'), () => {
     test('should truncate long title with ellipsis', async ({ page }) => {
       await page.setContent(
         `
