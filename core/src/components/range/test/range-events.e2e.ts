@@ -10,7 +10,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       /**
        * The mouse events are flaky on CI
        */
-      test.fixme('should emit start/end events', async ({ page }) => {
+      test('should emit start/end events', async ({ page }) => {
         /**
          * Requires padding to prevent the knob from being clipped.
          * If it's clipped, then the value might be one off.
@@ -31,23 +31,20 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         const rangeEl = page.locator('ion-range');
 
-        await dragElementBy(rangeEl, page, 300, 0);
-        await page.waitForChanges();
+        await dragElementBy(rangeEl, page, 180, 0);
 
-        /**
-         * dragElementBy defaults to starting the drag from the middle of the el,
-         * so the start value should jump to 50 despite the range defaulting to 20.
-         */
-        expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
+        expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 100 });
 
         /**
          * Verify both events fire if range is clicked without dragging.
          */
         await dragElementBy(rangeEl, page, 0, 0);
-        await page.waitForChanges();
 
-        expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
+        await rangeStart.next();
+        await rangeEnd.next();
+
+        expect(rangeStart).toHaveReceivedEventDetail({ value: 100 });
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
       });
 
