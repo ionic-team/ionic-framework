@@ -1,0 +1,64 @@
+
+// Global Functions
+@import "./functions";
+
+// Global Mixins
+@import "./mixins";
+
+// Default Theme
+@import "./default";
+
+
+// Default General
+// --------------------------------------------------
+$font-family-base:                  var(--ion-font-family, inherit) !default;
+
+// Hairlines width
+$hairlines-width: .55px !default;
+
+// The minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+// Input placeholder opacity
+// Ensures that the placeholder has the
+// correct color contrast against the background.
+$placeholder-opacity: var(--ion-placeholder-opacity, 0.6) !default;
+
+$form-control-label-margin: 16px !default;
+
+// How much the stacked labels should be scaled by
+/// The value 0.75 is used to match the MD spec.
+/// iOS does not have a floating label design spec, so we standardize on 0.75.
+$form-control-label-stacked-scale: 0.75 !default;
+
+
+// Z-Index
+// --------------------------------------------------
+// Grouped by elements which would be siblings
+
+$z-index-menu-overlay:           1000;
+$z-index-overlay:                1001;
+
+$z-index-fixed-content:          999;
+$z-index-refresher:              -1;
+
+$z-index-page-container:         0;
+$z-index-toolbar:                10;
+$z-index-toolbar-background:     -1;
+$z-index-toolbar-buttons:        99;
+
+$z-index-backdrop:               2;
+$z-index-overlay-wrapper:        10;
+
+$z-index-item-options:           1;
+$z-index-item-input:             2;
+$z-index-item-divider:           100;
+
+$z-index-reorder-selected:       100;

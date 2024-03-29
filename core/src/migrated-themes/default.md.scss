@@ -1,0 +1,43 @@
+
+// Material Design Default Theme
+// --------------------------------------------------
+// This file should only contain variables that are
+// used to theme the application colors for the Material
+// Design theme.
+
+// Material Design General Colors
+// --------------------------------------------------
+$backdrop-md-color:                         var(--ion-backdrop-color, #000) !default;
+$border-md-color:                           var(--ion-border-color, var(--ion-color-step-150, var(--ion-background-color-step-150, #c1c4cd))) !default;
+$overlay-md-background-color:               var(--ion-overlay-background-color, var(--ion-background-color, #fff)) !default;
+
+// Material Design Tabs & Tab bar
+// --------------------------------------------------
+$tabbar-md-background:                      var(--ion-tab-bar-background, $background-color) !default;
+$tabbar-md-background-focused:              var(--ion-tab-bar-background-focused, get-color-shade(#fff)) !default;
+$tabbar-md-border-color:                    var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, var(--ion-background-color-step-150, rgba(0, 0, 0, .07))))) !default;
+$tabbar-md-color:                           var(--ion-tab-bar-color, $text-color-step-350) !default;
+$tabbar-md-color-selected:                  var(--ion-tab-bar-color-selected, ion-color(primary, base)) !default;
+
+// Material Design Toolbar
+// --------------------------------------------------
+$toolbar-md-background:                     var(--ion-toolbar-background, $background-color) !default;
+$toolbar-md-border-color:                   var(--ion-toolbar-border-color, $border-md-color) !default;
+$toolbar-md-color:                          var(--ion-toolbar-color, var(--ion-text-color, #424242)) !default;
+
+// Material Design List & List Items
+// --------------------------------------------------
+$item-md-background:                        var(--ion-item-background, $background-color) !default;
+$item-md-border-color:                      var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, var(--ion-background-color-step-150, rgba(0, 0, 0, .13))))) !default;
+$item-md-color:                             var(--ion-item-color, $text-color) !default;
+
+// Material Design Card
+// --------------------------------------------------
+$card-md-background:                        var(--ion-card-background, $item-md-background) !default;
+$card-md-color:                             var(--ion-card-color, var(--ion-item-color, $text-color-step-450)) !default;
+
+// Material Design Form Controls
+// --------------------------------------------------
+/// This value comes from the Material Design spec:
+/// https://m3.material.io/components/text-fields/specs
+$form-control-md-disabled-opacity:          0.38;
