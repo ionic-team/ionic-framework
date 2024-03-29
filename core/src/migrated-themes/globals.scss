@@ -1,12 +1,12 @@
 
 // Global Functions
-@import "./functions";
+@forward "./functions";
 
 // Global Mixins
-@import "./mixins";
+@forward "./mixins";
 
 // Default Theme
-@import "./default";
+@forward "./default";
 
 
 // Default General

@@ -1,6 +1,6 @@
 
 // Global Core
-@import "./globals";
+@forward "./globals";
 
 // Global Material Design
-@import "./default.md";
+@forward "./default.md";

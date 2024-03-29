@@ -1,6 +1,6 @@
 
 // Global Core
-@import "./globals";
+@forward "./globals";
 
 // Global Ionic
-@import "./default.ionic";
+@forward "./default.ionic";

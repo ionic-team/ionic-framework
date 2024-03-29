@@ -1,6 +1,6 @@
 
 // Global Core
-@import "./globals";
+@forward "./globals";
 
 // Global iOS
-@import "./default.ios";
+@forward "./default.ios";
