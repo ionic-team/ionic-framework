@@ -212,3 +212,12 @@
 :host(.button-solid.ion-color.ion-activated) .button-native::after {
   background: #{current-color(shade)};
 }
+
+
+// Activated Button in Toolbar
+// --------------------------------------------------
+
+:host(.button-outline.ion-activated.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+  background: var(--ion-toolbar-color, var(--color));
+  color: #{var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))};
+}
