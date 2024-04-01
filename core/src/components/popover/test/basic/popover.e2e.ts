@@ -50,7 +50,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('popover: scrolling'), async () => {
     test.beforeEach(({ skip }) => {
-
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29211',
+      });
       // We are testing if Ionic sets overflow is set correctly on elements,
       // so we do not need to test across browsers
       skip.browser('webkit', 'Behavior does not vary across browsers');
