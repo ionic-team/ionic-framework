@@ -28,7 +28,7 @@ import { getCounterText } from './input.utils';
   styleUrls: {
     ios: 'input.ios.scss',
     md: 'input.md.scss',
-    ionic: 'input.md.scss',
+    ionic: 'input.ionic.scss',
   },
   scoped: true,
 })
