@@ -99,3 +99,18 @@ describe('input: label rendering', () => {
     expect(labelText.textContent).toBe('Label Prop Text');
   });
 });
+
+describe.only('input: clear icon', () => {
+  it('should render custom icon', async () => {
+    const page = await newSpecPage({
+      components: [Input],
+      html: `
+        <ion-input clear-input-icon="foo" clear-input="true"></ion-input>
+      `,
+    });
+
+    const icon = page.body.querySelector<HTMLIonIconElement>('ion-input ion-icon')!;
+
+    expect(icon.icon).toBe('foo');
+  });
+});
