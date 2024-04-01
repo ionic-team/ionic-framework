@@ -49,7 +49,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('popover: scrolling'), async () => {
-    test.only('should scroll to bottom without IonContent', async ({ page }) => {
+    test.beforeEach(({ skip }) => {
+
+      // We are testing if Ionic sets overflow is set correctly on elements,
+      // so we do not need to test across browsers
+      skip.browser('webkit', 'Behavior does not vary across browsers');
+      skip.browser('firefox', 'Behavior does not vary across browsers');
+    });
+    test('should scroll to bottom without IonContent', async ({ page }) => {
       await page.setContent(
         `
         <style>
@@ -74,18 +81,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       );
 
       const popover = page.locator('ion-popover');
+      const viewport = popover.locator('.popover-viewport');
       const p = popover.locator('p');
-      await popover.evaluate((el: HTMLIonPopoverElement) => el.present());
-
       const lastP = await p.last();
+
+      await popover.evaluate((el: HTMLIonPopoverElement) => el.present());
 
       await expect(lastP).not.toBeInViewport();
 
-      await lastP.scrollIntoViewIfNeeded();
+      // hover over viewport and scroll to bottom
+      await viewport.hover();
+      await page.mouse.wheel(0, 500);
 
       await expect(lastP).toBeInViewport();
     });
-    test.only('should scroll to bottom with IonContent', async ({ page }) => {
+    test('should scroll to bottom with IonContent', async ({ page }) => {
       await page.setContent(
         `
         <style>
@@ -112,14 +122,17 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       );
 
       const popover = page.locator('ion-popover');
+      const content = popover.locator('ion-content');
       const p = popover.locator('p');
-      await popover.evaluate((el: HTMLIonPopoverElement) => el.present());
-
       const lastP = await p.last();
+
+      await popover.evaluate((el: HTMLIonPopoverElement) => el.present());
 
       await expect(lastP).not.toBeInViewport();
 
-      await lastP.scrollIntoViewIfNeeded();
+      // hover over viewport and scroll to bottom
+      await content.hover();
+      await page.mouse.wheel(0, 500);
 
       await expect(lastP).toBeInViewport();
     });
