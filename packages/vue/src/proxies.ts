@@ -402,6 +402,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'autocorrect',
   'autofocus',
   'clearInput',
+  'clearInputIcon',
   'clearOnEdit',
   'counter',
   'counterFormatter',

@@ -1163,6 +1163,10 @@ export namespace Components {
          */
         "clearInput": boolean;
         /**
+          * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+         */
+        "clearInputIcon"?: string;
+        /**
           * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
          */
         "clearOnEdit"?: boolean;
@@ -5886,6 +5890,10 @@ declare namespace LocalJSX {
           * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
          */
         "clearInput"?: boolean;
+        /**
+          * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+         */
+        "clearInputIcon"?: string;
         /**
           * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
          */

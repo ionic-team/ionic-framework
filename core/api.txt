@@ -553,6 +553,7 @@ ion-input,prop,autocomplete,"name" | "on" | "off" | "honorific-prefix" | "given-
 ion-input,prop,autocorrect,"off" | "on",'off',false,false
 ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
+ion-input,prop,clearInputIcon,string | undefined,undefined,false,false
 ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-input,prop,counter,boolean,false,false,false
