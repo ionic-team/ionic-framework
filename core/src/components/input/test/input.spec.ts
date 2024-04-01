@@ -111,6 +111,6 @@ describe.only('input: clear icon', () => {
 
     const icon = page.body.querySelector<HTMLIonIconElement>('ion-input ion-icon')!;
 
-    expect(icon.icon).toBe('foo');
+    expect(icon.getAttribute('icon')).toBe('foo');
   });
 });
