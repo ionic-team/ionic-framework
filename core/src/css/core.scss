@@ -395,7 +395,7 @@ ion-input input::-webkit-date-and-time-value {
  * we should fallback to the old behavior for environments that do not support :has.
  * Developers can explicitly enable this behavior by setting overflow: visible
  * on .popover-viewport if they know they are not going to use an ion-content.
- * TODO FW-XXXX Remove this
+ * TODO FW-6106 Remove this
  */
 @supports not selector(:has(> ion-content)) {
   .popover-viewport {
