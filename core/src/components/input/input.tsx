@@ -4,6 +4,7 @@ import type { NotchController } from '@utils/forms';
 import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -14,7 +15,6 @@ import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
 import { getCounterText } from './input.utils';
-import { printIonWarning } from '@utils/logging';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
