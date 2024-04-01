@@ -143,7 +143,7 @@ StyleDictionary.extend({
   },
   fileHeader: {
     myFileHeader: () => {
-      return ['Ionic Design System'];
+      return [`This is an auto-generated file, please do not change it directly.`, `Ionic Design System`];
     },
   },
 }).buildAllPlatforms();
