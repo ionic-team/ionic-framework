@@ -1,3 +1,4 @@
-export interface ItemSlidingCustomEvent extends CustomEvent {
+export interface ItemSlidingCustomEvent
+  extends CustomEvent {
   target: HTMLIonItemSlidingElement;
 }

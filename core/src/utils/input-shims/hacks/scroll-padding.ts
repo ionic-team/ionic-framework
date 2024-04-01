@@ -1,4 +1,5 @@
-const PADDING_TIMER_KEY = '$ionPaddingTimer';
+const PADDING_TIMER_KEY =
+  '$ionPaddingTimer';
 
 /**
  * Scroll padding adds additional padding to the bottom
@@ -18,18 +19,32 @@ const PADDING_TIMER_KEY = '$ionPaddingTimer';
  * - Capacitor/Cordova on iOS: The keyboard overlays the content
  * when the KeyboardResize mode is set to 'none'.
  */
-export const setScrollPadding = (contentEl: HTMLElement, paddingAmount: number, clearCallback?: () => void) => {
-  const timer = (contentEl as any)[PADDING_TIMER_KEY];
+export const setScrollPadding = (
+  contentEl: HTMLElement,
+  paddingAmount: number,
+  clearCallback?: () => void
+) => {
+  const timer = (contentEl as any)[
+    PADDING_TIMER_KEY
+  ];
 
   if (timer) {
     clearTimeout(timer);
   }
 
   if (paddingAmount > 0) {
-    contentEl.style.setProperty('--keyboard-offset', `${paddingAmount}px`);
+    contentEl.style.setProperty(
+      '--keyboard-offset',
+      `${paddingAmount}px`
+    );
   } else {
-    (contentEl as any)[PADDING_TIMER_KEY] = setTimeout(() => {
-      contentEl.style.setProperty('--keyboard-offset', '0px');
+    (contentEl as any)[
+      PADDING_TIMER_KEY
+    ] = setTimeout(() => {
+      contentEl.style.setProperty(
+        '--keyboard-offset',
+        '0px'
+      );
       if (clearCallback) {
         clearCallback();
       }
@@ -47,16 +62,27 @@ export const setScrollPadding = (contentEl: HTMLElement, paddingAmount: number, 
  * input with cancel the timeout to clear the
  * scroll padding.
  */
-export const setClearScrollPaddingListener = (
-  inputEl: HTMLInputElement | HTMLTextAreaElement,
-  contentEl: HTMLElement | null,
-  doneCallback: () => void
-) => {
-  const clearScrollPadding = () => {
-    if (contentEl) {
-      setScrollPadding(contentEl, 0, doneCallback);
-    }
-  };
+export const setClearScrollPaddingListener =
+  (
+    inputEl:
+      | HTMLInputElement
+      | HTMLTextAreaElement,
+    contentEl: HTMLElement | null,
+    doneCallback: () => void
+  ) => {
+    const clearScrollPadding = () => {
+      if (contentEl) {
+        setScrollPadding(
+          contentEl,
+          0,
+          doneCallback
+        );
+      }
+    };
 
-  inputEl.addEventListener('focusout', clearScrollPadding, { once: true });
-};
+    inputEl.addEventListener(
+      'focusout',
+      clearScrollPadding,
+      { once: true }
+    );
+  };

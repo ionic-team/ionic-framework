@@ -1,11 +1,29 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  Watch,
+  h,
+} from '@stencil/core';
 import { clamp } from '@utils/helpers';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
+import {
+  hapticSelectionChanged,
+  hapticSelectionEnd,
+  hapticSelectionStart,
+} from '@utils/native/haptic';
 import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Gesture, GestureDetail } from '../../interface';
+import type {
+  Gesture,
+  GestureDetail,
+} from '../../interface';
 import type { PickerColumn } from '../picker/picker-interface';
 
 /**
@@ -18,7 +36,9 @@ import type { PickerColumn } from '../picker/picker-interface';
     md: 'picker-column.md.scss',
   },
 })
-export class PickerColumnCmp implements ComponentInterface {
+export class PickerColumnCmp
+  implements ComponentInterface
+{
   private bounceFrom!: number;
   private lastIndex?: number;
   private minY!: number;
@@ -30,8 +50,12 @@ export class PickerColumnCmp implements ComponentInterface {
   private y = 0;
   private optsEl?: HTMLElement;
   private gesture?: Gesture;
-  private rafId?: ReturnType<typeof requestAnimationFrame>;
-  private tmrId?: ReturnType<typeof setTimeout>;
+  private rafId?: ReturnType<
+    typeof requestAnimationFrame
+  >;
+  private tmrId?: ReturnType<
+    typeof setTimeout
+  >;
   private noAnimate = true;
   // `colDidChange` is a flag that gets set when the column is changed
   // dynamically. When this flag is set, the column will refresh
@@ -48,7 +72,8 @@ export class PickerColumnCmp implements ComponentInterface {
    * Emitted when the selected value has changed
    * @internal
    */
-  @Event() ionPickerColChange!: EventEmitter<PickerColumn>;
+  @Event()
+  ionPickerColChange!: EventEmitter<PickerColumn>;
 
   /** Picker column data */
   @Prop() col!: PickerColumn;
@@ -68,10 +93,16 @@ export class PickerColumnCmp implements ComponentInterface {
       pickerScaleFactor = 1;
     }
 
-    this.rotateFactor = pickerRotateFactor;
-    this.scaleFactor = pickerScaleFactor;
+    this.rotateFactor =
+      pickerRotateFactor;
+    this.scaleFactor =
+      pickerScaleFactor;
 
-    this.gesture = (await import('../../utils/gesture')).createGesture({
+    this.gesture = (
+      await import(
+        '../../utils/gesture'
+      )
+    ).createGesture({
       el: this.el,
       gestureName: 'picker-swipe',
       gesturePriority: 100,
@@ -111,8 +142,10 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
-    if (this.tmrId) clearTimeout(this.tmrId);
+    if (this.rafId !== undefined)
+      cancelAnimationFrame(this.rafId);
+    if (this.tmrId)
+      clearTimeout(this.tmrId);
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
@@ -120,24 +153,40 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   private emitColChange() {
-    this.ionPickerColChange.emit(this.col);
+    this.ionPickerColChange.emit(
+      this.col
+    );
   }
 
-  private setSelected(selectedIndex: number, duration: number) {
+  private setSelected(
+    selectedIndex: number,
+    duration: number
+  ) {
     // if there is a selected index, then figure out it's y position
     // if there isn't a selected index, then just use the top y position
-    const y = selectedIndex > -1 ? -(selectedIndex * this.optHeight) : 0;
+    const y =
+      selectedIndex > -1
+        ? -(
+            selectedIndex *
+            this.optHeight
+          )
+        : 0;
 
     this.velocity = 0;
 
     // set what y position we're at
-    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
+    if (this.rafId !== undefined)
+      cancelAnimationFrame(this.rafId);
     this.update(y, duration, true);
 
     this.emitColChange();
   }
 
-  private update(y: number, duration: number, saveY: boolean) {
+  private update(
+    y: number,
+    duration: number,
+    saveY: boolean
+  ) {
     if (!this.optsEl) {
       return;
     }
@@ -146,20 +195,35 @@ export class PickerColumnCmp implements ComponentInterface {
     let translateY = 0;
     let translateZ = 0;
     const { col, rotateFactor } = this;
-    const prevSelected = col.selectedIndex;
-    const selectedIndex = (col.selectedIndex = this.indexForY(-y));
-    const durationStr = duration === 0 ? '' : duration + 'ms';
+    const prevSelected =
+      col.selectedIndex;
+    const selectedIndex =
+      (col.selectedIndex =
+        this.indexForY(-y));
+    const durationStr =
+      duration === 0
+        ? ''
+        : duration + 'ms';
     const scaleStr = `scale(${this.scaleFactor})`;
 
-    const children = this.optsEl.children;
-    for (let i = 0; i < children.length; i++) {
-      const button = children[i] as HTMLElement;
+    const children =
+      this.optsEl.children;
+    for (
+      let i = 0;
+      i < children.length;
+      i++
+    ) {
+      const button = children[
+        i
+      ] as HTMLElement;
       const opt = col.options[i];
-      const optOffset = i * this.optHeight + y;
+      const optOffset =
+        i * this.optHeight + y;
       let transform = '';
 
       if (rotateFactor !== 0) {
-        const rotateX = optOffset * rotateFactor;
+        const rotateX =
+          optOffset * rotateFactor;
         if (Math.abs(rotateX) <= 90) {
           translateY = 0;
           translateZ = 90;
@@ -172,26 +236,35 @@ export class PickerColumnCmp implements ComponentInterface {
         translateY = optOffset;
       }
 
-      const selected = selectedIndex === i;
+      const selected =
+        selectedIndex === i;
       transform += `translate3d(0px,${translateY}px,${translateZ}px) `;
-      if (this.scaleFactor !== 1 && !selected) {
+      if (
+        this.scaleFactor !== 1 &&
+        !selected
+      ) {
         transform += scaleStr;
       }
 
       // Update transition duration
       if (this.noAnimate) {
         opt.duration = 0;
-        button.style.transitionDuration = '';
-      } else if (duration !== opt.duration) {
+        button.style.transitionDuration =
+          '';
+      } else if (
+        duration !== opt.duration
+      ) {
         opt.duration = duration;
-        button.style.transitionDuration = durationStr;
+        button.style.transitionDuration =
+          durationStr;
       }
 
       // Update transform
       if (transform !== opt.transform) {
         opt.transform = transform;
       }
-      button.style.transform = transform;
+      button.style.transform =
+        transform;
 
       /**
        * Ensure that the select column
@@ -200,18 +273,25 @@ export class PickerColumnCmp implements ComponentInterface {
       opt.selected = selected;
 
       if (selected) {
-        button.classList.add(PICKER_OPT_SELECTED);
+        button.classList.add(
+          PICKER_OPT_SELECTED
+        );
       } else {
-        button.classList.remove(PICKER_OPT_SELECTED);
+        button.classList.remove(
+          PICKER_OPT_SELECTED
+        );
       }
     }
-    this.col.prevSelected = prevSelected;
+    this.col.prevSelected =
+      prevSelected;
 
     if (saveY) {
       this.y = y;
     }
 
-    if (this.lastIndex !== selectedIndex) {
+    if (
+      this.lastIndex !== selectedIndex
+    ) {
       // have not set a last index yet
       hapticSelectionChanged();
       this.lastIndex = selectedIndex;
@@ -221,10 +301,14 @@ export class PickerColumnCmp implements ComponentInterface {
   private decelerate() {
     if (this.velocity !== 0) {
       // still decelerating
-      this.velocity *= DECELERATION_FRICTION;
+      this.velocity *=
+        DECELERATION_FRICTION;
 
       // do not let it go slower than a velocity of 1
-      this.velocity = this.velocity > 0 ? Math.max(this.velocity, 1) : Math.min(this.velocity, -1);
+      this.velocity =
+        this.velocity > 0
+          ? Math.max(this.velocity, 1)
+          : Math.min(this.velocity, -1);
 
       let y = this.y + this.velocity;
 
@@ -239,31 +323,56 @@ export class PickerColumnCmp implements ComponentInterface {
       }
 
       this.update(y, 0, true);
-      const notLockedIn = Math.round(y) % this.optHeight !== 0 || Math.abs(this.velocity) > 1;
+      const notLockedIn =
+        Math.round(y) %
+          this.optHeight !==
+          0 ||
+        Math.abs(this.velocity) > 1;
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        this.rafId = requestAnimationFrame(() => this.decelerate());
+        this.rafId =
+          requestAnimationFrame(() =>
+            this.decelerate()
+          );
       } else {
         this.velocity = 0;
         this.emitColChange();
         hapticSelectionEnd();
       }
-    } else if (this.y % this.optHeight !== 0) {
+    } else if (
+      this.y % this.optHeight !==
+      0
+    ) {
       // needs to still get locked into a position so options line up
-      const currentPos = Math.abs(this.y % this.optHeight);
+      const currentPos = Math.abs(
+        this.y % this.optHeight
+      );
 
       // create a velocity in the direction it needs to scroll
-      this.velocity = currentPos > this.optHeight / 2 ? 1 : -1;
+      this.velocity =
+        currentPos > this.optHeight / 2
+          ? 1
+          : -1;
 
       this.decelerate();
     }
   }
 
   private indexForY(y: number) {
-    return Math.min(Math.max(Math.abs(Math.round(y / this.optHeight)), 0), this.col.options.length - 1);
+    return Math.min(
+      Math.max(
+        Math.abs(
+          Math.round(y / this.optHeight)
+        ),
+        0
+      ),
+      this.col.options.length - 1
+    );
   }
 
-  private onStart(detail: GestureDetail) {
+  private onStart(
+    detail: GestureDetail
+  ) {
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
@@ -275,22 +384,33 @@ export class PickerColumnCmp implements ComponentInterface {
     hapticSelectionStart();
 
     // reset everything
-    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
+    if (this.rafId !== undefined)
+      cancelAnimationFrame(this.rafId);
     const options = this.col.options;
     let minY = options.length - 1;
     let maxY = 0;
-    for (let i = 0; i < options.length; i++) {
+    for (
+      let i = 0;
+      i < options.length;
+      i++
+    ) {
       if (!options[i].disabled) {
         minY = Math.min(minY, i);
         maxY = Math.max(maxY, i);
       }
     }
 
-    this.minY = -(minY * this.optHeight);
-    this.maxY = -(maxY * this.optHeight);
+    this.minY = -(
+      minY * this.optHeight
+    );
+    this.maxY = -(
+      maxY * this.optHeight
+    );
   }
 
-  private onMove(detail: GestureDetail) {
+  private onMove(
+    detail: GestureDetail
+  ) {
     if (detail.event.cancelable) {
       detail.event.preventDefault();
     }
@@ -327,23 +447,59 @@ export class PickerColumnCmp implements ComponentInterface {
       return;
     }
 
-    this.velocity = clamp(-MAX_PICKER_SPEED, detail.velocityY * 23, MAX_PICKER_SPEED);
-    if (this.velocity === 0 && detail.deltaY === 0) {
-      const opt = (detail.event.target as Element).closest('.picker-opt');
-      if (opt?.hasAttribute('opt-index')) {
-        this.setSelected(parseInt(opt.getAttribute('opt-index')!, 10), TRANSITION_DURATION);
+    this.velocity = clamp(
+      -MAX_PICKER_SPEED,
+      detail.velocityY * 23,
+      MAX_PICKER_SPEED
+    );
+    if (
+      this.velocity === 0 &&
+      detail.deltaY === 0
+    ) {
+      const opt = (
+        detail.event.target as Element
+      ).closest('.picker-opt');
+      if (
+        opt?.hasAttribute('opt-index')
+      ) {
+        this.setSelected(
+          parseInt(
+            opt.getAttribute(
+              'opt-index'
+            )!,
+            10
+          ),
+          TRANSITION_DURATION
+        );
       }
     } else {
       this.y += detail.deltaY;
 
-      if (Math.abs(detail.velocityY) < 0.05) {
-        const isScrollingUp = detail.deltaY > 0;
-        const optHeightFraction = (Math.abs(this.y) % this.optHeight) / this.optHeight;
+      if (
+        Math.abs(detail.velocityY) <
+        0.05
+      ) {
+        const isScrollingUp =
+          detail.deltaY > 0;
+        const optHeightFraction =
+          (Math.abs(this.y) %
+            this.optHeight) /
+          this.optHeight;
 
-        if (isScrollingUp && optHeightFraction > 0.5) {
-          this.velocity = Math.abs(this.velocity) * -1;
-        } else if (!isScrollingUp && optHeightFraction <= 0.5) {
-          this.velocity = Math.abs(this.velocity);
+        if (
+          isScrollingUp &&
+          optHeightFraction > 0.5
+        ) {
+          this.velocity =
+            Math.abs(this.velocity) *
+            -1;
+        } else if (
+          !isScrollingUp &&
+          optHeightFraction <= 0.5
+        ) {
+          this.velocity = Math.abs(
+            this.velocity
+          );
         }
       }
 
@@ -351,11 +507,19 @@ export class PickerColumnCmp implements ComponentInterface {
     }
   }
 
-  private refresh(forceRefresh?: boolean, animated?: boolean) {
-    let min = this.col.options.length - 1;
+  private refresh(
+    forceRefresh?: boolean,
+    animated?: boolean
+  ) {
+    let min =
+      this.col.options.length - 1;
     let max = 0;
     const options = this.col.options;
-    for (let i = 0; i < options.length; i++) {
+    for (
+      let i = 0;
+      i < options.length;
+      i++
+    ) {
       if (!options[i].disabled) {
         min = Math.min(min, i);
         max = Math.max(max, i);
@@ -373,23 +537,46 @@ export class PickerColumnCmp implements ComponentInterface {
       return;
     }
 
-    const selectedIndex = clamp(min, this.col.selectedIndex ?? 0, max);
-    if (this.col.prevSelected !== selectedIndex || forceRefresh) {
-      const y = selectedIndex * this.optHeight * -1;
-      const duration = animated ? TRANSITION_DURATION : 0;
+    const selectedIndex = clamp(
+      min,
+      this.col.selectedIndex ?? 0,
+      max
+    );
+    if (
+      this.col.prevSelected !==
+        selectedIndex ||
+      forceRefresh
+    ) {
+      const y =
+        selectedIndex *
+        this.optHeight *
+        -1;
+      const duration = animated
+        ? TRANSITION_DURATION
+        : 0;
       this.velocity = 0;
       this.update(y, duration, true);
     }
   }
 
-  private onDomChange(forceRefresh?: boolean, animated?: boolean) {
+  private onDomChange(
+    forceRefresh?: boolean,
+    animated?: boolean
+  ) {
     const colEl = this.optsEl;
     if (colEl) {
       // DOM READ
       // We perfom a DOM read over a rendered item, this needs to happen after the first render or after the the column has changed
-      this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
+      this.optHeight =
+        colEl.firstElementChild
+          ? colEl.firstElementChild
+              .clientHeight
+          : 0;
     }
-    this.refresh(forceRefresh, animated);
+    this.refresh(
+      forceRefresh,
+      animated
+    );
   }
 
   render() {
@@ -400,32 +587,59 @@ export class PickerColumnCmp implements ComponentInterface {
         class={{
           [mode]: true,
           'picker-col': true,
-          'picker-opts-left': this.col.align === 'left',
-          'picker-opts-right': this.col.align === 'right',
+          'picker-opts-left':
+            this.col.align === 'left',
+          'picker-opts-right':
+            this.col.align === 'right',
           ...getClassMap(col.cssClass),
         }}
         style={{
-          'max-width': this.col.columnWidth,
+          'max-width':
+            this.col.columnWidth,
         }}
       >
         {col.prefix && (
-          <div class="picker-prefix" style={{ width: col.prefixWidth! }}>
+          <div
+            class="picker-prefix"
+            style={{
+              width: col.prefixWidth!,
+            }}
+          >
             {col.prefix}
           </div>
         )}
-        <div class="picker-opts" style={{ maxWidth: col.optionsWidth! }} ref={(el) => (this.optsEl = el)}>
-          {col.options.map((o, index) => (
-            <button
-              aria-label={o.ariaLabel}
-              class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
-              opt-index={index}
-            >
-              {o.text}
-            </button>
-          ))}
+        <div
+          class="picker-opts"
+          style={{
+            maxWidth: col.optionsWidth!,
+          }}
+          ref={(el) =>
+            (this.optsEl = el)
+          }
+        >
+          {col.options.map(
+            (o, index) => (
+              <button
+                aria-label={o.ariaLabel}
+                class={{
+                  'picker-opt': true,
+                  'picker-opt-disabled':
+                    !!o.disabled,
+                }}
+                opt-index={index}
+              >
+                {o.text}
+              </button>
+            )
+          )}
         </div>
         {col.suffix && (
-          <div class="picker-suffix" style={{ width: col.suffixWidth! }}>
+          <div
+            class="picker-suffix"
+            style={{
+              width: col.suffixWidth!,
+            }}
+          >
             {col.suffix}
           </div>
         )}
@@ -434,7 +648,8 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 }
 
-const PICKER_OPT_SELECTED = 'picker-opt-selected';
+const PICKER_OPT_SELECTED =
+  'picker-opt-selected';
 const DECELERATION_FRICTION = 0.97;
 const MAX_PICKER_SPEED = 90;
 const TRANSITION_DURATION = 150;

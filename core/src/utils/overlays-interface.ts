@@ -1,8 +1,13 @@
 import type { EventEmitter } from '@stencil/core';
 
-import type { AnimationBuilder, HTMLStencilElement } from '../interface';
+import type {
+  AnimationBuilder,
+  HTMLStencilElement,
+} from '../interface';
 
-export interface OverlayEventDetail<T = any> {
+export interface OverlayEventDetail<
+  T = any
+> {
   data?: T;
   role?: string;
 }
@@ -28,22 +33,40 @@ export interface OverlayInterface {
   didDismissShorthand?: EventEmitter<OverlayEventDetail>;
 
   present(): Promise<void>;
-  dismiss(data?: any, role?: string): Promise<boolean>;
+  dismiss(
+    data?: any,
+    role?: string
+  ): Promise<boolean>;
 }
 
 export interface OverlayController {
-  create(opts?: any): Promise<HTMLElement>;
-  dismiss(data?: any, role?: string, id?: string): Promise<boolean>;
-  getTop(): Promise<HTMLIonOverlayElement | undefined>;
+  create(
+    opts?: any
+  ): Promise<HTMLElement>;
+  dismiss(
+    data?: any,
+    role?: string,
+    id?: string
+  ): Promise<boolean>;
+  getTop(): Promise<
+    HTMLIonOverlayElement | undefined
+  >;
 }
 
-export interface HTMLIonOverlayElement extends HTMLStencilElement {
+export interface HTMLIonOverlayElement
+  extends HTMLStencilElement {
   overlayIndex: number;
   backdropDismiss?: boolean;
   lastFocus?: HTMLElement;
 
-  dismiss(data?: any, role?: string): Promise<boolean>;
+  dismiss(
+    data?: any,
+    role?: string
+  ): Promise<boolean>;
   present: () => Promise<void>;
 }
 
-export type OverlaySelect = HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
+export type OverlaySelect =
+  | HTMLIonActionSheetElement
+  | HTMLIonAlertElement
+  | HTMLIonPopoverElement;

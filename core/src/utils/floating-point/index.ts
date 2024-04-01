@@ -1,6 +1,9 @@
-export function getDecimalPlaces(n: number) {
+export function getDecimalPlaces(
+  n: number
+) {
   if (n % 1 === 0) return 0;
-  return n.toString().split('.')[1].length;
+  return n.toString().split('.')[1]
+    .length;
 }
 
 /**
@@ -35,7 +38,14 @@ export function getDecimalPlaces(n: number) {
  * @param references Number(s) used to calculate n, or that should otherwise
  * be used as a reference for the desired specificity.
  */
-export function roundToMaxDecimalPlaces(n: number, ...references: number[]) {
-  const maxPlaces = Math.max(...references.map((r) => getDecimalPlaces(r)));
+export function roundToMaxDecimalPlaces(
+  n: number,
+  ...references: number[]
+) {
+  const maxPlaces = Math.max(
+    ...references.map((r) =>
+      getDecimalPlaces(r)
+    )
+  );
   return Number(n.toFixed(maxPlaces));
 }

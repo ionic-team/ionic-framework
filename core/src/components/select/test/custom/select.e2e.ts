@@ -1,16 +1,27 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('select: custom'), () => {
-    test('should be able to customize select using css apis', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/27208',
-      });
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('select: custom'),
+      () => {
+        test('should be able to customize select using css apis', async ({
+          page,
+        }) => {
+          test.info().annotations.push({
+            type: 'issue',
+            description:
+              'https://github.com/ionic-team/ionic-framework/issues/27208',
+          });
 
-      await page.setContent(
-        `
+          await page.setContent(
+            `
         <ion-select label="Select" value="a">
           <ion-select-option value="a">Apple</ion-select-option>
         </ion-select>
@@ -32,20 +43,31 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           }
         </style>
       `,
-        config
-      );
+            config
+          );
 
-      const select = page.locator('ion-select');
-      await expect(select).toHaveScreenshot(screenshot(`select-custom-diff`));
-    });
-    test('should be able to customize select label, placeholder, and value using css parts', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/27112',
-      });
+          const select = page.locator(
+            'ion-select'
+          );
+          await expect(
+            select
+          ).toHaveScreenshot(
+            screenshot(
+              `select-custom-diff`
+            )
+          );
+        });
+        test('should be able to customize select label, placeholder, and value using css parts', async ({
+          page,
+        }) => {
+          test.info().annotations.push({
+            type: 'issue',
+            description:
+              'https://github.com/ionic-team/ionic-framework/issues/27112',
+          });
 
-      await page.setContent(
-        `
+          await page.setContent(
+            `
         <div class="wrapper">
           <ion-select label="Select" label-placement="stacked" placeholder="Fruits">
             <ion-select-option value="a">Apple</ion-select-option>
@@ -66,11 +88,20 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           }
         </style>
       `,
-        config
-      );
+            config
+          );
 
-      const wrapper = page.locator('.wrapper');
-      await expect(wrapper).toHaveScreenshot(screenshot(`select-custom-parts-diff`));
-    });
-  });
-});
+          const wrapper =
+            page.locator('.wrapper');
+          await expect(
+            wrapper
+          ).toHaveScreenshot(
+            screenshot(
+              `select-custom-parts-diff`
+            )
+          );
+        });
+      }
+    );
+  }
+);

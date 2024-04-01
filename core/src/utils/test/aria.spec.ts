@@ -17,13 +17,31 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle')!;
+    const toggle =
+      page.body.querySelector(
+        'ion-toggle'
+      )!;
 
-    const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const {
+      label,
+      labelId,
+      labelText,
+    } = getAriaLabel(
+      toggle,
+      'ion-tg-0'
+    );
 
-    expect(labelText).toEqual('My Label');
-    expect(labelId).toEqual('ion-tg-0-lbl');
-    expect(label).toEqual(page.body.querySelector('ion-label'));
+    expect(labelText).toEqual(
+      'My Label'
+    );
+    expect(labelId).toEqual(
+      'ion-tg-0-lbl'
+    );
+    expect(label).toEqual(
+      page.body.querySelector(
+        'ion-label'
+      )
+    );
   });
 
   it('should correctly link component when using custom label', async () => {
@@ -35,13 +53,29 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle')!;
+    const toggle =
+      page.body.querySelector(
+        'ion-toggle'
+      )!;
 
-    const { label, labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const {
+      label,
+      labelId,
+      labelText,
+    } = getAriaLabel(
+      toggle,
+      'ion-tg-0'
+    );
 
-    expect(labelText).toEqual('Hello World');
+    expect(labelText).toEqual(
+      'Hello World'
+    );
     expect(labelId).toEqual('my-label');
-    expect(label).toEqual(page.body.querySelector('#my-label'));
+    expect(label).toEqual(
+      page.body.querySelector(
+        '#my-label'
+      )
+    );
   });
 
   it('should correctly link component when special characters are used', async () => {
@@ -53,11 +87,17 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle')!;
+    const toggle =
+      page.body.querySelector(
+        'ion-toggle'
+      )!;
 
-    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } =
+      getAriaLabel(toggle, 'ion-tg-0');
 
-    expect(labelText).toEqual('Hello World');
+    expect(labelText).toEqual(
+      'Hello World'
+    );
     expect(labelId).toEqual('id.1');
   });
 
@@ -70,11 +110,17 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle')!;
+    const toggle =
+      page.body.querySelector(
+        'ion-toggle'
+      )!;
 
-    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } =
+      getAriaLabel(toggle, 'ion-tg-0');
 
-    expect(labelText).toEqual('Hello World');
+    expect(labelText).toEqual(
+      'Hello World'
+    );
     expect(labelId).toEqual('my-id');
   });
 
@@ -87,11 +133,17 @@ describe('getAriaLabel()', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle')!;
+    const toggle =
+      page.body.querySelector(
+        'ion-toggle'
+      )!;
 
-    const { labelId, labelText } = getAriaLabel(toggle, 'ion-tg-0');
+    const { labelId, labelText } =
+      getAriaLabel(toggle, 'ion-tg-0');
 
-    expect(labelText).toEqual('Hello World');
+    expect(labelText).toEqual(
+      'Hello World'
+    );
     expect(labelId).toEqual('id.1-lbl');
   });
 });

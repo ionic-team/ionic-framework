@@ -1,11 +1,21 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('list: inset'), () => {
-    test('should render full lines while allowing for overrides', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('list: inset'),
+      () => {
+        test('should render full lines while allowing for overrides', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-content color="primary">
           <div class="wrapper" style="display: flex">
             <ion-list inset="true" style="width: 100%" lines="full">
@@ -21,16 +31,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </div>
         </ion-content>
       `,
-        config
-      );
+            config
+          );
 
-      const listWrapper = page.locator('.wrapper');
+          const listWrapper =
+            page.locator('.wrapper');
 
-      await expect(listWrapper).toHaveScreenshot(screenshot(`list-inset-full-lines`));
-    });
-    test('should render inset lines while allowing for overrides', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            listWrapper
+          ).toHaveScreenshot(
+            screenshot(
+              `list-inset-full-lines`
+            )
+          );
+        });
+        test('should render inset lines while allowing for overrides', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-content color="primary">
           <div class="wrapper" style="display: flex">
             <ion-list inset="true" style="width: 100%" lines="inset">
@@ -46,16 +65,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </div>
         </ion-content>
       `,
-        config
-      );
+            config
+          );
 
-      const listWrapper = page.locator('.wrapper');
+          const listWrapper =
+            page.locator('.wrapper');
 
-      await expect(listWrapper).toHaveScreenshot(screenshot(`list-inset-inset-lines`));
-    });
-    test('should render no lines while allowing for overrides', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            listWrapper
+          ).toHaveScreenshot(
+            screenshot(
+              `list-inset-inset-lines`
+            )
+          );
+        });
+        test('should render no lines while allowing for overrides', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-content color="primary">
           <div class="wrapper" style="display: flex">
             <ion-list inset="true" style="width: 100%" lines="none">
@@ -71,12 +99,21 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </div>
         </ion-content>
       `,
-        config
-      );
+            config
+          );
 
-      const listWrapper = page.locator('.wrapper');
+          const listWrapper =
+            page.locator('.wrapper');
 
-      await expect(listWrapper).toHaveScreenshot(screenshot(`list-inset-no-lines`));
-    });
-  });
-});
+          await expect(
+            listWrapper
+          ).toHaveScreenshot(
+            screenshot(
+              `list-inset-no-lines`
+            )
+          );
+        });
+      }
+    );
+  }
+);

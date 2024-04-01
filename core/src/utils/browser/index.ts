@@ -32,54 +32,109 @@ import type { BackButtonEvent } from '@utils/hardware-back-button';
 type IonicEvents = {
   addEventListener(
     type: 'ionKeyboardDidShow',
-    listener: (ev: CustomEvent<{ keyboardHeight: number }>) => void,
-    options?: boolean | AddEventListenerOptions
+    listener: (
+      ev: CustomEvent<{
+        keyboardHeight: number;
+      }>
+    ) => void,
+    options?:
+      | boolean
+      | AddEventListenerOptions
   ): void;
   removeEventListener(
     type: 'ionKeyboardDidShow',
-    listener: (ev: CustomEvent<{ keyboardHeight: number }>) => void,
-    options?: boolean | AddEventListenerOptions
+    listener: (
+      ev: CustomEvent<{
+        keyboardHeight: number;
+      }>
+    ) => void,
+    options?:
+      | boolean
+      | AddEventListenerOptions
   ): void;
   addEventListener(
     type: 'ionInputDidLoad',
-    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
-    options?: boolean | AddEventListenerOptions
+    listener: (
+      ev: CustomEvent<
+        | HTMLIonInputElement
+        | HTMLIonTextareaElement
+      >
+    ) => void,
+    options?:
+      | boolean
+      | AddEventListenerOptions
   ): void;
   removeEventListener(
     type: 'ionInputDidLoad',
-    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
-    options?: boolean | AddEventListenerOptions
+    listener: (
+      ev: CustomEvent<
+        | HTMLIonInputElement
+        | HTMLIonTextareaElement
+      >
+    ) => void,
+    options?:
+      | boolean
+      | AddEventListenerOptions
   ): void;
   addEventListener(
     type: 'ionInputDidUnload',
-    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
-    options?: boolean | AddEventListenerOptions
+    listener: (
+      ev: CustomEvent<
+        | HTMLIonInputElement
+        | HTMLIonTextareaElement
+      >
+    ) => void,
+    options?:
+      | boolean
+      | AddEventListenerOptions
   ): void;
   removeEventListener(
     type: 'ionInputDidUnload',
-    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
-    options?: boolean | AddEventListenerOptions
+    listener: (
+      ev: CustomEvent<
+        | HTMLIonInputElement
+        | HTMLIonTextareaElement
+      >
+    ) => void,
+    options?:
+      | boolean
+      | AddEventListenerOptions
   ): void;
   addEventListener(
     type: 'ionBackButton',
-    listener: (ev: BackButtonEvent) => void,
-    options?: boolean | AddEventListenerOptions
+    listener: (
+      ev: BackButtonEvent
+    ) => void,
+    options?:
+      | boolean
+      | AddEventListenerOptions
   ): void;
   removeEventListener(
     type: 'ionBackButton',
-    listener: (ev: BackButtonEvent) => void,
-    options?: boolean | AddEventListenerOptions
+    listener: (
+      ev: BackButtonEvent
+    ) => void,
+    options?:
+      | boolean
+      | AddEventListenerOptions
   ): void;
 };
 
-export interface CloseWatcher extends EventTarget {
-  new (options?: CloseWatcherOptions): any;
+export interface CloseWatcher
+  extends EventTarget {
+  new (
+    options?: CloseWatcherOptions
+  ): any;
   requestClose(): void;
   close(): void;
   destroy(): void;
 
-  oncancel: (event: Event) => void | null;
-  onclose: (event: Event) => void | null;
+  oncancel: (
+    event: Event
+  ) => void | null;
+  onclose: (
+    event: Event
+  ) => void | null;
 }
 
 interface CloseWatcherOptions {
@@ -97,9 +152,22 @@ type ExperimentalWindowFeatures = {
   CloseWatcher?: CloseWatcher;
 };
 
-type IonicWindow = Window & IonicEvents & ExperimentalWindowFeatures;
-type IonicDocument = Document & IonicEvents;
+type IonicWindow = Window &
+  IonicEvents &
+  ExperimentalWindowFeatures;
+type IonicDocument = Document &
+  IonicEvents;
 
-export const win: IonicWindow | undefined = typeof window !== 'undefined' ? window : undefined;
+export const win:
+  | IonicWindow
+  | undefined =
+  typeof window !== 'undefined'
+    ? window
+    : undefined;
 
-export const doc: IonicDocument | undefined = typeof document !== 'undefined' ? document : undefined;
+export const doc:
+  | IonicDocument
+  | undefined =
+  typeof document !== 'undefined'
+    ? document
+    : undefined;

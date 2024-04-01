@@ -1,5 +1,8 @@
 import { expect } from '@playwright/test';
-import type { E2EPage, ScreenshotFn } from '@utils/test/playwright';
+import type {
+  E2EPage,
+  ScreenshotFn,
+} from '@utils/test/playwright';
 
 /**
  * Visual regression tests for picker-column.
@@ -14,14 +17,21 @@ export async function testPickerColumn(
   buttonSelector: string,
   description: string
 ) {
-  const ionPickerDidPresentSpy = await page.spyOnEvent('ionPickerDidPresent');
+  const ionPickerDidPresentSpy =
+    await page.spyOnEvent(
+      'ionPickerDidPresent'
+    );
 
   await page.click(buttonSelector);
   await ionPickerDidPresentSpy.next();
 
   await page.waitForChanges();
 
-  await expect(page).toHaveScreenshot(screenshot(`picker-${description}-column-initial`));
+  await expect(page).toHaveScreenshot(
+    screenshot(
+      `picker-${description}-column-initial`
+    )
+  );
 
   // TODO FW-3403
   /*

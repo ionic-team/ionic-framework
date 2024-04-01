@@ -5,8 +5,13 @@ export interface PanRecognizer {
   getDirection(): number;
 }
 
-export const createPanRecognizer = (direction: string, thresh: number, maxAngle: number): PanRecognizer => {
-  const radians = maxAngle * (Math.PI / 180);
+export const createPanRecognizer = (
+  direction: string,
+  thresh: number,
+  maxAngle: number
+): PanRecognizer => {
+  const radians =
+    maxAngle * (Math.PI / 180);
   const isDirX = direction === 'x';
   const maxCosine = Math.cos(radians);
   const threshold = thresh * thresh;
@@ -25,20 +30,28 @@ export const createPanRecognizer = (direction: string, thresh: number, maxAngle:
       dirty = true;
     },
 
-    detect(x: number, y: number): boolean {
+    detect(
+      x: number,
+      y: number
+    ): boolean {
       if (!dirty) {
         return false;
       }
 
       const deltaX = x - startX;
       const deltaY = y - startY;
-      const distance = deltaX * deltaX + deltaY * deltaY;
+      const distance =
+        deltaX * deltaX +
+        deltaY * deltaY;
 
       if (distance < threshold) {
         return false;
       }
-      const hypotenuse = Math.sqrt(distance);
-      const cosine = (isDirX ? deltaX : deltaY) / hypotenuse;
+      const hypotenuse =
+        Math.sqrt(distance);
+      const cosine =
+        (isDirX ? deltaX : deltaY) /
+        hypotenuse;
 
       if (cosine > maxCosine) {
         isPan = 1;

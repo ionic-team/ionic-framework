@@ -1,17 +1,33 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
 /**
  * The resize behavior does not vary across directions or modes.
  */
-configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('spinner: resize'), () => {
-    test.beforeEach(async ({ page }) => {
-      await page.setViewportSize({ width: 320, height: 340 });
-    });
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+  modes: ['md'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('spinner: resize'),
+      () => {
+        test.beforeEach(
+          async ({ page }) => {
+            await page.setViewportSize({
+              width: 320,
+              height: 340,
+            });
+          }
+        );
+        test('should not have visual regressions', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           ion-spinner {
             width: 100px;
@@ -28,10 +44,18 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
         <ion-spinner name="circles"></ion-spinner>
         <ion-spinner name="crescent"></ion-spinner>
       `,
-        config
-      );
+            config
+          );
 
-      await expect(page).toHaveScreenshot(screenshot(`spinner-resize-diff`));
-    });
-  });
-});
+          await expect(
+            page
+          ).toHaveScreenshot(
+            screenshot(
+              `spinner-resize-diff`
+            )
+          );
+        });
+      }
+    );
+  }
+);

@@ -3,7 +3,8 @@ export interface BreadcrumbCollapsedClickEventDetail {
   collapsedBreadcrumbs?: HTMLIonBreadcrumbElement[];
 }
 
-export interface BreadcrumbCustomEvent extends CustomEvent {
+export interface BreadcrumbCustomEvent
+  extends CustomEvent {
   detail: BreadcrumbCollapsedClickEventDetail;
   target: HTMLIonBreadcrumbElement;
 }

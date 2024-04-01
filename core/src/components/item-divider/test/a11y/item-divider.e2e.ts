@@ -1,11 +1,23 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('item-divider: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title(
+        'item-divider: font scaling'
+      ),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 310%;
@@ -16,18 +28,27 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           <ion-label>Item Divider</ion-label>
         </ion-item-divider>
       `,
-        config
-      );
+            config
+          );
 
-      const itemDivider = page.locator('ion-item-divider');
+          const itemDivider =
+            page.locator(
+              'ion-item-divider'
+            );
 
-      await expect(itemDivider).toHaveScreenshot(screenshot(`item-divider-scale`));
-    });
-    test('should scale text on larger font sizes when item divider contains headings and paragraphs', async ({
-      page,
-    }) => {
-      await page.setContent(
-        `
+          await expect(
+            itemDivider
+          ).toHaveScreenshot(
+            screenshot(
+              `item-divider-scale`
+            )
+          );
+        });
+        test('should scale text on larger font sizes when item divider contains headings and paragraphs', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 310%;
@@ -43,12 +64,23 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </ion-label>
         </ion-item-divider>
       `,
-        config
-      );
+            config
+          );
 
-      const itemDivider = page.locator('ion-item-divider');
+          const itemDivider =
+            page.locator(
+              'ion-item-divider'
+            );
 
-      await expect(itemDivider).toHaveScreenshot(screenshot(`item-divider-headings-scale`));
-    });
-  });
-});
+          await expect(
+            itemDivider
+          ).toHaveScreenshot(
+            screenshot(
+              `item-divider-headings-scale`
+            )
+          );
+        });
+      }
+    );
+  }
+);

@@ -1,4 +1,5 @@
-export interface TabsCustomEvent extends CustomEvent {
+export interface TabsCustomEvent
+  extends CustomEvent {
   detail: { tab: string };
   target: HTMLIonTabsElement;
 }

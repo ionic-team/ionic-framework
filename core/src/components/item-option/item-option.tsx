@@ -1,6 +1,15 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
-import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
+import {
+  Component,
+  Element,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
+import type {
+  AnchorInterface,
+  ButtonInterface,
+} from '@utils/element-interface';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -26,7 +35,12 @@ import type { Color } from '../../interface';
   },
   shadow: true,
 })
-export class ItemOption implements ComponentInterface, AnchorInterface, ButtonInterface {
+export class ItemOption
+  implements
+    ComponentInterface,
+    AnchorInterface,
+    ButtonInterface
+{
   @Element() el!: HTMLElement;
 
   /**
@@ -34,7 +48,8 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * If `true`, the user cannot interact with the item option.
@@ -76,18 +91,30 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   /**
    * The type of the button.
    */
-  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+  @Prop() type:
+    | 'submit'
+    | 'reset'
+    | 'button' = 'button';
 
   private onClick = (ev: Event) => {
-    const el = (ev.target as HTMLElement).closest('ion-item-option');
+    const el = (
+      ev.target as HTMLElement
+    ).closest('ion-item-option');
     if (el) {
       ev.preventDefault();
     }
   };
 
   render() {
-    const { disabled, expandable, href } = this;
-    const TagType = href === undefined ? 'button' : ('a' as any);
+    const {
+      disabled,
+      expandable,
+      href,
+    } = this;
+    const TagType =
+      href === undefined
+        ? 'button'
+        : ('a' as any);
     const mode = getIonMode(this);
     const attrs =
       TagType === 'button'
@@ -101,14 +128,24 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
     return (
       <Host
         onClick={this.onClick}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'item-option-disabled': disabled,
-          'item-option-expandable': expandable,
-          'ion-activatable': true,
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'item-option-disabled':
+              disabled,
+            'item-option-expandable':
+              expandable,
+            'ion-activatable': true,
+          }
+        )}
       >
-        <TagType {...attrs} class="button-native" part="native" disabled={disabled}>
+        <TagType
+          {...attrs}
+          class="button-native"
+          part="native"
+          disabled={disabled}
+        >
           <span class="button-inner">
             <slot name="top"></slot>
             <div class="horizontal-wrapper">
@@ -119,7 +156,9 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
             </div>
             <slot name="bottom"></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {mode === 'md' && (
+            <ion-ripple-effect></ion-ripple-effect>
+          )}
         </TagType>
       </Host>
     );

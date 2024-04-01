@@ -1,5 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, h } from '@stencil/core';
+import {
+  Component,
+  Host,
+  h,
+} from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -10,7 +14,9 @@ import { getIonMode } from '../../global/ionic-global';
     md: 'item-group.md.scss',
   },
 })
-export class ItemGroup implements ComponentInterface {
+export class ItemGroup
+  implements ComponentInterface
+{
   render() {
     const mode = getIonMode(this);
     return (

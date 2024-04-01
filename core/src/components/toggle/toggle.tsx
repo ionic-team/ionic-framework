@@ -1,18 +1,47 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  State,
+  Watch,
+  h,
+} from '@stencil/core';
 import type { LegacyFormController } from '@utils/forms';
 import { createLegacyFormController } from '@utils/forms';
-import { getAriaLabel, renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
+import {
+  getAriaLabel,
+  renderHiddenInput,
+  inheritAriaAttributes,
+} from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { hapticSelection } from '@utils/native/haptic';
 import { isRTL } from '@utils/rtl';
-import { createColorClasses, hostContext } from '@utils/theme';
-import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
+import {
+  checkmarkOutline,
+  removeOutline,
+  ellipseOutline,
+} from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  Gesture,
+  GestureDetail,
+  Mode,
+  StyleEventDetail,
+} from '../../interface';
 
 import type { ToggleChangeEventDetail } from './toggle-interface';
 
@@ -33,18 +62,22 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
   },
   shadow: true,
 })
-export class Toggle implements ComponentInterface {
+export class Toggle
+  implements ComponentInterface
+{
   private inputId = `ion-tg-${toggleIds++}`;
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
   private lastDrag = 0;
   private legacyFormController!: LegacyFormController;
-  private inheritedAttributes: Attributes = {};
+  private inheritedAttributes: Attributes =
+    {};
   private toggleTrack?: HTMLElement;
   private didLoad = false;
 
   // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
+  private hasLoggedDeprecationWarning =
+    false;
 
   @Element() el!: HTMLIonToggleElement;
 
@@ -55,7 +88,8 @@ export class Toggle implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -65,7 +99,8 @@ export class Toggle implements ComponentInterface {
   /**
    * If `true`, the toggle is selected.
    */
-  @Prop({ mutable: true }) checked = false;
+  @Prop({ mutable: true }) checked =
+    false;
 
   /**
    * If `true`, the user cannot interact with the toggle.
@@ -84,7 +119,11 @@ export class Toggle implements ComponentInterface {
   /**
    * Enables the on/off accessibility switch labels within the toggle.
    */
-  @Prop() enableOnOffLabels: boolean | undefined = config.get('toggleOnOffLabels');
+  @Prop() enableOnOffLabels:
+    | boolean
+    | undefined = config.get(
+    'toggleOnOffLabels'
+  );
 
   /**
    * Where to place the label relative to the input.
@@ -93,7 +132,11 @@ export class Toggle implements ComponentInterface {
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    * `"stacked"`: The label will appear above the toggle regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
+  @Prop() labelPlacement:
+    | 'start'
+    | 'end'
+    | 'fixed'
+    | 'stacked' = 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -115,25 +158,32 @@ export class Toggle implements ComponentInterface {
    * `"space-between"`: The label and toggle will appear on opposite
    * ends of the line with space between the two elements.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify:
+    | 'start'
+    | 'end'
+    | 'space-between' = 'space-between';
 
   /**
    * How to control the alignment of the toggle and label on the cross axis.
    * `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
    * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
    */
-  @Prop() alignment: 'start' | 'center' = 'center';
+  @Prop() alignment:
+    | 'start'
+    | 'center' = 'center';
 
   /**
    * Emitted when the user switches the toggle on or off. Does not emit
    * when programmatically changing the value of the `checked` property.
    */
-  @Event() ionChange!: EventEmitter<ToggleChangeEventDetail>;
+  @Event()
+  ionChange!: EventEmitter<ToggleChangeEventDetail>;
 
   /**
    * Emitted when the toggle has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event()
+  ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the toggle loses focus.
@@ -144,13 +194,16 @@ export class Toggle implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
   disabledChanged() {
     this.emitStyle();
     if (this.gesture) {
-      this.gesture.enable(!this.disabled);
+      this.gesture.enable(
+        !this.disabled
+      );
     }
   }
 
@@ -167,7 +220,10 @@ export class Toggle implements ComponentInterface {
   }
 
   async connectedCallback() {
-    this.legacyFormController = createLegacyFormController(this.el);
+    this.legacyFormController =
+      createLegacyFormController(
+        this.el
+      );
 
     /**
      * If we have not yet rendered
@@ -189,7 +245,11 @@ export class Toggle implements ComponentInterface {
     const { toggleTrack } = this;
 
     if (toggleTrack) {
-      this.gesture = (await import('../../utils/gesture')).createGesture({
+      this.gesture = (
+        await import(
+          '../../utils/gesture'
+        )
+      ).createGesture({
         el: toggleTrack,
         gestureName: 'toggle',
         gesturePriority: 100,
@@ -213,17 +273,24 @@ export class Toggle implements ComponentInterface {
   componentWillLoad() {
     this.emitStyle();
 
-    if (!this.legacyFormController.hasLegacyControl()) {
+    if (
+      !this.legacyFormController.hasLegacyControl()
+    ) {
       this.inheritedAttributes = {
-        ...inheritAriaAttributes(this.el),
+        ...inheritAriaAttributes(
+          this.el
+        ),
       };
     }
   }
 
   private emitStyle() {
-    if (this.legacyFormController.hasLegacyControl()) {
+    if (
+      this.legacyFormController.hasLegacyControl()
+    ) {
       this.ionStyle.emit({
-        'interactive-disabled': this.disabled,
+        'interactive-disabled':
+          this.disabled,
         // TODO(FW-2990): remove this
         legacy: !!this.legacy,
       });
@@ -237,8 +304,17 @@ export class Toggle implements ComponentInterface {
     this.setFocus();
   }
 
-  private onMove(detail: GestureDetail) {
-    if (shouldToggle(isRTL(this.el), this.checked, detail.deltaX, -10)) {
+  private onMove(
+    detail: GestureDetail
+  ) {
+    if (
+      shouldToggle(
+        isRTL(this.el),
+        this.checked,
+        detail.deltaX,
+        -10
+      )
+    ) {
       this.toggleChecked();
       hapticSelection();
     }
@@ -261,14 +337,19 @@ export class Toggle implements ComponentInterface {
     }
   }
 
-  private onClick = (ev: MouseEvent) => {
+  private onClick = (
+    ev: MouseEvent
+  ) => {
     if (this.disabled) {
       return;
     }
 
     ev.preventDefault();
 
-    if (this.lastDrag + 300 < Date.now()) {
+    if (
+      this.lastDrag + 300 <
+      Date.now()
+    ) {
       this.toggleChecked();
     }
   };
@@ -281,21 +362,36 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
+  private getSwitchLabelIcon = (
+    mode: Mode,
+    checked: boolean
+  ) => {
     if (mode === 'md') {
-      return checked ? checkmarkOutline : removeOutline;
+      return checked
+        ? checkmarkOutline
+        : removeOutline;
     }
-    return checked ? removeOutline : ellipseOutline;
+    return checked
+      ? removeOutline
+      : ellipseOutline;
   };
 
-  private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
-    const icon = this.getSwitchLabelIcon(mode, checked);
+  private renderOnOffSwitchLabels(
+    mode: Mode,
+    checked: boolean
+  ) {
+    const icon =
+      this.getSwitchLabelIcon(
+        mode,
+        checked
+      );
 
     return (
       <ion-icon
         class={{
           'toggle-switch-icon': true,
-          'toggle-switch-icon-checked': checked,
+          'toggle-switch-icon-checked':
+            checked,
         }}
         icon={icon}
         aria-hidden="true"
@@ -306,17 +402,43 @@ export class Toggle implements ComponentInterface {
   private renderToggleControl() {
     const mode = getIonMode(this);
 
-    const { enableOnOffLabels, checked } = this;
+    const {
+      enableOnOffLabels,
+      checked,
+    } = this;
     return (
-      <div class="toggle-icon" part="track" ref={(el) => (this.toggleTrack = el)}>
+      <div
+        class="toggle-icon"
+        part="track"
+        ref={(el) =>
+          (this.toggleTrack = el)
+        }
+      >
         {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
          since the wrapper is translated when the handle is interacted with and
          this would move the on/off labels outside of the view box */}
         {enableOnOffLabels &&
-          mode === 'ios' && [this.renderOnOffSwitchLabels(mode, true), this.renderOnOffSwitchLabels(mode, false)]}
+          mode === 'ios' && [
+            this.renderOnOffSwitchLabels(
+              mode,
+              true
+            ),
+            this.renderOnOffSwitchLabels(
+              mode,
+              false
+            ),
+          ]}
         <div class="toggle-icon-wrapper">
-          <div class="toggle-inner" part="handle">
-            {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
+          <div
+            class="toggle-inner"
+            part="handle"
+          >
+            {enableOnOffLabels &&
+              mode === 'md' &&
+              this.renderOnOffSwitchLabels(
+                mode,
+                checked
+              )}
           </div>
         </div>
       </div>
@@ -328,33 +450,65 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { legacyFormController } = this;
+    const { legacyFormController } =
+      this;
 
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyToggle() : this.renderToggle();
+    return legacyFormController.hasLegacyControl()
+      ? this.renderLegacyToggle()
+      : this.renderToggle();
   }
 
   private renderToggle() {
-    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment } = this;
+    const {
+      activated,
+      color,
+      checked,
+      disabled,
+      el,
+      justify,
+      labelPlacement,
+      inputId,
+      name,
+      alignment,
+    } = this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
-    const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    renderHiddenInput(true, el, name, checked ? value : '', disabled);
+    const rtl = isRTL(el)
+      ? 'rtl'
+      : 'ltr';
+    renderHiddenInput(
+      true,
+      el,
+      name,
+      checked ? value : '',
+      disabled
+    );
 
     return (
       <Host
         onClick={this.onClick}
-        class={createColorClasses(color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'toggle-activated': activated,
-          'toggle-checked': checked,
-          'toggle-disabled': disabled,
-          [`toggle-justify-${justify}`]: true,
-          [`toggle-alignment-${alignment}`]: true,
-          [`toggle-label-placement-${labelPlacement}`]: true,
-          [`toggle-${rtl}`]: true,
-        })}
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            'in-item': hostContext(
+              'ion-item',
+              el
+            ),
+            'toggle-activated':
+              activated,
+            'toggle-checked': checked,
+            'toggle-disabled': disabled,
+            [`toggle-justify-${justify}`]:
+              true,
+            [`toggle-alignment-${alignment}`]:
+              true,
+            [`toggle-label-placement-${labelPlacement}`]:
+              true,
+            [`toggle-${rtl}`]: true,
+          }
+        )}
       >
         <label class="toggle-wrapper">
           {/*
@@ -368,28 +522,39 @@ export class Toggle implements ComponentInterface {
             checked={checked}
             disabled={disabled}
             id={inputId}
-            onFocus={() => this.onFocus()}
+            onFocus={() =>
+              this.onFocus()
+            }
             onBlur={() => this.onBlur()}
-            ref={(focusEl) => (this.focusEl = focusEl)}
-            {...this.inheritedAttributes}
+            ref={(focusEl) =>
+              (this.focusEl = focusEl)
+            }
+            {...this
+              .inheritedAttributes}
           />
           <div
             class={{
-              'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !this.hasLabel,
+              'label-text-wrapper':
+                true,
+              'label-text-wrapper-hidden':
+                !this.hasLabel,
             }}
             part="label"
           >
             <slot></slot>
           </div>
-          <div class="native-wrapper">{this.renderToggleControl()}</div>
+          <div class="native-wrapper">
+            {this.renderToggleControl()}
+          </div>
         </label>
       </Host>
     );
   }
 
   private renderLegacyToggle() {
-    if (!this.hasLoggedDeprecationWarning) {
+    if (
+      !this.hasLoggedDeprecationWarning
+    ) {
       printIonWarning(
         `ion-toggle now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
 
@@ -409,37 +574,71 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         );
       }
 
-      this.hasLoggedDeprecationWarning = true;
+      this.hasLoggedDeprecationWarning =
+        true;
     }
 
-    const { activated, color, checked, disabled, el, inputId, name } = this;
+    const {
+      activated,
+      color,
+      checked,
+      disabled,
+      el,
+      inputId,
+      name,
+    } = this;
     const mode = getIonMode(this);
-    const { label, labelId, labelText } = getAriaLabel(el, inputId);
+    const {
+      label,
+      labelId,
+      labelText,
+    } = getAriaLabel(el, inputId);
     const value = this.getValue();
-    const rtl = isRTL(el) ? 'rtl' : 'ltr';
+    const rtl = isRTL(el)
+      ? 'rtl'
+      : 'ltr';
 
-    renderHiddenInput(true, el, name, checked ? value : '', disabled);
+    renderHiddenInput(
+      true,
+      el,
+      name,
+      checked ? value : '',
+      disabled
+    );
 
     return (
       <Host
         onClick={this.onClick}
-        aria-labelledby={label ? labelId : null}
+        aria-labelledby={
+          label ? labelId : null
+        }
         aria-checked={`${checked}`}
-        aria-hidden={disabled ? 'true' : null}
+        aria-hidden={
+          disabled ? 'true' : null
+        }
         role="switch"
-        class={createColorClasses(color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'toggle-activated': activated,
-          'toggle-checked': checked,
-          'toggle-disabled': disabled,
-          'legacy-toggle': true,
-          interactive: true,
-          [`toggle-${rtl}`]: true,
-        })}
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            'in-item': hostContext(
+              'ion-item',
+              el
+            ),
+            'toggle-activated':
+              activated,
+            'toggle-checked': checked,
+            'toggle-disabled': disabled,
+            'legacy-toggle': true,
+            interactive: true,
+            [`toggle-${rtl}`]: true,
+          }
+        )}
       >
         {this.renderToggleControl()}
-        <label htmlFor={inputId}>{labelText}</label>
+        <label htmlFor={inputId}>
+          {labelText}
+        </label>
         <input
           type="checkbox"
           role="switch"
@@ -448,18 +647,31 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           id={inputId}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
-          ref={(focusEl) => (this.focusEl = focusEl)}
+          ref={(focusEl) =>
+            (this.focusEl = focusEl)
+          }
         />
       </Host>
     );
   }
 }
 
-const shouldToggle = (rtl: boolean, checked: boolean, deltaX: number, margin: number): boolean => {
+const shouldToggle = (
+  rtl: boolean,
+  checked: boolean,
+  deltaX: number,
+  margin: number
+): boolean => {
   if (checked) {
-    return (!rtl && margin > deltaX) || (rtl && -margin < deltaX);
+    return (
+      (!rtl && margin > deltaX) ||
+      (rtl && -margin < deltaX)
+    );
   } else {
-    return (!rtl && -margin < deltaX) || (rtl && margin > deltaX);
+    return (
+      (!rtl && -margin < deltaX) ||
+      (rtl && margin > deltaX)
+    );
   }
 };
 

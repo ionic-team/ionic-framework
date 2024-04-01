@@ -1,11 +1,21 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('label: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('label: font scaling'),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 310%;
@@ -14,16 +24,24 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
         <ion-label>Label</ion-label>
       `,
-        config
-      );
+            config
+          );
 
-      const label = page.locator('ion-label');
+          const label = page.locator(
+            'ion-label'
+          );
 
-      await expect(label).toHaveScreenshot(screenshot(`label-scale`));
-    });
-    test('should scale text on larger font sizes when wrapping', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            label
+          ).toHaveScreenshot(
+            screenshot(`label-scale`)
+          );
+        });
+        test('should scale text on larger font sizes when wrapping', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 310%;
@@ -32,16 +50,26 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
         <ion-label class="ion-text-wrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</ion-label>
       `,
-        config
-      );
+            config
+          );
 
-      const label = page.locator('ion-label');
+          const label = page.locator(
+            'ion-label'
+          );
 
-      await expect(label).toHaveScreenshot(screenshot(`label-wrap-scale`));
-    });
-    test('should scale text on larger font sizes when label contains headings and paragraphs', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            label
+          ).toHaveScreenshot(
+            screenshot(
+              `label-wrap-scale`
+            )
+          );
+        });
+        test('should scale text on larger font sizes when label contains headings and paragraphs', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 310%;
@@ -55,16 +83,26 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           <p>Paragraph</p>
         </ion-label>
       `,
-        config
-      );
+            config
+          );
 
-      const label = page.locator('ion-label');
+          const label = page.locator(
+            'ion-label'
+          );
 
-      await expect(label).toHaveScreenshot(screenshot(`label-headings-scale`));
-    });
-    test('should scale text on larger font sizes when position is stacked', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            label
+          ).toHaveScreenshot(
+            screenshot(
+              `label-headings-scale`
+            )
+          );
+        });
+        test('should scale text on larger font sizes when position is stacked', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 310%;
@@ -73,21 +111,41 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
         <ion-label position="stacked">Stacked</ion-label>
       `,
-        config
-      );
+            config
+          );
 
-      const label = page.locator('ion-label');
+          const label = page.locator(
+            'ion-label'
+          );
 
-      await expect(label).toHaveScreenshot(screenshot(`label-stacked-scale`));
-    });
-  });
-});
+          await expect(
+            label
+          ).toHaveScreenshot(
+            screenshot(
+              `label-stacked-scale`
+            )
+          );
+        });
+      }
+    );
+  }
+);
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('label: text wrapping in item'), () => {
-    test('long text should not cause label to expand infinitely', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  modes: ['ios'],
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title(
+        'label: text wrapping in item'
+      ),
+      () => {
+        test('long text should not cause label to expand infinitely', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           div {
             text-overflow: ellipsis;
@@ -104,12 +162,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
           </ion-label>
         </ion-item>
       `,
-        config
-      );
+            config
+          );
 
-      const item = page.locator('ion-item');
+          const item =
+            page.locator('ion-item');
 
-      await expect(item).toHaveScreenshot(screenshot(`label-item-wrap`));
-    });
-  });
-});
+          await expect(
+            item
+          ).toHaveScreenshot(
+            screenshot(
+              `label-item-wrap`
+            )
+          );
+        });
+      }
+    );
+  }
+);

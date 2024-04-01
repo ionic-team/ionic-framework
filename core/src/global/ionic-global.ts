@@ -1,33 +1,60 @@
-import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
+import {
+  getMode,
+  setMode,
+  setPlatformHelpers,
+} from '@stencil/core';
 
-import type { IonicConfig, Mode } from '../interface';
-import { isPlatform, setupPlatforms } from '../utils/platform';
+import type {
+  IonicConfig,
+  Mode,
+} from '../interface';
+import {
+  isPlatform,
+  setupPlatforms,
+} from '../utils/platform';
 
-import { config, configFromSession, configFromURL, saveConfig } from './config';
+import {
+  config,
+  configFromSession,
+  configFromURL,
+  saveConfig,
+} from './config';
 
 // TODO(FW-2832): types
 
 let defaultMode: Mode;
 
-export const getIonMode = (ref?: any): Mode => {
-  return (ref && getMode(ref)) || defaultMode;
+export const getIonMode = (
+  ref?: any
+): Mode => {
+  return (
+    (ref && getMode(ref)) || defaultMode
+  );
 };
 
-export const initialize = (userConfig: IonicConfig = {}) => {
-  if (typeof (window as any) === 'undefined') {
+export const initialize = (
+  userConfig: IonicConfig = {}
+) => {
+  if (
+    typeof (window as any) ===
+    'undefined'
+  ) {
     return;
   }
 
   const doc = window.document;
   const win = window;
-  const Ionic = ((win as any).Ionic = (win as any).Ionic || {});
+  const Ionic = ((win as any).Ionic =
+    (win as any).Ionic || {});
 
   const platformHelpers: any = {};
   if (userConfig._ael) {
-    platformHelpers.ael = userConfig._ael;
+    platformHelpers.ael =
+      userConfig._ael;
   }
   if (userConfig._rel) {
-    platformHelpers.rel = userConfig._rel;
+    platformHelpers.rel =
+      userConfig._rel;
   }
   if (userConfig._ce) {
     platformHelpers.ce = userConfig._ce;
@@ -45,7 +72,9 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   };
 
   config.reset(configObj);
-  if (config.getBoolean('persistConfig')) {
+  if (
+    config.getBoolean('persistConfig')
+  ) {
     saveConfig(win, configObj);
   }
 
@@ -58,28 +87,53 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   Ionic.config = config;
   Ionic.mode = defaultMode = config.get(
     'mode',
-    doc.documentElement.getAttribute('mode') || (isPlatform(win, 'ios') ? 'ios' : 'md')
+    doc.documentElement.getAttribute(
+      'mode'
+    ) ||
+      (isPlatform(win, 'ios')
+        ? 'ios'
+        : 'md')
   );
   config.set('mode', defaultMode);
-  doc.documentElement.setAttribute('mode', defaultMode);
-  doc.documentElement.classList.add(defaultMode);
+  doc.documentElement.setAttribute(
+    'mode',
+    defaultMode
+  );
+  doc.documentElement.classList.add(
+    defaultMode
+  );
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);
   }
 
-  const isIonicElement = (elm: any) => elm.tagName?.startsWith('ION-');
+  const isIonicElement = (elm: any) =>
+    elm.tagName?.startsWith('ION-');
 
-  const isAllowedIonicModeValue = (elmMode: string) => ['ios', 'md'].includes(elmMode);
+  const isAllowedIonicModeValue = (
+    elmMode: string
+  ) => ['ios', 'md'].includes(elmMode);
 
   setMode((elm: any) => {
     while (elm) {
-      const elmMode = (elm as any).mode || elm.getAttribute('mode');
+      const elmMode =
+        (elm as any).mode ||
+        elm.getAttribute('mode');
       if (elmMode) {
-        if (isAllowedIonicModeValue(elmMode)) {
+        if (
+          isAllowedIonicModeValue(
+            elmMode
+          )
+        ) {
           return elmMode;
-        } else if (isIonicElement(elm)) {
-          console.warn('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
+        } else if (
+          isIonicElement(elm)
+        ) {
+          console.warn(
+            'Invalid ionic mode: "' +
+              elmMode +
+              '", expected: "ios" or "md"'
+          );
         }
       }
       elm = elm.parentElement;

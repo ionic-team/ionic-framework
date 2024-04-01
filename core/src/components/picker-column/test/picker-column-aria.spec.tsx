@@ -24,13 +24,31 @@ describe('picker-column', () => {
 
     const page = await newSpecPage({
       components: [PickerColumnCmp],
-      template: () => <ion-picker-column col={col}></ion-picker-column>,
+      template: () => (
+        <ion-picker-column
+          col={col}
+        ></ion-picker-column>
+      ),
     });
 
-    const firstOption = page.body.querySelector('ion-picker-column .picker-opt:nth-child(1)')!;
-    const secondOption = page.body.querySelector('ion-picker-column .picker-opt:nth-child(2)')!;
+    const firstOption =
+      page.body.querySelector(
+        'ion-picker-column .picker-opt:nth-child(1)'
+      )!;
+    const secondOption =
+      page.body.querySelector(
+        'ion-picker-column .picker-opt:nth-child(2)'
+      )!;
 
-    expect(firstOption.getAttribute('aria-label')).toBe('C Sharp');
-    expect(secondOption.getAttribute('aria-label')).toBe(null);
+    expect(
+      firstOption.getAttribute(
+        'aria-label'
+      )
+    ).toBe('C Sharp');
+    expect(
+      secondOption.getAttribute(
+        'aria-label'
+      )
+    ).toBe(null);
   });
 });

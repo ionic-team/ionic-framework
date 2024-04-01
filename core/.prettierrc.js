@@ -7,5 +7,11 @@ module.exports = {
         singleQuote: false,
       },
     },
+    {
+      files: ['**/*.ts{,x}'],
+      options: {
+        printWidth: 40
+      }
+    }
   ],
 };

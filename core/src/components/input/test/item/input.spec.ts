@@ -13,15 +13,25 @@ it('should render as modern when label is set asynchronously', async () => {
     `,
   });
 
-  const input = page.body.querySelector('ion-input')!;
+  const input = page.body.querySelector(
+    'ion-input'
+  )!;
 
   // Template should be modern
-  expect(input.classList.contains('legacy-input')).toBe(false);
+  expect(
+    input.classList.contains(
+      'legacy-input'
+    )
+  ).toBe(false);
 
   // Update the input label
   input.label = 'New label';
   await page.waitForChanges();
 
   // Template should still be modern
-  expect(input.classList.contains('legacy-input')).toBe(false);
+  expect(
+    input.classList.contains(
+      'legacy-input'
+    )
+  ).toBe(false);
 });

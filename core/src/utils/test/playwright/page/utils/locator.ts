@@ -1,14 +1,18 @@
 import type { Locator } from '@playwright/test';
 
 import type { E2EPage } from '../../playwright-declarations';
-import { EventSpy, addE2EListener } from '../event-spy';
+import {
+  EventSpy,
+  addE2EListener,
+} from '../event-spy';
 
 export type LocatorOptions = {
   hasText?: string | RegExp;
   has?: Locator;
 };
 
-export interface E2ELocator extends Locator {
+export interface E2ELocator
+  extends Locator {
   /**
    * Creates a new EventSpy and listens
    * on the element for an event.
@@ -21,7 +25,9 @@ export interface E2ELocator extends Locator {
    * ...
    * await ionChange.next();
    */
-  spyOnEvent: (eventName: string) => Promise<EventSpy>;
+  spyOnEvent: (
+    eventName: string
+  ) => Promise<EventSpy>;
 }
 
 export const locator = (
@@ -30,11 +36,24 @@ export const locator = (
   selector: string,
   options?: LocatorOptions
 ): E2ELocator => {
-  const locator = originalFn(selector, options) as E2ELocator;
-  locator.spyOnEvent = async (eventName: string) => {
+  const locator = originalFn(
+    selector,
+    options
+  ) as E2ELocator;
+  locator.spyOnEvent = async (
+    eventName: string
+  ) => {
     const spy = new EventSpy(eventName);
-    const handle = await locator.evaluateHandle((node: HTMLElement) => node);
-    await addE2EListener(page, handle, eventName, (ev: CustomEvent) => spy.push(ev));
+    const handle =
+      await locator.evaluateHandle(
+        (node: HTMLElement) => node
+      );
+    await addE2EListener(
+      page,
+      handle,
+      eventName,
+      (ev: CustomEvent) => spy.push(ev)
+    );
     return spy;
   };
   return locator;

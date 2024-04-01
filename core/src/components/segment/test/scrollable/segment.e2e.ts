@@ -1,11 +1,21 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('segment: scrollable (rendering)'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(
-        `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title(
+        'segment: scrollable (rendering)'
+      ),
+      () => {
+        test('should not have visual regressions', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-segment scrollable="true" value="2">
           <ion-segment-button value="1">
             <ion-label>First</ion-label>
@@ -36,21 +46,40 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-segment-button>
         </ion-segment>
       `,
-        config
-      );
+            config
+          );
 
-      const segment = page.locator('ion-segment');
+          const segment = page.locator(
+            'ion-segment'
+          );
 
-      await expect(segment).toHaveScreenshot(screenshot(`segment-scrollable`));
-    });
-  });
-});
+          await expect(
+            segment
+          ).toHaveScreenshot(
+            screenshot(
+              `segment-scrollable`
+            )
+          );
+        });
+      }
+    );
+  }
+);
 
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('segment: scrollable (functionality)'), () => {
-    test('should scroll active button into view when value is already set', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  modes: ['md'],
+  directions: ['ltr'],
+}).forEach(({ title, config }) => {
+  test.describe(
+    title(
+      'segment: scrollable (functionality)'
+    ),
+    () => {
+      test('should scroll active button into view when value is already set', async ({
+        page,
+      }) => {
+        await page.setContent(
+          `
           <ion-segment scrollable="true" value="8">
             <ion-segment-button value="1">
               <ion-label>First</ion-label>
@@ -81,11 +110,15 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
             </ion-segment-button>
           </ion-segment>
         `,
-        config
-      );
+          config
+        );
 
-      const activeButton = page.locator('#activeButton');
-      await expect(activeButton).toBeInViewport();
-    });
-  });
+        const activeButton =
+          page.locator('#activeButton');
+        await expect(
+          activeButton
+        ).toBeInViewport();
+      });
+    }
+  );
 });

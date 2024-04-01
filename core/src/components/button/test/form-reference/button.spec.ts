@@ -13,19 +13,28 @@ describe('Button: Hidden Form Button', () => {
     });
 
     const getButtons = () => {
-      return page.body.querySelectorAll('form button');
+      return page.body.querySelectorAll(
+        'form button'
+      );
     };
 
-    const button = page.body.querySelector('ion-button')!;
+    const button =
+      page.body.querySelector(
+        'ion-button'
+      )!;
 
     await page.waitForChanges();
 
-    expect(getButtons().length).toEqual(1);
+    expect(getButtons().length).toEqual(
+      1
+    );
 
     // Re-render the component
     button.color = 'danger';
     await page.waitForChanges();
 
-    expect(getButtons().length).toEqual(1);
+    expect(getButtons().length).toEqual(
+      1
+    );
   });
 });

@@ -1,7 +1,9 @@
 import { Keyboard } from '../native/keyboard';
 
-export const KEYBOARD_DID_OPEN = 'ionKeyboardDidShow';
-export const KEYBOARD_DID_CLOSE = 'ionKeyboardDidHide';
+export const KEYBOARD_DID_OPEN =
+  'ionKeyboardDidShow';
+export const KEYBOARD_DID_CLOSE =
+  'ionKeyboardDidHide';
 const KEYBOARD_THRESHOLD = 150;
 
 // TODO(FW-2832): types
@@ -14,14 +16,18 @@ let keyboardOpen = false;
 /**
  * This is only used for tests
  */
-export const resetKeyboardAssist = () => {
-  previousVisualViewport = {};
-  currentVisualViewport = {};
-  keyboardOpen = false;
-};
+export const resetKeyboardAssist =
+  () => {
+    previousVisualViewport = {};
+    currentVisualViewport = {};
+    keyboardOpen = false;
+  };
 
-export const startKeyboardAssist = (win: Window) => {
-  const nativeEngine = Keyboard.getEngine();
+export const startKeyboardAssist = (
+  win: Window
+) => {
+  const nativeEngine =
+    Keyboard.getEngine();
 
   /**
    * If the native keyboard plugin is available
@@ -38,14 +44,24 @@ export const startKeyboardAssist = (win: Window) => {
       return;
     }
 
-    currentVisualViewport = copyVisualViewport((win as any).visualViewport);
+    currentVisualViewport =
+      copyVisualViewport(
+        (win as any).visualViewport
+      );
 
-    (win as any).visualViewport.onresize = () => {
+    (
+      win as any
+    ).visualViewport.onresize = () => {
       trackViewportChanges(win);
 
-      if (keyboardDidOpen() || keyboardDidResize(win)) {
+      if (
+        keyboardDidOpen() ||
+        keyboardDidResize(win)
+      ) {
         setKeyboardOpen(win);
-      } else if (keyboardDidClose(win)) {
+      } else if (
+        keyboardDidClose(win)
+      ) {
         setKeyboardClose(win);
       }
     };
@@ -57,17 +73,30 @@ export const startKeyboardAssist = (win: Window) => {
  * in Capacitor/Cordova so devs only need to listen
  * in one place.
  */
-const startNativeListeners = (win: Window) => {
-  win.addEventListener('keyboardDidShow', (ev) => setKeyboardOpen(win, ev));
-  win.addEventListener('keyboardDidHide', () => setKeyboardClose(win));
+const startNativeListeners = (
+  win: Window
+) => {
+  win.addEventListener(
+    'keyboardDidShow',
+    (ev) => setKeyboardOpen(win, ev)
+  );
+  win.addEventListener(
+    'keyboardDidHide',
+    () => setKeyboardClose(win)
+  );
 };
 
-export const setKeyboardOpen = (win: Window, ev?: any) => {
+export const setKeyboardOpen = (
+  win: Window,
+  ev?: any
+) => {
   fireKeyboardOpenEvent(win, ev);
   keyboardOpen = true;
 };
 
-export const setKeyboardClose = (win: Window) => {
+export const setKeyboardClose = (
+  win: Window
+) => {
   fireKeyboardCloseEvent(win);
   keyboardOpen = false;
 };
@@ -84,22 +113,32 @@ export const setKeyboardClose = (win: Window) => {
  * is why we take into account the current visual viewport's
  * scale value.
  */
-export const keyboardDidOpen = (): boolean => {
-  const scaledHeightDifference =
-    (previousVisualViewport.height - currentVisualViewport.height) * currentVisualViewport.scale;
-  return (
-    !keyboardOpen &&
-    previousVisualViewport.width === currentVisualViewport.width &&
-    scaledHeightDifference > KEYBOARD_THRESHOLD
-  );
-};
+export const keyboardDidOpen =
+  (): boolean => {
+    const scaledHeightDifference =
+      (previousVisualViewport.height -
+        currentVisualViewport.height) *
+      currentVisualViewport.scale;
+    return (
+      !keyboardOpen &&
+      previousVisualViewport.width ===
+        currentVisualViewport.width &&
+      scaledHeightDifference >
+        KEYBOARD_THRESHOLD
+    );
+  };
 
 /**
  * Returns `true` if the keyboard is open,
  * but the keyboard did not close
  */
-export const keyboardDidResize = (win: Window): boolean => {
-  return keyboardOpen && !keyboardDidClose(win);
+export const keyboardDidResize = (
+  win: Window
+): boolean => {
+  return (
+    keyboardOpen &&
+    !keyboardDidClose(win)
+  );
 };
 
 /**
@@ -108,18 +147,33 @@ export const keyboardDidResize = (win: Window): boolean => {
  * the current visual viewport height equals the
  * layout viewport height.
  */
-export const keyboardDidClose = (win: Window): boolean => {
-  return keyboardOpen && currentVisualViewport.height === win.innerHeight;
+export const keyboardDidClose = (
+  win: Window
+): boolean => {
+  return (
+    keyboardOpen &&
+    currentVisualViewport.height ===
+      win.innerHeight
+  );
 };
 
 /**
  * Dispatch a keyboard open event
  */
-const fireKeyboardOpenEvent = (win: Window, nativeEv?: any): void => {
-  const keyboardHeight = nativeEv ? nativeEv.keyboardHeight : win.innerHeight - currentVisualViewport.height;
-  const ev = new CustomEvent(KEYBOARD_DID_OPEN, {
-    detail: { keyboardHeight },
-  });
+const fireKeyboardOpenEvent = (
+  win: Window,
+  nativeEv?: any
+): void => {
+  const keyboardHeight = nativeEv
+    ? nativeEv.keyboardHeight
+    : win.innerHeight -
+      currentVisualViewport.height;
+  const ev = new CustomEvent(
+    KEYBOARD_DID_OPEN,
+    {
+      detail: { keyboardHeight },
+    }
+  );
 
   win.dispatchEvent(ev);
 };
@@ -127,8 +181,12 @@ const fireKeyboardOpenEvent = (win: Window, nativeEv?: any): void => {
 /**
  * Dispatch a keyboard close event
  */
-const fireKeyboardCloseEvent = (win: Window): void => {
-  const ev = new CustomEvent(KEYBOARD_DID_CLOSE);
+const fireKeyboardCloseEvent = (
+  win: Window
+): void => {
+  const ev = new CustomEvent(
+    KEYBOARD_DID_CLOSE
+  );
   win.dispatchEvent(ev);
 };
 
@@ -138,21 +196,35 @@ const fireKeyboardCloseEvent = (win: Window): void => {
  * while also preserving the previous visual and
  * layout viewport states
  */
-export const trackViewportChanges = (win: Window) => {
-  previousVisualViewport = { ...currentVisualViewport };
-  currentVisualViewport = copyVisualViewport((win as any).visualViewport);
+export const trackViewportChanges = (
+  win: Window
+) => {
+  previousVisualViewport = {
+    ...currentVisualViewport,
+  };
+  currentVisualViewport =
+    copyVisualViewport(
+      (win as any).visualViewport
+    );
 };
 
 /**
  * Creates a deep copy of the visual viewport
  * at a given state
  */
-export const copyVisualViewport = (visualViewport: any): any => {
+export const copyVisualViewport = (
+  visualViewport: any
+): any => {
   return {
-    width: Math.round(visualViewport.width),
-    height: Math.round(visualViewport.height),
+    width: Math.round(
+      visualViewport.width
+    ),
+    height: Math.round(
+      visualViewport.height
+    ),
     offsetTop: visualViewport.offsetTop,
-    offsetLeft: visualViewport.offsetLeft,
+    offsetLeft:
+      visualViewport.offsetLeft,
     pageTop: visualViewport.pageTop,
     pageLeft: visualViewport.pageLeft,
     scale: visualViewport.scale,

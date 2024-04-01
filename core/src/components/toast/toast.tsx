@@ -1,5 +1,18 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  State,
+  Watch,
+  Component,
+  Element,
+  Event,
+  h,
+  Host,
+  Method,
+  Prop,
+} from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { Gesture } from '@utils/gesture';
 import { raf } from '@utils/helpers';
@@ -18,11 +31,20 @@ import {
   setOverlayId,
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
-import { createColorClasses, getClassMap } from '@utils/theme';
+import {
+  createColorClasses,
+  getClassMap,
+} from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
+import type {
+  AnimationBuilder,
+  Color,
+  CssClassMap,
+  OverlayInterface,
+  FrameworkDelegate,
+} from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
@@ -62,12 +84,25 @@ import type {
   },
   shadow: true,
 })
-export class Toast implements ComponentInterface, OverlayInterface {
-  private readonly delegateController = createDelegateController(this);
-  private readonly lockController = createLockController();
-  private readonly triggerController = createTriggerController();
-  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
-  private durationTimeout?: ReturnType<typeof setTimeout>;
+export class Toast
+  implements
+    ComponentInterface,
+    OverlayInterface
+{
+  private readonly delegateController =
+    createDelegateController(this);
+  private readonly lockController =
+    createLockController();
+  private readonly triggerController =
+    createTriggerController();
+  private customHTMLEnabled =
+    config.get(
+      'innerHTMLTemplatesEnabled',
+      ENABLE_HTML_CONTENT_DEFAULT
+    );
+  private durationTimeout?: ReturnType<
+    typeof setTimeout
+  >;
   private gesture?: Gesture;
 
   /**
@@ -84,7 +119,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * will have aria-hidden elements removed causing
    * screen readers to announce the remaining content.
    */
-  @State() revealContentToScreenReader = false;
+  @State() revealContentToScreenReader =
+    false;
 
   @Element() el!: HTMLIonToastElement;
 
@@ -104,17 +140,20 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * Animation to use when the toast is presented.
    */
-  @Prop() enterAnimation?: AnimationBuilder;
+  @Prop()
+  enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the toast is dismissed.
    */
-  @Prop() leaveAnimation?: AnimationBuilder;
+  @Prop()
+  leaveAnimation?: AnimationBuilder;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
@@ -126,7 +165,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration = config.getNumber('toastDuration', 0);
+  @Prop() duration = config.getNumber(
+    'toastDuration',
+    0
+  );
 
   /**
    * Header to be shown in the toast.
@@ -140,7 +182,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * 'stacked': The buttons containers and message will stack on top
    * of each other. Use this if you have long text in your buttons.
    */
-  @Prop() layout: ToastLayout = 'baseline';
+  @Prop() layout: ToastLayout =
+    'baseline';
 
   /**
    * Message to be shown in the toast.
@@ -149,7 +192,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
    * before custom HTML can be used.
    */
-  @Prop() message?: string | IonicSafeString;
+  @Prop() message?:
+    | string
+    | IonicSafeString;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -160,7 +205,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * The starting position of the toast on the screen. Can be tweaked further
    * using the `positionAnchor` property.
    */
-  @Prop() position: ToastPosition = 'bottom';
+  @Prop() position: ToastPosition =
+    'bottom';
 
   /**
    * The element to anchor the toast's position to. Can be set as a direct reference
@@ -168,12 +214,17 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * chosen element. With `position="top"`, the toast will sit below the chosen element.
    * With `position="middle"`, the value of `positionAnchor` is ignored.
    */
-  @Prop() positionAnchor?: HTMLElement | string;
+  @Prop() positionAnchor?:
+    | HTMLElement
+    | string;
 
   /**
    * An array of buttons for the toast.
    */
-  @Prop() buttons?: (ToastButton | string)[];
+  @Prop() buttons?: (
+    | ToastButton
+    | string
+  )[];
 
   /**
    * If `true`, the toast will be translucent.
@@ -196,7 +247,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the toast.
    */
-  @Prop() htmlAttributes?: { [key: string]: any };
+  @Prop() htmlAttributes?: {
+    [key: string]: any;
+  };
 
   /**
    * If set to 'vertical', the Toast can be dismissed with
@@ -206,7 +259,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * `bottom`: The Toast can be swiped down to dismiss.
    * `middle`: The Toast can be swiped up or down to dismiss.
    */
-  @Prop() swipeGesture?: ToastSwipeGestureDirection;
+  @Prop()
+  swipeGesture?: ToastSwipeGestureDirection;
   @Watch('swipeGesture')
   swipeGestureChanged() {
     /**
@@ -228,12 +282,17 @@ export class Toast implements ComponentInterface, OverlayInterface {
      * yet presented then the "present" method will
      * handle calling the swipe gesture setup function.
      */
-    if (this.presented && this.prefersSwipeGesture()) {
+    if (
+      this.presented &&
+      this.prefersSwipeGesture()
+    ) {
       /**
        * If the Toast is presented then
        * lastPresentedPosition is defined.
        */
-      this.createSwipeGesture(this.lastPresentedPosition!);
+      this.createSwipeGesture(
+        this.lastPresentedPosition!
+      );
     }
   }
 
@@ -246,10 +305,19 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Prop() isOpen = false;
   @Watch('isOpen')
-  onIsOpenChange(newValue: boolean, oldValue: boolean) {
-    if (newValue === true && oldValue === false) {
+  onIsOpenChange(
+    newValue: boolean,
+    oldValue: boolean
+  ) {
+    if (
+      newValue === true &&
+      oldValue === false
+    ) {
       this.present();
-    } else if (newValue === false && oldValue === true) {
+    } else if (
+      newValue === false &&
+      oldValue === true
+    ) {
       this.dismiss();
     }
   }
@@ -261,55 +329,78 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() trigger: string | undefined;
   @Watch('trigger')
   triggerChanged() {
-    const { trigger, el, triggerController } = this;
+    const {
+      trigger,
+      el,
+      triggerController,
+    } = this;
     if (trigger) {
-      triggerController.addClickListener(el, trigger);
+      triggerController.addClickListener(
+        el,
+        trigger
+      );
     }
   }
 
   /**
    * Emitted after the toast has presented.
    */
-  @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
+  @Event({
+    eventName: 'ionToastDidPresent',
+  })
+  didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has presented.
    */
-  @Event({ eventName: 'ionToastWillPresent' }) willPresent!: EventEmitter<void>;
+  @Event({
+    eventName: 'ionToastWillPresent',
+  })
+  willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has dismissed.
    */
-  @Event({ eventName: 'ionToastWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({
+    eventName: 'ionToastWillDismiss',
+  })
+  willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    */
-  @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({
+    eventName: 'ionToastDidDismiss',
+  })
+  didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has presented.
    * Shorthand for ionToastWillDismiss.
    */
-  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+  @Event({ eventName: 'didPresent' })
+  didPresentShorthand!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has presented.
    * Shorthand for ionToastWillPresent.
    */
-  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+  @Event({ eventName: 'willPresent' })
+  willPresentShorthand!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has dismissed.
    * Shorthand for ionToastWillDismiss.
    */
-  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'willDismiss' })
+  willDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    * Shorthand for ionToastDidDismiss.
    */
-  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'didDismiss' })
+  didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   connectedCallback() {
     prepareOverlay(this.el);
@@ -350,35 +441,59 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    const unlock = await this.lockController.lock();
+    const unlock =
+      await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
     const { el, position } = this;
-    const anchor = this.getAnchorElement();
-    const animationPosition = getAnimationPosition(position, anchor, getIonMode(this), el);
+    const anchor =
+      this.getAnchorElement();
+    const animationPosition =
+      getAnimationPosition(
+        position,
+        anchor,
+        getIonMode(this),
+        el
+      );
 
     /**
      * Cache the calculated position of the toast, so we can re-use it
      * in the dismiss animation.
      */
-    this.lastPresentedPosition = animationPosition;
+    this.lastPresentedPosition =
+      animationPosition;
 
-    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, {
-      position,
-      top: animationPosition.top,
-      bottom: animationPosition.bottom,
-    });
+    await present<ToastPresentOptions>(
+      this,
+      'toastEnter',
+      iosEnterAnimation,
+      mdEnterAnimation,
+      {
+        position,
+        top: animationPosition.top,
+        bottom:
+          animationPosition.bottom,
+      }
+    );
 
     /**
      * Content is revealed to screen readers after
      * the transition to avoid jank since this
      * state updates will cause a re-render.
      */
-    this.revealContentToScreenReader = true;
+    this.revealContentToScreenReader =
+      true;
 
     if (this.duration > 0) {
-      this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
+      this.durationTimeout = setTimeout(
+        () =>
+          this.dismiss(
+            undefined,
+            'timeout'
+          ),
+        this.duration
+      );
     }
 
     /**
@@ -387,7 +502,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
      * presented Toast.
      */
     if (this.prefersSwipeGesture()) {
-      this.createSwipeGesture(animationPosition);
+      this.createSwipeGesture(
+        animationPosition
+      );
     }
 
     unlock();
@@ -407,40 +524,55 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
-  async dismiss(data?: any, role?: string): Promise<boolean> {
-    const unlock = await this.lockController.lock();
+  async dismiss(
+    data?: any,
+    role?: string
+  ): Promise<boolean> {
+    const unlock =
+      await this.lockController.lock();
 
-    const { durationTimeout, position, lastPresentedPosition } = this;
+    const {
+      durationTimeout,
+      position,
+      lastPresentedPosition,
+    } = this;
 
     if (durationTimeout) {
       clearTimeout(durationTimeout);
     }
 
-    const dismissed = await dismiss<ToastDismissOptions>(
-      this,
-      data,
-      role,
-      'toastLeave',
-      iosLeaveAnimation,
-      mdLeaveAnimation,
-      /**
-       * Fetch the cached position that was calculated back in the present
-       * animation. We always want to animate the dismiss from the same
-       * position the present stopped at, so the animation looks continuous.
-       */
-      {
-        position,
-        top: lastPresentedPosition?.top ?? '',
-        bottom: lastPresentedPosition?.bottom ?? '',
-      }
-    );
+    const dismissed =
+      await dismiss<ToastDismissOptions>(
+        this,
+        data,
+        role,
+        'toastLeave',
+        iosLeaveAnimation,
+        mdLeaveAnimation,
+        /**
+         * Fetch the cached position that was calculated back in the present
+         * animation. We always want to animate the dismiss from the same
+         * position the present stopped at, so the animation looks continuous.
+         */
+        {
+          position,
+          top:
+            lastPresentedPosition?.top ??
+            '',
+          bottom:
+            lastPresentedPosition?.bottom ??
+            '',
+        }
+      );
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
-      this.revealContentToScreenReader = false;
+      this.revealContentToScreenReader =
+        false;
     }
 
-    this.lastPresentedPosition = undefined;
+    this.lastPresentedPosition =
+      undefined;
 
     /**
      * If the Toast has a swipe gesture then we can
@@ -457,22 +589,34 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the toast did dismiss.
    */
   @Method()
-  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
-    return eventMethod(this.el, 'ionToastDidDismiss');
+  onDidDismiss<T = any>(): Promise<
+    OverlayEventDetail<T>
+  > {
+    return eventMethod(
+      this.el,
+      'ionToastDidDismiss'
+    );
   }
 
   /**
    * Returns a promise that resolves when the toast will dismiss.
    */
   @Method()
-  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
-    return eventMethod(this.el, 'ionToastWillDismiss');
+  onWillDismiss<T = any>(): Promise<
+    OverlayEventDetail<T>
+  > {
+    return eventMethod(
+      this.el,
+      'ionToastWillDismiss'
+    );
   }
 
   private getButtons(): ToastButton[] {
     const buttons = this.buttons
       ? this.buttons.map((b) => {
-          return typeof b === 'string' ? { text: b } : b;
+          return typeof b === 'string'
+            ? { text: b }
+            : b;
         })
       : [];
 
@@ -484,8 +628,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * or undefined if prop's value is an ID string and the element
    * is not found in the DOM.
    */
-  private getAnchorElement(): HTMLElement | undefined {
-    const { position, positionAnchor, el } = this;
+  private getAnchorElement():
+    | HTMLElement
+    | undefined {
+    const {
+      position,
+      positionAnchor,
+      el,
+    } = this;
 
     /**
      * If positionAnchor is undefined then
@@ -495,53 +645,89 @@ export class Toast implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    if (position === 'middle' && positionAnchor !== undefined) {
-      printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
+    if (
+      position === 'middle' &&
+      positionAnchor !== undefined
+    ) {
+      printIonWarning(
+        'The positionAnchor property is ignored when using position="middle".',
+        this.el
+      );
       return undefined;
     }
 
-    if (typeof positionAnchor === 'string') {
+    if (
+      typeof positionAnchor === 'string'
+    ) {
       /**
        * If the anchor is defined as an ID, find the element.
        * We do this on every present so the toast doesn't need
        * to account for the surrounding DOM changing since the
        * last time it was presented.
        */
-      const foundEl = document.getElementById(positionAnchor);
+      const foundEl =
+        document.getElementById(
+          positionAnchor
+        );
       if (foundEl === null) {
-        printIonWarning(`An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`, el);
+        printIonWarning(
+          `An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`,
+          el
+        );
         return undefined;
       }
 
       return foundEl;
     }
 
-    if (positionAnchor instanceof HTMLElement) {
+    if (
+      positionAnchor instanceof
+      HTMLElement
+    ) {
       return positionAnchor;
     }
 
-    printIonWarning('Invalid positionAnchor value:', positionAnchor, el);
+    printIonWarning(
+      'Invalid positionAnchor value:',
+      positionAnchor,
+      el
+    );
     return undefined;
   }
 
-  private async buttonClick(button: ToastButton) {
+  private async buttonClick(
+    button: ToastButton
+  ) {
     const role = button.role;
     if (isCancel(role)) {
-      return this.dismiss(undefined, role);
+      return this.dismiss(
+        undefined,
+        role
+      );
     }
-    const shouldDismiss = await this.callButtonHandler(button);
+    const shouldDismiss =
+      await this.callButtonHandler(
+        button
+      );
     if (shouldDismiss) {
-      return this.dismiss(undefined, role);
+      return this.dismiss(
+        undefined,
+        role
+      );
     }
     return Promise.resolve();
   }
 
-  private async callButtonHandler(button: ToastButton | undefined) {
+  private async callButtonHandler(
+    button: ToastButton | undefined
+  ) {
     if (button?.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
       try {
-        const rtn = await safeCall(button.handler);
+        const rtn = await safeCall(
+          button.handler
+        );
         if (rtn === false) {
           // if the return value of the handler is false then do not dismiss
           return false;
@@ -553,11 +739,18 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return true;
   }
 
-  private dispatchCancelHandler = (ev: CustomEvent) => {
+  private dispatchCancelHandler = (
+    ev: CustomEvent
+  ) => {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.getButtons().find((b) => b.role === 'cancel');
-      this.callButtonHandler(cancelButton);
+      const cancelButton =
+        this.getButtons().find(
+          (b) => b.role === 'cancel'
+        );
+      this.callButtonHandler(
+        cancelButton
+      );
     }
   };
 
@@ -565,14 +758,24 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Create a new swipe gesture so Toast
    * can be swiped to dismiss.
    */
-  private createSwipeGesture = (toastPosition: ToastAnimationPosition) => {
-    const gesture = (this.gesture = createSwipeToDismissGesture(this.el, toastPosition, () => {
-      /**
-       * If the gesture completed then
-       * we should dismiss the toast.
-       */
-      this.dismiss(undefined, GESTURE);
-    }));
+  private createSwipeGesture = (
+    toastPosition: ToastAnimationPosition
+  ) => {
+    const gesture = (this.gesture =
+      createSwipeToDismissGesture(
+        this.el,
+        toastPosition,
+        () => {
+          /**
+           * If the gesture completed then
+           * we should dismiss the toast.
+           */
+          this.dismiss(
+            undefined,
+            GESTURE
+          );
+        }
+      ));
 
     gesture.enable(true);
   };
@@ -603,7 +806,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return swipeGesture === 'vertical';
   };
 
-  renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
+  renderButtons(
+    buttons: ToastButton[],
+    side: 'start' | 'end'
+  ) {
     if (buttons.length === 0) {
       return;
     }
@@ -611,7 +817,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
-      [`toast-button-group-${side}`]: true,
+      [`toast-button-group-${side}`]:
+        true,
     };
     return (
       <div class={buttonGroupsClasses}>
@@ -621,7 +828,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
             type="button"
             class={buttonClass(b)}
             tabIndex={0}
-            onClick={() => this.buttonClick(b)}
+            onClick={() =>
+              this.buttonClick(b)
+            }
             part={buttonPart(b)}
           >
             <div class="toast-button-inner">
@@ -629,7 +838,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
                 <ion-icon
                   aria-hidden="true"
                   icon={b.icon}
-                  slot={b.text === undefined ? 'icon-only' : undefined}
+                  slot={
+                    b.text === undefined
+                      ? 'icon-only'
+                      : undefined
+                  }
                   class="toast-button-icon"
                 />
               )}
@@ -637,7 +850,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
             </div>
             {mode === 'md' && (
               <ion-ripple-effect
-                type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}
+                type={
+                  b.icon !==
+                    undefined &&
+                  b.text === undefined
+                    ? 'unbounded'
+                    : 'bounded'
+                }
               ></ion-ripple-effect>
             )}
           </button>
@@ -651,8 +870,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * @param key - A key to give the element a stable identity. This is used to improve compatibility with screen readers.
    * @param ariaHidden - If "true" then content will be hidden from screen readers.
    */
-  private renderToastMessage(key: string, ariaHidden: 'true' | null = null) {
-    const { customHTMLEnabled, message } = this;
+  private renderToastMessage(
+    key: string,
+    ariaHidden: 'true' | null = null
+  ) {
+    const {
+      customHTMLEnabled,
+      message,
+    } = this;
     if (customHTMLEnabled) {
       return (
         <div
@@ -660,13 +885,20 @@ export class Toast implements ComponentInterface, OverlayInterface {
           aria-hidden={ariaHidden}
           class="toast-message"
           part="message"
-          innerHTML={sanitizeDOMString(message)}
+          innerHTML={sanitizeDOMString(
+            message
+          )}
         ></div>
       );
     }
 
     return (
-      <div key={key} aria-hidden={ariaHidden} class="toast-message" part="message">
+      <div
+        key={key}
+        aria-hidden={ariaHidden}
+        class="toast-message"
+        part="message"
+      >
         {message}
       </div>
     );
@@ -677,19 +909,40 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * @param key - A key to give the element a stable identity. This is used to improve compatibility with screen readers.
    * @param ariaHidden - If "true" then content will be hidden from screen readers.
    */
-  private renderHeader(key: string, ariaHidden: 'true' | null = null) {
+  private renderHeader(
+    key: string,
+    ariaHidden: 'true' | null = null
+  ) {
     return (
-      <div key={key} class="toast-header" aria-hidden={ariaHidden} part="header">
+      <div
+        key={key}
+        class="toast-header"
+        aria-hidden={ariaHidden}
+        part="header"
+      >
         {this.header}
       </div>
     );
   }
 
   render() {
-    const { layout, el, revealContentToScreenReader, header, message } = this;
-    const allButtons = this.getButtons();
-    const startButtons = allButtons.filter((b) => b.side === 'start');
-    const endButtons = allButtons.filter((b) => b.side !== 'start');
+    const {
+      layout,
+      el,
+      revealContentToScreenReader,
+      header,
+      message,
+    } = this;
+    const allButtons =
+      this.getButtons();
+    const startButtons =
+      allButtons.filter(
+        (b) => b.side === 'start'
+      );
+    const endButtons =
+      allButtons.filter(
+        (b) => b.side !== 'start'
+      );
     const mode = getIonMode(this);
     const wrapperClass = {
       'toast-wrapper': true,
@@ -701,7 +954,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
      * Stacked buttons are only meant to be
      *  used with one type of button.
      */
-    if (layout === 'stacked' && startButtons.length > 0 && endButtons.length > 0) {
+    if (
+      layout === 'stacked' &&
+      startButtons.length > 0 &&
+      endButtons.length > 0
+    ) {
       printIonWarning(
         'This toast is using start and end buttons with the stacked toast layout. We recommend following the best practice of using either start or end buttons with the stacked toast layout.',
         el
@@ -711,24 +968,48 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return (
       <Host
         tabindex="-1"
-        {...(this.htmlAttributes as any)}
+        {...(this
+          .htmlAttributes as any)}
         style={{
-          zIndex: `${60000 + this.overlayIndex}`,
+          zIndex: `${
+            60000 + this.overlayIndex
+          }`,
         }}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          ...getClassMap(this.cssClass),
-          'overlay-hidden': true,
-          'toast-translucent': this.translucent,
-        })}
-        onIonToastWillDismiss={this.dispatchCancelHandler}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            ...getClassMap(
+              this.cssClass
+            ),
+            'overlay-hidden': true,
+            'toast-translucent':
+              this.translucent,
+          }
+        )}
+        onIonToastWillDismiss={
+          this.dispatchCancelHandler
+        }
       >
         <div class={wrapperClass}>
-          <div class="toast-container" part="container">
-            {this.renderButtons(startButtons, 'start')}
+          <div
+            class="toast-container"
+            part="container"
+          >
+            {this.renderButtons(
+              startButtons,
+              'start'
+            )}
 
-            {this.icon !== undefined && (
-              <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
+            {this.icon !==
+              undefined && (
+              <ion-icon
+                class="toast-icon"
+                part="icon"
+                icon={this.icon}
+                lazy={false}
+                aria-hidden="true"
+              ></ion-icon>
             )}
 
             {/*
@@ -742,7 +1023,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
               not interrupt the user which is why this has
               a "status" role and a "polite" presentation.
             */}
-            <div class="toast-content" role="status" aria-atomic="true" aria-live="polite">
+            <div
+              class="toast-content"
+              role="status"
+              aria-atomic="true"
+              aria-live="polite"
+            >
               {/*
                 This logic below is done to improve consistency
                 across platforms when showing and updating live regions.
@@ -761,13 +1047,34 @@ export class Toast implements ComponentInterface, OverlayInterface {
                 The "old" content is hidden using aria-hidden otherwise
                 VoiceOver will announce the toast content twice when presenting.
               */}
-              {!revealContentToScreenReader && header !== undefined && this.renderHeader('oldHeader', 'true')}
-              {!revealContentToScreenReader && message !== undefined && this.renderToastMessage('oldMessage', 'true')}
-              {revealContentToScreenReader && header !== undefined && this.renderHeader('header')}
-              {revealContentToScreenReader && message !== undefined && this.renderToastMessage('header')}
+              {!revealContentToScreenReader &&
+                header !== undefined &&
+                this.renderHeader(
+                  'oldHeader',
+                  'true'
+                )}
+              {!revealContentToScreenReader &&
+                message !== undefined &&
+                this.renderToastMessage(
+                  'oldMessage',
+                  'true'
+                )}
+              {revealContentToScreenReader &&
+                header !== undefined &&
+                this.renderHeader(
+                  'header'
+                )}
+              {revealContentToScreenReader &&
+                message !== undefined &&
+                this.renderToastMessage(
+                  'header'
+                )}
             </div>
 
-            {this.renderButtons(endButtons, 'end')}
+            {this.renderButtons(
+              endButtons,
+              'end'
+            )}
           </div>
         </div>
       </Host>
@@ -775,17 +1082,26 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 }
 
-const buttonClass = (button: ToastButton): CssClassMap => {
+const buttonClass = (
+  button: ToastButton
+): CssClassMap => {
   return {
     'toast-button': true,
-    'toast-button-icon-only': button.icon !== undefined && button.text === undefined,
-    [`toast-button-${button.role}`]: button.role !== undefined,
+    'toast-button-icon-only':
+      button.icon !== undefined &&
+      button.text === undefined,
+    [`toast-button-${button.role}`]:
+      button.role !== undefined,
     'ion-focusable': true,
     'ion-activatable': true,
     ...getClassMap(button.cssClass),
   };
 };
 
-const buttonPart = (button: ToastButton): string => {
-  return isCancel(button.role) ? 'button cancel' : 'button';
+const buttonPart = (
+  button: ToastButton
+): string => {
+  return isCancel(button.role)
+    ? 'button cancel'
+    : 'button';
 };

@@ -1,11 +1,19 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('textarea: item'), () => {
-    test('should render correctly in list with no fill', async ({ page }) => {
-      await page.setContent(
-        `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('textarea: item'),
+      () => {
+        test('should render correctly in list with no fill', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-list>
           <ion-item>
             <ion-textarea
@@ -18,14 +26,23 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-item>
         </ion-list>
       `,
-        config
-      );
-      const list = page.locator('ion-list');
-      await expect(list).toHaveScreenshot(screenshot(`textarea-list-no-fill`));
-    });
-    test('should render correctly in inset list with no fill', async ({ page }) => {
-      await page.setContent(
-        `
+            config
+          );
+          const list =
+            page.locator('ion-list');
+          await expect(
+            list
+          ).toHaveScreenshot(
+            screenshot(
+              `textarea-list-no-fill`
+            )
+          );
+        });
+        test('should render correctly in inset list with no fill', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-list inset="true">
           <ion-item>
             <ion-textarea
@@ -38,10 +55,19 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-item>
         </ion-list>
       `,
-        config
-      );
-      const list = page.locator('ion-list');
-      await expect(list).toHaveScreenshot(screenshot(`textarea-inset-list-no-fill`));
-    });
-  });
-});
+            config
+          );
+          const list =
+            page.locator('ion-list');
+          await expect(
+            list
+          ).toHaveScreenshot(
+            screenshot(
+              `textarea-inset-list-no-fill`
+            )
+          );
+        });
+      }
+    );
+  }
+);

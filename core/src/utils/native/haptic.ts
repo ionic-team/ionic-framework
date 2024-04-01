@@ -63,8 +63,11 @@ interface TapticEngine {
 }
 
 const HapticEngine = {
-  getEngine(): HapticsPlugin | undefined {
-    const tapticEngine = (window as any).TapticEngine;
+  getEngine():
+    | HapticsPlugin
+    | undefined {
+    const tapticEngine = (window as any)
+      .TapticEngine;
     if (tapticEngine) {
       // Cordova
       // TODO FW-4707 - Remove this in Ionic 8
@@ -72,9 +75,14 @@ const HapticEngine = {
     }
     const capacitor = getCapacitor();
 
-    if (capacitor?.isPluginAvailable('Haptics')) {
+    if (
+      capacitor?.isPluginAvailable(
+        'Haptics'
+      )
+    ) {
       // Capacitor
-      return capacitor.Plugins.Haptics as HapticsPlugin;
+      return capacitor.Plugins
+        .Haptics as HapticsPlugin;
     }
     return undefined;
   },
@@ -95,15 +103,24 @@ const HapticEngine = {
      * the Vibrate API. This check avoids that error
      * if the browser does not support the Vibrate API.
      */
-    if (capacitor?.getPlatform() === 'web') {
+    if (
+      capacitor?.getPlatform() === 'web'
+    ) {
       // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-      return typeof navigator !== 'undefined' && navigator.vibrate !== undefined;
+      return (
+        typeof navigator !==
+          'undefined' &&
+        navigator.vibrate !== undefined
+      );
     }
 
     return true;
   },
   isCordova() {
-    return (window as any).TapticEngine !== undefined;
+    return (
+      (window as any).TapticEngine !==
+      undefined
+    );
   },
   isCapacitor() {
     return getCapacitor() !== undefined;
@@ -119,10 +136,14 @@ const HapticEngine = {
      *
      * TODO: FW-4707 - Remove this in Ionic 8
      */
-    const style = this.isCapacitor() ? options.style : (options.style.toLowerCase() as ImpactStyle);
+    const style = this.isCapacitor()
+      ? options.style
+      : (options.style.toLowerCase() as ImpactStyle);
     engine.impact({ style });
   },
-  notification(options: HapticNotificationOptions) {
+  notification(
+    options: HapticNotificationOptions
+  ) {
     const engine = this.getEngine();
     if (!engine) {
       return;
@@ -133,7 +154,9 @@ const HapticEngine = {
      *
      * TODO: FW-4707 - Remove this in Ionic 8
      */
-    const type = this.isCapacitor() ? options.type : (options.type.toLowerCase() as NotificationType);
+    const type = this.isCapacitor()
+      ? options.type
+      : (options.type.toLowerCase() as NotificationType);
     engine.notification({ type });
   },
   selection() {
@@ -143,7 +166,9 @@ const HapticEngine = {
      *
      * TODO: FW-4707 - Remove this in Ionic 8
      */
-    const style = this.isCapacitor() ? ImpactStyle.Light : ('light' as ImpactStyle);
+    const style = this.isCapacitor()
+      ? ImpactStyle.Light
+      : ('light' as ImpactStyle);
     this.impact({ style });
   },
   selectionStart() {
@@ -154,7 +179,9 @@ const HapticEngine = {
     if (this.isCapacitor()) {
       engine.selectionStart();
     } else {
-      (engine as unknown as TapticEngine).gestureSelectionStart();
+      (
+        engine as unknown as TapticEngine
+      ).gestureSelectionStart();
     }
   },
   selectionChanged() {
@@ -165,7 +192,9 @@ const HapticEngine = {
     if (this.isCapacitor()) {
       engine.selectionChanged();
     } else {
-      (engine as unknown as TapticEngine).gestureSelectionChanged();
+      (
+        engine as unknown as TapticEngine
+      ).gestureSelectionChanged();
     }
   },
   selectionEnd() {
@@ -176,7 +205,9 @@ const HapticEngine = {
     if (this.isCapacitor()) {
       engine.selectionEnd();
     } else {
-      (engine as unknown as TapticEngine).gestureSelectionEnd();
+      (
+        engine as unknown as TapticEngine
+      ).gestureSelectionEnd();
     }
   },
 };
@@ -185,52 +216,66 @@ const HapticEngine = {
  * Check to see if the Haptic Plugin is available
  * @return Returns `true` or false if the plugin is available
  */
-export const hapticAvailable = (): boolean => {
-  return HapticEngine.available();
-};
+export const hapticAvailable =
+  (): boolean => {
+    return HapticEngine.available();
+  };
 
 /**
  * Trigger a selection changed haptic event. Good for one-time events
  * (not for gestures)
  */
 export const hapticSelection = () => {
-  hapticAvailable() && HapticEngine.selection();
+  hapticAvailable() &&
+    HapticEngine.selection();
 };
 
 /**
  * Tell the haptic engine that a gesture for a selection change is starting.
  */
-export const hapticSelectionStart = () => {
-  hapticAvailable() && HapticEngine.selectionStart();
-};
+export const hapticSelectionStart =
+  () => {
+    hapticAvailable() &&
+      HapticEngine.selectionStart();
+  };
 
 /**
  * Tell the haptic engine that a selection changed during a gesture.
  */
-export const hapticSelectionChanged = () => {
-  hapticAvailable() && HapticEngine.selectionChanged();
-};
+export const hapticSelectionChanged =
+  () => {
+    hapticAvailable() &&
+      HapticEngine.selectionChanged();
+  };
 
 /**
  * Tell the haptic engine we are done with a gesture. This needs to be
  * called lest resources are not properly recycled.
  */
-export const hapticSelectionEnd = () => {
-  hapticAvailable() && HapticEngine.selectionEnd();
-};
+export const hapticSelectionEnd =
+  () => {
+    hapticAvailable() &&
+      HapticEngine.selectionEnd();
+  };
 
 /**
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ type: NotificationType.SUCCESS }` (or `WARNING`/`ERROR`)
  */
-export const hapticNotification = (options: HapticNotificationOptions) => {
-  hapticAvailable() && HapticEngine.notification(options);
+export const hapticNotification = (
+  options: HapticNotificationOptions
+) => {
+  hapticAvailable() &&
+    HapticEngine.notification(options);
 };
 
 /**
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ style: ImpactStyle.LIGHT }` (or `MEDIUM`/`HEAVY`)
  */
-export const hapticImpact = (options: HapticImpactOptions) => {
-  hapticAvailable() && HapticEngine.impact(options);
+export const hapticImpact = (
+  options: HapticImpactOptions
+) => {
+  hapticAvailable() &&
+    HapticEngine.impact(options);
 };

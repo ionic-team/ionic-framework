@@ -2,7 +2,8 @@ export interface DatetimeChangeEventDetail {
   value?: string | string[] | null;
 }
 
-export interface DatetimeCustomEvent extends CustomEvent {
+export interface DatetimeCustomEvent
+  extends CustomEvent {
   detail: DatetimeChangeEventDetail;
   target: HTMLIonDatetimeElement;
 }
@@ -17,9 +18,17 @@ export interface DatetimeParts {
   ampm?: 'am' | 'pm';
 }
 
-export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
+export type DatetimePresentation =
+  | 'date-time'
+  | 'time-date'
+  | 'date'
+  | 'time'
+  | 'month'
+  | 'year'
+  | 'month-year';
 
-export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;
+export type TitleSelectedDatesFormatter =
+  (selectedDates: string[]) => string;
 
 export type DatetimeHighlightStyle =
   | {
@@ -31,11 +40,22 @@ export type DatetimeHighlightStyle =
       backgroundColor: string;
     };
 
-export type DatetimeHighlight = { date: string } & DatetimeHighlightStyle;
+export type DatetimeHighlight = {
+  date: string;
+} & DatetimeHighlightStyle;
 
-export type DatetimeHighlightCallback = (dateIsoString: string) => DatetimeHighlightStyle | undefined;
+export type DatetimeHighlightCallback =
+  (
+    dateIsoString: string
+  ) =>
+    | DatetimeHighlightStyle
+    | undefined;
 
-export type DatetimeHourCycle = 'h11' | 'h12' | 'h23' | 'h24';
+export type DatetimeHourCycle =
+  | 'h11'
+  | 'h12'
+  | 'h23'
+  | 'h24';
 
 /**
  * FormatOptions must include date and/or time; it cannot be an empty object

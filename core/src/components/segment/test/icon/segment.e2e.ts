@@ -1,11 +1,19 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('segment: icons'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(
-        `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('segment: icons'),
+      () => {
+        test('should not have visual regressions', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-segment value="2">
           <ion-segment-button value="1">
             <ion-icon name="book"></ion-icon>
@@ -21,12 +29,20 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-segment-button>
         </ion-segment>
       `,
-        config
-      );
+            config
+          );
 
-      const segment = page.locator('ion-segment');
+          const segment = page.locator(
+            'ion-segment'
+          );
 
-      await expect(segment).toHaveScreenshot(screenshot(`segment-icons`));
-    });
-  });
-});
+          await expect(
+            segment
+          ).toHaveScreenshot(
+            screenshot(`segment-icons`)
+          );
+        });
+      }
+    );
+  }
+);

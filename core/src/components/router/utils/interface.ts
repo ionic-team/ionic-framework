@@ -1,7 +1,11 @@
-import type { AnimationBuilder, ComponentProps } from '../../../interface';
+import type {
+  AnimationBuilder,
+  ComponentProps,
+} from '../../../interface';
 import type { NavigationHookCallback } from '../../route/route-interface';
 
-export interface HTMLStencilElement extends HTMLElement {
+export interface HTMLStencilElement
+  extends HTMLElement {
   componentOnReady(): Promise<this>;
 }
 
@@ -12,7 +16,9 @@ export interface NavOutlet {
     direction: RouterDirection,
     animation?: AnimationBuilder
   ): Promise<RouteWrite>;
-  getRouteId(): Promise<RouteID | undefined>;
+  getRouteId(): Promise<
+    RouteID | undefined
+  >;
 }
 
 export interface RouterEventDetail {
@@ -21,7 +27,8 @@ export interface RouterEventDetail {
   to: string;
 }
 
-export interface RouterCustomEvent extends CustomEvent {
+export interface RouterCustomEvent
+  extends CustomEvent {
   detail: RouterEventDetail;
   target: HTMLIonRouterElement;
 }
@@ -47,12 +54,15 @@ export interface RouteEntry {
   /** Component tag name or tab name. */
   id: string;
   segments: string[];
-  params: { [key: string]: any } | undefined;
+  params:
+    | { [key: string]: any }
+    | undefined;
   beforeLeave?: NavigationHookCallback;
   beforeEnter?: NavigationHookCallback;
 }
 
-export interface RouteNode extends RouteEntry {
+export interface RouteNode
+  extends RouteEntry {
   children: RouteTree;
 }
 
@@ -63,7 +73,11 @@ export interface ParsedRoute {
   queryString?: string;
 }
 
-export type RouterDirection = 'forward' | 'back' | 'root';
-export type NavOutletElement = NavOutlet & HTMLStencilElement;
+export type RouterDirection =
+  | 'forward'
+  | 'back'
+  | 'root';
+export type NavOutletElement =
+  NavOutlet & HTMLStencilElement;
 export type RouteChain = RouteEntry[];
 export type RouteTree = RouteNode[];

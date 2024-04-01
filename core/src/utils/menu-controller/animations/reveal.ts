@@ -10,12 +10,23 @@ import { baseAnimation } from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself, which is under the content, does not move.
  */
-export const menuRevealAnimation = (menu: MenuI): Animation => {
+export const menuRevealAnimation = (
+  menu: MenuI
+): Animation => {
   const mode = getIonMode(menu);
-  const openedX = menu.width * (menu.isEndSide ? -1 : 1) + 'px';
+  const openedX =
+    menu.width *
+      (menu.isEndSide ? -1 : 1) +
+    'px';
   const contentOpen = createAnimation()
     .addElement(menu.contentEl!) // REVIEW
-    .fromTo('transform', 'translateX(0px)', `translateX(${openedX})`);
+    .fromTo(
+      'transform',
+      'translateX(0px)',
+      `translateX(${openedX})`
+    );
 
-  return baseAnimation(mode === 'ios').addAnimation(contentOpen);
+  return baseAnimation(
+    mode === 'ios'
+  ).addAnimation(contentOpen);
 };

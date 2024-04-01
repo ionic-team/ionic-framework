@@ -1,11 +1,22 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('textarea: card'), () => {
-    test('should render correctly in card', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  modes: ['md'],
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('textarea: card'),
+      () => {
+        test('should render correctly in card', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-card>
           <ion-card-content>
             <ion-item style="border: 1px solid grey" lines="none">
@@ -14,11 +25,18 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           </ion-card-content>
         </ion-card>
       `,
-        config
-      );
+            config
+          );
 
-      const card = page.locator('ion-card');
-      await expect(card).toHaveScreenshot(screenshot(`textarea-card`));
-    });
-  });
-});
+          const card =
+            page.locator('ion-card');
+          await expect(
+            card
+          ).toHaveScreenshot(
+            screenshot(`textarea-card`)
+          );
+        });
+      }
+    );
+  }
+);

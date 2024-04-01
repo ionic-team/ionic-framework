@@ -11,11 +11,20 @@ describe('ion-checkbox: shadow parts', () => {
       `,
     });
 
-    const checkbox = page.body.querySelector('ion-checkbox')!;
+    const checkbox =
+      page.body.querySelector(
+        'ion-checkbox'
+      )!;
 
-    expect(checkbox).toHaveShadowPart('container');
-    expect(checkbox).toHaveShadowPart('label');
-    expect(checkbox).toHaveShadowPart('mark');
+    expect(checkbox).toHaveShadowPart(
+      'container'
+    );
+    expect(checkbox).toHaveShadowPart(
+      'label'
+    );
+    expect(checkbox).toHaveShadowPart(
+      'mark'
+    );
   });
 });
 
@@ -28,15 +37,22 @@ describe('ion-checkbox: disabled', () => {
       `,
     });
 
-    const checkbox = page.body.querySelector('ion-checkbox')!;
+    const checkbox =
+      page.body.querySelector(
+        'ion-checkbox'
+      )!;
 
-    expect(checkbox.checked).toBe(false);
+    expect(checkbox.checked).toBe(
+      false
+    );
 
     checkbox.click();
 
     await page.waitForChanges();
 
-    expect(checkbox.checked).toBe(false);
+    expect(checkbox.checked).toBe(
+      false
+    );
   });
 });
 
@@ -49,8 +65,15 @@ describe('ion-checkbox: indeterminate', () => {
       `,
     });
 
-    const checkbox = page.body.querySelector('ion-checkbox')!;
+    const checkbox =
+      page.body.querySelector(
+        'ion-checkbox'
+      )!;
 
-    expect(checkbox.getAttribute('aria-checked')).toBe('mixed');
+    expect(
+      checkbox.getAttribute(
+        'aria-checked'
+      )
+    ).toBe('mixed');
   });
 });

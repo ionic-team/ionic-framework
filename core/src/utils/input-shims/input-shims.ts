@@ -13,7 +13,10 @@ const INPUT_BLURRING = true;
 const SCROLL_ASSIST = true;
 const HIDE_CARET = true;
 
-export const startInputShims = async (config: Config, platform: 'ios' | 'android') => {
+export const startInputShims = async (
+  config: Config,
+  platform: 'ios' | 'android'
+) => {
   /**
    * If doc is undefined then we are in an SSR environment
    * where input shims do not apply.
@@ -23,22 +26,52 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
   }
 
   const isIOS = platform === 'ios';
-  const isAndroid = platform === 'android';
+  const isAndroid =
+    platform === 'android';
 
   /**
    * Hide Caret and Input Blurring are needed on iOS.
    * Scroll Assist and Scroll Padding are needed on iOS and Android
    * with Chrome web browser (not Chrome webview).
    */
-  const keyboardHeight = config.getNumber('keyboardHeight', 290);
-  const scrollAssist = config.getBoolean('scrollAssist', true);
-  const hideCaret = config.getBoolean('hideCaretOnScroll', isIOS);
-  const inputBlurring = config.getBoolean('inputBlurring', isIOS);
-  const scrollPadding = config.getBoolean('scrollPadding', true);
-  const inputs = Array.from(doc.querySelectorAll('ion-input, ion-textarea')) as HTMLElement[];
+  const keyboardHeight =
+    config.getNumber(
+      'keyboardHeight',
+      290
+    );
+  const scrollAssist =
+    config.getBoolean(
+      'scrollAssist',
+      true
+    );
+  const hideCaret = config.getBoolean(
+    'hideCaretOnScroll',
+    isIOS
+  );
+  const inputBlurring =
+    config.getBoolean(
+      'inputBlurring',
+      isIOS
+    );
+  const scrollPadding =
+    config.getBoolean(
+      'scrollPadding',
+      true
+    );
+  const inputs = Array.from(
+    doc.querySelectorAll(
+      'ion-input, ion-textarea'
+    )
+  ) as HTMLElement[];
 
-  const hideCaretMap = new WeakMap<HTMLElement, () => void>();
-  const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
+  const hideCaretMap = new WeakMap<
+    HTMLElement,
+    () => void
+  >();
+  const scrollAssistMap = new WeakMap<
+    HTMLElement,
+    () => void
+  >();
 
   /**
    * Grab the native keyboard resize configuration
@@ -48,23 +81,59 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
    * on focusin in scroll assist, we could potentially adjust the
    * input too late since this call is async.
    */
-  const keyboardResizeMode = await Keyboard.getResizeMode();
+  const keyboardResizeMode =
+    await Keyboard.getResizeMode();
 
-  const registerInput = async (componentEl: HTMLElement) => {
-    await new Promise((resolve) => componentOnReady(componentEl, resolve));
+  const registerInput = async (
+    componentEl: HTMLElement
+  ) => {
+    await new Promise((resolve) =>
+      componentOnReady(
+        componentEl,
+        resolve
+      )
+    );
 
-    const inputRoot = componentEl.shadowRoot || componentEl;
-    const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
-    const scrollEl = findClosestIonContent(componentEl);
-    const footerEl = !scrollEl ? (componentEl.closest('ion-footer') as HTMLIonFooterElement | null) : null;
+    const inputRoot =
+      componentEl.shadowRoot ||
+      componentEl;
+    const inputEl =
+      inputRoot.querySelector(
+        'input'
+      ) ||
+      inputRoot.querySelector(
+        'textarea'
+      );
+    const scrollEl =
+      findClosestIonContent(
+        componentEl
+      );
+    const footerEl = !scrollEl
+      ? (componentEl.closest(
+          'ion-footer'
+        ) as HTMLIonFooterElement | null)
+      : null;
 
     if (!inputEl) {
       return;
     }
 
-    if (HIDE_CARET && !!scrollEl && hideCaret && !hideCaretMap.has(componentEl)) {
-      const rmFn = enableHideCaretOnScroll(componentEl, inputEl, scrollEl);
-      hideCaretMap.set(componentEl, rmFn);
+    if (
+      HIDE_CARET &&
+      !!scrollEl &&
+      hideCaret &&
+      !hideCaretMap.has(componentEl)
+    ) {
+      const rmFn =
+        enableHideCaretOnScroll(
+          componentEl,
+          inputEl,
+          scrollEl
+        );
+      hideCaretMap.set(
+        componentEl,
+        rmFn
+      );
     }
 
     /**
@@ -73,7 +142,9 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
      * not needed. This also works around a bug in iOS <16 where
      * scroll assist causes the browser to lock up. See FW-1997.
      */
-    const isDateInput = inputEl.type === 'date' || inputEl.type === 'datetime-local';
+    const isDateInput =
+      inputEl.type === 'date' ||
+      inputEl.type === 'datetime-local';
     if (
       SCROLL_ASSIST &&
       !isDateInput &&
@@ -91,13 +162,20 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
         keyboardResizeMode,
         isAndroid
       );
-      scrollAssistMap.set(componentEl, rmFn);
+      scrollAssistMap.set(
+        componentEl,
+        rmFn
+      );
     }
   };
 
-  const unregisterInput = (componentEl: HTMLElement) => {
+  const unregisterInput = (
+    componentEl: HTMLElement
+  ) => {
     if (HIDE_CARET && hideCaret) {
-      const fn = hideCaretMap.get(componentEl);
+      const fn = hideCaretMap.get(
+        componentEl
+      );
       if (fn) {
         fn();
       }
@@ -105,11 +183,15 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
     }
 
     if (SCROLL_ASSIST && scrollAssist) {
-      const fn = scrollAssistMap.get(componentEl);
+      const fn = scrollAssistMap.get(
+        componentEl
+      );
       if (fn) {
         fn();
       }
-      scrollAssistMap.delete(componentEl);
+      scrollAssistMap.delete(
+        componentEl
+      );
     }
   };
 
@@ -124,13 +206,20 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
     registerInput(input);
   }
 
-  doc.addEventListener('ionInputDidLoad', (ev: InputEvent) => {
-    registerInput(ev.detail);
-  });
+  doc.addEventListener(
+    'ionInputDidLoad',
+    (ev: InputEvent) => {
+      registerInput(ev.detail);
+    }
+  );
 
-  doc.addEventListener('ionInputDidUnload', (ev: InputEvent) => {
-    unregisterInput(ev.detail);
-  });
+  doc.addEventListener(
+    'ionInputDidUnload',
+    (ev: InputEvent) => {
+      unregisterInput(ev.detail);
+    }
+  );
 };
 
-type InputEvent = CustomEvent<HTMLElement>;
+type InputEvent =
+  CustomEvent<HTMLElement>;

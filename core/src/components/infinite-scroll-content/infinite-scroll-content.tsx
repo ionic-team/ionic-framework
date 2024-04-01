@@ -1,5 +1,10 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import {
+  Component,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { sanitizeDOMString } from '@utils/sanitization';
 
@@ -15,13 +20,20 @@ import type { SpinnerTypes } from '../spinner/spinner-configs';
     md: 'infinite-scroll-content.md.scss',
   },
 })
-export class InfiniteScrollContent implements ComponentInterface {
-  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
+export class InfiniteScrollContent
+  implements ComponentInterface
+{
+  private customHTMLEnabled =
+    config.get(
+      'innerHTMLTemplatesEnabled',
+      ENABLE_HTML_CONTENT_DEFAULT
+    );
 
   /**
    * An animated SVG spinner that shows while loading.
    */
-  @Prop({ mutable: true }) loadingSpinner?: SpinnerTypes | null;
+  @Prop({ mutable: true })
+  loadingSpinner?: SpinnerTypes | null;
 
   /**
    * Optional text to display while loading.
@@ -37,25 +49,48 @@ export class InfiniteScrollContent implements ComponentInterface {
    * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
    * before custom HTML can be used.
    */
-  @Prop() loadingText?: string | IonicSafeString;
+  @Prop() loadingText?:
+    | string
+    | IonicSafeString;
 
   componentDidLoad() {
-    if (this.loadingSpinner === undefined) {
+    if (
+      this.loadingSpinner === undefined
+    ) {
       const mode = getIonMode(this);
       this.loadingSpinner = config.get(
         'infiniteLoadingSpinner',
-        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
+        config.get(
+          'spinner',
+          mode === 'ios'
+            ? 'lines'
+            : 'crescent'
+        )
       );
     }
   }
 
   private renderLoadingText() {
-    const { customHTMLEnabled, loadingText } = this;
+    const {
+      customHTMLEnabled,
+      loadingText,
+    } = this;
     if (customHTMLEnabled) {
-      return <div class="infinite-loading-text" innerHTML={sanitizeDOMString(loadingText)}></div>;
+      return (
+        <div
+          class="infinite-loading-text"
+          innerHTML={sanitizeDOMString(
+            loadingText
+          )}
+        ></div>
+      );
     }
 
-    return <div class="infinite-loading-text">{this.loadingText}</div>;
+    return (
+      <div class="infinite-loading-text">
+        {this.loadingText}
+      </div>
+    );
   }
 
   render() {
@@ -66,16 +101,23 @@ export class InfiniteScrollContent implements ComponentInterface {
           [mode]: true,
 
           // Used internally for styling
-          [`infinite-scroll-content-${mode}`]: true,
+          [`infinite-scroll-content-${mode}`]:
+            true,
         }}
       >
         <div class="infinite-loading">
           {this.loadingSpinner && (
             <div class="infinite-loading-spinner">
-              <ion-spinner name={this.loadingSpinner} />
+              <ion-spinner
+                name={
+                  this.loadingSpinner
+                }
+              />
             </div>
           )}
-          {this.loadingText !== undefined && this.renderLoadingText()}
+          {this.loadingText !==
+            undefined &&
+            this.renderLoadingText()}
         </div>
       </Host>
     );

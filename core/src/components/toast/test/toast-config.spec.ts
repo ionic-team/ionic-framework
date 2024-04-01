@@ -9,20 +9,28 @@ describe('toast: duration config', () => {
       html: `<ion-toast></ion-toast>`,
     });
 
-    const toast = page.body.querySelector('ion-toast')!;
+    const toast =
+      page.body.querySelector(
+        'ion-toast'
+      )!;
 
     expect(toast.duration).toBe(0);
   });
 
   it('should have duration set to 5000', async () => {
-    config.reset({ toastDuration: 5000 });
+    config.reset({
+      toastDuration: 5000,
+    });
 
     const page = await newSpecPage({
       components: [Toast],
       html: `<ion-toast></ion-toast>`,
     });
 
-    const toast = page.body.querySelector('ion-toast')!;
+    const toast =
+      page.body.querySelector(
+        'ion-toast'
+      )!;
 
     expect(toast.duration).toBe(5000);
   });

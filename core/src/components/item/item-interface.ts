@@ -1,1 +1,4 @@
-export type CounterFormatter = (inputLength: number, maxLength: number) => string;
+export type CounterFormatter = (
+  inputLength: number,
+  maxLength: number
+) => string;

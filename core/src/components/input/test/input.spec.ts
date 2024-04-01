@@ -9,10 +9,21 @@ describe('input: rendering', () => {
       html: '<ion-input title="my title" tabindex="-1" data-form-type="password"></ion-input>',
     });
 
-    const nativeEl = page.body.querySelector('ion-input input')!;
-    expect(nativeEl.getAttribute('title')).toBe('my title');
-    expect(nativeEl.getAttribute('tabindex')).toBe('-1');
-    expect(nativeEl.getAttribute('data-form-type')).toBe('password');
+    const nativeEl =
+      page.body.querySelector(
+        'ion-input input'
+      )!;
+    expect(
+      nativeEl.getAttribute('title')
+    ).toBe('my title');
+    expect(
+      nativeEl.getAttribute('tabindex')
+    ).toBe('-1');
+    expect(
+      nativeEl.getAttribute(
+        'data-form-type'
+      )
+    ).toBe('password');
   });
 
   it('should render bottom content when helper text is defined', async () => {
@@ -21,8 +32,13 @@ describe('input: rendering', () => {
       html: `<ion-input label="Input" helper-text="Helper Text"></ion-input>`,
     });
 
-    const bottomContent = page.body.querySelector('ion-input .input-bottom');
-    expect(bottomContent).not.toBe(null);
+    const bottomContent =
+      page.body.querySelector(
+        'ion-input .input-bottom'
+      );
+    expect(bottomContent).not.toBe(
+      null
+    );
   });
 
   it('should render bottom content when helper text is undefined', async () => {
@@ -31,7 +47,10 @@ describe('input: rendering', () => {
       html: `<ion-input label="Input"></ion-input>`,
     });
 
-    const bottomContent = page.body.querySelector('ion-input .input-bottom');
+    const bottomContent =
+      page.body.querySelector(
+        'ion-input .input-bottom'
+      );
     expect(bottomContent).toBe(null);
   });
 
@@ -41,7 +60,10 @@ describe('input: rendering', () => {
       html: `<ion-input label="Input" helper-text=""></ion-input>`,
     });
 
-    const bottomContent = page.body.querySelector('ion-input .input-bottom');
+    const bottomContent =
+      page.body.querySelector(
+        'ion-input .input-bottom'
+      );
     expect(bottomContent).toBe(null);
   });
 });
@@ -64,11 +86,19 @@ describe('input: label rendering', () => {
       `,
     });
 
-    const input = page.body.querySelector('ion-input')!;
+    const input =
+      page.body.querySelector(
+        'ion-input'
+      )!;
 
-    const labelText = input.querySelector('.label-text-wrapper')!;
+    const labelText =
+      input.querySelector(
+        '.label-text-wrapper'
+      )!;
 
-    expect(labelText.textContent).toBe('Label Prop Text');
+    expect(labelText.textContent).toBe(
+      'Label Prop Text'
+    );
   });
   it('should render label slot if only slot provided', async () => {
     const page = await newSpecPage({
@@ -78,11 +108,19 @@ describe('input: label rendering', () => {
       `,
     });
 
-    const input = page.body.querySelector('ion-input')!;
+    const input =
+      page.body.querySelector(
+        'ion-input'
+      )!;
 
-    const labelText = input.querySelector('.label-text-wrapper')!;
+    const labelText =
+      input.querySelector(
+        '.label-text-wrapper'
+      )!;
 
-    expect(labelText.textContent).toBe('Label Slot Text');
+    expect(labelText.textContent).toBe(
+      'Label Slot Text'
+    );
   });
   it('should render label prop if both prop and slot provided', async () => {
     const page = await newSpecPage({
@@ -92,10 +130,18 @@ describe('input: label rendering', () => {
       `,
     });
 
-    const input = page.body.querySelector('ion-input')!;
+    const input =
+      page.body.querySelector(
+        'ion-input'
+      )!;
 
-    const labelText = input.querySelector('.label-text-wrapper')!;
+    const labelText =
+      input.querySelector(
+        '.label-text-wrapper'
+      )!;
 
-    expect(labelText.textContent).toBe('Label Prop Text');
+    expect(labelText.textContent).toBe(
+      'Label Prop Text'
+    );
   });
 });

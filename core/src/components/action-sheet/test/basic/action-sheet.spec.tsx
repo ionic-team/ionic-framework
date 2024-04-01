@@ -10,15 +10,23 @@ describe('action sheet: htmlAttributes inheritance', () => {
       template: () => (
         <ion-action-sheet
           htmlAttributes={{
-            'data-testid': 'basic-action-sheet',
+            'data-testid':
+              'basic-action-sheet',
           }}
           overlayIndex={1}
         ></ion-action-sheet>
       ),
     });
 
-    const actionSheet = page.body.querySelector('ion-action-sheet')!;
+    const actionSheet =
+      page.body.querySelector(
+        'ion-action-sheet'
+      )!;
 
-    await expect(actionSheet.getAttribute('data-testid')).toBe('basic-action-sheet');
+    await expect(
+      actionSheet.getAttribute(
+        'data-testid'
+      )
+    ).toBe('basic-action-sheet');
   });
 });

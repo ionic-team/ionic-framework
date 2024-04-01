@@ -2,7 +2,10 @@ import { GESTURE } from '@utils/overlays';
 
 import type { Animation } from '../../../interface';
 
-export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Animation) => {
+export const handleCanDismiss = async (
+  el: HTMLIonModalElement,
+  animation: Animation
+) => {
   /**
    * If canDismiss is not a function
    * then we can return early. If canDismiss is `true`,
@@ -11,7 +14,9 @@ export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Anima
    * this code block is never reached. If canDismiss is `false`,
    * then we never dismiss.
    */
-  if (typeof el.canDismiss !== 'function') {
+  if (
+    typeof el.canDismiss !== 'function'
+  ) {
     return;
   }
 
@@ -20,7 +25,11 @@ export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Anima
    * If the function returns `true`,
    * then we can proceed with dismiss.
    */
-  const shouldDismiss = await el.canDismiss(undefined, GESTURE);
+  const shouldDismiss =
+    await el.canDismiss(
+      undefined,
+      GESTURE
+    );
   if (!shouldDismiss) {
     return;
   }
@@ -39,7 +48,10 @@ export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Anima
   if (animation.isRunning()) {
     animation.onFinish(
       () => {
-        el.dismiss(undefined, 'handler');
+        el.dismiss(
+          undefined,
+          'handler'
+        );
       },
       { oneTimeCallback: true }
     );
@@ -120,6 +132,14 @@ export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Anima
  * Note: This is the approximate form of the solution. Wolfram Alpha will
  * give you a complex differential equation too.
  */
-export const calculateSpringStep = (t: number) => {
-  return 0.00255275 * 2.71828 ** (-14.9619 * t) - 1.00255 * 2.71828 ** (-0.0380968 * t) + 1;
+export const calculateSpringStep = (
+  t: number
+) => {
+  return (
+    0.00255275 *
+      2.71828 ** (-14.9619 * t) -
+    1.00255 *
+      2.71828 ** (-0.0380968 * t) +
+    1
+  );
 };

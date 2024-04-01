@@ -1,7 +1,15 @@
-import type { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
+import type {
+  RouteChain,
+  RouteNode,
+  RouteRedirect,
+  RouteTree,
+} from './interface';
 import { parsePath } from './path';
 
-const readProp = (el: HTMLElement, prop: string): string | null | undefined => {
+const readProp = (
+  el: HTMLElement,
+  prop: string
+): string | null | undefined => {
   if (prop in el) {
     return (el as any)[prop];
   }
@@ -16,14 +24,29 @@ const readProp = (el: HTMLElement, prop: string): string | null | undefined => {
  *
  * The redirects are returned as a list of RouteRedirect.
  */
-export const readRedirects = (root: Element): RouteRedirect[] => {
-  return (Array.from(root.children) as HTMLIonRouteRedirectElement[])
-    .filter((el) => el.tagName === 'ION-ROUTE-REDIRECT')
+export const readRedirects = (
+  root: Element
+): RouteRedirect[] => {
+  return (
+    Array.from(
+      root.children
+    ) as HTMLIonRouteRedirectElement[]
+  )
+    .filter(
+      (el) =>
+        el.tagName ===
+        'ION-ROUTE-REDIRECT'
+    )
     .map((el) => {
       const to = readProp(el, 'to');
       return {
-        from: parsePath(readProp(el, 'from')).segments,
-        to: to == null ? undefined : parsePath(to),
+        from: parsePath(
+          readProp(el, 'from')
+        ).segments,
+        to:
+          to == null
+            ? undefined
+            : parsePath(to),
       };
     });
 };
@@ -33,8 +56,12 @@ export const readRedirects = (root: Element): RouteRedirect[] => {
  *
  * The routes are returned as a list of chains - the flattened tree.
  */
-export const readRoutes = (root: Element): RouteChain[] => {
-  return flattenRouterTree(readRouteNodes(root));
+export const readRoutes = (
+  root: Element
+): RouteChain[] => {
+  return flattenRouterTree(
+    readRouteNodes(root)
+  );
 };
 
 /**
@@ -42,13 +69,28 @@ export const readRoutes = (root: Element): RouteChain[] => {
  *
  * Note: routes without a component are ignored together with their children.
  */
-export const readRouteNodes = (node: Element): RouteTree => {
-  return (Array.from(node.children) as HTMLIonRouteElement[])
-    .filter((el) => el.tagName === 'ION-ROUTE' && el.component)
+export const readRouteNodes = (
+  node: Element
+): RouteTree => {
+  return (
+    Array.from(
+      node.children
+    ) as HTMLIonRouteElement[]
+  )
+    .filter(
+      (el) =>
+        el.tagName === 'ION-ROUTE' &&
+        el.component
+    )
     .map((el) => {
-      const component = readProp(el, 'component') as string;
+      const component = readProp(
+        el,
+        'component'
+      ) as string;
       return {
-        segments: parsePath(readProp(el, 'url')).segments,
+        segments: parsePath(
+          readProp(el, 'url')
+        ).segments,
         id: component.toLowerCase(),
         params: el.componentProps,
         beforeLeave: el.beforeLeave,
@@ -63,7 +105,9 @@ export const readRouteNodes = (node: Element): RouteTree => {
  *
  * Each chain represents a path from the root node to a terminal node.
  */
-export const flattenRouterTree = (nodes: RouteTree): RouteChain[] => {
+export const flattenRouterTree = (
+  nodes: RouteTree
+): RouteChain[] => {
   const chains: RouteChain[] = [];
   for (const node of nodes) {
     flattenNode([], chains, node);
@@ -72,7 +116,11 @@ export const flattenRouterTree = (nodes: RouteTree): RouteChain[] => {
 };
 
 /** Flattens a route node recursively and push each branch to the chains list. */
-const flattenNode = (chain: RouteChain, chains: RouteChain[], node: RouteNode) => {
+const flattenNode = (
+  chain: RouteChain,
+  chains: RouteChain[],
+  node: RouteNode
+) => {
   chain = [
     ...chain,
     {

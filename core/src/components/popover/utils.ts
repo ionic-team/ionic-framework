@@ -1,6 +1,15 @@
-import { getElementRoot, raf } from '@utils/helpers';
+import {
+  getElementRoot,
+  raf,
+} from '@utils/helpers';
 
-import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from './popover-interface';
+import type {
+  PopoverSize,
+  PositionAlign,
+  PositionReference,
+  PositionSide,
+  TriggerAction,
+} from './popover-interface';
 
 interface InteractionCallback {
   eventName: string;
@@ -42,13 +51,22 @@ export interface PopoverStyles {
  * arrow on `ios` mode. If arrow is disabled
  * returns (0, 0).
  */
-export const getArrowDimensions = (arrowEl: HTMLElement | null) => {
+export const getArrowDimensions = (
+  arrowEl: HTMLElement | null
+) => {
   if (!arrowEl) {
-    return { arrowWidth: 0, arrowHeight: 0 };
+    return {
+      arrowWidth: 0,
+      arrowHeight: 0,
+    };
   }
-  const { width, height } = arrowEl.getBoundingClientRect();
+  const { width, height } =
+    arrowEl.getBoundingClientRect();
 
-  return { arrowWidth: width, arrowHeight: height };
+  return {
+    arrowWidth: width,
+    arrowHeight: height,
+  };
 };
 
 /**
@@ -56,14 +74,23 @@ export const getArrowDimensions = (arrowEl: HTMLElement | null) => {
  * that takes into account whether or not the width
  * should match the trigger width.
  */
-export const getPopoverDimensions = (size: PopoverSize, contentEl: HTMLElement, triggerEl?: HTMLElement) => {
-  const contentDimentions = contentEl.getBoundingClientRect();
-  const contentHeight = contentDimentions.height;
-  let contentWidth = contentDimentions.width;
+export const getPopoverDimensions = (
+  size: PopoverSize,
+  contentEl: HTMLElement,
+  triggerEl?: HTMLElement
+) => {
+  const contentDimentions =
+    contentEl.getBoundingClientRect();
+  const contentHeight =
+    contentDimentions.height;
+  let contentWidth =
+    contentDimentions.width;
 
   if (size === 'cover' && triggerEl) {
-    const triggerDimensions = triggerEl.getBoundingClientRect();
-    contentWidth = triggerDimensions.width;
+    const triggerDimensions =
+      triggerEl.getBoundingClientRect();
+    contentWidth =
+      triggerDimensions.width;
   }
 
   return {
@@ -72,229 +99,349 @@ export const getPopoverDimensions = (size: PopoverSize, contentEl: HTMLElement, 
   };
 };
 
-export const configureDismissInteraction = (
-  triggerEl: HTMLElement,
-  triggerAction: TriggerAction,
-  popoverEl: HTMLIonPopoverElement,
-  parentPopoverEl: HTMLIonPopoverElement
-) => {
-  let dismissCallbacks: InteractionCallback[] = [];
-  const root = getElementRoot(parentPopoverEl);
-  const parentContentEl = root.querySelector('.popover-content') as HTMLElement;
+export const configureDismissInteraction =
+  (
+    triggerEl: HTMLElement,
+    triggerAction: TriggerAction,
+    popoverEl: HTMLIonPopoverElement,
+    parentPopoverEl: HTMLIonPopoverElement
+  ) => {
+    let dismissCallbacks: InteractionCallback[] =
+      [];
+    const root = getElementRoot(
+      parentPopoverEl
+    );
+    const parentContentEl =
+      root.querySelector(
+        '.popover-content'
+      ) as HTMLElement;
 
-  switch (triggerAction) {
-    case 'hover':
-      dismissCallbacks = [
-        {
-          /**
-           * Do not use mouseover here
-           * as this will causes the event to
-           * be dispatched on each underlying
-           * element rather than on the popover
-           * content as a whole.
-           */
-          eventName: 'mouseenter',
-          callback: (ev: MouseEvent) => {
+    switch (triggerAction) {
+      case 'hover':
+        dismissCallbacks = [
+          {
             /**
-             * Do not dismiss the popover is we
-             * are hovering over its trigger.
-             * This would be easier if we used mouseover
-             * but this would cause the event to be dispatched
-             * more often than we would like, potentially
-             * causing performance issues.
+             * Do not use mouseover here
+             * as this will causes the event to
+             * be dispatched on each underlying
+             * element rather than on the popover
+             * content as a whole.
              */
-            const element = document.elementFromPoint(ev.clientX, ev.clientY) as HTMLElement | null;
-            if (element === triggerEl) {
-              return;
-            }
-
-            popoverEl.dismiss(undefined, undefined, false);
-          },
-        },
-      ];
-      break;
-    case 'context-menu':
-    case 'click':
-    default:
-      dismissCallbacks = [
-        {
-          eventName: 'click',
-          callback: (ev: MouseEvent) => {
-            /**
-             * Do not dismiss the popover is we
-             * are hovering over its trigger.
-             */
-            const target = ev.target as HTMLElement;
-            const closestTrigger = target.closest('[data-ion-popover-trigger]');
-            if (closestTrigger === triggerEl) {
+            eventName: 'mouseenter',
+            callback: (
+              ev: MouseEvent
+            ) => {
               /**
-               * stopPropagation here so if the
-               * popover has dismissOnSelect="true"
-               * the popover does not dismiss since
-               * we just clicked a trigger element.
+               * Do not dismiss the popover is we
+               * are hovering over its trigger.
+               * This would be easier if we used mouseover
+               * but this would cause the event to be dispatched
+               * more often than we would like, potentially
+               * causing performance issues.
                */
-              ev.stopPropagation();
-              return;
-            }
+              const element =
+                document.elementFromPoint(
+                  ev.clientX,
+                  ev.clientY
+                ) as HTMLElement | null;
+              if (
+                element === triggerEl
+              ) {
+                return;
+              }
 
-            popoverEl.dismiss(undefined, undefined, false);
+              popoverEl.dismiss(
+                undefined,
+                undefined,
+                false
+              );
+            },
           },
-        },
-      ];
-      break;
-  }
+        ];
+        break;
+      case 'context-menu':
+      case 'click':
+      default:
+        dismissCallbacks = [
+          {
+            eventName: 'click',
+            callback: (
+              ev: MouseEvent
+            ) => {
+              /**
+               * Do not dismiss the popover is we
+               * are hovering over its trigger.
+               */
+              const target =
+                ev.target as HTMLElement;
+              const closestTrigger =
+                target.closest(
+                  '[data-ion-popover-trigger]'
+                );
+              if (
+                closestTrigger ===
+                triggerEl
+              ) {
+                /**
+                 * stopPropagation here so if the
+                 * popover has dismissOnSelect="true"
+                 * the popover does not dismiss since
+                 * we just clicked a trigger element.
+                 */
+                ev.stopPropagation();
+                return;
+              }
 
-  dismissCallbacks.forEach(({ eventName, callback }) => parentContentEl.addEventListener(eventName, callback));
+              popoverEl.dismiss(
+                undefined,
+                undefined,
+                false
+              );
+            },
+          },
+        ];
+        break;
+    }
 
-  return () => {
-    dismissCallbacks.forEach(({ eventName, callback }) => parentContentEl.removeEventListener(eventName, callback));
+    dismissCallbacks.forEach(
+      ({ eventName, callback }) =>
+        parentContentEl.addEventListener(
+          eventName,
+          callback
+        )
+    );
+
+    return () => {
+      dismissCallbacks.forEach(
+        ({ eventName, callback }) =>
+          parentContentEl.removeEventListener(
+            eventName,
+            callback
+          )
+      );
+    };
   };
-};
 
 /**
  * Configures the triggerEl to respond
  * to user interaction based upon the triggerAction
  * prop that devs have defined.
  */
-export const configureTriggerInteraction = (
-  triggerEl: HTMLElement,
-  triggerAction: TriggerAction,
-  popoverEl: HTMLIonPopoverElement
-) => {
-  let triggerCallbacks: InteractionCallback[] = [];
+export const configureTriggerInteraction =
+  (
+    triggerEl: HTMLElement,
+    triggerAction: TriggerAction,
+    popoverEl: HTMLIonPopoverElement
+  ) => {
+    let triggerCallbacks: InteractionCallback[] =
+      [];
 
-  /**
-   * Based upon the kind of trigger interaction
-   * the user wants, we setup the correct event
-   * listeners.
-   */
-  switch (triggerAction) {
-    case 'hover':
-      let hoverTimeout: ReturnType<typeof setTimeout> | undefined;
+    /**
+     * Based upon the kind of trigger interaction
+     * the user wants, we setup the correct event
+     * listeners.
+     */
+    switch (triggerAction) {
+      case 'hover':
+        let hoverTimeout:
+          | ReturnType<
+              typeof setTimeout
+            >
+          | undefined;
 
-      triggerCallbacks = [
-        {
-          eventName: 'mouseenter',
-          callback: async (ev: Event) => {
-            ev.stopPropagation();
+        triggerCallbacks = [
+          {
+            eventName: 'mouseenter',
+            callback: async (
+              ev: Event
+            ) => {
+              ev.stopPropagation();
 
-            if (hoverTimeout) {
-              clearTimeout(hoverTimeout);
-            }
+              if (hoverTimeout) {
+                clearTimeout(
+                  hoverTimeout
+                );
+              }
 
-            /**
-             * Hovering over a trigger should not
-             * immediately open the next popover.
-             */
-            hoverTimeout = setTimeout(() => {
-              raf(() => {
-                popoverEl.presentFromTrigger(ev);
-                hoverTimeout = undefined;
-              });
-            }, 100);
+              /**
+               * Hovering over a trigger should not
+               * immediately open the next popover.
+               */
+              hoverTimeout = setTimeout(
+                () => {
+                  raf(() => {
+                    popoverEl.presentFromTrigger(
+                      ev
+                    );
+                    hoverTimeout =
+                      undefined;
+                  });
+                },
+                100
+              );
+            },
           },
-        },
-        {
-          eventName: 'mouseleave',
-          callback: (ev: MouseEvent) => {
-            if (hoverTimeout) {
-              clearTimeout(hoverTimeout);
-            }
+          {
+            eventName: 'mouseleave',
+            callback: (
+              ev: MouseEvent
+            ) => {
+              if (hoverTimeout) {
+                clearTimeout(
+                  hoverTimeout
+                );
+              }
 
-            /**
-             * If mouse is over another popover
-             * that is not this popover then we should
-             * close this popover.
-             */
-            const target = ev.relatedTarget as HTMLElement | null;
-            if (!target) {
-              return;
-            }
+              /**
+               * If mouse is over another popover
+               * that is not this popover then we should
+               * close this popover.
+               */
+              const target =
+                ev.relatedTarget as HTMLElement | null;
+              if (!target) {
+                return;
+              }
 
-            if (target.closest('ion-popover') !== popoverEl) {
-              popoverEl.dismiss(undefined, undefined, false);
-            }
+              if (
+                target.closest(
+                  'ion-popover'
+                ) !== popoverEl
+              ) {
+                popoverEl.dismiss(
+                  undefined,
+                  undefined,
+                  false
+                );
+              }
+            },
           },
-        },
-        {
-          /**
-           * stopPropagation here prevents the popover
-           * from dismissing when dismiss-on-select="true".
-           */
-          eventName: 'click',
-          callback: (ev: Event) => ev.stopPropagation(),
-        },
-        {
-          eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true),
-        },
-      ];
-
-      break;
-    case 'context-menu':
-      triggerCallbacks = [
-        {
-          eventName: 'contextmenu',
-          callback: (ev: Event) => {
+          {
             /**
-             * Prevents the platform context
-             * menu from appearing.
+             * stopPropagation here prevents the popover
+             * from dismissing when dismiss-on-select="true".
              */
-            ev.preventDefault();
-            popoverEl.presentFromTrigger(ev);
+            eventName: 'click',
+            callback: (ev: Event) =>
+              ev.stopPropagation(),
           },
-        },
-        {
-          eventName: 'click',
-          callback: (ev: Event) => ev.stopPropagation(),
-        },
-        {
-          eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true),
-        },
-      ];
+          {
+            eventName:
+              'ionPopoverActivateTrigger',
+            callback: (ev: Event) =>
+              popoverEl.presentFromTrigger(
+                ev,
+                true
+              ),
+          },
+        ];
 
-      break;
-    case 'click':
-    default:
-      triggerCallbacks = [
-        {
-          /**
-           * Do not do a stopPropagation() here
-           * because if you had two click triggers
-           * then clicking the first trigger and then
-           * clicking the second trigger would not cause
-           * the first popover to dismiss.
-           */
-          eventName: 'click',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev),
-        },
-        {
-          eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true),
-        },
-      ];
-      break;
-  }
+        break;
+      case 'context-menu':
+        triggerCallbacks = [
+          {
+            eventName: 'contextmenu',
+            callback: (ev: Event) => {
+              /**
+               * Prevents the platform context
+               * menu from appearing.
+               */
+              ev.preventDefault();
+              popoverEl.presentFromTrigger(
+                ev
+              );
+            },
+          },
+          {
+            eventName: 'click',
+            callback: (ev: Event) =>
+              ev.stopPropagation(),
+          },
+          {
+            eventName:
+              'ionPopoverActivateTrigger',
+            callback: (ev: Event) =>
+              popoverEl.presentFromTrigger(
+                ev,
+                true
+              ),
+          },
+        ];
 
-  triggerCallbacks.forEach(({ eventName, callback }) => triggerEl.addEventListener(eventName, callback));
-  triggerEl.setAttribute('data-ion-popover-trigger', 'true');
+        break;
+      case 'click':
+      default:
+        triggerCallbacks = [
+          {
+            /**
+             * Do not do a stopPropagation() here
+             * because if you had two click triggers
+             * then clicking the first trigger and then
+             * clicking the second trigger would not cause
+             * the first popover to dismiss.
+             */
+            eventName: 'click',
+            callback: (ev: Event) =>
+              popoverEl.presentFromTrigger(
+                ev
+              ),
+          },
+          {
+            eventName:
+              'ionPopoverActivateTrigger',
+            callback: (ev: Event) =>
+              popoverEl.presentFromTrigger(
+                ev,
+                true
+              ),
+          },
+        ];
+        break;
+    }
 
-  return () => {
-    triggerCallbacks.forEach(({ eventName, callback }) => triggerEl.removeEventListener(eventName, callback));
-    triggerEl.removeAttribute('data-ion-popover-trigger');
+    triggerCallbacks.forEach(
+      ({ eventName, callback }) =>
+        triggerEl.addEventListener(
+          eventName,
+          callback
+        )
+    );
+    triggerEl.setAttribute(
+      'data-ion-popover-trigger',
+      'true'
+    );
+
+    return () => {
+      triggerCallbacks.forEach(
+        ({ eventName, callback }) =>
+          triggerEl.removeEventListener(
+            eventName,
+            callback
+          )
+      );
+      triggerEl.removeAttribute(
+        'data-ion-popover-trigger'
+      );
+    };
   };
-};
 
 /**
  * Returns the index of an ion-item in an array of ion-items.
  */
-export const getIndexOfItem = (items: HTMLIonItemElement[], item: HTMLElement | null) => {
-  if (!item || item.tagName !== 'ION-ITEM') {
+export const getIndexOfItem = (
+  items: HTMLIonItemElement[],
+  item: HTMLElement | null
+) => {
+  if (
+    !item ||
+    item.tagName !== 'ION-ITEM'
+  ) {
     return -1;
   }
 
-  return items.findIndex((el) => el === item);
+  return items.findIndex(
+    (el) => el === item
+  );
 };
 
 /**
@@ -302,8 +449,12 @@ export const getIndexOfItem = (items: HTMLIonItemElement[], item: HTMLElement | 
  * returns the next ion-item relative to the focused one or
  * undefined.
  */
-export const getNextItem = (items: HTMLIonItemElement[], currentItem: HTMLElement | null) => {
-  const currentItemIndex = getIndexOfItem(items, currentItem);
+export const getNextItem = (
+  items: HTMLIonItemElement[],
+  currentItem: HTMLElement | null
+) => {
+  const currentItemIndex =
+    getIndexOfItem(items, currentItem);
   return items[currentItemIndex + 1];
 };
 
@@ -312,15 +463,22 @@ export const getNextItem = (items: HTMLIonItemElement[], currentItem: HTMLElemen
  * returns the previous ion-item relative to the focused one or
  * undefined.
  */
-export const getPrevItem = (items: HTMLIonItemElement[], currentItem: HTMLElement | null) => {
-  const currentItemIndex = getIndexOfItem(items, currentItem);
+export const getPrevItem = (
+  items: HTMLIonItemElement[],
+  currentItem: HTMLElement | null
+) => {
+  const currentItemIndex =
+    getIndexOfItem(items, currentItem);
   return items[currentItemIndex - 1];
 };
 
 /** Focus the internal button of the ion-item */
-const focusItem = (item: HTMLIonItemElement) => {
+const focusItem = (
+  item: HTMLIonItemElement
+) => {
   const root = getElementRoot(item);
-  const button = root.querySelector('button');
+  const button =
+    root.querySelector('button');
 
   if (button) {
     raf(() => button.focus());
@@ -331,116 +489,163 @@ const focusItem = (item: HTMLIonItemElement) => {
  * Returns `true` if `el` has been designated
  * as a trigger element for an ion-popover.
  */
-export const isTriggerElement = (el: HTMLElement) => el.hasAttribute('data-ion-popover-trigger');
+export const isTriggerElement = (
+  el: HTMLElement
+) =>
+  el.hasAttribute(
+    'data-ion-popover-trigger'
+  );
 
-export const configureKeyboardInteraction = (popoverEl: HTMLIonPopoverElement) => {
-  const callback = async (ev: KeyboardEvent) => {
-    const activeElement = document.activeElement as HTMLElement | null;
-    let items: HTMLIonItemElement[] = [];
+export const configureKeyboardInteraction =
+  (
+    popoverEl: HTMLIonPopoverElement
+  ) => {
+    const callback = async (
+      ev: KeyboardEvent
+    ) => {
+      const activeElement =
+        document.activeElement as HTMLElement | null;
+      let items: HTMLIonItemElement[] =
+        [];
 
-    const targetTagName = (ev.target as HTMLElement)?.tagName;
-    /**
-     * Only handle custom keyboard interactions for the host popover element
-     * and children ion-item elements.
-     */
-    if (targetTagName !== 'ION-POPOVER' && targetTagName !== 'ION-ITEM') {
-      return;
-    }
-    /**
-     * Complex selectors with :not() are :not supported
-     * in older versions of Chromium so we need to do a
-     * try/catch here so errors are not thrown.
-     */
-    try {
+      const targetTagName = (
+        ev.target as HTMLElement
+      )?.tagName;
       /**
-       * Select all ion-items that are not children of child popovers.
-       * i.e. only select ion-item elements that are part of this popover
+       * Only handle custom keyboard interactions for the host popover element
+       * and children ion-item elements.
        */
-      items = Array.from(
-        popoverEl.querySelectorAll(
-          'ion-item:not(ion-popover ion-popover *):not([disabled])'
-        ) as NodeListOf<HTMLIonItemElement>
+      if (
+        targetTagName !==
+          'ION-POPOVER' &&
+        targetTagName !== 'ION-ITEM'
+      ) {
+        return;
+      }
+      /**
+       * Complex selectors with :not() are :not supported
+       * in older versions of Chromium so we need to do a
+       * try/catch here so errors are not thrown.
+       */
+      try {
+        /**
+         * Select all ion-items that are not children of child popovers.
+         * i.e. only select ion-item elements that are part of this popover
+         */
+        items = Array.from(
+          popoverEl.querySelectorAll(
+            'ion-item:not(ion-popover ion-popover *):not([disabled])'
+          ) as NodeListOf<HTMLIonItemElement>
+        );
+        /* eslint-disable-next-line */
+      } catch {}
+
+      switch (ev.key) {
+        /**
+         * If we are in a child popover
+         * then pressing the left arrow key
+         * should close this popover and move
+         * focus to the popover that presented
+         * this one.
+         */
+        case 'ArrowLeft':
+          const parentPopover =
+            await popoverEl.getParentPopover();
+          if (parentPopover) {
+            popoverEl.dismiss(
+              undefined,
+              undefined,
+              false
+            );
+          }
+          break;
+        /**
+         * ArrowDown should move focus to the next focusable ion-item.
+         */
+        case 'ArrowDown':
+          // Disable movement/scroll with keyboard
+          ev.preventDefault();
+          const nextItem = getNextItem(
+            items,
+            activeElement
+          );
+          if (nextItem !== undefined) {
+            focusItem(nextItem);
+          }
+          break;
+        /**
+         * ArrowUp should move focus to the previous focusable ion-item.
+         */
+        case 'ArrowUp':
+          // Disable movement/scroll with keyboard
+          ev.preventDefault();
+          const prevItem = getPrevItem(
+            items,
+            activeElement
+          );
+          if (prevItem !== undefined) {
+            focusItem(prevItem);
+          }
+          break;
+        /**
+         * Home should move focus to the first focusable ion-item.
+         */
+        case 'Home':
+          ev.preventDefault();
+          const firstItem = items[0];
+          if (firstItem !== undefined) {
+            focusItem(firstItem);
+          }
+          break;
+        /**
+         * End should move focus to the last focusable ion-item.
+         */
+        case 'End':
+          ev.preventDefault();
+          const lastItem =
+            items[items.length - 1];
+          if (lastItem !== undefined) {
+            focusItem(lastItem);
+          }
+          break;
+        /**
+         * ArrowRight, Spacebar, or Enter should activate
+         * the currently focused trigger item to open a
+         * popover if the element is a trigger item.
+         */
+        case 'ArrowRight':
+        case ' ':
+        case 'Enter':
+          if (
+            activeElement &&
+            isTriggerElement(
+              activeElement
+            )
+          ) {
+            const rightEvent =
+              new CustomEvent(
+                'ionPopoverActivateTrigger'
+              );
+            activeElement.dispatchEvent(
+              rightEvent
+            );
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    popoverEl.addEventListener(
+      'keydown',
+      callback
+    );
+    return () =>
+      popoverEl.removeEventListener(
+        'keydown',
+        callback
       );
-      /* eslint-disable-next-line */
-    } catch {}
-
-    switch (ev.key) {
-      /**
-       * If we are in a child popover
-       * then pressing the left arrow key
-       * should close this popover and move
-       * focus to the popover that presented
-       * this one.
-       */
-      case 'ArrowLeft':
-        const parentPopover = await popoverEl.getParentPopover();
-        if (parentPopover) {
-          popoverEl.dismiss(undefined, undefined, false);
-        }
-        break;
-      /**
-       * ArrowDown should move focus to the next focusable ion-item.
-       */
-      case 'ArrowDown':
-        // Disable movement/scroll with keyboard
-        ev.preventDefault();
-        const nextItem = getNextItem(items, activeElement);
-        if (nextItem !== undefined) {
-          focusItem(nextItem);
-        }
-        break;
-      /**
-       * ArrowUp should move focus to the previous focusable ion-item.
-       */
-      case 'ArrowUp':
-        // Disable movement/scroll with keyboard
-        ev.preventDefault();
-        const prevItem = getPrevItem(items, activeElement);
-        if (prevItem !== undefined) {
-          focusItem(prevItem);
-        }
-        break;
-      /**
-       * Home should move focus to the first focusable ion-item.
-       */
-      case 'Home':
-        ev.preventDefault();
-        const firstItem = items[0];
-        if (firstItem !== undefined) {
-          focusItem(firstItem);
-        }
-        break;
-      /**
-       * End should move focus to the last focusable ion-item.
-       */
-      case 'End':
-        ev.preventDefault();
-        const lastItem = items[items.length - 1];
-        if (lastItem !== undefined) {
-          focusItem(lastItem);
-        }
-        break;
-      /**
-       * ArrowRight, Spacebar, or Enter should activate
-       * the currently focused trigger item to open a
-       * popover if the element is a trigger item.
-       */
-      case 'ArrowRight':
-      case ' ':
-      case 'Enter':
-        if (activeElement && isTriggerElement(activeElement)) {
-          const rightEvent = new CustomEvent('ionPopoverActivateTrigger');
-          activeElement.dispatchEvent(rightEvent);
-        }
-        break;
-      default:
-        break;
-    }
   };
-
-  popoverEl.addEventListener('keydown', callback);
-  return () => popoverEl.removeEventListener('keydown', callback);
-};
 
 /**
  * Positions a popover by taking into account
@@ -478,7 +683,8 @@ export const getPopoverPosition = (
         return defaultPosition;
       }
 
-      const mouseEv = event as MouseEvent;
+      const mouseEv =
+        event as MouseEvent;
 
       referenceCoordinates = {
         top: mouseEv.clientY,
@@ -498,7 +704,8 @@ export const getPopoverPosition = (
      */
     case 'trigger':
     default:
-      const customEv = event as CustomEvent;
+      const customEv =
+        event as CustomEvent;
 
       /**
        * ionShadowTarget is used when we need to align the
@@ -509,18 +716,22 @@ export const getPopoverPosition = (
        * to the indicator rather than `ion-breadcrumb`
        * as a whole.
        */
-      const actualTriggerEl = (triggerEl ||
-        customEv?.detail?.ionShadowTarget ||
-        customEv?.target) as HTMLElement | null;
+      const actualTriggerEl =
+        (triggerEl ||
+          customEv?.detail
+            ?.ionShadowTarget ||
+          customEv?.target) as HTMLElement | null;
       if (!actualTriggerEl) {
         return defaultPosition;
       }
-      const triggerBoundingBox = actualTriggerEl.getBoundingClientRect();
+      const triggerBoundingBox =
+        actualTriggerEl.getBoundingClientRect();
       referenceCoordinates = {
         top: triggerBoundingBox.top,
         left: triggerBoundingBox.left,
         width: triggerBoundingBox.width,
-        height: triggerBoundingBox.height,
+        height:
+          triggerBoundingBox.height,
       };
 
       break;
@@ -531,40 +742,66 @@ export const getPopoverPosition = (
    * popover to be positioned on the
    * preferred side of the reference.
    */
-  const coordinates = calculatePopoverSide(
-    side,
-    referenceCoordinates,
-    contentWidth,
-    contentHeight,
-    arrowWidth,
-    arrowHeight,
-    isRTL
-  );
+  const coordinates =
+    calculatePopoverSide(
+      side,
+      referenceCoordinates,
+      contentWidth,
+      contentHeight,
+      arrowWidth,
+      arrowHeight,
+      isRTL
+    );
 
   /**
    * Get the top/left adjustments that
    * would allow the popover content
    * to have the correct alignment.
    */
-  const alignedCoordinates = calculatePopoverAlign(align, side, referenceCoordinates, contentWidth, contentHeight);
+  const alignedCoordinates =
+    calculatePopoverAlign(
+      align,
+      side,
+      referenceCoordinates,
+      contentWidth,
+      contentHeight
+    );
 
-  const top = coordinates.top + alignedCoordinates.top;
-  const left = coordinates.left + alignedCoordinates.left;
+  const top =
+    coordinates.top +
+    alignedCoordinates.top;
+  const left =
+    coordinates.left +
+    alignedCoordinates.left;
 
-  const { arrowTop, arrowLeft } = calculateArrowPosition(
-    side,
-    arrowWidth,
-    arrowHeight,
+  const { arrowTop, arrowLeft } =
+    calculateArrowPosition(
+      side,
+      arrowWidth,
+      arrowHeight,
+      top,
+      left,
+      contentWidth,
+      contentHeight,
+      isRTL
+    );
+
+  const { originX, originY } =
+    calculatePopoverOrigin(
+      side,
+      align,
+      isRTL
+    );
+
+  return {
     top,
     left,
-    contentWidth,
-    contentHeight,
-    isRTL
-  );
-
-  const { originX, originY } = calculatePopoverOrigin(side, align, isRTL);
-
-  return { top, left, referenceCoordinates, arrowTop, arrowLeft, originX, originY };
+    referenceCoordinates,
+    arrowTop,
+    arrowLeft,
+    originX,
+    originY,
+  };
 };
 
 /**
@@ -574,24 +811,58 @@ export const getPopoverPosition = (
  * prop values are. Currently only used
  * with the MD animation.
  */
-const calculatePopoverOrigin = (side: PositionSide, align: PositionAlign, isRTL: boolean) => {
+const calculatePopoverOrigin = (
+  side: PositionSide,
+  align: PositionAlign,
+  isRTL: boolean
+) => {
   switch (side) {
     case 'top':
-      return { originX: getOriginXAlignment(align), originY: 'bottom' };
+      return {
+        originX:
+          getOriginXAlignment(align),
+        originY: 'bottom',
+      };
     case 'bottom':
-      return { originX: getOriginXAlignment(align), originY: 'top' };
+      return {
+        originX:
+          getOriginXAlignment(align),
+        originY: 'top',
+      };
     case 'left':
-      return { originX: 'right', originY: getOriginYAlignment(align) };
+      return {
+        originX: 'right',
+        originY:
+          getOriginYAlignment(align),
+      };
     case 'right':
-      return { originX: 'left', originY: getOriginYAlignment(align) };
+      return {
+        originX: 'left',
+        originY:
+          getOriginYAlignment(align),
+      };
     case 'start':
-      return { originX: isRTL ? 'left' : 'right', originY: getOriginYAlignment(align) };
+      return {
+        originX: isRTL
+          ? 'left'
+          : 'right',
+        originY:
+          getOriginYAlignment(align),
+      };
     case 'end':
-      return { originX: isRTL ? 'right' : 'left', originY: getOriginYAlignment(align) };
+      return {
+        originX: isRTL
+          ? 'right'
+          : 'left',
+        originY:
+          getOriginYAlignment(align),
+      };
   }
 };
 
-const getOriginXAlignment = (align: PositionAlign) => {
+const getOriginXAlignment = (
+  align: PositionAlign
+) => {
   switch (align) {
     case 'start':
       return 'left';
@@ -602,7 +873,9 @@ const getOriginXAlignment = (align: PositionAlign) => {
   }
 };
 
-const getOriginYAlignment = (align: PositionAlign) => {
+const getOriginYAlignment = (
+  align: PositionAlign
+) => {
   switch (align) {
     case 'start':
       return 'top';
@@ -633,8 +906,14 @@ const calculateArrowPosition = (
    * by its dimension, you need to use `arrowWidth`.
    */
   const leftPosition = {
-    arrowTop: top + contentHeight / 2 - arrowWidth / 2,
-    arrowLeft: left + contentWidth - arrowWidth / 2,
+    arrowTop:
+      top +
+      contentHeight / 2 -
+      arrowWidth / 2,
+    arrowLeft:
+      left +
+      contentWidth -
+      arrowWidth / 2,
   };
 
   /**
@@ -642,23 +921,48 @@ const calculateArrowPosition = (
    * again by half of its width because we have rotated
    * the arrow using a transform.
    */
-  const rightPosition = { arrowTop: top + contentHeight / 2 - arrowWidth / 2, arrowLeft: left - arrowWidth * 1.5 };
+  const rightPosition = {
+    arrowTop:
+      top +
+      contentHeight / 2 -
+      arrowWidth / 2,
+    arrowLeft: left - arrowWidth * 1.5,
+  };
 
   switch (side) {
     case 'top':
-      return { arrowTop: top + contentHeight, arrowLeft: left + contentWidth / 2 - arrowWidth / 2 };
+      return {
+        arrowTop: top + contentHeight,
+        arrowLeft:
+          left +
+          contentWidth / 2 -
+          arrowWidth / 2,
+      };
     case 'bottom':
-      return { arrowTop: top - arrowHeight, arrowLeft: left + contentWidth / 2 - arrowWidth / 2 };
+      return {
+        arrowTop: top - arrowHeight,
+        arrowLeft:
+          left +
+          contentWidth / 2 -
+          arrowWidth / 2,
+      };
     case 'left':
       return leftPosition;
     case 'right':
       return rightPosition;
     case 'start':
-      return isRTL ? rightPosition : leftPosition;
+      return isRTL
+        ? rightPosition
+        : leftPosition;
     case 'end':
-      return isRTL ? leftPosition : rightPosition;
+      return isRTL
+        ? leftPosition
+        : rightPosition;
     default:
-      return { arrowTop: 0, arrowLeft: 0 };
+      return {
+        arrowTop: 0,
+        arrowLeft: 0,
+      };
   }
 };
 
@@ -679,32 +983,48 @@ const calculatePopoverSide = (
 ) => {
   const sideLeft = {
     top: triggerBoundingBox.top,
-    left: triggerBoundingBox.left - contentWidth - arrowWidth,
+    left:
+      triggerBoundingBox.left -
+      contentWidth -
+      arrowWidth,
   };
   const sideRight = {
     top: triggerBoundingBox.top,
-    left: triggerBoundingBox.left + triggerBoundingBox.width + arrowWidth,
+    left:
+      triggerBoundingBox.left +
+      triggerBoundingBox.width +
+      arrowWidth,
   };
 
   switch (side) {
     case 'top':
       return {
-        top: triggerBoundingBox.top - contentHeight - arrowHeight,
+        top:
+          triggerBoundingBox.top -
+          contentHeight -
+          arrowHeight,
         left: triggerBoundingBox.left,
       };
     case 'right':
       return sideRight;
     case 'bottom':
       return {
-        top: triggerBoundingBox.top + triggerBoundingBox.height + arrowHeight,
+        top:
+          triggerBoundingBox.top +
+          triggerBoundingBox.height +
+          arrowHeight,
         left: triggerBoundingBox.left,
       };
     case 'left':
       return sideLeft;
     case 'start':
-      return isRTL ? sideRight : sideLeft;
+      return isRTL
+        ? sideRight
+        : sideLeft;
     case 'end':
-      return isRTL ? sideLeft : sideRight;
+      return isRTL
+        ? sideLeft
+        : sideRight;
   }
 };
 
@@ -723,9 +1043,19 @@ const calculatePopoverAlign = (
 ) => {
   switch (align) {
     case 'center':
-      return calculatePopoverCenterAlign(side, triggerBoundingBox, contentWidth, contentHeight);
+      return calculatePopoverCenterAlign(
+        side,
+        triggerBoundingBox,
+        contentWidth,
+        contentHeight
+      );
     case 'end':
-      return calculatePopoverEndAlign(side, triggerBoundingBox, contentWidth, contentHeight);
+      return calculatePopoverEndAlign(
+        side,
+        triggerBoundingBox,
+        contentWidth,
+        contentHeight
+      );
     case 'start':
     default:
       return { top: 0, left: 0 };
@@ -753,7 +1083,10 @@ const calculatePopoverEndAlign = (
     case 'left':
     case 'right':
       return {
-        top: -(contentHeight - triggerBoundingBox.height),
+        top: -(
+          contentHeight -
+          triggerBoundingBox.height
+        ),
         left: 0,
       };
     case 'top':
@@ -761,7 +1094,10 @@ const calculatePopoverEndAlign = (
     default:
       return {
         top: 0,
-        left: -(contentWidth - triggerBoundingBox.width),
+        left: -(
+          contentWidth -
+          triggerBoundingBox.width
+        ),
       };
   }
 };
@@ -787,7 +1123,10 @@ const calculatePopoverCenterAlign = (
     case 'left':
     case 'right':
       return {
-        top: -(contentHeight / 2 - triggerBoundingBox.height / 2),
+        top: -(
+          contentHeight / 2 -
+          triggerBoundingBox.height / 2
+        ),
         left: 0,
       };
     case 'top':
@@ -795,7 +1134,10 @@ const calculatePopoverCenterAlign = (
     default:
       return {
         top: 0,
-        left: -(contentWidth / 2 - triggerBoundingBox.width / 2),
+        left: -(
+          contentWidth / 2 -
+          triggerBoundingBox.width / 2
+        ),
       };
   }
 };
@@ -805,104 +1147,144 @@ const calculatePopoverCenterAlign = (
  * such that popover does not appear offscreen
  * or overlapping safe area bounds.
  */
-export const calculateWindowAdjustment = (
-  side: PositionSide,
-  coordTop: number,
-  coordLeft: number,
-  bodyPadding: number,
-  bodyWidth: number,
-  bodyHeight: number,
-  contentWidth: number,
-  contentHeight: number,
-  safeAreaMargin: number,
-  contentOriginX: string,
-  contentOriginY: string,
-  triggerCoordinates?: ReferenceCoordinates,
-  coordArrowTop = 0,
-  coordArrowLeft = 0,
-  arrowHeight = 0
-): PopoverStyles => {
-  let arrowTop = coordArrowTop;
-  const arrowLeft = coordArrowLeft;
-  let left = coordLeft;
-  let top = coordTop;
-  let bottom;
-  let originX = contentOriginX;
-  let originY = contentOriginY;
-  let checkSafeAreaLeft = false;
-  let checkSafeAreaRight = false;
-  const triggerTop = triggerCoordinates
-    ? triggerCoordinates.top + triggerCoordinates.height
-    : bodyHeight / 2 - contentHeight / 2;
-  const triggerHeight = triggerCoordinates ? triggerCoordinates.height : 0;
-  let addPopoverBottomClass = false;
+export const calculateWindowAdjustment =
+  (
+    side: PositionSide,
+    coordTop: number,
+    coordLeft: number,
+    bodyPadding: number,
+    bodyWidth: number,
+    bodyHeight: number,
+    contentWidth: number,
+    contentHeight: number,
+    safeAreaMargin: number,
+    contentOriginX: string,
+    contentOriginY: string,
+    triggerCoordinates?: ReferenceCoordinates,
+    coordArrowTop = 0,
+    coordArrowLeft = 0,
+    arrowHeight = 0
+  ): PopoverStyles => {
+    let arrowTop = coordArrowTop;
+    const arrowLeft = coordArrowLeft;
+    let left = coordLeft;
+    let top = coordTop;
+    let bottom;
+    let originX = contentOriginX;
+    let originY = contentOriginY;
+    let checkSafeAreaLeft = false;
+    let checkSafeAreaRight = false;
+    const triggerTop =
+      triggerCoordinates
+        ? triggerCoordinates.top +
+          triggerCoordinates.height
+        : bodyHeight / 2 -
+          contentHeight / 2;
+    const triggerHeight =
+      triggerCoordinates
+        ? triggerCoordinates.height
+        : 0;
+    let addPopoverBottomClass = false;
 
-  /**
-   * Adjust popover so it does not
-   * go off the left of the screen.
-   */
-  if (left < bodyPadding + safeAreaMargin) {
-    left = bodyPadding;
-    checkSafeAreaLeft = true;
-    originX = 'left';
     /**
      * Adjust popover so it does not
-     * go off the right of the screen.
+     * go off the left of the screen.
      */
-  } else if (contentWidth + bodyPadding + left + safeAreaMargin > bodyWidth) {
-    checkSafeAreaRight = true;
-    left = bodyWidth - contentWidth - bodyPadding;
-    originX = 'right';
-  }
-
-  /**
-   * Adjust popover so it does not
-   * go off the top of the screen.
-   * If popover is on the left or the right of
-   * the trigger, then we should not adjust top
-   * margins.
-   */
-  if (triggerTop + triggerHeight + contentHeight > bodyHeight && (side === 'top' || side === 'bottom')) {
-    if (triggerTop - contentHeight > 0) {
+    if (
+      left <
+      bodyPadding + safeAreaMargin
+    ) {
+      left = bodyPadding;
+      checkSafeAreaLeft = true;
+      originX = 'left';
       /**
-       * While we strive to align the popover with the trigger
-       * on smaller screens this is not always possible. As a result,
-       * we adjust the popover up so that it does not hang
-       * off the bottom of the screen. However, we do not want to move
-       * the popover up so much that it goes off the top of the screen.
-       *
-       * We chose 12 here so that the popover position looks a bit nicer as
-       * it is not right up against the edge of the screen.
+       * Adjust popover so it does not
+       * go off the right of the screen.
        */
-      top = Math.max(12, triggerTop - contentHeight - triggerHeight - (arrowHeight - 1));
-      arrowTop = top + contentHeight;
-      originY = 'bottom';
-      addPopoverBottomClass = true;
-
-      /**
-       * If not enough room for popover to appear
-       * above trigger, then cut it off.
-       */
-    } else {
-      bottom = bodyPadding;
+    } else if (
+      contentWidth +
+        bodyPadding +
+        left +
+        safeAreaMargin >
+      bodyWidth
+    ) {
+      checkSafeAreaRight = true;
+      left =
+        bodyWidth -
+        contentWidth -
+        bodyPadding;
+      originX = 'right';
     }
-  }
 
-  return {
-    top,
-    left,
-    bottom,
-    originX,
-    originY,
-    checkSafeAreaLeft,
-    checkSafeAreaRight,
-    arrowTop,
-    arrowLeft,
-    addPopoverBottomClass,
+    /**
+     * Adjust popover so it does not
+     * go off the top of the screen.
+     * If popover is on the left or the right of
+     * the trigger, then we should not adjust top
+     * margins.
+     */
+    if (
+      triggerTop +
+        triggerHeight +
+        contentHeight >
+        bodyHeight &&
+      (side === 'top' ||
+        side === 'bottom')
+    ) {
+      if (
+        triggerTop - contentHeight >
+        0
+      ) {
+        /**
+         * While we strive to align the popover with the trigger
+         * on smaller screens this is not always possible. As a result,
+         * we adjust the popover up so that it does not hang
+         * off the bottom of the screen. However, we do not want to move
+         * the popover up so much that it goes off the top of the screen.
+         *
+         * We chose 12 here so that the popover position looks a bit nicer as
+         * it is not right up against the edge of the screen.
+         */
+        top = Math.max(
+          12,
+          triggerTop -
+            contentHeight -
+            triggerHeight -
+            (arrowHeight - 1)
+        );
+        arrowTop = top + contentHeight;
+        originY = 'bottom';
+        addPopoverBottomClass = true;
+
+        /**
+         * If not enough room for popover to appear
+         * above trigger, then cut it off.
+         */
+      } else {
+        bottom = bodyPadding;
+      }
+    }
+
+    return {
+      top,
+      left,
+      bottom,
+      originX,
+      originY,
+      checkSafeAreaLeft,
+      checkSafeAreaRight,
+      arrowTop,
+      arrowLeft,
+      addPopoverBottomClass,
+    };
   };
-};
 
-export const shouldShowArrow = (side: PositionSide, didAdjustBounds = false, ev?: Event, trigger?: HTMLElement) => {
+export const shouldShowArrow = (
+  side: PositionSide,
+  didAdjustBounds = false,
+  ev?: Event,
+  trigger?: HTMLElement
+) => {
   /**
    * If no event provided and
    * we do not have a trigger,
@@ -923,7 +1305,11 @@ export const shouldShowArrow = (side: PositionSide, didAdjustBounds = false, ev?
    * hide the arrow as it will never be pointing
    * at the trigger.
    */
-  if (side !== 'top' && side !== 'bottom' && didAdjustBounds) {
+  if (
+    side !== 'top' &&
+    side !== 'bottom' &&
+    didAdjustBounds
+  ) {
     return false;
   }
 

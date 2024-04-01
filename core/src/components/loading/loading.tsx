@@ -1,5 +1,17 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Watch,
+  Component,
+  Element,
+  Event,
+  Host,
+  Method,
+  Prop,
+  h,
+} from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
@@ -18,7 +30,11 @@ import { getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
+import type {
+  AnimationBuilder,
+  FrameworkDelegate,
+  OverlayInterface,
+} from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
@@ -41,12 +57,25 @@ import { mdLeaveAnimation } from './animations/md.leave';
   },
   scoped: true,
 })
-export class Loading implements ComponentInterface, OverlayInterface {
-  private readonly delegateController = createDelegateController(this);
-  private readonly lockController = createLockController();
-  private readonly triggerController = createTriggerController();
-  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
-  private durationTimeout?: ReturnType<typeof setTimeout>;
+export class Loading
+  implements
+    ComponentInterface,
+    OverlayInterface
+{
+  private readonly delegateController =
+    createDelegateController(this);
+  private readonly lockController =
+    createLockController();
+  private readonly triggerController =
+    createTriggerController();
+  private customHTMLEnabled =
+    config.get(
+      'innerHTMLTemplatesEnabled',
+      ENABLE_HTML_CONTENT_DEFAULT
+    );
+  private durationTimeout?: ReturnType<
+    typeof setTimeout
+  >;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -70,12 +99,14 @@ export class Loading implements ComponentInterface, OverlayInterface {
   /**
    * Animation to use when the loading indicator is presented.
    */
-  @Prop() enterAnimation?: AnimationBuilder;
+  @Prop()
+  enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the loading indicator is dismissed.
    */
-  @Prop() leaveAnimation?: AnimationBuilder;
+  @Prop()
+  leaveAnimation?: AnimationBuilder;
 
   /**
    * Optional text content to display in the loading indicator.
@@ -85,7 +116,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
    * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
    * before custom HTML can be used.
    */
-  @Prop() message?: string | IonicSafeString;
+  @Prop() message?:
+    | string
+    | IonicSafeString;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
@@ -111,7 +144,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
   /**
    * The name of the spinner to display.
    */
-  @Prop({ mutable: true }) spinner?: SpinnerTypes | null;
+  @Prop({ mutable: true })
+  spinner?: SpinnerTypes | null;
 
   /**
    * If `true`, the loading indicator will be translucent.
@@ -128,7 +162,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the loader.
    */
-  @Prop() htmlAttributes?: { [key: string]: any };
+  @Prop() htmlAttributes?: {
+    [key: string]: any;
+  };
 
   /**
    * If `true`, the loading indicator will open. If `false`, the loading indicator will close.
@@ -139,10 +175,19 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Prop() isOpen = false;
   @Watch('isOpen')
-  onIsOpenChange(newValue: boolean, oldValue: boolean) {
-    if (newValue === true && oldValue === false) {
+  onIsOpenChange(
+    newValue: boolean,
+    oldValue: boolean
+  ) {
+    if (
+      newValue === true &&
+      oldValue === false
+    ) {
       this.present();
-    } else if (newValue === false && oldValue === true) {
+    } else if (
+      newValue === false &&
+      oldValue === true
+    ) {
       this.dismiss();
     }
   }
@@ -154,55 +199,78 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() trigger: string | undefined;
   @Watch('trigger')
   triggerChanged() {
-    const { trigger, el, triggerController } = this;
+    const {
+      trigger,
+      el,
+      triggerController,
+    } = this;
     if (trigger) {
-      triggerController.addClickListener(el, trigger);
+      triggerController.addClickListener(
+        el,
+        trigger
+      );
     }
   }
 
   /**
    * Emitted after the loading has presented.
    */
-  @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
+  @Event({
+    eventName: 'ionLoadingDidPresent',
+  })
+  didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the loading has presented.
    */
-  @Event({ eventName: 'ionLoadingWillPresent' }) willPresent!: EventEmitter<void>;
+  @Event({
+    eventName: 'ionLoadingWillPresent',
+  })
+  willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the loading has dismissed.
    */
-  @Event({ eventName: 'ionLoadingWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({
+    eventName: 'ionLoadingWillDismiss',
+  })
+  willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the loading has dismissed.
    */
-  @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({
+    eventName: 'ionLoadingDidDismiss',
+  })
+  didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the loading indicator has presented.
    * Shorthand for ionLoadingWillDismiss.
    */
-  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+  @Event({ eventName: 'didPresent' })
+  didPresentShorthand!: EventEmitter<void>;
 
   /**
    * Emitted before the loading indicator has presented.
    * Shorthand for ionLoadingWillPresent.
    */
-  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+  @Event({ eventName: 'willPresent' })
+  willPresentShorthand!: EventEmitter<void>;
 
   /**
    * Emitted before the loading indicator has dismissed.
    * Shorthand for ionLoadingWillDismiss.
    */
-  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'willDismiss' })
+  willDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the loading indicator has dismissed.
    * Shorthand for ionLoadingDidDismiss.
    */
-  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'didDismiss' })
+  didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   connectedCallback() {
     prepareOverlay(this.el);
@@ -212,7 +280,15 @@ export class Loading implements ComponentInterface, OverlayInterface {
   componentWillLoad() {
     if (this.spinner === undefined) {
       const mode = getIonMode(this);
-      this.spinner = config.get('loadingSpinner', config.get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
+      this.spinner = config.get(
+        'loadingSpinner',
+        config.get(
+          'spinner',
+          mode === 'ios'
+            ? 'lines'
+            : 'crescent'
+        )
+      );
     }
     setOverlayId(this.el);
   }
@@ -247,14 +323,23 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    const unlock = await this.lockController.lock();
+    const unlock =
+      await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
+    await present(
+      this,
+      'loadingEnter',
+      iosEnterAnimation,
+      mdEnterAnimation
+    );
 
     if (this.duration > 0) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
+      this.durationTimeout = setTimeout(
+        () => this.dismiss(),
+        this.duration + 10
+      );
     }
 
     unlock();
@@ -274,13 +359,26 @@ export class Loading implements ComponentInterface, OverlayInterface {
    * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
-  async dismiss(data?: any, role?: string): Promise<boolean> {
-    const unlock = await this.lockController.lock();
+  async dismiss(
+    data?: any,
+    role?: string
+  ): Promise<boolean> {
+    const unlock =
+      await this.lockController.lock();
 
     if (this.durationTimeout) {
-      clearTimeout(this.durationTimeout);
+      clearTimeout(
+        this.durationTimeout
+      );
     }
-    const dismissed = await dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
+    const dismissed = await dismiss(
+      this,
+      data,
+      role,
+      'loadingLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation
+    );
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
@@ -295,44 +393,78 @@ export class Loading implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the loading did dismiss.
    */
   @Method()
-  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
-    return eventMethod(this.el, 'ionLoadingDidDismiss');
+  onDidDismiss<T = any>(): Promise<
+    OverlayEventDetail<T>
+  > {
+    return eventMethod(
+      this.el,
+      'ionLoadingDidDismiss'
+    );
   }
 
   /**
    * Returns a promise that resolves when the loading will dismiss.
    */
   @Method()
-  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
-    return eventMethod(this.el, 'ionLoadingWillDismiss');
+  onWillDismiss<T = any>(): Promise<
+    OverlayEventDetail<T>
+  > {
+    return eventMethod(
+      this.el,
+      'ionLoadingWillDismiss'
+    );
   }
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
   };
 
-  private renderLoadingMessage(msgId: string) {
-    const { customHTMLEnabled, message } = this;
+  private renderLoadingMessage(
+    msgId: string
+  ) {
+    const {
+      customHTMLEnabled,
+      message,
+    } = this;
     if (customHTMLEnabled) {
-      return <div class="loading-content" id={msgId} innerHTML={sanitizeDOMString(message)}></div>;
+      return (
+        <div
+          class="loading-content"
+          id={msgId}
+          innerHTML={sanitizeDOMString(
+            message
+          )}
+        ></div>
+      );
     }
 
     return (
-      <div class="loading-content" id={msgId}>
+      <div
+        class="loading-content"
+        id={msgId}
+      >
         {message}
       </div>
     );
   }
 
   render() {
-    const { message, spinner, htmlAttributes, overlayIndex } = this;
+    const {
+      message,
+      spinner,
+      htmlAttributes,
+      overlayIndex,
+    } = this;
     const mode = getIonMode(this);
     const msgId = `loading-${overlayIndex}-msg`;
     /**
      * If the message is defined, use that as the label.
      * Otherwise, don't set aria-labelledby.
      */
-    const ariaLabelledBy = message !== undefined ? msgId : null;
+    const ariaLabelledBy =
+      message !== undefined
+        ? msgId
+        : null;
 
     return (
       <Host
@@ -342,28 +474,44 @@ export class Loading implements ComponentInterface, OverlayInterface {
         tabindex="-1"
         {...(htmlAttributes as any)}
         style={{
-          zIndex: `${40000 + this.overlayIndex}`,
+          zIndex: `${
+            40000 + this.overlayIndex
+          }`,
         }}
-        onIonBackdropTap={this.onBackdropTap}
+        onIonBackdropTap={
+          this.onBackdropTap
+        }
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
           'overlay-hidden': true,
-          'loading-translucent': this.translucent,
+          'loading-translucent':
+            this.translucent,
         }}
       >
-        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
+        <ion-backdrop
+          visible={this.showBackdrop}
+          tappable={
+            this.backdropDismiss
+          }
+        />
 
         <div tabindex="0"></div>
 
         <div class="loading-wrapper ion-overlay-wrapper">
           {spinner && (
             <div class="loading-spinner">
-              <ion-spinner name={spinner} aria-hidden="true" />
+              <ion-spinner
+                name={spinner}
+                aria-hidden="true"
+              />
             </div>
           )}
 
-          {message !== undefined && this.renderLoadingMessage(msgId)}
+          {message !== undefined &&
+            this.renderLoadingMessage(
+              msgId
+            )}
         </div>
 
         <div tabindex="0"></div>

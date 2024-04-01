@@ -1,49 +1,95 @@
 class GestureController {
   private gestureId = 0;
-  private requestedStart = new Map<number, number>();
-  private disabledGestures = new Map<string, Set<number>>();
-  private disabledScroll = new Set<number>();
+  private requestedStart = new Map<
+    number,
+    number
+  >();
+  private disabledGestures = new Map<
+    string,
+    Set<number>
+  >();
+  private disabledScroll =
+    new Set<number>();
   private capturedId?: number;
 
   /**
    * Creates a gesture delegate based on the GestureConfig passed
    */
-  createGesture(config: GestureConfig): GestureDelegate {
-    return new GestureDelegate(this, this.newID(), config.name, config.priority ?? 0, !!config.disableScroll);
+  createGesture(
+    config: GestureConfig
+  ): GestureDelegate {
+    return new GestureDelegate(
+      this,
+      this.newID(),
+      config.name,
+      config.priority ?? 0,
+      !!config.disableScroll
+    );
   }
 
   /**
    * Creates a blocker that will block any other gesture events from firing. Set in the ion-gesture component.
    */
-  createBlocker(opts: BlockerConfig = {}): BlockerDelegate {
-    return new BlockerDelegate(this, this.newID(), opts.disable, !!opts.disableScroll);
+  createBlocker(
+    opts: BlockerConfig = {}
+  ): BlockerDelegate {
+    return new BlockerDelegate(
+      this,
+      this.newID(),
+      opts.disable,
+      !!opts.disableScroll
+    );
   }
 
-  start(gestureName: string, id: number, priority: number): boolean {
+  start(
+    gestureName: string,
+    id: number,
+    priority: number
+  ): boolean {
     if (!this.canStart(gestureName)) {
       this.requestedStart.delete(id);
       return false;
     }
-    this.requestedStart.set(id, priority);
+    this.requestedStart.set(
+      id,
+      priority
+    );
     return true;
   }
 
-  capture(gestureName: string, id: number, priority: number): boolean {
-    if (!this.start(gestureName, id, priority)) {
+  capture(
+    gestureName: string,
+    id: number,
+    priority: number
+  ): boolean {
+    if (
+      !this.start(
+        gestureName,
+        id,
+        priority
+      )
+    ) {
       return false;
     }
-    const requestedStart = this.requestedStart;
+    const requestedStart =
+      this.requestedStart;
     let maxPriority = -10000;
 
     requestedStart.forEach((value) => {
-      maxPriority = Math.max(maxPriority, value);
+      maxPriority = Math.max(
+        maxPriority,
+        value
+      );
     });
 
     if (maxPriority === priority) {
       this.capturedId = id;
       requestedStart.clear();
 
-      const event = new CustomEvent('ionGestureCaptured', { detail: { gestureName } });
+      const event = new CustomEvent(
+        'ionGestureCaptured',
+        { detail: { gestureName } }
+      );
       document.dispatchEvent(event);
       return true;
     }
@@ -60,17 +106,31 @@ class GestureController {
     }
   }
 
-  disableGesture(gestureName: string, id: number) {
-    let set = this.disabledGestures.get(gestureName);
+  disableGesture(
+    gestureName: string,
+    id: number
+  ) {
+    let set = this.disabledGestures.get(
+      gestureName
+    );
     if (set === undefined) {
       set = new Set<number>();
-      this.disabledGestures.set(gestureName, set);
+      this.disabledGestures.set(
+        gestureName,
+        set
+      );
     }
     set.add(id);
   }
 
-  enableGesture(gestureName: string, id: number) {
-    const set = this.disabledGestures.get(gestureName);
+  enableGesture(
+    gestureName: string,
+    id: number
+  ) {
+    const set =
+      this.disabledGestures.get(
+        gestureName
+      );
     if (set !== undefined) {
       set.delete(id);
     }
@@ -78,19 +138,29 @@ class GestureController {
 
   disableScroll(id: number) {
     this.disabledScroll.add(id);
-    if (this.disabledScroll.size === 1) {
-      document.body.classList.add(BACKDROP_NO_SCROLL);
+    if (
+      this.disabledScroll.size === 1
+    ) {
+      document.body.classList.add(
+        BACKDROP_NO_SCROLL
+      );
     }
   }
 
   enableScroll(id: number) {
     this.disabledScroll.delete(id);
-    if (this.disabledScroll.size === 0) {
-      document.body.classList.remove(BACKDROP_NO_SCROLL);
+    if (
+      this.disabledScroll.size === 0
+    ) {
+      document.body.classList.remove(
+        BACKDROP_NO_SCROLL
+      );
     }
   }
 
-  canStart(gestureName: string): boolean {
+  canStart(
+    gestureName: string
+  ): boolean {
     if (this.capturedId !== undefined) {
       // a gesture already captured
       return false;
@@ -104,15 +174,22 @@ class GestureController {
   }
 
   isCaptured(): boolean {
-    return this.capturedId !== undefined;
+    return (
+      this.capturedId !== undefined
+    );
   }
 
   isScrollDisabled(): boolean {
     return this.disabledScroll.size > 0;
   }
 
-  isDisabled(gestureName: string): boolean {
-    const disabled = this.disabledGestures.get(gestureName);
+  isDisabled(
+    gestureName: string
+  ): boolean {
+    const disabled =
+      this.disabledGestures.get(
+        gestureName
+      );
     if (disabled && disabled.size > 0) {
       return true;
     }
@@ -136,7 +213,8 @@ class GestureDelegate {
     priority: number,
     private disableScroll: boolean
   ) {
-    this.priority = priority * 1000000 + id;
+    this.priority =
+      priority * 1000000 + id;
     this.ctrl = ctrl;
   }
 
@@ -145,7 +223,9 @@ class GestureDelegate {
       return false;
     }
 
-    return this.ctrl.canStart(this.name);
+    return this.ctrl.canStart(
+      this.name
+    );
   }
 
   start(): boolean {
@@ -153,7 +233,11 @@ class GestureDelegate {
       return false;
     }
 
-    return this.ctrl.start(this.name, this.id, this.priority);
+    return this.ctrl.start(
+      this.name,
+      this.id,
+      this.priority
+    );
   }
 
   capture(): boolean {
@@ -161,8 +245,15 @@ class GestureDelegate {
       return false;
     }
 
-    const captured = this.ctrl.capture(this.name, this.id, this.priority);
-    if (captured && this.disableScroll) {
+    const captured = this.ctrl.capture(
+      this.name,
+      this.id,
+      this.priority
+    );
+    if (
+      captured &&
+      this.disableScroll
+    ) {
       this.ctrl.disableScroll(this.id);
     }
 
@@ -191,7 +282,9 @@ class BlockerDelegate {
   constructor(
     ctrl: GestureController,
     private id: number,
-    private disable: string[] | undefined,
+    private disable:
+      | string[]
+      | undefined,
     private disableScroll: boolean
   ) {
     this.ctrl = ctrl;
@@ -202,8 +295,12 @@ class BlockerDelegate {
       return;
     }
     if (this.disable) {
-      for (const gesture of this.disable) {
-        this.ctrl.disableGesture(gesture, this.id);
+      for (const gesture of this
+        .disable) {
+        this.ctrl.disableGesture(
+          gesture,
+          this.id
+        );
       }
     }
 
@@ -217,8 +314,12 @@ class BlockerDelegate {
       return;
     }
     if (this.disable) {
-      for (const gesture of this.disable) {
-        this.ctrl.enableGesture(gesture, this.id);
+      for (const gesture of this
+        .disable) {
+        this.ctrl.enableGesture(
+          gesture,
+          this.id
+        );
       }
     }
     if (this.disableScroll) {
@@ -243,5 +344,7 @@ export interface BlockerConfig {
   disableScroll?: boolean;
 }
 
-const BACKDROP_NO_SCROLL = 'backdrop-no-scroll';
-export const GESTURE_CONTROLLER = new GestureController();
+const BACKDROP_NO_SCROLL =
+  'backdrop-no-scroll';
+export const GESTURE_CONTROLLER =
+  new GestureController();

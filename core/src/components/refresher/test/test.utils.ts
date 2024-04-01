@@ -11,14 +11,25 @@ import { dragElementByYAxis } from '@utils/test/playwright';
  * @param page The E2E Page object.
  * @param selector The element selector to center the drag gesture on. Defaults to `body`.
  */
-const pullToRefresh = async (page: E2EPage, selector = 'body') => {
+const pullToRefresh = async (
+  page: E2EPage,
+  selector = 'body'
+) => {
   const target = page.locator(selector);
 
-  await page.locator('ion-refresher.hydrated').waitFor({ state: 'attached' });
+  await page
+    .locator('ion-refresher.hydrated')
+    .waitFor({ state: 'attached' });
 
-  const ev = await page.spyOnEvent('ionRefreshComplete');
+  const ev = await page.spyOnEvent(
+    'ionRefreshComplete'
+  );
 
-  await dragElementByYAxis(target, page, 320);
+  await dragElementByYAxis(
+    target,
+    page,
+    320
+  );
   await ev.next();
 };
 

@@ -1,11 +1,19 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('radio: item'), () => {
-    test('should render correctly in list', async ({ page }) => {
-      await page.setContent(
-        `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('radio: item'),
+      () => {
+        test('should render correctly in list', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-list>
           <ion-radio-group>
             <ion-item>
@@ -14,14 +22,21 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-radio-group>
         </ion-list>
       `,
-        config
-      );
-      const list = page.locator('ion-list');
-      await expect(list).toHaveScreenshot(screenshot(`radio-list`));
-    });
-    test('should render correctly in inset list', async ({ page }) => {
-      await page.setContent(
-        `
+            config
+          );
+          const list =
+            page.locator('ion-list');
+          await expect(
+            list
+          ).toHaveScreenshot(
+            screenshot(`radio-list`)
+          );
+        });
+        test('should render correctly in inset list', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-list inset="true">
           <ion-radio-group>
             <ion-item>
@@ -30,19 +45,38 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-radio-group>
         </ion-list>
       `,
-        config
-      );
-      const list = page.locator('ion-list');
-      await expect(list).toHaveScreenshot(screenshot(`radio-inset-list`));
-    });
-  });
-});
+            config
+          );
+          const list =
+            page.locator('ion-list');
+          await expect(
+            list
+          ).toHaveScreenshot(
+            screenshot(
+              `radio-inset-list`
+            )
+          );
+        });
+      }
+    );
+  }
+);
 
-configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('radio: long label in item'), () => {
-    test('should render margins correctly when using long label in item', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+  modes: ['md'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title(
+        'radio: long label in item'
+      ),
+      () => {
+        test('should render margins correctly when using long label in item', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
           <ion-list>
             <ion-radio-group>
               <ion-item>
@@ -53,17 +87,31 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
             </ion-radio-group>
           </ion-list>
         `,
-        config
-      );
-      const list = page.locator('ion-list');
-      await expect(list).toHaveScreenshot(screenshot(`radio-long-label-in-item`));
-    });
-  });
+            config
+          );
+          const list =
+            page.locator('ion-list');
+          await expect(
+            list
+          ).toHaveScreenshot(
+            screenshot(
+              `radio-long-label-in-item`
+            )
+          );
+        });
+      }
+    );
 
-  test.describe(title('radio: stacked label in item'), () => {
-    test('should render margins correctly when using stacked label in item', async ({ page }) => {
-      await page.setContent(
-        `
+    test.describe(
+      title(
+        'radio: stacked label in item'
+      ),
+      () => {
+        test('should render margins correctly when using stacked label in item', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
           <ion-list>
             <ion-radio-group>
               <ion-item>
@@ -72,17 +120,29 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
             </ion-radio-group>
           </ion-list>
         `,
-        config
-      );
-      const list = page.locator('ion-list');
-      await expect(list).toHaveScreenshot(screenshot(`radio-stacked-label-in-item`));
-    });
-  });
+            config
+          );
+          const list =
+            page.locator('ion-list');
+          await expect(
+            list
+          ).toHaveScreenshot(
+            screenshot(
+              `radio-stacked-label-in-item`
+            )
+          );
+        });
+      }
+    );
 
-  test.describe(title('radio: ionChange'), () => {
-    test('clicking padded space within item should click the radio', async ({ page }) => {
-      await page.setContent(
-        `
+    test.describe(
+      title('radio: ionChange'),
+      () => {
+        test('clicking padded space within item should click the radio', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-radio-group>
           <ion-item>
             <ion-radio>
@@ -91,20 +151,30 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
           </ion-item>
         </ion-radio-group>
       `,
-        config
-      );
-      const itemNative = page.locator('.item-native');
-      const ionChange = await page.spyOnEvent('ionChange');
+            config
+          );
+          const itemNative =
+            page.locator(
+              '.item-native'
+            );
+          const ionChange =
+            await page.spyOnEvent(
+              'ionChange'
+            );
 
-      // Clicks the padded space within the item
-      await itemNative.click({
-        position: {
-          x: 5,
-          y: 5,
-        },
-      });
+          // Clicks the padded space within the item
+          await itemNative.click({
+            position: {
+              x: 5,
+              y: 5,
+            },
+          });
 
-      expect(ionChange).toHaveReceivedEvent();
-    });
-  });
-});
+          expect(
+            ionChange
+          ).toHaveReceivedEvent();
+        });
+      }
+    );
+  }
+);

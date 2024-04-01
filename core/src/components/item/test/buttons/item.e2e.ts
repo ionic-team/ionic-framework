@@ -1,34 +1,62 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('item: buttons'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      /**
-       * This test validates that in iOS mode the arrow indicators are
-       * added to the end of the ion-item row.
-       *
-       * In MD mode, these arrow indicators are not present.
-       */
-      await page.goto(`/src/components/item/test/buttons`, config);
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('item: buttons'),
+      () => {
+        test('should not have visual regressions', async ({
+          page,
+        }) => {
+          /**
+           * This test validates that in iOS mode the arrow indicators are
+           * added to the end of the ion-item row.
+           *
+           * In MD mode, these arrow indicators are not present.
+           */
+          await page.goto(
+            `/src/components/item/test/buttons`,
+            config
+          );
 
-      await page.setIonViewport();
+          await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`item-buttons-diff`));
-    });
-  });
-});
+          await expect(
+            page
+          ).toHaveScreenshot(
+            screenshot(
+              `item-buttons-diff`
+            )
+          );
+        });
+      }
+    );
+  }
+);
 
-configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('item: buttons dark'), () => {
-    test('should not have visual regressions in dark', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/27130',
-      });
+configs({
+  directions: ['ltr'],
+  themes: ['dark'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('item: buttons dark'),
+      () => {
+        test('should not have visual regressions in dark', async ({
+          page,
+        }) => {
+          test.info().annotations.push({
+            type: 'issue',
+            description:
+              'https://github.com/ionic-team/ionic-framework/issues/27130',
+          });
 
-      await page.setContent(
-        `
+          await page.setContent(
+            `
         <ion-list>
           <ion-item button="true">
             <ion-label>Button Item</ion-label>
@@ -41,12 +69,21 @@ configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, screenshot,
           </ion-item>
         </ion-list>
       `,
-        config
-      );
+            config
+          );
 
-      const list = page.locator('ion-list');
+          const list =
+            page.locator('ion-list');
 
-      await expect(list).toHaveScreenshot(screenshot(`item-buttons-dark-diff`));
-    });
-  });
-});
+          await expect(
+            list
+          ).toHaveScreenshot(
+            screenshot(
+              `item-buttons-dark-diff`
+            )
+          );
+        });
+      }
+    );
+  }
+);

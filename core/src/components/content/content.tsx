@@ -1,14 +1,38 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
-import { componentOnReady, hasLazyBuild } from '@utils/helpers';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Listen,
+  Method,
+  Prop,
+  forceUpdate,
+  h,
+  readTask,
+} from '@stencil/core';
+import {
+  componentOnReady,
+  hasLazyBuild,
+} from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
-import { createColorClasses, hostContext } from '@utils/theme';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 
-import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
+import type {
+  ScrollBaseDetail,
+  ScrollDetail,
+} from './content-interface';
 
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
@@ -22,8 +46,12 @@ import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
   styleUrl: 'content.scss',
   shadow: true,
 })
-export class Content implements ComponentInterface {
-  private watchDog: ReturnType<typeof setInterval> | null = null;
+export class Content
+  implements ComponentInterface
+{
+  private watchDog: ReturnType<
+    typeof setInterval
+  > | null = null;
   private isScrolling = false;
   private lastScroll = 0;
   private queued = false;
@@ -32,9 +60,12 @@ export class Content implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
-  private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private resizeTimeout: ReturnType<
+    typeof setTimeout
+  > | null = null;
 
-  private tabsElement: HTMLElement | null = null;
+  private tabsElement: HTMLElement | null =
+    null;
   private tabsLoadCallback?: () => void;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
@@ -66,7 +97,8 @@ export class Content implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * If `true`, the content will scroll behind the headers
@@ -80,7 +112,8 @@ export class Content implements ComponentInterface {
    * If the content exceeds the bounds of ionContent, nothing will change.
    * Note, this does not disable the system bounce on iOS. That is an OS level setting.
    */
-  @Prop({ mutable: true }) forceOverscroll?: boolean;
+  @Prop({ mutable: true })
+  forceOverscroll?: boolean;
 
   /**
    * If you want to enable the content scrolling in the X axis, set this property to `true`.
@@ -102,22 +135,28 @@ export class Content implements ComponentInterface {
    * Emitted when the scroll has started. This event is disabled by default.
    * Set `scrollEvents` to `true` to enable.
    */
-  @Event() ionScrollStart!: EventEmitter<ScrollBaseDetail>;
+  @Event()
+  ionScrollStart!: EventEmitter<ScrollBaseDetail>;
 
   /**
    * Emitted while scrolling. This event is disabled by default.
    * Set `scrollEvents` to `true` to enable.
    */
-  @Event() ionScroll!: EventEmitter<ScrollDetail>;
+  @Event()
+  ionScroll!: EventEmitter<ScrollDetail>;
 
   /**
    * Emitted when the scroll has ended. This event is disabled by default.
    * Set `scrollEvents` to `true` to enable.
    */
-  @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
+  @Event()
+  ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
   connectedCallback() {
-    this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
+    this.isMainContent =
+      this.el.closest(
+        'ion-menu, ion-popover, ion-modal'
+      ) === null;
 
     /**
      * The fullscreen content offsets need to be
@@ -134,7 +173,9 @@ export class Content implements ComponentInterface {
        * be able to query for the closest tabs on disconnectedCallback
        * since the content has been removed from the DOM tree.
        */
-      const closestTabs = (this.tabsElement = this.el.closest('ion-tabs'));
+      const closestTabs =
+        (this.tabsElement =
+          this.el.closest('ion-tabs'));
       if (closestTabs !== null) {
         /**
          * When adding and removing the event listener
@@ -149,8 +190,12 @@ export class Content implements ComponentInterface {
          * bubbles, we can catch any instances of child tab bars loading by listening
          * on IonTabs.
          */
-        this.tabsLoadCallback = () => this.resize();
-        closestTabs.addEventListener('ionTabBarLoaded', this.tabsLoadCallback);
+        this.tabsLoadCallback = () =>
+          this.resize();
+        closestTabs.addEventListener(
+          'ionTabBarLoaded',
+          this.tabsLoadCallback
+        );
       }
     }
   }
@@ -165,9 +210,18 @@ export class Content implements ComponentInterface {
        * leak where the IonTabs instance can never be
        * garbage collected.
        */
-      const { tabsElement, tabsLoadCallback } = this;
-      if (tabsElement !== null && tabsLoadCallback !== undefined) {
-        tabsElement.removeEventListener('ionTabBarLoaded', tabsLoadCallback);
+      const {
+        tabsElement,
+        tabsLoadCallback,
+      } = this;
+      if (
+        tabsElement !== null &&
+        tabsLoadCallback !== undefined
+      ) {
+        tabsElement.removeEventListener(
+          'ionTabBarLoaded',
+          tabsLoadCallback
+        );
       }
 
       this.tabsElement = null;
@@ -192,32 +246,42 @@ export class Content implements ComponentInterface {
    * We also throttle the callback to minimize
    * thrashing when quickly resizing a window.
    */
-  @Listen('resize', { target: 'window' })
+  @Listen('resize', {
+    target: 'window',
+  })
   onResize() {
     if (this.resizeTimeout) {
       clearTimeout(this.resizeTimeout);
       this.resizeTimeout = null;
     }
 
-    this.resizeTimeout = setTimeout(() => {
-      /**
-       * Resize should only happen
-       * if the content is visible.
-       * When the content is hidden
-       * then offsetParent will be null.
-       */
-      if (this.el.offsetParent === null) {
-        return;
-      }
+    this.resizeTimeout = setTimeout(
+      () => {
+        /**
+         * Resize should only happen
+         * if the content is visible.
+         * When the content is hidden
+         * then offsetParent will be null.
+         */
+        if (
+          this.el.offsetParent === null
+        ) {
+          return;
+        }
 
-      this.resize();
-    }, 100);
+        this.resize();
+      },
+      100
+    );
   }
 
   private shouldForceOverscroll() {
     const { forceOverscroll } = this;
     const mode = getIonMode(this);
-    return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
+    return forceOverscroll === undefined
+      ? mode === 'ios' &&
+          isPlatform('ios')
+      : forceOverscroll;
   }
 
   private resize() {
@@ -231,8 +295,13 @@ export class Content implements ComponentInterface {
      */
     if (Build.isBrowser) {
       if (this.fullscreen) {
-        readTask(() => this.readDimensions());
-      } else if (this.cTop !== 0 || this.cBottom !== 0) {
+        readTask(() =>
+          this.readDimensions()
+        );
+      } else if (
+        this.cTop !== 0 ||
+        this.cBottom !== 0
+      ) {
         this.cTop = this.cBottom = 0;
         forceUpdate(this);
       }
@@ -240,10 +309,22 @@ export class Content implements ComponentInterface {
   }
 
   private readDimensions() {
-    const page = getPageElement(this.el);
-    const top = Math.max(this.el.offsetTop, 0);
-    const bottom = Math.max(page.offsetHeight - top - this.el.offsetHeight, 0);
-    const dirty = top !== this.cTop || bottom !== this.cBottom;
+    const page = getPageElement(
+      this.el
+    );
+    const top = Math.max(
+      this.el.offsetTop,
+      0
+    );
+    const bottom = Math.max(
+      page.offsetHeight -
+        top -
+        this.el.offsetHeight,
+      0
+    );
+    const dirty =
+      top !== this.cTop ||
+      bottom !== this.cBottom;
     if (dirty) {
       this.cTop = top;
       this.cBottom = bottom;
@@ -253,18 +334,29 @@ export class Content implements ComponentInterface {
 
   private onScroll(ev: UIEvent) {
     const timeStamp = Date.now();
-    const shouldStart = !this.isScrolling;
+    const shouldStart =
+      !this.isScrolling;
     this.lastScroll = timeStamp;
     if (shouldStart) {
       this.onScrollStart();
     }
-    if (!this.queued && this.scrollEvents) {
+    if (
+      !this.queued &&
+      this.scrollEvents
+    ) {
       this.queued = true;
       readTask((ts) => {
         this.queued = false;
         this.detail.event = ev;
-        updateScrollDetail(this.detail, this.scrollEl!, ts, shouldStart);
-        this.ionScroll.emit(this.detail);
+        updateScrollDetail(
+          this.detail,
+          this.scrollEl!,
+          ts,
+          shouldStart
+        );
+        this.ionScroll.emit(
+          this.detail
+        );
       });
     }
   }
@@ -284,10 +376,17 @@ export class Content implements ComponentInterface {
      * scrollEl won't be defined yet with the custom elements build, so wait for it to load in.
      */
     if (!this.scrollEl) {
-      await new Promise((resolve) => componentOnReady(this.el, resolve));
+      await new Promise((resolve) =>
+        componentOnReady(
+          this.el,
+          resolve
+        )
+      );
     }
 
-    return Promise.resolve(this.scrollEl!);
+    return Promise.resolve(
+      this.scrollEl!
+    );
   }
 
   /**
@@ -297,9 +396,16 @@ export class Content implements ComponentInterface {
   @Method()
   async getBackgroundElement(): Promise<HTMLElement> {
     if (!this.backgroundContentEl) {
-      await new Promise((resolve) => componentOnReady(this.el, resolve));
+      await new Promise((resolve) =>
+        componentOnReady(
+          this.el,
+          resolve
+        )
+      );
     }
-    return Promise.resolve(this.backgroundContentEl!);
+    return Promise.resolve(
+      this.backgroundContentEl!
+    );
   }
 
   /**
@@ -308,8 +414,14 @@ export class Content implements ComponentInterface {
    * @param duration The amount of time to take scrolling to the top. Defaults to `0`.
    */
   @Method()
-  scrollToTop(duration = 0): Promise<void> {
-    return this.scrollToPoint(undefined, 0, duration);
+  scrollToTop(
+    duration = 0
+  ): Promise<void> {
+    return this.scrollToPoint(
+      undefined,
+      0,
+      duration
+    );
   }
 
   /**
@@ -318,10 +430,19 @@ export class Content implements ComponentInterface {
    * @param duration The amount of time to take scrolling to the bottom. Defaults to `0`.
    */
   @Method()
-  async scrollToBottom(duration = 0): Promise<void> {
-    const scrollEl = await this.getScrollElement();
-    const y = scrollEl!.scrollHeight - scrollEl!.clientHeight;
-    return this.scrollToPoint(undefined, y, duration);
+  async scrollToBottom(
+    duration = 0
+  ): Promise<void> {
+    const scrollEl =
+      await this.getScrollElement();
+    const y =
+      scrollEl!.scrollHeight -
+      scrollEl!.clientHeight;
+    return this.scrollToPoint(
+      undefined,
+      y,
+      duration
+    );
   }
 
   /**
@@ -332,9 +453,18 @@ export class Content implements ComponentInterface {
    * @param duration The amount of time to take scrolling by that amount.
    */
   @Method()
-  async scrollByPoint(x: number, y: number, duration: number): Promise<void> {
-    const scrollEl = await this.getScrollElement();
-    return this.scrollToPoint(x + scrollEl!.scrollLeft, y + scrollEl!.scrollTop, duration);
+  async scrollByPoint(
+    x: number,
+    y: number,
+    duration: number
+  ): Promise<void> {
+    const scrollEl =
+      await this.getScrollElement();
+    return this.scrollToPoint(
+      x + scrollEl!.scrollLeft,
+      y + scrollEl!.scrollTop,
+      duration
+    );
   }
 
   /**
@@ -345,8 +475,13 @@ export class Content implements ComponentInterface {
    * @param duration The amount of time to take scrolling to that point. Defaults to `0`.
    */
   @Method()
-  async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {
-    const el = await this.getScrollElement();
+  async scrollToPoint(
+    x: number | undefined | null,
+    y: number | undefined | null,
+    duration = 0
+  ): Promise<void> {
+    const el =
+      await this.getScrollElement();
     if (duration < 32) {
       if (y != null) {
         el.scrollTop = y;
@@ -359,23 +494,39 @@ export class Content implements ComponentInterface {
 
     let resolve!: () => void;
     let startTime = 0;
-    const promise = new Promise<void>((r) => (resolve = r));
+    const promise = new Promise<void>(
+      (r) => (resolve = r)
+    );
     const fromY = el.scrollTop;
     const fromX = el.scrollLeft;
 
-    const deltaY = y != null ? y - fromY : 0;
-    const deltaX = x != null ? x - fromX : 0;
+    const deltaY =
+      y != null ? y - fromY : 0;
+    const deltaX =
+      x != null ? x - fromX : 0;
 
     // scroll loop
-    const step = (timeStamp: number) => {
-      const linearTime = Math.min(1, (timeStamp - startTime) / duration) - 1;
-      const easedT = Math.pow(linearTime, 3) + 1;
+    const step = (
+      timeStamp: number
+    ) => {
+      const linearTime =
+        Math.min(
+          1,
+          (timeStamp - startTime) /
+            duration
+        ) - 1;
+      const easedT =
+        Math.pow(linearTime, 3) + 1;
 
       if (deltaY !== 0) {
-        el.scrollTop = Math.floor(easedT * deltaY + fromY);
+        el.scrollTop = Math.floor(
+          easedT * deltaY + fromY
+        );
       }
       if (deltaX !== 0) {
-        el.scrollLeft = Math.floor(easedT * deltaX + fromX);
+        el.scrollLeft = Math.floor(
+          easedT * deltaX + fromX
+        );
       }
 
       if (easedT < 1) {
@@ -405,14 +556,18 @@ export class Content implements ComponentInterface {
     }
     // watchdog
     this.watchDog = setInterval(() => {
-      if (this.lastScroll < Date.now() - 120) {
+      if (
+        this.lastScroll <
+        Date.now() - 120
+      ) {
         this.onScrollEnd();
       }
     }, 100);
   }
 
   private onScrollEnd() {
-    if (this.watchDog) clearInterval(this.watchDog);
+    if (this.watchDog)
+      clearInterval(this.watchDog);
     this.watchDog = null;
     if (this.isScrolling) {
       this.isScrolling = false;
@@ -423,38 +578,74 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { isMainContent, scrollX, scrollY, el } = this;
-    const rtl = isRTL(el) ? 'rtl' : 'ltr';
+    const {
+      isMainContent,
+      scrollX,
+      scrollY,
+      el,
+    } = this;
+    const rtl = isRTL(el)
+      ? 'rtl'
+      : 'ltr';
     const mode = getIonMode(this);
-    const forceOverscroll = this.shouldForceOverscroll();
-    const transitionShadow = mode === 'ios';
-    const TagType = isMainContent ? 'main' : ('div' as any);
+    const forceOverscroll =
+      this.shouldForceOverscroll();
+    const transitionShadow =
+      mode === 'ios';
+    const TagType = isMainContent
+      ? 'main'
+      : ('div' as any);
 
     this.resize();
 
     return (
       <Host
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'content-sizing': hostContext('ion-popover', this.el),
-          overscroll: forceOverscroll,
-          [`content-${rtl}`]: true,
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'content-sizing':
+              hostContext(
+                'ion-popover',
+                this.el
+              ),
+            overscroll: forceOverscroll,
+            [`content-${rtl}`]: true,
+          }
+        )}
         style={{
           '--offset-top': `${this.cTop}px`,
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
+        <div
+          ref={(el) =>
+            (this.backgroundContentEl =
+              el)
+          }
+          id="background-content"
+          part="background"
+        ></div>
         <TagType
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
-            overscroll: (scrollX || scrollY) && forceOverscroll,
+            overscroll:
+              (scrollX || scrollY) &&
+              forceOverscroll,
           }}
-          ref={(scrollEl: HTMLElement) => (this.scrollEl = scrollEl!)}
-          onScroll={this.scrollEvents ? (ev: UIEvent) => this.onScroll(ev) : undefined}
+          ref={(
+            scrollEl: HTMLElement
+          ) =>
+            (this.scrollEl = scrollEl!)
+          }
+          onScroll={
+            this.scrollEvents
+              ? (ev: UIEvent) =>
+                  this.onScroll(ev)
+              : undefined
+          }
           part="scroll"
         >
           <slot></slot>
@@ -485,7 +676,9 @@ const getParentElement = (el: any) => {
   return null;
 };
 
-const getPageElement = (el: HTMLElement) => {
+const getPageElement = (
+  el: HTMLElement
+) => {
   const tabs = el.closest('ion-tabs');
   if (tabs) {
     return tabs;
@@ -496,7 +689,9 @@ const getPageElement = (el: HTMLElement) => {
    * between the popover and the edges of the screen. But if the popover contains
    * its own page element, we should use that instead.
    */
-  const page = el.closest('ion-app, ion-page, .ion-page, page-inner, .popover-content');
+  const page = el.closest(
+    'ion-app, ion-page, .ion-page, page-inner, .popover-content'
+  );
   if (page) {
     return page;
   }
@@ -505,7 +700,12 @@ const getPageElement = (el: HTMLElement) => {
 };
 
 // ******** DOM READ ****************
-const updateScrollDetail = (detail: ScrollDetail, el: Element, timestamp: number, shouldStart: boolean) => {
+const updateScrollDetail = (
+  detail: ScrollDetail,
+  el: Element,
+  timestamp: number,
+  shouldStart: boolean
+) => {
   const prevX = detail.currentX;
   const prevY = detail.currentY;
   const prevT = detail.currentTime;
@@ -518,18 +718,32 @@ const updateScrollDetail = (detail: ScrollDetail, el: Element, timestamp: number
     detail.startTime = timestamp;
     detail.startX = currentX;
     detail.startY = currentY;
-    detail.velocityX = detail.velocityY = 0;
+    detail.velocityX =
+      detail.velocityY = 0;
   }
   detail.currentTime = timestamp;
-  detail.currentX = detail.scrollLeft = currentX;
-  detail.currentY = detail.scrollTop = currentY;
-  detail.deltaX = currentX - detail.startX;
-  detail.deltaY = currentY - detail.startY;
+  detail.currentX = detail.scrollLeft =
+    currentX;
+  detail.currentY = detail.scrollTop =
+    currentY;
+  detail.deltaX =
+    currentX - detail.startX;
+  detail.deltaY =
+    currentY - detail.startY;
 
-  if (timeDelta > 0 && timeDelta < 100) {
-    const velocityX = (currentX - prevX) / timeDelta;
-    const velocityY = (currentY - prevY) / timeDelta;
-    detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
-    detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
+  if (
+    timeDelta > 0 &&
+    timeDelta < 100
+  ) {
+    const velocityX =
+      (currentX - prevX) / timeDelta;
+    const velocityY =
+      (currentY - prevY) / timeDelta;
+    detail.velocityX =
+      velocityX * 0.7 +
+      detail.velocityX * 0.3;
+    detail.velocityY =
+      velocityY * 0.7 +
+      detail.velocityY * 0.3;
   }
 };

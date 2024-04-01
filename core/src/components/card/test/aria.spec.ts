@@ -9,8 +9,13 @@ describe('card: button', () => {
       html: `<ion-card button="true" aria-label="Test"></ion-card>`,
     });
 
-    const button = page.body.querySelector('ion-card')!.shadowRoot!.querySelector('button')!;
-    const ariaLabel = button.getAttribute('aria-label');
+    const button = page.body
+      .querySelector('ion-card')!
+      .shadowRoot!.querySelector(
+        'button'
+      )!;
+    const ariaLabel =
+      button.getAttribute('aria-label');
 
     expect(ariaLabel).toEqual('Test');
   });

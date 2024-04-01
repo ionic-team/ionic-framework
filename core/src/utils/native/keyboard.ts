@@ -1,5 +1,8 @@
 import type { CapacitorException } from '@capacitor/core';
-import type { KeyboardPlugin, KeyboardResizeOptions } from '@capacitor/keyboard';
+import type {
+  KeyboardPlugin,
+  KeyboardResizeOptions,
+} from '@capacitor/keyboard';
 
 import { getCapacitor } from './capacitor';
 import { ExceptionCode } from './native-interface';
@@ -35,26 +38,42 @@ export enum KeyboardResize {
 }
 
 export const Keyboard = {
-  getEngine(): KeyboardPlugin | undefined {
+  getEngine():
+    | KeyboardPlugin
+    | undefined {
     const capacitor = getCapacitor();
 
-    if (capacitor?.isPluginAvailable('Keyboard')) {
-      return capacitor.Plugins.Keyboard as KeyboardPlugin;
+    if (
+      capacitor?.isPluginAvailable(
+        'Keyboard'
+      )
+    ) {
+      return capacitor.Plugins
+        .Keyboard as KeyboardPlugin;
     }
     return undefined;
   },
-  getResizeMode(): Promise<KeyboardResizeOptions | undefined> {
+  getResizeMode(): Promise<
+    KeyboardResizeOptions | undefined
+  > {
     const engine = this.getEngine();
     if (!engine?.getResizeMode) {
       return Promise.resolve(undefined);
     }
-    return engine.getResizeMode().catch((e: CapacitorException) => {
-      if (e.code === ExceptionCode.Unimplemented) {
-        // If the native implementation is not available
-        // we treat it the same as if the plugin is not available.
-        return undefined;
-      }
-      throw e;
-    });
+    return engine
+      .getResizeMode()
+      .catch(
+        (e: CapacitorException) => {
+          if (
+            e.code ===
+            ExceptionCode.Unimplemented
+          ) {
+            // If the native implementation is not available
+            // we treat it the same as if the plugin is not available.
+            return undefined;
+          }
+          throw e;
+        }
+      );
   },
 };

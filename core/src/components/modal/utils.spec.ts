@@ -6,6 +6,11 @@ describe('getBackdropValueForSheet()', () => {
      * Issue: https://github.com/ionic-team/ionic-framework/issues/25402
      */
     const backdropBreakpoint = 1;
-    expect(getBackdropValueForSheet(1, backdropBreakpoint)).toBe(0);
+    expect(
+      getBackdropValueForSheet(
+        1,
+        backdropBreakpoint
+      )
+    ).toBe(0);
   });
 });

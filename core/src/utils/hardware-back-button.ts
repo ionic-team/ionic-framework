@@ -4,13 +4,21 @@ import type { CloseWatcher } from '@utils/browser';
 import { config } from '../global/config';
 
 // TODO(FW-2832): type
-type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
+type Handler = (
+  processNextHandler: () => void
+) => Promise<any> | void | null;
 
 export interface BackButtonEventDetail {
-  register(priority: number, handler: (processNextHandler: () => void) => Promise<any> | void): void;
+  register(
+    priority: number,
+    handler: (
+      processNextHandler: () => void
+    ) => Promise<any> | void
+  ): void;
 }
 
-export type BackButtonEvent = CustomEvent<BackButtonEventDetail>;
+export type BackButtonEvent =
+  CustomEvent<BackButtonEventDetail>;
 
 interface HandlerRegister {
   priority: number;
@@ -30,8 +38,14 @@ interface HandlerRegister {
  * moment this file is evaluated which could be
  * before the config is set.
  */
-export const shouldUseCloseWatcher = () =>
-  config.get('experimentalCloseWatcher', false) && win !== undefined && 'CloseWatcher' in win;
+export const shouldUseCloseWatcher =
+  () =>
+    config.get(
+      'experimentalCloseWatcher',
+      false
+    ) &&
+    win !== undefined &&
+    'CloseWatcher' in win;
 
 /**
  * When hardwareBackButton: false in config,
@@ -43,97 +57,143 @@ export const shouldUseCloseWatcher = () =>
  * config is not working as the page transition
  * will still happen.
  */
-export const blockHardwareBackButton = () => {
-  document.addEventListener('backbutton', () => {}); // eslint-disable-line
-};
-
-export const startHardwareBackButton = () => {
-  const doc = document;
-  let busy = false;
-
-  const backButtonCallback = () => {
-    if (busy) {
-      return;
-    }
-
-    let index = 0;
-    let handlers: HandlerRegister[] = [];
-    const ev: BackButtonEvent = new CustomEvent('ionBackButton', {
-      bubbles: false,
-      detail: {
-        register(priority: number, handler: Handler) {
-          handlers.push({ priority, handler, id: index++ });
-        },
-      },
-    });
-    doc.dispatchEvent(ev);
-
-    const executeAction = async (handlerRegister: HandlerRegister | undefined) => {
-      try {
-        if (handlerRegister?.handler) {
-          const result = handlerRegister.handler(processHandlers);
-          if (result != null) {
-            await result;
-          }
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    const processHandlers = () => {
-      if (handlers.length > 0) {
-        let selectedHandler: HandlerRegister = {
-          priority: Number.MIN_SAFE_INTEGER,
-          handler: () => undefined,
-          id: -1,
-        };
-        handlers.forEach((handler) => {
-          if (handler.priority >= selectedHandler.priority) {
-            selectedHandler = handler;
-          }
-        });
-
-        busy = true;
-        handlers = handlers.filter((handler) => handler.id !== selectedHandler.id);
-        executeAction(selectedHandler).then(() => (busy = false));
-      }
-    };
-
-    processHandlers();
+export const blockHardwareBackButton =
+  () => {
+    document.addEventListener(
+      'backbutton',
+      () => {}
+    ); // eslint-disable-line
   };
 
-  /**
-   * If the CloseWatcher is defined then
-   * we don't want to also listen for the native
-   * backbutton event otherwise we may get duplicate
-   * events firing.
-   */
-  if (shouldUseCloseWatcher()) {
-    let watcher: CloseWatcher | undefined;
+export const startHardwareBackButton =
+  () => {
+    const doc = document;
+    let busy = false;
 
-    const configureWatcher = () => {
-      watcher?.destroy();
-      watcher = new win!.CloseWatcher!();
+    const backButtonCallback = () => {
+      if (busy) {
+        return;
+      }
 
-      /**
-       * Once a close request happens
-       * the watcher gets destroyed.
-       * As a result, we need to re-configure
-       * the watcher so we can respond to other
-       * close requests.
-       */
-      watcher!.onclose = () => {
-        backButtonCallback();
-        configureWatcher();
+      let index = 0;
+      let handlers: HandlerRegister[] =
+        [];
+      const ev: BackButtonEvent =
+        new CustomEvent(
+          'ionBackButton',
+          {
+            bubbles: false,
+            detail: {
+              register(
+                priority: number,
+                handler: Handler
+              ) {
+                handlers.push({
+                  priority,
+                  handler,
+                  id: index++,
+                });
+              },
+            },
+          }
+        );
+      doc.dispatchEvent(ev);
+
+      const executeAction = async (
+        handlerRegister:
+          | HandlerRegister
+          | undefined
+      ) => {
+        try {
+          if (
+            handlerRegister?.handler
+          ) {
+            const result =
+              handlerRegister.handler(
+                processHandlers
+              );
+            if (result != null) {
+              await result;
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
       };
+
+      const processHandlers = () => {
+        if (handlers.length > 0) {
+          let selectedHandler: HandlerRegister =
+            {
+              priority:
+                Number.MIN_SAFE_INTEGER,
+              handler: () => undefined,
+              id: -1,
+            };
+          handlers.forEach(
+            (handler) => {
+              if (
+                handler.priority >=
+                selectedHandler.priority
+              ) {
+                selectedHandler =
+                  handler;
+              }
+            }
+          );
+
+          busy = true;
+          handlers = handlers.filter(
+            (handler) =>
+              handler.id !==
+              selectedHandler.id
+          );
+          executeAction(
+            selectedHandler
+          ).then(() => (busy = false));
+        }
+      };
+
+      processHandlers();
     };
 
-    configureWatcher();
-  } else {
-    doc.addEventListener('backbutton', backButtonCallback);
-  }
-};
+    /**
+     * If the CloseWatcher is defined then
+     * we don't want to also listen for the native
+     * backbutton event otherwise we may get duplicate
+     * events firing.
+     */
+    if (shouldUseCloseWatcher()) {
+      let watcher:
+        | CloseWatcher
+        | undefined;
+
+      const configureWatcher = () => {
+        watcher?.destroy();
+        watcher =
+          new win!.CloseWatcher!();
+
+        /**
+         * Once a close request happens
+         * the watcher gets destroyed.
+         * As a result, we need to re-configure
+         * the watcher so we can respond to other
+         * close requests.
+         */
+        watcher!.onclose = () => {
+          backButtonCallback();
+          configureWatcher();
+        };
+      };
+
+      configureWatcher();
+    } else {
+      doc.addEventListener(
+        'backbutton',
+        backButtonCallback
+      );
+    }
+  };
 
 export const OVERLAY_BACK_BUTTON_PRIORITY = 100;
 export const MENU_BACK_BUTTON_PRIORITY = 99; // 1 less than overlay priority since menu is displayed behind overlays

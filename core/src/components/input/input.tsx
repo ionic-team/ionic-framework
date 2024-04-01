@@ -1,7 +1,28 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import type { LegacyFormController, NotchController } from '@utils/forms';
-import { createLegacyFormController, createNotchController } from '@utils/forms';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Method,
+  Prop,
+  State,
+  Watch,
+  forceUpdate,
+  h,
+} from '@stencil/core';
+import type {
+  LegacyFormController,
+  NotchController,
+} from '@utils/forms';
+import {
+  createLegacyFormController,
+  createNotchController,
+} from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import {
   inheritAriaAttributes,
@@ -13,13 +34,27 @@ import {
 import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
-import { createColorClasses, hostContext } from '@utils/theme';
-import { closeCircle, closeSharp } from 'ionicons/icons';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
+import {
+  closeCircle,
+  closeSharp,
+} from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
+import type {
+  AutocompleteTypes,
+  Color,
+  StyleEventDetail,
+  TextFieldTypes,
+} from '../../interface';
 
-import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
+import type {
+  InputChangeEventDetail,
+  InputInputEventDetail,
+} from './input-interface';
 import { getCounterText } from './input.utils';
 
 /**
@@ -37,18 +72,24 @@ import { getCounterText } from './input.utils';
   },
   scoped: true,
 })
-export class Input implements ComponentInterface {
+export class Input
+  implements ComponentInterface
+{
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
-  private inheritedAttributes: Attributes = {};
+  private inheritedAttributes: Attributes =
+    {};
   private isComposing = false;
   private legacyFormController!: LegacyFormController;
   private slotMutationController?: SlotMutationController;
   private notchController?: NotchController;
-  private notchSpacerEl: HTMLElement | undefined;
+  private notchSpacerEl:
+    | HTMLElement
+    | undefined;
 
   // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
+  private hasLoggedDeprecationWarning =
+    false;
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
   /**
@@ -61,7 +102,10 @@ export class Input implements ComponentInterface {
   /**
    * The value of the input when the input is focused.
    */
-  private focusedValue?: string | number | null;
+  private focusedValue?:
+    | string
+    | number
+    | null;
 
   @State() hasFocus = false;
 
@@ -72,7 +116,8 @@ export class Input implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * This attribute is ignored.
@@ -89,12 +134,15 @@ export class Input implements ComponentInterface {
   /**
    * Indicates whether the value of the control can be automatically completed by the browser.
    */
-  @Prop() autocomplete: AutocompleteTypes = 'off';
+  @Prop()
+  autocomplete: AutocompleteTypes =
+    'off';
 
   /**
    * Whether auto correction should be enabled when the user is entering/editing the text value.
    */
-  @Prop() autocorrect: 'on' | 'off' = 'off';
+  @Prop() autocorrect: 'on' | 'off' =
+    'off';
 
   /**
    * Sets the [`autofocus` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus) on the native input element.
@@ -125,7 +173,10 @@ export class Input implements ComponentInterface {
    * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
    * if you need to access `this` from within the callback.
    */
-  @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
+  @Prop() counterFormatter?: (
+    inputLength: number,
+    maxLength: number
+  ) => string;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
@@ -134,13 +185,23 @@ export class Input implements ComponentInterface {
 
   @Watch('debounce')
   protected debounceChanged() {
-    const { ionInput, debounce, originalIonInput } = this;
+    const {
+      ionInput,
+      debounce,
+      originalIonInput,
+    } = this;
 
     /**
      * If debounce is undefined, we have to manually revert the ionInput emitter in case
      * debounce used to be set to a number. Otherwise, the event would stay debounced.
      */
-    this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
+    this.ionInput =
+      debounce === undefined
+        ? originalIonInput ?? ionInput
+        : debounceEvent(
+            ionInput,
+            debounce
+          );
   }
 
   /**
@@ -158,7 +219,14 @@ export class Input implements ComponentInterface {
    * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
    * `"previous"`, `"search"`, and `"send"`.
    */
-  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+  @Prop() enterkeyhint?:
+    | 'enter'
+    | 'done'
+    | 'go'
+    | 'next'
+    | 'previous'
+    | 'search'
+    | 'send';
 
   /**
    * Text that is placed under the input and displayed when an error is detected.
@@ -176,7 +244,15 @@ export class Input implements ComponentInterface {
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
-  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+  @Prop() inputmode?:
+    | 'none'
+    | 'text'
+    | 'tel'
+    | 'url'
+    | 'email'
+    | 'numeric'
+    | 'decimal'
+    | 'search';
 
   /**
    * Text that is placed under the input and displayed when no error is detected.
@@ -200,7 +276,12 @@ export class Input implements ComponentInterface {
    * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+  @Prop() labelPlacement:
+    | 'start'
+    | 'end'
+    | 'floating'
+    | 'stacked'
+    | 'fixed' = 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -292,7 +373,10 @@ export class Input implements ComponentInterface {
   /**
    * The value of the input.
    */
-  @Prop({ mutable: true }) value?: string | number | null = '';
+  @Prop({ mutable: true }) value?:
+    | string
+    | number
+    | null = '';
 
   /**
    * The `ionInput` event is fired each time the user modifies the input's value.
@@ -304,7 +388,8 @@ export class Input implements ComponentInterface {
    * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
    * the input is cleared on edit, the type is `null`.
    */
-  @Event() ionInput!: EventEmitter<InputInputEventDetail>;
+  @Event()
+  ionInput!: EventEmitter<InputInputEventDetail>;
 
   /**
    * The `ionChange` event is fired when the user modifies the input's value.
@@ -318,23 +403,27 @@ export class Input implements ComponentInterface {
    * - When the element loses focus after its value has changed: for elements
    * where the user's interaction is typing.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
+  @Event()
+  ionChange!: EventEmitter<InputChangeEventDetail>;
 
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<FocusEvent>;
+  @Event()
+  ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<FocusEvent>;
+  @Event()
+  ionFocus!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Update the item classes when the placeholder changes
@@ -349,9 +438,14 @@ export class Input implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    const nativeInput = this.nativeInput;
+    const nativeInput =
+      this.nativeInput;
     const value = this.getValue();
-    if (nativeInput && nativeInput.value !== value && !this.isComposing) {
+    if (
+      nativeInput &&
+      nativeInput.value !== value &&
+      !this.isComposing
+    ) {
       /**
        * Assigning the native input's value on attribute
        * value change, allows `ionInput` implementations
@@ -368,34 +462,49 @@ export class Input implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
+      ...inheritAttributes(this.el, [
+        'tabindex',
+        'title',
+        'data-form-type',
+      ]),
     };
   }
 
   connectedCallback() {
     const { el } = this;
 
-    this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
-    this.notchController = createNotchController(
-      el,
-      () => this.notchSpacerEl,
-      () => this.labelSlot
-    );
+    this.legacyFormController =
+      createLegacyFormController(el);
+    this.slotMutationController =
+      createSlotMutationController(
+        el,
+        ['label', 'start', 'end'],
+        () => forceUpdate(this)
+      );
+    this.notchController =
+      createNotchController(
+        el,
+        () => this.notchSpacerEl,
+        () => this.labelSlot
+      );
 
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
       document.dispatchEvent(
-        new CustomEvent('ionInputDidLoad', {
-          detail: this.el,
-        })
+        new CustomEvent(
+          'ionInputDidLoad',
+          {
+            detail: this.el,
+          }
+        )
       );
     }
   }
 
   componentDidLoad() {
-    this.originalIonInput = this.ionInput;
+    this.originalIonInput =
+      this.ionInput;
   }
 
   componentDidRender() {
@@ -405,15 +514,19 @@ export class Input implements ComponentInterface {
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(
-        new CustomEvent('ionInputDidUnload', {
-          detail: this.el,
-        })
+        new CustomEvent(
+          'ionInputDidUnload',
+          {
+            detail: this.el,
+          }
+        )
       );
     }
 
     if (this.slotMutationController) {
       this.slotMutationController.destroy();
-      this.slotMutationController = undefined;
+      this.slotMutationController =
+        undefined;
     }
 
     if (this.notchController) {
@@ -451,9 +564,16 @@ export class Input implements ComponentInterface {
      * nativeInput won't be defined yet with the custom elements build, so wait for it to load in.
      */
     if (!this.nativeInput) {
-      await new Promise((resolve) => componentOnReady(this.el, resolve));
+      await new Promise((resolve) =>
+        componentOnReady(
+          this.el,
+          resolve
+        )
+      );
     }
-    return Promise.resolve(this.nativeInput!);
+    return Promise.resolve(
+      this.nativeInput!
+    );
   }
 
   /**
@@ -462,53 +582,82 @@ export class Input implements ComponentInterface {
    * This API should be called for user committed changes.
    * This API should not be used for external value changes.
    */
-  private emitValueChange(event?: Event) {
+  private emitValueChange(
+    event?: Event
+  ) {
     const { value } = this;
     // Checks for both null and undefined values
-    const newValue = value == null ? value : value.toString();
+    const newValue =
+      value == null
+        ? value
+        : value.toString();
     // Emitting a value change should update the internal state for tracking the focused value
     this.focusedValue = newValue;
-    this.ionChange.emit({ value: newValue, event });
+    this.ionChange.emit({
+      value: newValue,
+      event,
+    });
   }
 
   /**
    * Emits an `ionInput` event.
    */
-  private emitInputChange(event?: Event) {
+  private emitInputChange(
+    event?: Event
+  ) {
     const { value } = this;
 
     // Checks for both null and undefined values
-    const newValue = value == null ? value : value.toString();
+    const newValue =
+      value == null
+        ? value
+        : value.toString();
 
-    this.ionInput.emit({ value: newValue, event });
+    this.ionInput.emit({
+      value: newValue,
+      event,
+    });
   }
 
   private shouldClearOnEdit() {
     const { type, clearOnEdit } = this;
-    return clearOnEdit === undefined ? type === 'password' : clearOnEdit;
+    return clearOnEdit === undefined
+      ? type === 'password'
+      : clearOnEdit;
   }
 
   private getValue(): string {
-    return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
+    return typeof this.value ===
+      'number'
+      ? this.value.toString()
+      : (this.value || '').toString();
   }
 
   private emitStyle() {
-    if (this.legacyFormController.hasLegacyControl()) {
+    if (
+      this.legacyFormController.hasLegacyControl()
+    ) {
       this.ionStyle.emit({
         interactive: true,
         input: true,
-        'has-placeholder': this.placeholder !== undefined,
+        'has-placeholder':
+          this.placeholder !==
+          undefined,
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus,
-        'interactive-disabled': this.disabled,
+        'interactive-disabled':
+          this.disabled,
         // TODO(FW-2764): remove this
         legacy: !!this.legacy,
       });
     }
   }
 
-  private onInput = (ev: InputEvent | Event) => {
-    const input = ev.target as HTMLInputElement | null;
+  private onInput = (
+    ev: InputEvent | Event
+  ) => {
+    const input =
+      ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value || '';
     }
@@ -523,7 +672,9 @@ export class Input implements ComponentInterface {
     this.hasFocus = false;
     this.emitStyle();
 
-    if (this.focusedValue !== this.value) {
+    if (
+      this.focusedValue !== this.value
+    ) {
       /**
        * Emits the `ionChange` event when the input value
        * is different than the value when the input was focused.
@@ -536,7 +687,9 @@ export class Input implements ComponentInterface {
     this.ionBlur.emit(ev);
   };
 
-  private onFocus = (ev: FocusEvent) => {
+  private onFocus = (
+    ev: FocusEvent
+  ) => {
     this.hasFocus = true;
     this.focusedValue = this.value;
     this.emitStyle();
@@ -544,11 +697,15 @@ export class Input implements ComponentInterface {
     this.ionFocus.emit(ev);
   };
 
-  private onKeydown = (ev: KeyboardEvent) => {
+  private onKeydown = (
+    ev: KeyboardEvent
+  ) => {
     this.checkClearOnEdit(ev);
   };
 
-  private checkClearOnEdit(ev: KeyboardEvent) {
+  private checkClearOnEdit(
+    ev: KeyboardEvent
+  ) {
     if (!this.shouldClearOnEdit()) {
       return;
     }
@@ -563,14 +720,26 @@ export class Input implements ComponentInterface {
      * in a keydown listener, and the key has not yet
      * been added to the input.
      */
-    const IGNORED_KEYS = ['Enter', 'Tab', 'Shift', 'Meta', 'Alt', 'Control'];
-    const pressedIgnoredKey = IGNORED_KEYS.includes(ev.key);
+    const IGNORED_KEYS = [
+      'Enter',
+      'Tab',
+      'Shift',
+      'Meta',
+      'Alt',
+      'Control',
+    ];
+    const pressedIgnoredKey =
+      IGNORED_KEYS.includes(ev.key);
 
     /**
      * Clear the input if the control has not been previously cleared during focus.
      * Do not clear if the user hitting enter to submit a form.
      */
-    if (!this.didInputClearOnEdit && this.hasValue() && !pressedIgnoredKey) {
+    if (
+      !this.didInputClearOnEdit &&
+      this.hasValue() &&
+      !pressedIgnoredKey
+    ) {
       this.value = '';
       this.emitInputChange(ev);
     }
@@ -593,8 +762,15 @@ export class Input implements ComponentInterface {
     this.isComposing = false;
   };
 
-  private clearTextInput = (ev?: Event) => {
-    if (this.clearInput && !this.readonly && !this.disabled && ev) {
+  private clearTextInput = (
+    ev?: Event
+  ) => {
+    if (
+      this.clearInput &&
+      !this.readonly &&
+      !this.disabled &&
+      ev
+    ) {
       ev.preventDefault();
       ev.stopPropagation();
       // Attempt to focus input again after pressing clear button
@@ -612,18 +788,42 @@ export class Input implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText } = this;
+    const { helperText, errorText } =
+      this;
 
-    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+    return [
+      <div class="helper-text">
+        {helperText}
+      </div>,
+      <div class="error-text">
+        {errorText}
+      </div>,
+    ];
   }
 
   private renderCounter() {
-    const { counter, maxlength, counterFormatter, value } = this;
-    if (counter !== true || maxlength === undefined) {
+    const {
+      counter,
+      maxlength,
+      counterFormatter,
+      value,
+    } = this;
+    if (
+      counter !== true ||
+      maxlength === undefined
+    ) {
       return;
     }
 
-    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
+    return (
+      <div class="counter">
+        {getCounterText(
+          value,
+          maxlength,
+          counterFormatter
+        )}
+      </div>
+    );
   }
 
   /**
@@ -632,14 +832,22 @@ export class Input implements ComponentInterface {
    * be rendered if hint text is set or counter is enabled.
    */
   private renderBottomContent() {
-    const { counter, helperText, errorText, maxlength } = this;
+    const {
+      counter,
+      helperText,
+      errorText,
+      maxlength,
+    } = this;
 
     /**
      * undefined and empty string values should
      * be treated as not having helper/error text.
      */
-    const hasHintText = !!helperText || !!errorText;
-    const hasCounter = counter === true && maxlength !== undefined;
+    const hasHintText =
+      !!helperText || !!errorText;
+    const hasCounter =
+      counter === true &&
+      maxlength !== undefined;
     if (!hasHintText && !hasCounter) {
       return;
     }
@@ -659,10 +867,17 @@ export class Input implements ComponentInterface {
       <div
         class={{
           'label-text-wrapper': true,
-          'label-text-wrapper-hidden': !this.hasLabel,
+          'label-text-wrapper-hidden':
+            !this.hasLabel,
         }}
       >
-        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
+        {label === undefined ? (
+          <slot name="label"></slot>
+        ) : (
+          <div class="label-text">
+            {label}
+          </div>
+        )}
       </div>
     );
   }
@@ -672,7 +887,9 @@ export class Input implements ComponentInterface {
    * not the <slot> definition.
    */
   private get labelSlot() {
-    return this.el.querySelector('[slot="label"]');
+    return this.el.querySelector(
+      '[slot="label"]'
+    );
   }
 
   /**
@@ -682,7 +899,10 @@ export class Input implements ComponentInterface {
    * the `labelText` getter instead.
    */
   private get hasLabel() {
-    return this.label !== undefined || this.labelSlot !== null;
+    return (
+      this.label !== undefined ||
+      this.labelSlot !== null
+    );
   }
 
   /**
@@ -691,7 +911,9 @@ export class Input implements ComponentInterface {
    */
   private renderLabelContainer() {
     const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const hasOutlineFill =
+      mode === 'md' &&
+      this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -706,11 +928,20 @@ export class Input implements ComponentInterface {
           <div class="input-outline-start"></div>
           <div
             class={{
-              'input-outline-notch': true,
-              'input-outline-notch-hidden': !this.hasLabel,
+              'input-outline-notch':
+                true,
+              'input-outline-notch-hidden':
+                !this.hasLabel,
             }}
           >
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+            <div
+              class="notch-spacer"
+              aria-hidden="true"
+              ref={(el) =>
+                (this.notchSpacerEl =
+                  el)
+              }
+            >
               {this.label}
             </div>
           </div>
@@ -728,14 +959,32 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const {
+      disabled,
+      fill,
+      readonly,
+      shape,
+      inputId,
+      labelPlacement,
+      el,
+      hasFocus,
+    } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
-    const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const inItem = hostContext(
+      'ion-item',
+      this.el
+    );
+    const shouldRenderHighlight =
+      mode === 'md' &&
+      fill !== 'outline' &&
+      !inItem;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+    const hasStartEndSlots =
+      el.querySelector(
+        '[slot="start"], [slot="end"]'
+      ) !== null;
 
     /**
      * If the label is stacked, it should always sit above the input.
@@ -755,22 +1004,37 @@ export class Input implements ComponentInterface {
      * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+      labelPlacement === 'stacked' ||
+      (labelPlacement === 'floating' &&
+        (hasValue ||
+          hasFocus ||
+          hasStartEndSlots));
 
     return (
       <Host
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'has-value': hasValue,
-          'has-focus': hasFocus,
-          'label-floating': labelShouldFloat,
-          [`input-fill-${fill}`]: fill !== undefined,
-          [`input-shape-${shape}`]: shape !== undefined,
-          [`input-label-placement-${labelPlacement}`]: true,
-          'in-item': inItem,
-          'in-item-color': hostContext('ion-item.ion-color', this.el),
-          'input-disabled': disabled,
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'has-value': hasValue,
+            'has-focus': hasFocus,
+            'label-floating':
+              labelShouldFloat,
+            [`input-fill-${fill}`]:
+              fill !== undefined,
+            [`input-shape-${shape}`]:
+              shape !== undefined,
+            [`input-label-placement-${labelPlacement}`]:
+              true,
+            'in-item': inItem,
+            'in-item-color':
+              hostContext(
+                'ion-item.ion-color',
+                this.el
+              ),
+            'input-disabled': disabled,
+          }
+        )}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -778,21 +1042,35 @@ export class Input implements ComponentInterface {
          * interactable, clicking the label would focus that instead
          * since it comes before the input in the DOM.
          */}
-        <label class="input-wrapper" htmlFor={inputId}>
+        <label
+          class="input-wrapper"
+          htmlFor={inputId}
+        >
           {this.renderLabelContainer()}
           <div class="native-wrapper">
             <slot name="start"></slot>
             <input
               class="native-input"
-              ref={(input) => (this.nativeInput = input)}
+              ref={(input) =>
+                (this.nativeInput =
+                  input)
+              }
               id={inputId}
               disabled={disabled}
               accept={this.accept}
-              autoCapitalize={this.autocapitalize}
-              autoComplete={this.autocomplete}
-              autoCorrect={this.autocorrect}
+              autoCapitalize={
+                this.autocapitalize
+              }
+              autoComplete={
+                this.autocomplete
+              }
+              autoCorrect={
+                this.autocorrect
+              }
               autoFocus={this.autofocus}
-              enterKeyHint={this.enterkeyhint}
+              enterKeyHint={
+                this.enterkeyhint
+              }
               inputMode={this.inputmode}
               min={this.min}
               max={this.max}
@@ -801,10 +1079,14 @@ export class Input implements ComponentInterface {
               multiple={this.multiple}
               name={this.name}
               pattern={this.pattern}
-              placeholder={this.placeholder || ''}
+              placeholder={
+                this.placeholder || ''
+              }
               readOnly={readonly}
               required={this.required}
-              spellcheck={this.spellcheck}
+              spellcheck={
+                this.spellcheck
+              }
               step={this.step}
               size={this.size}
               type={this.type}
@@ -814,31 +1096,51 @@ export class Input implements ComponentInterface {
               onBlur={this.onBlur}
               onFocus={this.onFocus}
               onKeyDown={this.onKeydown}
-              onCompositionstart={this.onCompositionStart}
-              onCompositionend={this.onCompositionEnd}
-              {...this.inheritedAttributes}
+              onCompositionstart={
+                this.onCompositionStart
+              }
+              onCompositionend={
+                this.onCompositionEnd
+              }
+              {...this
+                .inheritedAttributes}
             />
-            {this.clearInput && !readonly && !disabled && (
-              <button
-                aria-label="reset"
-                type="button"
-                class="input-clear-icon"
-                onPointerDown={(ev) => {
-                  /**
-                   * This prevents mobile browsers from
-                   * blurring the input when the clear
-                   * button is activated.
-                   */
-                  ev.preventDefault();
-                }}
-                onClick={this.clearTextInput}
-              >
-                <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
-              </button>
-            )}
+            {this.clearInput &&
+              !readonly &&
+              !disabled && (
+                <button
+                  aria-label="reset"
+                  type="button"
+                  class="input-clear-icon"
+                  onPointerDown={(
+                    ev
+                  ) => {
+                    /**
+                     * This prevents mobile browsers from
+                     * blurring the input when the clear
+                     * button is activated.
+                     */
+                    ev.preventDefault();
+                  }}
+                  onClick={
+                    this.clearTextInput
+                  }
+                >
+                  <ion-icon
+                    aria-hidden="true"
+                    icon={
+                      mode === 'ios'
+                        ? closeCircle
+                        : closeSharp
+                    }
+                  ></ion-icon>
+                </button>
+              )}
             <slot name="end"></slot>
           </div>
-          {shouldRenderHighlight && <div class="input-highlight"></div>}
+          {shouldRenderHighlight && (
+            <div class="input-highlight"></div>
+          )}
         </label>
         {this.renderBottomContent()}
       </Host>
@@ -847,7 +1149,9 @@ export class Input implements ComponentInterface {
 
   // TODO FW-2764 Remove this
   private renderLegacyInput() {
-    if (!this.hasLoggedDeprecationWarning) {
+    if (
+      !this.hasLoggedDeprecationWarning
+    ) {
       printIonWarning(
         `ion-input now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
@@ -869,39 +1173,63 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         );
       }
 
-      this.hasLoggedDeprecationWarning = true;
+      this.hasLoggedDeprecationWarning =
+        true;
     }
 
     const mode = getIonMode(this);
     const value = this.getValue();
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
+    const labelId =
+      this.inputId + '-lbl';
+    const label = findItemLabel(
+      this.el
+    );
     if (label) {
       label.id = labelId;
     }
 
     return (
       <Host
-        aria-disabled={this.disabled ? 'true' : null}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
-          'legacy-input': true,
-          'in-item-color': hostContext('ion-item.ion-color', this.el),
-        })}
+        aria-disabled={
+          this.disabled ? 'true' : null
+        }
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'has-value':
+              this.hasValue(),
+            'has-focus': this.hasFocus,
+            'legacy-input': true,
+            'in-item-color':
+              hostContext(
+                'ion-item.ion-color',
+                this.el
+              ),
+          }
+        )}
       >
         <input
           class="native-input"
-          ref={(input) => (this.nativeInput = input)}
-          aria-labelledby={label ? label.id : null}
+          ref={(input) =>
+            (this.nativeInput = input)
+          }
+          aria-labelledby={
+            label ? label.id : null
+          }
           disabled={this.disabled}
           accept={this.accept}
-          autoCapitalize={this.autocapitalize}
-          autoComplete={this.autocomplete}
+          autoCapitalize={
+            this.autocapitalize
+          }
+          autoComplete={
+            this.autocomplete
+          }
           autoCorrect={this.autocorrect}
           autoFocus={this.autofocus}
-          enterKeyHint={this.enterkeyhint}
+          enterKeyHint={
+            this.enterkeyhint
+          }
           inputMode={this.inputmode}
           min={this.min}
           max={this.max}
@@ -910,7 +1238,9 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           multiple={this.multiple}
           name={this.name}
           pattern={this.pattern}
-          placeholder={this.placeholder || ''}
+          placeholder={
+            this.placeholder || ''
+          }
           readOnly={this.readonly}
           required={this.required}
           spellcheck={this.spellcheck}
@@ -925,32 +1255,46 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           onKeyDown={this.onKeydown}
           {...this.inheritedAttributes}
         />
-        {this.clearInput && !this.readonly && !this.disabled && (
-          <button
-            aria-label="reset"
-            type="button"
-            class="input-clear-icon"
-            onPointerDown={(ev) => {
-              /**
-               * This prevents mobile browsers from
-               * blurring the input when the clear
-               * button is activated.
-               */
-              ev.preventDefault();
-            }}
-            onClick={this.clearTextInput}
-          >
-            <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
-          </button>
-        )}
+        {this.clearInput &&
+          !this.readonly &&
+          !this.disabled && (
+            <button
+              aria-label="reset"
+              type="button"
+              class="input-clear-icon"
+              onPointerDown={(ev) => {
+                /**
+                 * This prevents mobile browsers from
+                 * blurring the input when the clear
+                 * button is activated.
+                 */
+                ev.preventDefault();
+              }}
+              onClick={
+                this.clearTextInput
+              }
+            >
+              <ion-icon
+                aria-hidden="true"
+                icon={
+                  mode === 'ios'
+                    ? closeCircle
+                    : closeSharp
+                }
+              ></ion-icon>
+            </button>
+          )}
       </Host>
     );
   }
 
   render() {
-    const { legacyFormController } = this;
+    const { legacyFormController } =
+      this;
 
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyInput() : this.renderInput();
+    return legacyFormController.hasLegacyControl()
+      ? this.renderLegacyInput()
+      : this.renderInput();
   }
 }
 

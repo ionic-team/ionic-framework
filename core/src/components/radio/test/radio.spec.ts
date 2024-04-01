@@ -9,7 +9,9 @@ describe('ion-radio', () => {
 
     await radio.connectedCallback();
 
-    expect(radio.value).toEqual('ion-rb-0');
+    expect(radio.value).toEqual(
+      'ion-rb-0'
+    );
   });
 
   it('should update the checked state when updating the value', async () => {
@@ -22,14 +24,25 @@ describe('ion-radio', () => {
       `,
     });
 
-    const radio = page.body.querySelector('ion-radio')!;
-    expect(radio.classList.contains('radio-checked')).toBe(false);
+    const radio =
+      page.body.querySelector(
+        'ion-radio'
+      )!;
+    expect(
+      radio.classList.contains(
+        'radio-checked'
+      )
+    ).toBe(false);
 
     radio.value = 'a';
 
     await page.waitForChanges();
 
-    expect(radio.classList.contains('radio-checked')).toBe(true);
+    expect(
+      radio.classList.contains(
+        'radio-checked'
+      )
+    ).toBe(true);
   });
 
   it('should render the radio with shadow parts', async () => {
@@ -42,11 +55,20 @@ describe('ion-radio', () => {
       `,
     });
 
-    const radio = page.body.querySelector('ion-radio')!;
+    const radio =
+      page.body.querySelector(
+        'ion-radio'
+      )!;
 
-    expect(radio).toHaveShadowPart('container');
-    expect(radio).toHaveShadowPart('label');
-    expect(radio).toHaveShadowPart('mark');
+    expect(radio).toHaveShadowPart(
+      'container'
+    );
+    expect(radio).toHaveShadowPart(
+      'label'
+    );
+    expect(radio).toHaveShadowPart(
+      'mark'
+    );
   });
 });
 
@@ -61,15 +83,25 @@ describe('ion-radio: disabled', () => {
       `,
     });
 
-    const radio = page.body.querySelector('ion-radio')!;
-    const radioGroup = page.body.querySelector('ion-radio-group')!;
+    const radio =
+      page.body.querySelector(
+        'ion-radio'
+      )!;
+    const radioGroup =
+      page.body.querySelector(
+        'ion-radio-group'
+      )!;
 
-    expect(radioGroup.value).toBe(undefined);
+    expect(radioGroup.value).toBe(
+      undefined
+    );
 
     radio.click();
 
     await page.waitForChanges();
 
-    expect(radioGroup.value).toBe(undefined);
+    expect(radioGroup.value).toBe(
+      undefined
+    );
   });
 });

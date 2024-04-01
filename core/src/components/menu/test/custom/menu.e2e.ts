@@ -1,19 +1,30 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across directions.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
-  test.describe(title('menu: custom'), () => {
-    test('should allow styling the menu box shadow when inside a split pane', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/21530',
-      });
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, config, screenshot }) => {
+    test.describe(
+      title('menu: custom'),
+      () => {
+        test('should allow styling the menu box shadow when inside a split pane', async ({
+          page,
+        }) => {
+          test.info().annotations.push({
+            type: 'issue',
+            description:
+              'https://github.com/ionic-team/ionic-framework/issues/21530',
+          });
 
-      await page.setContent(
-        `
+          await page.setContent(
+            `
         <style>
           ion-split-pane {
             --side-width: 200px;
@@ -54,12 +65,21 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
           </ion-split-pane>
         </ion-app>
       `,
-        config
-      );
+            config
+          );
 
-      const app = page.locator('ion-app');
+          const app =
+            page.locator('ion-app');
 
-      await expect(app).toHaveScreenshot(screenshot(`menu-custom-split-pane`));
-    });
-  });
-});
+          await expect(
+            app
+          ).toHaveScreenshot(
+            screenshot(
+              `menu-custom-split-pane`
+            )
+          );
+        });
+      }
+    );
+  }
+);

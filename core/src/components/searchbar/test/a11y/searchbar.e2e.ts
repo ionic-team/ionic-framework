@@ -1,11 +1,21 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('searchbar: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('searchbar: font scaling'),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 36px;
@@ -13,16 +23,27 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         </style>
         <ion-searchbar value="My Text" show-cancel-button="always" show-clear-button="always"></ion-searchbar>
       `,
-        config
-      );
+            config
+          );
 
-      const searchbar = page.locator('ion-searchbar');
+          const searchbar =
+            page.locator(
+              'ion-searchbar'
+            );
 
-      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-scale`));
-    });
-    test('should scale text on larger font sizes in a toolbar', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            searchbar
+          ).toHaveScreenshot(
+            screenshot(
+              `searchbar-scale`
+            )
+          );
+        });
+        test('should scale text on larger font sizes in a toolbar', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 36px;
@@ -34,12 +55,23 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </ion-toolbar>
         </ion-header>
       `,
-        config
-      );
+            config
+          );
 
-      const searchbar = page.locator('ion-searchbar');
+          const searchbar =
+            page.locator(
+              'ion-searchbar'
+            );
 
-      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-scale-toolbar`));
-    });
-  });
-});
+          await expect(
+            searchbar
+          ).toHaveScreenshot(
+            screenshot(
+              `searchbar-scale-toolbar`
+            )
+          );
+        });
+      }
+    );
+  }
+);

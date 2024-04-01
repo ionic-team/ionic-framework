@@ -15,9 +15,16 @@ describe('breadcrumb: collapsed indicator', () => {
 
     const collapsedIndicator = page.body
       .querySelector('ion-breadcrumb')!
-      .shadowRoot!.querySelector('.breadcrumbs-collapsed-indicator')!;
-    const ariaLabel = collapsedIndicator.getAttribute('aria-label');
+      .shadowRoot!.querySelector(
+        '.breadcrumbs-collapsed-indicator'
+      )!;
+    const ariaLabel =
+      collapsedIndicator.getAttribute(
+        'aria-label'
+      );
 
-    expect(ariaLabel).toEqual('Show more breadcrumbs');
+    expect(ariaLabel).toEqual(
+      'Show more breadcrumbs'
+    );
   });
 });

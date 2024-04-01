@@ -1,12 +1,32 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
-import { createColorClasses, hostContext, openURL } from '@utils/theme';
-import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
+import {
+  createColorClasses,
+  hostContext,
+  openURL,
+} from '@utils/theme';
+import {
+  chevronForwardOutline,
+  ellipsisHorizontal,
+} from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color } from '../../interface';
+import type {
+  AnimationBuilder,
+  Color,
+} from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface';
@@ -26,8 +46,11 @@ import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface
   },
   shadow: true,
 })
-export class Breadcrumb implements ComponentInterface {
-  private inheritedAttributes: Attributes = {};
+export class Breadcrumb
+  implements ComponentInterface
+{
+  private inheritedAttributes: Attributes =
+    {};
   private collapsedRef?: HTMLElement;
 
   /** @internal */
@@ -37,7 +60,8 @@ export class Breadcrumb implements ComponentInterface {
   @Prop() last!: boolean;
 
   /** @internal */
-  @Prop() showCollapsedIndicator!: boolean;
+  @Prop()
+  showCollapsedIndicator!: boolean;
 
   @Element() el!: HTMLElement;
 
@@ -84,7 +108,9 @@ export class Breadcrumb implements ComponentInterface {
    * If true, show a separator between this breadcrumb and the next.
    * Defaults to `true` for all breadcrumbs except the last.
    */
-  @Prop() separator?: boolean | undefined;
+  @Prop() separator?:
+    | boolean
+    | undefined;
 
   /**
    * Specifies where to display the linked URL.
@@ -97,18 +123,23 @@ export class Breadcrumb implements ComponentInterface {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection: RouterDirection = 'forward';
+  @Prop()
+  routerDirection: RouterDirection =
+    'forward';
 
   /**
    * When using a router, it specifies the transition animation when navigating to
    * another page using `href`.
    */
-  @Prop() routerAnimation: AnimationBuilder | undefined;
+  @Prop() routerAnimation:
+    | AnimationBuilder
+    | undefined;
 
   /**
    * Emitted when the breadcrumb has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event()
+  ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the breadcrumb loses focus.
@@ -124,10 +155,12 @@ export class Breadcrumb implements ComponentInterface {
    * TypeScript will throw an error in user applications.
    * @internal
    */
-  @Event() collapsedClick!: EventEmitter<BreadcrumbCollapsedClickEventDetail>;
+  @Event()
+  collapsedClick!: EventEmitter<BreadcrumbCollapsedClickEventDetail>;
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.inheritedAttributes =
+      inheritAriaAttributes(this.el);
   }
 
   private isClickable(): boolean {
@@ -142,9 +175,13 @@ export class Breadcrumb implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  private collapsedIndicatorClick = () => {
-    this.collapsedClick.emit({ ionShadowTarget: this.collapsedRef });
-  };
+  private collapsedIndicatorClick =
+    () => {
+      this.collapsedClick.emit({
+        ionShadowTarget:
+          this.collapsedRef,
+      });
+    };
 
   render() {
     const {
@@ -162,12 +199,18 @@ export class Breadcrumb implements ComponentInterface {
       showCollapsedIndicator,
       target,
     } = this;
-    const clickable = this.isClickable();
-    const TagType = this.href === undefined ? 'span' : ('a' as any);
+    const clickable =
+      this.isClickable();
+    const TagType =
+      this.href === undefined
+        ? 'span'
+        : ('a' as any);
 
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
-    const href = disabled ? undefined : this.href;
+    const href = disabled
+      ? undefined
+      : this.href;
     const mode = getIonMode(this);
     const attrs =
       TagType === 'span'
@@ -181,23 +224,55 @@ export class Breadcrumb implements ComponentInterface {
     // If the breadcrumb is collapsed, check if it contains the collapsed indicator
     // to show the separator as long as it isn't also the last breadcrumb
     // otherwise if not collapsed use the value in separator
-    const showSeparator = last ? false : collapsed ? (showCollapsedIndicator && !last ? true : false) : separator;
+    const showSeparator = last
+      ? false
+      : collapsed
+      ? showCollapsedIndicator && !last
+        ? true
+        : false
+      : separator;
 
     return (
       <Host
-        onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
-        aria-disabled={disabled ? 'true' : null}
-        class={createColorClasses(color, {
-          [mode]: true,
-          'breadcrumb-active': active,
-          'breadcrumb-collapsed': collapsed,
-          'breadcrumb-disabled': disabled,
-          'in-breadcrumbs-color': hostContext('ion-breadcrumbs[color]', el),
-          'in-toolbar': hostContext('ion-toolbar', this.el),
-          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'ion-activatable': clickable,
-          'ion-focusable': clickable,
-        })}
+        onClick={(ev: Event) =>
+          openURL(
+            href,
+            ev,
+            routerDirection,
+            routerAnimation
+          )
+        }
+        aria-disabled={
+          disabled ? 'true' : null
+        }
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            'breadcrumb-active': active,
+            'breadcrumb-collapsed':
+              collapsed,
+            'breadcrumb-disabled':
+              disabled,
+            'in-breadcrumbs-color':
+              hostContext(
+                'ion-breadcrumbs[color]',
+                el
+              ),
+            'in-toolbar': hostContext(
+              'ion-toolbar',
+              this.el
+            ),
+            'in-toolbar-color':
+              hostContext(
+                'ion-toolbar[color]',
+                this.el
+              ),
+            'ion-activatable':
+              clickable,
+            'ion-focusable': clickable,
+          }
+        )}
       >
         <TagType
           {...attrs}
@@ -216,13 +291,23 @@ export class Breadcrumb implements ComponentInterface {
           <button
             part="collapsed-indicator"
             aria-label="Show more breadcrumbs"
-            onClick={() => this.collapsedIndicatorClick()}
-            ref={(collapsedEl) => (this.collapsedRef = collapsedEl)}
+            onClick={() =>
+              this.collapsedIndicatorClick()
+            }
+            ref={(collapsedEl) =>
+              (this.collapsedRef =
+                collapsedEl)
+            }
             class={{
-              'breadcrumbs-collapsed-indicator': true,
+              'breadcrumbs-collapsed-indicator':
+                true,
             }}
           >
-            <ion-icon aria-hidden="true" icon={ellipsisHorizontal} lazy={false}></ion-icon>
+            <ion-icon
+              aria-hidden="true"
+              icon={ellipsisHorizontal}
+              lazy={false}
+            ></ion-icon>
           </button>
         )}
         {showSeparator && (
@@ -231,10 +316,20 @@ export class Breadcrumb implements ComponentInterface {
            * We add aria-hidden on the span so that this applies
            * to any custom separators too.
            */
-          <span class="breadcrumb-separator" part="separator" aria-hidden="true">
+          <span
+            class="breadcrumb-separator"
+            part="separator"
+            aria-hidden="true"
+          >
             <slot name="separator">
               {mode === 'ios' ? (
-                <ion-icon icon={chevronForwardOutline} lazy={false} flip-rtl></ion-icon>
+                <ion-icon
+                  icon={
+                    chevronForwardOutline
+                  }
+                  lazy={false}
+                  flip-rtl
+                ></ion-icon>
               ) : (
                 <span>/</span>
               )}

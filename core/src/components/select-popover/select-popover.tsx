@@ -1,5 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import {
+  Element,
+  Component,
+  Host,
+  Prop,
+  h,
+  forceUpdate,
+} from '@stencil/core';
 import { safeCall } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
@@ -20,8 +27,11 @@ import type { SelectPopoverOption } from './select-popover-interface';
   },
   scoped: true,
 })
-export class SelectPopover implements ComponentInterface {
-  @Element() el!: HTMLIonSelectPopoverElement;
+export class SelectPopover
+  implements ComponentInterface
+{
+  @Element()
+  el!: HTMLIonSelectPopoverElement;
   /**
    * The header text of the popover
    */
@@ -45,11 +55,18 @@ export class SelectPopover implements ComponentInterface {
   /**
    * An array of options for the popover
    */
-  @Prop() options: SelectPopoverOption[] = [];
+  @Prop()
+  options: SelectPopoverOption[] = [];
 
-  private findOptionFromEvent(ev: CheckboxCustomEvent | RadioGroupCustomEvent) {
+  private findOptionFromEvent(
+    ev:
+      | CheckboxCustomEvent
+      | RadioGroupCustomEvent
+  ) {
     const { options } = this;
-    return options.find((o) => o.value === ev.target.value);
+    return options.find(
+      (o) => o.value === ev.target.value
+    );
   }
 
   /**
@@ -57,8 +74,13 @@ export class SelectPopover implements ComponentInterface {
    * of the selected option(s) and return it in the option
    * handler
    */
-  private callOptionHandler(ev: CheckboxCustomEvent | RadioGroupCustomEvent) {
-    const option = this.findOptionFromEvent(ev);
+  private callOptionHandler(
+    ev:
+      | CheckboxCustomEvent
+      | RadioGroupCustomEvent
+  ) {
+    const option =
+      this.findOptionFromEvent(ev);
     const values = this.getValues(ev);
 
     if (option?.handler) {
@@ -71,56 +93,82 @@ export class SelectPopover implements ComponentInterface {
    * is rendered within.
    */
   private dismissParentPopover() {
-    const popover = this.el.closest('ion-popover');
+    const popover = this.el.closest(
+      'ion-popover'
+    );
     if (popover) {
       popover.dismiss();
     }
   }
 
-  private setChecked(ev: CheckboxCustomEvent): void {
+  private setChecked(
+    ev: CheckboxCustomEvent
+  ): void {
     const { multiple } = this;
-    const option = this.findOptionFromEvent(ev);
+    const option =
+      this.findOptionFromEvent(ev);
 
     // this is a popover with checkboxes (multiple value select)
     // we need to set the checked value for this option
     if (multiple && option) {
-      option.checked = ev.detail.checked;
+      option.checked =
+        ev.detail.checked;
     }
   }
 
-  private getValues(ev: CheckboxCustomEvent | RadioGroupCustomEvent): string | string[] | undefined {
+  private getValues(
+    ev:
+      | CheckboxCustomEvent
+      | RadioGroupCustomEvent
+  ): string | string[] | undefined {
     const { multiple, options } = this;
 
     if (multiple) {
       // this is a popover with checkboxes (multiple value select)
       // return an array of all the checked values
-      return options.filter((o) => o.checked).map((o) => o.value);
+      return options
+        .filter((o) => o.checked)
+        .map((o) => o.value);
     }
 
     // this is a popover with radio buttons (single value select)
     // return the value that was clicked, otherwise undefined
-    const option = this.findOptionFromEvent(ev);
-    return option ? option.value : undefined;
+    const option =
+      this.findOptionFromEvent(ev);
+    return option
+      ? option.value
+      : undefined;
   }
 
-  renderOptions(options: SelectPopoverOption[]) {
+  renderOptions(
+    options: SelectPopoverOption[]
+  ) {
     const { multiple } = this;
 
     switch (multiple) {
       case true:
-        return this.renderCheckboxOptions(options);
+        return this.renderCheckboxOptions(
+          options
+        );
       default:
-        return this.renderRadioOptions(options);
+        return this.renderRadioOptions(
+          options
+        );
     }
   }
 
-  renderCheckboxOptions(options: SelectPopoverOption[]) {
+  renderCheckboxOptions(
+    options: SelectPopoverOption[]
+  ) {
     return options.map((option) => (
       <ion-item
         class={{
           // TODO FW-4784
-          'item-checkbox-checked': option.checked,
-          ...getClassMap(option.cssClass),
+          'item-checkbox-checked':
+            option.checked,
+          ...getClassMap(
+            option.cssClass
+          ),
         }}
       >
         <ion-checkbox
@@ -142,23 +190,38 @@ export class SelectPopover implements ComponentInterface {
     ));
   }
 
-  renderRadioOptions(options: SelectPopoverOption[]) {
-    const checked = options.filter((o) => o.checked).map((o) => o.value)[0];
+  renderRadioOptions(
+    options: SelectPopoverOption[]
+  ) {
+    const checked = options
+      .filter((o) => o.checked)
+      .map((o) => o.value)[0];
 
     return (
-      <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
+      <ion-radio-group
+        value={checked}
+        onIonChange={(ev) =>
+          this.callOptionHandler(ev)
+        }
+      >
         {options.map((option) => (
           <ion-item
             class={{
               // TODO FW-4784
-              'item-radio-checked': option.value === checked,
-              ...getClassMap(option.cssClass),
+              'item-radio-checked':
+                option.value ===
+                checked,
+              ...getClassMap(
+                option.cssClass
+              ),
             }}
           >
             <ion-radio
               value={option.value}
               disabled={option.disabled}
-              onClick={() => this.dismissParentPopover()}
+              onClick={() =>
+                this.dismissParentPopover()
+              }
               onKeyUp={(ev) => {
                 if (ev.key === ' ') {
                   /**
@@ -179,18 +242,35 @@ export class SelectPopover implements ComponentInterface {
   }
 
   render() {
-    const { header, message, options, subHeader } = this;
-    const hasSubHeaderOrMessage = subHeader !== undefined || message !== undefined;
+    const {
+      header,
+      message,
+      options,
+      subHeader,
+    } = this;
+    const hasSubHeaderOrMessage =
+      subHeader !== undefined ||
+      message !== undefined;
 
     return (
       <Host class={getIonMode(this)}>
         <ion-list>
-          {header !== undefined && <ion-list-header>{header}</ion-list-header>}
+          {header !== undefined && (
+            <ion-list-header>
+              {header}
+            </ion-list-header>
+          )}
           {hasSubHeaderOrMessage && (
             <ion-item>
               <ion-label class="ion-text-wrap">
-                {subHeader !== undefined && <h3>{subHeader}</h3>}
-                {message !== undefined && <p>{message}</p>}
+                {subHeader !==
+                  undefined && (
+                  <h3>{subHeader}</h3>
+                )}
+                {message !==
+                  undefined && (
+                  <p>{message}</p>
+                )}
               </ion-label>
             </ion-item>
           )}

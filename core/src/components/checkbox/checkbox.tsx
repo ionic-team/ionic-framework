@@ -1,14 +1,36 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  Watch,
+  h,
+} from '@stencil/core';
 import type { LegacyFormController } from '@utils/forms';
 import { createLegacyFormController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
+import {
+  getAriaLabel,
+  inheritAriaAttributes,
+  renderHiddenInput,
+} from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
-import { createColorClasses, hostContext } from '@utils/theme';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Mode, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  Mode,
+  StyleEventDetail,
+} from '../../interface';
 
 import type { CheckboxChangeEventDetail } from './checkbox-interface';
 
@@ -29,24 +51,30 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
   },
   shadow: true,
 })
-export class Checkbox implements ComponentInterface {
+export class Checkbox
+  implements ComponentInterface
+{
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
   private legacyFormController!: LegacyFormController; // TODO(FW-3100): remove this
-  private inheritedAttributes: Attributes = {};
+  private inheritedAttributes: Attributes =
+    {};
 
   // TODO(FW-3100): remove this
   // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
+  private hasLoggedDeprecationWarning =
+    false;
 
-  @Element() el!: HTMLIonCheckboxElement;
+  @Element()
+  el!: HTMLIonCheckboxElement;
 
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -56,12 +84,14 @@ export class Checkbox implements ComponentInterface {
   /**
    * If `true`, the checkbox is selected.
    */
-  @Prop({ mutable: true }) checked = false;
+  @Prop({ mutable: true }) checked =
+    false;
 
   /**
    * If `true`, the checkbox will visually appear as indeterminate.
    */
-  @Prop({ mutable: true }) indeterminate = false;
+  @Prop({ mutable: true })
+  indeterminate = false;
 
   /**
    * If `true`, the user cannot interact with the checkbox.
@@ -84,7 +114,11 @@ export class Checkbox implements ComponentInterface {
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    * `"stacked"`: The label will appear above the checkbox regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
+  @Prop() labelPlacement:
+    | 'start'
+    | 'end'
+    | 'fixed'
+    | 'stacked' = 'start';
 
   /**
    * How to pack the label and checkbox within a line.
@@ -95,14 +129,19 @@ export class Checkbox implements ComponentInterface {
    * `"space-between"`: The label and checkbox will appear on opposite
    * ends of the line with space between the two elements.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify:
+    | 'start'
+    | 'end'
+    | 'space-between' = 'space-between';
 
   /**
    * How to control the alignment of the checkbox and label on the cross axis.
    * `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
    * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
    */
-  @Prop() alignment: 'start' | 'center' = 'center';
+  @Prop() alignment:
+    | 'start'
+    | 'center' = 'center';
 
   // TODO(FW-3100): remove this
   /**
@@ -123,12 +162,14 @@ export class Checkbox implements ComponentInterface {
    * This event will not emit when programmatically
    * setting the checked property.
    */
-  @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
+  @Event()
+  ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 
   /**
    * Emitted when the checkbox has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event()
+  ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the checkbox loses focus.
@@ -139,19 +180,27 @@ export class Checkbox implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   connectedCallback() {
-    this.legacyFormController = createLegacyFormController(this.el); // TODO(FW-3100): remove this
+    this.legacyFormController =
+      createLegacyFormController(
+        this.el
+      ); // TODO(FW-3100): remove this
   }
 
   componentWillLoad() {
     this.emitStyle();
 
     // TODO(FW-3100): remove check
-    if (!this.legacyFormController.hasLegacyControl()) {
+    if (
+      !this.legacyFormController.hasLegacyControl()
+    ) {
       this.inheritedAttributes = {
-        ...inheritAriaAttributes(this.el),
+        ...inheritAriaAttributes(
+          this.el
+        ),
       };
     }
   }
@@ -164,14 +213,18 @@ export class Checkbox implements ComponentInterface {
 
   private emitStyle() {
     const style: StyleEventDetail = {
-      'interactive-disabled': this.disabled,
+      'interactive-disabled':
+        this.disabled,
       // TODO(FW-3100): remove this
       legacy: !!this.legacy,
     };
 
     // TODO(FW-3100): remove this
-    if (this.legacyFormController.hasLegacyControl()) {
-      style['checkbox-checked'] = this.checked;
+    if (
+      this.legacyFormController.hasLegacyControl()
+    ) {
+      style['checkbox-checked'] =
+        this.checked;
     }
 
     this.ionStyle.emit(style);
@@ -189,15 +242,20 @@ export class Checkbox implements ComponentInterface {
    * checked state in response to user-generated
    * actions such as a click.
    */
-  private setChecked = (state: boolean) => {
-    const isChecked = (this.checked = state);
+  private setChecked = (
+    state: boolean
+  ) => {
+    const isChecked = (this.checked =
+      state);
     this.ionChange.emit({
       checked: isChecked,
       value: this.value,
     });
   };
 
-  private toggleChecked = (ev: Event) => {
+  private toggleChecked = (
+    ev: Event
+  ) => {
     ev.preventDefault();
 
     this.setFocus();
@@ -213,7 +271,9 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  private onClick = (ev: MouseEvent) => {
+  private onClick = (
+    ev: MouseEvent
+  ) => {
     if (this.disabled) {
       return;
     }
@@ -223,9 +283,12 @@ export class Checkbox implements ComponentInterface {
 
   // TODO(FW-3100): run contents of renderCheckbox directly instead
   render() {
-    const { legacyFormController } = this;
+    const { legacyFormController } =
+      this;
 
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyCheckbox() : this.renderCheckbox();
+    return legacyFormController.hasLegacyControl()
+      ? this.renderLegacyCheckbox()
+      : this.renderCheckbox();
   }
 
   private renderCheckbox() {
@@ -245,24 +308,48 @@ export class Checkbox implements ComponentInterface {
       alignment,
     } = this;
     const mode = getIonMode(this);
-    const path = getSVGPath(mode, indeterminate);
+    const path = getSVGPath(
+      mode,
+      indeterminate
+    );
 
-    renderHiddenInput(true, el, name, checked ? value : '', disabled);
+    renderHiddenInput(
+      true,
+      el,
+      name,
+      checked ? value : '',
+      disabled
+    );
 
     return (
       <Host
-        aria-checked={indeterminate ? 'mixed' : `${checked}`}
-        class={createColorClasses(color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'checkbox-checked': checked,
-          'checkbox-disabled': disabled,
-          'checkbox-indeterminate': indeterminate,
-          interactive: true,
-          [`checkbox-justify-${justify}`]: true,
-          [`checkbox-alignment-${alignment}`]: true,
-          [`checkbox-label-placement-${labelPlacement}`]: true,
-        })}
+        aria-checked={
+          indeterminate
+            ? 'mixed'
+            : `${checked}`
+        }
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            'in-item': hostContext(
+              'ion-item',
+              el
+            ),
+            'checkbox-checked': checked,
+            'checkbox-disabled':
+              disabled,
+            'checkbox-indeterminate':
+              indeterminate,
+            interactive: true,
+            [`checkbox-justify-${justify}`]:
+              true,
+            [`checkbox-alignment-${alignment}`]:
+              true,
+            [`checkbox-label-placement-${labelPlacement}`]:
+              true,
+          }
+        )}
         onClick={this.onClick}
       >
         <label class="checkbox-wrapper">
@@ -272,26 +359,40 @@ export class Checkbox implements ComponentInterface {
           */}
           <input
             type="checkbox"
-            checked={checked ? true : undefined}
+            checked={
+              checked ? true : undefined
+            }
             disabled={disabled}
             id={inputId}
-            onChange={this.toggleChecked}
-            onFocus={() => this.onFocus()}
+            onChange={
+              this.toggleChecked
+            }
+            onFocus={() =>
+              this.onFocus()
+            }
             onBlur={() => this.onBlur()}
-            ref={(focusEl) => (this.focusEl = focusEl)}
+            ref={(focusEl) =>
+              (this.focusEl = focusEl)
+            }
             {...inheritedAttributes}
           />
           <div
             class={{
-              'label-text-wrapper': true,
-              'label-text-wrapper-hidden': el.textContent === '',
+              'label-text-wrapper':
+                true,
+              'label-text-wrapper-hidden':
+                el.textContent === '',
             }}
             part="label"
           >
             <slot></slot>
           </div>
           <div class="native-wrapper">
-            <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
+            <svg
+              class="checkbox-icon"
+              viewBox="0 0 24 24"
+              part="container"
+            >
               {path}
             </svg>
           </div>
@@ -302,7 +403,9 @@ export class Checkbox implements ComponentInterface {
 
   // TODO(FW-3100): remove this
   private renderLegacyCheckbox() {
-    if (!this.hasLoggedDeprecationWarning) {
+    if (
+      !this.hasLoggedDeprecationWarning
+    ) {
       printIonWarning(
         `ion-checkbox now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
 
@@ -321,37 +424,79 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         );
       }
 
-      this.hasLoggedDeprecationWarning = true;
+      this.hasLoggedDeprecationWarning =
+        true;
     }
 
-    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
+    const {
+      color,
+      checked,
+      disabled,
+      el,
+      getSVGPath,
+      indeterminate,
+      inputId,
+      name,
+      value,
+    } = this;
     const mode = getIonMode(this);
-    const { label, labelId, labelText } = getAriaLabel(el, inputId);
-    const path = getSVGPath(mode, indeterminate);
+    const {
+      label,
+      labelId,
+      labelText,
+    } = getAriaLabel(el, inputId);
+    const path = getSVGPath(
+      mode,
+      indeterminate
+    );
 
-    renderHiddenInput(true, el, name, checked ? value : '', disabled);
+    renderHiddenInput(
+      true,
+      el,
+      name,
+      checked ? value : '',
+      disabled
+    );
 
     return (
       <Host
-        aria-labelledby={label ? labelId : null}
+        aria-labelledby={
+          label ? labelId : null
+        }
         aria-checked={`${checked}`}
-        aria-hidden={disabled ? 'true' : null}
+        aria-hidden={
+          disabled ? 'true' : null
+        }
         role="checkbox"
-        class={createColorClasses(color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'checkbox-checked': checked,
-          'checkbox-disabled': disabled,
-          'checkbox-indeterminate': indeterminate,
-          'legacy-checkbox': true,
-          interactive: true,
-        })}
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            'in-item': hostContext(
+              'ion-item',
+              el
+            ),
+            'checkbox-checked': checked,
+            'checkbox-disabled':
+              disabled,
+            'checkbox-indeterminate':
+              indeterminate,
+            'legacy-checkbox': true,
+            interactive: true,
+          }
+        )}
         onClick={this.onClick}
       >
-        <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
+        <svg
+          class="checkbox-icon"
+          viewBox="0 0 24 24"
+          part="container"
+        >
           {path}
         </svg>
-        <label htmlFor={inputId}>{labelText}</label>
+        <label htmlFor={inputId}>
+          {labelText}
+        </label>
         <input
           type="checkbox"
           aria-checked={`${checked}`}
@@ -360,24 +505,41 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           onChange={this.toggleChecked}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
-          ref={(focusEl) => (this.focusEl = focusEl)}
+          ref={(focusEl) =>
+            (this.focusEl = focusEl)
+          }
         />
       </Host>
     );
   }
 
-  private getSVGPath(mode: Mode, indeterminate: boolean): HTMLElement {
+  private getSVGPath(
+    mode: Mode,
+    indeterminate: boolean
+  ): HTMLElement {
     let path = indeterminate ? (
-      <path d="M6 12L18 12" part="mark" />
+      <path
+        d="M6 12L18 12"
+        part="mark"
+      />
     ) : (
-      <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
+      <path
+        d="M5.9,12.5l3.8,3.8l8.8-8.8"
+        part="mark"
+      />
     );
 
     if (mode === 'md') {
       path = indeterminate ? (
-        <path d="M2 12H22" part="mark" />
+        <path
+          d="M2 12H22"
+          part="mark"
+        />
       ) : (
-        <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+        <path
+          d="M1.73,12.91 8.1,19.28 22.79,4.59"
+          part="mark"
+        />
       );
     }
 

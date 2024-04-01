@@ -1,4 +1,7 @@
-import { h, setMode } from '@stencil/core';
+import {
+  h,
+  setMode,
+} from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Content } from '../../../content/content';
@@ -9,33 +12,57 @@ describe('modal: canDismiss', () => {
     it('should dismiss when canDismiss is true', async () => {
       const page = await newSpecPage({
         components: [Modal],
-        template: () => <ion-modal overlayIndex={1} animated={false} canDismiss={true}></ion-modal>,
+        template: () => (
+          <ion-modal
+            overlayIndex={1}
+            animated={false}
+            canDismiss={true}
+          ></ion-modal>
+        ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      await expect(returnValue).toBe(
+        true
+      );
     });
 
     it('should not dismiss when canDismiss is false', async () => {
       const page = await newSpecPage({
         components: [Modal],
-        template: () => <ion-modal overlayIndex={1} animated={false} canDismiss={false}></ion-modal>,
+        template: () => (
+          <ion-modal
+            overlayIndex={1}
+            animated={false}
+            canDismiss={false}
+          ></ion-modal>
+        ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      await expect(returnValue).toBe(
+        false
+      );
     });
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
@@ -46,22 +73,33 @@ describe('modal: canDismiss', () => {
             overlayIndex={1}
             animated={false}
             canDismiss={() => {
-              return new Promise((resolve) => {
-                setTimeout(() => resolve(true), 50);
-              });
+              return new Promise(
+                (resolve) => {
+                  setTimeout(
+                    () => resolve(true),
+                    50
+                  );
+                }
+              );
             }}
           ></ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      await expect(returnValue).toBe(
+        true
+      );
     });
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
@@ -72,22 +110,34 @@ describe('modal: canDismiss', () => {
             overlayIndex={1}
             animated={false}
             canDismiss={() => {
-              return new Promise((resolve) => {
-                setTimeout(() => resolve(false), 50);
-              });
+              return new Promise(
+                (resolve) => {
+                  setTimeout(
+                    () =>
+                      resolve(false),
+                    50
+                  );
+                }
+              );
             }}
           ></ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      await expect(returnValue).toBe(
+        false
+      );
     });
   });
   describe('modal: card modal', () => {
@@ -103,23 +153,33 @@ describe('modal: canDismiss', () => {
         template: () => (
           <ion-modal
             overlayIndex={1}
-            presentingElement={document.createElement('div')}
+            presentingElement={document.createElement(
+              'div'
+            )}
             animated={false}
             canDismiss={true}
           >
-            <ion-content>Test Content</ion-content>
+            <ion-content>
+              Test Content
+            </ion-content>
           </ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      await expect(returnValue).toBe(
+        true
+      );
     });
 
     it('should not dismiss when canDismiss is false', async () => {
@@ -128,23 +188,33 @@ describe('modal: canDismiss', () => {
         template: () => (
           <ion-modal
             overlayIndex={1}
-            presentingElement={document.createElement('div')}
+            presentingElement={document.createElement(
+              'div'
+            )}
             animated={false}
             canDismiss={false}
           >
-            <ion-content>Test Content</ion-content>
+            <ion-content>
+              Test Content
+            </ion-content>
           </ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      await expect(returnValue).toBe(
+        false
+      );
     });
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
@@ -153,27 +223,42 @@ describe('modal: canDismiss', () => {
         template: () => (
           <ion-modal
             overlayIndex={1}
-            presentingElement={document.createElement('div')}
+            presentingElement={document.createElement(
+              'div'
+            )}
             animated={false}
             canDismiss={() => {
-              return new Promise((resolve) => {
-                setTimeout(() => resolve(true), 50);
-              });
+              return new Promise(
+                (resolve) => {
+                  setTimeout(
+                    () => resolve(true),
+                    50
+                  );
+                }
+              );
             }}
           >
-            <ion-content>Test Content</ion-content>
+            <ion-content>
+              Test Content
+            </ion-content>
           </ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      await expect(returnValue).toBe(
+        true
+      );
     });
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
@@ -182,27 +267,43 @@ describe('modal: canDismiss', () => {
         template: () => (
           <ion-modal
             overlayIndex={1}
-            presentingElement={document.createElement('div')}
+            presentingElement={document.createElement(
+              'div'
+            )}
             animated={false}
             canDismiss={() => {
-              return new Promise((resolve) => {
-                setTimeout(() => resolve(false), 50);
-              });
+              return new Promise(
+                (resolve) => {
+                  setTimeout(
+                    () =>
+                      resolve(false),
+                    50
+                  );
+                }
+              );
             }}
           >
-            <ion-content>Test Content</ion-content>
+            <ion-content>
+              Test Content
+            </ion-content>
           </ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      await expect(returnValue).toBe(
+        false
+      );
     });
   });
   describe('modal: sheet modal', () => {
@@ -220,14 +321,20 @@ describe('modal: canDismiss', () => {
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      await expect(returnValue).toBe(
+        true
+      );
     });
 
     it('should not dismiss when canDismiss is false', async () => {
@@ -244,14 +351,20 @@ describe('modal: canDismiss', () => {
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      await expect(returnValue).toBe(
+        false
+      );
     });
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
@@ -264,22 +377,33 @@ describe('modal: canDismiss', () => {
             initialBreakpoint={1}
             animated={false}
             canDismiss={() => {
-              return new Promise((resolve) => {
-                setTimeout(() => resolve(true), 50);
-              });
+              return new Promise(
+                (resolve) => {
+                  setTimeout(
+                    () => resolve(true),
+                    50
+                  );
+                }
+              );
             }}
           ></ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      await expect(returnValue).toBe(
+        true
+      );
     });
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
@@ -292,22 +416,34 @@ describe('modal: canDismiss', () => {
             initialBreakpoint={1}
             animated={false}
             canDismiss={() => {
-              return new Promise((resolve) => {
-                setTimeout(() => resolve(false), 50);
-              });
+              return new Promise(
+                (resolve) => {
+                  setTimeout(
+                    () =>
+                      resolve(false),
+                    50
+                  );
+                }
+              );
             }}
           ></ion-modal>
         ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      const returnValue = await modal.dismiss();
+      const returnValue =
+        await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      await expect(returnValue).toBe(
+        false
+      );
     });
   });
   describe('modal: data and role', () => {
@@ -315,17 +451,34 @@ describe('modal: canDismiss', () => {
       const canDismiss = jest.fn();
       const page = await newSpecPage({
         components: [Modal],
-        template: () => <ion-modal overlayIndex={1} animated={false} canDismiss={canDismiss}></ion-modal>,
+        template: () => (
+          <ion-modal
+            overlayIndex={1}
+            animated={false}
+            canDismiss={canDismiss}
+          ></ion-modal>
+        ),
       });
 
-      const modal = page.body.querySelector('ion-modal')!;
+      const modal =
+        page.body.querySelector(
+          'ion-modal'
+        )!;
 
       await modal.present();
       await page.waitForChanges();
 
-      await modal.dismiss('my data', 'my role');
+      await modal.dismiss(
+        'my data',
+        'my role'
+      );
 
-      expect(canDismiss).toHaveBeenCalledWith('my data', 'my role');
+      expect(
+        canDismiss
+      ).toHaveBeenCalledWith(
+        'my data',
+        'my role'
+      );
     });
   });
 });

@@ -8,13 +8,15 @@ describe('toggle', () => {
     config.reset({});
   });
 
-  const newToggle = async (): Promise<Toggle> => {
-    const { rootInstance } = await newSpecPage({
-      components: [Toggle],
-      html: `<ion-toggle></ion-toggle>`,
-    });
-    return rootInstance;
-  };
+  const newToggle =
+    async (): Promise<Toggle> => {
+      const { rootInstance } =
+        await newSpecPage({
+          components: [Toggle],
+          html: `<ion-toggle></ion-toggle>`,
+        });
+      return rootInstance;
+    };
 
   describe('enableOnOffLabels', () => {
     it('should disable on/off labels when setting to false on component', async () => {
@@ -23,7 +25,9 @@ describe('toggle', () => {
       config.reset({
         toggleOnOffLabels: true,
       });
-      expect(t.enableOnOffLabels).toBe(false);
+      expect(t.enableOnOffLabels).toBe(
+        false
+      );
     });
 
     it('should enable on/off labels when setting to true on global config', async () => {
@@ -31,13 +35,17 @@ describe('toggle', () => {
         toggleOnOffLabels: true,
       });
       const t = await newToggle();
-      expect(t.enableOnOffLabels).toBe(true);
+      expect(t.enableOnOffLabels).toBe(
+        true
+      );
     });
 
     it('should enable on/off labels when setting to true on component', async () => {
       const t = await newToggle();
       t.enableOnOffLabels = true;
-      expect(t.enableOnOffLabels).toBe(true);
+      expect(t.enableOnOffLabels).toBe(
+        true
+      );
     });
   });
 
@@ -47,10 +55,19 @@ describe('toggle', () => {
         components: [Toggle],
         html: `<ion-toggle>Label</ion-toggle>`,
       });
-      const toggle = page.body.querySelector('ion-toggle')!;
-      expect(toggle).toHaveShadowPart('label');
-      expect(toggle).toHaveShadowPart('track');
-      expect(toggle).toHaveShadowPart('handle');
+      const toggle =
+        page.body.querySelector(
+          'ion-toggle'
+        )!;
+      expect(toggle).toHaveShadowPart(
+        'label'
+      );
+      expect(toggle).toHaveShadowPart(
+        'track'
+      );
+      expect(toggle).toHaveShadowPart(
+        'handle'
+      );
     });
   });
 });
@@ -64,7 +81,10 @@ describe('ion-toggle: disabled', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle')!;
+    const toggle =
+      page.body.querySelector(
+        'ion-toggle'
+      )!;
 
     expect(toggle.checked).toBe(false);
 

@@ -3,7 +3,8 @@ export interface PickerInternalChangeEventDetail {
   inputModeColumn?: HTMLIonPickerColumnInternalElement;
 }
 
-export interface PickerInternalCustomEvent extends CustomEvent {
+export interface PickerInternalCustomEvent
+  extends CustomEvent {
   target: HTMLIonPickerInternalElement;
   detail: PickerInternalChangeEventDetail;
 }

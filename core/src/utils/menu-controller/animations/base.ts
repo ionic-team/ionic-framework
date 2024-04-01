@@ -8,7 +8,9 @@ import type { Animation } from '../../animation/animation-interface';
  * and registers itself with Menu.
  */
 
-export const baseAnimation = (isIos: boolean): Animation => {
+export const baseAnimation = (
+  isIos: boolean
+): Animation => {
   // https://material.io/guidelines/motion/movement.html#movement-movement-in-out-of-screen-bounds
   // https://material.io/guidelines/motion/duration-easing.html#duration-easing-natural-easing-curves
 
@@ -18,5 +20,7 @@ export const baseAnimation = (isIos: boolean): Animation => {
    * this transition typically occurs over 300ms" -- MD Motion Guide
    */
 
-  return createAnimation().duration(isIos ? 400 : 300);
+  return createAnimation().duration(
+    isIos ? 400 : 300
+  );
 };

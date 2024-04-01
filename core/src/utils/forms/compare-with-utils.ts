@@ -1,4 +1,7 @@
-type CompareFn = (currentValue: any, compareValue: any) => boolean;
+type CompareFn = (
+  currentValue: any,
+  compareValue: any
+) => boolean;
 
 /**
  * Uses the compareWith param to compare two values to determine if they are equal.
@@ -10,14 +13,31 @@ type CompareFn = (currentValue: any, compareValue: any) => boolean;
 export const compareOptions = (
   currentValue: any,
   compareValue: any,
-  compareWith?: string | CompareFn | null
+  compareWith?:
+    | string
+    | CompareFn
+    | null
 ): boolean => {
-  if (typeof compareWith === 'function') {
-    return compareWith(currentValue, compareValue);
-  } else if (typeof compareWith === 'string') {
-    return currentValue[compareWith] === compareValue[compareWith];
+  if (
+    typeof compareWith === 'function'
+  ) {
+    return compareWith(
+      currentValue,
+      compareValue
+    );
+  } else if (
+    typeof compareWith === 'string'
+  ) {
+    return (
+      currentValue[compareWith] ===
+      compareValue[compareWith]
+    );
   } else {
-    return Array.isArray(compareValue) ? compareValue.includes(currentValue) : currentValue === compareValue;
+    return Array.isArray(compareValue)
+      ? compareValue.includes(
+          currentValue
+        )
+      : currentValue === compareValue;
   }
 };
 
@@ -31,14 +51,27 @@ export const compareOptions = (
 export const isOptionSelected = (
   currentValue: any[] | any,
   compareValue: any,
-  compareWith?: string | CompareFn | null
+  compareWith?:
+    | string
+    | CompareFn
+    | null
 ) => {
   if (currentValue === undefined) {
     return false;
   }
   if (Array.isArray(currentValue)) {
-    return currentValue.some((val) => compareOptions(val, compareValue, compareWith));
+    return currentValue.some((val) =>
+      compareOptions(
+        val,
+        compareValue,
+        compareWith
+      )
+    );
   } else {
-    return compareOptions(currentValue, compareValue, compareWith);
+    return compareOptions(
+      currentValue,
+      compareValue,
+      compareWith
+    );
   }
 };

@@ -1,5 +1,13 @@
-import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction, Theme } from '@utils/test/playwright';
+import type {
+  Page,
+  TestInfo,
+} from '@playwright/test';
+import type {
+  E2EPageOptions,
+  Mode,
+  Direction,
+  Theme,
+} from '@utils/test/playwright';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -12,9 +20,16 @@ import type { E2EPageOptions, Mode, Direction, Theme } from '@utils/test/playwri
  * @param testInfo The TestInfo associated with the current test run. (DEPRECATED)
  * @param options The test config associated with the current test run.
  */
-export const setContent = async (page: Page, html: string, testInfo: TestInfo, options?: E2EPageOptions) => {
+export const setContent = async (
+  page: Page,
+  html: string,
+  testInfo: TestInfo,
+  options?: E2EPageOptions
+) => {
   if (page.isClosed()) {
-    throw new Error('setContent unavailable: page is already closed');
+    throw new Error(
+      'setContent unavailable: page is already closed'
+    );
   }
 
   let mode: Mode;
@@ -22,16 +37,23 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   let theme: Theme;
 
   if (options == undefined) {
-    mode = testInfo.project.metadata.mode;
-    direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
-    theme = testInfo.project.metadata.theme;
+    mode =
+      testInfo.project.metadata.mode;
+    direction = testInfo.project
+      .metadata.rtl
+      ? 'rtl'
+      : 'ltr';
+    theme =
+      testInfo.project.metadata.theme;
   } else {
     mode = options.mode;
     direction = options.direction;
     theme = options.theme;
   }
 
-  const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
+  const baseUrl =
+    process.env
+      .PLAYWRIGHT_TEST_BASE_URL;
 
   const output = `
     <!DOCTYPE html>
@@ -42,7 +64,11 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
-        ${theme !== 'light' ? `<link href="${baseUrl}/scripts/testing/themes/${theme}.css" rel="stylesheet" />` : ''}
+        ${
+          theme !== 'light'
+            ? `<link href="${baseUrl}/scripts/testing/themes/${theme}.css" rel="stylesheet" />`
+            : ''
+        }
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
         <script>
@@ -65,23 +91,32 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   });
 
   if (baseUrl) {
-    await page.route(baseUrl, (route) => {
-      if (route.request().url() === `${baseUrl}/`) {
-        /**
-         * Intercepts the empty page request and returns the
-         * HTML content that was passed in.
-         */
-        route.fulfill({
-          status: 200,
-          contentType: 'text/html',
-          body: output,
-        });
-      } else {
-        // Allow all other requests to pass through
-        route.continue();
+    await page.route(
+      baseUrl,
+      (route) => {
+        if (
+          route.request().url() ===
+          `${baseUrl}/`
+        ) {
+          /**
+           * Intercepts the empty page request and returns the
+           * HTML content that was passed in.
+           */
+          route.fulfill({
+            status: 200,
+            contentType: 'text/html',
+            body: output,
+          });
+        } else {
+          // Allow all other requests to pass through
+          route.continue();
+        }
       }
-    });
+    );
 
-    await page.goto(`${baseUrl}#`, options);
+    await page.goto(
+      `${baseUrl}#`,
+      options
+    );
   }
 };

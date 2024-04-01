@@ -1,5 +1,15 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
 import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
@@ -11,7 +21,9 @@ import type { StyleEventDetail } from '../../interface';
   styleUrl: 'skeleton-text.scss',
   shadow: true,
 })
-export class SkeletonText implements ComponentInterface {
+export class SkeletonText
+  implements ComponentInterface
+{
   @Element() el!: HTMLElement;
 
   /**
@@ -23,7 +35,8 @@ export class SkeletonText implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
     this.emitStyle();
@@ -41,15 +54,29 @@ export class SkeletonText implements ComponentInterface {
   }
 
   render() {
-    const animated = this.animated && config.getBoolean('animated', true);
-    const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
+    const animated =
+      this.animated &&
+      config.getBoolean(
+        'animated',
+        true
+      );
+    const inMedia =
+      hostContext(
+        'ion-avatar',
+        this.el
+      ) ||
+      hostContext(
+        'ion-thumbnail',
+        this.el
+      );
     const mode = getIonMode(this);
 
     return (
       <Host
         class={{
           [mode]: true,
-          'skeleton-text-animated': animated,
+          'skeleton-text-animated':
+            animated,
           'in-media': inMedia,
         }}
       >

@@ -1,5 +1,16 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Method,
+  Prop,
+  h,
+} from '@stencil/core';
 import { isEndSide } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -12,7 +23,9 @@ import type { Side } from '../menu/menu-interface';
     md: 'item-options.md.scss',
   },
 })
-export class ItemOptions implements ComponentInterface {
+export class ItemOptions
+  implements ComponentInterface
+{
   @Element() el!: HTMLElement;
 
   /**
@@ -43,7 +56,8 @@ export class ItemOptions implements ComponentInterface {
           [mode]: true,
 
           // Used internally for styling
-          [`item-options-${mode}`]: true,
+          [`item-options-${mode}`]:
+            true,
 
           /**
            * Note: The "start" and "end" terms refer to the

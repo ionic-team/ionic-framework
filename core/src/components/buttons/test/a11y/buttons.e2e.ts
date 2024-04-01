@@ -1,11 +1,21 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('buttons: font scaling'), () => {
-    test('should scale default button text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('buttons: font scaling'),
+      () => {
+        test('should scale default button text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 135%;
@@ -16,17 +26,27 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           <ion-button>Default</ion-button>
         </ion-buttons>
       `,
-        config
-      );
+            config
+          );
 
-      const button = page.locator('ion-button');
+          const button = page.locator(
+            'ion-button'
+          );
 
-      await expect(button).toHaveScreenshot(screenshot(`buttons-default-scale`));
-    });
+          await expect(
+            button
+          ).toHaveScreenshot(
+            screenshot(
+              `buttons-default-scale`
+            )
+          );
+        });
 
-    test('should scale clear button text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should scale clear button text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 135%;
@@ -37,17 +57,27 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           <ion-button fill="clear">Clear</ion-button>
         </ion-buttons>
       `,
-        config
-      );
+            config
+          );
 
-      const button = page.locator('ion-button');
+          const button = page.locator(
+            'ion-button'
+          );
 
-      await expect(button).toHaveScreenshot(screenshot(`buttons-clear-scale`));
-    });
+          await expect(
+            button
+          ).toHaveScreenshot(
+            screenshot(
+              `buttons-clear-scale`
+            )
+          );
+        });
 
-    test('should scale button with icon on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should scale button with icon on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 135%;
@@ -61,17 +91,27 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </ion-button>
         </ion-buttons>
       `,
-        config
-      );
+            config
+          );
 
-      const button = page.locator('ion-button');
+          const button = page.locator(
+            'ion-button'
+          );
 
-      await expect(button).toHaveScreenshot(screenshot(`buttons-icon-scale`));
-    });
+          await expect(
+            button
+          ).toHaveScreenshot(
+            screenshot(
+              `buttons-icon-scale`
+            )
+          );
+        });
 
-    test('should scale button with icon only on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should scale button with icon only on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 135%;
@@ -84,12 +124,22 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </ion-button>
         </ion-buttons>
       `,
-        config
-      );
+            config
+          );
 
-      const button = page.locator('ion-button');
+          const button = page.locator(
+            'ion-button'
+          );
 
-      await expect(button).toHaveScreenshot(screenshot(`buttons-icon-only-scale`));
-    });
-  });
-});
+          await expect(
+            button
+          ).toHaveScreenshot(
+            screenshot(
+              `buttons-icon-only-scale`
+            )
+          );
+        });
+      }
+    );
+  }
+);

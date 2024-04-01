@@ -1,13 +1,25 @@
-import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import type {
+  AnimationBuilder,
+  ComponentProps,
+  ComponentRef,
+  FrameworkDelegate,
+  Mode,
+} from '../../interface';
 
 import type { ViewController } from './view-controller';
 
 // TODO(FW-2832): types
 
-export type NavDirection = 'back' | 'forward';
+export type NavDirection =
+  | 'back'
+  | 'forward';
 
-export type NavComponent = ComponentRef | ViewController;
-export interface NavComponentWithProps<T = any> {
+export type NavComponent =
+  | ComponentRef
+  | ViewController;
+export interface NavComponentWithProps<
+  T = any
+> {
   component: NavComponent;
   componentProps?: ComponentProps<T> | null;
 }
@@ -40,11 +52,14 @@ export interface RouterOutletOptions {
   progressAnimation?: boolean;
 }
 
-export interface NavOptions extends RouterOutletOptions {
+export interface NavOptions
+  extends RouterOutletOptions {
   progressAnimation?: boolean;
   updateURL?: boolean;
   delegate?: FrameworkDelegate;
-  viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
+  viewIsReady?: (
+    enteringEl: HTMLElement
+  ) => Promise<any>;
 }
 
 export type TransitionDoneFn = (
@@ -65,13 +80,18 @@ export interface TransitionInstruction {
   removeStart?: number;
   /** The number of view to remove. A negative number means all views from removeStart */
   removeCount?: number;
-  resolve?: (hasCompleted: boolean) => void;
-  reject?: (rejectReason: string) => void;
+  resolve?: (
+    hasCompleted: boolean
+  ) => void;
+  reject?: (
+    rejectReason: string
+  ) => void;
   done?: TransitionDoneFn;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
 }
 
-export interface NavCustomEvent extends CustomEvent {
+export interface NavCustomEvent
+  extends CustomEvent {
   target: HTMLIonNavElement;
 }

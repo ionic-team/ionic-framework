@@ -7,9 +7,16 @@ import type { Side } from '../components/menu/menu-interface';
 declare const __zone_symbol__requestAnimationFrame: typeof window.requestAnimationFrame;
 declare const requestAnimationFrame: typeof window.requestAnimationFrame;
 
-export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0) => {
+export const transitionEndAsync = (
+  el: HTMLElement | null,
+  expectedDuration = 0
+) => {
   return new Promise((resolve) => {
-    transitionEnd(el, expectedDuration, resolve);
+    transitionEnd(
+      el,
+      expectedDuration,
+      resolve
+    );
   });
 };
 
@@ -20,10 +27,21 @@ export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0)
  * never finishes. Also see transitionEndAsync
  * which is an await-able version of this.
  */
-const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
-  let unRegTrans: (() => void) | undefined;
-  let animationTimeout: number | undefined;
-  const opts: AddEventListenerOptions = { passive: true };
+const transitionEnd = (
+  el: HTMLElement | null,
+  expectedDuration = 0,
+  callback: (
+    ev?: TransitionEvent
+  ) => void
+) => {
+  let unRegTrans:
+    | (() => void)
+    | undefined;
+  let animationTimeout:
+    | number
+    | undefined;
+  const opts: AddEventListenerOptions =
+    { passive: true };
   const ANIMATION_FALLBACK_TIMEOUT = 500;
 
   const unregister = () => {
@@ -32,25 +50,52 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
     }
   };
 
-  const onTransitionEnd = (ev?: Event) => {
-    if (ev === undefined || el === ev.target) {
+  const onTransitionEnd = (
+    ev?: Event
+  ) => {
+    if (
+      ev === undefined ||
+      el === ev.target
+    ) {
       unregister();
       callback(ev as TransitionEvent);
     }
   };
 
   if (el) {
-    el.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
-    el.addEventListener('transitionend', onTransitionEnd, opts);
-    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
+    el.addEventListener(
+      'webkitTransitionEnd',
+      onTransitionEnd,
+      opts
+    );
+    el.addEventListener(
+      'transitionend',
+      onTransitionEnd,
+      opts
+    );
+    animationTimeout = setTimeout(
+      onTransitionEnd,
+      expectedDuration +
+        ANIMATION_FALLBACK_TIMEOUT
+    );
 
     unRegTrans = () => {
-      if (animationTimeout !== undefined) {
+      if (
+        animationTimeout !== undefined
+      ) {
         clearTimeout(animationTimeout);
         animationTimeout = undefined;
       }
-      el.removeEventListener('webkitTransitionEnd', onTransitionEnd, opts);
-      el.removeEventListener('transitionend', onTransitionEnd, opts);
+      el.removeEventListener(
+        'webkitTransitionEnd',
+        onTransitionEnd,
+        opts
+      );
+      el.removeEventListener(
+        'transitionend',
+        onTransitionEnd,
+        opts
+      );
     };
   }
 
@@ -69,10 +114,16 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
  * Use this utility rather than calling
  * el.componentOnReady yourself.
  */
-export const componentOnReady = (el: any, callback: any) => {
+export const componentOnReady = (
+  el: any,
+  callback: any
+) => {
   if (el.componentOnReady) {
     // eslint-disable-next-line custom-rules/no-component-on-ready-method
-    el.componentOnReady().then((resolvedEl: any) => callback(resolvedEl));
+    el.componentOnReady().then(
+      (resolvedEl: any) =>
+        callback(resolvedEl)
+    );
   } else {
     raf(() => callback(el));
   }
@@ -83,11 +134,18 @@ export const componentOnReady = (el: any, callback: any) => {
  * the lazy loaded build of Stencil. Returns `true` if
  * the component is lazy loaded. Returns `false` otherwise.
  */
-export const hasLazyBuild = (stencilEl: HTMLElement) => {
-  return (stencilEl as any).componentOnReady !== undefined;
+export const hasLazyBuild = (
+  stencilEl: HTMLElement
+) => {
+  return (
+    (stencilEl as any)
+      .componentOnReady !== undefined
+  );
 };
 
-export type Attributes = { [key: string]: any };
+export type Attributes = {
+  [key: string]: any;
+};
 
 /**
  * Elements inside of web components sometimes need to inherit global attributes
@@ -99,14 +157,20 @@ export type Attributes = { [key: string]: any };
  * This does not need to be reactive as changing attributes on the host element
  * does not trigger a re-render.
  */
-export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
-  const attributeObject: Attributes = {};
+export const inheritAttributes = (
+  el: HTMLElement,
+  attributes: string[] = []
+) => {
+  const attributeObject: Attributes =
+    {};
 
   attributes.forEach((attr) => {
     if (el.hasAttribute(attr)) {
-      const value = el.getAttribute(attr);
+      const value =
+        el.getAttribute(attr);
       if (value !== null) {
-        attributeObject[attr] = el.getAttribute(attr);
+        attributeObject[attr] =
+          el.getAttribute(attr);
       }
       el.removeAttribute(attr);
     }
@@ -181,46 +245,104 @@ const ariaAttributes = [
  * @param ignoreList The list of aria-attributes to ignore reflecting and removing from the host.
  * Use this in instances where we manually specify aria attributes on the `<Host>` element.
  */
-export const inheritAriaAttributes = (el: HTMLElement, ignoreList?: string[]) => {
-  let attributesToInherit = ariaAttributes;
-  if (ignoreList && ignoreList.length > 0) {
-    attributesToInherit = attributesToInherit.filter((attr) => !ignoreList.includes(attr));
+export const inheritAriaAttributes = (
+  el: HTMLElement,
+  ignoreList?: string[]
+) => {
+  let attributesToInherit =
+    ariaAttributes;
+  if (
+    ignoreList &&
+    ignoreList.length > 0
+  ) {
+    attributesToInherit =
+      attributesToInherit.filter(
+        (attr) =>
+          !ignoreList.includes(attr)
+      );
   }
-  return inheritAttributes(el, attributesToInherit);
+  return inheritAttributes(
+    el,
+    attributesToInherit
+  );
 };
 
-export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
-  if (typeof (window as any) !== 'undefined') {
+export const addEventListener = (
+  el: any,
+  eventName: string,
+  callback: any,
+  opts?: any
+) => {
+  if (
+    typeof (window as any) !==
+    'undefined'
+  ) {
     const win = window as any;
     const config = win?.Ionic?.config;
     if (config) {
       const ael = config.get('_ael');
       if (ael) {
-        return ael(el, eventName, callback, opts);
+        return ael(
+          el,
+          eventName,
+          callback,
+          opts
+        );
       } else if (config._ael) {
-        return config._ael(el, eventName, callback, opts);
+        return config._ael(
+          el,
+          eventName,
+          callback,
+          opts
+        );
       }
     }
   }
 
-  return el.addEventListener(eventName, callback, opts);
+  return el.addEventListener(
+    eventName,
+    callback,
+    opts
+  );
 };
 
-export const removeEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
-  if (typeof (window as any) !== 'undefined') {
+export const removeEventListener = (
+  el: any,
+  eventName: string,
+  callback: any,
+  opts?: any
+) => {
+  if (
+    typeof (window as any) !==
+    'undefined'
+  ) {
     const win = window as any;
     const config = win?.Ionic?.config;
     if (config) {
       const rel = config.get('_rel');
       if (rel) {
-        return rel(el, eventName, callback, opts);
+        return rel(
+          el,
+          eventName,
+          callback,
+          opts
+        );
       } else if (config._rel) {
-        return config._rel(el, eventName, callback, opts);
+        return config._rel(
+          el,
+          eventName,
+          callback,
+          opts
+        );
       }
     }
   }
 
-  return el.removeEventListener(eventName, callback, opts);
+  return el.removeEventListener(
+    eventName,
+    callback,
+    opts
+  );
 };
 
 /**
@@ -232,7 +354,10 @@ export const removeEventListener = (el: any, eventName: string, callback: any, o
  * Useful for whenever you need to explicitly
  * do "myElement.shadowRoot!.querySelector(...)".
  */
-export const getElementRoot = (el: HTMLElement, fallback: HTMLElement = el) => {
+export const getElementRoot = (
+  el: HTMLElement,
+  fallback: HTMLElement = el
+) => {
   return el.shadowRoot || fallback;
 };
 
@@ -240,29 +365,51 @@ export const getElementRoot = (el: HTMLElement, fallback: HTMLElement = el) => {
  * Patched version of requestAnimationFrame that avoids ngzone
  * Use only when you know ngzone should not run
  */
-export const raf = (h: FrameRequestCallback) => {
-  if (typeof __zone_symbol__requestAnimationFrame === 'function') {
-    return __zone_symbol__requestAnimationFrame(h);
+export const raf = (
+  h: FrameRequestCallback
+) => {
+  if (
+    typeof __zone_symbol__requestAnimationFrame ===
+    'function'
+  ) {
+    return __zone_symbol__requestAnimationFrame(
+      h
+    );
   }
-  if (typeof requestAnimationFrame === 'function') {
+  if (
+    typeof requestAnimationFrame ===
+    'function'
+  ) {
     return requestAnimationFrame(h);
   }
   return setTimeout(h);
 };
 
-export const hasShadowDom = (el: HTMLElement) => {
-  return !!el.shadowRoot && !!(el as any).attachShadow;
+export const hasShadowDom = (
+  el: HTMLElement
+) => {
+  return (
+    !!el.shadowRoot &&
+    !!(el as any).attachShadow
+  );
 };
 
-export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | null => {
-  const itemEl = componentEl.closest('ion-item');
+export const findItemLabel = (
+  componentEl: HTMLElement
+): HTMLIonLabelElement | null => {
+  const itemEl =
+    componentEl.closest('ion-item');
   if (itemEl) {
-    return itemEl.querySelector('ion-label');
+    return itemEl.querySelector(
+      'ion-label'
+    );
   }
   return null;
 };
 
-export const focusVisibleElement = (el: HTMLElement) => {
+export const focusVisibleElement = (
+  el: HTMLElement
+) => {
   el.focus();
 
   /**
@@ -273,7 +420,11 @@ export const focusVisibleElement = (el: HTMLElement) => {
    * this behavior so we call the `setFocus` method on ion-app
    * which will let us explicitly set the elements to focus.
    */
-  if (el.classList.contains('ion-focusable')) {
+  if (
+    el.classList.contains(
+      'ion-focusable'
+    )
+  ) {
     const app = el.closest('ion-app');
     if (app) {
       app.setFocus([el]);
@@ -297,21 +448,37 @@ export const focusVisibleElement = (el: HTMLElement) => {
 export const getAriaLabel = (
   componentEl: HTMLElement,
   inputId: string
-): { label: Element | null; labelId: string; labelText: string | null | undefined } => {
+): {
+  label: Element | null;
+  labelId: string;
+  labelText: string | null | undefined;
+} => {
   let labelText;
 
   // If the user provides their own label via the aria-labelledby attr
   // we should use that instead of looking for an ion-label
-  const labelledBy = componentEl.getAttribute('aria-labelledby');
+  const labelledBy =
+    componentEl.getAttribute(
+      'aria-labelledby'
+    );
 
   // Grab the id off of the component in case they are using
   // a custom label using the label element
   const componentId = componentEl.id;
 
-  let labelId = labelledBy !== null && labelledBy.trim() !== '' ? labelledBy : inputId + '-lbl';
+  let labelId =
+    labelledBy !== null &&
+    labelledBy.trim() !== ''
+      ? labelledBy
+      : inputId + '-lbl';
 
   let label =
-    labelledBy !== null && labelledBy.trim() !== '' ? document.getElementById(labelledBy) : findItemLabel(componentEl);
+    labelledBy !== null &&
+    labelledBy.trim() !== ''
+      ? document.getElementById(
+          labelledBy
+        )
+      : findItemLabel(componentEl);
 
   if (label) {
     if (labelledBy === null) {
@@ -319,18 +486,26 @@ export const getAriaLabel = (
     }
 
     labelText = label.textContent;
-    label.setAttribute('aria-hidden', 'true');
+    label.setAttribute(
+      'aria-hidden',
+      'true'
+    );
 
     // if there is no label, check to see if the user has provided
     // one by setting an id on the component and using the label element
-  } else if (componentId.trim() !== '') {
-    label = document.querySelector(`label[for="${componentId}"]`);
+  } else if (
+    componentId.trim() !== ''
+  ) {
+    label = document.querySelector(
+      `label[for="${componentId}"]`
+    );
 
     if (label) {
       if (label.id !== '') {
         labelId = label.id;
       } else {
-        label.id = labelId = `${componentId}-lbl`;
+        label.id =
+          labelId = `${componentId}-lbl`;
       }
 
       labelText = label.textContent;
@@ -359,10 +534,18 @@ export const renderHiddenInput = (
   value: string | undefined | null,
   disabled: boolean
 ) => {
-  if (always || hasShadowDom(container)) {
-    let input = container.querySelector('input.aux-input') as HTMLInputElement | null;
+  if (
+    always ||
+    hasShadowDom(container)
+  ) {
+    let input = container.querySelector(
+      'input.aux-input'
+    ) as HTMLInputElement | null;
     if (!input) {
-      input = container.ownerDocument!.createElement('input');
+      input =
+        container.ownerDocument!.createElement(
+          'input'
+        );
       input.type = 'hidden';
       input.classList.add('aux-input');
       container.appendChild(input);
@@ -373,11 +556,21 @@ export const renderHiddenInput = (
   }
 };
 
-export const clamp = (min: number, n: number, max: number) => {
-  return Math.max(min, Math.min(n, max));
+export const clamp = (
+  min: number,
+  n: number,
+  max: number
+) => {
+  return Math.max(
+    min,
+    Math.min(n, max)
+  );
 };
 
-export const assert = (actual: any, reason: string) => {
+export const assert = (
+  actual: any,
+  reason: string
+) => {
   if (!actual) {
     const message = 'ASSERT: ' + reason;
     console.error(message);
@@ -390,17 +583,29 @@ export const now = (ev: UIEvent) => {
   return ev.timeStamp || Date.now();
 };
 
-export const pointerCoord = (ev: any): { x: number; y: number } => {
+export const pointerCoord = (
+  ev: any
+): { x: number; y: number } => {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
-    const changedTouches = ev.changedTouches;
-    if (changedTouches && changedTouches.length > 0) {
+    const changedTouches =
+      ev.changedTouches;
+    if (
+      changedTouches &&
+      changedTouches.length > 0
+    ) {
       const touch = changedTouches[0];
-      return { x: touch.clientX, y: touch.clientY };
+      return {
+        x: touch.clientX,
+        y: touch.clientY,
+      };
     }
     if (ev.pageX !== undefined) {
-      return { x: ev.pageX, y: ev.pageY };
+      return {
+        x: ev.pageX,
+        y: ev.pageY,
+      };
     }
   }
   return { x: 0, y: 0 };
@@ -413,7 +618,9 @@ export const pointerCoord = (ev: any): { x: number; y: number } => {
  * @param side the side
  * @param isRTL whether the application dir is rtl
  */
-export const isEndSide = (side: Side): boolean => {
+export const isEndSide = (
+  side: Side
+): boolean => {
   const isRTL = document.dir === 'rtl';
   switch (side) {
     case 'start':
@@ -421,27 +628,45 @@ export const isEndSide = (side: Side): boolean => {
     case 'end':
       return !isRTL;
     default:
-      throw new Error(`"${side}" is not a valid value for [side]. Use "start" or "end" instead.`);
+      throw new Error(
+        `"${side}" is not a valid value for [side]. Use "start" or "end" instead.`
+      );
   }
 };
 
-export const deferEvent = (event: EventEmitter): EventEmitter => {
+export const deferEvent = (
+  event: EventEmitter
+): EventEmitter => {
   return debounceEvent(event, 0);
 };
 
-export const debounceEvent = (event: EventEmitter, wait: number): EventEmitter => {
-  const original = (event as any)._original || event;
+export const debounceEvent = (
+  event: EventEmitter,
+  wait: number
+): EventEmitter => {
+  const original =
+    (event as any)._original || event;
   return {
     _original: event,
-    emit: debounce(original.emit.bind(original), wait),
+    emit: debounce(
+      original.emit.bind(original),
+      wait
+    ),
   } as EventEmitter;
 };
 
-export const debounce = (func: (...args: any[]) => void, wait = 0) => {
+export const debounce = (
+  func: (...args: any[]) => void,
+  wait = 0
+) => {
   let timer: any;
   return (...args: any[]): any => {
     clearTimeout(timer);
-    timer = setTimeout(func, wait, ...args);
+    timer = setTimeout(
+      func,
+      wait,
+      ...args
+    );
   };
 };
 
@@ -453,7 +678,9 @@ export const debounce = (func: (...args: any[]) => void, wait = 0) => {
  * @returns whether the keys are the same and the values are shallow equal.
  */
 export const shallowEqualStringMap = (
-  map1: { [k: string]: any } | undefined,
+  map1:
+    | { [k: string]: any }
+    | undefined,
   map2: { [k: string]: any } | undefined
 ): boolean => {
   map1 ??= {};
@@ -465,7 +692,10 @@ export const shallowEqualStringMap = (
 
   const keys1 = Object.keys(map1);
 
-  if (keys1.length !== Object.keys(map2).length) {
+  if (
+    keys1.length !==
+    Object.keys(map2).length
+  ) {
     return false;
   }
 

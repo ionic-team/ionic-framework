@@ -1,24 +1,41 @@
-const cloneMap = new WeakMap<HTMLElement, HTMLElement>();
+const cloneMap = new WeakMap<
+  HTMLElement,
+  HTMLElement
+>();
 
 export const relocateInput = (
   componentEl: HTMLElement,
-  inputEl: HTMLInputElement | HTMLTextAreaElement,
+  inputEl:
+    | HTMLInputElement
+    | HTMLTextAreaElement,
   shouldRelocate: boolean,
   inputRelativeY = 0,
   disabledClonedInput = false
 ) => {
-  if (cloneMap.has(componentEl) === shouldRelocate) {
+  if (
+    cloneMap.has(componentEl) ===
+    shouldRelocate
+  ) {
     return;
   }
 
   if (shouldRelocate) {
-    addClone(componentEl, inputEl, inputRelativeY, disabledClonedInput);
+    addClone(
+      componentEl,
+      inputEl,
+      inputRelativeY,
+      disabledClonedInput
+    );
   } else {
     removeClone(componentEl, inputEl);
   }
 };
 
-export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolean => {
+export const isFocused = (
+  input:
+    | HTMLInputElement
+    | HTMLTextAreaElement
+): boolean => {
   /**
    * https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode
    * Calling getRootNode on an element in standard web page will return HTMLDocument.
@@ -28,12 +45,21 @@ export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolea
    * isFocused is used for the hide-caret utility which only considers input/textarea elements
    * that are present in the DOM, so we don't set types for that final case since it does not apply.
    */
-  return input === (input.getRootNode() as HTMLDocument | ShadowRoot).activeElement;
+  return (
+    input ===
+    (
+      input.getRootNode() as
+        | HTMLDocument
+        | ShadowRoot
+    ).activeElement
+  );
 };
 
 const addClone = (
   componentEl: HTMLElement,
-  inputEl: HTMLInputElement | HTMLTextAreaElement,
+  inputEl:
+    | HTMLInputElement
+    | HTMLTextAreaElement,
   inputRelativeY: number,
   disabledClonedInput = false
 ) => {
@@ -49,8 +75,14 @@ const addClone = (
   const parentEl = inputEl.parentNode!;
 
   // DOM WRITES
-  const clonedEl = inputEl.cloneNode(false) as HTMLInputElement | HTMLTextAreaElement;
-  clonedEl.classList.add('cloned-input');
+  const clonedEl = inputEl.cloneNode(
+    false
+  ) as
+    | HTMLInputElement
+    | HTMLTextAreaElement;
+  clonedEl.classList.add(
+    'cloned-input'
+  );
   clonedEl.tabIndex = -1;
 
   /**
@@ -71,14 +103,22 @@ const addClone = (
   parentEl.appendChild(clonedEl);
   cloneMap.set(componentEl, clonedEl);
 
-  const doc = componentEl.ownerDocument!;
-  const tx = doc.dir === 'rtl' ? 9999 : -9999;
-  componentEl.style.pointerEvents = 'none';
+  const doc =
+    componentEl.ownerDocument!;
+  const tx =
+    doc.dir === 'rtl' ? 9999 : -9999;
+  componentEl.style.pointerEvents =
+    'none';
   inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0) scale(0)`;
 };
 
-const removeClone = (componentEl: HTMLElement, inputEl: HTMLElement) => {
-  const clone = cloneMap.get(componentEl);
+const removeClone = (
+  componentEl: HTMLElement,
+  inputEl: HTMLElement
+) => {
+  const clone = cloneMap.get(
+    componentEl
+  );
   if (clone) {
     cloneMap.delete(componentEl);
     clone.remove();

@@ -8,10 +8,21 @@ it('should inherit attributes', async () => {
     html: '<ion-textarea title="my title" tabindex="-1" data-form-type="password"></ion-textarea>',
   });
 
-  const nativeEl = page.body.querySelector('ion-textarea textarea')!;
-  expect(nativeEl.getAttribute('title')).toBe('my title');
-  expect(nativeEl.getAttribute('tabindex')).toBe('-1');
-  expect(nativeEl.getAttribute('data-form-type')).toBe('password');
+  const nativeEl =
+    page.body.querySelector(
+      'ion-textarea textarea'
+    )!;
+  expect(
+    nativeEl.getAttribute('title')
+  ).toBe('my title');
+  expect(
+    nativeEl.getAttribute('tabindex')
+  ).toBe('-1');
+  expect(
+    nativeEl.getAttribute(
+      'data-form-type'
+    )
+  ).toBe('password');
 });
 
 /**
@@ -32,11 +43,19 @@ describe('textarea: label rendering', () => {
       `,
     });
 
-    const textarea = page.body.querySelector('ion-textarea')!;
+    const textarea =
+      page.body.querySelector(
+        'ion-textarea'
+      )!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper')!;
+    const labelText =
+      textarea.querySelector(
+        '.label-text-wrapper'
+      )!;
 
-    expect(labelText.textContent).toBe('Label Prop Text');
+    expect(labelText.textContent).toBe(
+      'Label Prop Text'
+    );
   });
   it('should render label slot if only slot provided', async () => {
     const page = await newSpecPage({
@@ -46,11 +65,19 @@ describe('textarea: label rendering', () => {
       `,
     });
 
-    const textarea = page.body.querySelector('ion-textarea')!;
+    const textarea =
+      page.body.querySelector(
+        'ion-textarea'
+      )!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper')!;
+    const labelText =
+      textarea.querySelector(
+        '.label-text-wrapper'
+      )!;
 
-    expect(labelText.textContent).toBe('Label Prop Slot');
+    expect(labelText.textContent).toBe(
+      'Label Prop Slot'
+    );
   });
   it('should render label prop if both prop and slot provided', async () => {
     const page = await newSpecPage({
@@ -60,10 +87,18 @@ describe('textarea: label rendering', () => {
       `,
     });
 
-    const textarea = page.body.querySelector('ion-textarea')!;
+    const textarea =
+      page.body.querySelector(
+        'ion-textarea'
+      )!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper')!;
+    const labelText =
+      textarea.querySelector(
+        '.label-text-wrapper'
+      )!;
 
-    expect(labelText.textContent).toBe('Label Prop Text');
+    expect(labelText.textContent).toBe(
+      'Label Prop Text'
+    );
   });
 });

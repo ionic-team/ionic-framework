@@ -9,24 +9,34 @@ it('popover should be assigned an incrementing id', async () => {
   });
   let popover: HTMLIonPopoverElement;
 
-  popover = page.body.querySelector('ion-popover')!;
+  popover = page.body.querySelector(
+    'ion-popover'
+  )!;
 
   expect(popover).not.toBe(null);
-  expect(popover.getAttribute('id')).toBe('ion-overlay-1');
+  expect(
+    popover.getAttribute('id')
+  ).toBe('ion-overlay-1');
 
   // Remove the popover from the DOM
   popover.remove();
   await page.waitForChanges();
 
   // Create a new popover to verify the id is incremented
-  popover = document.createElement('ion-popover');
+  popover = document.createElement(
+    'ion-popover'
+  );
   popover.isOpen = true;
   page.body.appendChild(popover);
   await page.waitForChanges();
 
-  popover = page.body.querySelector('ion-popover')!;
+  popover = page.body.querySelector(
+    'ion-popover'
+  )!;
 
-  expect(popover.getAttribute('id')).toBe('ion-overlay-2');
+  expect(
+    popover.getAttribute('id')
+  ).toBe('ion-overlay-2');
 
   // Presenting the same popover again should reuse the existing id
 
@@ -35,7 +45,11 @@ it('popover should be assigned an incrementing id', async () => {
   popover.isOpen = true;
   await page.waitForChanges();
 
-  popover = page.body.querySelector('ion-popover')!;
+  popover = page.body.querySelector(
+    'ion-popover'
+  )!;
 
-  expect(popover.getAttribute('id')).toBe('ion-overlay-2');
+  expect(
+    popover.getAttribute('id')
+  ).toBe('ion-overlay-2');
 });

@@ -1,5 +1,16 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Listen,
+  Prop,
+  h,
+} from '@stencil/core';
 import type { AnchorInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
@@ -25,8 +36,13 @@ import type {
   },
   shadow: true,
 })
-export class TabButton implements ComponentInterface, AnchorInterface {
-  private inheritedAttributes: Attributes = {};
+export class TabButton
+  implements
+    ComponentInterface,
+    AnchorInterface
+{
+  private inheritedAttributes: Attributes =
+    {};
 
   @Element() el!: HTMLElement;
 
@@ -59,12 +75,14 @@ export class TabButton implements ComponentInterface, AnchorInterface {
    * Set the layout of the text and icon in the tab bar.
    * It defaults to `"icon-top"`.
    */
-  @Prop({ mutable: true }) layout?: TabButtonLayout;
+  @Prop({ mutable: true })
+  layout?: TabButtonLayout;
 
   /**
    * The selected tab component
    */
-  @Prop({ mutable: true }) selected = false;
+  @Prop({ mutable: true }) selected =
+    false;
 
   /**
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
@@ -83,29 +101,49 @@ export class TabButton implements ComponentInterface, AnchorInterface {
    * Emitted when the tab bar is clicked
    * @internal
    */
-  @Event() ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
+  @Event()
+  ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
 
-  @Listen('ionTabBarChanged', { target: 'window' })
-  onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
-    const dispatchedFrom = ev.target as HTMLElement;
-    const parent = this.el.parentElement as EventTarget;
+  @Listen('ionTabBarChanged', {
+    target: 'window',
+  })
+  onTabBarChanged(
+    ev: CustomEvent<TabBarChangedEventDetail>
+  ) {
+    const dispatchedFrom =
+      ev.target as HTMLElement;
+    const parent = this.el
+      .parentElement as EventTarget;
 
-    if (ev.composedPath().includes(parent) || dispatchedFrom?.contains(this.el)) {
-      this.selected = this.tab === ev.detail.tab;
+    if (
+      ev
+        .composedPath()
+        .includes(parent) ||
+      dispatchedFrom?.contains(this.el)
+    ) {
+      this.selected =
+        this.tab === ev.detail.tab;
     }
   }
 
   componentWillLoad() {
     this.inheritedAttributes = {
-      ...inheritAttributes(this.el, ['aria-label']),
+      ...inheritAttributes(this.el, [
+        'aria-label',
+      ]),
     };
 
     if (this.layout === undefined) {
-      this.layout = config.get('tabButtonLayout', 'icon-top');
+      this.layout = config.get(
+        'tabButtonLayout',
+        'icon-top'
+      );
     }
   }
 
-  private selectTab(ev: Event | KeyboardEvent) {
+  private selectTab(
+    ev: Event | KeyboardEvent
+  ) {
     if (this.tab !== undefined) {
       if (!this.disabled) {
         this.ionTabButtonClick.emit({
@@ -119,15 +157,24 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   private get hasLabel() {
-    return !!this.el.querySelector('ion-label');
+    return !!this.el.querySelector(
+      'ion-label'
+    );
   }
 
   private get hasIcon() {
-    return !!this.el.querySelector('ion-icon');
+    return !!this.el.querySelector(
+      'ion-icon'
+    );
   }
 
-  private onKeyUp = (ev: KeyboardEvent) => {
-    if (ev.key === 'Enter' || ev.key === ' ') {
+  private onKeyUp = (
+    ev: KeyboardEvent
+  ) => {
+    if (
+      ev.key === 'Enter' ||
+      ev.key === ' '
+    ) {
       this.selectTab(ev);
     }
   };
@@ -137,7 +184,18 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   };
 
   render() {
-    const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;
+    const {
+      disabled,
+      hasIcon,
+      hasLabel,
+      href,
+      rel,
+      target,
+      layout,
+      selected,
+      tab,
+      inheritedAttributes,
+    } = this;
     const mode = getIonMode(this);
     const attrs = {
       download: this.download,
@@ -150,16 +208,23 @@ export class TabButton implements ComponentInterface, AnchorInterface {
       <Host
         onClick={this.onClick}
         onKeyup={this.onKeyUp}
-        id={tab !== undefined ? `tab-button-${tab}` : null}
+        id={
+          tab !== undefined
+            ? `tab-button-${tab}`
+            : null
+        }
         class={{
           [mode]: true,
           'tab-selected': selected,
           'tab-disabled': disabled,
           'tab-has-label': hasLabel,
           'tab-has-icon': hasIcon,
-          'tab-has-label-only': hasLabel && !hasIcon,
-          'tab-has-icon-only': hasIcon && !hasLabel,
-          [`tab-layout-${layout}`]: true,
+          'tab-has-label-only':
+            hasLabel && !hasIcon,
+          'tab-has-icon-only':
+            hasIcon && !hasLabel,
+          [`tab-layout-${layout}`]:
+            true,
           'ion-activatable': true,
           'ion-selectable': true,
           'ion-focusable': true,
@@ -170,15 +235,23 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           class="button-native"
           part="native"
           role="tab"
-          aria-selected={selected ? 'true' : null}
-          aria-disabled={disabled ? 'true' : null}
-          tabindex={disabled ? '-1' : undefined}
+          aria-selected={
+            selected ? 'true' : null
+          }
+          aria-disabled={
+            disabled ? 'true' : null
+          }
+          tabindex={
+            disabled ? '-1' : undefined
+          }
           {...inheritedAttributes}
         >
           <span class="button-inner">
             <slot></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+          {mode === 'md' && (
+            <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+          )}
         </a>
       </Host>
     );

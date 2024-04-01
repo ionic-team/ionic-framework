@@ -10,30 +10,68 @@ it('should inherit attributes', async () => {
    */
   const page = await newSpecPage({
     components: [Modal],
-    template: () => <ion-modal overlayIndex={1} aria-label="my label" role="presentation"></ion-modal>,
+    template: () => (
+      <ion-modal
+        overlayIndex={1}
+        aria-label="my label"
+        role="presentation"
+      ></ion-modal>
+    ),
   });
 
-  const modal = page.body.querySelector('ion-modal')!;
-  const contentWrapper = modal.shadowRoot!.querySelector('[part="content"]')!;
+  const modal = page.body.querySelector(
+    'ion-modal'
+  )!;
+  const contentWrapper =
+    modal.shadowRoot!.querySelector(
+      '[part="content"]'
+    )!;
 
-  expect(contentWrapper.getAttribute('aria-label')).toBe('my label');
-  expect(contentWrapper.getAttribute('role')).toBe('presentation');
+  expect(
+    contentWrapper.getAttribute(
+      'aria-label'
+    )
+  ).toBe('my label');
+  expect(
+    contentWrapper.getAttribute('role')
+  ).toBe('presentation');
 });
 
 it('should inherit attributes when set via htmlAttributes', async () => {
   const page = await newSpecPage({
     components: [Modal],
     template: () => (
-      <ion-modal overlayIndex={1} htmlAttributes={{ 'aria-label': 'my label', role: 'presentation' }}></ion-modal>
+      <ion-modal
+        overlayIndex={1}
+        htmlAttributes={{
+          'aria-label': 'my label',
+          role: 'presentation',
+        }}
+      ></ion-modal>
     ),
   });
 
-  const modal = page.body.querySelector('ion-modal')!;
-  const contentWrapper = modal.shadowRoot!.querySelector('[part="content"]')!;
+  const modal = page.body.querySelector(
+    'ion-modal'
+  )!;
+  const contentWrapper =
+    modal.shadowRoot!.querySelector(
+      '[part="content"]'
+    )!;
 
-  expect(contentWrapper.getAttribute('aria-label')).toBe('my label');
-  expect(contentWrapper.getAttribute('role')).toBe('presentation');
+  expect(
+    contentWrapper.getAttribute(
+      'aria-label'
+    )
+  ).toBe('my label');
+  expect(
+    contentWrapper.getAttribute('role')
+  ).toBe('presentation');
 
-  expect(modal.hasAttribute('aria-label')).toBe(false);
-  expect(modal.hasAttribute('role')).toBe(false);
+  expect(
+    modal.hasAttribute('aria-label')
+  ).toBe(false);
+  expect(
+    modal.hasAttribute('role')
+  ).toBe(false);
 });

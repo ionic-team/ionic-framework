@@ -1,4 +1,9 @@
-import type { AnimationBuilder, Color, LiteralUnion, Mode } from '../../interface';
+import type {
+  AnimationBuilder,
+  Color,
+  LiteralUnion,
+  Mode,
+} from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface ToastOptions {
@@ -7,13 +12,18 @@ export interface ToastOptions {
   cssClass?: string | string[];
   duration?: number;
   buttons?: (ToastButton | string)[];
-  position?: 'top' | 'bottom' | 'middle';
+  position?:
+    | 'top'
+    | 'bottom'
+    | 'middle';
   positionAnchor?: HTMLElement | string;
   swipeGesture?: ToastSwipeGestureDirection;
   translucent?: boolean;
   animated?: boolean;
   icon?: string;
-  htmlAttributes?: { [key: string]: any };
+  htmlAttributes?: {
+    [key: string]: any;
+  };
   layout?: ToastLayout;
 
   color?: Color;
@@ -25,7 +35,9 @@ export interface ToastOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export type ToastLayout = 'baseline' | 'stacked';
+export type ToastLayout =
+  | 'baseline'
+  | 'stacked';
 
 // TODO FW-4923 remove cssClass property
 
@@ -38,11 +50,19 @@ export interface ToastButton {
    * @deprecated Use the toast button's CSS Shadow Parts instead.
    */
   cssClass?: string | string[];
-  htmlAttributes?: { [key: string]: any };
-  handler?: () => boolean | void | Promise<boolean | void>;
+  htmlAttributes?: {
+    [key: string]: any;
+  };
+  handler?: () =>
+    | boolean
+    | void
+    | Promise<boolean | void>;
 }
 
-export type ToastPosition = 'top' | 'bottom' | 'middle';
+export type ToastPosition =
+  | 'top'
+  | 'bottom'
+  | 'middle';
 
 interface ToastPositionAlias {
   position: ToastPosition;
@@ -53,6 +73,11 @@ export interface ToastAnimationPosition {
   bottom: string;
 }
 
-export type ToastPresentOptions = ToastPositionAlias & ToastAnimationPosition;
-export type ToastDismissOptions = ToastPositionAlias & ToastAnimationPosition;
-export type ToastSwipeGestureDirection = 'vertical';
+export type ToastPresentOptions =
+  ToastPositionAlias &
+    ToastAnimationPosition;
+export type ToastDismissOptions =
+  ToastPositionAlias &
+    ToastAnimationPosition;
+export type ToastSwipeGestureDirection =
+  'vertical';

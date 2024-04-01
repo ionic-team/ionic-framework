@@ -1,10 +1,20 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Event, Prop, Watch } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Event,
+  Prop,
+  Watch,
+} from '@stencil/core';
 
 @Component({
   tag: 'ion-route-redirect',
 })
-export class RouteRedirect implements ComponentInterface {
+export class RouteRedirect
+  implements ComponentInterface
+{
   /**
    * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL.
    * It needs to be an exact match of the navigated URL in order to apply.
@@ -29,7 +39,10 @@ export class RouteRedirect implements ComponentInterface {
    * When this property is not specified or his value is `undefined` the whole redirect route is noop,
    * even if the "from" value matches.
    */
-  @Prop() to!: string | undefined | null;
+  @Prop() to!:
+    | string
+    | undefined
+    | null;
 
   /**
    * Internal event that fires when any value of this rule is added/removed from the DOM,
@@ -37,7 +50,8 @@ export class RouteRedirect implements ComponentInterface {
    *
    * `ion-router` captures this event in order to update his internal registry of router rules.
    */
-  @Event() ionRouteRedirectChanged!: EventEmitter;
+  @Event()
+  ionRouteRedirectChanged!: EventEmitter;
 
   @Watch('from')
   @Watch('to')

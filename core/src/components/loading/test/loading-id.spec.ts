@@ -9,24 +9,34 @@ it('loading should be assigned an incrementing id', async () => {
   });
   let loading: HTMLIonLoadingElement;
 
-  loading = page.body.querySelector('ion-loading')!;
+  loading = page.body.querySelector(
+    'ion-loading'
+  )!;
 
   expect(loading).not.toBe(null);
-  expect(loading.getAttribute('id')).toBe('ion-overlay-1');
+  expect(
+    loading.getAttribute('id')
+  ).toBe('ion-overlay-1');
 
   // Remove the loading from the DOM
   loading.remove();
   await page.waitForChanges();
 
   // Create a new loading to verify the id is incremented
-  loading = document.createElement('ion-loading');
+  loading = document.createElement(
+    'ion-loading'
+  );
   loading.isOpen = true;
   page.body.appendChild(loading);
   await page.waitForChanges();
 
-  loading = page.body.querySelector('ion-loading')!;
+  loading = page.body.querySelector(
+    'ion-loading'
+  )!;
 
-  expect(loading.getAttribute('id')).toBe('ion-overlay-2');
+  expect(
+    loading.getAttribute('id')
+  ).toBe('ion-overlay-2');
 
   // Presenting the same loading again should reuse the existing id
 
@@ -35,7 +45,11 @@ it('loading should be assigned an incrementing id', async () => {
   loading.isOpen = true;
   await page.waitForChanges();
 
-  loading = page.body.querySelector('ion-loading')!;
+  loading = page.body.querySelector(
+    'ion-loading'
+  )!;
 
-  expect(loading.getAttribute('id')).toBe('ion-overlay-2');
+  expect(
+    loading.getAttribute('id')
+  ).toBe('ion-overlay-2');
 });

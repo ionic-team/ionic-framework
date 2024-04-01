@@ -2,20 +2,26 @@ import { printIonWarning } from '@utils/logging';
 
 import type { DatetimeParts } from '../datetime-interface';
 
-import { isAfter, isBefore } from './comparison';
+import {
+  isAfter,
+  isBefore,
+} from './comparison';
 import { getNumDaysInMonth } from './helpers';
 
 const ISO_8601_REGEXP =
   // eslint-disable-next-line no-useless-escape
   /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 // eslint-disable-next-line no-useless-escape
-const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
+const TIME_REGEXP =
+  /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
 /**
  * Use to convert a string of comma separated numbers or
  * an array of numbers, and clean up any user input
  */
-export const convertToArrayOfNumbers = (input?: number[] | number | string): number[] | undefined => {
+export const convertToArrayOfNumbers = (
+  input?: number[] | number | string
+): number[] | undefined => {
   if (input === undefined) {
     return;
   }
@@ -25,13 +31,19 @@ export const convertToArrayOfNumbers = (input?: number[] | number | string): num
   if (typeof input === 'string') {
     // convert the string to an array of strings
     // auto remove any whitespace and [] characters
-    processedInput = input.replace(/\[|\]|\s/g, '').split(',');
+    processedInput = input
+      .replace(/\[|\]|\s/g, '')
+      .split(',');
   }
 
   let values: number[];
   if (Array.isArray(processedInput)) {
     // ensure each value is an actual number in the returned array
-    values = processedInput.map((num: any) => parseInt(num, 10)).filter(isFinite);
+    values = processedInput
+      .map((num: any) =>
+        parseInt(num, 10)
+      )
+      .filter(isFinite);
   } else {
     values = [processedInput as number];
   }
@@ -44,12 +56,28 @@ export const convertToArrayOfNumbers = (input?: number[] | number | string): num
  * from a .calendar-day element
  * into DatetimeParts.
  */
-export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
+export const getPartsFromCalendarDay = (
+  el: HTMLElement
+): DatetimeParts => {
   return {
-    month: parseInt(el.getAttribute('data-month')!, 10),
-    day: parseInt(el.getAttribute('data-day')!, 10),
-    year: parseInt(el.getAttribute('data-year')!, 10),
-    dayOfWeek: parseInt(el.getAttribute('data-day-of-week')!, 10),
+    month: parseInt(
+      el.getAttribute('data-month')!,
+      10
+    ),
+    day: parseInt(
+      el.getAttribute('data-day')!,
+      10
+    ),
+    year: parseInt(
+      el.getAttribute('data-year')!,
+      10
+    ),
+    dayOfWeek: parseInt(
+      el.getAttribute(
+        'data-day-of-week'
+      )!,
+      10
+    ),
   };
 };
 
@@ -58,16 +86,47 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
  * We do not use the JS Date object here because
  * it adjusts the date for the current timezone.
  */
-export function parseDate(val: string): DatetimeParts | undefined;
-export function parseDate(val: string[]): DatetimeParts[] | undefined;
-export function parseDate(val: undefined | null): undefined;
-export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts[] | undefined;
-export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
-export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
+export function parseDate(
+  val: string
+): DatetimeParts | undefined;
+export function parseDate(
+  val: string[]
+): DatetimeParts[] | undefined;
+export function parseDate(
+  val: undefined | null
+): undefined;
+export function parseDate(
+  val: string | string[]
+):
+  | DatetimeParts
+  | DatetimeParts[]
+  | undefined;
+export function parseDate(
+  val:
+    | string
+    | string[]
+    | undefined
+    | null
+):
+  | DatetimeParts
+  | DatetimeParts[]
+  | undefined;
+export function parseDate(
+  val:
+    | string
+    | string[]
+    | undefined
+    | null
+):
+  | DatetimeParts
+  | DatetimeParts[]
+  | undefined {
   if (Array.isArray(val)) {
-    const parsedArray: DatetimeParts[] = [];
+    const parsedArray: DatetimeParts[] =
+      [];
     for (const valStr of val) {
-      const parsedVal = parseDate(valStr);
+      const parsedVal =
+        parseDate(valStr);
 
       /**
        * If any of the values weren't parsed correctly, consider
@@ -95,7 +154,10 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
     parse = TIME_REGEXP.exec(val);
     if (parse) {
       // adjust the array so it fits nicely with the datetime parse
-      parse.unshift(undefined, undefined);
+      parse.unshift(
+        undefined,
+        undefined
+      );
       parse[2] = parse[3] = undefined;
     } else {
       // try parsing for full ISO datetime
@@ -105,13 +167,18 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
 
   if (parse === null) {
     // wasn't able to parse the ISO datetime
-    printIonWarning(`Unable to parse date string: ${val}. Please provide a valid ISO 8601 datetime string.`);
+    printIonWarning(
+      `Unable to parse date string: ${val}. Please provide a valid ISO 8601 datetime string.`
+    );
     return undefined;
   }
 
   // ensure all the parse values exist with at least 0
   for (let i = 1; i < 8; i++) {
-    parse[i] = parse[i] !== undefined ? parseInt(parse[i], 10) : undefined;
+    parse[i] =
+      parse[i] !== undefined
+        ? parseInt(parse[i], 10)
+        : undefined;
   }
 
   // can also get second and millisecond from parse[6] and parse[7] if needed
@@ -130,9 +197,15 @@ export const clampDate = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts
 ): DatetimeParts => {
-  if (minParts && isBefore(dateParts, minParts)) {
+  if (
+    minParts &&
+    isBefore(dateParts, minParts)
+  ) {
     return minParts;
-  } else if (maxParts && isAfter(dateParts, maxParts)) {
+  } else if (
+    maxParts &&
+    isAfter(dateParts, maxParts)
+  ) {
     return maxParts;
   }
   return dateParts;
@@ -143,7 +216,9 @@ export const clampDate = (
  * @param hour The hour to format, should be 0-23
  * @returns `pm` if the hour is greater than or equal to 12, `am` if less than 12.
  */
-export const parseAmPm = (hour: number) => {
+export const parseAmPm = (
+  hour: number
+) => {
   return hour >= 12 ? 'pm' : 'am';
 };
 
@@ -153,7 +228,10 @@ export const parseAmPm = (hour: number) => {
  * For example, max="2012" would fill in the missing
  * month, day, hour, and minute information.
  */
-export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeParts | undefined => {
+export const parseMaxParts = (
+  max: string,
+  todayParts: DatetimeParts
+): DatetimeParts | undefined => {
   const result = parseDate(max);
 
   /**
@@ -163,7 +241,13 @@ export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeP
     return;
   }
 
-  const { month, day, year, hour, minute } = result;
+  const {
+    month,
+    day,
+    year,
+    hour,
+    minute,
+  } = result;
 
   /**
    * When passing in `max` or `min`, developers
@@ -176,11 +260,17 @@ export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeP
    * we need to fill in any omitted data with the min or max values.
    */
 
-  const yearValue = year ?? todayParts.year;
+  const yearValue =
+    year ?? todayParts.year;
   const monthValue = month ?? 12;
   return {
     month: monthValue,
-    day: day ?? getNumDaysInMonth(monthValue, yearValue),
+    day:
+      day ??
+      getNumDaysInMonth(
+        monthValue,
+        yearValue
+      ),
     /**
      * Passing in "HH:mm" is a valid ISO-8601
      * string, so we just default to the current year
@@ -198,7 +288,10 @@ export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeP
  * For example, min="2012" would fill in the missing
  * month, day, hour, and minute information.
  */
-export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeParts | undefined => {
+export const parseMinParts = (
+  min: string,
+  todayParts: DatetimeParts
+): DatetimeParts | undefined => {
   const result = parseDate(min);
 
   /**
@@ -208,7 +301,13 @@ export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeP
     return;
   }
 
-  const { month, day, year, hour, minute } = result;
+  const {
+    month,
+    day,
+    year,
+    hour,
+    minute,
+  } = result;
 
   /**
    * When passing in `max` or `min`, developers

@@ -1,17 +1,31 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
 /**
  * Translucent is only available in iOS mode
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('tab-bar: translucent'), () => {
-    test.beforeEach(({ skip }) => {
-      skip.browser('firefox', 'Firefox does not support translucent effect');
-    });
-    test('should render translucent tab bar', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  modes: ['ios'],
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('tab-bar: translucent'),
+      () => {
+        test.beforeEach(({ skip }) => {
+          skip.browser(
+            'firefox',
+            'Firefox does not support translucent effect'
+          );
+        });
+        test('should render translucent tab bar', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           body {
             background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
@@ -32,16 +46,26 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-bar-translucent`));
-    });
-    test('should render translucent tab bar even when wrapped in a page container', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-bar-translucent`
+            )
+          );
+        });
+        test('should render translucent tab bar even when wrapped in a page container', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           ion-content {
             --background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
@@ -67,12 +91,22 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
           </ion-tab-bar>
         </ion-tabs>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-bar-translucent-container`));
-    });
-  });
-});
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-bar-translucent-container`
+            )
+          );
+        });
+      }
+    );
+  }
+);

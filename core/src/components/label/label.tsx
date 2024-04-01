@@ -1,9 +1,27 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
-import { createColorClasses, hostContext } from '@utils/theme';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  State,
+  Watch,
+  h,
+} from '@stencil/core';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  StyleEventDetail,
+} from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -16,7 +34,9 @@ import type { Color, StyleEventDetail } from '../../interface';
   },
   scoped: true,
 })
-export class Label implements ComponentInterface {
+export class Label
+  implements ComponentInterface
+{
   private inRange = false;
 
   @Element() el!: HTMLElement;
@@ -26,30 +46,39 @@ export class Label implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * The position determines where and how the label behaves inside an item.
    */
-  @Prop() position?: 'fixed' | 'stacked' | 'floating';
+  @Prop() position?:
+    | 'fixed'
+    | 'stacked'
+    | 'floating';
 
   /**
    * Emitted when the color changes.
    * @internal
    */
-  @Event() ionColor!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionColor!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   @State() noAnimate = false;
 
   componentWillLoad() {
-    this.inRange = !!this.el.closest('ion-range');
-    this.noAnimate = this.position === 'floating';
+    this.inRange = !!this.el.closest(
+      'ion-range'
+    );
+    this.noAnimate =
+      this.position === 'floating';
     this.emitStyle();
     this.emitColor();
   }
@@ -76,8 +105,10 @@ export class Label implements ComponentInterface {
     const { color } = this;
 
     this.ionColor.emit({
-      'item-label-color': color !== undefined,
-      [`ion-color-${color}`]: color !== undefined,
+      'item-label-color':
+        color !== undefined,
+      [`ion-color-${color}`]:
+        color !== undefined,
     });
   }
 
@@ -90,7 +121,8 @@ export class Label implements ComponentInterface {
     if (!inRange) {
       this.ionStyle.emit({
         label: true,
-        [`label-${position}`]: position !== undefined,
+        [`label-${position}`]:
+          position !== undefined,
       });
     }
   }
@@ -100,13 +132,23 @@ export class Label implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'in-item-color': hostContext('ion-item.ion-color', this.el),
-          [`label-${position}`]: position !== undefined,
-          [`label-no-animate`]: this.noAnimate,
-          'label-rtl': document.dir === 'rtl',
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'in-item-color':
+              hostContext(
+                'ion-item.ion-color',
+                this.el
+              ),
+            [`label-${position}`]:
+              position !== undefined,
+            [`label-no-animate`]:
+              this.noAnimate,
+            'label-rtl':
+              document.dir === 'rtl',
+          }
+        )}
       ></Host>
     );
   }

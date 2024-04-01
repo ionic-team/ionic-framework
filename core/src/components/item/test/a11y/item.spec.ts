@@ -12,8 +12,13 @@ describe('ion-item', () => {
       html: `<ion-item>Hello World</ion-item>`,
     });
 
-    const item = page.body.querySelector('ion-item')!;
-    expect(item.getAttribute('role')).toBe(null);
+    const item =
+      page.body.querySelector(
+        'ion-item'
+      )!;
+    expect(
+      item.getAttribute('role')
+    ).toBe(null);
   });
 
   it('should have a listitem role when used inside list', async () => {
@@ -28,13 +33,23 @@ describe('ion-item', () => {
       `,
     });
 
-    const item = page.body.querySelector('ion-item')!;
-    expect(item.getAttribute('role')).toBe('listitem');
+    const item =
+      page.body.querySelector(
+        'ion-item'
+      )!;
+    expect(
+      item.getAttribute('role')
+    ).toBe('listitem');
   });
 
   it('should not have a role when used inside radio group and list', async () => {
     const page = await newSpecPage({
-      components: [Radio, RadioGroup, Item, List],
+      components: [
+        Radio,
+        RadioGroup,
+        Item,
+        List,
+      ],
       html: `
         <ion-list>
           <ion-radio-group value="a">
@@ -46,7 +61,12 @@ describe('ion-item', () => {
       `,
     });
 
-    const item = page.body.querySelector('ion-item')!;
-    expect(item.getAttribute('role')).toBe(null);
+    const item =
+      page.body.querySelector(
+        'ion-item'
+      )!;
+    expect(
+      item.getAttribute('role')
+    ).toBe(null);
   });
 });

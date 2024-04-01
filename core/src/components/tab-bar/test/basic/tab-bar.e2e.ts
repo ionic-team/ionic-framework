@@ -1,17 +1,27 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
 /**
  * This behavior needs to be tested in both modes and directions to
  * make sure the safe area padding is applied only to that side
  * regardless of direction
  */
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('tab-bar: basic'), () => {
-    test.describe('safe area', () => {
-      test('should have padding added by the safe area', async ({ page }) => {
-        await page.setContent(
-          `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('tab-bar: basic'),
+      () => {
+        test.describe(
+          'safe area',
+          () => {
+            test('should have padding added by the safe area', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <style>
             :root {
               --ion-safe-area-left: 40px;
@@ -34,13 +44,25 @@ configs().forEach(({ title, screenshot, config }) => {
             </ion-tab-button>
           </ion-tab-bar>
         `,
-          config
+                config
+              );
+
+              const tabBar =
+                page.locator(
+                  'ion-tab-bar'
+                );
+
+              await expect(
+                tabBar
+              ).toHaveScreenshot(
+                screenshot(
+                  `tab-bar-safe-area`
+                )
+              );
+            });
+          }
         );
-
-        const tabBar = page.locator('ion-tab-bar');
-
-        await expect(tabBar).toHaveScreenshot(screenshot(`tab-bar-safe-area`));
-      });
-    });
-  });
-});
+      }
+    );
+  }
+);

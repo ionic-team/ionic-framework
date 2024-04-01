@@ -6,8 +6,14 @@ import type { DatetimeHourCycle } from '../datetime-interface';
  * is a leap year. Returns `false`
  * otherwise.
  */
-export const isLeapYear = (year: number) => {
-  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+export const isLeapYear = (
+  year: number
+) => {
+  return (
+    (year % 4 === 0 &&
+      year % 100 !== 0) ||
+    year % 400 === 0
+  );
 };
 
 /**
@@ -16,7 +22,10 @@ export const isLeapYear = (year: number) => {
  * Otherwise, we try to derive it from either the specified
  * locale extension tags or from Intl.DateTimeFormat directly.
  */
-export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
+export const getHourCycle = (
+  locale: string,
+  hourCycle?: DatetimeHourCycle
+) => {
   /**
    * If developer has explicitly enabled 24-hour time
    * then return early and do not look at the system default.
@@ -31,8 +40,12 @@ export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
    * Intl.DateTimeFormat hourCycle option as developers can encode this
    * option into the locale string. Example: `en-US-u-hc-h23`
    */
-  const formatted = new Intl.DateTimeFormat(locale, { hour: 'numeric' });
-  const options = formatted.resolvedOptions();
+  const formatted =
+    new Intl.DateTimeFormat(locale, {
+      hour: 'numeric',
+    });
+  const options =
+    formatted.resolvedOptions();
   if (options.hourCycle !== undefined) {
     return options.hourCycle;
   }
@@ -42,12 +55,19 @@ export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
    * of browser support or locale information) then fall
    * back to this slower hourCycle check.
    */
-  const date = new Date('5/18/2021 00:00');
-  const parts = formatted.formatToParts(date);
-  const hour = parts.find((p) => p.type === 'hour');
+  const date = new Date(
+    '5/18/2021 00:00'
+  );
+  const parts =
+    formatted.formatToParts(date);
+  const hour = parts.find(
+    (p) => p.type === 'hour'
+  );
 
   if (!hour) {
-    throw new Error('Hour value not found from DateTimeFormat');
+    throw new Error(
+      'Hour value not found from DateTimeFormat'
+    );
   }
 
   /**
@@ -66,7 +86,9 @@ export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
     case '24':
       return 'h24';
     default:
-      throw new Error(`Invalid hour cycle "${hourCycle}"`);
+      throw new Error(
+        `Invalid hour cycle "${hourCycle}"`
+      );
   }
 };
 
@@ -76,8 +98,13 @@ export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
  * If you don't know the hourCycle, use getHourCycle above
  * and pass the result into this function.
  */
-export const is24Hour = (hourCycle: DatetimeHourCycle) => {
-  return hourCycle === 'h23' || hourCycle === 'h24';
+export const is24Hour = (
+  hourCycle: DatetimeHourCycle
+) => {
+  return (
+    hourCycle === 'h23' ||
+    hourCycle === 'h24'
+  );
 };
 
 /**
@@ -86,8 +113,14 @@ export const is24Hour = (hourCycle: DatetimeHourCycle) => {
  * Month value begin at 1, not 0.
  * i.e. January = month 1.
  */
-export const getNumDaysInMonth = (month: number, year: number) => {
-  return month === 4 || month === 6 || month === 9 || month === 11
+export const getNumDaysInMonth = (
+  month: number,
+  year: number
+) => {
+  return month === 4 ||
+    month === 6 ||
+    month === 9 ||
+    month === 11
     ? 30
     : month === 2
     ? isLeapYear(year)
@@ -126,7 +159,10 @@ export const isMonthFirstLocale = (
    *
    * This ordering can be controlled by customizing the locale property.
    */
-  const parts = new Intl.DateTimeFormat(locale, formatOptions).formatToParts(new Date());
+  const parts = new Intl.DateTimeFormat(
+    locale,
+    formatOptions
+  ).formatToParts(new Date());
 
   return parts[0].type === 'month';
 };
@@ -137,7 +173,12 @@ export const isMonthFirstLocale = (
  * @param locale The locale to check.
  * @returns `true` if the locale formats the day period to the left of the hour.
  */
-export const isLocaleDayPeriodRTL = (locale: string) => {
-  const parts = new Intl.DateTimeFormat(locale, { hour: 'numeric' }).formatToParts(new Date());
+export const isLocaleDayPeriodRTL = (
+  locale: string
+) => {
+  const parts = new Intl.DateTimeFormat(
+    locale,
+    { hour: 'numeric' }
+  ).formatToParts(new Date());
   return parts[0].type === 'dayPeriod';
 };

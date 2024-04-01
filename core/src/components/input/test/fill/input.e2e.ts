@@ -1,15 +1,25 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
 /**
  * Fill is only available in MD mode
  */
-configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('input: fill'), () => {
-    test.describe('input: fill solid', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        await page.setContent(
-          `
+configs({ modes: ['md'] }).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('input: fill'),
+      () => {
+        test.describe(
+          'input: fill solid',
+          () => {
+            test('should not have visual regressions', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <ion-input
             fill="solid"
             label="Email"
@@ -19,15 +29,26 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             counter="true"
           ></ion-input>
         `,
-          config
-        );
+                config
+              );
 
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-solid`));
-      });
-      test('should render correctly with floating label', async ({ page }) => {
-        await page.setContent(
-          `
+              const input =
+                page.locator(
+                  'ion-input'
+                );
+              await expect(
+                input
+              ).toHaveScreenshot(
+                screenshot(
+                  `input-fill-solid`
+                )
+              );
+            });
+            test('should render correctly with floating label', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <ion-input
             fill="solid"
             label="Email"
@@ -38,15 +59,26 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             counter="true"
           ></ion-input>
         `,
-          config
-        );
+                config
+              );
 
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-solid-label-floating`));
-      });
-      test('should not have visual regressions with shaped solid', async ({ page }) => {
-        await page.setContent(
-          `
+              const input =
+                page.locator(
+                  'ion-input'
+                );
+              await expect(
+                input
+              ).toHaveScreenshot(
+                screenshot(
+                  `input-fill-solid-label-floating`
+                )
+              );
+            });
+            test('should not have visual regressions with shaped solid', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <ion-input
             shape="round"
             fill="solid"
@@ -57,15 +89,26 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             counter="true"
           ></ion-input>
         `,
-          config
-        );
+                config
+              );
 
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-solid`));
-      });
-      test('padding and border radius should be customizable', async ({ page }) => {
-        await page.setContent(
-          `
+              const input =
+                page.locator(
+                  'ion-input'
+                );
+              await expect(
+                input
+              ).toHaveScreenshot(
+                screenshot(
+                  `input-fill-shaped-solid`
+                )
+              );
+            });
+            test('padding and border radius should be customizable', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <style>
             ion-input {
               --border-radius: 10px !important;
@@ -85,17 +128,31 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             counter="true"
           ></ion-input>
         `,
-          config
-        );
+                config
+              );
 
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-solid-custom`));
-      });
-    });
-    test.describe('input: fill outline', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        await page.setContent(
-          `
+              const input =
+                page.locator(
+                  'ion-input'
+                );
+              await expect(
+                input
+              ).toHaveScreenshot(
+                screenshot(
+                  `input-fill-shaped-solid-custom`
+                )
+              );
+            });
+          }
+        );
+        test.describe(
+          'input: fill outline',
+          () => {
+            test('should not have visual regressions', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <ion-input
             fill="outline"
             label="Email"
@@ -105,15 +162,26 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             counter="true"
           ></ion-input>
         `,
-          config
-        );
+                config
+              );
 
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline`));
-      });
-      test('should render correctly with floating label', async ({ page }) => {
-        await page.setContent(
-          `
+              const input =
+                page.locator(
+                  'ion-input'
+                );
+              await expect(
+                input
+              ).toHaveScreenshot(
+                screenshot(
+                  `input-fill-outline`
+                )
+              );
+            });
+            test('should render correctly with floating label', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <ion-input
             fill="outline"
             label="Email"
@@ -124,15 +192,26 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             counter="true"
           ></ion-input>
         `,
-          config
-        );
+                config
+              );
 
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-floating`));
-      });
-      test('should not have visual regressions with shaped outline', async ({ page }) => {
-        await page.setContent(
-          `
+              const input =
+                page.locator(
+                  'ion-input'
+                );
+              await expect(
+                input
+              ).toHaveScreenshot(
+                screenshot(
+                  `input-fill-outline-label-floating`
+                )
+              );
+            });
+            test('should not have visual regressions with shaped outline', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <ion-input
             shape="round"
             fill="outline"
@@ -143,15 +222,26 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             counter="true"
           ></ion-input>
         `,
-          config
-        );
+                config
+              );
 
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-outline`));
-      });
-      test('padding and border radius should be customizable', async ({ page }) => {
-        await page.setContent(
-          `
+              const input =
+                page.locator(
+                  'ion-input'
+                );
+              await expect(
+                input
+              ).toHaveScreenshot(
+                screenshot(
+                  `input-fill-shaped-outline`
+                )
+              );
+            });
+            test('padding and border radius should be customizable', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
           <style>
             ion-input {
               --border-radius: 10px !important;
@@ -171,21 +261,41 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             counter="true"
           ></ion-input>
         `,
-          config
+                config
+              );
+
+              const input =
+                page.locator(
+                  'ion-input'
+                );
+              await expect(
+                input
+              ).toHaveScreenshot(
+                screenshot(
+                  `input-fill-shaped-outline-custom`
+                )
+              );
+            });
+          }
         );
+      }
+    );
+  }
+);
 
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-outline-custom`));
-      });
-    });
-  });
-});
-
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('input: label slot'), () => {
-    test('should render the notch correctly with a slotted label', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  modes: ['md'],
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('input: label slot'),
+      () => {
+        test('should render the notch correctly with a slotted label', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           .custom-label {
             font-size: 30px;
@@ -199,17 +309,25 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           <div slot="label" class="custom-label">My Label Content</div>
         </ion-input>
       `,
-        config
-      );
+            config
+          );
 
-      const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-slotted-label`));
-    });
-    test('should render the notch correctly with a slotted label after the input was originally hidden', async ({
-      page,
-    }) => {
-      await page.setContent(
-        `
+          const input = page.locator(
+            'ion-input'
+          );
+          await expect(
+            input
+          ).toHaveScreenshot(
+            screenshot(
+              `input-fill-outline-slotted-label`
+            )
+          );
+        });
+        test('should render the notch correctly with a slotted label after the input was originally hidden', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           .custom-label {
             font-size: 30px;
@@ -224,27 +342,54 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           <div slot="label" class="custom-label">My Label Content</div>
         </ion-input>
       `,
-        config
-      );
+            config
+          );
 
-      const input = page.locator('ion-input');
+          const input = page.locator(
+            'ion-input'
+          );
 
-      await input.evaluate((el: HTMLIonSelectElement) => el.style.removeProperty('display'));
+          await input.evaluate(
+            (
+              el: HTMLIonSelectElement
+            ) =>
+              el.style.removeProperty(
+                'display'
+              )
+          );
 
-      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-hidden-slotted-label`));
-    });
-  });
-  test.describe(title('input: notch cutout'), () => {
-    test('notch cutout should be hidden when no label is passed', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            input
+          ).toHaveScreenshot(
+            screenshot(
+              `input-fill-outline-hidden-slotted-label`
+            )
+          );
+        });
+      }
+    );
+    test.describe(
+      title('input: notch cutout'),
+      () => {
+        test('notch cutout should be hidden when no label is passed', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-input fill="outline" label-placement="stacked" aria-label="my input"></ion-input>
       `,
-        config
-      );
+            config
+          );
 
-      const notchCutout = page.locator('ion-input .input-outline-notch');
-      await expect(notchCutout).toBeHidden();
-    });
-  });
-});
+          const notchCutout =
+            page.locator(
+              'ion-input .input-outline-notch'
+            );
+          await expect(
+            notchCutout
+          ).toBeHidden();
+        });
+      }
+    );
+  }
+);

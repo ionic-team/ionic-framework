@@ -1,5 +1,12 @@
-import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction } from '@utils/test/playwright';
+import type {
+  Page,
+  TestInfo,
+} from '@playwright/test';
+import type {
+  E2EPageOptions,
+  Mode,
+  Direction,
+} from '@utils/test/playwright';
 
 /**
  * This is an extended version of Playwright's
@@ -15,7 +22,11 @@ export const goto = async (
   originalFn: typeof page.goto,
   options?: E2EPageOptions
 ) => {
-  if (options === undefined && testInfo.project.metadata.mode === undefined) {
+  if (
+    options === undefined &&
+    testInfo.project.metadata.mode ===
+      undefined
+  ) {
     throw new Error(`
 A config must be passed to page.goto to use a generator test:
 
@@ -30,14 +41,21 @@ configs().forEach(({ config, title }) => {
   let direction: Direction;
 
   if (options == undefined) {
-    mode = testInfo.project.metadata.mode;
-    direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
+    mode =
+      testInfo.project.metadata.mode;
+    direction = testInfo.project
+      .metadata.rtl
+      ? 'rtl'
+      : 'ltr';
   } else {
     mode = options.mode;
     direction = options.direction;
   }
 
-  const rtlString = direction === 'rtl' ? 'true' : undefined;
+  const rtlString =
+    direction === 'rtl'
+      ? 'true'
+      : undefined;
 
   const splitUrl = url.split('?');
   const paramsString = splitUrl[1];
@@ -46,10 +64,16 @@ configs().forEach(({ config, title }) => {
    * This allows developers to force a
    * certain mode or LTR/RTL config per test.
    */
-  const urlToParams = new URLSearchParams(paramsString);
-  const formattedMode = urlToParams.get('ionic:mode') ?? mode;
-  const formattedRtl = urlToParams.get('rtl') ?? rtlString;
-  const ionicTesting = urlToParams.get('ionic:_testing') ?? true;
+  const urlToParams =
+    new URLSearchParams(paramsString);
+  const formattedMode =
+    urlToParams.get('ionic:mode') ??
+    mode;
+  const formattedRtl =
+    urlToParams.get('rtl') ?? rtlString;
+  const ionicTesting =
+    urlToParams.get('ionic:_testing') ??
+    true;
 
   /**
    * Pass through other custom query params
@@ -63,8 +87,14 @@ configs().forEach(({ config, title }) => {
    * Be sure to call decodeURIComponent to decode
    * characters such as &.
    */
-  const remainingQueryParams = decodeURIComponent(urlToParams.toString());
-  const remainingQueryParamsString = remainingQueryParams == '' ? '' : `&${remainingQueryParams}`;
+  const remainingQueryParams =
+    decodeURIComponent(
+      urlToParams.toString()
+    );
+  const remainingQueryParamsString =
+    remainingQueryParams == ''
+      ? ''
+      : `&${remainingQueryParams}`;
 
   const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}${remainingQueryParamsString}`;
 
@@ -75,11 +105,19 @@ configs().forEach(({ config, title }) => {
 
   testInfo.annotations.push({
     type: 'direction',
-    description: formattedRtl === 'true' ? 'rtl' : 'ltr',
+    description:
+      formattedRtl === 'true'
+        ? 'rtl'
+        : 'ltr',
   });
 
   const result = await Promise.all([
-    page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),
+    page.waitForFunction(
+      () =>
+        (window as any)
+          .testAppLoaded === true,
+      { timeout: 4750 }
+    ),
     originalFn(formattedUrl, options),
   ]);
 

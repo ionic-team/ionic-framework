@@ -17,19 +17,33 @@ const FOCUS_KEYS = [
 
 export interface FocusVisibleUtility {
   destroy: () => void;
-  setFocus: (elements: Element[]) => void;
+  setFocus: (
+    elements: Element[]
+  ) => void;
 }
 
-export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => {
+export const startFocusVisible = (
+  rootEl?: HTMLElement
+): FocusVisibleUtility => {
   let currentFocus: Element[] = [];
   let keyboardMode = true;
 
-  const ref = rootEl ? rootEl.shadowRoot! : document;
-  const root = rootEl ? rootEl : document.body;
+  const ref = rootEl
+    ? rootEl.shadowRoot!
+    : document;
+  const root = rootEl
+    ? rootEl
+    : document.body;
 
-  const setFocus = (elements: Element[]) => {
-    currentFocus.forEach((el) => el.classList.remove(ION_FOCUSED));
-    elements.forEach((el) => el.classList.add(ION_FOCUSED));
+  const setFocus = (
+    elements: Element[]
+  ) => {
+    currentFocus.forEach((el) =>
+      el.classList.remove(ION_FOCUSED)
+    );
+    elements.forEach((el) =>
+      el.classList.add(ION_FOCUSED)
+    );
     currentFocus = elements;
   };
   const pointerDown = () => {
@@ -38,20 +52,29 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
   };
 
   const onKeydown = (ev: Event) => {
-    keyboardMode = FOCUS_KEYS.includes((ev as KeyboardEvent).key);
+    keyboardMode = FOCUS_KEYS.includes(
+      (ev as KeyboardEvent).key
+    );
     if (!keyboardMode) {
       setFocus([]);
     }
   };
   const onFocusin = (ev: Event) => {
-    if (keyboardMode && ev.composedPath !== undefined) {
-      const toFocus = ev.composedPath().filter((el: any) => {
-        // TODO(FW-2832): type
-        if (el.classList) {
-          return el.classList.contains(ION_FOCUSABLE);
-        }
-        return false;
-      }) as Element[];
+    if (
+      keyboardMode &&
+      ev.composedPath !== undefined
+    ) {
+      const toFocus = ev
+        .composedPath()
+        .filter((el: any) => {
+          // TODO(FW-2832): type
+          if (el.classList) {
+            return el.classList.contains(
+              ION_FOCUSABLE
+            );
+          }
+          return false;
+        }) as Element[];
       setFocus(toFocus);
     }
   };
@@ -61,18 +84,49 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
     }
   };
 
-  ref.addEventListener('keydown', onKeydown);
-  ref.addEventListener('focusin', onFocusin);
-  ref.addEventListener('focusout', onFocusout);
-  ref.addEventListener('touchstart', pointerDown, { passive: true });
-  ref.addEventListener('mousedown', pointerDown);
+  ref.addEventListener(
+    'keydown',
+    onKeydown
+  );
+  ref.addEventListener(
+    'focusin',
+    onFocusin
+  );
+  ref.addEventListener(
+    'focusout',
+    onFocusout
+  );
+  ref.addEventListener(
+    'touchstart',
+    pointerDown,
+    { passive: true }
+  );
+  ref.addEventListener(
+    'mousedown',
+    pointerDown
+  );
 
   const destroy = () => {
-    ref.removeEventListener('keydown', onKeydown);
-    ref.removeEventListener('focusin', onFocusin);
-    ref.removeEventListener('focusout', onFocusout);
-    ref.removeEventListener('touchstart', pointerDown);
-    ref.removeEventListener('mousedown', pointerDown);
+    ref.removeEventListener(
+      'keydown',
+      onKeydown
+    );
+    ref.removeEventListener(
+      'focusin',
+      onFocusin
+    );
+    ref.removeEventListener(
+      'focusout',
+      onFocusout
+    );
+    ref.removeEventListener(
+      'touchstart',
+      pointerDown
+    );
+    ref.removeEventListener(
+      'mousedown',
+      pointerDown
+    );
   };
 
   return {

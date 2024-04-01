@@ -1,13 +1,37 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
-import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  Watch,
+  h,
+} from '@stencil/core';
+import type {
+  AnchorInterface,
+  ButtonInterface,
+} from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
+import {
+  inheritAriaAttributes,
+  hasShadowDom,
+} from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
-import { createColorClasses, hostContext, openURL } from '@utils/theme';
+import {
+  createColorClasses,
+  hostContext,
+  openURL,
+} from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color } from '../../interface';
+import type {
+  AnimationBuilder,
+  Color,
+} from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
@@ -28,13 +52,21 @@ import type { RouterDirection } from '../router/utils/interface';
   },
   shadow: true,
 })
-export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
+export class Button
+  implements
+    ComponentInterface,
+    AnchorInterface,
+    ButtonInterface
+{
   private inItem = false;
   private inListHeader = false;
   private inToolbar = false;
-  private formButtonEl: HTMLButtonElement | null = null;
-  private formEl: HTMLFormElement | null = null;
-  private inheritedAttributes: Attributes = {};
+  private formButtonEl: HTMLButtonElement | null =
+    null;
+  private formEl: HTMLFormElement | null =
+    null;
+  private inheritedAttributes: Attributes =
+    {};
 
   @Element() el!: HTMLElement;
 
@@ -43,22 +75,26 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * The type of button.
    */
-  @Prop({ mutable: true }) buttonType = 'button';
+  @Prop({ mutable: true }) buttonType =
+    'button';
 
   /**
    * If `true`, the user cannot interact with the button.
    */
-  @Prop({ reflect: true }) disabled = false;
+  @Prop({ reflect: true }) disabled =
+    false;
   @Watch('disabled')
   disabledChanged() {
     const { disabled } = this;
     if (this.formButtonEl) {
-      this.formButtonEl.disabled = disabled;
+      this.formButtonEl.disabled =
+        disabled;
     }
   }
 
@@ -66,26 +102,40 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * with square corners and no left or right borders.
    */
-  @Prop({ reflect: true }) expand?: 'full' | 'block';
+  @Prop({ reflect: true }) expand?:
+    | 'full'
+    | 'block';
 
   /**
    * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"`
    * for a transparent button with a border, or to `"solid"` for a button with a filled background.
    * The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
    */
-  @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
+  @Prop({
+    reflect: true,
+    mutable: true,
+  })
+  fill?:
+    | 'clear'
+    | 'outline'
+    | 'solid'
+    | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection: RouterDirection = 'forward';
+  @Prop()
+  routerDirection: RouterDirection =
+    'forward';
 
   /**
    * When using a router, it specifies the transition animation when navigating to
    * another page using `href`.
    */
-  @Prop() routerAnimation: AnimationBuilder | undefined;
+  @Prop() routerAnimation:
+    | AnimationBuilder
+    | undefined;
 
   /**
    * This attribute instructs browsers to download a URL instead of navigating to
@@ -110,7 +160,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * Set to `"round"` for a button with more rounded corners.
    */
-  @Prop({ reflect: true }) shape?: 'round';
+  @Prop({ reflect: true })
+  shape?: 'round';
 
   /**
    * Set to `"small"` for a button with less height and padding, to `"default"`
@@ -119,7 +170,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * is inside of an item, where the size is `"small"` by default. Set the size to
    * `"default"` inside of an item to make it a standard size button.
    */
-  @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
+  @Prop({ reflect: true }) size?:
+    | 'small'
+    | 'default'
+    | 'large';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -136,17 +190,23 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * The type of the button.
    */
-  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+  @Prop() type:
+    | 'submit'
+    | 'reset'
+    | 'button' = 'button';
 
   /**
    * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
    */
-  @Prop() form?: string | HTMLFormElement;
+  @Prop() form?:
+    | string
+    | HTMLFormElement;
 
   /**
    * Emitted when the button has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event()
+  ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the button loses focus.
@@ -163,7 +223,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * which is why the following code is necessary.
    */
   private renderHiddenButton() {
-    const formEl = (this.formEl = this.findForm());
+    const formEl = (this.formEl =
+      this.findForm());
     if (formEl) {
       const { formButtonEl } = this;
 
@@ -171,38 +232,67 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
        * If the form already has a rendered form button
        * then do not append a new one again.
        */
-      if (formButtonEl !== null && formEl.contains(formButtonEl)) {
+      if (
+        formButtonEl !== null &&
+        formEl.contains(formButtonEl)
+      ) {
         return;
       }
 
       // Create a hidden native button inside of the form
-      const newFormButtonEl = (this.formButtonEl = document.createElement('button'));
+      const newFormButtonEl =
+        (this.formButtonEl =
+          document.createElement(
+            'button'
+          ));
       newFormButtonEl.type = this.type;
-      newFormButtonEl.style.display = 'none';
+      newFormButtonEl.style.display =
+        'none';
       // Only submit if the button is not disabled.
-      newFormButtonEl.disabled = this.disabled;
+      newFormButtonEl.disabled =
+        this.disabled;
 
-      formEl.appendChild(newFormButtonEl);
+      formEl.appendChild(
+        newFormButtonEl
+      );
     }
   }
 
   componentWillLoad() {
-    this.inToolbar = !!this.el.closest('ion-buttons');
-    this.inListHeader = !!this.el.closest('ion-list-header');
-    this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.inToolbar = !!this.el.closest(
+      'ion-buttons'
+    );
+    this.inListHeader =
+      !!this.el.closest(
+        'ion-list-header'
+      );
+    this.inItem =
+      !!this.el.closest('ion-item') ||
+      !!this.el.closest(
+        'ion-item-divider'
+      );
+    this.inheritedAttributes =
+      inheritAriaAttributes(this.el);
   }
 
   private get hasIconOnly() {
-    return !!this.el.querySelector('[slot="icon-only"]');
+    return !!this.el.querySelector(
+      '[slot="icon-only"]'
+    );
   }
 
   private get rippleType() {
-    const hasClearFill = this.fill === undefined || this.fill === 'clear';
+    const hasClearFill =
+      this.fill === undefined ||
+      this.fill === 'clear';
 
     // If the button is in a toolbar, has a clear fill (which is the default)
     // and only has an icon we use the unbounded "circular" ripple effect
-    if (hasClearFill && this.hasIconOnly && this.inToolbar) {
+    if (
+      hasClearFill &&
+      this.hasIconOnly &&
+      this.inToolbar
+    ) {
       return 'unbounded';
     }
 
@@ -215,14 +305,19 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    */
   private findForm(): HTMLFormElement | null {
     const { form } = this;
-    if (form instanceof HTMLFormElement) {
+    if (
+      form instanceof HTMLFormElement
+    ) {
       return form;
     }
     if (typeof form === 'string') {
       // Check if the string provided is a form id.
-      const el: HTMLElement | null = document.getElementById(form);
+      const el: HTMLElement | null =
+        document.getElementById(form);
       if (el) {
-        if (el instanceof HTMLFormElement) {
+        if (
+          el instanceof HTMLFormElement
+        ) {
           return el;
         } else {
           /**
@@ -271,7 +366,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     // this button wants to specifically submit a form
     // climb up the dom to see if we're in a <form>
     // and if so, then use JS to submit it
-    if (this.formEl && this.formButtonEl) {
+    if (
+      this.formEl &&
+      this.formButtonEl
+    ) {
       ev.preventDefault();
 
       this.formButtonEl.click();
@@ -281,7 +379,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private handleClick = (ev: Event) => {
     const { el } = this;
     if (this.type === 'button') {
-      openURL(this.href, ev, this.routerDirection, this.routerAnimation);
+      openURL(
+        this.href,
+        ev,
+        this.routerDirection,
+        this.routerAnimation
+      );
     } else if (hasShadowDom(el)) {
       this.submitForm(ev);
     }
@@ -312,8 +415,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       strong,
       inheritedAttributes,
     } = this;
-    const finalSize = size === undefined && this.inItem ? 'small' : size;
-    const TagType = href === undefined ? 'button' : ('a' as any);
+    const finalSize =
+      size === undefined && this.inItem
+        ? 'small'
+        : size;
+    const TagType =
+      href === undefined
+        ? 'button'
+        : ('a' as any);
     const attrs =
       TagType === 'button'
         ? { type }
@@ -329,7 +438,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
      * work around https://github.com/ionic-team/stencil/issues/3586.
      */
     if (fill == null) {
-      fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
+      fill =
+        this.inToolbar ||
+        this.inListHeader
+          ? 'clear'
+          : 'solid';
     }
 
     /**
@@ -340,29 +453,51 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
      * associated form.
      */
     {
-      type !== 'button' && this.renderHiddenButton();
+      type !== 'button' &&
+        this.renderHiddenButton();
     }
 
     return (
       <Host
         onClick={this.handleClick}
-        aria-disabled={disabled ? 'true' : null}
-        class={createColorClasses(color, {
-          [mode]: true,
-          [buttonType]: true,
-          [`${buttonType}-${expand}`]: expand !== undefined,
-          [`${buttonType}-${finalSize}`]: finalSize !== undefined,
-          [`${buttonType}-${shape}`]: shape !== undefined,
-          [`${buttonType}-${fill}`]: true,
-          [`${buttonType}-strong`]: strong,
-          'in-toolbar': hostContext('ion-toolbar', this.el),
-          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'in-buttons': hostContext('ion-buttons', this.el),
-          'button-has-icon-only': hasIconOnly,
-          'button-disabled': disabled,
-          'ion-activatable': true,
-          'ion-focusable': true,
-        })}
+        aria-disabled={
+          disabled ? 'true' : null
+        }
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            [buttonType]: true,
+            [`${buttonType}-${expand}`]:
+              expand !== undefined,
+            [`${buttonType}-${finalSize}`]:
+              finalSize !== undefined,
+            [`${buttonType}-${shape}`]:
+              shape !== undefined,
+            [`${buttonType}-${fill}`]:
+              true,
+            [`${buttonType}-strong`]:
+              strong,
+            'in-toolbar': hostContext(
+              'ion-toolbar',
+              this.el
+            ),
+            'in-toolbar-color':
+              hostContext(
+                'ion-toolbar[color]',
+                this.el
+              ),
+            'in-buttons': hostContext(
+              'ion-buttons',
+              this.el
+            ),
+            'button-has-icon-only':
+              hasIconOnly,
+            'button-disabled': disabled,
+            'ion-activatable': true,
+            'ion-focusable': true,
+          }
+        )}
       >
         <TagType
           {...attrs}
@@ -379,7 +514,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             <slot></slot>
             <slot name="end"></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {mode === 'md' && (
+            <ion-ripple-effect
+              type={this.rippleType}
+            ></ion-ripple-effect>
+          )}
         </TagType>
       </Host>
     );

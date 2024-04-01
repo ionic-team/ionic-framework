@@ -1,11 +1,17 @@
 import { createGesture } from '@utils/gesture';
-import { clamp, raf } from '@utils/helpers';
+import {
+  clamp,
+  raf,
+} from '@utils/helpers';
 
 import type { Animation } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
 import { getBackdropValueForSheet } from '../utils';
 
-import { calculateSpringStep, handleCanDismiss } from './utils';
+import {
+  calculateSpringStep,
+  handleCanDismiss,
+} from './utils';
 
 export interface MoveSheetToBreakpointOptions {
   /**
@@ -49,54 +55,101 @@ export const createSheetGesture = (
   breakpoints: number[] = [],
   getCurrentBreakpoint: () => number,
   onDismiss: () => void,
-  onBreakpointChange: (breakpoint: number) => void
+  onBreakpointChange: (
+    breakpoint: number
+  ) => void
 ) => {
   // Defaults for the sheet swipe animation
   const defaultBackdrop = [
-    { offset: 0, opacity: 'var(--backdrop-opacity)' },
+    {
+      offset: 0,
+      opacity:
+        'var(--backdrop-opacity)',
+    },
     { offset: 1, opacity: 0.01 },
   ];
 
   const customBackdrop = [
-    { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: 1 - backdropBreakpoint, opacity: 0 },
+    {
+      offset: 0,
+      opacity:
+        'var(--backdrop-opacity)',
+    },
+    {
+      offset: 1 - backdropBreakpoint,
+      opacity: 0,
+    },
     { offset: 1, opacity: 0 },
   ];
 
   const SheetDefaults = {
     WRAPPER_KEYFRAMES: [
-      { offset: 0, transform: 'translateY(0%)' },
-      { offset: 1, transform: 'translateY(100%)' },
+      {
+        offset: 0,
+        transform: 'translateY(0%)',
+      },
+      {
+        offset: 1,
+        transform: 'translateY(100%)',
+      },
     ],
-    BACKDROP_KEYFRAMES: backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
+    BACKDROP_KEYFRAMES:
+      backdropBreakpoint !== 0
+        ? customBackdrop
+        : defaultBackdrop,
   };
 
-  const contentEl = baseEl.querySelector('ion-content');
+  const contentEl =
+    baseEl.querySelector('ion-content');
   const height = wrapperEl.clientHeight;
-  let currentBreakpoint = initialBreakpoint;
+  let currentBreakpoint =
+    initialBreakpoint;
   let offset = 0;
   let canDismissBlocksGesture = false;
   const canDismissMaxStep = 0.95;
-  const wrapperAnimation = animation.childAnimations.find((ani) => ani.id === 'wrapperAnimation');
-  const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
-  const maxBreakpoint = breakpoints[breakpoints.length - 1];
+  const wrapperAnimation =
+    animation.childAnimations.find(
+      (ani) =>
+        ani.id === 'wrapperAnimation'
+    );
+  const backdropAnimation =
+    animation.childAnimations.find(
+      (ani) =>
+        ani.id === 'backdropAnimation'
+    );
+  const maxBreakpoint =
+    breakpoints[breakpoints.length - 1];
   const minBreakpoint = breakpoints[0];
 
   const enableBackdrop = () => {
-    baseEl.style.setProperty('pointer-events', 'auto');
-    backdropEl.style.setProperty('pointer-events', 'auto');
+    baseEl.style.setProperty(
+      'pointer-events',
+      'auto'
+    );
+    backdropEl.style.setProperty(
+      'pointer-events',
+      'auto'
+    );
 
     /**
      * When the backdrop is enabled, elements such
      * as inputs should not be focusable outside
      * the sheet.
      */
-    baseEl.classList.remove('ion-disable-focus-trap');
+    baseEl.classList.remove(
+      'ion-disable-focus-trap'
+    );
   };
 
   const disableBackdrop = () => {
-    baseEl.style.setProperty('pointer-events', 'none');
-    backdropEl.style.setProperty('pointer-events', 'none');
+    baseEl.style.setProperty(
+      'pointer-events',
+      'none'
+    );
+    backdropEl.style.setProperty(
+      'pointer-events',
+      'none'
+    );
 
     /**
      * When the backdrop is enabled, elements such
@@ -105,7 +158,9 @@ export const createSheetGesture = (
      * Adding this class disables focus trapping
      * for the sheet temporarily.
      */
-    baseEl.classList.add('ion-disable-focus-trap');
+    baseEl.classList.add(
+      'ion-disable-focus-trap'
+    );
   };
 
   /**
@@ -116,10 +171,20 @@ export const createSheetGesture = (
    * animation offset to the current breakpoint
    * so there is no flickering.
    */
-  if (wrapperAnimation && backdropAnimation) {
-    wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
-    backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
-    animation.progressStart(true, 1 - currentBreakpoint);
+  if (
+    wrapperAnimation &&
+    backdropAnimation
+  ) {
+    wrapperAnimation.keyframes([
+      ...SheetDefaults.WRAPPER_KEYFRAMES,
+    ]);
+    backdropAnimation.keyframes([
+      ...SheetDefaults.BACKDROP_KEYFRAMES,
+    ]);
+    animation.progressStart(
+      true,
+      1 - currentBreakpoint
+    );
 
     /**
      * If backdrop is not enabled, then content
@@ -128,7 +193,9 @@ export const createSheetGesture = (
      * ion-backdrop and .modal-wrapper always have pointer-events: auto
      * applied, so the modal content can still be interacted with.
      */
-    const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
+    const shouldEnableBackdrop =
+      currentBreakpoint >
+      backdropBreakpoint;
     if (shouldEnableBackdrop) {
       enableBackdrop();
     } else {
@@ -136,21 +203,33 @@ export const createSheetGesture = (
     }
   }
 
-  if (contentEl && currentBreakpoint !== maxBreakpoint) {
+  if (
+    contentEl &&
+    currentBreakpoint !== maxBreakpoint
+  ) {
     contentEl.scrollY = false;
   }
 
-  const canStart = (detail: GestureDetail) => {
+  const canStart = (
+    detail: GestureDetail
+  ) => {
     /**
      * If the sheet is fully expanded and
      * the user is swiping on the content,
      * the gesture should not start to
      * allow for scrolling on the content.
      */
-    const content = (detail.event.target! as HTMLElement).closest('ion-content');
-    currentBreakpoint = getCurrentBreakpoint();
+    const content = (
+      detail.event
+        .target! as HTMLElement
+    ).closest('ion-content');
+    currentBreakpoint =
+      getCurrentBreakpoint();
 
-    if (currentBreakpoint === 1 && content) {
+    if (
+      currentBreakpoint === 1 &&
+      content
+    ) {
       return false;
     }
 
@@ -170,7 +249,10 @@ export const createSheetGesture = (
      * TODO (FW-937)
      * Remove undefined check
      */
-    canDismissBlocksGesture = baseEl.canDismiss !== undefined && baseEl.canDismiss !== true && minBreakpoint === 0;
+    canDismissBlocksGesture =
+      baseEl.canDismiss !== undefined &&
+      baseEl.canDismiss !== true &&
+      minBreakpoint === 0;
 
     /**
      * If swiping on the content
@@ -189,27 +271,44 @@ export const createSheetGesture = (
       baseEl.focus();
     });
 
-    animation.progressStart(true, 1 - currentBreakpoint);
+    animation.progressStart(
+      true,
+      1 - currentBreakpoint
+    );
   };
 
-  const onMove = (detail: GestureDetail) => {
+  const onMove = (
+    detail: GestureDetail
+  ) => {
     /**
      * Given the change in gesture position on the Y axis,
      * compute where the offset of the animation should be
      * relative to where the user dragged.
      */
-    const initialStep = 1 - currentBreakpoint;
-    const secondToLastBreakpoint = breakpoints.length > 1 ? 1 - breakpoints[1] : undefined;
-    const step = initialStep + detail.deltaY / height;
+    const initialStep =
+      1 - currentBreakpoint;
+    const secondToLastBreakpoint =
+      breakpoints.length > 1
+        ? 1 - breakpoints[1]
+        : undefined;
+    const step =
+      initialStep +
+      detail.deltaY / height;
     const isAttemptingDismissWithCanDismiss =
-      secondToLastBreakpoint !== undefined && step >= secondToLastBreakpoint && canDismissBlocksGesture;
+      secondToLastBreakpoint !==
+        undefined &&
+      step >= secondToLastBreakpoint &&
+      canDismissBlocksGesture;
 
     /**
      * If we are blocking the gesture from dismissing,
      * set the max step value so that the sheet cannot be
      * completely hidden.
      */
-    const maxStep = isAttemptingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
+    const maxStep =
+      isAttemptingDismissWithCanDismiss
+        ? canDismissMaxStep
+        : 0.9999;
 
     /**
      * If we are blocking the gesture from
@@ -226,32 +325,54 @@ export const createSheetGesture = (
      * the result as a value from 0 to 1.
      */
     const processedStep =
-      isAttemptingDismissWithCanDismiss && secondToLastBreakpoint !== undefined
+      isAttemptingDismissWithCanDismiss &&
+      secondToLastBreakpoint !==
+        undefined
         ? secondToLastBreakpoint +
-          calculateSpringStep((step - secondToLastBreakpoint) / (maxStep - secondToLastBreakpoint))
+          calculateSpringStep(
+            (step -
+              secondToLastBreakpoint) /
+              (maxStep -
+                secondToLastBreakpoint)
+          )
         : step;
 
-    offset = clamp(0.0001, processedStep, maxStep);
+    offset = clamp(
+      0.0001,
+      processedStep,
+      maxStep
+    );
     animation.progressStep(offset);
   };
 
-  const onEnd = (detail: GestureDetail) => {
+  const onEnd = (
+    detail: GestureDetail
+  ) => {
     /**
      * When the gesture releases, we need to determine
      * the closest breakpoint to snap to.
      */
     const velocity = detail.velocityY;
-    const threshold = (detail.deltaY + velocity * 350) / height;
+    const threshold =
+      (detail.deltaY + velocity * 350) /
+      height;
 
-    const diff = currentBreakpoint - threshold;
-    const closest = breakpoints.reduce((a, b) => {
-      return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
-    });
+    const diff =
+      currentBreakpoint - threshold;
+    const closest = breakpoints.reduce(
+      (a, b) => {
+        return Math.abs(b - diff) <
+          Math.abs(a - diff)
+          ? b
+          : a;
+      }
+    );
 
     moveSheetToBreakpoint({
       breakpoint: closest,
       breakpointOffset: offset,
-      canDismiss: canDismissBlocksGesture,
+      canDismiss:
+        canDismissBlocksGesture,
 
       /**
        * The swipe is user-driven, so we should
@@ -261,28 +382,53 @@ export const createSheetGesture = (
     });
   };
 
-  const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
-    const { breakpoint, canDismiss, breakpointOffset, animated } = options;
+  const moveSheetToBreakpoint = (
+    options: MoveSheetToBreakpointOptions
+  ) => {
+    const {
+      breakpoint,
+      canDismiss,
+      breakpointOffset,
+      animated,
+    } = options;
     /**
      * canDismiss should only prevent snapping
      * when users are trying to dismiss. If canDismiss
      * is present but the user is trying to swipe upwards,
      * we should allow that to happen,
      */
-    const shouldPreventDismiss = canDismiss && breakpoint === 0;
-    const snapToBreakpoint = shouldPreventDismiss ? currentBreakpoint : breakpoint;
+    const shouldPreventDismiss =
+      canDismiss && breakpoint === 0;
+    const snapToBreakpoint =
+      shouldPreventDismiss
+        ? currentBreakpoint
+        : breakpoint;
 
-    const shouldRemainOpen = snapToBreakpoint !== 0;
+    const shouldRemainOpen =
+      snapToBreakpoint !== 0;
 
     currentBreakpoint = 0;
     /**
      * Update the animation so that it plays from
      * the last offset to the closest snap point.
      */
-    if (wrapperAnimation && backdropAnimation) {
+    if (
+      wrapperAnimation &&
+      backdropAnimation
+    ) {
       wrapperAnimation.keyframes([
-        { offset: 0, transform: `translateY(${breakpointOffset * 100}%)` },
-        { offset: 1, transform: `translateY(${(1 - snapToBreakpoint) * 100}%)` },
+        {
+          offset: 0,
+          transform: `translateY(${
+            breakpointOffset * 100
+          }%)`,
+        },
+        {
+          offset: 1,
+          transform: `translateY(${
+            (1 - snapToBreakpoint) * 100
+          }%)`,
+        },
       ]);
 
       backdropAnimation.keyframes([
@@ -295,7 +441,10 @@ export const createSheetGesture = (
         },
         {
           offset: 1,
-          opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})`,
+          opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
+            snapToBreakpoint,
+            backdropBreakpoint
+          )})`,
         },
       ]);
 
@@ -309,71 +458,112 @@ export const createSheetGesture = (
     gesture.enable(false);
 
     if (shouldPreventDismiss) {
-      handleCanDismiss(baseEl, animation);
+      handleCanDismiss(
+        baseEl,
+        animation
+      );
     } else if (!shouldRemainOpen) {
       onDismiss();
     }
 
-    return new Promise<void>((resolve) => {
-      animation
-        .onFinish(
-          () => {
-            if (shouldRemainOpen) {
-              /**
-               * Once the snapping animation completes,
-               * we need to reset the animation to go
-               * from 0 to 1 so users can swipe in any direction.
-               * We then set the animation offset to the current
-               * breakpoint so that it starts at the snapped position.
-               */
-              if (wrapperAnimation && backdropAnimation) {
-                raf(() => {
-                  wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
-                  backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
-                  animation.progressStart(true, 1 - snapToBreakpoint);
-                  currentBreakpoint = snapToBreakpoint;
-                  onBreakpointChange(currentBreakpoint);
+    return new Promise<void>(
+      (resolve) => {
+        animation
+          .onFinish(
+            () => {
+              if (shouldRemainOpen) {
+                /**
+                 * Once the snapping animation completes,
+                 * we need to reset the animation to go
+                 * from 0 to 1 so users can swipe in any direction.
+                 * We then set the animation offset to the current
+                 * breakpoint so that it starts at the snapped position.
+                 */
+                if (
+                  wrapperAnimation &&
+                  backdropAnimation
+                ) {
+                  raf(() => {
+                    wrapperAnimation.keyframes(
+                      [
+                        ...SheetDefaults.WRAPPER_KEYFRAMES,
+                      ]
+                    );
+                    backdropAnimation.keyframes(
+                      [
+                        ...SheetDefaults.BACKDROP_KEYFRAMES,
+                      ]
+                    );
+                    animation.progressStart(
+                      true,
+                      1 -
+                        snapToBreakpoint
+                    );
+                    currentBreakpoint =
+                      snapToBreakpoint;
+                    onBreakpointChange(
+                      currentBreakpoint
+                    );
 
-                  /**
-                   * If the sheet is fully expanded, we can safely
-                   * enable scrolling again.
-                   */
-                  if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
-                    contentEl.scrollY = true;
-                  }
+                    /**
+                     * If the sheet is fully expanded, we can safely
+                     * enable scrolling again.
+                     */
+                    if (
+                      contentEl &&
+                      currentBreakpoint ===
+                        breakpoints[
+                          breakpoints.length -
+                            1
+                        ]
+                    ) {
+                      contentEl.scrollY =
+                        true;
+                    }
 
-                  /**
-                   * Backdrop should become enabled
-                   * after the backdropBreakpoint value
-                   */
-                  const shouldEnableBackdrop = currentBreakpoint > backdropBreakpoint;
-                  if (shouldEnableBackdrop) {
-                    enableBackdrop();
-                  } else {
-                    disableBackdrop();
-                  }
+                    /**
+                     * Backdrop should become enabled
+                     * after the backdropBreakpoint value
+                     */
+                    const shouldEnableBackdrop =
+                      currentBreakpoint >
+                      backdropBreakpoint;
+                    if (
+                      shouldEnableBackdrop
+                    ) {
+                      enableBackdrop();
+                    } else {
+                      disableBackdrop();
+                    }
 
+                    gesture.enable(
+                      true
+                    );
+                    resolve();
+                  });
+                } else {
                   gesture.enable(true);
                   resolve();
-                });
+                }
               } else {
-                gesture.enable(true);
                 resolve();
               }
-            } else {
-              resolve();
-            }
 
-            /**
-             * This must be a one time callback
-             * otherwise a new callback will
-             * be added every time onEnd runs.
-             */
-          },
-          { oneTimeCallback: true }
-        )
-        .progressEnd(1, 0, animated ? 500 : 0);
-    });
+              /**
+               * This must be a one time callback
+               * otherwise a new callback will
+               * be added every time onEnd runs.
+               */
+            },
+            { oneTimeCallback: true }
+          )
+          .progressEnd(
+            1,
+            0,
+            animated ? 500 : 0
+          );
+      }
+    );
   };
 
   const gesture = createGesture({

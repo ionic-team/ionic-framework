@@ -11,13 +11,19 @@ export class RadioFixture {
     this.page = page;
   }
 
-  async checkRadio(method: 'keyboard' | 'mouse', selector = 'ion-radio') {
+  async checkRadio(
+    method: 'keyboard' | 'mouse',
+    selector = 'ion-radio'
+  ) {
     const { page } = this;
-    const radio = (this.radio = page.locator(selector));
+    const radio = (this.radio =
+      page.locator(selector));
 
     if (method === 'keyboard') {
       await radio.focus();
-      await page.keyboard.press('Space');
+      await page.keyboard.press(
+        'Space'
+      );
     } else {
       await radio.click();
     }
@@ -31,9 +37,15 @@ export class RadioFixture {
     const { radio } = this;
 
     if (state) {
-      await expect(radio).toHaveClass(/radio-checked/);
+      await expect(radio).toHaveClass(
+        /radio-checked/
+      );
     } else {
-      await expect(radio).not.toHaveClass(/radio-checked/);
+      await expect(
+        radio
+      ).not.toHaveClass(
+        /radio-checked/
+      );
     }
   }
 }

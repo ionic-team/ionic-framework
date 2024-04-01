@@ -1,14 +1,22 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
-  /**
-   * Chip rendering does not vary across modes.
-   */
-  test.describe(title('chip: rendering'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(
-        `
+configs({ modes: ['ios'] }).forEach(
+  ({ title, screenshot, config }) => {
+    /**
+     * Chip rendering does not vary across modes.
+     */
+    test.describe(
+      title('chip: rendering'),
+      () => {
+        test('should not have visual regressions', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-chip>
           <ion-avatar>
             <img
@@ -18,76 +26,123 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
           <ion-label>Chip</ion-label>
           <ion-icon name="close-circle"></ion-icon>
         </ion-chip>`,
-        config
-      );
+            config
+          );
 
-      const chip = page.locator('ion-chip');
+          const chip =
+            page.locator('ion-chip');
 
-      await expect(chip).toHaveScreenshot(screenshot(`chip-basic`));
-    });
-  });
-});
+          await expect(
+            chip
+          ).toHaveScreenshot(
+            screenshot(`chip-basic`)
+          );
+        });
+      }
+    );
+  }
+);
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  /**
-   * This behavior does not vary across modes/directions.
-   */
-  test.describe(title('chip: outline'), () => {
-    test('should render default outline chip', async ({ page }) => {
-      await page.setContent(
-        `<ion-chip outline="true">
+configs({
+  modes: ['ios'],
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    /**
+     * This behavior does not vary across modes/directions.
+     */
+    test.describe(
+      title('chip: outline'),
+      () => {
+        test('should render default outline chip', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `<ion-chip outline="true">
           <ion-icon name="checkmark-circle"></ion-icon>
           <ion-label>Icon</ion-label>
         </ion-chip>`,
-        config
-      );
+            config
+          );
 
-      const chip = page.locator('ion-chip');
+          const chip =
+            page.locator('ion-chip');
 
-      await expect(chip).toHaveScreenshot(screenshot(`chip-outline`));
-    });
-  });
-  /**
-   * This behavior does not vary across modes/directions.
-   */
-  test.describe(title('chip: color'), () => {
-    test('should render solid color chip', async ({ page }) => {
-      await page.setContent(
-        `<ion-chip color="tertiary">
+          await expect(
+            chip
+          ).toHaveScreenshot(
+            screenshot(`chip-outline`)
+          );
+        });
+      }
+    );
+    /**
+     * This behavior does not vary across modes/directions.
+     */
+    test.describe(
+      title('chip: color'),
+      () => {
+        test('should render solid color chip', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `<ion-chip color="tertiary">
           <ion-icon name="checkmark-circle"></ion-icon>
           <ion-label>Tertiary with Icon</ion-label>
         </ion-chip>`,
-        config
-      );
+            config
+          );
 
-      const chip = page.locator('ion-chip');
+          const chip =
+            page.locator('ion-chip');
 
-      await expect(chip).toHaveScreenshot(screenshot(`chip-solid-color`));
-    });
-    test('should render outline color chip', async ({ page }) => {
-      await page.setContent(
-        `<ion-chip outline="true" color="tertiary">
+          await expect(
+            chip
+          ).toHaveScreenshot(
+            screenshot(
+              `chip-solid-color`
+            )
+          );
+        });
+        test('should render outline color chip', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `<ion-chip outline="true" color="tertiary">
           <ion-icon name="checkmark-circle"></ion-icon>
           <ion-label>Tertiary with Icon</ion-label>
         </ion-chip>`,
-        config
-      );
+            config
+          );
 
-      const chip = page.locator('ion-chip');
+          const chip =
+            page.locator('ion-chip');
 
-      await expect(chip).toHaveScreenshot(screenshot(`chip-outline-color`));
-    });
-  });
+          await expect(
+            chip
+          ).toHaveScreenshot(
+            screenshot(
+              `chip-outline-color`
+            )
+          );
+        });
+      }
+    );
 
-  test.describe(title('chip: descenders'), () => {
-    test('should not clip descenders in item', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/18313',
-      });
+    test.describe(
+      title('chip: descenders'),
+      () => {
+        test('should not clip descenders in item', async ({
+          page,
+        }) => {
+          test.info().annotations.push({
+            type: 'issue',
+            description:
+              'https://github.com/ionic-team/ionic-framework/issues/18313',
+          });
 
-      await page.setContent(
-        `
+          await page.setContent(
+            `
         <ion-list>
           <ion-item>
             <ion-chip>
@@ -96,12 +151,19 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
           </ion-item>
         </ion-list>
       `,
-        config
-      );
+            config
+          );
 
-      const chip = page.locator('ion-chip');
+          const chip =
+            page.locator('ion-chip');
 
-      await expect(chip).toHaveScreenshot(screenshot(`chip-descender`));
-    });
-  });
-});
+          await expect(
+            chip
+          ).toHaveScreenshot(
+            screenshot(`chip-descender`)
+          );
+        });
+      }
+    );
+  }
+);

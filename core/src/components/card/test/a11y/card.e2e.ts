@@ -1,11 +1,21 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('card: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('card: font scaling'),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 36px;
@@ -23,12 +33,19 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </ion-card-content>
         </ion-card>
       `,
-        config
-      );
+            config
+          );
 
-      const card = page.locator('ion-card');
+          const card =
+            page.locator('ion-card');
 
-      await expect(card).toHaveScreenshot(screenshot(`card-scale`));
-    });
-  });
-});
+          await expect(
+            card
+          ).toHaveScreenshot(
+            screenshot(`card-scale`)
+          );
+        });
+      }
+    );
+  }
+);

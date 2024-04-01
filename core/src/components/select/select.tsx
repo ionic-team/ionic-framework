@@ -1,16 +1,54 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
-import type { LegacyFormController, NotchController } from '@utils/forms';
-import { compareOptions, createLegacyFormController, createNotchController, isOptionSelected } from '@utils/forms';
-import { findItemLabel, focusVisibleElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Method,
+  Prop,
+  State,
+  Watch,
+  h,
+  forceUpdate,
+} from '@stencil/core';
+import type {
+  LegacyFormController,
+  NotchController,
+} from '@utils/forms';
+import {
+  compareOptions,
+  createLegacyFormController,
+  createNotchController,
+  isOptionSelected,
+} from '@utils/forms';
+import {
+  findItemLabel,
+  focusVisibleElement,
+  getAriaLabel,
+  renderHiddenInput,
+  inheritAttributes,
+} from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
-import { actionSheetController, alertController, popoverController } from '@utils/overlays';
+import {
+  actionSheetController,
+  alertController,
+  popoverController,
+} from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
-import { createColorClasses, hostContext } from '@utils/theme';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
-import { caretDownSharp, chevronExpand } from 'ionicons/icons';
+import {
+  caretDownSharp,
+  chevronExpand,
+} from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -25,7 +63,11 @@ import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
 import type { AlertInput } from '../alert/alert-interface';
 import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
-import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
+import type {
+  SelectChangeEventDetail,
+  SelectInterface,
+  SelectCompareFn,
+} from './select-interface';
 
 // TODO(FW-2832): types
 
@@ -50,20 +92,28 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
   },
   shadow: true,
 })
-export class Select implements ComponentInterface {
+export class Select
+  implements ComponentInterface
+{
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
   private legacyFormController!: LegacyFormController;
-  private inheritedAttributes: Attributes = {};
-  private nativeWrapperEl: HTMLElement | undefined;
-  private notchSpacerEl: HTMLElement | undefined;
+  private inheritedAttributes: Attributes =
+    {};
+  private nativeWrapperEl:
+    | HTMLElement
+    | undefined;
+  private notchSpacerEl:
+    | HTMLElement
+    | undefined;
 
   private notchController?: NotchController;
 
   // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
+  private hasLoggedDeprecationWarning =
+    false;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -81,7 +131,8 @@ export class Select implements ComponentInterface {
    *
    * This property is only available when using the modern select syntax.
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * This property allows developers to specify a custom function or property
@@ -89,7 +140,10 @@ export class Select implements ComponentInterface {
    * ion-select. When not specified, the default behavior will use strict
    * equality (===) for comparison.
    */
-  @Prop() compareWith?: string | SelectCompareFn | null;
+  @Prop() compareWith?:
+    | string
+    | SelectCompareFn
+    | null;
 
   /**
    * If `true`, the user cannot interact with the select.
@@ -105,7 +159,8 @@ export class Select implements ComponentInterface {
   /**
    * The interface the select should use: `action-sheet`, `popover` or `alert`.
    */
-  @Prop() interface: SelectInterface = 'alert';
+  @Prop() interface: SelectInterface =
+    'alert';
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
@@ -130,7 +185,10 @@ export class Select implements ComponentInterface {
    * `"space-between"`: The label and select will appear on opposite
    * ends of the line with space between the two elements.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify:
+    | 'start'
+    | 'end'
+    | 'space-between' = 'space-between';
 
   /**
    * The visible label associated with the select.
@@ -150,7 +208,12 @@ export class Select implements ComponentInterface {
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    * When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
    */
-  @Prop() labelPlacement?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+  @Prop() labelPlacement?:
+    | 'start'
+    | 'end'
+    | 'floating'
+    | 'stacked'
+    | 'fixed' = 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -209,27 +272,33 @@ export class Select implements ComponentInterface {
   /**
    * The value of the select.
    */
-  @Prop({ mutable: true }) value?: any | null;
+  @Prop({ mutable: true }) value?:
+    | any
+    | null;
 
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<SelectChangeEventDetail>;
+  @Event()
+  ionChange!: EventEmitter<SelectChangeEventDetail>;
 
   /**
    * Emitted when the selection is cancelled.
    */
-  @Event() ionCancel!: EventEmitter<void>;
+  @Event()
+  ionCancel!: EventEmitter<void>;
 
   /**
    * Emitted when the overlay is dismissed.
    */
-  @Event() ionDismiss!: EventEmitter<void>;
+  @Event()
+  ionDismiss!: EventEmitter<void>;
 
   /**
    * Emitted when the select has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event()
+  ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the select loses focus.
@@ -240,7 +309,8 @@ export class Select implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
   @Watch('isExpanded')
@@ -256,33 +326,43 @@ export class Select implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAttributes =
+      inheritAttributes(this.el, [
+        'aria-label',
+      ]);
   }
 
   async connectedCallback() {
     const { el } = this;
 
-    this.legacyFormController = createLegacyFormController(el);
-    this.notchController = createNotchController(
-      el,
-      () => this.notchSpacerEl,
-      () => this.labelSlot
-    );
+    this.legacyFormController =
+      createLegacyFormController(el);
+    this.notchController =
+      createNotchController(
+        el,
+        () => this.notchSpacerEl,
+        () => this.labelSlot
+      );
 
     this.updateOverlayOptions();
     this.emitStyle();
 
-    this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
-      this.updateOverlayOptions();
+    this.mutationO =
+      watchForOptions<HTMLIonSelectOptionElement>(
+        this.el,
+        'ion-select-option',
+        async () => {
+          this.updateOverlayOptions();
 
-      /**
-       * We need to re-render the component
-       * because one of the new ion-select-option
-       * elements may match the value. In this case,
-       * the rendered selected text should be updated.
-       */
-      forceUpdate(this);
-    });
+          /**
+           * We need to re-render the component
+           * because one of the new ion-select-option
+           * elements may match the value. In this case,
+           * the rendered selected text should be updated.
+           */
+          forceUpdate(this);
+        }
+      );
   }
 
   disconnectedCallback() {
@@ -304,12 +384,18 @@ export class Select implements ComponentInterface {
    * @param event The user interface event that called the open.
    */
   @Method()
-  async open(event?: UIEvent): Promise<any> {
-    if (this.disabled || this.isExpanded) {
+  async open(
+    event?: UIEvent
+  ): Promise<any> {
+    if (
+      this.disabled ||
+      this.isExpanded
+    ) {
       return undefined;
     }
     this.isExpanded = true;
-    const overlay = (this.overlay = await this.createOverlay(event));
+    const overlay = (this.overlay =
+      await this.createOverlay(event));
     overlay.onDidDismiss().then(() => {
       this.overlay = undefined;
       this.isExpanded = false;
@@ -321,15 +407,23 @@ export class Select implements ComponentInterface {
 
     // focus selected option for popovers
     if (this.interface === 'popover') {
-      const indexOfSelected = this.childOpts.map((o) => o.value).indexOf(this.value);
+      const indexOfSelected =
+        this.childOpts
+          .map((o) => o.value)
+          .indexOf(this.value);
 
       if (indexOfSelected > -1) {
-        const selectedItem = overlay.querySelector<HTMLElement>(
-          `.select-interface-option:nth-child(${indexOfSelected + 1})`
-        );
+        const selectedItem =
+          overlay.querySelector<HTMLElement>(
+            `.select-interface-option:nth-child(${
+              indexOfSelected + 1
+            })`
+          );
 
         if (selectedItem) {
-          focusVisibleElement(selectedItem);
+          focusVisibleElement(
+            selectedItem
+          );
 
           /**
            * Browsers such as Firefox do not
@@ -342,7 +436,10 @@ export class Select implements ComponentInterface {
            * we only need to worry about those two components
            * when focusing.
            */
-          const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
+          const interactiveEl =
+            selectedItem.querySelector<HTMLElement>(
+              'ion-radio, ion-checkbox'
+            );
           if (interactiveEl) {
             interactiveEl.focus();
           }
@@ -351,11 +448,16 @@ export class Select implements ComponentInterface {
         /**
          * If no value is set then focus the first enabled option.
          */
-        const firstEnabledOption = overlay.querySelector<HTMLElement>(
-          'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
-        );
+        const firstEnabledOption =
+          overlay.querySelector<HTMLElement>(
+            'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
+          );
         if (firstEnabledOption) {
-          focusVisibleElement(firstEnabledOption.closest('ion-item')!);
+          focusVisibleElement(
+            firstEnabledOption.closest(
+              'ion-item'
+            )!
+          );
 
           /**
            * Focus the option for the same reason as we do above.
@@ -368,23 +470,35 @@ export class Select implements ComponentInterface {
     return overlay;
   }
 
-  private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
-    let selectInterface = this.interface;
-    if (selectInterface === 'action-sheet' && this.multiple) {
+  private createOverlay(
+    ev?: UIEvent
+  ): Promise<OverlaySelect> {
+    let selectInterface =
+      this.interface;
+    if (
+      selectInterface ===
+        'action-sheet' &&
+      this.multiple
+    ) {
       console.warn(
         `Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }
 
-    if (selectInterface === 'popover' && !ev) {
+    if (
+      selectInterface === 'popover' &&
+      !ev
+    ) {
       console.warn(
         `Select interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }
 
-    if (selectInterface === 'action-sheet') {
+    if (
+      selectInterface === 'action-sheet'
+    ) {
       return this.openActionSheet();
     }
     if (selectInterface === 'popover') {
@@ -402,40 +516,74 @@ export class Select implements ComponentInterface {
     const value = this.value;
     switch (this.interface) {
       case 'action-sheet':
-        overlay.buttons = this.createActionSheetButtons(childOpts, value);
+        overlay.buttons =
+          this.createActionSheetButtons(
+            childOpts,
+            value
+          );
         break;
       case 'popover':
-        const popover = overlay.querySelector('ion-select-popover');
+        const popover =
+          overlay.querySelector(
+            'ion-select-popover'
+          );
         if (popover) {
-          popover.options = this.createPopoverOptions(childOpts, value);
+          popover.options =
+            this.createPopoverOptions(
+              childOpts,
+              value
+            );
         }
         break;
       case 'alert':
-        const inputType = this.multiple ? 'checkbox' : 'radio';
-        overlay.inputs = this.createAlertInputs(childOpts, inputType, value);
+        const inputType = this.multiple
+          ? 'checkbox'
+          : 'radio';
+        overlay.inputs =
+          this.createAlertInputs(
+            childOpts,
+            inputType,
+            value
+          );
         break;
     }
   }
 
-  private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
-    const actionSheetButtons = data.map((option) => {
-      const value = getOptionValue(option);
+  private createActionSheetButtons(
+    data: HTMLIonSelectOptionElement[],
+    selectValue: any
+  ): ActionSheetButton[] {
+    const actionSheetButtons = data.map(
+      (option) => {
+        const value =
+          getOptionValue(option);
 
-      // Remove hydrated before copying over classes
-      const copyClasses = Array.from(option.classList)
-        .filter((cls) => cls !== 'hydrated')
-        .join(' ');
-      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+        // Remove hydrated before copying over classes
+        const copyClasses = Array.from(
+          option.classList
+        )
+          .filter(
+            (cls) => cls !== 'hydrated'
+          )
+          .join(' ');
+        const optClass = `${OPTION_CLASS} ${copyClasses}`;
 
-      return {
-        role: isOptionSelected(selectValue, value, this.compareWith) ? 'selected' : '',
-        text: option.textContent,
-        cssClass: optClass,
-        handler: () => {
-          this.setValue(value);
-        },
-      } as ActionSheetButton;
-    });
+        return {
+          role: isOptionSelected(
+            selectValue,
+            value,
+            this.compareWith
+          )
+            ? 'selected'
+            : '',
+          text: option.textContent,
+          cssClass: optClass,
+          handler: () => {
+            this.setValue(value);
+          },
+        } as ActionSheetButton;
+      }
+    );
 
     // Add "cancel" button
     actionSheetButtons.push({
@@ -454,74 +602,117 @@ export class Select implements ComponentInterface {
     inputType: 'checkbox' | 'radio',
     selectValue: any
   ): AlertInput[] {
-    const alertInputs = data.map((option) => {
-      const value = getOptionValue(option);
+    const alertInputs = data.map(
+      (option) => {
+        const value =
+          getOptionValue(option);
 
-      // Remove hydrated before copying over classes
-      const copyClasses = Array.from(option.classList)
-        .filter((cls) => cls !== 'hydrated')
-        .join(' ');
-      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+        // Remove hydrated before copying over classes
+        const copyClasses = Array.from(
+          option.classList
+        )
+          .filter(
+            (cls) => cls !== 'hydrated'
+          )
+          .join(' ');
+        const optClass = `${OPTION_CLASS} ${copyClasses}`;
 
-      return {
-        type: inputType,
-        cssClass: optClass,
-        label: option.textContent || '',
-        value,
-        checked: isOptionSelected(selectValue, value, this.compareWith),
-        disabled: option.disabled,
-      };
-    });
+        return {
+          type: inputType,
+          cssClass: optClass,
+          label:
+            option.textContent || '',
+          value,
+          checked: isOptionSelected(
+            selectValue,
+            value,
+            this.compareWith
+          ),
+          disabled: option.disabled,
+        };
+      }
+    );
 
     return alertInputs;
   }
 
-  private createPopoverOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
-    const popoverOptions = data.map((option) => {
-      const value = getOptionValue(option);
+  private createPopoverOptions(
+    data: HTMLIonSelectOptionElement[],
+    selectValue: any
+  ): SelectPopoverOption[] {
+    const popoverOptions = data.map(
+      (option) => {
+        const value =
+          getOptionValue(option);
 
-      // Remove hydrated before copying over classes
-      const copyClasses = Array.from(option.classList)
-        .filter((cls) => cls !== 'hydrated')
-        .join(' ');
-      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+        // Remove hydrated before copying over classes
+        const copyClasses = Array.from(
+          option.classList
+        )
+          .filter(
+            (cls) => cls !== 'hydrated'
+          )
+          .join(' ');
+        const optClass = `${OPTION_CLASS} ${copyClasses}`;
 
-      return {
-        text: option.textContent || '',
-        cssClass: optClass,
-        value,
-        checked: isOptionSelected(selectValue, value, this.compareWith),
-        disabled: option.disabled,
-        handler: (selected: any) => {
-          this.setValue(selected);
-          if (!this.multiple) {
-            this.close();
-          }
-        },
-      };
-    });
+        return {
+          text:
+            option.textContent || '',
+          cssClass: optClass,
+          value,
+          checked: isOptionSelected(
+            selectValue,
+            value,
+            this.compareWith
+          ),
+          disabled: option.disabled,
+          handler: (selected: any) => {
+            this.setValue(selected);
+            if (!this.multiple) {
+              this.close();
+            }
+          },
+        };
+      }
+    );
 
     return popoverOptions;
   }
 
-  private async openPopover(ev: UIEvent) {
-    const { fill, labelPlacement } = this;
-    const interfaceOptions = this.interfaceOptions;
+  private async openPopover(
+    ev: UIEvent
+  ) {
+    const { fill, labelPlacement } =
+      this;
+    const interfaceOptions =
+      this.interfaceOptions;
     const mode = getIonMode(this);
-    const showBackdrop = mode === 'md' ? false : true;
+    const showBackdrop =
+      mode === 'md' ? false : true;
     const multiple = this.multiple;
     const value = this.value;
 
     let event: Event | CustomEvent = ev;
     let size = 'auto';
 
-    if (this.legacyFormController.hasLegacyControl()) {
-      const item = this.el.closest('ion-item');
+    if (
+      this.legacyFormController.hasLegacyControl()
+    ) {
+      const item =
+        this.el.closest('ion-item');
 
       // If the select is inside of an item containing a floating
       // or stacked label then the popover should take up the
       // full width of the item when it presents
-      if (item && (item.classList.contains('item-label-floating') || item.classList.contains('item-label-stacked'))) {
+      if (
+        item &&
+        (item.classList.contains(
+          'item-label-floating'
+        ) ||
+          item.classList.contains(
+            'item-label-stacked'
+          ))
+      ) {
         event = {
           ...ev,
           detail: {
@@ -531,13 +722,19 @@ export class Select implements ComponentInterface {
         size = 'cover';
       }
     } else {
-      const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
+      const hasFloatingOrStackedLabel =
+        labelPlacement === 'floating' ||
+        labelPlacement === 'stacked';
       /**
        * The popover should take up the full width
        * when using a fill in MD mode or if the
        * label is floating/stacked.
        */
-      if (hasFloatingOrStackedLabel || (mode === 'md' && fill !== undefined)) {
+      if (
+        hasFloatingOrStackedLabel ||
+        (mode === 'md' &&
+          fill !== undefined)
+      ) {
         size = 'cover';
 
         /**
@@ -549,31 +746,43 @@ export class Select implements ComponentInterface {
         event = {
           ...ev,
           detail: {
-            ionShadowTarget: this.nativeWrapperEl,
+            ionShadowTarget:
+              this.nativeWrapperEl,
           },
         };
       }
     }
 
-    const popoverOpts: PopoverOptions = {
-      mode,
-      event,
-      alignment: 'center',
-      size,
-      showBackdrop,
-      ...interfaceOptions,
+    const popoverOpts: PopoverOptions =
+      {
+        mode,
+        event,
+        alignment: 'center',
+        size,
+        showBackdrop,
+        ...interfaceOptions,
 
-      component: 'ion-select-popover',
-      cssClass: ['select-popover', interfaceOptions.cssClass],
-      componentProps: {
-        header: interfaceOptions.header,
-        subHeader: interfaceOptions.subHeader,
-        message: interfaceOptions.message,
-        multiple,
-        value,
-        options: this.createPopoverOptions(this.childOpts, value),
-      },
-    };
+        component: 'ion-select-popover',
+        cssClass: [
+          'select-popover',
+          interfaceOptions.cssClass,
+        ],
+        componentProps: {
+          header:
+            interfaceOptions.header,
+          subHeader:
+            interfaceOptions.subHeader,
+          message:
+            interfaceOptions.message,
+          multiple,
+          value,
+          options:
+            this.createPopoverOptions(
+              this.childOpts,
+              value
+            ),
+        },
+      };
 
     /**
      * Workaround for Stencil to autodefine
@@ -584,23 +793,38 @@ export class Select implements ComponentInterface {
     if (false) {
       // eslint-disable-next-line
       // @ts-ignore
-      document.createElement('ion-select-popover');
-      document.createElement('ion-popover');
+      document.createElement(
+        'ion-select-popover'
+      );
+      document.createElement(
+        'ion-popover'
+      );
     }
 
-    return popoverController.create(popoverOpts);
+    return popoverController.create(
+      popoverOpts
+    );
   }
 
   private async openActionSheet() {
     const mode = getIonMode(this);
-    const interfaceOptions = this.interfaceOptions;
-    const actionSheetOpts: ActionSheetOptions = {
-      mode,
-      ...interfaceOptions,
+    const interfaceOptions =
+      this.interfaceOptions;
+    const actionSheetOpts: ActionSheetOptions =
+      {
+        mode,
+        ...interfaceOptions,
 
-      buttons: this.createActionSheetButtons(this.childOpts, this.value),
-      cssClass: ['select-action-sheet', interfaceOptions.cssClass],
-    };
+        buttons:
+          this.createActionSheetButtons(
+            this.childOpts,
+            this.value
+          ),
+        cssClass: [
+          'select-action-sheet',
+          interfaceOptions.cssClass,
+        ],
+      };
 
     /**
      * Workaround for Stencil to autodefine
@@ -611,10 +835,14 @@ export class Select implements ComponentInterface {
     if (false) {
       // eslint-disable-next-line
       // @ts-ignore
-      document.createElement('ion-action-sheet');
+      document.createElement(
+        'ion-action-sheet'
+      );
     }
 
-    return actionSheetController.create(actionSheetOpts);
+    return actionSheetController.create(
+      actionSheetOpts
+    );
   }
 
   private async openAlert() {
@@ -626,25 +854,41 @@ export class Select implements ComponentInterface {
      * when setting the header.
      */
     let label: HTMLElement | null;
-    let labelText: string | null | undefined;
+    let labelText:
+      | string
+      | null
+      | undefined;
 
-    if (this.legacyFormController.hasLegacyControl()) {
+    if (
+      this.legacyFormController.hasLegacyControl()
+    ) {
       label = this.getLabel();
-      labelText = label ? label.textContent : null;
+      labelText = label
+        ? label.textContent
+        : null;
     } else {
       labelText = this.labelText;
     }
 
-    const interfaceOptions = this.interfaceOptions;
-    const inputType = this.multiple ? 'checkbox' : 'radio';
+    const interfaceOptions =
+      this.interfaceOptions;
+    const inputType = this.multiple
+      ? 'checkbox'
+      : 'radio';
     const mode = getIonMode(this);
 
     const alertOpts: AlertOptions = {
       mode,
       ...interfaceOptions,
 
-      header: interfaceOptions.header ? interfaceOptions.header : labelText,
-      inputs: this.createAlertInputs(this.childOpts, inputType, this.value),
+      header: interfaceOptions.header
+        ? interfaceOptions.header
+        : labelText,
+      inputs: this.createAlertInputs(
+        this.childOpts,
+        inputType,
+        this.value
+      ),
       buttons: [
         {
           text: this.cancelText,
@@ -655,15 +899,21 @@ export class Select implements ComponentInterface {
         },
         {
           text: this.okText,
-          handler: (selectedValues: any) => {
-            this.setValue(selectedValues);
+          handler: (
+            selectedValues: any
+          ) => {
+            this.setValue(
+              selectedValues
+            );
           },
         },
       ],
       cssClass: [
         'select-alert',
         interfaceOptions.cssClass,
-        this.multiple ? 'multiple-select-alert' : 'single-select-alert',
+        this.multiple
+          ? 'multiple-select-alert'
+          : 'single-select-alert',
       ],
     };
 
@@ -676,10 +926,14 @@ export class Select implements ComponentInterface {
     if (false) {
       // eslint-disable-next-line
       // @ts-ignore
-      document.createElement('ion-alert');
+      document.createElement(
+        'ion-alert'
+      );
     }
 
-    return alertController.create(alertOpts);
+    return alertController.create(
+      alertOpts
+    );
   }
 
   /**
@@ -702,7 +956,11 @@ export class Select implements ComponentInterface {
   }
 
   private get childOpts() {
-    return Array.from(this.el.querySelectorAll('ion-select-option'));
+    return Array.from(
+      this.el.querySelectorAll(
+        'ion-select-option'
+      )
+    );
   }
 
   /**
@@ -730,11 +988,19 @@ export class Select implements ComponentInterface {
   }
 
   private getText(): string {
-    const selectedText = this.selectedText;
-    if (selectedText != null && selectedText !== '') {
+    const selectedText =
+      this.selectedText;
+    if (
+      selectedText != null &&
+      selectedText !== ''
+    ) {
       return selectedText;
     }
-    return generateText(this.childOpts, this.value, this.compareWith);
+    return generateText(
+      this.childOpts,
+      this.value,
+      this.compareWith
+    );
   }
 
   private setFocus() {
@@ -749,13 +1015,19 @@ export class Select implements ComponentInterface {
       'interactive-disabled': disabled,
     };
 
-    if (this.legacyFormController.hasLegacyControl()) {
+    if (
+      this.legacyFormController.hasLegacyControl()
+    ) {
       style['interactive'] = true;
       style['select'] = true;
-      style['select-disabled'] = disabled;
-      style['has-placeholder'] = this.placeholder !== undefined;
-      style['has-value'] = this.hasValue();
-      style['has-focus'] = this.isExpanded;
+      style['select-disabled'] =
+        disabled;
+      style['has-placeholder'] =
+        this.placeholder !== undefined;
+      style['has-value'] =
+        this.hasValue();
+      style['has-focus'] =
+        this.isExpanded;
       // TODO(FW-3194): remove this
       style['legacy'] = !!this.legacy;
     }
@@ -764,10 +1036,16 @@ export class Select implements ComponentInterface {
   }
 
   private onClick = (ev: UIEvent) => {
-    const target = ev.target as HTMLElement;
-    const closestSlot = target.closest('[slot="start"], [slot="end"]');
+    const target =
+      ev.target as HTMLElement;
+    const closestSlot = target.closest(
+      '[slot="start"], [slot="end"]'
+    );
 
-    if (target === this.el || closestSlot === null) {
+    if (
+      target === this.el ||
+      closestSlot === null
+    ) {
       this.setFocus();
       this.open(ev);
     } else {
@@ -816,11 +1094,18 @@ export class Select implements ComponentInterface {
       <div
         class={{
           'label-text-wrapper': true,
-          'label-text-wrapper-hidden': !this.hasLabel,
+          'label-text-wrapper-hidden':
+            !this.hasLabel,
         }}
         part="label"
       >
-        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
+        {label === undefined ? (
+          <slot name="label"></slot>
+        ) : (
+          <div class="label-text">
+            {label}
+          </div>
+        )}
       </div>
     );
   }
@@ -834,7 +1119,9 @@ export class Select implements ComponentInterface {
    * not the <slot> definition.
    */
   private get labelSlot() {
-    return this.el.querySelector('[slot="label"]');
+    return this.el.querySelector(
+      '[slot="label"]'
+    );
   }
 
   /**
@@ -844,7 +1131,10 @@ export class Select implements ComponentInterface {
    * the `labelText` getter instead.
    */
   private get hasLabel() {
-    return this.label !== undefined || this.labelSlot !== null;
+    return (
+      this.label !== undefined ||
+      this.labelSlot !== null
+    );
   }
 
   /**
@@ -853,7 +1143,9 @@ export class Select implements ComponentInterface {
    */
   private renderLabelContainer() {
     const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const hasOutlineFill =
+      mode === 'md' &&
+      this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -868,11 +1160,20 @@ export class Select implements ComponentInterface {
           <div class="select-outline-start"></div>
           <div
             class={{
-              'select-outline-notch': true,
-              'select-outline-notch-hidden': !this.hasLabel,
+              'select-outline-notch':
+                true,
+              'select-outline-notch-hidden':
+                !this.hasLabel,
             }}
           >
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+            <div
+              class="notch-spacer"
+              aria-hidden="true"
+              ref={(el) =>
+                (this.notchSpacerEl =
+                  el)
+              }
+            >
               {this.label}
             </div>
           </div>
@@ -890,19 +1191,50 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, shape, name, value } =
-      this;
+    const {
+      disabled,
+      el,
+      isExpanded,
+      expandedIcon,
+      labelPlacement,
+      justify,
+      placeholder,
+      fill,
+      shape,
+      name,
+      value,
+    } = this;
     const mode = getIonMode(this);
-    const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
-    const justifyEnabled = !hasFloatingOrStackedLabel;
-    const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const hasFloatingOrStackedLabel =
+      labelPlacement === 'floating' ||
+      labelPlacement === 'stacked';
+    const justifyEnabled =
+      !hasFloatingOrStackedLabel;
+    const rtl = isRTL(el)
+      ? 'rtl'
+      : 'ltr';
+    const inItem = hostContext(
+      'ion-item',
+      this.el
+    );
+    const shouldRenderHighlight =
+      mode === 'md' &&
+      fill !== 'outline' &&
+      !inItem;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+    const hasStartEndSlots =
+      el.querySelector(
+        '[slot="start"], [slot="end"]'
+      ) !== null;
 
-    renderHiddenInput(true, el, name, parseValue(value), disabled);
+    renderHiddenInput(
+      true,
+      el,
+      name,
+      parseValue(value),
+      disabled
+    );
 
     /**
      * If the label is stacked, it should always sit above the select.
@@ -922,39 +1254,70 @@ export class Select implements ComponentInterface {
      * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded || hasStartEndSlots));
+      labelPlacement === 'stacked' ||
+      (labelPlacement === 'floating' &&
+        (hasValue ||
+          isExpanded ||
+          hasStartEndSlots));
 
     return (
       <Host
         onClick={this.onClick}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'in-item': inItem,
-          'in-item-color': hostContext('ion-item.ion-color', el),
-          'select-disabled': disabled,
-          'select-expanded': isExpanded,
-          'has-expanded-icon': expandedIcon !== undefined,
-          'has-value': hasValue,
-          'label-floating': labelShouldFloat,
-          'has-placeholder': placeholder !== undefined,
-          'ion-focusable': true,
-          [`select-${rtl}`]: true,
-          [`select-fill-${fill}`]: fill !== undefined,
-          [`select-justify-${justify}`]: justifyEnabled,
-          [`select-shape-${shape}`]: shape !== undefined,
-          [`select-label-placement-${labelPlacement}`]: true,
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'in-item': inItem,
+            'in-item-color':
+              hostContext(
+                'ion-item.ion-color',
+                el
+              ),
+            'select-disabled': disabled,
+            'select-expanded':
+              isExpanded,
+            'has-expanded-icon':
+              expandedIcon !==
+              undefined,
+            'has-value': hasValue,
+            'label-floating':
+              labelShouldFloat,
+            'has-placeholder':
+              placeholder !== undefined,
+            'ion-focusable': true,
+            [`select-${rtl}`]: true,
+            [`select-fill-${fill}`]:
+              fill !== undefined,
+            [`select-justify-${justify}`]:
+              justifyEnabled,
+            [`select-shape-${shape}`]:
+              shape !== undefined,
+            [`select-label-placement-${labelPlacement}`]:
+              true,
+          }
+        )}
       >
-        <label class="select-wrapper" id="select-label">
+        <label
+          class="select-wrapper"
+          id="select-label"
+        >
           {this.renderLabelContainer()}
           <div class="select-wrapper-inner">
             <slot name="start"></slot>
-            <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
+            <div
+              class="native-wrapper"
+              ref={(el) =>
+                (this.nativeWrapperEl =
+                  el)
+              }
+              part="container"
+            >
               {this.renderSelectText()}
               {this.renderListbox()}
             </div>
             <slot name="end"></slot>
-            {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
+            {!hasFloatingOrStackedLabel &&
+              this.renderSelectIcon()}
           </div>
           {/**
            * The icon in a floating/stacked select
@@ -965,8 +1328,11 @@ export class Select implements ComponentInterface {
            * icon outside the inner wrapper, which holds
            * those components.
            */}
-          {hasFloatingOrStackedLabel && this.renderSelectIcon()}
-          {shouldRenderHighlight && <div class="select-highlight"></div>}
+          {hasFloatingOrStackedLabel &&
+            this.renderSelectIcon()}
+          {shouldRenderHighlight && (
+            <div class="select-highlight"></div>
+          )}
         </label>
       </Host>
     );
@@ -974,7 +1340,9 @@ export class Select implements ComponentInterface {
 
   // TODO FW-3194 - Remove this
   private renderLegacySelect() {
-    if (!this.hasLoggedDeprecationWarning) {
+    if (
+      !this.hasLoggedDeprecationWarning
+    ) {
       printIonWarning(
         `ion-select now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
@@ -992,19 +1360,39 @@ Developers can use the "legacy" property to continue using the legacy form marku
           this.el
         );
       }
-      this.hasLoggedDeprecationWarning = true;
+      this.hasLoggedDeprecationWarning =
+        true;
     }
 
-    const { disabled, el, inputId, isExpanded, expandedIcon, name, placeholder, value } = this;
+    const {
+      disabled,
+      el,
+      inputId,
+      isExpanded,
+      expandedIcon,
+      name,
+      placeholder,
+      value,
+    } = this;
     const mode = getIonMode(this);
-    const { labelText, labelId } = getAriaLabel(el, inputId);
+    const { labelText, labelId } =
+      getAriaLabel(el, inputId);
 
-    renderHiddenInput(true, el, name, parseValue(value), disabled);
+    renderHiddenInput(
+      true,
+      el,
+      name,
+      parseValue(value),
+      disabled
+    );
 
     const displayValue = this.getText();
 
     let selectText = displayValue;
-    if (selectText === '' && placeholder !== undefined) {
+    if (
+      selectText === '' &&
+      placeholder !== undefined
+    ) {
       selectText = placeholder;
     }
 
@@ -1013,28 +1401,43 @@ Developers can use the "legacy" property to continue using the legacy form marku
     // nicely when the screen reader announces it, otherwise just
     // announce the value / placeholder
     const displayLabel =
-      labelText !== undefined ? (selectText !== '' ? `${selectText}, ${labelText}` : labelText) : selectText;
+      labelText !== undefined
+        ? selectText !== ''
+          ? `${selectText}, ${labelText}`
+          : labelText
+        : selectText;
 
     return (
       <Host
         onClick={this.onClick}
         role="button"
         aria-haspopup="listbox"
-        aria-disabled={disabled ? 'true' : null}
+        aria-disabled={
+          disabled ? 'true' : null
+        }
         aria-label={displayLabel}
         class={{
           [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'in-item-color': hostContext('ion-item.ion-color', el),
+          'in-item': hostContext(
+            'ion-item',
+            el
+          ),
+          'in-item-color': hostContext(
+            'ion-item.ion-color',
+            el
+          ),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
-          'has-expanded-icon': expandedIcon !== undefined,
+          'has-expanded-icon':
+            expandedIcon !== undefined,
           'legacy-select': true,
         }}
       >
         {this.renderSelectText()}
         {this.renderSelectIcon()}
-        <label id={labelId}>{displayLabel}</label>
+        <label id={labelId}>
+          {displayLabel}
+        </label>
         {this.renderListbox()}
       </Host>
     );
@@ -1052,20 +1455,31 @@ Developers can use the "legacy" property to continue using the legacy form marku
 
     let addPlaceholderClass = false;
     let selectText = displayValue;
-    if (selectText === '' && placeholder !== undefined) {
+    if (
+      selectText === '' &&
+      placeholder !== undefined
+    ) {
       selectText = placeholder;
       addPlaceholderClass = true;
     }
 
-    const selectTextClasses: CssClassMap = {
-      'select-text': true,
-      'select-placeholder': addPlaceholderClass,
-    };
+    const selectTextClasses: CssClassMap =
+      {
+        'select-text': true,
+        'select-placeholder':
+          addPlaceholderClass,
+      };
 
-    const textPart = addPlaceholderClass ? 'placeholder' : 'text';
+    const textPart = addPlaceholderClass
+      ? 'placeholder'
+      : 'text';
 
     return (
-      <div aria-hidden="true" class={selectTextClasses} part={textPart}>
+      <div
+        aria-hidden="true"
+        class={selectTextClasses}
+        part={textPart}
+      >
         {selectText}
       </div>
     );
@@ -1077,24 +1491,54 @@ Developers can use the "legacy" property to continue using the legacy form marku
    */
   private renderSelectIcon() {
     const mode = getIonMode(this);
-    const { isExpanded, toggleIcon, expandedIcon } = this;
+    const {
+      isExpanded,
+      toggleIcon,
+      expandedIcon,
+    } = this;
     let icon: string;
 
-    if (isExpanded && expandedIcon !== undefined) {
+    if (
+      isExpanded &&
+      expandedIcon !== undefined
+    ) {
       icon = expandedIcon;
     } else {
-      const defaultIcon = mode === 'ios' ? chevronExpand : caretDownSharp;
+      const defaultIcon =
+        mode === 'ios'
+          ? chevronExpand
+          : caretDownSharp;
       icon = toggleIcon ?? defaultIcon;
     }
 
-    return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
+    return (
+      <ion-icon
+        class="select-icon"
+        part="icon"
+        aria-hidden="true"
+        icon={icon}
+      ></ion-icon>
+    );
   }
 
   private get ariaLabel() {
-    const { placeholder, el, inputId, inheritedAttributes } = this;
+    const {
+      placeholder,
+      el,
+      inputId,
+      inheritedAttributes,
+    } = this;
     const displayValue = this.getText();
-    const { labelText } = getAriaLabel(el, inputId);
-    const definedLabel = this.labelText ?? inheritedAttributes['aria-label'] ?? labelText;
+    const { labelText } = getAriaLabel(
+      el,
+      inputId
+    );
+    const definedLabel =
+      this.labelText ??
+      inheritedAttributes[
+        'aria-label'
+      ] ??
+      labelText;
 
     /**
      * If developer has specified a placeholder
@@ -1102,7 +1546,10 @@ Developers can use the "legacy" property to continue using the legacy form marku
      * should have the placeholder value.
      */
     let renderedLabel = displayValue;
-    if (renderedLabel === '' && placeholder !== undefined) {
+    if (
+      renderedLabel === '' &&
+      placeholder !== undefined
+    ) {
       renderedLabel = placeholder;
     }
 
@@ -1114,14 +1561,21 @@ Developers can use the "legacy" property to continue using the legacy form marku
      * before the values of the control.
      */
     if (definedLabel !== undefined) {
-      renderedLabel = renderedLabel === '' ? definedLabel : `${definedLabel}, ${renderedLabel}`;
+      renderedLabel =
+        renderedLabel === ''
+          ? definedLabel
+          : `${definedLabel}, ${renderedLabel}`;
     }
 
     return renderedLabel;
   }
 
   private renderListbox() {
-    const { disabled, inputId, isExpanded } = this;
+    const {
+      disabled,
+      inputId,
+      isExpanded,
+    } = this;
 
     return (
       <button
@@ -1132,21 +1586,30 @@ Developers can use the "legacy" property to continue using the legacy form marku
         aria-expanded={`${isExpanded}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
-        ref={(focusEl) => (this.focusEl = focusEl)}
+        ref={(focusEl) =>
+          (this.focusEl = focusEl)
+        }
       ></button>
     );
   }
 
   render() {
-    const { legacyFormController } = this;
+    const { legacyFormController } =
+      this;
 
-    return legacyFormController.hasLegacyControl() ? this.renderLegacySelect() : this.renderSelect();
+    return legacyFormController.hasLegacyControl()
+      ? this.renderLegacySelect()
+      : this.renderSelect();
   }
 }
 
-const getOptionValue = (el: HTMLIonSelectOptionElement) => {
+const getOptionValue = (
+  el: HTMLIonSelectOptionElement
+) => {
   const value = el.value;
-  return value === undefined ? el.textContent || '' : value;
+  return value === undefined
+    ? el.textContent || ''
+    : value;
 };
 
 const parseValue = (value: any) => {
@@ -1162,32 +1625,57 @@ const parseValue = (value: any) => {
 const generateText = (
   opts: HTMLIonSelectOptionElement[],
   value: any | any[],
-  compareWith?: string | SelectCompareFn | null
+  compareWith?:
+    | string
+    | SelectCompareFn
+    | null
 ) => {
   if (value === undefined) {
     return '';
   }
   if (Array.isArray(value)) {
     return value
-      .map((v) => textForValue(opts, v, compareWith))
+      .map((v) =>
+        textForValue(
+          opts,
+          v,
+          compareWith
+        )
+      )
       .filter((opt) => opt !== null)
       .join(', ');
   } else {
-    return textForValue(opts, value, compareWith) || '';
+    return (
+      textForValue(
+        opts,
+        value,
+        compareWith
+      ) || ''
+    );
   }
 };
 
 const textForValue = (
   opts: HTMLIonSelectOptionElement[],
   value: any,
-  compareWith?: string | SelectCompareFn | null
+  compareWith?:
+    | string
+    | SelectCompareFn
+    | null
 ): string | null => {
   const selectOpt = opts.find((opt) => {
-    return compareOptions(value, getOptionValue(opt), compareWith);
+    return compareOptions(
+      value,
+      getOptionValue(opt),
+      compareWith
+    );
   });
-  return selectOpt ? selectOpt.textContent : null;
+  return selectOpt
+    ? selectOpt.textContent
+    : null;
 };
 
 let selectIds = 0;
 
-const OPTION_CLASS = 'select-interface-option';
+const OPTION_CLASS =
+  'select-interface-option';

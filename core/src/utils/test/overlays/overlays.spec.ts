@@ -15,15 +15,30 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
+    const routerOutlet =
+      page.body.querySelector(
+        'ion-router-outlet'
+      )!;
 
-    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      routerOutlet.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
 
     setRootAriaHidden(true);
-    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+    expect(
+      routerOutlet.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
 
     setRootAriaHidden(false);
-    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      routerOutlet.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
   });
 
   it('should correctly remove and re-add nav from accessibility tree', async () => {
@@ -34,15 +49,24 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const nav = page.body.querySelector('ion-nav')!;
+    const nav =
+      page.body.querySelector(
+        'ion-nav'
+      )!;
 
-    expect(nav.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      nav.hasAttribute('aria-hidden')
+    ).toEqual(false);
 
     setRootAriaHidden(true);
-    expect(nav.hasAttribute('aria-hidden')).toEqual(true);
+    expect(
+      nav.hasAttribute('aria-hidden')
+    ).toEqual(true);
 
     setRootAriaHidden(false);
-    expect(nav.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      nav.hasAttribute('aria-hidden')
+    ).toEqual(false);
   });
 
   it('should correctly remove and re-add custom container from accessibility tree', async () => {
@@ -54,19 +78,49 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const containerRoot = page.body.querySelector('#ion-view-container-root')!;
-    const notContainerRoot = page.body.querySelector('#not-container-root')!;
+    const containerRoot =
+      page.body.querySelector(
+        '#ion-view-container-root'
+      )!;
+    const notContainerRoot =
+      page.body.querySelector(
+        '#not-container-root'
+      )!;
 
-    expect(containerRoot.hasAttribute('aria-hidden')).toEqual(false);
-    expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      containerRoot.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
+    expect(
+      notContainerRoot.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
 
     setRootAriaHidden(true);
-    expect(containerRoot.hasAttribute('aria-hidden')).toEqual(true);
-    expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      containerRoot.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
+    expect(
+      notContainerRoot.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
 
     setRootAriaHidden(false);
-    expect(containerRoot.hasAttribute('aria-hidden')).toEqual(false);
-    expect(notContainerRoot.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      containerRoot.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
+    expect(
+      notContainerRoot.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
   });
 
   it('should not error if router outlet was not found', async () => {
@@ -90,12 +144,22 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
-    const modal = page.body.querySelector('ion-modal')!;
+    const routerOutlet =
+      page.body.querySelector(
+        'ion-router-outlet'
+      )!;
+    const modal =
+      page.body.querySelector(
+        'ion-modal'
+      )!;
 
     await modal.present();
 
-    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+    expect(
+      routerOutlet.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
   });
 
   it('should add router-outlet from accessibility tree when then final overlay is dismissed', async () => {
@@ -109,25 +173,50 @@ describe('setRootAriaHidden()', () => {
       `,
     });
 
-    const routerOutlet = page.body.querySelector('ion-router-outlet')!;
-    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
-    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+    const routerOutlet =
+      page.body.querySelector(
+        'ion-router-outlet'
+      )!;
+    const modalOne =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#one'
+      )!;
+    const modalTwo =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#two'
+      )!;
 
     await modalOne.present();
 
-    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+    expect(
+      routerOutlet.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
 
     await modalTwo.present();
 
-    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+    expect(
+      routerOutlet.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
 
     await modalOne.dismiss();
 
-    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+    expect(
+      routerOutlet.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
 
     await modalTwo.dismiss();
 
-    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      routerOutlet.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
   });
 });
 
@@ -141,14 +230,28 @@ describe('aria-hidden on individual overlays', () => {
       `,
     });
 
-    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
-    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+    const modalOne =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#one'
+      )!;
+    const modalTwo =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#two'
+      )!;
 
     await modalOne.present();
     await modalTwo.present();
 
-    expect(modalOne.hasAttribute('aria-hidden')).toEqual(true);
-    expect(modalTwo.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      modalOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
+    expect(
+      modalTwo.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
   });
 
   it('should unhide new topmost overlay from screen readers when topmost is dismissed', async () => {
@@ -160,8 +263,14 @@ describe('aria-hidden on individual overlays', () => {
       `,
     });
 
-    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
-    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+    const modalOne =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#one'
+      )!;
+    const modalTwo =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#two'
+      )!;
 
     await modalOne.present();
     await modalTwo.present();
@@ -169,7 +278,11 @@ describe('aria-hidden on individual overlays', () => {
     // dismiss modalTwo so that modalOne becomes the new topmost overlay
     await modalTwo.dismiss();
 
-    expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      modalOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
   });
 
   it('should not keep overlays hidden from screen readers if presented after being dismissed while non-topmost', async () => {
@@ -181,8 +294,14 @@ describe('aria-hidden on individual overlays', () => {
       `,
     });
 
-    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#one')!;
-    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#two')!;
+    const modalOne =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#one'
+      )!;
+    const modalTwo =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#two'
+      )!;
 
     await modalOne.present();
     await modalTwo.present();
@@ -192,7 +311,11 @@ describe('aria-hidden on individual overlays', () => {
 
     // modalOne will become the topmost overlay; ensure it isn't still hidden from screen readers
     await modalOne.present();
-    expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      modalOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
   });
 
   it('should not hide previous overlay if top-most overlay is toast', async () => {
@@ -206,31 +329,79 @@ describe('aria-hidden on individual overlays', () => {
       `,
     });
 
-    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#m-one')!;
-    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#m-two')!;
-    const toastOne = page.body.querySelector<HTMLIonModalElement>('ion-toast#t-one')!;
-    const toastTwo = page.body.querySelector<HTMLIonModalElement>('ion-toast#t-two')!;
+    const modalOne =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#m-one'
+      )!;
+    const modalTwo =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#m-two'
+      )!;
+    const toastOne =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-toast#t-one'
+      )!;
+    const toastTwo =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-toast#t-two'
+      )!;
 
     await modalOne.present();
     await modalTwo.present();
     await toastOne.present();
     await toastTwo.present();
 
-    expect(modalOne.hasAttribute('aria-hidden')).toEqual(true);
-    expect(modalTwo.hasAttribute('aria-hidden')).toEqual(false);
-    expect(toastOne.hasAttribute('aria-hidden')).toEqual(false);
-    expect(toastTwo.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      modalOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
+    expect(
+      modalTwo.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
+    expect(
+      toastOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
+    expect(
+      toastTwo.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
 
     await toastTwo.dismiss();
 
-    expect(modalOne.hasAttribute('aria-hidden')).toEqual(true);
-    expect(modalTwo.hasAttribute('aria-hidden')).toEqual(false);
-    expect(toastOne.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      modalOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
+    expect(
+      modalTwo.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
+    expect(
+      toastOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
 
     await toastOne.dismiss();
 
-    expect(modalOne.hasAttribute('aria-hidden')).toEqual(true);
-    expect(modalTwo.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      modalOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
+    expect(
+      modalTwo.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
   });
 
   it('should hide previous overlay even with a toast that is not the top-most overlay', async () => {
@@ -243,21 +414,50 @@ describe('aria-hidden on individual overlays', () => {
       `,
     });
 
-    const modalOne = page.body.querySelector<HTMLIonModalElement>('ion-modal#m-one')!;
-    const modalTwo = page.body.querySelector<HTMLIonModalElement>('ion-modal#m-two')!;
-    const toastOne = page.body.querySelector<HTMLIonModalElement>('ion-toast#t-one')!;
+    const modalOne =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#m-one'
+      )!;
+    const modalTwo =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-modal#m-two'
+      )!;
+    const toastOne =
+      page.body.querySelector<HTMLIonModalElement>(
+        'ion-toast#t-one'
+      )!;
 
     await modalOne.present();
     await toastOne.present();
     await modalTwo.present();
 
-    expect(modalOne.hasAttribute('aria-hidden')).toEqual(true);
-    expect(toastOne.hasAttribute('aria-hidden')).toEqual(true);
-    expect(modalTwo.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      modalOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
+    expect(
+      toastOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(true);
+    expect(
+      modalTwo.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
 
     await modalTwo.dismiss();
 
-    expect(modalOne.hasAttribute('aria-hidden')).toEqual(false);
-    expect(toastOne.hasAttribute('aria-hidden')).toEqual(false);
+    expect(
+      modalOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
+    expect(
+      toastOne.hasAttribute(
+        'aria-hidden'
+      )
+    ).toEqual(false);
   });
 });

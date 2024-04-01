@@ -1,4 +1,7 @@
-import type { StatusBarPlugin, Style as StatusBarStyle } from '@capacitor/status-bar';
+import type {
+  StatusBarPlugin,
+  Style as StatusBarStyle,
+} from '@capacitor/status-bar';
 
 import { getCapacitor } from './capacitor';
 
@@ -13,17 +16,25 @@ export enum Style {
 }
 
 export const StatusBar = {
-  getEngine(): StatusBarPlugin | undefined {
+  getEngine():
+    | StatusBarPlugin
+    | undefined {
     const capacitor = getCapacitor();
 
-    if (capacitor?.isPluginAvailable('StatusBar')) {
-      return capacitor.Plugins.StatusBar as StatusBarPlugin;
+    if (
+      capacitor?.isPluginAvailable(
+        'StatusBar'
+      )
+    ) {
+      return capacitor.Plugins
+        .StatusBar as StatusBarPlugin;
     }
     return undefined;
   },
   // TODO FW-4696 Remove supportDefaultStatusBarStyle in Ionic v8
   supportsDefaultStatusBarStyle() {
-    const capacitor = getCapacitor() as any;
+    const capacitor =
+      getCapacitor() as any;
     /**
      * The 'DEFAULT' status bar style was added
      * to the @capacitor/status-bar plugin in Capacitor 3.
@@ -40,12 +51,14 @@ export const StatusBar = {
 
     engine.setStyle(options);
   },
-  getStyle: async function (): Promise<StatusBarStyle> {
-    const engine = this.getEngine();
-    if (!engine) {
-      return Style.Default;
-    }
-    const { style } = await engine.getInfo();
-    return style;
-  },
+  getStyle:
+    async function (): Promise<StatusBarStyle> {
+      const engine = this.getEngine();
+      if (!engine) {
+        return Style.Default;
+      }
+      const { style } =
+        await engine.getInfo();
+      return style;
+    },
 };

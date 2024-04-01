@@ -17,10 +17,13 @@ export class EventSpy {
    * calls point to the same event.
    */
   private cursor = 0;
-  private queuedHandler: (() => void)[] = [];
+  private queuedHandler: (() => void)[] =
+    [];
   public events: CustomEvent[] = [];
 
-  constructor(public eventName: string) {}
+  constructor(
+    public eventName: string
+  ) {}
 
   get length() {
     return this.events.length;
@@ -31,7 +34,11 @@ export class EventSpy {
   }
 
   get lastEvent() {
-    return this.events[this.events.length - 1] ?? null;
+    return (
+      this.events[
+        this.events.length - 1
+      ] ?? null
+    );
   }
 
   public next() {
@@ -50,17 +57,22 @@ export class EventSpy {
        * Promise below being resolved.
        */
       let resolve: () => void;
-      const promise = new Promise<void>((r) => (resolve = r));
+      const promise = new Promise<void>(
+        (r) => (resolve = r)
+      );
       // @ts-ignore
       this.queuedHandler.push(resolve);
 
-      return promise.then(() => this.events[cursor]);
+      return promise.then(
+        () => this.events[cursor]
+      );
     }
   }
 
   public push(ev: CustomEvent) {
     this.events.push(ev);
-    const next = this.queuedHandler.shift();
+    const next =
+      this.queuedHandler.shift();
     if (next) {
       next();
     }
@@ -75,16 +87,22 @@ export class EventSpy {
  * respond to an event listener created within
  * the page itself.
  */
-export const initPageEvents = async (page: E2EPage) => {
+export const initPageEvents = async (
+  page: E2EPage
+) => {
   page._e2eEventsIds = 0;
   page._e2eEvents = new Map();
 
-  await page.exposeFunction('ionicOnEvent', (id: number, ev: any) => {
-    const context = page._e2eEvents.get(id);
-    if (context) {
-      context.callback(ev);
+  await page.exposeFunction(
+    'ionicOnEvent',
+    (id: number, ev: any) => {
+      const context =
+        page._e2eEvents.get(id);
+      if (context) {
+        context.callback(ev);
+      }
     }
-  });
+  );
 };
 
 /**
@@ -106,46 +124,76 @@ export const addE2EListener = async (
 
   await elmHandle.evaluate(
     (elm, [eventName, id]) => {
-      (window as any).stencilSerializeEventTarget = (target: any) => {
+      (
+        window as any
+      ).stencilSerializeEventTarget = (
+        target: any
+      ) => {
         // BROWSER CONTEXT
         if (!target) {
           return null;
         }
         if (target === window) {
-          return { serializedWindow: true };
+          return {
+            serializedWindow: true,
+          };
         }
         if (target === document) {
-          return { serializedDocument: true };
+          return {
+            serializedDocument: true,
+          };
         }
         if (target.nodeType != null) {
-          const serializedElement: any = {
-            serializedElement: true,
-            nodeName: target.nodeName,
-            nodeValue: target.nodeValue,
-            nodeType: target.nodeType,
-            tagName: target.tagName,
-            className: target.className,
-            id: target.id,
-          };
+          const serializedElement: any =
+            {
+              serializedElement: true,
+              nodeName: target.nodeName,
+              nodeValue:
+                target.nodeValue,
+              nodeType: target.nodeType,
+              tagName: target.tagName,
+              className:
+                target.className,
+              id: target.id,
+            };
           return serializedElement;
         }
         return null;
       };
 
-      (window as any).serializeStencilEvent = (orgEv: CustomEvent) => {
+      (
+        window as any
+      ).serializeStencilEvent = (
+        orgEv: CustomEvent
+      ) => {
         const serializedEvent = {
           bubbles: orgEv.bubbles,
-          cancelBubble: orgEv.cancelBubble,
+          cancelBubble:
+            orgEv.cancelBubble,
           cancelable: orgEv.cancelable,
           composed: orgEv.composed,
-          currentTarget: (window as any).stencilSerializeEventTarget(orgEv.currentTarget),
-          defaultPrevented: orgEv.defaultPrevented,
+          currentTarget: (
+            window as any
+          ).stencilSerializeEventTarget(
+            orgEv.currentTarget
+          ),
+          defaultPrevented:
+            orgEv.defaultPrevented,
           detail: orgEv.detail,
           eventPhase: orgEv.eventPhase,
           isTrusted: orgEv.isTrusted,
-          returnValue: orgEv.returnValue,
-          srcElement: (window as any).stencilSerializeEventTarget(orgEv.srcElement),
-          target: (window as any).stencilSerializeEventTarget(orgEv.target),
+          returnValue:
+            orgEv.returnValue,
+          srcElement: (
+            window as any
+          ).stencilSerializeEventTarget(
+            orgEv.srcElement
+          ),
+          target: (
+            window as any
+          ).stencilSerializeEventTarget(
+            orgEv.target
+          ),
           timeStamp: orgEv.timeStamp,
           type: orgEv.type,
           isSerializedEvent: true,
@@ -153,9 +201,17 @@ export const addE2EListener = async (
         return serializedEvent;
       };
 
-      elm.addEventListener(eventName as string, (ev: Event) => {
-        (window as any).ionicOnEvent(id, (window as any).serializeStencilEvent(ev));
-      });
+      elm.addEventListener(
+        eventName as string,
+        (ev: Event) => {
+          (window as any).ionicOnEvent(
+            id,
+            (
+              window as any
+            ).serializeStencilEvent(ev)
+          );
+        }
+      );
     },
     [eventName, id]
   );

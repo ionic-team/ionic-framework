@@ -1,13 +1,33 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
-import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
+import type {
+  AnchorInterface,
+  ButtonInterface,
+} from '@utils/element-interface';
 import { inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
-import { createColorClasses, hostContext, openURL } from '@utils/theme';
+import {
+  createColorClasses,
+  hostContext,
+  openURL,
+} from '@utils/theme';
 import { close } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color } from '../../interface';
+import type {
+  AnimationBuilder,
+  Color,
+} from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
@@ -24,9 +44,16 @@ import type { RouterDirection } from '../router/utils/interface';
   },
   shadow: true,
 })
-export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
-  private fab: HTMLIonFabElement | null = null;
-  private inheritedAttributes: Attributes = {};
+export class FabButton
+  implements
+    ComponentInterface,
+    AnchorInterface,
+    ButtonInterface
+{
+  private fab: HTMLIonFabElement | null =
+    null;
+  private inheritedAttributes: Attributes =
+    {};
 
   @Element() el!: HTMLElement;
 
@@ -35,7 +62,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * If `true`, the fab button will be show a close icon.
@@ -71,13 +99,17 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection: RouterDirection = 'forward';
+  @Prop()
+  routerDirection: RouterDirection =
+    'forward';
 
   /**
    * When using a router, it specifies the transition animation when navigating to
    * another page using `href`.
    */
-  @Prop() routerAnimation: AnimationBuilder | undefined;
+  @Prop() routerAnimation:
+    | AnimationBuilder
+    | undefined;
 
   /**
    * Specifies where to display the linked URL.
@@ -101,7 +133,10 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   /**
    * The type of the button.
    */
-  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+  @Prop() type:
+    | 'submit'
+    | 'reset'
+    | 'button' = 'button';
 
   /**
    * The size of the button. Set this to `small` in order to have a mini fab button.
@@ -118,7 +153,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   /**
    * Emitted when the button has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event()
+  ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the button loses focus.
@@ -126,7 +162,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   @Event() ionBlur!: EventEmitter<void>;
 
   connectedCallback() {
-    this.fab = this.el.closest('ion-fab');
+    this.fab =
+      this.el.closest('ion-fab');
   }
 
   private onFocus = () => {
@@ -147,14 +184,31 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   };
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.inheritedAttributes =
+      inheritAriaAttributes(this.el);
   }
 
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
-    const inList = hostContext('ion-fab-list', el);
+    const {
+      el,
+      disabled,
+      color,
+      href,
+      activated,
+      show,
+      translucent,
+      size,
+      inheritedAttributes,
+    } = this;
+    const inList = hostContext(
+      'ion-fab-list',
+      el
+    );
     const mode = getIonMode(this);
-    const TagType = href === undefined ? 'button' : ('a' as any);
+    const TagType =
+      href === undefined
+        ? 'button'
+        : ('a' as any);
     const attrs =
       TagType === 'button'
         ? { type: this.type }
@@ -168,19 +222,30 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     return (
       <Host
         onClick={this.onClick}
-        aria-disabled={disabled ? 'true' : null}
-        class={createColorClasses(color, {
-          [mode]: true,
-          'fab-button-in-list': inList,
-          'fab-button-translucent-in-list': inList && translucent,
-          'fab-button-close-active': activated,
-          'fab-button-show': show,
-          'fab-button-disabled': disabled,
-          'fab-button-translucent': translucent,
-          'ion-activatable': true,
-          'ion-focusable': true,
-          [`fab-button-${size}`]: size !== undefined,
-        })}
+        aria-disabled={
+          disabled ? 'true' : null
+        }
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            'fab-button-in-list':
+              inList,
+            'fab-button-translucent-in-list':
+              inList && translucent,
+            'fab-button-close-active':
+              activated,
+            'fab-button-show': show,
+            'fab-button-disabled':
+              disabled,
+            'fab-button-translucent':
+              translucent,
+            'ion-activatable': true,
+            'ion-focusable': true,
+            [`fab-button-${size}`]:
+              size !== undefined,
+          }
+        )}
       >
         <TagType
           {...attrs}
@@ -189,7 +254,14 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          onClick={(ev: Event) => openURL(href, ev, this.routerDirection, this.routerAnimation)}
+          onClick={(ev: Event) =>
+            openURL(
+              href,
+              ev,
+              this.routerDirection,
+              this.routerAnimation
+            )
+          }
           {...inheritedAttributes}
         >
           <ion-icon
@@ -202,7 +274,9 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           <span class="button-inner">
             <slot></slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+          {mode === 'md' && (
+            <ion-ripple-effect></ion-ripple-effect>
+          )}
         </TagType>
       </Host>
     );

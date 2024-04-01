@@ -1,7 +1,10 @@
 import { win } from '@utils/browser';
 import { raf } from '@utils/helpers';
 
-type NotchElement = HTMLIonInputElement | HTMLIonSelectElement | HTMLIonTextareaElement;
+type NotchElement =
+  | HTMLIonInputElement
+  | HTMLIonSelectElement
+  | HTMLIonTextareaElement;
 
 /**
  * A utility to calculate the size of an outline notch
@@ -22,33 +25,39 @@ type NotchElement = HTMLIonInputElement | HTMLIonSelectElement | HTMLIonTextarea
  */
 export const createNotchController = (
   el: NotchElement,
-  getNotchSpacerEl: () => HTMLElement | undefined,
+  getNotchSpacerEl: () =>
+    | HTMLElement
+    | undefined,
   getLabelSlot: () => Element | null
 ): NotchController => {
-  let notchVisibilityIO: IntersectionObserver | undefined;
+  let notchVisibilityIO:
+    | IntersectionObserver
+    | undefined;
 
-  const needsExplicitNotchWidth = () => {
-    const notchSpacerEl = getNotchSpacerEl();
+  const needsExplicitNotchWidth =
+    () => {
+      const notchSpacerEl =
+        getNotchSpacerEl();
 
-    if (
-      /**
-       * If the notch is not being used
-       * then we do not need to set the notch width.
-       */
-      notchSpacerEl === undefined ||
-      /**
-       * If either the label property is being
-       * used or the label slot is not defined,
-       * then we do not need to estimate the notch width.
-       */
-      el.label !== undefined ||
-      getLabelSlot() === null
-    ) {
-      return false;
-    }
+      if (
+        /**
+         * If the notch is not being used
+         * then we do not need to set the notch width.
+         */
+        notchSpacerEl === undefined ||
+        /**
+         * If either the label property is being
+         * used or the label slot is not defined,
+         * then we do not need to estimate the notch width.
+         */
+        el.label !== undefined ||
+        getLabelSlot() === null
+      ) {
+        return false;
+      }
 
-    return true;
-  };
+      return true;
+    };
 
   const calculateNotchWidth = () => {
     if (needsExplicitNotchWidth()) {
@@ -78,18 +87,22 @@ export const createNotchController = (
    * intrinsic size of the label text.
    */
   const setNotchWidth = () => {
-    const notchSpacerEl = getNotchSpacerEl();
+    const notchSpacerEl =
+      getNotchSpacerEl();
 
     if (notchSpacerEl === undefined) {
       return;
     }
 
     if (!needsExplicitNotchWidth()) {
-      notchSpacerEl.style.removeProperty('width');
+      notchSpacerEl.style.removeProperty(
+        'width'
+      );
       return;
     }
 
-    const width = getLabelSlot()!.scrollWidth;
+    const width =
+      getLabelSlot()!.scrollWidth;
 
     if (
       /**
@@ -105,7 +118,8 @@ export const createNotchController = (
        * notchSpacerEl does not have position: fixed.
        */
       width === 0 &&
-      notchSpacerEl.offsetParent === null &&
+      notchSpacerEl.offsetParent ===
+        null &&
       win !== undefined &&
       'IntersectionObserver' in win
     ) {
@@ -116,33 +130,40 @@ export const createNotchController = (
        * As a result, there is no need to create
        * another one.
        */
-      if (notchVisibilityIO !== undefined) {
+      if (
+        notchVisibilityIO !== undefined
+      ) {
         return;
       }
 
-      const io = (notchVisibilityIO = new IntersectionObserver(
-        (ev) => {
+      const io = (notchVisibilityIO =
+        new IntersectionObserver(
+          (ev) => {
+            /**
+             * If the element is visible then we
+             * can try setting the notch width again.
+             */
+            if (
+              ev[0]
+                .intersectionRatio === 1
+            ) {
+              setNotchWidth();
+              io.disconnect();
+              notchVisibilityIO =
+                undefined;
+            }
+          },
           /**
-           * If the element is visible then we
-           * can try setting the notch width again.
+           * Set the root to be the host element
+           * This causes the IO callback
+           * to be fired in WebKit as soon as the element
+           * is visible. If we used the default root value
+           * then WebKit would only fire the IO callback
+           * after any animations (such as a modal transition)
+           * finished, and there would potentially be a flicker.
            */
-          if (ev[0].intersectionRatio === 1) {
-            setNotchWidth();
-            io.disconnect();
-            notchVisibilityIO = undefined;
-          }
-        },
-        /**
-         * Set the root to be the host element
-         * This causes the IO callback
-         * to be fired in WebKit as soon as the element
-         * is visible. If we used the default root value
-         * then WebKit would only fire the IO callback
-         * after any animations (such as a modal transition)
-         * finished, and there would potentially be a flicker.
-         */
-        { threshold: 0.01, root: el }
-      ));
+          { threshold: 0.01, root: el }
+        ));
 
       io.observe(notchSpacerEl);
       return;
@@ -155,7 +176,10 @@ export const createNotchController = (
      * the same amount the label element is scaled by in the host CSS.
      * (See $form-control-label-stacked-scale in ionic.globals.scss).
      */
-    notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
+    notchSpacerEl.style.setProperty(
+      'width',
+      `${width * 0.75}px`
+    );
   };
 
   const destroy = () => {

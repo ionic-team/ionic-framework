@@ -1,11 +1,23 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('back-button: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title(
+        'back-button: font scaling'
+      ),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 36px;
@@ -18,12 +30,23 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </ion-buttons>
         </ion-toolbar>
       `,
-        config
-      );
+            config
+          );
 
-      const backButton = page.locator('ion-back-button');
+          const backButton =
+            page.locator(
+              'ion-back-button'
+            );
 
-      await expect(backButton).toHaveScreenshot(screenshot(`back-button-scale`));
-    });
-  });
-});
+          await expect(
+            backButton
+          ).toHaveScreenshot(
+            screenshot(
+              `back-button-scale`
+            )
+          );
+        });
+      }
+    );
+  }
+);

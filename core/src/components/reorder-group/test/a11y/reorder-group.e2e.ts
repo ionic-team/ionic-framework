@@ -1,11 +1,23 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('reorder-group: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title(
+        'reorder-group: font scaling'
+      ),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 36px;
@@ -25,12 +37,23 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </ion-item>
         </ion-reorder-group>
       `,
-        config
-      );
+            config
+          );
 
-      const reorderGroup = page.locator('ion-reorder-group');
+          const reorderGroup =
+            page.locator(
+              'ion-reorder-group'
+            );
 
-      await expect(reorderGroup).toHaveScreenshot(screenshot(`reorder-group-scale`));
-    });
-  });
-});
+          await expect(
+            reorderGroup
+          ).toHaveScreenshot(
+            screenshot(
+              `reorder-group-scale`
+            )
+          );
+        });
+      }
+    );
+  }
+);

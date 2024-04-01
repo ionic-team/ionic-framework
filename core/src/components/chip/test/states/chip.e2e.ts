@@ -1,26 +1,44 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  /**
-   * This behavior does not vary across modes/directions.
-   */
-  test.describe(title('chip: states'), () => {
-    test('should render disabled state', async ({ page }) => {
-      await page.setContent(
-        `<ion-chip disabled="true">
+configs({
+  modes: ['ios'],
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    /**
+     * This behavior does not vary across modes/directions.
+     */
+    test.describe(
+      title('chip: states'),
+      () => {
+        test('should render disabled state', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `<ion-chip disabled="true">
           <ion-label>Disabled</ion-label>
         </ion-chip>`,
-        config
-      );
+            config
+          );
 
-      const chip = page.locator('ion-chip');
+          const chip =
+            page.locator('ion-chip');
 
-      await expect(chip).toHaveScreenshot(screenshot(`chip-disabled`));
-    });
-    test('should custom chip', async ({ page }) => {
-      await page.setContent(
-        `
+          await expect(
+            chip
+          ).toHaveScreenshot(
+            screenshot(`chip-disabled`)
+          );
+        });
+        test('should custom chip', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           ion-chip {
             --background: green;
@@ -32,12 +50,19 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         <ion-chip disabled="true">
           <ion-label>Custom</ion-label>
         </ion-chip>`,
-        config
-      );
+            config
+          );
 
-      const chip = page.locator('ion-chip');
+          const chip =
+            page.locator('ion-chip');
 
-      await expect(chip).toHaveScreenshot(screenshot(`chip-custom`));
-    });
-  });
-});
+          await expect(
+            chip
+          ).toHaveScreenshot(
+            screenshot(`chip-custom`)
+          );
+        });
+      }
+    );
+  }
+);

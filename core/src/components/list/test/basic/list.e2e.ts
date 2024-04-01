@@ -1,11 +1,19 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('list: basic'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(
-        `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('list: basic'),
+      () => {
+        test('should not have visual regressions', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-content>
           <ion-list>
             <ion-item>Pokémon Yellow</ion-item>
@@ -16,12 +24,21 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-list>
         </ion-content>
       `,
-        config
-      );
+            config
+          );
 
-      const list = page.locator('ion-list');
+          const list =
+            page.locator('ion-list');
 
-      await expect(list).toHaveScreenshot(screenshot(`list-basic-diff`));
-    });
-  });
-});
+          await expect(
+            list
+          ).toHaveScreenshot(
+            screenshot(
+              `list-basic-diff`
+            )
+          );
+        });
+      }
+    );
+  }
+);

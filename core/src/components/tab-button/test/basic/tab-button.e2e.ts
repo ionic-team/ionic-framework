@@ -1,11 +1,19 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('tab-button: basic'), () => {
-    test('should render tab button with label', async ({ page }) => {
-      await page.setContent(
-        `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('tab-button: basic'),
+      () => {
+        test('should render tab button with label', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-tab-bar selected-tab="1">
           <ion-tab-button tab="1">
             <ion-label>Recents</ion-label>
@@ -21,17 +29,27 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-button-label`));
-    });
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-button-label`
+            )
+          );
+        });
 
-    test('should render tab button with badges', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should render tab button with badges', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-tab-bar selected-tab="1">
           <ion-tab-button tab="1">
             <ion-icon name="heart"></ion-icon>
@@ -53,17 +71,27 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-button-badge`));
-    });
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-button-badge`
+            )
+          );
+        });
 
-    test('should render tab button with icons', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should render tab button with icons', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-tab-bar selected-tab="1">
           <ion-tab-button tab="1">
             <ion-icon name="heart"></ion-icon>
@@ -85,12 +113,22 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-button-badge`));
-    });
-  });
-});
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-button-badge`
+            )
+          );
+        });
+      }
+    );
+  }
+);

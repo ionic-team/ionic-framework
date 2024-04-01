@@ -1,5 +1,10 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import {
+  Component,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -11,7 +16,9 @@ import { getIonMode } from '../../global/ionic-global';
   },
   scoped: true,
 })
-export class Buttons implements ComponentInterface {
+export class Buttons
+  implements ComponentInterface
+{
   /**
    * If true, buttons will disappear when its
    * parent toolbar has fully collapsed if the toolbar
@@ -32,7 +39,8 @@ export class Buttons implements ComponentInterface {
       <Host
         class={{
           [mode]: true,
-          ['buttons-collapse']: this.collapse,
+          ['buttons-collapse']:
+            this.collapse,
         }}
       ></Host>
     );

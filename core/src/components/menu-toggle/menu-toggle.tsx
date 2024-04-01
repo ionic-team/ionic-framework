@@ -1,5 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Listen, Prop, State, h } from '@stencil/core';
+import {
+  Component,
+  Host,
+  Listen,
+  Prop,
+  State,
+  h,
+} from '@stencil/core';
 import { menuController } from '@utils/menu-controller';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -14,7 +21,9 @@ import { updateVisibility } from './menu-toggle-util';
   styleUrl: 'menu-toggle.scss',
   shadow: true,
 })
-export class MenuToggle implements ComponentInterface {
+export class MenuToggle
+  implements ComponentInterface
+{
   @State() visible = false;
 
   /**
@@ -39,24 +48,34 @@ export class MenuToggle implements ComponentInterface {
     this.visibilityChanged();
   }
 
-  @Listen('ionMenuChange', { target: 'body' })
-  @Listen('ionSplitPaneVisible', { target: 'body' })
+  @Listen('ionMenuChange', {
+    target: 'body',
+  })
+  @Listen('ionSplitPaneVisible', {
+    target: 'body',
+  })
   async visibilityChanged() {
-    this.visible = await updateVisibility(this.menu);
+    this.visible =
+      await updateVisibility(this.menu);
   }
 
   private onClick = () => {
-    return menuController.toggle(this.menu);
+    return menuController.toggle(
+      this.menu
+    );
   };
 
   render() {
     const mode = getIonMode(this);
-    const hidden = this.autoHide && !this.visible;
+    const hidden =
+      this.autoHide && !this.visible;
 
     return (
       <Host
         onClick={this.onClick}
-        aria-hidden={hidden ? 'true' : null}
+        aria-hidden={
+          hidden ? 'true' : null
+        }
         class={{
           [mode]: true,
           'menu-toggle-hidden': hidden,

@@ -1,10 +1,19 @@
-import { readTask, writeTask } from '@stencil/core';
+import {
+  readTask,
+  writeTask,
+} from '@stencil/core';
 import { clamp } from '@utils/helpers';
 
-export const handleFooterFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => {
+export const handleFooterFade = (
+  scrollEl: HTMLElement,
+  baseEl: HTMLElement
+) => {
   readTask(() => {
-    const scrollTop = scrollEl.scrollTop;
-    const maxScroll = scrollEl.scrollHeight - scrollEl.clientHeight;
+    const scrollTop =
+      scrollEl.scrollTop;
+    const maxScroll =
+      scrollEl.scrollHeight -
+      scrollEl.clientHeight;
 
     /**
      * Toolbar background will fade
@@ -23,13 +32,23 @@ export const handleFooterFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => 
      * band scrolling), the scale value will
      * get clamped to 1.
      */
-    const fadeStart = maxScroll - fadeDuration;
-    const distanceToStart = scrollTop - fadeStart;
+    const fadeStart =
+      maxScroll - fadeDuration;
+    const distanceToStart =
+      scrollTop - fadeStart;
 
-    const scale = clamp(0, 1 - distanceToStart / fadeDuration, 1);
+    const scale = clamp(
+      0,
+      1 -
+        distanceToStart / fadeDuration,
+      1
+    );
 
     writeTask(() => {
-      baseEl.style.setProperty('--opacity-scale', scale.toString());
+      baseEl.style.setProperty(
+        '--opacity-scale',
+        scale.toString()
+      );
     });
   });
 };

@@ -1,20 +1,45 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
+import {
+  Component,
+  Host,
+  Listen,
+  Prop,
+  forceUpdate,
+  h,
+} from '@stencil/core';
 import { matchBreakpoint } from '@utils/media';
 
 import { getIonMode } from '../../global/ionic-global';
 
-const win = typeof (window as any) !== 'undefined' ? (window as any) : undefined;
+const win =
+  typeof (window as any) !== 'undefined'
+    ? (window as any)
+    : undefined;
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-const SUPPORTS_VARS = win && !!(win.CSS && win.CSS.supports && win.CSS.supports('--a: 0'));
-const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
+const SUPPORTS_VARS =
+  win &&
+  !!(
+    win.CSS &&
+    win.CSS.supports &&
+    win.CSS.supports('--a: 0')
+  );
+const BREAKPOINTS = [
+  '',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+];
 
 @Component({
   tag: 'ion-col',
   styleUrl: 'col.scss',
   shadow: true,
 })
-export class Col implements ComponentInterface {
+export class Col
+  implements ComponentInterface
+{
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
    * of the total available.
@@ -155,7 +180,9 @@ export class Col implements ComponentInterface {
    */
   @Prop() sizeXl?: string;
 
-  @Listen('resize', { target: 'window' })
+  @Listen('resize', {
+    target: 'window',
+  })
   onResize() {
     forceUpdate(this);
   }
@@ -166,13 +193,23 @@ export class Col implements ComponentInterface {
     let matched;
 
     for (const breakpoint of BREAKPOINTS) {
-      const matches = matchBreakpoint(breakpoint);
+      const matches =
+        matchBreakpoint(breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
-      const columns = (this as any)[property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)];
+      const columns = (this as any)[
+        property +
+          breakpoint
+            .charAt(0)
+            .toUpperCase() +
+          breakpoint.slice(1)
+      ];
 
-      if (matches && columns !== undefined) {
+      if (
+        matches &&
+        columns !== undefined
+      ) {
         matched = columns;
       }
     }
@@ -183,7 +220,8 @@ export class Col implements ComponentInterface {
   }
 
   private calculateSize() {
-    const columns = this.getColumns('size');
+    const columns =
+      this.getColumns('size');
 
     // If size wasn't set for any breakpoint
     // or if the user set the size without a value
@@ -212,8 +250,12 @@ export class Col implements ComponentInterface {
   }
 
   // Called by push, pull, and offset since they use the same calculations
-  private calculatePosition(property: string, modifier: string) {
-    const columns = this.getColumns(property);
+  private calculatePosition(
+    property: string,
+    modifier: string
+  ) {
+    const columns =
+      this.getColumns(property);
 
     if (!columns) {
       return;
@@ -235,20 +277,38 @@ export class Col implements ComponentInterface {
     };
   }
 
-  private calculateOffset(isRTL: boolean) {
-    return this.calculatePosition('offset', isRTL ? 'margin-right' : 'margin-left');
+  private calculateOffset(
+    isRTL: boolean
+  ) {
+    return this.calculatePosition(
+      'offset',
+      isRTL
+        ? 'margin-right'
+        : 'margin-left'
+    );
   }
 
-  private calculatePull(isRTL: boolean) {
-    return this.calculatePosition('pull', isRTL ? 'left' : 'right');
+  private calculatePull(
+    isRTL: boolean
+  ) {
+    return this.calculatePosition(
+      'pull',
+      isRTL ? 'left' : 'right'
+    );
   }
 
-  private calculatePush(isRTL: boolean) {
-    return this.calculatePosition('push', isRTL ? 'right' : 'left');
+  private calculatePush(
+    isRTL: boolean
+  ) {
+    return this.calculatePosition(
+      'push',
+      isRTL ? 'right' : 'left'
+    );
   }
 
   render() {
-    const isRTL = document.dir === 'rtl';
+    const isRTL =
+      document.dir === 'rtl';
     const mode = getIonMode(this);
     return (
       <Host
@@ -256,7 +316,9 @@ export class Col implements ComponentInterface {
           [mode]: true,
         }}
         style={{
-          ...this.calculateOffset(isRTL),
+          ...this.calculateOffset(
+            isRTL
+          ),
           ...this.calculatePull(isRTL),
           ...this.calculatePush(isRTL),
           ...this.calculateSize(),

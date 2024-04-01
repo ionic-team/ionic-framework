@@ -1,9 +1,14 @@
-import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
+import type {
+  DatetimeParts,
+  DatetimeHourCycle,
+} from '../datetime-interface';
 
 import { is24Hour } from './helpers';
 import { convertDataToISO } from './manipulation';
 
-const getFormattedDayPeriod = (dayPeriod?: string) => {
+const getFormattedDayPeriod = (
+  dayPeriod?: string
+) => {
   if (dayPeriod === undefined) {
     return '';
   }
@@ -16,7 +21,9 @@ const getFormattedDayPeriod = (dayPeriod?: string) => {
  * different time from what was selected in the Datetime, which could cause
  * confusion.
  */
-export const stripTimeZone = (formatOptions: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions => {
+export const stripTimeZone = (
+  formatOptions: Intl.DateTimeFormatOptions
+): Intl.DateTimeFormatOptions => {
   return {
     ...formatOptions,
     /**
@@ -36,31 +43,43 @@ export const getLocalizedTime = (
   locale: string,
   refParts: DatetimeParts,
   hourCycle: DatetimeHourCycle,
-  formatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' }
+  formatOptions: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+  }
 ): string => {
-  const timeParts: Pick<DatetimeParts, 'hour' | 'minute'> = {
+  const timeParts: Pick<
+    DatetimeParts,
+    'hour' | 'minute'
+  > = {
     hour: refParts.hour,
     minute: refParts.minute,
   };
 
-  if (timeParts.hour === undefined || timeParts.minute === undefined) {
+  if (
+    timeParts.hour === undefined ||
+    timeParts.minute === undefined
+  ) {
     return 'Invalid Time';
   }
 
-  return new Intl.DateTimeFormat(locale, {
-    ...stripTimeZone(formatOptions),
-    /**
-     * We use hourCycle here instead of hour12 due to:
-     * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
-     */
-    hourCycle,
-    /**
-     * Setting Z at the end indicates that this
-     * date string is in the UTC time zone. This
-     * prevents new Date from adding the time zone
-     * offset when getting the ISO string.
-     */
-  }).format(
+  return new Intl.DateTimeFormat(
+    locale,
+    {
+      ...stripTimeZone(formatOptions),
+      /**
+       * We use hourCycle here instead of hour12 due to:
+       * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
+       */
+      hourCycle,
+      /**
+       * Setting Z at the end indicates that this
+       * date string is in the UTC time zone. This
+       * prevents new Date from adding the time zone
+       * offset when getting the ISO string.
+       */
+    }
+  ).format(
     new Date(
       convertDataToISO({
         /**
@@ -87,8 +106,11 @@ export const getLocalizedTime = (
  * Adds padding to a time value so
  * that it is always 2 digits.
  */
-export const addTimePadding = (value: number): string => {
-  const valueToString = value.toString();
+export const addTimePadding = (
+  value: number
+): string => {
+  const valueToString =
+    value.toString();
   if (valueToString.length > 1) {
     return valueToString;
   }
@@ -102,7 +124,10 @@ export const addTimePadding = (value: number): string => {
  * 12 hour times it ensures that
  * hour 0 is formatted as '12'.
  */
-export const getFormattedHour = (hour: number, hourCycle: DatetimeHourCycle): string => {
+export const getFormattedHour = (
+  hour: number,
+  hourCycle: DatetimeHourCycle
+): string => {
   /**
    * Midnight for h11 starts at 0:00am
    * Midnight for h12 starts at 12:00am
@@ -120,7 +145,9 @@ export const getFormattedHour = (hour: number, hourCycle: DatetimeHourCycle): st
       case 'h24':
         return '24';
       default:
-        throw new Error(`Invalid hour cycle "${hourCycle}"`);
+        throw new Error(
+          `Invalid hour cycle "${hourCycle}"`
+        );
     }
   }
 
@@ -140,7 +167,11 @@ export const getFormattedHour = (hour: number, hourCycle: DatetimeHourCycle): st
  * given a local, a date, and whether or not that date is
  * today's date.
  */
-export const generateDayAriaLabel = (locale: string, today: boolean, refParts: DatetimeParts) => {
+export const generateDayAriaLabel = (
+  locale: string,
+  today: boolean,
+  refParts: DatetimeParts
+) => {
   if (refParts.day === null) {
     return null;
   }
@@ -148,20 +179,24 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
   /**
    * MM/DD/YYYY will return midnight in the user's timezone.
    */
-  const date = getNormalizedDate(refParts);
+  const date =
+    getNormalizedDate(refParts);
 
-  const labelString = new Intl.DateTimeFormat(locale, {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
-  }).format(date);
+  const labelString =
+    new Intl.DateTimeFormat(locale, {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      timeZone: 'UTC',
+    }).format(date);
 
   /**
    * If date is today, prepend "Today" so screen readers indicate
    * that the date is today.
    */
-  return today ? `Today, ${labelString}` : labelString;
+  return today
+    ? `Today, ${labelString}`
+    : labelString;
 };
 
 /**
@@ -170,9 +205,20 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
  * the month name and full year.
  * Example: May 2021
  */
-export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
-  const date = getNormalizedDate(refParts);
-  return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+export const getMonthAndYear = (
+  locale: string,
+  refParts: DatetimeParts
+) => {
+  const date =
+    getNormalizedDate(refParts);
+  return new Intl.DateTimeFormat(
+    locale,
+    {
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }
+  ).format(date);
 };
 
 /**
@@ -183,8 +229,16 @@ export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
  * to the end. This function removes those literals.
  * Example: 29
  */
-export const getDay = (locale: string, refParts: DatetimeParts) => {
-  return getLocalizedDateTimeParts(locale, refParts, { day: 'numeric' }).find((obj) => obj.type === 'day')!.value;
+export const getDay = (
+  locale: string,
+  refParts: DatetimeParts
+) => {
+  return getLocalizedDateTimeParts(
+    locale,
+    refParts,
+    { day: 'numeric' }
+  ).find((obj) => obj.type === 'day')!
+    .value;
 };
 
 /**
@@ -193,17 +247,29 @@ export const getDay = (locale: string, refParts: DatetimeParts) => {
  * the numeric year.
  * Example: 2022
  */
-export const getYear = (locale: string, refParts: DatetimeParts) => {
-  return getLocalizedDateTime(locale, refParts, { year: 'numeric' });
+export const getYear = (
+  locale: string,
+  refParts: DatetimeParts
+) => {
+  return getLocalizedDateTime(
+    locale,
+    refParts,
+    { year: 'numeric' }
+  );
 };
 
 /**
  * Given reference parts, return a JS Date object
  * with a normalized time.
  */
-export const getNormalizedDate = (refParts: DatetimeParts) => {
+export const getNormalizedDate = (
+  refParts: DatetimeParts
+) => {
   const timeString =
-    refParts.hour !== undefined && refParts.minute !== undefined ? ` ${refParts.hour}:${refParts.minute}` : '';
+    refParts.hour !== undefined &&
+    refParts.minute !== undefined
+      ? ` ${refParts.hour}:${refParts.minute}`
+      : '';
 
   /**
    * We use / notation here for the date
@@ -215,7 +281,13 @@ export const getNormalizedDate = (refParts: DatetimeParts) => {
    * account for this and still return a valid date. However,
    * this is not a consistent behavior across all browsers.
    */
-  return new Date(`${refParts.month ?? 1}/${refParts.day ?? 1}/${refParts.year ?? 2023}${timeString} GMT+0000`);
+  return new Date(
+    `${refParts.month ?? 1}/${
+      refParts.day ?? 1
+    }/${
+      refParts.year ?? 2023
+    }${timeString} GMT+0000`
+  );
 };
 
 /**
@@ -231,8 +303,12 @@ export const getLocalizedDateTime = (
   refParts: DatetimeParts,
   options: Intl.DateTimeFormatOptions
 ): string => {
-  const date = getNormalizedDate(refParts);
-  return getDateTimeFormat(locale, stripTimeZone(options)).format(date);
+  const date =
+    getNormalizedDate(refParts);
+  return getDateTimeFormat(
+    locale,
+    stripTimeZone(options)
+  ).format(date);
 };
 
 /**
@@ -241,14 +317,19 @@ export const getLocalizedDateTime = (
  * and locale combination. This returns an array of
  * each piece of the date.
  */
-export const getLocalizedDateTimeParts = (
-  locale: string,
-  refParts: DatetimeParts,
-  options: Intl.DateTimeFormatOptions
-): Intl.DateTimeFormatPart[] => {
-  const date = getNormalizedDate(refParts);
-  return getDateTimeFormat(locale, options).formatToParts(date);
-};
+export const getLocalizedDateTimeParts =
+  (
+    locale: string,
+    refParts: DatetimeParts,
+    options: Intl.DateTimeFormatOptions
+  ): Intl.DateTimeFormatPart[] => {
+    const date =
+      getNormalizedDate(refParts);
+    return getDateTimeFormat(
+      locale,
+      options
+    ).formatToParts(date);
+  };
 
 /**
  * Wrapper function for Intl.DateTimeFormat.
@@ -256,8 +337,14 @@ export const getLocalizedDateTimeParts = (
  * This function also has built in safeguards for older browser bugs
  * with Intl.DateTimeFormat.
  */
-const getDateTimeFormat = (locale: string, options: Intl.DateTimeFormatOptions) => {
-  return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' });
+const getDateTimeFormat = (
+  locale: string,
+  options: Intl.DateTimeFormatOptions
+) => {
+  return new Intl.DateTimeFormat(
+    locale,
+    { ...options, timeZone: 'UTC' }
+  );
 };
 
 /**
@@ -265,10 +352,19 @@ const getDateTimeFormat = (locale: string, options: Intl.DateTimeFormatOptions) 
  * Falls back to "Today" in English for
  * browsers that do not support RelativeTimeFormat.
  */
-export const getTodayLabel = (locale: string) => {
+export const getTodayLabel = (
+  locale: string
+) => {
   if ('RelativeTimeFormat' in Intl) {
-    const label = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(0, 'day');
-    return label.charAt(0).toUpperCase() + label.slice(1);
+    const label =
+      new Intl.RelativeTimeFormat(
+        locale,
+        { numeric: 'auto' }
+      ).format(0, 'day');
+    return (
+      label.charAt(0).toUpperCase() +
+      label.slice(1)
+    );
   } else {
     return 'Today';
   }
@@ -303,14 +399,23 @@ export const getTodayLabel = (locale: string) => {
  * List of timezones with 30 and 45 minute timezones:
  * https://www.timeanddate.com/time/time-zones-interesting.html
  */
-export const removeDateTzOffset = (date: Date) => {
-  const tzOffset = date.getTimezoneOffset();
-  date.setMinutes(date.getMinutes() - tzOffset);
+export const removeDateTzOffset = (
+  date: Date
+) => {
+  const tzOffset =
+    date.getTimezoneOffset();
+  date.setMinutes(
+    date.getMinutes() - tzOffset
+  );
   return date;
 };
 
-const DATE_AM = removeDateTzOffset(new Date('2022T01:00'));
-const DATE_PM = removeDateTzOffset(new Date('2022T13:00'));
+const DATE_AM = removeDateTzOffset(
+  new Date('2022T01:00')
+);
+const DATE_PM = removeDateTzOffset(
+  new Date('2022T13:00')
+);
 
 /**
  * Formats the locale's string representation of the day period (am/pm) for a given
@@ -320,20 +425,32 @@ const DATE_PM = removeDateTzOffset(new Date('2022T13:00'));
  * @param value The date string, in ISO format.
  * @returns The localized day period (am/pm) representation of the given value.
  */
-export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | undefined) => {
-  const date = dayPeriod === 'am' ? DATE_AM : DATE_PM;
-  const localizedDayPeriod = new Intl.DateTimeFormat(locale, {
-    hour: 'numeric',
-    timeZone: 'UTC',
-  })
-    .formatToParts(date)
-    .find((part) => part.type === 'dayPeriod');
+export const getLocalizedDayPeriod = (
+  locale: string,
+  dayPeriod: 'am' | 'pm' | undefined
+) => {
+  const date =
+    dayPeriod === 'am'
+      ? DATE_AM
+      : DATE_PM;
+  const localizedDayPeriod =
+    new Intl.DateTimeFormat(locale, {
+      hour: 'numeric',
+      timeZone: 'UTC',
+    })
+      .formatToParts(date)
+      .find(
+        (part) =>
+          part.type === 'dayPeriod'
+      );
 
   if (localizedDayPeriod) {
     return localizedDayPeriod.value;
   }
 
-  return getFormattedDayPeriod(dayPeriod);
+  return getFormattedDayPeriod(
+    dayPeriod
+  );
 };
 
 /**
@@ -341,6 +458,14 @@ export const getLocalizedDayPeriod = (locale: string, dayPeriod: 'am' | 'pm' | u
  *
  * @param value The value to format, either an ISO string or an array thereof.
  */
-export const formatValue = (value: string | string[] | null | undefined) => {
-  return Array.isArray(value) ? value.join(',') : value;
+export const formatValue = (
+  value:
+    | string
+    | string[]
+    | null
+    | undefined
+) => {
+  return Array.isArray(value)
+    ? value.join(',')
+    : value;
 };

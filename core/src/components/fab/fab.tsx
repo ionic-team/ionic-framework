@@ -1,5 +1,13 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Host,
+  Method,
+  Prop,
+  Watch,
+  h,
+} from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -8,18 +16,26 @@ import { getIonMode } from '../../global/ionic-global';
   styleUrl: 'fab.scss',
   shadow: true,
 })
-export class Fab implements ComponentInterface {
+export class Fab
+  implements ComponentInterface
+{
   @Element() el!: HTMLElement;
 
   /**
    * Where to align the fab horizontally in the viewport.
    */
-  @Prop() horizontal?: 'start' | 'end' | 'center';
+  @Prop() horizontal?:
+    | 'start'
+    | 'end'
+    | 'center';
 
   /**
    * Where to align the fab vertically in the viewport.
    */
-  @Prop() vertical?: 'top' | 'bottom' | 'center';
+  @Prop() vertical?:
+    | 'top'
+    | 'bottom'
+    | 'center';
 
   /**
    * If `true`, the fab will display on the edge of the header if
@@ -32,7 +48,8 @@ export class Fab implements ComponentInterface {
    * If `true`, both the `ion-fab-button` and all `ion-fab-list` inside `ion-fab` will become active.
    * That means `ion-fab-button` will become a `close` icon and `ion-fab-list` will become visible.
    */
-  @Prop({ mutable: true }) activated = false;
+  @Prop({ mutable: true }) activated =
+    false;
   @Watch('activated')
   activatedChanged() {
     const activated = this.activated;
@@ -40,7 +57,11 @@ export class Fab implements ComponentInterface {
     if (fab) {
       fab.activated = activated;
     }
-    Array.from(this.el.querySelectorAll('ion-fab-list')).forEach((list) => {
+    Array.from(
+      this.el.querySelectorAll(
+        'ion-fab-list'
+      )
+    ).forEach((list) => {
       list.activated = activated;
     });
   }
@@ -59,7 +80,9 @@ export class Fab implements ComponentInterface {
   }
 
   private getFab() {
-    return this.el.querySelector('ion-fab-button');
+    return this.el.querySelector(
+      'ion-fab-button'
+    );
   }
 
   /**
@@ -68,21 +91,30 @@ export class Fab implements ComponentInterface {
    */
   @Method()
   async toggle() {
-    const hasList = !!this.el.querySelector('ion-fab-list');
+    const hasList =
+      !!this.el.querySelector(
+        'ion-fab-list'
+      );
     if (hasList) {
       this.activated = !this.activated;
     }
   }
 
   render() {
-    const { horizontal, vertical, edge } = this;
+    const {
+      horizontal,
+      vertical,
+      edge,
+    } = this;
     const mode = getIonMode(this);
     return (
       <Host
         class={{
           [mode]: true,
-          [`fab-horizontal-${horizontal}`]: horizontal !== undefined,
-          [`fab-vertical-${vertical}`]: vertical !== undefined,
+          [`fab-horizontal-${horizontal}`]:
+            horizontal !== undefined,
+          [`fab-vertical-${vertical}`]:
+            vertical !== undefined,
           'fab-edge': edge,
         }}
       >

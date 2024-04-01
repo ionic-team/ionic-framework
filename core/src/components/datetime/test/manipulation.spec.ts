@@ -89,77 +89,349 @@ describe('subtractDays()', () => {
 
 describe('getInternalHourValue()', () => {
   it('should correctly get the internal hour value', () => {
-    expect(getInternalHourValue(12, true)).toEqual(12);
-    expect(getInternalHourValue(12, true)).toEqual(12);
+    expect(
+      getInternalHourValue(12, true)
+    ).toEqual(12);
+    expect(
+      getInternalHourValue(12, true)
+    ).toEqual(12);
 
-    expect(getInternalHourValue(12, false, 'am')).toEqual(0);
-    expect(getInternalHourValue(12, false, 'pm')).toEqual(12);
+    expect(
+      getInternalHourValue(
+        12,
+        false,
+        'am'
+      )
+    ).toEqual(0);
+    expect(
+      getInternalHourValue(
+        12,
+        false,
+        'pm'
+      )
+    ).toEqual(12);
 
-    expect(getInternalHourValue(1, true)).toEqual(1);
-    expect(getInternalHourValue(1, true)).toEqual(1);
+    expect(
+      getInternalHourValue(1, true)
+    ).toEqual(1);
+    expect(
+      getInternalHourValue(1, true)
+    ).toEqual(1);
 
-    expect(getInternalHourValue(1, false, 'am')).toEqual(1);
-    expect(getInternalHourValue(1, false, 'pm')).toEqual(13);
+    expect(
+      getInternalHourValue(
+        1,
+        false,
+        'am'
+      )
+    ).toEqual(1);
+    expect(
+      getInternalHourValue(
+        1,
+        false,
+        'pm'
+      )
+    ).toEqual(13);
   });
 });
 
 describe('calculateHourFromAMPM()', () => {
   it('should correctly convert from AM to PM', () => {
-    expect(calculateHourFromAMPM({ hour: 12, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(12);
-    expect(calculateHourFromAMPM({ hour: 1, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(13);
-    expect(calculateHourFromAMPM({ hour: 2, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(14);
-    expect(calculateHourFromAMPM({ hour: 3, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(15);
-    expect(calculateHourFromAMPM({ hour: 4, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(16);
-    expect(calculateHourFromAMPM({ hour: 5, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(17);
-    expect(calculateHourFromAMPM({ hour: 6, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(18);
-    expect(calculateHourFromAMPM({ hour: 7, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(19);
-    expect(calculateHourFromAMPM({ hour: 8, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(20);
-    expect(calculateHourFromAMPM({ hour: 9, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(21);
-    expect(calculateHourFromAMPM({ hour: 10, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(22);
-    expect(calculateHourFromAMPM({ hour: 11, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(23);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 12,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(12);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 1,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(13);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 2,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(14);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 3,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(15);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 4,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(16);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 5,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(17);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 6,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(18);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 7,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(19);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 8,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(20);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 9,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(21);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 10,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(22);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 11,
+          ampm: 'am',
+        } as DatetimeParts,
+        'pm'
+      )
+    ).toEqual(23);
 
-    expect(calculateHourFromAMPM({ hour: 13, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(1);
-    expect(calculateHourFromAMPM({ hour: 14, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(2);
-    expect(calculateHourFromAMPM({ hour: 15, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(3);
-    expect(calculateHourFromAMPM({ hour: 16, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(4);
-    expect(calculateHourFromAMPM({ hour: 17, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(5);
-    expect(calculateHourFromAMPM({ hour: 18, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(6);
-    expect(calculateHourFromAMPM({ hour: 19, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(7);
-    expect(calculateHourFromAMPM({ hour: 20, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(8);
-    expect(calculateHourFromAMPM({ hour: 21, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(9);
-    expect(calculateHourFromAMPM({ hour: 22, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(10);
-    expect(calculateHourFromAMPM({ hour: 23, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(11);
-    expect(calculateHourFromAMPM({ hour: 0, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(12);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 13,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(1);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 14,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(2);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 15,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(3);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 16,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(4);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 17,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(5);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 18,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(6);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 19,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(7);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 20,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(8);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 21,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(9);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 22,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(10);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 23,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(11);
+    expect(
+      calculateHourFromAMPM(
+        {
+          hour: 0,
+          ampm: 'pm',
+        } as DatetimeParts,
+        'am'
+      )
+    ).toEqual(12);
   });
 });
 
 describe('convert12HourTo24Hour()', () => {
   it('should correctly convert 12 hour to 24 hour', () => {
-    expect(convert12HourTo24Hour(12, 'am')).toEqual(0);
-    expect(convert12HourTo24Hour(1, 'am')).toEqual(1);
-    expect(convert12HourTo24Hour(2, 'am')).toEqual(2);
-    expect(convert12HourTo24Hour(3, 'am')).toEqual(3);
-    expect(convert12HourTo24Hour(4, 'am')).toEqual(4);
-    expect(convert12HourTo24Hour(5, 'am')).toEqual(5);
-    expect(convert12HourTo24Hour(6, 'am')).toEqual(6);
-    expect(convert12HourTo24Hour(7, 'am')).toEqual(7);
-    expect(convert12HourTo24Hour(8, 'am')).toEqual(8);
-    expect(convert12HourTo24Hour(9, 'am')).toEqual(9);
-    expect(convert12HourTo24Hour(10, 'am')).toEqual(10);
-    expect(convert12HourTo24Hour(11, 'am')).toEqual(11);
+    expect(
+      convert12HourTo24Hour(12, 'am')
+    ).toEqual(0);
+    expect(
+      convert12HourTo24Hour(1, 'am')
+    ).toEqual(1);
+    expect(
+      convert12HourTo24Hour(2, 'am')
+    ).toEqual(2);
+    expect(
+      convert12HourTo24Hour(3, 'am')
+    ).toEqual(3);
+    expect(
+      convert12HourTo24Hour(4, 'am')
+    ).toEqual(4);
+    expect(
+      convert12HourTo24Hour(5, 'am')
+    ).toEqual(5);
+    expect(
+      convert12HourTo24Hour(6, 'am')
+    ).toEqual(6);
+    expect(
+      convert12HourTo24Hour(7, 'am')
+    ).toEqual(7);
+    expect(
+      convert12HourTo24Hour(8, 'am')
+    ).toEqual(8);
+    expect(
+      convert12HourTo24Hour(9, 'am')
+    ).toEqual(9);
+    expect(
+      convert12HourTo24Hour(10, 'am')
+    ).toEqual(10);
+    expect(
+      convert12HourTo24Hour(11, 'am')
+    ).toEqual(11);
 
-    expect(convert12HourTo24Hour(12, 'pm')).toEqual(12);
-    expect(convert12HourTo24Hour(1, 'pm')).toEqual(13);
-    expect(convert12HourTo24Hour(2, 'pm')).toEqual(14);
-    expect(convert12HourTo24Hour(3, 'pm')).toEqual(15);
-    expect(convert12HourTo24Hour(4, 'pm')).toEqual(16);
-    expect(convert12HourTo24Hour(5, 'pm')).toEqual(17);
-    expect(convert12HourTo24Hour(6, 'pm')).toEqual(18);
-    expect(convert12HourTo24Hour(7, 'pm')).toEqual(19);
-    expect(convert12HourTo24Hour(8, 'pm')).toEqual(20);
-    expect(convert12HourTo24Hour(9, 'pm')).toEqual(21);
-    expect(convert12HourTo24Hour(10, 'pm')).toEqual(22);
-    expect(convert12HourTo24Hour(11, 'pm')).toEqual(23);
+    expect(
+      convert12HourTo24Hour(12, 'pm')
+    ).toEqual(12);
+    expect(
+      convert12HourTo24Hour(1, 'pm')
+    ).toEqual(13);
+    expect(
+      convert12HourTo24Hour(2, 'pm')
+    ).toEqual(14);
+    expect(
+      convert12HourTo24Hour(3, 'pm')
+    ).toEqual(15);
+    expect(
+      convert12HourTo24Hour(4, 'pm')
+    ).toEqual(16);
+    expect(
+      convert12HourTo24Hour(5, 'pm')
+    ).toEqual(17);
+    expect(
+      convert12HourTo24Hour(6, 'pm')
+    ).toEqual(18);
+    expect(
+      convert12HourTo24Hour(7, 'pm')
+    ).toEqual(19);
+    expect(
+      convert12HourTo24Hour(8, 'pm')
+    ).toEqual(20);
+    expect(
+      convert12HourTo24Hour(9, 'pm')
+    ).toEqual(21);
+    expect(
+      convert12HourTo24Hour(10, 'pm')
+    ).toEqual(22);
+    expect(
+      convert12HourTo24Hour(11, 'pm')
+    ).toEqual(23);
   });
 });
 
@@ -411,17 +683,35 @@ describe('getPreviousDay()', () => {
 
 describe('getNextMonth()', () => {
   it('should return correct next month', () => {
-    expect(getNextMonth({ month: 5, year: 2021, day: 1 })).toEqual({
+    expect(
+      getNextMonth({
+        month: 5,
+        year: 2021,
+        day: 1,
+      })
+    ).toEqual({
       month: 6,
       year: 2021,
       day: 1,
     });
-    expect(getNextMonth({ month: 12, year: 2021, day: 30 })).toEqual({
+    expect(
+      getNextMonth({
+        month: 12,
+        year: 2021,
+        day: 30,
+      })
+    ).toEqual({
       month: 1,
       year: 2022,
       day: 30,
     });
-    expect(getNextMonth({ month: 12, year: 1999, day: 30 })).toEqual({
+    expect(
+      getNextMonth({
+        month: 12,
+        year: 1999,
+        day: 30,
+      })
+    ).toEqual({
       month: 1,
       year: 2000,
       day: 30,
@@ -431,17 +721,35 @@ describe('getNextMonth()', () => {
 
 describe('getPreviousMonth()', () => {
   it('should return correct previous month', () => {
-    expect(getPreviousMonth({ month: 5, year: 2021, day: 1 })).toEqual({
+    expect(
+      getPreviousMonth({
+        month: 5,
+        year: 2021,
+        day: 1,
+      })
+    ).toEqual({
       month: 4,
       year: 2021,
       day: 1,
     });
-    expect(getPreviousMonth({ month: 1, year: 2021, day: 30 })).toEqual({
+    expect(
+      getPreviousMonth({
+        month: 1,
+        year: 2021,
+        day: 30,
+      })
+    ).toEqual({
       month: 12,
       year: 2020,
       day: 30,
     });
-    expect(getPreviousMonth({ month: 1, year: 2000, day: 30 })).toEqual({
+    expect(
+      getPreviousMonth({
+        month: 1,
+        year: 2000,
+        day: 30,
+      })
+    ).toEqual({
       month: 12,
       year: 1999,
       day: 30,
@@ -451,18 +759,36 @@ describe('getPreviousMonth()', () => {
 
 describe('getNextYear()', () => {
   it('should return correct next year', () => {
-    expect(getNextYear({ month: 5, year: 2021, day: 1 })).toEqual({
+    expect(
+      getNextYear({
+        month: 5,
+        year: 2021,
+        day: 1,
+      })
+    ).toEqual({
       month: 5,
       year: 2022,
       day: 1,
     });
-    expect(getNextYear({ month: 12, year: 1999, day: 30 })).toEqual({
+    expect(
+      getNextYear({
+        month: 12,
+        year: 1999,
+        day: 30,
+      })
+    ).toEqual({
       month: 12,
       year: 2000,
       day: 30,
     });
     // Leap year
-    expect(getNextYear({ month: 2, year: 2024, day: 29 })).toEqual({
+    expect(
+      getNextYear({
+        month: 2,
+        year: 2024,
+        day: 29,
+      })
+    ).toEqual({
       month: 2,
       year: 2025,
       day: 28,
@@ -472,18 +798,36 @@ describe('getNextYear()', () => {
 
 describe('getPreviousYear()', () => {
   it('should return correct next year', () => {
-    expect(getPreviousYear({ month: 5, year: 2021, day: 1 })).toEqual({
+    expect(
+      getPreviousYear({
+        month: 5,
+        year: 2021,
+        day: 1,
+      })
+    ).toEqual({
       month: 5,
       year: 2020,
       day: 1,
     });
-    expect(getPreviousYear({ month: 12, year: 1999, day: 30 })).toEqual({
+    expect(
+      getPreviousYear({
+        month: 12,
+        year: 1999,
+        day: 30,
+      })
+    ).toEqual({
       month: 12,
       year: 1998,
       day: 30,
     });
     // Leap year
-    expect(getPreviousYear({ month: 2, year: 2024, day: 29 })).toEqual({
+    expect(
+      getPreviousYear({
+        month: 2,
+        year: 2024,
+        day: 29,
+      })
+    ).toEqual({
       month: 2,
       year: 2023,
       day: 28,
@@ -493,7 +837,15 @@ describe('getPreviousYear()', () => {
 
 describe('validateParts()', () => {
   it('should move day in bounds', () => {
-    expect(validateParts({ month: 2, day: 31, year: 2022, hour: 8, minute: 0 })).toEqual({
+    expect(
+      validateParts({
+        month: 2,
+        day: 31,
+        year: 2022,
+        hour: 8,
+        minute: 0,
+      })
+    ).toEqual({
       month: 2,
       day: 28,
       year: 2022,
@@ -504,73 +856,192 @@ describe('validateParts()', () => {
   it('should move the hour back in bounds according to the min', () => {
     expect(
       validateParts(
-        { month: 1, day: 1, year: 2022, hour: 8, minute: 0 },
-        { month: 1, day: 1, year: 2022, hour: 9, minute: 0 }
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 8,
+          minute: 0,
+        },
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 9,
+          minute: 0,
+        }
       )
-    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
+    ).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022,
+      hour: 9,
+      minute: 0,
+    });
   });
   it('should move the minute back in bounds according to the min', () => {
     expect(
       validateParts(
-        { month: 1, day: 1, year: 2022, hour: 9, minute: 20 },
-        { month: 1, day: 1, year: 2022, hour: 9, minute: 30 }
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 9,
+          minute: 20,
+        },
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 9,
+          minute: 30,
+        }
       )
-    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
+    ).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022,
+      hour: 9,
+      minute: 30,
+    });
   });
   it('should move the hour and minute back in bounds according to the min', () => {
     expect(
       validateParts(
-        { month: 1, day: 1, year: 2022, hour: 8, minute: 30 },
-        { month: 1, day: 1, year: 2022, hour: 9, minute: 0 }
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 8,
+          minute: 30,
+        },
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 9,
+          minute: 0,
+        }
       )
-    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
+    ).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022,
+      hour: 9,
+      minute: 0,
+    });
   });
   it('should move the hour back in bounds according to the max', () => {
     expect(
-      validateParts({ month: 1, day: 1, year: 2022, hour: 10, minute: 0 }, undefined, {
-        month: 1,
-        day: 1,
-        year: 2022,
-        hour: 9,
-        minute: 0,
-      })
-    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
+      validateParts(
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 10,
+          minute: 0,
+        },
+        undefined,
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 9,
+          minute: 0,
+        }
+      )
+    ).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022,
+      hour: 9,
+      minute: 0,
+    });
   });
   it('should move the minute back in bounds according to the max', () => {
     expect(
-      validateParts({ month: 1, day: 1, year: 2022, hour: 9, minute: 40 }, undefined, {
-        month: 1,
-        day: 1,
-        year: 2022,
-        hour: 9,
-        minute: 30,
-      })
-    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
+      validateParts(
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 9,
+          minute: 40,
+        },
+        undefined,
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 9,
+          minute: 30,
+        }
+      )
+    ).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022,
+      hour: 9,
+      minute: 30,
+    });
   });
   it('should move the hour and minute back in bounds according to the max', () => {
     expect(
-      validateParts({ month: 1, day: 1, year: 2022, hour: 10, minute: 20 }, undefined, {
-        month: 1,
-        day: 1,
-        year: 2022,
-        hour: 9,
-        minute: 30,
-      })
-    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
+      validateParts(
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 10,
+          minute: 20,
+        },
+        undefined,
+        {
+          month: 1,
+          day: 1,
+          year: 2022,
+          hour: 9,
+          minute: 30,
+        }
+      )
+    ).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022,
+      hour: 9,
+      minute: 30,
+    });
   });
 });
 
 describe('getClosestValidDate()', () => {
   it('should match a date with only month/day/year', () => {
     // October 10, 2023
-    const refParts = { month: 10, day: 10, year: 2023 };
+    const refParts = {
+      month: 10,
+      day: 10,
+      year: 2023,
+    };
     // April 10, 2021
-    const minParts = { month: 4, day: 10, year: 2021 };
+    const minParts = {
+      month: 4,
+      day: 10,
+      year: 2021,
+    };
     // September 14, 2021
-    const maxParts = { month: 9, day: 14, year: 2021 };
+    const maxParts = {
+      month: 9,
+      day: 14,
+      year: 2021,
+    };
 
     // September 4, 2021
-    const expected = { month: 9, day: 4, year: 2021, dayOfWeek: undefined };
+    const expected = {
+      month: 9,
+      day: 4,
+      year: 2021,
+      dayOfWeek: undefined,
+    };
 
     expect(
       getClosestValidDate({
@@ -586,11 +1057,29 @@ describe('getClosestValidDate()', () => {
 
   it('should match a date when the reference date is before the min', () => {
     // April 2, 2020 3:20 PM
-    const refParts = { month: 4, day: 2, year: 2020, hour: 15, minute: 20 };
+    const refParts = {
+      month: 4,
+      day: 2,
+      year: 2020,
+      hour: 15,
+      minute: 20,
+    };
     // September 10, 2021 10:10 AM
-    const minParts = { month: 9, day: 10, year: 2021, hour: 10, minute: 10 };
+    const minParts = {
+      month: 9,
+      day: 10,
+      year: 2021,
+      hour: 10,
+      minute: 10,
+    };
     // September 14, 2021 10:11 AM
-    const maxParts = { month: 9, day: 14, year: 2021, hour: 10, minute: 11 };
+    const maxParts = {
+      month: 9,
+      day: 14,
+      year: 2021,
+      hour: 10,
+      minute: 11,
+    };
 
     // September 11, 2021 11:15 AM
     const expected = {
@@ -610,7 +1099,9 @@ describe('getClosestValidDate()', () => {
         dayValues: [11, 12, 13, 14],
         yearValues: [2020, 2021, 2023],
         hourValues: [9, 10, 11],
-        minuteValues: [11, 12, 13, 14, 15],
+        minuteValues: [
+          11, 12, 13, 14, 15,
+        ],
         maxParts,
         minParts,
       })
@@ -619,11 +1110,29 @@ describe('getClosestValidDate()', () => {
 
   it('should match a date when the reference date is before the min', () => {
     // April 2, 2020 3:20 PM
-    const refParts = { month: 4, day: 2, year: 2020, hour: 15, minute: 20 };
+    const refParts = {
+      month: 4,
+      day: 2,
+      year: 2020,
+      hour: 15,
+      minute: 20,
+    };
     // September 10, 2021 10:10 AM
-    const minParts = { month: 9, day: 10, year: 2021, hour: 10, minute: 10 };
+    const minParts = {
+      month: 9,
+      day: 10,
+      year: 2021,
+      hour: 10,
+      minute: 10,
+    };
     // September 10, 2021 10:15 AM
-    const maxParts = { month: 9, day: 10, year: 2021, hour: 10, minute: 15 };
+    const maxParts = {
+      month: 9,
+      day: 10,
+      year: 2021,
+      hour: 10,
+      minute: 15,
+    };
 
     // September 10, 2021 10:15 AM
     const expected = {
@@ -643,7 +1152,9 @@ describe('getClosestValidDate()', () => {
         dayValues: [10, 12, 13, 14],
         yearValues: [2020, 2021, 2023],
         hourValues: [9, 10, 11],
-        minuteValues: [11, 12, 13, 14, 15],
+        minuteValues: [
+          11, 12, 13, 14, 15,
+        ],
         minParts,
         maxParts,
       })
@@ -652,11 +1163,29 @@ describe('getClosestValidDate()', () => {
 
   it('should only clamp minutes if within the same day and hour as min/max', () => {
     // April 2, 2020 9:16 AM
-    const refParts = { month: 4, day: 2, year: 2020, hour: 9, minute: 16 };
+    const refParts = {
+      month: 4,
+      day: 2,
+      year: 2020,
+      hour: 9,
+      minute: 16,
+    };
     // September 10, 2021 10:10 AM
-    const minParts = { month: 9, day: 10, year: 2021, hour: 10, minute: 10 };
+    const minParts = {
+      month: 9,
+      day: 10,
+      year: 2021,
+      hour: 10,
+      minute: 10,
+    };
     // September 10, 2021 11:15 AM
-    const maxParts = { month: 9, day: 10, year: 2021, hour: 11, minute: 15 };
+    const maxParts = {
+      month: 9,
+      day: 10,
+      year: 2021,
+      hour: 11,
+      minute: 15,
+    };
 
     // September 10, 2021 10:16 AM
     const expected = {
@@ -685,11 +1214,29 @@ describe('getClosestValidDate()', () => {
 
   it('should return the closest valid date after adjusting the allowed year', () => {
     // April 2, 2022 9:16 AM
-    const refParts = { month: 4, day: 2, year: 2022, hour: 9, minute: 16 };
+    const refParts = {
+      month: 4,
+      day: 2,
+      year: 2022,
+      hour: 9,
+      minute: 16,
+    };
     // September 10, 2021 10:10 AM
-    const minParts = { month: 9, day: 10, year: 2021, hour: 10, minute: 10 };
+    const minParts = {
+      month: 9,
+      day: 10,
+      year: 2021,
+      hour: 10,
+      minute: 10,
+    };
     // September 10, 2023 11:15 AM
-    const maxParts = { month: 9, day: 10, year: 2023, hour: 11, minute: 15 };
+    const maxParts = {
+      month: 9,
+      day: 10,
+      year: 2023,
+      hour: 11,
+      minute: 15,
+    };
 
     // April 2, 2022 9:16 AM
     const expected = {
@@ -707,7 +1254,9 @@ describe('getClosestValidDate()', () => {
         refParts,
         monthValues: [4, 9, 11],
         dayValues: [2, 10, 12, 13, 14],
-        yearValues: [2020, 2021, 2022, 2023],
+        yearValues: [
+          2020, 2021, 2022, 2023,
+        ],
         hourValues: [9, 10, 11],
         minuteValues: [10, 15, 16],
         minParts,

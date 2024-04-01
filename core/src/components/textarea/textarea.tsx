@@ -1,4 +1,7 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
 import {
   Build,
   Component,
@@ -13,8 +16,14 @@ import {
   h,
   writeTask,
 } from '@stencil/core';
-import type { LegacyFormController, NotchController } from '@utils/forms';
-import { createLegacyFormController, createNotchController } from '@utils/forms';
+import type {
+  LegacyFormController,
+  NotchController,
+} from '@utils/forms';
+import {
+  createLegacyFormController,
+  createNotchController,
+} from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import {
   inheritAriaAttributes,
@@ -26,13 +35,22 @@ import {
 import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
-import { createColorClasses, hostContext } from '@utils/theme';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  StyleEventDetail,
+} from '../../interface';
 import { getCounterText } from '../input/input.utils';
 
-import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
+import type {
+  TextareaChangeEventDetail,
+  TextareaInputEventDetail,
+} from './textarea-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -49,7 +67,9 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
   },
   scoped: true,
 })
-export class Textarea implements ComponentInterface {
+export class Textarea
+  implements ComponentInterface
+{
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-textarea-${textareaIds++}`;
   /**
@@ -58,26 +78,32 @@ export class Textarea implements ComponentInterface {
    *
    * Resets when the textarea loses focus.
    */
-  private didTextareaClearOnEdit = false;
+  private didTextareaClearOnEdit =
+    false;
   private textareaWrapper?: HTMLElement;
-  private inheritedAttributes: Attributes = {};
+  private inheritedAttributes: Attributes =
+    {};
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
   private legacyFormController!: LegacyFormController;
-  private notchSpacerEl: HTMLElement | undefined;
+  private notchSpacerEl:
+    | HTMLElement
+    | undefined;
 
   private slotMutationController?: SlotMutationController;
 
   private notchController?: NotchController;
 
   // This flag ensures we log the deprecation warning at most once.
-  private hasLoggedDeprecationWarning = false;
+  private hasLoggedDeprecationWarning =
+    false;
 
   /**
    * The value of the textarea when the textarea is focused.
    */
   private focusedValue?: string | null;
 
-  @Element() el!: HTMLIonTextareaElement;
+  @Element()
+  el!: HTMLIonTextareaElement;
 
   @State() hasFocus = false;
 
@@ -86,7 +112,8 @@ export class Textarea implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
@@ -113,13 +140,23 @@ export class Textarea implements ComponentInterface {
 
   @Watch('debounce')
   protected debounceChanged() {
-    const { ionInput, debounce, originalIonInput } = this;
+    const {
+      ionInput,
+      debounce,
+      originalIonInput,
+    } = this;
 
     /**
      * If debounce is undefined, we have to manually revert the ionInput emitter in case
      * debounce used to be set to a number. Otherwise, the event would stay debounced.
      */
-    this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
+    this.ionInput =
+      debounce === undefined
+        ? originalIonInput ?? ionInput
+        : debounceEvent(
+            ionInput,
+            debounce
+          );
   }
 
   /**
@@ -143,14 +180,29 @@ export class Textarea implements ComponentInterface {
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
-  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+  @Prop() inputmode?:
+    | 'none'
+    | 'text'
+    | 'tel'
+    | 'url'
+    | 'email'
+    | 'numeric'
+    | 'decimal'
+    | 'search';
 
   /**
    * A hint to the browser for which enter key to display.
    * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
    * `"previous"`, `"search"`, and `"send"`.
    */
-  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+  @Prop() enterkeyhint?:
+    | 'enter'
+    | 'done'
+    | 'go'
+    | 'next'
+    | 'previous'
+    | 'search'
+    | 'send';
 
   /**
    * This attribute specifies the maximum number of characters that the user can enter.
@@ -190,7 +242,8 @@ export class Textarea implements ComponentInterface {
   /**
    * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
    */
-  @Prop({ reflect: true }) cols?: number;
+  @Prop({ reflect: true })
+  cols?: number;
 
   /**
    * The number of visible text lines for the control.
@@ -200,18 +253,24 @@ export class Textarea implements ComponentInterface {
   /**
    * Indicates how the control wraps text.
    */
-  @Prop() wrap?: 'hard' | 'soft' | 'off';
+  @Prop() wrap?:
+    | 'hard'
+    | 'soft'
+    | 'off';
 
   /**
    * If `true`, the textarea container will grow and shrink based
    * on the contents of the textarea.
    */
-  @Prop({ reflect: true }) autoGrow = false;
+  @Prop({ reflect: true }) autoGrow =
+    false;
 
   /**
    * The value of the textarea.
    */
-  @Prop({ mutable: true }) value?: string | null = '';
+  @Prop({ mutable: true }) value?:
+    | string
+    | null = '';
 
   /**
    * If `true`, a character counter will display the ratio of characters used and the total character limit.
@@ -226,7 +285,10 @@ export class Textarea implements ComponentInterface {
    * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
    * if you need to access `this` from within the callback.
    */
-  @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
+  @Prop() counterFormatter?: (
+    inputLength: number,
+    maxLength: number
+  ) => string;
 
   /**
    * Text that is placed under the textarea and displayed when an error is detected.
@@ -255,7 +317,12 @@ export class Textarea implements ComponentInterface {
    * `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+  @Prop() labelPlacement:
+    | 'start'
+    | 'end'
+    | 'floating'
+    | 'stacked'
+    | 'fixed' = 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -278,9 +345,13 @@ export class Textarea implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    const nativeInput = this.nativeInput;
+    const nativeInput =
+      this.nativeInput;
     const value = this.getValue();
-    if (nativeInput && nativeInput.value !== value) {
+    if (
+      nativeInput &&
+      nativeInput.value !== value
+    ) {
       nativeInput.value = value;
     }
     this.runAutoGrow();
@@ -292,7 +363,8 @@ export class Textarea implements ComponentInterface {
    * Unlike the `ionInput` event, the `ionChange` event is fired when
    * the element loses focus after its value has been modified.
    */
-  @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
+  @Event()
+  ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
    * The `ionInput` event is fired each time the user modifies the textarea's value.
@@ -302,40 +374,54 @@ export class Textarea implements ComponentInterface {
    * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
    * the user clears the textarea by performing a keydown event.
    */
-  @Event() ionInput!: EventEmitter<TextareaInputEventDetail>;
+  @Event()
+  ionInput!: EventEmitter<TextareaInputEventDetail>;
 
   /**
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<FocusEvent>;
+  @Event()
+  ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<FocusEvent>;
+  @Event()
+  ionFocus!: EventEmitter<FocusEvent>;
 
   connectedCallback() {
     const { el } = this;
-    this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
-    this.notchController = createNotchController(
-      el,
-      () => this.notchSpacerEl,
-      () => this.labelSlot
-    );
+    this.legacyFormController =
+      createLegacyFormController(el);
+    this.slotMutationController =
+      createSlotMutationController(
+        el,
+        ['label', 'start', 'end'],
+        () => forceUpdate(this)
+      );
+    this.notchController =
+      createNotchController(
+        el,
+        () => this.notchSpacerEl,
+        () => this.labelSlot
+      );
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
       document.dispatchEvent(
-        new CustomEvent('ionInputDidLoad', {
-          detail: el,
-        })
+        new CustomEvent(
+          'ionInputDidLoad',
+          {
+            detail: el,
+          }
+        )
       );
     }
   }
@@ -343,15 +429,19 @@ export class Textarea implements ComponentInterface {
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(
-        new CustomEvent('ionInputDidUnload', {
-          detail: this.el,
-        })
+        new CustomEvent(
+          'ionInputDidUnload',
+          {
+            detail: this.el,
+          }
+        )
       );
     }
 
     if (this.slotMutationController) {
       this.slotMutationController.destroy();
-      this.slotMutationController = undefined;
+      this.slotMutationController =
+        undefined;
     }
 
     if (this.notchController) {
@@ -363,12 +453,17 @@ export class Textarea implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['data-form-type', 'title', 'tabindex']),
+      ...inheritAttributes(this.el, [
+        'data-form-type',
+        'title',
+        'tabindex',
+      ]),
     };
   }
 
   componentDidLoad() {
-    this.originalIonInput = this.ionInput;
+    this.originalIonInput =
+      this.ionInput;
     this.runAutoGrow();
   }
 
@@ -399,19 +494,31 @@ export class Textarea implements ComponentInterface {
      * nativeInput won't be defined yet with the custom elements build, so wait for it to load in.
      */
     if (!this.nativeInput) {
-      await new Promise((resolve) => componentOnReady(this.el, resolve));
+      await new Promise((resolve) =>
+        componentOnReady(
+          this.el,
+          resolve
+        )
+      );
     }
-    return Promise.resolve(this.nativeInput!);
+    return Promise.resolve(
+      this.nativeInput!
+    );
   }
 
   private emitStyle() {
-    if (this.legacyFormController.hasLegacyControl()) {
+    if (
+      this.legacyFormController.hasLegacyControl()
+    ) {
       this.ionStyle.emit({
         interactive: true,
         textarea: true,
         input: true,
-        'interactive-disabled': this.disabled,
-        'has-placeholder': this.placeholder !== undefined,
+        'interactive-disabled':
+          this.disabled,
+        'has-placeholder':
+          this.placeholder !==
+          undefined,
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus,
         // TODO(FW-2876): remove this
@@ -426,30 +533,47 @@ export class Textarea implements ComponentInterface {
    * This API should be called for user committed changes.
    * This API should not be used for external value changes.
    */
-  private emitValueChange(event?: Event) {
+  private emitValueChange(
+    event?: Event
+  ) {
     const { value } = this;
     // Checks for both null and undefined values
-    const newValue = value == null ? value : value.toString();
+    const newValue =
+      value == null
+        ? value
+        : value.toString();
     // Emitting a value change should update the internal state for tracking the focused value
     this.focusedValue = newValue;
-    this.ionChange.emit({ value: newValue, event });
+    this.ionChange.emit({
+      value: newValue,
+      event,
+    });
   }
 
   /**
    * Emits an `ionInput` event.
    */
-  private emitInputChange(event?: Event) {
+  private emitInputChange(
+    event?: Event
+  ) {
     const { value } = this;
-    this.ionInput.emit({ value, event });
+    this.ionInput.emit({
+      value,
+      event,
+    });
   }
 
   private runAutoGrow() {
-    if (this.nativeInput && this.autoGrow) {
+    if (
+      this.nativeInput &&
+      this.autoGrow
+    ) {
       writeTask(() => {
         if (this.textareaWrapper) {
           // Replicated value is an attribute to be used in the stylesheet
           // to set the inner contents of a pseudo element.
-          this.textareaWrapper.dataset.replicatedValue = this.value ?? '';
+          this.textareaWrapper.dataset.replicatedValue =
+            this.value ?? '';
         }
       });
     }
@@ -458,7 +582,9 @@ export class Textarea implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit(ev: KeyboardEvent) {
+  private checkClearOnEdit(
+    ev: KeyboardEvent
+  ) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -477,14 +603,25 @@ export class Textarea implements ComponentInterface {
      * textarea by adding a new line, so "Enter" is not
      * included in the IGNORED_KEYS array.
      */
-    const IGNORED_KEYS = ['Tab', 'Shift', 'Meta', 'Alt', 'Control'];
-    const pressedIgnoredKey = IGNORED_KEYS.includes(ev.key);
+    const IGNORED_KEYS = [
+      'Tab',
+      'Shift',
+      'Meta',
+      'Alt',
+      'Control',
+    ];
+    const pressedIgnoredKey =
+      IGNORED_KEYS.includes(ev.key);
 
     /**
      * Clear the textarea if the control has not been previously cleared
      * during focus.
      */
-    if (!this.didTextareaClearOnEdit && this.hasValue() && !pressedIgnoredKey) {
+    if (
+      !this.didTextareaClearOnEdit &&
+      this.hasValue() &&
+      !pressedIgnoredKey
+    ) {
       this.value = '';
       this.emitInputChange(ev);
     }
@@ -495,7 +632,8 @@ export class Textarea implements ComponentInterface {
      * be cleared.
      */
     if (!pressedIgnoredKey) {
-      this.didTextareaClearOnEdit = true;
+      this.didTextareaClearOnEdit =
+        true;
     }
   }
 
@@ -517,7 +655,8 @@ export class Textarea implements ComponentInterface {
   // should be InputEvent, but all other elements
   // should be Event).
   private onInput = (ev: Event) => {
-    const input = ev.target as HTMLTextAreaElement | null;
+    const input =
+      ev.target as HTMLTextAreaElement | null;
     if (input) {
       this.value = input.value || '';
     }
@@ -528,7 +667,9 @@ export class Textarea implements ComponentInterface {
     this.emitValueChange(ev);
   };
 
-  private onFocus = (ev: FocusEvent) => {
+  private onFocus = (
+    ev: FocusEvent
+  ) => {
     this.hasFocus = true;
     this.focusedValue = this.value;
     this.focusChange();
@@ -540,7 +681,9 @@ export class Textarea implements ComponentInterface {
     this.hasFocus = false;
     this.focusChange();
 
-    if (this.focusedValue !== this.value) {
+    if (
+      this.focusedValue !== this.value
+    ) {
       /**
        * Emits the `ionChange` event when the textarea value
        * is different than the value when the textarea was focused.
@@ -551,13 +694,17 @@ export class Textarea implements ComponentInterface {
     this.ionBlur.emit(ev);
   };
 
-  private onKeyDown = (ev: KeyboardEvent) => {
+  private onKeyDown = (
+    ev: KeyboardEvent
+  ) => {
     this.checkClearOnEdit(ev);
   };
 
   // TODO: FW-2876 - Remove this render function
   private renderLegacyTextarea() {
-    if (!this.hasLoggedDeprecationWarning) {
+    if (
+      !this.hasLoggedDeprecationWarning
+    ) {
       printIonWarning(
         `ion-textarea now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
@@ -569,39 +716,63 @@ For textareas that do not render the label immediately next to the input, develo
 Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
-      this.hasLoggedDeprecationWarning = true;
+      this.hasLoggedDeprecationWarning =
+        true;
     }
 
     const mode = getIonMode(this);
     const value = this.getValue();
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(this.el);
+    const labelId =
+      this.inputId + '-lbl';
+    const label = findItemLabel(
+      this.el
+    );
     if (label) {
       label.id = labelId;
     }
 
     return (
       <Host
-        aria-disabled={this.disabled ? 'true' : null}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'legacy-textarea': true,
-        })}
+        aria-disabled={
+          this.disabled ? 'true' : null
+        }
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'legacy-textarea': true,
+          }
+        )}
       >
-        <div class="textarea-legacy-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+        <div
+          class="textarea-legacy-wrapper"
+          ref={(el) =>
+            (this.textareaWrapper = el)
+          }
+        >
           <textarea
             class="native-textarea"
-            aria-labelledby={label ? label.id : null}
-            ref={(el) => (this.nativeInput = el)}
-            autoCapitalize={this.autocapitalize}
+            aria-labelledby={
+              label ? label.id : null
+            }
+            ref={(el) =>
+              (this.nativeInput = el)
+            }
+            autoCapitalize={
+              this.autocapitalize
+            }
             autoFocus={this.autofocus}
-            enterKeyHint={this.enterkeyhint}
+            enterKeyHint={
+              this.enterkeyhint
+            }
             inputMode={this.inputmode}
             disabled={this.disabled}
             maxLength={this.maxlength}
             minLength={this.minlength}
             name={this.name}
-            placeholder={this.placeholder || ''}
+            placeholder={
+              this.placeholder || ''
+            }
             readOnly={this.readonly}
             required={this.required}
             spellcheck={this.spellcheck}
@@ -613,7 +784,8 @@ Developers can use the "legacy" property to continue using the legacy form marku
             onBlur={this.onBlur}
             onFocus={this.onFocus}
             onKeyDown={this.onKeyDown}
-            {...this.inheritedAttributes}
+            {...this
+              .inheritedAttributes}
           >
             {value}
           </textarea>
@@ -629,10 +801,17 @@ Developers can use the "legacy" property to continue using the legacy form marku
       <div
         class={{
           'label-text-wrapper': true,
-          'label-text-wrapper-hidden': !this.hasLabel,
+          'label-text-wrapper-hidden':
+            !this.hasLabel,
         }}
       >
-        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
+        {label === undefined ? (
+          <slot name="label"></slot>
+        ) : (
+          <div class="label-text">
+            {label}
+          </div>
+        )}
       </div>
     );
   }
@@ -642,7 +821,9 @@ Developers can use the "legacy" property to continue using the legacy form marku
    * not the <slot> definition.
    */
   private get labelSlot() {
-    return this.el.querySelector('[slot="label"]');
+    return this.el.querySelector(
+      '[slot="label"]'
+    );
   }
 
   /**
@@ -652,7 +833,10 @@ Developers can use the "legacy" property to continue using the legacy form marku
    * the `labelText` getter instead.
    */
   private get hasLabel() {
-    return this.label !== undefined || this.labelSlot !== null;
+    return (
+      this.label !== undefined ||
+      this.labelSlot !== null
+    );
   }
 
   /**
@@ -660,7 +844,9 @@ Developers can use the "legacy" property to continue using the legacy form marku
    */
   private renderLabelContainer() {
     const mode = getIonMode(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const hasOutlineFill =
+      mode === 'md' &&
+      this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -675,11 +861,20 @@ Developers can use the "legacy" property to continue using the legacy form marku
           <div class="textarea-outline-start"></div>
           <div
             class={{
-              'textarea-outline-notch': true,
-              'textarea-outline-notch-hidden': !this.hasLabel,
+              'textarea-outline-notch':
+                true,
+              'textarea-outline-notch-hidden':
+                !this.hasLabel,
             }}
           >
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+            <div
+              class="notch-spacer"
+              aria-hidden="true"
+              ref={(el) =>
+                (this.notchSpacerEl =
+                  el)
+              }
+            >
               {this.label}
             </div>
           </div>
@@ -699,18 +894,42 @@ Developers can use the "legacy" property to continue using the legacy form marku
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText } = this;
+    const { helperText, errorText } =
+      this;
 
-    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+    return [
+      <div class="helper-text">
+        {helperText}
+      </div>,
+      <div class="error-text">
+        {errorText}
+      </div>,
+    ];
   }
 
   private renderCounter() {
-    const { counter, maxlength, counterFormatter, value } = this;
-    if (counter !== true || maxlength === undefined) {
+    const {
+      counter,
+      maxlength,
+      counterFormatter,
+      value,
+    } = this;
+    if (
+      counter !== true ||
+      maxlength === undefined
+    ) {
       return;
     }
 
-    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
+    return (
+      <div class="counter">
+        {getCounterText(
+          value,
+          maxlength,
+          counterFormatter
+        )}
+      </div>
+    );
   }
 
   /**
@@ -719,14 +938,22 @@ Developers can use the "legacy" property to continue using the legacy form marku
    * be rendered if hint text is set or counter is enabled.
    */
   private renderBottomContent() {
-    const { counter, helperText, errorText, maxlength } = this;
+    const {
+      counter,
+      helperText,
+      errorText,
+      maxlength,
+    } = this;
 
     /**
      * undefined and empty string values should
      * be treated as not having helper/error text.
      */
-    const hasHintText = !!helperText || !!errorText;
-    const hasCounter = counter === true && maxlength !== undefined;
+    const hasHintText =
+      !!helperText || !!errorText;
+    const hasCounter =
+      counter === true &&
+      maxlength !== undefined;
     if (!hasHintText && !hasCounter) {
       return;
     }
@@ -740,14 +967,31 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 
   private renderTextarea() {
-    const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
+    const {
+      inputId,
+      disabled,
+      fill,
+      shape,
+      labelPlacement,
+      el,
+      hasFocus,
+    } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
-    const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const inItem = hostContext(
+      'ion-item',
+      this.el
+    );
+    const shouldRenderHighlight =
+      mode === 'md' &&
+      fill !== 'outline' &&
+      !inItem;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+    const hasStartEndSlots =
+      el.querySelector(
+        '[slot="start"], [slot="end"]'
+      ) !== null;
 
     /**
      * If the label is stacked, it should always sit above the textarea.
@@ -767,20 +1011,32 @@ Developers can use the "legacy" property to continue using the legacy form marku
      * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+      labelPlacement === 'stacked' ||
+      (labelPlacement === 'floating' &&
+        (hasValue ||
+          hasFocus ||
+          hasStartEndSlots));
 
     return (
       <Host
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'has-value': hasValue,
-          'has-focus': hasFocus,
-          'label-floating': labelShouldFloat,
-          [`textarea-fill-${fill}`]: fill !== undefined,
-          [`textarea-shape-${shape}`]: shape !== undefined,
-          [`textarea-label-placement-${labelPlacement}`]: true,
-          'textarea-disabled': disabled,
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'has-value': hasValue,
+            'has-focus': hasFocus,
+            'label-floating':
+              labelShouldFloat,
+            [`textarea-fill-${fill}`]:
+              fill !== undefined,
+            [`textarea-shape-${shape}`]:
+              shape !== undefined,
+            [`textarea-label-placement-${labelPlacement}`]:
+              true,
+            'textarea-disabled':
+              disabled,
+          }
+        )}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -788,7 +1044,10 @@ Developers can use the "legacy" property to continue using the legacy form marku
          * interactable, clicking the label would focus that instead
          * since it comes before the textarea in the DOM.
          */}
-        <label class="textarea-wrapper" htmlFor={inputId}>
+        <label
+          class="textarea-wrapper"
+          htmlFor={inputId}
+        >
           {this.renderLabelContainer()}
           <div class="textarea-wrapper-inner">
             {/**
@@ -801,23 +1060,48 @@ Developers can use the "legacy" property to continue using the legacy form marku
             <div class="start-slot-wrapper">
               <slot name="start"></slot>
             </div>
-            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <div
+              class="native-wrapper"
+              ref={(el) =>
+                (this.textareaWrapper =
+                  el)
+              }
+            >
               <textarea
                 class="native-textarea"
-                ref={(el) => (this.nativeInput = el)}
+                ref={(el) =>
+                  (this.nativeInput =
+                    el)
+                }
                 id={inputId}
                 disabled={disabled}
-                autoCapitalize={this.autocapitalize}
-                autoFocus={this.autofocus}
-                enterKeyHint={this.enterkeyhint}
-                inputMode={this.inputmode}
-                minLength={this.minlength}
-                maxLength={this.maxlength}
+                autoCapitalize={
+                  this.autocapitalize
+                }
+                autoFocus={
+                  this.autofocus
+                }
+                enterKeyHint={
+                  this.enterkeyhint
+                }
+                inputMode={
+                  this.inputmode
+                }
+                minLength={
+                  this.minlength
+                }
+                maxLength={
+                  this.maxlength
+                }
                 name={this.name}
-                placeholder={this.placeholder || ''}
+                placeholder={
+                  this.placeholder || ''
+                }
                 readOnly={this.readonly}
                 required={this.required}
-                spellcheck={this.spellcheck}
+                spellcheck={
+                  this.spellcheck
+                }
                 cols={this.cols}
                 rows={this.rows}
                 wrap={this.wrap}
@@ -825,8 +1109,11 @@ Developers can use the "legacy" property to continue using the legacy form marku
                 onChange={this.onChange}
                 onBlur={this.onBlur}
                 onFocus={this.onFocus}
-                onKeyDown={this.onKeyDown}
-                {...this.inheritedAttributes}
+                onKeyDown={
+                  this.onKeyDown
+                }
+                {...this
+                  .inheritedAttributes}
               >
                 {value}
               </textarea>
@@ -835,7 +1122,9 @@ Developers can use the "legacy" property to continue using the legacy form marku
               <slot name="end"></slot>
             </div>
           </div>
-          {shouldRenderHighlight && <div class="textarea-highlight"></div>}
+          {shouldRenderHighlight && (
+            <div class="textarea-highlight"></div>
+          )}
         </label>
         {this.renderBottomContent()}
       </Host>
@@ -843,9 +1132,12 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 
   render() {
-    const { legacyFormController } = this;
+    const { legacyFormController } =
+      this;
 
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderTextarea();
+    return legacyFormController.hasLegacyControl()
+      ? this.renderLegacyTextarea()
+      : this.renderTextarea();
   }
 }
 

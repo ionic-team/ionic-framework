@@ -8,7 +8,9 @@ export interface TextareaInputEventDetail {
   event?: Event;
 }
 
-export interface TextareaCustomEvent<T = TextareaChangeEventDetail> extends CustomEvent {
+export interface TextareaCustomEvent<
+  T = TextareaChangeEventDetail
+> extends CustomEvent {
   detail: T;
   target: HTMLIonTextareaElement;
 }

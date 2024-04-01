@@ -1,5 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, Watch, h } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Host,
+  Prop,
+  Watch,
+  h,
+} from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -8,7 +15,9 @@ import { getIonMode } from '../../global/ionic-global';
   styleUrl: 'fab-list.scss',
   shadow: true,
 })
-export class FabList implements ComponentInterface {
+export class FabList
+  implements ComponentInterface
+{
   @Element() el!: HTMLIonFabElement;
 
   /**
@@ -17,20 +26,33 @@ export class FabList implements ComponentInterface {
   @Prop() activated = false;
 
   @Watch('activated')
-  protected activatedChanged(activated: boolean) {
-    const fabs = Array.from(this.el.querySelectorAll('ion-fab-button'));
+  protected activatedChanged(
+    activated: boolean
+  ) {
+    const fabs = Array.from(
+      this.el.querySelectorAll(
+        'ion-fab-button'
+      )
+    );
 
     // if showing the fabs add a timeout, else show immediately
     const timeout = activated ? 30 : 0;
     fabs.forEach((fab, i) => {
-      setTimeout(() => (fab.show = activated), i * timeout);
+      setTimeout(
+        () => (fab.show = activated),
+        i * timeout
+      );
     });
   }
 
   /**
    * The side the fab list will show on relative to the main fab button.
    */
-  @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
+  @Prop() side:
+    | 'start'
+    | 'end'
+    | 'top'
+    | 'bottom' = 'bottom';
 
   render() {
     const mode = getIonMode(this);
@@ -38,8 +60,10 @@ export class FabList implements ComponentInterface {
       <Host
         class={{
           [mode]: true,
-          'fab-list-active': this.activated,
-          [`fab-list-side-${this.side}`]: true,
+          'fab-list-active':
+            this.activated,
+          [`fab-list-side-${this.side}`]:
+            true,
         }}
       >
         <slot></slot>

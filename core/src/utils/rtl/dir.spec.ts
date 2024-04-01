@@ -3,12 +3,18 @@ import { isRTL } from './dir';
 describe('rtl: dir', () => {
   describe('with host element', () => {
     it('should return true', () => {
-      expect(isRTL({ dir: 'rtl' })).toBe(true);
+      expect(
+        isRTL({ dir: 'rtl' })
+      ).toBe(true);
     });
 
     it('should return false', () => {
-      expect(isRTL({ dir: 'ltr' })).toBe(false);
-      expect(isRTL({ dir: '' })).toBe(false);
+      expect(
+        isRTL({ dir: 'ltr' })
+      ).toBe(false);
+      expect(isRTL({ dir: '' })).toBe(
+        false
+      );
     });
   });
 

@@ -1,23 +1,50 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ config, title }) => {
-  test.describe(title('breadcrumbs: axe'), () => {
-    test('should not have accessibility violations', async ({ page }) => {
-      await page.goto(`/src/components/breadcrumbs/test/a11y`, config);
+configs().forEach(
+  ({ config, title }) => {
+    test.describe(
+      title('breadcrumbs: axe'),
+      () => {
+        test('should not have accessibility violations', async ({
+          page,
+        }) => {
+          await page.goto(
+            `/src/components/breadcrumbs/test/a11y`,
+            config
+          );
 
-      const results = await new AxeBuilder({ page }).analyze();
-      expect(results.violations).toEqual([]);
-    });
-  });
-});
+          const results =
+            await new AxeBuilder({
+              page,
+            }).analyze();
+          expect(
+            results.violations
+          ).toEqual([]);
+        });
+      }
+    );
+  }
+);
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('breadcrumbs: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title(
+        'breadcrumbs: font scaling'
+      ),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 36px;
@@ -30,12 +57,23 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           <ion-breadcrumb>Photography</ion-breadcrumb>
         </ion-breadcrumbs>
       `,
-        config
-      );
+            config
+          );
 
-      const breadcrumbs = page.locator('ion-breadcrumbs');
+          const breadcrumbs =
+            page.locator(
+              'ion-breadcrumbs'
+            );
 
-      await expect(breadcrumbs).toHaveScreenshot(screenshot(`breadcrumbs-scale`));
-    });
-  });
-});
+          await expect(
+            breadcrumbs
+          ).toHaveScreenshot(
+            screenshot(
+              `breadcrumbs-scale`
+            )
+          );
+        });
+      }
+    );
+  }
+);

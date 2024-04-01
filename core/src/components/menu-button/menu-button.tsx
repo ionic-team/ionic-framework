@@ -1,11 +1,25 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Host,
+  Listen,
+  Prop,
+  State,
+  h,
+} from '@stencil/core';
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
-import { createColorClasses, hostContext } from '@utils/theme';
-import { menuOutline, menuSharp } from 'ionicons/icons';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
+import {
+  menuOutline,
+  menuSharp,
+} from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -26,8 +40,13 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
   },
   shadow: true,
 })
-export class MenuButton implements ComponentInterface, ButtonInterface {
-  private inheritedAttributes: Attributes = {};
+export class MenuButton
+  implements
+    ComponentInterface,
+    ButtonInterface
+{
+  private inheritedAttributes: Attributes =
+    {};
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -38,7 +57,8 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * If `true`, the user cannot interact with the menu button.
@@ -58,61 +78,115 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   /**
    * The type of the button.
    */
-  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+  @Prop() type:
+    | 'submit'
+    | 'reset'
+    | 'button' = 'button';
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.inheritedAttributes =
+      inheritAriaAttributes(this.el);
   }
 
   componentDidLoad() {
     this.visibilityChanged();
   }
 
-  @Listen('ionMenuChange', { target: 'body' })
-  @Listen('ionSplitPaneVisible', { target: 'body' })
+  @Listen('ionMenuChange', {
+    target: 'body',
+  })
+  @Listen('ionSplitPaneVisible', {
+    target: 'body',
+  })
   async visibilityChanged() {
-    this.visible = await updateVisibility(this.menu);
+    this.visible =
+      await updateVisibility(this.menu);
   }
 
   private onClick = async () => {
-    return menuController.toggle(this.menu);
+    return menuController.toggle(
+      this.menu
+    );
   };
 
   render() {
-    const { color, disabled, inheritedAttributes } = this;
+    const {
+      color,
+      disabled,
+      inheritedAttributes,
+    } = this;
     const mode = getIonMode(this);
-    const menuIcon = config.get('menuIcon', mode === 'ios' ? menuOutline : menuSharp);
-    const hidden = this.autoHide && !this.visible;
+    const menuIcon = config.get(
+      'menuIcon',
+      mode === 'ios'
+        ? menuOutline
+        : menuSharp
+    );
+    const hidden =
+      this.autoHide && !this.visible;
 
     const attrs = {
       type: this.type,
     };
 
-    const ariaLabel = inheritedAttributes['aria-label'] || 'menu';
+    const ariaLabel =
+      inheritedAttributes[
+        'aria-label'
+      ] || 'menu';
 
     return (
       <Host
         onClick={this.onClick}
-        aria-disabled={disabled ? 'true' : null}
-        aria-hidden={hidden ? 'true' : null}
-        class={createColorClasses(color, {
-          [mode]: true,
-          button: true, // ion-buttons target .button
-          'menu-button-hidden': hidden,
-          'menu-button-disabled': disabled,
-          'in-toolbar': hostContext('ion-toolbar', this.el),
-          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'ion-activatable': true,
-          'ion-focusable': true,
-        })}
+        aria-disabled={
+          disabled ? 'true' : null
+        }
+        aria-hidden={
+          hidden ? 'true' : null
+        }
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            button: true, // ion-buttons target .button
+            'menu-button-hidden':
+              hidden,
+            'menu-button-disabled':
+              disabled,
+            'in-toolbar': hostContext(
+              'ion-toolbar',
+              this.el
+            ),
+            'in-toolbar-color':
+              hostContext(
+                'ion-toolbar[color]',
+                this.el
+              ),
+            'ion-activatable': true,
+            'ion-focusable': true,
+          }
+        )}
       >
-        <button {...attrs} disabled={disabled} class="button-native" part="native" aria-label={ariaLabel}>
+        <button
+          {...attrs}
+          disabled={disabled}
+          class="button-native"
+          part="native"
+          aria-label={ariaLabel}
+        >
           <span class="button-inner">
             <slot>
-              <ion-icon part="icon" icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
+              <ion-icon
+                part="icon"
+                icon={menuIcon}
+                mode={mode}
+                lazy={false}
+                aria-hidden="true"
+              ></ion-icon>
             </slot>
           </span>
-          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+          {mode === 'md' && (
+            <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+          )}
         </button>
       </Host>
     );

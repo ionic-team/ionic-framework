@@ -1,14 +1,40 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
-import type { Gesture, GestureDetail } from '@utils/gesture';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Listen,
+  Prop,
+  State,
+  Watch,
+  h,
+  writeTask,
+} from '@stencil/core';
+import type {
+  Gesture,
+  GestureDetail,
+} from '@utils/gesture';
 import { raf } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
-import { createColorClasses, hostContext } from '@utils/theme';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  StyleEventDetail,
+} from '../../interface';
 
-import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface';
+import type {
+  SegmentChangeEventDetail,
+  SegmentValue,
+} from './segment-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -21,7 +47,9 @@ import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface
   },
   shadow: true,
 })
-export class Segment implements ComponentInterface {
+export class Segment
+  implements ComponentInterface
+{
   private gesture?: Gesture;
 
   // Value before the segment is dragged
@@ -36,16 +64,25 @@ export class Segment implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
   @Watch('color')
-  protected colorChanged(value?: Color, oldValue?: Color) {
+  protected colorChanged(
+    value?: Color,
+    oldValue?: Color
+  ) {
     /**
      * If color is set after not having
      * previously been set (or vice versa),
      * we need to emit style so the segment-buttons
      * can apply their color classes properly.
      */
-    if ((oldValue === undefined && value !== undefined) || (oldValue !== undefined && value === undefined)) {
+    if (
+      (oldValue === undefined &&
+        value !== undefined) ||
+      (oldValue !== undefined &&
+        value === undefined)
+    ) {
       this.emitStyle();
     }
   }
@@ -75,10 +112,13 @@ export class Segment implements ComponentInterface {
   /**
    * the value of the segment.
    */
-  @Prop({ mutable: true }) value?: SegmentValue;
+  @Prop({ mutable: true })
+  value?: SegmentValue;
 
   @Watch('value')
-  protected valueChanged(value: SegmentValue | undefined) {
+  protected valueChanged(
+    value: SegmentValue | undefined
+  ) {
     /**
      * `ionSelect` is emitted every time the value changes (internal or external changes).
      * Used by `ion-segment-button` to determine if the button should be checked.
@@ -97,7 +137,8 @@ export class Segment implements ComponentInterface {
    * Emitted when the value property has changed and any
    * dragging pointer has been released from `ion-segment`.
    */
-  @Event() ionChange!: EventEmitter<SegmentChangeEventDetail>;
+  @Event()
+  ionChange!: EventEmitter<SegmentChangeEventDetail>;
 
   /**
    * Emitted when the value of the segment changes from user committed actions
@@ -105,13 +146,15 @@ export class Segment implements ComponentInterface {
    *
    * @internal
    */
-  @Event() ionSelect!: EventEmitter<SegmentChangeEventDetail>;
+  @Event()
+  ionSelect!: EventEmitter<SegmentChangeEventDetail>;
 
   /**
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
   disabledChanged() {
@@ -125,7 +168,11 @@ export class Segment implements ComponentInterface {
 
   private gestureChanged() {
     if (this.gesture) {
-      this.gesture.enable(!this.scrollable && !this.disabled && this.swipeGesture);
+      this.gesture.enable(
+        !this.scrollable &&
+          !this.disabled &&
+          this.swipeGesture
+      );
     }
   }
 
@@ -146,7 +193,9 @@ export class Segment implements ComponentInterface {
      * will not fire. As a result, we manually
      * fire this event when Select is loaded.
      */
-    this.ionSelect.emit({ value: this.value });
+    this.ionSelect.emit({
+      value: this.value,
+    });
 
     /**
      * We need to wait for the buttons to all be rendered
@@ -159,10 +208,16 @@ export class Segment implements ComponentInterface {
        * place instead of scroll. Smooth scrolling should only
        * happen when the user interacts with the segment.
        */
-      this.scrollActiveButtonIntoView(false);
+      this.scrollActiveButtonIntoView(
+        false
+      );
     });
 
-    this.gesture = (await import('../../utils/gesture')).createGesture({
+    this.gesture = (
+      await import(
+        '../../utils/gesture'
+      )
+    ).createGesture({
       el: this.el,
       gestureName: 'segment',
       gesturePriority: 100,
@@ -180,7 +235,8 @@ export class Segment implements ComponentInterface {
   }
 
   onStart(detail: GestureDetail) {
-    this.valueBeforeGesture = this.value;
+    this.valueBeforeGesture =
+      this.value;
     this.activate(detail);
   }
 
@@ -197,7 +253,10 @@ export class Segment implements ComponentInterface {
 
     const value = this.value;
     if (value !== undefined) {
-      if (this.valueBeforeGesture !== value) {
+      if (
+        this.valueBeforeGesture !==
+        value
+      ) {
         this.emitValueChange();
       }
     }
@@ -216,38 +275,60 @@ export class Segment implements ComponentInterface {
   }
 
   private getButtons() {
-    return Array.from(this.el.querySelectorAll('ion-segment-button'));
+    return Array.from(
+      this.el.querySelectorAll(
+        'ion-segment-button'
+      )
+    );
   }
 
   private get checked() {
-    return this.getButtons().find((button) => button.value === this.value);
+    return this.getButtons().find(
+      (button) =>
+        button.value === this.value
+    );
   }
 
   /*
    * Activate both the segment and the buttons
    * due to a bug with ::slotted in Safari
    */
-  private setActivated(activated: boolean) {
+  private setActivated(
+    activated: boolean
+  ) {
     const buttons = this.getButtons();
 
     buttons.forEach((button) => {
       if (activated) {
-        button.classList.add('segment-button-activated');
+        button.classList.add(
+          'segment-button-activated'
+        );
       } else {
-        button.classList.remove('segment-button-activated');
+        button.classList.remove(
+          'segment-button-activated'
+        );
       }
     });
     this.activated = activated;
   }
 
-  private activate(detail: GestureDetail) {
-    const clicked = detail.event.target as HTMLIonSegmentButtonElement;
+  private activate(
+    detail: GestureDetail
+  ) {
+    const clicked = detail.event
+      .target as HTMLIonSegmentButtonElement;
     const buttons = this.getButtons();
-    const checked = buttons.find((button) => button.value === this.value);
+    const checked = buttons.find(
+      (button) =>
+        button.value === this.value
+    );
 
     // Make sure we are only checking for activation on a segment button
     // since disabled buttons will get the click on the segment
-    if (clicked.tagName !== 'ION-SEGMENT-BUTTON') {
+    if (
+      clicked.tagName !==
+      'ION-SEGMENT-BUTTON'
+    ) {
       return;
     }
 
@@ -264,24 +345,43 @@ export class Segment implements ComponentInterface {
     }
   }
 
-  private getIndicator(button: HTMLIonSegmentButtonElement): HTMLDivElement | null {
-    const root = button.shadowRoot || button;
-    return root.querySelector('.segment-button-indicator');
+  private getIndicator(
+    button: HTMLIonSegmentButtonElement
+  ): HTMLDivElement | null {
+    const root =
+      button.shadowRoot || button;
+    return root.querySelector(
+      '.segment-button-indicator'
+    );
   }
 
-  private checkButton(previous: HTMLIonSegmentButtonElement, current: HTMLIonSegmentButtonElement) {
-    const previousIndicator = this.getIndicator(previous);
-    const currentIndicator = this.getIndicator(current);
+  private checkButton(
+    previous: HTMLIonSegmentButtonElement,
+    current: HTMLIonSegmentButtonElement
+  ) {
+    const previousIndicator =
+      this.getIndicator(previous);
+    const currentIndicator =
+      this.getIndicator(current);
 
-    if (previousIndicator === null || currentIndicator === null) {
+    if (
+      previousIndicator === null ||
+      currentIndicator === null
+    ) {
       return;
     }
 
-    const previousClientRect = previousIndicator.getBoundingClientRect();
-    const currentClientRect = currentIndicator.getBoundingClientRect();
+    const previousClientRect =
+      previousIndicator.getBoundingClientRect();
+    const currentClientRect =
+      currentIndicator.getBoundingClientRect();
 
-    const widthDelta = previousClientRect.width / currentClientRect.width;
-    const xPosition = previousClientRect.left - currentClientRect.left;
+    const widthDelta =
+      previousClientRect.width /
+      currentClientRect.width;
+    const xPosition =
+      previousClientRect.left -
+      currentClientRect.left;
 
     // Scale the indicator width to match the previous indicator width
     // and translate it on top of the previous indicator
@@ -289,17 +389,27 @@ export class Segment implements ComponentInterface {
 
     writeTask(() => {
       // Remove the transition before positioning on top of the previous indicator
-      currentIndicator.classList.remove('segment-button-indicator-animated');
-      currentIndicator.style.setProperty('transform', transform);
+      currentIndicator.classList.remove(
+        'segment-button-indicator-animated'
+      );
+      currentIndicator.style.setProperty(
+        'transform',
+        transform
+      );
 
       // Force a repaint to ensure the transform happens
       currentIndicator.getBoundingClientRect();
 
       // Add the transition to move the indicator into place
-      currentIndicator.classList.add('segment-button-indicator-animated');
+      currentIndicator.classList.add(
+        'segment-button-indicator-animated'
+      );
 
       // Remove the transform to slide the indicator back to the button clicked
-      currentIndicator.style.setProperty('transform', '');
+      currentIndicator.style.setProperty(
+        'transform',
+        ''
+      );
     });
 
     this.value = current.value;
@@ -308,33 +418,50 @@ export class Segment implements ComponentInterface {
 
   private setCheckedClasses() {
     const buttons = this.getButtons();
-    const index = buttons.findIndex((button) => button.value === this.value);
+    const index = buttons.findIndex(
+      (button) =>
+        button.value === this.value
+    );
     const next = index + 1;
 
     for (const button of buttons) {
-      button.classList.remove('segment-button-after-checked');
+      button.classList.remove(
+        'segment-button-after-checked'
+      );
     }
     if (next < buttons.length) {
-      buttons[next].classList.add('segment-button-after-checked');
+      buttons[next].classList.add(
+        'segment-button-after-checked'
+      );
     }
   }
 
-  private scrollActiveButtonIntoView(smoothScroll = true) {
-    const { scrollable, value, el } = this;
+  private scrollActiveButtonIntoView(
+    smoothScroll = true
+  ) {
+    const { scrollable, value, el } =
+      this;
 
     if (scrollable) {
       const buttons = this.getButtons();
-      const activeButton = buttons.find((button) => button.value === value);
+      const activeButton = buttons.find(
+        (button) =>
+          button.value === value
+      );
       if (activeButton !== undefined) {
-        const scrollContainerBox = el.getBoundingClientRect();
-        const activeButtonBox = activeButton.getBoundingClientRect();
+        const scrollContainerBox =
+          el.getBoundingClientRect();
+        const activeButtonBox =
+          activeButton.getBoundingClientRect();
 
         /**
          * Subtract the active button x position from the scroll
          * container x position. This will give us the x position
          * of the active button within the scroll container.
          */
-        const activeButtonLeft = activeButtonBox.x - scrollContainerBox.x;
+        const activeButtonLeft =
+          activeButtonBox.x -
+          scrollContainerBox.x;
 
         /**
          * If we just used activeButtonLeft, then the active button
@@ -346,7 +473,10 @@ export class Segment implements ComponentInterface {
          * button such that the midpoint of the active button is at the midpoint of the
          * scroll container.
          */
-        const centeredX = activeButtonLeft - scrollContainerBox.width / 2 + activeButtonBox.width / 2;
+        const centeredX =
+          activeButtonLeft -
+          scrollContainerBox.width / 2 +
+          activeButtonBox.width / 2;
 
         /**
          * We intentionally use scrollBy here instead of scrollIntoView
@@ -364,17 +494,25 @@ export class Segment implements ComponentInterface {
         el.scrollBy({
           top: 0,
           left: centeredX,
-          behavior: smoothScroll ? 'smooth' : 'instant',
+          behavior: smoothScroll
+            ? 'smooth'
+            : 'instant',
         });
       }
     }
   }
 
-  private setNextIndex(detail: GestureDetail, isEnd = false) {
+  private setNextIndex(
+    detail: GestureDetail,
+    isEnd = false
+  ) {
     const rtl = isRTL(this.el);
     const activated = this.activated;
     const buttons = this.getButtons();
-    const index = buttons.findIndex((button) => button.value === this.value);
+    const index = buttons.findIndex(
+      (button) =>
+        button.value === this.value
+    );
     const previous = buttons[index];
     let current;
     let nextIndex;
@@ -385,7 +523,8 @@ export class Segment implements ComponentInterface {
 
     // Get the element that the touch event started on in case
     // it was the checked button, then we will move the indicator
-    const rect = previous.getBoundingClientRect() as DOMRect;
+    const rect =
+      previous.getBoundingClientRect() as DOMRect;
     const left = rect.left;
     const width = rect.width;
 
@@ -394,7 +533,8 @@ export class Segment implements ComponentInterface {
     // can move up and down off of the segment
     const currentX = detail.currentX;
 
-    const previousY = rect.top + rect.height / 2;
+    const previousY =
+      rect.top + rect.height / 2;
 
     /**
      * Segment can be used inside the shadow dom
@@ -404,11 +544,22 @@ export class Segment implements ComponentInterface {
      * shadow root if used inside a shadow component and
      * returns document otherwise.
      */
-    const root = this.el.getRootNode() as Document | ShadowRoot;
-    const nextEl = root.elementFromPoint(currentX, previousY) as HTMLIonSegmentButtonElement;
+    const root =
+      this.el.getRootNode() as
+        | Document
+        | ShadowRoot;
+    const nextEl =
+      root.elementFromPoint(
+        currentX,
+        previousY
+      ) as HTMLIonSegmentButtonElement;
 
-    const decreaseIndex = rtl ? currentX > left + width : currentX < left;
-    const increaseIndex = rtl ? currentX < left : currentX > left + width;
+    const decreaseIndex = rtl
+      ? currentX > left + width
+      : currentX < left;
+    const increaseIndex = rtl
+      ? currentX < left
+      : currentX > left + width;
 
     // If the indicator is currently activated then we have started the gesture
     // on top of the checked button so we need to slide the indicator
@@ -426,13 +577,18 @@ export class Segment implements ComponentInterface {
         if (activated && !isEnd) {
           const newIndex = index + 1;
 
-          if (newIndex < buttons.length) {
+          if (
+            newIndex < buttons.length
+          ) {
             nextIndex = newIndex;
           }
         }
       }
 
-      if (nextIndex !== undefined && !buttons[nextIndex].disabled) {
+      if (
+        nextIndex !== undefined &&
+        !buttons[nextIndex].disabled
+      ) {
         current = buttons[nextIndex];
       }
     }
@@ -449,12 +605,18 @@ export class Segment implements ComponentInterface {
        * user tried to select a disabled ion-segment-button,
        * and we should not update the ripple.
        */
-      if (current.tagName === 'ION-SEGMENT') {
+      if (
+        current.tagName ===
+        'ION-SEGMENT'
+      ) {
         return false;
       }
 
       if (previous !== current) {
-        this.checkButton(previous, current);
+        this.checkButton(
+          previous,
+          current
+        );
       }
     }
 
@@ -468,14 +630,17 @@ export class Segment implements ComponentInterface {
   }
 
   private onClick = (ev: Event) => {
-    const current = ev.target as HTMLIonSegmentButtonElement;
+    const current =
+      ev.target as HTMLIonSegmentButtonElement;
     const previous = this.checked;
 
     // If the current element is a segment then that means
     // the user tried to swipe to a segment button and
     // click a segment button at the same time so we should
     // not update the checked segment button
-    if (current.tagName === 'ION-SEGMENT') {
+    if (
+      current.tagName === 'ION-SEGMENT'
+    ) {
       return;
     }
 
@@ -485,28 +650,55 @@ export class Segment implements ComponentInterface {
       this.emitValueChange();
     }
 
-    if (this.scrollable || !this.swipeGesture) {
+    if (
+      this.scrollable ||
+      !this.swipeGesture
+    ) {
       if (previous) {
-        this.checkButton(previous, current);
+        this.checkButton(
+          previous,
+          current
+        );
       } else {
         this.setCheckedClasses();
       }
     }
   };
 
-  private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
-    const buttons = this.getButtons().filter((button) => !button.disabled);
-    const currIndex = buttons.findIndex((button) => button === document.activeElement);
+  private getSegmentButton = (
+    selector:
+      | 'first'
+      | 'last'
+      | 'next'
+      | 'previous'
+  ): HTMLIonSegmentButtonElement | null => {
+    const buttons =
+      this.getButtons().filter(
+        (button) => !button.disabled
+      );
+    const currIndex = buttons.findIndex(
+      (button) =>
+        button ===
+        document.activeElement
+    );
 
     switch (selector) {
       case 'first':
         return buttons[0];
       case 'last':
-        return buttons[buttons.length - 1];
+        return buttons[
+          buttons.length - 1
+        ];
       case 'next':
-        return buttons[currIndex + 1] ?? buttons[0];
+        return (
+          buttons[currIndex + 1] ??
+          buttons[0]
+        );
       case 'previous':
-        return buttons[currIndex - 1] ?? buttons[buttons.length - 1];
+        return (
+          buttons[currIndex - 1] ??
+          buttons[buttons.length - 1]
+        );
       default:
         return null;
     }
@@ -515,29 +707,47 @@ export class Segment implements ComponentInterface {
   @Listen('keydown')
   onKeyDown(ev: KeyboardEvent) {
     const rtl = isRTL(this.el);
-    let keyDownSelectsButton = this.selectOnFocus;
+    let keyDownSelectsButton =
+      this.selectOnFocus;
     let current;
     switch (ev.key) {
       case 'ArrowRight':
         ev.preventDefault();
-        current = rtl ? this.getSegmentButton('previous') : this.getSegmentButton('next');
+        current = rtl
+          ? this.getSegmentButton(
+              'previous'
+            )
+          : this.getSegmentButton(
+              'next'
+            );
         break;
       case 'ArrowLeft':
         ev.preventDefault();
-        current = rtl ? this.getSegmentButton('next') : this.getSegmentButton('previous');
+        current = rtl
+          ? this.getSegmentButton(
+              'next'
+            )
+          : this.getSegmentButton(
+              'previous'
+            );
         break;
       case 'Home':
         ev.preventDefault();
-        current = this.getSegmentButton('first');
+        current =
+          this.getSegmentButton(
+            'first'
+          );
         break;
       case 'End':
         ev.preventDefault();
-        current = this.getSegmentButton('last');
+        current =
+          this.getSegmentButton('last');
         break;
       case ' ':
       case 'Enter':
         ev.preventDefault();
-        current = document.activeElement as HTMLIonSegmentButtonElement;
+        current =
+          document.activeElement as HTMLIonSegmentButtonElement;
         keyDownSelectsButton = true;
       default:
         break;
@@ -549,7 +759,10 @@ export class Segment implements ComponentInterface {
 
     if (keyDownSelectsButton) {
       const previous = this.checked;
-      this.checkButton(previous || current, current);
+      this.checkButton(
+        previous || current,
+        current
+      );
       if (current !== previous) {
         this.emitValueChange();
       }
@@ -563,14 +776,27 @@ export class Segment implements ComponentInterface {
       <Host
         role="tablist"
         onClick={this.onClick}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'in-toolbar': hostContext('ion-toolbar', this.el),
-          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'segment-activated': this.activated,
-          'segment-disabled': this.disabled,
-          'segment-scrollable': this.scrollable,
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'in-toolbar': hostContext(
+              'ion-toolbar',
+              this.el
+            ),
+            'in-toolbar-color':
+              hostContext(
+                'ion-toolbar[color]',
+                this.el
+              ),
+            'segment-activated':
+              this.activated,
+            'segment-disabled':
+              this.disabled,
+            'segment-scrollable':
+              this.scrollable,
+          }
+        )}
       >
         <slot></slot>
       </Host>

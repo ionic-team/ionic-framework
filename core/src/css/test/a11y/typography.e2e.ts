@@ -1,11 +1,22 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('typography: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+  modes: ['ios'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('typography: font scaling'),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 310%;
@@ -24,12 +35,21 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
           </p>
         </div>
       `,
-        config
-      );
+            config
+          );
 
-      const div = page.locator('div');
+          const div =
+            page.locator('div');
 
-      await expect(div).toHaveScreenshot(screenshot(`typography-scale`));
-    });
-  });
-});
+          await expect(
+            div
+          ).toHaveScreenshot(
+            screenshot(
+              `typography-scale`
+            )
+          );
+        });
+      }
+    );
+  }
+);

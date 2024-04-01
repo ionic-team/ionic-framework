@@ -1,5 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -20,7 +26,9 @@ import type { Color } from '../../interface';
   },
   shadow: true,
 })
-export class ItemDivider implements ComponentInterface {
+export class ItemDivider
+  implements ComponentInterface
+{
   @Element() el!: HTMLElement;
 
   /**
@@ -28,7 +36,8 @@ export class ItemDivider implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * When it's set to `true`, the item-divider will stay visible when it reaches the top
@@ -43,11 +52,15 @@ export class ItemDivider implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'item-divider-sticky': this.sticky,
-          item: true,
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'item-divider-sticky':
+              this.sticky,
+            item: true,
+          }
+        )}
       >
         <slot name="start"></slot>
         <div class="item-divider-inner">

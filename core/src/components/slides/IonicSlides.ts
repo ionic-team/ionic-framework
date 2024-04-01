@@ -1,4 +1,6 @@
-export const IonicSlides = (opts: any) => {
+export const IonicSlides = (
+  opts: any
+) => {
   const { swiper, extendParams } = opts;
   const slidesParams: any = {
     effect: undefined,
@@ -76,10 +78,13 @@ export const IonicSlides = (opts: any) => {
       crossFade: false,
     },
     a11y: {
-      prevSlideMessage: 'Previous slide',
+      prevSlideMessage:
+        'Previous slide',
       nextSlideMessage: 'Next slide',
-      firstSlideMessage: 'This is the first slide',
-      lastSlideMessage: 'This is the last slide',
+      firstSlideMessage:
+        'This is the first slide',
+      lastSlideMessage:
+        'This is the last slide',
     },
   };
 

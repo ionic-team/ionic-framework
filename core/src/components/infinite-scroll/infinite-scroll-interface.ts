@@ -1,3 +1,4 @@
-export interface InfiniteScrollCustomEvent extends CustomEvent {
+export interface InfiniteScrollCustomEvent
+  extends CustomEvent {
   target: HTMLIonInfiniteScrollElement;
 }

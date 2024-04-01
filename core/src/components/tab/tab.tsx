@@ -1,20 +1,35 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Build, Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Host,
+  Method,
+  Prop,
+  Watch,
+  h,
+} from '@stencil/core';
 import { attachComponent } from '@utils/framework-delegate';
 
-import type { ComponentRef, FrameworkDelegate } from '../../interface';
+import type {
+  ComponentRef,
+  FrameworkDelegate,
+} from '../../interface';
 
 @Component({
   tag: 'ion-tab',
   styleUrl: 'tab.scss',
   shadow: true,
 })
-export class Tab implements ComponentInterface {
+export class Tab
+  implements ComponentInterface
+{
   private loaded = false;
   @Element() el!: HTMLIonTabElement;
 
   /** @internal */
-  @Prop({ mutable: true }) active = false;
+  @Prop({ mutable: true }) active =
+    false;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -32,7 +47,10 @@ export class Tab implements ComponentInterface {
 
   async componentWillLoad() {
     if (Build.isDev) {
-      if (this.component !== undefined && this.el.childElementCount > 0) {
+      if (
+        this.component !== undefined &&
+        this.el.childElementCount > 0
+      ) {
         console.error(
           'You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
             `- Remove the component attribute in: <ion-tab component="${this.component}">` +
@@ -60,11 +78,21 @@ export class Tab implements ComponentInterface {
     }
   }
 
-  private prepareLazyLoaded(): Promise<HTMLElement | undefined> {
-    if (!this.loaded && this.component != null) {
+  private prepareLazyLoaded(): Promise<
+    HTMLElement | undefined
+  > {
+    if (
+      !this.loaded &&
+      this.component != null
+    ) {
       this.loaded = true;
       try {
-        return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
+        return attachComponent(
+          this.delegate,
+          this.el,
+          this.component,
+          ['ion-page']
+        );
       } catch (e) {
         console.error(e);
       }
@@ -73,14 +101,18 @@ export class Tab implements ComponentInterface {
   }
 
   render() {
-    const { tab, active, component } = this;
+    const { tab, active, component } =
+      this;
     return (
       <Host
         role="tabpanel"
-        aria-hidden={!active ? 'true' : null}
+        aria-hidden={
+          !active ? 'true' : null
+        }
         aria-labelledby={`tab-button-${tab}`}
         class={{
-          'ion-page': component === undefined,
+          'ion-page':
+            component === undefined,
           'tab-hidden': !active,
         }}
       >

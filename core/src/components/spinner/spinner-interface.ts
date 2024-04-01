@@ -7,7 +7,11 @@ export interface SpinnerConfig {
   circles?: number;
   lines?: number;
   elmDuration?: boolean;
-  fn: (dur: number, index: number, total: number) => SpinnerData;
+  fn: (
+    dur: number,
+    index: number,
+    total: number
+  ) => SpinnerData;
 }
 
 export interface SpinnerData {
@@ -16,7 +20,9 @@ export interface SpinnerData {
   y2?: number;
   cx?: number;
   cy?: number;
-  style: { [key: string]: string | undefined };
+  style: {
+    [key: string]: string | undefined;
+  };
   viewBox?: string;
   transform?: string;
 }

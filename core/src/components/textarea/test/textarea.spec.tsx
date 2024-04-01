@@ -7,7 +7,10 @@ it('should render bottom content when helper text is defined', async () => {
     html: `<ion-textarea label="Textarea" helper-text="Helper Text"></ion-textarea>`,
   });
 
-  const bottomContent = page.body.querySelector('ion-textarea .textarea-bottom');
+  const bottomContent =
+    page.body.querySelector(
+      'ion-textarea .textarea-bottom'
+    );
   expect(bottomContent).not.toBe(null);
 });
 
@@ -17,7 +20,10 @@ it('should render bottom content when helper text is undefined', async () => {
     html: `<ion-textarea label="Textarea"></ion-textarea>`,
   });
 
-  const bottomContent = page.body.querySelector('ion-textarea .textarea-bottom');
+  const bottomContent =
+    page.body.querySelector(
+      'ion-textarea .textarea-bottom'
+    );
   expect(bottomContent).toBe(null);
 });
 
@@ -27,6 +33,9 @@ it('should render bottom content when helper text is empty string', async () => 
     html: `<ion-textarea label="Textarea" helper-text=""></ion-textarea>`,
   });
 
-  const bottomContent = page.body.querySelector('ion-textarea .textarea-bottom');
+  const bottomContent =
+    page.body.querySelector(
+      'ion-textarea .textarea-bottom'
+    );
   expect(bottomContent).toBe(null);
 });

@@ -1,9 +1,23 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  Watch,
+  h,
+} from '@stencil/core';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  StyleEventDetail,
+} from '../../interface';
 
 @Component({
   tag: 'ion-title',
@@ -13,7 +27,9 @@ import type { Color, StyleEventDetail } from '../../interface';
   },
   shadow: true,
 })
-export class ToolbarTitle implements ComponentInterface {
+export class ToolbarTitle
+  implements ComponentInterface
+{
   @Element() el!: HTMLElement;
 
   /**
@@ -21,7 +37,8 @@ export class ToolbarTitle implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * The size of the toolbar title.
@@ -32,7 +49,8 @@ export class ToolbarTitle implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+  @Event()
+  ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('size')
   protected sizeChanged() {
@@ -52,7 +70,9 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   private getSize() {
-    return this.size !== undefined ? this.size : 'default';
+    return this.size !== undefined
+      ? this.size
+      : 'default';
   }
 
   render() {
@@ -61,11 +81,15 @@ export class ToolbarTitle implements ComponentInterface {
 
     return (
       <Host
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          [`title-${size}`]: true,
-          'title-rtl': document.dir === 'rtl',
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            [`title-${size}`]: true,
+            'title-rtl':
+              document.dir === 'rtl',
+          }
+        )}
       >
         <div class="toolbar-title">
           <slot></slot>

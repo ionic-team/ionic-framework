@@ -1,12 +1,26 @@
 import { printIonError } from '@utils/logging';
 
 export const getCounterText = (
-  value: string | number | null | undefined,
+  value:
+    | string
+    | number
+    | null
+    | undefined,
   maxLength: number,
-  counterFormatter?: (inputLength: number, maxLength: number) => string
+  counterFormatter?: (
+    inputLength: number,
+    maxLength: number
+  ) => string
 ) => {
-  const valueLength = value == null ? 0 : value.toString().length;
-  const defaultCounterText = defaultCounterFormatter(valueLength, maxLength);
+  const valueLength =
+    value == null
+      ? 0
+      : value.toString().length;
+  const defaultCounterText =
+    defaultCounterFormatter(
+      valueLength,
+      maxLength
+    );
 
   /**
    * If developers did not pass a custom formatter,
@@ -22,13 +36,22 @@ export const getCounterText = (
    * there was an error.
    */
   try {
-    return counterFormatter(valueLength, maxLength);
+    return counterFormatter(
+      valueLength,
+      maxLength
+    );
   } catch (e) {
-    printIonError('Exception in provided `counterFormatter`.', e);
+    printIonError(
+      'Exception in provided `counterFormatter`.',
+      e
+    );
     return defaultCounterText;
   }
 };
 
-const defaultCounterFormatter = (length: number, maxlength: number) => {
+const defaultCounterFormatter = (
+  length: number,
+  maxlength: number
+) => {
   return `${length} / ${maxlength}`;
 };

@@ -1,5 +1,9 @@
 import { expect } from '@playwright/test';
-import { configs, test, dragElementBy } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+  dragElementBy,
+} from '@utils/test/playwright';
 
 /**
  * item-sliding doesn't have mode-specific styling,
@@ -8,30 +12,66 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  * It is important to test all modes to ensure that the
  * child components are being rendered correctly.
  */
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('item-sliding: icons'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.goto(`/src/components/item-sliding/test/icons`, config);
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('item-sliding: icons'),
+      () => {
+        test('should not have visual regressions', async ({
+          page,
+        }) => {
+          await page.goto(
+            `/src/components/item-sliding/test/icons`,
+            config
+          );
 
-      const itemIDs = ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'];
-      for (const itemID of itemIDs) {
-        const item = page.locator(`#${itemID}`);
+          const itemIDs = [
+            'iconsOnly',
+            'iconsStart',
+            'iconsEnd',
+            'iconsTop',
+            'iconsBottom',
+          ];
+          for (const itemID of itemIDs) {
+            const item = page.locator(
+              `#${itemID}`
+            );
 
-        /**
-         * Negative dragByX value to drag element from the right to the left
-         * to reveal the options on the right side.
-         * Positive dragByX value to drag element from the left to the right
-         * to reveal the options on the left side.
-         */
-        const dragByX = config.direction === 'rtl' ? 150 : -150;
+            /**
+             * Negative dragByX value to drag element from the right to the left
+             * to reveal the options on the right side.
+             * Positive dragByX value to drag element from the left to the right
+             * to reveal the options on the left side.
+             */
+            const dragByX =
+              config.direction === 'rtl'
+                ? 150
+                : -150;
 
-        await dragElementBy(item, page, dragByX);
-        await page.waitForChanges();
+            await dragElementBy(
+              item,
+              page,
+              dragByX
+            );
+            await page.waitForChanges();
 
-        // Convert camelCase ids to kebab-case for screenshot file names
-        const itemIDKebab = itemID.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemIDKebab}`));
+            // Convert camelCase ids to kebab-case for screenshot file names
+            const itemIDKebab = itemID
+              .replace(
+                /([a-z])([A-Z])/g,
+                '$1-$2'
+              )
+              .toLowerCase();
+            await expect(
+              item
+            ).toHaveScreenshot(
+              screenshot(
+                `item-sliding-${itemIDKebab}`
+              )
+            );
+          }
+        });
       }
-    });
-  });
-});
+    );
+  }
+);

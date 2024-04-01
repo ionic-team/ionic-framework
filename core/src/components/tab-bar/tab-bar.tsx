@@ -1,5 +1,17 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Prop,
+  State,
+  Watch,
+  h,
+} from '@stencil/core';
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createColorClasses } from '@utils/theme';
@@ -20,8 +32,11 @@ import type { TabBarChangedEventDetail } from './tab-bar-interface';
   },
   shadow: true,
 })
-export class TabBar implements ComponentInterface {
-  private keyboardCtrl: KeyboardController | null = null;
+export class TabBar
+  implements ComponentInterface
+{
+  private keyboardCtrl: KeyboardController | null =
+    null;
 
   @Element() el!: HTMLElement;
 
@@ -32,7 +47,8 @@ export class TabBar implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * The selected tab component
@@ -40,7 +56,9 @@ export class TabBar implements ComponentInterface {
   @Prop() selectedTab?: string;
   @Watch('selectedTab')
   selectedTabChanged() {
-    if (this.selectedTab !== undefined) {
+    if (
+      this.selectedTab !== undefined
+    ) {
       this.ionTabBarChanged.emit({
         tab: this.selectedTab,
       });
@@ -55,7 +73,8 @@ export class TabBar implements ComponentInterface {
   @Prop() translucent = false;
 
   /** @internal */
-  @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
+  @Event()
+  ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
   /**
    * @internal
@@ -63,25 +82,36 @@ export class TabBar implements ComponentInterface {
    * calculate the fullscreen content offsets
    * when IonTabBar is used.
    */
-  @Event() ionTabBarLoaded!: EventEmitter<void>;
+  @Event()
+  ionTabBarLoaded!: EventEmitter<void>;
 
   componentWillLoad() {
     this.selectedTabChanged();
   }
 
   async connectedCallback() {
-    this.keyboardCtrl = await createKeyboardController(async (keyboardOpen, waitForResize) => {
-      /**
-       * If the keyboard is hiding, then we need to wait
-       * for the webview to resize. Otherwise, the tab bar
-       * will flicker before the webview resizes.
-       */
-      if (keyboardOpen === false && waitForResize !== undefined) {
-        await waitForResize;
-      }
+    this.keyboardCtrl =
+      await createKeyboardController(
+        async (
+          keyboardOpen,
+          waitForResize
+        ) => {
+          /**
+           * If the keyboard is hiding, then we need to wait
+           * for the webview to resize. Otherwise, the tab bar
+           * will flicker before the webview resizes.
+           */
+          if (
+            keyboardOpen === false &&
+            waitForResize !== undefined
+          ) {
+            await waitForResize;
+          }
 
-      this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
-    });
+          this.keyboardVisible =
+            keyboardOpen; // trigger re-render by updating state
+        }
+      );
   }
 
   disconnectedCallback() {
@@ -95,19 +125,33 @@ export class TabBar implements ComponentInterface {
   }
 
   render() {
-    const { color, translucent, keyboardVisible } = this;
+    const {
+      color,
+      translucent,
+      keyboardVisible,
+    } = this;
     const mode = getIonMode(this);
-    const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
+    const shouldHide =
+      keyboardVisible &&
+      this.el.getAttribute('slot') !==
+        'top';
 
     return (
       <Host
         role="tablist"
-        aria-hidden={shouldHide ? 'true' : null}
-        class={createColorClasses(color, {
-          [mode]: true,
-          'tab-bar-translucent': translucent,
-          'tab-bar-hidden': shouldHide,
-        })}
+        aria-hidden={
+          shouldHide ? 'true' : null
+        }
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            'tab-bar-translucent':
+              translucent,
+            'tab-bar-hidden':
+              shouldHide,
+          }
+        )}
       >
         <slot></slot>
       </Host>

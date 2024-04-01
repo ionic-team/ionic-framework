@@ -1,5 +1,8 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
 /**
  * By default ion-checkbox only takes up
@@ -9,176 +12,345 @@ import { configs, test } from '@utils/test/playwright';
  * we set the width of the checkbox so we can
  * see the justification results.
  */
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('checkbox: label'), () => {
-    test.describe('checkbox: start placement', () => {
-      test('should render a start justification with label in the start position', async ({ page }) => {
-        await page.setContent(
-          `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('checkbox: label'),
+      () => {
+        test.describe(
+          'checkbox: start placement',
+          () => {
+            test('should render a start justification with label in the start position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="start" justify="start" style="width: 200px">Label</ion-checkbox>
          `,
-          config
-        );
+                config
+              );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-start-justify-start`));
-      });
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-start-justify-start`
+                )
+              );
+            });
 
-      test('should render an end justification with label in the start position', async ({ page }) => {
-        await page.setContent(
-          `
+            test('should render an end justification with label in the start position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="start" justify="end" style="width: 200px">Label</ion-checkbox>
          `,
-          config
-        );
+                config
+              );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-start-justify-end`));
-      });
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-start-justify-end`
+                )
+              );
+            });
 
-      test('should render a space between justification with label in the start position', async ({ page }) => {
-        await page.setContent(
-          `
+            test('should render a space between justification with label in the start position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="start" justify="space-between" style="width: 200px">Label</ion-checkbox>
          `,
-          config
-        );
+                config
+              );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-start-justify-space-between`));
-      });
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-start-justify-space-between`
+                )
+              );
+            });
 
-      test('should truncate long labels with ellipses', async ({ page }) => {
-        await page.setContent(
-          `
+            test('should truncate long labels with ellipses', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="start" justify="start" style="width: 200px">
              Long Label Long Label Long Label Long Label Long Label Long Label
            </ion-checkbox>
          `,
-          config
+                config
+              );
+
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-long-label`
+                )
+              );
+            });
+          }
         );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-long-label`));
-      });
-    });
-
-    test.describe('checkbox: end placement', () => {
-      test('should render a start justification with label in the end position', async ({ page }) => {
-        await page.setContent(
-          `
+        test.describe(
+          'checkbox: end placement',
+          () => {
+            test('should render a start justification with label in the end position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="end" justify="start" style="width: 200px">Label</ion-checkbox>
          `,
-          config
-        );
+                config
+              );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-end-justify-start`));
-      });
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-end-justify-start`
+                )
+              );
+            });
 
-      test('should render an end justification with label in the end position', async ({ page }) => {
-        await page.setContent(
-          `
+            test('should render an end justification with label in the end position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="end" justify="end" style="width: 200px">Label</ion-checkbox>
          `,
-          config
-        );
+                config
+              );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-end-justify-end`));
-      });
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-end-justify-end`
+                )
+              );
+            });
 
-      test('should render a space between justification with label in the end position', async ({ page }) => {
-        await page.setContent(
-          `
+            test('should render a space between justification with label in the end position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="end" justify="space-between" style="width: 200px">Label</ion-checkbox>
          `,
-          config
+                config
+              );
+
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-end-justify-space-between`
+                )
+              );
+            });
+          }
         );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-end-justify-space-between`));
-      });
-    });
-
-    test.describe('checkbox: fixed placement', () => {
-      test('should render a start justification with label in the fixed position', async ({ page }) => {
-        await page.setContent(
-          `
+        test.describe(
+          'checkbox: fixed placement',
+          () => {
+            test('should render a start justification with label in the fixed position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="fixed" justify="start" style="width: 200px">This is a long label</ion-checkbox>
          `,
-          config
-        );
+                config
+              );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-fixed-justify-start`));
-      });
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-fixed-justify-start`
+                )
+              );
+            });
 
-      test('should render an end justification with label in the fixed position', async ({ page }) => {
-        await page.setContent(
-          `
+            test('should render an end justification with label in the fixed position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="fixed" justify="end" style="width: 200px">This is a long label</ion-checkbox>
          `,
-          config
-        );
+                config
+              );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-fixed-justify-end`));
-      });
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-fixed-justify-end`
+                )
+              );
+            });
 
-      test('should render a space between justification with label in the fixed position', async ({ page }) => {
-        await page.setContent(
-          `
+            test('should render a space between justification with label in the fixed position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
            <ion-checkbox label-placement="fixed" justify="space-between" style="width: 200px">This is a long label</ion-checkbox>
          `,
-          config
+                config
+              );
+
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-fixed-justify-space-between`
+                )
+              );
+            });
+          }
         );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-fixed-justify-space-between`));
-      });
-    });
-
-    test.describe('checkbox: stacked placement', () => {
-      test('should align the label to the start of the container in the stacked position', async ({ page }) => {
-        await page.setContent(
-          `
+        test.describe(
+          'checkbox: stacked placement',
+          () => {
+            test('should align the label to the start of the container in the stacked position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
             <ion-checkbox label-placement="stacked" alignment="start" style="width: 200px">This is a long label</ion-checkbox>
           `,
-          config
-        );
+                config
+              );
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-stacked-align-start`));
-      });
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-stacked-align-start`
+                )
+              );
+            });
 
-      test('should align the label to the center of the container in the stacked position', async ({ page }) => {
-        await page.setContent(
-          `
+            test('should align the label to the center of the container in the stacked position', async ({
+              page,
+            }) => {
+              await page.setContent(
+                `
             <ion-checkbox label-placement="stacked" alignment="center" style="width: 200px">This is a long label</ion-checkbox>
           `,
-          config
+                config
+              );
+
+              const checkbox =
+                page.locator(
+                  'ion-checkbox'
+                );
+              await expect(
+                checkbox
+              ).toHaveScreenshot(
+                screenshot(
+                  `checkbox-label-stacked-align-center`
+                )
+              );
+            });
+          }
         );
+      }
+    );
+  }
+);
 
-        const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-stacked-align-center`));
-      });
-    });
-  });
-});
-
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
-  test.describe(title('checkbox: stacked long label'), () => {
-    test('long label should truncate', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  modes: ['md'],
+  directions: ['ltr'],
+}).forEach(
+  ({ title, config, screenshot }) => {
+    test.describe(
+      title(
+        'checkbox: stacked long label'
+      ),
+      () => {
+        test('long label should truncate', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
           <ion-checkbox label-placement="stacked" alignment="start" style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-checkbox>
         `,
-        config
-      );
+            config
+          );
 
-      const checkbox = page.locator('ion-checkbox');
-      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-stacked-long-label`));
-    });
-  });
-});
+          const checkbox = page.locator(
+            'ion-checkbox'
+          );
+          await expect(
+            checkbox
+          ).toHaveScreenshot(
+            screenshot(
+              `checkbox-label-stacked-long-label`
+            )
+          );
+        });
+      }
+    );
+  }
+);

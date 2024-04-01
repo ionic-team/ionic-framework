@@ -1,6 +1,25 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
-import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Host,
+  Method,
+  Prop,
+  State,
+  Watch,
+  h,
+  readTask,
+  writeTask,
+} from '@stencil/core';
+import {
+  findClosestIonContent,
+  getScrollElement,
+  printIonContentErrorMsg,
+} from '@utils/content';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -8,7 +27,9 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-infinite-scroll',
   styleUrl: 'infinite-scroll.scss',
 })
-export class InfiniteScroll implements ComponentInterface {
+export class InfiniteScroll
+  implements ComponentInterface
+{
   private thrPx = 0;
   private thrPc = 0;
   private scrollEl?: HTMLElement;
@@ -42,7 +63,8 @@ export class InfiniteScroll implements ComponentInterface {
     const val = this.threshold;
     if (val.lastIndexOf('%') > -1) {
       this.thrPx = 0;
-      this.thrPc = parseFloat(val) / 100;
+      this.thrPc =
+        parseFloat(val) / 100;
     } else {
       this.thrPx = parseFloat(val);
       this.thrPc = 0;
@@ -74,7 +96,8 @@ export class InfiniteScroll implements ComponentInterface {
    * The position of the infinite scroll element.
    * The value can be either `top` or `bottom`.
    */
-  @Prop() position: 'top' | 'bottom' = 'bottom';
+  @Prop() position: 'top' | 'bottom' =
+    'bottom';
 
   /**
    * Emitted when the scroll reaches
@@ -82,21 +105,26 @@ export class InfiniteScroll implements ComponentInterface {
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.
    */
-  @Event() ionInfinite!: EventEmitter<void>;
+  @Event()
+  ionInfinite!: EventEmitter<void>;
 
   async connectedCallback() {
-    const contentEl = findClosestIonContent(this.el);
+    const contentEl =
+      findClosestIonContent(this.el);
     if (!contentEl) {
       printIonContentErrorMsg(this.el);
       return;
     }
-    this.scrollEl = await getScrollElement(contentEl);
+    this.scrollEl =
+      await getScrollElement(contentEl);
     this.thresholdChanged();
     this.disabledChanged();
     if (this.position === 'top') {
       writeTask(() => {
         if (this.scrollEl) {
-          this.scrollEl.scrollTop = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
+          this.scrollEl.scrollTop =
+            this.scrollEl.scrollHeight -
+            this.scrollEl.clientHeight;
         }
       });
     }
@@ -113,20 +141,33 @@ export class InfiniteScroll implements ComponentInterface {
       return 1;
     }
 
-    const infiniteHeight = this.el.offsetHeight;
+    const infiniteHeight =
+      this.el.offsetHeight;
     if (infiniteHeight === 0) {
       // if there is no height of this element then do nothing
       return 2;
     }
-    const scrollTop = scrollEl.scrollTop;
-    const scrollHeight = scrollEl.scrollHeight;
-    const height = scrollEl.offsetHeight;
-    const threshold = this.thrPc !== 0 ? height * this.thrPc : this.thrPx;
+    const scrollTop =
+      scrollEl.scrollTop;
+    const scrollHeight =
+      scrollEl.scrollHeight;
+    const height =
+      scrollEl.offsetHeight;
+    const threshold =
+      this.thrPc !== 0
+        ? height * this.thrPc
+        : this.thrPx;
 
     const distanceFromInfinite =
       this.position === 'bottom'
-        ? scrollHeight - infiniteHeight - scrollTop - threshold - height
-        : scrollTop - infiniteHeight - threshold;
+        ? scrollHeight -
+          infiniteHeight -
+          scrollTop -
+          threshold -
+          height
+        : scrollTop -
+          infiniteHeight -
+          threshold;
 
     if (distanceFromInfinite < 0) {
       if (!this.didFire) {
@@ -181,20 +222,25 @@ export class InfiniteScroll implements ComponentInterface {
       this.isBusy = true;
       // ******** DOM READ ****************
       // Save the current content dimensions before the UI updates
-      const prev = scrollEl.scrollHeight - scrollEl.scrollTop;
+      const prev =
+        scrollEl.scrollHeight -
+        scrollEl.scrollTop;
 
       // ******** DOM READ ****************
       requestAnimationFrame(() => {
         readTask(() => {
           // UI has updated, save the new content dimensions
-          const scrollHeight = scrollEl.scrollHeight;
+          const scrollHeight =
+            scrollEl.scrollHeight;
           // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
-          const newScrollTop = scrollHeight - prev;
+          const newScrollTop =
+            scrollHeight - prev;
 
           // ******** DOM WRITE ****************
           requestAnimationFrame(() => {
             writeTask(() => {
-              scrollEl.scrollTop = newScrollTop;
+              scrollEl.scrollTop =
+                newScrollTop;
               this.isBusy = false;
               this.didFire = false;
             });
@@ -207,15 +253,28 @@ export class InfiniteScroll implements ComponentInterface {
   }
 
   private canStart(): boolean {
-    return !this.disabled && !this.isBusy && !!this.scrollEl && !this.isLoading;
+    return (
+      !this.disabled &&
+      !this.isBusy &&
+      !!this.scrollEl &&
+      !this.isLoading
+    );
   }
 
-  private enableScrollEvents(shouldListen: boolean) {
+  private enableScrollEvents(
+    shouldListen: boolean
+  ) {
     if (this.scrollEl) {
       if (shouldListen) {
-        this.scrollEl.addEventListener('scroll', this.onScroll);
+        this.scrollEl.addEventListener(
+          'scroll',
+          this.onScroll
+        );
       } else {
-        this.scrollEl.removeEventListener('scroll', this.onScroll);
+        this.scrollEl.removeEventListener(
+          'scroll',
+          this.onScroll
+        );
       }
     }
   }
@@ -227,8 +286,10 @@ export class InfiniteScroll implements ComponentInterface {
       <Host
         class={{
           [mode]: true,
-          'infinite-scroll-loading': this.isLoading,
-          'infinite-scroll-enabled': !disabled,
+          'infinite-scroll-loading':
+            this.isLoading,
+          'infinite-scroll-enabled':
+            !disabled,
         }}
       />
     );

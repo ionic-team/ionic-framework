@@ -1,5 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -8,7 +14,9 @@ import { getIonMode } from '../../global/ionic-global';
   shadow: true,
   styleUrl: 'select-option.scss',
 })
-export class SelectOption implements ComponentInterface {
+export class SelectOption
+  implements ComponentInterface
+{
   private inputId = `ion-selopt-${selectOptionIds++}`;
 
   @Element() el!: HTMLElement;
@@ -24,7 +32,13 @@ export class SelectOption implements ComponentInterface {
   @Prop() value?: any | null;
 
   render() {
-    return <Host role="option" id={this.inputId} class={getIonMode(this)}></Host>;
+    return (
+      <Host
+        role="option"
+        id={this.inputId}
+        class={getIonMode(this)}
+      ></Host>
+    );
   }
 }
 

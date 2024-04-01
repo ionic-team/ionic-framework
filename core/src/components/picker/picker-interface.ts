@@ -1,4 +1,7 @@
-import type { AnimationBuilder, Mode } from '../../interface';
+import type {
+  AnimationBuilder,
+  Mode,
+} from '../../interface';
 
 export interface PickerOptions {
   columns: PickerColumn[];
@@ -11,7 +14,9 @@ export interface PickerOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: { [key: string]: any };
+  htmlAttributes?: {
+    [key: string]: any;
+  };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
@@ -21,7 +26,9 @@ export interface PickerButton {
   text?: string;
   role?: string;
   cssClass?: string | string[];
-  handler?: (value: any) => boolean | void;
+  handler?: (
+    value: any
+  ) => boolean | void;
 }
 
 export interface PickerColumn {

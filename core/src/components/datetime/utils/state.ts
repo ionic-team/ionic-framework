@@ -7,16 +7,36 @@ import type {
   DatetimeParts,
 } from '../datetime-interface';
 
-import { isAfter, isBefore, isSameDay } from './comparison';
-import { generateDayAriaLabel, getDay } from './format';
-import { getNextMonth, getPreviousMonth } from './manipulation';
+import {
+  isAfter,
+  isBefore,
+  isSameDay,
+} from './comparison';
+import {
+  generateDayAriaLabel,
+  getDay,
+} from './format';
+import {
+  getNextMonth,
+  getPreviousMonth,
+} from './manipulation';
 
-export const isYearDisabled = (refYear: number, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
-  if (minParts && minParts.year > refYear) {
+export const isYearDisabled = (
+  refYear: number,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+) => {
+  if (
+    minParts &&
+    minParts.year > refYear
+  ) {
     return true;
   }
 
-  if (maxParts && maxParts.year < refYear) {
+  if (
+    maxParts &&
+    maxParts.year < refYear
+  ) {
     return true;
   }
 
@@ -47,7 +67,10 @@ export const isDayDisabled = (
    * check to make sure that the date we are looking
    * at is in this array.
    */
-  if (dayValues !== undefined && !dayValues.includes(refParts.day)) {
+  if (
+    dayValues !== undefined &&
+    !dayValues.includes(refParts.day)
+  ) {
     return true;
   }
 
@@ -62,7 +85,10 @@ export const isDayDisabled = (
    * current month === min allow month, but the current
    * day < the min allowed day?
    */
-  if (minParts && isBefore(refParts, minParts)) {
+  if (
+    minParts &&
+    isBefore(refParts, minParts)
+  ) {
     return true;
   }
 
@@ -77,7 +103,10 @@ export const isDayDisabled = (
    * current month === max allow month, but the current
    * day > the max allowed day?
    */
-  if (maxParts && isAfter(refParts, maxParts)) {
+  if (
+    maxParts &&
+    isAfter(refParts, maxParts)
+  ) {
     return true;
   }
 
@@ -96,7 +125,9 @@ export const isDayDisabled = (
 export const getCalendarDayState = (
   locale: string,
   refParts: DatetimeParts,
-  activeParts: DatetimeParts | DatetimeParts[],
+  activeParts:
+    | DatetimeParts
+    | DatetimeParts[],
   todayParts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
@@ -109,16 +140,30 @@ export const getCalendarDayState = (
    * calculating the state for one button. So, we treat a single activeParts value
    * the same as an array of length one.
    */
-  const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
+  const activePartsArray =
+    Array.isArray(activeParts)
+      ? activeParts
+      : [activeParts];
 
   /**
    * The day button is active if it is selected, or in other words, if refParts
    * matches at least one selected date.
    */
-  const isActive = activePartsArray.find((parts) => isSameDay(refParts, parts)) !== undefined;
+  const isActive =
+    activePartsArray.find((parts) =>
+      isSameDay(refParts, parts)
+    ) !== undefined;
 
-  const isToday = isSameDay(refParts, todayParts);
-  const disabled = isDayDisabled(refParts, minParts, maxParts, dayValues);
+  const isToday = isSameDay(
+    refParts,
+    todayParts
+  );
+  const disabled = isDayDisabled(
+    refParts,
+    minParts,
+    maxParts,
+    dayValues
+  );
 
   /**
    * Note that we always return one object regardless of whether activeParts
@@ -128,9 +173,18 @@ export const getCalendarDayState = (
     disabled,
     isActive,
     isToday,
-    ariaSelected: isActive ? 'true' : null,
-    ariaLabel: generateDayAriaLabel(locale, isToday, refParts),
-    text: refParts.day != null ? getDay(locale, refParts) : null,
+    ariaSelected: isActive
+      ? 'true'
+      : null,
+    ariaLabel: generateDayAriaLabel(
+      locale,
+      isToday,
+      refParts
+    ),
+    text:
+      refParts.day != null
+        ? getDay(locale, refParts)
+        : null,
   };
 };
 
@@ -149,12 +203,23 @@ export const isMonthDisabled = (
   }
 ) => {
   // If the year is disabled then the month is disabled.
-  if (isYearDisabled(refParts.year, minParts, maxParts)) {
+  if (
+    isYearDisabled(
+      refParts.year,
+      minParts,
+      maxParts
+    )
+  ) {
     return true;
   }
   // If the date value is before the min date, then the month is disabled.
   // If the date value is after the max date, then the month is disabled.
-  if ((minParts && isBefore(refParts, minParts)) || (maxParts && isAfter(refParts, maxParts))) {
+  if (
+    (minParts &&
+      isBefore(refParts, minParts)) ||
+    (maxParts &&
+      isAfter(refParts, maxParts))
+  ) {
     return true;
   }
   return false;
@@ -165,7 +230,11 @@ export const isMonthDisabled = (
  * and an optional maximum date range; determine if the
  * previous navigation button is disabled.
  */
-export const isPrevMonthDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
+export const isPrevMonthDisabled = (
+  refParts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+) => {
   const prevMonth = {
     ...getPreviousMonth(refParts),
     day: null,
@@ -180,7 +249,10 @@ export const isPrevMonthDisabled = (refParts: DatetimeParts, minParts?: Datetime
  * Given a working date and a maximum date range,
  * determine if the next navigation button is disabled.
  */
-export const isNextMonthDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts) => {
+export const isNextMonthDisabled = (
+  refParts: DatetimeParts,
+  maxParts?: DatetimeParts
+) => {
   const nextMonth = {
     ...getNextMonth(refParts),
     day: null,
@@ -196,17 +268,29 @@ export const isNextMonthDisabled = (refParts: DatetimeParts, maxParts?: Datetime
  * that date, or undefined if none are found.
  */
 export const getHighlightStyles = (
-  highlightedDates: DatetimeHighlight[] | DatetimeHighlightCallback,
+  highlightedDates:
+    | DatetimeHighlight[]
+    | DatetimeHighlightCallback,
   dateIsoString: string,
   el: HTMLIonDatetimeElement
-): DatetimeHighlightStyle | undefined => {
+):
+  | DatetimeHighlightStyle
+  | undefined => {
   if (Array.isArray(highlightedDates)) {
-    const dateStringWithoutTime = dateIsoString.split('T')[0];
-    const matchingHighlight = highlightedDates.find((hd) => hd.date === dateStringWithoutTime);
+    const dateStringWithoutTime =
+      dateIsoString.split('T')[0];
+    const matchingHighlight =
+      highlightedDates.find(
+        (hd) =>
+          hd.date ===
+          dateStringWithoutTime
+      );
     if (matchingHighlight) {
       return {
-        textColor: matchingHighlight.textColor,
-        backgroundColor: matchingHighlight.backgroundColor,
+        textColor:
+          matchingHighlight.textColor,
+        backgroundColor:
+          matchingHighlight.backgroundColor,
       } as DatetimeHighlightStyle;
     }
   } else {
@@ -215,7 +299,9 @@ export const getHighlightStyles = (
      * from interrupting the calendar's rendering.
      */
     try {
-      return highlightedDates(dateIsoString);
+      return highlightedDates(
+        dateIsoString
+      );
     } catch (e) {
       printIonError(
         'Exception thrown from provided `highlightedDates` callback. Please check your function and try again.',

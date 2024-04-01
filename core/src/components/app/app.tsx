@@ -1,5 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Build, Component, Element, Host, Method, h } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Host,
+  Method,
+  h,
+} from '@stencil/core';
 import type { FocusVisibleUtility } from '@utils/focus-visible';
 import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import { printIonWarning } from '@utils/logging';
@@ -12,7 +19,9 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-app',
   styleUrl: 'app.scss',
 })
-export class App implements ComponentInterface {
+export class App
+  implements ComponentInterface
+{
   private focusVisible?: FocusVisibleUtility;
 
   @Element() el!: HTMLElement;
@@ -20,24 +29,69 @@ export class App implements ComponentInterface {
   componentDidLoad() {
     if (Build.isBrowser) {
       rIC(async () => {
-        const isHybrid = isPlatform(window, 'hybrid');
-        if (!config.getBoolean('_testing')) {
-          import('../../utils/tap-click').then((module) => module.startTapClick(config));
+        const isHybrid = isPlatform(
+          window,
+          'hybrid'
+        );
+        if (
+          !config.getBoolean('_testing')
+        ) {
+          import(
+            '../../utils/tap-click'
+          ).then((module) =>
+            module.startTapClick(config)
+          );
         }
-        if (config.getBoolean('statusTap', isHybrid)) {
-          import('../../utils/status-tap').then((module) => module.startStatusTap());
+        if (
+          config.getBoolean(
+            'statusTap',
+            isHybrid
+          )
+        ) {
+          import(
+            '../../utils/status-tap'
+          ).then((module) =>
+            module.startStatusTap()
+          );
         }
-        if (config.getBoolean('inputShims', needInputShims())) {
+        if (
+          config.getBoolean(
+            'inputShims',
+            needInputShims()
+          )
+        ) {
           /**
            * needInputShims() ensures that only iOS and Android
            * platforms proceed into this block.
            */
-          const platform = isPlatform(window, 'ios') ? 'ios' : 'android';
-          import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
+          const platform = isPlatform(
+            window,
+            'ios'
+          )
+            ? 'ios'
+            : 'android';
+          import(
+            '../../utils/input-shims/input-shims'
+          ).then((module) =>
+            module.startInputShims(
+              config,
+              platform
+            )
+          );
         }
-        const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
-        const supportsHardwareBackButtonEvents = isHybrid || shouldUseCloseWatcher();
-        if (config.getBoolean('hardwareBackButton', supportsHardwareBackButtonEvents)) {
+        const hardwareBackButtonModule =
+          await import(
+            '../../utils/hardware-back-button'
+          );
+        const supportsHardwareBackButtonEvents =
+          isHybrid ||
+          shouldUseCloseWatcher();
+        if (
+          config.getBoolean(
+            'hardwareBackButton',
+            supportsHardwareBackButtonEvents
+          )
+        ) {
           hardwareBackButtonModule.startHardwareBackButton();
         } else {
           /**
@@ -52,10 +106,25 @@ export class App implements ComponentInterface {
 
           hardwareBackButtonModule.blockHardwareBackButton();
         }
-        if (typeof (window as any) !== 'undefined') {
-          import('../../utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
+        if (
+          typeof (window as any) !==
+          'undefined'
+        ) {
+          import(
+            '../../utils/keyboard/keyboard'
+          ).then((module) =>
+            module.startKeyboardAssist(
+              window
+            )
+          );
         }
-        import('../../utils/focus-visible').then((module) => (this.focusVisible = module.startFocusVisible()));
+        import(
+          '../../utils/focus-visible'
+        ).then(
+          (module) =>
+            (this.focusVisible =
+              module.startFocusVisible())
+        );
       });
     }
   }
@@ -71,9 +140,13 @@ export class App implements ComponentInterface {
    * presented as a result of keyboard action.)
    */
   @Method()
-  async setFocus(elements: HTMLElement[]) {
+  async setFocus(
+    elements: HTMLElement[]
+  ) {
     if (this.focusVisible) {
-      this.focusVisible.setFocus(elements);
+      this.focusVisible.setFocus(
+        elements
+      );
     }
   }
 
@@ -84,7 +157,10 @@ export class App implements ComponentInterface {
         class={{
           [mode]: true,
           'ion-page': true,
-          'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding'),
+          'force-statusbar-padding':
+            config.getBoolean(
+              '_forceStatusbarPadding'
+            ),
         }}
       ></Host>
     );
@@ -95,7 +171,9 @@ const needInputShims = () => {
   /**
    * iOS always needs input shims
    */
-  const needsShimsIOS = isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+  const needsShimsIOS =
+    isPlatform(window, 'ios') &&
+    isPlatform(window, 'mobile');
   if (needsShimsIOS) {
     return true;
   }
@@ -105,7 +183,9 @@ const needInputShims = () => {
    * in the browser and only if the browser is using the
    * new Chrome 108+ resize behavior: https://developer.chrome.com/blog/viewport-resize-behavior/
    */
-  const isAndroidMobileWeb = isPlatform(window, 'android') && isPlatform(window, 'mobileweb');
+  const isAndroidMobileWeb =
+    isPlatform(window, 'android') &&
+    isPlatform(window, 'mobileweb');
   if (isAndroidMobileWeb) {
     return true;
   }
@@ -115,7 +195,9 @@ const needInputShims = () => {
 
 const rIC = (callback: () => void) => {
   if ('requestIdleCallback' in window) {
-    (window as any).requestIdleCallback(callback);
+    (window as any).requestIdleCallback(
+      callback
+    );
   } else {
     setTimeout(callback, 32);
   }

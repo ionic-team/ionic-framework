@@ -4,7 +4,9 @@ import { createPanRecognizer } from './recognizers';
 
 // TODO(FW-2832): types
 
-export const createGesture = (config: GestureConfig): Gesture => {
+export const createGesture = (
+  config: GestureConfig
+): Gesture => {
   let hasCapturedPan = false;
   let hasStartedPan = false;
   let hasFiredStart = true;
@@ -22,14 +24,18 @@ export const createGesture = (config: GestureConfig): Gesture => {
   };
 
   const canStart = finalConfig.canStart;
-  const onWillStart = finalConfig.onWillStart;
+  const onWillStart =
+    finalConfig.onWillStart;
   const onStart = finalConfig.onStart;
   const onEnd = finalConfig.onEnd;
-  const notCaptured = finalConfig.notCaptured;
+  const notCaptured =
+    finalConfig.notCaptured;
   const onMove = finalConfig.onMove;
-  const threshold = finalConfig.threshold;
+  const threshold =
+    finalConfig.threshold;
   const passive = finalConfig.passive;
-  const blurOnStart = finalConfig.blurOnStart;
+  const blurOnStart =
+    finalConfig.blurOnStart;
 
   const detail = {
     type: 'pan',
@@ -47,28 +53,47 @@ export const createGesture = (config: GestureConfig): Gesture => {
     data: undefined,
   };
 
-  const pan = createPanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
-  const gesture = GESTURE_CONTROLLER.createGesture({
-    name: config.gestureName,
-    priority: config.gesturePriority,
-    disableScroll: config.disableScroll,
-  });
+  const pan = createPanRecognizer(
+    finalConfig.direction,
+    finalConfig.threshold,
+    finalConfig.maxAngle
+  );
+  const gesture =
+    GESTURE_CONTROLLER.createGesture({
+      name: config.gestureName,
+      priority: config.gesturePriority,
+      disableScroll:
+        config.disableScroll,
+    });
 
-  const pointerDown = (ev: UIEvent): boolean => {
+  const pointerDown = (
+    ev: UIEvent
+  ): boolean => {
     const timeStamp = now(ev);
-    if (hasStartedPan || !hasFiredStart) {
+    if (
+      hasStartedPan ||
+      !hasFiredStart
+    ) {
       return false;
     }
 
     updateDetail(ev, detail);
     detail.startX = detail.currentX;
     detail.startY = detail.currentY;
-    detail.startTime = detail.currentTime = timeStamp;
-    detail.velocityX = detail.velocityY = detail.deltaX = detail.deltaY = 0;
+    detail.startTime =
+      detail.currentTime = timeStamp;
+    detail.velocityX =
+      detail.velocityY =
+      detail.deltaX =
+      detail.deltaY =
+        0;
     detail.event = ev;
 
     // Check if gesture can start
-    if (canStart && canStart(detail) === false) {
+    if (
+      canStart &&
+      canStart(detail) === false
+    ) {
       return false;
     }
     // Release fallback
@@ -83,7 +108,10 @@ export const createGesture = (config: GestureConfig): Gesture => {
     if (threshold === 0) {
       return tryToCapturePan();
     }
-    pan.start(detail.startX, detail.startY);
+    pan.start(
+      detail.startX,
+      detail.startY
+    );
     return true;
   };
 
@@ -91,18 +119,31 @@ export const createGesture = (config: GestureConfig): Gesture => {
     // fast path, if gesture is currently captured
     // do minimum job to get user-land even dispatched
     if (hasCapturedPan) {
-      if (!isMoveQueued && hasFiredStart) {
+      if (
+        !isMoveQueued &&
+        hasFiredStart
+      ) {
         isMoveQueued = true;
         calcGestureData(detail, ev);
-        requestAnimationFrame(fireOnMove);
+        requestAnimationFrame(
+          fireOnMove
+        );
       }
       return;
     }
 
     // gesture is currently being detected
     calcGestureData(detail, ev);
-    if (pan.detect(detail.currentX, detail.currentY)) {
-      if (!pan.isGesture() || !tryToCapturePan()) {
+    if (
+      pan.detect(
+        detail.currentX,
+        detail.currentY
+      )
+    ) {
+      if (
+        !pan.isGesture() ||
+        !tryToCapturePan()
+      ) {
         abortGesture();
       }
     }
@@ -120,34 +161,41 @@ export const createGesture = (config: GestureConfig): Gesture => {
     }
   };
 
-  const tryToCapturePan = (): boolean => {
-    if (!gesture.capture()) {
-      return false;
-    }
-    hasCapturedPan = true;
-    hasFiredStart = false;
+  const tryToCapturePan =
+    (): boolean => {
+      if (!gesture.capture()) {
+        return false;
+      }
+      hasCapturedPan = true;
+      hasFiredStart = false;
 
-    // reset start position since the real user-land event starts here
-    // If the pan detector threshold is big, not resetting the start position
-    // will cause a jump in the animation equal to the detector threshold.
-    // the array of positions used to calculate the gesture velocity does not
-    // need to be cleaned, more points in the positions array always results in a
-    // more accurate value of the velocity.
-    detail.startX = detail.currentX;
-    detail.startY = detail.currentY;
-    detail.startTime = detail.currentTime;
+      // reset start position since the real user-land event starts here
+      // If the pan detector threshold is big, not resetting the start position
+      // will cause a jump in the animation equal to the detector threshold.
+      // the array of positions used to calculate the gesture velocity does not
+      // need to be cleaned, more points in the positions array always results in a
+      // more accurate value of the velocity.
+      detail.startX = detail.currentX;
+      detail.startY = detail.currentY;
+      detail.startTime =
+        detail.currentTime;
 
-    if (onWillStart) {
-      onWillStart(detail).then(fireOnStart);
-    } else {
-      fireOnStart();
-    }
-    return true;
-  };
+      if (onWillStart) {
+        onWillStart(detail).then(
+          fireOnStart
+        );
+      } else {
+        fireOnStart();
+      }
+      return true;
+    };
 
   const blurActiveElement = () => {
-    if (typeof document !== 'undefined') {
-      const activeElement = document.activeElement as HTMLElement | null;
+    if (
+      typeof document !== 'undefined'
+    ) {
+      const activeElement =
+        document.activeElement as HTMLElement | null;
       if (activeElement?.blur) {
         activeElement.blur();
       }
@@ -175,9 +223,13 @@ export const createGesture = (config: GestureConfig): Gesture => {
 
   // END *************************
 
-  const pointerUp = (ev: UIEvent | undefined) => {
-    const tmpHasCaptured = hasCapturedPan;
-    const tmpHasFiredStart = hasFiredStart;
+  const pointerUp = (
+    ev: UIEvent | undefined
+  ) => {
+    const tmpHasCaptured =
+      hasCapturedPan;
+    const tmpHasFiredStart =
+      hasFiredStart;
     reset();
 
     if (!tmpHasFiredStart) {
@@ -199,10 +251,17 @@ export const createGesture = (config: GestureConfig): Gesture => {
     }
   };
 
-  const pointerEvents = createPointerEvents(finalConfig.el, pointerDown, pointerMove, pointerUp, {
-    capture: false,
-    passive,
-  });
+  const pointerEvents =
+    createPointerEvents(
+      finalConfig.el,
+      pointerDown,
+      pointerMove,
+      pointerUp,
+      {
+        capture: false,
+        passive,
+      }
+    );
 
   const abortGesture = () => {
     reset();
@@ -230,7 +289,10 @@ export const createGesture = (config: GestureConfig): Gesture => {
   };
 };
 
-const calcGestureData = (detail: GestureDetail, ev: UIEvent | undefined) => {
+const calcGestureData = (
+  detail: GestureDetail,
+  ev: UIEvent | undefined
+) => {
   if (!ev) {
     return;
   }
@@ -242,27 +304,46 @@ const calcGestureData = (detail: GestureDetail, ev: UIEvent | undefined) => {
 
   const currentX = detail.currentX;
   const currentY = detail.currentY;
-  const timestamp = (detail.currentTime = now(ev));
+  const timestamp =
+    (detail.currentTime = now(ev));
   const timeDelta = timestamp - prevT;
-  if (timeDelta > 0 && timeDelta < 100) {
-    const velocityX = (currentX - prevX) / timeDelta;
-    const velocityY = (currentY - prevY) / timeDelta;
-    detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
-    detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
+  if (
+    timeDelta > 0 &&
+    timeDelta < 100
+  ) {
+    const velocityX =
+      (currentX - prevX) / timeDelta;
+    const velocityY =
+      (currentY - prevY) / timeDelta;
+    detail.velocityX =
+      velocityX * 0.7 +
+      detail.velocityX * 0.3;
+    detail.velocityY =
+      velocityY * 0.7 +
+      detail.velocityY * 0.3;
   }
-  detail.deltaX = currentX - detail.startX;
-  detail.deltaY = currentY - detail.startY;
+  detail.deltaX =
+    currentX - detail.startX;
+  detail.deltaY =
+    currentY - detail.startY;
   detail.event = ev;
 };
 
-const updateDetail = (ev: any, detail: GestureDetail) => {
+const updateDetail = (
+  ev: any,
+  detail: GestureDetail
+) => {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   let x = 0;
   let y = 0;
   if (ev) {
-    const changedTouches = ev.changedTouches;
-    if (changedTouches && changedTouches.length > 0) {
+    const changedTouches =
+      ev.changedTouches;
+    if (
+      changedTouches &&
+      changedTouches.length > 0
+    ) {
       const touch = changedTouches[0];
       x = touch.clientX;
       y = touch.clientY;
@@ -295,7 +376,9 @@ export interface GestureDetail {
   data?: any;
 }
 
-export type GestureCallback = (detail: GestureDetail) => boolean | void;
+export type GestureCallback = (
+  detail: GestureDetail
+) => boolean | void;
 
 export interface Gesture {
   enable(enable?: boolean): void;
@@ -316,7 +399,9 @@ export interface GestureConfig {
   blurOnStart?: boolean;
 
   canStart?: GestureCallback;
-  onWillStart?: (_: GestureDetail) => Promise<void>;
+  onWillStart?: (
+    _: GestureDetail
+  ) => Promise<void>;
   onStart?: GestureCallback;
   onMove?: GestureCallback;
   onEnd?: GestureCallback;

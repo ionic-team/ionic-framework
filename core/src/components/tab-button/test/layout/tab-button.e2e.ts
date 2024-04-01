@@ -1,11 +1,19 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('tab-button: basic'), () => {
-    test('should render tab button with icons left of text', async ({ page }) => {
-      await page.setContent(
-        `
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('tab-button: basic'),
+      () => {
+        test('should render tab button with icons left of text', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-tab-bar color="light" selected-tab="1">
           <ion-tab-button tab="1" layout="icon-start">
             <ion-label>Recents</ion-label>
@@ -24,17 +32,27 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-button-icon-left`));
-    });
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-button-icon-left`
+            )
+          );
+        });
 
-    test('should render tab button with icons right of text', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should render tab button with icons right of text', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-tab-bar color="danger" selected-tab="1">
           <ion-tab-button tab="1" layout="icon-end">
             <ion-label>Recents</ion-label>
@@ -53,17 +71,27 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-button-icon-right`));
-    });
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-button-icon-right`
+            )
+          );
+        });
 
-    test('should render tab button with icons below text', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should render tab button with icons below text', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-tab-bar color="dark" selected-tab="1">
           <ion-tab-button tab="1" layout="icon-bottom">
             <ion-label>Recents</ion-label>
@@ -82,17 +110,27 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-button-icon-below`));
-    });
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-button-icon-below`
+            )
+          );
+        });
 
-    test('should render tab button with icons on top of text', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should render tab button with icons on top of text', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-tab-bar color="secondary" selected-tab="1">
           <ion-tab-button tab="1">
             <ion-label>Location</ion-label>
@@ -110,17 +148,27 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-button-icon-top`));
-    });
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-button-icon-top`
+            )
+          );
+        });
 
-    test('should render tab button with no icons', async ({ page }) => {
-      await page.setContent(
-        `
+        test('should render tab button with no icons', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <ion-tab-bar color="primary" selected-tab="1">
           <ion-tab-button tab="1" layout="icon-hide">
             <ion-label>Recents</ion-label>
@@ -139,12 +187,22 @@ configs().forEach(({ title, screenshot, config }) => {
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        config
-      );
+            config
+          );
 
-      const tabBar = page.locator('ion-tab-bar');
+          const tabBar = page.locator(
+            'ion-tab-bar'
+          );
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`tab-button-no-icon`));
-    });
-  });
-});
+          await expect(
+            tabBar
+          ).toHaveScreenshot(
+            screenshot(
+              `tab-button-no-icon`
+            )
+          );
+        });
+      }
+    );
+  }
+);

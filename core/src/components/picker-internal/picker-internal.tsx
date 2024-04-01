@@ -1,5 +1,16 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Listen, Method, Host, h } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  Listen,
+  Method,
+  Host,
+  h,
+} from '@stencil/core';
 import { getElementRoot } from '@utils/helpers';
 
 import type { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
@@ -16,18 +27,24 @@ import type { PickerInternalChangeEventDetail } from './picker-internal-interfac
   },
   shadow: true,
 })
-export class PickerInternal implements ComponentInterface {
+export class PickerInternal
+  implements ComponentInterface
+{
   private inputEl?: HTMLInputElement;
   private useInputMode = false;
   private inputModeColumn?: HTMLIonPickerColumnInternalElement;
   private highlightEl?: HTMLElement;
   private actionOnClick?: () => void;
   private destroyKeypressListener?: () => void;
-  private singleColumnSearchTimeout?: ReturnType<typeof setTimeout>;
+  private singleColumnSearchTimeout?: ReturnType<
+    typeof setTimeout
+  >;
 
-  @Element() el!: HTMLIonPickerInternalElement;
+  @Element()
+  el!: HTMLIonPickerInternalElement;
 
-  @Event() ionInputModeChange!: EventEmitter<PickerInternalChangeEventDetail>;
+  @Event()
+  ionInputModeChange!: EventEmitter<PickerInternalChangeEventDetail>;
 
   /**
    * When the picker is interacted with
@@ -38,28 +55,47 @@ export class PickerInternal implements ComponentInterface {
    * a card modal to swipe to close.
    */
   @Listen('touchstart')
-  preventTouchStartPropagation(ev: TouchEvent) {
+  preventTouchStartPropagation(
+    ev: TouchEvent
+  ) {
     ev.stopPropagation();
   }
 
   componentWillLoad() {
-    getElementRoot(this.el).addEventListener('focusin', this.onFocusIn);
-    getElementRoot(this.el).addEventListener('focusout', this.onFocusOut);
+    getElementRoot(
+      this.el
+    ).addEventListener(
+      'focusin',
+      this.onFocusIn
+    );
+    getElementRoot(
+      this.el
+    ).addEventListener(
+      'focusout',
+      this.onFocusOut
+    );
   }
 
-  private isInHighlightBounds = (ev: PointerEvent) => {
+  private isInHighlightBounds = (
+    ev: PointerEvent
+  ) => {
     const { highlightEl } = this;
     if (!highlightEl) {
       return false;
     }
 
-    const bbox = highlightEl.getBoundingClientRect();
+    const bbox =
+      highlightEl.getBoundingClientRect();
     /**
      * Check to see if the user clicked
      * outside the bounds of the highlight.
      */
-    const outsideX = ev.clientX < bbox.left || ev.clientX > bbox.right;
-    const outsideY = ev.clientY < bbox.top || ev.clientY > bbox.bottom;
+    const outsideX =
+      ev.clientX < bbox.left ||
+      ev.clientX > bbox.right;
+    const outsideY =
+      ev.clientY < bbox.top ||
+      ev.clientY > bbox.bottom;
     if (outsideX || outsideY) {
       return false;
     }
@@ -78,7 +114,12 @@ export class PickerInternal implements ComponentInterface {
     // TODO(FW-2832): type
     const { relatedTarget } = ev;
 
-    if (!relatedTarget || (relatedTarget.tagName !== 'ION-PICKER-COLUMN-INTERNAL' && relatedTarget !== this.inputEl)) {
+    if (
+      !relatedTarget ||
+      (relatedTarget.tagName !==
+        'ION-PICKER-COLUMN-INTERNAL' &&
+        relatedTarget !== this.inputEl)
+    ) {
       this.exitInputMode();
     }
   };
@@ -98,7 +139,10 @@ export class PickerInternal implements ComponentInterface {
      * make sure that this function only ever runs when
      * focusing a picker column.
      */
-    if (target.tagName !== 'ION-PICKER-COLUMN-INTERNAL') {
+    if (
+      target.tagName !==
+      'ION-PICKER-COLUMN-INTERNAL'
+    ) {
       return;
     }
 
@@ -116,10 +160,15 @@ export class PickerInternal implements ComponentInterface {
      * we should enter/exit input mode automatically.
      */
     if (!this.actionOnClick) {
-      const columnEl = target as HTMLIonPickerColumnInternalElement;
-      const allowInput = columnEl.numericInput;
+      const columnEl =
+        target as HTMLIonPickerColumnInternalElement;
+      const allowInput =
+        columnEl.numericInput;
       if (allowInput) {
-        this.enterInputMode(columnEl, false);
+        this.enterInputMode(
+          columnEl,
+          false
+        );
       } else {
         this.exitInputMode();
       }
@@ -148,8 +197,14 @@ export class PickerInternal implements ComponentInterface {
    * user completes the click, the onClick function
    * runs and runs the actionOnClick callback.
    */
-  private onPointerDown = (ev: PointerEvent) => {
-    const { useInputMode, inputModeColumn, el } = this;
+  private onPointerDown = (
+    ev: PointerEvent
+  ) => {
+    const {
+      useInputMode,
+      inputModeColumn,
+      el,
+    } = this;
     if (this.isInHighlightBounds(ev)) {
       /**
        * If we were already in
@@ -167,20 +222,30 @@ export class PickerInternal implements ComponentInterface {
          * since we just tapped the highlight and
          * not a column.
          */
-        if ((ev.target as HTMLElement).tagName === 'ION-PICKER-COLUMN-INTERNAL') {
+        if (
+          (ev.target as HTMLElement)
+            .tagName ===
+          'ION-PICKER-COLUMN-INTERNAL'
+        ) {
           /**
            * If user taps 2 different columns
            * then we should just switch to input mode
            * for the new column rather than switching to
            * input mode for all columns.
            */
-          if (inputModeColumn && inputModeColumn === ev.target) {
+          if (
+            inputModeColumn &&
+            inputModeColumn ===
+              ev.target
+          ) {
             this.actionOnClick = () => {
               this.enterInputMode();
             };
           } else {
             this.actionOnClick = () => {
-              this.enterInputMode(ev.target as HTMLIonPickerColumnInternalElement);
+              this.enterInputMode(
+                ev.target as HTMLIonPickerColumnInternalElement
+              );
             };
           }
         } else {
@@ -198,8 +263,14 @@ export class PickerInternal implements ComponentInterface {
          * If there is only 1 numeric input column
          * then we should skip multi column input.
          */
-        const columns = el.querySelectorAll('ion-picker-column-internal.picker-column-numeric-input');
-        const columnEl = columns.length === 1 ? (ev.target as HTMLIonPickerColumnInternalElement) : undefined;
+        const columns =
+          el.querySelectorAll(
+            'ion-picker-column-internal.picker-column-numeric-input'
+          );
+        const columnEl =
+          columns.length === 1
+            ? (ev.target as HTMLIonPickerColumnInternalElement)
+            : undefined;
         this.actionOnClick = () => {
           this.enterInputMode(columnEl);
         };
@@ -226,7 +297,10 @@ export class PickerInternal implements ComponentInterface {
    * users from having any visual indication of which
    * column is focused.
    */
-  private enterInputMode = (columnEl?: HTMLIonPickerColumnInternalElement, focusInput = true) => {
+  private enterInputMode = (
+    columnEl?: HTMLIonPickerColumnInternalElement,
+    focusInput = true
+  ) => {
     const { inputEl, el } = this;
     if (!inputEl) {
       return;
@@ -236,7 +310,10 @@ export class PickerInternal implements ComponentInterface {
      * Only active input mode if there is at
      * least one column that accepts numeric input.
      */
-    const hasInputColumn = el.querySelector('ion-picker-column-internal.picker-column-numeric-input');
+    const hasInputColumn =
+      el.querySelector(
+        'ion-picker-column-internal.picker-column-numeric-input'
+      );
     if (!hasInputColumn) {
       return;
     }
@@ -258,18 +335,28 @@ export class PickerInternal implements ComponentInterface {
      * old listeners.
      */
     if (focusInput) {
-      if (this.destroyKeypressListener) {
+      if (
+        this.destroyKeypressListener
+      ) {
         this.destroyKeypressListener();
-        this.destroyKeypressListener = undefined;
+        this.destroyKeypressListener =
+          undefined;
       }
 
       inputEl.focus();
     } else {
       // TODO FW-5900 Use keydown instead
-      el.addEventListener('keypress', this.onKeyPress);
-      this.destroyKeypressListener = () => {
-        el.removeEventListener('keypress', this.onKeyPress);
-      };
+      el.addEventListener(
+        'keypress',
+        this.onKeyPress
+      );
+      this.destroyKeypressListener =
+        () => {
+          el.removeEventListener(
+            'keypress',
+            this.onKeyPress
+          );
+        };
     }
 
     this.emitInputModeChange();
@@ -283,7 +370,8 @@ export class PickerInternal implements ComponentInterface {
    */
   @Method()
   async exitInputMode() {
-    const { inputEl, useInputMode } = this;
+    const { inputEl, useInputMode } =
+      this;
     if (!useInputMode || !inputEl) {
       return;
     }
@@ -295,19 +383,25 @@ export class PickerInternal implements ComponentInterface {
 
     if (this.destroyKeypressListener) {
       this.destroyKeypressListener();
-      this.destroyKeypressListener = undefined;
+      this.destroyKeypressListener =
+        undefined;
     }
 
     this.emitInputModeChange();
   }
 
-  private onKeyPress = (ev: KeyboardEvent) => {
+  private onKeyPress = (
+    ev: KeyboardEvent
+  ) => {
     const { inputEl } = this;
     if (!inputEl) {
       return;
     }
 
-    const parsedValue = parseInt(ev.key, 10);
+    const parsedValue = parseInt(
+      ev.key,
+      10
+    );
 
     /**
      * Only numbers should be allowed
@@ -320,12 +414,19 @@ export class PickerInternal implements ComponentInterface {
   };
 
   private selectSingleColumn = () => {
-    const { inputEl, inputModeColumn, singleColumnSearchTimeout } = this;
+    const {
+      inputEl,
+      inputModeColumn,
+      singleColumnSearchTimeout,
+    } = this;
     if (!inputEl || !inputModeColumn) {
       return;
     }
 
-    const values = inputModeColumn.items.filter((item) => item.disabled !== true);
+    const values =
+      inputModeColumn.items.filter(
+        (item) => item.disabled !== true
+      );
 
     /**
      * If users pause for a bit, the search
@@ -334,13 +435,17 @@ export class PickerInternal implements ComponentInterface {
      * then typing "5" should select "05".
      */
     if (singleColumnSearchTimeout) {
-      clearTimeout(singleColumnSearchTimeout);
+      clearTimeout(
+        singleColumnSearchTimeout
+      );
     }
 
-    this.singleColumnSearchTimeout = setTimeout(() => {
-      inputEl.value = '';
-      this.singleColumnSearchTimeout = undefined;
-    }, 1000);
+    this.singleColumnSearchTimeout =
+      setTimeout(() => {
+        inputEl.value = '';
+        this.singleColumnSearchTimeout =
+          undefined;
+      }, 1000);
 
     /**
      * For values that are longer than 2 digits long
@@ -351,8 +456,12 @@ export class PickerInternal implements ComponentInterface {
      * the max length of all of the picker items.
      */
     if (inputEl.value.length >= 3) {
-      const startIndex = inputEl.value.length - 2;
-      const newString = inputEl.value.substring(startIndex);
+      const startIndex =
+        inputEl.value.length - 2;
+      const newString =
+        inputEl.value.substring(
+          startIndex
+        );
 
       inputEl.value = newString;
       this.selectSingleColumn();
@@ -370,13 +479,21 @@ export class PickerInternal implements ComponentInterface {
      * 0+(?=[1-9]) --> Match 1 or more zeros that are followed by 1-9
      * 0+(?=0$) --> Match 1 or more zeros that must be followed by one 0 and end.
      */
-    const findItemFromCompleteValue = values.find(({ text }) => {
-      const parsedText = text.replace(/^0+(?=[1-9])|0+(?=0$)/, '');
-      return parsedText === inputEl.value;
-    });
+    const findItemFromCompleteValue =
+      values.find(({ text }) => {
+        const parsedText = text.replace(
+          /^0+(?=[1-9])|0+(?=0$)/,
+          ''
+        );
+        return (
+          parsedText === inputEl.value
+        );
+      });
 
     if (findItemFromCompleteValue) {
-      inputModeColumn.setValue(findItemFromCompleteValue.value);
+      inputModeColumn.setValue(
+        findItemFromCompleteValue.value
+      );
       return;
     }
 
@@ -385,7 +502,10 @@ export class PickerInternal implements ComponentInterface {
      * we should select "07" as "567" is not a valid minute.
      */
     if (inputEl.value.length === 2) {
-      const changedCharacter = inputEl.value.substring(inputEl.value.length - 1);
+      const changedCharacter =
+        inputEl.value.substring(
+          inputEl.value.length - 1
+        );
       inputEl.value = changedCharacter;
       this.selectSingleColumn();
     }
@@ -400,10 +520,20 @@ export class PickerInternal implements ComponentInterface {
   private searchColumn = (
     colEl: HTMLIonPickerColumnInternalElement,
     value: string,
-    zeroBehavior: 'start' | 'end' = 'start'
+    zeroBehavior:
+      | 'start'
+      | 'end' = 'start'
   ) => {
-    const behavior = zeroBehavior === 'start' ? /^0+/ : /0$/;
-    const item = colEl.items.find(({ text, disabled }) => disabled !== true && text.replace(behavior, '') === value);
+    const behavior =
+      zeroBehavior === 'start'
+        ? /^0+/
+        : /0$/;
+    const item = colEl.items.find(
+      ({ text, disabled }) =>
+        disabled !== true &&
+        text.replace(behavior, '') ===
+          value
+    );
 
     if (item) {
       colEl.setValue(item.value);
@@ -416,18 +546,25 @@ export class PickerInternal implements ComponentInterface {
       return;
     }
 
-    const numericPickers = Array.from(el.querySelectorAll('ion-picker-column-internal')).filter(
-      (col) => col.numericInput
-    );
+    const numericPickers = Array.from(
+      el.querySelectorAll(
+        'ion-picker-column-internal'
+      )
+    ).filter((col) => col.numericInput);
 
-    const firstColumn = numericPickers[0];
-    const lastColumn = numericPickers[1];
+    const firstColumn =
+      numericPickers[0];
+    const lastColumn =
+      numericPickers[1];
 
     let value = inputEl.value;
     let minuteValue;
     switch (value.length) {
       case 1:
-        this.searchColumn(firstColumn, value);
+        this.searchColumn(
+          firstColumn,
+          value
+        );
         break;
       case 2:
         /**
@@ -436,10 +573,18 @@ export class PickerInternal implements ComponentInterface {
          * or `11` into the hour field, so we should look
          * at that first.
          */
-        const firstCharacter = inputEl.value.substring(0, 1);
-        value = firstCharacter === '0' || firstCharacter === '1' ? inputEl.value : firstCharacter;
+        const firstCharacter =
+          inputEl.value.substring(0, 1);
+        value =
+          firstCharacter === '0' ||
+          firstCharacter === '1'
+            ? inputEl.value
+            : firstCharacter;
 
-        this.searchColumn(firstColumn, value);
+        this.searchColumn(
+          firstColumn,
+          value
+        );
 
         /**
          * If only checked the first value,
@@ -447,8 +592,15 @@ export class PickerInternal implements ComponentInterface {
          * for a match in the minutes column
          */
         if (value.length === 1) {
-          minuteValue = inputEl.value.substring(inputEl.value.length - 1);
-          this.searchColumn(lastColumn, minuteValue, 'end');
+          minuteValue =
+            inputEl.value.substring(
+              inputEl.value.length - 1
+            );
+          this.searchColumn(
+            lastColumn,
+            minuteValue,
+            'end'
+          );
         }
         break;
       case 3:
@@ -458,22 +610,39 @@ export class PickerInternal implements ComponentInterface {
          * or `11` into the hour field, so we should look
          * at that first.
          */
-        const firstCharacterAgain = inputEl.value.substring(0, 1);
+        const firstCharacterAgain =
+          inputEl.value.substring(0, 1);
         value =
-          firstCharacterAgain === '0' || firstCharacterAgain === '1'
-            ? inputEl.value.substring(0, 2)
+          firstCharacterAgain === '0' ||
+          firstCharacterAgain === '1'
+            ? inputEl.value.substring(
+                0,
+                2
+              )
             : firstCharacterAgain;
 
-        this.searchColumn(firstColumn, value);
+        this.searchColumn(
+          firstColumn,
+          value
+        );
 
         /**
          * If only checked the first value,
          * we can check the second value
          * for a match in the minutes column
          */
-        minuteValue = value.length === 1 ? inputEl.value.substring(1) : inputEl.value.substring(2);
+        minuteValue =
+          value.length === 1
+            ? inputEl.value.substring(1)
+            : inputEl.value.substring(
+                2
+              );
 
-        this.searchColumn(lastColumn, minuteValue, 'end');
+        this.searchColumn(
+          lastColumn,
+          minuteValue,
+          'end'
+        );
         break;
       case 4:
         /**
@@ -482,12 +651,22 @@ export class PickerInternal implements ComponentInterface {
          * or `11` into the hour field, so we should look
          * at that first.
          */
-        const firstCharacterAgainAgain = inputEl.value.substring(0, 1);
+        const firstCharacterAgainAgain =
+          inputEl.value.substring(0, 1);
         value =
-          firstCharacterAgainAgain === '0' || firstCharacterAgainAgain === '1'
-            ? inputEl.value.substring(0, 2)
+          firstCharacterAgainAgain ===
+            '0' ||
+          firstCharacterAgainAgain ===
+            '1'
+            ? inputEl.value.substring(
+                0,
+                2
+              )
             : firstCharacterAgainAgain;
-        this.searchColumn(firstColumn, value);
+        this.searchColumn(
+          firstColumn,
+          value
+        );
 
         /**
          * If only checked the first value,
@@ -496,14 +675,28 @@ export class PickerInternal implements ComponentInterface {
          */
         const minuteValueAgain =
           value.length === 1
-            ? inputEl.value.substring(1, inputEl.value.length)
-            : inputEl.value.substring(2, inputEl.value.length);
-        this.searchColumn(lastColumn, minuteValueAgain, 'end');
+            ? inputEl.value.substring(
+                1,
+                inputEl.value.length
+              )
+            : inputEl.value.substring(
+                2,
+                inputEl.value.length
+              );
+        this.searchColumn(
+          lastColumn,
+          minuteValueAgain,
+          'end'
+        );
 
         break;
       default:
-        const startIndex = inputEl.value.length - 4;
-        const newString = inputEl.value.substring(startIndex);
+        const startIndex =
+          inputEl.value.length - 4;
+        const newString =
+          inputEl.value.substring(
+            startIndex
+          );
 
         inputEl.value = newString;
         this.selectMultiColumn();
@@ -517,7 +710,11 @@ export class PickerInternal implements ComponentInterface {
    * to select
    */
   private onInputChange = () => {
-    const { useInputMode, inputEl, inputModeColumn } = this;
+    const {
+      useInputMode,
+      inputEl,
+      inputModeColumn,
+    } = this;
     if (!useInputMode || !inputEl) {
       return;
     }
@@ -535,7 +732,10 @@ export class PickerInternal implements ComponentInterface {
    * or not their column is "active" for text input.
    */
   private emitInputModeChange = () => {
-    const { useInputMode, inputModeColumn } = this;
+    const {
+      useInputMode,
+      inputModeColumn,
+    } = this;
 
     this.ionInputModeChange.emit({
       useInputMode,
@@ -545,13 +745,20 @@ export class PickerInternal implements ComponentInterface {
 
   render() {
     return (
-      <Host onPointerDown={(ev: PointerEvent) => this.onPointerDown(ev)} onClick={() => this.onClick()}>
+      <Host
+        onPointerDown={(
+          ev: PointerEvent
+        ) => this.onPointerDown(ev)}
+        onClick={() => this.onClick()}
+      >
         <input
           aria-hidden="true"
           tabindex={-1}
           inputmode="numeric"
           type="number"
-          onKeyDown={(ev: KeyboardEvent) => {
+          onKeyDown={(
+            ev: KeyboardEvent
+          ) => {
             /**
              * The "Enter" key represents
              * the user submitting their time
@@ -566,13 +773,24 @@ export class PickerInternal implements ComponentInterface {
               this.inputEl?.blur();
             }
           }}
-          ref={(el) => (this.inputEl = el)}
-          onInput={() => this.onInputChange()}
-          onBlur={() => this.exitInputMode()}
+          ref={(el) =>
+            (this.inputEl = el)
+          }
+          onInput={() =>
+            this.onInputChange()
+          }
+          onBlur={() =>
+            this.exitInputMode()
+          }
         />
         <div class="picker-before"></div>
         <div class="picker-after"></div>
-        <div class="picker-highlight" ref={(el) => (this.highlightEl = el)}></div>
+        <div
+          class="picker-highlight"
+          ref={(el) =>
+            (this.highlightEl = el)
+          }
+        ></div>
         <slot></slot>
       </Host>
     );

@@ -1,9 +1,24 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
-import { createColorClasses, hostContext } from '@utils/theme';
+import {
+  Component,
+  Element,
+  Host,
+  Listen,
+  Prop,
+  forceUpdate,
+  h,
+} from '@stencil/core';
+import {
+  createColorClasses,
+  hostContext,
+} from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  CssClassMap,
+  StyleEventDetail,
+} from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -22,8 +37,13 @@ import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
   },
   shadow: true,
 })
-export class Toolbar implements ComponentInterface {
-  private childrenStyles = new Map<string, CssClassMap>();
+export class Toolbar
+  implements ComponentInterface
+{
+  private childrenStyles = new Map<
+    string,
+    CssClassMap
+  >();
 
   @Element() el!: HTMLIonToolbarElement;
 
@@ -32,51 +52,88 @@ export class Toolbar implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   componentWillLoad() {
-    const buttons = Array.from(this.el.querySelectorAll('ion-buttons'));
+    const buttons = Array.from(
+      this.el.querySelectorAll(
+        'ion-buttons'
+      )
+    );
 
-    const firstButtons = buttons.find((button) => {
-      return button.slot === 'start';
-    });
+    const firstButtons = buttons.find(
+      (button) => {
+        return button.slot === 'start';
+      }
+    );
     if (firstButtons) {
-      firstButtons.classList.add('buttons-first-slot');
+      firstButtons.classList.add(
+        'buttons-first-slot'
+      );
     }
 
-    const buttonsReversed = buttons.reverse();
+    const buttonsReversed =
+      buttons.reverse();
     const lastButtons =
-      buttonsReversed.find((button) => button.slot === 'end') ||
-      buttonsReversed.find((button) => button.slot === 'primary') ||
-      buttonsReversed.find((button) => button.slot === 'secondary');
+      buttonsReversed.find(
+        (button) =>
+          button.slot === 'end'
+      ) ||
+      buttonsReversed.find(
+        (button) =>
+          button.slot === 'primary'
+      ) ||
+      buttonsReversed.find(
+        (button) =>
+          button.slot === 'secondary'
+      );
     if (lastButtons) {
-      lastButtons.classList.add('buttons-last-slot');
+      lastButtons.classList.add(
+        'buttons-last-slot'
+      );
     }
   }
 
   @Listen('ionStyle')
-  childrenStyle(ev: CustomEvent<StyleEventDetail>) {
+  childrenStyle(
+    ev: CustomEvent<StyleEventDetail>
+  ) {
     ev.stopPropagation();
 
-    const tagName = (ev.target as HTMLElement).tagName;
+    const tagName = (
+      ev.target as HTMLElement
+    ).tagName;
     const updatedStyles = ev.detail;
     const newStyles = {} as CssClassMap;
-    const childStyles = this.childrenStyles.get(tagName) || {};
+    const childStyles =
+      this.childrenStyles.get(
+        tagName
+      ) || {};
 
     let hasStyleChange = false;
-    Object.keys(updatedStyles).forEach((key) => {
-      const childKey = `toolbar-${key}`;
-      const newValue = updatedStyles[key];
-      if (newValue !== childStyles[childKey]) {
-        hasStyleChange = true;
+    Object.keys(updatedStyles).forEach(
+      (key) => {
+        const childKey = `toolbar-${key}`;
+        const newValue =
+          updatedStyles[key];
+        if (
+          newValue !==
+          childStyles[childKey]
+        ) {
+          hasStyleChange = true;
+        }
+        if (newValue) {
+          newStyles[childKey] = true;
+        }
       }
-      if (newValue) {
-        newStyles[childKey] = true;
-      }
-    });
+    );
 
     if (hasStyleChange) {
-      this.childrenStyles.set(tagName, newStyles);
+      this.childrenStyles.set(
+        tagName,
+        newStyles
+      );
       forceUpdate(this);
     }
   }
@@ -84,17 +141,28 @@ export class Toolbar implements ComponentInterface {
   render() {
     const mode = getIonMode(this);
     const childStyles = {};
-    this.childrenStyles.forEach((value) => {
-      Object.assign(childStyles, value);
-    });
+    this.childrenStyles.forEach(
+      (value) => {
+        Object.assign(
+          childStyles,
+          value
+        );
+      }
+    );
     return (
       <Host
         class={{
           ...childStyles,
-          ...createColorClasses(this.color, {
-            [mode]: true,
-            'in-toolbar': hostContext('ion-toolbar', this.el),
-          }),
+          ...createColorClasses(
+            this.color,
+            {
+              [mode]: true,
+              'in-toolbar': hostContext(
+                'ion-toolbar',
+                this.el
+              ),
+            }
+          ),
         }}
       >
         <div class="toolbar-background"></div>

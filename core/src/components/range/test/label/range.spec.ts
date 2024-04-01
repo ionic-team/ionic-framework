@@ -13,9 +13,18 @@ describe('range: label', () => {
       `,
     });
 
-    const range = page.body.querySelector('ion-range');
-    const propEl = range?.shadowRoot?.querySelector('.label-text');
-    const slotEl = range?.shadowRoot?.querySelector('slot[name="label"]');
+    const range =
+      page.body.querySelector(
+        'ion-range'
+      );
+    const propEl =
+      range?.shadowRoot?.querySelector(
+        '.label-text'
+      );
+    const slotEl =
+      range?.shadowRoot?.querySelector(
+        'slot[name="label"]'
+      );
 
     expect(propEl).not.toBeNull();
     expect(slotEl).toBeNull();

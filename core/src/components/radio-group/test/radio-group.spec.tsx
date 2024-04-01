@@ -9,21 +9,58 @@ describe('ion-radio-group', () => {
     const page = await newSpecPage({
       components: [Radio, RadioGroup],
       template: () => (
-        <ion-radio-group compareWith="value" value={{ label: 'Blue', value: 'blue' }}>
-          <ion-radio value={{ label: 'Red', value: 'red' }}>Red</ion-radio>
-          <ion-radio value={{ label: 'Blue', value: 'blue' }}>Blue</ion-radio>
-          <ion-radio value={{ label: 'Green', value: 'green' }}>Green</ion-radio>
+        <ion-radio-group
+          compareWith="value"
+          value={{
+            label: 'Blue',
+            value: 'blue',
+          }}
+        >
+          <ion-radio
+            value={{
+              label: 'Red',
+              value: 'red',
+            }}
+          >
+            Red
+          </ion-radio>
+          <ion-radio
+            value={{
+              label: 'Blue',
+              value: 'blue',
+            }}
+          >
+            Blue
+          </ion-radio>
+          <ion-radio
+            value={{
+              label: 'Green',
+              value: 'green',
+            }}
+          >
+            Green
+          </ion-radio>
         </ion-radio-group>
       ),
     });
 
-    const radioGroup = page.body.querySelector('ion-radio-group')!;
-    const radios = document.querySelectorAll('ion-radio')!;
+    const radioGroup =
+      page.body.querySelector(
+        'ion-radio-group'
+      )!;
+    const radios =
+      document.querySelectorAll(
+        'ion-radio'
+      )!;
 
     await radios[2].click();
     await page.waitForChanges();
 
-    expect(radios[2].getAttribute('aria-checked')).toBe('true');
+    expect(
+      radios[2].getAttribute(
+        'aria-checked'
+      )
+    ).toBe('true');
     expect(radioGroup.value).toEqual({
       label: 'Green',
       value: 'green',
@@ -34,22 +71,59 @@ describe('ion-radio-group', () => {
     const page = await newSpecPage({
       components: [Radio, RadioGroup],
       template: () => (
-        <ion-radio-group value={{ label: 'Blue', value: 'blue' }}>
-          <ion-radio value={{ label: 'Red', value: 'red' }}>Red</ion-radio>
-          <ion-radio value={{ label: 'Blue', value: 'blue' }}>Blue</ion-radio>
-          <ion-radio value={{ label: 'Green', value: 'green' }}>Green</ion-radio>
+        <ion-radio-group
+          value={{
+            label: 'Blue',
+            value: 'blue',
+          }}
+        >
+          <ion-radio
+            value={{
+              label: 'Red',
+              value: 'red',
+            }}
+          >
+            Red
+          </ion-radio>
+          <ion-radio
+            value={{
+              label: 'Blue',
+              value: 'blue',
+            }}
+          >
+            Blue
+          </ion-radio>
+          <ion-radio
+            value={{
+              label: 'Green',
+              value: 'green',
+            }}
+          >
+            Green
+          </ion-radio>
         </ion-radio-group>
       ),
     });
 
-    const radioGroup = page.body.querySelector('ion-radio-group')!;
-    const radios = document.querySelectorAll('ion-radio')!;
-    radioGroup.compareWith = (a, b) => a.value === b.value;
+    const radioGroup =
+      page.body.querySelector(
+        'ion-radio-group'
+      )!;
+    const radios =
+      document.querySelectorAll(
+        'ion-radio'
+      )!;
+    radioGroup.compareWith = (a, b) =>
+      a.value === b.value;
 
     await radios[2].click();
     await page.waitForChanges();
 
-    expect(radios[2].getAttribute('aria-checked')).toBe('true');
+    expect(
+      radios[2].getAttribute(
+        'aria-checked'
+      )
+    ).toBe('true');
     expect(radioGroup.value).toEqual({
       label: 'Green',
       value: 'green',
@@ -60,24 +134,45 @@ describe('ion-radio-group', () => {
     const page = await newSpecPage({
       components: [RadioGroup, Radio],
       template: () => (
-        <ion-radio-group compareWith={null} value="blue">
-          <ion-radio value="red">Red</ion-radio>
+        <ion-radio-group
+          compareWith={null}
+          value="blue"
+        >
+          <ion-radio value="red">
+            Red
+          </ion-radio>
           <br />
-          <ion-radio value="blue">Blue</ion-radio>
+          <ion-radio value="blue">
+            Blue
+          </ion-radio>
           <br />
-          <ion-radio value="green">Green</ion-radio>
+          <ion-radio value="green">
+            Green
+          </ion-radio>
         </ion-radio-group>
       ),
     });
 
-    const radioGroup = page.body.querySelector('ion-radio-group')!;
-    const radios = document.querySelectorAll('ion-radio')!;
+    const radioGroup =
+      page.body.querySelector(
+        'ion-radio-group'
+      )!;
+    const radios =
+      document.querySelectorAll(
+        'ion-radio'
+      )!;
 
     await radios[2].click();
     await page.waitForChanges();
 
-    expect(radios[2].getAttribute('aria-checked')).toBe('true');
-    expect(radioGroup.value).toEqual('green');
+    expect(
+      radios[2].getAttribute(
+        'aria-checked'
+      )
+    ).toBe('true');
+    expect(radioGroup.value).toEqual(
+      'green'
+    );
   });
 
   it('should work with different parameter types', async () => {
@@ -85,27 +180,50 @@ describe('ion-radio-group', () => {
       components: [Radio, RadioGroup],
       template: () => (
         <ion-radio-group value={2}>
-          <ion-radio value={1}>Option #1</ion-radio>
-          <ion-radio value={2}>Option #2</ion-radio>
-          <ion-radio value={3}>Option #3</ion-radio>
+          <ion-radio value={1}>
+            Option #1
+          </ion-radio>
+          <ion-radio value={2}>
+            Option #2
+          </ion-radio>
+          <ion-radio value={3}>
+            Option #3
+          </ion-radio>
         </ion-radio-group>
       ),
     });
 
-    const radioGroup = page.body.querySelector('ion-radio-group')!;
-    radioGroup.compareWith = (val1, val2) => {
+    const radioGroup =
+      page.body.querySelector(
+        'ion-radio-group'
+      )!;
+    radioGroup.compareWith = (
+      val1,
+      val2
+    ) => {
       // convert val1 to a number
       return +val1 === val2;
     };
 
-    const radios = document.querySelectorAll('ion-radio')!;
+    const radios =
+      document.querySelectorAll(
+        'ion-radio'
+      )!;
 
-    await expect(radios[1].getAttribute('aria-checked')).toBe('true');
+    await expect(
+      radios[1].getAttribute(
+        'aria-checked'
+      )
+    ).toBe('true');
 
     await radios[2].click();
     await page.waitForChanges();
 
-    expect(radios[2].getAttribute('aria-checked')).toBe('true');
+    expect(
+      radios[2].getAttribute(
+        'aria-checked'
+      )
+    ).toBe('true');
     expect(radioGroup.value).toEqual(3);
   });
 });

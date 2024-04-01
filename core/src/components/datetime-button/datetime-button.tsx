@@ -1,6 +1,16 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, State, h } from '@stencil/core';
-import { componentOnReady, addEventListener } from '@utils/helpers';
+import {
+  Component,
+  Element,
+  Host,
+  Prop,
+  State,
+  h,
+} from '@stencil/core';
+import {
+  componentOnReady,
+  addEventListener,
+} from '@utils/helpers';
 import { printIonError } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
@@ -8,7 +18,10 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
-import { getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
+import {
+  getLocalizedDateTime,
+  getLocalizedTime,
+} from '../datetime/utils/format';
 import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
 /**
@@ -27,31 +40,48 @@ import { parseDate } from '../datetime/utils/parse';
   },
   shadow: true,
 })
-export class DatetimeButton implements ComponentInterface {
-  private datetimeEl: HTMLIonDatetimeElement | null = null;
-  private overlayEl: HTMLIonModalElement | HTMLIonPopoverElement | null = null;
-  private dateTargetEl: HTMLElement | undefined;
-  private timeTargetEl: HTMLElement | undefined;
+export class DatetimeButton
+  implements ComponentInterface
+{
+  private datetimeEl: HTMLIonDatetimeElement | null =
+    null;
+  private overlayEl:
+    | HTMLIonModalElement
+    | HTMLIonPopoverElement
+    | null = null;
+  private dateTargetEl:
+    | HTMLElement
+    | undefined;
+  private timeTargetEl:
+    | HTMLElement
+    | undefined;
 
-  @Element() el!: HTMLIonDatetimeButtonElement;
+  @Element()
+  el!: HTMLIonDatetimeButtonElement;
 
-  @State() datetimePresentation?: DatetimePresentation = 'date-time';
+  @State()
+  datetimePresentation?: DatetimePresentation =
+    'date-time';
   @State() dateText?: string;
   @State() timeText?: string;
   @State() datetimeActive = false;
-  @State() selectedButton?: 'date' | 'time';
+  @State() selectedButton?:
+    | 'date'
+    | 'time';
 
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color = 'primary';
+  @Prop({ reflect: true })
+  color?: Color = 'primary';
 
   /**
    * If `true`, the user cannot interact with the button.
    */
-  @Prop({ reflect: true }) disabled = false;
+  @Prop({ reflect: true }) disabled =
+    false;
 
   /**
    * The ID of the `ion-datetime` instance
@@ -69,9 +99,16 @@ export class DatetimeButton implements ComponentInterface {
       return;
     }
 
-    const datetimeEl = (this.datetimeEl = document.getElementById(datetime) as HTMLIonDatetimeElement | null);
+    const datetimeEl =
+      (this.datetimeEl =
+        document.getElementById(
+          datetime
+        ) as HTMLIonDatetimeElement | null);
     if (!datetimeEl) {
-      printIonError(`No ion-datetime instance found for ID '${datetime}'.`, this.el);
+      printIonError(
+        `No ion-datetime instance found for ID '${datetime}'.`,
+        this.el
+      );
       return;
     }
 
@@ -79,7 +116,10 @@ export class DatetimeButton implements ComponentInterface {
      * The element reference must be an ion-datetime. Print an error
      * if a non-datetime element was provided.
      */
-    if (datetimeEl.tagName !== 'ION-DATETIME') {
+    if (
+      datetimeEl.tagName !==
+      'ION-DATETIME'
+    ) {
       printIonError(
         `Expected an ion-datetime instance for ID '${datetime}' but received '${datetimeEl.tagName.toLowerCase()}' instead.`,
         datetimeEl
@@ -94,9 +134,12 @@ export class DatetimeButton implements ComponentInterface {
      * aria-expanded state.
      */
     const io = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
+      (
+        entries: IntersectionObserverEntry[]
+      ) => {
         const ev = entries[0];
-        this.datetimeActive = ev.isIntersecting;
+        this.datetimeActive =
+          ev.isIntersecting;
       },
       {
         threshold: 0.01,
@@ -110,7 +153,10 @@ export class DatetimeButton implements ComponentInterface {
      * the datetime is being used in so we can
      * correctly size it when it is presented.
      */
-    const overlayEl = (this.overlayEl = datetimeEl.closest('ion-modal, ion-popover'));
+    const overlayEl = (this.overlayEl =
+      datetimeEl.closest(
+        'ion-modal, ion-popover'
+      ));
 
     /**
      * The .ion-datetime-button-overlay class contains
@@ -122,11 +168,16 @@ export class DatetimeButton implements ComponentInterface {
      * explicit widths on each variant of datetime.
      */
     if (overlayEl) {
-      overlayEl.classList.add('ion-datetime-button-overlay');
+      overlayEl.classList.add(
+        'ion-datetime-button-overlay'
+      );
     }
 
     componentOnReady(datetimeEl, () => {
-      const datetimePresentation = (this.datetimePresentation = datetimeEl.presentation || 'date-time');
+      const datetimePresentation =
+        (this.datetimePresentation =
+          datetimeEl.presentation ||
+          'date-time');
 
       /**
        * Set the initial display
@@ -139,7 +190,11 @@ export class DatetimeButton implements ComponentInterface {
        * text in the buttons.
        */
       this.setDateTimeText();
-      addEventListener(datetimeEl, 'ionValueChange', this.setDateTimeText);
+      addEventListener(
+        datetimeEl,
+        'ionValueChange',
+        this.setDateTimeText
+      );
 
       /**
        * Configure the initial selected button
@@ -172,8 +227,13 @@ export class DatetimeButton implements ComponentInterface {
    * can work with an array internally and not need
    * to keep checking if the datetime value is `string` or `string[]`.
    */
-  private getParsedDateValues = (value?: string[] | string | null): string[] => {
-    if (value === undefined || value === null) {
+  private getParsedDateValues = (
+    value?: string[] | string | null
+  ): string[] => {
+    if (
+      value === undefined ||
+      value === null
+    ) {
       return [];
     }
 
@@ -190,21 +250,37 @@ export class DatetimeButton implements ComponentInterface {
    * to the locale specified on ion-datetime.
    */
   private setDateTimeText = () => {
-    const { datetimeEl, datetimePresentation } = this;
+    const {
+      datetimeEl,
+      datetimePresentation,
+    } = this;
 
     if (!datetimeEl) {
       return;
     }
 
-    const { value, locale, formatOptions, hourCycle, preferWheel, multiple, titleSelectedDatesFormatter } = datetimeEl;
+    const {
+      value,
+      locale,
+      formatOptions,
+      hourCycle,
+      preferWheel,
+      multiple,
+      titleSelectedDatesFormatter,
+    } = datetimeEl;
 
-    const parsedValues = this.getParsedDateValues(value);
+    const parsedValues =
+      this.getParsedDateValues(value);
 
     /**
      * Both ion-datetime and ion-datetime-button default
      * to today's date and time if no value is set.
      */
-    const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : [getToday()]);
+    const parsedDatetimes = parseDate(
+      parsedValues.length > 0
+        ? parsedValues
+        : [getToday()]
+    );
 
     if (!parsedDatetimes) {
       return;
@@ -217,20 +293,34 @@ export class DatetimeButton implements ComponentInterface {
      * not appear broken. Datetime will provide a
      * warning in the console.
      */
-    const firstParsedDatetime = parsedDatetimes[0];
-    const computedHourCycle = getHourCycle(locale, hourCycle);
+    const firstParsedDatetime =
+      parsedDatetimes[0];
+    const computedHourCycle =
+      getHourCycle(locale, hourCycle);
 
-    this.dateText = this.timeText = undefined;
+    this.dateText = this.timeText =
+      undefined;
 
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        const dateText = getLocalizedDateTime(
-          locale,
-          firstParsedDatetime,
-          formatOptions?.date ?? { month: 'short', day: 'numeric', year: 'numeric' }
-        );
-        const timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle, formatOptions?.time);
+        const dateText =
+          getLocalizedDateTime(
+            locale,
+            firstParsedDatetime,
+            formatOptions?.date ?? {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            }
+          );
+        const timeText =
+          getLocalizedTime(
+            locale,
+            firstParsedDatetime,
+            computedHourCycle,
+            formatOptions?.time
+          );
         if (preferWheel) {
           this.dateText = `${dateText} ${timeText}`;
         } else {
@@ -239,39 +329,80 @@ export class DatetimeButton implements ComponentInterface {
         }
         break;
       case 'date':
-        if (multiple && parsedValues.length !== 1) {
+        if (
+          multiple &&
+          parsedValues.length !== 1
+        ) {
           let headerText = `${parsedValues.length} days`; // default/fallback for multiple selection
-          if (titleSelectedDatesFormatter !== undefined) {
+          if (
+            titleSelectedDatesFormatter !==
+            undefined
+          ) {
             try {
-              headerText = titleSelectedDatesFormatter(parsedValues);
+              headerText =
+                titleSelectedDatesFormatter(
+                  parsedValues
+                );
             } catch (e) {
-              printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+              printIonError(
+                'Exception in provided `titleSelectedDatesFormatter`: ',
+                e
+              );
             }
           }
           this.dateText = headerText;
         } else {
-          this.dateText = getLocalizedDateTime(
-            locale,
-            firstParsedDatetime,
-            formatOptions?.date ?? { month: 'short', day: 'numeric', year: 'numeric' }
-          );
+          this.dateText =
+            getLocalizedDateTime(
+              locale,
+              firstParsedDatetime,
+              formatOptions?.date ?? {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              }
+            );
         }
         break;
       case 'time':
-        this.timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle, formatOptions?.time);
+        this.timeText =
+          getLocalizedTime(
+            locale,
+            firstParsedDatetime,
+            computedHourCycle,
+            formatOptions?.time
+          );
         break;
       case 'month-year':
-        this.dateText = getLocalizedDateTime(
-          locale,
-          firstParsedDatetime,
-          formatOptions?.date ?? { month: 'long', year: 'numeric' }
-        );
+        this.dateText =
+          getLocalizedDateTime(
+            locale,
+            firstParsedDatetime,
+            formatOptions?.date ?? {
+              month: 'long',
+              year: 'numeric',
+            }
+          );
         break;
       case 'month':
-        this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, formatOptions?.time ?? { month: 'long' });
+        this.dateText =
+          getLocalizedDateTime(
+            locale,
+            firstParsedDatetime,
+            formatOptions?.time ?? {
+              month: 'long',
+            }
+          );
         break;
       case 'year':
-        this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, formatOptions?.time ?? { year: 'numeric' });
+        this.dateText =
+          getLocalizedDateTime(
+            locale,
+            firstParsedDatetime,
+            formatOptions?.time ?? {
+              year: 'numeric',
+            }
+          );
         break;
     }
   };
@@ -281,19 +412,30 @@ export class DatetimeButton implements ComponentInterface {
    * This is needed in order to correctly position
    * a popover relative to the trigger element.
    */
-  private waitForDatetimeChanges = async () => {
-    const { datetimeEl } = this;
-    if (!datetimeEl) {
-      return Promise.resolve();
-    }
+  private waitForDatetimeChanges =
+    async () => {
+      const { datetimeEl } = this;
+      if (!datetimeEl) {
+        return Promise.resolve();
+      }
 
-    return new Promise((resolve) => {
-      addEventListener(datetimeEl, 'ionRender', resolve, { once: true });
-    });
-  };
+      return new Promise((resolve) => {
+        addEventListener(
+          datetimeEl,
+          'ionRender',
+          resolve,
+          { once: true }
+        );
+      });
+    };
 
-  private handleDateClick = async (ev: Event) => {
-    const { datetimeEl, datetimePresentation } = this;
+  private handleDateClick = async (
+    ev: Event
+  ) => {
+    const {
+      datetimeEl,
+      datetimePresentation,
+    } = this;
 
     if (!datetimeEl) {
       return;
@@ -311,16 +453,23 @@ export class DatetimeButton implements ComponentInterface {
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        const needsChange = datetimeEl.presentation !== 'date';
+        const needsChange =
+          datetimeEl.presentation !==
+          'date';
         /**
          * The date+time wheel picker
          * shows date and time together,
          * so do not adjust the presentation
          * in that case.
          */
-        if (!datetimeEl.preferWheel && needsChange) {
-          datetimeEl.presentation = 'date';
-          needsPresentationChange = true;
+        if (
+          !datetimeEl.preferWheel &&
+          needsChange
+        ) {
+          datetimeEl.presentation =
+            'date';
+          needsPresentationChange =
+            true;
         }
         break;
     }
@@ -334,11 +483,20 @@ export class DatetimeButton implements ComponentInterface {
      */
     this.selectedButton = 'date';
 
-    this.presentOverlay(ev, needsPresentationChange, this.dateTargetEl);
+    this.presentOverlay(
+      ev,
+      needsPresentationChange,
+      this.dateTargetEl
+    );
   };
 
-  private handleTimeClick = (ev: Event) => {
-    const { datetimeEl, datetimePresentation } = this;
+  private handleTimeClick = (
+    ev: Event
+  ) => {
+    const {
+      datetimeEl,
+      datetimePresentation,
+    } = this;
 
     if (!datetimeEl) {
       return;
@@ -356,10 +514,14 @@ export class DatetimeButton implements ComponentInterface {
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        const needsChange = datetimeEl.presentation !== 'time';
+        const needsChange =
+          datetimeEl.presentation !==
+          'time';
         if (needsChange) {
-          datetimeEl.presentation = 'time';
-          needsPresentationChange = true;
+          datetimeEl.presentation =
+            'time';
+          needsPresentationChange =
+            true;
         }
         break;
     }
@@ -373,7 +535,11 @@ export class DatetimeButton implements ComponentInterface {
      */
     this.selectedButton = 'time';
 
-    this.presentOverlay(ev, needsPresentationChange, this.timeTargetEl);
+    this.presentOverlay(
+      ev,
+      needsPresentationChange,
+      this.timeTargetEl
+    );
   };
 
   /**
@@ -386,14 +552,21 @@ export class DatetimeButton implements ComponentInterface {
    * reasonably sized with a datetime that
    * fills the entire container.
    */
-  private presentOverlay = async (ev: Event, needsPresentationChange: boolean, triggerEl?: HTMLElement) => {
+  private presentOverlay = async (
+    ev: Event,
+    needsPresentationChange: boolean,
+    triggerEl?: HTMLElement
+  ) => {
     const { overlayEl } = this;
 
     if (!overlayEl) {
       return;
     }
 
-    if (overlayEl.tagName === 'ION-POPOVER') {
+    if (
+      overlayEl.tagName ===
+      'ION-POPOVER'
+    ) {
       /**
        * When the presentation on datetime changes,
        * we need to wait for the component to re-render
@@ -411,7 +584,9 @@ export class DatetimeButton implements ComponentInterface {
        * so that the popover aligns with the individual
        * button that was clicked, not the component container.
        */
-      (overlayEl as HTMLIonPopoverElement).present({
+      (
+        overlayEl as HTMLIonPopoverElement
+      ).present({
         ...ev,
         detail: {
           ionShadowTarget: triggerEl,
@@ -423,30 +598,54 @@ export class DatetimeButton implements ComponentInterface {
   };
 
   render() {
-    const { color, dateText, timeText, selectedButton, datetimeActive, disabled } = this;
+    const {
+      color,
+      dateText,
+      timeText,
+      selectedButton,
+      datetimeActive,
+      disabled,
+    } = this;
 
     const mode = getIonMode(this);
 
     return (
       <Host
-        class={createColorClasses(color, {
-          [mode]: true,
-          [`${selectedButton}-active`]: datetimeActive,
-          ['datetime-button-disabled']: disabled,
-        })}
+        class={createColorClasses(
+          color,
+          {
+            [mode]: true,
+            [`${selectedButton}-active`]:
+              datetimeActive,
+            ['datetime-button-disabled']:
+              disabled,
+          }
+        )}
       >
         {dateText && (
           <button
             class="ion-activatable"
             id="date-button"
-            aria-expanded={datetimeActive ? 'true' : 'false'}
-            onClick={this.handleDateClick}
+            aria-expanded={
+              datetimeActive
+                ? 'true'
+                : 'false'
+            }
+            onClick={
+              this.handleDateClick
+            }
             disabled={disabled}
             part="native"
-            ref={(el) => (this.dateTargetEl = el)}
+            ref={(el) =>
+              (this.dateTargetEl = el)
+            }
           >
-            <slot name="date-target">{dateText}</slot>
-            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            <slot name="date-target">
+              {dateText}
+            </slot>
+            {mode === 'md' && (
+              <ion-ripple-effect></ion-ripple-effect>
+            )}
           </button>
         )}
 
@@ -454,14 +653,26 @@ export class DatetimeButton implements ComponentInterface {
           <button
             class="ion-activatable"
             id="time-button"
-            aria-expanded={datetimeActive ? 'true' : 'false'}
-            onClick={this.handleTimeClick}
+            aria-expanded={
+              datetimeActive
+                ? 'true'
+                : 'false'
+            }
+            onClick={
+              this.handleTimeClick
+            }
             disabled={disabled}
             part="native"
-            ref={(el) => (this.timeTargetEl = el)}
+            ref={(el) =>
+              (this.timeTargetEl = el)
+            }
           >
-            <slot name="time-target">{timeText}</slot>
-            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            <slot name="time-target">
+              {timeText}
+            </slot>
+            {mode === 'md' && (
+              <ion-ripple-effect></ion-ripple-effect>
+            )}
           </button>
         )}
       </Host>

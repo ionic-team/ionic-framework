@@ -1,4 +1,7 @@
-import { Build, writeTask } from '@stencil/core';
+import {
+  Build,
+  writeTask,
+} from '@stencil/core';
 
 import {
   LIFECYCLE_DID_ENTER,
@@ -6,46 +9,68 @@ import {
   LIFECYCLE_WILL_ENTER,
   LIFECYCLE_WILL_LEAVE,
 } from '../../components/nav/constants';
-import type { NavOptions, NavDirection } from '../../components/nav/nav-interface';
-import type { Animation, AnimationBuilder } from '../animation/animation-interface';
+import type {
+  NavOptions,
+  NavDirection,
+} from '../../components/nav/nav-interface';
+import type {
+  Animation,
+  AnimationBuilder,
+} from '../animation/animation-interface';
 import { raf } from '../helpers';
 
-const iosTransitionAnimation = () => import('./ios.transition');
-const mdTransitionAnimation = () => import('./md.transition');
+const iosTransitionAnimation = () =>
+  import('./ios.transition');
+const mdTransitionAnimation = () =>
+  import('./md.transition');
 
 // TODO(FW-2832): types
 
-export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
-  return new Promise((resolve, reject) => {
-    writeTask(() => {
-      beforeTransition(opts);
-      runTransition(opts).then(
-        (result) => {
-          if (result.animation) {
-            result.animation.destroy();
+export const transition = (
+  opts: TransitionOptions
+): Promise<TransitionResult> => {
+  return new Promise(
+    (resolve, reject) => {
+      writeTask(() => {
+        beforeTransition(opts);
+        runTransition(opts).then(
+          (result) => {
+            if (result.animation) {
+              result.animation.destroy();
+            }
+            afterTransition(opts);
+            resolve(result);
+          },
+          (error) => {
+            afterTransition(opts);
+            reject(error);
           }
-          afterTransition(opts);
-          resolve(result);
-        },
-        (error) => {
-          afterTransition(opts);
-          reject(error);
-        }
-      );
-    });
-  });
+        );
+      });
+    }
+  );
 };
 
-const beforeTransition = (opts: TransitionOptions) => {
+const beforeTransition = (
+  opts: TransitionOptions
+) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
-  setZIndex(enteringEl, leavingEl, opts.direction);
+  setZIndex(
+    enteringEl,
+    leavingEl,
+    opts.direction
+  );
 
   if (opts.showGoBack) {
-    enteringEl.classList.add('can-go-back');
+    enteringEl.classList.add(
+      'can-go-back'
+    );
   } else {
-    enteringEl.classList.remove('can-go-back');
+    enteringEl.classList.remove(
+      'can-go-back'
+    );
   }
   setPageHidden(enteringEl, false);
 
@@ -55,35 +80,68 @@ const beforeTransition = (opts: TransitionOptions) => {
    * issues like users double tapping the ion-back-button.
    * These pointer events are removed in `afterTransition`.
    */
-  enteringEl.style.setProperty('pointer-events', 'none');
+  enteringEl.style.setProperty(
+    'pointer-events',
+    'none'
+  );
 
   if (leavingEl) {
     setPageHidden(leavingEl, false);
-    leavingEl.style.setProperty('pointer-events', 'none');
+    leavingEl.style.setProperty(
+      'pointer-events',
+      'none'
+    );
   }
 };
 
-const runTransition = async (opts: TransitionOptions): Promise<TransitionResult> => {
-  const animationBuilder = await getAnimationBuilder(opts);
+const runTransition = async (
+  opts: TransitionOptions
+): Promise<TransitionResult> => {
+  const animationBuilder =
+    await getAnimationBuilder(opts);
 
-  const ani = animationBuilder && Build.isBrowser ? animation(animationBuilder, opts) : noAnimation(opts); // fast path for no animation
+  const ani =
+    animationBuilder && Build.isBrowser
+      ? animation(
+          animationBuilder,
+          opts
+        )
+      : noAnimation(opts); // fast path for no animation
 
   return ani;
 };
 
-const afterTransition = (opts: TransitionOptions) => {
+const afterTransition = (
+  opts: TransitionOptions
+) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
-  enteringEl.classList.remove('ion-page-invisible');
-  enteringEl.style.removeProperty('pointer-events');
+  enteringEl.classList.remove(
+    'ion-page-invisible'
+  );
+  enteringEl.style.removeProperty(
+    'pointer-events'
+  );
   if (leavingEl !== undefined) {
-    leavingEl.classList.remove('ion-page-invisible');
-    leavingEl.style.removeProperty('pointer-events');
+    leavingEl.classList.remove(
+      'ion-page-invisible'
+    );
+    leavingEl.style.removeProperty(
+      'pointer-events'
+    );
   }
 };
 
-const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBuilder | undefined> => {
-  if (!opts.leavingEl || !opts.animated || opts.duration === 0) {
+const getAnimationBuilder = async (
+  opts: TransitionOptions
+): Promise<
+  AnimationBuilder | undefined
+> => {
+  if (
+    !opts.leavingEl ||
+    !opts.animated ||
+    opts.duration === 0
+  ) {
     return undefined;
   }
 
@@ -93,27 +151,42 @@ const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBu
 
   const getAnimation =
     opts.mode === 'ios'
-      ? (await iosTransitionAnimation()).iosTransitionAnimation
-      : (await mdTransitionAnimation()).mdTransitionAnimation;
+      ? (await iosTransitionAnimation())
+          .iosTransitionAnimation
+      : (await mdTransitionAnimation())
+          .mdTransitionAnimation;
 
   return getAnimation;
 };
 
-const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> => {
+const animation = async (
+  animationBuilder: AnimationBuilder,
+  opts: TransitionOptions
+): Promise<TransitionResult> => {
   await waitForReady(opts, true);
 
-  const trans = animationBuilder(opts.baseEl, opts);
+  const trans = animationBuilder(
+    opts.baseEl,
+    opts
+  );
 
-  fireWillEvents(opts.enteringEl, opts.leavingEl);
+  fireWillEvents(
+    opts.enteringEl,
+    opts.leavingEl
+  );
 
-  const didComplete = await playTransition(trans, opts);
+  const didComplete =
+    await playTransition(trans, opts);
 
   if (opts.progressCallback) {
     opts.progressCallback(undefined);
   }
 
   if (didComplete) {
-    fireDidEvents(opts.enteringEl, opts.leavingEl);
+    fireDidEvents(
+      opts.enteringEl,
+      opts.leavingEl
+    );
   }
 
   return {
@@ -122,7 +195,9 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
   };
 };
 
-const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> => {
+const noAnimation = async (
+  opts: TransitionOptions
+): Promise<TransitionResult> => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
@@ -136,18 +211,34 @@ const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> =
   };
 };
 
-const waitForReady = async (opts: TransitionOptions, defaultDeep: boolean) => {
-  const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
+const waitForReady = async (
+  opts: TransitionOptions,
+  defaultDeep: boolean
+) => {
+  const deep =
+    opts.deepWait !== undefined
+      ? opts.deepWait
+      : defaultDeep;
 
   if (deep) {
-    await Promise.all([deepReady(opts.enteringEl), deepReady(opts.leavingEl)]);
+    await Promise.all([
+      deepReady(opts.enteringEl),
+      deepReady(opts.leavingEl),
+    ]);
   }
 
-  await notifyViewReady(opts.viewIsReady, opts.enteringEl);
+  await notifyViewReady(
+    opts.viewIsReady,
+    opts.enteringEl
+  );
 };
 
 const notifyViewReady = async (
-  viewIsReady: undefined | ((enteringEl: HTMLElement) => Promise<any>),
+  viewIsReady:
+    | undefined
+    | ((
+        enteringEl: HTMLElement
+      ) => Promise<any>),
   enteringEl: HTMLElement
 ) => {
   if (viewIsReady) {
@@ -155,12 +246,21 @@ const notifyViewReady = async (
   }
 };
 
-const playTransition = (trans: Animation, opts: TransitionOptions): Promise<boolean> => {
-  const progressCallback = opts.progressCallback;
+const playTransition = (
+  trans: Animation,
+  opts: TransitionOptions
+): Promise<boolean> => {
+  const progressCallback =
+    opts.progressCallback;
 
-  const promise = new Promise<boolean>((resolve) => {
-    trans.onFinish((currentStep: any) => resolve(currentStep === 1));
-  });
+  const promise = new Promise<boolean>(
+    (resolve) => {
+      trans.onFinish(
+        (currentStep: any) =>
+          resolve(currentStep === 1)
+      );
+    }
+  );
 
   // cool, let's do this, start the transition
   if (progressCallback) {
@@ -178,22 +278,46 @@ const playTransition = (trans: Animation, opts: TransitionOptions): Promise<bool
   return promise;
 };
 
-const fireWillEvents = (enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) => {
-  lifecycle(leavingEl, LIFECYCLE_WILL_LEAVE);
-  lifecycle(enteringEl, LIFECYCLE_WILL_ENTER);
+const fireWillEvents = (
+  enteringEl: HTMLElement | undefined,
+  leavingEl: HTMLElement | undefined
+) => {
+  lifecycle(
+    leavingEl,
+    LIFECYCLE_WILL_LEAVE
+  );
+  lifecycle(
+    enteringEl,
+    LIFECYCLE_WILL_ENTER
+  );
 };
 
-const fireDidEvents = (enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) => {
-  lifecycle(enteringEl, LIFECYCLE_DID_ENTER);
-  lifecycle(leavingEl, LIFECYCLE_DID_LEAVE);
+const fireDidEvents = (
+  enteringEl: HTMLElement | undefined,
+  leavingEl: HTMLElement | undefined
+) => {
+  lifecycle(
+    enteringEl,
+    LIFECYCLE_DID_ENTER
+  );
+  lifecycle(
+    leavingEl,
+    LIFECYCLE_DID_LEAVE
+  );
 };
 
-export const lifecycle = (el: HTMLElement | undefined, eventName: string) => {
+export const lifecycle = (
+  el: HTMLElement | undefined,
+  eventName: string
+) => {
   if (el) {
-    const ev = new CustomEvent(eventName, {
-      bubbles: false,
-      cancelable: false,
-    });
+    const ev = new CustomEvent(
+      eventName,
+      {
+        bubbles: false,
+        cancelable: false,
+      }
+    );
     el.dispatchEvent(ev);
   }
 };
@@ -211,16 +335,24 @@ export const lifecycle = (el: HTMLElement | undefined, eventName: string) => {
  * we need to wait two rafs. As a result we are using two rafs for
  * all frameworks to ensure contents are mounted.
  */
-export const waitForMount = (): Promise<void> => {
-  return new Promise((resolve) => raf(() => raf(() => resolve())));
-};
+export const waitForMount =
+  (): Promise<void> => {
+    return new Promise((resolve) =>
+      raf(() => raf(() => resolve()))
+    );
+  };
 
-export const deepReady = async (el: any | undefined): Promise<void> => {
+export const deepReady = async (
+  el: any | undefined
+): Promise<void> => {
   const element = el as any;
   if (element) {
-    if (element.componentOnReady != null) {
+    if (
+      element.componentOnReady != null
+    ) {
       // eslint-disable-next-line custom-rules/no-component-on-ready-method
-      const stencilEl = await element.componentOnReady();
+      const stencilEl =
+        await element.componentOnReady();
       if (stencilEl != null) {
         return;
       }
@@ -228,28 +360,45 @@ export const deepReady = async (el: any | undefined): Promise<void> => {
       /**
        * Custom elements in Stencil will have __registerHost.
        */
-    } else if (element.__registerHost != null) {
+    } else if (
+      element.__registerHost != null
+    ) {
       /**
        * Non-lazy loaded custom elements need to wait
        * one frame for component to be loaded.
        */
-      const waitForCustomElement = new Promise((resolve) => raf(resolve));
+      const waitForCustomElement =
+        new Promise((resolve) =>
+          raf(resolve)
+        );
       await waitForCustomElement;
 
       return;
     }
-    await Promise.all(Array.from(element.children).map(deepReady));
+    await Promise.all(
+      Array.from(element.children).map(
+        deepReady
+      )
+    );
   }
 };
 
-export const setPageHidden = (el: HTMLElement, hidden: boolean) => {
+export const setPageHidden = (
+  el: HTMLElement,
+  hidden: boolean
+) => {
   if (hidden) {
-    el.setAttribute('aria-hidden', 'true');
+    el.setAttribute(
+      'aria-hidden',
+      'true'
+    );
     el.classList.add('ion-page-hidden');
   } else {
     el.hidden = false;
     el.removeAttribute('aria-hidden');
-    el.classList.remove('ion-page-hidden');
+    el.classList.remove(
+      'ion-page-hidden'
+    );
   }
 };
 
@@ -259,19 +408,30 @@ const setZIndex = (
   direction: NavDirection | undefined
 ) => {
   if (enteringEl !== undefined) {
-    enteringEl.style.zIndex = direction === 'back' ? '99' : '101';
+    enteringEl.style.zIndex =
+      direction === 'back'
+        ? '99'
+        : '101';
   }
   if (leavingEl !== undefined) {
     leavingEl.style.zIndex = '100';
   }
 };
 
-export const getIonPageElement = (element: HTMLElement) => {
-  if (element.classList.contains('ion-page')) {
+export const getIonPageElement = (
+  element: HTMLElement
+) => {
+  if (
+    element.classList.contains(
+      'ion-page'
+    )
+  ) {
     return element;
   }
 
-  const ionPage = element.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs');
+  const ionPage = element.querySelector(
+    ':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs'
+  );
   if (ionPage) {
     return ionPage;
   }
@@ -279,8 +439,11 @@ export const getIonPageElement = (element: HTMLElement) => {
   return element;
 };
 
-export interface TransitionOptions extends NavOptions {
-  progressCallback?: (ani: Animation | undefined) => void;
+export interface TransitionOptions
+  extends NavOptions {
+  progressCallback?: (
+    ani: Animation | undefined
+  ) => void;
   baseEl: any;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement | undefined;

@@ -1,5 +1,13 @@
-import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Event, Prop, Watch } from '@stencil/core';
+import type {
+  ComponentInterface,
+  EventEmitter,
+} from '@stencil/core';
+import {
+  Component,
+  Event,
+  Prop,
+  Watch,
+} from '@stencil/core';
 
 import type { NavigationHookCallback } from './route-interface';
 
@@ -8,7 +16,9 @@ import type { NavigationHookCallback } from './route-interface';
 @Component({
   tag: 'ion-route',
 })
-export class Route implements ComponentInterface {
+export class Route
+  implements ComponentInterface
+{
   /**
    * Relative path that needs to match in order for this route to apply.
    *
@@ -30,7 +40,9 @@ export class Route implements ComponentInterface {
    * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed
    * to the defined component when rendered.
    */
-  @Prop() componentProps?: { [key: string]: any };
+  @Prop() componentProps?: {
+    [key: string]: any;
+  };
 
   /**
    * A navigation hook that is fired when the route tries to leave.
@@ -38,7 +50,8 @@ export class Route implements ComponentInterface {
    * `false` causes it to be cancelled. Returning a `NavigationHookOptions`
    * object causes the router to redirect to the path specified.
    */
-  @Prop() beforeLeave?: NavigationHookCallback;
+  @Prop()
+  beforeLeave?: NavigationHookCallback;
 
   /**
    * A navigation hook that is fired when the route tries to enter.
@@ -46,32 +59,45 @@ export class Route implements ComponentInterface {
    * `false` causes it to be cancelled. Returning a `NavigationHookOptions`
    * object causes the router to redirect to the path specified.
    */
-  @Prop() beforeEnter?: NavigationHookCallback;
+  @Prop()
+  beforeEnter?: NavigationHookCallback;
 
   /**
    * Used internally by `ion-router` to know when this route did change.
    */
-  @Event() ionRouteDataChanged!: EventEmitter<any>;
+  @Event()
+  ionRouteDataChanged!: EventEmitter<any>;
 
   @Watch('url')
   @Watch('component')
   onUpdate(newValue: any) {
-    this.ionRouteDataChanged.emit(newValue);
+    this.ionRouteDataChanged.emit(
+      newValue
+    );
   }
 
   @Watch('componentProps')
-  onComponentProps(newValue: any, oldValue: any) {
+  onComponentProps(
+    newValue: any,
+    oldValue: any
+  ) {
     if (newValue === oldValue) {
       return;
     }
-    const keys1 = newValue ? Object.keys(newValue) : [];
-    const keys2 = oldValue ? Object.keys(oldValue) : [];
+    const keys1 = newValue
+      ? Object.keys(newValue)
+      : [];
+    const keys2 = oldValue
+      ? Object.keys(oldValue)
+      : [];
     if (keys1.length !== keys2.length) {
       this.onUpdate(newValue);
       return;
     }
     for (const key of keys1) {
-      if (newValue[key] !== oldValue[key]) {
+      if (
+        newValue[key] !== oldValue[key]
+      ) {
         this.onUpdate(newValue);
         return;
       }

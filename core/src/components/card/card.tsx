@@ -1,12 +1,28 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h } from '@stencil/core';
-import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
+import {
+  Element,
+  Component,
+  Host,
+  Prop,
+  h,
+} from '@stencil/core';
+import type {
+  AnchorInterface,
+  ButtonInterface,
+} from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes } from '@utils/helpers';
-import { createColorClasses, openURL } from '@utils/theme';
+import {
+  createColorClasses,
+  openURL,
+} from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, Mode } from '../../interface';
+import type {
+  AnimationBuilder,
+  Color,
+  Mode,
+} from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
@@ -22,8 +38,14 @@ import type { RouterDirection } from '../router/utils/interface';
   },
   shadow: true,
 })
-export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
-  private inheritedAriaAttributes: Attributes = {};
+export class Card
+  implements
+    ComponentInterface,
+    AnchorInterface,
+    ButtonInterface
+{
+  private inheritedAriaAttributes: Attributes =
+    {};
 
   @Element() el!: HTMLElement;
   /**
@@ -31,7 +53,8 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop({ reflect: true })
+  color?: Color;
 
   /**
    * If `true`, a button tag will be rendered and the card will be tappable.
@@ -41,7 +64,10 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The type of the button. Only used when an `onclick` or `button` property is present.
    */
-  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+  @Prop() type:
+    | 'submit'
+    | 'reset'
+    | 'button' = 'button';
 
   /**
    * If `true`, the user cannot interact with the card.
@@ -72,13 +98,17 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection: RouterDirection = 'forward';
+  @Prop()
+  routerDirection: RouterDirection =
+    'forward';
 
   /**
    * When using a router, it specifies the transition animation when navigating to
    * another page using `href`.
    */
-  @Prop() routerAnimation: AnimationBuilder | undefined;
+  @Prop() routerAnimation:
+    | AnimationBuilder
+    | undefined;
 
   /**
    * Specifies where to display the linked URL.
@@ -88,21 +118,37 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() target: string | undefined;
 
   componentWillLoad() {
-    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAriaAttributes =
+      inheritAttributes(this.el, [
+        'aria-label',
+      ]);
   }
 
   private isClickable(): boolean {
-    return this.href !== undefined || this.button;
+    return (
+      this.href !== undefined ||
+      this.button
+    );
   }
 
   private renderCard(mode: Mode) {
-    const clickable = this.isClickable();
+    const clickable =
+      this.isClickable();
 
     if (!clickable) {
       return [<slot></slot>];
     }
-    const { href, routerAnimation, routerDirection, inheritedAriaAttributes } = this;
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    const {
+      href,
+      routerAnimation,
+      routerDirection,
+      inheritedAriaAttributes,
+    } = this;
+    const TagType = clickable
+      ? href === undefined
+        ? 'button'
+        : 'a'
+      : ('div' as any);
     const attrs =
       TagType === 'button'
         ? { type: this.type }
@@ -120,10 +166,19 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         class="card-native"
         part="native"
         disabled={this.disabled}
-        onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
+        onClick={(ev: Event) =>
+          openURL(
+            href,
+            ev,
+            routerDirection,
+            routerAnimation
+          )
+        }
       >
         <slot></slot>
-        {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        {clickable && mode === 'md' && (
+          <ion-ripple-effect></ion-ripple-effect>
+        )}
       </TagType>
     );
   }
@@ -132,11 +187,16 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     return (
       <Host
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'card-disabled': this.disabled,
-          'ion-activatable': this.isClickable(),
-        })}
+        class={createColorClasses(
+          this.color,
+          {
+            [mode]: true,
+            'card-disabled':
+              this.disabled,
+            'ion-activatable':
+              this.isClickable(),
+          }
+        )}
       >
         {this.renderCard(mode)}
       </Host>

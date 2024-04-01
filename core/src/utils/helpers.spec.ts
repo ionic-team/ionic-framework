@@ -2,14 +2,27 @@ import { inheritAriaAttributes } from './helpers';
 
 describe('inheritAriaAttributes', () => {
   it('should inherit aria attributes', () => {
-    const parent = document.createElement('div');
-    parent.setAttribute('aria-label', 'parent');
-    parent.setAttribute('aria-hidden', 'true');
-    parent.setAttribute('role', 'button');
+    const parent =
+      document.createElement('div');
+    parent.setAttribute(
+      'aria-label',
+      'parent'
+    );
+    parent.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+    parent.setAttribute(
+      'role',
+      'button'
+    );
 
-    const inheritedAriaAttributes = inheritAriaAttributes(parent);
+    const inheritedAriaAttributes =
+      inheritAriaAttributes(parent);
 
-    expect(inheritedAriaAttributes).toEqual({
+    expect(
+      inheritedAriaAttributes
+    ).toEqual({
       'aria-label': 'parent',
       'aria-hidden': 'true',
       role: 'button',
@@ -17,24 +30,47 @@ describe('inheritAriaAttributes', () => {
   });
 
   it('should not inherit non-aria attributes', () => {
-    const parent = document.createElement('button');
-    parent.setAttribute('type', 'submit');
+    const parent =
+      document.createElement('button');
+    parent.setAttribute(
+      'type',
+      'submit'
+    );
 
-    const inheritedAriaAttributes = inheritAriaAttributes(parent);
+    const inheritedAriaAttributes =
+      inheritAriaAttributes(parent);
 
-    expect(inheritedAriaAttributes).toEqual({});
+    expect(
+      inheritedAriaAttributes
+    ).toEqual({});
   });
 
   it('attributes that are ignored should not be returned', () => {
-    const parent = document.createElement('div');
-    parent.setAttribute('aria-label', 'parent');
-    parent.setAttribute('aria-hidden', 'true');
-    parent.setAttribute('role', 'button');
+    const parent =
+      document.createElement('div');
+    parent.setAttribute(
+      'aria-label',
+      'parent'
+    );
+    parent.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+    parent.setAttribute(
+      'role',
+      'button'
+    );
 
     const ignoreList = ['aria-hidden'];
-    const inheritedAriaAttributes = inheritAriaAttributes(parent, ignoreList);
+    const inheritedAriaAttributes =
+      inheritAriaAttributes(
+        parent,
+        ignoreList
+      );
 
-    expect(inheritedAriaAttributes).toEqual({
+    expect(
+      inheritedAriaAttributes
+    ).toEqual({
       'aria-label': 'parent',
       role: 'button',
     });

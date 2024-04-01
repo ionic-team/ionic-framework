@@ -1,94 +1,212 @@
 import { expect } from '@playwright/test';
-import { configs, dragElementBy, test } from '@utils/test/playwright';
+import {
+  configs,
+  dragElementBy,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('range: rendering'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.goto(`/src/components/range/test/legacy/basic`, config);
+configs().forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title('range: rendering'),
+      () => {
+        test('should not have visual regressions', async ({
+          page,
+        }) => {
+          await page.goto(
+            `/src/components/range/test/legacy/basic`,
+            config
+          );
 
-      await page.setIonViewport();
+          await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`range-diff`));
-    });
-  });
-});
+          await expect(
+            page
+          ).toHaveScreenshot(
+            screenshot(`range-diff`)
+          );
+        });
+      }
+    );
+  }
+);
 
 /**
  * This behavior does not vary across modes/directions.
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('range: behavior'), () => {
-    /**
-     * The mouse events are flaky on CI
-     * TODO FW-2873
-     */
-    test.fixme('should emit start/end events', async ({ page }) => {
-      await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`, config);
-
-      const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
-      const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
-
-      const rangeEl = page.locator('ion-range');
-
-      await dragElementBy(rangeEl, page, 300, 0);
-      await page.waitForChanges();
-
+configs({
+  modes: ['ios'],
+  directions: ['ltr'],
+}).forEach(({ title, config }) => {
+  test.describe(
+    title('range: behavior'),
+    () => {
       /**
-       * dragElementBy defaults to starting the drag from the middle of the el,
-       * so the start value should jump to 50 despite the range defaulting to 20.
+       * The mouse events are flaky on CI
+       * TODO FW-2873
        */
-      expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
-      expect(rangeEnd).toHaveReceivedEventDetail({ value: 100 });
+      test.fixme(
+        'should emit start/end events',
+        async ({ page }) => {
+          await page.setContent(
+            `<ion-range value="20" legacy="true"></ion-range>`,
+            config
+          );
 
-      /**
-       * Verify both events fire if range is clicked without dragging.
-       */
-      await dragElementBy(rangeEl, page, 0, 0);
-      await page.waitForChanges();
+          const rangeStart =
+            await page.spyOnEvent(
+              'ionKnobMoveStart'
+            );
+          const rangeEnd =
+            await page.spyOnEvent(
+              'ionKnobMoveEnd'
+            );
 
-      expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
-      expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
-    });
+          const rangeEl = page.locator(
+            'ion-range'
+          );
 
-    test('should emit start/end events, keyboard', async ({ page }) => {
-      await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`, config);
+          await dragElementBy(
+            rangeEl,
+            page,
+            300,
+            0
+          );
+          await page.waitForChanges();
 
-      const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
-      const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+          /**
+           * dragElementBy defaults to starting the drag from the middle of the el,
+           * so the start value should jump to 50 despite the range defaulting to 20.
+           */
+          expect(
+            rangeStart
+          ).toHaveReceivedEventDetail({
+            value: 50,
+          });
+          expect(
+            rangeEnd
+          ).toHaveReceivedEventDetail({
+            value: 100,
+          });
 
-      await page.keyboard.press('Tab'); // focus first range
-      await page.keyboard.press('ArrowRight');
+          /**
+           * Verify both events fire if range is clicked without dragging.
+           */
+          await dragElementBy(
+            rangeEl,
+            page,
+            0,
+            0
+          );
+          await page.waitForChanges();
 
-      await rangeStart.next();
-      await rangeEnd.next();
+          expect(
+            rangeStart
+          ).toHaveReceivedEventDetail({
+            value: 50,
+          });
+          expect(
+            rangeEnd
+          ).toHaveReceivedEventDetail({
+            value: 50,
+          });
+        }
+      );
 
-      expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
-      expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
-    });
+      test('should emit start/end events, keyboard', async ({
+        page,
+      }) => {
+        await page.setContent(
+          `<ion-range value="20" legacy="true"></ion-range>`,
+          config
+        );
 
-    // TODO FW-2873
-    test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
-      skip.browser('webkit', 'mouse.wheel is not available in WebKit');
+        const rangeStart =
+          await page.spyOnEvent(
+            'ionKnobMoveStart'
+          );
+        const rangeEnd =
+          await page.spyOnEvent(
+            'ionKnobMoveEnd'
+          );
 
-      await page.goto(`/src/components/range/test/legacy/basic`, config);
+        await page.keyboard.press(
+          'Tab'
+        ); // focus first range
+        await page.keyboard.press(
+          'ArrowRight'
+        );
 
-      const knobEl = page.locator('ion-range#stacked-range .range-knob-handle');
-      const scrollEl = page.locator('ion-content .inner-scroll');
+        await rangeStart.next();
+        await rangeEnd.next();
 
-      expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
+        expect(
+          rangeStart
+        ).toHaveReceivedEventDetail({
+          value: 20,
+        });
+        expect(
+          rangeEnd
+        ).toHaveReceivedEventDetail({
+          value: 21,
+        });
+      });
 
-      await dragElementBy(knobEl, page, 30, 0, undefined, undefined, false);
+      // TODO FW-2873
+      test.skip('should not scroll when the knob is swiped', async ({
+        page,
+        skip,
+      }) => {
+        skip.browser(
+          'webkit',
+          'mouse.wheel is not available in WebKit'
+        );
 
-      /**
-       * Do not use scrollToBottom() or other scrolling methods
-       * on ion-content as those will update the scroll position.
-       * Setting scrollTop still works even with overflow-y: hidden.
-       * However, simulating a user gesture should not scroll the content.
-       */
-      await page.mouse.wheel(0, 100);
-      await page.waitForChanges();
+        await page.goto(
+          `/src/components/range/test/legacy/basic`,
+          config
+        );
 
-      expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
-    });
-  });
+        const knobEl = page.locator(
+          'ion-range#stacked-range .range-knob-handle'
+        );
+        const scrollEl = page.locator(
+          'ion-content .inner-scroll'
+        );
+
+        expect(
+          await scrollEl.evaluate(
+            (el: HTMLElement) =>
+              el.scrollTop
+          )
+        ).toEqual(0);
+
+        await dragElementBy(
+          knobEl,
+          page,
+          30,
+          0,
+          undefined,
+          undefined,
+          false
+        );
+
+        /**
+         * Do not use scrollToBottom() or other scrolling methods
+         * on ion-content as those will update the scroll position.
+         * Setting scrollTop still works even with overflow-y: hidden.
+         * However, simulating a user gesture should not scroll the content.
+         */
+        await page.mouse.wheel(0, 100);
+        await page.waitForChanges();
+
+        expect(
+          await scrollEl.evaluate(
+            (el: HTMLElement) =>
+              el.scrollTop
+          )
+        ).toEqual(0);
+      });
+    }
+  );
 });

@@ -13,22 +13,44 @@ export const createPointerEvents = (
     capture?: boolean;
   }
 ) => {
-  let rmTouchStart: (() => void) | undefined;
-  let rmTouchMove: (() => void) | undefined;
-  let rmTouchEnd: (() => void) | undefined;
-  let rmTouchCancel: (() => void) | undefined;
-  let rmMouseStart: (() => void) | undefined;
-  let rmMouseMove: (() => void) | undefined;
-  let rmMouseUp: (() => void) | undefined;
+  let rmTouchStart:
+    | (() => void)
+    | undefined;
+  let rmTouchMove:
+    | (() => void)
+    | undefined;
+  let rmTouchEnd:
+    | (() => void)
+    | undefined;
+  let rmTouchCancel:
+    | (() => void)
+    | undefined;
+  let rmMouseStart:
+    | (() => void)
+    | undefined;
+  let rmMouseMove:
+    | (() => void)
+    | undefined;
+  let rmMouseUp:
+    | (() => void)
+    | undefined;
   let lastTouchEvent = 0;
 
-  const handleTouchStart = (ev: any) => {
-    lastTouchEvent = Date.now() + MOUSE_WAIT;
+  const handleTouchStart = (
+    ev: any
+  ) => {
+    lastTouchEvent =
+      Date.now() + MOUSE_WAIT;
     if (!pointerDown(ev)) {
       return;
     }
     if (!rmTouchMove && pointerMove) {
-      rmTouchMove = addEventListener(el, 'touchmove', pointerMove, options);
+      rmTouchMove = addEventListener(
+        el,
+        'touchmove',
+        pointerMove,
+        options
+      );
     }
 
     /**
@@ -41,10 +63,20 @@ export const createPointerEvents = (
      * is removed from the DOM.
      */
     if (!rmTouchEnd) {
-      rmTouchEnd = addEventListener(ev.target, 'touchend', handleTouchEnd, options);
+      rmTouchEnd = addEventListener(
+        ev.target,
+        'touchend',
+        handleTouchEnd,
+        options
+      );
     }
     if (!rmTouchCancel) {
-      rmTouchCancel = addEventListener(ev.target, 'touchcancel', handleTouchEnd, options);
+      rmTouchCancel = addEventListener(
+        ev.target,
+        'touchcancel',
+        handleTouchEnd,
+        options
+      );
     }
   };
 
@@ -56,10 +88,20 @@ export const createPointerEvents = (
       return;
     }
     if (!rmMouseMove && pointerMove) {
-      rmMouseMove = addEventListener(getDocument(el), 'mousemove', pointerMove, options);
+      rmMouseMove = addEventListener(
+        getDocument(el),
+        'mousemove',
+        pointerMove,
+        options
+      );
     }
     if (!rmMouseUp) {
-      rmMouseUp = addEventListener(getDocument(el), 'mouseup', handleMouseUp, options);
+      rmMouseUp = addEventListener(
+        getDocument(el),
+        'mouseup',
+        handleMouseUp,
+        options
+      );
     }
   };
 
@@ -87,7 +129,10 @@ export const createPointerEvents = (
     if (rmTouchCancel) {
       rmTouchCancel();
     }
-    rmTouchMove = rmTouchEnd = rmTouchCancel = undefined;
+    rmTouchMove =
+      rmTouchEnd =
+      rmTouchCancel =
+        undefined;
   };
 
   const stopMouse = () => {
@@ -113,21 +158,35 @@ export const createPointerEvents = (
       if (rmMouseStart) {
         rmMouseStart();
       }
-      rmTouchStart = rmMouseStart = undefined;
+      rmTouchStart = rmMouseStart =
+        undefined;
       stop();
     } else {
       if (!rmTouchStart) {
-        rmTouchStart = addEventListener(el, 'touchstart', handleTouchStart, options);
+        rmTouchStart = addEventListener(
+          el,
+          'touchstart',
+          handleTouchStart,
+          options
+        );
       }
       if (!rmMouseStart) {
-        rmMouseStart = addEventListener(el, 'mousedown', handleMouseDown, options);
+        rmMouseStart = addEventListener(
+          el,
+          'mousedown',
+          handleMouseDown,
+          options
+        );
       }
     }
   };
 
   const destroy = () => {
     enable(false);
-    pointerUp = pointerMove = pointerDown = undefined;
+    pointerUp =
+      pointerMove =
+      pointerDown =
+        undefined;
   };
 
   return {
@@ -138,7 +197,9 @@ export const createPointerEvents = (
 };
 
 const getDocument = (node: Node) => {
-  return node instanceof Document ? node : node.ownerDocument;
+  return node instanceof Document
+    ? node
+    : node.ownerDocument;
 };
 
 export interface PointerEventsConfig {

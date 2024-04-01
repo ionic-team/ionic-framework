@@ -7,11 +7,19 @@ import type {
   OverlayInterface,
 } from '../../interface';
 
-export interface PopoverInterface extends OverlayInterface {
-  present: (event?: MouseEvent | TouchEvent | PointerEvent) => Promise<void>;
+export interface PopoverInterface
+  extends OverlayInterface {
+  present: (
+    event?:
+      | MouseEvent
+      | TouchEvent
+      | PointerEvent
+  ) => Promise<void>;
 }
 
-export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
+export interface PopoverOptions<
+  T extends ComponentRef = ComponentRef
+> {
   component: T;
   componentProps?: ComponentProps<T>;
   showBackdrop?: boolean;
@@ -25,7 +33,9 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: { [key: string]: any };
+  htmlAttributes?: {
+    [key: string]: any;
+  };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
@@ -41,10 +51,26 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   triggerAction?: string;
 }
 
-export type PopoverSize = 'cover' | 'auto';
+export type PopoverSize =
+  | 'cover'
+  | 'auto';
 
-export type TriggerAction = 'click' | 'hover' | 'context-menu';
+export type TriggerAction =
+  | 'click'
+  | 'hover'
+  | 'context-menu';
 
-export type PositionReference = 'trigger' | 'event';
-export type PositionSide = 'top' | 'right' | 'bottom' | 'left' | 'start' | 'end';
-export type PositionAlign = 'start' | 'center' | 'end';
+export type PositionReference =
+  | 'trigger'
+  | 'event';
+export type PositionSide =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'start'
+  | 'end';
+export type PositionAlign =
+  | 'start'
+  | 'center'
+  | 'end';

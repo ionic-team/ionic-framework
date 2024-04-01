@@ -1,5 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Method, Prop, h } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Host,
+  Method,
+  Prop,
+  h,
+} from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -13,13 +20,18 @@ import { getIonMode } from '../../global/ionic-global';
     md: 'list.md.scss',
   },
 })
-export class List implements ComponentInterface {
+export class List
+  implements ComponentInterface
+{
   @Element() el!: HTMLElement;
 
   /**
    * How the bottom border should be displayed on all items.
    */
-  @Prop() lines?: 'full' | 'inset' | 'none';
+  @Prop() lines?:
+    | 'full'
+    | 'inset'
+    | 'none';
 
   /**
    * If `true`, the list will have margin around it and rounded corners.
@@ -34,7 +46,9 @@ export class List implements ComponentInterface {
    */
   @Method()
   async closeSlidingItems(): Promise<boolean> {
-    const item = this.el.querySelector('ion-item-sliding');
+    const item = this.el.querySelector(
+      'ion-item-sliding'
+    );
     if (item?.closeOpened) {
       return item.closeOpened();
     }
@@ -54,8 +68,10 @@ export class List implements ComponentInterface {
           [`list-${mode}`]: true,
 
           'list-inset': inset,
-          [`list-lines-${lines}`]: lines !== undefined,
-          [`list-${mode}-lines-${lines}`]: lines !== undefined,
+          [`list-lines-${lines}`]:
+            lines !== undefined,
+          [`list-${mode}-lines-${lines}`]:
+            lines !== undefined,
         }}
       ></Host>
     );

@@ -8,7 +8,8 @@ export interface SearchbarInputEventDetail {
   event?: Event;
 }
 
-export interface SearchbarCustomEvent extends CustomEvent {
+export interface SearchbarCustomEvent
+  extends CustomEvent {
   detail: SearchbarChangeEventDetail;
   target: HTMLIonSearchbarElement;
 }

@@ -1,23 +1,54 @@
 import type { DatetimeParts } from '../datetime-interface';
 
-import { isAfter, isBefore, isSameDay } from './comparison';
+import {
+  isAfter,
+  isBefore,
+  isSameDay,
+} from './comparison';
 import { getNumDaysInMonth } from './helpers';
-import { clampDate, parseAmPm } from './parse';
+import {
+  clampDate,
+  parseAmPm,
+} from './parse';
 
-const twoDigit = (val: number | undefined): string => {
-  return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
+const twoDigit = (
+  val: number | undefined
+): string => {
+  return (
+    '0' +
+    (val !== undefined
+      ? Math.abs(val)
+      : '0')
+  ).slice(-2);
 };
 
-const fourDigit = (val: number | undefined): string => {
-  return ('000' + (val !== undefined ? Math.abs(val) : '0')).slice(-4);
+const fourDigit = (
+  val: number | undefined
+): string => {
+  return (
+    '000' +
+    (val !== undefined
+      ? Math.abs(val)
+      : '0')
+  ).slice(-4);
 };
 
-export function convertDataToISO(data: DatetimeParts): string;
-export function convertDataToISO(data: DatetimeParts[]): string[];
-export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string | string[];
-export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string | string[] {
+export function convertDataToISO(
+  data: DatetimeParts
+): string;
+export function convertDataToISO(
+  data: DatetimeParts[]
+): string[];
+export function convertDataToISO(
+  data: DatetimeParts | DatetimeParts[]
+): string | string[];
+export function convertDataToISO(
+  data: DatetimeParts | DatetimeParts[]
+): string | string[] {
   if (Array.isArray(data)) {
-    return data.map((parts) => convertDataToISO(parts));
+    return data.map((parts) =>
+      convertDataToISO(parts)
+    );
   }
 
   // https://www.w3.org/TR/NOTE-datetime
@@ -32,17 +63,25 @@ export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string 
 
       if (data.day !== undefined) {
         // YYYY-MM-DD
-        rtn += '-' + twoDigit(data.day!);
+        rtn +=
+          '-' + twoDigit(data.day!);
 
         if (data.hour !== undefined) {
           // YYYY-MM-DDTHH:mm:SS
-          rtn += `T${twoDigit(data.hour)}:${twoDigit(data.minute)}:00`;
+          rtn += `T${twoDigit(
+            data.hour
+          )}:${twoDigit(
+            data.minute
+          )}:00`;
         }
       }
     }
   } else if (data.hour !== undefined) {
     // HH:mm
-    rtn = twoDigit(data.hour) + ':' + twoDigit(data.minute);
+    rtn =
+      twoDigit(data.hour) +
+      ':' +
+      twoDigit(data.minute);
   }
 
   return rtn;
@@ -51,7 +90,10 @@ export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string 
 /**
  * Converts an 12 hour value to 24 hours.
  */
-export const convert12HourTo24Hour = (hour: number, ampm?: 'am' | 'pm') => {
+export const convert12HourTo24Hour = (
+  hour: number,
+  ampm?: 'am' | 'pm'
+) => {
   if (ampm === undefined) {
     return hour;
   }
@@ -86,37 +128,65 @@ export const convert12HourTo24Hour = (hour: number, ampm?: 'am' | 'pm') => {
   return hour + 12;
 };
 
-export const getStartOfWeek = (refParts: DatetimeParts): DatetimeParts => {
+export const getStartOfWeek = (
+  refParts: DatetimeParts
+): DatetimeParts => {
   const { dayOfWeek } = refParts;
-  if (dayOfWeek === null || dayOfWeek === undefined) {
-    throw new Error('No day of week provided');
+  if (
+    dayOfWeek === null ||
+    dayOfWeek === undefined
+  ) {
+    throw new Error(
+      'No day of week provided'
+    );
   }
 
-  return subtractDays(refParts, dayOfWeek);
+  return subtractDays(
+    refParts,
+    dayOfWeek
+  );
 };
 
-export const getEndOfWeek = (refParts: DatetimeParts): DatetimeParts => {
+export const getEndOfWeek = (
+  refParts: DatetimeParts
+): DatetimeParts => {
   const { dayOfWeek } = refParts;
-  if (dayOfWeek === null || dayOfWeek === undefined) {
-    throw new Error('No day of week provided');
+  if (
+    dayOfWeek === null ||
+    dayOfWeek === undefined
+  ) {
+    throw new Error(
+      'No day of week provided'
+    );
   }
 
-  return addDays(refParts, 6 - dayOfWeek);
+  return addDays(
+    refParts,
+    6 - dayOfWeek
+  );
 };
 
-export const getNextDay = (refParts: DatetimeParts): DatetimeParts => {
+export const getNextDay = (
+  refParts: DatetimeParts
+): DatetimeParts => {
   return addDays(refParts, 1);
 };
 
-export const getPreviousDay = (refParts: DatetimeParts): DatetimeParts => {
+export const getPreviousDay = (
+  refParts: DatetimeParts
+): DatetimeParts => {
   return subtractDays(refParts, 1);
 };
 
-export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
+export const getPreviousWeek = (
+  refParts: DatetimeParts
+): DatetimeParts => {
   return subtractDays(refParts, 7);
 };
 
-export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
+export const getNextWeek = (
+  refParts: DatetimeParts
+): DatetimeParts => {
   return addDays(refParts, 7);
 };
 
@@ -126,7 +196,10 @@ export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
  * Returns a new DatetimeParts object
  * Currently can only go backward at most 1 month.
  */
-export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
+export const subtractDays = (
+  refParts: DatetimeParts,
+  numDays: number
+) => {
   const { month, day, year } = refParts;
   if (day === null) {
     throw new Error('No day provided');
@@ -163,7 +236,11 @@ export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
    */
 
   if (workingParts.day < 1) {
-    const daysInMonth = getNumDaysInMonth(workingParts.month, workingParts.year);
+    const daysInMonth =
+      getNumDaysInMonth(
+        workingParts.month,
+        workingParts.year
+      );
 
     /**
      * Take num days in month and add the
@@ -174,7 +251,8 @@ export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
      * 2 - 7 = -5
      * 31 + (-5) = 26
      */
-    workingParts.day = daysInMonth + workingParts.day;
+    workingParts.day =
+      daysInMonth + workingParts.day;
   }
 
   return workingParts;
@@ -186,7 +264,10 @@ export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
  * Returns a new DatetimeParts object
  * Currently can only go forward at most 1 month.
  */
-export const addDays = (refParts: DatetimeParts, numDays: number) => {
+export const addDays = (
+  refParts: DatetimeParts,
+  numDays: number
+) => {
   const { month, day, year } = refParts;
   if (day === null) {
     throw new Error('No day provided');
@@ -198,7 +279,10 @@ export const addDays = (refParts: DatetimeParts, numDays: number) => {
     year,
   };
 
-  const daysInMonth = getNumDaysInMonth(month, year);
+  const daysInMonth = getNumDaysInMonth(
+    month,
+    year
+  );
   workingParts.day = day + numDays;
 
   /**
@@ -225,16 +309,28 @@ export const addDays = (refParts: DatetimeParts, numDays: number) => {
 /**
  * Given DatetimeParts, generate the previous month.
  */
-export const getPreviousMonth = (refParts: DatetimeParts) => {
+export const getPreviousMonth = (
+  refParts: DatetimeParts
+) => {
   /**
    * If current month is January, wrap backwards
    *  to December of the previous year.
    */
-  const month = refParts.month === 1 ? 12 : refParts.month - 1;
-  const year = refParts.month === 1 ? refParts.year - 1 : refParts.year;
+  const month =
+    refParts.month === 1
+      ? 12
+      : refParts.month - 1;
+  const year =
+    refParts.month === 1
+      ? refParts.year - 1
+      : refParts.year;
 
-  const numDaysInMonth = getNumDaysInMonth(month, year);
-  const day = numDaysInMonth < refParts.day! ? numDaysInMonth : refParts.day;
+  const numDaysInMonth =
+    getNumDaysInMonth(month, year);
+  const day =
+    numDaysInMonth < refParts.day!
+      ? numDaysInMonth
+      : refParts.day;
 
   return { month, year, day };
 };
@@ -242,26 +338,46 @@ export const getPreviousMonth = (refParts: DatetimeParts) => {
 /**
  * Given DatetimeParts, generate the next month.
  */
-export const getNextMonth = (refParts: DatetimeParts) => {
+export const getNextMonth = (
+  refParts: DatetimeParts
+) => {
   /**
    * If current month is December, wrap forwards
    *  to January of the next year.
    */
-  const month = refParts.month === 12 ? 1 : refParts.month + 1;
-  const year = refParts.month === 12 ? refParts.year + 1 : refParts.year;
+  const month =
+    refParts.month === 12
+      ? 1
+      : refParts.month + 1;
+  const year =
+    refParts.month === 12
+      ? refParts.year + 1
+      : refParts.year;
 
-  const numDaysInMonth = getNumDaysInMonth(month, year);
-  const day = numDaysInMonth < refParts.day! ? numDaysInMonth : refParts.day;
+  const numDaysInMonth =
+    getNumDaysInMonth(month, year);
+  const day =
+    numDaysInMonth < refParts.day!
+      ? numDaysInMonth
+      : refParts.day;
 
   return { month, year, day };
 };
 
-const changeYear = (refParts: DatetimeParts, yearDelta: number) => {
+const changeYear = (
+  refParts: DatetimeParts,
+  yearDelta: number
+) => {
   const month = refParts.month;
-  const year = refParts.year + yearDelta;
+  const year =
+    refParts.year + yearDelta;
 
-  const numDaysInMonth = getNumDaysInMonth(month, year);
-  const day = numDaysInMonth < refParts.day! ? numDaysInMonth : refParts.day;
+  const numDaysInMonth =
+    getNumDaysInMonth(month, year);
+  const day =
+    numDaysInMonth < refParts.day!
+      ? numDaysInMonth
+      : refParts.day;
 
   return { month, year, day };
 };
@@ -269,14 +385,18 @@ const changeYear = (refParts: DatetimeParts, yearDelta: number) => {
 /**
  * Given DatetimeParts, generate the previous year.
  */
-export const getPreviousYear = (refParts: DatetimeParts) => {
+export const getPreviousYear = (
+  refParts: DatetimeParts
+) => {
   return changeYear(refParts, -1);
 };
 
 /**
  * Given DatetimeParts, generate the next year.
  */
-export const getNextYear = (refParts: DatetimeParts) => {
+export const getNextYear = (
+  refParts: DatetimeParts
+) => {
   return changeYear(refParts, 1);
 };
 
@@ -286,12 +406,19 @@ export const getNextYear = (refParts: DatetimeParts) => {
  * Does not apply when public
  * values are already 24-hr time.
  */
-export const getInternalHourValue = (hour: number, use24Hour: boolean, ampm?: 'am' | 'pm') => {
+export const getInternalHourValue = (
+  hour: number,
+  use24Hour: boolean,
+  ampm?: 'am' | 'pm'
+) => {
   if (use24Hour) {
     return hour;
   }
 
-  return convert12HourTo24Hour(hour, ampm);
+  return convert12HourTo24Hour(
+    hour,
+    ampm
+  );
 };
 
 /**
@@ -308,8 +435,12 @@ export const getInternalHourValue = (hour: number, use24Hour: boolean, ampm?: 'a
  * Used when toggling the AM/PM segment since we store our hours
  * in 24-hour time format internally.
  */
-export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am' | 'pm') => {
-  const { ampm: currentAMPM, hour } = currentParts;
+export const calculateHourFromAMPM = (
+  currentParts: DatetimeParts,
+  newAMPM: 'am' | 'pm'
+) => {
+  const { ampm: currentAMPM, hour } =
+    currentParts;
 
   let newHour = hour!;
 
@@ -317,13 +448,22 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
    * If going from AM --> PM, need to update the
    *
    */
-  if (currentAMPM === 'am' && newAMPM === 'pm') {
-    newHour = convert12HourTo24Hour(newHour, 'pm');
+  if (
+    currentAMPM === 'am' &&
+    newAMPM === 'pm'
+  ) {
+    newHour = convert12HourTo24Hour(
+      newHour,
+      'pm'
+    );
 
     /**
      * If going from PM --> AM
      */
-  } else if (currentAMPM === 'pm' && newAMPM === 'am') {
+  } else if (
+    currentAMPM === 'pm' &&
+    newAMPM === 'am'
+  ) {
     newHour = Math.abs(newHour - 12);
   }
 
@@ -342,9 +482,16 @@ export const validateParts = (
   maxParts?: DatetimeParts
 ): DatetimeParts => {
   const { month, day, year } = parts;
-  const partsCopy = clampDate({ ...parts }, minParts, maxParts);
+  const partsCopy = clampDate(
+    { ...parts },
+    minParts,
+    maxParts
+  );
 
-  const numDays = getNumDaysInMonth(month, year);
+  const numDays = getNumDaysInMonth(
+    month,
+    year
+  );
 
   /**
    * If the max number of days
@@ -360,29 +507,42 @@ export const validateParts = (
    * If value is same day as min day,
    * make sure the time value is in bounds.
    */
-  if (minParts !== undefined && isSameDay(partsCopy, minParts)) {
+  if (
+    minParts !== undefined &&
+    isSameDay(partsCopy, minParts)
+  ) {
     /**
      * If the hour is out of bounds,
      * update both the hour and minute.
      * This is done so that the new time
      * is closest to what the user selected.
      */
-    if (partsCopy.hour !== undefined && minParts.hour !== undefined) {
-      if (partsCopy.hour < minParts.hour) {
+    if (
+      partsCopy.hour !== undefined &&
+      minParts.hour !== undefined
+    ) {
+      if (
+        partsCopy.hour < minParts.hour
+      ) {
         partsCopy.hour = minParts.hour;
-        partsCopy.minute = minParts.minute;
+        partsCopy.minute =
+          minParts.minute;
 
         /**
          * If only the minute is out of bounds,
          * set it to the min minute.
          */
       } else if (
-        partsCopy.hour === minParts.hour &&
-        partsCopy.minute !== undefined &&
+        partsCopy.hour ===
+          minParts.hour &&
+        partsCopy.minute !==
+          undefined &&
         minParts.minute !== undefined &&
-        partsCopy.minute < minParts.minute
+        partsCopy.minute <
+          minParts.minute
       ) {
-        partsCopy.minute = minParts.minute;
+        partsCopy.minute =
+          minParts.minute;
       }
     }
   }
@@ -391,28 +551,41 @@ export const validateParts = (
    * If value is same day as max day,
    * make sure the time value is in bounds.
    */
-  if (maxParts !== undefined && isSameDay(parts, maxParts)) {
+  if (
+    maxParts !== undefined &&
+    isSameDay(parts, maxParts)
+  ) {
     /**
      * If the hour is out of bounds,
      * update both the hour and minute.
      * This is done so that the new time
      * is closest to what the user selected.
      */
-    if (partsCopy.hour !== undefined && maxParts.hour !== undefined) {
-      if (partsCopy.hour > maxParts.hour) {
+    if (
+      partsCopy.hour !== undefined &&
+      maxParts.hour !== undefined
+    ) {
+      if (
+        partsCopy.hour > maxParts.hour
+      ) {
         partsCopy.hour = maxParts.hour;
-        partsCopy.minute = maxParts.minute;
+        partsCopy.minute =
+          maxParts.minute;
         /**
          * If only the minute is out of bounds,
          * set it to the max minute.
          */
       } else if (
-        partsCopy.hour === maxParts.hour &&
-        partsCopy.minute !== undefined &&
+        partsCopy.hour ===
+          maxParts.hour &&
+        partsCopy.minute !==
+          undefined &&
         maxParts.minute !== undefined &&
-        partsCopy.minute > maxParts.minute
+        partsCopy.minute >
+          maxParts.minute
       ) {
-        partsCopy.minute = maxParts.minute;
+        partsCopy.minute =
+          maxParts.minute;
       }
     }
   }
@@ -468,93 +641,187 @@ export const getClosestValidDate = ({
    */
   maxParts?: DatetimeParts;
 }) => {
-  const { hour, minute, day, month, year } = refParts;
-  const copyParts = { ...refParts, dayOfWeek: undefined };
+  const {
+    hour,
+    minute,
+    day,
+    month,
+    year,
+  } = refParts;
+  const copyParts = {
+    ...refParts,
+    dayOfWeek: undefined,
+  };
 
   if (yearValues !== undefined) {
     // Filters out years that are out of the min/max bounds
-    const filteredYears = yearValues.filter((year) => {
-      if (minParts !== undefined && year < minParts.year) {
-        return false;
-      }
+    const filteredYears =
+      yearValues.filter((year) => {
+        if (
+          minParts !== undefined &&
+          year < minParts.year
+        ) {
+          return false;
+        }
 
-      if (maxParts !== undefined && year > maxParts.year) {
-        return false;
-      }
+        if (
+          maxParts !== undefined &&
+          year > maxParts.year
+        ) {
+          return false;
+        }
 
-      return true;
-    });
-    copyParts.year = findClosestValue(year, filteredYears);
+        return true;
+      });
+    copyParts.year = findClosestValue(
+      year,
+      filteredYears
+    );
   }
 
   if (monthValues !== undefined) {
     // Filters out months that are out of the min/max bounds
-    const filteredMonths = monthValues.filter((month) => {
-      if (minParts !== undefined && copyParts.year === minParts.year && month < minParts.month) {
-        return false;
-      }
+    const filteredMonths =
+      monthValues.filter((month) => {
+        if (
+          minParts !== undefined &&
+          copyParts.year ===
+            minParts.year &&
+          month < minParts.month
+        ) {
+          return false;
+        }
 
-      if (maxParts !== undefined && copyParts.year === maxParts.year && month > maxParts.month) {
-        return false;
-      }
+        if (
+          maxParts !== undefined &&
+          copyParts.year ===
+            maxParts.year &&
+          month > maxParts.month
+        ) {
+          return false;
+        }
 
-      return true;
-    });
-    copyParts.month = findClosestValue(month, filteredMonths);
+        return true;
+      });
+    copyParts.month = findClosestValue(
+      month,
+      filteredMonths
+    );
   }
 
   // Day is nullable but cannot be undefined
-  if (day !== null && dayValues !== undefined) {
+  if (
+    day !== null &&
+    dayValues !== undefined
+  ) {
     // Filters out days that are out of the min/max bounds
-    const filteredDays = dayValues.filter((day) => {
-      if (minParts !== undefined && isBefore({ ...copyParts, day }, minParts)) {
-        return false;
-      }
-      if (maxParts !== undefined && isAfter({ ...copyParts, day }, maxParts)) {
-        return false;
-      }
-      return true;
-    });
-    copyParts.day = findClosestValue(day, filteredDays);
+    const filteredDays =
+      dayValues.filter((day) => {
+        if (
+          minParts !== undefined &&
+          isBefore(
+            { ...copyParts, day },
+            minParts
+          )
+        ) {
+          return false;
+        }
+        if (
+          maxParts !== undefined &&
+          isAfter(
+            { ...copyParts, day },
+            maxParts
+          )
+        ) {
+          return false;
+        }
+        return true;
+      });
+    copyParts.day = findClosestValue(
+      day,
+      filteredDays
+    );
   }
 
-  if (hour !== undefined && hourValues !== undefined) {
+  if (
+    hour !== undefined &&
+    hourValues !== undefined
+  ) {
     // Filters out hours that are out of the min/max bounds
-    const filteredHours = hourValues.filter((hour) => {
-      if (minParts?.hour !== undefined && isSameDay(copyParts, minParts) && hour < minParts.hour) {
-        return false;
-      }
-      if (maxParts?.hour !== undefined && isSameDay(copyParts, maxParts) && hour > maxParts.hour) {
-        return false;
-      }
-      return true;
-    });
-    copyParts.hour = findClosestValue(hour, filteredHours);
-    copyParts.ampm = parseAmPm(copyParts.hour);
+    const filteredHours =
+      hourValues.filter((hour) => {
+        if (
+          minParts?.hour !==
+            undefined &&
+          isSameDay(
+            copyParts,
+            minParts
+          ) &&
+          hour < minParts.hour
+        ) {
+          return false;
+        }
+        if (
+          maxParts?.hour !==
+            undefined &&
+          isSameDay(
+            copyParts,
+            maxParts
+          ) &&
+          hour > maxParts.hour
+        ) {
+          return false;
+        }
+        return true;
+      });
+    copyParts.hour = findClosestValue(
+      hour,
+      filteredHours
+    );
+    copyParts.ampm = parseAmPm(
+      copyParts.hour
+    );
   }
 
-  if (minute !== undefined && minuteValues !== undefined) {
+  if (
+    minute !== undefined &&
+    minuteValues !== undefined
+  ) {
     // Filters out minutes that are out of the min/max bounds
-    const filteredMinutes = minuteValues.filter((minute) => {
-      if (
-        minParts?.minute !== undefined &&
-        isSameDay(copyParts, minParts) &&
-        copyParts.hour === minParts.hour &&
-        minute < minParts.minute
-      ) {
-        return false;
-      }
-      if (
-        maxParts?.minute !== undefined &&
-        isSameDay(copyParts, maxParts) &&
-        copyParts.hour === maxParts.hour &&
-        minute > maxParts.minute
-      ) {
-        return false;
-      }
-      return true;
-    });
-    copyParts.minute = findClosestValue(minute, filteredMinutes);
+    const filteredMinutes =
+      minuteValues.filter((minute) => {
+        if (
+          minParts?.minute !==
+            undefined &&
+          isSameDay(
+            copyParts,
+            minParts
+          ) &&
+          copyParts.hour ===
+            minParts.hour &&
+          minute < minParts.minute
+        ) {
+          return false;
+        }
+        if (
+          maxParts?.minute !==
+            undefined &&
+          isSameDay(
+            copyParts,
+            maxParts
+          ) &&
+          copyParts.hour ===
+            maxParts.hour &&
+          minute > maxParts.minute
+        ) {
+          return false;
+        }
+        return true;
+      });
+    copyParts.minute = findClosestValue(
+      minute,
+      filteredMinutes
+    );
   }
 
   return copyParts;
@@ -570,11 +837,20 @@ export const getClosestValidDate = ({
  * @param values The allowed values that will be
  * searched to find the closest value to "reference"
  */
-const findClosestValue = (reference: number, values: number[]) => {
+const findClosestValue = (
+  reference: number,
+  values: number[]
+) => {
   let closestValue = values[0];
-  let rank = Math.abs(closestValue - reference);
+  let rank = Math.abs(
+    closestValue - reference
+  );
 
-  for (let i = 1; i < values.length; i++) {
+  for (
+    let i = 1;
+    i < values.length;
+    i++
+  ) {
     const value = values[i];
     /**
      * This code prioritizes the first
@@ -583,7 +859,9 @@ const findClosestValue = (reference: number, values: number[]) => {
      * this code will prioritize the smaller of
      * the two values.
      */
-    const valueRank = Math.abs(value - reference);
+    const valueRank = Math.abs(
+      value - reference
+    );
     if (valueRank < rank) {
       closestValue = value;
       rank = valueRank;

@@ -2,7 +2,10 @@ import { win } from '@utils/browser';
 import { printIonWarning } from '@utils/logging';
 import type { Mode } from 'src/interface';
 
-import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
+import type {
+  ToastAnimationPosition,
+  ToastPosition,
+} from '../toast-interface';
 
 /**
  * Calculate the CSS top and bottom position of the toast, to be used
@@ -23,7 +26,9 @@ import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
  */
 export function getAnimationPosition(
   position: ToastPosition,
-  positionAnchor: HTMLElement | undefined,
+  positionAnchor:
+    | HTMLElement
+    | undefined,
   mode: Mode,
   toast: HTMLElement
 ): ToastAnimationPosition {
@@ -33,9 +38,11 @@ export function getAnimationPosition(
    */
   let offset: number;
   if (mode === 'md') {
-    offset = position === 'top' ? 8 : -8;
+    offset =
+      position === 'top' ? 8 : -8;
   } else {
-    offset = position === 'top' ? 10 : -10;
+    offset =
+      position === 'top' ? 10 : -10;
   }
 
   /**
@@ -45,9 +52,13 @@ export function getAnimationPosition(
    * anchor edge is targeted.
    */
   if (positionAnchor && win) {
-    warnIfAnchorIsHidden(positionAnchor, toast);
+    warnIfAnchorIsHidden(
+      positionAnchor,
+      toast
+    );
 
-    const box = positionAnchor.getBoundingClientRect();
+    const box =
+      positionAnchor.getBoundingClientRect();
     if (position === 'top') {
       offset += box.bottom;
     } else if (position === 'bottom') {
@@ -56,7 +67,8 @@ export function getAnimationPosition(
        * to the top edge of the anchor. We want to calculate from the
        * bottom edge of the screen instead.
        */
-      offset -= win.innerHeight - box.top;
+      offset -=
+        win.innerHeight - box.top;
     }
 
     /**
@@ -80,8 +92,13 @@ export function getAnimationPosition(
  * will return all 0s for it, which can cause unexpected
  * results in the position calculation when animating.
  */
-function warnIfAnchorIsHidden(positionAnchor: HTMLElement, toast: HTMLElement) {
-  if (positionAnchor.offsetParent === null) {
+function warnIfAnchorIsHidden(
+  positionAnchor: HTMLElement,
+  toast: HTMLElement
+) {
+  if (
+    positionAnchor.offsetParent === null
+  ) {
     printIonWarning(
       'The positionAnchor element for ion-toast was found in the DOM, but appears to be hidden. This may lead to unexpected positioning of the toast.',
       toast
@@ -97,6 +114,13 @@ function warnIfAnchorIsHidden(positionAnchor: HTMLElement, toast: HTMLElement) {
  * @param wrapperHeight - The height of the .toast-wrapper element
  * inside the toast's shadow root.
  */
-export const getOffsetForMiddlePosition = (toastHeight: number, wrapperHeight: number) => {
-  return Math.floor(toastHeight / 2 - wrapperHeight / 2);
-};
+export const getOffsetForMiddlePosition =
+  (
+    toastHeight: number,
+    wrapperHeight: number
+  ) => {
+    return Math.floor(
+      toastHeight / 2 -
+        wrapperHeight / 2
+    );
+  };

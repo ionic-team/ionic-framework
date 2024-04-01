@@ -1,12 +1,22 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
 // NOTE: these tests cannot be re-written as spec tests because the `getAccordions` method in accordion-group.tsx uses a `:scope` selector
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
-  test.describe(title('accordion: disabled'), () => {
-    test('should properly set disabled on child accordions', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  modes: ['md'],
+  directions: ['ltr'],
+}).forEach(({ config, title }) => {
+  test.describe(
+    title('accordion: disabled'),
+    () => {
+      test('should properly set disabled on child accordions', async ({
+        page,
+      }) => {
+        await page.setContent(
+          `
       <ion-accordion-group animated="false">
         <ion-accordion>
           <ion-item slot="header">Label</ion-item>
@@ -14,26 +24,47 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
         </ion-accordion>
       </ion-accordion-group>
     `,
-        config
-      );
+          config
+        );
 
-      const accordionGroup = page.locator('ion-accordion-group');
-      const accordion = page.locator('ion-accordion');
+        const accordionGroup =
+          page.locator(
+            'ion-accordion-group'
+          );
+        const accordion = page.locator(
+          'ion-accordion'
+        );
 
-      await expect(accordion).toHaveJSProperty('disabled', false);
+        await expect(
+          accordion
+        ).toHaveJSProperty(
+          'disabled',
+          false
+        );
 
-      await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => {
-        el.disabled = true;
+        await accordionGroup.evaluate(
+          (
+            el: HTMLIonAccordionGroupElement
+          ) => {
+            el.disabled = true;
+          }
+        );
+
+        await page.waitForChanges();
+
+        await expect(
+          accordion
+        ).toHaveJSProperty(
+          'disabled',
+          true
+        );
       });
 
-      await page.waitForChanges();
-
-      await expect(accordion).toHaveJSProperty('disabled', true);
-    });
-
-    test('should not open accordion on click when group is disabled', async ({ page }) => {
-      await page.setContent(
-        `
+      test('should not open accordion on click when group is disabled', async ({
+        page,
+      }) => {
+        await page.setContent(
+          `
       <ion-accordion-group animated="false" disabled>
         <ion-accordion>
           <ion-item slot="header">Label</ion-item>
@@ -41,22 +72,34 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
         </ion-accordion>
       </ion-accordion-group>
     `,
-        config
-      );
+          config
+        );
 
-      const accordion = page.locator('ion-accordion');
+        const accordion = page.locator(
+          'ion-accordion'
+        );
 
-      await expect(accordion).toHaveClass(/accordion-collapsed/);
+        await expect(
+          accordion
+        ).toHaveClass(
+          /accordion-collapsed/
+        );
 
-      accordion.click();
-      await page.waitForChanges();
+        accordion.click();
+        await page.waitForChanges();
 
-      await expect(accordion).toHaveClass(/accordion-collapsed/);
-    });
+        await expect(
+          accordion
+        ).toHaveClass(
+          /accordion-collapsed/
+        );
+      });
 
-    test('should not open accordion on click when accordion is disabled', async ({ page }) => {
-      await page.setContent(
-        `
+      test('should not open accordion on click when accordion is disabled', async ({
+        page,
+      }) => {
+        await page.setContent(
+          `
       <ion-accordion-group animated="false">
         <ion-accordion disabled>
           <ion-item slot="header">Label</ion-item>
@@ -64,22 +107,35 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
         </ion-accordion>
       </ion-accordion-group>
     `,
-        config
-      );
+          config
+        );
 
-      const accordion = page.locator('ion-accordion');
+        const accordion = page.locator(
+          'ion-accordion'
+        );
 
-      await expect(accordion).toHaveClass(/accordion-collapsed/);
+        await expect(
+          accordion
+        ).toHaveClass(
+          /accordion-collapsed/
+        );
 
-      accordion.click();
-      await page.waitForChanges();
+        accordion.click();
+        await page.waitForChanges();
 
-      await expect(accordion).toHaveClass(/accordion-collapsed/);
-    });
+        await expect(
+          accordion
+        ).toHaveClass(
+          /accordion-collapsed/
+        );
+      });
 
-    test('should not open accordion via keyboard navigation when group is disabled', async ({ page, browserName }) => {
-      await page.setContent(
-        `
+      test('should not open accordion via keyboard navigation when group is disabled', async ({
+        page,
+        browserName,
+      }) => {
+        await page.setContent(
+          `
       <ion-accordion-group animated="false" disabled>
         <ion-accordion>
           <ion-item slot="header">Label</ion-item>
@@ -87,29 +143,46 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
         </ion-accordion>
       </ion-accordion-group>
     `,
-        config
-      );
+          config
+        );
 
-      const accordion = page.locator('ion-accordion');
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+        const accordion = page.locator(
+          'ion-accordion'
+        );
+        const tabKey =
+          browserName === 'webkit'
+            ? 'Alt+Tab'
+            : 'Tab';
 
-      await expect(accordion).toHaveClass(/accordion-collapsed/);
+        await expect(
+          accordion
+        ).toHaveClass(
+          /accordion-collapsed/
+        );
 
-      await page.keyboard.press(tabKey);
-      await page.waitForChanges();
+        await page.keyboard.press(
+          tabKey
+        );
+        await page.waitForChanges();
 
-      await page.keyboard.press('Enter');
-      await page.waitForChanges();
+        await page.keyboard.press(
+          'Enter'
+        );
+        await page.waitForChanges();
 
-      await expect(accordion).toHaveClass(/accordion-collapsed/);
-    });
+        await expect(
+          accordion
+        ).toHaveClass(
+          /accordion-collapsed/
+        );
+      });
 
-    test('should not open accordion via keyboard navigation when accordion is disabled', async ({
-      page,
-      browserName,
-    }) => {
-      await page.setContent(
-        `
+      test('should not open accordion via keyboard navigation when accordion is disabled', async ({
+        page,
+        browserName,
+      }) => {
+        await page.setContent(
+          `
       <ion-accordion-group animated="false">
         <ion-accordion disabled>
           <ion-item slot="header">Label</ion-item>
@@ -117,21 +190,39 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
         </ion-accordion>
       </ion-accordion-group>
     `,
-        config
-      );
+          config
+        );
 
-      const accordion = page.locator('ion-accordion');
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+        const accordion = page.locator(
+          'ion-accordion'
+        );
+        const tabKey =
+          browserName === 'webkit'
+            ? 'Alt+Tab'
+            : 'Tab';
 
-      await expect(accordion).toHaveClass(/accordion-collapsed/);
+        await expect(
+          accordion
+        ).toHaveClass(
+          /accordion-collapsed/
+        );
 
-      await page.keyboard.press(tabKey);
-      await page.waitForChanges();
+        await page.keyboard.press(
+          tabKey
+        );
+        await page.waitForChanges();
 
-      await page.keyboard.press('Enter');
-      await page.waitForChanges();
+        await page.keyboard.press(
+          'Enter'
+        );
+        await page.waitForChanges();
 
-      await expect(accordion).toHaveClass(/accordion-collapsed/);
-    });
-  });
+        await expect(
+          accordion
+        ).toHaveClass(
+          /accordion-collapsed/
+        );
+      });
+    }
+  );
 });

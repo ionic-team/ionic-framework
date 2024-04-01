@@ -1,15 +1,33 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
-configs().forEach(({ title, config }) => {
-  test.describe(title('list: a11y'), () => {
-    test('should not have accessibility violations', async ({ page }) => {
-      await page.goto(`/src/components/list/test/a11y`, config);
+configs().forEach(
+  ({ title, config }) => {
+    test.describe(
+      title('list: a11y'),
+      () => {
+        test('should not have accessibility violations', async ({
+          page,
+        }) => {
+          await page.goto(
+            `/src/components/list/test/a11y`,
+            config
+          );
 
-      const results = await new AxeBuilder({ page }).analyze();
+          const results =
+            await new AxeBuilder({
+              page,
+            }).analyze();
 
-      expect(results.violations).toEqual([]);
-    });
-  });
-});
+          expect(
+            results.violations
+          ).toEqual([]);
+        });
+      }
+    );
+  }
+);

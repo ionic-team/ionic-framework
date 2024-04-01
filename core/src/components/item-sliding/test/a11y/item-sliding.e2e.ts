@@ -1,15 +1,27 @@
-import { configs, test } from '@utils/test/playwright';
+import {
+  configs,
+  test,
+} from '@utils/test/playwright';
 
 import { testSlidingItem } from '../test.utils';
 
 /**
  * This behavior does not vary across directions
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('item-sliding: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(
-        `
+configs({
+  directions: ['ltr'],
+}).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(
+      title(
+        'item-sliding: font scaling'
+      ),
+      () => {
+        test('should scale text on larger font sizes', async ({
+          page,
+        }) => {
+          await page.setContent(
+            `
         <style>
           html {
             font-size: 310%;
@@ -28,10 +40,17 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           </ion-item-options>
         </ion-item-sliding>
       `,
-        config
-      );
+            config
+          );
 
-      await testSlidingItem(page, 'fontScaling', 'scale', screenshot);
-    });
-  });
-});
+          await testSlidingItem(
+            page,
+            'fontScaling',
+            'scale',
+            screenshot
+          );
+        });
+      }
+    );
+  }
+);
