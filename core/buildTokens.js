@@ -54,7 +54,8 @@ StyleDictionary.registerFormat({
 
       switch (tokenType) {
         case 'color':
-          utilityClass = `.${className} { color: ${prop.value}; }; .background-${className} {background-color: ${prop.value};}`;
+          utilityClass = `.${className} { color: ${prop.value}; }; 
+.background-${className} {background-color: ${prop.value};}`;
           break;
         case 'border':
           const borderAttribute = prop.attributes.type === 'radius' ? 'border-radius' : 'border-width';
@@ -68,7 +69,8 @@ StyleDictionary.registerFormat({
           utilityClass = `.${className} { box-shadow: ${prop.value}; }`;
           break;
         case 'space':
-          utilityClass = `.margin-${className} { margin: ${prop.value}; }; .padding-${className} {padding: ${prop.value};}`;
+          utilityClass = `.margin-${className} { margin: ${prop.value}; }; 
+.padding-${className} {padding: ${prop.value};}`;
           break;
         default:
           utilityClass = `.${className} { ${tokenType}: ${prop.value}; }`;
