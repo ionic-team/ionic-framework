@@ -6,13 +6,16 @@ const { fileHeader } = StyleDictionary.formatHelpers;
 // Empty for as an example of how we can add some extra variables, not from the tokens JSON
 const customVariables = ``;
 
+// Prefix for all generated variables
+const variablesPrefix = 'ionic';
+
 // CSS vanilla :root format
 StyleDictionary.registerFormat({
   name: 'rootFormat',
   formatter({ dictionary, file }) {
     // Add a prefix to all variable names
     const prefixedVariables = dictionary.allProperties.map((prop) => {
-      return `  --${prop.name}: ${prop.value};`;
+      return `--${variablesPrefix}-${prop.name}: ${prop.value};`;
     });
 
     return (
@@ -31,7 +34,7 @@ StyleDictionary.registerFormat({
   formatter({ dictionary, file }) {
     // Add a prefix to all variable names
     const prefixedVariables = dictionary.allProperties.map((prop) => {
-      return `$${prop.name}: ${prop.value};`;
+      return `$${variablesPrefix}-${prop.name}: ${prop.value};`;
     });
 
     return (
