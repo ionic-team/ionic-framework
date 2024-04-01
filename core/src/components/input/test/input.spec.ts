@@ -100,7 +100,8 @@ describe('input: label rendering', () => {
   });
 });
 
-describe.only('input: clear icon', () => {
+// https://github.com/ionic-team/ionic-framework/issues/26974
+describe('input: clear icon', () => {
   it('should render custom icon', async () => {
     const page = await newSpecPage({
       components: [Input],
