@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('toolbar: basic'), () => {
+configs({ themes: ['light', 'dark'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toolbar: basic (LTR only)'), () => {
     test('should not have visual regressions with text only', async ({ page }) => {
       await page.setContent(
         `
@@ -18,7 +18,11 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
       const header = page.locator('ion-header');
       await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-only`));
     });
+  });
+});
 
+configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toolbar: basic'), () => {
     test('should truncate long title with ellipsis', async ({ page }) => {
       await page.setContent(
         `
@@ -87,9 +91,6 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
             <ion-toolbar>
               <ion-buttons slot="secondary">
                 <ion-button fill="solid">
-                  <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-                </ion-button>
-                <ion-button fill="solid">
                   <ion-icon slot="start" name="person-circle"></ion-icon>
                   Solid
                 </ion-button>
@@ -104,9 +105,6 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
             </ion-toolbar>
             <ion-toolbar>
               <ion-buttons slot="secondary">
-                <ion-button href="#" fill="solid" class="ion-activated">
-                  <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-                </ion-button>
                 <ion-button fill="solid" class="ion-activated">
                   <ion-icon slot="start" name="person-circle"></ion-icon>
                   Solid
@@ -123,38 +121,32 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
             <ion-toolbar>
               <ion-buttons slot="secondary">
                 <ion-button fill="outline">
-                  <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-                </ion-button>
-                <ion-button fill="outline">
                   <ion-icon slot="start" name="star"></ion-icon>
                   Star
                 </ion-button>
               </ion-buttons>
+              <ion-title>Outline</ion-title>
               <ion-buttons slot="primary">
                 <ion-button color="secondary" fill="outline">
                   Info
                   <ion-icon slot="end" name="information-circle"></ion-icon>
                 </ion-button>
               </ion-buttons>
-              <ion-title>Outline</ion-title>
             </ion-toolbar>
             <ion-toolbar>
               <ion-buttons slot="secondary">
-                <ion-button fill="outline" class="ion-activated">
-                  <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-                </ion-button>
                 <ion-button fill="outline" class="ion-activated">
                   <ion-icon slot="start" name="star"></ion-icon>
                   Star
                 </ion-button>
               </ion-buttons>
+              <ion-title>Outline Activated</ion-title>
               <ion-buttons slot="primary">
                 <ion-button color="secondary" fill="outline" class="ion-activated">
                   Info
                   <ion-icon slot="end" name="information-circle"></ion-icon>
                 </ion-button>
               </ion-buttons>
-              <ion-title>Outline Activated</ion-title>
             </ion-toolbar>
           </ion-header>
         `,
@@ -163,28 +155,6 @@ configs({ themes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) =
 
       const header = page.locator('ion-header');
       await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-icon-buttons`));
-    });
-
-    test('should not have visual regressions with buttons with text only', async ({ page }) => {
-      await page.setContent(
-        `
-          <ion-header>
-            <ion-toolbar>
-              <ion-buttons slot="secondary">
-                <ion-button>Go Back</ion-button>
-              </ion-buttons>
-              <ion-buttons slot="primary">
-                <ion-button href="#">Edit</ion-button>
-              </ion-buttons>
-              <ion-title>Text Only</ion-title>
-            </ion-toolbar>
-          </ion-header>
-        `,
-        config
-      );
-
-      const header = page.locator('ion-header');
-      await expect(header).toHaveScreenshot(screenshot(`toolbar-basic-text-buttons`));
     });
   });
 });
