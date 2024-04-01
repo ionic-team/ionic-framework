@@ -48,6 +48,82 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  * Translucent popovers are only available on iOS
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('popover: scrolling'), async () => {
+    test.only('should scroll to bottom without IonContent', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-popover {
+            --height: 150px;
+          }
+        </style>
+        <ion-popover>
+          <p>Text</p>
+          <p>Text</p>
+          <p>Text</p>
+          <p>Text</p>
+          <p>Text</p>
+          <p>Text</p>
+          <p>Text</p>
+          <p>Text</p>
+          <p>Text</p>
+          <p>Text</p>
+        </ion-popover>
+      `,
+        config
+      );
+
+      const popover = page.locator('ion-popover');
+      const p = popover.locator('p');
+      await popover.evaluate((el: HTMLIonPopoverElement) => el.present());
+
+      const lastP = await p.last();
+
+      await expect(lastP).not.toBeInViewport();
+
+      await lastP.scrollIntoViewIfNeeded();
+
+      await expect(lastP).toBeInViewport();
+    });
+    test.only('should scroll to bottom with IonContent', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-popover {
+            --height: 150px;
+          }
+        </style>
+        <ion-popover>
+          <ion-content>
+            <p>Text</p>
+            <p>Text</p>
+            <p>Text</p>
+            <p>Text</p>
+            <p>Text</p>
+            <p>Text</p>
+            <p>Text</p>
+            <p>Text</p>
+            <p>Text</p>
+            <p>Text</p>
+          </ion-content>
+        </ion-popover>
+      `,
+        config
+      );
+
+      const popover = page.locator('ion-popover');
+      const p = popover.locator('p');
+      await popover.evaluate((el: HTMLIonPopoverElement) => el.present());
+
+      const lastP = await p.last();
+
+      await expect(lastP).not.toBeInViewport();
+
+      await lastP.scrollIntoViewIfNeeded();
+
+      await expect(lastP).toBeInViewport();
+    });
+  });
   test.describe(title('popover: translucent variants'), async () => {
     let popoverFixture!: PopoverFixture;
     test.beforeEach(async ({ page }) => {
