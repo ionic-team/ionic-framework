@@ -479,7 +479,7 @@ export class Content implements ComponentInterface {
           </div>
         ) : null}
 
-        {fixedSlotPlacement !== 'beforeContent' ? <slot name="fixed"></slot> : null}
+        {fixedSlotPlacement === 'afterContent' ? <slot name="fixed"></slot> : null}
       </Host>
     );
   }
