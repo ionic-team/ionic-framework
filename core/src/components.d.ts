@@ -763,7 +763,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * To place a FAB or other fixed content before the main page content in the DOM, set this property to `beforeContent`.
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'beforeContent'`.
          */
         "fixedSlotPlacement": 'afterContent' | 'beforeContent';
         /**
@@ -5483,7 +5483,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * To place a FAB or other fixed content before the main page content in the DOM, set this property to `beforeContent`.
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'beforeContent'`.
          */
         "fixedSlotPlacement"?: 'afterContent' | 'beforeContent';
         /**
