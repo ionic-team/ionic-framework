@@ -2036,7 +2036,7 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   /**
    * Expression to be called when the split-pane visibility has changed
    */
-  ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean }>>;
+  ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean; }>>;
 }
 
 
