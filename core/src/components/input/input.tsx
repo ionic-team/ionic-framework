@@ -253,7 +253,7 @@ export class Input implements ComponentInterface {
   @Prop() step?: string;
 
   /**
-   * The size of the input. If "large" it will have an increased height. By default the
+   * The size of the input. If "large", it will have an increased height. By default the
    * size is unset. This property only applies to the `"ionic"` theme.
    */
   @Prop() size?: 'large';
