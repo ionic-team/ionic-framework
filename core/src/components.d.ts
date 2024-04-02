@@ -725,7 +725,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * Set to `"small"` for a checkbox with less height and padding or to `"default"` for a checkbox with the default height and padding.
+          * Set to `"small"` for a checkbox with less height and padding.
          */
         "size"?: 'small';
         /**
@@ -5957,7 +5957,7 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
-          * Set to `"small"` for a checkbox with less height and padding or to `"default"` for a checkbox with the default height and padding.
+          * Set to `"small"` for a checkbox with less height and padding.
          */
         "size"?: 'small';
         /**
