@@ -4,12 +4,12 @@
 
   /* Font sizes */
   --ionic-font-size-s: 12px;
-  --ionic-font-size-base: 14px;
+  --ionic-font-size-m: 14px;
   --ionic-font-size-l: 16px;
 
   /* Font size displays */
-  --ionic-display-m: 36px;
   --ionic-display-s: 32px;
+  --ionic-display-m: 36px;
 
   /* Headings */
   --ionic-h1-font-size: 28px;
@@ -44,7 +44,7 @@
 
 html {
   font-family: var(--ionic-font-family);
-  font-size: var(--ionic-font-size-base);
+  font-size: var(--ionic-font-size-m);
   font-weight: var(--ionic-font-regular);
   line-height: var(--ionic-line-height-m);
 }
@@ -122,8 +122,8 @@ h6,
 .ionic-font-size-s {
   font-size: var(--ionic-font-size-s);
 }
-.ionic-font-size-base {
-  font-size: var(--ionic-font-size-base);
+.ionic-font-size-m {
+  font-size: var(--ionic-font-size-m);
 }
 .ionic-font-size-l {
   font-size: var(--ionic-font-size-l);
