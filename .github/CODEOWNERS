@@ -30,7 +30,7 @@
 
 ## Vue
 
-/packages/vue/ @liamdebeasi @thetaPC
+/packages/vue/ @thetaPC
 /packages/vue-router/ @liamdebeasi @thetaPC
 /packages/vue/test/ @thetaPC
 /packages/vue-router/__tests__ @thetaPC
@@ -39,7 +39,7 @@
 
 /core/src/components/checkbox/ @amandaejohnston
 
-/core/src/components/datetime/ @liamdebeasi @amandaejohnston @sean-perkins
+/core/src/components/datetime/ @amandaejohnston @sean-perkins
 
 /core/src/components/item/ @brandyscarney
 
@@ -61,12 +61,10 @@
 
 # Utilities
 
-/core/src/utils/animation/ @liamdebeasi
 /core/src/utils/content/ @sean-perkins
 /core/src/utils/gesture/ @liamdebeasi
 /core/src/utils/input-shims/ @liamdebeasi
 /core/src/utils/logging/ @amandaejohnston
-/core/src/utils/sanitization/ @liamdebeasi
 
 /core/src/css/ @brandyscarney
 /core/src/themes/ @brandyscarney
