@@ -19,7 +19,7 @@ describe('content: fixed slot placement', () => {
   it('should should fixed slot before content', async () => {
     const page = await newSpecPage({
       components: [Content],
-      html: `<ion-content fixed-slot-placement="beforeContent"></ion-content>`,
+      html: `<ion-content fixed-slot-placement="before"></ion-content>`,
     });
 
     const content = page.body.querySelector('ion-content')!;

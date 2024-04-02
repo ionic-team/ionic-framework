@@ -80,9 +80,9 @@ export class Content implements ComponentInterface {
    * in the DOM. This can be used to control the order in which fixed elements
    * receive keyboard focus.
    * For example, if a FAB in the fixed slot should receive keyboard focus before
-   * the main page content, set this property to `'beforeContent'`.
+   * the main page content, set this property to `'before'`.
    */
-  @Prop() fixedSlotPlacement: 'afterContent' | 'beforeContent' = 'afterContent';
+  @Prop() fixedSlotPlacement: 'after' | 'before' = 'after';
 
   /**
    * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
@@ -456,7 +456,7 @@ export class Content implements ComponentInterface {
       >
         <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
 
-        {fixedSlotPlacement === 'beforeContent' ? <slot name="fixed"></slot> : null}
+        {fixedSlotPlacement === 'before' ? <slot name="fixed"></slot> : null}
 
         <div
           class={{
@@ -479,7 +479,7 @@ export class Content implements ComponentInterface {
           </div>
         ) : null}
 
-        {fixedSlotPlacement === 'afterContent' ? <slot name="fixed"></slot> : null}
+        {fixedSlotPlacement === 'after' ? <slot name="fixed"></slot> : null}
       </Host>
     );
   }
