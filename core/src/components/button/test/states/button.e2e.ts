@@ -78,7 +78,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
 
       const button = page.locator('ion-button');
 
-      await expect(button).toHaveScreenshot(screenshot(`button-activated-clear`));
+      await expect(button).toHaveScreenshot(screenshot(`button-activated-clear-color`));
     });
   });
 });
