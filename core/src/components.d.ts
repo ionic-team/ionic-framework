@@ -763,6 +763,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'before'`.
+         */
+        "fixedSlotPlacement": 'after' | 'before';
+        /**
           * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
         "forceOverscroll"?: boolean;
@@ -5482,6 +5486,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'before'`.
+         */
+        "fixedSlotPlacement"?: 'after' | 'before';
         /**
           * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
