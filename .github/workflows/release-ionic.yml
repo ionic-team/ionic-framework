@@ -41,8 +41,8 @@ jobs:
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-docs
-        output: docs/DocsBuild.zip
-        paths: docs/core.json docs/core.d.ts
+        output: packages/docs/DocsBuild.zip
+        paths: packages/docs/core.json packages/docs/core.d.ts
 
   release-docs:
     needs: [release-core]
@@ -53,7 +53,7 @@ jobs:
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-docs
-        path: ./docs
+        path: .packages/docs
         filename: DocsBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
