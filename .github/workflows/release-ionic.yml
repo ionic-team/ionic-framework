@@ -61,7 +61,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
-        working-directory: 'docs'
+        working-directory: 'packages/docs'
         token: ${{ secrets.NPM_TOKEN }}
 
   release-angular:
