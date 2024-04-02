@@ -145,9 +145,9 @@
   /**
     * The values were provided through MD design,
     * large and small are based on the iOS sizes.
-    * min font size: 13.5px, default font size: 22.4px, max font size: 40.5px
+    * min font size: 15px, default font size: 22.4px, max font size: 43px
     */
-  font-size: dynamic-font-clamp(0.53, 25.6px, 1.58, 1em);
+  font-size: dynamic-font-clamp(0.59, 25.6px, 1.68, 1em);
 }
 
 :host(.button-small.button-has-icon-only) {
@@ -161,9 +161,9 @@
   /**
     * The values were provided through MD design,
     * large and small are based on the iOS sizes.
-    * min font size: 13px, default font size: 16px, max font size: 38px
+    * min font size: 12px, default font size: 16px, max font size: 40px
     */
-  font-size: dynamic-font-clamp(0.62, 19.7px, 1.88, 1em);
+  font-size: dynamic-font-clamp(0.66, 19.7px, 2.05, 1em);
 }
 
 :host(.button-large.button-has-icon-only) {
@@ -177,9 +177,9 @@
   /**
     * The values were provided through MD design,
     * large and small are based on the iOS sizes.
-    * min font size: 13.5px, default font size: 28px, max font size: 40.5px
+    * min font size: 15px, default font size: 28px, max font size: 43px
     */
-    font-size: dynamic-font-clamp(0.6, 22.4px, 1.81, 1em);
+    font-size: dynamic-font-clamp(0.67, 22.4px, 1.92, 1em);
 }
 
 // Material Design Button: Hover
