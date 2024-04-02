@@ -725,6 +725,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Set to `"small"` for a checkbox with less height and padding or to `"default"` for a checkbox with the default height and padding.
+         */
+        "size"?: 'small';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -5952,6 +5956,10 @@ declare namespace LocalJSX {
           * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
+        /**
+          * Set to `"small"` for a checkbox with less height and padding or to `"default"` for a checkbox with the default height and padding.
+         */
+        "size"?: 'small';
         /**
           * The theme determines the visual appearance of the component.
          */

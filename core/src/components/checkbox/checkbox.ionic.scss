@@ -15,3 +15,14 @@
   // Size
   --size: #{$checkbox-ionic-size};
 }
+
+
+// Ionic Design Checkbox Sizes
+// --------------------------------------------------
+:host(.checkbox-size-small) {
+  --padding-top: #{$checkbox-ionic-small-padding-top};
+  --padding-bottom: #{$checkbox-ionic-small-padding-bottom};
+
+   // Size
+   --size: #{$checkbox-ionic-small-size};
+}

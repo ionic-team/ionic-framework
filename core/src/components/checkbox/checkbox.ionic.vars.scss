@@ -19,3 +19,12 @@ $checkbox-ionic-border-width: 1px !default;
 /// With a default size of 24px, the border radius is calculated as 24px / 4 - 2px = 4px
 /// With a small size of 16px, the border radius is calculated as 16px / 4 - 2px = 2px;
 $checkbox-ionic-border-radius: calc(var(--size) / 4 - 2px) !default;
+
+/// @prop - Icon size of the checkbox for the small size
+$checkbox-ionic-small-size: 16px !default;
+
+/// @prop - Padding top of the checkbox for the small size
+$checkbox-ionic-small-padding-top: 16px !default;
+
+/// @prop - Padding bottom of the button for the small size
+$checkbox-ionic-small-padding-bottom: 16px !default;

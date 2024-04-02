@@ -99,6 +99,11 @@ export class Checkbox implements ComponentInterface {
   @Prop() alignment: 'start' | 'center' = 'center';
 
   /**
+   * Set to `"small"` for a checkbox with less height and padding or to `"default"` for a checkbox with the default height and padding.
+  */
+  @Prop({ reflect: true }) size?: 'small';
+
+  /**
    * Emitted when the checked property has changed
    * as a result of a user action such as a click.
    * This event will not emit when programmatically
@@ -181,6 +186,7 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
       alignment,
+      size,
     } = this;
     const theme = getIonTheme(this);
 
@@ -201,6 +207,7 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-justify-${justify}`]: true,
           [`checkbox-alignment-${alignment}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
+          [`checkbox-size-${size}`]: size !== undefined,
         })}
         onClick={this.onClick}
       >
@@ -251,6 +258,12 @@ export class Checkbox implements ComponentInterface {
         <path d="M2 12H22" part="mark" />
       ) : (
         <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+      );
+    } else if (theme === 'ionic') {
+      path = indeterminate ? (
+        <path d="M6.5 12H17.5" stroke-linecap="round" part="mark" />
+      ) : (
+        <path d="M6 12.5L10 16.5L18.5 8" stroke-linecap="round" stroke-linejoin="round" part="mark" />
       );
     }
 
