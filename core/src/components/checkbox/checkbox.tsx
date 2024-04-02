@@ -100,7 +100,7 @@ export class Checkbox implements ComponentInterface {
 
   /**
    * Set to `"small"` for a checkbox with less height and padding.
-  */
+   */
   @Prop() size?: 'small';
 
   /**
