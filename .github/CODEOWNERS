@@ -41,8 +41,6 @@
 
 /core/src/components/datetime/ @amandaejohnston @sean-perkins
 
-/core/src/components/item/ @brandyscarney
-
 /core/src/components/menu/ @amandaejohnston
 /core/src/components/menu-toggle/ @amandaejohnston
 
@@ -52,19 +50,9 @@
 /core/src/components/radio/ @amandaejohnston
 /core/src/components/radio-group/ @amandaejohnston
 
-/core/src/components/searchbar/ @brandyscarney
-
-/core/src/components/segment/ @brandyscarney
-/core/src/components/segment-button/ @brandyscarney
-
-/core/src/components/skeleton-text/ @brandyscarney
-
 # Utilities
 
 /core/src/utils/content/ @sean-perkins
 /core/src/utils/gesture/ @liamdebeasi
 /core/src/utils/input-shims/ @liamdebeasi
 /core/src/utils/logging/ @amandaejohnston
-
-/core/src/css/ @brandyscarney
-/core/src/themes/ @brandyscarney
