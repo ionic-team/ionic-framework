@@ -99,7 +99,7 @@ export class Checkbox implements ComponentInterface {
   @Prop() alignment: 'start' | 'center' = 'center';
 
   /**
-   * Set to `"small"` for a checkbox with less height and padding or to `"default"` for a checkbox with the default height and padding.
+   * Set to `"small"` for a checkbox with less height and padding.
   */
   @Prop() size?: 'small';
 
