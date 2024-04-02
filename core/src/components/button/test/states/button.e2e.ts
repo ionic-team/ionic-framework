@@ -6,7 +6,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render solid button', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button class="activated">Button</ion-button>
+        <ion-button class="ion-activated">Button</ion-button>
       `,
         config
       );
@@ -19,7 +19,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render solid button with color', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button color="tertiary" class="activated">Button</ion-button>
+        <ion-button color="tertiary" class="ion-activated">Button</ion-button>
       `,
         config
       );
@@ -32,7 +32,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render outline button', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button fill="outline" class="activated">Button</ion-button>
+        <ion-button fill="outline" class="ion-activated">Button</ion-button>
       `,
         config
       );
@@ -45,7 +45,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render outline button with color', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button color="tertiary" fill="outline" class="activated">Button</ion-button>
+        <ion-button color="tertiary" fill="outline" class="ion-activated">Button</ion-button>
       `,
         config
       );
@@ -58,7 +58,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render clear button', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button fill="clear" class="activated">Button</ion-button>
+        <ion-button fill="clear" class="ion-activated">Button</ion-button>
       `,
         config
       );
@@ -71,7 +71,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render clear button with color', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button color="tertiary" fill="clear" class="activated">Button</ion-button>
+        <ion-button color="tertiary" fill="clear" class="ion-activated">Button</ion-button>
       `,
         config
       );
