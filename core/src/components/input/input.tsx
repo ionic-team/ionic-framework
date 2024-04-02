@@ -93,6 +93,11 @@ export class Input implements ComponentInterface {
   @Prop() clearInput = false;
 
   /**
+   * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+   */
+  @Prop() clearInputIcon?: string;
+
+  /**
    * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop() clearOnEdit?: boolean;
@@ -681,11 +686,13 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, clearInputIcon } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const defaultClearIcon = mode === 'ios' ? closeCircle : closeSharp;
+    const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -784,7 +791,7 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>
