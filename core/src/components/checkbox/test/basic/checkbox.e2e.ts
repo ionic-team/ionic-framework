@@ -130,7 +130,8 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       await page.setContent(
         `
         <div id="checkboxes">
-          <ion-checkbox size="small" >Focused</ion-checkbox>
+          <ion-checkbox size="small">Small</ion-checkbox>
+          <ion-checkbox size="small" checked="true">Small - Checked</ion-checkbox>
         </div>
       `,
         config
