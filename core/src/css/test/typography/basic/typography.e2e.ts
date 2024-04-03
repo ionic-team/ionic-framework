@@ -9,7 +9,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     test('should apply the globals styles for each semantic tag', async ({ page }) => {
       await page.setContent(
         `
-        <link href="../../../../../css/ionic.globals.ionic.css" rel="stylesheet" />
+        <link href="/css/typography.ionic.css" rel="stylesheet" />
         <div>
           <h1>H1: The quick brown fox jumps over the lazy dog</h1>
           <h2>H2: The quick brown fox jumps over the lazy dog</h2>
@@ -32,7 +32,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     test('should apply the utility classes for each heading', async ({ page }) => {
       await page.setContent(
         `
-        <link href="../../../../../css/ionic.globals.ionic.css" rel="stylesheet" />
+        <link href="/css/typography.ionic.css" rel="stylesheet" />
         <div>
           <h1 class="ionic-heading2 ionic-font-light">Tag H1 - Style Heading 2 - Font Light</h1>
           <h2 class="ionic-heading3 ionic-font-light">Tag H2 - Style Heading 3 - Font Light</h2>
@@ -52,7 +52,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     test('should apply the heading classes on ion-text element', async ({ page }) => {
       await page.setContent(
         `
-        <link href="../../../../../css/ionic.globals.ionic.css" rel="stylesheet" />
+        <link href="/css/typography.ionic.css" rel="stylesheet" />
         <div>
           <p><ion-text class="ionic-heading1">Utility class 'ionic-heading1'</ion-text></p>
           <p><ion-text class="ionic-heading2">Utility class 'ionic-heading2'</ion-text></p>
@@ -72,7 +72,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     test('should apply the utility classes for font weights', async ({ page }) => {
       await page.setContent(
         `
-        <link href="../../../../../css/ionic.globals.ionic.css" rel="stylesheet" />
+        <link href="/css/typography.ionic.css" rel="stylesheet" />
         <div>
           <p><ion-text class="ionic-font-light">Utility class 'ionic-font-light'</ion-text></p>
           <p><ion-text class="ionic-font-regular">Utility class 'ionic-font-regular'</ion-text></p>
@@ -91,7 +91,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     test('should apply the utility classes for font display', async ({ page }) => {
       await page.setContent(
         `
-        <link href="../../../../../css/ionic.globals.ionic.css" rel="stylesheet" />
+        <link href="/css/typography.ionic.css" rel="stylesheet" />
         <div>
           <p><ion-text class="ionic-display-s">Utility class 'ionic-display-s'</ion-text></p>
           <p><ion-text class="ionic-display-m">Utility class 'ionic-display-m'</ion-text></p>
