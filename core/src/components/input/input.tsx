@@ -182,7 +182,8 @@ export class Input implements ComponentInterface {
    * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = getIonTheme(this) === 'ionic' ? ionicThemeDefaultLabelPlacement : 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' =
+    getIonTheme(this) === 'ionic' ? ionicThemeDefaultLabelPlacement : 'start';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -469,8 +470,11 @@ export class Input implements ComponentInterface {
     const theme = getIonTheme(this);
     const { el, labelPlacement } = this;
 
-    if (theme === 'ionic' && (labelPlacement !== 'stacked' && labelPlacement !== 'floating')) {
-      printIonWarning(`The "${labelPlacement}" label placement is not supported in the ${theme} theme. The default value of "${ionicThemeDefaultLabelPlacement}" will be used instead.`, el);
+    if (theme === 'ionic' && labelPlacement !== 'stacked' && labelPlacement !== 'floating') {
+      printIonWarning(
+        `The "${labelPlacement}" label placement is not supported in the ${theme} theme. The default value of "${ionicThemeDefaultLabelPlacement}" will be used instead.`,
+        el
+      );
       return ionicThemeDefaultLabelPlacement;
     }
 
