@@ -1,5 +1,9 @@
 @use "../../themes/ionic.mixins" as mixins;
 
+// Chip
+// --------------------------------------------------
+
+// These variables below are not definitive! Should be replaced by the real global variables once the Design System work is done and merged!
 $ionic-color-neutral-10: #f5f5f5;
 $ionic-color-neutral-100: #dadada;
 $ionic-color-neutral-900: #05080f;
@@ -7,6 +11,7 @@ $ionic-border-size-small: 1px;
 $ionic-border-size-medium: 2px;
 $ionic-states-focus-primary: #9ec4fd; // there is no token yet for this one, but it should be created in the future, once UX team has figma tokens done
 $ionic-font-family: "Inter", sans-serif;
+$ionic-font-size-s: 14px;
 $ionic-border-radius-rounded-large: 16px;
 $ionic-space-xxs: 6px;
 $ionic-space-xs: 8px;
@@ -38,6 +43,7 @@ $ionic-space-xs: 8px;
   color: var(--color);
 
   font-family: $ionic-font-family;
+  font-size: $ionic-font-size-s;
 
   cursor: pointer;
 
@@ -70,9 +76,4 @@ $ionic-space-xs: 8px;
   :host(:hover) {
     --background: #{rgba($ionic-color-neutral-900, 0.16)};
   }
-
-  // This should be done after we have scss functions for the Ionic Design System tokens
-  // :host(.ion-color:hover) {
-  //     background: current-color(base, 0.12);
-  //}
 }
