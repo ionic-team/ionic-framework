@@ -36,6 +36,31 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: bottom content'), () => {
+    test('entire input component should render correctly with no fill', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
+      `,
+        config
+      );
+      const input = page.locator('ion-input');
+      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-no-fill`));
+    });
+    test('entire input component should render correctly with outline fill', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input fill="outline" value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
+      `,
+        config
+      );
+      const input = page.locator('ion-input');
+      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-outline`));
+    });
+  });
+});
+
 /**
  * Rendering is the same across modes
  */
