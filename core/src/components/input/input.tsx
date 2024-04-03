@@ -4,6 +4,7 @@ import type { NotchController } from '@utils/forms';
 import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -252,6 +253,12 @@ export class Input implements ComponentInterface {
   @Prop() step?: string;
 
   /**
+   * The size of the input. If "large", it will have an increased height. By default the
+   * size is unset. This property only applies to the `"ionic"` theme.
+   */
+  @Prop() size?: 'large';
+
+  /**
    * The type of control to display. The default type is text.
    */
   @Prop() type: TextFieldTypes = 'text';
@@ -462,6 +469,16 @@ export class Input implements ComponentInterface {
 
   private getValue(): string {
     return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
+  }
+
+  private getSize() {
+    const theme = getIonTheme(this);
+    const { size } = this;
+    if (theme !== 'ionic' && size === 'large') {
+      printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+    return size;
   }
 
   private onInput = (ev: InputEvent | Event) => {
@@ -686,6 +703,7 @@ export class Input implements ComponentInterface {
     const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
+    const size = this.getSize();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
@@ -721,6 +739,7 @@ export class Input implements ComponentInterface {
           'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
+          [`input-size-${size}`]: size !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
