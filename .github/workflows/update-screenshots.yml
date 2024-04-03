@@ -3,6 +3,20 @@ name: 'Update Reference Screenshots'
 on:
   workflow_dispatch:
     inputs:
+      # Screenshots can be updated for all components or specified component(s).
+      # If the `component` variable is set, then the test has the option to
+      # - run all the instances of the specified component(s) in the `src/components` folder
+      # -- For example: if the `component` value is "item", then the following command will be: `npm run test.e2e item`
+      # - run the specified file path
+      # -- For example: if the `component` value is "src/components/item/test/basic", then the following command will be: `npm run test.e2e src/components/item/test/basic`
+      # - run multiple specified components based on the space-separated value
+      # -- For example: if the `component` value is "item basic", then the following command will be: `npm run test.e2e item basic`
+      # -- For example: if the `component` value is "src/components/item/test/basic src/components/item/test/a11y", then the following command will be: `npm run test.e2e src/components/item/test/basic src/components/item/test/a11y`
+      #
+      # If the `component` variable is not set, then the test will run all the instances of the components in the `src/components` folder.
+      # - For example: `npm run test.e2e`
+      #
+      # More common options can be found at the Playwright Command line page: https://playwright.dev/docs/test-cli
       component:
         description: 'What component(s) should be updated? (leave blank to update all or use a space-separated list for multiple components)'
         required: false

@@ -39,3 +39,18 @@ describe('ion-checkbox: disabled', () => {
     expect(checkbox.checked).toBe(false);
   });
 });
+
+describe('ion-checkbox: indeterminate', () => {
+  it('should have a mixed value for aria-checked', async () => {
+    const page = await newSpecPage({
+      components: [Checkbox],
+      html: `
+        <ion-checkbox indeterminate="true">Checkbox</ion-checkbox>
+      `,
+    });
+
+    const checkbox = page.body.querySelector('ion-checkbox')!;
+
+    expect(checkbox.getAttribute('aria-checked')).toBe('mixed');
+  });
+});

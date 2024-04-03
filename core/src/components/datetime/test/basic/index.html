@@ -308,6 +308,13 @@
               </ion-datetime>
             </ion-modal>
           </div>
+
+          <div class="grid-item">
+            <h2>formatOptions</h2>
+            <ion-datetime value="2020-03-14T14:23:00.000Z" id="format-options-datetime">
+              <span slot="title">Select Date</span>
+            </ion-datetime>
+          </div>
         </div>
       </ion-content>
       <script>
@@ -402,6 +409,12 @@
           const app = document.querySelector('ion-app');
           app.appendChild(modalElement);
           return modalElement;
+        };
+
+        const formatOptions = document.querySelector('#format-options-datetime');
+        formatOptions.formatOptions = {
+          time: { hour: '2-digit', minute: '2-digit' },
+          date: { day: '2-digit', month: 'long', era: 'short' },
         };
       </script>
     </ion-app>

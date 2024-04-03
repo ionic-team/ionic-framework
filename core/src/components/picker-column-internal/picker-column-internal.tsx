@@ -92,7 +92,11 @@ export class PickerColumnInternal implements ComponentInterface {
    */
   componentWillLoad() {
     const visibleCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
+      /**
+       * Browsers will sometimes group multiple IO events into a single callback.
+       * As a result, we want to grab the last/most recent event in case there are multiple events.
+       */
+      const ev = entries[entries.length - 1];
 
       if (ev.isIntersecting) {
         const { activeItem, el } = this;

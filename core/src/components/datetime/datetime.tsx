@@ -20,6 +20,7 @@ import type {
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
   DatetimeHourCycle,
+  FormatOptions,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -33,7 +34,7 @@ import {
   getTimeColumnsData,
   getCombinedDateColumnData,
 } from './utils/data';
-import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import { formatValue, getLocalizedDateTime, getLocalizedTime, getMonthAndYear } from './utils/format';
 import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
@@ -68,6 +69,7 @@ import {
   isNextMonthDisabled,
   isPrevMonthDisabled,
 } from './utils/state';
+import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './utils/validate';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -106,6 +108,7 @@ export class Datetime implements ComponentInterface {
   private calendarBodyRef?: HTMLElement;
   private monthYearToggleItemRef?: HTMLIonItemElement;
   private popoverRef?: HTMLIonPopoverElement;
+  private intersectionTrackerRef?: HTMLElement;
   private clearFocusVisible?: () => void;
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
@@ -172,6 +175,20 @@ export class Datetime implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * Formatting options for dates and times.
+   * Should include a 'date' and/or 'time' object, each of which is of type [Intl.DateTimeFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options).
+   *
+   */
+  @Prop() formatOptions?: FormatOptions;
+
+  @Watch('formatOptions')
+  protected formatOptionsChanged() {
+    const { el, formatOptions, presentation } = this;
+    checkForPresentationFormatMismatch(el, presentation, formatOptions);
+    warnIfTimeZoneProvided(el, formatOptions);
+  }
+
+  /**
    * If `true`, the datetime appears normal but the selected date cannot be changed.
    */
   @Prop() readonly = false;
@@ -234,6 +251,12 @@ export class Datetime implements ComponentInterface {
    * `"time-date"` will show the time picker first and date picker second.
    */
   @Prop() presentation: DatetimePresentation = 'date-time';
+
+  @Watch('presentation')
+  protected presentationChanged() {
+    const { el, formatOptions, presentation } = this;
+    checkForPresentationFormatMismatch(el, presentation, formatOptions);
+  }
 
   private get isGridStyle() {
     const { presentation, preferWheel } = this;
@@ -1057,6 +1080,8 @@ export class Datetime implements ComponentInterface {
   }
 
   componentDidLoad() {
+    const { el, intersectionTrackerRef } = this;
+
     /**
      * If a scrollable element is hidden using `display: none`,
      * it will not have a scroll height meaning we cannot scroll elements
@@ -1084,7 +1109,7 @@ export class Datetime implements ComponentInterface {
         this.el.classList.add('datetime-ready');
       });
     };
-    const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01 });
+    const visibleIO = new IntersectionObserver(visibleCallback, { threshold: 0.01, root: el });
 
     /**
      * Use raf to avoid a race condition between the component loading and
@@ -1092,7 +1117,7 @@ export class Datetime implements ComponentInterface {
      * could cause the datetime to start at a visibility of 0, erroneously
      * triggering the `hiddenIO` observer below.
      */
-    raf(() => visibleIO?.observe(this.el));
+    raf(() => visibleIO?.observe(intersectionTrackerRef!));
 
     /**
      * We need to clean up listeners when the datetime is hidden
@@ -1122,8 +1147,8 @@ export class Datetime implements ComponentInterface {
         this.el.classList.remove('datetime-ready');
       });
     };
-    const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0 });
-    raf(() => hiddenIO?.observe(this.el));
+    const hiddenIO = new IntersectionObserver(hiddenCallback, { threshold: 0, root: el });
+    raf(() => hiddenIO?.observe(intersectionTrackerRef!));
 
     /**
      * Datetime uses Ionic components that emit
@@ -1357,7 +1382,7 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, highlightedDates, multiple, presentation, preferWheel } = this;
+    const { el, formatOptions, highlightedDates, multiple, presentation, preferWheel } = this;
 
     if (multiple) {
       if (presentation !== 'date') {
@@ -1380,6 +1405,11 @@ export class Datetime implements ComponentInterface {
       if (preferWheel) {
         printIonWarning('The highlightedDates property is not supported with preferWheel="true".', el);
       }
+    }
+
+    if (formatOptions) {
+      checkForPresentationFormatMismatch(el, presentation, formatOptions);
+      warnIfTimeZoneProvided(el, formatOptions);
     }
 
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
@@ -2354,7 +2384,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const { disabled, hourCycle, isTimePopoverOpen, locale } = this;
+    const { disabled, hourCycle, isTimePopoverOpen, locale, formatOptions } = this;
     const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
@@ -2389,7 +2419,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(locale, activePart, computedHourCycle)}
+        {getLocalizedTime(locale, activePart, computedHourCycle, formatOptions?.time)}
       </button>,
       <ion-popover
         alignment="center"
@@ -2424,7 +2454,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private getHeaderSelectedDateText() {
-    const { activeParts, multiple, titleSelectedDatesFormatter } = this;
+    const { activeParts, formatOptions, multiple, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
@@ -2439,7 +2469,11 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback());
+      headerText = getLocalizedDateTime(
+        this.locale,
+        this.getActivePartsWithFallback(),
+        formatOptions?.date ?? { weekday: 'short', month: 'short', day: 'numeric' }
+      );
     }
 
     return headerText;
@@ -2582,6 +2616,20 @@ export class Datetime implements ComponentInterface {
           }),
         }}
       >
+        {/*
+          WebKit has a quirk where IntersectionObserver callbacks are delayed until after
+          an accelerated animation finishes if the "root" specified in the config is the
+          browser viewport (the default behavior if "root" is not specified). This means
+          that when presenting a datetime in a modal on iOS the calendar body appears
+          blank until the modal animation finishes.
+
+          We can work around this by observing .intersection-tracker and using the host
+          (ion-datetime) as the "root". This allows the IO callback to fire the moment
+          the datetime is visible. The .intersection-tracker element should not have
+          dimensions or additional styles, and it should not be positioned absolutely
+          otherwise the IO callback may fire at unexpected times.
+        */}
+        <div class="intersection-tracker" ref={(el) => (this.intersectionTrackerRef = el)}></div>
         {this.renderDatetime(mode)}
       </Host>
     );
