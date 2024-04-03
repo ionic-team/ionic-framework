@@ -46,6 +46,7 @@ html {
   font-family: var(--ionic-font-family);
   font-size: var(--ionic-font-size-m);
   font-weight: var(--ionic-font-regular);
+  
   line-height: var(--ionic-line-height-m);
 }
 
@@ -62,42 +63,49 @@ h5,
 h6,
 .ionic-heading6 {
   color: var(--ionic-color-base);
+
   font-weight: var(--ionic-font-semibold);
 }
 
 h1,
 .ionic-heading1 {
   font-size: var(--ionic-h1-font-size);
+
   line-height: var(--ionic-line-height-xxl);
 }
 
 h2,
 .ionic-heading2 {
   font-size: var(--ionic-h2-font-size);
+
   line-height: var(--ionic-line-height-xl);
 }
 
 h3,
 .ionic-heading3 {
   font-size: var(--ionic-h3-font-size);
+
   line-height: var(--ionic-line-height-xl);
 }
 
 h4,
 .ionic-heading4 {
   font-size: var(--ionic-h4-font-size);
+
   line-height: var(--ionic-line-height-l);
 }
 
 h5,
 .ionic-heading5 {
   font-size: var(--ionic-h5-font-size);
+
   line-height: var(--ionic-line-height-l);
 }
 
 h6,
 .ionic-heading6 {
   font-size: var(--ionic-h6-font-size);
+
   line-height: var(--ionic-line-height-m);
 }
 
@@ -110,11 +118,13 @@ h6,
 
 .ionic-display-s {
   font-size: var(--ionic-display-s);
+
   line-height: var(--ionic-line-height-display-s);
 }
 
 .ionic-display-m {
   font-size: var(--ionic-display-m);
+
   line-height: var(--ionic-line-height-display-m);
 }
 
