@@ -1,5 +1,6 @@
+import { isIonContent, findClosestIonContent } from '@utils/content';
 import { createGesture } from '@utils/gesture';
-import { clamp, raf } from '@utils/helpers';
+import { clamp, raf, getElementRoot } from '@utils/helpers';
 
 import type { Animation } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
@@ -142,22 +143,35 @@ export const createSheetGesture = (
 
   const canStart = (detail: GestureDetail) => {
     /**
-     * If the sheet is fully expanded and
-     * the user is swiping on the content,
-     * the gesture should not start to
-     * allow for scrolling on the content.
+     * If we are swiping on the content, swiping should only be possible if the content
+     * is scrolled all the way to the top so that we do not interfere with scrolling.
+     *
+     * We cannot assume that the `ion-content` target will remain consistent between swipes.
+     * For example, when using ion-nav within a modal it is possible to swipe, push a view,
+     * and then swipe again. The target content will not be the same between swipes.
      */
-    const content = (detail.event.target! as HTMLElement).closest('ion-content');
+    const contentEl = findClosestIonContent(detail.event.target! as HTMLElement);
     currentBreakpoint = getCurrentBreakpoint();
 
-    if (currentBreakpoint === 1 && content) {
-      return false;
+    if (currentBreakpoint === 1 && contentEl) {
+      /**
+       * The modal should never swipe to close on the content with a refresher.
+       * Note 1: We cannot solve this by making this gesture have a higher priority than
+       * the refresher gesture as the iOS native refresh gesture uses a scroll listener in
+       * addition to a gesture.
+       *
+       * Note 2: Do not use getScrollElement here because we need this to be a synchronous
+       * operation, and getScrollElement is asynchronous.
+       */
+      const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
+      const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
+      return !hasRefresherInContent && scrollEl!.scrollTop === 0;
     }
 
     return true;
   };
 
-  const onStart = () => {
+  const onStart = (detail: GestureDetail) => {
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
@@ -173,11 +187,10 @@ export const createSheetGesture = (
     canDismissBlocksGesture = baseEl.canDismiss !== undefined && baseEl.canDismiss !== true && minBreakpoint === 0;
 
     /**
-     * If swiping on the content
-     * we should disable scrolling otherwise
-     * the sheet will expand and the content will scroll.
+     * If we are pulling down, then it is possible we are pulling on the content.
+     * We do not want scrolling to happen at the same time as the gesture.
      */
-    if (contentEl) {
+    if (detail.deltaY > 0 && contentEl) {
       contentEl.scrollY = false;
     }
 
@@ -193,6 +206,16 @@ export const createSheetGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
+    /**
+     * If we are pulling down, then it is possible we are pulling on the content.
+     * We do not want scrolling to happen at the same time as the gesture.
+     * This accounts for when the user scrolls down, scrolls all the way up, and then
+     * pulls down again such that the modal should start to move.
+     */
+    if (detail.deltaY > 0 && contentEl) {
+      contentEl.scrollY = false;
+    }
+
     /**
      * Given the change in gesture position on the Y axis,
      * compute where the offset of the animation should be
