@@ -111,7 +111,7 @@ $action-sheet-ios-button-background:                              linear-gradien
 $action-sheet-ios-button-background-activated:                    $text-color !default;
 
 /// @prop - Background color of the selected action sheet button
-$action-sheet-ios-button-background-selected:                     var(--ion-color-step-150, $background-color) !default;
+$action-sheet-ios-button-background-selected:                     var(--ion-color-step-150, var(--ion-background-color-step-150, $background-color)) !default;
 
 /// @prop - Destructive text color of the action sheet button
 $action-sheet-ios-button-destructive-text-color:                  ion-color(danger, base) !default;

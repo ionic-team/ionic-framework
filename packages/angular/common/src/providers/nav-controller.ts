@@ -37,9 +37,9 @@ export class NavController {
     if (router) {
       router.events.subscribe((ev) => {
         if (ev instanceof NavigationStart) {
+          // restoredState is set if the browser back/forward button is used
           const id = ev.restoredState ? ev.restoredState.navigationId : ev.id;
-          this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
-          this.guessAnimation = !ev.restoredState ? this.guessDirection : undefined;
+          this.guessDirection = this.guessAnimation = id < this.lastNavId ? 'back' : 'forward';
           this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
         }
       });

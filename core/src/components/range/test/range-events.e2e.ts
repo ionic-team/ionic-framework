@@ -104,7 +104,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
         skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
-        await page.goto(`/src/components/range/test/legacy/basic`, config);
+        await page.goto(`/src/components/range/test/basic`, config);
 
         const knobEl = page.locator('ion-range#stacked-range .range-knob-handle');
         const scrollEl = page.locator('ion-content .inner-scroll');

@@ -1,10 +1,4 @@
 @import "../../themes/ionic.globals";
 
-// Picker
-// --------------------------------------------------
-
-/// @prop - Width of the picker
-$picker-width:                             100% !default;
-
-/// @prop - Max width of the picker
-$picker-max-width:                         500px !default;
+$picker-fade-background-fallback: var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255));
+$picker-fade-background: var(--fade-background-rgb, $picker-fade-background-fallback);

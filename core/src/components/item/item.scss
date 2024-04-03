@@ -2,7 +2,6 @@
 
 // Item
 // --------------------------------------------------
-// TODO: FW-4955
 
 :host {
   /**
@@ -46,10 +45,6 @@
    *
    * @prop --ripple-color: Color of the item ripple effect
    *
-   * @prop --highlight-height: The height of the highlight on the item. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
-   * @prop --highlight-color-focused: The color of the highlight on the item when focused. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
-   * @prop --highlight-color-valid: The color of the highlight on the item when valid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
-   * @prop --highlight-color-invalid: The color of the highlight on the item when invalid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    */
   --border-radius: 0px;
   --border-width: 0px;
@@ -64,8 +59,6 @@
   --inner-padding-start: 0px;
   --inner-padding-end: 0px;
   --inner-box-shadow: none;
-  --show-full-highlight: 0;
-  --show-inset-highlight: 0;
   --detail-icon-color: initial;
   --detail-icon-font-size: 1.25em;
   --detail-icon-opacity: 0.25;
@@ -99,16 +92,15 @@
 // Item: Color
 // --------------------------------------------------
 
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native {
+:host(.ion-color) .item-native {
   background: current-color(base);
   color: current-color(contrast);
 }
 
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native,
-:host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-inner {
+:host(.ion-color) .item-native,
+:host(.ion-color) .item-inner {
   border-color: current-color(shade);
 }
-
 
 // Item: Activated
 // --------------------------------------------------
@@ -126,7 +118,6 @@
 :host(.ion-color.ion-activated) .item-native {
   color: current-color(contrast);
 }
-
 
 // Item: Focused
 // --------------------------------------------------
@@ -148,7 +139,6 @@
     background: current-color(contrast);
   }
 }
-
 
 // Item: Hover
 // --------------------------------------------------
@@ -176,10 +166,10 @@
 // Item: Interactive
 // --------------------------------------------------
 
-:host(.item-has-interactive-control) {
+// Inputs and textareas do not need the cursor, but other components like checkbox or toggle do.
+:host(.item-control-needs-pointer-cursor) {
   cursor: pointer;
 }
-
 
 // Item: Disabled
 // --------------------------------------------------
@@ -191,11 +181,9 @@
 
 :host(.item-disabled) {
   cursor: default;
-  opacity: .3;
+  opacity: 0.3;
   pointer-events: none;
 }
-
-
 
 // Native Item
 // --------------------------------------------------
@@ -256,13 +244,13 @@
   z-index: -1;
 }
 
-button, a {
+button,
+a {
   cursor: pointer;
   user-select: none;
 
   -webkit-user-drag: none;
 }
-
 
 // Inner Item
 // --------------------------------------------------
@@ -306,32 +294,6 @@ button, a {
   box-sizing: border-box;
 }
 
-// Item Bottom
-// --------------------------------------------------
-
-.item-bottom {
-  @include margin(0);
-  @include padding(0, null);
-
-  /* stylelint-disable */
-  @include ltr() {
-    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
-    padding-right: calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px));
-  }
-
-  @include rtl() {
-    padding-left: calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px));
-    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
-  }
-  /* stylelint-enable */
-
-  display: flex;
-
-  justify-content: space-between;
-
-}
-
-
 // Item Detail Icon
 // --------------------------------------------------
 
@@ -352,7 +314,6 @@ button, a {
 
   opacity: var(--detail-icon-opacity);
 }
-
 
 // Item Slots
 // --------------------------------------------------
@@ -423,156 +384,6 @@ button, a {
   flex-direction: column;
 }
 
-
-// Item Input Highlight
-// --------------------------------------------------
-
-.item-highlight,
-.item-inner-highlight {
-  @include position(0, 0, 0, 0);
-  @include border-radius(inherit);
-  position: absolute;
-
-  width: 100%;
-
-  height: 100%;
-
-  transform: scaleX(0);
-
-  transition: transform 200ms, border-bottom-width 200ms;
-
-  z-index: 2;
-
-  box-sizing: border-box;
-  pointer-events: none;
-}
-
-// Item Input Focused
-// --------------------------------------------------
-
-:host(.item-interactive.ion-focused),
-:host(.item-interactive.item-has-focus),
-:host(.item-interactive.ion-touched.ion-invalid) {
-  // If the item has a full border and highlight is enabled, show the full item highlight
-  --full-highlight-height: #{calc(var(--highlight-height) * var(--show-full-highlight))};
-
-  // If the item has an inset border and highlight is enabled, show the inset item highlight
-  --inset-highlight-height: #{calc(var(--highlight-height) * var(--show-inset-highlight))};
-}
-
-:host(.ion-focused) .item-highlight,
-:host(.ion-focused) .item-inner-highlight,
-:host(.item-has-focus) .item-highlight,
-:host(.item-has-focus) .item-inner-highlight {
-  transform: scaleX(1);
-
-  border-style: var(--border-style);
-  border-color: var(--highlight-background);
-}
-
-:host(.ion-focused) .item-highlight,
-:host(.item-has-focus) .item-highlight {
-  border-width: var(--full-highlight-height);
-
-  opacity: var(--show-full-highlight);
-}
-
-:host(.ion-focused) .item-inner-highlight,
-:host(.item-has-focus) .item-inner-highlight {
-  border-bottom-width: var(--inset-highlight-height);
-
-  opacity: var(--show-inset-highlight);
-}
-
-:host(.ion-focused.item-fill-solid) .item-highlight,
-:host(.item-has-focus.item-fill-solid) .item-highlight {
-  border-width: calc(var(--full-highlight-height) - 1px);
-}
-
-:host(.ion-focused) .item-inner-highlight,
-:host(.ion-focused:not(.item-fill-outline)) .item-highlight,
-:host(.item-has-focus) .item-inner-highlight,
-:host(.item-has-focus:not(.item-fill-outline)) .item-highlight {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-}
-
-
-// Item Input Focus
-// --------------------------------------------------
-
-:host(.item-interactive.ion-focused),
-:host(.item-interactive.item-has-focus) {
-  --highlight-background: var(--highlight-color-focused);
-}
-
-// Item Input Valid
-// --------------------------------------------------
-
-:host(.item-interactive.ion-valid) {
-  --highlight-background: var(--highlight-color-valid);
-}
-
-// Item Input Invalid
-// --------------------------------------------------
-
-:host(.item-interactive.ion-invalid) {
-  --highlight-background: var(--highlight-color-invalid);
-}
-
-:host(.item-interactive.ion-invalid) ::slotted([slot="helper"]) {
-  display: none;
-}
-
-::slotted([slot="error"]) {
-  display: none;
-
-  color: var(--highlight-color-invalid);
-}
-
-:host(.item-interactive.ion-invalid) ::slotted([slot="error"]) {
-  display: block;
-}
-
-// Item Select
-// --------------------------------------------------
-
-:host(:not(.item-label)) ::slotted(ion-select.legacy-select) {
-  --padding-start: 0;
-
-  max-width: none;
-}
-
-:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
-:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  --padding-start: 0;
-
-  align-self: stretch;
-
-  width: 100%;
-
-  max-width: 100%;
-}
-
-
-// Item Datetime
-// --------------------------------------------------
-
-:host(:not(.item-label)) ::slotted(ion-datetime) {
-  --padding-start: 0;
-}
-
-:host(.item-label-stacked) ::slotted(ion-datetime),
-:host(.item-label-floating) ::slotted(ion-datetime) {
-  --padding-start: 0;
-
-  width: 100%;
-}
-
-
 // Item w/ Multiple Inputs
 // --------------------------------------------------
 // Multiple inputs in an item should have the input
@@ -580,8 +391,7 @@ button, a {
 
 :host(.item-multiple-inputs) ::slotted(ion-checkbox),
 :host(.item-multiple-inputs) ::slotted(ion-datetime),
-:host(.item-multiple-inputs) ::slotted(ion-radio),
-:host(.item-multiple-inputs) ::slotted(ion-select.legacy-select) {
+:host(.item-multiple-inputs) ::slotted(ion-radio) {
   position: relative;
 }
 
@@ -592,14 +402,12 @@ button, a {
   align-items: stretch;
 }
 
-
 // Item Reorder
 // --------------------------------------------------
 
 ::slotted(ion-reorder[slot]) {
   @include margin(0, null);
 }
-
 
 // Item Button Ripple effect
 // --------------------------------------------------
@@ -608,42 +416,3 @@ ion-ripple-effect {
   color: var(--ripple-color);
 }
 
-:host(.item-fill-solid) ::slotted([slot="start"]),
-:host(.item-fill-solid) ::slotted([slot="end"]),
-:host(.item-fill-outline) ::slotted([slot="start"]),
-:host(.item-fill-outline) ::slotted([slot="end"]) {
-  align-self: center;
-}
-
-::slotted([slot="helper"]),
-::slotted([slot="error"]),
-.item-counter {
-  padding-top: 5px;
-
-  font-size: dynamic-font(12px);
-
-  z-index: 1;
-}
-
-// Item Max Length Counter
-// --------------------------------------------------
-
-.item-counter {
-  @include margin-horizontal(auto, null);
-
-  color: #{$background-color-step-550};
-
-  white-space: nowrap;
-
-  padding-inline-start: 16px;
-}
-
-// Item: Reduced Motion
-// --------------------------------------------------
-
-@media (prefers-reduced-motion: reduce) {
-  .item-highlight,
-  .item-inner-highlight {
-    transition: none;
-  }
-}

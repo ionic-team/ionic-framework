@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Picker Column - Basic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Picker Column - Disabled</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Even items disabled</h2>
+            <ion-picker>
+              <ion-picker-column id="half-disabled"></ion-picker-column>
+            </ion-picker>
+          </div>
+          <div class="grid-item">
+            <h2>Column disabled</h2>
+            <ion-picker>
+              <ion-picker-column id="column-disabled" disabled></ion-picker-column>
+            </ion-picker>
+          </div>
+        </div>
+      </ion-content>
+      <script>
+        const halfDisabledPicker = document.getElementById('half-disabled');
+        Array(24)
+          .fill()
+          .forEach((_, i) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = i;
+            option.textContent = i;
+            option.disabled = i % 2 === 0;
+
+            halfDisabledPicker.appendChild(option);
+          });
+        halfDisabledPicker.value = 12;
+
+        const fullDisabledPicker = document.getElementById('column-disabled');
+        Array(24)
+          .fill()
+          .forEach((_, i) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = i;
+            option.textContent = i;
+
+            fullDisabledPicker.appendChild(option);
+          });
+        fullDisabledPicker.value = 11;
+      </script>
+    </ion-app>
+  </body>
+</html>

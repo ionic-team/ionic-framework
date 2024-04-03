@@ -12,12 +12,6 @@
   --border-radius: #{$radio-md-icon-border-radius};
 }
 
-// TODO FW-3125: Remove this style
-:host(.legacy-radio) {
-  width: $radio-md-icon-width;
-  height: $radio-md-icon-height;
-}
-
 :host(.ion-color) .radio-inner {
   background: current-color(base);
 }
@@ -74,7 +68,6 @@
 // opacity set by its spec, while the label
 // should match the other form controls
 
-:host(.legacy-radio.radio-disabled),
 :host(.radio-disabled) .label-text-wrapper {
   opacity: $radio-md-disabled-opacity;
 }
@@ -85,10 +78,6 @@
 
 // Material Design Radio: Keyboard Focus
 // -----------------------------------------
-
-:host(.ion-focused.legacy-radio) .radio-icon::after {
-  @include position(-12px, null, null, -12px);
-}
 
 :host(.ion-focused) .radio-icon::after {
   @include border-radius(var(--inner-border-radius));
@@ -103,30 +92,6 @@
 
   content: "";
   opacity: 0.2;
-}
-
-// Material Design Radio Within An Item
-// -----------------------------------------
-
-:host(.in-item.legacy-radio) {
-  @include margin(
-    $radio-md-item-end-margin-top,
-    $radio-md-item-end-margin-end,
-    $radio-md-item-end-margin-bottom,
-    $radio-md-item-end-margin-start
-  );
-
-  display: block;
-  position: static;
-}
-
-:host(.in-item.legacy-radio[slot="start"]) {
-  @include margin(
-    $radio-md-item-start-margin-top,
-    $radio-md-item-start-margin-end,
-    $radio-md-item-start-margin-bottom,
-    $radio-md-item-start-margin-start
-  );
 }
 
 // Radio Native Wrapper

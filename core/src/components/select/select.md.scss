@@ -9,14 +9,7 @@
 :host {
   --border-width: 1px;
   --border-color: #{$item-md-border-color};
-}
-
-// TODO FW-3194 - Remove this
-:host(.legacy-select) {
-  --padding-top: #{$select-md-padding-top};
-  --padding-end: #{$select-md-padding-end};
-  --padding-bottom: #{$select-md-padding-bottom};
-  --padding-start: #{$select-md-padding-start};
+  --highlight-height: 2px;
 }
 
 .select-icon {
@@ -58,7 +51,7 @@
   position: absolute;
 
   width: 100%;
-  height: 2px;
+  height: var(--highlight-height);
 
   transform: scale(0);
 
@@ -89,7 +82,7 @@
  * when the select is activated.
  * This should only happen on MD.
  */
-:host(.select-expanded:not(.legacy-select):not(.has-expanded-icon)) .select-icon {
+:host(.select-expanded:not(.has-expanded-icon)) .select-icon {
   @include transform(rotate(180deg));
 }
 
@@ -104,31 +97,6 @@
 :host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
 :host(.ion-focused) .select-wrapper .select-icon {
   color: var(--highlight-color);
-}
-
-/**
- * Adjust the arrow so that it appears in the middle
- * of the item. If the item has fill="outline" then
- * we should adjust the entire ion-select rather than
- * just the outline so the selected value appears centered too.
- */
-:host-context(.item-label-stacked) .select-icon,
-:host-context(.item-label-floating:not(.item-fill-outline)) .select-icon,
-:host-context(.item-label-floating.item-fill-outline) {
-  @include transform(translate3d(0, -9px, 0));
-}
-
-:host-context(.item-has-focus):host(:not(.has-expanded-icon)) .select-icon {
-  @include transform(rotate(180deg));
-}
-
-/**
- * Ensure that the translation we did
- * above is preserved when we rotate the select icon.
- */
-:host-context(.item-has-focus.item-label-stacked):host(:not(.has-expanded-icon)) .select-icon,
-:host-context(.item-has-focus.item-label-floating:not(.item-fill-outline)):host(:not(.has-expanded-icon)) .select-icon {
-  @include transform(rotate(180deg), translate3d(0, -9px, 0));
 }
 
 // Select Shape Rounded

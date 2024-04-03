@@ -99,7 +99,7 @@ $alert-ios-content-max-height:                          240px !default;
 $alert-ios-input-margin-top:                            10px !default;
 
 /// @prop - Padding top on the alert input
-$alert-ios-input-padding-top:                           6px !default;
+$alert-ios-input-padding-top:                           7px !default;
 
 /// @prop - Padding end on the alert input
 $alert-ios-input-padding-end:                           $alert-ios-input-padding-top !default;
@@ -120,7 +120,7 @@ $alert-ios-input-border-color:                          $background-color-step-2
 $alert-ios-input-border:                                $hairlines-width solid $alert-ios-input-border-color !default;
 
 /// @prop - Border radius of the alert input
-$alert-ios-input-border-radius:                         4px !default;
+$alert-ios-input-border-radius:                         7px !default;
 
 /// @prop - Background color of the alert input
 $alert-ios-input-background-color:                      $background-color !default;
@@ -264,10 +264,10 @@ $alert-ios-checkbox-margin-bottom:                      10px !default;
 $alert-ios-checkbox-margin-start:                       16px !default;
 
 /// @prop - Size of the checkbox in the alert
-$alert-ios-checkbox-size:                               dynamic-font-max(24px, 2.75) !default;
+$alert-ios-checkbox-size:                               dynamic-font-max(22px, 2.538) !default;
 
 /// @prop - Border width of the checkbox in the alert
-$alert-ios-checkbox-border-width:                       dynamic-font(1px) !default;
+$alert-ios-checkbox-border-width:                       dynamic-font(2px) !default;
 
 /// @prop - Border style of the checkbox in the alert
 $alert-ios-checkbox-border-style:                       solid !default;
@@ -288,10 +288,10 @@ $alert-ios-checkbox-background-color-off:               $item-ios-background !de
 $alert-ios-checkbox-background-color-on:                ion-color(primary, base) !default;
 
 /// @prop - Top of the icon in the checkbox alert
-$alert-ios-checkbox-icon-top:                           calc($alert-ios-checkbox-size / 6) !default;
+$alert-ios-checkbox-icon-top:                           calc($alert-ios-checkbox-size / 8) !default;
 
 /// @prop - Start of the icon in the checkbox alert
-$alert-ios-checkbox-icon-start:                         calc($alert-ios-checkbox-size / 3 + 1px) !default;
+$alert-ios-checkbox-icon-start:                         calc($alert-ios-checkbox-size / 3) !default;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-ios-checkbox-icon-width:                         calc($alert-ios-checkbox-size / 6 + 1px) !default;

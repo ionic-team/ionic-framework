@@ -17,6 +17,7 @@
   --button-background-selected: #{$action-sheet-ios-button-background-selected};
   --button-background-selected-opacity: 1;
   --button-color: #{$action-sheet-ios-button-text-color};
+  --button-color-disabled: #{$text-color-step-150};
   --color: #{$action-sheet-ios-title-color};
 
   text-align: $action-sheet-ios-text-align;

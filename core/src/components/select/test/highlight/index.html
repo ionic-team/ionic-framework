@@ -33,6 +33,13 @@
           padding: 0;
         }
       }
+
+      .custom {
+        --highlight-color-focused: purple;
+        --highlight-color-invalid: purple;
+        --highlight-color-valid: purple;
+        --highlight-height: 6px;
+      }
     </style>
   </head>
 
@@ -117,6 +124,30 @@
           </div>
         </div>
 
+        <h1>No Fill, Custom</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-select label-placement="start" value="hi@ionic.io" class="custom ion-focused" label="Fruit">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid, Focus</h2>
+            <ion-select label-placement="start" class="custom ion-valid ion-focused" label="Fruit">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-select label-placement="start" class="custom ion-touched ion-invalid" label="Fruit">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
         <h1>Solid, Default</h1>
         <div class="grid">
           <div class="grid-item">
@@ -189,6 +220,36 @@
           </div>
         </div>
 
+        <h1>Solid, Custom</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-select
+              fill="solid"
+              label-placement="start"
+              value="hi@ionic.io"
+              class="custom ion-focused"
+              label="Fruit"
+            >
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid, Focus</h2>
+            <ion-select fill="solid" label-placement="start" class="custom ion-valid ion-focused" label="Fruit">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-select fill="solid" label-placement="start" class="custom ion-touched ion-invalid" label="Fruit">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
         <h1>Outline, Default</h1>
         <div class="grid">
           <div class="grid-item">
@@ -256,6 +317,36 @@
           <div class="grid-item">
             <h2>Invalid</h2>
             <ion-select fill="outline" label-placement="stacked" class="ion-touched ion-invalid" label="Fruit">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <h1>Outline, Custom</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-select
+              fill="outline"
+              label-placement="start"
+              value="hi@ionic.io"
+              class="custom ion-focused"
+              label="Fruit"
+            >
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid, Focus</h2>
+            <ion-select fill="outline" label-placement="start" class="custom ion-valid ion-focused" label="Fruit">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-select fill="outline" label-placement="start" class="custom ion-touched ion-invalid" label="Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
           </div>
