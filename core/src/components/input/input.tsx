@@ -4,6 +4,7 @@ import type { NotchController } from '@utils/forms';
 import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -181,7 +182,7 @@ export class Input implements ComponentInterface {
    * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = getIonTheme(this) === 'ionic' ? ionicThemeDefaultLabelPlacement : 'start';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -464,6 +465,18 @@ export class Input implements ComponentInterface {
     return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
   }
 
+  private getLabelPlacement() {
+    const theme = getIonTheme(this);
+    const { el, labelPlacement } = this;
+
+    if (theme === 'ionic' && (labelPlacement !== 'stacked' && labelPlacement !== 'floating')) {
+      printIonWarning(`The "${labelPlacement}" label placement is not supported in the ${theme} theme. The default value of "${ionicThemeDefaultLabelPlacement}" will be used instead.`, el);
+      return ionicThemeDefaultLabelPlacement;
+    }
+
+    return labelPlacement;
+  }
+
   private onInput = (ev: InputEvent | Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
@@ -683,11 +696,12 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const { disabled, fill, readonly, shape, inputId, el, hasFocus } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
+    const labelPlacement = this.getLabelPlacement();
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -800,3 +814,4 @@ export class Input implements ComponentInterface {
 }
 
 let inputIds = 0;
+const ionicThemeDefaultLabelPlacement = 'stacked';
