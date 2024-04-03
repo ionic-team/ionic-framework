@@ -1,5 +1,12 @@
 @import "./input";
 @import "./input.ionic.vars";
+@import "./input.ionic.outline.scss";
 
 // Ionic Input
 // --------------------------------------------------
+
+:host {
+  --border-width: 1px;
+  --border-color: rgba(0, 0, 0, .13);
+  --highlight-height: 2px;
+}

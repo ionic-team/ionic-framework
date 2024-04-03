@@ -646,7 +646,7 @@ export class Input implements ComponentInterface {
    */
   private renderLabelContainer() {
     const theme = getIonTheme(this);
-    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
+    const hasOutlineFill = (theme === 'md' || theme === 'ionic') && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
