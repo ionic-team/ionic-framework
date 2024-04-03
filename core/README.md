@@ -89,14 +89,14 @@ defineCustomElement();
 
 const showModal = async () => {
   const modal = await modalController.create({ ... });
-  
+
   ...
 }
 ```
 
 ## How to contribute
 
-[Check out the CONTRIBUTE guide](/.github/CONTRIBUTING.md)
+[Check out the CONTRIBUTE guide](/docs/CONTRIBUTING.md)
 
 ## Related
 
