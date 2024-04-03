@@ -1,7 +1,6 @@
 {
   "packages": [
     "core",
-    "docs",
     "packages/*"
   ],
   "version": "7.8.2"
