@@ -103,6 +103,11 @@ export class Checkbox implements ComponentInterface {
    */
   @Prop() size?: 'small';
 
+   /**
+   * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
+   */
+   @Prop() shape?: 'soft' | 'rectangular' = 'soft';
+
   /**
    * Emitted when the checked property has changed
    * as a result of a user action such as a click.
@@ -187,6 +192,7 @@ export class Checkbox implements ComponentInterface {
       value,
       alignment,
       size,
+      shape,
     } = this;
     const theme = getIonTheme(this);
 
@@ -208,6 +214,7 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-alignment-${alignment}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
           [`checkbox-size-${size}`]: size !== undefined,
+          [`checkbox-shape-${shape}`]: true,
         })}
         onClick={this.onClick}
       >
