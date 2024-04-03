@@ -760,7 +760,7 @@ To work around this, you should set an RTL class on the host of your component a
 <Host
 class={{
   'my-cmp-rtl': document.dir === 'rtl'
-})
+}}
 >
  ...
 </Host>
