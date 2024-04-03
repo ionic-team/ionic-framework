@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
+## [7.8.3](https://github.com/ionic-team/ionic-framework/compare/v7.8.2...v7.8.3) (2024-04-03)
+
+
+### Bug Fixes
+
+* **button:** activated outline button in toolbar no longer blends into background on MD dark mode ([#29216](https://github.com/ionic-team/ionic-framework/issues/29216)) ([ee5da7a](https://github.com/ionic-team/ionic-framework/commit/ee5da7a747c0a0b420c5e371a9fe9ec4938d179e))
+* **popover:** viewport can be scrolled if no content present ([#29215](https://github.com/ionic-team/ionic-framework/issues/29215)) ([f08759c](https://github.com/ionic-team/ionic-framework/commit/f08759c2b8256ff66f8d1901bd8e0be4617db262)), closes [#29211](https://github.com/ionic-team/ionic-framework/issues/29211)
+
+
+
+
+
 # [8.0.0-rc.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.4...v8.0.0-rc.0) (2024-03-27)
 
 **Note:** Version bump only for package @ionic/core
