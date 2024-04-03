@@ -146,6 +146,15 @@
     * The values were provided through MD design,
     * large and small are based on the iOS sizes.
     * min font size: 15px, default font size: 22.4px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 14px
+    * (derived from rem) and the default font size of the icon is
+    * 22.4px, then the base size would need to be increased.
     */
   font-size: dynamic-font-clamp(0.59, 25.6px, 1.68, 1em);
 }
@@ -162,6 +171,15 @@
     * The values were provided through MD design,
     * large and small are based on the iOS sizes.
     * min font size: 12px, default font size: 16px, max font size: 40px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 13px
+    * (derived from rem) and the default font size of the icon is
+    * 16px, then the base size would need to be increased.
     */
   font-size: dynamic-font-clamp(0.66, 19.7px, 2.05, 1em);
 }
@@ -178,6 +196,15 @@
     * The values were provided through MD design,
     * large and small are based on the iOS sizes.
     * min font size: 15px, default font size: 28px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 20px
+    * (derived from rem) and the default font size of the icon is
+    * 28px, then the base size would need to be increased.
     */
     font-size: dynamic-font-clamp(0.67, 22.4px, 1.92, 1em);
 }

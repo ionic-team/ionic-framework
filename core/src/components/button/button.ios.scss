@@ -152,6 +152,15 @@
   /**
     * The values were provided through a native iOS app.
     * min font size: 15px, default font size: 18px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 16px
+    * (derived from rem), then the base size can use the default font
+    * size of the icon.
     */
   font-size: dynamic-font-clamp(0.84, 18px, 2.39, 1em);
 }
@@ -167,6 +176,15 @@
   /**
     * The values were provided through a native iOS app.
     * min font size: 12px, default font size: 17px, max font size: 40px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 13px
+    * (derived from rem) and the default font size of the icon is
+    * 17px, then the base size would need to be increased.
     */
   font-size: dynamic-font-clamp(0.58, 20.93px, 1.92, 1em);
 }
@@ -182,6 +200,15 @@
   /**
     * The values were provided through a native iOS app.
     * min font size: 15px, default font size: 18px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 20px
+    * (derived from rem) and the default font size of the icon is
+    * 18px, then the base size would need to be decreased.
     */
   font-size: dynamic-font-clamp(1.05, 14.4px, 2.99, 1em);
 }
