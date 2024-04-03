@@ -74,7 +74,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 /**
  * Shape="rectangular" is only available in the Ionic theme.
  */
-configs({ directions: ['ltr'], themes: ['ionic'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: shape'), () => {
     test.describe('rectangular', () => {
       test('should not have visual regressions', async ({ page }) => {

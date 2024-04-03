@@ -81,25 +81,10 @@ export class Searchbar implements ComponentInterface {
   @Prop() animated = false;
 
   /**
-   * Prior to the addition of this property
-   * autocapitalize was enabled by default on iOS
-   * and disabled by default on Android
-   * for Searchbar. The autocapitalize type on HTMLElement
-   * requires that it be a string and never undefined.
-   * However, setting it to a string value would be a breaking change
-   * in behavior, so we use "!" to tell TypeScript that this property
-   * is always defined so we can rely on the browser defaults. Browsers
-   * will automatically set a default value if the developer does not set one.
-   *
-   * In the future, this property will default to "off" to align with
-   * Input and Textarea, and the "!" will not be needed.
-   */
-
-  /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
    * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
-  @Prop() autocapitalize!: string;
+  @Prop() autocapitalize: string = 'off';
 
   /**
    * Set the input's autocomplete property.
