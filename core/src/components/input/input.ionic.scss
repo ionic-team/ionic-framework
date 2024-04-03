@@ -17,6 +17,6 @@
 // ----------------------------------------------------------------
 
 .input-bottom .helper-text {
-  // TODO: Verify the design token is correct once it's available and remove the hardcoded value.
+  // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
   color: var(--ionic-color-neutral-600, #535353);
 }
