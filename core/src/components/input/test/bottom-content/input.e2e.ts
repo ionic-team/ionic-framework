@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: bottom content'), () => {
     test('entire input component should render correctly with no fill', async ({ page }) => {
       await page.setContent(

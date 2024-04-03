@@ -12,3 +12,11 @@
 :host(.input-size-large) {
   min-height: 48px;
 }
+
+// Input Hint Text
+// ----------------------------------------------------------------
+
+.input-bottom .helper-text {
+  // TODO: Verify the design token is correct once it's available and remove the hardcoded value.
+  color: var(--ionic-color-neutral-600, #535353);
+}
