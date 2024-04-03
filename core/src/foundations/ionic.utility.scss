@@ -483,11 +483,23 @@ background-color: #008bef;
 .padding-space-none {
 padding: 0;
 }
-.margin-space-xxs {
+.margin-space-xxxxs {
+ margin: 2px;
+ }; 
+.padding-space-xxxxs {
+padding: 2px;
+}
+.margin-space-xxxs {
  margin: 4px;
  }; 
-.padding-space-xxs {
+.padding-space-xxxs {
 padding: 4px;
+}
+.margin-space-xss {
+ margin: 6px;
+ }; 
+.padding-space-xss {
+padding: 6px;
 }
 .margin-space-xs {
  margin: 8px;

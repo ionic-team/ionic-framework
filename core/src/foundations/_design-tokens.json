@@ -282,8 +282,14 @@
     "none": {
       "$value": "0"
     },
-    "xxs": {
+    "xxxxs": {
+      "$value": "2px"
+    },
+    "xxxs": {
       "$value": "4px"
+    },
+    "xss": {
+      "$value": "6px"
     },
     "xs": {
       "$value": "8px"
