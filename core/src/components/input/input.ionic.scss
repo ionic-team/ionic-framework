@@ -9,3 +9,10 @@
   --border-width: 1px;
   --border-color: #B8B8B8;
 }
+
+// Ionic Input Sizes
+// --------------------------------------------------
+
+:host(.input-size-large) {
+  min-height: 48px;
+}
