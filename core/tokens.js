@@ -15,7 +15,7 @@ StyleDictionary.registerFormat({
   formatter({ dictionary, file }) {
     // Add a prefix to all variable names
     const prefixedVariables = dictionary.allProperties.map((prop) => {
-      return `--${variablesPrefix}-${prop.name}: ${prop.value};`;
+      return `  --${variablesPrefix}-${prop.name}: ${prop.value};`;
     });
 
     return (
@@ -34,7 +34,7 @@ StyleDictionary.registerFormat({
   formatter({ dictionary, file }) {
     // Add a prefix to all variable names
     const prefixedVariables = dictionary.allProperties.map((prop) => {
-      return `$${variablesPrefix}-${prop.name}: ${prop.value};`;
+      return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});`;
     });
 
     return (
@@ -57,32 +57,32 @@ StyleDictionary.registerFormat({
 
       switch (tokenType) {
         case 'color':
-          utilityClass = `.${className} { color: ${prop.value}; }; 
-.background-${className} {background-color: ${prop.value};}`;
+          utilityClass = `.${variablesPrefix}-${className} {\n  color: $ionic-${prop.name};\n}
+.${variablesPrefix}-background-${className} {\n  background-color: $ionic-${prop.name};\n}`;
           break;
         case 'border':
           const borderAttribute = prop.attributes.type === 'radius' ? 'border-radius' : 'border-width';
-          utilityClass = `.${className} { ${borderAttribute}: ${prop.value}; }`;
+          utilityClass = `.${variablesPrefix}-${className} {\n  ${borderAttribute}: $ionic-${prop.name};\n}`;
           break;
         case 'font':
           const fontAttribute = prop.attributes.type === 'size' ? 'font-size' : 'font-weight';
-          utilityClass = `.${className} { ${fontAttribute}: ${prop.value}; }`;
+          utilityClass = `.${variablesPrefix}-${className} {\n  ${fontAttribute}: $ionic-${prop.name};\n}`;
           break;
         case 'elevation':
-          utilityClass = `.${className} { box-shadow: ${prop.value}; }`;
+          utilityClass = `.${variablesPrefix}-${className} {\n  box-shadow: $ionic-${prop.name};\n}`;
           break;
         case 'space':
-          utilityClass = `.margin-${className} { margin: ${prop.value}; }; 
-.padding-${className} {padding: ${prop.value};}`;
+          utilityClass = `.${variablesPrefix}-margin-${className} {\n  margin: $ionic-${prop.name};\n};
+.${variablesPrefix}-padding-${className} {\n  padding: $ionic-${prop.name};\n}`;
           break;
         default:
-          utilityClass = `.${className} { ${tokenType}: ${prop.value}; }`;
+          utilityClass = `.${variablesPrefix}-${className} {\n  ${tokenType}: $ionic-${prop.name};\n}`;
       }
 
       return utilityClass;
     });
 
-    return fileHeader({ file }) + utilityClasses.join('\n');
+    return [fileHeader({ file }), '@import "./ionic.vars";\n', utilityClasses.join('\n')].join('\n');
   },
 });
 
