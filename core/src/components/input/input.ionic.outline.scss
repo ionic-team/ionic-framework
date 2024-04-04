@@ -4,11 +4,11 @@
 // ----------------------------------------------------------------
 
 :host(.input-fill-outline) {
-  --border-radius: 8px;
-  --padding-start: 20px;
-  --padding-end: 20px;
+  --border-radius: 4px;
+  --padding-start: 12px;
+  --padding-end: 12px;
 
-  min-height: 56px;
+  min-height: 40px;
 }
 
 /**
