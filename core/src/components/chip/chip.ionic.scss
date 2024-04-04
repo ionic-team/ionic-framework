@@ -3,14 +3,15 @@
 // Chip
 // --------------------------------------------------
 
-// These variables below are not definitive! Should be replaced by the real global variables once the Design System work is done and merged!
+// TODO: These variables below are not definitive! Should be replaced by the real global variables once the Design System work is done and merged!
+// That work should be done once the PR #29245 is merged and FW-5964-migration is complete
 $ionic-color-neutral-10: #f5f5f5;
 $ionic-color-neutral-100: #dadada;
 $ionic-color-neutral-900: #05080f;
 $ionic-border-size-small: 1px;
 $ionic-border-size-medium: 2px;
-$ionic-states-focus-primary: #9ec4fd; // there is no token yet for this one, but it should be created in the future, once UX team has figma tokens done
-$ionic-font-family: "Inter", sans-serif;
+$ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet for this one, but it should be created in the future, once UX team has figma tokens done
+$ionic-font-family: "Inter", sans-serif; // TODO(ROU-4837): this will be replaced by the real variables once the Typography task is merged - ROU-4810 - on the final Chip task
 $ionic-font-size-s: 14px;
 $ionic-border-radius-rounded-large: 16px;
 $ionic-space-xxs: 6px;
