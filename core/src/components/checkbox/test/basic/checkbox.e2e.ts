@@ -140,5 +140,33 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       const checkboxes = page.locator('#checkboxes');
       await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-small`));
     });
+
+    test('should have the start label placement applied', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="checkboxes">
+          <ion-checkbox label-placement="start">Start</ion-checkbox>
+        </div>
+      `,
+        config
+      );
+
+      const checkboxes = page.locator('#checkboxes');
+      await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-label-placement_start`));
+    });
+
+    test('should have the end label placement applied', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="checkboxes">
+          <ion-checkbox label-placement="end">End</ion-checkbox>
+        </div>
+      `,
+        config
+      );
+
+      const checkboxes = page.locator('#checkboxes');
+      await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-label-placement_end`));
+    });
   });
 });
