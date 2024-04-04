@@ -26,9 +26,11 @@ It is based on <a href="https://www.webcomponents.org/introduction">Web Componen
 
 ## Packages
 
-| Project     | Package                                                          | Documentation                | Guides                                                            |
-| ----------- | ---------------------------------------------------------------- | ---------------------------- | ----------------------------------------------------------------- |
-| **Core**    | [`@ionic/core`](https://www.npmjs.com/package/@ionic/core)       | [Readme](core/README.md)     | [Scripts](core/scripts.md)                                        |
-| **Angular** | [`@ionic/angular`](https://www.npmjs.com/package/@ionic/angular) | [Readme](angular/README.md)  | [Testing](angular/testing.md)                                     |
-| **Vue**     | [`@ionic/vue`](https://www.npmjs.com/package/@ionic/vue)         | [Readme](vue/README.md)      | [Testing](vue/testing.md)                                         |
-| **React**   | [`@ionic/react`](https://www.npmjs.com/package/@ionic/react)     | [Readme](react/README.md)    | [Testing](react/testing.md) • [Testing Part 2](react/testing2.md) |
+| Project          | Package                                                                    | Documentation                    | Guides                                                            |
+| ---------------- | -------------------------------------------------------------------------- | ---------------------------------| ----------------------------------------------------------------- |
+| **Core**         | [`@ionic/core`](https://www.npmjs.com/package/@ionic/core)                 | [Readme](core/README.md)         | [Scripts](core/scripts.md)                                        |
+| **Angular**      | [`@ionic/angular`](https://www.npmjs.com/package/@ionic/angular)           | [Readme](angular/README.md)      | [Testing](angular/testing.md)                                     |
+| **Vue**          | [`@ionic/vue`](https://www.npmjs.com/package/@ionic/vue)                   | [Readme](vue/README.md)          | [Testing](vue/testing.md)                                         |
+| **Vue Router**   | [`@ionic/vue-router`](https://www.npmjs.com/package/@ionic/vue-router)     | [Readme](vue-router/README.md)   |                                                                   |
+| **React**        | [`@ionic/react`](https://www.npmjs.com/package/@ionic/react)               | [Readme](react/README.md)        | [Testing](react/testing.md) • [Testing Part 2](react/testing2.md) |
+| **React Router** | [`@ionic/react-router`](https://www.npmjs.com/package/@ionic/react-router) | [Readme](react-router/README.md) | [Testing](react-router/testing.md)                                |
