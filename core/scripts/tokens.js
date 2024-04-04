@@ -1,3 +1,9 @@
+/* For generating Design Tokens, we use Style Dictionary for several reasons:
+- It's prepared to easily generate tokens for multiple types of outputs (CSS, SCSS, iOS, Android, documentation, etc.).
+- It also works very well out of the box with any kind of Design Tokens formats, like Figma Tokens, as well as APIs to adjust to more custom ones.
+- It is probably the most well-known and widely used Design Tokens tool. It has also been regularly maintained for a long time.
+- It can easily scale to different necessities we might have in the future.
+*/
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const StyleDictionary = require('style-dictionary');
 
