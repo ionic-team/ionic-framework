@@ -47,6 +47,7 @@ export class Chip implements ComponentInterface {
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
+          'ion-focusable': true,
         })}
       >
         <slot></slot>

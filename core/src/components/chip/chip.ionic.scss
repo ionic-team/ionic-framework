@@ -51,21 +51,14 @@ $ionic-space-xs: 8px;
 
   overflow: hidden;
 
+  vertical-align: middle;
   box-sizing: border-box;
-}
-
-// Chip: Disabled
-// ---------------------------------------------
-
-:host(.chip-disabled) {
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 // Chip: Focus
 // ---------------------------------------------
 
-:host(:focus) {
+:host(.ion-focused) {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-width);
 }
@@ -77,4 +70,12 @@ $ionic-space-xs: 8px;
   :host(:hover) {
     --background: #{rgba($ionic-color-neutral-900, 0.16)};
   }
+}
+
+// Chip: Disabled
+// ---------------------------------------------
+
+:host(.chip-disabled) {
+  opacity: 0.6;
+  pointer-events: none;
 }
