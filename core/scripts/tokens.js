@@ -122,7 +122,7 @@ StyleDictionary.extend({
       ],
     },
     scss: {
-      buildPath: 'src/foundations/',
+      buildPath: './src/foundations/',
       transformGroup: 'scss',
       files: [
         {
