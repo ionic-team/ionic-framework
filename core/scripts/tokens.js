@@ -105,10 +105,10 @@ StyleDictionary.registerParser(w3cTokenJsonParser);
 
 // Generate Tokens
 StyleDictionary.extend({
-  source: ['src/foundations/*.json'],
+  source: ['./src/foundations/*.json'],
   platforms: {
     css: {
-      buildPath: 'src/foundations/',
+      buildPath: './src/foundations/',
       transformGroup: 'css',
       files: [
         {
