@@ -14,6 +14,29 @@
 
   // Size
   --size: #{$checkbox-ionic-size};
+
+  // Checkbox Target area
+  // -------------------------------------------------- 
+  &::after {
+    @include position(50%, 0, null, 0);
+
+    position: absolute;
+
+    height: 100%;
+    min-height: 48px;
+
+    transform: translateY(-50%);
+
+    content: "";
+
+    cursor: pointer;
+
+    z-index: 1;
+  }
+
+  .native-wrapper{
+    position: relative;
+  }
 }
 
 
