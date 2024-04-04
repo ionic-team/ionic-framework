@@ -11,7 +11,9 @@
   --border-style: #{$checkbox-ionic-border-style};
   --border-color: #{$checkbox-ionic-background-color-off};
   --checkmark-width: 3;
-
+  --focus-ring-color: #9ec4fd;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
   // Size
   --size: #{$checkbox-ionic-size};
 }
@@ -26,3 +28,19 @@
    // Size
    --size: #{$checkbox-ionic-small-size};
 }
+
+// Ionic Design Checkbox Required
+// --------------------------------------------------
+:host(.ion-invalid) {
+  .checkbox-icon {
+    border-color: #f72c2c;
+  }
+}
+
+// Focused
+:host(.ion-focused.ion-invalid) .native-wrapper {
+  --focus-ring-color: #ffafaf;
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
