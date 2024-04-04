@@ -5,6 +5,7 @@ Thanks for your interest in contributing to the Ionic Framework! 🎉
 - [Contributing Etiquette](#contributing-etiquette)
 - [Creating an Issue](#creating-an-issue)
   * [Creating a Good Code Reproduction](#creating-a-good-code-reproduction)
+- [Using VS Code on Windows](#using-vs-code-on-windows)
 - [Creating a Pull Request](#creating-a-pull-request)
   * [Requirements](#requirements)
   * [Setup](#setup)
@@ -81,6 +82,19 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 * **No secret code needed:** Creating a minimal reproduction of the issue prevents you from having to publish any proprietary code used in your project.
 * **Get help fixing the issue:** If we can reliably reproduce an issue, there is a good chance we will be able to address it.
 
+## Using VS Code on Windows
+
+To contribute on Windows, do the following:
+
+- Configure VS Code to read/save files using line breaks (LF) instead of carriage returns (CRLF). Set it globally by navigating to: Settings -> Text Editor -> Files -> Eol. Set to `\n`.
+
+  - You can optionally use the following settings in your `.vscode/settings.json`:
+    ```json
+    { "files.eol": "\n" }
+    ```
+
+- Check that the Git setting `core.autocrlf` is set to `false`: run `git config -l | grep autocrlf`. Switch it to false using: `git config --global core.autocrlf false`.
+- If you've already cloned the `ionic-framework` repo, the files may already be cached as LF. To undo this, you need to clean the cache files of the repository. Run the following (make sure you stage or commit your changes first): `git rm --cached -r .` then `git reset --hard`.
 
 ## Creating a Pull Request
 
@@ -245,6 +259,14 @@ npm install file:/~/ionic-vue-router-7.0.1.tgz
 
 
 #### Lint Changes
+
+> [!IMPORTANT]
+> If you are using a Windows machine, you will need to configure your local development environment to use the correct line endings.
+> - Check that the Git setting `core.autocrlf` is set to `false`: run `git config -l | grep autocrlf`. Switch it to false using: `git config --global core.autocrlf false`.
+> - If you've already cloned the `ionic-docs` repo, the files may already be cached as LF. To undo this, you need to clean the cache files of the repository. Run the following (make sure you stage or commit your changes first): `git rm --cached -r .` then `git reset --hard`.
+
+
+
 
 1. Run `npm run lint` to lint the TypeScript and Sass.
 2. If there are lint errors, run `npm run lint.fix` to automatically fix any errors. Repeat step 1 to ensure the errors have been fixed, and manually fix them if not.
