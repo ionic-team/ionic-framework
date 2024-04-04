@@ -14,7 +14,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'chip.ios.scss',
     md: 'chip.md.scss',
-    ionic: 'chip.md.scss',
+    ionic: 'chip.ionic.scss',
   },
   shadow: true,
 })
@@ -47,6 +47,7 @@ export class Chip implements ComponentInterface {
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
+          'ion-focusable': true,
         })}
       >
         <slot></slot>
