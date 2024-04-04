@@ -1,9 +1,11 @@
 @import "./input";
 @import "./input.ionic.vars";
+@import "./input.ionic.outline.scss";
 
 // Ionic Input
 // --------------------------------------------------
 :host {
+  --highlight-color-valid: var(--ionic-color-success-400, #52A518);
   // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
   --highlight-color-invalid: var(--ionic-color-error-600, #970606);
 }
@@ -15,12 +17,25 @@
   min-height: 48px;
 }
 
+// Input Bottom Content
+// ----------------------------------------------------------------
+
+.input-bottom {
+  @include padding-horizontal(0, 0);
+}
+
 // Input Hint Text
 // ----------------------------------------------------------------
 
 .input-bottom .helper-text {
   // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
   color: var(--ionic-color-neutral-600, #535353);
+  // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
+  font-weight: var(--ionic-font-medium, 500);
+}
+
+:host(.has-focus.ion-valid) .helper-text {
+  color: var(--ionic-color-success-800, #144B05);
 }
 
 .input-bottom .error-text {
