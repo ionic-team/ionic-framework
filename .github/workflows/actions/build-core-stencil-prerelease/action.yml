@@ -1,12 +1,12 @@
-name: 'Build Ionic Core with Stencil Prerelease'
-description: 'Build Ionic Core with a Prerelease Build of Stencil'
+name: "Build Ionic Core with Stencil Prerelease"
+description: "Build Ionic Core with a Prerelease Build of Stencil"
 inputs:
   stencil-version:
-    description: 'The NPM tag of @stencil/core to install.'
+    description: "The NPM tag of @stencil/core to install."
     type: string
     required: true
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -29,4 +29,4 @@ runs:
       with:
         name: ionic-core
         output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
+        paths: core/dist core/components core/src/foundations core/css core/hydrate core/loader core/src/components.d.ts
