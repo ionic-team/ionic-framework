@@ -51,8 +51,15 @@ $ionic-space-xs: 8px;
 
   overflow: hidden;
 
-  vertical-align: middle;
   box-sizing: border-box;
+}
+
+// Outline Chip
+// ---------------------------------------------
+
+:host(.chip-outline) {
+  border-color: $ionic-color-neutral-100;
+  --background: transparent;
 }
 
 // Chip: Focus
