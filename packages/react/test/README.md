@@ -1,3 +1,3 @@
 # React E2E Test Apps
 
-This file has been moved to [/docs/react/testing.md](/docs/react/testing.md).
+Refer to the [React Testing documentation](/docs/react/testing.md) in order to build and run the test app.

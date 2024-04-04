@@ -1,3 +1,3 @@
 # Angular E2E Test Apps
 
-This file has been moved to [/docs/angular/testing.md](/docs/angular/testing.md).
+Refer to the [Angular Testing documentation](/docs/angular/testing.md) in order to build and run the test app.

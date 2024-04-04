@@ -1,3 +1,3 @@
 # React Router E2E Test Apps
 
-This file has been moved to [/docs/react-router/testing.md](/docs/react-router/testing.md).
+Refer to the [React Router Testing documentation](/docs/react-router/testing.md) in order to build and run the test app.

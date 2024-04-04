@@ -1,3 +1,3 @@
 # React Test App
 
-This file has been moved to [/docs/react/testing2.md](/docs/react/testing2.md).
+Refer to the [React Testing documentation](/docs/react/testing2.md) in order to build and run the test app.
