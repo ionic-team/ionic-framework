@@ -1,4 +1,4 @@
-# React Router E2E Test Apps
+# React Router Testing
 
 Ionic Framework supports multiple versions of React Router. As a result, we need to verify that Ionic works correctly with each of these React Router versions.
 

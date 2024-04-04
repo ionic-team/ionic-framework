@@ -1,57 +1,11 @@
-# @ionic/vue
+# Ionic Vue
 
-Ionic Framework integration for Vue 3 apps.
-
-## Building
-
-1. Install dependencies in `@ionic/core`:
-
-```shell
-cd core && npm install
-```
-
-2. Build `@ionic/core`. This will generate Vue component bindings in the `packages/vue` directory:
-
-```shell
-npm run build
-````
-
-3. Install dependencies in `@ionic/vue`:
-
-```shell
-cd packages/vue && npm install
-```
-
-4. Build `@ionic/vue`:
-
-```shell
-npm run build
-````
-
-5. Install dependencies in `@ionic/vue-router`:
-
-```shell
-cd packages/vue-router && npm install
-```
-
-6. Build `@ionic/vue-router`:
-
-```shell
-npm run build
-````
-
-## Tests
-
-* E2E Tests are found in the `packages/vue/test/base/tests` directory and use Cypress.
-* When making changes to `@ionic/vue` or `@ionic/vue-router` you can run `npm run sync` in the [test-app directory](test/README.md#syncing-local-changes) to ensure that the test application is using your built changes. Be sure to build in the `vue` and `vue-router` directories first.
-* Tests can be run in headless mode by running `npm run cypress`.
-* If you want to open the Cypress test runner, you can run `node_modules/.bin/cypress open`.
-* Bug fix and feature PRs should have new tests verifying the PR functionality.
+The [@ionic/vue](https://www.npmjs.com/package/@ionic/vue) package builds on top of [@ionic/core](https://www.npmjs.com/package/@ionic/core) components.
 
 ## Contributing
 
-See our [Contributing Guide](https://github.com/ionic-team/ionic-framework/blob/main/docs/CONTRIBUTING.md).
+See our [Contributing Guide](/docs/CONTRIBUTING.md).
 
-## Need Help?
+## Testing
 
-Post your question on the [Ionic Forum](http://forum.ionicframework.com/).
+Refer to the [Vue Testing documentation](./testing.md) for testing the Vue package.

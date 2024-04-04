@@ -1,31 +1,11 @@
-# @ionic/vue-router
+# Ionic Vue Router
 
-Routing integration for `@ionic/vue` applications.
-
-## Building
-
-1. Install dependencies:
-
-```shell
-npm install
-```
-
-2. Run build script:
-
-```shell
-npm run build
-````
-
-## Tests
-
-* Tests are found in the `__tests__` directory and use Jest.
-* Tests can be run using `npm run test.spec`
-* Bug fix and feature PRs should have new tests verifying the PR functionality.
+The [@ionic/vue-router](https://www.npmjs.com/package/@ionic/vue-router) package is the routing integration for [@ionic/vue](https://www.npmjs.com/package/@ionic/vue). It uses the [Vue Router](https://router.vuejs.org/) library beneath the surface.
 
 ## Contributing
 
-See our [Contributing Guide](https://github.com/ionic-team/ionic-framework/blob/main/docs/CONTRIBUTING.md).
+See our [Contributing Guide](/docs/CONTRIBUTING.md).
 
-## Need Help?
+## Testing
 
-Post your question on the [Ionic Forum](http://forum.ionicframework.com/).
+Refer to the [Vue Router Testing documentation](./testing.md) for testing the Vue Router package.

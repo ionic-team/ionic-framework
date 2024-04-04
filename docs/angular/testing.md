@@ -1,4 +1,4 @@
-# Angular E2E Test Apps
+# Angular Testing
 
 Ionic Framework supports multiple versions of Angular. As a result, we need to verify that Ionic works correctly with each of these Angular versions.
 

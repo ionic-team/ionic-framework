@@ -1,4 +1,4 @@
-# Vue E2E Test Apps
+# Vue Testing
 
 Ionic Framework supports multiple versions of Vue. As a result, we need to verify that Ionic works correctly with each of these Vue versions.
 

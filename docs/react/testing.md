@@ -1,4 +1,4 @@
-# React E2E Test Apps
+# React Testing
 
 Ionic Framework supports multiple versions of React. As a result, we need to verify that Ionic works correctly with each of these React versions.
 
