@@ -63,78 +63,18 @@
 // Input Fill: Outline, Outline Container
 // ----------------------------------------------------------------
 
-/**
- * Note that while the ionic theme does not make use of the notch,
- * thus avoiding the need for separate outline container parts at all,
- * the element's structure has been kept the same to simplify the
- * component render function and keep selectors consistent between
- * the ionic and md themes.
- */
-
-:host(.input-fill-outline) .input-outline-container {
+:host(.input-fill-outline) .input-outline {
   @include position(0, 0, 0, 0);
-
-  display: flex;
+  @include border-radius(var(--border-radius));
 
   position: absolute;
 
   width: 100%;
   height: 100%;
-}
 
-:host(.input-fill-outline) .input-outline-start,
-:host(.input-fill-outline) .input-outline-end {
   pointer-events: none;
-}
 
-/**
- * Each piece of the container should have a top and bottom
- * border. This gives the appearance of a unified container
- * with a border.
- */
-:host(.input-fill-outline) .input-outline-start,
-:host(.input-fill-outline) .input-outline-notch,
-:host(.input-fill-outline) .input-outline-end {
-  border-top: var(--border-width) var(--border-style) var(--border-color);
-  border-bottom: var(--border-width) var(--border-style) var(--border-color);
-}
-
-/**
- * Ensures long labels do not cause the notch to flow
- * out of bounds.
- */
-:host(.input-fill-outline) .input-outline-notch {
-  max-width: calc(100% - var(--padding-start) - var(--padding-end));
-}
-
-/**
- * In the md theme, this element ensures that the notch
- * uses the size of the scaled text so that the border
- * cut-out is the correct width. However, a notch is not
- * shown in the ionic theme, so we only need to make sure
- * the text in this element is not visible or interactive.
- */
-:host(.input-fill-outline) .notch-spacer {
-  opacity: 0;
-  pointer-events: none;
-}
-
-:host(.input-fill-outline) .input-outline-start {
-  @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
-  @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
-
-  width: calc(var(--padding-start));
-}
-
-:host(.input-fill-outline) .input-outline-end {
-  @include border(null, var(--border-width) var(--border-style) var(--border-color), null, null);
-  @include border-radius(0px, var(--border-radius), var(--border-radius), 0px);
-
-  /**
-   * The ending outline fragment
-   * should take up the remaining free space.
-   */
-  flex-grow: 1;
+  border: var(--border-width) var(--border-style) var(--border-color);
 }
 
 

@@ -679,9 +679,9 @@ export class Input implements ComponentInterface {
    */
   private renderLabelContainer() {
     const theme = getIonTheme(this);
-    const hasOutlineFill = (theme === 'md' || theme === 'ionic') && this.fill === 'outline';
+    const hasOutlineFill = this.fill === 'outline';
 
-    if (hasOutlineFill) {
+    if (hasOutlineFill && theme === 'md') {
       /**
        * The outline fill has a special outline
        * that appears around the input and the label.
@@ -706,6 +706,12 @@ export class Input implements ComponentInterface {
         </div>,
         this.renderLabel(),
       ];
+    } else if (hasOutlineFill && theme === 'ionic') {
+      /**
+       * The ionic theme doesn't need the notch, so we can just
+       * return a single element for the entire border.
+       */
+      return [<div class="input-outline"></div>, this.renderLabel()];
     }
 
     /**
