@@ -1,7 +1,5 @@
 # Vue Router Testing
 
-Ionic Framework supports multiple versions of Vue Router. As a result, we need to verify that Ionic works correctly with each of these Vue Router versions.
-
 ## Tests
 
 * Tests are found in the `__tests__` directory and use Jest.
