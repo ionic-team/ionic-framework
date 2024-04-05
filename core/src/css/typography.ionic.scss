@@ -1,4 +1,6 @@
 @use "../foundations/ionic.vars.scss" as tokens;
+/* This import below is temporary, to make sure basic tests have access to all utility-classes */
+@import "../foundations/ionic.utility.scss";
 
 html {
   font-family: #{tokens.$ionic-font-family};
