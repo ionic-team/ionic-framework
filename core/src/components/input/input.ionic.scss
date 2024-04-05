@@ -23,6 +23,9 @@
 
 .input-bottom {
   @include padding-horizontal(0, 0);
+
+  // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
+  font-weight: var(--ionic-font-medium, 500);
 }
 
 // Input Hint Text
@@ -31,8 +34,6 @@
 .input-bottom .helper-text {
   // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
   color: var(--ionic-color-neutral-600, #535353);
-  // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
-  font-weight: var(--ionic-font-medium, 500);
 }
 
 :host(.has-focus.ion-valid) .helper-text {
