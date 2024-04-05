@@ -7,6 +7,8 @@
   --border-radius: 4px;
   --padding-start: 12px;
   --padding-end: 12px;
+  --placeholder-color: #535353;
+  --placeholder-opacity: 1;
 }
 
 /**
@@ -46,12 +48,14 @@
   max-width: calc(100% - var(--padding-start) - var(--padding-end));
 }
 
-/**
- * The label should appear on top of an outline
- * container that overlaps it so it is always clickable.
- */
 :host(.input-fill-outline) .label-text-wrapper {
+  /**
+   * The label should appear on top of an outline
+   * container that overlaps it so it is always clickable.
+   */
   position: relative;
+
+  color: #373737;
 }
 
 :host(.input-fill-outline) .native-wrapper {
