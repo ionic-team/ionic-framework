@@ -7,9 +7,15 @@
 // TODO: These variables below are not definitive! Should be replaced by the real global variables once the Design System work is done and merged!
 // That work should be done once the PR #29245 is merged and FW-5964-migration is complete
 $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet for this one, but it should be created in the future, once UX team has figma tokens done
-$ionic-font-family: "Inter", sans-serif; // TODO(ROU-4837): this will be replaced by the real variables once the Typography task is merged - ROU-4810 - on the final Chip task
 
 :host {
+  /**
+   * @prop --background: Background of the chip
+   * @prop --border-color: Color of the chip border
+   * @prop --color: Color of the chip
+   * @prop --focus-ring-color: Color of the chip focus outline
+   * @prop --focus-ring-width: Size of the chip focus outline
+   */
   --background: #{tokens.$ionic-color-neutral-10};
   --border-color: transparent;
   --color: #{tokens.$ionic-color-neutral-900};
@@ -36,8 +42,8 @@ $ionic-font-family: "Inter", sans-serif; // TODO(ROU-4837): this will be replace
   background: var(--background);
   color: var(--color);
 
-  font-family: $ionic-font-family;
-  font-size: tokens.$ionic-font-size-s;
+  font-family: tokens.$ionic-font-family;
+  font-size: tokens.$ionic-font-size-m;
 
   cursor: pointer;
 
