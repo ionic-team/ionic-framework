@@ -4,8 +4,8 @@
 
 ### 1. Clone ionic
 
-    git@github.com:ionic-team/ionic.git
-    cd ionic
+    git clone https://github.com/ionic-team/ionic-framework.git
+    cd ionic-framework
 
 ### 2. Run `npm install`
 
@@ -20,7 +20,7 @@ Make sure you are inside the `core` directory.
 
     npm start
 
-With the `dev` command, Ionic components will be built with [Stencil](https://stenciljs.com/), changes to source files are watched, a local http server will startup, and [http://localhost:3333/](http://localhost:3333/) will open in a browser.
+With the `start` command, Ionic components will be built with [Stencil](https://stenciljs.com/), changes to source files are watched, a local http server will startup, and [http://localhost:3333/](http://localhost:3333/) will open in a browser.
 
 ### 4. Preview
 
