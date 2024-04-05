@@ -20,15 +20,17 @@ It is based on <a href="https://www.webcomponents.org/introduction">Web Componen
 
 ## Guides
 
-- [Contributing](./CONTRIBUTING.md)
-- [Component Guide](./component-guide.md)
-- [Sass Guidelines](./sass-guidelines.md)
+| Guide                                   | Description                                                                              |
+| ----------------------------------------| ---------------------------------------------------------------------------------------- |
+| [Contributing](./CONTRIBUTING.md)       | How to contribute including creating pull requests, commit message guidelines, and more. |
+| [Component Guide](./component-guide.md) | Guidelines for implementing component states, accessibility, and more.                   |
+| [Sass Guidelines](./sass-guidelines.md) | Outlines scenarios where Sass members and comments should be used.                       |
 
 ## Packages
 
 | Project          | Package                                                                    | Documentation                    | Guides                                                            |
 | ---------------- | -------------------------------------------------------------------------- | ---------------------------------| ----------------------------------------------------------------- |
-| **Core**         | [`@ionic/core`](https://www.npmjs.com/package/@ionic/core)                 | [Readme](core/README.md)         | [Testing](core/testing.md)                                        |
+| **Core**         | [`@ionic/core`](https://www.npmjs.com/package/@ionic/core)                 | [Readme](core/README.md)         | [Testing](core/testing/README.md)                                 |
 | **Angular**      | [`@ionic/angular`](https://www.npmjs.com/package/@ionic/angular)           | [Readme](angular/README.md)      | [Testing](angular/testing.md)                                     |
 | **Vue**          | [`@ionic/vue`](https://www.npmjs.com/package/@ionic/vue)                   | [Readme](vue/README.md)          | [Testing](vue/testing.md)                                         |
 | **Vue Router**   | [`@ionic/vue-router`](https://www.npmjs.com/package/@ionic/vue-router)     | [Readme](vue-router/README.md)   | [Testing](vue-router/testing.md)                                  |

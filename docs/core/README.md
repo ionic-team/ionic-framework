@@ -8,4 +8,4 @@ See our [Contributing Guide](/docs/CONTRIBUTING.md).
 
 ## Testing
 
-Refer to the [Core Testing documentation](./testing.md) for testing the Core package.
+Refer to the [Core Testing documentation](./testing/README.md) for testing the Core package.
