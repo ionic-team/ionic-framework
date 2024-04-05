@@ -53,8 +53,8 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, config, screenshot }) => {
       await page.setContent(
         `
           <ion-input label-placement="start" fill="outline" value="hi@ionic.io" label="Email">
-            <ion-icon slot="start" name="lock" aria-hidden="true"></ion-icon>
-            <ion-icon slot="end" name="lock" aria-hidden="true"></ion-icon>
+            <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+            <ion-icon slot="end" name="lock-closed" aria-hidden="true"></ion-icon>
           </ion-input>
         `,
         config
