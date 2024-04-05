@@ -67,14 +67,16 @@
     "rollup": "^2.26.4",
     "sass": "^1.33.0",
     "serve": "^14.0.1",
+    "style-dictionary": "^3.9.2",
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
+    "build": "npm run clean && npm run build.tokens && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
+    "build.tokens": "node ./scripts/tokens.js && npm run lint.sass.fix",
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass --embed-sources src/css:./css",
