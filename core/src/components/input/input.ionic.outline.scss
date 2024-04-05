@@ -74,7 +74,7 @@
 :host(.input-fill-outline.input-label-placement-stacked) {
   // !important is needed to overwrite another !important on the host/base styles.
   /* stylelint-disable-next-line declaration-no-important */
-  padding-top: 20px !important;
+  @include padding(20px !important, null, null, null);
 }
 
 // This makes the label sit above the input.
