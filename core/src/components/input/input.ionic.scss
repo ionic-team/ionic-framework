@@ -1,11 +1,12 @@
 @import "./input";
 @import "./input.ionic.vars";
+@import "./input.ionic.outline.scss";
 
 // Ionic Input
 // --------------------------------------------------
 :host {
   // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
-  --highlight-color-invalid: var(--ionic-color-error-600, #970606);
+  --highlight-color-invalid: var(--ionic-color-error-400, #F72C2C);
 }
 
 // Ionic Input Sizes
@@ -23,6 +24,7 @@
   color: var(--ionic-color-neutral-600, #535353);
 }
 
-.input-bottom .error-text {
-  color: var(--highlight-color-invalid);
+:host(.ion-touched.ion-invalid) .error-text {
+  // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
+  color: var(--ionic-color-error-600, #970606);
 }
