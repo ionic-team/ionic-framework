@@ -265,7 +265,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-ionic-theme-fill-outline-label-stacked`));
+      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked`));
     });
   });
 });
