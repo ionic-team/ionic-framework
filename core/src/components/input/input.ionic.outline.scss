@@ -49,16 +49,6 @@
   position: relative;
 }
 
-/**
- * This ensures that the input does not
- * overlap the floating label while still
- * remaining visually centered.
- */
-:host(.input-fill-outline.input-label-placement-stacked) input,
-:host(.input-fill-outline.input-label-placement-floating) input {
-  @include margin(6px, 0, 6px, 0);
-}
-
 
 // Input Fill: Outline, Outline Container
 // ----------------------------------------------------------------
