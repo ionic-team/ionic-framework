@@ -101,10 +101,10 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-:host(.input-fill-outline) ::slotted([slot="start"]:last-of-type) {
+:host(.input-fill-outline) ::slotted([slot="start"]) {
   margin-inline-end: 8px;
 }
 
-:host(.input-fill-outline) ::slotted([slot="end"]:first-of-type) {
+:host(.input-fill-outline) ::slotted([slot="end"]) {
   margin-inline-start: 8px;
 }

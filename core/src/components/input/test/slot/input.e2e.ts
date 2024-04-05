@@ -52,7 +52,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, config, screenshot }) => {
     test('should not have visual regressions with a stacked label and outline fill', async ({ page }) => {
       await page.setContent(
         `
-          <ion-input label-placement="start" fill="outline" value="hi@ionic.io" label="Email">
+          <ion-input label-placement="stacked" fill="outline" value="hi@ionic.io" label="Email">
             <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
             <ion-icon slot="end" name="lock-closed" aria-hidden="true"></ion-icon>
           </ion-input>
