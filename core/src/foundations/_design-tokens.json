@@ -232,15 +232,55 @@
   },
   "font": {
     "$type": "font",
-    "size": {
-      "h1": {
-        "$value": "32px"
+    "family": {
+      "$value": "\"Inter\", sans-serif"
+    },
+    "letter-spacing": {
+      "none": {
+        "$value": "0em"
       },
-      "h2": {
+      "s": {
+        "$value": "0.1em"
+      },
+      "m": {
+        "$value": "0.15em"
+      }
+    },
+    "line-height": {
+      "xs": {
+        "$value": "16px"
+      },
+      "s": {
+        "$value": "20px"
+      },
+      "m": {
+        "$value": "24px"
+      },
+      "l": {
         "$value": "28px"
       },
+      "xl": {
+        "$value": "32px"
+      },
+      "xxl": {
+        "$value": "36px"
+      },
+      "display-s": {
+        "$value": "44px"
+      },
+      "display-m": {
+        "$value": "48px"
+      }
+    },
+    "size": {
+      "h1": {
+        "$value": "28px"
+      },
+      "h2": {
+        "$value": "32px"
+      },
       "h3": {
-        "$value": "26px"
+        "$value": "24px"
       },
       "h4": {
         "$value": "22px"
@@ -251,30 +291,35 @@
       "h6": {
         "$value": "18px"
       },
-      "display": {
+      "display-s": {
+        "$value": "32px"
+      },
+      "display-m": {
         "$value": "36px"
       },
-      "base": {
-        "$value": "16px"
-      },
       "s": {
+        "$value": "12px"
+      },
+      "m": {
         "$value": "14px"
       },
-      "xs": {
-        "$value": "12px"
+      "l": {
+        "$value": "16px"
       }
     },
-    "light": {
-      "$value": "300"
-    },
-    "regular": {
-      "$value": "400"
-    },
-    "semi-bold": {
-      "$value": "600"
-    },
-    "bold": {
-      "$value": "700"
+    "weight": {
+      "light": {
+        "$value": "300"
+      },
+      "regular": {
+        "$value": "400"
+      },
+      "semi-bold": {
+        "$value": "600"
+      },
+      "bold": {
+        "$value": "700"
+      }
     }
   },
   "space": {

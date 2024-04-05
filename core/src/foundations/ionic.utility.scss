@@ -438,6 +438,40 @@
 .ionic-background-color-info {
   background-color: $ionic-color-info;
 }
+
+.ionic-font-letter-spacing-none {
+  letter-spacing: $ionic-font-letter-spacing-none;
+}
+.ionic-font-letter-spacing-s {
+  letter-spacing: $ionic-font-letter-spacing-s;
+}
+.ionic-font-letter-spacing-m {
+  letter-spacing: $ionic-font-letter-spacing-m;
+}
+.ionic-font-line-height-xs {
+  line-height: $ionic-font-line-height-xs;
+}
+.ionic-font-line-height-s {
+  line-height: $ionic-font-line-height-s;
+}
+.ionic-font-line-height-m {
+  line-height: $ionic-font-line-height-m;
+}
+.ionic-font-line-height-l {
+  line-height: $ionic-font-line-height-l;
+}
+.ionic-font-line-height-xl {
+  line-height: $ionic-font-line-height-xl;
+}
+.ionic-font-line-height-xxl {
+  line-height: $ionic-font-line-height-xxl;
+}
+.ionic-font-line-height-display-s {
+  line-height: $ionic-font-line-height-display-s;
+}
+.ionic-font-line-height-display-m {
+  line-height: $ionic-font-line-height-display-m;
+}
 .ionic-font-size-h1 {
   font-size: $ionic-font-size-h1;
 }
@@ -456,29 +490,32 @@
 .ionic-font-size-h6 {
   font-size: $ionic-font-size-h6;
 }
-.ionic-font-size-display {
-  font-size: $ionic-font-size-display;
+.ionic-font-size-display-s {
+  font-size: $ionic-font-size-display-s;
 }
-.ionic-font-size-base {
-  font-size: $ionic-font-size-base;
+.ionic-font-size-display-m {
+  font-size: $ionic-font-size-display-m;
 }
 .ionic-font-size-s {
   font-size: $ionic-font-size-s;
 }
-.ionic-font-size-xs {
-  font-size: $ionic-font-size-xs;
+.ionic-font-size-m {
+  font-size: $ionic-font-size-m;
 }
-.ionic-font-light {
-  font-weight: $ionic-font-light;
+.ionic-font-size-l {
+  font-size: $ionic-font-size-l;
 }
-.ionic-font-regular {
-  font-weight: $ionic-font-regular;
+.ionic-font-weight-light {
+  font-weight: $ionic-font-weight-light;
 }
-.ionic-font-semi-bold {
-  font-weight: $ionic-font-semi-bold;
+.ionic-font-weight-regular {
+  font-weight: $ionic-font-weight-regular;
 }
-.ionic-font-bold {
-  font-weight: $ionic-font-bold;
+.ionic-font-weight-semi-bold {
+  font-weight: $ionic-font-weight-semi-bold;
+}
+.ionic-font-weight-bold {
+  font-weight: $ionic-font-weight-bold;
 }
 .ionic-margin-space-none {
   margin: $ionic-space-none;
