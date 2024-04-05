@@ -346,7 +346,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('input: highlights'), () => {
+  test.describe(title('input: highlights'), () => {
     test.describe('input: no fill', () => {
       test('should render valid state correctly', async ({ page }) => {
         await page.setContent(
