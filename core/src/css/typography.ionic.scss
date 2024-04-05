@@ -8,6 +8,7 @@ html {
   line-height: #{tokens.$ionic-font-line-height-m};
 }
 
+/* Composite utility classes for html headings and font classes, that aggregate size and weight, based on tokens*/
 h1,
 .ionic-heading1,
 h2,
@@ -67,21 +68,16 @@ h6,
   line-height: #{tokens.$ionic-font-line-height-m};
 }
 
-/* Utility Classes */
-/* Font size display */
-.ionic-font-display-s,
-.ionic-font-display-m {
-  font-weight: #{tokens.$ionic-font-weight-regular};
-}
-
 .ionic-display-s {
   font-size: #{tokens.$ionic-font-size-display-s};
+  font-weight: #{tokens.$ionic-font-weight-regular};
 
   line-height: #{tokens.$ionic-font-line-height-s};
 }
 
 .ionic-display-m {
   font-size: #{tokens.$ionic-font-size-display-m};
+  font-weight: #{tokens.$ionic-font-weight-regular};
 
   line-height: #{tokens.$ionic-font-line-height-m};
 }
