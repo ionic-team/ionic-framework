@@ -4,7 +4,7 @@
 - [Scope](#scope)
 - [Historical Usage](#historical-usage)
 - [Current Usage](#current-usage)
-- [Proposed Usage](#proposed-usage)
+- [Recommended Usage](#recommended-usage)
   * [Comments](#comments)
   * [Variables](#variables)
     + [✅ Global](#-global)
@@ -96,9 +96,9 @@ $action-sheet-ios-title-with-sub-title-font-weight:               600 !default;
 
 It could be argued though that the comment doesn't really help, as seeing the variable in use will explain its purpose the best. Additionally, this is an example of a variable that isn't necessary, given it is only used in one place, which is why it is so specific in the first place.
 
-## Proposed Usage
+## Recommended Usage
 
-There are two things that need to be outlined here: when we should use comments and when we should use variables. The sections below detail the proposed usage for each of these.
+There are two things that need to be outlined here: when we should use comments and when we should use variables. The sections below detail the recommended usage for each of these.
 
 ### Comments
 
