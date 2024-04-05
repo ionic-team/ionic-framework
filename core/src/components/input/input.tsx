@@ -713,17 +713,12 @@ export class Input implements ComponentInterface {
         </div>,
         this.renderLabel(),
       ];
-    } else if (hasOutlineFill && theme === 'ionic') {
-      /**
-       * The ionic theme doesn't need the notch, so we can just
-       * return a single element for the entire border.
-       */
-      return [<div class="input-outline"></div>, this.renderLabel()];
     }
 
     /**
-     * If not using the outline style,
-     * we can render just the label.
+     * If not using the outline style, OR if using the
+     * ionic theme, just render the label. For the ionic
+     * theme, the outline will be rendered elsewhere.
      */
     return this.renderLabel();
   }
@@ -785,6 +780,18 @@ export class Input implements ComponentInterface {
         <label class="input-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="native-wrapper">
+            {
+              /**
+               * For the ionic theme, we render the outline container here
+               * instead of higher up, so it can be positioned relative to
+               * the native wrapper instead of the <label> element or the
+               * entire component. This allows the label text to be positioned
+               * above the outline, while staying within the bounds of the
+               * <label> element, ensuring that clicking the label text
+               * focuses the input.
+               */
+              theme === 'ionic' && fill === 'outline' && <div class="input-outline"></div>
+            }
             <slot name="start"></slot>
             <input
               class="native-input"
