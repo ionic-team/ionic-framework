@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="#">
-    <img alt="Ionic Logo" src="https://github.com/ionic-team/ionic-framework/blob/main/.github/assets/logo.png?raw=true" width="60" />
-  </a>
+  <img alt="Ionic Logo" src="https://github.com/ionic-team/ionic-framework/blob/main/.github/assets/logo.png?raw=true" width="60" />
 </p>
 
 <h1 align="center">
