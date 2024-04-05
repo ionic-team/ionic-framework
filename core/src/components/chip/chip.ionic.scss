@@ -1,0 +1,81 @@
+@use "../../themes/ionic.mixins" as mixins;
+
+// Chip
+// --------------------------------------------------
+
+// TODO: These variables below are not definitive! Should be replaced by the real global variables once the Design System work is done and merged!
+// That work should be done once the PR #29245 is merged and FW-5964-migration is complete
+$ionic-color-neutral-10: #f5f5f5;
+$ionic-color-neutral-100: #dadada;
+$ionic-color-neutral-900: #05080f;
+$ionic-border-size-small: 1px;
+$ionic-border-size-medium: 2px;
+$ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet for this one, but it should be created in the future, once UX team has figma tokens done
+$ionic-font-family: "Inter", sans-serif; // TODO(ROU-4837): this will be replaced by the real variables once the Typography task is merged - ROU-4810 - on the final Chip task
+$ionic-font-size-s: 14px;
+$ionic-border-radius-rounded-large: 16px;
+$ionic-space-xxs: 6px;
+$ionic-space-xs: 8px;
+
+:host {
+  --background: #{$ionic-color-neutral-10};
+  --border-color: transparent;
+  --color: #{$ionic-color-neutral-900};
+  --focus-ring-color: #{$ionic-states-focus-primary};
+  --focus-ring-width: #{$ionic-border-size-medium};
+
+  @include mixins.font-smoothing;
+  @include mixins.padding($ionic-space-xs, $ionic-space-xxs);
+  @include mixins.border-radius($ionic-border-radius-rounded-large);
+
+  display: inline-flex;
+
+  position: relative;
+
+  align-items: center;
+
+  min-height: 32px;
+
+  border-width: $ionic-border-size-small;
+  border-style: solid;
+
+  border-color: var(--border-color);
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $ionic-font-family;
+  font-size: $ionic-font-size-s;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+// Chip: Focus
+// ---------------------------------------------
+
+:host(.ion-focused) {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-width);
+}
+
+// Chip: Hover
+// ---------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --background: #{rgba($ionic-color-neutral-900, 0.16)};
+  }
+}
+
+// Chip: Disabled
+// ---------------------------------------------
+
+:host(.chip-disabled) {
+  opacity: 0.6;
+  pointer-events: none;
+}
