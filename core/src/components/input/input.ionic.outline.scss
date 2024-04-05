@@ -89,3 +89,14 @@
    */
   max-width: calc((100% - var(--padding-start) - var(--padding-end)) / #{$form-control-label-stacked-scale});
 }
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline) ::slotted([slot="start"]:last-of-type) {
+  margin-inline-end: 8px;
+}
+
+:host(.input-fill-outline) ::slotted([slot="end"]:first-of-type) {
+  margin-inline-start: 8px;
+}
