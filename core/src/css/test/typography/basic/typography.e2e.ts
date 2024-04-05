@@ -18,8 +18,8 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           <h5>H5: The quick brown fox jumps over the lazy dog</h5>
           <h6>H6: The quick brown fox jumps over the lazy dog</h6>
           <p><ion-text class="ionic-font-size-l"><p>Tag_P FontLarge: The quick brown fox jumps over the lazy dog</p></ion-text><p>
+          <p><ion-text class="ionic-font-size-m">Tag_None FontMedium: The quick brown fox jumps over the lazydog</ion-text></p>
           <p><ion-text class="ionic-font-size-s"><span>Tag_Span FontSmall: The quick brown fox jumps over the lazy dog</span></ion-text></p>
-          <p><ion-text class="ionic-font-size-base">Tag_None FontBase: The quick brown fox jumps over the lazydog</ion-text></p>
         </div>
       `,
         config
@@ -34,12 +34,12 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         `
         <link href="/css/typography.ionic.css" rel="stylesheet" />
         <div>
-          <h1 class="ionic-heading2 ionic-font-light">Tag H1 - Style Heading 2 - Font Light</h1>
-          <h2 class="ionic-heading3 ionic-font-light">Tag H2 - Style Heading 3 - Font Light</h2>
+          <h1 class="ionic-heading2 ionic-font-weight-light">Tag H1 - Style Heading 2 - Font Light</h1>
+          <h2 class="ionic-heading3 ionic-font-weight-light">Tag H2 - Style Heading 3 - Font Light</h2>
           <h3 class="ionic-heading4">Tag H3 - Style Heading 4 - Font Regular</h3>
-          <h4 class="ionic-heading5 ionic-font-medium">Tag H4 - Style Heading 5 - Font Medium</h4>
+          <h4 class="ionic-heading5 ionic-font-weight-medium">Tag H4 - Style Heading 5 - Font Medium</h4>
           <h5 class="ionic-heading6">Tag H5 - Style Heading 6 - Font Semibold</h5>
-          <h6 class="ionic-heading1 ionic-font-bold">Tag H6 - Style Heading 1 - Font Bold</h6>
+          <h6 class="ionic-heading1 ionic-font-weight-bold">Tag H6 - Style Heading 1 - Font Bold</h6>
         </div>
       `,
         config
@@ -74,11 +74,11 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         `
         <link href="/css/typography.ionic.css" rel="stylesheet" />
         <div>
-          <p><ion-text class="ionic-font-light">Utility class 'ionic-font-light'</ion-text></p>
-          <p><ion-text class="ionic-font-regular">Utility class 'ionic-font-regular'</ion-text></p>
-          <p><ion-text class="ionic-font-medium">Utility class 'ionic-font-medium'</ion-text></p>
-          <p><ion-text class="ionic-font-semibold">Utility class 'ionic-font-semibold'</ion-text></p>
-          <p><ion-text class="ionic-font-bold">Utility class 'ionic-font-bold'</ion-text></p>
+          <p><ion-text class="ionic-font-weight-light">Utility class 'ionic-font-light'</ion-text></p>
+          <p><ion-text class="ionic-font-weight-regular">Utility class 'ionic-font-regular'</ion-text></p>
+          <p><ion-text class="ionic-font-weight-medium">Utility class 'ionic-font-medium'</ion-text></p>
+          <p><ion-text class="ionic-font-weight-semi-bold">Utility class 'ionic-font-semibold'</ion-text></p>
+          <p><ion-text class="ionic-font-weight-bold">Utility class 'ionic-font-bold'</ion-text></p>
         </div>
       `,
         config

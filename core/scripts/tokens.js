@@ -71,7 +71,23 @@ StyleDictionary.registerFormat({
           utilityClass = `.${variablesPrefix}-${className} {\n  ${borderAttribute}: $ionic-${prop.name};\n}`;
           break;
         case 'font':
-          const fontAttribute = prop.attributes.type === 'size' ? 'font-size' : 'font-weight';
+          let fontAttribute;
+          switch (prop.attributes.type) {
+            case 'size':
+              fontAttribute = 'font-size';
+              break;
+            case 'weight':
+              fontAttribute = 'font-weight';
+              break;
+            case 'line-height':
+              fontAttribute = 'line-height';
+              break;
+            case 'letter-spacing':
+              fontAttribute = 'letter-spacing';
+              break;
+            case 'family':
+              return;
+          }
           utilityClass = `.${variablesPrefix}-${className} {\n  ${fontAttribute}: $ionic-${prop.name};\n}`;
           break;
         case 'elevation':

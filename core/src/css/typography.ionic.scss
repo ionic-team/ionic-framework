@@ -1,55 +1,16 @@
-:root {
-  /* Font Family */
-  --ionic-font-family: "Inter", sans-serif;
-
-  /* Font sizes */
-  --ionic-font-size-s: 12px;
-  --ionic-font-size-m: 14px;
-  --ionic-font-size-l: 16px;
-
-  /* Font size displays */
-  --ionic-display-s: 32px;
-  --ionic-display-m: 36px;
-
-  /* Headings */
-  --ionic-h1-font-size: 28px;
-  --ionic-h2-font-size: 26px;
-  --ionic-h3-font-size: 24px;
-  --ionic-h4-font-size: 22px;
-  --ionic-h5-font-size: 20px;
-  --ionic-h6-font-size: 18px;
-
-  /* Font Weights */
-  --ionic-font-light: 300;
-  --ionic-font-regular: 400;
-  --ionic-font-medium: 500;
-  --ionic-font-semibold: 600;
-  --ionic-font-bold: 700;
-
-  /* Line heights */
-  --ionic-line-height-xs: 16px;
-  --ionic-line-height-s: 20px;
-  --ionic-line-height-m: 24px;
-  --ionic-line-height-l: 28px;
-  --ionic-line-height-xl: 32px;
-  --ionic-line-height-xxl: 36px;
-  --ionic-line-height-display-s: 44px;
-  --ionic-line-height-display-m: 48px;
-
-  /* Letter spacing */
-  --ionic-letter-spacing-none: 0em;
-  --ionic-letter-spacing-s: 0.1em;
-  --ionic-letter-spacing-m: 0.15em;
-}
+@use "../foundations/ionic.vars.scss" as tokens;
+/* This import below is temporary, to make sure basic tests have access to all utility-classes */
+@import "../foundations/ionic.utility.scss";
 
 html {
-  font-family: var(--ionic-font-family);
-  font-size: var(--ionic-font-size-m);
-  font-weight: var(--ionic-font-regular);
-  
-  line-height: var(--ionic-line-height-m);
+  font-family: #{tokens.$ionic-font-family};
+  font-size: #{tokens.$ionic-font-size-m};
+  font-weight: #{tokens.$ionic-font-weight-regular};
+
+  line-height: #{tokens.$ionic-font-line-height-m};
 }
 
+/* Composite utility classes for html headings and font classes, that aggregate size and weight, based on tokens*/
 h1,
 .ionic-heading1,
 h2,
@@ -62,109 +23,65 @@ h5,
 .ionic-heading5,
 h6,
 .ionic-heading6 {
-  color: var(--ionic-color-base);
+  color: #{tokens.$ionic-color-neutral-900};
 
-  font-weight: var(--ionic-font-semibold);
+  font-weight: #{tokens.$ionic-font-weight-semi-bold};
 }
 
 h1,
 .ionic-heading1 {
-  font-size: var(--ionic-h1-font-size);
+  font-size: #{tokens.$ionic-font-size-h1};
 
-  line-height: var(--ionic-line-height-xxl);
+  line-height: #{tokens.$ionic-font-line-height-xxl};
 }
 
 h2,
 .ionic-heading2 {
-  font-size: var(--ionic-h2-font-size);
+  font-size: #{tokens.$ionic-font-size-h2};
 
-  line-height: var(--ionic-line-height-xl);
+  line-height: #{tokens.$ionic-font-line-height-xl};
 }
 
 h3,
 .ionic-heading3 {
-  font-size: var(--ionic-h3-font-size);
+  font-size: #{tokens.$ionic-font-size-h3};
 
-  line-height: var(--ionic-line-height-xl);
+  line-height: #{tokens.$ionic-font-line-height-xl};
 }
 
 h4,
 .ionic-heading4 {
-  font-size: var(--ionic-h4-font-size);
+  font-size: #{tokens.$ionic-font-size-h4};
 
-  line-height: var(--ionic-line-height-l);
+  line-height: #{tokens.$ionic-font-line-height-l};
 }
 
 h5,
 .ionic-heading5 {
-  font-size: var(--ionic-h5-font-size);
+  font-size: #{tokens.$ionic-font-size-h5};
 
-  line-height: var(--ionic-line-height-l);
+  line-height: #{tokens.$ionic-font-line-height-l};
 }
 
 h6,
 .ionic-heading6 {
-  font-size: var(--ionic-h6-font-size);
+  font-size: #{tokens.$ionic-font-size-h6};
 
-  line-height: var(--ionic-line-height-m);
-}
-
-/* Utility Classes */
-/* Font size display */
-.ionic-font-display-s,
-.ionic-font-display-m {
-  font-weight: var(--ionic-font-regular);
+  line-height: #{tokens.$ionic-font-line-height-m};
 }
 
 .ionic-display-s {
-  font-size: var(--ionic-display-s);
+  font-size: #{tokens.$ionic-font-size-display-s};
+  font-weight: #{tokens.$ionic-font-weight-regular};
 
-  line-height: var(--ionic-line-height-display-s);
+  line-height: #{tokens.$ionic-font-line-height-s};
 }
 
 .ionic-display-m {
-  font-size: var(--ionic-display-m);
+  font-size: #{tokens.$ionic-font-size-display-m};
+  font-weight: #{tokens.$ionic-font-weight-regular};
 
-  line-height: var(--ionic-line-height-display-m);
-}
-
-/* Font sizes */
-.ionic-font-size-s {
-  font-size: var(--ionic-font-size-s);
-}
-.ionic-font-size-m {
-  font-size: var(--ionic-font-size-m);
-}
-.ionic-font-size-l {
-  font-size: var(--ionic-font-size-l);
-}
-
-/* Font weights */
-.ionic-font-light {
-  font-weight: var(--ionic-font-light);
-}
-.ionic-font-regular {
-  font-weight: var(--ionic-font-regular);
-}
-.ionic-font-medium {
-  font-weight: var(--ionic-font-medium);
-}
-.ionic-font-semibold {
-  font-weight: var(--ionic-font-semibold);
-}
-.ionic-font-bold {
-  font-weight: var(--ionic-font-bold);
-}
-
-/* Letter spacing */
-.ionic-letter-spacing-none {
-  letter-spacing: var(--ionic-letter-spacing-none);
-}
-.ionic-letter-spacing-s {
-  letter-spacing: var(--ionic-letter-spacing-s);
-}
-.ionic-letter-spacing-m {
-  letter-spacing: var(--ionic-letter-spacing-m);
+  line-height: #{tokens.$ionic-font-line-height-m};
 }
 
 /* Common */
