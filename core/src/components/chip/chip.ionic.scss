@@ -7,13 +7,6 @@
 $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet for this one, but it should be created in the future, once UX team has figma tokens done
 
 :host {
-  /**
-   * @prop --background: Background of the chip
-   * @prop --border-color: Color of the chip border
-   * @prop --color: Color of the chip
-   * @prop --focus-ring-color: Color of the chip focus outline
-   * @prop --focus-ring-width: Size of the chip focus outline
-   */
   --background: #{tokens.$ionic-color-neutral-10};
   --border-color: transparent;
   --color: #{tokens.$ionic-color-neutral-900};
