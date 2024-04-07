@@ -1,0 +1,78 @@
+<!-- TODO: FW-6077 This file can be removed once the additional test cases are added -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Card - Theme Ionic</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+  <style>
+    .ion-margin-top {
+      margin-top: 32px;
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Card - Ionic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
+      <h4>Preview options</h4>
+
+      <p>
+        <ion-select id="select-shape" justify="space-between" interface="alert" label="Shape" placeholder="">
+          <ion-select-option value="soft">Soft (default)</ion-select-option>
+          <ion-select-option value="round">Round</ion-select-option>
+          <ion-select-option value="rectangular">Rectangular</ion-select-option>
+        </ion-select>
+      </p>
+
+      <div id="screenshot-wrapper" class="ion-margin-top">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+            <ion-card-title>Card Title</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week
+            in the woods. Wash your spirit clean.
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    const listOfBtns = Array.from(document.querySelectorAll('ion-card'));
+
+    function updateAttr(el, name, value) {
+      if (value === '' || value === undefined) {
+        el.removeAttribute(name);
+      } else {
+        el.setAttribute(name, value);
+      }
+    }
+
+    const selectShape = document.getElementById('select-shape');
+    selectShape.addEventListener('ionChange', (e) => {
+      for (const el of listOfBtns) {
+        updateAttr(el, 'shape', e.detail.value);
+      }
+    });
+  </script>
+</body>
+
+</html>
