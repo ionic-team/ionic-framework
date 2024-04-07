@@ -20,7 +20,7 @@ import type { RouterDirection } from '../router/utils/interface';
   styleUrls: {
     ios: 'card.ios.scss',
     md: 'card.md.scss',
-    ionic: 'card.md.scss',
+    ionic: 'card.ionic.scss',
   },
   shadow: true,
 })
@@ -83,6 +83,11 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() routerAnimation: AnimationBuilder | undefined;
 
   /**
+   * Set to `"soft"` for a card with more rounded corners.
+   */
+  @Prop({ reflect: true }) shape?: 'soft' | 'round' | 'rectangular';
+
+  /**
    * Specifies where to display the linked URL.
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
@@ -131,12 +136,14 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
+    const { shape } = this;
     const theme = getIonTheme(this);
 
     return (
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
+          [`card-${shape}`]: shape !== undefined,
           'card-disabled': this.disabled,
           'ion-activatable': this.isClickable(),
         })}

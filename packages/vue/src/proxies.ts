@@ -184,6 +184,7 @@ export const IonCard = /*@__PURE__*/ defineContainer<JSX.IonCard>('ion-card', de
   'rel',
   'routerDirection',
   'routerAnimation',
+  'shape',
   'target'
 ]);
 
