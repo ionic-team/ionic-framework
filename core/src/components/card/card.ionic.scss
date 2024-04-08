@@ -1,25 +1,24 @@
 @use "../../foundations/ionic.vars.scss" as tokens;
-@import "./card";
 
-// Material Design Card
+// Ionic Theme  Card
 // --------------------------------------------------
 
 :host {
   /**
    * @prop --background: Background of the card
-   * @prop --color: Color of the card
+   * @prop --border-radius: Shape of the card
    */
   --background: #{tokens.$ionic-color-neutral-0};
   --border-radius: #{tokens.$ionic-border-radius-rounded-small};
-   padding: #{tokens.$ionic-space-base}; 
+  display: block;
 
-   border: #{tokens.$ionic-border-size-small} solid #{tokens.$ionic-color-neutral-10};
-   border-radius: var(--border-radius);
+  padding: #{tokens.$ionic-space-base};
 
- 
-   background: var(--background);
-   color: var(--color);
+  border: #{tokens.$ionic-border-size-small} solid #{tokens.$ionic-color-neutral-10};
+  border-radius: var(--border-radius);
 
+  background: var(--background);
+  color: var(--color);
 }
 
 :host(.card-soft) {
