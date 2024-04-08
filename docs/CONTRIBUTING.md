@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to the Ionic Framework! :tada:
+Thanks for your interest in contributing to the Ionic Framework! 🎉
 
 - [Contributing Etiquette](#contributing-etiquette)
 - [Creating an Issue](#creating-an-issue)
