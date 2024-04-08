@@ -20,7 +20,7 @@
   <a href="https://github.com/ionic-team/ionic-framework/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Ionic Framework is released under the MIT license." />
   </a>
-  <a href="https://github.com/ionic-team/ionic/blob/main/.github/CONTRIBUTING.md">
+  <a href="https://github.com/ionic-team/ionic/blob/main/docs/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
   <a href="https://twitter.com/Ionicframework">
@@ -38,7 +38,7 @@
     Documentation
   </a>
   <span> · </span>
-  <a href="https://github.com/ionic-team/ionic/blob/main/.github/CONTRIBUTING.md">Contribute</a>
+  <a href="https://github.com/ionic-team/ionic/blob/main/docs/CONTRIBUTING.md">Contribute</a>
   <span> · </span>
   <a href="https://blog.ionicframework.com/">Blog</a>
   <br />
@@ -88,7 +88,7 @@ The Ionic Conference App is a full featured Ionic app. It is the perfect startin
 ### Contributing
 
 Thanks for your interest in contributing! Read up on our guidelines for
-[contributing](https://github.com/ionic-team/ionic/blob/main/.github/CONTRIBUTING.md)
+[contributing](https://github.com/ionic-team/ionic/blob/main/docs/CONTRIBUTING.md)
 and then look through our issues with a [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
 label.
 
