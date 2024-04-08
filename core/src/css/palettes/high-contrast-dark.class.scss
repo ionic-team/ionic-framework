@@ -1,0 +1,13 @@
+@import "./high-contrast-dark";
+
+.ion-palette-high-contrast.ion-palette-dark {
+  @include high-contrast-dark-base-palette();
+}
+
+.ion-palette-high-contrast.ion-palette-dark.ios {
+  @include high-contrast-dark-ios-palette();
+}
+
+.ion-palette-high-contrast.ion-palette-dark.md {
+  @include high-contrast-dark-md-palette();
+}

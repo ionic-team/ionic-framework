@@ -57,7 +57,7 @@ configs({ modes: ['md'] }).forEach(({ config, screenshot, title }) => {
         await page.mouse.down();
       }
 
-      await page.waitForSelector('#default.ion-activated');
+      await page.locator('#default.ion-activated').waitFor();
 
       await expect(button).toHaveScreenshot(screenshot(`button-ripple-effect`));
     });

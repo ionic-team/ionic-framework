@@ -7,8 +7,8 @@ const DURATION = 540;
 
 // TODO(FW-2832): types
 
-const getClonedElement = (tagName: string): any => {
-  return document.querySelector(`${tagName}.ion-cloned-element`) as any;
+const getClonedElement = <T extends HTMLIonBackButtonElement | HTMLIonTitleElement>(tagName: string) => {
+  return document.querySelector<T>(`${tagName}.ion-cloned-element`);
 };
 
 export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
@@ -59,8 +59,8 @@ const createLargeTitleTransition = (
   rootAnimation: Animation,
   rtl: boolean,
   backDirection: boolean,
-  enteringEl: any,
-  leavingEl: any
+  enteringEl: HTMLElement,
+  leavingEl: HTMLElement | undefined
 ) => {
   const enteringBackButton = getBackButton(enteringEl, backDirection);
   const leavingLargeTitle = getLargeTitle(leavingEl);
@@ -268,10 +268,10 @@ const animateBackButton = (
   const enteringBackButtonIconAnimation = createAnimation();
   const enteringBackButtonAnimation = createAnimation();
 
-  const clonedBackButtonEl = getClonedElement('ion-back-button');
+  const clonedBackButtonEl = getClonedElement<HTMLIonBackButtonElement>('ion-back-button')!;
 
-  const clonedBackButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text');
-  const clonedBackButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon');
+  const clonedBackButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text')!;
+  const clonedBackButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon')!;
 
   clonedBackButtonEl.text = backButtonEl.text;
   clonedBackButtonEl.mode = backButtonEl.mode;
@@ -424,7 +424,7 @@ const animateLargeTitle = (
 
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
 
-  const clonedTitleEl = getClonedElement('ion-title');
+  const clonedTitleEl = getClonedElement<HTMLIonTitleElement>('ion-title')!;
   const clonedLargeTitleAnimation = createAnimation();
 
   clonedTitleEl.innerText = largeTitleEl.innerText;
@@ -468,7 +468,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     const CENTER = '0%';
     const OFF_OPACITY = 0.8;
 
-    const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
+    const isRTL = navEl.ownerDocument.dir === 'rtl';
     const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
     const OFF_LEFT = isRTL ? '33%' : '-33%';
 

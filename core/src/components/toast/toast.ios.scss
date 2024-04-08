@@ -37,20 +37,8 @@
   }
 }
 
-.toast-wrapper.toast-top {
-  @include transform(translate3d(0, -100%, 0));
-
-  top: 0;
-}
-
 .toast-wrapper.toast-middle {
   opacity: .01;
-}
-
-.toast-wrapper.toast-bottom {
-  @include transform(translate3d(0, 100%, 0));
-
-  bottom: 0;
 }
 
 .toast-content {

@@ -14,7 +14,7 @@ import { dragElementByYAxis } from '@utils/test/playwright';
 const pullToRefresh = async (page: E2EPage, selector = 'body') => {
   const target = page.locator(selector);
 
-  await page.waitForSelector('ion-refresher.hydrated', { state: 'attached' });
+  await page.locator('ion-refresher.hydrated').waitFor({ state: 'attached' });
 
   const ev = await page.spyOnEvent('ionRefreshComplete');
 

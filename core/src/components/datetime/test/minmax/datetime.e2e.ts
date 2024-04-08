@@ -36,7 +36,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const prevButton = page.locator('ion-datetime .calendar-next-prev ion-button:nth-child(1)');
       const nextButton = page.locator('ion-datetime .calendar-next-prev ion-button:nth-child(2)');
@@ -61,7 +61,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       await page.goto('/src/components/datetime/test/minmax', config);
       const calendarMonths = page.locator('ion-datetime#inside .calendar-month');
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').first().waitFor();
 
       await expect(calendarMonths.nth(0)).not.toHaveClass(/calendar-month-disabled/);
       await expect(calendarMonths.nth(1)).not.toHaveClass(/calendar-month-disabled/);
@@ -70,7 +70,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
     test('datetime: minmax navigation disabled', async ({ page }) => {
       await page.goto('/src/components/datetime/test/minmax', config);
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').first().waitFor();
 
       const navButtons = page.locator('ion-datetime#outside .calendar-next-prev ion-button');
 
@@ -80,7 +80,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
     test('datetime: min including day should not disable month', async ({ page }) => {
       await page.goto('/src/components/datetime/test/minmax', config);
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').first().waitFor();
 
       const calendarMonths = page.locator('ion-datetime#min-with-day .calendar-month');
 
@@ -102,7 +102,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
@@ -120,7 +120,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
     test.describe('setting value outside bounds should show in-bounds month', () => {
       const testDisplayedMonth = async (page: E2EPage, content: string, expectedString = /June 2021/) => {
         await page.setContent(content, config);
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
         await expect(calendarMonthYear).toHaveText(expectedString);
@@ -170,7 +170,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetimeMonthDidChange = await page.spyOnEvent('datetimeMonthDidChange');
       const eventButton = page.locator('button#bind');
@@ -252,7 +252,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const datetime = page.locator('ion-datetime');
         const ionChange = await page.spyOnEvent('ionChange');
@@ -275,7 +275,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
           config
         );
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         const datetime = page.locator('ion-datetime');
         const ionChange = await page.spyOnEvent('ionChange');
@@ -303,7 +303,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
         const monthColumnItems = page.locator('ion-datetime .month-column ion-picker-column-option');
         const ionChange = await page.spyOnEvent('ionChange');
 
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         await monthColumnItems.nth(0).click(); // switch to January
         await ionChange.next();
@@ -338,7 +338,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
 
         // Select Jan 10, 2022
         const maxDate = page.locator('ion-datetime .calendar-day[data-day="10"][data-month="1"][data-year="2022"]');

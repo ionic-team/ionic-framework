@@ -8,11 +8,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.goto('/src/utils/animation/test/hooks', config);
       await testHooks(page);
     });
-
-    test(`should fire hooks using css animations`, async ({ page }) => {
-      await page.goto('/src/utils/animation/test/hooks?ionic:_forceCSSAnimations=true', config);
-      await testHooks(page);
-    });
   });
 });
 

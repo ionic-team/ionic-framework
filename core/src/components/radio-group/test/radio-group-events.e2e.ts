@@ -7,9 +7,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
       <ion-radio-group value="1">
-        <ion-radio value="1"></ion-radio>
-        <ion-radio value="2"></ion-radio>
-        <ion-radio value="3"></ion-radio>
+        <ion-radio value="1" aria-label="1"></ion-radio>
+        <ion-radio value="2" aria-label="2"></ion-radio>
+        <ion-radio value="3" aria-label="3"></ion-radio>
       </ion-radio-group>
     `,
         config
@@ -29,9 +29,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
       <ion-radio-group>
-        <ion-radio value="1"></ion-radio>
-        <ion-radio value="2"></ion-radio>
-        <ion-radio value="3"></ion-radio>
+        <ion-radio value="1" aria-label="1"></ion-radio>
+        <ion-radio value="2" aria-label="2"></ion-radio>
+        <ion-radio value="3" aria-label="3"></ion-radio>
       </ion-radio-group>
     `,
         config
@@ -51,9 +51,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
       <ion-radio-group value="1">
-        <ion-radio value="1"></ion-radio>
-        <ion-radio value="2"></ion-radio>
-        <ion-radio value="3"></ion-radio>
+        <ion-radio value="1" aria-label="1"></ion-radio>
+        <ion-radio value="2" aria-label="2"></ion-radio>
+        <ion-radio value="3" aria-label="3"></ion-radio>
       </ion-radio-group>
     `,
         config
@@ -72,9 +72,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-radio-group value="1">
-          <ion-radio value="1"></ion-radio>
-          <ion-radio value="2"></ion-radio>
-          <ion-radio value="3"></ion-radio>
+          <ion-radio value="1" aria-label="1"></ion-radio>
+          <ion-radio value="2" aria-label="2"></ion-radio>
+          <ion-radio value="3" aria-label="3"></ion-radio>
         </ion-radio-group>
       `,
         config
@@ -94,9 +94,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.setContent(
           `
         <ion-radio-group allow-empty-selection="true" value="1">
-          <ion-radio value="1"></ion-radio>
-          <ion-radio value="2"></ion-radio>
-          <ion-radio value="3"></ion-radio>
+          <ion-radio value="1" aria-label="1"></ion-radio>
+          <ion-radio value="2" aria-label="2"></ion-radio>
+          <ion-radio value="3" aria-label="3"></ion-radio>
         </ion-radio-group>
       `,
           config

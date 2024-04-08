@@ -10,7 +10,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const items = page.locator('.calendar-day:not([disabled])');
 
@@ -91,7 +91,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const minuteColumn = page.locator('ion-picker-column').nth(1);
       const minuteItems = minuteColumn.locator('ion-picker-column-option');
@@ -139,7 +139,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const monthItems = page.locator('.month-column ion-picker-column-option');
       await expect(monthItems).toHaveText(['January']);
@@ -171,7 +171,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const todayButton = page.locator('.calendar-day[data-day="10"][data-month="10"][data-year="2022"]');
 

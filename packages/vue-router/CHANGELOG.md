@@ -3,6 +3,206 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.3](https://github.com/ionic-team/ionic-framework/compare/v7.8.2...v7.8.3) (2024-04-03)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [8.0.0-rc.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.4...v8.0.0-rc.0) (2024-03-27)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [8.0.0-beta.4](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.3...v8.0.0-beta.4) (2024-03-27)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.8.2](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v7.8.2) (2024-03-27)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [8.0.0-beta.3](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.2...v8.0.0-beta.3) (2024-03-20)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.8.1](https://github.com/ionic-team/ionic-framework/compare/v7.8.0...v7.8.1) (2024-03-20)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [8.0.0-beta.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.1...v8.0.0-beta.2) (2024-03-13)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [7.8.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.5...v7.8.0) (2024-03-13)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.7.5](https://github.com/ionic-team/ionic-framework/compare/v7.7.4...v7.7.5) (2024-03-13)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [8.0.0-beta.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.0...v8.0.0-beta.1) (2024-03-06)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [8.0.0-beta.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v8.0.0-beta.0) (2024-02-28)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.7.2](https://github.com/ionic-team/ionic-framework/compare/v7.7.1...v7.7.2) (2024-02-14)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.7.1](https://github.com/ionic-team/ionic-framework/compare/v7.7.0...v7.7.1) (2024-02-07)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [7.7.0](https://github.com/ionic-team/ionic-framework/compare/v7.6.7...v7.7.0) (2024-01-31)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.6.7](https://github.com/ionic-team/ionic-framework/compare/v7.6.6...v7.6.7) (2024-01-31)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.4...v7.6.5) (2024-01-17)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.6.1](https://github.com/ionic-team/ionic-framework/compare/v7.6.0...v7.6.1) (2023-12-13)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [7.6.0](https://github.com/ionic-team/ionic-framework/compare/v7.5.8...v7.6.0) (2023-12-06)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [7.5.8](https://github.com/ionic-team/ionic-framework/compare/v7.5.7...v7.5.8) (2023-12-06)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 ## [7.5.7](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7) (2023-11-29)
 
 **Note:** Version bump only for package @ionic/vue-router

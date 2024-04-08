@@ -9,6 +9,19 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      main > button {
+        display: block;
+        clear: both;
+        width: 100%;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
   <script type="module">
     import { alertController } from '../../../../dist/ionic/index.esm.js';
@@ -19,13 +32,13 @@
     <main class="ion-padding">
       <h1>Alert - A11y</h1>
 
-      <ion-button id="bothHeaders" expand="block" onclick="presentBothHeaders()">Both Headers</ion-button>
-      <ion-button id="subHeaderOnly" expand="block" onclick="presentSubHeaderOnly()">Subheader Only</ion-button>
-      <ion-button id="noHeaders" expand="block" onclick="presentNoHeaders()">No Headers</ion-button>
-      <ion-button id="noMessage" expand="block" onclick="presentNoMessage()">No Message</ion-button>
-      <ion-button id="customAria" expand="block" onclick="presentCustomAria()">Custom Aria</ion-button>
-      <ion-button id="ariaLabelButton" expand="block" onclick="presentAriaLabelButton()">Aria Label Button</ion-button>
-      <ion-button id="checkbox" expand="block" onclick="presentAlertCheckbox()">Checkbox</ion-button>
+      <button id="bothHeaders" onclick="presentBothHeaders()">Both Headers</button>
+      <button id="subHeaderOnly" onclick="presentSubHeaderOnly()">Subheader Only</button>
+      <button id="noHeaders" onclick="presentNoHeaders()">No Headers</button>
+      <button id="noMessage" onclick="presentNoMessage()">No Message</button>
+      <button id="customAria" onclick="presentCustomAria()">Custom Aria</button>
+      <button id="ariaLabelButton" onclick="presentAriaLabelButton()">Aria Label Button</button>
+      <button id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
     </main>
 
     <script>

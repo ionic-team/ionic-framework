@@ -10,7 +10,7 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-label id="title">{{ title }}</ion-label>
-      <ion-input></ion-input>
+      <ion-input :aria-label="title"></ion-input>
     </ion-content>
   </ion-page>
 </template>

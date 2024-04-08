@@ -95,7 +95,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
 
@@ -111,7 +111,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetimeYear = page.locator('ion-datetime .year-column ion-picker-column-option').nth(0);
       await expect(datetimeYear).toHaveText('٢٠٢٢');
@@ -146,7 +146,7 @@ class DatetimeLocaleFixture {
 
     this.datetime = this.page.locator('ion-datetime');
 
-    await this.page.waitForSelector('.datetime-ready');
+    await this.page.locator('.datetime-ready').waitFor();
   }
 
   async expectLocalizedDatePicker(screenshot: ScreenshotFn) {

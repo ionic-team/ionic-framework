@@ -25,7 +25,7 @@ export const IonLoading = /*@__PURE__*/ defineOverlayContainer<JSX.IonLoading>('
     
 export const IonPickerLegacy = /*@__PURE__*/ defineOverlayContainer<JSX.IonPickerLegacy>('ion-picker-legacy', defineIonPickerLegacyCustomElement, ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger']);
     
-export const IonToast = /*@__PURE__*/ defineOverlayContainer<JSX.IonToast>('ion-toast', defineIonToastCustomElement, ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'translucent', 'trigger']);
+export const IonToast = /*@__PURE__*/ defineOverlayContainer<JSX.IonToast>('ion-toast', defineIonToastCustomElement, ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'swipeGesture', 'translucent', 'trigger']);
     
 export const IonModal = /*@__PURE__*/ defineOverlayContainer<JSX.IonModal>('ion-modal', defineIonModalCustomElement, ['animated', 'backdropBreakpoint', 'backdropDismiss', 'breakpoints', 'canDismiss', 'enterAnimation', 'handle', 'handleBehavior', 'htmlAttributes', 'initialBreakpoint', 'isOpen', 'keepContentsMounted', 'keyboardClose', 'leaveAnimation', 'mode', 'presentingElement', 'showBackdrop', 'trigger'], true);
     

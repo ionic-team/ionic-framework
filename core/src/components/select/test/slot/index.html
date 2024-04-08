@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select - Slots</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select - Slots</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill / Start Label / Justify Start</h2>
+            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="start" justify="start">
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Start Label / Justify Start</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="start"
+              fill="solid"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / Justify Start</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="start"
+              fill="outline"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / Justify End</h2>
+            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="start" justify="end">
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Start Label / Justify End</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="end"
+              fill="solid"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / Justify End</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="end"
+              fill="outline"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / Justify Space Between</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="space-between"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Start Label / Justify Space Between</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="space-between"
+              fill="solid"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / Justify Space Between</h2>
+            <ion-select
+              label="Favorite Pizza"
+              placeholder="Select a pizza"
+              label-placement="start"
+              justify="space-between"
+              fill="outline"
+            >
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Floating Label</h2>
+            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="floating">
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Floating Label</h2>
+            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="floating" fill="solid">
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating Label</h2>
+            <ion-select label="Favorite Pizza" placeholder="Select a pizza" label-placement="floating" fill="outline">
+              <ion-icon slot="start" name="pizza" aria-hidden="true"></ion-icon>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="supreme">Supreme</ion-select-option>
+              <ion-select-option value="chicken">Chicken</ion-select-option>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-select>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

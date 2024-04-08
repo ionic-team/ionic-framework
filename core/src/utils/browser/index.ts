@@ -1,3 +1,5 @@
+import type { BackButtonEvent } from '@utils/hardware-back-button';
+
 /**
  * When accessing the document or window, it is important
  * to account for SSR applications where the
@@ -27,7 +29,7 @@
  * on the window for certain CustomEvent types you can add that definition
  * here as long as you are using the "win" utility below.
  */
-type IonicWindow = Window & {
+type IonicEvents = {
   addEventListener(
     type: 'ionKeyboardDidShow',
     listener: (ev: CustomEvent<{ keyboardHeight: number }>) => void,
@@ -38,8 +40,66 @@ type IonicWindow = Window & {
     listener: (ev: CustomEvent<{ keyboardHeight: number }>) => void,
     options?: boolean | AddEventListenerOptions
   ): void;
+  addEventListener(
+    type: 'ionInputDidLoad',
+    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: 'ionInputDidLoad',
+    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  addEventListener(
+    type: 'ionInputDidUnload',
+    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: 'ionInputDidUnload',
+    listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  addEventListener(
+    type: 'ionBackButton',
+    listener: (ev: BackButtonEvent) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: 'ionBackButton',
+    listener: (ev: BackButtonEvent) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
 };
+
+export interface CloseWatcher extends EventTarget {
+  new (options?: CloseWatcherOptions): any;
+  requestClose(): void;
+  close(): void;
+  destroy(): void;
+
+  oncancel: (event: Event) => void | null;
+  onclose: (event: Event) => void | null;
+}
+
+interface CloseWatcherOptions {
+  signal: AbortSignal;
+}
+
+/**
+ * Experimental browser features that
+ * are selectively used inside of Ionic
+ * Since they are experimental they typically
+ * do not have types yet, so we can add custom ones
+ * here until types are available.
+ */
+type ExperimentalWindowFeatures = {
+  CloseWatcher?: CloseWatcher;
+};
+
+type IonicWindow = Window & IonicEvents & ExperimentalWindowFeatures;
+type IonicDocument = Document & IonicEvents;
 
 export const win: IonicWindow | undefined = typeof window !== 'undefined' ? window : undefined;
 
-export const doc: Document | undefined = typeof document !== 'undefined' ? document : undefined;
+export const doc: IonicDocument | undefined = typeof document !== 'undefined' ? document : undefined;

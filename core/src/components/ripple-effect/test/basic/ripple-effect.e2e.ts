@@ -29,7 +29,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         }
 
         // Waits for the ripple effect to be added
-        await page.waitForSelector('.ion-activated');
+        await page.locator('.ion-activated').waitFor();
 
         await expect(el).toHaveClass(/ion-activated/);
       });
@@ -56,7 +56,7 @@ const verifyRippleEffect = async (page: E2EPage, config: E2EPageOptions, selecto
     await page.mouse.down();
   }
 
-  await page.waitForSelector('.ion-activated');
+  await page.locator('.ion-activated').waitFor();
 
   await expect(el).toHaveClass(/ion-activated/);
 };

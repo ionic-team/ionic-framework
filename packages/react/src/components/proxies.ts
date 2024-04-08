@@ -31,6 +31,7 @@ import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
 import { defineCustomElement as defineIonInput } from '@ionic/core/components/ion-input.js';
+import { defineCustomElement as defineIonInputPasswordToggle } from '@ionic/core/components/ion-input-password-toggle.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
 import { defineCustomElement as defineIonItemGroup } from '@ionic/core/components/ion-item-group.js';
 import { defineCustomElement as defineIonItemOptions } from '@ionic/core/components/ion-item-options.js';
@@ -99,6 +100,7 @@ export const IonImg = /*@__PURE__*/createReactComponent<JSX.IonImg, HTMLIonImgEl
 export const IonInfiniteScroll = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScroll, HTMLIonInfiniteScrollElement>('ion-infinite-scroll', undefined, undefined, defineIonInfiniteScroll);
 export const IonInfiniteScrollContent = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScrollContent, HTMLIonInfiniteScrollContentElement>('ion-infinite-scroll-content', undefined, undefined, defineIonInfiniteScrollContent);
 export const IonInput = /*@__PURE__*/createReactComponent<JSX.IonInput, HTMLIonInputElement>('ion-input', undefined, undefined, defineIonInput);
+export const IonInputPasswordToggle = /*@__PURE__*/createReactComponent<JSX.IonInputPasswordToggle, HTMLIonInputPasswordToggleElement>('ion-input-password-toggle', undefined, undefined, defineIonInputPasswordToggle);
 export const IonItemDivider = /*@__PURE__*/createReactComponent<JSX.IonItemDivider, HTMLIonItemDividerElement>('ion-item-divider', undefined, undefined, defineIonItemDivider);
 export const IonItemGroup = /*@__PURE__*/createReactComponent<JSX.IonItemGroup, HTMLIonItemGroupElement>('ion-item-group', undefined, undefined, defineIonItemGroup);
 export const IonItemOptions = /*@__PURE__*/createReactComponent<JSX.IonItemOptions, HTMLIonItemOptionsElement>('ion-item-options', undefined, undefined, defineIonItemOptions);

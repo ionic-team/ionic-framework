@@ -199,12 +199,12 @@ export const config: Config = {
           event: 'ion-change'
         },
         {
-          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
+          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
           event: 'ion-change',
         },
         {
-          elements: ['ion-input', 'ion-searchbar', 'ion-textarea'],
+          elements: ['ion-input', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
           event: 'ion-input',
         }
@@ -231,7 +231,7 @@ export const config: Config = {
     },
     {
       type: 'docs-json',
-      file: '../docs/core.json'
+      file: '../packages/docs/core.json'
     },
     {
       type: 'dist-hydrate-script'
@@ -251,9 +251,24 @@ export const config: Config = {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
       "@utils/logging": ["<rootDir>/src/utils/logging"],
     },
+    setupFilesAfterEnv: ['./setupJest.js']
   },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
   transformAliasedImportPaths: true,
+  extras: {
+    /**
+     * `experimentalSlotFixes` is necessary in Stencil v4 until the fixes described in
+     * {@link https://stenciljs.com/docs/config-extras#experimentalslotfixes the Stencil docs for the flag} are the
+     * default behavior (slated for a future Stencil major version).
+     */
+    experimentalSlotFixes: true,
+    /**
+     * `experimentalScopedSlotChanges` is necessary in Stencil v4 until the fixes described in
+     * {@link https://stenciljs.com/docs/config-extras#experimentalscopedslotchanges the Stencil docs for the flag} are
+     * the default behavior (slated for a future Stencil major version).
+     */
+    experimentalScopedSlotChanges: true,
+  }
 };

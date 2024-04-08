@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Radio Group - compareWith</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Radio Group - compareWith</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-list-header>Compare with String</ion-list-header>
+          <ion-radio-group id="compareWithString" compare-with="value"> </ion-radio-group>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>Compare with Function</ion-list-header>
+          <ion-radio-group id="compareWithFn"></ion-radio-group>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const options = [
+        {
+          label: 'Red',
+          value: 'red',
+        },
+        {
+          label: 'Blue',
+          value: 'blue',
+        },
+        {
+          label: 'Green',
+          value: 'green',
+        },
+      ];
+
+      const radioGroupWithFn = document.querySelector('#compareWithFn');
+      radioGroupWithFn.compareWith = (a, b) => a.value === b.value;
+
+      document.querySelectorAll('ion-radio-group').forEach((radioGroup) => {
+        radioGroup.value = options[1];
+
+        options.forEach((option) => {
+          const radio = document.createElement('ion-radio');
+
+          radio.value = option;
+          radio.textContent = option.label;
+
+          const item = document.createElement('ion-item');
+          item.appendChild(radio);
+
+          radioGroup.appendChild(item);
+        });
+      });
+    </script>
+  </body>
+</html>

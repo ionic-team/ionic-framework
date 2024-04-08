@@ -1,4 +1,4 @@
-Issue number: #
+Issue number: resolves #
 
 ---------
 
@@ -21,7 +21,12 @@ Issue number: #
 - [ ] Yes
 - [ ] No
 
-<!-- If this introduces a breaking change, please describe the impact and migration path for existing applications below. -->
+<!--
+  If this introduces a breaking change:
+  1. Describe the impact and migration path for existing applications below.
+  2. Update the BREAKING.md file with the breaking change.
+  3. Add "BREAKING CHANGE: [...]" to the commit description when merging. See https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#footer for more information.
+-->
 
 
 ## Other information

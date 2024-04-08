@@ -1,3 +1,5 @@
+import { doc } from '@utils/browser';
+
 import type { Config } from '../../interface';
 import { findClosestIonContent } from '../content';
 import { componentOnReady } from '../helpers';
@@ -12,7 +14,14 @@ const SCROLL_ASSIST = true;
 const HIDE_CARET = true;
 
 export const startInputShims = async (config: Config, platform: 'ios' | 'android') => {
-  const doc = document;
+  /**
+   * If doc is undefined then we are in an SSR environment
+   * where input shims do not apply.
+   */
+  if (doc === undefined) {
+    return;
+  }
+
   const isIOS = platform === 'ios';
   const isAndroid = platform === 'android';
 
@@ -24,7 +33,15 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
   const hideCaret = config.getBoolean('hideCaretOnScroll', isIOS);
-  const inputBlurring = config.getBoolean('inputBlurring', isIOS);
+
+  /**
+   * The team is evaluating if inputBlurring is still needed. As a result
+   * this feature is disabled by default as of Ionic 8.0. Developers are
+   * able to re-enable it temporarily. The team may remove this utility
+   * if it is determined that doing so would not bring any adverse side effects.
+   * TODO FW-6014 remove input blurring utility (including implementation)
+   */
+  const inputBlurring = config.getBoolean('inputBlurring', false);
   const scrollPadding = config.getBoolean('scrollPadding', true);
   const inputs = Array.from(doc.querySelectorAll('ion-input, ion-textarea')) as HTMLElement[];
 
@@ -115,15 +132,13 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
     registerInput(input);
   }
 
-  // TODO(FW-2832): types
-
-  doc.addEventListener('ionInputDidLoad', ((ev: InputEvent) => {
+  doc.addEventListener('ionInputDidLoad', (ev: InputEvent) => {
     registerInput(ev.detail);
-  }) as any);
+  });
 
-  doc.addEventListener('ionInputDidUnload', ((ev: InputEvent) => {
+  doc.addEventListener('ionInputDidUnload', (ev: InputEvent) => {
     unregisterInput(ev.detail);
-  }) as any);
+  });
 };
 
 type InputEvent = CustomEvent<HTMLElement>;

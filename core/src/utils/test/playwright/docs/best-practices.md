@@ -18,6 +18,7 @@ This guide details best practices that should be followed when writing E2E tests
 - [Test for positive and negative cases](#practice-positive-negative)
 - [Start your test with the configuration or layout in place if possible](#practice-test-config)
 - [Place your test closest to the fix or feature](#practice-test-close)
+- [Account for different locales when writing tests](#practice-locales)
 
 <h2 id="practice-test">Use the customized `test` function</h2>
 
@@ -259,3 +260,7 @@ This allows tests to remain fast on CI as we can focus on the test itself instea
 <h2 id="practice-test-close">Place your test closest to the fix or feature</h2>
 
 Tests should be placed closest to where the fix or feature was implemented. This means that if a fix was written for `ion-button`, then the test should be placed in `src/components/button/tests`.
+
+<h2 id="practice-locales">Account for different locales when writing tests</h2>
+
+Tests ran on CI may not run on the same locale as your local machine. It's always a good idea to apply locale considerations to components that support it, when writing tests (i.e. `ion-datetime` should specify `locale="en-US"`).

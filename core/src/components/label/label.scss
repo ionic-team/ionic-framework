@@ -19,9 +19,6 @@
 
   text-overflow: ellipsis;
 
-  white-space: nowrap;
-
-  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -29,8 +26,8 @@
   color: current-color(base);
 }
 
-:host(.ion-text-wrap) {
-  white-space: normal;
+:host(.ion-text-nowrap) {
+  overflow: hidden;
 }
 
 :host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
@@ -50,6 +47,11 @@
   align-self: baseline;
 }
 
+// Overflow hidden is required for the proper
+// margins between skeleton text elements
+:host-context(.item-skeleton-text) {
+  overflow: hidden;
+}
 
 // Fixed Inputs
 // --------------------------------------------------

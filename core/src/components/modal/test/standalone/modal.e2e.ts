@@ -15,7 +15,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await ionModalDidDismiss.next();
 
-      await page.waitForSelector('ion-modal', { state: 'detached' });
+      await page.locator('ion-modal').waitFor({ state: 'detached' });
     });
   });
 });

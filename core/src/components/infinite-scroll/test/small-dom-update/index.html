@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Infinite Scroll - Small DOM Update</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      #list .item {
+        width: 100%;
+        border-bottom: 1px solid gray;
+
+        padding: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-content class="ion-padding" id="content">
+        <div id="list"></div>
+
+        <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+          <ion-infinite-scroll-content loading-spinner="crescent" loading-text="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const list = document.getElementById('list');
+      const infiniteScroll = document.getElementById('infinite-scroll');
+
+      infiniteScroll.addEventListener('ionInfinite', () => {
+        setTimeout(() => {
+          appendItems();
+
+          infiniteScroll.complete();
+
+          // Custom event consumed in the e2e tests
+          window.dispatchEvent(new CustomEvent('ionInfiniteComplete'));
+        }, 500);
+      });
+
+      function appendItems(count = 3) {
+        for (var i = 0; i < count; i++) {
+          const el = document.createElement('div');
+          el.classList.add('item');
+          el.textContent = `${1 + i}`;
+          list.appendChild(el);
+        }
+      }
+      appendItems(30);
+    </script>
+  </body>
+</html>

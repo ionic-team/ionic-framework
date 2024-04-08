@@ -1,6 +1,6 @@
 import type { DatetimeParts } from '../datetime-interface';
 
-import { isSameDay } from './comparison';
+import { isAfter, isBefore, isSameDay } from './comparison';
 import { getNumDaysInMonth } from './helpers';
 import { clampDate, parseAmPm } from './parse';
 
@@ -424,44 +424,137 @@ export const validateParts = (
  * Returns the closest date to refParts
  * that also meets the constraints of
  * the *Values params.
- * @param refParts The reference date
- * @param monthValues The allowed month values
- * @param dayValues The allowed day (of the month) values
- * @param yearValues The allowed year values
- * @param hourValues The allowed hour values
- * @param minuteValues The allowed minute values
  */
-export const getClosestValidDate = (
-  refParts: DatetimeParts,
-  monthValues?: number[],
-  dayValues?: number[],
-  yearValues?: number[],
-  hourValues?: number[],
-  minuteValues?: number[]
-) => {
+export const getClosestValidDate = ({
+  refParts,
+  monthValues,
+  dayValues,
+  yearValues,
+  hourValues,
+  minuteValues,
+  minParts,
+  maxParts,
+}: {
+  /**
+   * The reference date
+   */
+  refParts: DatetimeParts;
+  /**
+   * The allowed month values
+   */
+  monthValues?: number[];
+  /**
+   * The allowed day (of the month) values
+   */
+  dayValues?: number[];
+  /**
+   * The allowed year values
+   */
+  yearValues?: number[];
+  /**
+   * The allowed hour values
+   */
+  hourValues?: number[];
+  /**
+   * The allowed minute values
+   */
+  minuteValues?: number[];
+  /**
+   * The minimum date that can be returned
+   */
+  minParts?: DatetimeParts;
+  /**
+   * The maximum date that can be returned
+   */
+  maxParts?: DatetimeParts;
+}) => {
   const { hour, minute, day, month, year } = refParts;
   const copyParts = { ...refParts, dayOfWeek: undefined };
 
+  if (yearValues !== undefined) {
+    // Filters out years that are out of the min/max bounds
+    const filteredYears = yearValues.filter((year) => {
+      if (minParts !== undefined && year < minParts.year) {
+        return false;
+      }
+
+      if (maxParts !== undefined && year > maxParts.year) {
+        return false;
+      }
+
+      return true;
+    });
+    copyParts.year = findClosestValue(year, filteredYears);
+  }
+
   if (monthValues !== undefined) {
-    copyParts.month = findClosestValue(month, monthValues);
+    // Filters out months that are out of the min/max bounds
+    const filteredMonths = monthValues.filter((month) => {
+      if (minParts !== undefined && copyParts.year === minParts.year && month < minParts.month) {
+        return false;
+      }
+
+      if (maxParts !== undefined && copyParts.year === maxParts.year && month > maxParts.month) {
+        return false;
+      }
+
+      return true;
+    });
+    copyParts.month = findClosestValue(month, filteredMonths);
   }
 
   // Day is nullable but cannot be undefined
   if (day !== null && dayValues !== undefined) {
-    copyParts.day = findClosestValue(day, dayValues);
-  }
-
-  if (yearValues !== undefined) {
-    copyParts.year = findClosestValue(year, yearValues);
+    // Filters out days that are out of the min/max bounds
+    const filteredDays = dayValues.filter((day) => {
+      if (minParts !== undefined && isBefore({ ...copyParts, day }, minParts)) {
+        return false;
+      }
+      if (maxParts !== undefined && isAfter({ ...copyParts, day }, maxParts)) {
+        return false;
+      }
+      return true;
+    });
+    copyParts.day = findClosestValue(day, filteredDays);
   }
 
   if (hour !== undefined && hourValues !== undefined) {
-    copyParts.hour = findClosestValue(hour, hourValues);
+    // Filters out hours that are out of the min/max bounds
+    const filteredHours = hourValues.filter((hour) => {
+      if (minParts?.hour !== undefined && isSameDay(copyParts, minParts) && hour < minParts.hour) {
+        return false;
+      }
+      if (maxParts?.hour !== undefined && isSameDay(copyParts, maxParts) && hour > maxParts.hour) {
+        return false;
+      }
+      return true;
+    });
+    copyParts.hour = findClosestValue(hour, filteredHours);
     copyParts.ampm = parseAmPm(copyParts.hour);
   }
 
   if (minute !== undefined && minuteValues !== undefined) {
-    copyParts.minute = findClosestValue(minute, minuteValues);
+    // Filters out minutes that are out of the min/max bounds
+    const filteredMinutes = minuteValues.filter((minute) => {
+      if (
+        minParts?.minute !== undefined &&
+        isSameDay(copyParts, minParts) &&
+        copyParts.hour === minParts.hour &&
+        minute < minParts.minute
+      ) {
+        return false;
+      }
+      if (
+        maxParts?.minute !== undefined &&
+        isSameDay(copyParts, maxParts) &&
+        copyParts.hour === maxParts.hour &&
+        minute > maxParts.minute
+      ) {
+        return false;
+      }
+      return true;
+    });
+    copyParts.minute = findClosestValue(minute, filteredMinutes);
   }
 
   return copyParts;

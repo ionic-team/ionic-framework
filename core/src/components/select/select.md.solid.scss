@@ -68,10 +68,7 @@
 // Select Label
 // ----------------------------------------------------------------
 
-:host(.select-fill-solid.select-label-placement-stacked) .label-text-wrapper,
-:host(.select-expanded.select-fill-solid.select-label-placement-floating) .label-text-wrapper,
-:host(.ion-focused.select-fill-solid.select-label-placement-floating) .label-text-wrapper,
-:host(.has-value.select-fill-solid.select-label-placement-floating) .label-text-wrapper {
+:host(.label-floating.select-fill-solid) .label-text-wrapper {
   /**
    * Label text should not extend
    * beyond the bounds of the select.

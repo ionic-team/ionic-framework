@@ -216,13 +216,6 @@
    */
   max-width: 200px;
 
-  /**
-   * This ensures that double tapping this text
-   * clicks the <label> and focuses the range
-   * when a screen reader is enabled.
-   */
-  pointer-events: none;
-
   text-overflow: ellipsis;
 
   white-space: nowrap;

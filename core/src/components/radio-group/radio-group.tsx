@@ -4,7 +4,7 @@ import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
 
-import type { RadioGroupChangeEventDetail } from './radio-group-interface';
+import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-group-interface';
 
 @Component({
   tag: 'ion-radio-group',
@@ -20,6 +20,14 @@ export class RadioGroup implements ComponentInterface {
    * If `true`, the radios can be deselected.
    */
   @Prop() allowEmptySelection = false;
+
+  /**
+   * This property allows developers to specify a custom function or property
+   * name for comparing objects when determining the selected option in the
+   * ion-radio-group. When not specified, the default behavior will use strict
+   * equality (===) for comparison.
+   */
+  @Prop() compareWith?: string | RadioGroupCompareFn | null;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -122,7 +130,15 @@ export class RadioGroup implements ComponentInterface {
      * using the `name` attribute.
      */
     const selectedRadio = ev.target && (ev.target as HTMLElement).closest('ion-radio');
-    if (selectedRadio && selectedRadio.disabled === false) {
+    /**
+     * Our current disabled prop definition causes Stencil to mark it
+     * as optional. While this is not desired, fixing this behavior
+     * in Stencil is a significant breaking change, so this effort is
+     * being de-risked in STENCIL-917. Until then, we compromise
+     * here by checking for falsy `disabled` values instead of strictly
+     * checking `disabled === false`.
+     */
+    if (selectedRadio && !selectedRadio.disabled) {
       const currentValue = this.value;
       const newValue = selectedRadio.value;
       if (newValue !== currentValue) {

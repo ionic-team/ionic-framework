@@ -113,7 +113,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
     test.describe('check example usages', () => {
       test.beforeEach(async ({ page }) => {
         await page.goto('/src/components/datetime/test/disable-dates', config);
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').first().waitFor();
       });
 
       test('should disable a specific date', async ({ page }) => {

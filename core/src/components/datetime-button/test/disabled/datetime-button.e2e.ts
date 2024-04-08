@@ -11,7 +11,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page.locator('#date-button')).toBeDisabled();
       await expect(page.locator('#time-button')).toBeDisabled();
@@ -24,7 +24,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       `,
         config
       );
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const datetimeButton = page.locator('ion-datetime-button');
       await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-disabled`));
