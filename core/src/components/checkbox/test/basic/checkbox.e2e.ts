@@ -142,7 +142,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     });
   });
 
-  test.describe(title('Ionic checkbox: shape visual tests'), () => {
+  test.describe(title('checkbox: shapes'), () => {
     test('should have a soft shape applied correctly', async ({ page }) => {
       await page.setContent(
         `
