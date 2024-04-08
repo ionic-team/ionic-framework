@@ -14,11 +14,10 @@
 
   @include mixins.padding(tokens.$ionic-space-base);
   @include mixins.border-radius(var(--border-radius));
-  
+
   display: block;
 
   border: #{tokens.$ionic-border-size-small} solid #{tokens.$ionic-color-neutral-10};
-  border-radius: var(--border-radius);
 
   background: var(--background);
   color: var(--color);
