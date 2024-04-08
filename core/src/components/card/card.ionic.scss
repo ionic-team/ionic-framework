@@ -1,4 +1,5 @@
 @use "../../foundations/ionic.vars.scss" as tokens;
+@use "../../themes/ionic.mixins" as mixins;
 
 // Ionic Theme  Card
 // --------------------------------------------------
@@ -10,9 +11,11 @@
    */
   --background: #{tokens.$ionic-color-neutral-0};
   --border-radius: #{tokens.$ionic-border-radius-rounded-small};
-  display: block;
 
-  padding: #{tokens.$ionic-space-base};
+  @include mixins.padding(tokens.$ionic-space-base);
+  @include mixins.border-radius(var(--border-radius));
+  
+  display: block;
 
   border: #{tokens.$ionic-border-size-small} solid #{tokens.$ionic-color-neutral-10};
   border-radius: var(--border-radius);
