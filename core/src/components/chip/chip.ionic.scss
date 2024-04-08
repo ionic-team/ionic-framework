@@ -41,6 +41,8 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
   overflow: hidden;
 
   box-sizing: border-box;
+
+  vertical-align: middle;
 }
 
 // Outline Chip
@@ -74,4 +76,10 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
 :host(.chip-disabled) {
   opacity: 0.6;
   pointer-events: none;
+}
+
+// Chip Icon
+// ---------------------------------------------
+::slotted(ion-icon) {
+  font-size: tokens.$ionic-font-size-l;
 }
