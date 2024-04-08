@@ -39,6 +39,17 @@
             <ion-label>Disabled</ion-label>
           </ion-chip>
         </p>
+
+        <h3>Outline</h3>
+        <p>
+          <ion-chip outline="true">
+            <ion-label>Default</ion-label>
+          </ion-chip>
+
+          <ion-chip class="ion-focused" outline="true">
+            <ion-label>Focus</ion-label>
+          </ion-chip>
+        </p>
       </ion-content>
     </ion-app>
 
@@ -50,6 +61,10 @@
 
       p {
         padding-left: 8px;
+      }
+
+      ion-chip + ion-chip {
+        margin-inline-start: 16px;
       }
     </style>
   </body>
