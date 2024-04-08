@@ -6,8 +6,8 @@
 // --------------------------------------------------
 
 :host {
-  --border-width: 1px;
-  --border-color: #B8B8B8;
+  --border-width: #{$ionic-border-size-small};
+  --border-color: #{$ionic-color-neutral-300};
 
   // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
   --highlight-color-invalid: var(--ionic-color-error-600, #970606);
