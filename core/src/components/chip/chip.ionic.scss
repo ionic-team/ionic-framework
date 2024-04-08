@@ -4,7 +4,9 @@
 // Chip
 // --------------------------------------------------
 
-$ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet for this one, but it should be created in the future, once UX team has figma tokens done
+// TODO(ROU-4870): there is no token yet for these ones, but it should be created in the future, once UX team has figma tokens done
+$ionic-states-focus-primary: #9ec4fd;
+$ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make this in the future, as we are setting scss variables with a var() and fallback, and it doesn't work inside a rgba().
 
 :host {
   --background: #{tokens.$ionic-color-neutral-10};
@@ -24,6 +26,8 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
 
   align-items: center;
 
+  gap: tokens.$ionic-space-xxxs;
+
   min-height: 32px;
 
   border-width: tokens.$ionic-border-size-small;
@@ -42,6 +46,8 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
   overflow: hidden;
 
   box-sizing: border-box;
+
+  vertical-align: middle;
 }
 
 // Outline Chip
@@ -65,7 +71,7 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: #{rgba(tokens.$ionic-color-neutral-900, 0.16)};
+    --background: #{$ionic-states-hover};
   }
 }
 
@@ -88,4 +94,10 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
 }
 :host(.chip-rectangular) {
   --border-radius: #{tokens.$ionic-border-radius-square};
+}
+
+// Chip Icon
+// ---------------------------------------------
+::slotted(ion-icon) {
+  font-size: tokens.$ionic-font-size-l;
 }
