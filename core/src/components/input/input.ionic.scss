@@ -5,8 +5,7 @@
 // Ionic Input
 // --------------------------------------------------
 :host {
-  // TODO(FW-6114): Verify the ionic design token is correct once it's available and remove the hardcoded value.
-  --highlight-color-valid: var(--ionic-color-success-400, #52A518);
+  --highlight-color-valid: #{$ionic-color-success-400};
   // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
   --highlight-color-invalid: var(--ionic-color-error-600, #970606);
 }
@@ -37,8 +36,7 @@
 }
 
 :host(.has-focus.ion-valid) .helper-text {
-  // TODO(FW-6114): Verify the ionic design token is correct once it's available and remove the hardcoded value.
-  color: var(--ionic-color-success-800, #144B05);
+  color: #{$ionic-color-success-800};
 }
 
 .input-bottom .error-text {
