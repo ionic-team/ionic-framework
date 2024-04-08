@@ -9,13 +9,14 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
 :host {
   --background: #{tokens.$ionic-color-neutral-10};
   --border-color: transparent;
+  --border-radius: #{tokens.$ionic-border-radius-rounded-large};
   --color: #{tokens.$ionic-color-neutral-900};
   --focus-ring-color: #{$ionic-states-focus-primary};
   --focus-ring-width: #{tokens.$ionic-border-size-medium};
 
   @include mixins.font-smoothing;
   @include mixins.padding(tokens.$ionic-space-xs, tokens.$ionic-space-xxs);
-  @include mixins.border-radius(tokens.$ionic-border-radius-rounded-large);
+  @include mixins.border-radius(var(--border-radius));
 
   display: inline-flex;
 
@@ -74,4 +75,17 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
 :host(.chip-disabled) {
   opacity: 0.6;
   pointer-events: none;
+}
+
+// Chip Shapes
+// ---------------------------------------------
+
+:host(.chip-soft) {
+  --border-radius: #{tokens.$ionic-border-radius-rounded-small};
+}
+:host(.chip-round) {
+  --border-radius: #{tokens.$ionic-border-radius-rounded-large};
+}
+:host(.chip-rectangular) {
+  --border-radius: #{tokens.$ionic-border-radius-square};
 }

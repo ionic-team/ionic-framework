@@ -751,6 +751,10 @@ export namespace Components {
          */
         "outline": boolean;
         /**
+          * Set to 'rectangular' for a chip with sharp corners.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -5978,6 +5982,10 @@ declare namespace LocalJSX {
           * Display an outline style button.
          */
         "outline"?: boolean;
+        /**
+          * Set to 'rectangular' for a chip with sharp corners.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */
