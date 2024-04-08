@@ -30,7 +30,7 @@
 // Link: Standalone
 // -------------------------------------------------------------------------------
 
-@mixin ion-link {
+@mixin ionic-link {
   @include link-shared;
 
   // Link: Standalone - Hover
@@ -68,15 +68,15 @@
   }
 }
 
-a.ion-link,
-:not(a).ion-link > a {
-  @include ion-link;
+a.ionic-link,
+:not(a).ionic-link a {
+  @include ionic-link;
 }
 
 // Link: Underline
 // -------------------------------------------------------------------------------
 
-@mixin ion-link-underline {
+@mixin ionic-link-underline {
   @include link-shared;
 
   // Link: Underline - Hover
@@ -114,7 +114,7 @@ a.ion-link,
   }
 }
 
-a.ion-link-underline,
-:not(a).ion-link-underline > a {
-  @include ion-link-underline;
+a.ionic-link-underline,
+:not(a).ionic-link-underline a {
+  @include ionic-link-underline;
 }
