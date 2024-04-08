@@ -1,0 +1,120 @@
+@import "../foundations/ionic.vars";
+
+// Link: Shared Styles (Standalone & Underline)
+// -------------------------------------------------------------------------------
+@mixin link-shared {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  transition: color 0.2s ease-in-out;
+
+  font-weight: 400;
+
+  text-decoration-color: inherit;
+
+  text-underline-offset: 2px;
+
+  cursor: pointer;
+
+  // Link: Visited
+  // -------------------------------------------------------------------------------
+
+  &:visited {
+    color: $ionic-color-info-500;
+  }
+}
+
+// Link: Standalone
+// -------------------------------------------------------------------------------
+
+@mixin ion-link {
+  @include link-shared;
+
+  // Link: Standalone - Hover
+  // -------------------------------------------------------------------------------
+
+  @media (any-hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  color: $ionic-color-info-400;
+
+  text-decoration: none;
+
+  // Link: Standalone - Focus
+  // -------------------------------------------------------------------------------
+
+  &:focus,
+  &.ion-focused {
+    outline: 2px solid $ionic-color-primary-100;
+    outline-offset: 2px;
+
+    text-decoration: underline;
+  }
+
+  // Link: Standalone - Active
+  // -------------------------------------------------------------------------------
+
+  &:active,
+  &.ion-activated {
+    color: $ionic-color-info-500;
+
+    text-decoration: underline;
+  }
+}
+
+a.ion-link,
+:not(a).ion-link-underline > a {
+  @include ion-link;
+}
+
+// Link: Underline
+// -------------------------------------------------------------------------------
+
+@mixin ion-link-underline {
+  @include link-shared;
+
+  // Link: Underline - Hover
+  // -------------------------------------------------------------------------------
+
+  @media (any-hover: hover) {
+    &:hover {
+      color: $ionic-color-info-400;
+    }
+  }
+
+  color: currentColor;
+
+  text-decoration: underline;
+
+  // Link: Underline - Focus
+  // -------------------------------------------------------------------------------
+
+  &:focus,
+  &.ion-focused {
+    outline: 2px solid $ionic-color-primary-100;
+    outline-offset: 2px;
+
+    color: currentColor;
+
+    text-decoration: none;
+  }
+
+  // Link: Underline - Active
+  // -------------------------------------------------------------------------------
+
+  &:active,
+  &.ion-activated {
+    color: $ionic-color-info-500;
+  }
+}
+
+a.ion-link-underline,
+:not(a).ion-link > a {
+  @include ion-link-underline;
+}
