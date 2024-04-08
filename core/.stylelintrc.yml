@@ -23,10 +23,10 @@ rules:
   at-rule-empty-line-before:
     - always
     - except:
-      - blockless-after-blockless
-      - first-nested
+        - blockless-after-blockless
+        - first-nested
       ignore:
-      - after-comment
+        - after-comment
 
   block-closing-brace-newline-before:
     - always
@@ -40,13 +40,12 @@ rules:
   custom-property-empty-line-before:
     - always
     - except:
-      - after-comment
-      - after-custom-property
-      - first-nested
+        - after-comment
+        - after-custom-property
+        - first-nested
 
   declaration-no-important:
     - true
-
 
   order/order:
     - custom-properties
@@ -57,216 +56,212 @@ rules:
 
   # https://github.com/sasstools/sass-lint/blob/develop/lib/config/property-sort-orders/smacss.yml
   order/properties-order:
-
     # Box
 
     - emptyLineBefore: always
       properties:
-      - display
-      - position
-      - top
-      - right
-      - bottom
-      - left
+        - display
+        - position
+        - top
+        - right
+        - bottom
+        - left
 
     - emptyLineBefore: always
       properties:
-      - flex
-      - flex-basis
-      - flex-direction
-      - flex-flow
-      - flex-grow
-      - flex-shrink
-      - flex-wrap
-      - align-content
-      - align-items
-      - align-self
-      - justify-content
-      - order
+        - flex
+        - flex-basis
+        - flex-direction
+        - flex-flow
+        - flex-grow
+        - flex-shrink
+        - flex-wrap
+        - align-content
+        - align-items
+        - align-self
+        - justify-content
+        - order
 
     - emptyLineBefore: always
       properties:
-      - width
-      - min-width
-      - max-width
+        - width
+        - min-width
+        - max-width
 
-      - height
-      - min-height
-      - max-height
-
-    - emptyLineBefore: always
-      properties:
-      - margin
-      - margin-top
-      - margin-right
-      - margin-bottom
-      - margin-left
+        - height
+        - min-height
+        - max-height
 
     - emptyLineBefore: always
       properties:
-      - padding
-      - padding-top
-      - padding-right
-      - padding-bottom
-      - padding-left
+        - margin
+        - margin-top
+        - margin-right
+        - margin-bottom
+        - margin-left
 
     - emptyLineBefore: always
       properties:
-      - float
-      - clear
+        - padding
+        - padding-top
+        - padding-right
+        - padding-bottom
+        - padding-left
 
     - emptyLineBefore: always
       properties:
-      - columns
-      - column-gap
-      - column-fill
-      - column-rule
-      - column-span
-      - column-count
-      - column-width
+        - float
+        - clear
 
     - emptyLineBefore: always
       properties:
-      - transform
-      - transform-box
-      - transform-origin
-      - transform-style
+        - columns
+        - column-gap
+        - column-fill
+        - column-rule
+        - column-span
+        - column-count
+        - column-width
 
     - emptyLineBefore: always
       properties:
-      - transition
-      - transition-delay
-      - transition-duration
-      - transition-property
-      - transition-timing-function
+        - transform
+        - transform-box
+        - transform-origin
+        - transform-style
+
+    - emptyLineBefore: always
+      properties:
+        - transition
+        - transition-delay
+        - transition-duration
+        - transition-property
+        - transition-timing-function
 
     # Border
 
     - emptyLineBefore: always
       properties:
-      - border
-      - border-top
-      - border-right
-      - border-bottom
-      - border-left
-      - border-width
-      - border-top-width
-      - border-right-width
-      - border-bottom-width
-      - border-left-width
+        - border
+        - border-top
+        - border-right
+        - border-bottom
+        - border-left
+        - border-width
+        - border-top-width
+        - border-right-width
+        - border-bottom-width
+        - border-left-width
 
-      - border-style
-      - border-top-style
-      - border-right-style
-      - border-bottom-style
-      - border-left-style
+        - border-style
+        - border-top-style
+        - border-right-style
+        - border-bottom-style
+        - border-left-style
 
-      - border-radius
-      - border-top-left-radius
-      - border-top-right-radius
-      - border-bottom-left-radius
-      - border-bottom-right-radius
+        - border-radius
+        - border-top-left-radius
+        - border-top-right-radius
+        - border-bottom-left-radius
+        - border-bottom-right-radius
 
-      - border-color
-      - border-top-color
-      - border-right-color
-      - border-bottom-color
-      - border-left-color
+        - border-color
+        - border-top-color
+        - border-right-color
+        - border-bottom-color
+        - border-left-color
 
     - emptyLineBefore: always
       properties:
-      - outline
-      - outline-color
-      - outline-offset
-      - outline-style
-      - outline-width
+        - outline
+        - outline-color
+        - outline-offset
+        - outline-style
+        - outline-width
 
     # Background
 
     - emptyLineBefore: always
       properties:
-      - background
-      - background-attachment
-      - background-clip
-      - background-color
-      - background-image
-      - background-repeat
-      - background-position
-      - background-size
+        - background
+        - background-attachment
+        - background-clip
+        - background-color
+        - background-image
+        - background-repeat
+        - background-position
+        - background-size
 
-    # Text
+        # Text
 
-      - color
-
-    - emptyLineBefore: always
-      properties:
-      - font
-      - font-family
-      - font-size
-      - font-smoothing
-      - font-style
-      - font-variant
-      - font-weight
+        - color
 
     - emptyLineBefore: always
       properties:
-      - letter-spacing
-      - line-height
-      - list-style
+        - font
+        - font-family
+        - font-size
+        - font-smoothing
+        - font-style
+        - font-variant
+        - font-weight
 
     - emptyLineBefore: always
       properties:
-      - text-align
-      - text-decoration
-      - text-indent
-      - text-overflow
-      - text-rendering
-      - text-shadow
-      - text-transform
-      - text-wrap
+        - letter-spacing
+        - line-height
+        - list-style
 
     - emptyLineBefore: always
       properties:
-      - white-space
-      - word-spacing
+        - text-align
+        - text-decoration
+        - text-indent
+        - text-overflow
+        - text-rendering
+        - text-shadow
+        - text-transform
+        - text-wrap
+
+    - emptyLineBefore: always
+      properties:
+        - white-space
+        - word-spacing
 
     # Other
 
     - emptyLineBefore: always
       properties:
-      - border-collapse
-      - border-spacing
-      - box-shadow
-      - caption-side
-      - contain
-      - content
-      - cursor
-      - direction
-      - empty-cells
-      - object-fit
-      - opacity
-      - overflow
-      - quotes
-      - speak
-      - table-layout
-      - touch-action
-      - user-select
-      - vertical-align
-      - visibility
-      - z-index
+        - border-collapse
+        - border-spacing
+        - box-shadow
+        - caption-side
+        - contain
+        - content
+        - cursor
+        - direction
+        - empty-cells
+        - object-fit
+        - opacity
+        - overflow
+        - quotes
+        - speak
+        - table-layout
+        - touch-action
+        - user-select
+        - vertical-align
+        - visibility
+        - z-index
 
   property-disallowed-list:
     - background-position
     - right
     - left
     - float
-    - padding
     - padding-left
     - padding-right
-    - margin
     - margin-left
     - margin-right
-    - border-radius
     - border-top-left-radius
     - border-top-right-radius
     - border-bottom-right-radius
