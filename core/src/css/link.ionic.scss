@@ -69,7 +69,7 @@
 }
 
 a.ion-link,
-:not(a).ion-link-underline > a {
+:not(a).ion-link > a {
   @include ion-link;
 }
 
@@ -115,6 +115,6 @@ a.ion-link,
 }
 
 a.ion-link-underline,
-:not(a).ion-link > a {
+:not(a).ion-link-underline > a {
   @include ion-link-underline;
 }
