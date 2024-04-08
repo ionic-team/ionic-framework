@@ -143,7 +143,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
   });
 
   test.describe(title('checkbox: basic visual tests'), () => {
-    test('should have a Invalid visual applied correctly', async ({ page }) => {
+    test('should have an invalid visual applied correctly', async ({ page }) => {
       await page.setContent(
         `
         <div id="checkboxes">
