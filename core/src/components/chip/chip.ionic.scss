@@ -23,6 +23,8 @@ $ionic-states-focus-primary: #9ec4fd; // TODO(ROU-4870): there is no token yet f
 
   align-items: center;
 
+  gap: tokens.$ionic-space-xxxs;
+
   min-height: 32px;
 
   border-width: tokens.$ionic-border-size-small;
