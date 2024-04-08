@@ -16,7 +16,7 @@
 // Ionic Input Sizes
 // --------------------------------------------------
 
-:host(.input-size-large) {
+:host(.input-size-large) .native-wrapper {
   min-height: 48px;
 }
 
