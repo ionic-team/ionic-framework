@@ -3,6 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 /**
  * Shape is only available in the Ionic theme.
+ * TODO(FW-6119): add the `ios` and `md` modes when shape support is added.
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('card: shape'), () => {
