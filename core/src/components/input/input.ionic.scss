@@ -4,7 +4,11 @@
 
 // Ionic Input
 // --------------------------------------------------
+
 :host {
+  --border-width: #{$ionic-border-size-small};
+  --border-color: #{$ionic-color-neutral-300};
+
   --highlight-color-valid: #{$ionic-color-success-400};
   // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
   --highlight-color-invalid: var(--ionic-color-error-600, #970606);
@@ -13,7 +17,7 @@
 // Ionic Input Sizes
 // --------------------------------------------------
 
-:host(.input-size-large) {
+:host(.input-size-large) .native-wrapper {
   min-height: 48px;
 }
 

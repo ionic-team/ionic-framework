@@ -181,8 +181,12 @@ export class Input implements ComponentInterface {
    * `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
    * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   *
+   * Defaults to "stacked" for the ionic theme, or "start" for all other themes.
+   *
+   * In the ionic theme, only the values "stacked" and "floating" are supported.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+  @Prop({ mutable: true }) labelPlacement?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -343,6 +347,10 @@ export class Input implements ComponentInterface {
       ...inheritAriaAttributes(this.el),
       ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
     };
+
+    if (this.labelPlacement === undefined) {
+      this.labelPlacement = getIonTheme(this) === 'ionic' ? ionicThemeDefaultLabelPlacement : 'start';
+    }
   }
 
   connectedCallback() {
@@ -469,6 +477,21 @@ export class Input implements ComponentInterface {
 
   private getValue(): string {
     return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
+  }
+
+  private getLabelPlacement() {
+    const theme = getIonTheme(this);
+    const { el, labelPlacement } = this;
+
+    if (theme === 'ionic' && labelPlacement !== 'stacked' && labelPlacement !== 'floating') {
+      printIonWarning(
+        `The "${labelPlacement}" label placement is not supported in the ${theme} theme. The default value of "${ionicThemeDefaultLabelPlacement}" will be used instead.`,
+        el
+      );
+      return ionicThemeDefaultLabelPlacement;
+    }
+
+    return labelPlacement;
   }
 
   private getSize() {
@@ -663,9 +686,9 @@ export class Input implements ComponentInterface {
    */
   private renderLabelContainer() {
     const theme = getIonTheme(this);
-    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
+    const hasOutlineFill = this.fill === 'outline';
 
-    if (hasOutlineFill) {
+    if (hasOutlineFill && theme === 'md') {
       /**
        * The outline fill has a special outline
        * that appears around the input and the label.
@@ -693,19 +716,21 @@ export class Input implements ComponentInterface {
     }
 
     /**
-     * If not using the outline style,
-     * we can render just the label.
+     * If not using the outline style, OR if using the
+     * ionic theme, just render the label. For the ionic
+     * theme, the outline will be rendered elsewhere.
      */
     return this.renderLabel();
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const { disabled, fill, readonly, shape, inputId, el, hasFocus } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const size = this.getSize();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
+    const labelPlacement = this.getLabelPlacement();
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -755,6 +780,18 @@ export class Input implements ComponentInterface {
         <label class="input-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="native-wrapper">
+            {
+              /**
+               * For the ionic theme, we render the outline container here
+               * instead of higher up, so it can be positioned relative to
+               * the native wrapper instead of the <label> element or the
+               * entire component. This allows the label text to be positioned
+               * above the outline, while staying within the bounds of the
+               * <label> element, ensuring that clicking the label text
+               * focuses the input.
+               */
+              theme === 'ionic' && fill === 'outline' && <div class="input-outline"></div>
+            }
             <slot name="start"></slot>
             <input
               class="native-input"
@@ -819,3 +856,4 @@ export class Input implements ComponentInterface {
 }
 
 let inputIds = 0;
+const ionicThemeDefaultLabelPlacement = 'stacked';
