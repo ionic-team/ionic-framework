@@ -34,7 +34,7 @@ $picker-md-button-text-color:                       ion-color(primary, base) !de
 $picker-md-button-background-color:                 transparent !default;
 
 /// @prop - Font size of the picker button
-$picker-md-button-font-size:                        14px !default;
+$picker-md-button-font-size:                        dynamic-font(14px) !default;
 
 /// @prop - Padding top of the picker column
 $picker-md-column-padding-top:                      0 !default;
@@ -64,7 +64,7 @@ $picker-md-option-padding-start:                    $picker-md-option-padding-en
 $picker-md-option-text-color:                       $item-md-color !default;
 
 /// @prop - Font size of the picker option
-$picker-md-option-font-size:                        22px !default;
+$picker-md-option-font-size:                        dynamic-font(22px) !default;
 
 /// @prop - Height of the picker option
 $picker-md-option-height:                           42px !default;
