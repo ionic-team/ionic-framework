@@ -141,4 +141,40 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-small`));
     });
   });
+
+  test.describe(title('checkbox: basic visual tests'), () => {
+    test('check target area of a small size checkbox', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="checkboxes">
+          <ion-checkbox size="small">Small</ion-checkbox>
+        </div>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('#checkboxes');
+      const box = await checkbox.boundingBox();
+      if(box !== null){
+        await page.mouse.click(box.x + box.width / 2, box.y + 47 );
+      }
+    });
+
+    test('check target area of a default size checkbox', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="checkboxes">
+          <ion-checkbox>Default</ion-checkbox>
+        </div>
+      `,
+        config
+      );
+
+      const checkbox = page.locator('#checkboxes');
+      const box = await checkbox.boundingBox();
+      if(box !== null){
+        await page.mouse.click(box.x + box.width / 2, box.y + 47 );
+      }
+    });
+  });
 });
