@@ -37,7 +37,7 @@ export class Chip implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * Set to 'rectangular' for a chip with sharp corners.
+   * Define the Chip corner shape, when using the Ionic Theme.
    */
   @Prop({ reflect: true }) shape?: 'soft' | 'round' | 'rectangular';
 

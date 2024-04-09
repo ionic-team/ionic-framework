@@ -751,7 +751,7 @@ export namespace Components {
          */
         "outline": boolean;
         /**
-          * Set to 'rectangular' for a chip with sharp corners.
+          * Define the Chip corner shape, when using the Ionic Theme.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
@@ -5983,7 +5983,7 @@ declare namespace LocalJSX {
          */
         "outline"?: boolean;
         /**
-          * Set to 'rectangular' for a chip with sharp corners.
+          * Define the Chip corner shape, when using the Ionic Theme.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
