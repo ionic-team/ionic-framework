@@ -26,10 +26,3 @@
    // Size
    --size: #{$checkbox-ionic-small-size};
 }
-
-// Ionic Design Checkbox Label Placement
-// --------------------------------------------------
-:host(.checkbox-label-placement-start) {
-  display: flex;
-  justify-content: space-between;
-}
