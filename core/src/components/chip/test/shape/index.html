@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chip - Ionic States</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <h2>Chip - Shape</h2>
+
+       
+        <h3>Shapes</h3>
+        <p>
+          <ion-chip id="default">
+            <ion-label>Default</ion-label>
+          </ion-chip>
+          <ion-chip id="soft" shape="soft">
+            <ion-label>Soft</ion-label>
+          </ion-chip>
+          <ion-chip id="round" shape="round">
+            <ion-label>Round</ion-label>
+          </ion-chip>
+          <ion-chip id="rectangular" shape="rectangular">
+            <ion-label>Rectangular</ion-label>
+       
+      </ion-content>
+    </ion-app>
+
+    <style>
+      ion-content {
+        --background: #222;
+      }
+      h2,
+      h3 {
+        color: #fff;
+        padding-left: 16px;
+      }
+
+      p {
+        padding-left: 8px;
+      }
+
+      ion-chip + ion-chip {
+        margin-inline-start: 16px;
+      }
+    </style>
+  </body>
+</html>
