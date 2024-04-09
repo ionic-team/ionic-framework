@@ -13,30 +13,7 @@
 
 * @ionic-team/framework
 
-# Frameworks
-
-## Angular
-
-/packages/angular/ @sean-perkins @thetaPC
-/packages/angular-server @sean-perkins @thetaPC
-/packages/angular/test @thetaPC
-
-## Vue
-
-/packages/vue/ @thetaPC
-/packages/vue-router/ @liamdebeasi @thetaPC
-/packages/vue/test/ @thetaPC
-/packages/vue-router/__tests__ @thetaPC
-
-# Components
-
-/core/src/components/datetime/ @sean-perkins
-
-/core/src/components/nav/ @sean-perkins
-/core/src/components/nav-link/ @sean-perkins
-
 # Utilities
 
-/core/src/utils/content/ @sean-perkins
 /core/src/utils/gesture/ @liamdebeasi
 /core/src/utils/input-shims/ @liamdebeasi

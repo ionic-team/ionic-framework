@@ -91,17 +91,8 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
         const eventsNames = Array.isArray(modelUpdateEvent) ? modelUpdateEvent : [modelUpdateEvent];
         eventsNames.forEach((eventName: string) => {
           el.addEventListener(eventName.toLowerCase(), (e: Event) => {
-            /**
-             * Only update the v-model binding if the event's target is the element we are
-             * listening on. For example, Component A could emit ionChange, but it could also
-             * have a descendant Component B that also emits ionChange. We only want to update
-             * the v-model for Component A when ionChange originates from that element and not
-             * when ionChange bubbles up from Component B.
-             */
-            if (e.target.tagName === el.tagName) {
-              modelPropValue = (e?.target as any)[modelProp];
-              emit(UPDATE_VALUE_EVENT, modelPropValue);
-            }
+            modelPropValue = (e?.target as any)[modelProp];
+            emit(UPDATE_VALUE_EVENT, modelPropValue);
           });
         });
       },
