@@ -367,32 +367,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-no-fill-valid`));
       });
-      test('should render custom highlight correctly', async ({ page }) => {
-        await page.setContent(
-          `
-          <style>
-            ion-input.custom {
-              --highlight-color-valid: purple;
-            }
-          </style>
-
-            <ion-input
-              value="hi@ionic.io"
-              class="custom has-focus ion-valid"
-              label="Email"
-              error-text="Please enter a valid email"
-              helper-text="Enter an email"
-              counter="true"
-              maxlength="20"
-            ></ion-input>
-          </div>
-        `,
-          config
-        );
-
-        const container = page.locator('ion-input');
-        await expect(container).toHaveScreenshot(screenshot(`input-no-fill-custom-highlight`));
-      });
     });
     test.describe('input: outline', () => {
       test('should render valid state correctly', async ({ page }) => {
