@@ -795,7 +795,6 @@ export class Input implements ComponentInterface {
                 onClick={this.clearTextInput}
               >
                 <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
-                <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>
