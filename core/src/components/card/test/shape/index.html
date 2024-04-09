@@ -1,10 +1,9 @@
-<!-- TODO: FW-6077 This file can be removed once the additional test cases are added -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8" />
-  <title>Card - Theme Ionic</title>
+  <title>Card - Shape</title>
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
@@ -13,17 +12,16 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
-Styles only for testing purposes to identify the card shape
+  <!-- Styles only for testing purposes to identify the card shape -->
   <style>
+    :root {
+      --ion-background-color: #dde2ef;
+    }
+
     #default,
     #round,
     #rectangular {
-      background: #ebeb;
       padding: 8px;
-    }
-
-    .ionic {
-      --background: #ebeb;
     }
   </style>
 </head>
@@ -32,7 +30,7 @@ Styles only for testing purposes to identify the card shape
   <ion-app>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Card - Ionic</ion-title>
+        <ion-title>Card - Shape</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -83,5 +81,4 @@ Styles only for testing purposes to identify the card shape
     </ion-content>
   </ion-app>
 </body>
-
 </html>
