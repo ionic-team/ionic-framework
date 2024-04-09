@@ -24,7 +24,7 @@ Using [Style Dictionary](https://amzn.github.io/style-dictionary/), these tokens
 - `ionic.vars.scss` - SCSS variables, based on the native ones, that are used internally on all CSS/SCSS code.
 - `ionic.utility.scss` - list of utility classes based on each Design Token.
 
-This is, more or less, what is called System Tokens - decisions that systematize the design language for a specific theme or context.
+This refers, more or less, to what's known as System Tokens, which are decisions that systematize the design language for a specific theme or context.
 
 Currently, Reference Tokens and Component Tokens are not used. Instead we are defining a base architecture for system tokens, that will inform the :root and global scss variables, and then we let the scss architecture propagate that to the Components.
 
