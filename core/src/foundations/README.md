@@ -22,7 +22,7 @@ Using [Style Dictionary](https://amzn.github.io/style-dictionary/), these tokens
 
 - `ionic.root.scss` - native CSS Custom Properties inside a :root element.
 - `ionic.vars.scss` - SCSS variables, based on the native ones, that are used internally on all CSS/SCSS code.
-- `ionic.utility.scss` - list of utility-classes based on each Design Token.
+- `ionic.utility.scss` - list of utility classes based on each Design Token.
 
 This is, more or less, what is called System Tokens - decisions that systematize the design language for a specific theme or context.
 
