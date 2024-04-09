@@ -1,16 +1,21 @@
 @import "./input";
 @import "./input.ionic.vars";
+@import "./input.ionic.outline.scss";
 
 // Ionic Input
 // --------------------------------------------------
+
 :host {
+  --border-width: #{$ionic-border-size-small};
+  --border-color: #{$ionic-color-neutral-300};
+
   --highlight-color-invalid: #{$ionic-color-error-400};
 }
 
 // Ionic Input Sizes
 // --------------------------------------------------
 
-:host(.input-size-large) {
+:host(.input-size-large) .native-wrapper {
   min-height: 48px;
 }
 
