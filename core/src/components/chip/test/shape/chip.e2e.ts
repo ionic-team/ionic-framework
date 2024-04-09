@@ -14,7 +14,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
         const container = page.locator('#default');
 
-        await expect(container).toHaveScreenshot(screenshot(`chip-round`));
+        await expect(container).toHaveScreenshot(screenshot(`chip-default`));
       });
     });
 
