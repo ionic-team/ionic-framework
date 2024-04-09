@@ -282,12 +282,12 @@ ion-card,prop,mode,"ios" | "md",undefined,false,false
 ion-card,prop,rel,string | undefined,undefined,false,false
 ion-card,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-card,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-card,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,true
+ion-card,prop,shape,"rectangular" | "round" | undefined,undefined,false,true
 ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-card,css-prop,--background
-ion-card,css-prop,--color
+ion-card,css-prop,--border-radius
 ion-card,part,native
 
 ion-card-content,none

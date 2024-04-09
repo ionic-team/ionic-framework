@@ -1,7 +1,7 @@
 @use "../../foundations/ionic.vars.scss" as tokens;
 @use "../../themes/ionic.mixins" as mixins;
 
-// Ionic Theme  Card
+// Ionic Card
 // --------------------------------------------------
 
 :host {
@@ -21,10 +21,6 @@
 
   background: var(--background);
   color: var(--color);
-}
-
-:host(.card-soft) {
-  --border-radius: #{tokens.$ionic-border-radius-rounded-small};
 }
 
 :host(.card-round) {

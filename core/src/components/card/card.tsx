@@ -83,9 +83,9 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() routerAnimation: AnimationBuilder | undefined;
 
   /**
-   * Set to `"soft"` for a card with more rounded corners.
+   * Set to `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners.
    */
-  @Prop({ reflect: true }) shape?: 'soft' | 'round' | 'rectangular';
+  @Prop({ reflect: true }) shape?: 'round' | 'rectangular';
 
   /**
    * Specifies where to display the linked URL.
@@ -100,6 +100,20 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   private isClickable(): boolean {
     return this.href !== undefined || this.button;
+  }
+
+  /**
+   * Disable the "xsmall" and "xlarge" sizes if the theme is "ios" or "md"
+   */
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    if (theme === 'ios' || theme === 'md' || shape === null) {
+      return undefined;
+    }
+
+    return shape;
   }
 
   private renderCard(theme: Theme) {
@@ -136,14 +150,14 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const { shape } = this;
     const theme = getIonTheme(this);
+    const finalShape = this.getShape();
 
     return (
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
-          [`card-${shape}`]: shape !== undefined,
+          [`card-${finalShape}`]: finalShape !== undefined,
           'card-disabled': this.disabled,
           'ion-activatable': this.isClickable(),
         })}
