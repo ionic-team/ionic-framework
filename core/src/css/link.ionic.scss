@@ -1,4 +1,4 @@
-@import "../foundations/ionic.vars";
+@use "../foundations/ionic.vars" as tokens;
 
 // Link: Shared Styles (Standalone & Underline)
 // -------------------------------------------------------------------------------
@@ -23,7 +23,7 @@
   // -------------------------------------------------------------------------------
 
   &:visited {
-    color: $ionic-color-info-500;
+    color: tokens.$ionic-color-info-500;
   }
 }
 
@@ -42,7 +42,7 @@
     }
   }
 
-  color: $ionic-color-info-400;
+  color: tokens.$ionic-color-info-400;
 
   text-decoration: none;
 
@@ -51,7 +51,7 @@
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid $ionic-color-primary-100;
+    outline: 2px solid tokens.$ionic-color-primary-100;
     outline-offset: 2px;
 
     text-decoration: underline;
@@ -62,7 +62,7 @@
 
   &:active,
   &.ion-activated {
-    color: $ionic-color-info-500;
+    color: tokens.$ionic-color-info-500;
 
     text-decoration: underline;
   }
@@ -84,7 +84,7 @@ a.ionic-link,
 
   @media (any-hover: hover) {
     &:hover {
-      color: $ionic-color-info-400;
+      color: tokens.$ionic-color-info-400;
     }
   }
 
@@ -97,7 +97,7 @@ a.ionic-link,
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid $ionic-color-primary-100;
+    outline: 2px solid tokens.$ionic-color-primary-100;
     outline-offset: 2px;
 
     color: currentColor;
@@ -110,7 +110,7 @@ a.ionic-link,
 
   &:active,
   &.ion-activated {
-    color: $ionic-color-info-500;
+    color: tokens.$ionic-color-info-500;
   }
 }
 
