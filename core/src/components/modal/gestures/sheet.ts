@@ -337,6 +337,17 @@ export const createSheetGesture = (
       onDismiss();
     }
 
+    /**
+     * If the sheet is going to be fully expanded then we should enable
+     * scrolling immediately. The sheet modal animation takes ~500ms to finish
+     * so if we wait until then there is a visible delay for when scrolling is
+     * re-enabled. Native iOS allows for scrolling on the sheet modal as soon
+     * as the gesture is released, so we align with that.
+     */
+    if (contentEl && snapToBreakpoint === breakpoints[breakpoints.length - 1]) {
+      contentEl.scrollY = true;
+    }
+
     return new Promise<void>((resolve) => {
       animation
         .onFinish(
@@ -356,14 +367,6 @@ export const createSheetGesture = (
                   animation.progressStart(true, 1 - snapToBreakpoint);
                   currentBreakpoint = snapToBreakpoint;
                   onBreakpointChange(currentBreakpoint);
-
-                  /**
-                   * If the sheet is fully expanded, we can safely
-                   * enable scrolling again.
-                   */
-                  if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
-                    contentEl.scrollY = true;
-                  }
 
                   /**
                    * Backdrop should become enabled
