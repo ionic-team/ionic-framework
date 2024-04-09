@@ -172,7 +172,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
       const checkbox = page.locator('#checkboxes');
       const box = await checkbox.boundingBox();
-      if(box !== null){
+      if(box !== null) {
         await page.mouse.click(box.x + box.width / 2, box.y + 47 );
       }
     });
