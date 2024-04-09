@@ -52,6 +52,7 @@ Example:
 The `tokens.js` script that will generated the css and scss variables, and the utility-classes, will follow always the same nomenclature: `prefix - CSS property name - type variation - modifier name`.
 
 Examples:
+
 CSS Custom Property:
 
 ```css
