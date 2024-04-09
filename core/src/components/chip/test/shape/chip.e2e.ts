@@ -6,12 +6,12 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
    * This behavior only applies to Ionic Theme.
    */
   test.describe(title('chip: shape'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/src/components/chip/test/shape`, config);
+    });
+
     test.describe('default', () => {
       test('should not have visual regressions', async ({ page }) => {
-        await page.goto(`/src/components/chip/test/shape`, config);
-
-        await page.setIonViewport();
-
         const container = page.locator('#default');
 
         await expect(container).toHaveScreenshot(screenshot(`chip-default`));
@@ -20,10 +20,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
     test.describe('soft', () => {
       test('should not have visual regressions', async ({ page }) => {
-        await page.goto(`/src/components/chip/test/shape`, config);
-
-        await page.setIonViewport();
-
         const container = page.locator('#soft');
 
         await expect(container).toHaveScreenshot(screenshot(`chip-soft`));
@@ -32,10 +28,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
     test.describe('round', () => {
       test('should not have visual regressions', async ({ page }) => {
-        await page.goto(`/src/components/chip/test/shape`, config);
-
-        await page.setIonViewport();
-
         const container = page.locator('#round');
 
         await expect(container).toHaveScreenshot(screenshot(`chip-round`));
@@ -44,10 +36,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
     test.describe('rectangular', () => {
       test('should not have visual regressions', async ({ page }) => {
-        await page.goto(`/src/components/chip/test/shape`, config);
-
-        await page.setIonViewport();
-
         const container = page.locator('#rectangular');
 
         await expect(container).toHaveScreenshot(screenshot(`chip-rectangular`));
