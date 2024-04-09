@@ -64,7 +64,7 @@ SCSS Variable:
 $ionic-color-primary-10
 ```
 
-Utility-class:
+Utility class:
 
 ```css
 .ionic-color-primary-10
