@@ -78,9 +78,9 @@ Adding new tokens is more or less risk free. However, changing values will resul
 
 ## How to change the Design Tokens
 
-Design Tokens are generated automatically on the `npm run build` command. This is to guarantee that someone would change the json and not running the expected command.
+Using `npm run build.tokens` will generate the `ionic.root.scss`, `ionic.vars.scss`, and `ionic.utility.scss` files with the updated values that come from the `design-tokens.json`.
 
-That being said, using `npm run build.tokens` will trigger the same effect, to generate again the `ionic.root.scss`, `ionic.vars.scss`, `ionic.utility.scss` files with the updated values that come from the `design-tokens.json`.
+Design Tokens will also be generated automatically with the `npm run build` command. This ensures that if someone modifies the JSON without running the build tokens command, the changes will be applied correctly.
 
 ## How to use
 
