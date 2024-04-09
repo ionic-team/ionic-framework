@@ -50,7 +50,7 @@ export class Chip implements ComponentInterface {
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [theme]: true,
-          [`chip-${shape}`]: shape !== undefined,
+          [`chip-${shape}`]: theme === 'ionic' && shape !== undefined,
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
