@@ -31,3 +31,13 @@
 .input-bottom .error-text {
   color: var(--highlight-color-invalid);
 }
+
+// Input Hover
+// ----------------------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
+    --border-color: var(--ionic-color-neutral-600, #535353);
+  }
+}
