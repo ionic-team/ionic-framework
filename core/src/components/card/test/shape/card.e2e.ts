@@ -11,8 +11,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.goto(`/src/components/card/test/shape`, config);
 
-        await page.setIonViewport();
-
         const container = page.locator('#default');
 
         await expect(container).toHaveScreenshot(screenshot(`card-default`));
@@ -23,8 +21,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.goto(`/src/components/card/test/shape`, config);
 
-        await page.setIonViewport();
-
         const container = page.locator('#round');
 
         await expect(container).toHaveScreenshot(screenshot(`card-round`));
@@ -34,8 +30,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     test.describe('rectangular', () => {
       test('should not have visual regressions', async ({ page }) => {
         await page.goto(`/src/components/card/test/shape`, config);
-
-        await page.setIonViewport();
 
         const container = page.locator('#rectangular');
 
