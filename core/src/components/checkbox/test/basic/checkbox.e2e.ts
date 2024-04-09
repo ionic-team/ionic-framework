@@ -145,36 +145,30 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
   test.describe(title('checkbox: basic visual tests'), () => {
     test('check target area of a small size checkbox', async ({ page }) => {
       await page.setContent(
-        `
-        <div id="checkboxes">
-          <ion-checkbox size="small">Small</ion-checkbox>
-        </div>
-      `,
+        `<ion-checkbox size="small">Small</ion-checkbox>`,
         config
       );
 
-      const checkbox = page.locator('#checkboxes');
+      const checkbox = page.locator('ion-checkbox');
       const box = await checkbox.boundingBox();
       if(box !== null){
         await page.mouse.click(box.x + box.width / 2, box.y + 47 );
       }
+      await expect(checkbox).toBeFocused();
     });
 
     test('check target area of a default size checkbox', async ({ page }) => {
       await page.setContent(
-        `
-        <div id="checkboxes">
-          <ion-checkbox>Default</ion-checkbox>
-        </div>
-      `,
+        `<ion-checkbox>Default</ion-checkbox>`,
         config
       );
 
-      const checkbox = page.locator('#checkboxes');
+      const checkbox = page.locator('ion-checkbox');
       const box = await checkbox.boundingBox();
       if(box !== null){
         await page.mouse.click(box.x + box.width / 2, box.y + 47 );
       }
+      await expect(checkbox).toBeFocused();
     });
   });
 });
