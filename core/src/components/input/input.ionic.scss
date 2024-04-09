@@ -8,7 +8,6 @@
 :host {
   --border-width: #{$ionic-border-size-small};
   --border-color: #{$ionic-color-neutral-300};
-
   --highlight-color-valid: #{$ionic-color-success-400};
   // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
   --highlight-color-invalid: var(--ionic-color-error-600, #970606);
@@ -27,8 +26,7 @@
 .input-bottom {
   @include padding-horizontal(0, 0);
 
-  // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
-  font-weight: var(--ionic-font-medium, 500);
+  font-weight: 500;
 }
 
 // Input Hint Text
