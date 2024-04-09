@@ -5,10 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --background: Background of the card
-   * @prop --border-radius: Shape of the card
-   */
   --background: #{tokens.$ionic-color-neutral-0};
   --border-radius: #{tokens.$ionic-border-radius-rounded-small};
 
@@ -17,7 +13,7 @@
 
   display: block;
 
-  border: #{tokens.$ionic-border-size-small} solid #{tokens.$ionic-color-neutral-10};
+  border: #{tokens.$ionic-border-size-small} solid #{tokens.$ionic-color-neutral-50};
 
   background: var(--background);
   color: var(--color);

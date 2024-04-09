@@ -287,7 +287,7 @@ ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-card,css-prop,--background
-ion-card,css-prop,--border-radius
+ion-card,css-prop,--color
 ion-card,part,native
 
 ion-card-content,none
