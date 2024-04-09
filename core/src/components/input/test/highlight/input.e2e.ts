@@ -390,7 +390,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
           config
         );
 
-        const container = page.locator('.container');
+        const container = page.locator('ion-input');
         await expect(container).toHaveScreenshot(screenshot(`input-no-fill-custom-highlight`));
       });
     });
