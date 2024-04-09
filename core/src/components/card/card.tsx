@@ -102,20 +102,6 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.href !== undefined || this.button;
   }
 
-  /**
-   * Disable the "xsmall" and "xlarge" sizes if the theme is "ios" or "md"
-   */
-  private getShape(): string | undefined {
-    const theme = getIonTheme(this);
-    const { shape } = this;
-
-    if (theme === 'ios' || theme === 'md' || shape === null) {
-      return undefined;
-    }
-
-    return shape;
-  }
-
   private renderCard(theme: Theme) {
     const clickable = this.isClickable();
 
@@ -150,14 +136,15 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
+    const { shape } = this;
+
     const theme = getIonTheme(this);
-    const finalShape = this.getShape();
 
     return (
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
-          [`card-${finalShape}`]: finalShape !== undefined,
+          [`card-${shape}`]: theme === 'ionic' && shape !== undefined,
           'card-disabled': this.disabled,
           'ion-activatable': this.isClickable(),
         })}
