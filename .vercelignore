@@ -1,1 +1,5 @@
 core/**/*/*.png
+
+# Only the ionic directory is needed to load Ionic Framework
+dist
+!dist/ionic
