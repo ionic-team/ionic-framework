@@ -20,17 +20,17 @@ Currently, five categories of tokens are stored:
 
 Using [Style Dictionary](https://amzn.github.io/style-dictionary/), these tokens generate 3 files inside `core/src/foundations`:
 
-- `ionic.root.scss` - native CSS Custom Properties inside a :root element.
+- `ionic.root.scss` - native CSS Custom Properties inside a `:root` element.
 - `ionic.vars.scss` - SCSS variables, based on the native ones, that are used internally on all CSS/SCSS code.
 - `ionic.utility.scss` - list of utility classes based on each Design Token.
 
 This refers, more or less, to what's known as System Tokens, which are decisions that systematize the design language for a specific theme or context.
 
-Currently, Reference Tokens and Component Tokens are not used. Instead we are defining a base architecture for system tokens, that will inform the :root and global scss variables, and then we let the scss architecture propagate that to the Components.
+Currently, Reference Tokens and Component Tokens are not used. Instead we are defining a base architecture for system tokens, that will inform the `:root` and global SCSS variables, and then we let the SCSS architecture propagate that to the Components.
 
 ## Format
 
-The new [W3C Design Tokens Format](https://design-tokens.github.io/community-group/format/) was followed. This is a recent effort to normalize the nomenclature of Design Tokens.
+The latest [W3C Design Tokens Format](https://design-tokens.github.io/community-group/format/) was adhered to, this is a recent effort to normalize the nomenclature of Design Tokens.
 
 The nomenclature has the following structure: `type - type variation - modifier name - $value`
 
@@ -49,7 +49,7 @@ Example:
 }
 ```
 
-The `tokens.js` script that will generated the css and scss variables, and the utility-classes, will follow always the same nomenclature: `prefix - CSS property name - type variation - modifier name`.
+The `tokens.js` script, responsible for generating CSS and SCSS variables along with utility classes, will follow the same nomenclature: `prefix - CSS property name - type variation - modifier name`.
 
 Examples:
 
