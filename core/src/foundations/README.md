@@ -75,7 +75,7 @@ Utility class:
 
 It's not expected that the `design-tokens.json` needs to be changed frequently. This represents the base of all the Ionic Design System and any change to the json file should be taken carefully, synced with the UX/UI Team and reviewed by other devs.
 
-Adding new tokens is more or less risk free. However, changing values will result in visual breaking-changes and renaming tokens might cause the build to be broken.
+Adding new tokens is more or less risk free. However, changing values will result in visual breaking changes and renaming tokens might cause the build to be broken.
 
 ## How to change the Design Tokens
 
