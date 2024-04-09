@@ -49,7 +49,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
   test.describe(title('chip: focus state'), () => {
     test('should render focus state', async ({ page }) => {
       await page.setContent(
-        `<ion-chip class="ion-focused">
+        `<ion-chip class="ion-focused ion-margin">
           <ion-label>Focused</ion-label>
         </ion-chip>`,
         config
