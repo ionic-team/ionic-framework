@@ -86,7 +86,7 @@ Design Tokens will also be generated automatically with the `npm run build` comm
 
 It's very important to highlight that only the Ionic Theme supports these tokens and they should not be used for md/ios themes.
 
-On the components scope, variables from thse global tokens should always be used. There should be no hardcoded values on component scope that relate to any of the existing tokens.
+Within the component scope, variables from these global tokens should always be used. There should be no hardcoded values on component scope that relate to any of the existing tokens.
 
 Example (Chip Component):
 
