@@ -119,8 +119,8 @@ configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, sc
           config
         );
 
-        const errorText = page.locator('ion-input .error-text');
-        await expect(errorText).toHaveScreenshot(screenshot(`input-error-custom-color`));
+        const bottomEl = page.locator('ion-input .input-bottom');
+        await expect(bottomEl).toHaveScreenshot(screenshot(`input-error-custom-color`));
       });
     });
     test.describe('input: hint text rendering', () => {
