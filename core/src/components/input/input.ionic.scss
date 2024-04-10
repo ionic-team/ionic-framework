@@ -9,6 +9,7 @@
   --border-width: #{$ionic-border-size-small};
   --border-color: #{$ionic-color-neutral-300};
   --highlight-color-invalid: #{$ionic-color-error-400};
+  --text-color-invalid: #{$ionic-color-error-600};
 }
 
 // Ionic Input Sizes
@@ -27,5 +28,5 @@
 }
 
 :host(.ion-touched.ion-invalid) .error-text {
-  color: #{$ionic-color-error-600};
+  color: var(--text-color-invalid);
 }

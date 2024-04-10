@@ -105,12 +105,13 @@ configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, sc
         await expect(errorText).toBeVisible();
         await expect(errorText).toHaveText('my error');
       });
-      test('error text should change when variable is customized', async ({ page }) => {
+      test('error text and highlight should change when variable is customized', async ({ page }) => {
         await page.setContent(
           `
           <style>
             ion-input.custom-input {
               --highlight-color-invalid: purple;
+              --text-color-invalid: purple; // ionic only
             }
           </style>
           <ion-input class="ion-invalid ion-touched custom-input" label="my label" error-text="my error"></ion-input>
