@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: states'), () => {
     test('should render disabled checkbox correctly', async ({ page }) => {
       await page.setContent(
@@ -49,6 +49,52 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const checkbox = page.locator('ion-checkbox');
       await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-unchecked`));
+    });
+
+    test('should render focus checkbox correctly', async ({ page }) => {
+      await page.setContent(
+        `
+          <div id="checkboxes" style="padding: 8px">
+            <ion-checkbox class="ion-focused">Label</ion-checkbox>
+            <ion-checkbox class="ion-focused" checked>Label</ion-checkbox>
+          </div>
+      `,
+        config
+      );
+
+      const checkboxes = page.locator('#checkboxes');
+      await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-focused`));
+    });
+
+    test('should render checkbox hover correctly', async ({ page }) => {
+      await page.setContent(
+        `
+          <div id="checkboxes">
+            <ion-checkbox>Label</ion-checkbox>
+            <ion-checkbox checked>Label</ion-checkbox>
+          </div>
+      `,
+        config
+      );
+
+      const checkboxes = page.locator('#checkboxes');
+      await checkboxes.hover();
+      await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-hover`));
+    });
+
+    test('should render checkbox active correctly', async ({ page }) => {
+      await page.setContent(
+        `
+          <div id="checkboxes">
+            <ion-checkbox class="ion-activated">Label</ion-checkbox>
+            <ion-checkbox class="ion-activated" checked>Label</ion-checkbox>
+          </div>
+      `,
+        config
+      );
+
+      const checkboxes = page.locator('#checkboxes');
+      await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-active`));
     });
   });
 });
