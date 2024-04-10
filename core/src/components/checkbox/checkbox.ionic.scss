@@ -20,7 +20,6 @@
   --focus-ring-width: 2px;
 }
 
-
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
@@ -71,7 +70,6 @@
   }
 }
 
-
 // Checkbox Focus
 // --------------------------------------------------
 // Only show the focus ring when the checkbox is focused and not disabled
@@ -92,3 +90,14 @@
   /* TODO: Use design token variables */
   background-color: #105ed1; // mix of '#1068eb', '#121212', 0.12, 'rgb'
 }
+
+// Ionic Design Checkbox Shapes
+// --------------------------------------------------
+:host(.checkbox-shape-soft) {
+  --border-radius: #{$checkbox-ionic-border-radius};
+}
+
+:host(.checkbox-shape-rectangular) {
+  --border-radius: #{$checkbox-ionic-rectangular-border};
+}
+
