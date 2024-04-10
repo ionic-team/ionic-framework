@@ -4,6 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   /**
    * This behavior only applies to Ionic Theme.
+   * TODO(FW-6120): add the `ios` and `md` modes when shape support is added.
    */
   test.describe(title('chip: shape'), () => {
     test.beforeEach(async ({ page }) => {
