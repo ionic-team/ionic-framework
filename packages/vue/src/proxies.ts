@@ -184,6 +184,7 @@ export const IonCard = /*@__PURE__*/ defineContainer<JSX.IonCard>('ion-card', de
   'rel',
   'routerDirection',
   'routerAnimation',
+  'shape',
   'target'
 ]);
 
@@ -263,6 +264,7 @@ export const IonCol = /*@__PURE__*/ defineContainer<JSX.IonCol>('ion-col', defin
 export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-content', defineIonContent, [
   'color',
   'fullscreen',
+  'fixedSlotPlacement',
   'forceOverscroll',
   'scrollX',
   'scrollY',
@@ -403,6 +405,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'autocorrect',
   'autofocus',
   'clearInput',
+  'clearInputIcon',
   'clearOnEdit',
   'counter',
   'counterFormatter',
