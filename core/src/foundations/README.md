@@ -2,7 +2,7 @@
 
 ## What are Design Tokens?
 
-Design Tokens are an abstract and universal language to store Design System values, creating a single source of truth that is tech-agnostic and easily scalable and extendable to any any kind of desired output (CSS, SCSS, iOS, Android, JSON, etc). Are usually stored as JSON format, which makes them easily scalable to use with any kind of language or Design Tool (like Figma, Sketch, etc).
+Design Tokens are an abstract and universal language to store Design System values, creating a single source of truth that is tech-agnostic and easily scalable and extendable for various outputs such as CSS, SCSS, iOS, Android, JSON, and more. Typically stored in JSON format, they facilitate seamless scalability for integration with any language or Design Tool like Figma or Sketch.
 
 Design tokens represent small, repeated design decisions that make up a design system's visual style. Tokens replace static values, like hex codes representing colors, with descriptive and intuitive names.
 
