@@ -1,4 +1,3 @@
 .stencil
-components
 node_modules
 src/components/**/*/*-.png
