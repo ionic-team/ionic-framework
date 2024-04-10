@@ -493,14 +493,14 @@ export declare interface IonButtons extends Components.IonButtons {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCard,
-  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'theme', 'type']
+  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'theme', 'type']
 })
 @Component({
   selector: 'ion-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'theme', 'type'],
+  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'theme', 'type'],
   standalone: true
 })
 export class IonCard {
