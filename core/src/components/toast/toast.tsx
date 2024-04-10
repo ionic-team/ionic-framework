@@ -526,11 +526,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   private async buttonClick(button: ToastButton) {
     const role = button.role;
-    if (isCancel(role)) {
-      return this.dismiss(undefined, role);
-    }
     const shouldDismiss = await this.callButtonHandler(button);
-    if (shouldDismiss) {
+    if (isCancel(role) || shouldDismiss) {
       return this.dismiss(undefined, role);
     }
     return Promise.resolve();
@@ -554,9 +551,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   private dispatchCancelHandler = (ev: CustomEvent) => {
-    const role = ev.detail.role;
+    const button = ev.detail;
+    const role = button.role;
     if (isCancel(role)) {
-      const cancelButton = this.getButtons().find((b) => b.role === 'cancel');
+      const cancelButton = this.getButtons().find((b) => {
+        return b === button && b.role === 'cancel';
+      });
       this.callButtonHandler(cancelButton);
     }
   };
