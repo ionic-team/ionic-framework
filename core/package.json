@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.0.0-beta.3",
+  "version": "8.0.0-rc.0",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -79,7 +79,7 @@
     "build.tokens": "node ./scripts/tokens.js && npm run lint.sass.fix",
     "clean": "node scripts/clean.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
-    "css.sass": "sass --embed-sources src/css:./css",
+    "css.sass": "sass --embed-sources --style compressed src/css:./css",
     "eslint": "eslint src",
     "lint": "npm run lint.ts && npm run lint.sass && npm run prettier -- --write --cache",
     "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix && npm run prettier -- --write --cache",
