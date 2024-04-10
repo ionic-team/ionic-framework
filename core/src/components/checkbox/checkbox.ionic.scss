@@ -17,9 +17,6 @@
   // Size
   --size: #{$checkbox-ionic-size};
 
-  // Padding
-  @include padding(var(--padding-top), null, var(--padding-bottom), null);
-
   // Checkbox Target area
   // -------------------------------------------------- 
   &::after {
@@ -48,9 +45,10 @@
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
-  --padding-top: #{$checkbox-ionic-small-padding-top};
-  --padding-bottom: #{$checkbox-ionic-small-padding-bottom};
-
    // Size
    --size: #{$checkbox-ionic-small-size};
+}
+
+.checkbox-wrapper {
+  min-height: 48px;
 }
