@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0-rc.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.0...v8.0.0-rc.1) (2024-04-10)
+
+
+### Bug Fixes
+
+* **button:** use clamp for font sizes on circle shape ([#29200](https://github.com/ionic-team/ionic-framework/issues/29200)) ([4d6edee](https://github.com/ionic-team/ionic-framework/commit/4d6edee89c7bb2cb669d67730d7ddf24c78b3cb1))
+
+
+
+
+
 ## [7.8.4](https://github.com/ionic-team/ionic-framework/compare/v7.8.3...v7.8.4) (2024-04-10)
 
 
