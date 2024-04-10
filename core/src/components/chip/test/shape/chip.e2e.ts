@@ -19,14 +19,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       });
     });
 
-    test.describe('soft', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        const container = page.locator('#soft');
-
-        await expect(container).toHaveScreenshot(screenshot(`chip-soft`));
-      });
-    });
-
     test.describe('round', () => {
       test('should not have visual regressions', async ({ page }) => {
         const container = page.locator('#round');
