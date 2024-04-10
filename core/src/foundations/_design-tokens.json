@@ -43,6 +43,9 @@
       "$value": "#303d60"
     },
     "neutral": {
+      "0": {
+        "$value": "#ffffff"
+      },
       "10": {
         "$value": "#f5f5f5"
       },
