@@ -725,6 +725,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
+         */
+        "shape"?: 'soft' | 'rectangular';
+        /**
           * Set to `"small"` for a checkbox with less height and padding.
          */
         "size"?: 'small';
@@ -5956,6 +5960,10 @@ declare namespace LocalJSX {
           * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
+        /**
+          * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
+         */
+        "shape"?: 'soft' | 'rectangular';
         /**
           * Set to `"small"` for a checkbox with less height and padding.
          */

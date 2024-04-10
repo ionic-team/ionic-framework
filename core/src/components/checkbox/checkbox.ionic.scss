@@ -41,12 +41,21 @@
   }
 }
 
-
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
    // Size
    --size: #{$checkbox-ionic-small-size};
+}
+
+// Ionic Design Checkbox Shapes
+// --------------------------------------------------
+:host(.checkbox-shape-soft) {
+  --border-radius: #{$checkbox-ionic-border-radius};
+}
+
+:host(.checkbox-shape-rectangular) {
+  --border-radius: #{$checkbox-ionic-rectangular-border};
 }
 
 .checkbox-wrapper {

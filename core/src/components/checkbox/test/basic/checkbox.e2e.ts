@@ -165,4 +165,35 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       await expect(checkbox).toBeFocused();
     });
   });
+
+  test.describe(title('checkbox: shapes'), () => {
+    test('should have a soft shape applied correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="checkboxes">
+          <ion-checkbox >soft</ion-checkbox>
+          <ion-checkbox shape="soft">Soft</ion-checkbox>
+        </div>
+      `,
+        config
+      );
+
+      const checkboxes = page.locator('#checkboxes');
+      await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-shape-soft`));
+    });
+
+    test('should have a rectangular shape applied correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="checkboxes">
+          <ion-checkbox shape="rectangular">Rectangular</ion-checkbox>
+        </div>
+      `,
+        config
+      );
+
+      const checkboxes = page.locator('#checkboxes');
+      await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-shape-rectangular`));
+    });
+  });
 });
