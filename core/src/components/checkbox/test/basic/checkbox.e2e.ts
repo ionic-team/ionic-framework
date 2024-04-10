@@ -140,7 +140,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       const checkboxes = page.locator('#checkboxes');
       await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-small`));
     });
-    
+
     test('should have an invalid visual applied correctly', async ({ page }) => {
       await page.setContent(
         `
@@ -151,12 +151,11 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       `,
         config
       );
-      
+
       const checkboxes = page.locator('#checkboxes');
       await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-invalid`));
     });
   });
-
 
   test.describe(title('checkbox: shapes'), () => {
     test('should have a soft shape applied correctly', async ({ page }) => {
