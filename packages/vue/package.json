@@ -1,6 +1,10 @@
 {
   "name": "@ionic/vue",
+<<<<<<< HEAD
   "version": "8.0.0-rc.0",
+=======
+  "version": "7.8.4",
+>>>>>>> origin/main
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -66,7 +70,11 @@
     "vue-router": "^4.0.16"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@ionic/core": "8.0.0-rc.0",
+=======
+    "@ionic/core": "^7.8.4",
+>>>>>>> origin/main
     "ionicons": "^7.0.0"
   },
   "vetur": {
