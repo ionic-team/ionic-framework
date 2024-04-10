@@ -9,7 +9,7 @@ import { configs, test } from '@utils/test/playwright';
  * we set the width of the checkbox so we can
  * see the justification results.
  */
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: label'), () => {
     test.describe('checkbox: start placement', () => {
       test('should render a start justification with label in the start position', async ({ page }) => {
