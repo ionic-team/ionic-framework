@@ -54,7 +54,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
     test('should render focus checkbox correctly', async ({ page }) => {
       await page.setContent(
         `
-          <div id="checkboxes">
+          <div id="checkboxes" style="padding: 8px">
             <ion-checkbox class="ion-focused">Label</ion-checkbox>
             <ion-checkbox class="ion-focused" checked>Label</ion-checkbox>
           </div>
