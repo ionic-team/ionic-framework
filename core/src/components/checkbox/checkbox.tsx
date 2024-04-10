@@ -103,10 +103,10 @@ export class Checkbox implements ComponentInterface {
    */
   @Prop() size?: 'small';
 
-   /**
+  /**
    * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
    */
-   @Prop() shape?: 'soft' | 'rectangular' = 'soft';
+  @Prop() shape?: 'soft' | 'rectangular' = 'soft';
 
   /**
    * Emitted when the checked property has changed
