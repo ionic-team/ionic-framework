@@ -31,3 +31,21 @@
 .input-bottom .error-text {
   color: var(--highlight-color-invalid);
 }
+
+// Input - Disabled
+// ----------------------------------------------------------------
+
+:host(.input-disabled) {
+  // color for the text within the input
+  --color: #{$ionic-color-neutral-400};
+  --background: #{$ionic-color-neutral-10};
+}
+
+:host(.input-disabled) .label-text-wrapper,
+:host(.input-disabled:not(.ion-valid)) .input-bottom .helper-text {
+  color: #{$ionic-color-neutral-400};
+}
+
+:host(.input-disabled.has-focus.ion-valid) {
+  --highlight-color-valid: rgba(#000000, 0.5);
+}

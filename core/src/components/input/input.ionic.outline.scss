@@ -109,3 +109,17 @@
 :host(.input-fill-outline) ::slotted([slot="end"]) {
   margin-inline-start: 8px;
 }
+
+// Input - Disabled
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline.input-disabled) {
+  // color for the text within the input
+  --color: #{$ionic-color-neutral-400};
+  --background: transparent;
+}
+
+:host(.input-fill-outline.input-disabled) .input-outline {
+  --background: #{$ionic-color-neutral-10};
+  background: var(--background);
+}
