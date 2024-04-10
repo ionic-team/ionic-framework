@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.4](https://github.com/ionic-team/ionic-framework/compare/v7.8.3...v7.8.4) (2024-04-10)
+
+
+### Performance Improvements
+
+* **styles:** compress distributed global stylesheets ([#29275](https://github.com/ionic-team/ionic-framework/issues/29275)) ([b3cd49b](https://github.com/ionic-team/ionic-framework/commit/b3cd49bf2219aacffc1ac34acbae7c76ef243765))
+
+
+
+
+
 ## [7.8.3](https://github.com/ionic-team/ionic-framework/compare/v7.8.2...v7.8.3) (2024-04-03)
 
 
