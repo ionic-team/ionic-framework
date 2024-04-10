@@ -11,7 +11,7 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 :host {
   --background: #{tokens.$ionic-color-neutral-10};
   --border-color: transparent;
-  --border-radius: #{tokens.$ionic-border-radius-rounded-large};
+  --border-radius: #{tokens.$ionic-border-radius-rounded-small};
   --color: #{tokens.$ionic-color-neutral-900};
   --focus-ring-color: #{$ionic-states-focus-primary};
   --focus-ring-width: #{tokens.$ionic-border-size-medium};
