@@ -38,9 +38,7 @@
 }
 
 // Focused
-:host(.ion-focused.ion-invalid) .native-wrapper {
+:host(.ion-invalid) {
   --focus-ring-color: #ffafaf;
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: 2px;
 }
 

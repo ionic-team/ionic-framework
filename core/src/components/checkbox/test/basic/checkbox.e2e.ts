@@ -146,7 +146,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     test('should have an invalid visual applied correctly', async ({ page }) => {
       await page.setContent(
         `
-        <div id="checkboxes">
+        <div id="checkboxes" style="padding: 8px">
           <ion-checkbox class="ion-invalid">Invalid</ion-checkbox>
           <ion-checkbox class="ion-invalid ion-focused">Invalid</ion-checkbox>
         </div>
