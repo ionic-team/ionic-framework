@@ -144,6 +144,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
+          // TODO(FW-6119): remove theme === 'ionic' when support for other themes is added
           [`card-${shape}`]: theme === 'ionic' && shape !== undefined,
           'card-disabled': this.disabled,
           'ion-activatable': this.isClickable(),
