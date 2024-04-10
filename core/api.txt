@@ -653,6 +653,7 @@ ion-input,css-prop,--placeholder-color
 ion-input,css-prop,--placeholder-font-style
 ion-input,css-prop,--placeholder-font-weight
 ion-input,css-prop,--placeholder-opacity
+ion-input,css-prop,--text-color-invalid
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
