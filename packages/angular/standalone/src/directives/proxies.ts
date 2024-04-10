@@ -661,7 +661,7 @@ export declare interface IonCol extends Components.IonCol {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonContent,
-  inputs: ['color', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
+  inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
   methods: ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']
 })
 @Component({
@@ -669,7 +669,7 @@ export declare interface IonCol extends Components.IonCol {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
+  inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
   standalone: true
 })
 export class IonContent {
