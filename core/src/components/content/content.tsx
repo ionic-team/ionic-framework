@@ -79,6 +79,15 @@ export class Content implements ComponentInterface {
   @Prop() fullscreen = false;
 
   /**
+   * Controls where the fixed content is placed relative to the main content
+   * in the DOM. This can be used to control the order in which fixed elements
+   * receive keyboard focus.
+   * For example, if a FAB in the fixed slot should receive keyboard focus before
+   * the main page content, set this property to `'before'`.
+   */
+  @Prop() fixedSlotPlacement: 'after' | 'before' = 'after';
+
+  /**
    * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
    * If the content exceeds the bounds of ionContent, nothing will change.
    * Note, this does not disable the system bounce on iOS. That is an OS level setting.
@@ -425,7 +434,7 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { isMainContent, scrollX, scrollY, el } = this;
+    const { fixedSlotPlacement, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const theme = getIonTheme(this);
     const mode = getIonMode(this, theme);
@@ -449,6 +458,9 @@ export class Content implements ComponentInterface {
         }}
       >
         <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
+
+        {fixedSlotPlacement === 'before' ? <slot name="fixed"></slot> : null}
+
         <div
           class={{
             'inner-scroll': true,
@@ -470,7 +482,7 @@ export class Content implements ComponentInterface {
           </div>
         ) : null}
 
-        <slot name="fixed"></slot>
+        {fixedSlotPlacement === 'after' ? <slot name="fixed"></slot> : null}
       </Host>
     );
   }
