@@ -39,7 +39,7 @@ export class Chip implements ComponentInterface {
   /**
    * Define the Chip corner shape, when using the Ionic Theme.
    */
-  @Prop({ reflect: true }) shape?: 'round' | 'rectangular';
+  @Prop() shape?: 'round' | 'rectangular';
 
   render() {
     const { shape } = this;

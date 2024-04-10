@@ -49,15 +49,15 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
   test.describe(title('chip: focus state'), () => {
     test('should render focus state', async ({ page }) => {
       await page.setContent(
-        `<ion-content class="ion-padding">
+        `<div id="container" class="ion-padding">
           <ion-chip class="ion-focused">
             <ion-label>Focused</ion-label>
           </ion-chip>
-        </ion-content>`,
+        </div>`,
         config
       );
 
-      const chip = page.locator('ion-content');
+      const chip = page.locator('#container');
 
       await expect(chip).toHaveScreenshot(screenshot(`chip-focused`));
     });
