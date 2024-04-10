@@ -42,3 +42,12 @@
   --focus-ring-color: #ffafaf;
 }
 
+// Ionic Design Checkbox Shapes
+// --------------------------------------------------
+:host(.checkbox-shape-soft) {
+  --border-radius: #{$checkbox-ionic-border-radius};
+}
+
+:host(.checkbox-shape-rectangular) {
+  --border-radius: #{$checkbox-ionic-rectangular-border};
+}
