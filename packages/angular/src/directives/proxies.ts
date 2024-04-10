@@ -399,14 +399,14 @@ export declare interface IonButtons extends Components.IonButtons {}
 
 
 @ProxyCmp({
-  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'theme', 'type']
+  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'theme', 'type']
 })
 @Component({
   selector: 'ion-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'theme', 'type'],
+  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'theme', 'type'],
 })
 export class IonCard {
   protected el: HTMLElement;
@@ -594,7 +594,7 @@ export declare interface IonCol extends Components.IonCol {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
+  inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
   methods: ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']
 })
 @Component({
@@ -602,7 +602,7 @@ export declare interface IonCol extends Components.IonCol {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
+  inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'mode', 'scrollEvents', 'scrollX', 'scrollY', 'theme'],
 })
 export class IonContent {
   protected el: HTMLElement;
@@ -957,7 +957,7 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
 
 
 @ProxyCmp({
-  inputs: ['autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'spellcheck', 'step', 'theme', 'type', 'value'],
+  inputs: ['autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearInputIcon', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'spellcheck', 'step', 'theme', 'type', 'value'],
   methods: ['setFocus', 'getInputElement']
 })
 @Component({
@@ -965,7 +965,7 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'spellcheck', 'step', 'theme', 'type', 'value'],
+  inputs: ['autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearInputIcon', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'spellcheck', 'step', 'theme', 'type', 'value'],
 })
 export class IonInput {
   protected el: HTMLElement;

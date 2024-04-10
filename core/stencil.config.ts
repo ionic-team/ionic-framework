@@ -231,7 +231,7 @@ export const config: Config = {
     },
     {
       type: 'docs-json',
-      file: '../docs/core.json'
+      file: '../packages/docs/core.json'
     },
     {
       type: 'dist-hydrate-script'
