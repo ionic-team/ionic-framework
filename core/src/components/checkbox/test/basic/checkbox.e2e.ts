@@ -157,6 +157,30 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     });
   });
 
+  test.describe(title('checkbox: safe area'), () => {
+    test('should click the safe area of a small checkbox', async ({ page }) => {
+      await page.setContent(`<ion-checkbox size="small">Small</ion-checkbox>`, config);
+
+      const checkbox = page.locator('ion-checkbox');
+      const box = await checkbox.boundingBox();
+      if (box !== null) {
+        await page.mouse.click(box.x + box.width / 2, box.y + 47);
+      }
+      await expect(checkbox).toBeFocused();
+    });
+
+    test('should click the safe area of a default checkbox', async ({ page }) => {
+      await page.setContent(`<ion-checkbox>Default</ion-checkbox>`, config);
+
+      const checkbox = page.locator('ion-checkbox');
+      const box = await checkbox.boundingBox();
+      if (box !== null) {
+        await page.mouse.click(box.x + box.width / 2, box.y + 47);
+      }
+      await expect(checkbox).toBeFocused();
+    });
+  });
+
   test.describe(title('checkbox: shapes'), () => {
     test('should have a soft shape applied correctly', async ({ page }) => {
       await page.setContent(

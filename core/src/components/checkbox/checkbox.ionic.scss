@@ -11,23 +11,42 @@
   --border-style: #{$checkbox-ionic-border-style};
   --border-color: #{$checkbox-ionic-background-color-off};
   --checkmark-width: 3;
-  --focus-ring-color: #9ec4fd;
-  --focus-ring-width: 2px;
-  --focus-ring-offset: 2px;
-  // Size
-  --size: #{$checkbox-ionic-size};
 
   // Focus
   --focus-ring-color: #9ec4fd;
   --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  
+  // Size
+  --size: #{$checkbox-ionic-size};
+
+  // Checkbox Target area
+  // -------------------------------------------------- 
+  &::after {
+    @include position(50%, 0, null, 0);
+
+    position: absolute;
+
+    height: 100%;
+    min-height: 48px;
+
+    transform: translateY(-50%);
+
+    content: "";
+
+    cursor: pointer;
+
+    z-index: 1;
+  }
+
+  .native-wrapper {
+    position: relative;
+  }
 }
 
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
-  --padding-top: #{$checkbox-ionic-small-padding-top};
-  --padding-bottom: #{$checkbox-ionic-small-padding-bottom};
-
    // Size
    --size: #{$checkbox-ionic-small-size};
 }
@@ -87,7 +106,7 @@
 // Only show the focus ring when the checkbox is focused and not disabled
 :host(.ion-focused:not(.checkbox-disabled)) .checkbox-icon {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: 2px;
+  outline-offset: var(--focus-ring-offset);
 }
 
 // Checkbox: Active
@@ -111,4 +130,8 @@
 
 :host(.checkbox-shape-rectangular) {
   --border-radius: #{$checkbox-ionic-rectangular-border};
+}
+
+.checkbox-wrapper {
+  min-height: 48px;
 }
