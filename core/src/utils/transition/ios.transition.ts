@@ -383,17 +383,13 @@ const animateLargeTitle = (
    */
   let END_SCALE = `scale(${HEIGHT_SCALE})`;
 
-  /**
-   * If a developer passes text="" to the back button
-   * then the text element will not be rendered.
-   */
+  // Text element not rendered if developers pass text="" to the back button
   if (backButtonTextEl && backButtonTextBox) {
     /**
-     * The scaled title should (roughly) overlap the back button.
-     * This ensures that the back button and title overlap during
-     * the animation. Note that since both elements either fade in
-     * or fade out over the course of the animation, neither element
-     * will be fully visible on top of the other. As a result, the overlap
+     * The scaled title should (roughly) overlap the back button. This ensures that
+     * the back button and title overlap during the animation. Note that since both
+     * elements either fade in or fade out over the course of the animation, neither
+     * element will be fully visible on top of the other. As a result, the overlap
      * does not need to be perfect, so approximate values are acceptable here.
      */
     END_TRANSLATE_X = rtl
@@ -401,26 +397,21 @@ const animateLargeTitle = (
       : `${backButtonTextBox.x - LARGE_TITLE_TRANSLATION_OFFSET}px`;
 
     /**
-     * In the forward direction, the large title should start at its
-     * normal size and then scale down to be (roughly) the size of the
-     * back button on the other view. In the backward direction, the
-     * large title should start at (roughly) the size of the back button
-     * and then scale up to its original size.
-     *
-     * Note that since both elements either fade in
-     * or fade out over the course of the animation, neither element
-     * will be fully visible on top of the other. As a result, the overlap
-     * does not need to be perfect, so approximate values are acceptable here.
+     * In the forward direction, the large title should start at its normal size and
+     * then scale down to be (roughly) the size of the back button on the other view.
+     * In the backward direction, the large title should start at (roughly) the size
+     * of the back button and then scale up to its original size.
+     * Note that since both elements either fade in or fade out over the course of the
+     * animation, neither element will be fully visible on top of the other. As a result,
+     * the overlap  does not need to be perfect, so approximate values are acceptable here.
      */
 
     /**
-     * When the title and back button texts match
-     * then they should overlap during the page transition.
-     * If the texts do not match up then the large title text scale adjusts
-     * to not perfectly match the back button text otherwise the
-     * proportions will be incorrect.
-     * When the texts match we scale both the width and height to account for
-     * font weight differences between the title and back button.
+     * When the title and back button texts match then they should overlap during the
+     * page transition. If the texts do not match up then the large title text scale
+     * adjusts to not perfectly match the back button text otherwise the proportions
+     * will be incorrect. When the texts match we scale both the width and height to
+     * account for font weight differences between the title and back button.
      */
     const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
 
