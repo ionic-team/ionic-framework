@@ -140,6 +140,21 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       const checkboxes = page.locator('#checkboxes');
       await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-small`));
     });
+
+    test('should have an invalid visual applied correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="checkboxes" style="padding: 8px">
+          <ion-checkbox class="ion-invalid">Invalid</ion-checkbox>
+          <ion-checkbox class="ion-invalid ion-focused">Invalid</ion-checkbox>
+        </div>
+      `,
+        config
+      );
+
+      const checkboxes = page.locator('#checkboxes');
+      await expect(checkboxes).toHaveScreenshot(screenshot(`checkbox-invalid`));
+    });
   });
 
   test.describe(title('checkbox: safe area'), () => {
