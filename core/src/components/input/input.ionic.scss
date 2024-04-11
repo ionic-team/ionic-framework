@@ -20,6 +20,13 @@
   min-height: 48px;
 }
 
+// Ionic Input Shapes
+// --------------------------------------------------
+
+:host(.input-shape-round) {
+  --border-radius: 999px;
+}
+
 // Input Hint Text
 // ----------------------------------------------------------------
 
