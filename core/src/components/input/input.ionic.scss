@@ -1,3 +1,4 @@
+@use "../../foundations/ionic.vars.scss" as tokens;
 @import "./input";
 @import "./input.ionic.vars";
 @import "./input.ionic.outline.scss";
@@ -23,10 +24,18 @@
 // ----------------------------------------------------------------
 
 .input-bottom .helper-text {
-  // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
-  color: var(--ionic-color-neutral-600, #535353);
+  color: tokens.$ionic-color-neutral-600;
 }
 
 :host(.ion-touched.ion-invalid) .error-text {
   color: var(--text-color-invalid);
+}
+
+// Input Hover
+// ----------------------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --border-color: #{tokens.$ionic-color-neutral-600};
+  }
 }
