@@ -27,7 +27,8 @@
 .input-bottom {
   @include padding-horizontal(0, 0);
 
-  font-weight: 500;
+  // TODO(FW-6112): Update it to `$ionic-font-weight-medium` when it's available
+  font-weight: var(--ionic-font-weight-medium, 500);
 }
 
 // Input Hint Text
@@ -38,7 +39,7 @@
 }
 
 :host(.has-focus.ion-valid) .helper-text {
-  color: $ionic-color-success-800;
+  color: #{tokens.$ionic-color-success-800};
 }
 
 :host(.ion-touched.ion-invalid) .error-text {
