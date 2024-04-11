@@ -1,5 +1,4 @@
 import { Build, writeTask } from '@stencil/core';
-import { printIonWarning } from '@utils/logging';
 
 import {
   LIFECYCLE_DID_ENTER,
@@ -10,10 +9,12 @@ import {
 import type { NavOptions, NavDirection } from '../../components/nav/nav-interface';
 import { config } from '../../global/config';
 import type { Animation, AnimationBuilder } from '../animation/animation-interface';
+import { createFocusController } from '../focus-controller';
 import { raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
+const focusController = createFocusController();
 
 // TODO(FW-2832): types
 
@@ -42,7 +43,7 @@ const beforeTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
-  saveViewFocus(leavingEl);
+  focusController.saveViewFocus(leavingEl);
 
   setZIndex(enteringEl, leavingEl, opts.direction);
 
@@ -85,104 +86,8 @@ const afterTransition = (opts: TransitionOptions) => {
     leavingEl.style.removeProperty('pointer-events');
   }
 
-  setViewFocus(enteringEl);
+  focusController.setViewFocus(enteringEl);
 };
-
-/**
- * Moves focus to a specified element. Note that we do not remove the tabindex
- * because that can result in an unintentional blur. Non-focusables can't be
- * focused, so the body will get focused again.
- */
-const moveFocus = (el: HTMLElement) => {
-  el.tabIndex = -1;
-  el.focus();
-};
-
-/**
- * Elements that are hidden using `display: none` should
- * not be focused even if they are present in the DOM.
- */
-const isVisible = (el: HTMLElement) => {
-  return el.offsetParent !== null;
-};
-
-const saveViewFocus = (referenceEl?: HTMLElement) => {
-  const focusManagerEnabled = config.get('focusManagerPriority', false);
-
-  /**
-   * When going back to a previously visited page focus should typically be moved
-   * back to the element that was last focused when the user was on this view.
-   */
-  if (focusManagerEnabled) {
-    const activeEl = document.activeElement;
-    if (activeEl !== null && referenceEl?.contains(activeEl)) {
-      activeEl.setAttribute(LAST_FOCUS, 'true');
-    }
-  }
-}
-
-const setViewFocus = (referenceEl: HTMLElement) => {
-  const focusManagerPriorities = config.get('focusManagerPriority', false);
-  /**
-   * If the focused element is a descendant of the referenceEl then it's possible
-   * that the app developer manually moved focus, so we do not want to override that.
-   * This can happen with inputs the are focused when a view transitions in.
-   */
-  if (Array.isArray(focusManagerPriorities) && !referenceEl.contains(document.activeElement)) {
-    /**
-     * When going back to a previously visited view focus should always be moved back
-     * to the element that the user was last focused on when they were on this view.
-     */
-    const lastFocus = referenceEl.querySelector<HTMLElement>(`[${LAST_FOCUS}]`);
-    if (lastFocus && isVisible(lastFocus)) {
-      moveFocus(lastFocus);
-      return;
-    }
-
-    for (const priority of focusManagerPriorities) {
-      /**
-       * For each recognized case (excluding the default case) make sure to return
-       * so that the fallback focus behavior does not run.
-       *
-       * We intentionally query for specific roles/semantic elements so that the
-       * transition manager can work with both Ionic and non-Ionic UI components.
-       */
-      switch (priority) {
-        case 'content':
-          const content = referenceEl.querySelector<HTMLElement>('main, [role="main"]');
-          if (content && isVisible(content)) {
-            moveFocus(content);
-            return;
-          }
-          break;
-        case 'heading':
-          const headingOne = referenceEl.querySelector<HTMLElement>('h1, [role="heading"][aria-level="1"]');
-          if (headingOne && isVisible(headingOne)) {
-            moveFocus(headingOne);
-            return;
-          }
-          break;
-        case 'banner':
-          const header = referenceEl.querySelector<HTMLElement>('header, [role="banner"]');
-          if (header && isVisible(header)) {
-            moveFocus(header);
-            return;
-          }
-          break;
-        default:
-          printIonWarning(`Unrecognized focus manager priority value ${priority}`);
-          break;
-      }
-    }
-
-    /**
-     * If there is nothing to focus then focus the page so focus at least moves to
-     * the correct view. The browser will then determine where within the page to
-     * move focus to.
-     */
-    moveFocus(referenceEl);
-  }
-}
 
 const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBuilder | undefined> => {
   if (!opts.leavingEl || !opts.animated || opts.duration === 0) {
@@ -401,5 +306,3 @@ export interface TransitionResult {
   hasCompleted: boolean;
   animation?: Animation;
 }
-
-const LAST_FOCUS = 'ion-last-focus';
