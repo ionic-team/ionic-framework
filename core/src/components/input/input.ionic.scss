@@ -1,3 +1,4 @@
+@use "../../foundations/ionic.vars.scss" as tokens;
 @import "./input";
 @import "./input.ionic.vars";
 @import "./input.ionic.outline.scss";
@@ -9,8 +10,8 @@
   --border-width: #{$ionic-border-size-small};
   --border-color: #{$ionic-color-neutral-300};
   --highlight-color-valid: #{$ionic-color-success-400};
-  // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
-  --highlight-color-invalid: var(--ionic-color-error-600, #970606);
+  --highlight-color-invalid: #{$ionic-color-error-400};
+  --text-color-invalid: #{$ionic-color-error-600};
 }
 
 // Ionic Input Sizes
@@ -33,14 +34,22 @@
 // ----------------------------------------------------------------
 
 .input-bottom .helper-text {
-  // TODO(FW-6112): Verify the design token is correct once it's available and remove the hardcoded value.
-  color: var(--ionic-color-neutral-600, #535353);
+  color: tokens.$ionic-color-neutral-600;
 }
 
 :host(.has-focus.ion-valid) .helper-text {
   color: $ionic-color-success-800;
 }
 
-.input-bottom .error-text {
-  color: var(--highlight-color-invalid);
+:host(.ion-touched.ion-invalid) .error-text {
+  color: var(--text-color-invalid);
+}
+
+// Input Hover
+// ----------------------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --border-color: #{tokens.$ionic-color-neutral-600};
+  }
 }
