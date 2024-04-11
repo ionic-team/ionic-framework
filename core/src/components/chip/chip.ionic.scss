@@ -25,6 +25,7 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
   position: relative;
 
   align-items: center;
+  justify-content: center;
 
   gap: tokens.$ionic-space-xxxs;
 
@@ -40,6 +41,9 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
   font-family: tokens.$ionic-font-family;
   font-size: tokens.$ionic-font-size-m;
+  font-weight: tokens.$ionic-font-weight-medium;
+
+  line-height: tokens.$ionic-font-line-height-full;
 
   cursor: pointer;
 
