@@ -256,8 +256,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
    *
    * Developers may want to consider disabling focus trapping if this
    * overlay presents a non-Ionic overlay from a 3rd party library.
-   * This would allow developers to manually move and manage focus
-   * within the 3rd party library's overlay.
+   * Developers would disable focus trapping on the Ionic overlay
+   * when presenting the 3rd party overlay and then re-enable
+   * focus trapping when dismissing the 3rd party overlay and moving
+   * focus back to the Ionic overlay.
    */
   @Prop() focusTrap = true;
 
