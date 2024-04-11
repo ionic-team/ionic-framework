@@ -206,6 +206,9 @@ export interface IonicConfig {
 
   /**
    * @experimental
+   * When defined, Ionic will move focus to the appropriate element after each
+   * page transition. This ensures that users relying on assistive technology
+   * are informed when a page transition happens.
    */
   focusManagerPriority?: FocusManagerPriority[];
   /**
