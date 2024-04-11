@@ -111,7 +111,7 @@ configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, sc
           <style>
             ion-input.custom-input {
               --highlight-color-invalid: purple;
-              --text-color-invalid: purple; // ionic only
+              --text-color-invalid: purple; /* ionic only */
             }
           </style>
           <ion-input class="ion-invalid ion-touched custom-input" label="my label" error-text="my error"></ion-input>
