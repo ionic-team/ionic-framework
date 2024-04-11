@@ -38,7 +38,7 @@
 }
 
 :host(.has-focus.ion-valid) .helper-text {
-  color: #{$ionic-color-success-800};
+  color: $ionic-color-success-800;
 }
 
 .input-bottom .error-text {
