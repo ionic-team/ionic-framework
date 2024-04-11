@@ -16,6 +16,7 @@ import {
   present,
   createTriggerController,
   setOverlayId,
+  FOCUS_TRAP_DISABLE_CLASS,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
@@ -256,6 +257,23 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * frameworks such as Angular, React, and Vue.
    */
   @Prop() keepContentsMounted = false;
+
+  /**
+   * If `true`, focus will not be allowed to move outside of this overlay.
+   * If 'false', focus will be allowed to move outside of the overlay.
+   *
+   * In most scenarios this property should remain set to `true`. Setting
+   * this property to `false` can cause severe accessibility issues as users
+   * relying on assistive technologies may be able to move focus into
+   * a confusing state. We recommend only setting this to `false` when
+   * absolutely necessary.
+   *
+   * Developers may want to consider disabling focus trapping if this
+   * overlay presents a non-Ionic overlay from a 3rd party library.
+   * This would allow developers to manually move and manage focus
+   * within the 3rd party library's overlay.
+   */
+  @Prop() focusTrap = true;
 
   /**
    * Determines whether or not a modal can dismiss
@@ -905,7 +923,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   render() {
-    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
+    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes, focusTrap } =
+      this;
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
@@ -926,6 +945,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
+          [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
           ...getClassMap(this.cssClass),
         }}
         onIonBackdropTap={this.onBackdropTap}

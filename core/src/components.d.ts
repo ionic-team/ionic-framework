@@ -1724,6 +1724,10 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If 'false', focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. This would allow developers to manually move and manage focus within the 3rd party library's overlay.
+         */
+        "focusTrap": boolean;
+        /**
           * Returns the current breakpoint of a sheet style modal
          */
         "getCurrentBreakpoint": () => Promise<number | undefined>;
@@ -2139,6 +2143,10 @@ export namespace Components {
           * The event to pass to the popover animation.
          */
         "event": any;
+        /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If 'false', focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. This would allow developers to manually move and manage focus within the 3rd party library's overlay.
+         */
+        "focusTrap": boolean;
         "getParentPopover": () => Promise<HTMLIonPopoverElement | null>;
         "hasController": boolean;
         /**
@@ -6458,6 +6466,10 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If 'false', focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. This would allow developers to manually move and manage focus within the 3rd party library's overlay.
+         */
+        "focusTrap"?: boolean;
+        /**
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
@@ -6803,6 +6815,10 @@ declare namespace LocalJSX {
           * The event to pass to the popover animation.
          */
         "event"?: any;
+        /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If 'false', focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. This would allow developers to manually move and manage focus within the 3rd party library's overlay.
+         */
+        "focusTrap"?: boolean;
         "hasController"?: boolean;
         /**
           * Additional attributes to pass to the popover.
