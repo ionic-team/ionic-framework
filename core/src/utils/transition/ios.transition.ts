@@ -153,8 +153,8 @@ const animateBackButton = (
   backDirection: boolean,
   backButtonEl: HTMLIonBackButtonElement,
   backButtonBox: DOMRect,
-  backButtonTextEl: HTMLElement,
-  backButtonTextBox: DOMRect,
+  backButtonTextEl: HTMLElement | null,
+  backButtonTextBox: DOMRect | undefined,
   largeTitleEl: HTMLIonTitleElement,
   largeTitleTextBox: DOMRect
 ) => {
@@ -300,12 +300,11 @@ const animateBackButton = (
       top: '0px',
       [CONTAINER_ORIGIN_X]: '0px',
     })
-    .keyframes(CONTAINER_KEYFRAMES);
-
-  enteringBackButtonTextAnimation
-    .beforeStyles({
-      'transform-origin': `${TEXT_ORIGIN_X} top`,
-    })
+    /**
+     * The write hooks must be set on this animation as it is guaranteed to run. Other
+     * animations such as the back button text animation will not run if the back button
+     * has no visible text.
+     */
     .beforeAddWrite(() => {
       backButtonEl.style.setProperty('display', 'none');
       clonedBackButtonEl.style.setProperty(TEXT_ORIGIN_X, BACK_BUTTON_START_OFFSET);
@@ -314,6 +313,12 @@ const animateBackButton = (
       backButtonEl.style.setProperty('display', '');
       clonedBackButtonEl.style.setProperty('display', 'none');
       clonedBackButtonEl.style.removeProperty(TEXT_ORIGIN_X);
+    })
+    .keyframes(CONTAINER_KEYFRAMES);
+
+  enteringBackButtonTextAnimation
+    .beforeStyles({
+      'transform-origin': `${TEXT_ORIGIN_X} top`,
     })
     .keyframes(TEXT_KEYFRAMES);
 
@@ -363,8 +368,8 @@ const animateLargeTitle = (
    */
   const LARGE_TITLE_TRANSLATION_OFFSET = 8;
   let END_TRANSLATE_X = rtl
-  ? `-${window.innerWidth - backButtonBox.right - LARGE_TITLE_TRANSLATION_OFFSET}px`
-  : `${backButtonBox.x + LARGE_TITLE_TRANSLATION_OFFSET}px`;
+    ? `-${window.innerWidth - backButtonBox.right - LARGE_TITLE_TRANSLATION_OFFSET}px`
+    : `${backButtonBox.x + LARGE_TITLE_TRANSLATION_OFFSET}px`;
 
   /**
    * How much to scale the large title up/down by.
@@ -427,7 +432,7 @@ const animateLargeTitle = (
    * The midpoints of the back button and the title should align such that the back
    * button and title appear to be centered with each other.
    */
-  const backButtonMidPoint = backButtonBox.top + (backButtonBox.height / 2);
+  const backButtonMidPoint = backButtonBox.top + backButtonBox.height / 2;
   const titleMidPoint = (largeTitleBox.height * HEIGHT_SCALE) / 2;
   const END_TRANSLATE_Y = `${backButtonMidPoint - titleMidPoint}px`;
 
