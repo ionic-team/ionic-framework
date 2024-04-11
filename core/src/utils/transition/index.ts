@@ -14,6 +14,7 @@ import { raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
+
 // TODO(FW-2832): types
 
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
@@ -37,22 +38,11 @@ export const transition = (opts: TransitionOptions): Promise<TransitionResult> =
   });
 };
 
-const LAST_FOCUS = 'ion-last-focus';
 const beforeTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
-  const focusManagerEnabled = config.get('focusManagerPriority', false);
 
-  /**
-   * When going back to a previously visited page focus should typically be moved
-   * back to the element that was last focused when the user was on this view.
-   */
-  if (focusManagerEnabled) {
-    const activeEl = document.activeElement;
-    if (activeEl !== null && leavingEl?.contains(activeEl)) {
-      activeEl.setAttribute(LAST_FOCUS, 'true');
-    }
-  }
+  saveViewFocus(leavingEl);
 
   setZIndex(enteringEl, leavingEl, opts.direction);
 
@@ -115,6 +105,21 @@ const moveFocus = (el: HTMLElement) => {
 const isVisible = (el: HTMLElement) => {
   return el.offsetParent !== null;
 };
+
+const saveViewFocus = (referenceEl?: HTMLElement) => {
+  const focusManagerEnabled = config.get('focusManagerPriority', false);
+
+  /**
+   * When going back to a previously visited page focus should typically be moved
+   * back to the element that was last focused when the user was on this view.
+   */
+  if (focusManagerEnabled) {
+    const activeEl = document.activeElement;
+    if (activeEl !== null && referenceEl?.contains(activeEl)) {
+      activeEl.setAttribute(LAST_FOCUS, 'true');
+    }
+  }
+}
 
 const setViewFocus = (referenceEl: HTMLElement) => {
   const focusManagerPriorities = config.get('focusManagerPriority', false);
@@ -396,3 +401,5 @@ export interface TransitionResult {
   hasCompleted: boolean;
   animation?: Animation;
 }
+
+const LAST_FOCUS = 'ion-last-focus';
