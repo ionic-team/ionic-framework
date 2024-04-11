@@ -10,6 +10,7 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   delegate?: FrameworkDelegate;
   animated?: boolean;
   canDismiss?: boolean | ((data?: any, role?: string) => Promise<boolean>);
+  focusTrap?: boolean;
 
   mode?: Mode;
   keyboardClose?: boolean;
