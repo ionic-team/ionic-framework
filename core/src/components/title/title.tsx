@@ -58,6 +58,7 @@ export class ToolbarTitle implements ComponentInterface {
   render() {
     const mode = getIonMode(this);
     const size = this.getSize();
+
     return (
       <Host
         class={createColorClasses(this.color, {
