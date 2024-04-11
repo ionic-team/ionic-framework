@@ -207,7 +207,7 @@ export interface IonicConfig {
   /**
    * @experimental
    */
-  experimentalFocusManagerPriority?: FocusManagerPriority[];
+  focusManagerPriority?: FocusManagerPriority[];
   /**
    * @experimental
    * If `true`, the [CloseWatcher API](https://github.com/WICG/close-watcher) will be used to handle

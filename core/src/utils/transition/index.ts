@@ -41,7 +41,7 @@ const LAST_FOCUS = 'ion-last-focus';
 const beforeTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
-  const focusManagerEnabled = config.get('experimentalFocusManagerPriority', false);
+  const focusManagerEnabled = config.get('focusManagerPriority', false);
 
   /**
    * When going back to a previously visited page focus should typically be moved
@@ -117,7 +117,7 @@ const isVisible = (el: HTMLElement) => {
 };
 
 const setViewFocus = (referenceEl: HTMLElement) => {
-  const focusManagerPriorities = config.get('experimentalFocusManagerPriority', false);
+  const focusManagerPriorities = config.get('focusManagerPriority', false);
   /**
    * If the focused element is a descendant of the referenceEl then it's possible
    * that the app developer manually moved focus, so we do not want to override that.
@@ -222,7 +222,7 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
 const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
-  const focusManagerEnabled = config.get('experimentalFocusManagerPriority', false);
+  const focusManagerEnabled = config.get('focusManagerPriority', false);
 
   /**
    * If the focus manager is enabled then we
