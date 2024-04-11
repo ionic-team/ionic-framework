@@ -755,6 +755,10 @@ export namespace Components {
          */
         "outline": boolean;
         /**
+          * Define the Chip corner shape, when using the Ionic Theme.
+         */
+        "shape"?: 'round' | 'rectangular';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -5994,6 +5998,10 @@ declare namespace LocalJSX {
           * Display an outline style button.
          */
         "outline"?: boolean;
+        /**
+          * Define the Chip corner shape, when using the Ionic Theme.
+         */
+        "shape"?: 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */

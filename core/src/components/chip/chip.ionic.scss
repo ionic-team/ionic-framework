@@ -1,7 +1,7 @@
 @use "../../themes/ionic.mixins" as mixins;
 @use "../../foundations/ionic.vars.scss" as tokens;
 
-// Chip
+// Ionic Chip
 // --------------------------------------------------
 
 // TODO(ROU-4870): there is no token yet for these ones, but it should be created in the future, once UX team has figma tokens done
@@ -11,19 +11,21 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 :host {
   --background: #{tokens.$ionic-color-neutral-10};
   --border-color: transparent;
+  --border-radius: #{tokens.$ionic-border-radius-rounded-small};
   --color: #{tokens.$ionic-color-neutral-900};
   --focus-ring-color: #{$ionic-states-focus-primary};
   --focus-ring-width: #{tokens.$ionic-border-size-medium};
 
   @include mixins.font-smoothing;
   @include mixins.padding(tokens.$ionic-space-xs, tokens.$ionic-space-xxs);
-  @include mixins.border-radius(tokens.$ionic-border-radius-rounded-large);
+  @include mixins.border-radius(var(--border-radius));
 
   display: inline-flex;
 
   position: relative;
 
   align-items: center;
+  justify-content: center;
 
   gap: tokens.$ionic-space-xxxs;
 
@@ -39,6 +41,9 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
   font-family: tokens.$ionic-font-family;
   font-size: tokens.$ionic-font-size-m;
+  font-weight: tokens.$ionic-font-weight-medium;
+
+  line-height: tokens.$ionic-font-line-height-full;
 
   cursor: pointer;
 
@@ -80,6 +85,17 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 :host(.chip-disabled) {
   opacity: 0.6;
   pointer-events: none;
+}
+
+// Chip Shapes
+// ---------------------------------------------
+
+:host(.chip-round) {
+  --border-radius: #{tokens.$ionic-border-radius-rounded-large};
+}
+
+:host(.chip-rectangular) {
+  --border-radius: #{tokens.$ionic-border-radius-square};
 }
 
 // Chip Icon
