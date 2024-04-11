@@ -44,10 +44,8 @@ const beforeTransition = (opts: TransitionOptions) => {
   const focusManagerEnabled = config.get('experimentalFocusManagerPriority', false);
 
   /**
-   * When going back to a previously visited page
-   * focus should typically be moved back to the
-   * element that was last focused when the user
-   * was on this view.
+   * When going back to a previously visited page focus should typically be moved
+   * back to the element that was last focused when the user was on this view.
    */
   if (focusManagerEnabled) {
     const activeEl = document.activeElement;
@@ -88,11 +86,9 @@ const runTransition = async (opts: TransitionOptions): Promise<TransitionResult>
 };
 
 /**
- * Moves focus to a specified element.
- * Note that we do not remove the tabindex
- * because that can result in an unintentional
- * blur. Non-focusables can't be focused, so the
- * body will get focused again.
+ * Moves focus to a specified element. Note that we do not remove the tabindex
+ * because that can result in an unintentional blur. Non-focusables can't be
+ * focused, so the body will get focused again.
  */
 const moveFocus = (el: HTMLElement) => {
   el.tabIndex = -1;
@@ -105,7 +101,7 @@ const moveFocus = (el: HTMLElement) => {
  */
 const isVisible = (el: HTMLElement) => {
   return el.offsetParent !== null;
-}
+};
 
 const afterTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
@@ -120,9 +116,8 @@ const afterTransition = (opts: TransitionOptions) => {
   const focusManagerPriorities = config.get('experimentalFocusManagerPriority', false);
   if (Array.isArray(focusManagerPriorities) && !enteringEl.contains(document.activeElement)) {
     /**
-     * When going back to a previously visited view
-     * focus should always be moved back to the element
-     * that the user was last focused on when they were on this view.
+     * When going back to a previously visited view focus should always be moved back
+     * to the element that the user was last focused on when they were on this view.
      */
     const lastFocus = enteringEl.querySelector<HTMLElement>(`[${LAST_FOCUS}]`);
     if (lastFocus && isVisible(lastFocus)) {
@@ -134,8 +129,8 @@ const afterTransition = (opts: TransitionOptions) => {
       switch (priority) {
         case 'content':
           /**
-           * If no level one heading exists then we should at least focus the
-           * header so focus starts at the top of the page.
+           * If no level one heading exists then we should at least focus the header so focus
+           * starts at the top of the page.
            */
           const content = enteringEl.querySelector<HTMLElement>('main, [role="main"]');
           if (content && isVisible(content)) {
@@ -145,11 +140,9 @@ const afterTransition = (opts: TransitionOptions) => {
           break;
         case 'heading':
           /**
-           * If no last focus exists then we should prefer to focus
-           * level one headings. We do not prioritize the header yet
-           * because the header can have non-title elements such as
-           * a back button which is not necessarily helpful
-           * to focus first.
+           * If no last focus exists then we should prefer to focus level one headings. We do
+           * not prioritize the header yet because the header can have non-title elements
+           * such as a back button which is not necessarily helpful to focus first.
            */
           const headingOne = enteringEl.querySelector<HTMLElement>('h1, [role="heading"][aria-level="1"]');
           if (headingOne && isVisible(headingOne)) {
@@ -159,8 +152,8 @@ const afterTransition = (opts: TransitionOptions) => {
           break;
         case 'banner':
           /**
-           * If no level one heading exists then we should at least focus the
-           * header so focus starts at the top of the page.
+           * If no level one heading exists then we should at least focus the header so focus
+           * starts at the top of the page.
            */
           const header = enteringEl.querySelector<HTMLElement>('header, [role="banner"]');
           if (header && isVisible(header)) {
@@ -175,10 +168,8 @@ const afterTransition = (opts: TransitionOptions) => {
     }
 
     /**
-     * If there is no header then focus the page
-     * so focus at least moves to the correct view.
-     * The browser will then determine where within the
-     * page to move focus to.
+     * If there is no header then focus the page so focus at least moves to the correct
+     * view. The browser will then determine where within the page to move focus to.
      */
     moveFocus(enteringEl);
   }
