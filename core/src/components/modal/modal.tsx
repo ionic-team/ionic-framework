@@ -10,7 +10,6 @@ import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
   GESTURE,
   BACKDROP,
-  activeAnimations,
   dismiss,
   eventMethod,
   prepareOverlay,
@@ -346,10 +345,47 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    const { breakpoints, initialBreakpoint, el } = this;
+    const { breakpoints, initialBreakpoint, el, htmlAttributes } = this;
     const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
-    this.inheritedAttributes = inheritAttributes(el, ['aria-label', 'role']);
+    const attributesToInherit = ['aria-label', 'role'];
+    this.inheritedAttributes = inheritAttributes(el, attributesToInherit);
+
+    /**
+     * When using a controller modal you can set attributes
+     * using the htmlAttributes property. Since the above attributes
+     * need to be inherited inside of the modal, we need to look
+     * and see if these attributes are being set via htmlAttributes.
+     *
+     * We could alternatively move this to componentDidLoad to simplify the work
+     * here, but we'd then need to make inheritedAttributes a State variable,
+     * thus causing another render to always happen after the first render.
+     */
+    if (htmlAttributes !== undefined) {
+      attributesToInherit.forEach((attribute) => {
+        const attributeValue = htmlAttributes[attribute];
+        if (attributeValue) {
+          /**
+           * If an attribute we need to inherit was
+           * set using htmlAttributes then add it to
+           * inheritedAttributes and remove it from htmlAttributes.
+           * This ensures the attribute is inherited and not
+           * set on the host.
+           *
+           * In this case, if an inherited attribute is set
+           * on the host element and using htmlAttributes then
+           * htmlAttributes wins, but that's not a pattern that we recommend.
+           * The only time you'd need htmlAttributes is when using modalController.
+           */
+          this.inheritedAttributes = {
+            ...this.inheritedAttributes,
+            [attribute]: htmlAttributes[attribute],
+          };
+
+          delete htmlAttributes[attribute];
+        }
+      });
+    }
 
     if (isSheetModal) {
       this.currentBreakpoint = this.initialBreakpoint;
@@ -663,6 +699,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    *
    * @param data Any data to emit in the dismiss events.
    * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
+   *
+   * This is a no-op if the overlay has not been presented yet. If you want
+   * to remove an overlay from the DOM that was never presented, use the
+   * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -705,8 +745,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.keyboardOpenCallback = undefined;
     }
 
-    const enteringAnimation = activeAnimations.get(this) || [];
-
     const dismissed = await dismiss<ModalDismissOptions>(
       this,
       data,
@@ -733,8 +771,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.gesture) {
         this.gesture.destroy();
       }
-
-      enteringAnimation.forEach((ani) => ani.destroy());
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;

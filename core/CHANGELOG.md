@@ -3,6 +3,208 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.4](https://github.com/ionic-team/ionic-framework/compare/v7.8.3...v7.8.4) (2024-04-10)
+
+
+### Performance Improvements
+
+* **styles:** compress distributed global stylesheets ([#29275](https://github.com/ionic-team/ionic-framework/issues/29275)) ([b3cd49b](https://github.com/ionic-team/ionic-framework/commit/b3cd49bf2219aacffc1ac34acbae7c76ef243765))
+
+
+
+
+
+## [7.8.3](https://github.com/ionic-team/ionic-framework/compare/v7.8.2...v7.8.3) (2024-04-03)
+
+
+### Bug Fixes
+
+* **button:** activated outline button in toolbar no longer blends into background on MD dark mode ([#29216](https://github.com/ionic-team/ionic-framework/issues/29216)) ([ee5da7a](https://github.com/ionic-team/ionic-framework/commit/ee5da7a747c0a0b420c5e371a9fe9ec4938d179e))
+* **popover:** viewport can be scrolled if no content present ([#29215](https://github.com/ionic-team/ionic-framework/issues/29215)) ([f08759c](https://github.com/ionic-team/ionic-framework/commit/f08759c2b8256ff66f8d1901bd8e0be4617db262)), closes [#29211](https://github.com/ionic-team/ionic-framework/issues/29211)
+
+
+
+
+
+## [7.8.2](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v7.8.2) (2024-03-27)
+
+
+### Bug Fixes
+
+* **searchbar:** autocapitalize is initialized correctly ([#29197](https://github.com/ionic-team/ionic-framework/issues/29197)) ([8ad66c0](https://github.com/ionic-team/ionic-framework/commit/8ad66c03d777edcab19c97cba696b171acc2d2e8)), closes [#29193](https://github.com/ionic-team/ionic-framework/issues/29193)
+
+
+
+
+
+## [7.8.1](https://github.com/ionic-team/ionic-framework/compare/v7.8.0...v7.8.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* **datetime:** wheel picker shows consistently in overlays ([#29147](https://github.com/ionic-team/ionic-framework/issues/29147)) ([19c1bc1](https://github.com/ionic-team/ionic-framework/commit/19c1bc16cbc6725463890382365203824b7fd353)), closes [#26234](https://github.com/ionic-team/ionic-framework/issues/26234)
+* **header:** iOS headers in MD app are not hidden ([#29164](https://github.com/ionic-team/ionic-framework/issues/29164)) ([fdfecd3](https://github.com/ionic-team/ionic-framework/commit/fdfecd32c33c41cf202d3b30c073bfb1b077e2d6)), closes [#28867](https://github.com/ionic-team/ionic-framework/issues/28867)
+
+
+### Performance Improvements
+
+* **datetime:** calendar body shows immediately in modal on ios ([#29163](https://github.com/ionic-team/ionic-framework/issues/29163)) ([f759776](https://github.com/ionic-team/ionic-framework/commit/f75977699dae5aeea3d97d4318377633e935afb9)), closes [#24542](https://github.com/ionic-team/ionic-framework/issues/24542)
+
+
+
+
+
+# [7.8.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.5...v7.8.0) (2024-03-13)
+
+
+### Features
+
+* **datetime:** formatOptions property for Datetime ([#29065](https://github.com/ionic-team/ionic-framework/issues/29065)) ([7cdbc1b](https://github.com/ionic-team/ionic-framework/commit/7cdbc1b5ad004e17a7c51363653e0e67f50e6860))
+* **searchbar:** autocapitalize, dir, lang, maxlength, and minlength are inherited to native input ([#29098](https://github.com/ionic-team/ionic-framework/issues/29098)) ([a0a77f7](https://github.com/ionic-team/ionic-framework/commit/a0a77f799df0732d9f7182f15866035a3ce5a1eb)), closes [#27606](https://github.com/ionic-team/ionic-framework/issues/27606)
+
+
+
+
+
+## [7.7.5](https://github.com/ionic-team/ionic-framework/compare/v7.7.4...v7.7.5) (2024-03-13)
+
+
+### Bug Fixes
+
+* **checkbox:** set aria-checked of indeterminate checkbox to 'mixed' ([#29115](https://github.com/ionic-team/ionic-framework/issues/29115)) ([b2d636f](https://github.com/ionic-team/ionic-framework/commit/b2d636f14dcd33313f6604cfd4a64b542c831b34))
+* **overlay:** do not hide overlay if toast is presented ([#29140](https://github.com/ionic-team/ionic-framework/issues/29140)) ([c0f5e5e](https://github.com/ionic-team/ionic-framework/commit/c0f5e5ebc0c9d45d71e10e09903b00b3ba8e6bba)), closes [#29139](https://github.com/ionic-team/ionic-framework/issues/29139)
+
+
+
+
+
+## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+
+### Bug Fixes
+
+* **modal:** ariaLabel and role are inherited when set via htmlAttributes ([#29099](https://github.com/ionic-team/ionic-framework/issues/29099)) ([de13633](https://github.com/ionic-team/ionic-framework/commit/de13633a182d963876434db773aa346833f956fd))
+
+
+
+
+
+## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
+
+
+### Bug Fixes
+
+* **label:** do not grow when in end slot ([#29036](https://github.com/ionic-team/ionic-framework/issues/29036)) ([1fc4b76](https://github.com/ionic-team/ionic-framework/commit/1fc4b76f5940b38fd89e19561d6b4738dfb8ae5d)), closes [#29033](https://github.com/ionic-team/ionic-framework/issues/29033)
+* **overlays:** focus is returned to last focus element when focusing toast ([#28950](https://github.com/ionic-team/ionic-framework/issues/28950)) ([2ed0ada](https://github.com/ionic-team/ionic-framework/commit/2ed0ada9237b3f4dbf5959746ce2d1744936eebe)), closes [#28261](https://github.com/ionic-team/ionic-framework/issues/28261)
+
+
+
+
+
+## [7.7.2](https://github.com/ionic-team/ionic-framework/compare/v7.7.1...v7.7.2) (2024-02-14)
+
+
+### Bug Fixes
+
+* **overlays:** do not return focus if application has already moved focus manually ([#28850](https://github.com/ionic-team/ionic-framework/issues/28850)) ([a016670](https://github.com/ionic-team/ionic-framework/commit/a016670a8a46e101d23235b17bc8a2081fb992eb)), closes [#28849](https://github.com/ionic-team/ionic-framework/issues/28849)
+* **overlays:** ensure that only topmost overlay is announced by screen readers ([#28997](https://github.com/ionic-team/ionic-framework/issues/28997)) ([ba4ba61](https://github.com/ionic-team/ionic-framework/commit/ba4ba6161c1a6c67f7804b07f49c64ac9ad2b14c)), closes [#23472](https://github.com/ionic-team/ionic-framework/issues/23472)
+* **popover:** render arrow above backdrop ([#28986](https://github.com/ionic-team/ionic-framework/issues/28986)) ([0a8964d](https://github.com/ionic-team/ionic-framework/commit/0a8964d30c76218fe62f7f4aed4f81df7bb80cd0)), closes [#28985](https://github.com/ionic-team/ionic-framework/issues/28985)
+
+
+
+
+
+## [7.7.1](https://github.com/ionic-team/ionic-framework/compare/v7.7.0...v7.7.1) (2024-02-07)
+
+
+### Bug Fixes
+
+* **action-sheet:** iOS dismiss animation respects safe area ([#28915](https://github.com/ionic-team/ionic-framework/issues/28915)) ([7449fb4](https://github.com/ionic-team/ionic-framework/commit/7449fb4fed4048f5d01ba068dc6f8e2d7727e95d)), closes [#28541](https://github.com/ionic-team/ionic-framework/issues/28541)
+* **overlays:** tear down animations after dismiss ([#28907](https://github.com/ionic-team/ionic-framework/issues/28907)) ([950fa40](https://github.com/ionic-team/ionic-framework/commit/950fa40c5597c81d5cbaeb9276b09adfea5e79fb)), closes [#28352](https://github.com/ionic-team/ionic-framework/issues/28352)
+* **select:** popover can be scrolled ([#28965](https://github.com/ionic-team/ionic-framework/issues/28965)) ([35ab6b4](https://github.com/ionic-team/ionic-framework/commit/35ab6b4816bd627239de8d8b25ce0c86db8c74b4)), closes [#28963](https://github.com/ionic-team/ionic-framework/issues/28963)
+
+
+
+
+
+# [7.7.0](https://github.com/ionic-team/ionic-framework/compare/v7.6.7...v7.7.0) (2024-01-31)
+
+
+### Features
+
+* add experimental hardware back button support in browsers ([#28705](https://github.com/ionic-team/ionic-framework/issues/28705)) ([658d1ca](https://github.com/ionic-team/ionic-framework/commit/658d1caccd530350843b85c0e24544ec27dd9eb4)), closes [#28703](https://github.com/ionic-team/ionic-framework/issues/28703)
+
+
+
+
+
+## [7.6.7](https://github.com/ionic-team/ionic-framework/compare/v7.6.6...v7.6.7) (2024-01-31)
+
+
+### Bug Fixes
+
+* **accordion:** prevent opening of readonly accordion using keyboard ([#28865](https://github.com/ionic-team/ionic-framework/issues/28865)) ([e10f49c](https://github.com/ionic-team/ionic-framework/commit/e10f49c43daa11fe7deb5a9b9bfd34897542b6b1)), closes [#28344](https://github.com/ionic-team/ionic-framework/issues/28344)
+* **action-sheet, alert, toast:** button roles autocomplete with available options ([#27940](https://github.com/ionic-team/ionic-framework/issues/27940)) ([f6fc22b](https://github.com/ionic-team/ionic-framework/commit/f6fc22bba60388701b80a9421510e3d843d39e9e)), closes [#27965](https://github.com/ionic-team/ionic-framework/issues/27965)
+* **item:** ensure button focus state on property change ([#28892](https://github.com/ionic-team/ionic-framework/issues/28892)) ([bf7922c](https://github.com/ionic-team/ionic-framework/commit/bf7922c8b37b32dbf90650cb74a2e77bedf0c118)), closes [#28525](https://github.com/ionic-team/ionic-framework/issues/28525)
+* **item:** only default slot content wraps ([#28773](https://github.com/ionic-team/ionic-framework/issues/28773)) ([9448783](https://github.com/ionic-team/ionic-framework/commit/9448783bb19b187f867054c86d215e3dc97952c1)), closes [#28769](https://github.com/ionic-team/ionic-framework/issues/28769)
+
+
+
+
+
+## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
+
+
+### Bug Fixes
+
+* **alert:** remove border-right on ios stacked buttons ([#28821](https://github.com/ionic-team/ionic-framework/issues/28821)) ([ad65824](https://github.com/ionic-team/ionic-framework/commit/ad65824722da0eed90ef9e595b743754bfd360b8))
+* **datetime:** do not animate to new value when multiple values in different months are set ([#28847](https://github.com/ionic-team/ionic-framework/issues/28847)) ([9262f7d](https://github.com/ionic-team/ionic-framework/commit/9262f7da15969706039e9d5f11ef5c7bd73ced0d)), closes [#28602](https://github.com/ionic-team/ionic-framework/issues/28602)
+* **datetime:** enter closes keyboard when typing time ([#28848](https://github.com/ionic-team/ionic-framework/issues/28848)) ([c47a16d](https://github.com/ionic-team/ionic-framework/commit/c47a16d6c3c57f56b053727dd10ead0bfe547e50)), closes [#28325](https://github.com/ionic-team/ionic-framework/issues/28325)
+* **menu:** improve reliability of main content not being scrollable when menu opens ([#28829](https://github.com/ionic-team/ionic-framework/issues/28829)) ([9603a4d](https://github.com/ionic-team/ionic-framework/commit/9603a4de363d2b42622ff3585cd6e4787d9581d1)), closes [#28399](https://github.com/ionic-team/ionic-framework/issues/28399)
+* **popover:** content inside of popover scrolls correctly ([#28861](https://github.com/ionic-team/ionic-framework/issues/28861)) ([10c38d0](https://github.com/ionic-team/ionic-framework/commit/10c38d0354e61e20bec9a313de84b22c3b85c323)), closes [#28455](https://github.com/ionic-team/ionic-framework/issues/28455)
+* **segment:** setting value via binding updates button state ([#28837](https://github.com/ionic-team/ionic-framework/issues/28837)) ([0847c2a](https://github.com/ionic-team/ionic-framework/commit/0847c2ac2c52b5fa6d30e381685d6cbf7a41231a)), closes [#28816](https://github.com/ionic-team/ionic-framework/issues/28816)
+* **select:** click handlers on slotted content fire ([#28839](https://github.com/ionic-team/ionic-framework/issues/28839)) ([aed7a03](https://github.com/ionic-team/ionic-framework/commit/aed7a03532b88628a4358c8cbae1a1cbb861462b)), closes [#28818](https://github.com/ionic-team/ionic-framework/issues/28818)
+
+
+
+
+
+## [7.6.5](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.5) (2024-01-17)
+
+
+### Bug Fixes
+
+* **list:** remove uneeded border radius from items in inset list ([#28830](https://github.com/ionic-team/ionic-framework/issues/28830)) ([dbaaa5b](https://github.com/ionic-team/ionic-framework/commit/dbaaa5bd9f43b8ba589b3f9c4b4204d2f203ef18))
+
+
+
+
+
+## [7.6.4](https://github.com/ionic-team/ionic-framework/compare/v7.6.3...v7.6.4) (2024-01-10)
+
+
+### Bug Fixes
+
+* **input:** slotted buttons are clickable ([#28772](https://github.com/ionic-team/ionic-framework/issues/28772)) ([4ccc150](https://github.com/ionic-team/ionic-framework/commit/4ccc150edff4e3f33f453343aedb081d920b2f90)), closes [#28762](https://github.com/ionic-team/ionic-framework/issues/28762)
+
+
+
+
+
+## [7.6.3](https://github.com/ionic-team/ionic-framework/compare/v7.6.2...v7.6.3) (2024-01-03)
+
+
+### Bug Fixes
+
+* **datetime:** selected today button renders correctly on ios ([#28740](https://github.com/ionic-team/ionic-framework/issues/28740)) ([2f99aea](https://github.com/ionic-team/ionic-framework/commit/2f99aeae6f71d5ffd1880f2c549227ecf71becf3))
+* **nav, router-outlet:** ios page transition does not cover menu on larger screens ([#28745](https://github.com/ionic-team/ionic-framework/issues/28745)) ([878eec6](https://github.com/ionic-team/ionic-framework/commit/878eec6ea21d76586466d01e13e5e842e69eaceb)), closes [#28737](https://github.com/ionic-team/ionic-framework/issues/28737)
+* **radio-group:** radio disabled prop can be undefined ([#28712](https://github.com/ionic-team/ionic-framework/issues/28712)) ([75ffeee](https://github.com/ionic-team/ionic-framework/commit/75ffeee933ae353d2601670178896116c81923e0)), closes [#28677](https://github.com/ionic-team/ionic-framework/issues/28677)
+* **refresher:** native ios refresher works on iPadOS ([#28620](https://github.com/ionic-team/ionic-framework/issues/28620)) ([e522601](https://github.com/ionic-team/ionic-framework/commit/e5226016a0f0b066a7bd7fc9997f905d3b87fbc4)), closes [#28617](https://github.com/ionic-team/ionic-framework/issues/28617)
+
+
+
+
+
 ## [7.6.2](https://github.com/ionic-team/ionic-framework/compare/v7.6.1...v7.6.2) (2023-12-19)
 
 

@@ -525,6 +525,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
    * @param dismissParentPopover If `true`, dismissing this popover will also dismiss
    * a parent popover if this popover is nested. Defaults to `true`.
+   *
+   * This is a no-op if the overlay has not been presented yet. If you want
+   * to remove an overlay from the DOM that was never presented, use the
+   * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
   async dismiss(data?: any, role?: string, dismissParentPopover = true): Promise<boolean> {

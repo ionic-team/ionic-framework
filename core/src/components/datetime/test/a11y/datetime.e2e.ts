@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const container = page.locator('#container');
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(container).toHaveScreenshot(screenshot(`datetime-scale`));
     });
@@ -87,7 +87,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const clearButton = page.locator('#clear-button button');
       const selectedDay = page.locator('.calendar-day-active');
@@ -114,7 +114,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
       const calendarBody = page.locator('.calendar-body');
       await expect(calendarMonthYear).toHaveText('February 2022');

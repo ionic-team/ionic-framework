@@ -265,6 +265,22 @@
   flex-wrap: $alert-ios-button-group-flex-wrap;
 }
 
+/**
+  * The right border should only be applied to the first button
+  * when the group has 2 or less buttons (horizontal).
+  * Otherwise, the right border should not be applied
+  * when the group has 3 or more buttons (vertical).
+  */
+.alert-button-group-vertical .alert-button {
+  border-right: none;
+
+  &:last-child {
+    @include rtl() {
+      border-right: none;
+    }
+  }
+}
+
 .alert-button {
   /**
    * This padding ensures that alerts

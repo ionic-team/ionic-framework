@@ -19,14 +19,34 @@ configs().forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item: buttons dark'), () => {
     test('should not have visual regressions in dark', async ({ page }) => {
-      await page.goto(`/src/components/item/test/buttons?dark=true`, config);
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27130',
+      });
 
-      await page.setIonViewport();
+      await page.setContent(
+        `
+        <ion-list>
+          <ion-item button="true">
+            <ion-label>Button Item</ion-label>
+          </ion-item>
+          <ion-item button="true" class="ion-activated">
+            <ion-label>Activated Button Item</ion-label>
+          </ion-item>
+          <ion-item button="true" class="ion-focused">
+            <ion-label>Focused Button Item</ion-label>
+          </ion-item>
+        </ion-list>
+      `,
+        config
+      );
 
-      await expect(page).toHaveScreenshot(screenshot(`item-buttons-dark-diff`));
+      const list = page.locator('ion-list');
+
+      await expect(list).toHaveScreenshot(screenshot(`item-buttons-dark-diff`));
     });
   });
 });

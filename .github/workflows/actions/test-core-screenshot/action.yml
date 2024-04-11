@@ -7,11 +7,13 @@ inputs:
     description: 'Playwright total number of test shards (ex: 4)'
   update:
     description: 'Whether or not to update the reference snapshots'
+  component:
+    description: 'The component to update the reference snapshots'
 
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 18.x
     - uses: ./.github/workflows/actions/download-archive
@@ -19,13 +21,13 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Install Playwright Dependencies
-      run: npm install && npx playwright install && npx playwright install-deps
+    - name: Install Dependencies
+      run: npm install
       shell: bash
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      run: npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -47,7 +49,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e.docker.ci ${{ inputs.component }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
@@ -60,7 +62,7 @@ runs:
       working-directory: ./core
     - name: Archive Updated Screenshots
       if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: updated-screenshots-${{ inputs.shard }}-${{ inputs.totalShards }}
         path: UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip

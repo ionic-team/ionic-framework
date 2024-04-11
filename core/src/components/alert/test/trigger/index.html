@@ -11,6 +11,19 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-content > button {
+        display: block;
+        clear: both;
+        width: 100%;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -22,8 +35,8 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-button id="default">Open Alert</ion-button>
-        <ion-button id="timeout">Open Alert, Close After 500ms</ion-button>
+        <button id="default">Open Alert</button>
+        <button id="timeout">Open Alert, Close After 500ms</button>
 
         <ion-alert id="default-alert" trigger="default" header="Alert" message="Hello World!"></ion-alert>
         <ion-alert id="timeout-alert" trigger="timeout" header="Alert" message="Hello World!"></ion-alert>

@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it, vi } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { IonicVue, IonApp, IonRouterOutlet, IonTabs, IonPage } from '@ionic/vue';
+import { IonicVue, IonRouterOutlet, IonTabs, IonPage } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { waitForRouter } from './utils';
-
-const App = {
-  components: { IonApp, IonRouterOutlet },
-  template: '<ion-app><ion-router-outlet /></ion-app>',
-}
 
 const BasePage = {
   template: '<ion-page :data-pageid="name"></ion-page>',
@@ -54,7 +49,7 @@ describe('Lifecycle Events', () => {
     // Initial render
     router.push('/');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -108,7 +103,7 @@ describe('Lifecycle Events', () => {
       template: `
         <ion-page>
           <ion-tabs>
-            <ion-router-outlet></ion-router-outlet>
+            <IonRouterOutlet />
           </ion-tabs>
         </ion-page>
       `,
@@ -148,7 +143,7 @@ describe('Lifecycle Events', () => {
     // Initial render
     router.push('/tab1');
     await router.isReady();
-    const wrapper = mount(App, {
+    const wrapper = mount(IonRouterOutlet, {
       global: {
         plugins: [router, IonicVue]
       }

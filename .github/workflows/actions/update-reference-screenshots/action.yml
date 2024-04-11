@@ -7,10 +7,10 @@ on:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 18.x
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         path: ./artifacts
     - name: Extract Archives
@@ -25,12 +25,9 @@ runs:
       # Configure user as Ionitron
       # and push only the changed .png snapshots
       # to the remote branch.
-      # Screenshots are in .gitignore
+      # Non-Linux screenshots are in .gitignore
       # to prevent local screenshots from getting
-      # pushed to Git. As a result, we need --force
-      # here so that CI generated screenshots can
-      # get added to git. Screenshot ground truths
-      # should only be added via this CI process.
+      # pushed to Git.
       run: |
         git config user.name ionitron
         git config user.email hi@ionicframework.com
@@ -38,7 +35,7 @@ runs:
         # This adds an empty entry for new
         # screenshot files so we can track them with
         # git diff
-        git add src/\*.png --force -N
+        git add src/\*.png -N
 
         if git diff --exit-code; then
           echo -e "\033[1;31m⚠️ Error: No new screenshots generated ⚠️\033[0m"
@@ -48,7 +45,7 @@ runs:
         else
           # This actually adds the contents
           # of the screenshots (including new ones)
-          git add src/\*.png --force
+          git add src/\*.png
           git commit -m "chore(): add updated snapshots"
           git push
         fi

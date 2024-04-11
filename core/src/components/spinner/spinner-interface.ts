@@ -16,7 +16,7 @@ export interface SpinnerData {
   y2?: number;
   cx?: number;
   cy?: number;
-  style: any; // TODO(FW-2832): type
+  style: { [key: string]: string | undefined };
   viewBox?: string;
   transform?: string;
 }

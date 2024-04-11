@@ -259,15 +259,16 @@
 
 // Input Has focus
 // --------------------------------------------------
-// When the input has focus, then the input cover should be hidden
 
-:host(.has-focus) {
+// TODO FW-2764 Remove this
+:host(.has-focus.legacy-input) {
   pointer-events: none;
 }
 
-:host(.has-focus) input,
-:host(.has-focus) a,
-:host(.has-focus) button {
+// TODO FW-2764 Remove this
+:host(.has-focus.legacy-input) input,
+:host(.has-focus.legacy-input) a,
+:host(.has-focus.legacy-input) button {
   pointer-events: auto;
 }
 

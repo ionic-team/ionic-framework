@@ -1,2 +1,2 @@
-## @ionic/react-router (beta)
+# @ionic/react-router
 

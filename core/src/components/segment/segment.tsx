@@ -141,6 +141,14 @@ export class Segment implements ComponentInterface {
     this.setCheckedClasses();
 
     /**
+     * If the value changes before watchers
+     * are setup, then the ionSelect watch callback
+     * will not fire. As a result, we manually
+     * fire this event when Select is loaded.
+     */
+    this.ionSelect.emit({ value: this.value });
+
+    /**
      * We need to wait for the buttons to all be rendered
      * before we can scroll.
      */

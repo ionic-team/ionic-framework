@@ -29,14 +29,6 @@
   overflow: hidden;
 }
 
-// TODO(FW-5289): move to :host-context(.item)
-// Shouldn't need :not(.item-input) as this was
-// only needed because of the specificity with
-// :not(.item-legacy)
-:host-context(.item:not(.item-input):not(.item-legacy)) {
-  flex-grow: 1;
-}
-
 :host(.ion-color) {
   color: current-color(base);
 }

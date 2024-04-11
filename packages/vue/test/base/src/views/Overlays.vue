@@ -18,28 +18,22 @@
         </ion-list-header>
 
         <ion-item>
-          <ion-label>Alert</ion-label>
-          <ion-radio value="alert" id="ion-alert"></ion-radio>
+          <ion-radio value="alert" id="ion-alert">Alert</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Action Sheet</ion-label>
-          <ion-radio value="action-sheet" id="ion-action-sheet"></ion-radio>
+          <ion-radio value="action-sheet" id="ion-action-sheet">Action Sheet</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Loading</ion-label>
-          <ion-radio value="loading" id="ion-loading"></ion-radio>
+          <ion-radio value="loading" id="ion-loading">Loading</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Modal</ion-label>
-          <ion-radio value="modal" id="ion-modal"></ion-radio>
+          <ion-radio value="modal" id="ion-modal">Modal</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Popover</ion-label>
-          <ion-radio value="popover" id="ion-popover"></ion-radio>
+          <ion-radio value="popover" id="ion-popover">Popover</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Toast</ion-label>
-          <ion-radio value="toast" id="ion-toast"></ion-radio>
+          <ion-radio value="toast" id="ion-toast">Toast</ion-radio>
         </ion-item>
       </ion-radio-group>
 
@@ -51,12 +45,10 @@
         </ion-list-header>
 
         <ion-item>
-          <ion-label>Controller</ion-label>
-          <ion-radio value="controller" id="controller"></ion-radio>
+          <ion-radio value="controller" id="controller">Controller</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Component</ion-label>
-          <ion-radio value="component" id="component"></ion-radio>
+          <ion-radio value="component" id="component">Component</ion-radio>
         </ion-item>
       </ion-radio-group>
 

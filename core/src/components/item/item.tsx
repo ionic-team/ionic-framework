@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes, raf } from '@utils/helpers';
@@ -149,6 +149,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() counterFormatter?: CounterFormatter;
 
   @State() counterString: string | null | undefined;
+
+  @Watch('button')
+  buttonChanged() {
+    // Update the focusable option when the button option is changed
+    this.focusable = this.isFocusable();
+  }
 
   @Watch('counterFormatter')
   counterFormatterChanged() {
@@ -352,15 +358,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private getFirstInteractive() {
-    if (Build.isTesting) {
-      /**
-       * Pseudo selectors can't be tested in unit tests.
-       * It will cause an error when running the tests.
-       *
-       * TODO: FW-5205 - Remove the build conditional when this is fixed in Stencil
-       */
-      return undefined;
-    }
     const controls = this.el.querySelectorAll<HTMLElement>(
       'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled]), ion-select:not([disabled])'
     );

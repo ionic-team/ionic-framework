@@ -1,3 +1,8 @@
+import { win } from '@utils/browser';
+import type { CloseWatcher } from '@utils/browser';
+
+import { config } from '../global/config';
+
 // TODO(FW-2832): type
 type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
 
@@ -12,6 +17,21 @@ interface HandlerRegister {
   handler: Handler;
   id: number;
 }
+
+/**
+ * CloseWatcher is a newer API that lets
+ * use detect the hardware back button event
+ * in a web browser: https://caniuse.com/?search=closewatcher
+ * However, not every browser supports it yet.
+ *
+ * This needs to be a function so that we can
+ * check the config once it has been set.
+ * Otherwise, this code would be evaluated the
+ * moment this file is evaluated which could be
+ * before the config is set.
+ */
+export const shouldUseCloseWatcher = () =>
+  config.get('experimentalCloseWatcher', false) && win !== undefined && 'CloseWatcher' in win;
 
 /**
  * When hardwareBackButton: false in config,
@@ -29,9 +49,9 @@ export const blockHardwareBackButton = () => {
 
 export const startHardwareBackButton = () => {
   const doc = document;
-
   let busy = false;
-  doc.addEventListener('backbutton', () => {
+
+  const backButtonCallback = () => {
     if (busy) {
       return;
     }
@@ -81,7 +101,38 @@ export const startHardwareBackButton = () => {
     };
 
     processHandlers();
-  });
+  };
+
+  /**
+   * If the CloseWatcher is defined then
+   * we don't want to also listen for the native
+   * backbutton event otherwise we may get duplicate
+   * events firing.
+   */
+  if (shouldUseCloseWatcher()) {
+    let watcher: CloseWatcher | undefined;
+
+    const configureWatcher = () => {
+      watcher?.destroy();
+      watcher = new win!.CloseWatcher!();
+
+      /**
+       * Once a close request happens
+       * the watcher gets destroyed.
+       * As a result, we need to re-configure
+       * the watcher so we can respond to other
+       * close requests.
+       */
+      watcher!.onclose = () => {
+        backButtonCallback();
+        configureWatcher();
+      };
+    };
+
+    configureWatcher();
+  } else {
+    doc.addEventListener('backbutton', backButtonCallback);
+  }
 };
 
 export const OVERLAY_BACK_BUTTON_PRIORITY = 100;

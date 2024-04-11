@@ -1,4 +1,4 @@
-import type { AnimationBuilder, Color, Mode } from '../../interface';
+import type { AnimationBuilder, Color, LiteralUnion, Mode } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface ToastOptions {
@@ -33,8 +33,7 @@ export interface ToastButton {
   text?: string;
   icon?: string;
   side?: 'start' | 'end';
-  role?: 'cancel' | string;
-
+  role?: LiteralUnion<'cancel', string>;
   /**
    * @deprecated Use the toast button's CSS Shadow Parts instead.
    */

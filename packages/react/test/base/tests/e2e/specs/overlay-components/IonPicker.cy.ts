@@ -1,9 +1,4 @@
-/**
- * TODO: Skipping for now to avoid the CE build issue
- * where child components do not get registered.
- * Re-enable after this is resolved in Stencil 2.9.
- */
-describe.skip('IonPicker', () => {
+describe('IonPicker', () => {
   beforeEach(() => {
     cy.visit('/overlay-components/picker');
   });
