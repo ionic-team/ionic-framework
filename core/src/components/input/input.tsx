@@ -10,7 +10,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
+import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
 import { getCounterText } from './input.utils';
@@ -93,6 +93,11 @@ export class Input implements ComponentInterface {
   @Prop() clearInput = false;
 
   /**
+   * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+   */
+  @Prop() clearInputIcon?: string;
+
+  /**
    * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop() clearOnEdit?: boolean;
@@ -130,7 +135,7 @@ export class Input implements ComponentInterface {
   /**
    * If `true`, the user cannot interact with the input.
    */
-  @Prop() disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * A hint to the browser for which enter key to display.
@@ -226,7 +231,7 @@ export class Input implements ComponentInterface {
   /**
    * If `true`, the user cannot modify the value.
    */
-  @Prop() readonly = false;
+  @Prop({ reflect: true }) readonly = false;
 
   /**
    * If `true`, the user must fill in a value before submitting a form.
@@ -253,6 +258,20 @@ export class Input implements ComponentInterface {
    * The type of control to display. The default type is text.
    */
   @Prop() type: TextFieldTypes = 'text';
+
+  /**
+   * Whenever the type on the input changes we need
+   * to update the internal type prop on the password
+   * toggle so that that correct icon is shown.
+   */
+  @Watch('type')
+  onTypeChange() {
+    const passwordToggle = this.el.querySelector('ion-input-password-toggle');
+
+    if (passwordToggle) {
+      passwordToggle.type = this.type;
+    }
+  }
 
   /**
    * The value of the input.
@@ -294,12 +313,6 @@ export class Input implements ComponentInterface {
    * Emitted when the input has focus.
    */
   @Event() ionFocus!: EventEmitter<FocusEvent>;
-
-  /**
-   * Emitted when the styles change.
-   * @internal
-   */
-  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
    * Update the native input element when the value changes
@@ -350,6 +363,14 @@ export class Input implements ComponentInterface {
 
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
+
+    /**
+     * Set the type on the password toggle in the event that this input's
+     * type was set async and does not match the default type for the password toggle.
+     * This can happen when the type is bound using a JS framework binding syntax
+     * such as [type] in Angular.
+     */
+    this.onTypeChange();
   }
 
   componentDidRender() {
@@ -665,11 +686,13 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, clearInputIcon } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const defaultClearIcon = mode === 'ios' ? closeCircle : closeSharp;
+    const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -768,7 +791,7 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>

@@ -14,6 +14,7 @@
   --padding-end: 0px;
   --padding-bottom: #{$textarea-padding-bottom};
   --padding-start: 0px;
+  --highlight-height: 2px;
 
   font-size: $textarea-md-font-size;
 }
@@ -62,7 +63,7 @@
   position: absolute;
 
   width: 100%;
-  height: 2px;
+  height: var(--highlight-height);
 
   transform: scale(0);
 

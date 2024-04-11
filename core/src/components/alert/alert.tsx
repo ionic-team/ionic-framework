@@ -411,6 +411,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * This can be useful in a button handler for determining which button was
    * clicked to dismiss the alert.
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+   *
+   * This is a no-op if the overlay has not been presented yet. If you want
+   * to remove an overlay from the DOM that was never presented, use the
+   * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {

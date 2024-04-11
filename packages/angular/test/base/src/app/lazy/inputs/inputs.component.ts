@@ -13,6 +13,7 @@ export class InputsComponent {
   toggle = true;
   select? = 'nes';
   changes = 0;
+  range? = 50;
 
   setValues() {
     console.log('set values');
@@ -22,6 +23,7 @@ export class InputsComponent {
     this.radio = 'nes';
     this.toggle = true;
     this.select = 'nes';
+    this.range = 50;
   }
 
   resetValues() {
@@ -32,6 +34,7 @@ export class InputsComponent {
     this.radio = undefined;
     this.toggle = false;
     this.select = undefined;
+    this.range = undefined;
   }
 
   counter() {

@@ -19,6 +19,7 @@
    * @prop --placeholder-font-weight: Font weight of the input placeholder text
    * @prop --placeholder-opacity: Opacity of the input placeholder text
    *
+   * @prop --highlight-height: The height of the highlight on the input. Only applies to md mode.
    * @prop --highlight-color-focused: The color of the highlight on the input when focused
    * @prop --highlight-color-valid: The color of the highlight on the input when valid
    * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
@@ -595,12 +596,21 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-::slotted([slot="start"]) {
+::slotted([slot="start"]:last-of-type) {
   margin-inline-end: $form-control-label-margin;
   margin-inline-start: 0;
 }
 
-::slotted([slot="end"]) {
+::slotted([slot="end"]:first-of-type) {
   margin-inline-start: $form-control-label-margin;
   margin-inline-end: 0;
+}
+
+/**
+ * The input password toggle component should be hidden when the input is readonly/disabled
+ * because it is not possible to edit a password.
+ */
+:host([disabled]) ::slotted(ion-input-password-toggle),
+:host([readonly]) ::slotted(ion-input-password-toggle) {
+  display: none;
 }

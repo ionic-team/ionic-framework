@@ -44,7 +44,7 @@
  */
 :host(.select-fill-outline.select-expanded),
 :host(.select-fill-outline.ion-focused) {
-  --border-width: 2px;
+  --border-width: var(--highlight-height);
   --border-color: var(--highlight-color);
 }
 

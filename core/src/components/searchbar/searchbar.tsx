@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import { debounceEvent, raf, componentOnReady } from '@utils/helpers';
+import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
@@ -28,6 +29,7 @@ export class Searchbar implements ComponentInterface {
   private shouldAlignLeft = true;
   private originalIonInput?: EventEmitter<SearchbarInputEventDetail>;
   private inputId = `ion-searchbar-${searchbarIds++}`;
+  private inheritedAttributes: Attributes = {};
 
   /**
    * The value of the input when the textarea is focused.
@@ -40,6 +42,31 @@ export class Searchbar implements ComponentInterface {
   @State() noAnimate = true;
 
   /**
+   * lang and dir are globally enumerated attributes.
+   * As a result, creating these as properties
+   * can have unintended side effects. Instead, we
+   * listen for attribute changes and inherit them
+   * to the inner `<input>` element.
+   */
+  @Watch('lang')
+  onLangChanged(newValue: string) {
+    this.inheritedAttributes = {
+      ...this.inheritedAttributes,
+      lang: newValue,
+    };
+    forceUpdate(this);
+  }
+
+  @Watch('dir')
+  onDirChanged(newValue: string) {
+    this.inheritedAttributes = {
+      ...this.inheritedAttributes,
+      dir: newValue,
+    };
+    forceUpdate(this);
+  }
+
+  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
@@ -50,6 +77,12 @@ export class Searchbar implements ComponentInterface {
    * If `true`, enable searchbar animation.
    */
   @Prop() animated = false;
+
+  /**
+   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+   * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
+   */
+  @Prop() autocapitalize: string = 'off';
 
   /**
    * Set the input's autocomplete property.
@@ -111,6 +144,16 @@ export class Searchbar implements ComponentInterface {
    * `"previous"`, `"search"`, and `"send"`.
    */
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
+   * This attribute specifies the maximum number of characters that the user can enter.
+   */
+  @Prop() maxlength?: number;
+
+  /**
+   * This attribute specifies the minimum number of characters that the user can enter.
+   */
+  @Prop() minlength?: number;
 
   /**
    * If used in a form, set the name of the control, which is submitted with the form data.
@@ -230,6 +273,12 @@ export class Searchbar implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = {
+      ...inheritAttributes(this.el, ['lang', 'dir']),
+    };
   }
 
   componentDidLoad() {
@@ -557,7 +606,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   render() {
-    const { cancelButtonText } = this;
+    const { cancelButtonText, autocapitalize } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? closeCircle : closeSharp);
@@ -614,12 +663,16 @@ export class Searchbar implements ComponentInterface {
             onChange={this.onChange}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
+            minLength={this.minlength}
+            maxLength={this.maxlength}
             placeholder={this.placeholder}
             type={this.type}
             value={this.getValue()}
+            autoCapitalize={autocapitalize === 'default' ? undefined : autocapitalize}
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
             spellcheck={this.spellcheck}
+            {...this.inheritedAttributes}
           />
 
           {mode === 'md' && cancelButton}

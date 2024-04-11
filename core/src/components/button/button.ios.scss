@@ -114,11 +114,6 @@
   font-size: #{$button-ios-small-font-size};
 }
 
-:host(.button-has-icon-only) {
-  --padding-top: 0;
-  --padding-bottom: 0;
-}
-
 
 // iOS Round Button
 // --------------------------------------------------
@@ -131,7 +126,6 @@
   --padding-bottom: #{$button-ios-round-padding-bottom};
 }
 
-
 // iOS Strong Button
 // --------------------------------------------------
 
@@ -139,6 +133,85 @@
   font-weight: #{$button-ios-strong-font-weight};
 }
 
+// iOS Icon Only Button
+// --------------------------------------------------
+
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: var(--padding-top);
+  --padding-end: var(--padding-top);
+  --padding-start: var(--padding-end);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(30px, 2.125em, 60px);
+
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(30px, 2.125em, 60px);
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through a native iOS app.
+    * min font size: 15px, default font size: 18px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 16px
+    * (derived from rem), then the base size can use the default font
+    * size of the icon.
+    */
+  font-size: dynamic-font-clamp(0.84, 18px, 2.39, 1em);
+}
+
+:host(.button-small.button-has-icon-only) {
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(23px, 2.16em, 54px);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(23px, 2.16em, 54px);
+}
+
+:host(.button-small) ::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through a native iOS app.
+    * min font size: 12px, default font size: 17px, max font size: 40px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 13px
+    * (derived from rem) and the default font size of the icon is
+    * 17px, then the base size would need to be increased.
+    */
+  font-size: dynamic-font-clamp(0.58, 20.93px, 1.92, 1em);
+}
+
+:host(.button-large.button-has-icon-only) {
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-width: clamp(46px, 2.5em, 78px);
+  // TODO(FW-6053): replace em value with the min-height variable.
+  min-height: clamp(46px, 2.5em, 78px);
+}
+
+:host(.button-large) ::slotted(ion-icon[slot="icon-only"]) {
+  /**
+    * The values were provided through a native iOS app.
+    * min font size: 15px, default font size: 18px, max font size: 43px
+    *
+    * Since the `ion-button` uses `rem` for the font size, we can't
+    * just pass the desired icon font size in `em` to the `
+    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * to account for the ion-button` font size.
+    *
+    * For example, if the default font size of `ion-button` is 20px
+    * (derived from rem) and the default font size of the icon is
+    * 18px, then the base size would need to be decreased.
+    */
+  font-size: dynamic-font-clamp(1.05, 14.4px, 2.99, 1em);
+}
 
 // iOS Button Focused
 // --------------------------------------------------
@@ -211,4 +284,13 @@
 
 :host(.button-solid.ion-color.ion-activated) .button-native::after {
   background: #{current-color(shade)};
+}
+
+
+// Activated Button in Toolbar
+// --------------------------------------------------
+
+:host(.button-outline.ion-activated.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+  background: var(--ion-toolbar-color, var(--color));
+  color: #{var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))};
 }

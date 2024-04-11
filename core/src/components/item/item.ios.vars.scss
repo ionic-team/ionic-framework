@@ -57,15 +57,6 @@ $item-ios-border-bottom-style:               solid !default;
 /// @prop - Border bottom color for the item when lines are displayed
 $item-ios-border-bottom-color:               $item-ios-border-color !default;
 
-/// @prop - Color of the item input highlight
-$item-ios-input-highlight-color:             ion-color(primary, base) !default;
-
-/// @prop - Color of the item input highlight when valid
-$item-ios-input-highlight-color-valid:       ion-color(success, base) !default;
-
-/// @prop - Color of the item input highlight when invalid
-$item-ios-input-highlight-color-invalid:     ion-color(danger, base) !default;
-
 
 // Item Slots
 // --------------------------------------------------

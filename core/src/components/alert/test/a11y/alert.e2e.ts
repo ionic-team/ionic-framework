@@ -28,7 +28,7 @@ const testAria = async (
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
 };
 
-configs({ directions: ['ltr'], themes: ['dark', 'light'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'], palettes: ['dark', 'light'] }).forEach(({ title, config }) => {
   test.describe(title('alert: Axe testing'), () => {
     test('should not have accessibility violations when header and message are defined', async ({ page }) => {
       await page.setContent(
@@ -306,6 +306,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await alert.evaluate((el: HTMLIonAlertElement) => el.present());
       await ionAlertDidPresent.next();
 
+      /**
+       * The borders on the text fields may not be visible in the screenshot
+       * when using Safari, this is due to a WebKit rendering quirk.
+       */
       await expect(page).toHaveScreenshot(screenshot(`alert-text-fields-scale`));
     });
   });

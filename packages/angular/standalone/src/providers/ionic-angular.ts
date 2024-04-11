@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import { APP_INITIALIZER } from '@angular/core';
-import type { Provider } from '@angular/core';
+import { APP_INITIALIZER, makeEnvironmentProviders } from '@angular/core';
+import type { EnvironmentProviders } from '@angular/core';
 import { AngularDelegate, ConfigToken, provideComponentInputBinding } from '@ionic/angular/common';
 import { initialize } from '@ionic/core/components';
 import type { IonicConfig } from '@ionic/core/components';
@@ -8,13 +8,8 @@ import type { IonicConfig } from '@ionic/core/components';
 import { ModalController } from './modal-controller';
 import { PopoverController } from './popover-controller';
 
-export const provideIonicAngular = (config?: IonicConfig): Provider[] => {
-  /**
-   * TODO FW-4967
-   * Use makeEnvironmentProviders once Angular 14 support is dropped.
-   * This prevents provideIonicAngular from being accidentally referenced in an @Component.
-   */
-  return [
+export const provideIonicAngular = (config?: IonicConfig): EnvironmentProviders => {
+  return makeEnvironmentProviders([
     {
       provide: ConfigToken,
       useValue: config,
@@ -29,7 +24,7 @@ export const provideIonicAngular = (config?: IonicConfig): Provider[] => {
     AngularDelegate,
     ModalController,
     PopoverController,
-  ];
+  ]);
 };
 
 const initializeIonicAngular = (config: IonicConfig, doc: Document) => {

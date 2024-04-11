@@ -13,7 +13,7 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <link id="theme" href="/src/themes/test/default.css" rel="stylesheet" />
+    <link id="palette" href="/src/themes/test/default.css" rel="stylesheet" />
 
     <style>
       .wrapper {
@@ -147,7 +147,7 @@
             </ion-toolbar>
 
             <ion-toolbar>
-              <ion-segment value="default" class="theme-picker">
+              <ion-segment value="default" class="palette-picker">
                 <ion-segment-button value="default">
                   <ion-label>Default</ion-label>
                 </ion-segment-button>
@@ -908,7 +908,7 @@
             <ion-toolbar>
               <ion-title>Overlays</ion-title>
               <div slot="end" class="right-container">
-                <ion-select label="Select a Theme:" interface="popover" class="theme-picker">
+                <ion-select label="Select a Palette:" interface="popover" class="palette-picker">
                   <ion-select-option value="default" selected>Default</ion-select-option>
                   <ion-select-option value="dark">Dark</ion-select-option>
                   <ion-select-option value="high-contrast">High Contrast</ion-select-option>
@@ -962,52 +962,52 @@
     </ion-app>
 
     <script>
-      const selects = document.querySelectorAll('.theme-picker');
+      const selects = document.querySelectorAll('.palette-picker');
 
       for (let i = 0; i < selects.length; i++) {
         selects[i].addEventListener('ionChange', (ev) => {
-          const theme = event.detail && event.detail.value;
-          toggleTheme(theme);
+          const palette = event.detail && event.detail.value;
+          togglePalette(palette);
         });
       }
 
-      function toggleTheme(theme) {
+      function togglePalette(palette) {
         // The path to the directory containing the
-        // custom theme files for this test
-        var themeFilesDir = '/src/themes/test/css-variables/css';
+        // custom palette files for this test
+        var paletteFilesDir = '/src/themes/test/css-variables/css';
         let modifier = '';
 
-        // The default and dark themes are official Ionic
-        // themes so they are located outside of this test
-        switch (theme) {
+        // The default and dark palettes are official Ionic
+        // palettes so they are located outside of this test
+        switch (palette) {
           case 'dark':
           case 'high-contrast':
           case 'high-contrast-dark':
-            themeFilesDir = '/css/themes';
+            paletteFilesDir = '/css/palettes';
             modifier = '.always';
             break;
           default:
             break;
         }
 
-        var cssFile = `${themeFilesDir}/${theme}${modifier}.css`;
+        var cssFile = `${paletteFilesDir}/${palette}${modifier}.css`;
 
-        var oldLink = document.getElementById('theme');
+        var oldLink = document.getElementById('palette');
 
         var newLink = document.createElement('link');
-        newLink.setAttribute('id', 'theme');
+        newLink.setAttribute('id', 'palette');
         newLink.setAttribute('rel', 'stylesheet');
         newLink.setAttribute('type', 'text/css');
 
-        // The default light theme is built in to Ionic, so no need to import a separate stylesheet
-        if (theme !== 'default') {
+        // The default light palette is built in to Ionic, so no need to import a separate stylesheet
+        if (palette !== 'default') {
           newLink.setAttribute('href', cssFile);
         }
 
         document.getElementsByTagName('head').item(0).replaceChild(newLink, oldLink);
 
         for (let i = 0; i < selects.length; i++) {
-          selects[i].value = theme;
+          selects[i].value = palette;
         }
       }
 

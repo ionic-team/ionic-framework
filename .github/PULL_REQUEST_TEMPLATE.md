@@ -25,7 +25,7 @@ Issue number: resolves #
   If this introduces a breaking change:
   1. Describe the impact and migration path for existing applications below.
   2. Update the BREAKING.md file with the breaking change.
-  3. Add "BREAKING CHANGE: [...]" to the commit description when merging. See https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#footer for more information.
+  3. Add "BREAKING CHANGE: [...]" to the commit description when merging. See https://github.com/ionic-team/ionic-framework/blob/main/docs/CONTRIBUTING.md#footer for more information.
 -->
 
 

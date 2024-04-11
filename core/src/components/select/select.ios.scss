@@ -4,6 +4,10 @@
 // iOS Select
 // --------------------------------------------------
 
+:host {
+  --highlight-height: 0px;
+}
+
 .select-icon {
   width: $select-ios-icon-size;
   height: $select-ios-icon-size;

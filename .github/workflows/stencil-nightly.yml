@@ -26,7 +26,7 @@ jobs:
   build-core-with-stencil-nightly:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/actions/build-core-stencil-prerelease
         with:
           stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
@@ -35,21 +35,21 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/actions/test-core-clean-build
 
   test-core-lint:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/actions/test-core-lint
 
   test-core-spec:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/actions/test-core-spec
         with:
           stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
@@ -72,7 +72,7 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/workflows/actions/test-core-screenshot
         with:
           shard: ${{ matrix.shard }}
@@ -100,14 +100,14 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/build-vue
 
   build-vue-router:
     needs: [build-vue]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/build-vue-router
 
   test-vue-e2e:
@@ -118,7 +118,7 @@ jobs:
     needs: [build-vue, build-vue-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/test-vue-e2e
       with:
         app: ${{ matrix.apps }}
@@ -136,14 +136,14 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/build-angular-server
 
   test-angular-e2e:
@@ -154,7 +154,7 @@ jobs:
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/test-angular-e2e
       with:
         app: ${{ matrix.apps }}
@@ -172,14 +172,14 @@ jobs:
     needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
     needs: [build-react]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
@@ -190,7 +190,7 @@ jobs:
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/test-react-router-e2e
       with:
         app: ${{ matrix.apps }}
@@ -212,7 +212,7 @@ jobs:
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/workflows/actions/test-react-e2e
       with:
         app: ${{ matrix.apps }}

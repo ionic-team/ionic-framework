@@ -30,7 +30,7 @@ interface HandlerRegister {
  * moment this file is evaluated which could be
  * before the config is set.
  */
-export const shoudUseCloseWatcher = () =>
+export const shouldUseCloseWatcher = () =>
   config.get('experimentalCloseWatcher', false) && win !== undefined && 'CloseWatcher' in win;
 
 /**
@@ -109,7 +109,7 @@ export const startHardwareBackButton = () => {
    * backbutton event otherwise we may get duplicate
    * events firing.
    */
-  if (shoudUseCloseWatcher()) {
+  if (shouldUseCloseWatcher()) {
     let watcher: CloseWatcher | undefined;
 
     const configureWatcher = () => {
