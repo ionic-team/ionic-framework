@@ -8,9 +8,8 @@
 :host {
   --border-width: #{$ionic-border-size-small};
   --border-color: #{$ionic-color-neutral-300};
-
-  // TODO(FW-6113): Verify the ionic design token is correct once it's available and remove the hardcoded value.
-  --highlight-color-invalid: var(--ionic-color-error-600, #970606);
+  --highlight-color-invalid: #{$ionic-color-error-400};
+  --text-color-invalid: #{$ionic-color-error-600};
 }
 
 // Ionic Input Sizes
@@ -28,6 +27,6 @@
   color: var(--ionic-color-neutral-600, #535353);
 }
 
-.input-bottom .error-text {
-  color: var(--highlight-color-invalid);
+:host(.ion-touched.ion-invalid) .error-text {
+  color: var(--text-color-invalid);
 }
