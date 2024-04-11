@@ -211,6 +211,7 @@ export interface IonicConfig {
    * are informed when a page transition happens.
    */
   focusManagerPriority?: FocusManagerPriority[];
+
   /**
    * @experimental
    * If `true`, the [CloseWatcher API](https://github.com/WICG/close-watcher) will be used to handle
