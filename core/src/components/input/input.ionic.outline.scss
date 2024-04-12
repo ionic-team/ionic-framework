@@ -1,0 +1,121 @@
+@import "./input.vars";
+@import "../../foundations/ionic.vars";
+
+// Input Fill: Outline (Ionic Theme)
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline) {
+  --border-radius: #{$ionic-border-radius-rounded-small};
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --placeholder-color: #{$ionic-color-neutral-600};
+  --placeholder-opacity: 1;
+}
+
+/**
+ * The bottom content should never have
+ * a border with the outline style.
+ */
+:host(.input-fill-outline) .input-bottom {
+  border-top: none;
+}
+
+:host(.input-fill-outline.input-shape-round) .input-bottom,
+:host(.input-fill-outline.input-label-placement-floating) .input-bottom {
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the text input.
+   */
+  @include padding-horizontal(var(--padding-start), var(--padding-end));
+}
+
+:host(.input-fill-outline) .input-wrapper {
+  /**
+   * For the ionic theme, the padding needs to sit on the
+   * native wrapper instead, so that it sits within the
+   * outline container but does not affect the label text.
+
+   * For the ionic theme, the horizontal padding needs to
+   * sit on the native wrapper instead, so that
+   */
+  @include padding(0);
+
+  /**
+   * Outline inputs do not have a bottom border.
+   * Instead, they have a border that wraps the
+   * input + label.
+   */
+  border-bottom: none;
+}
+
+:host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
+  @include transform-origin(start, top);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+:host(.input-fill-outline) .label-text-wrapper {
+  /**
+   * The label should appear on top of an outline
+   * container that overlaps it so it is always clickable.
+   */
+  position: relative;
+
+  color: #{$ionic-color-neutral-700};
+}
+
+:host(.input-fill-outline) .native-wrapper {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  min-height: 40px;
+}
+
+
+// Input Fill: Outline, Outline Container
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline) .input-outline {
+  @include position(0, 0, 0, 0);
+  @include border-radius(var(--border-radius));
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  border: var(--border-width) var(--border-style) var(--border-color);
+}
+
+
+// Input Fill: Outline, Label Placement: Stacked
+// ----------------------------------------------------------------
+
+// This makes the label sit above the input.
+:host(.label-floating.input-fill-outline.input-label-placement-stacked:not(.input-shape-round)) .label-text-wrapper {
+  @include transform(translateY(0), scale(#{$form-control-label-stacked-scale}));
+  @include margin(0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc((100% - var(--padding-start) - var(--padding-end)) / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline) ::slotted([slot="start"]) {
+  margin-inline-end: 8px;
+}
+
+:host(.input-fill-outline) ::slotted([slot="end"]) {
+  margin-inline-start: 8px;
+}

@@ -619,6 +619,10 @@ export namespace Components {
          */
         "routerDirection": RouterDirection;
         /**
+          * Set to `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners.
+         */
+        "shape"?: 'round' | 'rectangular';
+        /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target": string | undefined;
@@ -866,6 +870,10 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'before'`.
+         */
+        "fixedSlotPlacement": 'after' | 'before';
         /**
           * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
@@ -1343,6 +1351,10 @@ export namespace Components {
          */
         "clearInput": boolean;
         /**
+          * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+         */
+        "clearInputIcon"?: string;
+        /**
           * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
          */
         "clearOnEdit"?: boolean;
@@ -1395,9 +1407,9 @@ export namespace Components {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").  Defaults to "stacked" for the ionic theme, or "start" for all other themes.  In the ionic theme, only the values "stacked" and "floating" are supported.
          */
-        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -5839,6 +5851,10 @@ declare namespace LocalJSX {
          */
         "routerDirection"?: RouterDirection;
         /**
+          * Set to `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners.
+         */
+        "shape"?: 'round' | 'rectangular';
+        /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target"?: string | undefined;
@@ -6098,6 +6114,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'before'`.
+         */
+        "fixedSlotPlacement"?: 'after' | 'before';
         /**
           * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
@@ -6583,6 +6603,10 @@ declare namespace LocalJSX {
          */
         "clearInput"?: boolean;
         /**
+          * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+         */
+        "clearInputIcon"?: string;
+        /**
           * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
          */
         "clearOnEdit"?: boolean;
@@ -6631,7 +6655,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").  Defaults to "stacked" for the ionic theme, or "start" for all other themes.  In the ionic theme, only the values "stacked" and "floating" are supported.
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
