@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Overlay Roles</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-modal.ios,
+      ion-popover.datetime-popover.ios {
+        --width: 350px;
+        --height: 420px;
+      }
+
+      ion-modal.md,
+      ion-popover.datetime-popover.md {
+        --width: 350px;
+        --height: 450px;
+      }
+
+      ion-datetime {
+        width: 350px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Overlay Roles</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-button onclick="presentModal()">Present Modal</ion-button>
+      </ion-content>
+    </ion-app>
+    <script>
+      const presentModal = async () => {
+        const modal = await createModal();
+
+        await modal.present();
+        console.log(await modal.onDidDismiss());
+      };
+
+      const createModal = () => {
+        // create component to open
+        const element = document.createElement('div');
+        element.innerHTML = `
+            <ion-datetime show-default-buttons="true"></ion-datetime>
+          `;
+
+        // present the modal
+        const modalElement = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+        });
+
+        const app = document.querySelector('ion-app');
+        app.appendChild(modalElement);
+        return modalElement;
+      };
+    </script>
+  </body>
+</html>

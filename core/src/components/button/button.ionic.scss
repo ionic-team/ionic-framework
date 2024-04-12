@@ -109,7 +109,18 @@
 ::slotted(ion-icon[slot="start"]),
 ::slotted(ion-icon[slot="end"]),
 ::slotted(ion-icon[slot="icon-only"]) {
-  font-size: 1em;
+  font-size: px-to-rem(16);
+}
+
+:host(.button-xsmall),
+:host(.button-small),
+:host(.button-large),
+:host(.button-xlarge) {
+  ::slotted(ion-icon[slot="start"]),
+  ::slotted(ion-icon[slot="end"]),
+  ::slotted(ion-icon[slot="icon-only"]) {
+    font-size: 1em;
+  }
 }
 
 /* Button extra small */
@@ -142,6 +153,7 @@
 
 // Button Shape Rectangular
 // -------------------------------------------------------------------------------
+
 :host(.button-rectangular) {
   --border-radius: #{$button-ionic-rectangular-border};
 }
@@ -167,6 +179,11 @@
 :host(.button-solid) {
   --background-activated: #{ion-color(primary, shade)};
 }
+
+:host(.button-solid.ion-color.ion-activated) .button-native::after {
+  background: #{current-color(shade)};
+}
+
 
 // Fill Outline Button
 // --------------------------------------------------

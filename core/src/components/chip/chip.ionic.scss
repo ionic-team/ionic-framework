@@ -1,0 +1,105 @@
+@use "../../themes/ionic.mixins" as mixins;
+@use "../../foundations/ionic.vars.scss" as tokens;
+
+// Ionic Chip
+// --------------------------------------------------
+
+// TODO(ROU-4870): there is no token yet for these ones, but it should be created in the future, once UX team has figma tokens done
+$ionic-states-focus-primary: #9ec4fd;
+$ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make this in the future, as we are setting scss variables with a var() and fallback, and it doesn't work inside a rgba().
+
+:host {
+  --background: #{tokens.$ionic-color-neutral-10};
+  --border-color: transparent;
+  --border-radius: #{tokens.$ionic-border-radius-rounded-small};
+  --color: #{tokens.$ionic-color-neutral-900};
+  --focus-ring-color: #{$ionic-states-focus-primary};
+  --focus-ring-width: #{tokens.$ionic-border-size-medium};
+
+  @include mixins.font-smoothing;
+  @include mixins.padding(tokens.$ionic-space-xs, tokens.$ionic-space-xxs);
+  @include mixins.border-radius(var(--border-radius));
+
+  display: inline-flex;
+
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: tokens.$ionic-space-xxxs;
+
+  min-height: 32px;
+
+  border-width: tokens.$ionic-border-size-small;
+  border-style: solid;
+
+  border-color: var(--border-color);
+
+  background: var(--background);
+  color: var(--color);
+
+  font-family: tokens.$ionic-font-family;
+  font-size: tokens.$ionic-font-size-m;
+  font-weight: tokens.$ionic-font-weight-medium;
+
+  line-height: tokens.$ionic-font-line-height-full;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  vertical-align: middle;
+}
+
+// Outline Chip
+// ---------------------------------------------
+
+:host(.chip-outline) {
+  --background: transparent;
+  border-color: tokens.$ionic-color-neutral-100;
+}
+
+// Chip: Focus
+// ---------------------------------------------
+
+:host(.ion-focused) {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-width);
+}
+
+// Chip: Hover
+// ---------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --background: #{$ionic-states-hover};
+  }
+}
+
+// Chip: Disabled
+// ---------------------------------------------
+
+:host(.chip-disabled) {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// Chip Shapes
+// ---------------------------------------------
+
+:host(.chip-round) {
+  --border-radius: #{tokens.$ionic-border-radius-rounded-large};
+}
+
+:host(.chip-rectangular) {
+  --border-radius: #{tokens.$ionic-border-radius-square};
+}
+
+// Chip Icon
+// ---------------------------------------------
+::slotted(ion-icon) {
+  font-size: tokens.$ionic-font-size-l;
+}

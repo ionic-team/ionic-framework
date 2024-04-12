@@ -282,6 +282,7 @@ ion-card,prop,mode,"ios" | "md",undefined,false,false
 ion-card,prop,rel,string | undefined,undefined,false,false
 ion-card,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-card,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-card,prop,shape,"rectangular" | "round" | undefined,undefined,false,true
 ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
@@ -348,6 +349,7 @@ ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-chip,prop,disabled,boolean,false,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
+ion-chip,prop,shape,"rectangular" | "round" | undefined,undefined,false,false
 ion-chip,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-chip,css-prop,--background
 ion-chip,css-prop,--color
@@ -389,6 +391,7 @@ ion-col,css-prop,--ion-grid-columns
 
 ion-content,shadow
 ion-content,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-content,prop,fixedSlotPlacement,"after" | "before",'after',false,false
 ion-content,prop,forceOverscroll,boolean | undefined,undefined,false,false
 ion-content,prop,fullscreen,boolean,false,false,false
 ion-content,prop,mode,"ios" | "md",undefined,false,false
@@ -600,6 +603,7 @@ ion-input,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "h
 ion-input,prop,autocorrect,"off" | "on",'off',false,false
 ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
+ion-input,prop,clearInputIcon,string | undefined,undefined,false,false
 ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-input,prop,counter,boolean,false,false,false
