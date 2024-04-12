@@ -25,7 +25,7 @@
 // --------------------------------------------------
 
 :host(.input-shape-round) {
-  --border-radius: 100px;
+  --border-radius: #{$ionic-border-radius-rounded-full};
 }
 
 // Input Bottom Content
