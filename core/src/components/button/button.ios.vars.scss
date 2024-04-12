@@ -30,9 +30,6 @@ $button-ios-padding-start:                            $button-ios-padding-end !d
 /// @prop - Minimum height of the button
 $button-ios-min-height:                               3.1em !default;
 
-/// @prop - Border radius of the button
-$button-ios-border-radius:                            14px !default;
-
 /// @prop - Font size of the button text
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
@@ -104,8 +101,6 @@ $button-ios-outline-border-width:                     1px !default;
 /// @prop - Border style of the outline button
 $button-ios-outline-border-style:                     solid !default;
 
-/// @prop - Border radius of the outline button
-$button-ios-outline-border-radius:                    $button-ios-border-radius !default;
 
 // iOS Clear Button
 // --------------------------------------------------
@@ -127,6 +122,13 @@ $button-ios-clear-opacity-activated:                  .4 !default;
 /// @prop - Opacity of the clear button on hover
 $button-ios-clear-opacity-hover:                      .6 !default;
 
+// iOS Soft Button
+// --------------------------------------------------
+
+/// @prop - Border radius of the soft button
+$button-ios-soft-border-radius:                            14px !default;
+
+
 // iOS Round Button
 // --------------------------------------------------
 
@@ -144,6 +146,13 @@ $button-ios-round-padding-start:                      $button-round-padding-star
 
 /// @prop - Border radius of the round button
 $button-ios-round-border-radius:                      $button-round-border-radius !default;
+
+
+// iOS Rectangular Button
+// --------------------------------------------------
+
+/// @prop - Border radius of the rectangular button
+$button-ios-rectangular-border-radius:               0 !default;
 
 
 // iOS Decorator Button

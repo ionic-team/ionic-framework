@@ -115,9 +115,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() rel: string | undefined;
 
   /**
-   * Set to `"round"` for a button with more rounded corners.
+   * Set to `"soft"` for a button with soft rounded corners, `"round"` for a button
+   * with fully rounded corners, or `"rectangular" for a button without rounded corners.
+   * Defaults to `"soft"` for the `"ios`" and `"ionic"` themes and `"round"` for the `"md"` theme.
    */
-  @Prop({ reflect: true }) shape?: 'round' | 'rectangular';
+  @Prop({ reflect: true }) shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * Set to `"small"` for a button with less height and padding, to `"default"`
@@ -214,6 +216,20 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     }
 
     return 'bounded';
+  }
+
+  /**
+   * Set the default shape for the different themes
+   */
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    if (shape === undefined) {
+      return theme === 'md' ? 'round' : 'soft';
+    }
+
+    return shape;
   }
 
   /**
@@ -343,13 +359,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       color,
       expand,
       hasIconOnly,
-      shape,
       strong,
       inheritedAttributes,
     } = this;
 
     const theme = getIonTheme(this);
     const finalSize = this.getSize();
+    const finalShape = this.getShape();
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
@@ -389,7 +405,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [buttonType]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
           [`${buttonType}-${finalSize}`]: finalSize !== undefined,
-          [`${buttonType}-${shape}`]: shape !== undefined,
+          [`${buttonType}-${finalShape}`]: finalShape !== undefined,
           [`${buttonType}-${fill}`]: true,
           [`${buttonType}-strong`]: strong,
           'in-toolbar': hostContext('ion-toolbar', this.el),

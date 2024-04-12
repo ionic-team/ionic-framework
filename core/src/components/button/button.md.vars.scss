@@ -30,9 +30,6 @@ $button-md-padding-start:                               1.1em !default;
 /// @prop - Minimum height of the button
 $button-md-min-height:                                  36px !default;
 
-/// @prop - Border radius of the button
-$button-md-border-radius:                               4px !default;
-
 /// @prop - Font size of the button text
 $button-md-font-size:                                   dynamic-font(14px) !default;
 
@@ -96,6 +93,13 @@ $button-md-small-font-size:                             dynamic-font(13px) !defa
 // Material Design Round Button
 // --------------------------------------------------
 
+/// @prop - Border radius of the soft button
+$button-md-soft-border-radius:                          4px !default;
+
+
+// Material Design Round Button
+// --------------------------------------------------
+
 /// @prop - Padding top of the round button
 $button-md-round-padding-top:                           $button-round-padding-top !default;
 
@@ -110,6 +114,13 @@ $button-md-round-padding-start:                         $button-round-padding-st
 
 /// @prop - Border radius of the round button
 $button-md-round-border-radius:                         $button-round-border-radius !default;
+
+
+// Material Design Rectangular Button
+// --------------------------------------------------
+
+/// @prop - Border radius of the rectangular button
+$button-md-rectangular-border-radius:                  0 !default;
 
 
 // Material Design Decorator Button

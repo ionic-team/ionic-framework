@@ -5,7 +5,6 @@
 // -------------------------------------------------------------------------------
 
 :host {
-  --border-radius: #{$button-ionic-border-radius};
   --padding-bottom: var(--padding-top);
   --padding-end: #{$button-ionic-padding-end};
   --padding-start: var(--padding-end);
@@ -155,13 +154,20 @@
 // -------------------------------------------------------------------------------
 
 :host(.button-rectangular) {
-  --border-radius: #{$button-ionic-rectangular-border};
+  --border-radius: #{$button-ionic-rectangular-border-radius};
+}
+
+// Button Shape Soft
+// -------------------------------------------------------------------------------
+
+:host(.button-soft) {
+  --border-radius: #{$button-ionic-soft-border-radius};
 }
 
 // Button Shape Round
 // -------------------------------------------------------------------------------
 :host(.button-round) {
-  --border-radius: #{$button-ionic-round-border};
+  --border-radius: #{$button-ionic-round-border-radius};
 }
 
 // Button Focused

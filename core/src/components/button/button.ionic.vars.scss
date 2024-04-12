@@ -3,9 +3,6 @@
 // Ionic Button
 // -------------------------------------------------------------------------------
 
-/// @prop - Border radius of the button
-$button-ionic-border-radius:                                  px-to-rem(8) !default;
-
 /// @prop - Padding top of the button
 $button-ionic-padding-top:                                    px-to-rem(12) !default;
 
@@ -128,13 +125,19 @@ $button-ionic-xlarge-font-size:                               dynamic-font-max(2
 // -------------------------------------------------------------------------------
 
 /// @prop - Border radius of the rectangular button
-$button-ionic-rectangular-border:                             0 !default;
+$button-ionic-rectangular-border-radius:                     0 !default;
+
+// Ionic Soft Button
+// -------------------------------------------------------------------------------
+
+/// @prop - Border radius of the soft button
+$button-ionic-soft-border-radius:                            px-to-rem(8) !default;
 
 // Ionic Round Button
 // -------------------------------------------------------------------------------
 
 /// @prop - Border radius of the round button
-$button-ionic-round-border:                                   px-to-rem(999) !default;
+$button-ionic-round-border-radius:                           px-to-rem(999) !default;
 
 // Ionic Outline Button
 // -------------------------------------------------------------------------------

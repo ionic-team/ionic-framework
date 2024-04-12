@@ -7,7 +7,6 @@
 // --------------------------------------------------
 
 :host {
-  --border-radius: #{$button-ios-border-radius};
   --padding-top: #{$button-ios-padding-top};
   --padding-bottom: #{$button-ios-padding-bottom};
   --padding-start: #{$button-ios-padding-start};
@@ -42,7 +41,6 @@
 // --------------------------------------------------
 
 :host(.button-outline) {
-  --border-radius: #{$button-ios-outline-border-radius};
   --border-width: #{$button-ios-outline-border-width};
   --border-style: #{$button-ios-outline-border-style};
   --background-activated: #{ion-color(primary, base)};
@@ -114,6 +112,12 @@
   font-size: #{$button-ios-small-font-size};
 }
 
+// iOS Soft Button
+// --------------------------------------------------
+
+:host(.button-soft) {
+  --border-radius: #{$button-ios-soft-border-radius};
+}
 
 // iOS Round Button
 // --------------------------------------------------
@@ -124,6 +128,13 @@
   --padding-start: #{$button-ios-round-padding-start};
   --padding-end: #{$button-ios-round-padding-end};
   --padding-bottom: #{$button-ios-round-padding-bottom};
+}
+
+// iOS Rectangular Button
+// --------------------------------------------------
+
+:host(.button-rectangular) {
+  --border-radius: #{$button-ios-rectangular-border-radius};
 }
 
 // iOS Strong Button
@@ -155,7 +166,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 16px
@@ -179,7 +190,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 13px
@@ -203,7 +214,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 20px

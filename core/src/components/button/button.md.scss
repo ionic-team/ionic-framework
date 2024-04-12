@@ -5,7 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --border-radius: #{$button-md-border-radius};
   --padding-top: #{$button-md-padding-top};
   --padding-bottom: #{$button-md-padding-bottom};
   --padding-start: #{$button-md-padding-start};
@@ -76,6 +75,13 @@
 }
 
 
+// Material Design Soft Button
+// --------------------------------------------------
+
+:host(.button-soft) {
+  --border-radius: #{$button-md-soft-border-radius};
+}
+
 // Material Design Round Button
 // --------------------------------------------------
 
@@ -87,6 +93,12 @@
   --padding-bottom: #{$button-md-round-padding-bottom};
 }
 
+// Material Design Rectangular Button
+// --------------------------------------------------
+
+:host(.button-rectangular) {
+  --border-radius: #{$button-md-rectangular-border-radius};
+}
 
 // Material Design Button Sizes
 // --------------------------------------------------
@@ -149,7 +161,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 14px
@@ -174,7 +186,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 13px
@@ -199,7 +211,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 20px
