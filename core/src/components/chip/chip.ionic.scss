@@ -9,6 +9,11 @@ $ionic-states-focus-primary: #9ec4fd;
 $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make this in the future, as we are setting scss variables with a var() and fallback, and it doesn't work inside a rgba().
 
 :host {
+  // TODO(FW-6178): Remove this once the Stencil bug is resolved.
+  /**
+   * @prop --background: Background of the chip
+   * @prop --color: Color of the chip
+   */
   --background: #{tokens.$ionic-color-neutral-10};
   --border-color: transparent;
   --border-radius: #{tokens.$ionic-border-radius-rounded-small};
