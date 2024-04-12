@@ -6,8 +6,8 @@ const removeNewline = (string) => {
   return string.replace(/(\r\n|\n|\r)/gm, "");
 }
 
-const { stdout: display } = await execa('cat', { inputFile: 'docker-display.txt' });
-const { stdout: displayVolume } = await execa('cat', { inputFile: 'docker-display-volume.txt' });
+const display = removeNewline(fs.readFileSync('docker-display.txt', { encoding: 'utf-8' }));
+const displayVolume = removeNewline(fs.readFileSync('docker-display-volume.txt', { encoding: 'utf-8' }));
 
 // Using --mount requires an absolute path which is what this gives us.
 const { stdout: pwd } = await execa('pwd');
