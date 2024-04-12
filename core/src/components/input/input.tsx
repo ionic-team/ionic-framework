@@ -776,7 +776,7 @@ export class Input implements ComponentInterface {
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
-          'input-disabled': disabled
+          'input-disabled': disabled,
         })}
         onFocus={() => console.log('focus')}
         onBlur={() => console.log('blur')}
