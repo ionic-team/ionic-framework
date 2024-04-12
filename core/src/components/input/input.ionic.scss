@@ -71,12 +71,12 @@
 }
 
 :host(.input-disabled.has-focus.ion-valid) {
-  // TODO: Update to use the correct color token when rgb tokens are available
+  // TODO(FW-6112): Update to use the correct color token when rgb tokens are available
   --border-color: rgba(var(--ionic-color-success-400-rgb, 82, 165, 24), 0.6);
 }
 
 :host(.input-disabled.ion-touched.ion-invalid) {
-  // TODO: Update to use the correct color token when rgb tokens are available
+  // TODO(FW-6112): Update to use the correct color token when rgb tokens are available
   --border-color: rgba(var(--ionic-color-error-400-rgb, 247, 44, 44), 0.6);
 }
 
