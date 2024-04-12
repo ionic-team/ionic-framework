@@ -34,12 +34,13 @@ Docker can be installed by [following the steps on the Docker website](https://d
 
 ### Docker and Windows Development
 
-Developers using Windows who wish to run tests using Docker must use the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/about). Developers who wish to run headed tests will also need to use WSLg.
+Developers using Windows who wish to run tests using Docker must use the [Windows Subsystem for Linux v2 (WSL 2)](https://learn.microsoft.com/en-us/windows/wsl/about). Developers who wish to run headed tests will also need to use WSLg.
 
 If you are running Docker Desktop on Windows 10 or 11 you likely already have both WSL and WSLg installed. The following steps show how to verify that WSL and WSLg are installed. If either of the below verification checks fail, then developers should [download the latest version of WSL](https://apps.microsoft.com/store/detail/9P9TQF7MRM4R?hl=en-us&gl=US).
 
 1. To verify WSL is installed, launch "WSL" from the start menu. If "WSL" does not show up in the start menu then you do not have WSL installed.
 2. With WSL open, verify that WSLg is installed: `ls -a -w 1 /mnt/wslg`. If the command fails with `No such file or directory` then your system is either missing WSLg or running an old version.
+3. Verify that your local version of Ubuntu (or other Linux subsystem) is using WSL 2 by running `wsl --list --verbose`. If your subsystem has a `1` under the "VERSION" heading, then that means it is using WSL 1, not WSL 2. To correct this, run `wsl --set-version Ubuntu 2`. "Ubuntu" can be substituted with the name of the installed Linux subsystem.
 
 If you are using VSCode, the WSL terminal can be accessed by selecting "Ubuntu (WSL)" from the terminal dropdown menu:
 
