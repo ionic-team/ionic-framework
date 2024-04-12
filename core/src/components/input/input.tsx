@@ -778,8 +778,6 @@ export class Input implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
         })}
-        onFocus={() => console.log('focus')}
-        onBlur={() => console.log('blur')}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
