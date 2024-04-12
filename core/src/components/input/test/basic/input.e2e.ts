@@ -131,3 +131,57 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     });
   });
 });
+
+configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: clear button in ionic theme, visual checks'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="Text"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      await expect(input).toHaveScreenshot(screenshot(`input-with-clear-button`));
+    });
+  });
+});
+
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: clear button in ionic theme, functionality checks'), () => {
+    test('should show clear button when any part of input is focused', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="Text"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      const clearButton = input.locator('.input-clear-icon');
+
+      await expect(input).not.toBeFocused();
+      await expect(clearButton).not.toBeVisible();
+
+      await input.click();
+      await expect(input).toBeFocused();
+      await expect(clearButton).toBeVisible();
+
+      // ensure blurring native input doesn't immediately hide clear button
+      await page.keyboard.press('Tab');
+      await expect(clearButton).toBeFocused();
+      await expect(clearButton).toBeVisible();
+    });
+  });
+});
