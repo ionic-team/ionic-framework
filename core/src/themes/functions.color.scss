@@ -7,7 +7,9 @@
 @function current-color($variation, $alpha: null) {
   @if $alpha == null {
     @return var(--ion-color-#{$variation});
-  } @else {
+  }
+
+ @else {
     @return rgba(var(--ion-color-#{$variation}-rgb), #{$alpha});
   }
 }
@@ -30,8 +32,10 @@
 
   @if ($alpha) {
     $value: color-to-rgb-list($value);
+
     @return rgba(var(#{$variable}-rgb, $value), $alpha);
   }
+
   @if ($rgb) {
     $value: color-to-rgb-list($value);
     $variable: #{$variable}-rgb;

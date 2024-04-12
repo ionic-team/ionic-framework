@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 // Progress bar
 // ------------------------------------------------------------------------
@@ -157,7 +157,12 @@
 // ------------------------------------------------------------------------
 
 :host(.ion-color) .buffer-circles {
-  background-image: radial-gradient(ellipse at center, #{current-color(base, 0.3)} 0%, #{current-color(base, 0.3)} 30%, transparent 30%);
+  background-image: radial-gradient(
+    ellipse at center,
+    #{current-color(base, 0.3)} 0%,
+    #{current-color(base, 0.3)} 30%,
+    transparent 30%
+  );
 }
 
 :host(.ion-color) {
@@ -166,7 +171,6 @@
     background: #{current-color(base)};
   }
 }
-
 
 // Progress Bar: Animation Keyframes
 // ------------------------------------------------------------------------
@@ -178,13 +182,13 @@
   }
 
   20% {
-    animation-timing-function: cubic-bezier(.5, 0, .701732, .495819);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
 
     transform: translateX(0);
   }
 
   59.15% {
-    animation-timing-function: cubic-bezier(.302435, .381352, .55, .956352);
+    animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
 
     transform: translateX(83.67142%);
   }
@@ -196,41 +200,41 @@
 
 @keyframes primary-indeterminate-scale {
   0% {
-    transform: scaleX(.08);
+    transform: scaleX(0.08);
   }
 
   36.65% {
-    animation-timing-function: cubic-bezier(.334731, .12482, .785844, 1);
+    animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1);
 
-    transform: scaleX(.08);
+    transform: scaleX(0.08);
   }
 
   69.15% {
-    animation-timing-function: cubic-bezier(.06, .11, .6, 1);
+    animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
 
-    transform: scaleX(.661479);
+    transform: scaleX(0.661479);
   }
 
   100% {
-    transform: scaleX(.08);
+    transform: scaleX(0.08);
   }
 }
 
 @keyframes secondary-indeterminate-translate {
   0% {
-    animation-timing-function: cubic-bezier(.15, 0, .515058, .409685);
+    animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
 
     transform: translateX(0);
   }
 
   25% {
-    animation-timing-function: cubic-bezier(.31033, .284058, .8, .733712);
+    animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
 
     transform: translateX(37.651913%);
   }
 
   48.35% {
-    animation-timing-function: cubic-bezier(.4, .627035, .6, .902026);
+    animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
 
     transform: translateX(84.386165%);
   }
@@ -242,25 +246,25 @@
 
 @keyframes secondary-indeterminate-scale {
   0% {
-    animation-timing-function: cubic-bezier(.205028, .057051, .57661, .453971);
+    animation-timing-function: cubic-bezier(0.205028, 0.057051, 0.57661, 0.453971);
 
-    transform: scaleX(.08);
+    transform: scaleX(0.08);
   }
 
   19.15% {
-    animation-timing-function: cubic-bezier(.152313, .196432, .648374, 1.004315);
+    animation-timing-function: cubic-bezier(0.152313, 0.196432, 0.648374, 1.004315);
 
-    transform: scaleX(.457104);
+    transform: scaleX(0.457104);
   }
 
   44.15% {
-    animation-timing-function: cubic-bezier(.257759, -.003163, .211762, 1.38179);
+    animation-timing-function: cubic-bezier(0.257759, -0.003163, 0.211762, 1.38179);
 
-    transform: scaleX(.72796);
+    transform: scaleX(0.72796);
   }
 
   100% {
-    transform: scaleX(.08);
+    transform: scaleX(0.08);
   }
 }
 
@@ -269,4 +273,3 @@
     transform: translateX(-10px);
   }
 }
-

@@ -43,11 +43,14 @@
   height: 100%;
 
   border: 0;
+
+  outline: none;
+
   background: transparent;
+
   cursor: pointer;
 
   appearance: none;
-  outline: none;
 
   &::-moz-focus-inner {
     border: 0;
@@ -58,40 +61,46 @@
   position: absolute;
 
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
 
   width: 100%;
   height: 100%;
 
   margin: 0;
+
   padding: 0;
 
   border: 0;
+
   outline: 0;
-  clip: rect(0 0 0 0);
 
   opacity: 0;
   overflow: hidden;
+  clip: rect(0 0 0 0);
 
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
 @mixin text-inherit() {
+  color: inherit;
+
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
   font-weight: inherit;
+
   letter-spacing: inherit;
+
+  text-align: inherit;
   text-decoration: inherit;
   text-indent: inherit;
   text-overflow: inherit;
   text-transform: inherit;
-  text-align: inherit;
+
   white-space: inherit;
-  color: inherit;
 }
 
 @mixin button-state() {
@@ -158,11 +167,14 @@
 // Makes the @content apply to the given breakpoint and wider.
 @mixin media-breakpoint-up($name, $breakpoints: $screen-breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
+
   @if $min {
     @media (min-width: $min) {
       @content;
     }
-  } @else {
+  }
+
+ @else {
     @content;
   }
 }
@@ -177,6 +189,7 @@
 //    md
 @function breakpoint-next($name, $breakpoints: $screen-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
   $n: index($breakpoint-names, $name);
+
   @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
 }
 
@@ -192,6 +205,7 @@
 //    767.98px
 @function breakpoint-max($name, $breakpoints: $screen-breakpoints) {
   $max: map-get($breakpoints, $name);
+
   @return if($max and $max > 0, $max - .02, null);
 }
 
@@ -199,11 +213,14 @@
 // Makes the @content apply to the given breakpoint and narrower.
 @mixin media-breakpoint-down($name, $breakpoints: $screen-breakpoints) {
   $max: breakpoint-max($name, $breakpoints);
+
   @if $max {
     @media (max-width: $max) {
       @content;
     }
-  } @else {
+  }
+
+ @else {
     @content;
   }
 }
@@ -247,7 +264,9 @@
     // Group the selectors back into a single selector to optimize the output.
     @if str-index($selector, ":host-context") {
       $hostContextSelectors: append($hostContextSelectors, $selector, comma);
-    } @else {
+    }
+
+ @else {
       // Group the selectors back into a single selector to optimize the output.
       $restSelectors: append($restSelectors, $selector, comma);
     }
@@ -304,7 +323,9 @@
     @include multi-dir() {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
-  } @else {
+  }
+
+ @else {
     $transform: "transform='translate(#{nth($viewBox, 3)}, 0) scale(-1, 1)'";
     $flipped-url: $svg;
     $flipped-url: str-replace($flipped-url, "<path", "<path #{$transform}");
@@ -315,6 +336,7 @@
     @include ltr () {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
+
     @include rtl() {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$flipped-url}");
     }
@@ -330,7 +352,9 @@
     #{$prop}-left: $start;
     #{$prop}-right: $end;
 
-  } @else {
+  }
+
+ @else {
     -webkit-#{$prop}-start: $start;
     #{$prop}-inline-start: $start;
     -webkit-#{$prop}-end: $end;
@@ -395,10 +419,12 @@
 @mixin position-horizontal($start: null, $end: null) {
   @if $start == $end {
     @include multi-dir() {
-      left: $start;
       right: $end;
+      left: $start;
     }
-  } @else {
+  }
+
+ @else {
     @at-root {
       & {
         inset-inline-start: $start;
@@ -439,7 +465,9 @@
 @mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
   @if $top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start {
     border-radius: $top-start;
-  } @else {
+  }
+
+ @else {
     border-start-start-radius: $top-start;
     border-start-end-radius: $top-end;
     border-end-end-radius: $bottom-end;
@@ -454,13 +482,16 @@
 
   @if $dir == ltr {
     $other-dir: rtl;
-  } @else {
+  }
+
+ @else {
     $other-dir: ltr;
   }
 
   @include ltr() {
     direction: $dir;
   }
+
   @include rtl() {
     direction: $other-dir;
   }
@@ -474,17 +505,23 @@
     @include ltr() {
       float: left $decorator;
     }
+
     @include rtl() {
       float: right $decorator;
     }
-  } @else if $side == end {
+  }
+
+ @else if $side == end {
     @include ltr() {
       float: right $decorator;
     }
+
     @include rtl() {
       float: left $decorator;
     }
-  } @else {
+  }
+
+ @else {
     @include multi-dir() {
       float: $side $decorator;
     }
@@ -495,10 +532,13 @@
   @if $horizontal == start or $horizontal == end {
     $horizontal-ltr: null;
     $horizontal-rtl: null;
+
     @if $horizontal == start {
       $horizontal-ltr: left;
       $horizontal-rtl: right;
-    } @else {
+    }
+
+ @else {
       $horizontal-ltr: right;
       $horizontal-rtl: left;
     }
@@ -506,10 +546,13 @@
     @include ltr() {
       background-position: $horizontal-ltr $horizontal-amount $vertical $vertical-amount;
     }
+
     @include rtl() {
       background-position: $horizontal-rtl $horizontal-amount $vertical $vertical-amount;
     }
-  } @else {
+  }
+
+ @else {
     @include multi-dir() {
       background-position: $horizontal $horizontal-amount $vertical $vertical-amount;
     }
@@ -521,24 +564,33 @@
     @include ltr() {
       transform-origin: left $y-axis;
     }
+
     @include rtl() {
       transform-origin: right $y-axis;
     }
-  } @else if $x-axis == end {
+  }
+
+ @else if $x-axis == end {
     @include ltr() {
       transform-origin: right $y-axis;
     }
+
     @include rtl() {
       transform-origin: left $y-axis;
     }
-  } @else if $x-axis == left or $x-axis == right {
+  }
+
+ @else if $x-axis == left or $x-axis == right {
     @include multi-dir() {
       transform-origin: $x-axis $y-axis;
     }
-  } @else {
+  }
+
+ @else {
     @include ltr() {
       transform-origin: $x-axis $y-axis;
     }
+
     @include rtl() {
       transform-origin: calc(100% - #{$x-axis}) $y-axis;
     }
@@ -556,10 +608,10 @@
 
   @each $transform in $transforms {
     @if (str-index($transform, translate3d)) {
-      $transform: str-replace($transform, 'translate3d(');
-      $transform: str-replace($transform, ')');
+      $transform: str-replace($transform, "translate3d(");
+      $transform: str-replace($transform, ")");
 
-      $coordinates: str-split($transform, ',');
+      $coordinates: str-split($transform, ",");
 
       $x: nth($coordinates, 1);
       $y: nth($coordinates, 2);
@@ -567,20 +619,26 @@
 
       $ltr-translate: translate3d($x, $y, $z);
       $rtl-translate: translate3d(calc(-1 * #{$x}), $y, $z);
-    } @else {
+    }
+
+ @else {
       @if $extra == null {
         $extra: $transform;
-      } @else {
+      }
+
+ @else {
         $extra: $extra $transform;
       }
     }
   }
 
-  @if $x == '0' or $x == null {
+  @if $x == "0" or $x == null {
     @include multi-dir() {
       transform: $ltr-translate $extra;
     }
-  } @else {
+  }
+
+ @else {
     @include ltr() {
       transform: $ltr-translate $extra;
     }

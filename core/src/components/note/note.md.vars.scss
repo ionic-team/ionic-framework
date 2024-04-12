@@ -1,10 +1,10 @@
-@import "../../themes/ionic.globals.md";
+@import "../../themes/native/native.globals.md";
 
 // Material Design Note
 // --------------------------------------------------
 
 /// @prop - Text color of the note
-$note-md-color:          $text-color-step-400 !default;
+$note-md-color: $text-color-step-400 !default;
 
 /// @prop - Font size of the note
-$note-md-font-size:      dynamic-font(14px) !default;
+$note-md-font-size: dynamic-font(14px) !default;

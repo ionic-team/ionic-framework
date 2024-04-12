@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 // Spinners
 // --------------------------------------------------
@@ -43,7 +43,6 @@ svg {
   transform: translateZ(0);
 }
 
-
 // Spinner: lines / lines-small / lines-sharp / lines-sharp-small
 // --------------------------------------------------
 
@@ -72,7 +71,6 @@ svg {
   animation: spinner-fade-out 1s linear infinite;
 }
 
-
 // Spinner: bubbles
 // --------------------------------------------------
 
@@ -81,7 +79,6 @@ svg {
   fill: currentColor;
 }
 
-
 // Spinner: circles
 // --------------------------------------------------
 
@@ -89,7 +86,6 @@ svg {
   animation: spinner-fade-out 1s linear infinite;
   fill: currentColor;
 }
-
 
 // Spinner: crescent
 // --------------------------------------------------
@@ -106,7 +102,6 @@ svg {
   animation: spinner-rotate 1s linear infinite;
 }
 
-
 // Spinner: dots
 // --------------------------------------------------
 
@@ -118,7 +113,6 @@ svg {
 :host(.spinner-dots) svg {
   animation: spinner-dots 1s linear infinite;
 }
-
 
 // Spinner: circular
 // --------------------------------------------------
@@ -136,7 +130,6 @@ svg {
   fill: none;
 }
 
-
 // Spinner: paused
 // --------------------------------------------------
 
@@ -145,7 +138,6 @@ svg {
 :host(.spinner-paused) circle {
   animation-play-state: paused;
 }
-
 
 // Animation Keyframes
 // --------------------------------------------------
@@ -158,7 +150,6 @@ svg {
   100% {
     opacity: 0;
   }
-
 }
 
 @keyframes spinner-scale-out {
@@ -169,7 +160,6 @@ svg {
   100% {
     transform: scale(0, 0);
   }
-
 }
 
 @keyframes spinner-rotate {
@@ -180,26 +170,25 @@ svg {
   100% {
     transform: rotate(360deg);
   }
-
 }
 
 @keyframes spinner-dots {
   0% {
     transform: scale(1, 1);
 
-    opacity: .9;
+    opacity: 0.9;
   }
 
   50% {
-    transform: scale(.4, .4);
+    transform: scale(0.4, 0.4);
 
-    opacity: .3;
+    opacity: 0.3;
   }
 
   100% {
     transform: scale(1, 1);
 
-    opacity: .9;
+    opacity: 0.9;
   }
 }
 

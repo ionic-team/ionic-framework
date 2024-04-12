@@ -78,6 +78,7 @@
 @function url-encode($val) {
   $spaces: str-replace($val, " ", "%20");
   $encoded: str-replace($spaces, "#", "%23");
+
   @return $encoded;
 }
 
@@ -134,7 +135,9 @@
           @if $useHostContext {
             // .fixed -> :host-context([dir=rtl]).fixed
             $scoped-element: str-replace($scoped-element, $scoped-element, ":host-context(#{$addHostSelector})#{$scoped-element}");
-          } @else {
+          }
+
+ @else {
             // .fixed -> :host(.fixed:dir(rtl))
             $scoped-element: str-replace($scoped-element, $scoped-element, ":host(#{$scoped-element}#{$addHostSelector})");
           }
@@ -144,7 +147,9 @@
           // @include add-root(":host(.fixed)", ":dir(rtl)", false)
           // --> :host(.fixed:dir(rtl))
           $new-element: append($new-element, $scoped-element, space);
-        } @else {
+        }
+
+ @else {
           // Add back any selectors that followed the host
           // after transforming the first selector:
           // @include add-root-selector(":host(.fixed) ::slotted(ion-icon)", "[dir=rtl]")
@@ -164,19 +169,23 @@
     // --> :host-context([dir=rtl])
     // @include add-root(":host", ":dir(rtl)", false)
     // --> :host(:dir(rtl))
-    } @else if str-contains($selector, ":host") {
+    }
+
+ @else if str-contains($selector, ":host") {
       $new-element: ();
       $elements: str-split($selector, " ");
 
       @each $element in $elements {
         @if str-contains($element, ":host") {
-          $updated-element: '';
+          $updated-element: "";
 
           // Replace the :host with the addHostSelector:
           @if $useHostContext {
             // :host -> :host-context([dir=rtl])
             $updated-element: str-replace($element, ":host", ":host-context(#{$addHostSelector})");
-          } @else {
+          }
+
+ @else {
             // :host -> :host(:dir(rtl))
             $updated-element: str-replace($element, ":host", ":host(#{$addHostSelector})");
           }
@@ -187,7 +196,9 @@
           // @include add-root(":host", ":dir(rtl)", false)
           // --> :host(:dir(rtl))
           $new-element: append($new-element, $updated-element, space);
-        } @else {
+        }
+
+ @else {
           // Add back any selectors that followed the host
           // after transforming the first selector:
           // @include add-root-selector(":host ::slotted(ion-icon)", "[dir=rtl]")
@@ -206,11 +217,15 @@
     // --> [dir=rtl] ion-component
     // @include add-root("ion-component", ":dir(rtl)", false)
     // --> ion-component:dir(rtl)
-    } @else {
+    }
+
+ @else {
       @if ($useHostContext) {
         $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
         $list: append($list, "#{$addHostSelector} #{$selector}", comma);
-      } @else {
+      }
+
+ @else {
         $list: append($list, "#{$selector}#{$addHostSelector}", comma);
       }
     }

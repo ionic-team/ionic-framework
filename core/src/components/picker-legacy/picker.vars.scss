@@ -1,10 +1,10 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 // Picker
 // --------------------------------------------------
 
 /// @prop - Width of the picker
-$picker-width:                             100% !default;
+$picker-width: 100% !default;
 
 /// @prop - Max width of the picker
-$picker-max-width:                         500px !default;
+$picker-max-width: 500px !default;
