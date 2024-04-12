@@ -242,8 +242,14 @@ export class Input implements ComponentInterface {
 
   /**
    * The shape of the input. If "round" it will have an increased border radius.
+   *
    */
-  @Prop() shape?: 'round';
+  /**
+   * Set to `"soft"` for an input with soft rounded corners, `"round"` for an input
+   * with fully rounded corners, or `"rectangular" for an input without rounded corners.
+   * Defaults to `"soft"`.
+   */
+  @Prop() shape?: 'soft' | 'round' = 'soft';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.

@@ -6,11 +6,14 @@
 :host(.input-fill-solid) {
   --background: #{$background-color-step-50};
   --border-color: #{$background-color-step-500};
-  --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
 
   min-height: 56px;
+}
+
+:host(.input-fill-solid.input-shape-soft) {
+  --border-radius: 4px;
 }
 
 /**

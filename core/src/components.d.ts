@@ -1463,9 +1463,9 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * The shape of the input. If "round" it will have an increased border radius.
+          * Set to `"soft"` for an input with soft rounded corners, `"round"` for an input with fully rounded corners, or `"rectangular" for an input without rounded corners. Defaults to `"soft"`.
          */
-        "shape"?: 'round';
+        "shape"?: 'soft' | 'round';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -6723,9 +6723,9 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * The shape of the input. If "round" it will have an increased border radius.
+          * Set to `"soft"` for an input with soft rounded corners, `"round"` for an input with fully rounded corners, or `"rectangular" for an input without rounded corners. Defaults to `"soft"`.
          */
-        "shape"?: 'round';
+        "shape"?: 'soft' | 'round';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
