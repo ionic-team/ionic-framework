@@ -729,7 +729,7 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, el, hasFocus, clearInputIcon } = this;
+    const { disabled, fill, readonly, shape, inputId, el, hasFocus, clearInput, clearInputIcon } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const size = this.getSize();
@@ -763,6 +763,16 @@ export class Input implements ComponentInterface {
     const labelShouldFloat =
       labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
 
+    /**
+     * For all themes, the clear action should be allowed to show if
+     * the input is not readonly or disabled. For the ionic theme,
+     * the clear action should additionally only render if the input
+     * or any other actions within the component (such as the clear
+     * action itself) are focused.
+     */
+    const isFocusWithinContainer = document.activeElement?.closest('ion-input') === el;
+    const hasClearAction = clearInput && !readonly && !disabled && (theme !== 'ionic' || isFocusWithinContainer);
+
     return (
       <Host
         class={createColorClasses(this.color, {
@@ -776,8 +786,10 @@ export class Input implements ComponentInterface {
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
-          'input-disabled': disabled,
+          'input-disabled': disabled
         })}
+        onFocus={() => console.log('focus')}
+        onBlur={() => console.log('blur')}
       >
         {/**
          * htmlFor is needed so that clicking the label always focuses
@@ -835,7 +847,7 @@ export class Input implements ComponentInterface {
               onCompositionend={this.onCompositionEnd}
               {...this.inheritedAttributes}
             />
-            {this.clearInput && !readonly && !disabled && (
+            {hasClearAction && (
               <button
                 aria-label="reset"
                 type="button"
