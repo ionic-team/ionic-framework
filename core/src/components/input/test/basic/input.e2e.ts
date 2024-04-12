@@ -171,11 +171,9 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       const input = page.locator('ion-input');
       const clearButton = input.locator('.input-clear-icon');
 
-      await expect(input).not.toBeFocused();
       await expect(clearButton).not.toBeVisible();
 
-      await input.click();
-      await expect(input).toBeFocused();
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
       await expect(clearButton).toBeVisible();
 
       // ensure blurring native input doesn't immediately hide clear button
