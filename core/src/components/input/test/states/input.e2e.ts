@@ -28,3 +28,119 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: states'), () => {
+    test.describe(title('disabled'), () => {
+      test.describe(title('no fill'), () => {
+        test('should render disabled input correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-input
+                label="Email" 
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                disabled="true"
+              ></ion-input>
+
+              <ion-input
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                class="ion-valid has-focus"
+                disabled="true"
+              ></ion-input>
+  
+              <ion-input
+                label="Email"
+                value="hi@ionic.io"
+                error-text="Please enter a valid email"
+                counter="true"
+                maxlength="20"
+                class="ion-touched ion-invalid"
+                disabled="true"
+              ></ion-input>
+
+              <ion-input
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                disabled="true"
+                color="warning"
+              ></ion-input>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`input-disabled-no-fill`));
+        });
+      });
+
+      test.describe(title('outline'), () => {
+        test('should render disabled input correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-input
+                fill="outline"
+                label="Email" 
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                disabled="true"
+              ></ion-input>
+
+              <ion-input
+                fill="outline"
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                class="ion-valid has-focus"
+                disabled="true"
+              ></ion-input>
+  
+              <ion-input
+                fill="outline"
+                label="Email"
+                value="hi@ionic.io"
+                error-text="Please enter a valid email"
+                counter="true"
+                maxlength="20"
+                class="ion-touched ion-invalid"
+                disabled="true"
+              ></ion-input>
+
+              <ion-input
+                fill="outline"
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                disabled="true"
+                color="warning"
+              ></ion-input>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`input-disabled-outline`));
+        });
+      });
+    });
+  });
+});
