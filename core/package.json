@@ -59,7 +59,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-custom-rules": "file:custom-rules",
-    "execa": "^5.0.0",
+    "execa": "^8.0.1",
     "fs-extra": "^9.0.1",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
@@ -96,7 +96,7 @@
     "test.treeshake": "node scripts/treeshaking.js dist/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake",
     "docker.build": "docker build -t ionic-playwright .",
-    "test.e2e.docker": "npm run docker.build && bash ./scripts/docker.sh",
+    "test.e2e.docker": "npm run docker.build && node ./scripts/docker.mjs",
     "test.e2e.docker.update-snapshots": "npm run test.e2e.docker -- --update-snapshots",
     "test.e2e.docker.ci": "npm run docker.build && docker run -e CI='true' --rm --ipc=host --mount=type=bind,source=./,target=/ionic ionic-playwright npm run test.e2e --",
     "test.report": "npx playwright show-report"
