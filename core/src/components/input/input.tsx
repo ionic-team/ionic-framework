@@ -763,16 +763,6 @@ export class Input implements ComponentInterface {
     const labelShouldFloat =
       labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
 
-    /**
-     * For all themes, the clear action should be allowed to show if
-     * the input is not readonly or disabled. For the ionic theme,
-     * the clear action should additionally only render if the input
-     * or any other actions within the component (such as the clear
-     * action itself) are focused.
-     */
-    const isFocusWithinContainer = document.activeElement?.closest('ion-input') === el;
-    const hasClearAction = clearInput && !readonly && !disabled && (theme !== 'ionic' || isFocusWithinContainer);
-
     return (
       <Host
         class={createColorClasses(this.color, {
@@ -847,7 +837,7 @@ export class Input implements ComponentInterface {
               onCompositionend={this.onCompositionEnd}
               {...this.inheritedAttributes}
             />
-            {hasClearAction && (
+            {clearInput && !readonly && !disabled && (
               <button
                 aria-label="reset"
                 type="button"
