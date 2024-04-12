@@ -3,15 +3,16 @@
 # See documentation at https://stylelint.io/
 
 ignoreFiles:
+  - src/foundations/*.scss
   - src/css/core.scss
   - src/css/flex-utils.scss
   - src/css/normalize.scss
   - src/css/text-alignment.scss
   - src/css/display.scss
-  - src/themes/ionic.mixins.scss
-  - src/themes/ionic.functions.color.scss
-  - src/themes/ionic.functions.string.scss
-  - src/themes/ionic.theme.default.scss
+  - src/themes/mixins.scss
+  - src/themes/functions.color.scss
+  - src/themes/functions.string.scss
+  - src/themes/native.theme.default.scss
   - src/css/themes/*.scss
 
 indentation: 2
@@ -258,10 +259,13 @@ rules:
     - right
     - left
     - float
+    - padding
     - padding-left
     - padding-right
+    - margin
     - margin-left
     - margin-right
+    - border-radius
     - border-top-left-radius
     - border-top-right-radius
     - border-bottom-right-radius
