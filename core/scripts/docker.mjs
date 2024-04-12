@@ -1,4 +1,3 @@
-import { exec, spawn } from 'child_process';
 import { execa } from 'execa';
 import * as fs from 'fs';
 
