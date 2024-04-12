@@ -5,6 +5,11 @@
 // --------------------------------------------------
 
 :host {
+  // TODO(FW-6178): Remove this once the Stencil bug is resolved.
+  /**
+   * @prop --background: Background of the card
+   * @prop --color: Color of the card
+   */
   --background: #{tokens.$ionic-color-neutral-0};
   --border-radius: #{tokens.$ionic-border-radius-rounded-small};
 
