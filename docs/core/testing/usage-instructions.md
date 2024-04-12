@@ -40,7 +40,8 @@ If you are running Docker Desktop on Windows 10 or 11 you likely already have bo
 
 1. To verify WSL is installed, launch "WSL" from the start menu. If "WSL" does not show up in the start menu then you do not have WSL installed.
 2. With WSL open, verify that WSLg is installed: `ls -a -w 1 /mnt/wslg`. If the command fails with `No such file or directory` then your system is either missing WSLg or running an old version.
-3. Verify that your local version of Ubuntu (or other Linux subsystem) is using WSL 2 by running `wsl --list --verbose`. If your subsystem has a `1` under the "VERSION" heading, then that means it is using WSL 1, not WSL 2. To correct this, run `wsl --set-version Ubuntu 2`. "Ubuntu" can be substituted with the name of the installed Linux subsystem.
+3. Verify that you have a Linux subsystem installed (such as Ubuntu) by running `wsl --list --verbose`. If you do not see a Linux subsystem in the list, run `wsl --install` to install it. Once installed, it's recommended to set this subsystem as the default Linux subsystem using `wsl --set-default [subsystem]`. Example: `wsl --set-default Ubuntu`.
+4. Verify that your local version of Ubuntu (or other Linux subsystem) is using WSL 2 by running `wsl --list --verbose`. If your subsystem has a `1` under the "VERSION" heading, then that means it is using WSL 1, not WSL 2. To correct this, run `wsl --set-version [subsystem] 2`. Example: `wsl --set-version Ubuntu 2`.
 
 If you are using VSCode, the WSL terminal can be accessed by selecting "Ubuntu (WSL)" from the terminal dropdown menu:
 
