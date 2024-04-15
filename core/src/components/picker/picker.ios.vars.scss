@@ -31,7 +31,7 @@ $picker-ios-button-height:                        $picker-ios-toolbar-height !de
 $picker-ios-button-text-color:                    ion-color(primary, base) !default;
 
 /// @prop - Font size of the picker button
-$picker-ios-button-font-size:                     16px !default;
+$picker-ios-button-font-size:                     dynamic-font-min(1, 16px) !default;
 
 /// @prop - Padding top of the picker button
 $picker-ios-button-padding-top:                   0 !default;
@@ -79,7 +79,7 @@ $picker-ios-option-padding-start:                 $picker-ios-option-padding-end
 $picker-ios-option-text-color:                    $item-ios-color !default;
 
 /// @prop - Font size of the picker option
-$picker-ios-option-font-size:                     20px !default;
+$picker-ios-option-font-size:                     dynamic-font-min(1, 20px) !default;
 
 /// @prop - Height of the picker option
 $picker-ios-option-height:                        42px !default;
