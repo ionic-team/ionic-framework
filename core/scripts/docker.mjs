@@ -1,13 +1,23 @@
 import { execa } from 'execa';
 import * as fs from 'fs';
 import { resolve } from 'path';
+import chalk from 'chalk';
 
 const removeNewline = (string) => {
   return string.replace(/(\r\n|\n|\r)/gm, "");
 }
 
-const display = removeNewline(fs.readFileSync('docker-display.txt', { encoding: 'utf-8' }));
-const displayVolume = removeNewline(fs.readFileSync('docker-display-volume.txt', { encoding: 'utf-8' }));
+const readConfigFile = (file) => {
+  if (fs.existsSync(file)) {
+    return fs.readFileSync(file, { encoding: 'utf-8' });
+  }
+
+  return '';
+}
+
+// These files are optional, so we don't want to error if they don't exist
+const display = removeNewline(readConfigFile('docker-display.txt'));
+const displayVolume = removeNewline(readConfigFile('docker-display-volume.txt'));
 
 // Using --mount requires an absolute path which is what this gives us.
 const pwd = resolve('./');
@@ -24,6 +34,17 @@ const args = ['run', '--rm', '-it', '--init', `-e DISPLAY=${display}`, `-v ${dis
 // Set the CI env variable so Playwright uses the CI config
 if (process.env.CI) {
   args.splice(1, 0, '-e CI=true');
+}
+
+/**
+ * While these config files are optional to run the tests, they are required to run
+ * the tests in headed mode. Add a warning if dev tries to run headed tests without
+ * the correct config files.
+ */
+const requestHeaded = process.argv.find(arg => arg.includes('headed'));
+const hasHeadedConfigFiles = display && displayVolume;
+if (requestHeaded && !hasHeadedConfigFiles) {
+  console.warn(chalk.yellow.bold('\n⚠️ You are running tests in headed mode, but one or more of your headed config files was not found.\nPlease ensure that both docker-display.txt and docker-display-volume.txt have been created in the correct location.\n'));
 }
 
 execa('docker', args, { shell: true, stdio: 'inherit' });
