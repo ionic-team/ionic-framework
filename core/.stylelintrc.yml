@@ -4,6 +4,7 @@
 
 ignoreFiles:
   - src/foundations/*.scss
+  - src/css/ionic/*.scss
   - src/css/core.scss
   - src/css/flex-utils.scss
   - src/css/normalize.scss
