@@ -19,7 +19,7 @@
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
-      h3 {
+      h2 {
         font-size: 12px;
         font-weight: normal;
 
@@ -46,19 +46,18 @@
 
       <ion-content id="content" class="ion-padding">
         <h1>Readonly</h1>
-        <h2>No Fill</h2>
         <div class="grid">
           <div class="grid-item">
-            <h3>Default</h3>
+            <h2>No Fill, Default</h2>
 
             <ion-input label="Email" value="hi@ionic.io" readonly="true"></ion-input>
           </div>
         </div>
+
         <h1>Disabled</h1>
-        <h2>No Fill</h2>
         <div class="grid">
           <div class="grid-item">
-            <h3>Default</h3>
+            <h2>No Fill, Default</h2>
 
             <ion-input
               label="Email"
@@ -71,7 +70,7 @@
           </div>
 
           <div class="grid-item">
-            <h3>Valid</h3>
+            <h2>No Fill, Valid</h2>
 
             <ion-input
               label="Email"
@@ -85,7 +84,7 @@
           </div>
 
           <div class="grid-item">
-            <h3>Invalid</h3>
+            <h2>No Fill, Invalid</h2>
 
             <ion-input
               label="Email"
@@ -99,7 +98,7 @@
           </div>
 
           <div class="grid-item">
-            <h3>Color (ionic theme only)</h3>
+            <h2>No Fill, Color (ionic theme only)</h2>
 
             <ion-input
               label="Email"
@@ -113,10 +112,9 @@
           </div>
         </div>
 
-        <h2>Outline</h2>
         <div class="grid">
           <div class="grid-item">
-            <h3>Default</h3>
+            <h2>Outline, Default</h2>
 
             <ion-input
               fill="outline"
@@ -130,7 +128,7 @@
           </div>
 
           <div class="grid-item">
-            <h3>Valid</h3>
+            <h2>Outline, Valid</h2>
 
             <ion-input
               fill="outline"
@@ -145,7 +143,7 @@
           </div>
 
           <div class="grid-item">
-            <h3>Invalid</h3>
+            <h2>Outline, Invalid</h2>
 
             <ion-input
               fill="outline"
@@ -160,7 +158,7 @@
           </div>
 
           <div class="grid-item">
-            <h3>Color (ionic theme only)</h3>
+            <h2>Outline, Color (ionic theme only)</h2>
 
             <ion-input
               fill="outline"
@@ -173,7 +171,10 @@
               color="warning"
             ></ion-input>
           </div>
+        </div>
 
+        <h1>Focus</h1>
+        <div class="grid">
           <div class="grid-item">
             <h2>Focused, No Fill</h2>
 
