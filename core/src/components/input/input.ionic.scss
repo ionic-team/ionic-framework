@@ -82,7 +82,7 @@
   --border-color: rgba(var(--ionic-color-error-400-rgb, 247, 44, 44), 0.6);
 }
 
-:host(.input-disabled.ion-color){
+:host(.input-disabled.ion-color) {
   --border-color: #{current-color(base, 0.6)};
 }
 
