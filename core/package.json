@@ -98,8 +98,7 @@
     "docker.build": "docker build -t ionic-playwright .",
     "test.e2e.docker": "npm run docker.build && node ./scripts/docker.mjs",
     "test.e2e.docker.update-snapshots": "npm run test.e2e.docker -- --update-snapshots",
-    "test.e2e.docker.ci": "npm run docker.build && docker run -e CI='true' --rm --ipc=host --mount=type=bind,source=./,target=/ionic ionic-playwright npm run test.e2e --",
-    "test.report": "npx playwright show-report"
+    "test.e2e.docker.ci": "npm run docker.build && CI=true node ./scripts/docker.mjs"
   },
   "author": "Ionic Team",
   "license": "MIT",

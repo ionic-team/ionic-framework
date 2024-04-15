@@ -21,4 +21,9 @@ const pwd = resolve('./');
  */
 const args = ['run', '--rm', '-it', '--init', `-e DISPLAY=${display}`, `-v ${displayVolume}`, '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm run test.e2e --', ...process.argv.slice(2)];
 
+// Set the CI env variable so Playwright uses the CI config
+if (process.env.CI) {
+  args.splice(1, 0, '-e CI=true');
+}
+
 execa('docker', args, { shell: true, stdio: 'inherit' });
