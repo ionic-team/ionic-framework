@@ -62,6 +62,8 @@
   // color for the text within the input
   --color: #{tokens.$ionic-color-neutral-400};
   --background: #{tokens.$ionic-color-neutral-10};
+  
+  pointer-events: none;
 }
 
 :host(.input-disabled:not(.ion-valid)) .input-bottom .helper-text,
