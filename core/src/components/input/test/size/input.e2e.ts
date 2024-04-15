@@ -22,13 +22,13 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-size-large`));
       });
-      test('should render correctly with floating label', async ({ page }) => {
+      test('should render correctly with stacked label', async ({ page }) => {
         await page.setContent(
           `
           <ion-input
             size="large"
             label="Email"
-            label-placement="floating"
+            label-placement="stacked"
             value="hi@ionic.io"
           ></ion-input>
         `,
@@ -36,7 +36,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         );
 
         const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-size-large-label-floating`));
+        await expect(input).toHaveScreenshot(screenshot(`input-size-large-label-stacked`));
       });
       test('should not have visual regressions with fill outline', async ({ page }) => {
         await page.setContent(
@@ -45,7 +45,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             fill="outline"
             size="large"
             label="Email"
-            label-placement="floating"
+            label-placement="stacked"
             value="hi@ionic.io"
           ></ion-input>
         `,
@@ -63,7 +63,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             shape="round"
             size="large"
             label="Email"
-            label-placement="floating"
+            label-placement="stacked"
             value="hi@ionic.io"
           ></ion-input>
         `,
