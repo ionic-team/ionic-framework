@@ -1,5 +1,6 @@
 import { execa } from 'execa';
 import * as fs from 'fs';
+import { resolve } from 'path';
 
 const removeNewline = (string) => {
   return string.replace(/(\r\n|\n|\r)/gm, "");
@@ -9,7 +10,7 @@ const display = removeNewline(fs.readFileSync('docker-display.txt', { encoding: 
 const displayVolume = removeNewline(fs.readFileSync('docker-display-volume.txt', { encoding: 'utf-8' }));
 
 // Using --mount requires an absolute path which is what this gives us.
-const { stdout: pwd } = await execa('pwd');
+const pwd = resolve('./');
 
 /**
  * -it will let the user gracefully kill the process using Ctrl+C (or equivalent)
