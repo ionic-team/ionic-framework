@@ -7,11 +7,11 @@
 
   align-items: center;
 
-  gap: 4px;
+  gap: tokens.$ionic-space-xxxs;
 
   transition: color 0.2s ease-in-out;
 
-  font-weight: 400;
+  font-weight: tokens.$ionic-font-weight-regular;
 
   text-decoration-color: inherit;
 
