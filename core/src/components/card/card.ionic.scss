@@ -7,8 +7,8 @@
   --background: #{globals.$ionic-color-neutral-0};
   --border-radius: #{globals.$ionic-border-radius-rounded-small};
 
-  @include mixins.padding(globals.$ionic-space-base);
-  @include mixins.border-radius(var(--border-radius));
+  @include globals.padding(globals.$ionic-space-base);
+  @include globals.border-radius(var(--border-radius));
 
   display: block;
 

@@ -1,12 +1,12 @@
 // Design System scss vars based on Design Tokens
 @forward "../../foundations/ionic.vars.scss";
 
-// Global Utility Functions
-@import "../functions.sizes";
-@import "../functions.string";
-
-// Global Font Functions
-@import "../functions.font";
-
 // Global Mixins
 @forward "../mixins";
+
+// Global Utility Functions
+@forward "../functions.sizes";
+@forward "../functions.string";
+
+// Global Font Functions
+@forward "../functions.font";
