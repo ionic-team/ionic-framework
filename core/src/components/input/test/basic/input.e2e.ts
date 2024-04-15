@@ -153,6 +153,30 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(input).toHaveScreenshot(screenshot(`input-with-clear-button`));
     });
+
+    test('should not have visual regressions when clear button is focused', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="Text"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await page.waitForChanges();
+
+      await page.keyboard.press('Tab');
+      await page.waitForChanges();
+
+      await expect(input).toHaveScreenshot(screenshot(`input-clear-button-focused`));
+    });
   });
 });
 
