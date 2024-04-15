@@ -3,15 +3,19 @@
 // Ionic Font Family
 // --------------------------------------------------
 
+:root {
+  --ionic-global-background-color: #{globals.$ionic-color-neutral-10};
+  --ionic-global-text-color: #{globals.$ionic-color-neutral-900};
+}
+
 html {
-  --ion-default-font: "Roboto", "Helvetica Neue", sans-serif;
-  --ion-dynamic-font: -apple-system-body;
-  --ion-font-family: var(--ion-default-font);
+  --ionic-dynamic-font: -apple-system-body;
+  font-family: #{globals.$ionic-font-family};
 }
 
 body {
-  background: var(--ion-background-color);
-  color: var(--ion-text-color);
+  background: var(--ionic-global-background-color);
+  color: var(--ionic-global-text-color);
 }
 
 body.backdrop-no-scroll {
@@ -30,7 +34,7 @@ body.backdrop-no-scroll {
 html.ios ion-modal.modal-card ion-header ion-toolbar:first-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
 html.ios ion-modal ion-footer ion-toolbar:first-of-type {
-  padding-top: 6px;
+  padding-top: globals.$ionic-space-xxs;
 }
 
 /**
@@ -40,7 +44,7 @@ html.ios ion-modal ion-footer ion-toolbar:first-of-type {
 */
 html.ios ion-modal.modal-card ion-header ion-toolbar:last-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
-  padding-bottom: 6px;
+  padding-bottom: globals.$ionic-space-xxs;
 }
 
 /**
@@ -49,8 +53,8 @@ html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
 * safe area values when in landscape.
 */
 html.ios ion-modal ion-toolbar {
-  padding-right: calc(var(--ion-safe-area-right) + 8px);
-  padding-left: calc(var(--ion-safe-area-left) + 8px);
+  padding-right: calc(var(--ion-safe-area-right) + globals.$ionic-space-xs);
+  padding-left: calc(var(--ion-safe-area-left) + globals.$ionic-space-xs);
 }
 
 /**
@@ -176,7 +180,7 @@ ion-toast-controller,
 
 html.plt-ios.plt-hybrid,
 html.plt-ios.plt-pwa {
-  --ion-statusbar-padding: 20px;
+  --ion-statusbar-padding: globals.$ionic-space-m;
 }
 
 @supports (padding-top: 20px) {
@@ -255,15 +259,15 @@ ion-card-header.ion-color .ion-inherit-color {
 
 // Accordion Styles
 ion-accordion-group.accordion-group-expand-inset > ion-accordion:first-of-type {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: globals.$ionic-border-radius-rounded-medium;
+  border-top-right-radius: globals.$ionic-border-radius-rounded-medium;
 }
 ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: globals.$ionic-border-radius-rounded-medium;
+  border-bottom-right-radius: globals.$ionic-border-radius-rounded-medium;
 }
 ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
-  --border-width: 0px;
+  --border-width: 0;
 }
 
 ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
@@ -288,8 +292,8 @@ ion-accordion.accordion-expanded > [slot="header"] .ion-accordion-toggle-icon {
 }
 
 ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-previous ion-item[slot="header"] {
-  --border-width: 0px;
-  --inner-border-width: 0px;
+  --border-width: 0;
+  --inner-border-width: 0;
 }
 
 ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-expanding:first-of-type,
