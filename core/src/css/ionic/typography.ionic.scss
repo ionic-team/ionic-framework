@@ -1,11 +1,14 @@
 @use "../../foundations/ionic.vars.scss" as tokens;
 
 html {
-  font-family: #{tokens.$ionic-font-family};
-  font-size: #{tokens.$ionic-font-size-m};
-  font-weight: #{tokens.$ionic-font-weight-regular};
+  font-family: tokens.$ionic-font-family;
+}
 
-  line-height: #{tokens.$ionic-font-line-height-m};
+body {
+  font-weight: tokens.$ionic-font-weight-regular;
+  font-size: tokens.$ionic-font-size-m;
+
+  line-height: tokens.$ionic-font-line-height-m;
 }
 
 /* Composite utility classes for html headings and font classes, that aggregate size and weight, based on tokens*/
@@ -21,65 +24,65 @@ h5,
 .ionic-heading5,
 h6,
 .ionic-heading6 {
-  color: #{tokens.$ionic-color-neutral-900};
+  color: tokens.$ionic-color-neutral-900;
 
-  font-weight: #{tokens.$ionic-font-weight-semi-bold};
+  font-weight: tokens.$ionic-font-weight-semi-bold;
 }
 
 h1,
 .ionic-heading1 {
-  font-size: #{tokens.$ionic-font-size-h1};
+  font-size: tokens.$ionic-font-size-h1;
 
-  line-height: #{tokens.$ionic-font-line-height-xxl};
+  line-height: tokens.$ionic-font-line-height-xxl;
 }
 
 h2,
 .ionic-heading2 {
-  font-size: #{tokens.$ionic-font-size-h2};
+  font-size: tokens.$ionic-font-size-h2;
 
-  line-height: #{tokens.$ionic-font-line-height-xl};
+  line-height: tokens.$ionic-font-line-height-xl;
 }
 
 h3,
 .ionic-heading3 {
-  font-size: #{tokens.$ionic-font-size-h3};
+  font-size: tokens.$ionic-font-size-h3;
 
-  line-height: #{tokens.$ionic-font-line-height-xl};
+  line-height: tokens.$ionic-font-line-height-xl;
 }
 
 h4,
 .ionic-heading4 {
-  font-size: #{tokens.$ionic-font-size-h4};
+  font-size: tokens.$ionic-font-size-h4;
 
-  line-height: #{tokens.$ionic-font-line-height-l};
+  line-height: tokens.$ionic-font-line-height-l;
 }
 
 h5,
 .ionic-heading5 {
-  font-size: #{tokens.$ionic-font-size-h5};
+  font-size: tokens.$ionic-font-size-h5;
 
-  line-height: #{tokens.$ionic-font-line-height-l};
+  line-height: tokens.$ionic-font-line-height-l;
 }
 
 h6,
 .ionic-heading6 {
-  font-size: #{tokens.$ionic-font-size-h6};
+  font-size: tokens.$ionic-font-size-h6;
 
-  line-height: #{tokens.$ionic-font-line-height-m};
+  line-height: tokens.$ionic-font-line-height-m;
 }
 
 .ionic-display-s {
-  font-size: #{tokens.$ionic-font-size-display-s};
-  font-weight: #{tokens.$ionic-font-weight-regular};
+  font-size: tokens.$ionic-font-size-display-s;
+  font-weight: tokens.$ionic-font-weight-regular;
 
-  line-height: #{tokens.$ionic-font-line-height-s};
+  line-height: tokens.$ionic-font-line-height-s;
 }
 
 .ionic-display-m {
-  font-size: #{tokens.$ionic-font-size-display-m};
-  font-weight: #{tokens.$ionic-font-weight-regular};
+  font-size: tokens.$ionic-font-size-display-m;
+  font-weight: tokens.$ionic-font-weight-regular;
 
-  line-height: #{tokens.$ionic-font-line-height-m};
+  line-height: tokens.$ionic-font-line-height-m;
 }
 
 /* Common */
