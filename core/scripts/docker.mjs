@@ -19,6 +19,6 @@ const pwd = resolve('./');
  * --init is recommended to avoid zombie processes: https://playwright.dev/docs/ci#docker
  * --mount allow us to mount the local Ionic project inside of the Docker container so devs do not need to re-build the project in Docker.
  */
-const args = ['run', '--rm', '-it', '--init', `-e DISPLAY=${display}`, `-v '${displayVolume}'`, '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm run test.e2e --', ...process.argv.slice(2)];
+const args = ['run', '--rm', '-it', '--init', `-e DISPLAY=${display}`, `-v ${displayVolume}`, '--ipc=host', `--mount=type=bind,source=${pwd},target=/ionic`, 'ionic-playwright', 'npm run test.e2e --', ...process.argv.slice(2)];
 
 execa('docker', args, { shell: true, stdio: 'inherit' });
