@@ -73,6 +73,9 @@ macOS uses [XQuartz](https://www.xquartz.org) to use XServer on macOS.
 
 Windows has a native XServer called [WSLg](https://github.com/microsoft/wslg#readme) that is included as part of the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/about). See [Docker and Windows Development](#docker-and-windows-development) for information on how to ensure both WSL and WSLg are installed. Once completed, follow the steps below to configure headed tests to use XServer.
 
+> [!NOTE]
+> The following steps should be done in WSL, not PowerShell. Running the commands in PowerShell may result in extra hidden characters being added.
+
 1. In the `core` directory run `echo :0 > docker-display.txt`. This information is used to set the `DISPLAY` environment variable which tells Playwright how to render a headed UI from the Docker container.
 2. In the `core` directory run `echo /tmp/.X11-unix:/tmp/.X11-unix > docker-display-volume.txt`. This information is used to make XServer available inside of the Docker container.
 
