@@ -39,14 +39,14 @@ if [ "$updateTruths" = "y" ]; then
   # New line
   echo ""
 
-  # User provided a base branch
-  if [ -n "$baseBranch" ]; then
-    # Update the base branch without checking out the branch
-    git pull origin $baseBranch
-  else
-    # Update the default base branch without checking out the branch
-    git pull origin main
+  # Check if the user provided a base branch
+  if [ -z "$baseBranch" ]; then
+    # Default base branch is main
+    baseBranch="main"
   fi
+
+  # Update the base branch without checking out the branch
+  git pull origin $baseBranch
 
   # New line
   echo ""
@@ -125,9 +125,9 @@ echo "Running e2e tests..."
 
 # User provided a component name
 if [ -z "$componentValue" ]; then
-  npm run test.e2e.docker.ci
+  npm run test.e2e.docker
 else
-  npm run test.e2e.docker.ci $componentValue
+  npm run test.e2e.docker $componentValue
 fi
 
 # New line
@@ -139,5 +139,5 @@ read -n 1 viewReport
 
 # If user wants to view the Playwright report, then open the report
 if [ "$viewReport" = "y" ]; then
-  npm run test.report
+  npx playwright show-report
 fi
