@@ -59,6 +59,13 @@
   display: none;
 }
 
+// Ionic Input Shapes
+// --------------------------------------------------
+
+:host(.input-shape-round) {
+  --border-radius: #{$ionic-border-radius-rounded-full};
+}
+
 // Input Bottom Content
 // ----------------------------------------------------------------
 
@@ -91,4 +98,42 @@
   :host(:hover) {
     --border-color: #{tokens.$ionic-color-neutral-600};
   }
+}
+
+// Input - Disabled
+// ----------------------------------------------------------------
+
+:host(.input-disabled) {
+  // color for the text within the input
+  --color: #{tokens.$ionic-color-neutral-400};
+  --background: #{tokens.$ionic-color-neutral-10};
+
+  pointer-events: none;
+}
+
+:host(.input-disabled:not(.ion-valid)) .input-bottom .helper-text,
+:host(.input-disabled) .input-bottom .counter,
+:host(.input-disabled) .label-text-wrapper {
+  color: tokens.$ionic-color-neutral-400;
+}
+
+:host(.input-disabled.has-focus.ion-valid) {
+  // TODO(FW-6112): Update to use the correct color token when rgb tokens are available
+  --border-color: rgba(var(--ionic-color-success-400-rgb, 82, 165, 24), 0.6);
+}
+
+:host(.input-disabled.ion-touched.ion-invalid) {
+  // TODO(FW-6112): Update to use the correct color token when rgb tokens are available
+  --border-color: rgba(var(--ionic-color-error-400-rgb, 247, 44, 44), 0.6);
+}
+
+:host(.input-disabled.ion-color) {
+  --border-color: #{current-color(base, 0.6)};
+}
+
+:host(.input-disabled.has-focus.ion-valid) .input-bottom .helper-text,
+:host(.input-disabled.ion-touched.ion-invalid) .error-text,
+:host(.input-disabled.ion-color) .input-bottom .helper-text,
+:host(.input-disabled.ion-color) .helper-text {
+  opacity: 0.6;
 }

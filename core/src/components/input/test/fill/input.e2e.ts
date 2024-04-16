@@ -267,5 +267,42 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       const input = page.locator('ion-input');
       await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked`));
     });
+
+    test('should not have visual regressions with outline fill and round shape', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            fill="outline"
+            label="Email"
+            label-placement="stacked"
+            placeholder="example@ionic.io"
+            shape="round"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked-shape-round`));
+    });
+
+    test('should not have visual regressions with outline fill, round shape, and large size', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            fill="outline"
+            label="Email"
+            label-placement="stacked"
+            placeholder="example@ionic.io"
+            shape="round"
+            size="large"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked-shape-round-size-large`));
+    });
   });
 });
