@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# The purpose of this script is to provide a way run the E2E tests
+# without having the developer to manually run multiple commands based
+# on the desired end result.
+# E.g. update the local ground truths for a specific component or
+# open the Playwright report after running the E2E tests.
+
 # Ask user if they want to update their local ground truths
 echo "Do you want to update your local ground truths? (y/n)"
 read -n 1 updateTruths
