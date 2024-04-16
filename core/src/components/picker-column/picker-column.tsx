@@ -492,6 +492,71 @@ export class PickerColumn implements ComponentInterface {
     });
   }
 
+  private findNextOption = () => {
+    const { activeItem } = this;
+    if (!activeItem) return undefined;
+
+    let node = activeItem.nextElementSibling as HTMLIonPickerColumnOptionElement | null;
+    while (node != null) {
+      if (node.tagName === 'ION-PICKER-COLUMN-OPTION' && !node.disabled) {
+        return node;
+      }
+      node = node.nextElementSibling as HTMLIonPickerColumnOptionElement | null;
+    }
+
+    return undefined;
+  }
+
+  private findPreviousOption = () => {
+    const { activeItem } = this;
+    if (!activeItem) return undefined;
+
+    let node = activeItem.previousElementSibling as HTMLIonPickerColumnOptionElement | null;
+    while (node != null) {
+      if (node.tagName === 'ION-PICKER-COLUMN-OPTION' && !node.disabled) {
+        return node;
+      }
+      node = node.previousElementSibling as HTMLIonPickerColumnOptionElement | null;
+    }
+
+    return undefined;
+  }
+
+  private onKeyDown = (ev: KeyboardEvent) => {
+    let options, newOption;
+    switch(ev.key) {
+      case 'ArrowDown':
+        newOption = this.findNextOption();
+        break;
+      case 'ArrowUp':
+        newOption = this.findPreviousOption();
+        break;
+      case 'PageUp':
+        // TODO
+        break;
+      case 'PageDown':
+        // TODO
+        break;
+      case 'Home':
+        options = this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option');
+        newOption = options[0];
+        break;
+      case 'End':
+        options = this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option');
+        newOption = options[options.length - 1];
+        break;
+      default:
+        break;
+    }
+
+    if (newOption != null) {
+      this.value = newOption.value;
+
+      // This stops any default browser behavior such as scrolling
+      ev.preventDefault();
+    }
+  }
+
   /**
    * Render an element that overlays the column. This element is for assistive
    * tech to allow users to navigate the column up/down. This element should receive
@@ -499,6 +564,9 @@ export class PickerColumn implements ComponentInterface {
    * slider role: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
    */
   private renderAssistiveFocusable = () => {
+    const { activeItem } = this;
+    const valueText = activeItem ? activeItem.innerText : '';
+
     return (
       <div
         class="assistive-focusable"
@@ -508,8 +576,9 @@ export class PickerColumn implements ComponentInterface {
         aria-valuemin={0}
         aria-valuemax={0}
         aria-valuenow={0}
-        aria-valuetext="Active Item Text"
+        aria-valuetext={valueText}
         aria-orientation="vertical"
+        onKeyDown={(ev) => this.onKeyDown(ev)}
       ></div>
     );
   };
