@@ -729,7 +729,7 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, el, hasFocus, clearInputIcon } = this;
+    const { disabled, fill, readonly, shape, inputId, el, hasFocus, clearInput, clearInputIcon } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const size = this.getSize();
@@ -835,11 +835,11 @@ export class Input implements ComponentInterface {
               onCompositionend={this.onCompositionEnd}
               {...this.inheritedAttributes}
             />
-            {this.clearInput && !readonly && !disabled && (
+            {clearInput && !readonly && !disabled && (
               <button
                 aria-label="reset"
                 type="button"
-                class="input-clear-icon"
+                class="input-clear-icon ion-focusable"
                 onPointerDown={(ev) => {
                   /**
                    * This prevents mobile browsers from

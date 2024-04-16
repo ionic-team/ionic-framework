@@ -23,6 +23,51 @@
   min-height: 48px;
 }
 
+// Input Clear Button
+// ----------------------------------------------------------------
+
+.input-clear-icon {
+  width: 16px;
+  height: 16px;
+
+  color: #{$ionic-color-neutral-500};
+}
+
+.input-clear-icon.ion-focused {
+  border-radius: #{$ionic-border-radius-rounded-small};
+
+  outline: #{$ionic-border-size-medium} solid #{$ionic-color-primary-100};
+
+  opacity: 1;
+}
+
+.input-clear-icon ion-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * The clear button should be visible if the native input
+ * OR any other interactive elements in the component (the
+ * clear button, slotted buttons, etc.) are focused. If we
+ * only looked at the native input, tabbing to the clear
+ * button would immediately hide it.
+ *
+ * Note that the clear button also requires the native input
+ * to have any value, but this is not specific to the ionic
+ * theme, so it is handled elsewhere.
+ */
+:host(:not(:focus-within)) .input-clear-icon {
+  display: none;
+}
+
+// Ionic Input Shapes
+// --------------------------------------------------
+
+:host(.input-shape-round) {
+  --border-radius: #{$ionic-border-radius-rounded-full};
+}
+
 // Input Bottom Content
 // ----------------------------------------------------------------
 
@@ -69,7 +114,7 @@
   // color for the text within the input
   --color: #{tokens.$ionic-color-neutral-400};
   --background: #{tokens.$ionic-color-neutral-10};
-  
+
   pointer-events: none;
 }
 

@@ -131,3 +131,92 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     });
   });
 });
+
+configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: clear button in ionic theme, visual checks'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="Text"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await page.waitForChanges();
+
+      await expect(input).toHaveScreenshot(screenshot(`input-with-clear-button`));
+    });
+
+    test('should not have visual regressions when clear button is focused', async ({ page }) => {
+      // extra padding around input ensures focus ring doesn't get cut off at screenshot edges
+      await page.setContent(
+        `
+          <style>
+            #container {
+              padding: 10px;
+            }
+          </style>
+
+          <div id="container">
+            <ion-input
+              label="Label"
+              label-placement="stacked"
+              clear-input="true"
+              value="Text"
+            ></ion-input>
+          </div>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await page.waitForChanges();
+
+      const clearButton = input.locator('.input-clear-icon');
+      clearButton.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
+      await page.waitForChanges();
+
+      const container = page.locator('#container');
+      await expect(container).toHaveScreenshot(screenshot(`input-clear-button-focused`));
+    });
+  });
+});
+
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('input: clear button in ionic theme, functionality checks'), () => {
+    test('should show clear button when any part of input is focused', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="Text"
+          ></ion-input>
+        `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      const clearButton = input.locator('.input-clear-icon');
+
+      await expect(clearButton).not.toBeVisible();
+
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await expect(clearButton).toBeVisible();
+
+      // ensure blurring native input doesn't immediately hide clear button
+      await page.keyboard.press('Tab');
+      await expect(clearButton).toBeFocused();
+      await expect(clearButton).toBeVisible();
+    });
+  });
+});
