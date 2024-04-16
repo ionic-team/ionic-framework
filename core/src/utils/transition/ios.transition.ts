@@ -425,9 +425,11 @@ const animateLargeTitle = (
     const WIDTH_SCALE = backButtonTextBox.width / largeTitleTextBox.width;
     HEIGHT_SCALE = backButtonTextBox.height / (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET);
 
-    if (doTitleAndButtonTextsMatch) {
-      END_SCALE = `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})`;
-    }
+    /**
+     * Even though we set TEXT_START_SCALE to HEIGHT_SCALE above, we potentially need
+     * to re-compute this here since the HEIGHT_SCALE may have changed.
+     */
+    END_SCALE = doTitleAndButtonTextsMatch ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})` : `scale(${HEIGHT_SCALE})`;
   }
 
   /**
