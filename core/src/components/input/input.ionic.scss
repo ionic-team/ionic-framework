@@ -34,7 +34,7 @@
 .input-clear-icon.ion-focused {
   border-radius: #{$ionic-border-radius-rounded-small};
 
-  outline: 2px solid #{$ionic-color-primary-100};
+  outline: #{$ionic-border-size-medium} solid #{$ionic-color-primary-100};
 
   opacity: 1;
 }
