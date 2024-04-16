@@ -3,6 +3,7 @@
  * Ionic Design System
  */
 
+
 @import "./ionic.vars";
 @import "../themes/mixins";
 
@@ -536,8 +537,8 @@
   --margin-bottom: #{$ionic-space-none};
 
   @include margin(0);
-}
-
+};
+ 
 .ionic-padding-space-none {
   --padding-start: #{$ionic-space-none};
   --padding-end: #{$ionic-space-none};
@@ -545,7 +546,7 @@
   --padding-bottom: #{$ionic-space-none};
 
   @include padding(0);
-}
+};
 
 .ionic-margin-space-xxxxs {
   --margin-start: #{$ionic-space-xxxxs};
@@ -554,8 +555,8 @@
   --margin-bottom: #{$ionic-space-xxxxs};
 
   @include margin(2px);
-}
-
+};
+ 
 .ionic-padding-space-xxxxs {
   --padding-start: #{$ionic-space-xxxxs};
   --padding-end: #{$ionic-space-xxxxs};
@@ -563,7 +564,7 @@
   --padding-bottom: #{$ionic-space-xxxxs};
 
   @include padding(2px);
-}
+};
 
 .ionic-margin-space-xxxs {
   --margin-start: #{$ionic-space-xxxs};
@@ -572,8 +573,8 @@
   --margin-bottom: #{$ionic-space-xxxs};
 
   @include margin(4px);
-}
-
+};
+ 
 .ionic-padding-space-xxxs {
   --padding-start: #{$ionic-space-xxxs};
   --padding-end: #{$ionic-space-xxxs};
@@ -581,7 +582,7 @@
   --padding-bottom: #{$ionic-space-xxxs};
 
   @include padding(4px);
-}
+};
 
 .ionic-margin-space-xxs {
   --margin-start: #{$ionic-space-xxs};
@@ -590,8 +591,8 @@
   --margin-bottom: #{$ionic-space-xxs};
 
   @include margin(6px);
-}
-
+};
+ 
 .ionic-padding-space-xxs {
   --padding-start: #{$ionic-space-xxs};
   --padding-end: #{$ionic-space-xxs};
@@ -599,7 +600,7 @@
   --padding-bottom: #{$ionic-space-xxs};
 
   @include padding(6px);
-}
+};
 
 .ionic-margin-space-xs {
   --margin-start: #{$ionic-space-xs};
@@ -608,8 +609,8 @@
   --margin-bottom: #{$ionic-space-xs};
 
   @include margin(8px);
-}
-
+};
+ 
 .ionic-padding-space-xs {
   --padding-start: #{$ionic-space-xs};
   --padding-end: #{$ionic-space-xs};
@@ -617,7 +618,7 @@
   --padding-bottom: #{$ionic-space-xs};
 
   @include padding(8px);
-}
+};
 
 .ionic-margin-space-s {
   --margin-start: #{$ionic-space-s};
@@ -626,8 +627,8 @@
   --margin-bottom: #{$ionic-space-s};
 
   @include margin(12px);
-}
-
+};
+ 
 .ionic-padding-space-s {
   --padding-start: #{$ionic-space-s};
   --padding-end: #{$ionic-space-s};
@@ -635,7 +636,7 @@
   --padding-bottom: #{$ionic-space-s};
 
   @include padding(12px);
-}
+};
 
 .ionic-margin-space-base {
   --margin-start: #{$ionic-space-base};
@@ -644,8 +645,8 @@
   --margin-bottom: #{$ionic-space-base};
 
   @include margin(16px);
-}
-
+};
+ 
 .ionic-padding-space-base {
   --padding-start: #{$ionic-space-base};
   --padding-end: #{$ionic-space-base};
@@ -653,7 +654,7 @@
   --padding-bottom: #{$ionic-space-base};
 
   @include padding(16px);
-}
+};
 
 .ionic-margin-space-m {
   --margin-start: #{$ionic-space-m};
@@ -662,8 +663,8 @@
   --margin-bottom: #{$ionic-space-m};
 
   @include margin(20px);
-}
-
+};
+ 
 .ionic-padding-space-m {
   --padding-start: #{$ionic-space-m};
   --padding-end: #{$ionic-space-m};
@@ -671,7 +672,7 @@
   --padding-bottom: #{$ionic-space-m};
 
   @include padding(20px);
-}
+};
 
 .ionic-margin-space-l {
   --margin-start: #{$ionic-space-l};
@@ -680,8 +681,8 @@
   --margin-bottom: #{$ionic-space-l};
 
   @include margin(24px);
-}
-
+};
+ 
 .ionic-padding-space-l {
   --padding-start: #{$ionic-space-l};
   --padding-end: #{$ionic-space-l};
@@ -689,7 +690,7 @@
   --padding-bottom: #{$ionic-space-l};
 
   @include padding(24px);
-}
+};
 
 .ionic-margin-space-xl {
   --margin-start: #{$ionic-space-xl};
@@ -698,8 +699,8 @@
   --margin-bottom: #{$ionic-space-xl};
 
   @include margin(28px);
-}
-
+};
+ 
 .ionic-padding-space-xl {
   --padding-start: #{$ionic-space-xl};
   --padding-end: #{$ionic-space-xl};
@@ -707,7 +708,7 @@
   --padding-bottom: #{$ionic-space-xl};
 
   @include padding(28px);
-}
+};
 
 .ionic-margin-space-xxl {
   --margin-start: #{$ionic-space-xxl};
@@ -716,8 +717,8 @@
   --margin-bottom: #{$ionic-space-xxl};
 
   @include margin(32px);
-}
-
+};
+ 
 .ionic-padding-space-xxl {
   --padding-start: #{$ionic-space-xxl};
   --padding-end: #{$ionic-space-xxl};
@@ -725,7 +726,7 @@
   --padding-bottom: #{$ionic-space-xxl};
 
   @include padding(32px);
-}
+};
 
 .ionic-margin-space-xxxl {
   --margin-start: #{$ionic-space-xxxl};
@@ -734,8 +735,8 @@
   --margin-bottom: #{$ionic-space-xxxl};
 
   @include margin(36px);
-}
-
+};
+ 
 .ionic-padding-space-xxxl {
   --padding-start: #{$ionic-space-xxxl};
   --padding-end: #{$ionic-space-xxxl};
@@ -743,7 +744,7 @@
   --padding-bottom: #{$ionic-space-xxxl};
 
   @include padding(36px);
-}
+};
 
 .ionic-margin-space-xxxxl {
   --margin-start: #{$ionic-space-xxxxl};
@@ -752,8 +753,8 @@
   --margin-bottom: #{$ionic-space-xxxxl};
 
   @include margin(40px);
-}
-
+};
+ 
 .ionic-padding-space-xxxxl {
   --padding-start: #{$ionic-space-xxxxl};
   --padding-end: #{$ionic-space-xxxxl};
@@ -761,7 +762,7 @@
   --padding-bottom: #{$ionic-space-xxxxl};
 
   @include padding(40px);
-}
+};
 
 .ionic-border-radius-square {
   border-radius: $ionic-border-radius-square;
