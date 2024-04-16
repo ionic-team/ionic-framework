@@ -155,14 +155,23 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should not have visual regressions when clear button is focused', async ({ page }) => {
+      // extra padding around input ensures focus ring doesn't get cut off at screenshot edges
       await page.setContent(
         `
-          <ion-input
-            label="Label"
-            label-placement="stacked"
-            clear-input="true"
-            value="Text"
-          ></ion-input>
+          <style>
+            #container {
+              padding: 10px;
+            }
+          </style>
+
+          <div id="container">
+            <ion-input
+              label="Label"
+              label-placement="stacked"
+              clear-input="true"
+              value="Text"
+            ></ion-input>
+          </div>
         `,
         config
       );
@@ -175,7 +184,8 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       clearButton.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
       await page.waitForChanges();
 
-      await expect(input).toHaveScreenshot(screenshot(`input-clear-button-focused`));
+      const container = page.locator('#container');
+      await expect(container).toHaveScreenshot(screenshot(`input-clear-button-focused`));
     });
   });
 });
