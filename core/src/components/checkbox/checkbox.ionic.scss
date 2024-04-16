@@ -65,7 +65,7 @@
 // --------------------------------------------------
 // disabled, indeterminate checkbox
 :host(.checkbox-disabled.checkbox-indeterminate) .checkbox-icon {
-  /* TODO: Use design token variables */
+  /* TODO(FW-6183): Use design token variables */
   border-width: 0;
 
   background-color: #{$background-color-step-600};
@@ -73,7 +73,7 @@
 
 // disabled, unchecked checkbox
 :host(.checkbox-disabled) .checkbox-icon {
-  /* TODO: Use design token variables */
+  /* TODO(FW-6183): Use design token variables */
   border-color: #c9c9c9;
 
   background-color: #f5f5f5; // mix of #f5f5f5 with 60% #FFF
@@ -90,13 +90,13 @@
 // --------------------------------------------------------
 @media (any-hover: hover) {
   :host(:hover) .checkbox-icon {
-    /* TODO: Use design token variables */
+    /* TODO(FW-6183): Use design token variables */
     background-color: #ececec; // mix of 'white', '#121212', 0.08, 'rgb'
   }
 
   :host(:hover.checkbox-checked) .checkbox-icon,
   :host(:hover.checkbox-indeterminate) .checkbox-icon {
-    /* TODO: Use design token variables */
+    /* TODO(FW-6183): Use design token variables */
     background-color: #1061da; // mix of '#1068eb', '#121212', 0.08, 'rgb'
   }
 }
@@ -112,13 +112,13 @@
 // Checkbox: Active
 // --------------------------------------------------------
 :host(.ion-activated) .checkbox-icon {
-  /* TODO: Use design token variables */
+  /* TODO(FW-6183): Use design token variables */
   background-color: #e3e3e3; // mix of 'white', '#121212', 0.12, 'rgb'
 }
 
 :host(.ion-activated.checkbox-checked) .checkbox-icon,
 :host(.ion-activated.checkbox-indeterminate) .checkbox-icon {
-  /* TODO: Use design token variables */
+  /* TODO(FW-6183): Use design token variables */
   background-color: #105ed1; // mix of '#1068eb', '#121212', 0.12, 'rgb'
 }
 
