@@ -32,6 +32,13 @@ export class PickerColumn implements ComponentInterface {
   private parentEl?: HTMLIonPickerElement | null;
   private canExitInputMode = true;
 
+  @State() ariaLabel: string | null = null;
+
+  @Watch('aria-label')
+  ariaLabelChanged(newValue: string) {
+    this.ariaLabel = newValue;
+  }
+
   @State() isActive = false;
 
   @Element() el!: HTMLIonPickerColumnElement;
@@ -204,6 +211,10 @@ export class PickerColumn implements ComponentInterface {
     if (this.scrollEl) {
       this.scrollEl.focus();
     }
+  }
+
+  connectedCallback() {
+    this.ariaLabel = this.el.getAttribute('aria-label') ?? 'Select a value';
   }
 
   private centerPickerItemInView = (target: HTMLElement, smooth = true, canExitInputMode = true) => {
@@ -481,6 +492,28 @@ export class PickerColumn implements ComponentInterface {
     });
   }
 
+  /**
+   * Render an element that overlays the column. This element is for assistive
+   * tech to allow users to navigate the column up/down. This element should receive
+   * focus as it listens for synthesized keyboard events as required by the
+   * slider role: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
+   */
+  private renderAssistiveFocusable = () => {
+    return (
+      <div
+        class="assistive-focusable"
+        role="slider"
+        tabindex={this.disabled ? undefined : 0}
+        aria-label={this.ariaLabel}
+        aria-valuemin={0}
+        aria-valuemax={0}
+        aria-valuenow={0}
+        aria-valuetext="Active Item Text"
+        aria-orientation="vertical"
+      ></div>
+    );
+  };
+
   render() {
     const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
@@ -494,6 +527,7 @@ export class PickerColumn implements ComponentInterface {
           ['picker-column-disabled']: disabled,
         })}
       >
+        {this.renderAssistiveFocusable()}
         <slot name="prefix"></slot>
         <div
           class="picker-opts"
