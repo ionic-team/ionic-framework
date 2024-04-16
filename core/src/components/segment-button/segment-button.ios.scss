@@ -46,7 +46,6 @@
   line-height: #{$segment-button-ios-line-height};
 }
 
-
 // Segment Button: Borders
 // --------------------------------------------------
 
@@ -69,7 +68,6 @@
   border-left-color: transparent;
 }
 
-
 // Segment Button: Disabled
 // --------------------------------------------------
 
@@ -77,14 +75,12 @@
   opacity: $segment-button-ios-opacity-disabled;
 }
 
-
 // Segment Button: Icon
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
   font-size: $segment-button-ios-icon-size;
 }
-
 
 // Segment Button: Layout
 // --------------------------------------------------
@@ -98,7 +94,6 @@
 :host(.segment-button-layout-icon-end) ::slotted(ion-label) {
   @include margin-horizontal(0, 2px);
 }
-
 
 // Segment Button: Checked Indicator
 // --------------------------------------------------
@@ -118,7 +113,6 @@
   transition: var(--indicator-transition);
 }
 
-
 // Segment Button: Checked Borders
 // --------------------------------------------------
 
@@ -127,14 +121,12 @@
   opacity: 0;
 }
 
-
 // Segment Button: Checked
 // --------------------------------------------------
 
 :host(.segment-button-checked) {
   z-index: -1;
 }
-
 
 // Segment: States
 // --------------------------------------------------
@@ -157,7 +149,6 @@
     opacity: 1;
   }
 }
-
 
 // Segment Button: Segment w/ Color
 // --------------------------------------------------
@@ -183,8 +174,6 @@
   }
 }
 
-
-
 // Segment Button: Toolbar
 // --------------------------------------------------
 
@@ -195,7 +184,6 @@
   --color-checked: var(--ion-toolbar-segment-color-checked, var(--ion-toolbar-color), initial);
   --indicator-color: #{var(--ion-toolbar-segment-indicator-color, $segment-button-ios-indicator-color)};
 }
-
 
 // Segment Button: Toolbar w/ Color
 // --------------------------------------------------

@@ -13,11 +13,10 @@
 
   contain: strict;
   cursor: pointer;
-  opacity: .01;
+  opacity: 0.01;
   touch-action: none;
   z-index: $z-index-backdrop;
 }
-
 
 :host(.backdrop-hide) {
   background: transparent;
@@ -26,4 +25,3 @@
 :host(.backdrop-no-tappable) {
   cursor: auto;
 }
-

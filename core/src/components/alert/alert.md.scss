@@ -22,7 +22,12 @@
 // --------------------------------------------------
 
 .alert-head {
-  @include padding($alert-md-head-padding-top, $alert-md-head-padding-end, $alert-md-head-padding-bottom, $alert-md-head-padding-start);
+  @include padding(
+    $alert-md-head-padding-top,
+    $alert-md-head-padding-end,
+    $alert-md-head-padding-bottom,
+    $alert-md-head-padding-start
+  );
 
   text-align: $alert-md-head-text-align;
 }
@@ -40,13 +45,17 @@
   font-size: $alert-md-sub-title-font-size;
 }
 
-
 // Material Design Alert Message
 // --------------------------------------------------
 
 .alert-message,
 .alert-input-group {
-  @include padding($alert-md-message-padding-top, $alert-md-message-padding-end, $alert-md-message-padding-bottom, $alert-md-message-padding-start);
+  @include padding(
+    $alert-md-message-padding-top,
+    $alert-md-message-padding-end,
+    $alert-md-message-padding-bottom,
+    $alert-md-message-padding-start
+  );
 
   color: $alert-md-message-text-color;
 }
@@ -67,19 +76,28 @@
 }
 
 .alert-message:empty {
-  @include padding($alert-md-message-empty-padding-top, $alert-md-message-empty-padding-end, $alert-md-message-empty-padding-bottom, $alert-md-message-empty-padding-start);
+  @include padding(
+    $alert-md-message-empty-padding-top,
+    $alert-md-message-empty-padding-end,
+    $alert-md-message-empty-padding-bottom,
+    $alert-md-message-empty-padding-start
+  );
 }
 
 .alert-head + .alert-message {
   padding-top: 0;
 }
 
-
 // Material Design Alert Input
 // --------------------------------------------------
 
 .alert-input {
-  @include margin($alert-md-input-margin-top, $alert-md-input-margin-end, $alert-md-input-margin-bottom, $alert-md-input-margin-start);
+  @include margin(
+    $alert-md-input-margin-top,
+    $alert-md-input-margin-end,
+    $alert-md-input-margin-bottom,
+    $alert-md-input-margin-start
+  );
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
 
@@ -100,9 +118,9 @@
 .alert-input:focus {
   @include margin(null, null, $alert-md-input-margin-bottom - 1, null);
 
-  border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
+  border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused
+    $alert-md-input-border-color-focused;
 }
-
 
 // Material Design Alert Radio/Checkbox Group
 // --------------------------------------------------
@@ -135,12 +153,16 @@
   min-height: $alert-md-tappable-height;
 }
 
-
 // Material Design Alert Radio
 // --------------------------------------------------
 
 .alert-radio-label {
-  @include padding($alert-md-radio-label-padding-top, $alert-md-radio-label-padding-end, $alert-md-radio-label-padding-bottom, $alert-md-radio-label-padding-start);
+  @include padding(
+    $alert-md-radio-label-padding-top,
+    $alert-md-radio-label-padding-end,
+    $alert-md-radio-label-padding-bottom,
+    $alert-md-radio-label-padding-start
+  );
 
   flex: 1;
 
@@ -186,28 +208,31 @@
   background-color: $alert-md-radio-border-color-on;
 }
 
-
 // Material Design Alert Radio Checked
 // ---------------------------------------------------
 
-[aria-checked=true] .alert-radio-label {
+[aria-checked="true"] .alert-radio-label {
   color: $alert-md-radio-label-text-color-checked;
 }
 
-[aria-checked=true] .alert-radio-icon {
+[aria-checked="true"] .alert-radio-icon {
   border-color: $alert-md-radio-border-color-on;
 }
 
-[aria-checked=true] .alert-radio-inner {
+[aria-checked="true"] .alert-radio-inner {
   transform: $alert-md-radio-icon-transform-on;
 }
-
 
 // Material Design Alert Checkbox Label
 // --------------------------------------------------
 
 .alert-checkbox-label {
-  @include padding($alert-md-checkbox-label-padding-top, $alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-bottom, $alert-md-checkbox-label-padding-start);
+  @include padding(
+    $alert-md-checkbox-label-padding-top,
+    $alert-md-checkbox-label-padding-end,
+    $alert-md-checkbox-label-padding-bottom,
+    $alert-md-checkbox-label-padding-start
+  );
 
   flex: 1;
 
@@ -219,7 +244,6 @@
 
   font-size: $alert-md-checkbox-label-font-size;
 }
-
 
 // Material Design Alert Checkbox Outline: Unchecked
 // --------------------------------------------------
@@ -243,13 +267,13 @@
 // Material Design Alert Checkbox Checkmark: Checked
 // --------------------------------------------------
 
-[aria-checked=true] .alert-checkbox-icon {
+[aria-checked="true"] .alert-checkbox-icon {
   border-color: $alert-md-checkbox-border-color-on;
 
   background-color: $alert-md-checkbox-border-color-on;
 }
 
-[aria-checked=true] .alert-checkbox-inner {
+[aria-checked="true"] .alert-checkbox-inner {
   @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start);
 
   position: absolute;
@@ -266,7 +290,6 @@
   border-color: $alert-md-checkbox-icon-border-color;
 }
 
-
 // Material Design Alert Button
 // --------------------------------------------------
 
@@ -281,8 +304,18 @@
 
 .alert-button {
   @include border-radius($alert-md-button-border-radius);
-  @include margin($alert-md-button-margin-top, $alert-md-button-margin-end, $alert-md-button-margin-bottom, $alert-md-button-margin-start);
-  @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
+  @include margin(
+    $alert-md-button-margin-top,
+    $alert-md-button-margin-end,
+    $alert-md-button-margin-bottom,
+    $alert-md-button-margin-start
+  );
+  @include padding(
+    $alert-md-button-padding-top,
+    $alert-md-button-padding-end,
+    $alert-md-button-padding-bottom,
+    $alert-md-button-padding-start
+  );
 
   // necessary for ripple to work properly
   position: relative;

@@ -25,7 +25,6 @@
   --border-radius: #{$toolbar-md-button-border-radius};
 }
 
-
 // Material Design Toolbar w/ Color: Default Buttons
 // --------------------------------------------------
 
@@ -52,7 +51,6 @@
   --border-color: #{current-color(contrast)};
 }
 
-
 // Material Design Toolbar Icon Only Clear Button
 // --------------------------------------------------
 
@@ -69,7 +67,6 @@
   height: 3rem;
 }
 
-
 ::slotted(*) .button {
   --background-hover: currentColor;
 }
@@ -84,7 +81,6 @@
   --background-focused: currentColor;
 }
 
-
 // Material Design Toolbar Outline Button
 // --------------------------------------------------
 
@@ -97,7 +93,6 @@
   --border-color: currentColor;
 }
 
-
 // Material Design Toolbar Clear Button
 // --------------------------------------------------
 
@@ -109,19 +104,18 @@
   --background-hover: currentColor;
 }
 
-
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
 ::slotted(*) ion-icon[slot="start"] {
   @include margin(0);
-  @include margin-horizontal(null, .3em);
+  @include margin-horizontal(null, 0.3em);
 
   font-size: 1.4em;
 }
 
 ::slotted(*) ion-icon[slot="end"] {
   @include margin(0);
-  @include margin-horizontal(.4em, null);
+  @include margin-horizontal(0.4em, null);
 
   font-size: 1.4em;
 }

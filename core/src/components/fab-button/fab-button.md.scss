@@ -10,17 +10,12 @@
   --background-focused: currentColor;
   --background-hover: currentColor;
   --background-activated-opacity: 0;
-  --background-focused-opacity: .24;
-  --background-hover-opacity: .08;
+  --background-focused-opacity: 0.24;
+  --background-hover-opacity: 0.08;
   --color: #{$fab-md-text-color};
   --box-shadow: #{$fab-md-box-shadow};
-  --transition: #{
-    box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
-    background-color 280ms cubic-bezier(.4, 0, .2, 1),
-    color 280ms cubic-bezier(.4, 0, .2, 1),
-    opacity 15ms linear 30ms,
-    transform 270ms cubic-bezier(0, 0, .2, 1) 0ms
-  };
+  --transition: #{box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), background-color 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms};
   --close-icon-font-size: #{$fab-md-icon-font-size};
 }
 
@@ -31,7 +26,6 @@
 ::slotted(ion-icon) {
   font-size: $fab-md-icon-font-size;
 }
-
 
 // FAB buttons in a list
 // --------------------------------------------------
@@ -49,7 +43,6 @@
 :host(.fab-button-in-list) ::slotted(ion-icon) {
   font-size: $fab-md-list-button-icon-font-size;
 }
-
 
 // FAB Button: Color
 // --------------------------------------------------

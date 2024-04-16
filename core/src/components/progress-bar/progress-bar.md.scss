@@ -8,7 +8,6 @@
   height: $progress-bar-md-height;
 }
 
-
 :host(.ion-color) .progress-buffer-bar {
   background: #{current-color(base, 0.3)};
 }

@@ -88,7 +88,7 @@
 }
 
 .range-knob {
-  transform: scale(.67);
+  transform: scale(0.67);
 
   transition-duration: 120ms;
   transition-property: transform, background-color, border;
@@ -138,7 +138,7 @@
 .range-pin {
   @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
   @include border-radius(50%);
-  @include transform(translate3d(0, 0, 0), scale(.01));
+  @include transform(translate3d(0, 0, 0), scale(0.01));
 
   display: flex;
 
@@ -247,7 +247,7 @@
 }
 
 :host(.range-disabled) .range-knob {
-  transform: scale(.55);
+  transform: scale(0.55);
 
   outline: 5px solid #fff;
 
@@ -255,7 +255,7 @@
 }
 
 :host(.range-disabled) .label-text-wrapper,
-:host(.range-disabled) ::slotted([slot=start]),
-:host(.range-disabled) ::slotted([slot=end]) {
+:host(.range-disabled) ::slotted([slot="start"]),
+:host(.range-disabled) ::slotted([slot="end"]) {
   opacity: $range-md-disabled-opacity;
 }

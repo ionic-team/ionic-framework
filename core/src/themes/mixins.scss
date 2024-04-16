@@ -1,4 +1,3 @@
-
 /**
  * A heuristic that applies CSS to tablet
  * viewports.
@@ -128,7 +127,6 @@
   @return nth($keys, $index);
 }
 
-
 // Breakpoint Mixins
 // ---------------------------------------------------------------------------------
 
@@ -172,9 +170,7 @@
     @media (min-width: $min) {
       @content;
     }
-  }
-
- @else {
+  } @else {
     @content;
   }
 }
@@ -206,7 +202,7 @@
 @function breakpoint-max($name, $breakpoints: $screen-breakpoints) {
   $max: map-get($breakpoints, $name);
 
-  @return if($max and $max > 0, $max - .02, null);
+  @return if($max and $max > 0, $max - 0.02, null);
 }
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
@@ -218,13 +214,10 @@
     @media (max-width: $max) {
       @content;
     }
-  }
-
- @else {
+  } @else {
     @content;
   }
 }
-
 
 // Text Direction - ltr / rtl
 //
@@ -264,9 +257,7 @@
     // Group the selectors back into a single selector to optimize the output.
     @if str-index($selector, ":host-context") {
       $hostContextSelectors: append($hostContextSelectors, $selector, comma);
-    }
-
- @else {
+    } @else {
       // Group the selectors back into a single selector to optimize the output.
       $restSelectors: append($restSelectors, $selector, comma);
     }
@@ -311,7 +302,6 @@
   @content;
 }
 
-
 // SVG Background Image Mixin
 // @param {string} $svg
 // ----------------------------------------------------------
@@ -323,9 +313,7 @@
     @include multi-dir() {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
-  }
-
- @else {
+  } @else {
     $transform: "transform='translate(#{nth($viewBox, 3)}, 0) scale(-1, 1)'";
     $flipped-url: $svg;
     $flipped-url: str-replace($flipped-url, "<path", "<path #{$transform}");
@@ -333,7 +321,7 @@
     $flipped-url: str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
     $flipped-url: url-encode($flipped-url);
 
-    @include ltr () {
+    @include ltr() {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
 
@@ -351,10 +339,7 @@
   @if $start == 0 and $end == 0 {
     #{$prop}-left: $start;
     #{$prop}-right: $end;
-
-  }
-
- @else {
+  } @else {
     -webkit-#{$prop}-start: $start;
     #{$prop}-inline-start: $start;
     -webkit-#{$prop}-end: $end;
@@ -422,9 +407,7 @@
       right: $end;
       left: $start;
     }
-  }
-
- @else {
+  } @else {
     @at-root {
       & {
         inset-inline-start: $start;
@@ -465,9 +448,7 @@
 @mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
   @if $top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start {
     border-radius: $top-start;
-  }
-
- @else {
+  } @else {
     border-start-start-radius: $top-start;
     border-start-end-radius: $top-end;
     border-end-end-radius: $bottom-end;
@@ -482,9 +463,7 @@
 
   @if $dir == ltr {
     $other-dir: rtl;
-  }
-
- @else {
+  } @else {
     $other-dir: ltr;
   }
 
@@ -509,9 +488,7 @@
     @include rtl() {
       float: right $decorator;
     }
-  }
-
- @else if $side == end {
+  } @else if $side == end {
     @include ltr() {
       float: right $decorator;
     }
@@ -519,9 +496,7 @@
     @include rtl() {
       float: left $decorator;
     }
-  }
-
- @else {
+  } @else {
     @include multi-dir() {
       float: $side $decorator;
     }
@@ -536,9 +511,7 @@
     @if $horizontal == start {
       $horizontal-ltr: left;
       $horizontal-rtl: right;
-    }
-
- @else {
+    } @else {
       $horizontal-ltr: right;
       $horizontal-rtl: left;
     }
@@ -550,9 +523,7 @@
     @include rtl() {
       background-position: $horizontal-rtl $horizontal-amount $vertical $vertical-amount;
     }
-  }
-
- @else {
+  } @else {
     @include multi-dir() {
       background-position: $horizontal $horizontal-amount $vertical $vertical-amount;
     }
@@ -568,9 +539,7 @@
     @include rtl() {
       transform-origin: right $y-axis;
     }
-  }
-
- @else if $x-axis == end {
+  } @else if $x-axis == end {
     @include ltr() {
       transform-origin: right $y-axis;
     }
@@ -578,15 +547,11 @@
     @include rtl() {
       transform-origin: left $y-axis;
     }
-  }
-
- @else if $x-axis == left or $x-axis == right {
+  } @else if $x-axis == left or $x-axis == right {
     @include multi-dir() {
       transform-origin: $x-axis $y-axis;
     }
-  }
-
- @else {
+  } @else {
     @include ltr() {
       transform-origin: $x-axis $y-axis;
     }
@@ -619,14 +584,10 @@
 
       $ltr-translate: translate3d($x, $y, $z);
       $rtl-translate: translate3d(calc(-1 * #{$x}), $y, $z);
-    }
-
- @else {
+    } @else {
       @if $extra == null {
         $extra: $transform;
-      }
-
- @else {
+      } @else {
         $extra: $extra $transform;
       }
     }
@@ -636,9 +597,7 @@
     @include multi-dir() {
       transform: $ltr-translate $extra;
     }
-  }
-
- @else {
+  } @else {
     @include ltr() {
       transform: $ltr-translate $extra;
     }

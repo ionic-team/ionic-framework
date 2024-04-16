@@ -97,7 +97,9 @@
    * Label text should not extend
    * beyond the bounds of the input.
    */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale});
+  max-width: calc(
+    (100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale}
+  );
 }
 
 /**

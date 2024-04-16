@@ -10,9 +10,7 @@
   --padding-bottom: #{$button-md-padding-bottom};
   --padding-start: #{$button-md-padding-start};
   --padding-end: #{$button-md-padding-end};
-  --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
-                background-color 15ms linear,
-                color 15ms linear;
+  --transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), background-color 15ms linear, color 15ms linear;
 
   @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
 
@@ -34,8 +32,8 @@
   --background-hover: #{ion-color(primary, contrast)};
   --background-focused: #{ion-color(primary, contrast)};
   --background-activated-opacity: 0;
-  --background-focused-opacity: .24;
-  --background-hover-opacity: .08;
+  --background-focused-opacity: 0.24;
+  --background-hover-opacity: 0.08;
   --box-shadow: #{$button-md-box-shadow};
 }
 
@@ -54,14 +52,13 @@
   --background-focused: #{ion-color(primary, base)};
   --background-hover: #{ion-color(primary, base)};
   --background-activated-opacity: 0;
-  --background-focused-opacity: .12;
-  --background-hover-opacity: .04;
+  --background-focused-opacity: 0.12;
+  --background-hover-opacity: 0.04;
 }
 
 :host(.button-outline.ion-activated.ion-color) .button-native {
   background: transparent;
 }
-
 
 // Material Design Clear Button
 // --------------------------------------------------
@@ -71,10 +68,9 @@
   --background-focused: #{ion-color(primary, base)};
   --background-hover: #{ion-color(primary, base)};
   --background-activated-opacity: 0;
-  --background-focused-opacity: .12;
-  --background-hover-opacity: .04;
+  --background-focused-opacity: 0.12;
+  --background-hover-opacity: 0.04;
 }
-
 
 // Material Design Round Button
 // --------------------------------------------------
@@ -86,7 +82,6 @@
   --padding-end: #{$button-md-round-padding-end};
   --padding-bottom: #{$button-md-round-padding-bottom};
 }
-
 
 // Material Design Button Sizes
 // --------------------------------------------------
@@ -206,7 +201,7 @@
     * (derived from rem) and the default font size of the icon is
     * 28px, then the base size would need to be increased.
     */
-    font-size: dynamic-font-clamp(0.67, 22.4px, 1.92, 1em);
+  font-size: dynamic-font-clamp(0.67, 22.4px, 1.92, 1em);
 }
 
 // Material Design Button: Hover
@@ -227,7 +222,6 @@
   background: #{current-color(base)};
 }
 
-
 @media (any-hover: hover) {
   :host(.button-solid.ion-color:hover) .button-native::after {
     background: #{current-color(contrast)};
@@ -238,7 +232,6 @@
     background: #{current-color(base)};
   }
 }
-
 
 // Activated Button in Toolbar
 // --------------------------------------------------

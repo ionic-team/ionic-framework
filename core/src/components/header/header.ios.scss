@@ -17,7 +17,7 @@
     backdrop-filter: $header-ios-translucent-filter;
   }
   .header-translucent-ios ion-toolbar {
-    --opacity: .8;
+    --opacity: 0.8;
   }
 
   /**
@@ -79,7 +79,6 @@
   padding-bottom: 13px;
 }
 
-
 .header-collapse-main {
   --opacity-scale: 1;
 }
@@ -136,7 +135,7 @@
  * Both headers should be scoped to iOS mode otherwise an MD app that uses an
  * iOS header may cause other MD headers to be unexpectedly hidden.
  */
-ion-header.header-ios:not(.header-collapse-main):has(~ ion-content ion-header.header-ios[collapse="condense"],
-~ ion-content ion-header.header-ios.header-collapse-condense) {
+ion-header.header-ios:not(.header-collapse-main):has(~ ion-content
+    ion-header.header-ios[collapse="condense"], ~ ion-content ion-header.header-ios.header-collapse-condense) {
   opacity: 0;
 }
