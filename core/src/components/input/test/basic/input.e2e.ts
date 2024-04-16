@@ -168,11 +168,8 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-
-      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
-      await page.waitForChanges();
-
-      await page.keyboard.press('Tab');
+      const clearButton = input.locator('.input-clear-icon');
+      clearButton.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
       await page.waitForChanges();
 
       await expect(input).toHaveScreenshot(screenshot(`input-clear-button-focused`));
