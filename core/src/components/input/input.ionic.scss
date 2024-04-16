@@ -21,6 +21,13 @@
   min-height: 48px;
 }
 
+// Ionic Input Shapes
+// --------------------------------------------------
+
+:host(.input-shape-round) {
+  --border-radius: #{$ionic-border-radius-rounded-full};
+}
+
 // Input Bottom Content
 // ----------------------------------------------------------------
 
