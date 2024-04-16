@@ -168,6 +168,9 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
+      await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
+      await page.waitForChanges();
+
       const clearButton = input.locator('.input-clear-icon');
       clearButton.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
       await page.waitForChanges();
