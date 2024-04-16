@@ -88,7 +88,7 @@
     "lint.ts": "npm run eslint",
     "lint.ts.fix": "npm run eslint -- --fix",
     "prerender.e2e": "node scripts/testing/prerender.js",
-    "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
+    "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx,scss}\"",
     "start": "npm run build.css && stencil build --dev --watch --serve",
     "test": "npm run test.spec && npm run test.e2e",
     "test.spec": "stencil test --spec --max-workers=2",
