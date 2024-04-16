@@ -1,4 +1,4 @@
-## @ionic/react
+# @ionic/react
 
 These are React specific building blocks on top of [@ionic/core](https://www.npmjs.com/package/@ionic/core) components/services.
 
