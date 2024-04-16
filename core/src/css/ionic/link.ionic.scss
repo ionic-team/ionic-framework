@@ -1,4 +1,4 @@
-@use "../../foundations/ionic.vars" as tokens;
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Link: Shared Styles (Standalone & Underline)
 // -------------------------------------------------------------------------------
@@ -7,11 +7,11 @@
 
   align-items: center;
 
-  gap: tokens.$ionic-space-xxxs;
+  gap: globals.$ionic-space-xxxs;
 
   transition: color 0.2s ease-in-out;
 
-  font-weight: tokens.$ionic-font-weight-regular;
+  font-weight: globals.$ionic-font-weight-regular;
 
   text-decoration-color: inherit;
 
@@ -23,7 +23,7 @@
   // -------------------------------------------------------------------------------
 
   &:visited {
-    color: tokens.$ionic-color-info-500;
+    color: globals.$ionic-color-info-500;
   }
 }
 
@@ -42,7 +42,7 @@
     }
   }
 
-  color: tokens.$ionic-color-info-400;
+  color: globals.$ionic-color-info-400;
 
   text-decoration: none;
 
@@ -51,7 +51,7 @@
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid tokens.$ionic-color-primary-100;
+    outline: 2px solid globals.$ionic-color-primary-100;
     outline-offset: 2px;
 
     text-decoration: underline;
@@ -62,7 +62,7 @@
 
   &:active,
   &.ion-activated {
-    color: tokens.$ionic-color-info-500;
+    color: globals.$ionic-color-info-500;
 
     text-decoration: underline;
   }
@@ -84,7 +84,7 @@ a.ionic-link,
 
   @media (any-hover: hover) {
     &:hover {
-      color: tokens.$ionic-color-info-400;
+      color: globals.$ionic-color-info-400;
     }
   }
 
@@ -97,7 +97,7 @@ a.ionic-link,
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid tokens.$ionic-color-primary-100;
+    outline: 2px solid globals.$ionic-color-primary-100;
     outline-offset: 2px;
 
     color: currentColor;
@@ -110,7 +110,7 @@ a.ionic-link,
 
   &:active,
   &.ion-activated {
-    color: tokens.$ionic-color-info-500;
+    color: globals.$ionic-color-info-500;
   }
 }
 
