@@ -35,6 +35,11 @@
   pointer-events: none;
 }
 
+// Hide the focus ring since screen readers will show their own
+.assistive-focusable:focus {
+  outline: none;
+}
+
 .picker-opts {
   /**
    * This padding must be set here and not on the
