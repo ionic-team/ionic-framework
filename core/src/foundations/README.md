@@ -98,6 +98,7 @@ Usage example (Chip Component):
 
 :host {
   --background: #{globals.$ionic-color-neutral-10};
+  color: globals.$ionic-color-neutral-900;
   @include globals.font-smoothing;
 }
 ```
