@@ -144,7 +144,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
     });
 
     test.describe(title('focused'), () => {
-      test('should render disabled input correctly', async ({ page }) => {
+      test('should render focused input correctly', async ({ page }) => {
         await page.setContent(
           `
           <div class="container">
