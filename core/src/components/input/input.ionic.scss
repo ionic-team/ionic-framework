@@ -11,6 +11,8 @@
   --border-color: #{$ionic-color-neutral-300};
   --highlight-color-valid: #{$ionic-color-success-400};
   --highlight-color-invalid: #{$ionic-color-error-400};
+  --placeholder-color: #{$ionic-color-neutral-500};
+  --placeholder-opacity: 1;
   --text-color-invalid: #{$ionic-color-error-600};
 }
 
@@ -91,6 +93,11 @@
   color: var(--text-color-invalid);
 }
 
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
+  --border-width: #{tokens.$ionic-border-size-small};
+}
+
 // Input Hover
 // ----------------------------------------------------------------
 
@@ -136,4 +143,12 @@
 :host(.input-disabled.ion-color) .input-bottom .helper-text,
 :host(.input-disabled.ion-color) .helper-text {
   opacity: 0.6;
+}
+
+// Input Focus
+// ----------------------------------------------------------------
+
+:host(.has-focus) {
+  --border-color: #{tokens.$ionic-color-primary};
+  --border-width: #{tokens.$ionic-border-size-medium};
 }

@@ -142,5 +142,38 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         });
       });
     });
+
+    test.describe(title('focused'), () => {
+      test('should render focused input correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <div class="container">
+            <ion-input
+              label="Email" 
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              class="has-focus"
+            ></ion-input>
+
+            <ion-input
+              fill="outline"
+              label="Email" 
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              class="has-focus"
+            ></ion-input>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(screenshot(`input-focused`));
+      });
+    });
   });
 });
