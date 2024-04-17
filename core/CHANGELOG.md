@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.5](https://github.com/ionic-team/ionic-framework/compare/v7.8.4...v7.8.5) (2024-04-17)
+
+
+### Bug Fixes
+
+* **modal:** improve sheet modal scrolling and gesture behavior ([#29312](https://github.com/ionic-team/ionic-framework/issues/29312)) ([9738228](https://github.com/ionic-team/ionic-framework/commit/9738228bc05abe3e2012e57b0e6b85f0ec06f66b)), closes [#24583](https://github.com/ionic-team/ionic-framework/issues/24583)
+
+
+
+
+
 ## [7.8.4](https://github.com/ionic-team/ionic-framework/compare/v7.8.3...v7.8.4) (2024-04-10)
 
 
