@@ -1,8 +1,22 @@
 @import "./progress-bar";
+@import "./progress-bar.ios.vars";
 
 // iOS Progress bar
 // --------------------------------------------------
 
 :host {
-  height: 3px;
+  @include border-radius($progress-bar-ios-border-radius);
+
+  height: $progress-bar-ios-height;
+}
+
+:host(.progress-bar-solid) {
+  /**
+   * On iOS the unfilled portion of the progress bar
+   * is always a consistent background color. We
+   * only apply this style when the progress bar is
+   * solid (with a buffer value of 1). This maintains
+   * the custom Ionic appearance for a buffered progress bar.
+   */
+  --background: #{$background-color-step-100};
 }

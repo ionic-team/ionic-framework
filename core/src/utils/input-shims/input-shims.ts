@@ -33,7 +33,15 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
   const hideCaret = config.getBoolean('hideCaretOnScroll', isIOS);
-  const inputBlurring = config.getBoolean('inputBlurring', isIOS);
+
+  /**
+   * The team is evaluating if inputBlurring is still needed. As a result
+   * this feature is disabled by default as of Ionic 8.0. Developers are
+   * able to re-enable it temporarily. The team may remove this utility
+   * if it is determined that doing so would not bring any adverse side effects.
+   * TODO FW-6014 remove input blurring utility (including implementation)
+   */
+  const inputBlurring = config.getBoolean('inputBlurring', false);
   const scrollPadding = config.getBoolean('scrollPadding', true);
   const inputs = Array.from(doc.querySelectorAll('ion-input, ion-textarea')) as HTMLElement[];
 

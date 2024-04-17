@@ -49,6 +49,12 @@
       </ion-item>
 
       <ion-item>
+        <ion-radio-group formControlName="radio">
+          <ion-radio value="nes">Radio</ion-radio>
+        </ion-radio-group>
+      </ion-item>
+
+      <ion-item>
         <ion-input label="Min" formControlName="inputMin" type="number"></ion-input>
         <pre>errors: {{ profileForm.controls['inputMin'].errors | json }}</pre>
       </ion-item>

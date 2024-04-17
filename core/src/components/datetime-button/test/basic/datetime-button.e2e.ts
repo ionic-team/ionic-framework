@@ -1,6 +1,23 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('datetime-button: basic'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
+        <ion-datetime id="datetime" value="2022-01-01T06:30:00" presentation="date-time"></ion-datetime>
+      `,
+        config
+      );
+      const datetimeButton = page.locator('ion-datetime-button');
+
+      await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-basic`));
+    });
+  });
+});
+
 /**
  * The tested behavior does not
  * vary across modes/directions

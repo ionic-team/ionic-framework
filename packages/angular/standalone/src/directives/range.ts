@@ -29,7 +29,6 @@ const RANGE_INPUTS = [
   'dualKnobs',
   'label',
   'labelPlacement',
-  'legacy',
   'max',
   'min',
   'mode',

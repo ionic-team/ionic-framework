@@ -51,29 +51,26 @@
         background-color: rgb(248, 215, 255);
       }
 
-      /*
-        The second selectors that target ion-picker(-column)-internal
-        directly are for styling the time picker. This is currently
-        undocumented usage.
-      */
-
-      .custom-grid-wheel,
-      ion-picker-internal {
+      .custom-grid-wheel {
         --wheel-highlight-background: rgb(218, 216, 255);
+        --wheel-highlight-border-radius: 16px;
         --wheel-fade-background-rgb: 245, 235, 247;
       }
 
-      ion-picker-internal {
+      ion-picker {
+        --highlight-background: rgb(218, 216, 255);
+        --highlight-border-radius: 16px;
+        --fade-background-rgb: 245, 235, 247;
+
         background-color: rgb(245, 235, 247);
       }
-
       .custom-grid-wheel::part(wheel-item),
-      ion-picker-column-internal::part(wheel-item) {
+      ion-picker-column-option {
         color: rgb(255, 134, 154);
       }
 
       .custom-grid-wheel::part(wheel-item active),
-      ion-picker-column-internal::part(wheel-item active) {
+      ion-picker-column-option.option-active {
         color: rgb(128, 30, 171);
       }
 
