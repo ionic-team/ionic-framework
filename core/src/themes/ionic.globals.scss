@@ -1,4 +1,3 @@
-
 // Global Utility Functions
 @import "./ionic.functions.sizes";
 @import "./ionic.functions.string";
@@ -15,13 +14,12 @@
 // Default Theme
 @import "./ionic.theme.default";
 
-
 // Default General
 // --------------------------------------------------
-$font-family-base:                  var(--ion-font-family, inherit) !default;
+$font-family-base: var(--ion-font-family, inherit) !default;
 
 // Hairlines width
-$hairlines-width: .55px !default;
+$hairlines-width: 0.55px !default;
 
 // The minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries
@@ -30,7 +28,7 @@ $screen-breakpoints: (
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1200px
+  xl: 1200px,
 ) !default;
 
 // Input placeholder opacity
@@ -45,27 +43,26 @@ $form-control-label-margin: 16px !default;
 /// iOS does not have a floating label design spec, so we standardize on 0.75.
 $form-control-label-stacked-scale: 0.75 !default;
 
-
 // Z-Index
 // --------------------------------------------------
 // Grouped by elements which would be siblings
 
-$z-index-menu-overlay:           1000;
-$z-index-overlay:                1001;
+$z-index-menu-overlay: 1000;
+$z-index-overlay: 1001;
 
-$z-index-fixed-content:          999;
-$z-index-refresher:              -1;
+$z-index-fixed-content: 999;
+$z-index-refresher: -1;
 
-$z-index-page-container:         0;
-$z-index-toolbar:                10;
-$z-index-toolbar-background:     -1;
-$z-index-toolbar-buttons:        99;
+$z-index-page-container: 0;
+$z-index-toolbar: 10;
+$z-index-toolbar-background: -1;
+$z-index-toolbar-buttons: 99;
 
-$z-index-backdrop:               2;
-$z-index-overlay-wrapper:        10;
+$z-index-backdrop: 2;
+$z-index-overlay-wrapper: 10;
 
-$z-index-item-options:           1;
-$z-index-item-input:             2;
-$z-index-item-divider:           100;
+$z-index-item-options: 1;
+$z-index-item-input: 2;
+$z-index-item-divider: 100;
 
-$z-index-reorder-selected:       100;
+$z-index-reorder-selected: 100;

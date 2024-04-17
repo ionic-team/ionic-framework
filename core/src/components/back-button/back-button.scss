@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 :host {
- /**
+  /**
    * @prop --background: Background of the button
    * @prop --background-focused: Background of the button when focused with the tab key
    * @prop --background-focused-opacity: Opacity of the button background when focused with the tab key
@@ -99,14 +99,12 @@ ion-ripple-effect {
   color: var(--ripple-color);
 }
 
-
 // Back Button with Color
 // --------------------------------------------------
 
 :host(.ion-color) .button-native {
   color: current-color(base);
 }
-
 
 // Back Button States
 // --------------------------------------------------
@@ -117,7 +115,7 @@ ion-ripple-effect {
 
 :host(.back-button-disabled) {
   cursor: default;
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }
 
@@ -174,12 +172,16 @@ ion-ripple-effect {
   z-index: 1;
 }
 
-
 // Back Button Icon
 // --------------------------------------------------
 
 ion-icon {
-  @include padding(var(--icon-padding-top), var(--icon-padding-end), var(--icon-padding-bottom), var(--icon-padding-start));
+  @include padding(
+    var(--icon-padding-top),
+    var(--icon-padding-end),
+    var(--icon-padding-bottom),
+    var(--icon-padding-start)
+  );
   @include margin(var(--icon-margin-top), var(--icon-margin-end), var(--icon-margin-bottom), var(--icon-margin-start));
 
   display: inherit;
@@ -189,7 +191,6 @@ ion-icon {
 
   pointer-events: none;
 }
-
 
 // Back Button: Focused
 // --------------------------------------------------
@@ -203,7 +204,6 @@ ion-icon {
     opacity: var(--background-focused-opacity);
   }
 }
-
 
 // Back Button: Hover
 // --------------------------------------------------
@@ -224,14 +224,12 @@ ion-icon {
   }
 }
 
-
 // Back Button Color: Focused
 // --------------------------------------------------
 
 :host(.ion-color.ion-focused) .button-native {
   color: #{current-color(base)};
 }
-
 
 // Back Button Color: Hover
 // --------------------------------------------------
@@ -241,7 +239,6 @@ ion-icon {
     color: #{current-color(base)};
   }
 }
-
 
 // Back Button in Toolbar: Global Theming
 // --------------------------------------------------

@@ -6,7 +6,7 @@
 
 :host {
   // Border
-  --border-radius: calc(var(--size) * .125);
+  --border-radius: calc(var(--size) * 0.125);
   --border-width: #{$checkbox-md-icon-border-width};
   --border-style: #{$checkbox-md-icon-border-style};
   --border-color: #{$checkbox-md-icon-border-color-off};
@@ -36,7 +36,6 @@
 
   transition: stroke-dashoffset 90ms linear 90ms;
 }
-
 
 // Material Design Checkbox: Disabled
 // --------------------------------------------------------

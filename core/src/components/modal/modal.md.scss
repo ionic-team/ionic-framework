@@ -1,7 +1,6 @@
 @import "./modal";
 @import "./modal.md.vars";
 
-
 // Material Design Modals
 // --------------------------------------------------
 
@@ -19,6 +18,5 @@
 .modal-wrapper {
   @include transform(translate3d(0, 40px, 0));
 
-  opacity: .01;
+  opacity: 0.01;
 }
-

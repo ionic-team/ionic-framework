@@ -40,12 +40,12 @@
 }
 
 :host(.ion-color) ::slotted(.tab-selected) {
-  color: #{current-color(contrast)};;
+  color: #{current-color(contrast)};
 }
 
 :host(.ion-color),
 :host(.ion-color) ::slotted(ion-tab-button) {
-  color: #{current-color(contrast, .7)};
+  color: #{current-color(contrast, 0.7)};
 }
 
 :host(.ion-color),
@@ -55,7 +55,7 @@
 
 :host(.ion-color) ::slotted(ion-tab-button.ion-focused),
 :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
-  background: var(--background-focused)
+  background: var(--background-focused);
 }
 
 :host(.tab-bar-translucent) ::slotted(ion-tab-button) {

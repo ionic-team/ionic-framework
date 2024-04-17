@@ -142,7 +142,6 @@ input {
 // Toggle Align
 // --------------------------------------------------
 
-
 :host(.toggle-alignment-start) .toggle-wrapper {
   align-items: start;
 }
@@ -335,7 +334,7 @@ input {
 
 :host(.toggle-ltr.toggle-checked) .toggle-icon-wrapper {
   // transform by 100% - handle width
-  transform: translate3d(calc(100% - var(--handle-width)), 0, 0)
+  transform: translate3d(calc(100% - var(--handle-width)), 0, 0);
 }
 
 :host(.toggle-rtl.toggle-checked) .toggle-icon-wrapper {

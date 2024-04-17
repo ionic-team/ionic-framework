@@ -24,7 +24,7 @@
 
 .button-native {
   @include text-inherit();
-  @include padding(0, .7em);
+  @include padding(0, 0.7em);
 
   display: inline-block;
 
@@ -84,11 +84,10 @@
   @include padding(0);
   @include margin(0, 10px);
 
-  min-width: .9em;
+  min-width: 0.9em;
 
   font-size: 1.8em;
 }
-
 
 // Item Expandable Animation
 // --------------------------------------------------
@@ -98,9 +97,8 @@
 
   transition-duration: 0;
   transition-property: none;
-  transition-timing-function: cubic-bezier(.65, .05, .36, 1);
+  transition-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
 }
-
 
 // Item Disabled Styling
 // --------------------------------------------------
@@ -111,6 +109,6 @@
 
 :host(.item-option-disabled) .button-native {
   cursor: default;
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }

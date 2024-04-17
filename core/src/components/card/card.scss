@@ -26,7 +26,6 @@
   overflow: hidden;
 }
 
-
 // Card Colors
 // ---------------------------------------------
 
@@ -35,16 +34,14 @@
   color: current-color(contrast);
 }
 
-
 // Disabled Card
 // --------------------------------------------------
 
 :host(.card-disabled) {
   cursor: default;
-  opacity: .3;
+  opacity: 0.3;
   pointer-events: none;
 }
-
 
 // Native
 // --------------------------------------------------
@@ -74,7 +71,8 @@
   border: 0;
 }
 
-button, a {
+button,
+a {
   cursor: pointer;
   user-select: none;
 

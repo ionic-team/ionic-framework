@@ -10,7 +10,12 @@
 // Header
 // -----------------------------------
 :host .datetime-header {
-  @include padding($datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding);
+  @include padding(
+    $datetime-md-header-padding,
+    $datetime-md-header-padding,
+    $datetime-md-header-padding,
+    $datetime-md-header-padding
+  );
 
   background: current-color(base);
   color: var(--title-color);

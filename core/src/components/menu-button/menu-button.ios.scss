@@ -6,7 +6,7 @@
 
 :host {
   --background-focused: currentColor;
-  --background-focused-opacity: .1;
+  --background-focused-opacity: 0.1;
   --border-radius: 4px;
   --color: #{ion-color(primary, base)};
   --padding-start: 5px;
@@ -17,20 +17,18 @@
   font-size: dynamic-font-clamp(1, 31px, 1.23);
 }
 
-
 // Menu Button: Activated
 // --------------------------------------------------
 
 :host(.ion-activated) {
-  opacity: .4;
+  opacity: 0.4;
 }
-
 
 // Menu Button: Hover
 // --------------------------------------------------
 
 @media (any-hover: hover) {
   :host(:hover) {
-    opacity: .6;
+    opacity: 0.6;
   }
 }

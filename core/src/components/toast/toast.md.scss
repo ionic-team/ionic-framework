@@ -23,13 +23,18 @@
   display: block;
   position: absolute;
 
-  opacity: .01;
+  opacity: 0.01;
 
   z-index: $z-index-overlay-wrapper;
 }
 
 .toast-content {
-  @include padding($toast-md-content-padding-top, $toast-md-content-padding-end, $toast-md-content-padding-bottom, $toast-md-content-padding-start);
+  @include padding(
+    $toast-md-content-padding-top,
+    $toast-md-content-padding-end,
+    $toast-md-content-padding-bottom,
+    $toast-md-content-padding-start
+  );
 }
 
 .toast-header {
@@ -44,10 +49,8 @@
   line-height: $toast-md-message-line-height;
 }
 
-
 // Material Design Toast Button
 // --------------------------------------------------
-
 
 .toast-layout-baseline .toast-button-group-start {
   @include margin(null, null, null, 8px);
@@ -66,7 +69,12 @@
 }
 
 .toast-button {
-  @include padding($toast-md-button-padding-top, $toast-md-button-padding-end, $toast-md-button-padding-bottom, $toast-md-button-padding-start);
+  @include padding(
+    $toast-md-button-padding-top,
+    $toast-md-button-padding-end,
+    $toast-md-button-padding-bottom,
+    $toast-md-button-padding-start
+  );
 
   // necessary for ripple to work properly
   position: relative;
@@ -95,7 +103,6 @@
   width: $toast-md-button-icon-only-width;
   height: $toast-md-button-icon-only-height;
 }
-
 
 // Material Design Toast Button: Hover
 // --------------------------------------------------

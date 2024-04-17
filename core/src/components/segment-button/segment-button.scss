@@ -82,7 +82,7 @@
   @include text-inherit();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include transform(translate3d(0,0,0));
+  @include transform(translate3d(0, 0, 0));
 
   display: flex;
   position: relative;
@@ -135,7 +135,6 @@
   z-index: 1;
 }
 
-
 // Segment Button: Checked
 // --------------------------------------------------
 
@@ -144,7 +143,6 @@
   color: var(--color-checked);
 }
 
-
 // Segment Button: Disabled
 // --------------------------------------------------
 
@@ -152,7 +150,6 @@
   cursor: default;
   pointer-events: none;
 }
-
 
 // Segment Button: Focused
 // --------------------------------------------------
@@ -190,7 +187,6 @@
   }
 }
 
-
 // Segment Button Icon
 // --------------------------------------------------
 
@@ -201,7 +197,6 @@
 
   pointer-events: none;
 }
-
 
 // Segment Button Label
 // --------------------------------------------------
@@ -225,7 +220,6 @@
 
   pointer-events: none;
 }
-
 
 // Segment Button Layout
 // --------------------------------------------------
@@ -302,7 +296,6 @@ ion-ripple-effect {
 :host(.segment-button-checked) .segment-button-indicator {
   opacity: 1;
 }
-
 
 // Segment: Reduced Motion
 // --------------------------------------------------

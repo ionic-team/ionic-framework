@@ -1,7 +1,6 @@
 @import "../themes/ionic.globals";
 @import "../themes/ionic.mixins";
 
-
 // Element Space
 // --------------------------------------------------
 // Creates padding and margin attributes to be used on
@@ -68,7 +67,6 @@ $margin: var(--ion-margin, 16px);
 
   @include padding-horizontal($padding);
 }
-
 
 // Margin
 // --------------------------------------------------

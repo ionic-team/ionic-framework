@@ -112,10 +112,9 @@ ion-icon {
 
 :host(.menu-button-disabled) {
   cursor: default;
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }
-
 
 // Menu Button: Focused
 // --------------------------------------------------
@@ -129,7 +128,6 @@ ion-icon {
     opacity: var(--background-focused-opacity);
   }
 }
-
 
 // Menu Button: Hover
 // --------------------------------------------------
@@ -150,14 +148,12 @@ ion-icon {
   }
 }
 
-
 // Menu Button with Color
 // --------------------------------------------------
 
 :host(.ion-color) .button-native {
   color: current-color(base);
 }
-
 
 // Menu Button in Toolbar: Global Theming
 // --------------------------------------------------

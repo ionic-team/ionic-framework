@@ -669,7 +669,8 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-.start-slot-wrapper, .end-slot-wrapper {
+.start-slot-wrapper,
+.end-slot-wrapper {
   @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
 
   display: flex;

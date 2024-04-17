@@ -116,9 +116,8 @@
 :host(.tab-disabled) {
   pointer-events: none;
 
-  opacity: .4;
+  opacity: 0.4;
 }
-
 
 // Tab Button: Label / Icon
 // --------------------------------------------------
@@ -149,11 +148,9 @@
   height: 1em;
 }
 
-
 :host(.tab-has-label-only) ::slotted(ion-label) {
   white-space: normal;
 }
-
 
 // Tab Button: Badge
 // --------------------------------------------------
@@ -165,7 +162,6 @@
 
   z-index: 1;
 }
-
 
 // Tab Button: Layout
 // --------------------------------------------------

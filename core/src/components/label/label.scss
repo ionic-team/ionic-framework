@@ -1,6 +1,5 @@
 @import "../../themes/ionic.globals";
 
-
 // Label
 // --------------------------------------------------
 
@@ -32,7 +31,7 @@
 
 :host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
   cursor: default;
-  opacity: .3;
+  opacity: 0.3;
   pointer-events: none;
 }
 

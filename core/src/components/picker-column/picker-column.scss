@@ -115,7 +115,8 @@
   scroll-snap-align: none;
 }
 
-::slotted([slot="prefix"]), ::slotted([slot="suffix"]) {
+::slotted([slot="prefix"]),
+::slotted([slot="suffix"]) {
   max-width: 200px;
 
   text-overflow: ellipsis;

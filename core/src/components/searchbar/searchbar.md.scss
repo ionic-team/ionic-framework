@@ -13,11 +13,15 @@
   --color: #{$searchbar-md-input-text-color};
   --icon-color: #{$searchbar-md-input-search-icon-color};
 
-  @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
+  @include padding(
+    $searchbar-md-padding-top,
+    $searchbar-md-padding-end,
+    $searchbar-md-padding-bottom,
+    $searchbar-md-padding-start
+  );
 
   background: $searchbar-md-background;
 }
-
 
 // Searchbar Search Icon
 // -----------------------------------------
@@ -28,7 +32,6 @@
   width: $searchbar-md-input-search-icon-size;
   height: $searchbar-md-input-search-icon-size;
 }
-
 
 // Searchbar Cancel Icon
 // -----------------------------------------
@@ -60,7 +63,6 @@
   background-color: transparent;
 }
 
-
 // Searchbar Input Field
 // -----------------------------------------
 
@@ -75,7 +77,6 @@
 
   line-height: $searchbar-md-input-line-height;
 }
-
 
 // Searchbar Clear Input Icon
 // -----------------------------------------
@@ -102,7 +103,6 @@
   height: 100%;
 }
 
-
 // Searchbar Focused
 // -----------------------------------------
 
@@ -119,7 +119,6 @@
 :host(.searchbar-should-show-cancel) .searchbar-cancel-button + .searchbar-search-icon {
   display: none;
 }
-
 
 // Searchbar in Toolbar
 // -----------------------------------------

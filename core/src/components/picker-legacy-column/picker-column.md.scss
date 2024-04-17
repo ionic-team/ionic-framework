@@ -5,7 +5,12 @@
 // --------------------------------------------------
 
 .picker-col {
-  @include padding($picker-md-column-padding-top, $picker-md-column-padding-end, $picker-md-column-padding-bottom, $picker-md-column-padding-start);
+  @include padding(
+    $picker-md-column-padding-top,
+    $picker-md-column-padding-end,
+    $picker-md-column-padding-bottom,
+    $picker-md-column-padding-start
+  );
 
   transform-style: preserve-3d;
 }
@@ -25,10 +30,14 @@
   pointer-events: none;
 }
 
-
 .picker-opt {
   @include margin(0);
-  @include padding($picker-md-option-padding-top, $picker-md-option-padding-end, $picker-md-option-padding-bottom, $picker-md-option-padding-start);
+  @include padding(
+    $picker-md-option-padding-top,
+    $picker-md-option-padding-end,
+    $picker-md-option-padding-bottom,
+    $picker-md-option-padding-start
+  );
 
   height: 43px;
 

@@ -4,16 +4,15 @@
 // --------------------------------------------------
 
 .swiper {
-
   // These values are the same for iOS and MD
   // We just do not add a .md or .ios class beforehand
   // so the styles are easier to override by the user.
   --bullet-background: $text-color-step-800;
   --bullet-background-active: ion-color(primary, base);
-  --progress-bar-background: rgba($text-color-rgb, .25);
+  --progress-bar-background: rgba($text-color-rgb, 0.25);
   --progress-bar-background-active: ion-color(primary, shade);
-  --scroll-bar-background: rgba($text-color-rgb, .1);
-  --scroll-bar-background-active: rgba($text-color-rgb, .5);
+  --scroll-bar-background: rgba($text-color-rgb, 0.1);
+  --scroll-bar-background-active: rgba($text-color-rgb, 0.5);
   /**
    * @prop --bullet-background: Background of the pagination bullets
    * @prop --bullet-background-active: Background of the active pagination bullet
@@ -39,7 +38,6 @@
 .swiper .swiper-pagination-bullet-active {
   background: var(--bullet-background-active);
 }
-
 
 // Pagination Progress Bar
 // --------------------------------------------------
@@ -75,7 +73,6 @@
 }
 
 .swiper .swiper-slide {
-
   // Center slide text vertically
   display: flex;
   position: relative;
