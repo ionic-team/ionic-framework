@@ -42,7 +42,9 @@ import { RouteView, StackDidChangeEvent, StackWillChangeEvent, getUrl, isTabSwit
   inputs: ['animated', 'animation', 'mode', 'swipeGesture'],
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export class IonRouterOutlet implements OnDestroy, OnInit {
+export abstract class IonRouterOutlet implements OnDestroy, OnInit {
+  abstract outletContent: any;
+
   nativeEl: HTMLIonRouterOutletElement;
   activatedView: RouteView | null = null;
   tabsPrefix: string | undefined;
@@ -276,8 +278,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component ?? snapshot.component;
 
-      cmpRef = this.activated = this.location.createComponent(component, {
-        index: this.location.length,
+      /**
+       * View components need to be added as a child of ion-router-outlet
+       * for page transitions and swipe to go back.
+       * However, createComponent mounts components as siblings of the
+       * ViewContainerRef. As a result, outletContent must reference
+       * an ng-container inside of ion-router-outlet and not
+       * ion-router-outlet itself.
+       */
+      cmpRef = this.activated = this.outletContent.createComponent(component, {
+        index: this.outletContent.length,
         injector,
         environmentInjector: environmentInjector ?? this.environmentInjector,
       });
@@ -287,7 +297,13 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
-      enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
+
+      /**
+       * At this point this.activated has been set earlier
+       * in this function, so it is guaranteed to be non-null.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      enteringView = this.stackCtrl.createView(this.activated!, activatedRoute);
 
       // Store references to the proxy by component
       this.proxyMap.set(cmpRef.instance, activatedRouteProxy);

@@ -13,7 +13,7 @@ $segment-button-ios-background-checked:               $segment-button-ios-backgr
 $segment-button-ios-color:                            $text-color !default;
 
 /// @prop - Background of the checked segment button indicator
-$segment-button-ios-indicator-color:                  var(--ion-color-step-350, $background-color) !default;
+$segment-button-ios-indicator-color:                  var(--ion-color-step-350, var(--ion-background-color-step-350, $background-color)) !default;
 
 /// @prop - Margin of the segment button
 $segment-button-ios-margin:                           2px !default;

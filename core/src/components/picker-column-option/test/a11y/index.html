@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Picker Column Option - a11y</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <ion-picker-column-option> my option </ion-picker-column-option>
+      <ion-picker-column-option aria-label="the best one"> other option </ion-picker-column-option>
+      <ion-picker-column-option color="tertiary" class="option-active">option</ion-picker-column-option>
+      <ion-picker-column-option disabled="true">option</ion-picker-column-option>
+      <ion-picker-column-option color="tertiary" class="option-active" disabled="true">option</ion-picker-column-option>
+    </main>
+  </body>
+</html>

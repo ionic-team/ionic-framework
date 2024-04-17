@@ -23,7 +23,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(push1Done).toHaveBeenCalledWith(hasCompleted, requiresTransition, view1, undefined, 'forward');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView1);
 
       // Push 2
@@ -32,7 +32,7 @@ describe('NavController', () => {
 
       expect(push2Done).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view1, 'forward');
 
-      expect(nav.getLength()).toEqual(2);
+      expect(await nav.getLength()).toEqual(2);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
 
@@ -41,7 +41,7 @@ describe('NavController', () => {
       await nav.push(view3, null, { animated: false }, push3Done);
 
       expect(push3Done).toHaveBeenCalledWith(hasCompleted, requiresTransition, view3, view2, 'forward');
-      expect(nav.getLength()).toEqual(3);
+      expect(await nav.getLength()).toEqual(3);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
       expect(nav['views'][2].component).toEqual(MockView3);
@@ -50,7 +50,7 @@ describe('NavController', () => {
       const view4 = mockView(MockView4);
       await nav.push(view4, null, { animated: false }, push4Done);
       expect(push4Done).toHaveBeenCalledWith(hasCompleted, requiresTransition, view4, view3, 'forward');
-      expect(nav.getLength()).toEqual(4);
+      expect(await nav.getLength()).toEqual(4);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
       expect(nav['views'][2].component).toEqual(MockView3);
@@ -59,7 +59,7 @@ describe('NavController', () => {
       // Pop 1
       await nav.pop({ animated: false }, pop1Done);
       expect(pop1Done).toHaveBeenCalledWith(hasCompleted, requiresTransition, view3, view4, 'back');
-      expect(nav.getLength()).toEqual(3);
+      expect(await nav.getLength()).toEqual(3);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
       expect(nav['views'][2].component).toEqual(MockView3);
@@ -67,14 +67,14 @@ describe('NavController', () => {
       // Pop 2
       await nav.pop({ animated: false }, pop2Done);
       expect(pop2Done).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view3, 'back');
-      expect(nav.getLength()).toEqual(2);
+      expect(await nav.getLength()).toEqual(2);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
 
       // Pop 3
       await nav.pop({ animated: false }, pop3Done);
       expect(pop3Done).toHaveBeenCalledWith(hasCompleted, requiresTransition, view1, view2, 'back');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView1);
     }, 10000);
   });
@@ -86,7 +86,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view1, undefined, 'forward');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['isTransitioning']).toEqual(false);
     }, 10000);
@@ -102,7 +102,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view1, 'forward');
-      expect(nav.getLength()).toEqual(2);
+      expect(await nav.getLength()).toEqual(2);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
       expect(nav['isTransitioning']).toEqual(false);
@@ -134,7 +134,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view1, 'forward');
-      expect(nav.getLength()).toEqual(2);
+      expect(await nav.getLength()).toEqual(2);
     }, 10000);
   });
 
@@ -156,9 +156,9 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = false;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, undefined, undefined, undefined);
-      expect(nav.getLength()).toEqual(4);
+      expect(await nav.getLength()).toEqual(4);
       expect(nav['views'][0].component).toEqual(MockView4);
-      expect(nav['views'][nav.getLength() - 1].component).toEqual(MockView3);
+      expect(nav['views'][(await nav.getLength()) - 1].component).toEqual(MockView3);
     }, 10000);
 
     it('should insert at the end when given -1', async () => {
@@ -172,8 +172,8 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view1, 'forward');
-      expect(nav.getLength()).toEqual(2);
-      expect(nav['views'][nav.getLength() - 1].component).toEqual(MockView2);
+      expect(await nav.getLength()).toEqual(2);
+      expect(nav['views'][(await nav.getLength()) - 1].component).toEqual(MockView2);
     }, 10000);
 
     it('should insert at the end when given a number greater than actual length', async () => {
@@ -185,8 +185,8 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view1, 'forward');
-      expect(nav.getLength()).toEqual(2);
-      expect(nav['views'][nav.getLength() - 1].component).toEqual(MockView2);
+      expect(await nav.getLength()).toEqual(2);
+      expect(nav['views'][(await nav.getLength()) - 1].component).toEqual(MockView2);
     }, 10000);
 
     it('should not insert if null view', (done) => {
@@ -197,14 +197,14 @@ describe('NavController', () => {
         .then(() => {
           fail('it should not succeed');
         })
-        .catch((err: Error) => {
+        .catch(async (err: Error) => {
           const hasCompleted = false;
           const requiresTransition = false;
           const rejectReason = new Error('invalid views to insert');
           expect(err).toEqual(rejectReason);
           expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
-          expect(nav.getLength()).toEqual(1);
-          expect(nav['views'][nav.getLength() - 1].component).toEqual(MockView1);
+          expect(await nav.getLength()).toEqual(1);
+          expect(nav['views'][(await nav.getLength()) - 1].component).toEqual(MockView1);
           done();
         });
     }, 10000);
@@ -232,7 +232,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = false;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, undefined, undefined, undefined);
-      expect(nav.getLength()).toEqual(5);
+      expect(await nav.getLength()).toEqual(5);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView4);
       expect(nav['views'][2].component).toEqual(MockView5);
@@ -251,13 +251,13 @@ describe('NavController', () => {
         .then(() => {
           fail('it should not succeed');
         })
-        .catch((err: any) => {
+        .catch(async (err: any) => {
           const hasCompleted = false;
           const requiresTransition = false;
           const rejectReason = new Error('no views in the stack to be removed');
           expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
           expect(err).toEqual(rejectReason);
-          expect(nav.getLength()).toEqual(0);
+          expect(await nav.getLength()).toEqual(0);
           expect(nav['isTransitioning']).toEqual(false);
           done();
         });
@@ -287,7 +287,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view1, view2, 'back');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['isTransitioning']).toEqual(false);
     }, 10000);
@@ -305,7 +305,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view3, 'back');
-      expect(nav.getLength()).toEqual(2);
+      expect(await nav.getLength()).toEqual(2);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
     }, 10000);
@@ -322,7 +322,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view4, 'back');
-      expect(nav.getLength()).toEqual(2);
+      expect(await nav.getLength()).toEqual(2);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
     }, 10000);
@@ -368,7 +368,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view1, view4, 'back');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView1);
     }, 10000);
   });
@@ -415,7 +415,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view1, view4, 'back');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView1);
     }, 10000);
 
@@ -427,7 +427,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = false;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, undefined, undefined, undefined);
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView1);
     }, 10000);
   });
@@ -474,7 +474,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = false;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, undefined, undefined, undefined);
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView4);
     }, 10000);
 
@@ -527,7 +527,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = false;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, undefined, undefined, undefined);
-      expect(nav.getLength()).toEqual(3);
+      expect(await nav.getLength()).toEqual(3);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
       expect(nav['views'][2].component).toEqual(MockView5);
@@ -574,7 +574,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view4, 'back');
-      expect(nav.getLength()).toEqual(2);
+      expect(await nav.getLength()).toEqual(2);
       expect(nav['views'][0].component).toEqual(MockView1);
       expect(nav['views'][1].component).toEqual(MockView2);
     }, 10000);
@@ -613,7 +613,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = false;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, undefined, undefined, undefined);
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView3);
     }, 10000);
 
@@ -649,7 +649,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view2, view3, 'back');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView2);
     }, 10000);
 
@@ -685,7 +685,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view1, view3, 'back');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView1);
     }, 10000);
 
@@ -708,7 +708,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view4, view3, 'back');
-      expect(nav.getLength()).toEqual(1);
+      expect(await nav.getLength()).toEqual(1);
       expect(nav['views'][0].component).toEqual(MockView4);
     }, 10000);
   });
@@ -732,7 +732,7 @@ describe('NavController', () => {
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, view5, view2, 'back');
-      expect(nav.getLength()).toEqual(2);
+      expect(await nav.getLength()).toEqual(2);
       expect(nav['views'][0].component).toEqual(MockView4);
       expect(nav['views'][1].component).toEqual(MockView5);
     }, 10000);

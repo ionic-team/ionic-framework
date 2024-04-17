@@ -23,7 +23,6 @@ const CHECKBOX_INPUTS = [
   'indeterminate',
   'justify',
   'labelPlacement',
-  'legacy',
   'mode',
   'name',
   'value',

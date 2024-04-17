@@ -8,11 +8,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.goto('/src/utils/animation/test/display', config);
       await testDisplay(page);
     });
-
-    test(`should resolve using css animations`, async ({ page }) => {
-      await page.goto('/src/utils/animation/test/display?ionic:_forceCSSAnimations=true', config);
-      await testDisplay(page);
-    });
   });
 });
 

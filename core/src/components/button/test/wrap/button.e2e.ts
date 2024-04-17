@@ -4,10 +4,9 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: wrap'), () => {
     test('should render button with long text', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
-        <ion-button class="ion-text-wrap">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+        <ion-button>This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
       `,
         config
       );
@@ -18,10 +17,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render small button with long text', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
-        <ion-button class="ion-text-wrap" size="small">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+        <ion-button size="small">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
       `,
         config
       );
@@ -32,10 +30,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render large button with long text', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
-        <ion-button class="ion-text-wrap" size="large">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+        <ion-button size="large">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
       `,
         config
       );
@@ -46,10 +43,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render button with long text and icons', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
-        <ion-button class="ion-text-wrap">
+        <ion-button>
           <ion-icon slot="start" name="heart"></ion-icon>
           This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
           <ion-icon slot="end" name="star"></ion-icon>
@@ -64,10 +60,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render block button with long text', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
-        <ion-button class="ion-text-wrap" expand="block">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+        <ion-button expand="block">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
       `,
         config
       );
@@ -78,10 +73,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render block button with long text and icons', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
-        <ion-button class="ion-text-wrap" expand="block">
+        <ion-button expand="block">
           <ion-icon slot="start" name="heart"></ion-icon>
           This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
           <ion-icon slot="end" name="star"></ion-icon>
@@ -96,10 +90,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render full button with long text', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
-        <ion-button class="ion-text-wrap" expand="full">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+        <ion-button expand="full">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
       `,
         config
       );
@@ -110,10 +103,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render full button with long text and icons', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
-        <ion-button class="ion-text-wrap" expand="full">
+        <ion-button expand="full">
           <ion-icon slot="start" name="heart"></ion-icon>
           This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
           <ion-icon slot="end" name="star"></ion-icon>
@@ -128,11 +120,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render an item button with long text', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
         <ion-item>
-          <ion-button class="ion-text-wrap" slot="end">
+          <ion-button slot="end">
             This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
           </ion-button>
         </ion-item>
@@ -146,11 +137,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render an item button with long text and icons', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
         <ion-item>
-          <ion-button class="ion-text-wrap" slot="end">
+          <ion-button slot="end">
             <ion-icon slot="start" name="heart"></ion-icon>
             This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
             <ion-icon slot="end" name="star"></ion-icon>
@@ -166,12 +156,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render a list header button with long text', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
         <ion-list-header>
           <ion-label>List Header</ion-label>
-          <ion-button class="ion-text-wrap">
+          <ion-button>
             This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
           </ion-button>
         </ion-list-header>
@@ -185,12 +174,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should render a toolbar button with long text', async ({ page }) => {
-      // TODO(FW-4599): remove ion-text-wrap class
       await page.setContent(
         `
         <ion-toolbar>
           <ion-buttons slot="end">
-            <ion-button class="ion-text-wrap">
+            <ion-button>
               This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
             </ion-button>
           </ion-buttons>

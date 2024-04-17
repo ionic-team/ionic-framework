@@ -15,7 +15,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const datetimeFooter = page.locator('#date-time .datetime-footer');
       await expect(datetimeFooter).toBeVisible();
 
-      const pickerButton = page.locator('#date-time .calendar-month-year > ion-item');
+      const pickerButton = page.locator('#date-time .calendar-month-year > .calendar-month-year-toggle');
       await pickerButton.click();
       await page.waitForChanges();
       await expect(datetimeFooter).not.toBeVisible();
