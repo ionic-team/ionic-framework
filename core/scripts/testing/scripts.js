@@ -24,13 +24,7 @@
     const linkTag = document.createElement('link');
     linkTag.setAttribute('rel', 'stylesheet');
     linkTag.setAttribute('type', 'text/css');
-    /**
-     * The file must be the same as the one being used in Playwright tests
-     * when `dark` is being passed as a `theme` option.
-     * This provides consistency when Playwright is running through
-     * the test page or the `setContent` method.
-     */
-    linkTag.setAttribute('href', `/scripts/testing/themes/${palette[1]}.css`);
+    linkTag.setAttribute('href', `/css/palettes/${palette[1]}.always.css`);
     document.head.appendChild(linkTag);
   }
 

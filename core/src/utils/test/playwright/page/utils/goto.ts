@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction, Theme } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction, Palette } from '@utils/test/playwright';
 
 /**
  * This is an extended version of Playwright's
@@ -28,16 +28,16 @@ configs().forEach(({ config, title }) => {
 
   let mode: Mode;
   let direction: Direction;
-  let theme: Theme;
+  let palette: Palette;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
-    theme = testInfo.project.metadata.theme;
+    palette = testInfo.project.metadata.palette;
   } else {
     mode = options.mode;
     direction = options.direction;
-    theme = options.theme;
+    palette = options.palette;
   }
 
   const rtlString = direction === 'rtl' ? 'true' : undefined;
@@ -52,13 +52,7 @@ configs().forEach(({ config, title }) => {
   const urlToParams = new URLSearchParams(paramsString);
   const formattedMode = urlToParams.get('ionic:mode') ?? mode;
   const formattedRtl = urlToParams.get('rtl') ?? rtlString;
-  /**
-   * The term `palette` is used to as a param to
-   * match the Ionic docs, plus here is already a
-   * `ionic:theme` query being used for `md`, `ios`,
-   * and `ionic` themes.
-   */
-  const formattedPalette = urlToParams.get('palette') ?? theme;
+  const formattedPalette = urlToParams.get('palette') ?? palette;
   const ionicTesting = urlToParams.get('ionic:_testing') ?? true;
 
   /**
