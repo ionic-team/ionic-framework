@@ -6,10 +6,6 @@
 /// @prop - Padding top/bottom of the range
 $range-md-padding-vertical:                  8px !default;
 
-/// @prop - Padding start/end of the range
-// TODO FW-2997 Remove this
-$range-md-padding-horizontal:                14px !default;
-
 /// @prop - Padding start/end of the range - modern range
 /**
  * 18px was chosen so the knob and its focus/active

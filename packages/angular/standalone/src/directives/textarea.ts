@@ -34,7 +34,6 @@ const TEXTAREA_INPUTS = [
   'inputmode',
   'label',
   'labelPlacement',
-  'legacy',
   'maxlength',
   'minlength',
   'mode',

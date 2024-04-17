@@ -12,4 +12,4 @@ $breadcrumb-baseline-font-size: 16px !default;
 $breadcrumb-font-size:           dynamic-font($breadcrumb-baseline-font-size) !default;
 
 /// @prop - Color of the breadcrumb separator
-$breadcrumb-separator-color:     var(--ion-color-step-550, #73849a) !default;
+$breadcrumb-separator-color:     var(--ion-color-step-550, var(--ion-text-color-step-450, #73849a)) !default;

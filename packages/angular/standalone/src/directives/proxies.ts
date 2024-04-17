@@ -36,6 +36,7 @@ import { defineCustomElement as defineIonHeader } from '@ionic/core/components/i
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
+import { defineCustomElement as defineIonInputPasswordToggle } from '@ionic/core/components/ion-input-password-toggle.js';
 import { defineCustomElement as defineIonItem } from '@ionic/core/components/ion-item.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
 import { defineCustomElement as defineIonItemGroup } from '@ionic/core/components/ion-item-group.js';
@@ -52,7 +53,11 @@ import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/componen
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
 import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
+import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/components/ion-picker-column.js';
+import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
+import { defineCustomElement as defineIonPickerLegacy } from '@ionic/core/components/ion-picker-legacy.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
+import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
 import { defineCustomElement as defineIonRefresher } from '@ionic/core/components/ion-refresher.js';
 import { defineCustomElement as defineIonRefresherContent } from '@ionic/core/components/ion-refresher-content.js';
 import { defineCustomElement as defineIonReorder } from '@ionic/core/components/ion-reorder.js';
@@ -973,15 +978,39 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
 
 
 @ProxyCmp({
+  defineCustomElementFn: defineIonInputPasswordToggle,
+  inputs: ['color', 'hideIcon', 'mode', 'showIcon']
+})
+@Component({
+  selector: 'ion-input-password-toggle',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'hideIcon', 'mode', 'showIcon'],
+  standalone: true
+})
+export class IonInputPasswordToggle {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonInputPasswordToggle extends Components.IonInputPasswordToggle {}
+
+
+@ProxyCmp({
   defineCustomElementFn: defineIonItem,
-  inputs: ['button', 'color', 'counter', 'counterFormatter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type']
+  inputs: ['button', 'color', 'detail', 'detailIcon', 'disabled', 'download', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type']
 })
 @Component({
   selector: 'ion-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['button', 'color', 'counter', 'counterFormatter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type'],
+  inputs: ['button', 'color', 'detail', 'detailIcon', 'disabled', 'download', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type'],
   standalone: true
 })
 export class IonItem {
@@ -1407,18 +1436,99 @@ export declare interface IonNote extends Components.IonNote {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonPicker,
-  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-picker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  inputs: ['mode'],
   standalone: true
 })
 export class IonPicker {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonPicker extends Components.IonPicker {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonPickerColumn,
+  inputs: ['color', 'disabled', 'mode', 'value'],
+  methods: ['setFocus']
+})
+@Component({
+  selector: 'ion-picker-column',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'disabled', 'mode', 'value'],
+  standalone: true
+})
+export class IonPickerColumn {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange']);
+  }
+}
+
+
+import type { PickerColumnChangeEventDetail as IIonPickerColumnPickerColumnChangeEventDetail } from '@ionic/core/components';
+
+export declare interface IonPickerColumn extends Components.IonPickerColumn {
+  /**
+   * Emitted when the value has changed.
+   */
+  ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonPickerColumnOption,
+  inputs: ['color', 'disabled', 'value']
+})
+@Component({
+  selector: 'ion-picker-column-option',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'disabled', 'value'],
+  standalone: true
+})
+export class IonPickerColumnOption {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonPickerColumnOption extends Components.IonPickerColumnOption {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonPickerLegacy,
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
+})
+@Component({
+  selector: 'ion-picker-legacy',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  standalone: true
+})
+export class IonPickerLegacy {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -1428,9 +1538,9 @@ export class IonPicker {
 }
 
 
-import type { OverlayEventDetail as IIonPickerOverlayEventDetail } from '@ionic/core/components';
+import type { OverlayEventDetail as IIonPickerLegacyOverlayEventDetail } from '@ionic/core/components';
 
-export declare interface IonPicker extends Components.IonPicker {
+export declare interface IonPickerLegacy extends Components.IonPickerLegacy {
   /**
    * Emitted after the picker has presented.
    */
@@ -1442,11 +1552,11 @@ export declare interface IonPicker extends Components.IonPicker {
   /**
    * Emitted before the picker has dismissed.
    */
-  ionPickerWillDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  ionPickerWillDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has dismissed.
    */
-  ionPickerDidDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  ionPickerDidDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has presented.
 Shorthand for ionPickerWillDismiss.
@@ -1461,12 +1571,12 @@ Shorthand for ionPickerWillPresent.
    * Emitted before the picker has dismissed.
 Shorthand for ionPickerWillDismiss.
    */
-  willDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  willDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has dismissed.
 Shorthand for ionPickerDidDismiss.
    */
-  didDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  didDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
 }
 
 
@@ -1492,6 +1602,40 @@ export class IonProgressBar {
 
 
 export declare interface IonProgressBar extends Components.IonProgressBar {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonRadio,
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value']
+})
+@Component({
+  selector: 'ion-radio',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value'],
+  standalone: true
+})
+export class IonRadio {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
+  }
+}
+
+
+export declare interface IonRadio extends Components.IonRadio {
+  /**
+   * Emitted when the radio button has focus.
+   */
+  ionFocus: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the radio button loses focus.
+   */
+  ionBlur: EventEmitter<CustomEvent<void>>;
+}
 
 
 @ProxyCmp({

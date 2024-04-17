@@ -208,7 +208,7 @@ $alert-md-radio-border-style:                 solid !default;
 $alert-md-radio-border-radius:                50% !default;
 
 /// @prop - Border color of the alert radio when off
-$alert-md-radio-border-color-off:             $text-color-step-450 !default;
+$alert-md-radio-border-color-off:             $background-color-step-550 !default;
 
 /// @prop - Border color of the alert radio when on
 $alert-md-radio-border-color-on:              $alert-md-button-text-color !default;
@@ -280,7 +280,7 @@ $alert-md-checkbox-border-style:              solid !default;
 $alert-md-checkbox-border-radius:             2px !default;
 
 /// @prop - Border color of the checkbox in the alert when off
-$alert-md-checkbox-border-color-off:          $text-color-step-450 !default;
+$alert-md-checkbox-border-color-off:          $background-color-step-550 !default;
 
 /// @prop - Border color of the checkbox in the alert when on
 $alert-md-checkbox-border-color-on:           $alert-md-button-text-color !default;

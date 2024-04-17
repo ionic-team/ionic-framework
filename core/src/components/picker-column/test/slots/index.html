@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Picker Column - Slots</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Picker Column - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-picker>
+          <ion-picker-column>
+            <div slot="prefix">Prefix</div>
+            <div slot="suffix">Suffix</div>
+          </ion-picker-column>
+        </ion-picker>
+        <ion-picker>
+          <ion-picker-column>
+            <div slot="prefix">Prefix</div>
+            <div slot="suffix">Long Suffix Long Suffix Long Suffix</div>
+          </ion-picker-column>
+        </ion-picker>
+      </ion-content>
+      <script>
+        const pickerColumns = document.querySelectorAll('ion-picker-column');
+
+        const items = Array(24)
+          .fill()
+          .forEach((_, i) => {
+            pickerColumns.forEach((col) => {
+              const option = document.createElement('ion-picker-column-option');
+              option.value = i;
+              option.textContent = i;
+
+              col.appendChild(option);
+            });
+          });
+      </script>
+    </ion-app>
+  </body>
+</html>

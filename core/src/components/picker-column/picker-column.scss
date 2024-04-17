@@ -3,87 +3,170 @@
 // Picker Column
 // --------------------------------------------------
 
-.picker-col {
+:host {
   display: flex;
-  position: relative;
 
-  flex: 1;
+  align-items: center;
+
   justify-content: center;
 
-  height: 100%;
-  box-sizing: content-box;
+  max-width: 100%;
 
-  contain: content;
+  height: 200px;
+
+  font-size: 22px;
+
+  text-align: center;
 }
 
 .picker-opts {
-  position: relative;
+  /**
+   * This padding must be set here and not on the
+   * host to ensure that the focus highlight on the
+   * column is not overly narrow.
+   */
+  @include padding(0px, 16px, 0px, 16px);
 
-  flex: 1;
+  /**
+   * When using reactive data, such as in datetime's
+   * wheel picker, there may be layout shifts between
+   * individual columns in a picker as the columns
+   * shrink to fit the widest item in the column.
+   * Setting a minimum width avoids this layout shifting.
+   *
+   * Note that we need this min-width set on the same
+   * element as the vertical padding (i.e. not on the
+   * host).
+   */
+  min-width: 26px;
+  max-height: 200px;
 
-  max-width: 100%;
+  outline: none;
+
+  /**
+   * Added so that text-align can be set on the host
+   * from external components. For example, datetime
+   * changes the alignment of specific columns in its
+   * wheel pickers.
+   */
+  text-align: inherit;
+
+  scroll-snap-type: y mandatory;
+
+  /**
+   * Need to explicitly set overflow-x: hidden
+   * for older implementations of scroll snapping.
+   */
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  // Hide scrollbars on Firefox
+  scrollbar-width: none;
 }
 
-// contain property is supported by Chrome
-.picker-opt {
-  @include position(0, null, null, 0);
+.picker-item-empty {
+  @include padding(0);
+  @include margin(0);
 
   display: block;
-  position: absolute;
 
   width: 100%;
 
-  border: 0;
+  height: 34px;
 
-  text-align: center;
+  border: 0px;
+
+  outline: none;
+
+  background: transparent;
+
+  color: inherit;
+
+  font-family: $font-family-base;
+
+  font-size: inherit;
+
+  line-height: 34px;
+
+  text-align: inherit;
+
   text-overflow: ellipsis;
 
   white-space: nowrap;
 
-  contain: strict;
   overflow: hidden;
-  will-change: transform;
 }
 
-.picker-opt.picker-opt-disabled {
+/**
+ * Hide scrollbars on Chrome and Safari
+ */
+.picker-opts::-webkit-scrollbar {
+  display: none;
+}
+
+::slotted(ion-picker-column-option) {
+  display: block;
+
+  scroll-snap-align: center;
+}
+
+.picker-item-empty,
+:host(:not([disabled])) ::slotted(ion-picker-column-option.option-disabled) {
+  scroll-snap-align: none;
+}
+
+::slotted([slot="prefix"]), ::slotted([slot="suffix"]) {
+  max-width: 200px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+::slotted([slot="prefix"]) {
+  /**
+   * This is added in addition to the column's own padding so that there is white
+   * space between the slot and the column's focus highlight.
+   */
+  @include padding(0, 16px);
+
+  justify-content: end;
+}
+
+::slotted([slot="suffix"]) {
+  /**
+   * This is added in addition to the column's own padding so that there is white
+   * space between the slot and the column's focus highlight.
+   */
+  @include padding(0, 16px);
+
+  justify-content: start;
+}
+
+:host(.picker-column-disabled) .picker-opts {
+  overflow-y: hidden;
+}
+
+/**
+ * When the column is disabled, none of the options
+ * should be interactive. However, we do not disable
+ * the buttons because that would require overriding the
+ * app's preference for each option. In this case,
+ * the picker column interactive as a whole is
+ * disabled, not individual options.
+ */
+:host(.picker-column-disabled) ::slotted(ion-picker-column-option) {
+  cursor: default;
+  opacity: 0.4;
   pointer-events: none;
 }
 
-.picker-opt-disabled {
-  opacity: 0;
-}
-
-.picker-opts-left {
-  justify-content: flex-start;
-}
-
-.picker-opts-right {
-  justify-content: flex-end;
-}
-
-.picker-opt {
-  &:active,
-  &:focus {
+@media (any-hover: hover) {
+  :host(:focus) .picker-opts {
     outline: none;
+
+    background: current-color(base, 0.2);
   }
-}
-
-.picker-prefix {
-  position: relative;
-
-  flex: 1;
-
-  text-align: end;
-
-  white-space: nowrap;
-}
-
-.picker-suffix {
-  position: relative;
-
-  flex: 1;
-
-  text-align: start;
-
-  white-space: nowrap;
 }

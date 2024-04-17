@@ -145,7 +145,7 @@ export interface IonicConfig {
   toastEnter?: AnimationBuilder;
 
   /**
-   * Provides a custom enter animation for all `ion-picker`, overriding the default "animation".
+   * Provides a custom enter animation for all `ion-picker-legacy`, overriding the default "animation".
    */
   pickerEnter?: AnimationBuilder;
 
@@ -180,7 +180,7 @@ export interface IonicConfig {
   toastLeave?: AnimationBuilder;
 
   /**
-   * Provides a custom leave animation for all `ion-picker`, overriding the default "animation".
+   * Provides a custom leave animation for all `ion-picker-legacy`, overriding the default "animation".
    */
   pickerLeave?: AnimationBuilder;
 

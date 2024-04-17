@@ -186,20 +186,6 @@ describe('range: item adjustments', () => {
     expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
   });
 
-  // TODO FW-2997 remove this
-  it('should not add adjustment with legacy syntax', async () => {
-    const page = await newSpecPage({
-      components: [Item, Range],
-      html: `
-        <ion-range legacy="true"></ion-range>
-      `,
-    });
-
-    const range = page.body.querySelector('ion-range')!;
-    expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
-    expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
-  });
-
   it('should not add start adjustment when with start adornment', async () => {
     const page = await newSpecPage({
       components: [Item, Range],

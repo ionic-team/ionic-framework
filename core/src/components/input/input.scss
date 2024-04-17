@@ -19,6 +19,7 @@
    * @prop --placeholder-font-weight: Font weight of the input placeholder text
    * @prop --placeholder-opacity: Opacity of the input placeholder text
    *
+   * @prop --highlight-height: The height of the highlight on the input. Only applies to md mode.
    * @prop --highlight-color-focused: The color of the highlight on the input when focused
    * @prop --highlight-color-valid: The color of the highlight on the input when valid
    * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
@@ -57,6 +58,8 @@
 
   width: 100%;
 
+  min-height: 44px;
+
   /* stylelint-disable-next-line all */
   padding: 0 !important;
 
@@ -67,34 +70,9 @@
   z-index: $z-index-item-input;
 }
 
-// TODO FW-2764 Remove this
-:host(.legacy-input) {
-  display: flex;
-
-  flex: 1;
-  align-items: center;
-
-  background: var(--background);
-}
-
-// TODO FW-2764 Remove this
-:host(.legacy-input) .native-input {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include border-radius(var(--border-radius));
-}
-
-:host-context(ion-item:not(.item-label):not(.item-has-modern-input)) {
-  --padding-start: 0;
-}
-
 :host-context(ion-item)[slot="start"],
 :host-context(ion-item)[slot="end"] {
   width: auto;
-}
-
-// TODO FW-2764 Remove this
-:host(.legacy-input.ion-color) {
-  color: current-color(base);
 }
 
 :host(.ion-color) {
@@ -103,10 +81,6 @@
 
 // Input Wrapper
 // ----------------------------------------------------------------
-
-:host(:not(.legacy-input)) {
-  min-height: 44px;
-}
 
 /**
  * Since the label sits on top of the element,
@@ -206,11 +180,6 @@
 // Clear Input Icon
 // --------------------------------------------------
 
-// TODO FW-2764 Remove this
-:host(.legacy-input) .input-clear-icon {
-  @include margin(0);
-}
-
 .input-clear-icon {
   @include margin(auto);
   @include padding(0);
@@ -254,37 +223,6 @@
 
 :host(.has-value) .input-clear-icon {
   visibility: visible;
-}
-
-
-// Input Has focus
-// --------------------------------------------------
-
-// TODO FW-2764 Remove this
-:host(.has-focus.legacy-input) {
-  pointer-events: none;
-}
-
-// TODO FW-2764 Remove this
-:host(.has-focus.legacy-input) input,
-:host(.has-focus.legacy-input) a,
-:host(.has-focus.legacy-input) button {
-  pointer-events: auto;
-}
-
-
-// Item Floating: Placeholder
-// ----------------------------------------------------------------
-// When used with a floating item the placeholder should hide
-
-:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value)) {
-  opacity: 0;
-}
-
-:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value).item-has-focus) {
-  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-
-  opacity: 1;
 }
 
 // Input Wrapper
@@ -402,7 +340,7 @@
 .input-bottom .helper-text {
   display: block;
 
-  color: #{$background-color-step-550};
+  color: #{$text-color-step-450};
 }
 
 :host(.ion-touched.ion-invalid) .input-bottom .error-text {
@@ -424,7 +362,7 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: #{$background-color-step-550};
+  color: #{$text-color-step-450};
 
   white-space: nowrap;
 
@@ -658,12 +596,21 @@
 // Start/End Slots
 // ----------------------------------------------------------------
 
-::slotted([slot="start"]) {
+::slotted([slot="start"]:last-of-type) {
   margin-inline-end: $form-control-label-margin;
   margin-inline-start: 0;
 }
 
-::slotted([slot="end"]) {
+::slotted([slot="end"]:first-of-type) {
   margin-inline-start: $form-control-label-margin;
   margin-inline-end: 0;
+}
+
+/**
+ * The input password toggle component should be hidden when the input is readonly/disabled
+ * because it is not possible to edit a password.
+ */
+:host([disabled]) ::slotted(ion-input-password-toggle),
+:host([readonly]) ::slotted(ion-input-password-toggle) {
+  display: none;
 }

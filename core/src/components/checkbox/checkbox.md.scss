@@ -44,29 +44,10 @@
 // opacity set by its spec, while the label
 // should match the other form controls
 
-:host(.legacy-checkbox.checkbox-disabled),
 :host(.checkbox-disabled) .label-text-wrapper {
   opacity: $checkbox-md-disabled-opacity;
 }
 
 :host(.checkbox-disabled) .native-wrapper {
   opacity: $checkbox-md-icon-disabled-opacity;
-}
-
-
-// Material Design Checkbox Within An Item
-// TODO(FW-3100): remove this
-// --------------------------------------------------------
-
-:host(.in-item.legacy-checkbox) {
-  // end position by default
-  @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
-
-  display: block;
-
-  position: static;
-}
-
-:host(.in-item.legacy-checkbox[slot="start"]) {
-  @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
 }
