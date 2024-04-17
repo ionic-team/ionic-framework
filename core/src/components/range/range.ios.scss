@@ -71,7 +71,6 @@
 
   &.has-ticks {
     @include border-radius(0);
-    @include margin(null, calc(-1 * $range-ios-tick-width * 0.5), null, calc(-1 * $range-ios-tick-width * 0.5));
   }
 }
 
@@ -94,8 +93,13 @@
 }
 
 .range-pin {
-  @include transform(translate3d(0, 100%, 0), scale(.01));
-  @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
+  @include transform(translate3d(0, 100%, 0), scale(0.01));
+  @include padding(
+    $range-ios-pin-padding-top,
+    $range-ios-pin-padding-end,
+    $range-ios-pin-padding-bottom,
+    $range-ios-pin-padding-start
+  );
 
   min-width: 28px;
 
