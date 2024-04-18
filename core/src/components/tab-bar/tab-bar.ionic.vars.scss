@@ -7,7 +7,7 @@
 $tabbar-ionic-background: var(--ion-tab-bar-background, tokens.$ionic-color-neutral-0) !default;
 
 /// @prop - Background color of the tab bar button when activated
-// TODO(): use design token here when it is added
+// TODO(FW-6186): use design token here when it is added
 $tabbar-ionic-background-activated: var(--ion-tab-bar-background-activated, #ececec) !default;
 
 /// @prop - Background color of the tab bar button when focused
