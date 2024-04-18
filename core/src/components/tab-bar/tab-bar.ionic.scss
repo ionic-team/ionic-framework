@@ -1,0 +1,16 @@
+@use "../../foundations/ionic.vars.scss" as tokens;
+@import "./tab-bar";
+@import "./tab-bar.ionic.vars";
+
+:host {
+  --background: #{$tabbar-ionic-background};
+  --background-activated: #{$tabbar-ionic-background-activated};
+  --background-focused: #{$tabbar-ionic-background-focused};
+  --color: #{$tabbar-ionic-color};
+  --color-selected: #{$tabbar-ionic-color-selected};
+
+  height: 52px;
+  gap: 12px;
+  padding: 4px 16px;
+  box-shadow: tokens.$ionic-elevation-4;
+}
