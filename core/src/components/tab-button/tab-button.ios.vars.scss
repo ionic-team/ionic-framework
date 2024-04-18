@@ -24,5 +24,8 @@ $tab-button-ios-text-color:           $tabbar-ios-color !default;
 /// @prop - Font size of the tab button text
 $tab-button-ios-font-size:            10px !default;
 
-/// @prop - Size of the tab button icon
-$tab-button-ios-icon-size:            30px !default;
+/// @prop - Size of the tab button icon when there is a label
+$tab-button-ios-icon-size:            24px !default;
+
+/// @prop - Size of the tab button icon when there is not a label
+$tab-button-ios-icon-only-size:       30px !default;

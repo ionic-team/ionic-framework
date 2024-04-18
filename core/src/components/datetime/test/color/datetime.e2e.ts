@@ -4,19 +4,28 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This behavior does not vary across directions
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: color'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      await page.goto('/src/components/datetime/test/color', config);
+      await page.setContent(
+        `
+        <div id="container" style="width: 250px;">
+          <ion-datetime
+            color="danger"
+            value="2022-05-03"
+            show-default-title="true"
+            show-default-buttons="true"
+          ></ion-datetime>
+        </div>
+      `,
+        config
+      );
 
-      const datetime = page.locator('#color-datetime');
+      const container = page.locator('#container');
 
-      await expect(datetime).toHaveScreenshot(screenshot(`datetime-color`));
+      await page.locator('.datetime-ready').waitFor();
 
-      await page.evaluate(() => document.body.classList.toggle('dark'));
-      await page.waitForChanges();
-
-      await expect(datetime).toHaveScreenshot(screenshot(`datetime-color-dark`));
+      await expect(container).toHaveScreenshot(screenshot(`datetime-color`));
     });
   });
 });

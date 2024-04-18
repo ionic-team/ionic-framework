@@ -7,18 +7,6 @@
 /// @prop - Font size of the input
 $input-md-font-size: inherit !default;
 
-/// @prop - Margin top of the input
-$input-md-padding-top: 10px !default;
-
-/// @prop - Margin end of the input
-$input-md-padding-end: 0 !default;
-
-/// @prop - Margin bottom of the input
-$input-md-padding-bottom: 10px !default;
-
-/// @prop - Margin start of the input
-$input-md-padding-start: ($item-md-padding-start * 0.5) !default;
-
 /// @prop - The amount of whitespace to display on either side of the floating label
 $input-md-floating-label-padding: 4px !default;
 

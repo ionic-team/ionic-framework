@@ -20,7 +20,8 @@ export class FormComponent {
       input2: ['Default Value'],
       inputMin: [1, Validators.min(1)],
       inputMax: [1, Validators.max(1)],
-      checkbox: [false]
+      checkbox: [false],
+      radio: [undefined]
     }, {
       updateOn: typeof (window as any) !== 'undefined' && window.location.hash === '#blur' ? 'blur' : 'change'
     });
@@ -44,7 +45,8 @@ export class FormComponent {
       toggle: true,
       input: 'Some value',
       input2: 'Another values',
-      checkbox: true
+      checkbox: true,
+      radio: 'nes'
     });
   }
 

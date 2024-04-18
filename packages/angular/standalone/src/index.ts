@@ -34,7 +34,6 @@ export {
   IonInput,
   IonIcon,
   IonRadioGroup,
-  IonRadio,
   IonRange,
   IonSearchbar,
   IonSegment,
