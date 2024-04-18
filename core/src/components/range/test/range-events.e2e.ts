@@ -7,9 +7,6 @@ import { configs, dragElementBy, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: events:'), () => {
     test.describe('range: knob events', () => {
-      /**
-       * The mouse events are flaky on CI
-       */
       test('should emit start/end events', async ({ page }) => {
         /**
          * Requires padding to prevent the knob from being clipped.
@@ -31,20 +28,34 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         const rangeEl = page.locator('ion-range');
 
+        /**
+         * Verify both events fire if range is dragged.
+         */
         await dragElementBy(rangeEl, page, 180, 0);
 
+        await rangeStart.next();
+        await rangeEnd.next();
+
+        // Once the knob is dragged, the start event should fire with
+        // the initial value.
         expect(rangeStart).toHaveReceivedEventDetail({ value: 20 });
+        // Once the knob is released, the end event should fire with
+        // the final value.
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 100 });
 
         /**
-         * Verify both events fire if range is clicked without dragging.
+         * Verify both events fire if range is tapped without dragging.
          */
         await dragElementBy(rangeEl, page, 0, 0);
 
         await rangeStart.next();
         await rangeEnd.next();
 
+        // Once the tap is released, the start event should fire with
+        // the initial value.
         expect(rangeStart).toHaveReceivedEventDetail({ value: 100 });
+        // Once the tap is released, the end event should fire with
+        // the final value.
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
       });
 
