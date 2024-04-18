@@ -9,7 +9,7 @@
   --focus-ring-color: #9ec4fd;
   --focus-ring-width: 2px;
 
-  border-radius: tokens.$ionic-border-radius-rounded-medium;
+  @include border-radius(tokens.$ionic-border-radius-rounded-medium);
 }
 
 // Tab Button Focused
@@ -19,7 +19,7 @@
   overflow: visible;
 
   &::after {
-    border-radius: inherit;
+    @include border-radius(inherit);
   }
 }
 

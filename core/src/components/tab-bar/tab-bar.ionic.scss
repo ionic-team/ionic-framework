@@ -9,10 +9,10 @@
   --color: #{$tabbar-ionic-color};
   --color-selected: #{$tabbar-ionic-color-selected};
 
+  @include padding(4px, 16px);
+
   height: 52px;
   gap: 12px;
-
-  padding: 4px 16px;
 
   box-shadow: tokens.$ionic-elevation-2;
 }
