@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 // Toolbar
 // --------------------------------------------------
@@ -100,7 +100,6 @@
   z-index: $z-index-toolbar-background;
   pointer-events: none;
 }
-
 
 // Toolbar: Progress Bar
 // --------------------------------------------------

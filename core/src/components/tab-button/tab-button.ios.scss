@@ -12,7 +12,6 @@
   font-size: $tab-button-ios-font-size;
 }
 
-
 // iOS Tab Button: Badge
 // --------------------------------------------------
 
@@ -27,7 +26,6 @@
   line-height: 16px;
 }
 
-
 // iOS Tab Button: Icon
 // --------------------------------------------------
 
@@ -41,7 +39,6 @@
   vertical-align: top;
 }
 
-
 // iOS Tab Button: Label
 // --------------------------------------------------
 
@@ -52,7 +49,6 @@
 
   font-weight: 500;
 }
-
 
 // iOS Tab Button Label Only
 // --------------------------------------------------
@@ -65,7 +61,6 @@
 
   line-height: 1.1;
 }
-
 
 // iOS Tab Button Layout
 // --------------------------------------------------
@@ -92,7 +87,6 @@
   font-size: 24px;
 }
 
-
 // iOS Tab Button: Icon Bottom Layout
 // --------------------------------------------------
 
@@ -111,7 +105,6 @@
   @include margin(4px, null, null, null);
 }
 
-
 // iOS Tab Button: Icon Start / End Layout
 // --------------------------------------------------
 
@@ -119,7 +112,6 @@
 :host(.tab-layout-icon-end) ::slotted(ion-badge) {
   @include position(10px, null, null, calc(50% + 35px));
 }
-
 
 // iOS Tab Button: Icon Hide / Label Only Layout
 // --------------------------------------------------------------
@@ -129,7 +121,6 @@
 :host(.tab-has-label-only) ::slotted(ion-badge) {
   @include position(10px, null, null, calc(50% + 30px));
 }
-
 
 // iOS Tab Button: Icon Only / Label Hide Layout
 // --------------------------------------------------------------

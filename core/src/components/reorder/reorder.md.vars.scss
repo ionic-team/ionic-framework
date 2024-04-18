@@ -1,10 +1,10 @@
-@import "../../themes/ionic.globals.md";
+@import "../../themes/native/native.globals.md";
 
 // Material Design Reorder
 // --------------------------------------------------
 
 /// @prop - Font size of the reorder icon
-$reorder-md-icon-font-size:      dynamic-font(31px) !default;
+$reorder-md-icon-font-size: dynamic-font(31px) !default;
 
 /// @prop - Opacity of the reorder icon
-$reorder-md-icon-opacity:        .3 !default;
+$reorder-md-icon-opacity: 0.3 !default;

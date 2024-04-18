@@ -18,9 +18,13 @@
 
 .loading-wrapper {
   @include border-radius($loading-ios-border-radius);
-  @include padding($loading-ios-padding-top, $loading-ios-padding-end, $loading-ios-padding-bottom, $loading-ios-padding-start);
+  @include padding(
+    $loading-ios-padding-top,
+    $loading-ios-padding-end,
+    $loading-ios-padding-bottom,
+    $loading-ios-padding-start
+  );
 }
-
 
 // iOS Translucent Loading
 // -----------------------------------------
@@ -31,7 +35,6 @@
     backdrop-filter: $loading-ios-translucent-filter;
   }
 }
-
 
 // iOS Loading Content
 // -----------------------------------------

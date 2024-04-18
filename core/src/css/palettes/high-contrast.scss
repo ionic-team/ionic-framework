@@ -1,71 +1,71 @@
 @use "sass:map";
-@import "../../themes/ionic.functions.color";
+@import "../../themes/functions.color";
 
-$primary:         #003fae !default;
-$secondary:       #01487b !default;
-$tertiary:        #3400e6 !default;
-$success:         #004314 !default;
-$warning:         #5f4100 !default;
-$danger:          #9c000c !default;
-$light:           #f4f5f8 !default;
-$medium:          #444446 !default;
-$dark:            #222428 !default;
+$primary: #003fae !default;
+$secondary: #01487b !default;
+$tertiary: #3400e6 !default;
+$success: #004314 !default;
+$warning: #5f4100 !default;
+$danger: #9c000c !default;
+$light: #f4f5f8 !default;
+$medium: #444446 !default;
+$dark: #222428 !default;
 
-$colors:  (
+$colors: (
   primary: (
-    base:             $primary,
-    contrast:         #fff,
-    shade:            get-color-shade($primary),
-    tint:             get-color-tint($primary)
+    base: $primary,
+    contrast: #fff,
+    shade: get-color-shade($primary),
+    tint: get-color-tint($primary),
   ),
   secondary: (
-    base:             $secondary,
-    contrast:         #fff,
-    shade:            get-color-shade($secondary),
-    tint:             get-color-tint($secondary)
+    base: $secondary,
+    contrast: #fff,
+    shade: get-color-shade($secondary),
+    tint: get-color-tint($secondary),
   ),
   tertiary: (
-    base:             $tertiary,
-    contrast:         #fff,
-    shade:            get-color-shade($tertiary),
-    tint:             get-color-tint($tertiary)
+    base: $tertiary,
+    contrast: #fff,
+    shade: get-color-shade($tertiary),
+    tint: get-color-tint($tertiary),
   ),
   success: (
-    base:             $success,
-    contrast:         #fff,
-    shade:            get-color-shade($success),
-    tint:             get-color-tint($success)
+    base: $success,
+    contrast: #fff,
+    shade: get-color-shade($success),
+    tint: get-color-tint($success),
   ),
   warning: (
-    base:             $warning,
-    contrast:         #fff,
-    shade:            get-color-shade($warning),
-    tint:             get-color-tint($warning)
+    base: $warning,
+    contrast: #fff,
+    shade: get-color-shade($warning),
+    tint: get-color-tint($warning),
   ),
   danger: (
-    base:             $danger,
-    contrast:         #fff,
-    shade:            get-color-shade($danger),
-    tint:             get-color-tint($danger)
+    base: $danger,
+    contrast: #fff,
+    shade: get-color-shade($danger),
+    tint: get-color-tint($danger),
   ),
   light: (
-    base:             $light,
-    contrast:         #000,
-    shade:            get-color-shade($light),
-    tint:             get-color-tint($light)
+    base: $light,
+    contrast: #000,
+    shade: get-color-shade($light),
+    tint: get-color-tint($light),
   ),
   medium: (
-    base:             $medium,
-    contrast:         #fff,
-    shade:            get-color-shade($medium),
-    tint:             get-color-tint($medium)
+    base: $medium,
+    contrast: #fff,
+    shade: get-color-shade($medium),
+    tint: get-color-tint($medium),
   ),
   dark: (
-    base:             $dark,
-    contrast:         #fff,
-    shade:            get-color-shade($dark),
-    tint:             get-color-tint($dark)
-  )
+    base: $dark,
+    contrast: #fff,
+    shade: get-color-shade($dark),
+    tint: get-color-tint($dark),
+  ),
 ) !default;
 
 /// Text step colors are generated based on

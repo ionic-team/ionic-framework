@@ -1,0 +1,8 @@
+// Core CSS, always required
+@import "./core.ionic";
+
+// Global CSS: blocks scrolling, sets box-sizing
+@import "./global.bundle.ionic";
+
+// CSS Utils
+@import "./utils.bundle.ionic";

@@ -113,8 +113,8 @@ StyleDictionary.registerFormat({
           utilityClass = `.${variablesPrefix}-${className} {\n  box-shadow: $ionic-${prop.name};\n}`;
           break;
         case 'space':
-          utilityClass = `.${variablesPrefix}-margin-${className} {\n  margin: $ionic-${prop.name};\n};
-.${variablesPrefix}-padding-${className} {\n  padding: $ionic-${prop.name};\n}`;
+          utilityClass = `.${variablesPrefix}-margin-${className} {\n  --margin-start: #{$ionic-${prop.name}};\n  --margin-end: #{$ionic-${prop.name}};\n  --margin-top: #{$ionic-${prop.name}};\n  --margin-bottom: #{$ionic-${prop.name}};\n\n  @include margin(${prop.value});\n};\n 
+.${variablesPrefix}-padding-${className} {\n  --padding-start: #{$ionic-${prop.name}};\n  --padding-end: #{$ionic-${prop.name}};\n  --padding-top: #{$ionic-${prop.name}};\n  --padding-bottom: #{$ionic-${prop.name}};\n\n  @include padding(${prop.value});\n};\n`;
           break;
         default:
           utilityClass = `.${variablesPrefix}-${className} {\n  ${tokenType}: $ionic-${prop.name};\n}`;
@@ -123,7 +123,11 @@ StyleDictionary.registerFormat({
       return utilityClass;
     });
 
-    return [fileHeader({ file }), '@import "./ionic.vars";\n', utilityClasses.join('\n')].join('\n');
+    return [
+      fileHeader({ file }),
+      '@import "./ionic.vars";\n@import "../themes/mixins";\n',
+      utilityClasses.join('\n'),
+    ].join('\n');
   },
 });
 

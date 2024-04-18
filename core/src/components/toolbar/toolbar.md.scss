@@ -15,7 +15,6 @@
   --min-height: 56px;
 }
 
-
 // Toolbar: Content
 // --------------------------------------------------
 
@@ -43,7 +42,6 @@
 ::slotted(.buttons-last-slot) {
   @include margin-horizontal(null, 4px);
 }
-
 
 // Material Design Toolbar Slot Placement
 // --------------------------------------------------

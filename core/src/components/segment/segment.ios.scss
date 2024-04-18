@@ -14,14 +14,12 @@
   z-index: 0;
 }
 
-
 // Segment: Color
 // --------------------------------------------------
 
 :host(.ion-color) {
   background: #{current-color(base, 0.065)};
 }
-
 
 // Segment: Default Toolbar
 // --------------------------------------------------
@@ -36,7 +34,6 @@
 :host(.in-toolbar:not(.ion-color)) {
   background: var(--ion-toolbar-segment-background, var(--background));
 }
-
 
 // Segment: Color Toolbar
 // --------------------------------------------------

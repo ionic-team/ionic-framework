@@ -21,23 +21,36 @@
   font-weight: $item-divider-ios-font-weight;
 }
 
-
 // iOS Item Divider Slots
 // --------------------------------------------------
 
 :host([slot="start"]) {
-  @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
+  @include margin(
+    $item-ios-slot-start-margin-top,
+    $item-ios-slot-start-margin-end,
+    $item-ios-slot-start-margin-bottom,
+    $item-ios-slot-start-margin-start
+  );
 }
 
 :host([slot="end"]) {
-  @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
+  @include margin(
+    $item-ios-slot-end-margin-top,
+    $item-ios-slot-end-margin-end,
+    $item-ios-slot-end-margin-bottom,
+    $item-ios-slot-end-margin-start
+  );
 }
 
 ::slotted(ion-icon[slot="start"]),
 ::slotted(ion-icon[slot="end"]) {
-  @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
+  @include margin(
+    $item-ios-icon-slot-margin-top,
+    $item-ios-icon-slot-margin-end,
+    $item-ios-icon-slot-margin-bottom,
+    $item-ios-icon-slot-margin-start
+  );
 }
-
 
 // iOS Item Divider Content
 // --------------------------------------------------
@@ -58,7 +71,12 @@
 }
 
 ::slotted(p) {
-  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
+  @include margin(
+    $item-ios-paragraph-margin-top,
+    $item-ios-paragraph-margin-end,
+    $item-ios-paragraph-margin-bottom,
+    $item-ios-paragraph-margin-start
+  );
 
   color: $item-ios-paragraph-text-color;
 
@@ -71,8 +89,7 @@
   overflow: inherit;
 }
 
-::slotted(h2:last-child)
-::slotted(h3:last-child),
+::slotted(h2:last-child) ::slotted(h3:last-child),
 ::slotted(h4:last-child),
 ::slotted(h5:last-child),
 ::slotted(h6:last-child),

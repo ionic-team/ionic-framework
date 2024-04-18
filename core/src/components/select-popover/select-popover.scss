@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 :host ion-list {
   @include margin(0);
@@ -8,7 +8,6 @@ ion-list-header,
 ion-label {
   @include margin(0);
 }
-
 
 /**
  * The main content inside of a popover has overflow: hidden

@@ -1,5 +1,5 @@
 @use "sass:map";
-@import "../themes/ionic.globals";
+@import "../themes/native/native.globals";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
 
@@ -161,7 +161,6 @@ html.ios ion-modal.modal-card .ion-page {
   }
 }
 
-
 // Page Container Structure
 // --------------------------------------------------
 
@@ -224,11 +223,11 @@ ion-toast-controller,
   display: block;
 }
 
-
 // Ionic Safe Margins
 // --------------------------------------------------
 
-html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
+html.plt-ios.plt-hybrid,
+html.plt-ios.plt-pwa {
   --ion-statusbar-padding: 20px;
 }
 
@@ -247,7 +246,6 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
   }
 }
 
-
 // Global Card Styles
 // --------------------------------------------------
 
@@ -255,7 +253,6 @@ ion-card.ion-color .ion-inherit-color,
 ion-card-header.ion-color .ion-inherit-color {
   color: inherit;
 }
-
 
 // Menu Styles
 // --------------------------------------------------
@@ -304,7 +301,7 @@ ion-card-header.ion-color .ion-inherit-color {
   box-shadow: $menu-ios-box-shadow-reveal;
 }
 
-[dir=rtl].ios .menu-content-reveal {
+[dir="rtl"].ios .menu-content-reveal {
   box-shadow: $menu-ios-box-shadow-reveal-rtl;
 }
 

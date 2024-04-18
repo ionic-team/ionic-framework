@@ -292,7 +292,7 @@ button {
    */
   max-width: 200px;
 
-  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /**
    * This ensures that double tapping this text
@@ -547,7 +547,8 @@ button {
 // Start/End Slots
 // ----------------------------------------------------------------
 
-::slotted([slot="start"]), ::slotted([slot="end"]) {
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
   /**
    * Prevent the slots from shrinking when the label and/or
    * selected item text is long enough to fill the rest of

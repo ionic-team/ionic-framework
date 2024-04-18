@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 @import "./refresher.vars";
 
 ion-refresher {
@@ -69,7 +69,7 @@ ion-refresher-content .arrow-container {
   }
 }
 
-.refresher-ready  ion-refresher-content {
+.refresher-ready ion-refresher-content {
   .refresher-pulling {
     display: block;
   }
@@ -79,7 +79,7 @@ ion-refresher-content .arrow-container {
   }
 }
 
-.refresher-refreshing  ion-refresher-content {
+.refresher-refreshing ion-refresher-content {
   .refresher-refreshing {
     display: block;
   }
@@ -109,7 +109,8 @@ ion-refresher-content .arrow-container {
 // --------------------------------------------------
 
 .refresher-native {
-  .refresher-pulling-text, .refresher-refreshing-text {
+  .refresher-pulling-text,
+  .refresher-refreshing-text {
     display: none;
   }
 }

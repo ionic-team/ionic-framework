@@ -16,12 +16,12 @@
   --focus-ring-color: #9ec4fd;
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
-  
+
   // Size
   --size: #{$checkbox-ionic-size};
 
   // Checkbox Target area
-  // -------------------------------------------------- 
+  // --------------------------------------------------
   &::after {
     @include position(50%, 0, null, 0);
 
@@ -47,8 +47,8 @@
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
-   // Size
-   --size: #{$checkbox-ionic-small-size};
+  // Size
+  --size: #{$checkbox-ionic-small-size};
 }
 
 // Ionic Design Checkbox Invalid

@@ -40,7 +40,7 @@
   --color-focused: var(--color);
   --color-hover: var(--color);
   --background-hover: #{ion-color(primary, contrast)};
-  --background-hover-opacity: .08;
+  --background-hover-opacity: 0.08;
   --transition: background-color, opacity 100ms linear;
   --ripple-color: currentColor;
   --border-radius: #{$fab-border-radius};
@@ -67,7 +67,6 @@
   white-space: nowrap;
   font-kerning: none;
 }
-
 
 .button-native {
   @include border-radius(var(--border-radius));
@@ -132,16 +131,14 @@
   z-index: 1;
 }
 
-
 // FAB Button: Disabled
 // --------------------------------------------------
 
 :host(.fab-button-disabled) {
   cursor: default;
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }
-
 
 // FAB Button: Hover
 // --------------------------------------------------
@@ -158,7 +155,6 @@
   }
 }
 
-
 // FAB Button: Focused
 // --------------------------------------------------
 
@@ -171,7 +167,6 @@
     opacity: var(--background-focused-opacity);
   }
 }
-
 
 // FAB Button: Activated
 // --------------------------------------------------
@@ -186,14 +181,12 @@
   }
 }
 
-
 // FAB Content
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
   line-height: 1;
 }
-
 
 // FAB small (mini
 // --------------------------------------------------
@@ -216,7 +209,7 @@
 
   height: 100%;
 
-  transform: scale(.4) rotateZ(-45deg);
+  transform: scale(0.4) rotateZ(-45deg);
 
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
@@ -228,7 +221,6 @@
   z-index: 1;
 }
 
-
 // FAB Animation
 // --------------------------------------------------
 
@@ -239,7 +231,7 @@
 }
 
 :host(.fab-button-close-active) .button-inner {
-  transform: scale(.4) rotateZ(45deg);
+  transform: scale(0.4) rotateZ(45deg);
 
   opacity: 0;
 }
@@ -256,7 +248,6 @@ ion-ripple-effect {
     backdrop-filter: var(--backdrop-filter);
   }
 }
-
 
 // FAB Button: Color
 // --------------------------------------------------
