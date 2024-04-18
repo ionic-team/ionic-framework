@@ -10,12 +10,16 @@
   background: $item-ios-background;
 }
 
-
 // iOS Inset List
 // --------------------------------------------------
 
 .list-ios.list-inset {
-  @include margin($list-inset-ios-margin-top, $list-inset-ios-margin-end, $list-inset-ios-margin-bottom, $list-inset-ios-margin-start);
+  @include margin(
+    $list-inset-ios-margin-top,
+    $list-inset-ios-margin-end,
+    $list-inset-ios-margin-bottom,
+    $list-inset-ios-margin-start
+  );
   @include border-radius($list-inset-ios-border-radius);
 }
 
@@ -41,7 +45,6 @@
 .list-ios.list-inset + ion-list.list-inset {
   @include margin(0, null, null, null);
 }
-
 
 // iOS No Lines List
 // --------------------------------------------------

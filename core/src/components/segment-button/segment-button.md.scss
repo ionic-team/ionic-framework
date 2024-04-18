@@ -10,8 +10,8 @@
   --background-hover: var(--color-checked);
   --background-focused: var(--color-checked);
   --background-activated-opacity: 0;
-  --background-focused-opacity: .12;
-  --background-hover-opacity: .04;
+  --background-focused-opacity: 0.12;
+  --background-hover-opacity: 0.04;
   --color: #{$segment-button-md-text-color};
   --color-checked: #{$segment-button-md-text-color-checked};
   --indicator-box-shadow: none;
@@ -49,7 +49,6 @@
 :host(.segment-button-disabled) {
   opacity: $segment-button-md-opacity-disabled;
 }
-
 
 // Segment Button: Segment w/ Color
 // --------------------------------------------------
@@ -94,7 +93,6 @@
   }
 }
 
-
 // Segment: Default Toolbar
 // --------------------------------------------------
 
@@ -106,13 +104,12 @@
   --indicator-color: #{var(--ion-toolbar-segment-color-checked, var(--color-checked))};
 }
 
-
 // Segment Button: Toolbar w/ Color
 // --------------------------------------------------
 
 // Default Segment, In a Toolbar with Color
 :host(.in-toolbar-color:not(.in-segment-color)) .button-native {
-  color: #{current-color(contrast, .6)};
+  color: #{current-color(contrast, 0.6)};
 }
 
 // Default Segment, In a Toolbar with Color, Checked
@@ -126,7 +123,6 @@
     background: #{current-color(contrast)};
   }
 }
-
 
 // Segment Button: Icon
 // --------------------------------------------------

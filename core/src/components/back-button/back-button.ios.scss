@@ -8,7 +8,7 @@
   --background-hover: transparent;
   --background-hover-opacity: 1;
   --background-focused: currentColor;
-  --background-focused-opacity: .1;
+  --background-focused-opacity: 0.1;
   --border-radius: 4px;
   --color: #{$back-button-ios-color};
   --icon-margin-end: 1px;
@@ -46,11 +46,11 @@
 // --------------------------------------------------
 
 :host(.ion-activated) .button-native {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 @media (any-hover: hover) {
   :host(:hover) {
-    opacity: .6;
+    opacity: 0.6;
   }
 }

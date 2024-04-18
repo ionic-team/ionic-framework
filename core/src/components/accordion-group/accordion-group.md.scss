@@ -11,7 +11,12 @@
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanding),
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanded) {
   @include margin($accordion-md-expanded-margin, 0, $accordion-md-expanded-margin, 0);
-  @include border-radius($accordion-md-border-radius, $accordion-md-border-radius, $accordion-md-border-radius, $accordion-md-border-radius);
+  @include border-radius(
+    $accordion-md-border-radius,
+    $accordion-md-border-radius,
+    $accordion-md-border-radius,
+    $accordion-md-border-radius
+  );
 }
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-previous) {

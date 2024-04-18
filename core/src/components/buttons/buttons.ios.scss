@@ -1,7 +1,6 @@
 @import "./buttons.ios.vars";
 @import "./buttons";
 
-
 // iOS Toolbar Default Button
 // --------------------------------------------------
 
@@ -25,7 +24,6 @@
   --border-radius: #{$toolbar-ios-button-border-radius};
 }
 
-
 // iOS Toolbar with Color: Default Buttons
 // --------------------------------------------------
 
@@ -38,9 +36,9 @@
 :host-context(.ion-color)::slotted(*) .button-solid {
   --background: #{current-color(contrast)};
   --background-focused: #000;
-  --background-focused-opacity: .12;
+  --background-focused-opacity: 0.12;
   --background-activated: #000;
-  --background-activated-opacity: .12;
+  --background-activated-opacity: 0.12;
   --background-hover: #{current-color(base)};
   --background-hover-opacity: 0.45;
   --color: #{current-color(base)};
@@ -58,7 +56,6 @@
   --background-activated: #{current-color(contrast)};
 }
 
-
 // iOS Toolbar Button Clear / Outline
 // --------------------------------------------------
 
@@ -69,43 +66,41 @@
   --background-hover: transparent;
 }
 
-
 // iOS Toolbar Button Solid
 // --------------------------------------------------
 
 ::slotted(*) .button-solid:not(.ion-color) {
   --background-focused: #000;
-  --background-focused-opacity: .12;
+  --background-focused-opacity: 0.12;
   --background-activated: #000;
-  --background-activated-opacity: .12;
+  --background-activated-opacity: 0.12;
 }
-
 
 // iOS Toolbar Button Icon
 // --------------------------------------------------
 
 ::slotted(*) ion-icon[slot="start"] {
   @include margin(0);
-  @include margin-horizontal(null, .3em);
+  @include margin-horizontal(null, 0.3em);
 
   // This value is calculated by dividing the font size the
   // icon should be in px (24px) by the font size of its
   // parent button (17px). e.g. 24 / 17 = 1.4117
   font-size: 1.41em;
 
-  line-height: .67;
+  line-height: 0.67;
 }
 
 ::slotted(*) ion-icon[slot="end"] {
   @include margin(0);
-  @include margin-horizontal(.4em, null);
+  @include margin-horizontal(0.4em, null);
 
   // This value is calculated by dividing the font size the
   // icon should be in px (24px) by the font size of its
   // parent button (17px). e.g. 24 / 17 = 1.4117
   font-size: 1.41em;
 
-  line-height: .67;
+  line-height: 0.67;
 }
 
 ::slotted(*) ion-icon[slot="icon-only"] {
@@ -117,5 +112,5 @@
   // parent button (17px). e.g. 28 / 17 = 1.647
   font-size: 1.65em;
 
-  line-height: .67;
+  line-height: 0.67;
 }

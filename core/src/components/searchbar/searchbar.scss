@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 // Searchbar
 // --------------------------------------------------
@@ -163,6 +163,6 @@
 
 :host(.searchbar-disabled) {
   cursor: default;
-  opacity: .4;
+  opacity: 0.4;
   pointer-events: none;
 }

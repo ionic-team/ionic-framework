@@ -173,14 +173,12 @@
   overflow: hidden;
 }
 
-
 // Action Sheet: States
 // --------------------------------------------------
 
 .action-sheet-button::after {
   @include button-state();
 }
-
 
 // Action Sheet: Selected
 // --------------------------------------------------
@@ -195,7 +193,6 @@
   }
 }
 
-
 // Action Sheet: Activated
 // --------------------------------------------------
 
@@ -208,7 +205,6 @@
     opacity: var(--button-background-activated-opacity);
   }
 }
-
 
 // Action Sheet: Focused
 // --------------------------------------------------

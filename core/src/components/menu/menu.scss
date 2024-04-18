@@ -35,7 +35,6 @@
   display: block;
 }
 
-
 .menu-inner {
   @include transform(translateX(-9999px));
 
@@ -135,7 +134,7 @@
 ion-backdrop {
   display: none;
 
-  opacity: .01;
+  opacity: 0.01;
   z-index: -1;
 }
 
@@ -144,7 +143,6 @@ ion-backdrop {
     --width: #{$menu-small-width};
   }
 }
-
 
 // Menu Reveal
 // --------------------------------------------------
@@ -158,7 +156,6 @@ ion-backdrop {
 :host(.menu-type-reveal.show-menu) .menu-inner {
   @include transform(translate3d(0, 0, 0));
 }
-
 
 // Menu Overlay
 // --------------------------------------------------
@@ -174,7 +171,6 @@ ion-backdrop {
 
   cursor: pointer;
 }
-
 
 // Menu Split Pane
 // --------------------------------------------------
@@ -222,7 +218,7 @@ ion-backdrop {
   order: -1;
 }
 
-:host(.menu-pane-visible.split-pane-side[side=end]) {
+:host(.menu-pane-visible.split-pane-side[side="end"]) {
   order: 1;
 }
 
@@ -248,10 +244,9 @@ ion-backdrop {
   max-width: var(--side-max-width);
 }
 
-:host(.menu-pane-visible.split-pane-side[side=end]) {
+:host(.menu-pane-visible.split-pane-side[side="end"]) {
   @include border(0, 0, 0, var(--border));
 
   min-width: var(--side-min-width);
   max-width: var(--side-max-width);
 }
-

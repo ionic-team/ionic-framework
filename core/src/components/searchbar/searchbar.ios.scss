@@ -13,7 +13,12 @@
   --color: #{$searchbar-ios-input-text-color};
   --icon-color: #{$searchbar-ios-input-search-icon-color};
 
-  @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
+  @include padding(
+    $searchbar-ios-padding-top,
+    $searchbar-ios-padding-end,
+    $searchbar-ios-padding-bottom,
+    $searchbar-ios-padding-start
+  );
 
   min-height: $searchbar-ios-input-min-height + $searchbar-ios-padding-top + $searchbar-ios-padding-bottom;
 
@@ -23,7 +28,6 @@
 .searchbar-input-container {
   min-height: $searchbar-ios-input-min-height;
 }
-
 
 // Searchbar Search Icon
 // -----------------------------------------
@@ -39,7 +43,6 @@
 
   contain: strict;
 }
-
 
 // Searchbar Input Field
 // -----------------------------------------
@@ -86,7 +89,6 @@
   height: 100%;
 }
 
-
 // Searchbar Cancel
 // -----------------------------------------
 
@@ -100,7 +102,6 @@
   font-size: $searchbar-ios-cancel-button-font-size;
 }
 
-
 // Searchbar Left Aligned (iOS Only)
 // -----------------------------------------
 
@@ -111,7 +112,6 @@
 :host(.searchbar-left-aligned) .searchbar-input {
   @include padding-horizontal(dynamic-font(30px), null);
 }
-
 
 // Searchbar Has Focus & Animated
 // -----------------------------------------

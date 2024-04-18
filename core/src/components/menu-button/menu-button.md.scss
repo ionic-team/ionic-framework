@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals.md";
+@import "../../themes/native/native.globals.md";
 @import "./menu-button";
 
 // MD Menu Button
@@ -6,9 +6,9 @@
 
 :host {
   --background-focused: currentColor;
-  --background-focused-opacity: .12;
+  --background-focused-opacity: 0.12;
   --background-hover: currentColor;
-  --background-hover-opacity: .04;
+  --background-hover-opacity: 0.04;
   --border-radius: 50%;
   --color: initial;
   --padding-start: 8px;
@@ -20,14 +20,12 @@
   font-size: dynamic-font(24px);
 }
 
-
 // Menu Button Color: Focused
 // --------------------------------------------------
 
 :host(.ion-color.ion-focused)::after {
   background: #{current-color(base)};
 }
-
 
 // Menu Button Color: Hover
 // --------------------------------------------------

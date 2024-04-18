@@ -23,7 +23,6 @@
   pointer-events: none;
 }
 
-
 // iOS Translucent Alert
 // -----------------------------------------
 
@@ -38,7 +37,12 @@
 // --------------------------------------------------
 
 .alert-head {
-  @include padding($alert-ios-head-padding-top, $alert-ios-head-padding-end, $alert-ios-head-padding-bottom, $alert-ios-head-padding-start);
+  @include padding(
+    $alert-ios-head-padding-top,
+    $alert-ios-head-padding-end,
+    $alert-ios-head-padding-bottom,
+    $alert-ios-head-padding-start
+  );
 
   text-align: $alert-ios-head-text-align;
 }
@@ -58,13 +62,17 @@
   font-size: $alert-ios-sub-title-font-size;
 }
 
-
 // iOS Alert Message
 // --------------------------------------------------
 
 .alert-message,
 .alert-input-group {
-  @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
+  @include padding(
+    $alert-ios-message-padding-top,
+    $alert-ios-message-padding-end,
+    $alert-ios-message-padding-bottom,
+    $alert-ios-message-padding-start
+  );
 
   color: $alert-ios-message-text-color;
 
@@ -78,9 +86,13 @@
 }
 
 .alert-message:empty {
-  @include padding($alert-ios-message-empty-padding-top, $alert-ios-message-empty-padding-end, $alert-ios-message-empty-padding-bottom, $alert-ios-message-empty-padding-start);
+  @include padding(
+    $alert-ios-message-empty-padding-top,
+    $alert-ios-message-empty-padding-end,
+    $alert-ios-message-empty-padding-bottom,
+    $alert-ios-message-empty-padding-start
+  );
 }
-
 
 // iOS Alert Input
 // --------------------------------------------------
@@ -88,7 +100,12 @@
 .alert-input {
   @include border-radius($alert-ios-input-border-radius);
   @include margin($alert-ios-input-margin-top, null, null, null);
-  @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
+  @include padding(
+    $alert-ios-input-padding-top,
+    $alert-ios-input-padding-end,
+    $alert-ios-input-padding-bottom,
+    $alert-ios-input-padding-start
+  );
 
   border: $alert-ios-input-border;
 
@@ -120,7 +137,6 @@
   }
 }
 
-
 // iOS Alert Radio/Checkbox Group
 // --------------------------------------------------
 
@@ -139,12 +155,16 @@
   min-height: $alert-ios-tappable-height;
 }
 
-
 // iOS Alert Radio Label
 // --------------------------------------------------
 
 .alert-radio-label {
-  @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
+  @include padding(
+    $alert-ios-radio-label-padding-top,
+    $alert-ios-radio-label-padding-end,
+    $alert-ios-radio-label-padding-bottom,
+    $alert-ios-radio-label-padding-start
+  );
 
   flex: 1;
   order: 0;
@@ -152,14 +172,12 @@
   color: $alert-ios-radio-label-text-color;
 }
 
-
 // iOS Alert Radio Label: Checked
 // --------------------------------------------------
 
-[aria-checked=true] .alert-radio-label {
+[aria-checked="true"] .alert-radio-label {
   color: $alert-ios-radio-label-text-color-checked;
 }
-
 
 // iOS Alert Radio Checkmark: Unchecked
 // -----------------------------------------
@@ -172,11 +190,10 @@
   min-width: $alert-ios-radio-min-width;
 }
 
-
 // iOS Alert Radio Checked
 // -----------------------------------------
 
-[aria-checked=true] .alert-radio-inner {
+[aria-checked="true"] .alert-radio-inner {
   @include position($alert-ios-radio-icon-top, null, null, $alert-ios-radio-icon-start);
 
   position: absolute;
@@ -193,12 +210,16 @@
   border-color: $alert-ios-radio-icon-border-color;
 }
 
-
 // iOS Alert Checkbox Label
 // --------------------------------------------------
 
 .alert-checkbox-label {
-  @include padding($alert-ios-checkbox-label-padding-top, $alert-ios-checkbox-label-padding-end, $alert-ios-checkbox-label-padding-bottom, $alert-ios-checkbox-label-padding-start);
+  @include padding(
+    $alert-ios-checkbox-label-padding-top,
+    $alert-ios-checkbox-label-padding-end,
+    $alert-ios-checkbox-label-padding-bottom,
+    $alert-ios-checkbox-label-padding-start
+  );
 
   flex: 1;
 
@@ -210,7 +231,12 @@
 
 .alert-checkbox-icon {
   @include border-radius($alert-ios-checkbox-border-radius);
-  @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
+  @include margin(
+    $alert-ios-checkbox-margin-top,
+    $alert-ios-checkbox-margin-end,
+    $alert-ios-checkbox-margin-bottom,
+    $alert-ios-checkbox-margin-start
+  );
 
   position: relative;
 
@@ -226,21 +252,19 @@
   contain: strict;
 }
 
-
 // iOS Alert Checkbox Outer Circle: Checked
 // -----------------------------------------
 
-[aria-checked=true] .alert-checkbox-icon {
+[aria-checked="true"] .alert-checkbox-icon {
   border-color: $alert-ios-checkbox-border-color-on;
 
   background-color: $alert-ios-checkbox-background-color-on;
 }
 
-
 // iOS Alert Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
-[aria-checked=true] .alert-checkbox-inner {
+[aria-checked="true"] .alert-checkbox-inner {
   @include position($alert-ios-checkbox-icon-top, null, null, $alert-ios-checkbox-icon-start);
 
   position: absolute;
@@ -256,7 +280,6 @@
   border-style: $alert-ios-checkbox-icon-border-style;
   border-color: $alert-ios-checkbox-icon-border-color;
 }
-
 
 // iOS Alert Button
 // --------------------------------------------------

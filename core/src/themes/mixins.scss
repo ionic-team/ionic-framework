@@ -1,4 +1,3 @@
-
 /**
  * A heuristic that applies CSS to tablet
  * viewports.
@@ -43,11 +42,14 @@
   height: 100%;
 
   border: 0;
+
+  outline: none;
+
   background: transparent;
+
   cursor: pointer;
 
   appearance: none;
-  outline: none;
 
   &::-moz-focus-inner {
     border: 0;
@@ -58,40 +60,46 @@
   position: absolute;
 
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
 
   width: 100%;
   height: 100%;
 
   margin: 0;
+
   padding: 0;
 
   border: 0;
+
   outline: 0;
-  clip: rect(0 0 0 0);
 
   opacity: 0;
   overflow: hidden;
+  clip: rect(0 0 0 0);
 
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
 @mixin text-inherit() {
+  color: inherit;
+
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
   font-weight: inherit;
+
   letter-spacing: inherit;
+
+  text-align: inherit;
   text-decoration: inherit;
   text-indent: inherit;
   text-overflow: inherit;
   text-transform: inherit;
-  text-align: inherit;
+
   white-space: inherit;
-  color: inherit;
 }
 
 @mixin button-state() {
@@ -118,7 +126,6 @@
 
   @return nth($keys, $index);
 }
-
 
 // Breakpoint Mixins
 // ---------------------------------------------------------------------------------
@@ -158,6 +165,7 @@
 // Makes the @content apply to the given breakpoint and wider.
 @mixin media-breakpoint-up($name, $breakpoints: $screen-breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
+
   @if $min {
     @media (min-width: $min) {
       @content;
@@ -177,6 +185,7 @@
 //    md
 @function breakpoint-next($name, $breakpoints: $screen-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
   $n: index($breakpoint-names, $name);
+
   @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
 }
 
@@ -192,13 +201,15 @@
 //    767.98px
 @function breakpoint-max($name, $breakpoints: $screen-breakpoints) {
   $max: map-get($breakpoints, $name);
-  @return if($max and $max > 0, $max - .02, null);
+
+  @return if($max and $max > 0, $max - 0.02, null);
 }
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
 // Makes the @content apply to the given breakpoint and narrower.
 @mixin media-breakpoint-down($name, $breakpoints: $screen-breakpoints) {
   $max: breakpoint-max($name, $breakpoints);
+
   @if $max {
     @media (max-width: $max) {
       @content;
@@ -207,7 +218,6 @@
     @content;
   }
 }
-
 
 // Text Direction - ltr / rtl
 //
@@ -292,7 +302,6 @@
   @content;
 }
 
-
 // SVG Background Image Mixin
 // @param {string} $svg
 // ----------------------------------------------------------
@@ -312,9 +321,10 @@
     $flipped-url: str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
     $flipped-url: url-encode($flipped-url);
 
-    @include ltr () {
+    @include ltr() {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
+
     @include rtl() {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$flipped-url}");
     }
@@ -329,7 +339,6 @@
   @if $start == 0 and $end == 0 {
     #{$prop}-left: $start;
     #{$prop}-right: $end;
-
   } @else {
     -webkit-#{$prop}-start: $start;
     #{$prop}-inline-start: $start;
@@ -395,8 +404,8 @@
 @mixin position-horizontal($start: null, $end: null) {
   @if $start == $end {
     @include multi-dir() {
-      left: $start;
       right: $end;
+      left: $start;
     }
   } @else {
     @at-root {
@@ -461,6 +470,7 @@
   @include ltr() {
     direction: $dir;
   }
+
   @include rtl() {
     direction: $other-dir;
   }
@@ -474,6 +484,7 @@
     @include ltr() {
       float: left $decorator;
     }
+
     @include rtl() {
       float: right $decorator;
     }
@@ -481,6 +492,7 @@
     @include ltr() {
       float: right $decorator;
     }
+
     @include rtl() {
       float: left $decorator;
     }
@@ -495,6 +507,7 @@
   @if $horizontal == start or $horizontal == end {
     $horizontal-ltr: null;
     $horizontal-rtl: null;
+
     @if $horizontal == start {
       $horizontal-ltr: left;
       $horizontal-rtl: right;
@@ -506,6 +519,7 @@
     @include ltr() {
       background-position: $horizontal-ltr $horizontal-amount $vertical $vertical-amount;
     }
+
     @include rtl() {
       background-position: $horizontal-rtl $horizontal-amount $vertical $vertical-amount;
     }
@@ -521,6 +535,7 @@
     @include ltr() {
       transform-origin: left $y-axis;
     }
+
     @include rtl() {
       transform-origin: right $y-axis;
     }
@@ -528,6 +543,7 @@
     @include ltr() {
       transform-origin: right $y-axis;
     }
+
     @include rtl() {
       transform-origin: left $y-axis;
     }
@@ -539,6 +555,7 @@
     @include ltr() {
       transform-origin: $x-axis $y-axis;
     }
+
     @include rtl() {
       transform-origin: calc(100% - #{$x-axis}) $y-axis;
     }
@@ -556,10 +573,10 @@
 
   @each $transform in $transforms {
     @if (str-index($transform, translate3d)) {
-      $transform: str-replace($transform, 'translate3d(');
-      $transform: str-replace($transform, ')');
+      $transform: str-replace($transform, "translate3d(");
+      $transform: str-replace($transform, ")");
 
-      $coordinates: str-split($transform, ',');
+      $coordinates: str-split($transform, ",");
 
       $x: nth($coordinates, 1);
       $y: nth($coordinates, 2);
@@ -576,7 +593,7 @@
     }
   }
 
-  @if $x == '0' or $x == null {
+  @if $x == "0" or $x == null {
     @include multi-dir() {
       transform: $ltr-translate $extra;
     }
