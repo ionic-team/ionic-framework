@@ -551,6 +551,7 @@ export class Input implements ComponentInterface {
       ev.preventDefault();
       ev.stopPropagation();
       // Attempt to focus input again after pressing clear button
+      console.log('hi there');
       this.setFocus();
     }
     this.value = '';
@@ -781,6 +782,15 @@ export class Input implements ComponentInterface {
                    * button is activated.
                    */
                   ev.preventDefault();
+                }}
+                onFocusin={(ev) => {
+                  /**
+                   * Prevent the focusin event from bubbling otherwise it will cause the focusin
+                   * event listener in scroll assist to fire. When this fires, focus will be moved
+                   * back to the input even if the clear button was never tapped. This poses issues
+                   * for screen readers as it means users would be unable to swipe past the clear button.
+                   */
+                  ev.stopPropagation();
                 }}
                 onClick={this.clearTextInput}
               >
