@@ -847,6 +847,23 @@ export class Datetime implements ComponentInterface {
     this.maxParts = parseMaxParts(max, defaultParts);
   };
 
+  private centerCalendarGrid = (workingMonth: HTMLElement) => {
+    const { el, calendarBodyRef } = this;
+
+    if (!calendarBodyRef) return;
+
+    const monthRight = workingMonth.offsetLeft + workingMonth.offsetWidth;
+    const elRight = el.offsetLeft + el.offsetWidth;
+
+    if (monthRight > elRight) {
+      calendarBodyRef.scrollLeft = workingMonth.clientWidth;
+      console.log('LTR', workingMonth)
+    } else {
+      calendarBodyRef.scrollLeft = -workingMonth.clientWidth;
+      console.log('RTL', workingMonth)
+    }
+  }
+
   private initializeCalendarListener = () => {
     const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
@@ -868,11 +885,11 @@ export class Datetime implements ComponentInterface {
      * the months in a row allows us to mostly sidestep
      * that issue.
      */
-    const months = calendarBodyRef.querySelectorAll('.calendar-month');
+    const months = calendarBodyRef.querySelectorAll<HTMLElement>('.calendar-month');
 
-    const startMonth = months[0] as HTMLElement;
-    const workingMonth = months[1] as HTMLElement;
-    const endMonth = months[2] as HTMLElement;
+    const startMonth = months[0];
+    const workingMonth = months[1];
+    const endMonth = months[2];
     const mode = getIonMode(this);
     const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
@@ -883,7 +900,7 @@ export class Datetime implements ComponentInterface {
      * if element is not in viewport. Use scrollLeft instead.
      */
     writeTask(() => {
-      calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+      this.centerCalendarGrid(workingMonth);
 
       const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
         const box = calendarBodyRef.getBoundingClientRect();
@@ -953,6 +970,7 @@ export class Datetime implements ComponentInterface {
          * then we can return early.
          */
         const newDate = getChangedMonth(this.workingParts);
+        console.log(newDate,this.workingParts)
         if (!newDate) return;
 
         const { month, day, year } = newDate;
@@ -993,7 +1011,7 @@ export class Datetime implements ComponentInterface {
             year,
           });
 
-          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+          this.centerCalendarGrid(workingMonth);
           calendarBodyRef.style.removeProperty('overflow');
 
           if (this.resolveForceDateScrolling) {
@@ -1185,7 +1203,7 @@ export class Datetime implements ComponentInterface {
      */
     const hasCalendarGrid = !preferWheel && ['date-time', 'time-date', 'date'].includes(presentation);
     if (minParts !== undefined && hasCalendarGrid && calendarBodyRef) {
-      const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
+      const workingMonth = calendarBodyRef.querySelector<HTMLElement>('.calendar-month:nth-of-type(1)');
       /**
        * We need to make sure the datetime is not in the process
        * of scrolling to a new datetime value if the value
@@ -1200,7 +1218,7 @@ export class Datetime implements ComponentInterface {
        * and the resolveForceDateScrolling promise never resolves.
        */
       if (workingMonth && forceRenderDate === undefined) {
-        calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+        this.centerCalendarGrid(workingMonth);
       }
     }
 
@@ -1464,16 +1482,24 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
+    const nextMonth = calendarBodyRef.querySelector<HTMLElement>('.calendar-month:last-of-type');
     if (!nextMonth) {
       return;
     }
 
-    const left = (nextMonth as HTMLElement).offsetWidth * 2;
+    const left = nextMonth.offsetWidth * 2;
+
+    if (!calendarBodyRef) return;
+
+    console.log('yay',left)
+
+    const monthRight = nextMonth.offsetLeft + nextMonth.offsetWidth;
+    const elRight = this.el.offsetLeft + this.el.offsetWidth;
+    const direction = monthRight > elRight ? 1 : -1;
 
     calendarBodyRef.scrollTo({
       top: 0,
-      left: left * (isRTL(this.el) ? -1 : 1),
+      left: left * direction,
       behavior: 'smooth',
     });
   };
