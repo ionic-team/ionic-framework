@@ -551,7 +551,6 @@ export class Input implements ComponentInterface {
       ev.preventDefault();
       ev.stopPropagation();
       // Attempt to focus input again after pressing clear button
-      console.log('hi there');
       this.setFocus();
     }
     this.value = '';
