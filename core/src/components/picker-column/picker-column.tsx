@@ -556,7 +556,7 @@ export class PickerColumn implements ComponentInterface {
   };
 
   private onKeyDown = (ev: KeyboardEvent) => {
-    let options, newOption;
+    let newOption;
     switch (ev.key) {
       case 'ArrowDown':
         newOption = this.findNextOption();
@@ -576,8 +576,7 @@ export class PickerColumn implements ComponentInterface {
          * There is no guarantee that the first child will be an ion-picker-column-option,
          * so we do not use firstElementChild.
          */
-        options = this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option');
-        newOption = options[0];
+        newOption = this.el.querySelector<HTMLIonPickerColumnOptionElement>('ion-picker-column-option:first-of-type');
         break;
       case 'End':
 
@@ -585,8 +584,7 @@ export class PickerColumn implements ComponentInterface {
          * There is no guarantee that the last child will be an ion-picker-column-option,
          * so we do not use lastElementChild.
          */
-        options = this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option');
-        newOption = options[options.length - 1];
+        newOption = this.el.querySelector<HTMLIonPickerColumnOptionElement>('ion-picker-column-option:last-of-type');
         break;
       default:
         break;
