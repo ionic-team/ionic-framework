@@ -9,7 +9,7 @@
   --background: #{rgba($text-color-rgb, 0.12)};
   --color: #{rgba($text-color-rgb, 0.87)};
 
-  @include border-radius(16px);
+  @include border-radius(var(--border-radius));
   @include font-smoothing();
   @include margin(4px);
   @include padding(6px, 12px);
@@ -118,6 +118,21 @@
 
 ::slotted(ion-avatar:last-child) {
   @include margin(-4px, -8px, -4px, 8px);
+}
+
+// Chip Shapes
+// ---------------------------------------------
+
+:host(.chip-soft) {
+  --border-radius: 8px;
+}
+
+:host(.chip-round) {
+  --border-radius: 999px;
+}
+
+:host(.chip-rectangular) {
+  --border-radius: 0px;
 }
 
 // Chip: Focus
