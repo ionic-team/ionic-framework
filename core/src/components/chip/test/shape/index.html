@@ -16,13 +16,16 @@
 
   <body>
     <ion-app>
-      <ion-content>
+      <ion-content class="ion-padding">
         <h2>Chip - Shape</h2>
 
         <h3>Shapes</h3>
         <p>
           <ion-chip id="default">
             <ion-label>Default</ion-label>
+          </ion-chip>
+          <ion-chip id="soft" shape="soft">
+            <ion-label>Soft</ion-label>
           </ion-chip>
           <ion-chip id="round" shape="round">
             <ion-label>Round</ion-label>
@@ -32,25 +35,18 @@
           </ion-chip>
         </p>
       </ion-content>
+
+      <style>
+        /*
+         * This style is applied to make the shape stand out more
+         * in the e2e tests, but it shouldn't be applied to the ios or
+         * md themes as those use an rgb value for the chip background
+         */
+        .ionic ion-content {
+          --background: #222;
+          --color: #fff;
+        }
+      </style>
     </ion-app>
-
-    <style>
-      ion-content {
-        --background: #222;
-      }
-      h2,
-      h3 {
-        color: #fff;
-        padding-left: 16px;
-      }
-
-      p {
-        padding-left: 8px;
-      }
-
-      ion-chip + ion-chip {
-        margin-inline-start: 16px;
-      }
-    </style>
   </body>
 </html>
