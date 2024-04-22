@@ -130,6 +130,17 @@ export interface IonicConfig {
   accordionToggleIcon?: string;
 
   /**
+   * Overrides the separator icon for all `ion-breadcrumb` components,
+   * only when mode is set to `ios`.
+   */
+  breadcrumbSeparatorIcon?: string;
+
+  /**
+   * Overrides the collapsed icon for all `ion-breadcrumb` components.
+   */
+  breadcrumbCollapsedIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */

@@ -406,7 +406,7 @@ export class Accordion implements ComponentInterface {
    * Get the icon to use for the toggle icon.
    * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default chevron down icon.
+   * If no icon is set in the config, use the default icon.
    *
    * @internal
    * @returns {string} The icon to use for the toggle icon.

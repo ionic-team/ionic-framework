@@ -5,6 +5,7 @@ import { inheritAriaAttributes } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -148,6 +149,32 @@ export class Breadcrumb implements ComponentInterface {
     this.collapsedClick.emit({ ionShadowTarget: this.collapsedRef });
   };
 
+  /**
+   * Get the icon to use for the separator icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the separator icon.
+   */
+  get breadcrumbSeparatorIcon(): string {
+    return config.get('breadcrumbSeparatorIcon', chevronForwardOutline);
+  }
+
+  /**
+   * Get the icon to use for the collapsed icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the collapsed icon.
+   */
+  get breadcrumbCollapsedIcon(): string {
+    return config.get('breadcrumbSeparatorIcon', ellipsisHorizontal);
+  }
+
   render() {
     const {
       color,
@@ -163,6 +190,8 @@ export class Breadcrumb implements ComponentInterface {
       separator,
       showCollapsedIndicator,
       target,
+      breadcrumbSeparatorIcon,
+      breadcrumbCollapsedIcon,
     } = this;
     const clickable = this.isClickable();
     const TagType = this.href === undefined ? 'span' : ('a' as any);
@@ -224,7 +253,7 @@ export class Breadcrumb implements ComponentInterface {
               'breadcrumbs-collapsed-indicator': true,
             }}
           >
-            <ion-icon aria-hidden="true" icon={ellipsisHorizontal} lazy={false}></ion-icon>
+            <ion-icon aria-hidden="true" icon={breadcrumbCollapsedIcon} lazy={false}></ion-icon>
           </button>
         )}
         {showSeparator && (
@@ -236,7 +265,7 @@ export class Breadcrumb implements ComponentInterface {
           <span class="breadcrumb-separator" part="separator" aria-hidden="true">
             <slot name="separator">
               {theme === 'ios' ? (
-                <ion-icon icon={chevronForwardOutline} lazy={false} flip-rtl></ion-icon>
+                <ion-icon icon={breadcrumbSeparatorIcon} lazy={false} flip-rtl></ion-icon>
               ) : (
                 <span>/</span>
               )}
