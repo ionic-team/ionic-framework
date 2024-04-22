@@ -166,6 +166,11 @@ export interface IonicConfig {
   fabButtonCloseIcon?: string;
 
   /**
+   * Overrides the clear icon for all `ion-input` components.
+   */
+  inputClearIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */

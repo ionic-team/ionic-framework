@@ -9,6 +9,7 @@ import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, TextFieldTypes } from '../../interface';
 
@@ -687,15 +688,34 @@ export class Input implements ComponentInterface {
     return this.renderLabel();
   }
 
+  /**
+   * Get the icon to use for the clear icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the clear icon.
+   */
+  get inputClearIcon(): string {
+    const theme = getIonTheme(this);
+    const defaultClearIcon = theme === 'ios' ? closeCircle : closeSharp;
+    const icon = this.clearInputIcon;
+
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('inputClearIcon', defaultClearIcon);
+  }
+
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, clearInputIcon } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, inputClearIcon } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
-
-    const defaultClearIcon = theme === 'ios' ? closeCircle : closeSharp;
-    const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -794,7 +814,7 @@ export class Input implements ComponentInterface {
                 }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
+                <ion-icon aria-hidden="true" icon={inputClearIcon}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>
