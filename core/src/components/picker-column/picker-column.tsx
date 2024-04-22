@@ -492,34 +492,63 @@ export class PickerColumn implements ComponentInterface {
     });
   }
 
-  private findNextOption = () => {
+  /**
+   * Find the next enabled option after the active option.
+   * @param stride - How many options to "jump" over in order to select the next option.
+   * This can be used to implement PageUp/PageDown behaviors where pressing these keys
+   * scrolls the picker by more than 1 option. For example, a stride of 5 means select
+   * the enabled option 5 options after the active one. Note that the actual option selected
+   * may be past the stride if the option at the stride is disabled.
+   */
+  private findNextOption = (stride: number = 1) => {
     const { activeItem } = this;
     if (!activeItem) return undefined;
 
+    let prevNode = activeItem;
     let node = activeItem.nextElementSibling as HTMLIonPickerColumnOptionElement | null;
     while (node != null) {
-      if (node.tagName === 'ION-PICKER-COLUMN-OPTION' && !node.disabled) {
+      if (stride > 0) {
+        stride--;
+      }
+
+      if (node.tagName === 'ION-PICKER-COLUMN-OPTION' && !node.disabled && stride === 0) {
         return node;
       }
+      prevNode = node;
       node = node.nextElementSibling as HTMLIonPickerColumnOptionElement | null;
     }
 
-    return undefined;
+    return prevNode;
   };
 
-  private findPreviousOption = () => {
+  /**
+   * Find the next enabled option after the active option.
+   * @param stride - How many options to "jump" over in order to select the next option.
+   * This can be used to implement PageUp/PageDown behaviors where pressing these keys
+   * scrolls the picker by more than 1 option. For example, a stride of 5 means select
+   * the enabled option 5 options before the active one. Note that the actual option selected
+   *  may be past the stride if the option at the stride is disabled.
+   */
+  private findPreviousOption = (stride: number = 1) => {
     const { activeItem } = this;
     if (!activeItem) return undefined;
 
+    let nextNode = activeItem;
     let node = activeItem.previousElementSibling as HTMLIonPickerColumnOptionElement | null;
     while (node != null) {
-      if (node.tagName === 'ION-PICKER-COLUMN-OPTION' && !node.disabled) {
+      if (stride > 0) {
+        stride--;
+      }
+
+      if (node.tagName === 'ION-PICKER-COLUMN-OPTION' && !node.disabled && stride === 0) {
         return node;
       }
+
+      nextNode = node;
       node = node.previousElementSibling as HTMLIonPickerColumnOptionElement | null;
     }
 
-    return undefined;
+    return nextNode;
   };
 
   private onKeyDown = (ev: KeyboardEvent) => {
@@ -532,10 +561,10 @@ export class PickerColumn implements ComponentInterface {
         newOption = this.findPreviousOption();
         break;
       case 'PageUp':
-        // TODO
+        newOption = this.findPreviousOption(5);
         break;
       case 'PageDown':
-        // TODO
+        newOption = this.findNextOption(5);
         break;
       case 'Home':
         options = this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option');
@@ -551,6 +580,7 @@ export class PickerColumn implements ComponentInterface {
 
     if (newOption != null) {
       this.value = newOption.value;
+      console.log(newOption);
 
       // This stops any default browser behavior such as scrolling
       ev.preventDefault();
