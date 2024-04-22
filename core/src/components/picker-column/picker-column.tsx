@@ -556,7 +556,7 @@ export class PickerColumn implements ComponentInterface {
   };
 
   private onKeyDown = (ev: KeyboardEvent) => {
-    let newOption;
+    let newOption = null;
     switch (ev.key) {
       case 'ArrowDown':
         newOption = this.findNextOption();
