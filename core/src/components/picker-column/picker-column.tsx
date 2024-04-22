@@ -624,7 +624,7 @@ export class PickerColumn implements ComponentInterface {
         tabindex={this.disabled ? undefined : 0}
         aria-label={this.ariaLabel}
         aria-valuemin={0}
-        aria-valuemax={el.childElementCount}
+        aria-valuemax={el.childElementCount - 1}
         aria-valuenow={activeItemIndex >= 0 ? activeItemIndex : 0}
         aria-valuetext={valueText}
         aria-orientation="vertical"
