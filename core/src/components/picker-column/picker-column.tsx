@@ -593,7 +593,7 @@ export class PickerColumn implements ComponentInterface {
    * slider role: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
    */
   private renderAssistiveFocusable = () => {
-    const { activeItem } = this;
+    const { activeItem, el } = this;
     const valueText = activeItem ? activeItem.getAttribute('aria-label') ?? activeItem.innerText : '';
 
     return (
@@ -603,7 +603,7 @@ export class PickerColumn implements ComponentInterface {
         tabindex={this.disabled ? undefined : 0}
         aria-label={this.ariaLabel}
         aria-valuemin={0}
-        aria-valuemax={0}
+        aria-valuemax={el.childElementCount}
         aria-valuenow={0}
         aria-valuetext={valueText}
         aria-orientation="vertical"
