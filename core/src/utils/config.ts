@@ -125,6 +125,11 @@ export interface IonicConfig {
   toastDuration?: number;
 
   /**
+   * Overrides the toggle icon for all `ion-accordion` components.
+   */
+  accordionToggleIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */

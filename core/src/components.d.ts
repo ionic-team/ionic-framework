@@ -96,7 +96,7 @@ export namespace Components {
         /**
           * The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed.
          */
-        "toggleIcon": string;
+        "toggleIcon"?: string | null;
         /**
           * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
@@ -5278,7 +5278,7 @@ declare namespace LocalJSX {
         /**
           * The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed.
          */
-        "toggleIcon"?: string;
+        "toggleIcon"?: string | null;
         /**
           * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */

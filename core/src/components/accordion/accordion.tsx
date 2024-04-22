@@ -79,7 +79,7 @@ export class Accordion implements ComponentInterface {
    * rotated when the accordion is expanded
    * or collapsed.
    */
-  @Prop() toggleIcon = chevronDown;
+  @Prop() toggleIcon?: string | null;
 
   /**
    * The slot inside of `ion-item` to
@@ -193,7 +193,7 @@ export class Accordion implements ComponentInterface {
       return;
     }
 
-    const { toggleIconSlot, toggleIcon } = this;
+    const { toggleIconSlot, accordionToggleIcon } = this;
 
     /**
      * Check if there already is a toggle icon.
@@ -208,7 +208,7 @@ export class Accordion implements ComponentInterface {
     iconEl.slot = toggleIconSlot;
     iconEl.lazy = false;
     iconEl.classList.add('ion-accordion-toggle-icon');
-    iconEl.icon = toggleIcon;
+    iconEl.icon = accordionToggleIcon;
     iconEl.setAttribute('aria-hidden', 'true');
 
     ionItem.appendChild(iconEl);
@@ -400,6 +400,25 @@ export class Accordion implements ComponentInterface {
       const expand = state === AccordionState.Collapsed || state === AccordionState.Collapsing;
       accordionGroupEl.requestAccordionToggle(value, expand);
     }
+  }
+
+  /**
+   * Get the icon to use for the toggle icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default chevron down icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the toggle icon.
+   */
+  get accordionToggleIcon(): string {
+    const icon = this.toggleIcon;
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('accordionToggleIcon', chevronDown);
   }
 
   render() {

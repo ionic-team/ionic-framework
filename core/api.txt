@@ -4,7 +4,7 @@ ion-accordion,prop,disabled,boolean,false,false,false
 ion-accordion,prop,mode,"ios" | "md",undefined,false,false
 ion-accordion,prop,readonly,boolean,false,false,false
 ion-accordion,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-accordion,prop,toggleIcon,string,chevronDown,false,false
+ion-accordion,prop,toggleIcon,null | string | undefined,undefined,false,false
 ion-accordion,prop,toggleIconSlot,"end" | "start",'end',false,false
 ion-accordion,prop,value,string,`ion-accordion-${accordionIds++}`,false,false
 ion-accordion,part,content
