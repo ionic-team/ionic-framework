@@ -141,6 +141,26 @@ export interface IonicConfig {
   breadcrumbCollapsedIcon?: string;
 
   /**
+   * Overrides the next icon for all `ion-datetime` components.
+   */
+  datetimeNextIcon?: string;
+
+  /**
+   * Overrides the previous icon for all `ion-datetime` components.
+   */
+  datetimePrevIcon?: string;
+
+  /**
+   * Overrides the show month and year icon for all `ion-datetime` components.
+   */
+  datetimeShowMonthYearIcon?: string;
+
+  /**
+   * Overrides the hide month and year icon for all `ion-datetime` components.
+   */
+  datetimeHideMonthYearIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */
