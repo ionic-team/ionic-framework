@@ -1687,6 +1687,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a date"
         class="date-column"
         color={this.color}
         disabled={disabled}
@@ -1806,6 +1807,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a day"
         class="day-column"
         color={this.color}
         disabled={disabled}
@@ -1849,6 +1851,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a month"
         class="month-column"
         color={this.color}
         disabled={disabled}
@@ -1891,6 +1894,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a year"
         class="year-column"
         color={this.color}
         disabled={disabled}
@@ -1964,6 +1968,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select an hour"
         color={this.color}
         disabled={disabled}
         value={activePart.hour}
@@ -2003,6 +2008,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a minute"
         color={this.color}
         disabled={disabled}
         value={activePart.minute}
@@ -2045,6 +2051,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a day"
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
         disabled={disabled}
