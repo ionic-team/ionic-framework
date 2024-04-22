@@ -571,10 +571,20 @@ export class PickerColumn implements ComponentInterface {
         newOption = this.findNextOption(5);
         break;
       case 'Home':
+
+        /**
+         * There is no guarantee that the first child will be an ion-picker-column-option,
+         * so we do not use firstElementChild.
+         */
         options = this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option');
         newOption = options[0];
         break;
       case 'End':
+
+        /**
+         * There is no guarantee that the last child will be an ion-picker-column-option,
+         * so we do not use lastElementChild.
+         */
         options = this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option');
         newOption = options[options.length - 1];
         break;
