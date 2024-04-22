@@ -505,7 +505,7 @@ export class PickerColumn implements ComponentInterface {
     }
 
     return undefined;
-  }
+  };
 
   private findPreviousOption = () => {
     const { activeItem } = this;
@@ -520,11 +520,11 @@ export class PickerColumn implements ComponentInterface {
     }
 
     return undefined;
-  }
+  };
 
   private onKeyDown = (ev: KeyboardEvent) => {
     let options, newOption;
-    switch(ev.key) {
+    switch (ev.key) {
       case 'ArrowDown':
         newOption = this.findNextOption();
         break;
@@ -555,7 +555,7 @@ export class PickerColumn implements ComponentInterface {
       // This stops any default browser behavior such as scrolling
       ev.preventDefault();
     }
-  }
+  };
 
   /**
    * Render an element that overlays the column. This element is for assistive
@@ -565,7 +565,7 @@ export class PickerColumn implements ComponentInterface {
    */
   private renderAssistiveFocusable = () => {
     const { activeItem } = this;
-    const valueText = activeItem ? activeItem.innerText : '';
+    const valueText = activeItem ? activeItem.getAttribute('aria-label') ?? activeItem.innerText : '';
 
     return (
       <div

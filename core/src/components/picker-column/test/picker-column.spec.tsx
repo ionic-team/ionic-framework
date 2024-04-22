@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { PickerColumn } from '../picker-column';
+import { PickerColumnOption } from '../../picker-column-option/picker-column-option';
 
 describe('picker-column: assistive element', () => {
   beforeEach(() => {
@@ -75,5 +76,39 @@ describe('picker-column: assistive element', () => {
     const assistiveFocusable = pickerCol.shadowRoot!.querySelector<HTMLElement>('.assistive-focusable')!;
 
     expect(assistiveFocusable.tabIndex).toBe(-1);
+  });
+
+  it('should use option aria-label as assistive element aria-valuetext', async () => {
+    const page = await newSpecPage({
+      components: [PickerColumn, PickerColumnOption],
+      template: () => (
+        <ion-picker-column value={1}>
+          <ion-picker-column-option value={1} aria-label="My Label">
+            My Text
+          </ion-picker-column-option>
+        </ion-picker-column>
+      ),
+    });
+
+    const pickerCol = page.body.querySelector('ion-picker-column')!;
+    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
+
+    expect(assistiveFocusable.getAttribute('aria-valuetext')).toBe('My Label');
+  });
+
+  it('should use option text as assistive element aria-valuetext when no label provided', async () => {
+    const page = await newSpecPage({
+      components: [PickerColumn, PickerColumnOption],
+      template: () => (
+        <ion-picker-column value={1}>
+          <ion-picker-column-option value={1}>My Text</ion-picker-column-option>
+        </ion-picker-column>
+      ),
+    });
+
+    const pickerCol = page.body.querySelector('ion-picker-column')!;
+    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
+
+    expect(assistiveFocusable.getAttribute('aria-valuetext')).toBe('My Text');
   });
 });
