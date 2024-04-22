@@ -515,6 +515,8 @@ export class PickerColumn implements ComponentInterface {
         return node;
       }
       prevNode = node;
+
+      // Use nextElementSibling instead of nextSibling to avoid text/comment nodes
       node = node.nextElementSibling as HTMLIonPickerColumnOptionElement | null;
     }
 
@@ -545,6 +547,8 @@ export class PickerColumn implements ComponentInterface {
       }
 
       nextNode = node;
+
+      // Use previousElementSibling instead of previousSibling to avoid text/comment nodes
       node = node.previousElementSibling as HTMLIonPickerColumnOptionElement | null;
     }
 
