@@ -6,6 +6,7 @@ import type { Attributes } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { close } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -115,7 +116,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * is pressed. Only applies if it is the main button inside of a fab containing a
    * fab list.
    */
-  @Prop() closeIcon = close;
+  @Prop() closeIcon?: string | null;
 
   /**
    * Emitted when the button has focus.
@@ -152,8 +153,28 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  /**
+   * Get the icon to use for the show month and year icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the show month and year icon.
+   */
+  get fabButtonCloseIcon(): string {
+    const icon = this.closeIcon;
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('fabButtonCloseIcon', close);
+  }
+
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
+    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes, fabButtonCloseIcon } =
+      this;
     const inList = hostContext('ion-fab-list', el);
     const theme = getIonTheme(this);
     const TagType = href === undefined ? 'button' : ('a' as any);
@@ -196,7 +217,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
         >
           <ion-icon
             aria-hidden="true"
-            icon={this.closeIcon}
+            icon={fabButtonCloseIcon}
             part="close-icon"
             class="close-icon"
             lazy={false}
