@@ -502,7 +502,7 @@ export class PickerColumn implements ComponentInterface {
    */
   private findNextOption = (stride: number = 1) => {
     const { activeItem } = this;
-    if (!activeItem) return undefined;
+    if (!activeItem) return null;
 
     let prevNode = activeItem;
     let node = activeItem.nextElementSibling as HTMLIonPickerColumnOptionElement | null;
@@ -533,7 +533,7 @@ export class PickerColumn implements ComponentInterface {
    */
   private findPreviousOption = (stride: number = 1) => {
     const { activeItem } = this;
-    if (!activeItem) return undefined;
+    if (!activeItem) return null;
 
     let nextNode = activeItem;
     let node = activeItem.previousElementSibling as HTMLIonPickerColumnOptionElement | null;
@@ -590,7 +590,7 @@ export class PickerColumn implements ComponentInterface {
         break;
     }
 
-    if (newOption != null) {
+    if (newOption !== null) {
       this.value = newOption.value;
 
       // This stops any default browser behavior such as scrolling
