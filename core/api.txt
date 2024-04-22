@@ -286,8 +286,6 @@ ion-card,prop,shape,"rectangular" | "round" | undefined,undefined,false,true
 ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
-ion-card,css-prop,--background
-ion-card,css-prop,--color
 ion-card,part,native
 
 ion-card-content,none
@@ -349,7 +347,7 @@ ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-chip,prop,disabled,boolean,false,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
-ion-chip,prop,shape,"rectangular" | "round" | undefined,undefined,false,false
+ion-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,'soft',false,false
 ion-chip,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-chip,css-prop,--background
 ion-chip,css-prop,--color
