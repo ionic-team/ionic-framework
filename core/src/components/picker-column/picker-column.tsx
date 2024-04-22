@@ -601,7 +601,6 @@ export class PickerColumn implements ComponentInterface {
         <div
           aria-hidden="true"
           class="picker-opts"
-          tabindex={disabled ? undefined : 0}
           ref={(el) => {
             this.scrollEl = el;
           }}
