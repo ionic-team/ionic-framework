@@ -580,7 +580,6 @@ export class PickerColumn implements ComponentInterface {
 
     if (newOption != null) {
       this.value = newOption.value;
-      console.log(newOption);
 
       // This stops any default browser behavior such as scrolling
       ev.preventDefault();
