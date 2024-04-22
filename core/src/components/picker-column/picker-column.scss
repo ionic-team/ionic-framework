@@ -28,9 +28,6 @@
   @include position(0, 0, 0, 0);
   position: absolute;
 
-  // TODO NOW - Remove this (for debugging only)
-  background: rgba(0, 255, 0, 0.1);
-
   z-index: 1;
   pointer-events: none;
 }
