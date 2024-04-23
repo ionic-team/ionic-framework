@@ -1280,9 +1280,9 @@ ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocapitalize,string,'off',false,false
 ion-searchbar,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
-ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
+ion-searchbar,prop,cancelButtonIcon,null | string | undefined,undefined,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
-ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
+ion-searchbar,prop,clearIcon,null | string | undefined,undefined,false,false
 ion-searchbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-searchbar,prop,debounce,number | undefined,undefined,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
@@ -1293,7 +1293,7 @@ ion-searchbar,prop,minlength,number | undefined,undefined,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,name,string,this.inputId,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
-ion-searchbar,prop,searchIcon,string | undefined,undefined,false,false
+ion-searchbar,prop,searchIcon,null | string | undefined,undefined,false,false
 ion-searchbar,prop,showCancelButton,"always" | "focus" | "never",'never',false,false
 ion-searchbar,prop,showClearButton,"always" | "focus" | "never",'always',false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
@@ -1376,7 +1376,7 @@ ion-select,prop,cancelText,string,'Cancel',false,false
 ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
-ion-select,prop,expandedIcon,string | undefined,undefined,false,false
+ion-select,prop,expandedIcon,null | string | undefined,undefined,false,false
 ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false

@@ -207,6 +207,16 @@ export interface IonicConfig {
   searchbarSearchIcon?: string;
 
   /**
+   * Overrides the expand icon for all `ion-select` components.
+   */
+  selectExpandIcon?: string;
+
+  /**
+   * Overrides the collapsed icon for all `ion-select` components.
+   */
+  selectCollapsedIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */

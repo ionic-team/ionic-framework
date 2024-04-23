@@ -11,6 +11,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type {
   ActionSheetOptions,
@@ -185,7 +186,7 @@ export class Select implements ComponentInterface {
    * rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon`
    * will be used for when the select is both open and closed.
    */
-  @Prop() expandedIcon?: string;
+  @Prop() expandedIcon?: string | null;
 
   /**
    * The shape of the select. If "round" it will have an increased border radius.
@@ -861,15 +862,13 @@ export class Select implements ComponentInterface {
    * next to the select text.
    */
   private renderSelectIcon() {
-    const theme = getIonTheme(this);
-    const { isExpanded, toggleIcon, expandedIcon } = this;
+    const { isExpanded, selectExpandIcon, selectCollapsedIcon } = this;
     let icon: string;
 
-    if (isExpanded && expandedIcon !== undefined) {
-      icon = expandedIcon;
+    if (isExpanded) {
+      icon = selectExpandIcon;
     } else {
-      const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
-      icon = toggleIcon ?? defaultIcon;
+      icon = selectCollapsedIcon;
     }
 
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
@@ -921,6 +920,55 @@ export class Select implements ComponentInterface {
         ref={(focusEl) => (this.focusEl = focusEl)}
       ></button>
     );
+  }
+
+  /**
+   * Get the icon to use for the expand icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the expand icon.
+   */
+  get selectExpandIcon(): string {
+    const theme = getIonTheme(this);
+    const icon = this.expandedIcon;
+    let defaultExpandIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
+
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    if (this.toggleIcon) {
+      // If the toggleIcon is set, use that as the default expand icon.
+      defaultExpandIcon = this.toggleIcon;
+    }
+
+    return config.get('selectExpandIcon', defaultExpandIcon);
+  }
+
+  /**
+   * Get the icon to use for the collapsed icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the collapsed icon.
+   */
+  get selectCollapsedIcon(): string {
+    const theme = getIonTheme(this);
+    const icon = this.toggleIcon;
+    const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
+
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('selectCollapsedIcon', defaultIcon);
   }
 
   render() {
