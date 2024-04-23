@@ -619,9 +619,9 @@ export namespace Components {
          */
         "routerDirection": RouterDirection;
         /**
-          * Set to `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners.
+          * Set to `"soft"` for a card with slightly rounded corners, `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners. Defaults to `"round"`.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -5859,9 +5859,9 @@ declare namespace LocalJSX {
          */
         "routerDirection"?: RouterDirection;
         /**
-          * Set to `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners.
+          * Set to `"soft"` for a card with slightly rounded corners, `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners. Defaults to `"round"`.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
