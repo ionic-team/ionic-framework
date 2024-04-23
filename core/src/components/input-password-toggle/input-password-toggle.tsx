@@ -4,6 +4,7 @@ import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 import { eyeOff, eye } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, TextFieldTypes } from '../../interface';
 
@@ -105,13 +106,50 @@ export class InputPasswordToggle implements ComponentInterface {
     inputElRef.type = inputElRef.type === 'text' ? 'password' : 'text';
   };
 
+  /**
+   * Get the icon to use for the show icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the show icon.
+   */
+  get inputPasswordShowIcon(): string {
+    const icon = this.showIcon;
+
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('inputPasswordShowIcon', eye);
+  }
+
+  /**
+   * Get the icon to use for the hide icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the hide icon.
+   */
+  get inputPasswordHideIcon(): string {
+    const icon = this.hideIcon;
+
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('inputPasswordHideIcon', eyeOff);
+  }
+
   render() {
-    const { color, type } = this;
+    const { color, type, inputPasswordShowIcon, inputPasswordHideIcon } = this;
 
     const mode = getIonMode(this);
-
-    const showPasswordIcon = this.showIcon ?? eye;
-    const hidePasswordIcon = this.hideIcon ?? eyeOff;
 
     const isPasswordVisible = type === 'text';
 
@@ -143,7 +181,7 @@ export class InputPasswordToggle implements ComponentInterface {
           <ion-icon
             slot="icon-only"
             aria-hidden="true"
-            icon={isPasswordVisible ? hidePasswordIcon : showPasswordIcon}
+            icon={isPasswordVisible ? inputPasswordHideIcon : inputPasswordShowIcon}
           ></ion-icon>
         </ion-button>
       </Host>

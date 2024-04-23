@@ -171,6 +171,16 @@ export interface IonicConfig {
   inputClearIcon?: string;
 
   /**
+   * Overrides the show icon for all `ion-input-password` components.
+   */
+  inputPasswordShowIcon?: string;
+
+  /**
+   * Overrides the hide icon for all `ion-input-password` components.
+   */
+  inputPasswordHideIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */
