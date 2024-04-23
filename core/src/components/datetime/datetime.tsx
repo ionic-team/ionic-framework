@@ -2051,7 +2051,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
-        aria-label="Select a day"
+        aria-label="Select a day period"
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
         disabled={disabled}
