@@ -31,7 +31,6 @@
   border: 1px solid transparent;
 }
 
-
 // Breadcrumb: Focused
 // ------------------------------------------
 
@@ -41,7 +40,7 @@
 
 :host(.in-breadcrumbs-color.ion-focused) .breadcrumb-native,
 :host(.ion-color.ion-focused) .breadcrumb-native {
-  background: #{current-color(base, .1)};
+  background: #{current-color(base, 0.1)};
   color: #{current-color(base)};
 }
 
@@ -51,14 +50,12 @@
   color: $breadcrumb-ios-icon-color-focused;
 }
 
-
 // Breadcrumb Separator
 // ------------------------------------------
 
 .breadcrumb-separator {
   color: $breadcrumb-ios-separator-color;
 }
-
 
 // Breadcrumb Slotted Icons
 // ------------------------------------------
@@ -80,7 +77,6 @@
 :host(.breadcrumb-active) ::slotted(ion-icon) {
   color: $breadcrumb-ios-icon-color-active;
 }
-
 
 // Breadcrumbs Collapsed Indicator
 // --------------------------------------------------

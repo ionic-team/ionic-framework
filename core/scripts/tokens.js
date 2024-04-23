@@ -15,13 +15,27 @@ const customVariables = ``;
 // Prefix for all generated variables
 const variablesPrefix = 'ionic';
 
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+      }
+    : null;
+}
+
 // CSS vanilla :root format
 StyleDictionary.registerFormat({
   name: 'rootFormat',
   formatter({ dictionary, file }) {
     // Add a prefix to all variable names
     const prefixedVariables = dictionary.allProperties.map((prop) => {
-      return `  --${variablesPrefix}-${prop.name}: ${prop.value};`;
+      const rgb = hexToRgb(prop.value);
+      return `  --${variablesPrefix}-${prop.name}: ${prop.value};${
+        rgb ? `\n  --${variablesPrefix}-${prop.name}-rgb: ${rgb.r}, ${rgb.g}, ${rgb.b};` : ``
+      }`;
     });
 
     return (
@@ -40,7 +54,12 @@ StyleDictionary.registerFormat({
   formatter({ dictionary, file }) {
     // Add a prefix to all variable names
     const prefixedVariables = dictionary.allProperties.map((prop) => {
-      return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});`;
+      const rgb = hexToRgb(prop.value);
+      return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${
+        rgb
+          ? `\n$${variablesPrefix}-${prop.name}-rgb: var(--${variablesPrefix}-${prop.name}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`
+          : ``
+      }`;
     });
 
     return (
@@ -94,8 +113,8 @@ StyleDictionary.registerFormat({
           utilityClass = `.${variablesPrefix}-${className} {\n  box-shadow: $ionic-${prop.name};\n}`;
           break;
         case 'space':
-          utilityClass = `.${variablesPrefix}-margin-${className} {\n  margin: $ionic-${prop.name};\n};
-.${variablesPrefix}-padding-${className} {\n  padding: $ionic-${prop.name};\n}`;
+          utilityClass = `.${variablesPrefix}-margin-${className} {\n  --margin-start: #{$ionic-${prop.name}};\n  --margin-end: #{$ionic-${prop.name}};\n  --margin-top: #{$ionic-${prop.name}};\n  --margin-bottom: #{$ionic-${prop.name}};\n\n  @include margin(${prop.value});\n};\n 
+.${variablesPrefix}-padding-${className} {\n  --padding-start: #{$ionic-${prop.name}};\n  --padding-end: #{$ionic-${prop.name}};\n  --padding-top: #{$ionic-${prop.name}};\n  --padding-bottom: #{$ionic-${prop.name}};\n\n  @include padding(${prop.value});\n};\n`;
           break;
         default:
           utilityClass = `.${variablesPrefix}-${className} {\n  ${tokenType}: $ionic-${prop.name};\n}`;
@@ -104,21 +123,25 @@ StyleDictionary.registerFormat({
       return utilityClass;
     });
 
-    return [fileHeader({ file }), '@import "./ionic.vars";\n', utilityClasses.join('\n')].join('\n');
+    return [
+      fileHeader({ file }),
+      '@import "./ionic.vars";\n@import "../themes/mixins";\n',
+      utilityClasses.join('\n'),
+    ].join('\n');
   },
 });
 
 // Make Style Dictionary comply with the $ format on properties from W3C Guidelines
 const w3cTokenJsonParser = {
   pattern: /\.json|\.tokens\.json|\.tokens$/,
-  parse(_a) {
-    var contents = _a.contents;
+  parse({ contents }) {
     // replace $value with value so that style dictionary recognizes it
     var preparedContent = (contents || '{}')
       .replace(/"\$?value":/g, '"value":')
       // convert $description to comment
       .replace(/"\$?description":/g, '"comment":');
     //
+
     return JSON.parse(preparedContent);
   },
 };

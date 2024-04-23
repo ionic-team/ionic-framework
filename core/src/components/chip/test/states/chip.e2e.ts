@@ -41,3 +41,25 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     });
   });
 });
+
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  /**
+   * This behavior only applies to Ionic Theme.
+   */
+  test.describe(title('chip: focus state'), () => {
+    test('should render focus state', async ({ page }) => {
+      await page.setContent(
+        `<div id="container" class="ion-padding">
+          <ion-chip class="ion-focused">
+            <ion-label>Focused</ion-label>
+          </ion-chip>
+        </div>`,
+        config
+      );
+
+      const chip = page.locator('#container');
+
+      await expect(chip).toHaveScreenshot(screenshot(`chip-focused`));
+    });
+  });
+});

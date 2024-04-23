@@ -1,0 +1,120 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Link: Shared Styles (Standalone & Underline)
+// -------------------------------------------------------------------------------
+@mixin link-shared {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: globals.$ionic-space-xxxs;
+
+  transition: color 0.2s ease-in-out;
+
+  font-weight: globals.$ionic-font-weight-regular;
+
+  text-decoration-color: inherit;
+
+  text-underline-offset: 2px;
+
+  cursor: pointer;
+
+  // Link: Visited
+  // -------------------------------------------------------------------------------
+
+  &:visited {
+    color: globals.$ionic-color-info-500;
+  }
+}
+
+// Link: Standalone
+// -------------------------------------------------------------------------------
+
+@mixin ionic-link {
+  @include link-shared;
+
+  // Link: Standalone - Hover
+  // -------------------------------------------------------------------------------
+
+  @media (any-hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  color: globals.$ionic-color-info-400;
+
+  text-decoration: none;
+
+  // Link: Standalone - Focus
+  // -------------------------------------------------------------------------------
+
+  &:focus,
+  &.ion-focused {
+    outline: 2px solid globals.$ionic-color-primary-100;
+    outline-offset: 2px;
+
+    text-decoration: underline;
+  }
+
+  // Link: Standalone - Active
+  // -------------------------------------------------------------------------------
+
+  &:active,
+  &.ion-activated {
+    color: globals.$ionic-color-info-500;
+
+    text-decoration: underline;
+  }
+}
+
+a.ionic-link,
+:not(a).ionic-link a {
+  @include ionic-link;
+}
+
+// Link: Underline
+// -------------------------------------------------------------------------------
+
+@mixin ionic-link-underline {
+  @include link-shared;
+
+  // Link: Underline - Hover
+  // -------------------------------------------------------------------------------
+
+  @media (any-hover: hover) {
+    &:hover {
+      color: globals.$ionic-color-info-400;
+    }
+  }
+
+  color: currentColor;
+
+  text-decoration: underline;
+
+  // Link: Underline - Focus
+  // -------------------------------------------------------------------------------
+
+  &:focus,
+  &.ion-focused {
+    outline: 2px solid globals.$ionic-color-primary-100;
+    outline-offset: 2px;
+
+    color: currentColor;
+
+    text-decoration: none;
+  }
+
+  // Link: Underline - Active
+  // -------------------------------------------------------------------------------
+
+  &:active,
+  &.ion-activated {
+    color: globals.$ionic-color-info-500;
+  }
+}
+
+a.ionic-link-underline,
+:not(a).ionic-link-underline a {
+  @include ionic-link-underline;
+}

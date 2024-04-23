@@ -1,28 +1,27 @@
-@use "../../foundations/ionic.vars.scss" as tokens;
-@use "../../themes/ionic.mixins" as mixins;
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Ionic Card
 // --------------------------------------------------
 
 :host {
-  --background: #{tokens.$ionic-color-neutral-0};
-  --border-radius: #{tokens.$ionic-border-radius-rounded-small};
+  --background: #{globals.$ionic-color-neutral-0};
+  --border-radius: #{globals.$ionic-border-radius-rounded-small};
 
-  @include mixins.padding(tokens.$ionic-space-base);
-  @include mixins.border-radius(var(--border-radius));
+  @include globals.padding(globals.$ionic-space-base);
+  @include globals.border-radius(var(--border-radius));
 
   display: block;
 
-  border: #{tokens.$ionic-border-size-small} solid #{tokens.$ionic-color-neutral-50};
+  border: #{globals.$ionic-border-size-small} solid #{globals.$ionic-color-neutral-50};
 
   background: var(--background);
   color: var(--color);
 }
 
 :host(.card-round) {
-  --border-radius: #{tokens.$ionic-border-radius-rounded-large};
+  --border-radius: #{globals.$ionic-border-radius-rounded-large};
 }
 
 :host(.card-rectangular) {
-  --border-radius: #{tokens.$ionic-border-radius-square};
+  --border-radius: #{globals.$ionic-border-radius-square};
 }

@@ -17,19 +17,26 @@ ion-infinite-scroll-content {
 }
 
 .infinite-loading {
-  @include margin($infinite-scroll-loading-margin-top, $infinite-scroll-loading-margin-end, $infinite-scroll-loading-margin-bottom, $infinite-scroll-loading-margin-start);
+  @include margin(
+    $infinite-scroll-loading-margin-top,
+    $infinite-scroll-loading-margin-end,
+    $infinite-scroll-loading-margin-bottom,
+    $infinite-scroll-loading-margin-start
+  );
 
   display: none;
 
   width: 100%;
 }
 
-
 .infinite-loading-text {
-  @include margin($infinite-scroll-loading-text-margin-top, $infinite-scroll-loading-text-margin-end, $infinite-scroll-loading-text-margin-bottom, $infinite-scroll-loading-text-margin-start);
+  @include margin(
+    $infinite-scroll-loading-text-margin-top,
+    $infinite-scroll-loading-text-margin-end,
+    $infinite-scroll-loading-text-margin-bottom,
+    $infinite-scroll-loading-text-margin-start
+  );
 }
-
-
 
 // Infinite Scroll Content States
 // --------------------------------------------------

@@ -56,10 +56,7 @@
 
   border-bottom: 1px solid $picker-md-border-color;
 
-  background: linear-gradient(
-    to bottom,
-    $picker-md-top-background-color 20%,
-    $picker-md-bottom-background-color 100%);
+  background: linear-gradient(to bottom, $picker-md-top-background-color 20%, $picker-md-bottom-background-color 100%);
 
   z-index: 10;
 }
@@ -75,10 +72,7 @@
 
   border-top: 1px solid $picker-md-border-color;
 
-  background: linear-gradient(
-    to top,
-    $picker-md-top-background-color 30%,
-    $picker-md-bottom-background-color 100%);
+  background: linear-gradient(to top, $picker-md-top-background-color 30%, $picker-md-bottom-background-color 100%);
 
   z-index: 11;
 }

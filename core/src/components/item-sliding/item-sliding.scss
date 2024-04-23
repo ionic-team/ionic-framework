@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 // Item Sliding
 // --------------------------------------------------
@@ -21,7 +21,7 @@ ion-item-sliding .item {
 .item-sliding-active-slide .item {
   position: relative;
 
-  transition: transform 500ms cubic-bezier(.36, .66, .04, 1);
+  transition: transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1);
 
   opacity: 1;
   z-index: $z-index-item-options + 1;
@@ -47,7 +47,7 @@ ion-item-sliding .item {
     order: -1;
   }
 
-  transition-duration: .6s;
+  transition-duration: 0.6s;
   transition-property: padding-left;
 }
 
@@ -65,6 +65,6 @@ ion-item-sliding .item {
     order: 1;
   }
 
-  transition-duration: .6s;
+  transition-duration: 0.6s;
   transition-property: padding-right;
 }

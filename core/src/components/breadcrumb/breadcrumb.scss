@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 :host {
- /**
+  /**
    * @prop --color: Text color of the breadcrumb
    * @prop --color-active: Text color of the active breadcrumb
    * @prop --color-hover: Text color of the breadcrumb on hover
@@ -43,10 +43,9 @@
 
 :host(.breadcrumb-disabled) {
   cursor: default;
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }
-
 
 // Breadcrumb: Active
 // ------------------------------------------
@@ -54,7 +53,6 @@
 :host(.breadcrumb-active) {
   color: var(--color-active);
 }
-
 
 // Breadcrumb: Focused
 // ------------------------------------------
@@ -66,7 +64,6 @@
 :host(.ion-focused) .breadcrumb-native {
   background: var(--background-focused);
 }
-
 
 // Breadcrumb: Hover
 // ------------------------------------------
@@ -82,7 +79,6 @@
   }
 }
 
-
 // Breadcrumb Separator
 // ------------------------------------------
 
@@ -90,14 +86,12 @@
   display: inline-flex;
 }
 
-
 // Breadcrumb: Collapsed
 // ------------------------------------------
 
 :host(.breadcrumb-collapsed) .breadcrumb-native {
   display: none;
 }
-
 
 // Breadcrumbs: Color
 // ------------------------------------------
@@ -120,13 +114,12 @@
 
 :host(.in-toolbar-color),
 :host(.in-toolbar-color) .breadcrumb-separator {
-  color: current-color(contrast, .8);
+  color: current-color(contrast, 0.8);
 }
 
 :host(.in-toolbar-color.breadcrumb-active) {
   color: current-color(contrast);
 }
-
 
 // Breadcrumbs: Collapsed Indicator
 // --------------------------------------------------

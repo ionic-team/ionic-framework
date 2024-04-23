@@ -89,12 +89,16 @@ It's very important to highlight that only the Ionic Theme supports these tokens
 
 Within the component scope, variables from these global tokens should always be used. There should be no hardcoded values on component scope that relate to any of the existing tokens.
 
-Example (Chip Component):
+To prevent differences between components implementation, a global partial was created - `ionic.globals.scss` - that forwards all the necessary foundations, functions and mixins, relevant to the Ionic Theme.
+
+Usage example (Chip Component):
 
 ```scss
-@use '../../foundations/ionic.vars.scss' as tokens;
+@use '../../themes/ionic/ionic.globals.scss' as globals;
 
 :host {
-  --background: #{tokens.$ionic-color-neutral-10};
+  --background: #{globals.$ionic-color-neutral-10};
+  color: globals.$ionic-color-neutral-900;
+  @include globals.font-smoothing;
 }
 ```

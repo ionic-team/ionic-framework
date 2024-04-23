@@ -273,6 +273,9 @@
       },
       "display-m": {
         "$value": "48px"
+      },
+      "full": {
+        "$value": "100%"
       }
     },
     "size": {
@@ -316,6 +319,9 @@
       },
       "regular": {
         "$value": "400"
+      },
+      "medium": {
+        "$value": "500"
       },
       "semi-bold": {
         "$value": "600"

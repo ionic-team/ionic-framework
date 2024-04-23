@@ -1,0 +1,40 @@
+@use "../../foundations/ionic.vars.scss" as tokens;
+@import "./tab-button";
+
+// Ionic Tab Button
+// --------------------------------------------------------------
+
+:host {
+  // TODO(FW-6186): use design token here when it is added
+  --focus-ring-color: #9ec4fd;
+  --focus-ring-width: 2px;
+
+  @include border-radius(tokens.$ionic-border-radius-rounded-medium);
+}
+
+// Tab Button Focused
+// -------------------------------------------------------------------------------
+
+.button-native {
+  overflow: visible;
+
+  &::after {
+    @include border-radius(inherit);
+  }
+}
+
+// Only show the focus ring when the tab button is focused
+:host(.ion-focused) .button-native {
+  &::after {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  }
+}
+
+// Tab Button Activated
+// -------------------------------------------------------------------------------
+
+:host(.ion-activated) .button-native::after {
+  background: var(--background-activated);
+
+  opacity: var(--background-activated-opacity);
+}

@@ -5,17 +5,17 @@
 - [Historical Usage](#historical-usage)
 - [Current Usage](#current-usage)
 - [Recommended Usage](#recommended-usage)
-  * [Comments](#comments)
-  * [Variables](#variables)
-    + [✅ Global](#-global)
-    + [✅ Theming](#-theming)
-    + [✅ Reusable values](#-reusable-values)
-    + [✅ Media queries](#-media-queries)
-    + [✅ Dynamic calculations](#-dynamic-calculations)
-    + [🚫 Consistency](#-consistency)
-    + [🚫 Text Alignment](#-text-alignment)
-    + [🚫 Structural Changes](#-structural-changes)
-    + [🚫 Font Properties](#-font-properties)
+  - [Comments](#comments)
+  - [Variables](#variables)
+    - [✅ Global](#-global)
+    - [✅ Theming](#-theming)
+    - [✅ Reusable values](#-reusable-values)
+    - [✅ Media queries](#-media-queries)
+    - [✅ Dynamic calculations](#-dynamic-calculations)
+    - [🚫 Consistency](#-consistency)
+    - [🚫 Text Alignment](#-text-alignment)
+    - [🚫 Structural Changes](#-structural-changes)
+    - [🚫 Font Properties](#-font-properties)
 
 ## Definitions
 
@@ -39,10 +39,10 @@ Due to this, Ionic Framework documented the Sass variables as part of the public
 // alert.ios.scss
 
 /// @prop - Max width of the alert
-$alert-ios-max-width:                           270px !default;
+$alert-ios-max-width: 270px !default;
 
 /// @prop - Border radius of the alert
-$alert-ios-border-radius:                       13px !default;
+$alert-ios-border-radius: 13px !default;
 ```
 
 If a Sass variable was deprecated or hidden from the public API, the `@prop` comment would be removed, or it would never be added, as seen in [v3.9.2](https://github.com/ionic-team/ionic-framework/blob/v3.9.2/src/components/alert/alert.ios.scss#L18-L19):
@@ -51,7 +51,7 @@ If a Sass variable was deprecated or hidden from the public API, the `@prop` com
 // alert.ios.scss
 
 // deprecated
-$alert-ios-head-padding:                        null !default;
+$alert-ios-head-padding: null !default;
 ```
 
 To ensure proper documentation of variables for customizing Ionic Framework, Sass variables were added for components even if they were not used multiple times within the same component or elsewhere:
@@ -60,9 +60,9 @@ To ensure proper documentation of variables for customizing Ionic Framework, Sas
 // alert.ios.scss
 
 /// @prop - Text color of the label for the checked radio alert
-$alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color !default;
+$alert-ios-radio-label-text-color-checked: $alert-ios-button-text-color !default;
 
-.alert-ios [aria-checked=true] .alert-radio-label {
+.alert-ios [aria-checked="true"] .alert-radio-label {
   color: $alert-ios-radio-label-text-color-checked;
 }
 ```
@@ -77,10 +77,10 @@ The comments for Sass variables are also still visible today in [v7.7.0](https:/
 // alert.ios.vars.scss
 
 /// @prop - Max width of the alert
-$alert-ios-max-width:                                   dynamic-font-clamp(1, 270px, 1.2) !default;
+$alert-ios-max-width: dynamic-font-clamp(1, 270px, 1.2) !default;
 
 /// @prop - Border radius of the alert
-$alert-ios-border-radius:                               13px !default;
+$alert-ios-border-radius: 13px !default;
 ```
 
 These comments aren't necessary when the naming describes its use thoroughly. The comments for the variables above do not need to be there, as it is fairly obvious what they are used for.
@@ -91,7 +91,7 @@ However, the comment for the following variable might be helpful in explaining w
 // action-sheet.ios.vars.scss
 
 /// @prop - Font weight of the action sheet title when it has a sub title
-$action-sheet-ios-title-with-sub-title-font-weight:               600 !default;
+$action-sheet-ios-title-with-sub-title-font-weight: 600 !default;
 ```
 
 It could be argued though that the comment doesn't really help, as seeing the variable in use will explain its purpose the best. Additionally, this is an example of a variable that isn't necessary, given it is only used in one place, which is why it is so specific in the first place.
@@ -105,52 +105,54 @@ There are two things that need to be outlined here: when we should use comments 
 We should update the comments for Sass variables in one of the following ways:
 
 1. If we don't intend to ever publicly document the Sass variables again, we should update the comments to remove the syntax that was added for documentation generation:
-    ```diff
-    // alert.ios.vars.scss
 
-    -/// @prop - Border radius of the alert
-    +// Border radius of the alert
-    $alert-ios-border-radius:                               13px !default;
-    ```
+   ```diff
+   // alert.ios.vars.scss
+
+   -/// @prop - Border radius of the alert
+   +// Border radius of the alert
+   $alert-ios-border-radius:                               13px !default;
+   ```
 
 2. If we don't find the comments to be helpful, and want to stick with keeping the variable names specific, we should remove the comments entirely:
-    ```diff
-    // alert.ios.vars.scss
 
-    -/// @prop - Border radius of the alert
-    $alert-ios-border-radius:                               13px !default;
-    ```
+   ```diff
+   // alert.ios.vars.scss
+
+   -/// @prop - Border radius of the alert
+   $alert-ios-border-radius:                               13px !default;
+   ```
 
 3. If we find the comments to be helpful for certain variables or situations, like when there are math calculations involved, we should keep only the comments that are necessary to explain what is going on:
-    ```diff
-    -/// @prop - Height of the alert button
-    /**
-    * We want the height of the button to
-    * scale with the text so the next never runs
-    * into the edge of the button. We change the height
-    * instead of adding padding because we would need to offset
-    * the height the padding and the border. Since the border uses
-    * a hairline (<1px) width, this will cause subpixel rendering
-    * differences across browsers.
-    */
-    $alert-ios-button-height:                           dynamic-font-min(1, 44px) !default;
-    ```
+   ```diff
+   -/// @prop - Height of the alert button
+   /**
+   * We want the height of the button to
+   * scale with the text so the next never runs
+   * into the edge of the button. We change the height
+   * instead of adding padding because we would need to offset
+   * the height the padding and the border. Since the border uses
+   * a hairline (<1px) width, this will cause subpixel rendering
+   * differences across browsers.
+   */
+   $alert-ios-button-height:                           dynamic-font-min(1, 44px) !default;
+   ```
 
 ### Variables
 
 The table below outlines the recommended approach for when to use Sass variables. Each scenario links to a section that explains it in more detail.
 
-|    | Scenario                                                       |
-| ---| ---------------------------------------------------------------|
-| ✅ | [Global](#white_check_mark-global)                             |
-| ✅ | [Theming](#white_check_mark-theming)                           |
-| ✅ | [Reusable values](#white_check_mark-reusable-values)           |
-| ✅ | [Media queries](#white_check_mark-media-queries)               |
-| ✅ | [Dynamic calculations](#white_check_mark-dynamic-calculations) |
-| 🚫 | [Consistency](#no_entry_sign-consistency)                      |
-| 🚫 | [Text Alignment](#no_entry_sign-text-alignment)                |
-| 🚫 | [Structural Changes](#no_entry_sign-structural-changes)        |
-| 🚫 | [Font Properties](#no_entry_sign-font-properties)              |
+|     | Scenario                                                       |
+| --- | -------------------------------------------------------------- |
+| ✅  | [Global](#white_check_mark-global)                             |
+| ✅  | [Theming](#white_check_mark-theming)                           |
+| ✅  | [Reusable values](#white_check_mark-reusable-values)           |
+| ✅  | [Media queries](#white_check_mark-media-queries)               |
+| ✅  | [Dynamic calculations](#white_check_mark-dynamic-calculations) |
+| 🚫  | [Consistency](#no_entry_sign-consistency)                      |
+| 🚫  | [Text Alignment](#no_entry_sign-text-alignment)                |
+| 🚫  | [Structural Changes](#no_entry_sign-structural-changes)        |
+| 🚫  | [Font Properties](#no_entry_sign-font-properties)              |
 
 #### ✅ Global
 
@@ -161,11 +163,11 @@ Example of global variables:
 ```scss
 // ionic.globals.scss
 
-$font-family-base:              var(--ion-font-family, inherit) !default;
+$font-family-base: var(--ion-font-family, inherit) !default;
 
-$hairlines-width:               .55px !default;
+$hairlines-width: 0.55px !default;
 
-$placeholder-opacity:           0.6 !default;
+$placeholder-opacity: 0.6 !default;
 ```
 
 #### ✅ Theming
@@ -177,23 +179,32 @@ Example of theme variables:
 ```scss
 // ionic.theme.default.scss
 
-$background-color-value:        #fff !default;
-$background-color-rgb-value:    255, 255, 255 !default;
+$background-color-value: #fff !default;
+$background-color-rgb-value: 255, 255, 255 !default;
 
-$text-color-value:              #000 !default;
-$text-color-rgb-value:          0, 0, 0 !default;
+$text-color-value: #000 !default;
+$text-color-rgb-value: 0, 0, 0 !default;
 
-$background-color:              var(--ion-background-color, $background-color-value) !default;
-$background-color-rgb:          var(--ion-background-color-rgb, $background-color-rgb-value) !default;
-$text-color:                    var(--ion-text-color, $text-color-value) !default;
-$text-color-rgb:                var(--ion-text-color-rgb, $text-color-rgb-value) !default;
+$background-color: var(
+  --ion-background-color,
+  $background-color-value
+) !default;
+$background-color-rgb: var(
+  --ion-background-color-rgb,
+  $background-color-rgb-value
+) !default;
+$text-color: var(--ion-text-color, $text-color-value) !default;
+$text-color-rgb: var(--ion-text-color-rgb, $text-color-rgb-value) !default;
 ```
 
 ```scss
 // ionic.theme.default.ios.scss
 
-$backdrop-ios-color:            var(--ion-backdrop-color, #000) !default;
-$overlay-ios-background-color:  var(--ion-overlay-background-color, var(--ion-color-step-100, #f9f9f9)) !default;
+$backdrop-ios-color: var(--ion-backdrop-color, #000) !default;
+$overlay-ios-background-color: var(
+  --ion-overlay-background-color,
+  var(--ion-color-step-100, #f9f9f9)
+) !default;
 ```
 
 #### ✅ Reusable values
@@ -216,10 +227,10 @@ Example of reusable values:
 // alert.ios.vars.scss
 
 /// @prop - Padding end of the alert head
-$alert-ios-head-padding-end:     16px !default;
+$alert-ios-head-padding-end: 16px !default;
 
 /// @prop - Padding start of the alert head
-$alert-ios-head-padding-start:   $alert-ios-head-padding-end !default;
+$alert-ios-head-padding-start: $alert-ios-head-padding-end !default;
 ```
 
 ```scss
@@ -248,10 +259,10 @@ $alert-ios-head-padding-start:   $alert-ios-head-padding-end !default;
 // alert.ios.vars.scss
 
 /// @prop - Padding top of the alert head
-$alert-ios-head-padding-top:     12px !default;
+$alert-ios-head-padding-top: 12px !default;
 
 /// @prop - Padding bottom of the alert head
-$alert-ios-head-padding-bottom:  7px !default;
+$alert-ios-head-padding-bottom: 7px !default;
 ```
 
 ```scss
@@ -289,7 +300,7 @@ $global-md-item-padding-start: $global-md-item-padding-end;
 ```scss
 // item.md.vars.scss
 
-@import "../../themes/ionic.globals.md";
+@import "../../themes/native/native.globals.md";
 
 /// @prop - Padding end for the item content
 $item-md-padding-end: $global-md-item-padding-end !default;
@@ -301,7 +312,7 @@ $item-md-padding-start: $global-md-item-padding-start !default;
 ```scss
 // item-divider.md.vars.scss
 
-@import "../../themes/ionic.globals.md";
+@import "../../themes/native/native.globals.md";
 
 /// @prop - Padding start for the divider
 $item-divider-md-padding-start: $global-md-item-padding-start !default;
@@ -324,26 +335,26 @@ $item-divider-md-padding-end: $global-md-item-padding-end !default;
 ```scss
 // item.md.vars.scss
 
-@import "../../themes/ionic.globals.md";
+@import "../../themes/native/native.globals.md";
 
 /// @prop - Padding end for the item content
-$item-md-padding-end:                   16px !default;
+$item-md-padding-end: 16px !default;
 
 /// @prop - Padding start for the item content
-$item-md-padding-start:                 16px !default;
+$item-md-padding-start: 16px !default;
 ```
 
 ```scss
 // item-divider.md.vars.scss
 
-@import "../../themes/ionic.globals.md";
+@import "../../themes/native/native.globals.md";
 @import "../item/item.md.vars";
 
 /// @prop - Padding start for the divider
-$item-divider-md-padding-start:        $item-md-padding-start !default;
+$item-divider-md-padding-start: $item-md-padding-start !default;
 
 /// @prop - Padding end for the divider
-$item-divider-md-padding-end:          $item-md-padding-end !default;
+$item-divider-md-padding-end: $item-md-padding-end !default;
 ```
 
 </td>
@@ -369,7 +380,7 @@ $screen-breakpoints: (
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1200px
+  xl: 1200px,
 ) !default;
 ```
 
@@ -418,7 +429,7 @@ $chip-avatar-size: math.div(24em, $chip-base-font-size);
 // alert.vars.scss
 
 /// @prop - Font size of the alert button
-$alert-button-font-size:          dynamic-font(14px) !default;
+$alert-button-font-size: dynamic-font(14px) !default;
 ```
 
 </td>
@@ -445,7 +456,7 @@ For example, the color of the label changes when focused in `md` mode. However, 
 // label.md.vars.scss
 
 /// @prop - Text color of the stacked/floating label when it is focused
-$label-md-text-color-focused:            ion-color(primary, base) !default;
+$label-md-text-color-focused: ion-color(primary, base) !default;
 ```
 
 ```scss
@@ -474,7 +485,7 @@ $label-md-text-color-focused:            ion-color(primary, base) !default;
 // label.ios.vars.scss
 
 /// @prop - Text color of the stacked/floating label when it is focused
-$label-ios-text-color-focused:         null !default;
+$label-ios-text-color-focused: null !default;
 ```
 
 ```scss
@@ -526,7 +537,7 @@ A text alignment property should not be stored in a Sass variable, even if it is
 // action-sheet.ios.vars.scss
 
 /// @prop - Text align of the action sheet
-$action-sheet-ios-text-align:        center !default;
+$action-sheet-ios-text-align: center !default;
 ```
 
 ```scss
@@ -544,7 +555,6 @@ $action-sheet-ios-text-align:        center !default;
 </td>
 </tr>
 </table>
-
 
 #### 🚫 Structural Changes
 
@@ -583,15 +593,14 @@ Variables should not be used when they are structural changes of an element. Thi
 <tr>
 <td valign="top">
 
-
 ```scss
 // alert.ios.vars.scss
 
 /// @prop - Flex wrap of the alert button group
-$alert-ios-button-group-flex-wrap:        wrap !default;
+$alert-ios-button-group-flex-wrap: wrap !default;
 
 /// @prop - Flex of the alert button
-$alert-ios-button-flex:                   1 1 auto !default;
+$alert-ios-button-flex: 1 1 auto !default;
 ```
 
 ```scss
@@ -653,13 +662,13 @@ We shouldn't use variables for changing things such as `font-size` or `font-weig
 // action-sheet.ios.vars.scss
 
 /// @prop - Font size of the action sheet title
-$action-sheet-ios-title-font-size:          dynamic-font-min(1, 13px) !default;
+$action-sheet-ios-title-font-size: dynamic-font-min(1, 13px) !default;
 
 /// @prop - Font weight of the action sheet title
-$action-sheet-ios-title-font-weight:        400 !default;
+$action-sheet-ios-title-font-weight: 400 !default;
 
 /// @prop - Font size of the action sheet sub title
-$action-sheet-ios-sub-title-font-size:      dynamic-font-min(1, 13px) !default;
+$action-sheet-ios-sub-title-font-size: dynamic-font-min(1, 13px) !default;
 ```
 
 ```scss
@@ -681,5 +690,4 @@ $action-sheet-ios-sub-title-font-size:      dynamic-font-min(1, 13px) !default;
 </table>
 
 [^1]: Sass Documentation, https://sass-lang.com/documentation/
-
 [^2]: Ionic Framework v3 Documentation - Theming - Overriding Ionic Variables, https://ionicframework.com/docs/v3/theming/overriding-ionic-variables/

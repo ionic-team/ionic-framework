@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/native/native.globals";
 
 // Datetime
 // --------------------------------------------------
@@ -79,9 +79,9 @@
  * the text alignment too.
  */
 :host .wheel-order-year-first .day-column {
- order: 3;
+  order: 3;
 
- text-align: end;
+  text-align: end;
 }
 
 :host .wheel-order-year-first .month-column {
@@ -238,7 +238,6 @@
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body {
-
   /**
    * Show all calendar months inline
    * and allow them to take up 100% of

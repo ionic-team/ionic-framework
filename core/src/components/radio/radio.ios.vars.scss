@@ -1,23 +1,23 @@
-@import "../../themes/ionic.globals.ios";
+@import "../../themes/native/native.globals.ios";
 @import "../item/item.ios.vars";
 
 // iOS Radio
 // --------------------------------------------------
 
 /// @prop - Background color of focus indicator for radio when focused
-$radio-ios-background-color-focused:  ion-color(primary, tint) !default;
+$radio-ios-background-color-focused: ion-color(primary, tint) !default;
 
 /// @prop - Width of the radio icon
-$radio-ios-icon-width:                dynamic-font(15px) !default;
+$radio-ios-icon-width: dynamic-font(15px) !default;
 
 /// @prop - Height of the radio icon
-$radio-ios-icon-height:               dynamic-font(24px) !default;
+$radio-ios-icon-height: dynamic-font(24px) !default;
 
 /// @prop - Border width of the radio icon
-$radio-ios-icon-border-width:         dynamic-font(2px) !default;
+$radio-ios-icon-border-width: dynamic-font(2px) !default;
 
 /// @prop - Border style of the radio icon
-$radio-ios-icon-border-style:         solid !default;
+$radio-ios-icon-border-style: solid !default;
 
 /// @prop - Opacity of the disabled radio
-$radio-ios-disabled-opacity:          $form-control-ios-disabled-opacity !default;
+$radio-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;

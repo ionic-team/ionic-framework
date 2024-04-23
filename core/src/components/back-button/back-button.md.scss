@@ -7,7 +7,7 @@
 :host {
   --border-radius: 4px;
   --background-focused: currentColor;
-  --background-focused-opacity: .12;
+  --background-focused-opacity: 0.12;
   --background-hover: currentColor;
   --background-hover-opacity: 0.04;
   --color: #{$back-button-md-color};
@@ -49,11 +49,10 @@
 }
 
 ion-icon {
-  line-height: .67;
+  line-height: 0.67;
 
   text-align: start;
 }
-
 
 // Back Button Color: Hover
 // --------------------------------------------------
@@ -63,7 +62,6 @@ ion-icon {
     background: #{current-color(base)};
   }
 }
-
 
 // Back Button Color: Focused
 // --------------------------------------------------

@@ -1,7 +1,6 @@
-@use "../../themes/ionic.mixins" as mixins;
-@use "../../foundations/ionic.vars.scss" as tokens;
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
-// Chip
+// Ionic Chip
 // --------------------------------------------------
 
 // TODO(ROU-4870): there is no token yet for these ones, but it should be created in the future, once UX team has figma tokens done
@@ -9,27 +8,29 @@ $ionic-states-focus-primary: #9ec4fd;
 $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make this in the future, as we are setting scss variables with a var() and fallback, and it doesn't work inside a rgba().
 
 :host {
-  --background: #{tokens.$ionic-color-neutral-10};
+  --background: #{globals.$ionic-color-neutral-10};
   --border-color: transparent;
-  --color: #{tokens.$ionic-color-neutral-900};
+  --border-radius: #{globals.$ionic-border-radius-rounded-small};
+  --color: #{globals.$ionic-color-neutral-900};
   --focus-ring-color: #{$ionic-states-focus-primary};
-  --focus-ring-width: #{tokens.$ionic-border-size-medium};
+  --focus-ring-width: #{globals.$ionic-border-size-medium};
 
-  @include mixins.font-smoothing;
-  @include mixins.padding(tokens.$ionic-space-xs, tokens.$ionic-space-xxs);
-  @include mixins.border-radius(tokens.$ionic-border-radius-rounded-large);
+  @include globals.font-smoothing;
+  @include globals.padding(globals.$ionic-space-xs, globals.$ionic-space-xxs);
+  @include globals.border-radius(var(--border-radius));
 
   display: inline-flex;
 
   position: relative;
 
   align-items: center;
+  justify-content: center;
 
-  gap: tokens.$ionic-space-xxxs;
+  gap: globals.$ionic-space-xxxs;
 
   min-height: 32px;
 
-  border-width: tokens.$ionic-border-size-small;
+  border-width: globals.$ionic-border-size-small;
   border-style: solid;
 
   border-color: var(--border-color);
@@ -37,8 +38,11 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
   background: var(--background);
   color: var(--color);
 
-  font-family: tokens.$ionic-font-family;
-  font-size: tokens.$ionic-font-size-m;
+  font-family: globals.$ionic-font-family;
+  font-size: globals.$ionic-font-size-m;
+  font-weight: globals.$ionic-font-weight-medium;
+
+  line-height: globals.$ionic-font-line-height-full;
 
   cursor: pointer;
 
@@ -54,7 +58,7 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
 :host(.chip-outline) {
   --background: transparent;
-  border-color: tokens.$ionic-color-neutral-100;
+  border-color: globals.$ionic-color-neutral-100;
 }
 
 // Chip: Focus
@@ -82,8 +86,19 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
   pointer-events: none;
 }
 
+// Chip Shapes
+// ---------------------------------------------
+
+:host(.chip-round) {
+  --border-radius: #{globals.$ionic-border-radius-rounded-large};
+}
+
+:host(.chip-rectangular) {
+  --border-radius: #{globals.$ionic-border-radius-square};
+}
+
 // Chip Icon
 // ---------------------------------------------
 ::slotted(ion-icon) {
-  font-size: tokens.$ionic-font-size-l;
+  font-size: globals.$ionic-font-size-l;
 }

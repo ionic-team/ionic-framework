@@ -110,7 +110,9 @@
    * Label text should not extend
    * beyond the bounds of the select.
    */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$select-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale});
+  max-width: calc(
+    (100% - var(--padding-start) - var(--padding-end) - #{$select-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale}
+  );
 }
 
 /**

@@ -20,14 +20,17 @@
   @include padding(6px, 12px, 6px, 12px);
 }
 
-
 // Breadcrumb Separator
 // ------------------------------------------
 
 .breadcrumb-separator {
-  @include margin($breadcrumb-md-separator-margin-top, $breadcrumb-md-separator-margin-end, $breadcrumb-md-separator-margin-bottom, $breadcrumb-md-separator-margin-start);
+  @include margin(
+    $breadcrumb-md-separator-margin-top,
+    $breadcrumb-md-separator-margin-end,
+    $breadcrumb-md-separator-margin-bottom,
+    $breadcrumb-md-separator-margin-start
+  );
 }
-
 
 // Breadcrumb: Focused
 // ------------------------------------------
@@ -38,14 +41,12 @@
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2), 0px 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-
 // Breadcrumb Separator
 // ------------------------------------------
 
 .breadcrumb-separator {
   color: $breadcrumb-md-separator-color;
 }
-
 
 // Breadcrumb Slotted Icons
 // ------------------------------------------
@@ -67,7 +68,6 @@
 :host(.breadcrumb-active) ::slotted(ion-icon) {
   color: $breadcrumb-md-icon-color-active;
 }
-
 
 // Breadcrumbs Collapsed Indicator
 // --------------------------------------------------

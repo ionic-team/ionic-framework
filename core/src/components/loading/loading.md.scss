@@ -18,11 +18,15 @@
 
 .loading-wrapper {
   @include border-radius($loading-md-border-radius);
-  @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
+  @include padding(
+    $loading-md-padding-top,
+    $loading-md-padding-end,
+    $loading-md-padding-bottom,
+    $loading-md-padding-start
+  );
 
   box-shadow: $loading-md-box-shadow;
 }
-
 
 // Material Design Loading Content
 // -----------------------------------------

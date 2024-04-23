@@ -1,10 +1,10 @@
-@import "../../themes/ionic.globals.md";
+@import "../../themes/native/native.globals.md";
 
 // Material Design Modals
 // --------------------------------------------------
 
 /// @prop - Box shadow color of the alert
-$modal-inset-box-shadow-color:    rgba(0, 0, 0, .4) !default;
+$modal-inset-box-shadow-color: rgba(0, 0, 0, 0.4) !default;
 
 /// @prop - Box shadow of the alert
-$modal-inset-box-shadow:          0 28px 48px $modal-inset-box-shadow-color !default;
+$modal-inset-box-shadow: 0 28px 48px $modal-inset-box-shadow-color !default;

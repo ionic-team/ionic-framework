@@ -36,7 +36,13 @@ export class Chip implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  /**
+   * Define the Chip corner shape, when using the Ionic Theme.
+   */
+  @Prop() shape?: 'round' | 'rectangular';
+
   render() {
+    const { shape } = this;
     const theme = getIonTheme(this);
 
     return (
@@ -44,10 +50,12 @@ export class Chip implements ComponentInterface {
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [theme]: true,
+          // TODO(FW-6120): remove the theme==='ionic' when we add support for the `ios` and `md` modes.
+          [`chip-${shape}`]: theme === 'ionic' && shape !== undefined,
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
-          'ion-focusable': true,
+          'ion-focusable': !this.disabled,
         })}
       >
         <slot></slot>

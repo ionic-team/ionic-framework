@@ -1,11 +1,11 @@
-@import "../../themes/ionic.globals.ios";
+@import "../../themes/native/native.globals.ios";
 @import "../item/item.ios.vars";
 
 // iOS Select
 // --------------------------------------------------
 
 /// @prop - Size of the select icon
-$select-ios-icon-size:              dynamic-font(18px) !default;
+$select-ios-icon-size: dynamic-font(18px) !default;
 
 /// @prop - Opacity of the disabled select
 $select-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;

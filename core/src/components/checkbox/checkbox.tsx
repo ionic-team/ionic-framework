@@ -24,7 +24,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
   styleUrls: {
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
-    ionic: 'checkbox.md.scss',
+    ionic: 'checkbox.ionic.scss',
   },
   shadow: true,
 })
@@ -97,6 +97,16 @@ export class Checkbox implements ComponentInterface {
    * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
    */
   @Prop() alignment: 'start' | 'center' = 'center';
+
+  /**
+   * Set to `"small"` for a checkbox with less height and padding.
+   */
+  @Prop() size?: 'small';
+
+  /**
+   * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
+   */
+  @Prop() shape?: 'soft' | 'rectangular' = 'soft';
 
   /**
    * Emitted when the checked property has changed
@@ -181,6 +191,8 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
       alignment,
+      size,
+      shape,
     } = this;
     const theme = getIonTheme(this);
 
@@ -201,6 +213,8 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-justify-${justify}`]: true,
           [`checkbox-alignment-${alignment}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
+          [`checkbox-size-${size}`]: size !== undefined,
+          [`checkbox-shape-${shape}`]: true,
         })}
         onClick={this.onClick}
       >
@@ -251,6 +265,12 @@ export class Checkbox implements ComponentInterface {
         <path d="M2 12H22" part="mark" />
       ) : (
         <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+      );
+    } else if (theme === 'ionic') {
+      path = indeterminate ? (
+        <path d="M6.5 12H17.5" stroke-linecap="round" part="mark" />
+      ) : (
+        <path d="M6 12.5L10 16.5L18.5 8" stroke-linecap="round" stroke-linejoin="round" part="mark" />
       );
     }
 

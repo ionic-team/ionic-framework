@@ -729,6 +729,14 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
+         */
+        "shape"?: 'soft' | 'rectangular';
+        /**
+          * Set to `"small"` for a checkbox with less height and padding.
+         */
+        "size"?: 'small';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -754,6 +762,10 @@ export namespace Components {
           * Display an outline style button.
          */
         "outline": boolean;
+        /**
+          * Define the Chip corner shape, when using the Ionic Theme.
+         */
+        "shape"?: 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -5973,6 +5985,14 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
+          * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
+         */
+        "shape"?: 'soft' | 'rectangular';
+        /**
+          * Set to `"small"` for a checkbox with less height and padding.
+         */
+        "size"?: 'small';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -5998,6 +6018,10 @@ declare namespace LocalJSX {
           * Display an outline style button.
          */
         "outline"?: boolean;
+        /**
+          * Define the Chip corner shape, when using the Ionic Theme.
+         */
+        "shape"?: 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */
