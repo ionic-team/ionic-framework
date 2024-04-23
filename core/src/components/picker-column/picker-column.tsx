@@ -575,19 +575,29 @@ export class PickerColumn implements ComponentInterface {
   };
 
   private onKeyDown = (ev: KeyboardEvent) => {
+
+    /**
+     * The below operations should be inverted when running on a mobile device.
+     * For example, swiping up will dispatch an "ArrowUp" event. On desktop,
+     * this should cause the previous option to be selected. On mobile, swiping
+     * up causes a view to scroll down. As a result, swiping up on mobile should
+     * cause the next option to be selected. The Home/End operations remain
+     * unchanged because those always represent the first/last options, respectively.
+     */
+    const mobile = isPlatform('mobile');
     let newOption = null;
     switch (ev.key) {
       case 'ArrowDown':
-        newOption = this.findNextOption();
+        newOption = mobile ? this.findPreviousOption() : this.findNextOption();
         break;
       case 'ArrowUp':
-        newOption = this.findPreviousOption();
+        newOption = mobile ? this.findNextOption() : this.findPreviousOption();
         break;
       case 'PageUp':
-        newOption = this.findPreviousOption(5);
+        newOption = mobile ? this.findNextOption(5) : this.findPreviousOption(5);
         break;
       case 'PageDown':
-        newOption = this.findNextOption(5);
+        newOption = mobile ? this.findPreviousOption(5) : this.findNextOption(5);
         break;
       case 'Home':
         /**
