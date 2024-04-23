@@ -371,6 +371,7 @@ export class Input implements ComponentInterface {
      * such as [type] in Angular.
      */
     this.onTypeChange();
+    this.debounceChanged();
   }
 
   componentDidRender() {
