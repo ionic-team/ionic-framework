@@ -32,6 +32,7 @@ export class PickerColumn implements ComponentInterface {
   private parentEl?: HTMLIonPickerElement | null;
   private canExitInputMode = true;
   private assistiveFocusable?: HTMLElement;
+  private updateValueTextOnScroll = false;
 
   @State() ariaLabel: string | null = null;
 
@@ -234,6 +235,7 @@ export class PickerColumn implements ComponentInterface {
          * of these can cause a scroll to occur.
          */
         this.canExitInputMode = canExitInputMode;
+        this.updateValueTextOnScroll = false;
         scrollEl.scroll({
           top,
           left: 0,
@@ -412,11 +414,20 @@ export class PickerColumn implements ComponentInterface {
          * Set the aria-valuetext even though the value prop has not been updated yet.
          * This enables some screen readers to announce the value as the users drag
          * as opposed to when their release their pointer from the screen.
+         *
+         * When the value is programmatically updated, we will smoothly scroll
+         * to the new option. However, we do not want to update aria-valuetext mid-scroll
+         * as that can cause the old value to be briefly set before being set to the
+         * correct option. This will cause some screen readers to announce the old value
+         * again before announcing the new value. The correct valuetext will be set on render.
          */
-        this.assistiveFocusable?.setAttribute('aria-valuetext', this.getOptionValueText(newActiveElement));
+        if (this.updateValueTextOnScroll) {
+          this.assistiveFocusable?.setAttribute('aria-valuetext', this.getOptionValueText(newActiveElement));
+        }
 
         timeout = setTimeout(() => {
           this.isScrolling = false;
+          this.updateValueTextOnScroll = true;
           enableHaptics && hapticSelectionEnd();
 
           /**
@@ -620,6 +631,7 @@ export class PickerColumn implements ComponentInterface {
   private renderAssistiveFocusable = () => {
     const { activeItem } = this;
     const valueText = this.getOptionValueText(activeItem);
+    console.log('setting value text to RENDER', valueText);
 
     /**
      * When using the picker, the valuetext provides important context that valuenow
