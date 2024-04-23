@@ -499,6 +499,7 @@ export class Input implements ComponentInterface {
     return labelPlacement;
   }
 
+  // TODO(FW-6201): Remove this method when size is supported in ios and md
   private getSize() {
     const theme = getIonTheme(this);
     const { size } = this;

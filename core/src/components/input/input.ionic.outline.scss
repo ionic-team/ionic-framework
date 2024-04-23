@@ -80,7 +80,6 @@
   min-height: 40px;
 }
 
-
 // Input Fill: Outline, Outline Container
 // ----------------------------------------------------------------
 
@@ -97,7 +96,6 @@
 
   border: var(--border-width) var(--border-style) var(--border-color);
 }
-
 
 // Input Fill: Outline, Label Placement: Stacked
 // ----------------------------------------------------------------
@@ -136,7 +134,8 @@
 
 :host(.input-fill-outline.input-disabled) .native-wrapper {
   --background: #{$ionic-color-neutral-10};
-  border-radius: inherit;
+
+  @include border-radius(inherit);
 
   background: var(--background);
 }
