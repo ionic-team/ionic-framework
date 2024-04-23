@@ -631,7 +631,6 @@ export class PickerColumn implements ComponentInterface {
   private renderAssistiveFocusable = () => {
     const { activeItem } = this;
     const valueText = this.getOptionValueText(activeItem);
-    console.log('setting value text to RENDER', valueText);
 
     /**
      * When using the picker, the valuetext provides important context that valuenow
