@@ -6,6 +6,7 @@ import { inheritAttributes, raf } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -241,10 +242,28 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return controls[0];
   }
 
+  /**
+   * Get the icon to use for the detail icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the detail icon.
+   */
+  get itemDetailIcon(): string {
+    const icon = this.detailIcon;
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('itemDetailIcon', chevronForward);
+  }
+
   render() {
     const {
       detail,
-      detailIcon,
       download,
       labelColorStyles,
       lines,
@@ -256,6 +275,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerDirection,
       inheritedAriaAttributes,
       multipleInputs,
+      itemDetailIcon,
     } = this;
     const childStyles = {} as StyleEventDetail;
     const theme = getIonTheme(this);
@@ -368,12 +388,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             <slot name="end"></slot>
             {showDetail && (
               <ion-icon
-                icon={detailIcon}
+                icon={itemDetailIcon}
                 lazy={false}
                 class="item-detail-icon"
                 part="detail-icon"
                 aria-hidden="true"
-                flip-rtl={detailIcon === chevronForward}
+                flip-rtl={itemDetailIcon === chevronForward}
               ></ion-icon>
             )}
           </div>
