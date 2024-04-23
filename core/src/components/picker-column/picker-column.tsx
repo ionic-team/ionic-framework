@@ -575,7 +575,6 @@ export class PickerColumn implements ComponentInterface {
   };
 
   private onKeyDown = (ev: KeyboardEvent) => {
-
     /**
      * The below operations should be inverted when running on a mobile device.
      * For example, swiping up will dispatch an "ArrowUp" event. On desktop,
