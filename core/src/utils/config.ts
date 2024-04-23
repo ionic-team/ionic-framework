@@ -191,6 +191,22 @@ export interface IonicConfig {
   reorderHandleIcon?: string;
 
   /**
+   * Overrides the cancel icon for all `ion-searchbar` components,
+   * only when mode is set to `md`.
+   */
+  searchbarCancelIcon?: string;
+
+  /**
+   * Overrides the clear icon for all `ion-searchbar` components.
+   */
+  searchbarClearIcon?: string;
+
+  /**
+   * Overrides the search icon for all `ion-searchbar` components.
+   */
+  searchbarSearchIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */

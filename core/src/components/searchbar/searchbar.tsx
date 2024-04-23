@@ -100,7 +100,7 @@ export class Searchbar implements ComponentInterface {
    * Set the cancel button icon. Only available when the theme is `"md"`.
    * Defaults to `"arrow-back-sharp"`.
    */
-  @Prop() cancelButtonIcon = config.get('backButtonIcon', arrowBackSharp) as string;
+  @Prop() cancelButtonIcon?: string | null;
 
   /**
    * Set the the cancel button text. Only available when the theme is `"ios"`.
@@ -110,7 +110,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the clear icon. Defaults to `"close-circle"` for `"ios"` theme and `"close-sharp"` for `"md"` and `"ionic"` theme.
    */
-  @Prop() clearIcon?: string;
+  @Prop() clearIcon?: string | null;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
@@ -177,7 +177,7 @@ export class Searchbar implements ComponentInterface {
    * The icon to use as the search icon. Defaults to `"search-outline"` in
    * the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
    */
-  @Prop() searchIcon?: string;
+  @Prop() searchIcon?: string | null;
 
   /**
    * Sets the behavior for the cancel button. Defaults to `"never"`.
@@ -607,12 +607,73 @@ export class Searchbar implements ComponentInterface {
     return true;
   }
 
+  /**
+   * Get the icon to use for the cancel icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the cancel icon.
+   */
+  get searchbarCancelIcon(): string {
+    const icon = this.cancelButtonIcon;
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('searchbarCancelIcon', arrowBackSharp);
+  }
+
+  /**
+   * Get the icon to use for the clear icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the clear icon.
+   */
+  get searchbarClearIcon(): string {
+    const theme = getIonTheme(this);
+    const icon = this.clearIcon;
+    const defaultIcon = theme === 'ios' ? closeCircle : closeSharp;
+
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('searchbarClearIcon', defaultIcon);
+  }
+
+  /**
+   * Get the icon to use for the search icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @internal
+   * @returns {string} The icon to use for the search icon.
+   */
+  get searchbarSearchIcon(): string {
+    const theme = getIonTheme(this);
+    const icon = this.searchIcon;
+    const defaultIcon = theme === 'ios' ? searchOutline : searchSharp;
+
+    if (icon != null) {
+      // icon is set on the component
+      return icon;
+    }
+
+    return config.get('searchbarSearchIcon', defaultIcon);
+  }
+
   render() {
-    const { cancelButtonText, autocapitalize } = this;
+    const { cancelButtonText, autocapitalize, searchbarCancelIcon, searchbarClearIcon, searchbarSearchIcon } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const theme = getIonTheme(this);
-    const clearIcon = this.clearIcon || (theme === 'ios' ? closeCircle : closeSharp);
-    const searchIcon = this.searchIcon || (theme === 'ios' ? searchOutline : searchSharp);
     const shouldShowCancelButton = this.shouldShowCancelButton();
 
     const cancelButton = this.showCancelButton !== 'never' && (
@@ -628,7 +689,7 @@ export class Searchbar implements ComponentInterface {
       >
         <div aria-hidden="true">
           {theme === 'md' ? (
-            <ion-icon aria-hidden="true" icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+            <ion-icon aria-hidden="true" icon={searchbarCancelIcon} lazy={false}></ion-icon>
           ) : (
             cancelButtonText
           )}
@@ -679,7 +740,7 @@ export class Searchbar implements ComponentInterface {
 
           {theme === 'md' && cancelButton}
 
-          <ion-icon aria-hidden="true" icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+          <ion-icon aria-hidden="true" icon={searchbarSearchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
           <button
             aria-label="reset"
@@ -696,7 +757,7 @@ export class Searchbar implements ComponentInterface {
             }}
             onClick={() => this.onClearInput(true)}
           >
-            <ion-icon aria-hidden="true" icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+            <ion-icon aria-hidden="true" icon={searchbarClearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
           </button>
         </div>
         {theme === 'ios' && cancelButton}
