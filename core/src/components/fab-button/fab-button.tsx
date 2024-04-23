@@ -154,13 +154,13 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   }
 
   /**
-   * Get the icon to use for the show month and year icon.
+   * Get the icon to use for the close icon.
    * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
    * @internal
-   * @returns {string} The icon to use for the show month and year icon.
+   * @returns {string} The icon to use for the close icon.
    */
   get fabButtonCloseIcon(): string {
     const icon = this.closeIcon;
