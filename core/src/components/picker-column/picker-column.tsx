@@ -111,8 +111,7 @@ export class PickerColumn implements ComponentInterface {
       const ev = entries[entries.length - 1];
 
       if (ev.isIntersecting) {
-        const { activeItem } = this.activeItem;
-        const { el } = this;
+        const { activeItem, el } = this;
 
         this.isColumnVisible = true;
 
@@ -159,8 +158,7 @@ export class PickerColumn implements ComponentInterface {
   }
 
   componentDidRender() {
-    const { activeItem } = this.activeItem;
-    const { el, isColumnVisible, value } = this;
+    const { el, activeItem, isColumnVisible, value } = this;
 
     if (isColumnVisible && !activeItem) {
       const firstOption = el.querySelector('ion-picker-column-option');
@@ -181,7 +179,7 @@ export class PickerColumn implements ComponentInterface {
   /** @internal  */
   @Method()
   async scrollActiveItemIntoView(smooth = false) {
-    const { activeItem: activeEl } = this.activeItem;
+    const activeEl = this.activeItem;
 
     if (activeEl) {
       this.centerPickerItemInView(activeEl, smooth, false);
@@ -314,7 +312,7 @@ export class PickerColumn implements ComponentInterface {
     const { el, scrollEl } = this;
 
     let timeout: ReturnType<typeof setTimeout> | undefined;
-    let { activeItem: activeEl } = this.activeItem;
+    let activeEl: HTMLIonPickerColumnOptionElement | undefined = this.activeItem;
 
     const scrollCallback = () => {
       raf(() => {
@@ -486,29 +484,20 @@ export class PickerColumn implements ComponentInterface {
     this.el.classList.remove('picker-column-active');
   };
 
-  get activeItem(): {
-    activeItem?: HTMLIonPickerColumnOptionElement;
-    activeItemIndex: number;
-  } {
+  get activeItem() {
     const { value } = this;
-    const options = this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option');
-
-    for (let i = 0; i <= options.length - 1; i++) {
-      const option = options[i];
-
+    const options = Array.from(this.el.querySelectorAll<HTMLIonPickerColumnOptionElement>('ion-picker-column-option'));
+    return options.find((option) => {
       /**
        * If the whole picker column is disabled, the current value should appear active
        * If the current value item is specifically disabled, it should not appear active
        */
-      if (option.value === value && !option.disabled) {
-        return {
-          activeItem: option,
-          activeItemIndex: i,
-        };
+      if (!this.disabled && option.disabled) {
+        return false;
       }
-    }
 
-    return { activeItem: undefined, activeItemIndex: -1 };
+      return option.value === value;
+    });
   }
 
   /**
@@ -520,7 +509,7 @@ export class PickerColumn implements ComponentInterface {
    * may be past the stride if the option at the stride is disabled.
    */
   private findNextOption = (stride: number = 1) => {
-    const { activeItem } = this.activeItem;
+    const { activeItem } = this;
     if (!activeItem) return null;
 
     let prevNode = activeItem;
@@ -551,7 +540,7 @@ export class PickerColumn implements ComponentInterface {
    *  may be past the stride if the option at the stride is disabled.
    */
   private findPreviousOption = (stride: number = 1) => {
-    const { activeItem } = this.activeItem;
+    const { activeItem } = this;
     if (!activeItem) return null;
 
     let nextNode = activeItem;
@@ -629,9 +618,15 @@ export class PickerColumn implements ComponentInterface {
    * slider role: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
    */
   private renderAssistiveFocusable = () => {
-    const { activeItem, activeItemIndex } = this.activeItem;
-    const { el } = this;
+    const { activeItem } = this;
     const valueText = this.getOptionValueText(activeItem);
+
+    /**
+     * When using the picker, the valuetext provides important context that valuenow
+     * does not. Additionally, using non-zero valuemin/valuemax values can cause
+     * WebKit to incorrectly announce numeric valuetext values (such as a year
+     * like "2024") as percentages: https://bugs.webkit.org/show_bug.cgi?id=273126
+     */
     return (
       <div
         ref={(el) => (this.assistiveFocusable = el)}
@@ -640,8 +635,8 @@ export class PickerColumn implements ComponentInterface {
         tabindex={this.disabled ? undefined : 0}
         aria-label={this.ariaLabel}
         aria-valuemin={0}
-        aria-valuemax={el.childElementCount - 1}
-        aria-valuenow={activeItemIndex >= 0 ? activeItemIndex : 0}
+        aria-valuemax={0}
+        aria-valuenow={0}
         aria-valuetext={valueText}
         aria-orientation="vertical"
         onKeyDown={(ev) => this.onKeyDown(ev)}
