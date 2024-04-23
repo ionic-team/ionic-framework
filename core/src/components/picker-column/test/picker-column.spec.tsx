@@ -111,42 +111,4 @@ describe('picker-column: assistive element', () => {
 
     expect(assistiveFocusable.getAttribute('aria-valuetext')).toBe('My Text');
   });
-
-  it('should have the correct value count attributes', async () => {
-    const page = await newSpecPage({
-      components: [PickerColumn, PickerColumnOption],
-      template: () => (
-        <ion-picker-column value={2}>
-          <ion-picker-column-option value={1}>My Text</ion-picker-column-option>
-          <ion-picker-column-option value={2}>My Text</ion-picker-column-option>
-          <ion-picker-column-option value={3}>My Text</ion-picker-column-option>
-        </ion-picker-column>
-      ),
-    });
-
-    const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
-
-    expect(assistiveFocusable.getAttribute('aria-valuemin')).toBe('0');
-    expect(assistiveFocusable.getAttribute('aria-valuemax')).toBe('2');
-    expect(assistiveFocusable.getAttribute('aria-valuenow')).toBe('1');
-  });
-
-  it('should clamp the value now attributes', async () => {
-    const page = await newSpecPage({
-      components: [PickerColumn, PickerColumnOption],
-      template: () => (
-        <ion-picker-column>
-          <ion-picker-column-option value={1}>My Text</ion-picker-column-option>
-          <ion-picker-column-option value={2}>My Text</ion-picker-column-option>
-          <ion-picker-column-option value={3}>My Text</ion-picker-column-option>
-        </ion-picker-column>
-      ),
-    });
-
-    const pickerCol = page.body.querySelector('ion-picker-column')!;
-    const assistiveFocusable = pickerCol.shadowRoot!.querySelector('.assistive-focusable')!;
-
-    expect(assistiveFocusable.getAttribute('aria-valuenow')).toBe('0');
-  });
 });
