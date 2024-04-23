@@ -172,7 +172,7 @@ export class Breadcrumb implements ComponentInterface {
    * @returns {string} The icon to use for the collapsed icon.
    */
   get breadcrumbCollapsedIcon(): string {
-    return config.get('breadcrumbSeparatorIcon', ellipsisHorizontal);
+    return config.get('breadcrumbCollapsedIcon', ellipsisHorizontal);
   }
 
   render() {

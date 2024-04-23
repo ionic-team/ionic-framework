@@ -186,7 +186,7 @@ export interface IonicConfig {
   itemDetailIcon?: string;
 
   /**
-   * Overrides the hanlde icon for all `ion-reorder` components.
+   * Overrides the handle icon for all `ion-reorder` components.
    */
   reorderHandleIcon?: string;
 
