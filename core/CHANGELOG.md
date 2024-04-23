@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.2...v8.0.0) (2024-04-17)
+
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+# [8.0.0-rc.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.1...v8.0.0-rc.2) (2024-04-17)
+
+
+### Bug Fixes
+
+* **dark-palette:** improve base colors ([#29239](https://github.com/ionic-team/ionic-framework/issues/29239)) ([4698d22](https://github.com/ionic-team/ionic-framework/commit/4698d22413966b59f9fa65b4e2533695cf00ed70)), closes [#29219](https://github.com/ionic-team/ionic-framework/issues/29219)
+* **form-controls:** adjust flex properties inside of an item ([#29328](https://github.com/ionic-team/ionic-framework/issues/29328)) ([9b59138](https://github.com/ionic-team/ionic-framework/commit/9b59138011fd1e71def209ec3a43fb7f91b58949)), closes [#29319](https://github.com/ionic-team/ionic-framework/issues/29319)
+
+
+
+
+
+## [7.8.5](https://github.com/ionic-team/ionic-framework/compare/v7.8.4...v7.8.5) (2024-04-17)
+
+
+### Bug Fixes
+
+* **modal:** improve sheet modal scrolling and gesture behavior ([#29312](https://github.com/ionic-team/ionic-framework/issues/29312)) ([9738228](https://github.com/ionic-team/ionic-framework/commit/9738228bc05abe3e2012e57b0e6b85f0ec06f66b)), closes [#24583](https://github.com/ionic-team/ionic-framework/issues/24583)
+
+
+
+
+
+# [8.0.0-rc.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.0...v8.0.0-rc.1) (2024-04-10)
+
+
+### Bug Fixes
+
+* **button:** use clamp for font sizes on circle shape ([#29200](https://github.com/ionic-team/ionic-framework/issues/29200)) ([4d6edee](https://github.com/ionic-team/ionic-framework/commit/4d6edee89c7bb2cb669d67730d7ddf24c78b3cb1))
+
+
+
+
+
+## [7.8.4](https://github.com/ionic-team/ionic-framework/compare/v7.8.3...v7.8.4) (2024-04-10)
+
+
+### Performance Improvements
+
+* **styles:** compress distributed global stylesheets ([#29275](https://github.com/ionic-team/ionic-framework/issues/29275)) ([b3cd49b](https://github.com/ionic-team/ionic-framework/commit/b3cd49bf2219aacffc1ac34acbae7c76ef243765))
+
+
+
+
 
 ## [7.8.3](https://github.com/ionic-team/ionic-framework/compare/v7.8.2...v7.8.3) (2024-04-03)
 

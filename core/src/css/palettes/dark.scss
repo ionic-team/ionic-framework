@@ -1,59 +1,83 @@
+@use "sass:map";
+@import "../../themes/ionic.functions.color";
+
+$primary: #4d8dff;
+$secondary: #46b1ff;
+$tertiary: #8482fb;
+$success: #2dd55b;
+$warning: #ffce31;
+$danger: #f24c58;
+$light: #222428;
+$medium: #989aa2;
+$dark: #f4f5f8;
+
+$colors:  (
+  primary: (
+    base:             $primary,
+    contrast:         #000,
+    shade:            get-color-shade($primary),
+    tint:             get-color-tint($primary)
+  ),
+  secondary: (
+    base:             $secondary,
+    contrast:         #000,
+    shade:            get-color-shade($secondary),
+    tint:             get-color-tint($secondary)
+  ),
+  tertiary: (
+    base:             $tertiary,
+    contrast:         #000,
+    shade:            get-color-shade($tertiary),
+    tint:             get-color-tint($tertiary)
+  ),
+  success: (
+    base:             $success,
+    contrast:         #000,
+    shade:            get-color-shade($success),
+    tint:             get-color-tint($success)
+  ),
+  warning: (
+    base:             $warning,
+    contrast:         #000,
+    shade:            get-color-shade($warning),
+    tint:             get-color-tint($warning)
+  ),
+  danger: (
+    base:             $danger,
+    contrast:         #000,
+    shade:            get-color-shade($danger),
+    tint:             get-color-tint($danger)
+  ),
+  light: (
+    base:             $light,
+    contrast:         #fff,
+    shade:            get-color-shade($light),
+    tint:             get-color-tint($light)
+  ),
+  medium: (
+    base:             $medium,
+    contrast:         #000,
+    shade:            get-color-shade($medium),
+    tint:             get-color-tint($medium)
+  ),
+  dark: (
+    base:             $dark,
+    contrast:         #000,
+    shade:            get-color-shade($dark),
+    tint:             get-color-tint($dark)
+  )
+);
+
 @mixin dark-base-palette() {
   & {
-    --ion-color-primary: #4d8dff;
-    --ion-color-primary-rgb: 77, 141, 255;
-    --ion-color-primary-contrast: #000000;
-    --ion-color-primary-contrast-rgb: 0, 0, 0;
-    --ion-color-primary-shade: #447ce0;
-    --ion-color-primary-tint: #5f98ff;
-    --ion-color-secondary: #62bdff;
-    --ion-color-secondary-rgb: 98, 189, 255;
-    --ion-color-secondary-contrast: #000000;
-    --ion-color-secondary-contrast-rgb: 0, 0, 0;
-    --ion-color-secondary-shade: #56a6e0;
-    --ion-color-secondary-tint: #72c4ff;
-    --ion-color-tertiary: #8482fb;
-    --ion-color-tertiary-rgb: 132, 130, 251;
-    --ion-color-tertiary-contrast: #000000;
-    --ion-color-tertiary-contrast-rgb: 0, 0, 0;
-    --ion-color-tertiary-shade: #7472dd;
-    --ion-color-tertiary-tint: #908ffb;
-    --ion-color-success: #2dd55b;
-    --ion-color-success-rgb: 45, 213, 91;
-    --ion-color-success-contrast: #000000;
-    --ion-color-success-contrast-rgb: 0, 0, 0;
-    --ion-color-success-shade: #28bb50;
-    --ion-color-success-tint: #42d96b;
-    --ion-color-warning: #ffce31;
-    --ion-color-warning-rgb: 255, 206, 49;
-    --ion-color-warning-contrast: #000000;
-    --ion-color-warning-contrast-rgb: 0, 0, 0;
-    --ion-color-warning-shade: #e0b52b;
-    --ion-color-warning-tint: #ffd346;
-    --ion-color-danger: #f56570;
-    --ion-color-danger-rgb: 245, 101, 112;
-    --ion-color-danger-contrast: #000000;
-    --ion-color-danger-contrast-rgb: 0, 0, 0;
-    --ion-color-danger-shade: #d85963;
-    --ion-color-danger-tint: #f6747e;
-    --ion-color-dark: #f4f5f8;
-    --ion-color-dark-rgb: 244, 245, 248;
-    --ion-color-dark-contrast: #000000;
-    --ion-color-dark-contrast-rgb: 0, 0, 0;
-    --ion-color-dark-shade: #d7d8da;
-    --ion-color-dark-tint: #f5f6f9;
-    --ion-color-medium: #989aa2;
-    --ion-color-medium-rgb: 152, 154, 162;
-    --ion-color-medium-contrast: #000000;
-    --ion-color-medium-contrast-rgb: 0, 0, 0;
-    --ion-color-medium-shade: #86888f;
-    --ion-color-medium-tint: #a2a4ab;
-    --ion-color-light: #222428;
-    --ion-color-light-rgb: 34, 36, 40;
-    --ion-color-light-contrast: #ffffff;
-    --ion-color-light-contrast-rgb: 255, 255, 255;
-    --ion-color-light-shade: #1e2023;
-    --ion-color-light-tint: #383a3e;
+    @each $color-name, $value in $colors {
+      --ion-color-#{$color-name}: #{map.get($value, base)};
+      --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+      --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+      --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+      --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+      --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+    }
   }
 }
 
