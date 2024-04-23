@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction, Palette } from '@utils/test/playwright';
 
 /**
  * This is an extended version of Playwright's
@@ -28,13 +28,16 @@ configs().forEach(({ config, title }) => {
 
   let mode: Mode;
   let direction: Direction;
+  let palette: Palette;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
+    palette = testInfo.project.metadata.palette;
   } else {
     mode = options.mode;
     direction = options.direction;
+    palette = options.palette;
   }
 
   const rtlString = direction === 'rtl' ? 'true' : undefined;
@@ -49,6 +52,7 @@ configs().forEach(({ config, title }) => {
   const urlToParams = new URLSearchParams(paramsString);
   const formattedMode = urlToParams.get('ionic:mode') ?? mode;
   const formattedRtl = urlToParams.get('rtl') ?? rtlString;
+  const formattedPalette = urlToParams.get('palette') ?? palette;
   const ionicTesting = urlToParams.get('ionic:_testing') ?? true;
 
   /**
@@ -56,6 +60,7 @@ configs().forEach(({ config, title }) => {
    */
   urlToParams.delete('ionic:mode');
   urlToParams.delete('rtl');
+  urlToParams.delete('palette');
   urlToParams.delete('ionic:_testing');
 
   /**
@@ -66,7 +71,7 @@ configs().forEach(({ config, title }) => {
   const remainingQueryParams = decodeURIComponent(urlToParams.toString());
   const remainingQueryParamsString = remainingQueryParams == '' ? '' : `&${remainingQueryParams}`;
 
-  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}${remainingQueryParamsString}`;
+  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}&palette=${formattedPalette}${remainingQueryParamsString}`;
 
   testInfo.annotations.push({
     type: 'mode',
@@ -76,6 +81,11 @@ configs().forEach(({ config, title }) => {
   testInfo.annotations.push({
     type: 'direction',
     description: formattedRtl === 'true' ? 'rtl' : 'ltr',
+  });
+
+  testInfo.annotations.push({
+    type: 'palette',
+    description: formattedPalette,
   });
 
   const result = await Promise.all([
