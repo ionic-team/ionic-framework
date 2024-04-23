@@ -31,6 +31,7 @@ export class PickerColumn implements ComponentInterface {
   private isColumnVisible = false;
   private parentEl?: HTMLIonPickerElement | null;
   private canExitInputMode = true;
+  private assistiveFocusable?: HTMLElement;
 
   @State() ariaLabel: string | null = null;
 
@@ -409,6 +410,13 @@ export class PickerColumn implements ComponentInterface {
         activeEl = newActiveElement;
         this.setPickerItemActiveState(newActiveElement, true);
 
+        /**
+         * Set the aria-valuetext even though the value prop has not been updated yet.
+         * This enables some screen readers to announce the value as the users drag
+         * as opposed to when their release their pointer from the screen.
+         */
+        this.assistiveFocusable?.setAttribute('aria-valuetext', this.getOptionValueText(newActiveElement));
+
         timeout = setTimeout(() => {
           this.isScrolling = false;
           enableHaptics && hapticSelectionEnd();
@@ -608,6 +616,13 @@ export class PickerColumn implements ComponentInterface {
   };
 
   /**
+   * Utility to generate the correct text for aria-valuetext.
+   */
+  private getOptionValueText = (el?: HTMLIonPickerColumnOptionElement) => {
+    return el ? el.getAttribute('aria-label') ?? el.innerText : '';
+  };
+
+  /**
    * Render an element that overlays the column. This element is for assistive
    * tech to allow users to navigate the column up/down. This element should receive
    * focus as it listens for synthesized keyboard events as required by the
@@ -616,9 +631,10 @@ export class PickerColumn implements ComponentInterface {
   private renderAssistiveFocusable = () => {
     const { activeItem, activeItemIndex } = this.activeItem;
     const { el } = this;
-    const valueText = activeItem ? activeItem.getAttribute('aria-label') ?? activeItem.innerText : '';
+    const valueText = this.getOptionValueText(activeItem);
     return (
       <div
+        ref={(el) => (this.assistiveFocusable = el)}
         class="assistive-focusable"
         role="slider"
         tabindex={this.disabled ? undefined : 0}
