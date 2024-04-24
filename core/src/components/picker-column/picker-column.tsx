@@ -519,7 +519,7 @@ export class PickerColumn implements ComponentInterface {
    * the enabled option 5 options after the active one. Note that the actual option selected
    * may be past the stride if the option at the stride is disabled.
    */
-  private findNextOption = (stride: number = 1) => {
+  private findNextOption = (stride = 1) => {
     const { activeItem } = this;
     if (!activeItem) return null;
 
