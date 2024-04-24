@@ -144,6 +144,7 @@ Before creating a pull request, please read our requirements that explains the m
 3. From here, navigate to one of the component's tests to preview your changes.
 4. If a test showing your change doesn't exist, [add a new test or update an existing one](#modifying-tests).
 5. To test in RTL mode, once you are in the desired component's test, add `?rtl=true` at the end of the url; for example: `http://localhost:3333/src/components/alert/test/basic?rtl=true`.
+6. To test in dark mode, once you are in the desired component's test, add `?palette=dark` at the end of the url; for example: `http://localhost:3333/src/components/alert/test/basic?palette=dark`.
 
 ##### Previewing in an external app
 
