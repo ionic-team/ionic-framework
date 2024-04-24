@@ -260,7 +260,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, focus will not be allowed to move outside of this overlay.
-   * If 'false', focus will be allowed to move outside of the overlay.
+   * If `false`, focus will be allowed to move outside of the overlay.
    *
    * In most scenarios this property should remain set to `true`. Setting
    * this property to `false` can cause severe accessibility issues as users
