@@ -15,7 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 9.x
 
 - [Components](#version-9x-components)
-  - [Chip](#version-8x-chip)
+  - [Chip](#version-9x-chip)
 
 <h2 id="version-9x-components">Components</h2>
 
