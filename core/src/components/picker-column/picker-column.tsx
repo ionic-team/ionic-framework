@@ -584,7 +584,7 @@ export class PickerColumn implements ComponentInterface {
      * unchanged because those always represent the first/last options, respectively.
      */
     const mobile = isPlatform('mobile');
-    let newOption = null;
+    let newOption: HTMLIonPickerColumnOptionElement | null = null;
     switch (ev.key) {
       case 'ArrowDown':
         newOption = mobile ? this.findPreviousOption() : this.findNextOption();
