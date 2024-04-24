@@ -15,7 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 9.x
 
 - [Components](#version-9x-components)
-  - [Card](#version-8x-card)
+  - [Card](#version-9x-card)
 
 <h2 id="version-9x-components">Components</h2>
 
