@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0...v8.0.1) (2024-04-24)
+
+
+### Bug Fixes
+
+* **input:** clear button can be navigated using screen reader ([#29366](https://github.com/ionic-team/ionic-framework/issues/29366)) ([ee49824](https://github.com/ionic-team/ionic-framework/commit/ee49824a84df7a7b002f41dab7b935fbcdb64946)), closes [#29358](https://github.com/ionic-team/ionic-framework/issues/29358)
+* **input:** debounce is set with binding syntax in angular on load ([#29377](https://github.com/ionic-team/ionic-framework/issues/29377)) ([23321f7](https://github.com/ionic-team/ionic-framework/commit/23321f7ab2a242c3c4193fd6cece3f1c7c0034ef)), closes [#29374](https://github.com/ionic-team/ionic-framework/issues/29374)
+
+
+
+
+
 # [8.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.2...v8.0.0) (2024-04-17)
 
 **Note:** Version bump only for package @ionic/core
