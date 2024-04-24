@@ -1,49 +1,70 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('toggle: enableOnOffLabels'), () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto(`/src/components/toggle/test/enable-on-off-labels`, config);
-    });
-
+configs({ palettes: ['light', 'dark'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toggle: enable-on-off-labels'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      await page.setIonViewport();
+      await page.setContent(
+        `
+        <style>
+          #container {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            justify-content: space-evenly;
+            gap: 8px;
+            padding: 16px 0;
+          }
+        </style>
 
-      await expect(page).toHaveScreenshot(screenshot(`toggle-on-off-labels-diff`));
+        <div id="container">
+          <ion-toggle enable-on-off-labels="true">Unchecked</ion-toggle>
+          <ion-toggle enable-on-off-labels="true" checked>Checked</ion-toggle>
+        </div>
+      `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`toggle-on-off-labels`));
     });
-  });
-});
 
-/**
- * This behavior does not vary across directions
- */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('toggle: dark mode'), () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto(`/src/components/toggle/test/enable-on-off-labels`, config);
-    });
+    test('should not have visual regressions with color', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          #container {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            justify-content: space-evenly;
+            gap: 8px;
+            padding: 16px 0;
+          }
+        </style>
 
-    test('should not have visual regressions', async ({ page }) => {
-      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-      const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+        <div id="container">
+          <ion-toggle color="secondary" enable-on-off-labels="true">Unchecked</ion-toggle>
+          <ion-toggle color="secondary" enable-on-off-labels="true" checked>Checked</ion-toggle>
+          <ion-toggle color="success" enable-on-off-labels="true">Unchecked</ion-toggle>
+          <ion-toggle color="success" enable-on-off-labels="true" checked>Checked</ion-toggle>
+          <ion-toggle color="danger" enable-on-off-labels="true">Unchecked</ion-toggle>
+          <ion-toggle color="danger" enable-on-off-labels="true" checked>Checked</ion-toggle>
+          <ion-toggle color="tertiary" enable-on-off-labels="true">Unchecked</ion-toggle>
+          <ion-toggle color="tertiary" enable-on-off-labels="true" checked>Checked</ion-toggle>
+          <ion-toggle color="light" enable-on-off-labels="true">Unchecked</ion-toggle>
+          <ion-toggle color="light" enable-on-off-labels="true" checked>Checked</ion-toggle>
+          <ion-toggle color="medium" enable-on-off-labels="true">Unchecked</ion-toggle>
+          <ion-toggle color="medium" enable-on-off-labels="true" checked>Checked</ion-toggle>
+          <ion-toggle color="dark" enable-on-off-labels="true">Unchecked</ion-toggle>
+          <ion-toggle color="dark" enable-on-off-labels="true" checked>Checked</ion-toggle>
+        </div>
+      `,
+        config
+      );
 
-      await page.click('#popover-trigger');
-      await ionPopoverDidPresent.next();
+      const container = page.locator('#container');
 
-      await page.click('#dark-mode');
-
-      await page.evaluate(() => {
-        const popover = document.querySelector('ion-popover');
-        return popover?.dismiss();
-      });
-      await ionPopoverDidDismiss.next();
-
-      await page.waitForChanges();
-
-      await page.setIonViewport();
-
-      await expect(page).toHaveScreenshot(screenshot(`toggle-on-off-labels-dark-mode-diff`));
+      await expect(container).toHaveScreenshot(screenshot(`toggle-on-off-labels-color`));
     });
   });
 });
