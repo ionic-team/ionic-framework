@@ -38,6 +38,8 @@
 }
 
 :host(.in-item) {
+  flex: 1 1 0;
+
   width: 100%;
   height: 100%;
 }
