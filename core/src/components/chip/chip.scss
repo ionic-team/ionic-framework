@@ -121,21 +121,6 @@
   @include margin(-4px, -8px, -4px, 8px);
 }
 
-// Chip Shapes
-// ---------------------------------------------
-
-:host(.chip-soft) {
-  --border-radius: 8px;
-}
-
-:host(.chip-round) {
-  --border-radius: 999px;
-}
-
-:host(.chip-rectangular) {
-  --border-radius: 0px;
-}
-
 // Chip: Focus
 // ---------------------------------------------
 
