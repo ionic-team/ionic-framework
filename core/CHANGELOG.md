@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.8.6](https://github.com/ionic-team/ionic-framework/compare/v7.8.5...v7.8.6) (2024-04-24)
+
+
+### Bug Fixes
+
+* **input:** clear button can be navigated using screen reader ([#29366](https://github.com/ionic-team/ionic-framework/issues/29366)) ([#29383](https://github.com/ionic-team/ionic-framework/issues/29383)) ([5ce0c60](https://github.com/ionic-team/ionic-framework/commit/5ce0c609f365aa497814067276b67fc4e58bdb35))
+
+
+
+
+
 ## [7.8.5](https://github.com/ionic-team/ionic-framework/compare/v7.8.4...v7.8.5) (2024-04-17)
 
 
