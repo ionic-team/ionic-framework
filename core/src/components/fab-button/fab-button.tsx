@@ -116,7 +116,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * is pressed. Only applies if it is the main button inside of a fab containing a
    * fab list.
    */
-  @Prop() closeIcon?: string | null;
+  @Prop() closeIcon?: string;
 
   /**
    * Emitted when the button has focus.
@@ -164,8 +164,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    */
   get fabButtonCloseIcon(): string {
     const icon = this.closeIcon;
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 

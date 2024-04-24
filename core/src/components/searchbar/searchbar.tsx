@@ -100,7 +100,7 @@ export class Searchbar implements ComponentInterface {
    * Set the cancel button icon. Only available when the theme is `"md"`.
    * Defaults to `"arrow-back-sharp"`.
    */
-  @Prop() cancelButtonIcon?: string | null;
+  @Prop() cancelButtonIcon?: string;
 
   /**
    * Set the the cancel button text. Only available when the theme is `"ios"`.
@@ -110,7 +110,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the clear icon. Defaults to `"close-circle"` for `"ios"` theme and `"close-sharp"` for `"md"` and `"ionic"` theme.
    */
-  @Prop() clearIcon?: string | null;
+  @Prop() clearIcon?: string;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
@@ -177,7 +177,7 @@ export class Searchbar implements ComponentInterface {
    * The icon to use as the search icon. Defaults to `"search-outline"` in
    * the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
    */
-  @Prop() searchIcon?: string | null;
+  @Prop() searchIcon?: string;
 
   /**
    * Sets the behavior for the cancel button. Defaults to `"never"`.
@@ -618,8 +618,8 @@ export class Searchbar implements ComponentInterface {
    */
   get searchbarCancelIcon(): string {
     const icon = this.cancelButtonIcon;
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 
@@ -640,8 +640,8 @@ export class Searchbar implements ComponentInterface {
     const icon = this.clearIcon;
     const defaultIcon = theme === 'ios' ? closeCircle : closeSharp;
 
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 
@@ -662,8 +662,8 @@ export class Searchbar implements ComponentInterface {
     const icon = this.searchIcon;
     const defaultIcon = theme === 'ios' ? searchOutline : searchSharp;
 
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 

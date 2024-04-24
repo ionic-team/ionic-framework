@@ -62,7 +62,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon = chevronForward;
+  @Prop() detailIcon?: string;
 
   /**
    * If `true`, the user cannot interact with the item.
@@ -253,8 +253,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   get itemDetailIcon(): string {
     const icon = this.detailIcon;
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 

@@ -118,8 +118,8 @@ export class InputPasswordToggle implements ComponentInterface {
   get inputPasswordShowIcon(): string {
     const icon = this.showIcon;
 
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 
@@ -138,8 +138,8 @@ export class InputPasswordToggle implements ComponentInterface {
   get inputPasswordHideIcon(): string {
     const icon = this.hideIcon;
 
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 

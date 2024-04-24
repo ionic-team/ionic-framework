@@ -96,7 +96,7 @@ export namespace Components {
         /**
           * The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed.
          */
-        "toggleIcon"?: string | null;
+        "toggleIcon"?: string;
         /**
           * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
@@ -1153,7 +1153,7 @@ export namespace Components {
         /**
           * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
          */
-        "closeIcon"?: string | null;
+        "closeIcon"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -1530,7 +1530,7 @@ export namespace Components {
         /**
           * The icon to use when `detail` is set to `true`.
          */
-        "detailIcon": string;
+        "detailIcon"?: string;
         /**
           * If `true`, the user cannot interact with the item.
          */
@@ -2981,7 +2981,7 @@ export namespace Components {
         /**
           * Set the cancel button icon. Only available when the theme is `"md"`. Defaults to `"arrow-back-sharp"`.
          */
-        "cancelButtonIcon"?: string | null;
+        "cancelButtonIcon"?: string;
         /**
           * Set the the cancel button text. Only available when the theme is `"ios"`.
          */
@@ -2989,7 +2989,7 @@ export namespace Components {
         /**
           * Set the clear icon. Defaults to `"close-circle"` for `"ios"` theme and `"close-sharp"` for `"md"` and `"ionic"` theme.
          */
-        "clearIcon"?: string | null;
+        "clearIcon"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -3037,7 +3037,7 @@ export namespace Components {
         /**
           * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
          */
-        "searchIcon"?: string | null;
+        "searchIcon"?: string;
         /**
           * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
@@ -3148,7 +3148,7 @@ export namespace Components {
         /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
-        "expandedIcon"?: string | null;
+        "expandedIcon"?: string;
         /**
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in the `"md"` theme.
          */
@@ -5278,7 +5278,7 @@ declare namespace LocalJSX {
         /**
           * The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed.
          */
-        "toggleIcon"?: string | null;
+        "toggleIcon"?: string;
         /**
           * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
@@ -6393,7 +6393,7 @@ declare namespace LocalJSX {
         /**
           * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
          */
-        "closeIcon"?: string | null;
+        "closeIcon"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -8226,7 +8226,7 @@ declare namespace LocalJSX {
         /**
           * Set the cancel button icon. Only available when the theme is `"md"`. Defaults to `"arrow-back-sharp"`.
          */
-        "cancelButtonIcon"?: string | null;
+        "cancelButtonIcon"?: string;
         /**
           * Set the the cancel button text. Only available when the theme is `"ios"`.
          */
@@ -8234,7 +8234,7 @@ declare namespace LocalJSX {
         /**
           * Set the clear icon. Defaults to `"close-circle"` for `"ios"` theme and `"close-sharp"` for `"md"` and `"ionic"` theme.
          */
-        "clearIcon"?: string | null;
+        "clearIcon"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -8306,7 +8306,7 @@ declare namespace LocalJSX {
         /**
           * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
          */
-        "searchIcon"?: string | null;
+        "searchIcon"?: string;
         /**
           * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
          */
@@ -8424,7 +8424,7 @@ declare namespace LocalJSX {
         /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
-        "expandedIcon"?: string | null;
+        "expandedIcon"?: string;
         /**
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in the `"md"` theme.
          */

@@ -186,7 +186,7 @@ export class Select implements ComponentInterface {
    * rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon`
    * will be used for when the select is both open and closed.
    */
-  @Prop() expandedIcon?: string | null;
+  @Prop() expandedIcon?: string;
 
   /**
    * The shape of the select. If "round" it will have an increased border radius.
@@ -936,8 +936,8 @@ export class Select implements ComponentInterface {
     const icon = this.expandedIcon;
     let defaultExpandIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
 
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 
@@ -963,8 +963,8 @@ export class Select implements ComponentInterface {
     const icon = this.toggleIcon;
     const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
 
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 

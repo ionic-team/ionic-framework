@@ -79,7 +79,7 @@ export class Accordion implements ComponentInterface {
    * rotated when the accordion is expanded
    * or collapsed.
    */
-  @Prop() toggleIcon?: string | null;
+  @Prop() toggleIcon?: string;
 
   /**
    * The slot inside of `ion-item` to
@@ -413,8 +413,8 @@ export class Accordion implements ComponentInterface {
    */
   get accordionToggleIcon(): string {
     const icon = this.toggleIcon;
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 

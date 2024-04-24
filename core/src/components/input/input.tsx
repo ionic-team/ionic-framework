@@ -702,8 +702,8 @@ export class Input implements ComponentInterface {
     const defaultClearIcon = theme === 'ios' ? closeCircle : closeSharp;
     const icon = this.clearInputIcon;
 
-    if (icon != null) {
-      // icon is set on the component
+    if (icon !== undefined) {
+      // Icon is set on the component.
       return icon;
     }
 
