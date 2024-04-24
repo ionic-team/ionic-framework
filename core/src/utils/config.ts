@@ -217,6 +217,16 @@ export interface IonicConfig {
   selectCollapsedIcon?: string;
 
   /**
+   * Overrides the checked icon for all `ion-toggle` components.
+   */
+  toggleCheckedIcon?: string;
+
+  /**
+   * Overrides the unchecked icon for all `ion-toggle` components.
+   */
+  toggleUncheckedIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */
