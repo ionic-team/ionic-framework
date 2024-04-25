@@ -135,12 +135,8 @@ const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> =
   const focusManagerEnabled = config.get('focusManagerPriority', false);
 
   /**
-   * If the focus manager is enabled then we
-   * need to wait for Ionic components to be rendered
-   * otherwise the correct component to focus may not
-   * be focused because it is still hidden.
-   * However, if the manager is not enabled
-   * then there's no need to wait since there will be no animation.
+   * If the focus manager is enabled then we need to wait for Ionic components to be
+   * rendered otherwise the component to focus may not be focused because it is hidden.
    */
   await waitForReady(opts, focusManagerEnabled);
 

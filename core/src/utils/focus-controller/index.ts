@@ -2,6 +2,24 @@ import { config } from '@global/config';
 import { printIonWarning } from '@utils/logging';
 
 /**
+ * Moves focus to a specified element. Note that we do not remove the tabindex
+ * because that can result in an unintentional blur. Non-focusables can't be
+ * focused, so the body will get focused again.
+ */
+const moveFocus = (el: HTMLElement) => {
+  el.tabIndex = -1;
+  el.focus();
+};
+
+/**
+ * Elements that are hidden using `display: none` should not be focused even if
+ * they are present in the DOM.
+ */
+const isVisible = (el: HTMLElement) => {
+  return el.offsetParent !== null;
+};
+
+/**
  * The focus controller allows us to manage focus within a view so assistive
  * technologies can inform users of changes to the navigation state. Traditional
  * native apps have a way of informing assistive technology about a navigation
@@ -10,24 +28,6 @@ import { printIonWarning } from '@utils/logging';
  * integration ourselves.
  */
 export const createFocusController = (): FocusController => {
-  /**
-   * Moves focus to a specified element. Note that we do not remove the tabindex
-   * because that can result in an unintentional blur. Non-focusables can't be
-   * focused, so the body will get focused again.
-   */
-  const moveFocus = (el: HTMLElement) => {
-    el.tabIndex = -1;
-    el.focus();
-  };
-
-  /**
-   * Elements that are hidden using `display: none` should
-   * not be focused even if they are present in the DOM.
-   */
-  const isVisible = (el: HTMLElement) => {
-    return el.offsetParent !== null;
-  };
-
   const saveViewFocus = (referenceEl?: HTMLElement) => {
     const focusManagerEnabled = config.get('focusManagerPriority', false);
 
