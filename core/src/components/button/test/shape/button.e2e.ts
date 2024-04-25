@@ -2,11 +2,86 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * All content takes up the full width, so RTL has no effect.
+ * This behavior does not vary across directions.
  */
-// TODO: FW-6077 - Add ionic theme on MD mode to this test.
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: shape'), () => {
+    test.describe('default', () => {
+      test.describe('default', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#default #default');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-default`));
+        });
+      });
+
+      test.describe('outline', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#default #outline');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-default-outline`));
+        });
+      });
+
+      test.describe('clear', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#default #clear');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-default-clear`));
+        });
+      });
+    });
+
+    test.describe('soft', () => {
+      test.describe('default', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#soft #default');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-soft`));
+        });
+      });
+
+      test.describe('outline', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#soft #outline');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-soft-outline`));
+        });
+      });
+
+      test.describe('clear', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#soft #clear');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-soft-clear`));
+        });
+      });
+    });
+
     test.describe('round', () => {
       test.describe('default', () => {
         test('should not have visual regressions', async ({ page }) => {
@@ -14,7 +89,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
           await page.setIonViewport();
 
-          const container = page.locator('#default');
+          const container = page.locator('#round #default');
 
           await expect(container).toHaveScreenshot(screenshot(`button-round`));
         });
@@ -26,9 +101,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
           await page.setIonViewport();
 
-          const container = page.locator('#outline');
+          const container = page.locator('#round #outline');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-outline-round`));
+          await expect(container).toHaveScreenshot(screenshot(`button-round-outline`));
         });
       });
 
@@ -38,9 +113,47 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
           await page.setIonViewport();
 
-          const container = page.locator('#clear');
+          const container = page.locator('#round #clear');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-clear-round`));
+          await expect(container).toHaveScreenshot(screenshot(`button-round-clear`));
+        });
+      });
+    });
+
+    test.describe('rectangular', () => {
+      test.describe('default', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#rectangular #default');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-rectangular`));
+        });
+      });
+
+      test.describe('outline', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#rectangular #outline');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-rectangular-outline`));
+        });
+      });
+
+      test.describe('clear', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.goto(`/src/components/button/test/shape`, config);
+
+          await page.setIonViewport();
+
+          const container = page.locator('#rectangular #clear');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-rectangular-clear`));
         });
       });
     });
