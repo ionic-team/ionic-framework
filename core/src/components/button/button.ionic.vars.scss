@@ -123,21 +123,3 @@ $button-ionic-outline-border-width: 1px !default;
 
 /// @prop - Border style of the outline button
 $button-ionic-outline-border-style: solid !default;
-
-// Ionic Icon Only Button
-// -------------------------------------------------------------------------------
-
-/// @prop - Padding end of the icon only button
-$button-has-icon-only-padding-end: px-to-rem(13) !default;
-
-/// @prop - Padding end of the icon only extra small button
-$button-has-icon-only-padding-end-xsmall: px-to-rem(6) !default;
-
-/// @prop - Padding end of the icon only small button
-$button-has-icon-only-padding-end-small: px-to-rem(10) !default;
-
-/// @prop - Padding end of the icon only large button
-$button-has-icon-only-padding-end-large: px-to-rem(16) !default;
-
-/// @prop - Padding end of the icon only extra large button
-$button-has-icon-only-padding-end-xlarge: px-to-rem(18) !default;

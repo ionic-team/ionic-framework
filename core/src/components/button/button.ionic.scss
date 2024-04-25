@@ -123,29 +123,13 @@
   }
 }
 
-/* Button extra small */
-:host(.button-has-icon-only.button-xsmall) {
-  --padding-end: #{$button-has-icon-only-padding-end-xsmall};
-}
-
-/* Button small */
-:host(.button-has-icon-only.button-small) {
-  --padding-end: #{$button-has-icon-only-padding-end-small};
-}
-
-/* Default */
 :host(.button-has-icon-only) {
-  --padding-end: #{$button-has-icon-only-padding-end};
-}
+  --padding-top: 0;
+  --padding-bottom: var(--padding-top);
+  --padding-end: var(--padding-top);
+  --padding-start: var(--padding-end);
 
-/* Button large */
-:host(.button-has-icon-only.button-large) {
-  --padding-end: #{$button-has-icon-only-padding-end-large};
-}
-
-/* Button extra large */
-:host(.button-has-icon-only.button-xlarge) {
-  --padding-end: #{$button-has-icon-only-padding-end-xlarge};
+  aspect-ratio: 1 / 1;
 }
 
 // Button Shapes
