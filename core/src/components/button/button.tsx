@@ -349,19 +349,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   render() {
-    const {
-      buttonType,
-      type,
-      disabled,
-      rel,
-      target,
-      href,
-      color,
-      expand,
-      hasIconOnly,
-      strong,
-      inheritedAttributes,
-    } = this;
+    const { buttonType, type, disabled, rel, target, href, color, expand, hasIconOnly, strong, inheritedAttributes } =
+      this;
 
     const theme = getIonTheme(this);
     const size = this.getSize();
