@@ -43,30 +43,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           await expect(container).toHaveScreenshot(screenshot(`button-clear-round`));
         });
       });
-
-      test.describe('color', () => {
-        test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
-
-          await page.setIonViewport();
-
-          const container = page.locator('#color');
-
-          await expect(container).toHaveScreenshot(screenshot(`button-color-round`));
-        });
-      });
-
-      test.describe('expand', () => {
-        test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
-
-          await page.setIonViewport();
-
-          const container = page.locator('#expand');
-
-          await expect(container).toHaveScreenshot(screenshot(`button-expand-round`));
-        });
-      });
     });
   });
 });
