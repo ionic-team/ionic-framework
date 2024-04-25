@@ -263,9 +263,9 @@ export class Input implements ComponentInterface {
 
   /**
    * The size of the input. If "large", it will have an increased height. By default the
-   * size is unset. This property only applies to the `"ionic"` theme.
+   * size is medium. This property only applies to the `"ionic"` theme.
    */
-  @Prop() size?: 'large';
+  @Prop() size?: 'medium' | 'large' = 'medium';
 
   /**
    * The type of control to display. The default type is text.

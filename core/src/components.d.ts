@@ -1475,9 +1475,9 @@ export namespace Components {
          */
         "shape"?: 'round';
         /**
-          * The size of the input. If "large", it will have an increased height. By default the size is unset. This property only applies to the `"ionic"` theme.
+          * The size of the input. If "large", it will have an increased height. By default the size is medium. This property only applies to the `"ionic"` theme.
          */
-        "size"?: 'large';
+        "size"?: 'medium' | 'large';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -6747,9 +6747,9 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round';
         /**
-          * The size of the input. If "large", it will have an increased height. By default the size is unset. This property only applies to the `"ionic"` theme.
+          * The size of the input. If "large", it will have an increased height. By default the size is medium. This property only applies to the `"ionic"` theme.
          */
-        "size"?: 'large';
+        "size"?: 'medium' | 'large';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
