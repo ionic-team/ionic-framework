@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 /// @prop - Size of the select icon
-$select-ios-icon-size:              dynamic-font(18px) !default;
+$select-ios-icon-size:              dynamic-font(18px);
 
 /// @prop - Opacity of the disabled select
-$select-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;
+$select-ios-disabled-opacity: $form-control-ios-disabled-opacity;

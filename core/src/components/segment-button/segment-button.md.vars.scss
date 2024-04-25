@@ -4,61 +4,61 @@
 // --------------------------------------------------
 
 /// @prop - Opacity of the segment button
-$segment-button-md-opacity:                           .6 !default;
+$segment-button-md-opacity:                           .6;
 
 /// @prop - Text color of the segment button
-$segment-button-md-text-color:                        rgba($text-color-rgb, $segment-button-md-opacity) !default;
+$segment-button-md-text-color:                        rgba($text-color-rgb, $segment-button-md-opacity);
 
 /// @prop - Text color of the checked segment button
-$segment-button-md-text-color-checked:                ion-color(primary, base) !default;
+$segment-button-md-text-color-checked:                ion-color(primary, base);
 
 /// @prop - Background of the segment button
-$segment-button-md-background:                        none !default;
+$segment-button-md-background:                        none;
 
 /// @prop - Background of the checked segment button
-$segment-button-md-background-checked:                $segment-button-md-background !default;
+$segment-button-md-background-checked:                $segment-button-md-background;
 
 /// @prop - Opacity of the disabled segment button
-$segment-button-md-opacity-disabled:                  .3 !default;
+$segment-button-md-opacity-disabled:                  .3;
 
 /// @prop - Padding top of the segment button
-$segment-button-md-padding-top:                       0 !default;
+$segment-button-md-padding-top:                       0;
 
 /// @prop - Padding end of the segment button
-$segment-button-md-padding-end:                       16px !default;
+$segment-button-md-padding-end:                       16px;
 
 /// @prop - Padding bottom of the segment button
-$segment-button-md-padding-bottom:                    $segment-button-md-padding-top !default;
+$segment-button-md-padding-bottom:                    $segment-button-md-padding-top;
 
 /// @prop - Padding start of the segment button
-$segment-button-md-padding-start:                     $segment-button-md-padding-end !default;
+$segment-button-md-padding-start:                     $segment-button-md-padding-end;
 
 /// @prop - Minimum height of the segment button
-$segment-button-md-min-height:                        48px !default;
+$segment-button-md-min-height:                        48px;
 
 /// @prop - Minimum width of the segment button
-$segment-button-md-min-width:                         90px !default;
+$segment-button-md-min-width:                         90px;
 
 /// @prop - Maximum width of the segment button
-$segment-button-md-max-width:                         360px !default;
+$segment-button-md-max-width:                         360px;
 
 /// @prop - Line height of the segment button
-$segment-button-md-line-height:                       40px !default;
+$segment-button-md-line-height:                       40px;
 
 /// @prop - Font size of the segment button
-$segment-button-md-font-size:                         14px !default;
+$segment-button-md-font-size:                         14px;
 
 /// @prop - Letter spacing of the segment button
-$segment-button-md-letter-spacing:                    .06em !default;
+$segment-button-md-letter-spacing:                    .06em;
 
 /// @prop - Font weight of the segment button
-$segment-button-md-font-weight:                       500 !default;
+$segment-button-md-font-weight:                       500;
 
 /// @prop - Transition of the segment button
-$segment-button-md-transition:                        color .15s linear 0s, opacity .15s linear 0s !default;
+$segment-button-md-transition:                        color .15s linear 0s, opacity .15s linear 0s;
 
 /// @prop - Transition of the animated segment button
-$segment-button-md-transition-animated:               transform 250ms cubic-bezier(.4, 0, .2, 1) !default;
+$segment-button-md-transition-animated:               transform 250ms cubic-bezier(.4, 0, .2, 1);
 
 /// @prop - Size of an icon in the segment button
-$segment-button-md-icon-size:                         24px !default;
+$segment-button-md-icon-size:                         24px;

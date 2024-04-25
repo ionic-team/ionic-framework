@@ -5,37 +5,37 @@
 // --------------------------------------------------
 
 /// @prop - Color of the checked radio
-$radio-md-color-on:                  current-color(base) !default;
+$radio-md-color-on:                  current-color(base);
 
 /// @prop - Background color of focus indicator for radio when focused
-$radio-md-background-color-focused:  ion-color(primary, tint) !default;
+$radio-md-background-color-focused:  ion-color(primary, tint);
 
 /// @prop - Color of the unchecked radio
-$radio-md-color-off:                 rgb($text-color-rgb, 0.60) !default;
+$radio-md-color-off:                 rgb($text-color-rgb, 0.60);
 
 /// @prop - Width of the radio icon
-$radio-md-icon-width:                dynamic-font(20px) !default;
+$radio-md-icon-width:                dynamic-font(20px);
 
 /// @prop - Height of the radio icon
-$radio-md-icon-height:               dynamic-font(20px) !default;
+$radio-md-icon-height:               dynamic-font(20px);
 
 /// @prop - Border width of the radio icon
-$radio-md-icon-border-width:         dynamic-font(2px) !default;
+$radio-md-icon-border-width:         dynamic-font(2px);
 
 /// @prop - Border style of the radio icon
-$radio-md-icon-border-style:         solid !default;
+$radio-md-icon-border-style:         solid;
 
 /// @prop - Border radius of the radio icon
-$radio-md-icon-border-radius:        50% !default;
+$radio-md-icon-border-radius:        50%;
 
 /// @prop - Transition duration of the radio
-$radio-md-transition-duration:       280ms !default;
+$radio-md-transition-duration:       280ms;
 
 /// @prop - Transition easing of the radio
-$radio-md-transition-easing:         cubic-bezier(.4, 0, .2, 1) !default;
+$radio-md-transition-easing:         cubic-bezier(.4, 0, .2, 1);
 
 /// @prop - Opacity of the disabled radio label
-$radio-md-disabled-opacity:          $form-control-md-disabled-opacity !default;
+$radio-md-disabled-opacity:          $form-control-md-disabled-opacity;
 
 /// @prop - Opacity of the disabled radio
 /// This value is used because the radio color is set to
@@ -44,4 +44,4 @@ $radio-md-disabled-opacity:          $form-control-md-disabled-opacity !default;
 /// opacity is applied on top of the transparent color so
 /// this opacity gets us the equivalent of applying `0.38`
 /// on top of an opaque radio `rgb(0, 0, 0, 1.0)`
-$radio-md-icon-disabled-opacity:     0.63 !default;
+$radio-md-icon-disabled-opacity:     0.63;

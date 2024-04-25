@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Text color of the note
-$note-ios-color:          $text-color-step-650 !default;
+$note-ios-color:          $text-color-step-650;
 
 /// @prop - Font size of the note
-$note-ios-font-size:      dynamic-font-min(0.875, 16px) !default;
+$note-ios-font-size:      dynamic-font-min(0.875, 16px);
