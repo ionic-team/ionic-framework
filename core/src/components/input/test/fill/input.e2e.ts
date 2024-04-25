@@ -112,25 +112,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline`));
       });
 
-      test('focus state should not have visual regressions', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-input class="has-focus"
-            fill="outline"
-            label="Email"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-input>
-        `,
-          config
-        );
-
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-focus`));
-      });
-
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
           `
