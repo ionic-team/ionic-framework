@@ -2,6 +2,35 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+configs({ directions: ['ltr'], palettes: ['dark'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('item: dark palette'), () => {
+    /**
+     * This test was originally created to ensure the item border has sufficient
+     * contrast. We don't use an Axe test here because Axe not warn about color
+     * contrast on the item borders.
+     */
+    test('borders should have sufficient contrast', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29386',
+      });
+      await page.setContent(
+        `
+        <ion-list>
+          <ion-item>Item</ion-item>
+          <ion-item>Item</ion-item>
+        </ion-list>
+      `,
+        config
+      );
+
+      const list = page.locator('ion-list');
+
+      await expect(list).toHaveScreenshot(screenshot(`item-dark`));
+    });
+  });
+});
+
 configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('item: axe'), () => {
     test('should not have accessibility violations', async ({ page }) => {
