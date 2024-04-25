@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 /// @prop - Alpha of the segment for use in the backgrounds
-$segment-ios-background-alpha:                  0.065 !default;
+$segment-ios-background-alpha:                  0.065;
 
 /// @prop - Background color of the segment
-$segment-ios-background-color:                  rgba($text-color-rgb, $segment-ios-background-alpha) !default;
+$segment-ios-background-color:                  rgba($text-color-rgb, $segment-ios-background-alpha);
 
 /// @prop - Border radius of the segment
-$segment-ios-border-radius:                     8px !default;
+$segment-ios-border-radius:                     8px;

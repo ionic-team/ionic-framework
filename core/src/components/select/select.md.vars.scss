@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 /// @prop - Size of the select icon
-$select-md-icon-size:           dynamic-font(13px) !default;
+$select-md-icon-size:           dynamic-font(13px);
 /// @prop - The amount of whitespace to display on either side of the floating label
-$select-md-floating-label-padding:         4px !default;
+$select-md-floating-label-padding:         4px;
 
 /// @prop - Opacity of the disabled select
-$select-md-disabled-opacity: $form-control-md-disabled-opacity !default;
+$select-md-disabled-opacity: $form-control-md-disabled-opacity;
