@@ -115,9 +115,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() rel: string | undefined;
 
   /**
-   * Set to `"round"` for a button with more rounded corners.
+   * Set to `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully
+   * rounded corners, or `"rectangular"` for a button without rounded corners.
+   * Defaults to `"soft"` for the `"ios"` theme and `"round"` for all other themes.
    */
-  @Prop({ reflect: true }) shape?: 'round' | 'rectangular';
+  @Prop({ reflect: true }) shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * Set to `"small"` for a button with less height and padding, to `"default"`
@@ -214,6 +216,20 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     }
 
     return 'bounded';
+  }
+
+  /**
+   * Set the shape based on the theme
+   */
+  private getShape(): string {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    if (shape === undefined) {
+      return theme === 'ios' ? 'soft' : 'round';
+    }
+
+    return shape;
   }
 
   /**
@@ -343,13 +359,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       color,
       expand,
       hasIconOnly,
-      shape,
       strong,
       inheritedAttributes,
     } = this;
 
     const theme = getIonTheme(this);
-    const finalSize = this.getSize();
+    const size = this.getSize();
+    const shape = this.getShape();
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'
@@ -388,7 +404,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [theme]: true,
           [buttonType]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
-          [`${buttonType}-${finalSize}`]: finalSize !== undefined,
+          [`${buttonType}-${size}`]: size !== undefined,
           [`${buttonType}-${shape}`]: shape !== undefined,
           [`${buttonType}-${fill}`]: true,
           [`${buttonType}-strong`]: strong,

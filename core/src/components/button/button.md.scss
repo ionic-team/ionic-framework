@@ -5,7 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --border-radius: #{$button-md-border-radius};
   --padding-top: #{$button-md-padding-top};
   --padding-bottom: #{$button-md-padding-bottom};
   --padding-start: #{$button-md-padding-start};
@@ -24,7 +23,7 @@
   text-transform: #{$button-md-text-transform};
 }
 
-// Material Design Solid Button
+// Solid Button
 // --------------------------------------------------
 
 :host(.button-solid) {
@@ -41,7 +40,7 @@
   --box-shadow: #{$button-md-box-shadow-activated};
 }
 
-// Material Design Outline Button
+// Outline Button
 // --------------------------------------------------
 
 :host(.button-outline) {
@@ -60,7 +59,7 @@
   background: transparent;
 }
 
-// Material Design Clear Button
+// Clear Button
 // --------------------------------------------------
 
 :host(.button-clear) {
@@ -72,18 +71,27 @@
   --background-hover-opacity: 0.04;
 }
 
-// Material Design Round Button
-// --------------------------------------------------
+// Button Shapes
+// -------------------------------------------------------------------------------
 
+:host(.button-soft) {
+  --border-radius: 4px;
+}
+
+// TODO(FW-6202): remove the custom padding styles
 :host(.button-round) {
-  --border-radius: #{$button-md-round-border-radius};
+  --border-radius: 999px;
   --padding-top: #{$button-md-round-padding-top};
   --padding-start: #{$button-md-round-padding-start};
   --padding-end: #{$button-md-round-padding-end};
   --padding-bottom: #{$button-md-round-padding-bottom};
 }
 
-// Material Design Button Sizes
+:host(.button-rectangular) {
+  --border-radius: 0px;
+}
+
+// Button Sizes
 // --------------------------------------------------
 
 :host(.button-large) {
@@ -108,14 +116,14 @@
   font-size: #{$button-md-small-font-size};
 }
 
-// MD strong Button
+// Strong Button
 // --------------------------------------------------
 
 :host(.button-strong) {
   font-weight: #{$button-md-strong-font-weight};
 }
 
-// MD Icon Only Button
+// Icon Only Button
 //
 // MD does not specify a small size, these
 // styles are based on the iOS small size.
@@ -144,7 +152,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 14px
@@ -169,7 +177,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 13px
@@ -194,7 +202,7 @@
     *
     * Since the `ion-button` uses `rem` for the font size, we can't
     * just pass the desired icon font size in `em` to the `
-    * dynamic-font-clamp`. Instead, we need to adjust the base size 
+    * dynamic-font-clamp`. Instead, we need to adjust the base size
     * to account for the ion-button` font size.
     *
     * For example, if the default font size of `ion-button` is 20px
@@ -204,7 +212,7 @@
   font-size: dynamic-font-clamp(0.67, 22.4px, 1.92, 1em);
 }
 
-// Material Design Button: Hover
+// Button: Hover
 // --------------------------------------------------
 
 /**

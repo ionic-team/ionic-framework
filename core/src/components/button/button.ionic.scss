@@ -1,3 +1,5 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
 @import "./button";
 @import "./button.ionic.vars";
 
@@ -5,11 +7,11 @@
 // -------------------------------------------------------------------------------
 
 :host {
-  --border-radius: #{$button-ionic-border-radius};
   --padding-bottom: var(--padding-top);
   --padding-end: #{$button-ionic-padding-end};
   --padding-start: var(--padding-end);
   --padding-top: #{$button-ionic-padding-top};
+  // TODO(FW-6187): set this to a design token when it is added
   --focus-ring-color: #9ec4fd;
   --focus-ring-width: 2px;
 
@@ -62,7 +64,6 @@
 
 /* Extra Small Button */
 :host(.button-xsmall) {
-  --border-radius: #{$button-ionic-xsmall-border-radius};
   --padding-top: #{$button-ionic-xsmall-padding-top};
   --padding-end: #{$button-ionic-xsmall-padding-end};
 
@@ -73,7 +74,6 @@
 
 /* Small Button */
 :host(.button-small) {
-  --border-radius: #{$button-ionic-small-border-radius};
   --padding-top: #{$button-ionic-small-padding-top};
   --padding-end: #{$button-ionic-small-padding-end};
 
@@ -151,17 +151,21 @@
 // Button Shapes
 // -------------------------------------------------------------------------------
 
-// Button Shape Rectangular
-// -------------------------------------------------------------------------------
-
-:host(.button-rectangular) {
-  --border-radius: #{$button-ionic-rectangular-border};
+:host(.button-soft) {
+  --border-radius: #{globals.$ionic-border-radius-rounded-medium};
 }
 
-// Button Shape Round
-// -------------------------------------------------------------------------------
+:host(.button-soft.button-xsmall),
+:host(.button-soft.button-small) {
+  --border-radius: #{globals.$ionic-border-radius-rounded-small};
+}
+
 :host(.button-round) {
-  --border-radius: #{$button-ionic-round-border};
+  --border-radius: #{globals.$ionic-border-radius-rounded-full};
+}
+
+:host(.button-rectangular) {
+  --border-radius: #{globals.$ionic-border-radius-square};
 }
 
 // Button Focused

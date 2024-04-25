@@ -543,9 +543,9 @@ export namespace Components {
          */
         "routerDirection": RouterDirection;
         /**
-          * Set to `"round"` for a button with more rounded corners.
+          * Set to `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully rounded corners, or `"rectangular"` for a button without rounded corners. Defaults to `"soft"` for the `"ios"` theme and `"round"` for all other themes.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
          */
@@ -5783,9 +5783,9 @@ declare namespace LocalJSX {
          */
         "routerDirection"?: RouterDirection;
         /**
-          * Set to `"round"` for a button with more rounded corners.
+          * Set to `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully rounded corners, or `"rectangular"` for a button without rounded corners. Defaults to `"soft"` for the `"ios"` theme and `"round"` for all other themes.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
          */
