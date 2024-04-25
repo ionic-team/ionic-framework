@@ -5,6 +5,7 @@
 
 :host {
   display: flex;
+  position: relative;
 
   align-items: center;
 
@@ -17,6 +18,23 @@
   font-size: 22px;
 
   text-align: center;
+}
+
+/**
+ * Renders an invisible element on top of the column that receives focus
+ * events. This allows screen readers to navigate the column.
+ */
+.assistive-focusable {
+  @include position(0, 0, 0, 0);
+  position: absolute;
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+// Hide the focus ring since screen readers will show their own
+.assistive-focusable:focus {
+  outline: none;
 }
 
 .picker-opts {
