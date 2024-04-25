@@ -397,8 +397,17 @@ ion-input input::-webkit-date-and-time-value {
 /**
  * When moving focus on page transitions we call .focus() on an element which can
  * add an undesired outline ring. This CSS removes the outline ring.
+ * We also remove the outline ring from elements that are actively being focused
+ * by the focus manager. We are intentionally selective about which elements this
+ * applies to so we do not accidentally override outlines set by the developer.
  */
-[ion-last-focus] {
+[ion-last-focus],
+header[tabindex="-1"]:focus,
+[role="banner"][tabindex="-1"]:focus,
+main[tabindex="-1"]:focus,
+[role="main"][tabindex="-1"]:focus,
+h1[tabindex="-1"]:focus,
+[role="heading"][aria-level="1"][tabindex="-1"]:focus {
   outline: none;
 }
 

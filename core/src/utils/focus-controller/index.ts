@@ -68,6 +68,9 @@ export const createFocusController = (): FocusController => {
          *
          * We intentionally query for specific roles/semantic elements so that the
          * transition manager can work with both Ionic and non-Ionic UI components.
+         *
+         * If new selectors are added, be sure to remove the outline ring by adding
+         * new selectors to rule in core.scss.
          */
         switch (priority) {
           case 'content':
