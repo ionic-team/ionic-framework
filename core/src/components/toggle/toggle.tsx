@@ -107,8 +107,9 @@ export class Toggle implements ComponentInterface {
   @Prop() alignment: 'start' | 'center' = 'center';
 
   /**
-   * Emitted when the user switches the toggle on or off. Does not emit
-   * when programmatically changing the value of the `checked` property.
+   * Emitted when the user switches the toggle on or off.
+   *
+   * This event will not emit when programmatically setting the `checked` property.
    */
   @Event() ionChange!: EventEmitter<ToggleChangeEventDetail>;
 

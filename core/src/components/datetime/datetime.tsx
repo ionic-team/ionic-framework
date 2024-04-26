@@ -477,6 +477,8 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Emitted when the value (selected date) has changed.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
 

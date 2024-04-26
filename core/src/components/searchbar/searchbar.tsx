@@ -225,6 +225,8 @@ export class Searchbar implements ComponentInterface {
    * by the user. This can happen when the element loses focus or
    * when the "Enter" key is pressed. `ionChange` can also fire
    * when clicking the clear or cancel buttons.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<SearchbarChangeEventDetail>;
 
