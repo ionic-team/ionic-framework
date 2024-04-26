@@ -59,10 +59,9 @@ export class AccordionGroup implements ComponentInterface {
   @Prop() expand: 'compact' | 'inset' = 'compact';
 
   /**
-   * Emitted when the value property has changed
-   * as a result of a user action such as a click.
-   * This event will not emit when programmatically setting
-   * the value property.
+   * Emitted when the value property has changed as a result of a user action such as a click.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<AccordionGroupChangeEventDetail>;
 
