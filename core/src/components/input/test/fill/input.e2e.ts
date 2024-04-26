@@ -111,7 +111,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline`));
       });
-
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
           `
