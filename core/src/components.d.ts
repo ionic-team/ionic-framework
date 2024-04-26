@@ -7386,7 +7386,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted when the value property has changed and any ragging pointer has been released from `ion-segment`.  This event will not emit when programmatically setting the `value` property.
+          * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**

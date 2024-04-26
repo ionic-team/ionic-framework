@@ -94,7 +94,7 @@ export class Segment implements ComponentInterface {
   @Prop() selectOnFocus = false;
 
   /**
-   * Emitted when the value property has changed and any ragging pointer has been released from `ion-segment`.
+   * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
    *
    * This event will not emit when programmatically setting the `value` property.
    */
