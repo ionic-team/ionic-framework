@@ -320,6 +320,9 @@ export class Content implements ComponentInterface {
   @Method()
   async scrollToBottom(duration = 0): Promise<void> {
     const scrollEl = await this.getScrollElement();
+    if (!scrollEl) {
+      return;
+    }
     const y = scrollEl!.scrollHeight - scrollEl!.clientHeight;
     return this.scrollToPoint(undefined, y, duration);
   }
