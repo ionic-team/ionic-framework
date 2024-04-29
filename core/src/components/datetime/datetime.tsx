@@ -2587,7 +2587,6 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Get the icon to use for the show month and year icon.
-   * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
@@ -2602,7 +2601,6 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Get the icon to use for the hide month and year icon.
-   * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
