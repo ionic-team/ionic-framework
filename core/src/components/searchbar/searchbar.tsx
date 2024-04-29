@@ -608,24 +608,6 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * Get the icon to use for the cancel icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the cancel icon.
-   */
-  get searchbarCancelIcon(): string {
-    const icon = this.cancelButtonIcon;
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
-    }
-
-    return config.get('searchbarCancelIcon', arrowBackSharp);
-  }
-
-  /**
    * Get the icon to use for the clear icon.
    * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
@@ -668,10 +650,11 @@ export class Searchbar implements ComponentInterface {
   }
 
   render() {
-    const { cancelButtonText, autocapitalize, searchbarCancelIcon, searchbarClearIcon, searchbarSearchIcon } = this;
+    const { cancelButtonText, autocapitalize, searchbarClearIcon, searchbarSearchIcon } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const theme = getIonTheme(this);
     const shouldShowCancelButton = this.shouldShowCancelButton();
+    const searchbarCancelIcon = this.cancelButtonIcon ?? config.get('searchbarCancelIcon', arrowBackSharp);
 
     const cancelButton = this.showCancelButton !== 'never' && (
       <button

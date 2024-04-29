@@ -242,24 +242,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return controls[0];
   }
 
-  /**
-   * Get the icon to use for the detail icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the detail icon.
-   */
-  get itemDetailIcon(): string {
-    const icon = this.detailIcon;
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
-    }
-
-    return config.get('itemDetailIcon', chevronForward);
-  }
-
   render() {
     const {
       detail,
@@ -274,13 +256,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerDirection,
       inheritedAriaAttributes,
       multipleInputs,
-      itemDetailIcon,
     } = this;
     const childStyles = {} as StyleEventDetail;
     const theme = getIonTheme(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    const itemDetailIcon = this.detailIcon ?? config.get('itemDetailIcon', chevronForward);
 
     const attrs =
       TagType === 'button'

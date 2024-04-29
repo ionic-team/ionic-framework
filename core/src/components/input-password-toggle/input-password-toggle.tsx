@@ -106,50 +106,14 @@ export class InputPasswordToggle implements ComponentInterface {
     inputElRef.type = inputElRef.type === 'text' ? 'password' : 'text';
   };
 
-  /**
-   * Get the icon to use for the show icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the show icon.
-   */
-  get inputPasswordShowIcon(): string {
-    const icon = this.showIcon;
-
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
-    }
-
-    return config.get('inputPasswordShowIcon', eye);
-  }
-
-  /**
-   * Get the icon to use for the hide icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the hide icon.
-   */
-  get inputPasswordHideIcon(): string {
-    const icon = this.hideIcon;
-
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
-    }
-
-    return config.get('inputPasswordHideIcon', eyeOff);
-  }
-
   render() {
-    const { color, type, inputPasswordShowIcon, inputPasswordHideIcon } = this;
+    const { color, type } = this;
 
     const mode = getIonMode(this);
 
     const isPasswordVisible = type === 'text';
+    const inputPasswordShowIcon = this.showIcon ?? config.get('inputPasswordShowIcon', eye);
+    const inputPasswordHideIcon = this.hideIcon ?? config.get('inputPasswordHideIcon', eyeOff);
 
     return (
       <Host

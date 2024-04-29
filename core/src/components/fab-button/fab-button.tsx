@@ -153,27 +153,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
-  /**
-   * Get the icon to use for the close icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the close icon.
-   */
-  get fabButtonCloseIcon(): string {
-    const icon = this.closeIcon;
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
-    }
-
-    return config.get('fabButtonCloseIcon', close);
-  }
-
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes, fabButtonCloseIcon } =
-      this;
+    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
     const inList = hostContext('ion-fab-list', el);
     const theme = getIonTheme(this);
     const TagType = href === undefined ? 'button' : ('a' as any);
@@ -186,6 +167,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
             rel: this.rel,
             target: this.target,
           };
+    const fabButtonCloseIcon = this.closeIcon ?? config.get('fabButtonCloseIcon', close);
 
     return (
       <Host

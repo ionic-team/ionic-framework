@@ -193,7 +193,8 @@ export class Accordion implements ComponentInterface {
       return;
     }
 
-    const { toggleIconSlot, accordionToggleIcon } = this;
+    const { toggleIconSlot } = this;
+    const accordionToggleIcon = this.toggleIcon ?? config.get('accordionToggleIcon', chevronDown);
 
     /**
      * Check if there already is a toggle icon.
@@ -400,24 +401,6 @@ export class Accordion implements ComponentInterface {
       const expand = state === AccordionState.Collapsed || state === AccordionState.Collapsing;
       accordionGroupEl.requestAccordionToggle(value, expand);
     }
-  }
-
-  /**
-   * Get the icon to use for the toggle icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the toggle icon.
-   */
-  get accordionToggleIcon(): string {
-    const icon = this.toggleIcon;
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
-    }
-
-    return config.get('accordionToggleIcon', chevronDown);
   }
 
   render() {
