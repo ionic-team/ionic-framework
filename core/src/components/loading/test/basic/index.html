@@ -100,7 +100,8 @@
         <button
           id="basic-loading"
           expand="block"
-          onclick="openLoading({ message: 'Hellooo', duration: 2000, htmlAttributes: { 'data-testid': 'basic-loading' } })">
+          onclick="openLoading({ message: 'Hellooo', duration: 2000, htmlAttributes: { 'data-testid': 'basic-loading' } })"
+        >
           Show Loading
         </button>
         <button id="default" expand="block" onclick="openLoading({duration: 2000, content: 'Please wait...'})">
@@ -109,25 +110,29 @@
         <button
           id="long-content-loading"
           expand="block"
-          onclick="openLoading({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">
+          onclick="openLoading({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})"
+        >
           Show Loading with long message
         </button>
         <button
           id="no-spinner-loading"
           expand="block"
-          onclick="openLoading({duration: 2000, message: 'Please wait...', spinner: null})">
+          onclick="openLoading({duration: 2000, message: 'Please wait...', spinner: null})"
+        >
           Show Loading with no spinner
         </button>
         <button
           id="translucent-loading"
           expand="block"
-          onclick="openLoading({duration: 5000, message: 'Please wait...', translucent: true})">
+          onclick="openLoading({duration: 5000, message: 'Please wait...', translucent: true})"
+        >
           Show Loading with translucent
         </button>
         <button
           id="custom-class-loading"
           expand="block"
-          onclick="openLoading({duration: 5000,message: 'Please wait...', spinner: 'lines-sharp', cssClass: 'custom-class custom-loading'})">
+          onclick="openLoading({duration: 5000,message: 'Please wait...', spinner: 'lines-sharp', cssClass: 'custom-class custom-loading'})"
+        >
           Show Loading with cssClass
         </button>
         <button id="backdrop-loading" expand="block" onclick="openLoading({backdropDismiss: true})">
@@ -136,7 +141,8 @@
         <button
           id="html-content-loading"
           expand="block"
-          onclick="openLoading({cssClass: 'html-loading', duration: 5000, message: '<button>Click impatiently to load faster</button>'})">
+          onclick="openLoading({cssClass: 'html-loading', duration: 5000, message: '<button>Click impatiently to load faster</button>'})"
+        >
           Show Loading with HTML content
         </button>
 

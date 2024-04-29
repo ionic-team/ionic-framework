@@ -38,35 +38,39 @@
         <button
           id="basic-popover"
           expand="block"
-          onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })">
-
+          onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })"
+        >
           Show Popover
         </button>
         <button
           id="translucent-popover"
           expand="block"
-          onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">
+          onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })"
+        >
           Show Translucent Popover
         </button>
         <button
           id="long-list-popover"
           expand="block"
           color="secondary"
-          onclick="presentPopover({ component: 'list-page', event: event })">
+          onclick="presentPopover({ component: 'list-page', event: event })"
+        >
           Show Long List Popover
         </button>
         <button
           id="no-event-popover"
           expand="block"
           color="danger"
-          onclick="presentPopover({ component: 'profile-page' })">
+          onclick="presentPopover({ component: 'profile-page' })"
+        >
           No Event Popover
         </button>
         <button
           id="custom-class-popover"
           expand="block"
           color="tertiary"
-          onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">
+          onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })"
+        >
           Custom Class Popover
         </button>
         <button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })">
@@ -75,13 +79,15 @@
         <button
           id="translucent-header-popover"
           expand="block"
-          onclick="presentPopover({ component: 'translucent-header-page' })">
+          onclick="presentPopover({ component: 'translucent-header-page' })"
+        >
           Popover With Translucent Header
         </button>
         <button
           id="popover-with-textarea"
           expand="block"
-          onclick="presentPopover({ component: 'textarea-page', event: event, htmlAttributes: { 'data-testid': 'popover-with-textarea'} })">
+          onclick="presentPopover({ component: 'textarea-page', event: event, htmlAttributes: { 'data-testid': 'popover-with-textarea'} })"
+        >
           Popover With Textarea
         </button>
       </ion-content>

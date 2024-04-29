@@ -102,22 +102,26 @@
           <button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</button>
           <button
             id="custom-breakpoint-modal"
-            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })">
+            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })"
+          >
             Present Sheet Modal (Custom Breakpoints)
           </button>
           <button
             id="custom-breakpoint-modal"
-            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })">
+            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })"
+          >
             Present Sheet Modal (Max breakpoint is not 1)
           </button>
           <button
             id="custom-backdrop-modal"
-            onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })">
+            onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })"
+          >
             Present Sheet Modal (Custom Backdrop Breakpoint)
           </button>
           <button
             id="custom-backdrop-off-center-modal"
-            onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">
+            onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
+          >
             Present Sheet Modal (Backdrop breakpoint is off-center)
           </button>
           <button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })">
@@ -125,7 +129,8 @@
           </button>
           <button
             id="handle-behavior-cycle-modal"
-            onclick="presentModal({ handleBehavior: 'cycle', initialBreakpoint: 0.25, breakpoints: [0, 0.25, 0.5, 0.75, 1] })">
+            onclick="presentModal({ handleBehavior: 'cycle', initialBreakpoint: 0.25, breakpoints: [0, 0.25, 0.5, 0.75, 1] })"
+          >
             Present Sheet Modal (HandleBehavior: Cycle)
           </button>
           <button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })">
@@ -136,12 +141,14 @@
           </button>
           <button
             id="backdrop-active"
-            onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })">
+            onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })"
+          >
             Backdrop is active
           </button>
           <button
             id="backdrop-inactive"
-            onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">
+            onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
+          >
             Backdrop is inactive
           </button>
 
