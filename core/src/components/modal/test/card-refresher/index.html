@@ -13,11 +13,20 @@
     <link href="../../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../../dist/ionic/ionic.esm.js"></script>
-    <script type="module">
-      import { modalController } from '../../../../../dist/ionic/index.esm.js';
-      window.modalController = modalController;
-    </script>
+
     <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       #content {
         position: relative;
 
@@ -31,6 +40,10 @@
       }
     </style>
   </head>
+  <script type="module">
+    import { modalController } from '../../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
 
   <body>
     <ion-app>
@@ -42,9 +55,9 @@
         </ion-header>
 
         <ion-content class="ion-padding">
-          <ion-button expand="block" id="card" onclick="presentModal(document.querySelectorAll('.ion-page')[1])"
-            >Card Modal</ion-button
-          >
+          <button expand="block" id="card" onclick="presentModal(document.querySelectorAll('.ion-page')[1])">
+            Card Modal
+          </button>
         </ion-content>
       </div>
     </ion-app>
@@ -56,12 +69,7 @@
         element.innerHTML = `
       <ion-header id="modal-header">
         <ion-toolbar>
-          <ion-title>Contacts</ion-title>
-          <ion-buttons slot="end">
-            <ion-button class="add">
-              <ion-icon name="add" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-buttons>
+          <ion-title>Modal</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
@@ -69,7 +77,8 @@
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
         Hello World!
-        <ion-button class="dismiss">Dismiss Modal</ion-button>
+        <button id="add">Add Modal</button>
+        <button id="dismiss">Dismiss Modal</button>
       </ion-content>
 
       <ion-footer>
@@ -80,12 +89,12 @@
       `;
 
         // listen for close event
-        const button = element.querySelector('ion-button.dismiss');
+        const button = element.querySelector('#dismiss');
         button.addEventListener('click', () => {
           modalController.dismiss();
         });
 
-        const create = element.querySelector('ion-button.add');
+        const create = element.querySelector('#add');
         create.addEventListener('click', async () => {
           const topModal = await modalController.getTop();
 

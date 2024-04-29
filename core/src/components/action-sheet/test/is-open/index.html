@@ -12,6 +12,18 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
+      button {
+        display: block;
+        clear: both;
+        width: 100%;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       .grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -47,11 +59,11 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Default</h2>
-            <ion-button id="default" onclick="openActionSheet()">Open ActionSheet</ion-button>
+            <button id="default" onclick="openActionSheet()">Open ActionSheet</button>
           </div>
           <div class="grid-item">
             <h2>Open, then close after 500ms</h2>
-            <ion-button id="timeout" onclick="openActionSheet(500)">Open ActionSheet</ion-button>
+            <button id="timeout" onclick="openActionSheet(500)">Open ActionSheet</button>
           </div>
         </div>
 

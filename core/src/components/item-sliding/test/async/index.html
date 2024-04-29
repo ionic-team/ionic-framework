@@ -14,6 +14,18 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       .hidden {
         display: none;
       }
@@ -29,7 +41,7 @@
       </ion-header>
 
       <ion-content>
-        <ion-button id="toggle-button" onclick="toggle()">Make async changes</ion-button>
+        <button id="toggle-button" onclick="toggle()">Make async changes</button>
         <ion-list>
           <ion-item-sliding id="async-item">
             <ion-item-options side="end">

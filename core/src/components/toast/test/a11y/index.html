@@ -8,17 +8,32 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script type="module">
-      import { toastController } from '../../../../dist/ionic/index.esm.js';
-      window.toastController = toastController;
-    </script>
+
+    <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
+  <script type="module">
+    import { toastController } from '../../../../dist/ionic/index.esm.js';
+    window.toastController = toastController;
+  </script>
+
   <body>
     <ion-app>
       <main>
         <h1 style="background-color: white">Toast - a11y</h1>
 
-        <ion-button id="inline-toast-trigger">Present Inline Toast</ion-button>
+        <button id="inline-toast-trigger">Present Inline Toast</button>
         <ion-toast
           id="inline-toast"
           trigger="inline-toast-trigger"
@@ -27,14 +42,14 @@
           message="Inline Toast Message"
         ></ion-toast>
 
-        <ion-button
+        <button
           id="controller-toast-trigger"
           onclick="presentToast({ icon: 'person', header: 'Controller Toast Header', message: 'Controller Toast Message', buttons: ['Ok'] })"
         >
           Present Controller Toast
-        </ion-button>
+        </button>
 
-        <ion-button id="aria-label-toast-trigger">Present Aria Label Toast</ion-button>
+        <button id="aria-label-toast-trigger">Present Aria Label Toast</button>
         <ion-toast
           id="aria-label-toast"
           trigger="aria-label-toast-trigger"
@@ -42,7 +57,7 @@
           message="Aria Label Toast Message"
         ></ion-toast>
 
-        <ion-button onclick="updateContent()">Update Inner Content</ion-button>
+        <button onclick="updateContent()">Update Inner Content</button>
       </main>
     </ion-app>
     <script>

@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body onload="loadFirstPage()">
@@ -46,7 +60,7 @@
         <ion-content class="ion-padding">
           <h1>Page One</h1>
           <ion-nav-link router-direction="forward" component="page-two">
-            <ion-button class="next">Go to Page Two</ion-button>
+            <button class="next">Go to Page Two</button>
           </ion-nav-link>
         </ion-content>
       `;
@@ -65,10 +79,10 @@
         <ion-content class="ion-padding">
           <h1>Page Two</h1>
           <ion-nav-link router-direction="forward" component="page-three">
-            <ion-button class="next">Go to Page Three</ion-button>
+            <button class="next">Go to Page Three</button>
           </ion-nav-link>
           <ion-nav-link router-direction="back">
-            <ion-button class="back">Go Back</ion-button>
+            <button class="back">Go Back</button>
           </ion-nav-link>
         </ion-content>
       `;
@@ -87,7 +101,7 @@
         <ion-content class="ion-padding">
           <h1>Page Three</h1>
           <ion-nav-link router-direction="back">
-            <ion-button class="back">Go Back</ion-button>
+            <button class="back">Go Back</button>
           </ion-nav-link>
         </ion-content>
       `;

@@ -17,6 +17,18 @@
     <meta name="apple-mobile-web-app-title" content="Ionic App" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       .custom-height {
         --height: 50%;
       }
@@ -87,57 +99,51 @@
         <ion-content class="ion-padding">
           <input id="root-input" />
 
-          <ion-button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
-          <ion-button
+          <button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</button>
+          <button
             id="custom-breakpoint-modal"
-            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })"
-            >Present Sheet Modal (Custom Breakpoints)</ion-button
-          >
-          <ion-button
+            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })">
+            Present Sheet Modal (Custom Breakpoints)
+          </button>
+          <button
             id="custom-breakpoint-modal"
-            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })"
-            >Present Sheet Modal (Max breakpoint is not 1)</ion-button
-          >
-          <ion-button
+            onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })">
+            Present Sheet Modal (Max breakpoint is not 1)
+          </button>
+          <button
             id="custom-backdrop-modal"
-            onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })"
-            >Present Sheet Modal (Custom Backdrop Breakpoint)</ion-button
-          >
-          <ion-button
+            onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })">
+            Present Sheet Modal (Custom Backdrop Breakpoint)
+          </button>
+          <button
             id="custom-backdrop-off-center-modal"
-            onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
-          >
-            Present Sheet Modal (Backdrop breakpoint is off-center)</ion-button
-          >
-          <ion-button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })"
-            >Present Sheet Modal (Custom Height)</ion-button
-          >
-
-          <ion-button
+            onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">
+            Present Sheet Modal (Backdrop breakpoint is off-center)
+          </button>
+          <button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })">
+            Present Sheet Modal (Custom Height)
+          </button>
+          <button
             id="handle-behavior-cycle-modal"
-            onclick="presentModal({ handleBehavior: 'cycle', initialBreakpoint: 0.25, breakpoints: [0, 0.25, 0.5, 0.75, 1] })"
-          >
-            Present Sheet Modal (HandleBehavior: Cycle)</ion-button
-          >
-
-          <ion-button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })"
-            >Present Sheet Modal (Custom Handle)</ion-button
-          >
-          <ion-button id="no-handle-modal" onclick="presentModal({ handle: false })"
-            >Present Sheet Modal (No Handle)
-          </ion-button>
-          <ion-button
+            onclick="presentModal({ handleBehavior: 'cycle', initialBreakpoint: 0.25, breakpoints: [0, 0.25, 0.5, 0.75, 1] })">
+            Present Sheet Modal (HandleBehavior: Cycle)
+          </button>
+          <button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })">
+            Present Sheet Modal (Custom Handle)
+          </button>
+          <button id="no-handle-modal" onclick="presentModal({ handle: false })">
+            Present Sheet Modal (No Handle)
+          </button>
+          <button
             id="backdrop-active"
-            onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })"
-          >
-            Backdrop is active</ion-button
-          >
-          <ion-button
+            onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })">
+            Backdrop is active
+          </button>
+          <button
             id="backdrop-inactive"
-            onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
-          >
-            Backdrop is inactive</ion-button
-          >
+            onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })">
+            Backdrop is inactive
+          </button>
 
           <div class="grid">
             <div class="grid-item red"></div>

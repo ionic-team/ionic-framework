@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -30,16 +44,16 @@
           <ion-content id="content-part">
             <f style="height: 50%"></f>
             <p>
-              <ion-button onclick="toggleDisplay('header')" color="secondary">Toggle header</ion-button>
-              <ion-button onclick="toggleDisplay('footer')" color="secondary">Toggle footer</ion-button>
-              <ion-button onclick="toggleDisplay('toolbar2')" color="secondary">Toggle 2nd toolbar</ion-button>
+              <button onclick="toggleDisplay('header')" color="secondary">Toggle header</button>
+              <button onclick="toggleDisplay('footer')" color="secondary">Toggle footer</button>
+              <button onclick="toggleDisplay('toolbar2')" color="secondary">Toggle 2nd toolbar</button>
             </p>
             <p>
-              <ion-button onclick="toggleDisplay('content2')" color="danger">Toggle bottom content</ion-button>
-              <ion-button onclick="toggleDisplay('content3')" color="danger">Toggle right content</ion-button>
+              <button onclick="toggleDisplay('content2')" color="danger">Toggle bottom content</button>
+              <button onclick="toggleDisplay('content3')" color="danger">Toggle right content</button>
             </p>
             <p>
-              <ion-button onclick="myanimation()" color="dark">Animate</ion-button>
+              <button onclick="myanimation()" color="dark">Animate</button>
             </p>
             <f></f>
             <f></f>

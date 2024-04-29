@@ -12,13 +12,22 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
       .grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-row-gap: 20px;
         grid-column-gap: 20px;
-
-        padding: 200px;
       }
       .grid-item {
         margin: 0 auto;
@@ -46,14 +55,14 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Event</h2>
-            <ion-button id="event-trigger">Trigger</ion-button>
+            <button id="event-trigger">Trigger</button>
             <ion-popover reference="event" class="event-popover" trigger="event-trigger" alignment="start">
               <ion-content class="ion-padding"> Popover Content </ion-content>
             </ion-popover>
           </div>
           <div class="grid-item">
             <h2>Trigger</h2>
-            <ion-button id="trigger-trigger">Trigger</ion-button>
+            <button id="trigger-trigger">Trigger</button>
             <ion-popover reference="trigger" class="trigger-popover" trigger="trigger-trigger" alignment="start">
               <ion-content class="ion-padding"> Popover Content </ion-content>
             </ion-popover>

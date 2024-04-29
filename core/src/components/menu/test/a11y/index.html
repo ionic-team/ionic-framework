@@ -9,18 +9,32 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script type="module">
-      import { menuController } from '../../../../dist/ionic/index.esm.js';
-      window.menuController = menuController;
-    </script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
+  <script type="module">
+    import { menuController } from '../../../../dist/ionic/index.esm.js';
+    window.menuController = menuController;
+  </script>
 
   <body>
     <main>
       <div class="ion-page" id="main-content">
         <ion-content class="ion-padding">
           <h1>Menu</h1>
-          <ion-button id="open-menu" expand="block" onclick="openMenu()">Open Menu</ion-button>
+          <button id="open-menu" expand="block" onclick="openMenu()">Open Menu</button>
         </ion-content>
       </div>
 

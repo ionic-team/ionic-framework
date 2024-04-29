@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        clear: both;
+        width: 100%;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
   <script type="module">
     import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
@@ -27,24 +41,16 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
-        <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()"
-          >Alert from Action Sheet</ion-button
-        >
-        <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
-        <ion-button expand="block" id="custom" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
-        <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
-        <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()"
-          >No Backdrop Dismiss</ion-button
-        >
-        <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
-        <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()"
-          >Scroll Without Cancel</ion-button
-        >
-        <ion-button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')"
-          >Custom Backdrop Opacity</ion-button
-        >
-        <ion-button expand="block" id="buttonData" onclick="presentWithButtonData()">Button data</ion-button>
+        <button expand="block" id="basic" onclick="presentBasic()">Basic</button>
+        <button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</button>
+        <button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</button>
+        <button expand="block" id="custom" onclick="presentWithCssClass()">Custom CSS Class</button>
+        <button expand="block" id="icons" onclick="presentIcons()">Icons</button>
+        <button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</button>
+        <button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</button>
+        <button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</button>
+        <button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')">Custom Backdrop Opacity</button>
+        <button expand="block" id="buttonData" onclick="presentWithButtonData()">Button data</button>
       </ion-content>
     </ion-app>
 

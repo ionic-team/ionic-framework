@@ -21,6 +21,18 @@
         --ion-safe-area-left: 20px;
       }
 
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       .grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(250px, 1fr));
@@ -53,11 +65,11 @@
           <div class="grid">
             <div class="grid-item">
               <h2>Outside "ion-content"</h2>
-              <ion-button id="basic-modal">Present modal</ion-button>
+              <button id="basic-modal">Present modal</button>
               <ion-modal trigger="basic-modal">
                 <h1>Content of doom</h1>
                 <div>Here's some more content</div>
-                <ion-button class="dismiss">Dismiss Modal</ion-button>
+                <button class="dismiss">Dismiss Modal</button>
               </ion-modal>
             </div>
           </div>

@@ -11,6 +11,20 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
   <body>
     <ion-app>
@@ -41,7 +55,7 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <ion-button onclick="openMenu()" id="open-menu-button">Open Menu</ion-button>
+          <button onclick="openMenu()" id="open-menu-button">Open Menu</button>
         </ion-content>
       </div>
     </ion-app>

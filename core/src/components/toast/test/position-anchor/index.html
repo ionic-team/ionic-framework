@@ -13,9 +13,21 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <style>
-      html {
+      :root {
         --ion-safe-area-top: 30px;
         --ion-safe-area-bottom: 30px;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
       }
     </style>
   </head>
@@ -29,11 +41,11 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-button id="headerAnchor">Anchor to Header</ion-button>
-        <ion-button id="footerAnchor">Anchor to Footer</ion-button>
-        <ion-button id="middleAnchor">Anchor to Header (Middle Position)</ion-button>
-        <ion-button id="headerElAnchor">Anchor to Header (Element Ref)</ion-button>
-        <ion-button id="hiddenElAnchor">Anchor to Hidden Element</ion-button>
+        <button id="headerAnchor">Anchor to Header</button>
+        <button id="footerAnchor">Anchor to Footer</button>
+        <button id="middleAnchor">Anchor to Header (Middle Position)</button>
+        <button id="headerElAnchor">Anchor to Header (Element Ref)</button>
+        <button id="hiddenElAnchor">Anchor to Hidden Element</button>
 
         <ion-toast
           id="headerToast"

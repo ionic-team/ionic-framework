@@ -12,6 +12,24 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
+      .outer-content {
+        --background: #f2f2f2;
+      }
+    </style>
   </head>
 
   <body>
@@ -47,7 +65,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-button type="submit">Submit</ion-button>
+                <button type="submit">Submit</button>
               </ion-item>
             </ion-radio-group>
           </ion-list>
@@ -64,11 +82,6 @@
         </p>
       </ion-content>
 
-      <style>
-        .outer-content {
-          --background: #f2f2f2;
-        }
-      </style>
       <script>
         var changes = 0;
 

@@ -14,12 +14,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script type="module">
-      import { modalController, createAnimation } from '../../../../dist/ionic/index.esm.js';
-      window.modalController = modalController;
-      window.createAnimation = createAnimation;
-    </script>
+
     <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       #modal-header {
         padding-top: 5px !important;
         height: 55px;
@@ -43,6 +51,11 @@
       }
     </style>
   </head>
+  <script type="module">
+    import { modalController, createAnimation } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+    window.createAnimation = createAnimation;
+  </script>
 
   <body>
     <ion-app>
@@ -467,7 +480,7 @@
         <ion-toolbar>
           <ion-title>Contacts</ion-title>
           <ion-buttons slot="end">
-            <ion-button class="add">
+            <ion-button id="add">
               <ion-icon name="add" slot="icon-only"></ion-icon>
             </ion-button>
           </ion-buttons>
@@ -492,17 +505,17 @@
             })
             .join('')}
         </ion-list>
-        <ion-button class="dismiss">Dismiss Modal</ion-button>
+        <button id="dismiss">Dismiss Modal</button>
       </ion-content>
       `;
 
         // listen for close event
-        const button = element.querySelector('ion-button.dismiss');
+        const button = element.querySelector('#dismiss');
         button.addEventListener('click', () => {
           modalController.dismiss();
         });
 
-        const create = element.querySelector('ion-button.add');
+        const create = element.querySelector('#add');
         create.addEventListener('click', async () => {
           const topModal = await modalController.getTop();
 

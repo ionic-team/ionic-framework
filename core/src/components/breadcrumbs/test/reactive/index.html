@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -30,8 +44,8 @@
           <ion-breadcrumb href="#"> Photos </ion-breadcrumb>
         </ion-breadcrumbs>
 
-        <ion-button id="add-btn" onclick="addItem()">Add Item</ion-button>
-        <ion-button id="remove-btn" onclick="removeItem()">Remove Item</ion-button>
+        <button id="add-btn" onclick="addItem()">Add Item</button>
+        <button id="remove-btn" onclick="removeItem()">Remove Item</button>
       </ion-content>
     </ion-app>
 

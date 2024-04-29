@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -28,7 +42,7 @@
           </ion-infinite-scroll-content>
         </ion-infinite-scroll>
 
-        <ion-button onclick="toggleInfiniteScroll()" expand="block"> Toggle InfiniteScroll </ion-button>
+        <button onclick="toggleInfiniteScroll()" expand="block">Toggle InfiniteScroll</button>
 
         <ion-list id="list"></ion-list>
       </ion-content>

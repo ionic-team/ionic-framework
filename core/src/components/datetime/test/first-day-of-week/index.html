@@ -9,6 +9,18 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       .grid {
         display: grid;
         grid-template-columns: repeat(1, minmax(250px, 1fr));
@@ -49,7 +61,7 @@
           <div class="grid-item">
             <h2>Default</h2>
             <ion-datetime first-day-of-week="1" value="2022-05-03"></ion-datetime>
-            <ion-button onclick="increase()">Increase firstDayOfWeek</ion-button>
+            <button onclick="increase()">Increase firstDayOfWeek</button>
             <div>
               <span>FirstDayOfWeek: <span id="start-of-week">1</span></span>
             </div>

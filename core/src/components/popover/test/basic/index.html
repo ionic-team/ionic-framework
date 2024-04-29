@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
   <script type="module">
     import { popoverController } from '../../../../dist/ionic/index.esm.js';
@@ -21,56 +35,55 @@
   <body>
     <ion-app>
       <ion-content class="ion-padding" id="content">
-        <ion-button
+        <button
           id="basic-popover"
           expand="block"
-          onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })"
-        >
-          Show Popover</ion-button
-        >
-        <ion-button
+          onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })">
+
+          Show Popover
+        </button>
+        <button
           id="translucent-popover"
           expand="block"
-          onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })"
-          >Show Translucent Popover</ion-button
-        >
-        <ion-button
+          onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">
+          Show Translucent Popover
+        </button>
+        <button
           id="long-list-popover"
           expand="block"
           color="secondary"
-          onclick="presentPopover({ component: 'list-page', event: event })"
-          >Show Long List Popover</ion-button
-        >
-        <ion-button
+          onclick="presentPopover({ component: 'list-page', event: event })">
+          Show Long List Popover
+        </button>
+        <button
           id="no-event-popover"
           expand="block"
           color="danger"
-          onclick="presentPopover({ component: 'profile-page' })"
-          >No Event Popover</ion-button
-        >
-        <ion-button
+          onclick="presentPopover({ component: 'profile-page' })">
+          No Event Popover
+        </button>
+        <button
           id="custom-class-popover"
           expand="block"
           color="tertiary"
-          onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })"
-          >Custom Class Popover</ion-button
-        >
-        <ion-button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })"
-          >Popover With Header</ion-button
-        >
-        <ion-button
+          onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">
+          Custom Class Popover
+        </button>
+        <button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })">
+          Popover With Header
+        </button>
+        <button
           id="translucent-header-popover"
           expand="block"
-          onclick="presentPopover({ component: 'translucent-header-page' })"
-          >Popover With Translucent Header</ion-button
-        >
-        <ion-button
+          onclick="presentPopover({ component: 'translucent-header-page' })">
+          Popover With Translucent Header
+        </button>
+        <button
           id="popover-with-textarea"
           expand="block"
-          onclick="presentPopover({ component: 'textarea-page', event: event, htmlAttributes: { 'data-testid': 'popover-with-textarea'} })"
-        >
-          Popover With Textarea</ion-button
-        >
+          onclick="presentPopover({ component: 'textarea-page', event: event, htmlAttributes: { 'data-testid': 'popover-with-textarea'} })">
+          Popover With Textarea
+        </button>
       </ion-content>
 
       <style>

@@ -14,6 +14,17 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
   <style>
+    button {
+      display: inline-block;
+      width: auto;
+      clear: both;
+      padding: 12px 8px;
+      font-size: 1em;
+      background: #f8f8f8;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
     @media (min-width: 768px) {
       .grid {
         display: grid;
@@ -47,7 +58,7 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Dismiss On Select - Click</h2>
-            <ion-button id="click-trigger">Click to Open</ion-button>
+            <button id="click-trigger">Click to Open</button>
             <ion-popover
               class="click-trigger-popover"
               trigger="click-trigger"
@@ -87,7 +98,7 @@
           </div>
           <div class="grid-item">
             <h2>Dismiss On Select - Hover</h2>
-            <ion-button id="hover-trigger">Click to Open</ion-button>
+            <button id="hover-trigger">Click to Open</button>
             <ion-popover
               class="hover-trigger-popover"
               trigger="hover-trigger"

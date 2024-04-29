@@ -12,23 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  </head>
-  <script type="module">
-    import { pickerController } from '../../../../dist/ionic/index.esm.js';
-    window.pickerController = pickerController;
-  </script>
-
-  <body>
-    <ion-app>
-      <ion-content class="ion-padding">
-        <ion-button id="basic" expand="block" onclick="presentPicker()">Show Picker</ion-button>
-        <ion-button id="custom" expand="block" onclick="presentPicker('my-custom-class')"
-          >Show Custom Picker</ion-button
-        >
-      </ion-content>
-    </ion-app>
 
     <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       .my-custom-class {
         --width: 200px;
         --height: 50%;
@@ -42,6 +39,21 @@
         color: #d6d6d6;
       }
     </style>
+  </head>
+  <script type="module">
+    import { pickerController } from '../../../../dist/ionic/index.esm.js';
+    window.pickerController = pickerController;
+  </script>
+
+  <body>
+    <ion-app>
+      <ion-content class="ion-padding">
+        <button id="basic" expand="block" onclick="presentPicker()">Show Picker</button>
+        <button id="custom" expand="block" onclick="presentPicker('my-custom-class')">
+          Show Custom Picker
+        </button>
+      </ion-content>
+    </ion-app>
 
     <script>
       selectedIndex = 0;

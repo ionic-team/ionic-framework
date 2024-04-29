@@ -12,6 +12,21 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: flex;
+        gap: 4px;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -119,10 +134,10 @@
         </ion-list>
 
         <p>
-          <ion-button onclick="updateIcon()">
+          <button onclick="updateIcon()">
             <ion-icon slot="start" id="dynamicBtnIcon"></ion-icon>
             Update icon
-          </ion-button>
+          </button>
         </p>
       </ion-content>
 
@@ -143,7 +158,7 @@
       dynamicHomeIcon.name = 'home';
       dynamicHomeIcon.isActive = false;
 
-      icons = ['home', 'star', 'ios-alert', 'ios-alert-outline', 'md-alert', 'logo-apple'];
+      icons = ['home', 'star', 'alert-circle', 'alert-circle-outline', 'alert-circle-sharp', 'logo-apple'];
 
       var iconIndex = 0;
 

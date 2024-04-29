@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -102,23 +116,16 @@
           mode="ios"
           animated="false"
           show-cancel-button="focus"
-          placeholder="<ion-button>Hello</ion-button>"
+          placeholder="<button>Hello</button>"
         >
         </ion-searchbar>
 
         <h5 class="ion-padding-start ion-padding-top">Search - Name</h5>
         <ion-searchbar name="search"> </ion-searchbar>
 
-        <div class="ion-padding-horizontal">
-          <ion-button expand="block" onClick="toggleProp()">Toggle Property</ion-button>
-        </div>
-        <div class="ion-padding">
-          <ion-button expand="block" color="secondary" onClick="toggleAttr()">Toggle Attribute</ion-button>
-        </div>
-
-        <div class="ion-padding-horizontal">
-          <ion-button expand="block" color="secondary" onClick="toggleDisabled()">Toggle disabled</ion-button>
-        </div>
+        <button expand="block" onClick="toggleProp()">Toggle Property</button>
+        <button expand="block" color="secondary" onClick="toggleAttr()">Toggle Attribute</button>
+        <button expand="block" color="secondary" onClick="toggleDisabled()">Toggle Disabled</button>
 
         <script>
           function toggleAttr() {

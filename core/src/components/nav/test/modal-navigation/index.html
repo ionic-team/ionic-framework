@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -21,14 +35,14 @@
           <ion-title>Modal Navigation</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
-        <ion-button id="openModal">Open Modal</ion-button>
+      <ion-content class="ion-padding">
+        <button id="openModal">Open Modal</button>
         <ion-modal trigger="openModal">
           <ion-header>
             <ion-toolbar>
               <ion-title>Modal</ion-title>
               <ion-buttons slot="end">
-                <ion-button onclick="dismiss()"> Close </ion-button>
+                <ion-button onclick="dismiss()">Close</ion-button>
               </ion-buttons>
             </ion-toolbar>
           </ion-header>
@@ -66,7 +80,7 @@
           this.innerHTML = `
           <ion-content class="ion-padding">
             <h1>Page One</h1>
-            <ion-button id="goto-page-two" onclick="navigate('page-two')">Go to Page Two</ion-button>
+            <button id="goto-page-two" onclick="navigate('page-two')">Go to Page Two</button>
           </ion-content>
         `;
         }
@@ -77,7 +91,7 @@
           this.innerHTML = `
           <ion-content class="ion-padding">
             <h1>Page Two</h1>
-            <ion-button id="goto-page-three" onclick="navigate('page-three')">Go to Page Three</ion-button>
+            <button id="goto-page-three" onclick="navigate('page-three')">Go to Page Three</button>
           </ion-content>
         `;
         }
@@ -88,8 +102,8 @@
           this.innerHTML = `
           <ion-content class="ion-padding">
             <h1>Page Three</h1>
-            <ion-button id="go-back" onclick="navigateBack()">Go Back</ion-button>
-            <ion-button id="goto-root"onclick="navigateToRoot()">Go to Root</ion-button>
+            <button id="go-back" onclick="navigateBack()">Go Back</button>
+            <button id="goto-root"onclick="navigateToRoot()">Go to Root</button>
           </ion-content>
         `;
         }

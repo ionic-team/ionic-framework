@@ -12,11 +12,39 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script type="module">
-      import { menuController } from '../../../../dist/ionic/index.esm.js';
-      window.menuController = menuController;
-    </script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
+      .my-custom-menu {
+        --width: 500px;
+      }
+
+      .menu-part::part(backdrop) {
+        background-color: rgba(255, 0, 255, 0.5);
+      }
+
+      .menu-part::part(container) {
+        border-radius: 0 20px 20px 0;
+
+        box-shadow: 4px 0px 16px rgba(255, 0, 255, 0.18);
+      }
+    </style>
   </head>
+  <script type="module">
+    import { menuController } from '../../../../dist/ionic/index.esm.js';
+    window.menuController = menuController;
+  </script>
 
   <body>
     <ion-app>
@@ -101,28 +129,12 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <ion-button expand="block" id="open-start" onclick="openStart()">Open Start Menu</ion-button>
-          <ion-button expand="block" id="open-end" onclick="openEnd()">Open End Menu</ion-button>
-          <ion-button expand="block" id="open-custom" onclick="openCustom()">Open Custom Menu</ion-button>
+          <button expand="block" id="open-start" onclick="openStart()">Open Start Menu</button>
+          <button expand="block" id="open-end" onclick="openEnd()">Open End Menu</button>
+          <button expand="block" id="open-custom" onclick="openCustom()">Open Custom Menu</button>
         </ion-content>
       </div>
     </ion-app>
-
-    <style>
-      .my-custom-menu {
-        --width: 500px;
-      }
-
-      .menu-part::part(backdrop) {
-        background-color: rgba(255, 0, 255, 0.5);
-      }
-
-      .menu-part::part(container) {
-        border-radius: 0 20px 20px 0;
-
-        box-shadow: 4px 0px 16px rgba(255, 0, 255, 0.18);
-      }
-    </style>
 
     <script>
       async function openStart() {

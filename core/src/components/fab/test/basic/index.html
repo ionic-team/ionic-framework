@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -26,7 +40,7 @@
         <f></f>
         <f></f>
 
-        <ion-button>Test</ion-button>
+        <button>Test</button>
         <ion-fab-button disabled href="#path" onclick="throw 'no clickable'">FAB</ion-fab-button>
 
         <ion-fab vertical="top" horizontal="end" edge id="fab1" slot="fixed">

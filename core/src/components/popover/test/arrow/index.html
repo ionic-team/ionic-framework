@@ -13,6 +13,17 @@
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
+      button {
+        display: inline-block;
+        width: auto;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
       ion-app > ion-content {
         --background: #dddddd;
       }
@@ -56,21 +67,21 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Top</h2>
-            <ion-button id="top-trigger">Click to Open</ion-button>
+            <button id="top-trigger">Click to Open</button>
             <ion-popover show-backdrop="false" class="top-popover" trigger="top-trigger" side="top" size="cover">
               <ion-content class="ion-padding"> Hello World </ion-content>
             </ion-popover>
           </div>
           <div class="grid-item">
             <h2>Right</h2>
-            <ion-button id="right-trigger">Click to Open</ion-button>
+            <button id="right-trigger">Click to Open</button>
             <ion-popover show-backdrop="false" class="right-popover" trigger="right-trigger" side="right" size="cover">
               <ion-content class="ion-padding"> Hello World </ion-content>
             </ion-popover>
           </div>
           <div class="grid-item">
             <h2>Bottom</h2>
-            <ion-button id="bottom-trigger">Click to Open</ion-button>
+            <button id="bottom-trigger">Click to Open</button>
             <ion-popover
               show-backdrop="false"
               class="bottom-popover"
@@ -83,21 +94,21 @@
           </div>
           <div class="grid-item">
             <h2>Left</h2>
-            <ion-button id="left-trigger">Click to Open</ion-button>
+            <button id="left-trigger">Click to Open</button>
             <ion-popover show-backdrop="false" class="left-popover" trigger="left-trigger" side="left" size="cover">
               <ion-content class="ion-padding"> Hello World </ion-content>
             </ion-popover>
           </div>
           <div class="grid-item">
             <h2>Start</h2>
-            <ion-button id="start-trigger">Click to Open</ion-button>
+            <button id="start-trigger">Click to Open</button>
             <ion-popover show-backdrop="false" class="start-popover" trigger="start-trigger" side="start" size="cover">
               <ion-content class="ion-padding"> Hello World </ion-content>
             </ion-popover>
           </div>
           <div class="grid-item">
             <h2>End</h2>
-            <ion-button id="end-trigger">Click to Open</ion-button>
+            <button id="end-trigger">Click to Open</button>
             <ion-popover show-backdrop="false" class="end-popover" trigger="end-trigger" side="end" size="cover">
               <ion-content class="ion-padding"> Hello World </ion-content>
             </ion-popover>

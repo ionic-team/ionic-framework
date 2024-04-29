@@ -13,6 +13,18 @@
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       ion-modal {
         --width: fit-content;
         --min-width: 250px;
@@ -52,7 +64,7 @@
         </ion-header>
 
         <ion-content class="ion-padding">
-          <ion-button id="custom-modal">Open Custom Dialog</ion-button>
+          <button id="custom-modal">Open Custom Dialog</button>
           <ion-modal trigger="custom-modal">
             <div class="wrapper">
               <h1>Dialog header</h1>

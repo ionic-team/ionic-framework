@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
   <script type="module">
     import { modalController } from '../../../../dist/ionic/index.esm.js';
@@ -27,7 +41,7 @@
 
       <ion-content class="ion-padding">
         <p>
-          <ion-button class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
+          <button class="e2ePresentModal" onclick="presentModal()">Present modal</button>
         </p>
       </ion-content>
     </ion-app>
@@ -52,11 +66,11 @@
           <ion-content>
             <h1>Content of doom</h1>
             <div>Here's some more content</div>
-            <ion-button class="dismiss">Dismiss Modal</ion-button>
+            <button class="dismiss">Dismiss Modal</button>
           </ion-content>`;
 
           // listen for close event
-          const button = this.querySelector('ion-button');
+          const button = this.querySelector('button');
           button.addEventListener('click', async () => {
             await modalController.dismiss();
           });

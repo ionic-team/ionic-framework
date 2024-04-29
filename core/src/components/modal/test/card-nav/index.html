@@ -13,9 +13,46 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  </head>
 
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
   <body>
+
+    <ion-app>
+      <div class="ion-page">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Card</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <button id="open-modal">Open Modal</button>
+
+          <ion-modal trigger="open-modal" component="app-nav"></ion-modal>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      const modal = document.querySelector('ion-modal');
+      const nav = document.querySelector('ion-nav');
+      modal.canDismiss = true;
+      modal.presentingElement = document.querySelector('.ion-page');
+    </script>
+
     <script>
       class AppNav extends HTMLElement {
         connectedCallback() {
@@ -37,7 +74,7 @@
           <ion-content class="ion-padding">
             <h1>Page One</h1>
             <ion-nav-link router-direction="forward" component="page-two">
-              <ion-button id="go-page-two">Go to Page Two</ion-button>
+              <button id="go-page-two">Go to Page Two</button>
             </ion-nav-link>
           </ion-content>
         `;
@@ -61,28 +98,6 @@
       customElements.define('page-one', PageOne);
       customElements.define('page-two', PageTwo);
       customElements.define('app-nav', AppNav);
-    </script>
-    <ion-app>
-      <div class="ion-page">
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Card</ion-title>
-          </ion-toolbar>
-        </ion-header>
-
-        <ion-content class="ion-padding">
-          <ion-button id="open-modal">Open Modal</ion-button>
-
-          <ion-modal trigger="open-modal" component="app-nav"></ion-modal>
-        </ion-content>
-      </div>
-    </ion-app>
-
-    <script>
-      const modal = document.querySelector('ion-modal');
-      const nav = document.querySelector('ion-nav');
-      modal.canDismiss = true;
-      modal.presentingElement = document.querySelector('.ion-page');
     </script>
   </body>
 </html>

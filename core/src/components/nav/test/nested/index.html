@@ -12,6 +12,27 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-nav root="page-one"></ion-nav>
+    </ion-app>
+
     <script>
       class PageOne extends HTMLElement {
         connectedCallback() {
@@ -24,7 +45,7 @@
           <ion-content class="ion-padding">
             <h1>Page 1</h1>
             <ion-nav-link router-direction="forward" component="page-two">
-              <ion-button class="next">Go to Page 2</ion-button>
+              <button class="next">Go to Page 2</button>
             </ion-nav-link>
           </ion-content>
         `;
@@ -54,7 +75,7 @@
             <h1>Page 2.1</h1>
             <div>
               <ion-nav-link router-direction="forward" component="page-two-two">
-                <ion-button class="next">Go to Page 2.2</ion-button>
+                <button class="next">Go to Page 2.2</button>
               </ion-nav-link>
             </div>
           </ion-content>
@@ -77,7 +98,7 @@
             <h1>Page 2.2</h1>
             <div>
               <ion-nav-link router-direction="forward" component="page-three">
-                <ion-button class="next">Go to Page 3</ion-button>
+                <button class="next">Go to Page 3</button>
               </ion-nav-link>
             </div>
           </ion-content>
@@ -109,11 +130,5 @@
       customElements.define('page-two-two', PageTwoTwo);
       customElements.define('page-three', PageThree);
     </script>
-  </head>
-
-  <body>
-    <ion-app>
-      <ion-nav root="page-one"></ion-nav>
-    </ion-app>
   </body>
 </html>

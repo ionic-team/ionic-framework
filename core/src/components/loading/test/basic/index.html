@@ -12,107 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  </head>
-  <script type="module">
-    import { loadingController } from '../../../../../dist/ionic/index.esm.js';
-    window.loadingController = loadingController;
-  </script>
-  <body>
-    <ion-app>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Loading - Basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <ion-content class="ion-padding">
-        <ion-button
-          id="basic-loading"
-          expand="block"
-          onclick="openLoading({ message: 'Hellooo', duration: 2000, htmlAttributes: { 'data-testid': 'basic-loading' } })"
-          >Show Loading</ion-button
-        >
-        <ion-button id="default" expand="block" onclick="openLoading({duration: 2000, content: 'Please wait...'})"
-          >Show Default Loading</ion-button
-        >
-        <ion-button
-          id="long-content-loading"
-          expand="block"
-          onclick="openLoading({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})"
-          >Show Loading with long message</ion-button
-        >
-        <ion-button
-          id="no-spinner-loading"
-          expand="block"
-          onclick="openLoading({duration: 2000, message: 'Please wait...', spinner: null})"
-          >Show Loading with no spinner</ion-button
-        >
-        <ion-button
-          id="translucent-loading"
-          expand="block"
-          onclick="openLoading({duration: 5000, message: 'Please wait...', translucent: true})"
-          >Show Loading with translucent</ion-button
-        >
-        <ion-button
-          id="custom-class-loading"
-          expand="block"
-          onclick="openLoading({duration: 5000,message: 'Please wait...', spinner: 'lines-sharp', cssClass: 'custom-class custom-loading'})"
-          >Show Loading with cssClass</ion-button
-        >
-        <ion-button id="backdrop-loading" expand="block" onclick="openLoading({backdropDismiss: true})"
-          >Show Backdrop Click Loading</ion-button
-        >
-        <ion-button
-          id="html-content-loading"
-          expand="block"
-          onclick="openLoading({cssClass: 'html-loading', duration: 5000, message: '<ion-button>Click impatiently to load faster</ion-button>'})"
-          >Show Loading with HTML content</ion-button
-        >
-
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6">
-              <f class="red"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="green"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="blue"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="yellow"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="pink"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="purple"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="black"></f>
-            </ion-col>
-            <ion-col size="6">
-              <f class="orange"></f>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-content>
-    </ion-app>
-    <script>
-      window.Ionic = {
-        config: {
-          innerHTMLTemplatesEnabled: true,
-        },
-      };
-
-      async function openLoading(opts) {
-        const loading = await loadingController.create(opts);
-        await loading.present();
-      }
-    </script>
 
     <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       .html-loading {
         --max-width: auto;
       }
@@ -170,5 +83,104 @@
         background-color: #f69234;
       }
     </style>
+  </head>
+  <script type="module">
+    import { loadingController } from '../../../../../dist/ionic/index.esm.js';
+    window.loadingController = loadingController;
+  </script>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Loading - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <button
+          id="basic-loading"
+          expand="block"
+          onclick="openLoading({ message: 'Hellooo', duration: 2000, htmlAttributes: { 'data-testid': 'basic-loading' } })">
+          Show Loading
+        </button>
+        <button id="default" expand="block" onclick="openLoading({duration: 2000, content: 'Please wait...'})">
+          Show Default Loading
+        </button>
+        <button
+          id="long-content-loading"
+          expand="block"
+          onclick="openLoading({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">
+          Show Loading with long message
+        </button>
+        <button
+          id="no-spinner-loading"
+          expand="block"
+          onclick="openLoading({duration: 2000, message: 'Please wait...', spinner: null})">
+          Show Loading with no spinner
+        </button>
+        <button
+          id="translucent-loading"
+          expand="block"
+          onclick="openLoading({duration: 5000, message: 'Please wait...', translucent: true})">
+          Show Loading with translucent
+        </button>
+        <button
+          id="custom-class-loading"
+          expand="block"
+          onclick="openLoading({duration: 5000,message: 'Please wait...', spinner: 'lines-sharp', cssClass: 'custom-class custom-loading'})">
+          Show Loading with cssClass
+        </button>
+        <button id="backdrop-loading" expand="block" onclick="openLoading({backdropDismiss: true})">
+          Show Backdrop Click Loading
+        </button>
+        <button
+          id="html-content-loading"
+          expand="block"
+          onclick="openLoading({cssClass: 'html-loading', duration: 5000, message: '<button>Click impatiently to load faster</button>'})">
+          Show Loading with HTML content
+        </button>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <f class="red"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="green"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="blue"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="yellow"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="pink"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="purple"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="black"></f>
+            </ion-col>
+            <ion-col size="6">
+              <f class="orange"></f>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ion-app>
+    <script>
+      window.Ionic = {
+        config: {
+          innerHTMLTemplatesEnabled: true,
+        },
+      };
+
+      async function openLoading(opts) {
+        const loading = await loadingController.create(opts);
+        await loading.present();
+      }
+    </script>
   </body>
 </html>

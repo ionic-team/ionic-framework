@@ -12,6 +12,62 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        clear: both;
+        width: 100%;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
+      f {
+        display: block;
+        width: 100%;
+        height: 150px;
+      }
+
+      .red {
+        background-color: #ea445a;
+      }
+
+      .green {
+        background-color: #76d672;
+      }
+
+      .blue {
+        background-color: #3478f6;
+      }
+
+      .yellow {
+        background-color: #ffff80;
+      }
+
+      .pink {
+        background-color: #ff6b86;
+      }
+
+      .purple {
+        background-color: #7e34f6;
+      }
+
+      .black {
+        background-color: #000;
+      }
+
+      .fuchsia {
+        background-color: #cc00ff;
+      }
+
+      .orange {
+        background-color: #f69234;
+      }
+    </style>
   </head>
   <script type="module">
     import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
@@ -26,18 +82,12 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
-        <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()"
-          >No Backdrop Dismiss</ion-button
-        >
-        <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()"
-          >Alert from Action Sheet</ion-button
-        >
-        <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
-        <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()"
-          >Scroll Without Cancel</ion-button
-        >
-        <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
+        <button expand="block" id="basic" onclick="presentBasic()">Basic</button>
+        <button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</button>
+        <button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</button>
+        <button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</button>
+        <button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</button>
+        <button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</button>
 
         <ion-grid>
           <ion-row>
@@ -346,48 +396,6 @@
       }
     </script>
 
-    <style>
-      f {
-        display: block;
-        width: 100%;
-        height: 150px;
-      }
 
-      .red {
-        background-color: #ea445a;
-      }
-
-      .green {
-        background-color: #76d672;
-      }
-
-      .blue {
-        background-color: #3478f6;
-      }
-
-      .yellow {
-        background-color: #ffff80;
-      }
-
-      .pink {
-        background-color: #ff6b86;
-      }
-
-      .purple {
-        background-color: #7e34f6;
-      }
-
-      .black {
-        background-color: #000;
-      }
-
-      .fuchsia {
-        background-color: #cc00ff;
-      }
-
-      .orange {
-        background-color: #f69234;
-      }
-    </style>
   </body>
 </html>

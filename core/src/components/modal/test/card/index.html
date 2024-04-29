@@ -13,11 +13,20 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script type="module">
-      import { modalController } from '../../../../dist/ionic/index.esm.js';
-      window.modalController = modalController;
-    </script>
+
     <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+
       ion-modal#custom {
         --border-radius: 50px !important;
       }
@@ -28,6 +37,10 @@
       }
     </style>
   </head>
+  <script type="module">
+    import { modalController } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
 
   <body>
     <ion-app>
@@ -39,15 +52,15 @@
         </ion-header>
 
         <ion-content class="ion-padding">
-          <ion-button expand="block" id="card" onclick="presentModal(document.querySelectorAll('.ion-page')[1])"
-            >Card Modal</ion-button
-          >
-          <ion-button
+          <button expand="block" id="card" onclick="presentModal(document.querySelectorAll('.ion-page')[1])">
+            Card Modal
+          </button>
+          <button
             expand="block"
             id="card-custom"
-            onclick="presentModal(document.querySelectorAll('.ion-page')[1], { id: 'custom' })"
-            >Card Modal Custom Radius</ion-button
-          >
+            onclick="presentModal(document.querySelectorAll('.ion-page')[1], { id: 'custom' })">
+            Card Modal Custom Radius
+          </button>
         </ion-content>
       </div>
     </ion-app>

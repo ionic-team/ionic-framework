@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -24,12 +38,10 @@
 
       <ion-content>
         <div class="ion-padding">
-          <ion-button expand="block" onclick="closeOpened()">Close Opened Items</ion-button>
-          <ion-button expand="block" id="openItemStart" onclick="openItem('start')">Open Item Start</ion-button>
-          <ion-button expand="block" id="openItemEnd" onclick="openItem('end')">Open Item End</ion-button>
-          <ion-button expand="block" id="openItemOneSide" onclick="openItemOneSide()"
-            >Open Item with only one side</ion-button
-          >
+          <button expand="block" onclick="closeOpened()">Close Opened Items</button>
+          <button expand="block" id="openItemStart" onclick="openItem('start')">Open Item Start</button>
+          <button expand="block" id="openItemEnd" onclick="openItem('end')">Open Item End</button>
+          <button expand="block" id="openItemOneSide" onclick="openItemOneSide()">Open Item with only one side</button>
         </div>
 
         <ion-list id="list">

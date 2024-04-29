@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
   <script type="module">
     import { toastController } from '../../../../dist/ionic/index.esm.js';
@@ -27,17 +41,17 @@
 
       <ion-content class="ion-padding" id="content">
         <!-- New way using array of buttons -->
-        <ion-button id="closeArray" expand="block" onclick="presentCloseArrayToast()"> Close Button Array </ion-button>
+        <button id="closeArray" expand="block" onclick="presentCloseArrayToast()"> Close Button Array </button>
 
-        <ion-button id="twoButtons" expand="block" onclick="presentToastWithTwoButtons()"> Two Buttons </ion-button>
+        <button id="twoButtons" expand="block" onclick="presentToastWithTwoButtons()"> Two Buttons </button>
 
-        <ion-button id="multipleButtons" expand="block" onclick="presentToastWithMultipleButtons()">
+        <button id="multipleButtons" expand="block" onclick="presentToastWithMultipleButtons()">
           Multiple Buttons
-        </ion-button>
+        </button>
 
-        <ion-button id="longButton" expand="block" onclick="presentToastWithLongButton()">
+        <button id="longButton" expand="block" onclick="presentToastWithLongButton()">
           Really Long Button
-        </ion-button>
+        </button>
       </ion-content>
     </ion-app>
 

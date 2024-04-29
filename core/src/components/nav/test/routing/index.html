@@ -12,6 +12,33 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-router>
+        <ion-route url="/" component="page-root"></ion-route>
+        <ion-route url="/page-one" component="page-one"></ion-route>
+        <ion-route url="/page-two" component="page-two"></ion-route>
+        <ion-route url="/page-three" component="page-three"></ion-route>
+      </ion-router>
+      <ion-nav></ion-nav>
+    </ion-app>
+
     <script>
       class PageRoot extends HTMLElement {
         connectedCallback() {
@@ -25,7 +52,7 @@
             <h1>Root</h1>
             <div>
               <ion-nav-link router-direction="forward" component="page-one">
-                <ion-button class="next">Go to Page One</ion-button>
+                <button class="next">Go to Page One</button>
               </ion-nav-link>
             </div>
           </ion-content>
@@ -46,7 +73,7 @@
           <ion-content class="ion-padding">
             <h1>Page One</h1>
             <ion-nav-link router-direction="forward" component="page-two">
-              <ion-button class="next">Go to Page Two</ion-button>
+              <button class="next">Go to Page Two</button>
             </ion-nav-link>
           </ion-content>
         `;
@@ -67,7 +94,7 @@
             <h1>Page Two</h1>
             <div>
               <ion-nav-link router-direction="forward" component="page-three">
-                <ion-button class="next">Go to Page Three</ion-button>
+                <button class="next">Go to Page Three</button>
               </ion-nav-link>
             </div>
           </ion-content>
@@ -96,17 +123,5 @@
       customElements.define('page-two', PageTwo);
       customElements.define('page-three', PageThree);
     </script>
-  </head>
-
-  <body>
-    <ion-app>
-      <ion-router>
-        <ion-route url="/" component="page-root"></ion-route>
-        <ion-route url="/page-one" component="page-one"></ion-route>
-        <ion-route url="/page-two" component="page-two"></ion-route>
-        <ion-route url="/page-three" component="page-three"></ion-route>
-      </ion-router>
-      <ion-nav></ion-nav>
-    </ion-app>
   </body>
 </html>

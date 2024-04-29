@@ -12,6 +12,20 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      button {
+        display: block;
+        width: 100%;
+        clear: both;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body onload="listenForEvent()">
@@ -215,15 +229,9 @@
           <ion-segment id="dynamicButtons"></ion-segment>
         </div>
 
-        <div class="ion-padding-horizontal">
-          <ion-button expand="block" onClick="toggleDisabled()">Toggle Disabled</ion-button>
-        </div>
-        <div class="ion-padding">
-          <ion-button expand="block" color="secondary" onClick="toggleValue()">Toggle Value</ion-button>
-        </div>
-        <div class="ion-padding-horizontal">
-          <ion-button expand="block" color="tertiary" onClick="toggleSwipeGesture()">Toggle Swipe Gesture</ion-button>
-        </div>
+        <button expand="block" onClick="toggleDisabled()">Toggle Disabled</button>
+        <button expand="block" color="secondary" onClick="toggleValue()">Toggle Value</button>
+        <button expand="block" color="tertiary" onClick="toggleSwipeGesture()">Toggle Swipe Gesture</ion-button>
 
         <script>
           var dynamicAttrDisable = document.getElementsByName('dynamicAttrDisable');
