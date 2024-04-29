@@ -928,7 +928,6 @@ export class Select implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the expand icon.
    */
   get selectExpandIcon(): string {
@@ -955,7 +954,6 @@ export class Select implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the collapsed icon.
    */
   get selectCollapsedIcon(): string {

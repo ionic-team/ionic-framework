@@ -252,7 +252,6 @@ export class Toggle implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the checked icon.
    */
   get toggleCheckedIcon(): string {
@@ -268,7 +267,6 @@ export class Toggle implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the unchecked icon.
    */
   get toggleUncheckedIcon(): string {

@@ -2588,7 +2588,6 @@ export class Datetime implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the next icon.
    */
   get datetimeNextIcon(): string {
@@ -2601,7 +2600,6 @@ export class Datetime implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the previous icon.
    */
   get datetimePrevIcon(): string {
@@ -2614,7 +2612,6 @@ export class Datetime implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the show month and year icon.
    */
   get datetimeShowMonthYearIcon(): string {
@@ -2630,7 +2627,6 @@ export class Datetime implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the hide month and year icon.
    */
   get datetimeHideMonthYearIcon(): string {

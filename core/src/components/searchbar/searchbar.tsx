@@ -613,7 +613,6 @@ export class Searchbar implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the cancel icon.
    */
   get searchbarCancelIcon(): string {
@@ -632,7 +631,6 @@ export class Searchbar implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the clear icon.
    */
   get searchbarClearIcon(): string {
@@ -654,7 +652,6 @@ export class Searchbar implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    *
-   * @internal
    * @returns {string} The icon to use for the search icon.
    */
   get searchbarSearchIcon(): string {
