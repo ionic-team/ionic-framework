@@ -2106,7 +2106,10 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(theme: Theme) {
-    const { disabled, datetimeNextIcon, datetimePrevIcon, datetimeShowMonthYearIcon, datetimeHideMonthYearIcon } = this;
+    const { disabled, datetimeShowMonthYearIcon, datetimeHideMonthYearIcon } = this;
+
+    const datetimeNextIcon = config.get('datetimeNextIcon', chevronForward);
+    const datetimePrevIcon = config.get('datetimePrevIcon', chevronBack);
 
     const prevMonthDisabled = disabled || isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
@@ -2580,30 +2583,6 @@ export class Datetime implements ComponentInterface {
           this.renderFooter(),
         ];
     }
-  }
-
-  /**
-   * Get the icon to use for the next icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the next icon.
-   */
-  get datetimeNextIcon(): string {
-    return config.get('datetimeNextIcon', chevronForward);
-  }
-
-  /**
-   * Get the icon to use for the previous icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the previous icon.
-   */
-  get datetimePrevIcon(): string {
-    return config.get('datetimePrevIcon', chevronBack);
   }
 
   /**

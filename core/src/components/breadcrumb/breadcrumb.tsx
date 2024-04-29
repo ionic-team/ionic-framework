@@ -149,30 +149,6 @@ export class Breadcrumb implements ComponentInterface {
     this.collapsedClick.emit({ ionShadowTarget: this.collapsedRef });
   };
 
-  /**
-   * Get the icon to use for the separator icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the separator icon.
-   */
-  get breadcrumbSeparatorIcon(): string {
-    return config.get('breadcrumbSeparatorIcon', chevronForwardOutline);
-  }
-
-  /**
-   * Get the icon to use for the collapsed icon.
-   * If an icon is set on the component, use that.
-   * Otherwise, use the icon set in the config.
-   * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the collapsed icon.
-   */
-  get breadcrumbCollapsedIcon(): string {
-    return config.get('breadcrumbCollapsedIcon', ellipsisHorizontal);
-  }
-
   render() {
     const {
       color,
@@ -188,11 +164,12 @@ export class Breadcrumb implements ComponentInterface {
       separator,
       showCollapsedIndicator,
       target,
-      breadcrumbSeparatorIcon,
-      breadcrumbCollapsedIcon,
     } = this;
     const clickable = this.isClickable();
     const TagType = this.href === undefined ? 'span' : ('a' as any);
+
+    const breadcrumbSeparatorIcon = config.get('breadcrumbSeparatorIcon', chevronForwardOutline);
+    const breadcrumbCollapsedIcon = config.get('breadcrumbCollapsedIcon', ellipsisHorizontal);
 
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
