@@ -7,7 +7,7 @@ import {
   LIFECYCLE_WILL_LEAVE,
 } from '../../components/nav/constants';
 import type { NavOptions, NavDirection } from '../../components/nav/nav-interface';
-import { config } from '../../global/config';
+import { config } from '@global/config';
 import type { Animation, AnimationBuilder } from '../animation/animation-interface';
 import { createFocusController } from '../focus-controller';
 import { raf } from '../helpers';
