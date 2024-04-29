@@ -145,10 +145,31 @@
   opacity: 0.6;
 }
 
+// Input Highlight
+// ----------------------------------------------------------------
+
+.input-highlight {
+  @include position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: tokens.$ionic-border-size-medium;
+
+  transform: scale(0);
+
+  transition: transform 200ms;
+
+  background: var(--border-color);
+}
+
 // Input Focus
 // ----------------------------------------------------------------
 
 :host(.has-focus) {
   --border-color: #{tokens.$ionic-color-primary};
-  --border-width: #{tokens.$ionic-border-size-medium};
+}
+
+:host(.has-focus) .input-highlight {
+  transform: scale(1);
 }

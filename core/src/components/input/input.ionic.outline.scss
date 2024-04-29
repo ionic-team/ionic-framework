@@ -139,3 +139,10 @@
 
   background: var(--background);
 }
+
+// Input Focus
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline.has-focus) {
+  --border-width: #{tokens.$ionic-border-size-medium};
+}

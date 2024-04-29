@@ -736,7 +736,7 @@ export class Input implements ComponentInterface {
     const value = this.getValue();
     const size = this.getSize();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = (theme === 'md' || theme === 'ionic') && fill !== 'outline' && !inItem;
     const labelPlacement = this.getLabelPlacement();
 
     const defaultClearIcon = theme === 'ios' ? closeCircle : closeSharp;
