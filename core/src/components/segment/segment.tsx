@@ -142,14 +142,6 @@ export class Segment implements ComponentInterface {
     this.setCheckedClasses();
 
     /**
-     * If the value changes before watchers
-     * are setup, then the ionSelect watch callback
-     * will not fire. As a result, we manually
-     * fire this event when Select is loaded.
-     */
-    this.ionSelect.emit({ value: this.value });
-
-    /**
      * We need to wait for the buttons to all be rendered
      * before we can scroll.
      */
@@ -495,6 +487,10 @@ export class Segment implements ComponentInterface {
     }
   };
 
+  private onSlottedItemsChange = () => {
+    this.valueChanged(this.value);
+  };
+
   private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
     const buttons = this.getButtons().filter((button) => !button.disabled);
     const currIndex = buttons.findIndex((button) => button === document.activeElement);
@@ -573,7 +569,7 @@ export class Segment implements ComponentInterface {
           'segment-scrollable': this.scrollable,
         })}
       >
-        <slot></slot>
+        <slot onSlotchange={this.onSlottedItemsChange}></slot>
       </Host>
     );
   }
