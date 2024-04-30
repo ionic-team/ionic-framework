@@ -27,7 +27,7 @@
 
       <ion-content class="ion-padding" id="content">
         <button
-          expand="block"
+          class="expand"
           id="show-bottom-toast"
           onclick="openToast({ message: 'Hellooo', position: 'bottom', duration: 2000, htmlAttributes: { 'data-testid': 'basic-toast' } })"
         >
@@ -35,7 +35,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="show-top-toast"
           onclick="openToast({ message: 'Hellooo', position: 'top', duration: 2000 })"
         >
@@ -43,26 +43,26 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="show-middle-toast"
           onclick="openToast({ message: 'Hellooo', position: 'middle', duration: 2000 })"
         >
           Position Middle
         </button>
 
-        <button expand="block" onclick="openToast({header: 'Toast header', message: 'Toast message', duration: 2000})">
+        <button class="expand" onclick="openToast({header: 'Toast header', message: 'Toast message', duration: 2000})">
           Header Toast
         </button>
 
         <button
-          expand="block"
+          class="expand"
           onclick="openToast({header: 'Toast header', message: 'Really long message that should go all of the way to the button', buttons: ['Action'] })"
         >
           Header + Action Toast
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="two-line-toast"
           onclick="openToast({message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in elit varius, maximus sem in, bibendum justo.', buttons: ['Action'] })"
         >
@@ -70,7 +70,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="close-button-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'] })"
         >
@@ -78,19 +78,19 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="custom-close-text-toast"
           onclick="openToast({message: 'click to close', buttons: ['closing time'] })"
         >
           Custom Close Button
         </button>
 
-        <button expand="block" id="custom-action-buttons-toast" onclick="openToastWithButtonOptions()">
+        <button class="expand" id="custom-action-buttons-toast" onclick="openToastWithButtonOptions()">
           Custom Buttons
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="translucent-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true})"
         >
@@ -98,7 +98,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="color-toast"
           onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'danger'})"
         >
@@ -106,7 +106,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="light-color-toast"
           onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'light'})"
         >
@@ -114,7 +114,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="translucent-color-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true, color: 'success'})"
         >
@@ -122,7 +122,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="custom-class-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'my-custom-class'})"
         >
@@ -130,7 +130,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="toast-start-and-end"
           onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'toast-start-and-end'})"
         >
@@ -138,7 +138,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="toast-html"
           onclick="openToast({message: '<button>Button in a Toast!</button>', buttons: ['Close'] })"
         >
@@ -146,7 +146,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="toast-with-icon"
           onclick="openToast({ header: 'Bluetooth', message: 'Device connected.', icon: 'bluetooth', duration: 2000 })"
         >
@@ -154,7 +154,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="toast-with-icon-2"
           onclick="openToast({ message: 'An error has occurred!', icon: 'warning', color: 'danger', duration: 2000 })"
         >
@@ -162,7 +162,7 @@
         </button>
 
         <button
-          expand="block"
+          class="expand"
           id="toast-with-icon-3"
           onclick="openToast({ message: 'Debug me...', icon: 'bug', buttons: ['Close'] })"
         >

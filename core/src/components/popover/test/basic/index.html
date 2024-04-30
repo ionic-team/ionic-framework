@@ -23,21 +23,21 @@
       <ion-content class="ion-padding" id="content">
         <button
           id="basic-popover"
-          expand="block"
+          class="expand"
           onclick="presentPopover({ component: 'profile-page', event: event, htmlAttributes: { 'data-testid': 'basic-popover' } })"
         >
           Show Popover
         </button>
         <button
           id="translucent-popover"
-          expand="block"
+          class="expand"
           onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })"
         >
           Show Translucent Popover
         </button>
         <button
           id="long-list-popover"
-          expand="block"
+          class="expand"
           color="secondary"
           onclick="presentPopover({ component: 'list-page', event: event })"
         >
@@ -45,7 +45,7 @@
         </button>
         <button
           id="no-event-popover"
-          expand="block"
+          class="expand"
           color="danger"
           onclick="presentPopover({ component: 'profile-page' })"
         >
@@ -53,25 +53,25 @@
         </button>
         <button
           id="custom-class-popover"
-          expand="block"
+          class="expand"
           color="tertiary"
           onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })"
         >
           Custom Class Popover
         </button>
-        <button id="header-popover" expand="block" onclick="presentPopover({ component: 'header-page' })">
+        <button id="header-popover" class="block" onclick="presentPopover({ component: 'header-page' })" expand>
           Popover With Header
         </button>
         <button
           id="translucent-header-popover"
-          expand="block"
+          class="expand"
           onclick="presentPopover({ component: 'translucent-header-page' })"
         >
           Popover With Translucent Header
         </button>
         <button
           id="popover-with-textarea"
-          expand="block"
+          class="expand"
           onclick="presentPopover({ component: 'textarea-page', event: event, htmlAttributes: { 'data-testid': 'popover-with-textarea'} })"
         >
           Popover With Textarea

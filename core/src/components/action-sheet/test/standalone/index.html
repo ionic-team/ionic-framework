@@ -18,14 +18,14 @@
     window.actionSheetController = actionSheetController;
   </script>
   <body>
-    <button id="basic" onclick="presentBasic()">Basic</button>
-    <button id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</button>
-    <button id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</button>
-    <button id="scrollableOptions" onclick="presentScroll()">Scrollable Options</button>
-    <button id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</button>
-    <button id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</button>
-    <button id="icons" onclick="presentIcons()">Icons</button>
-    <button id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</button>
+    <button class="expand" id="basic" onclick="presentBasic()">Basic</button>
+    <button class="expand" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</button>
+    <button class="expand" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</button>
+    <button class="expand" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</button>
+    <button class="expand" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</button>
+    <button class="expand" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</button>
+    <button class="expand" id="icons" onclick="presentIcons()">Icons</button>
+    <button class="expand" id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</button>
 
     <script>
       window.addEventListener('ionActionSheetDidDismiss', function (e) {

@@ -18,26 +18,32 @@
     window.loadingController = loadingController;
   </script>
   <body>
-    <button id="basic-loading" onclick="openLoading({ message: 'Hellooo', duration: 5000 })">Show Loading</button>
+    <button class="expand" id="basic-loading" onclick="openLoading({ message: 'Hellooo', duration: 5000 })">
+      Show Loading
+    </button>
     <button
+      class="expand"
       id="long-content-loading"
       onclick="openLoading({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})"
     >
       Show Loading with long content
     </button>
     <button
+      class="expand"
       id="no-spinner-loading"
       onclick="openLoading({duration: 2000, content: 'Loading Please Wait...', spinner: null})"
     >
       Show Loading with no spinner
     </button>
     <button
+      class="expand"
       id="translucent-loading"
       onclick="openLoading({duration: 5000, content: 'Loading Please Wait...', translucent: true})"
     >
       Show Loading with translucent
     </button>
     <button
+      class="expand"
       id="custom-class-loading"
       onclick="openLoading({duration: 5000, content: 'Loading Please Wait...', translucent: true, cssClass: 'custom-class custom-loading'})"
     >
