@@ -12,6 +12,15 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .f {
+        width: 200px;
+        height: 200px;
+        background: blue;
+        margin: 20px auto;
+      }
+    </style>
   </head>
   <script type="module">
     import { alertController } from '../../../../dist/ionic/index.esm.js';
@@ -59,15 +68,6 @@
         </menu>
       </form>
     </dialog>
-
-    <style>
-      .f {
-        width: 200px;
-        height: 200px;
-        background: blue;
-        margin: 20px auto;
-      }
-    </style>
 
     <script>
       async function openAlert(opts) {
