@@ -49,7 +49,8 @@ html.ios.ios {
   font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
 }
 
-button {
+ion-content button,
+main button {
   display: inline-block;
   width: auto;
   clear: both;
@@ -62,7 +63,8 @@ button {
   margin: 8px 0;
 }
 
-button.expand {
+ion-content button.expand,
+main button.expand {
   display: block;
   width: 100%;
 }
