@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
+import type { E2ELocator } from '@utils/test/playwright';
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('focus controller: ionic components'), () => {
@@ -8,7 +9,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
     test('should focus heading', async ({ page }) => {
       const goToPageOneButton = page.locator('page-root ion-button.page-one');
-      const nav = page.locator('ion-nav');
+      const nav = page.locator('ion-nav') as E2ELocator;
       const ionNavDidChange = await (nav as any).spyOnEvent('ionNavDidChange');
 
       // Focus heading on Page One
@@ -21,7 +22,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should focus banner', async ({ page }) => {
       const goToPageThreeButton = page.locator('page-root ion-button.page-three');
-      const nav = page.locator('ion-nav');
+      const nav = page.locator('ion-nav') as E2ELocator;
       const ionNavDidChange = await (nav as any).spyOnEvent('ionNavDidChange');
 
       const pageThreeHeader = page.locator('page-three ion-header');
@@ -33,7 +34,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test('should focus content', async ({ page }) => {
       const goToPageTwoButton = page.locator('page-root ion-button.page-two');
-      const nav = page.locator('ion-nav');
+      const nav = page.locator('ion-nav') as E2ELocator;
       const ionNavDidChange = await (nav as any).spyOnEvent('ionNavDidChange');
       const pageTwoContent = page.locator('page-two ion-content');
 
@@ -47,7 +48,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       test.skip(browserName === 'webkit', 'Desktop Safari does not consider buttons to be focusable');
 
       const goToPageOneButton = page.locator('page-root ion-button.page-one');
-      const nav = page.locator('ion-nav');
+      const nav = page.locator('ion-nav') as E2ELocator;
       const ionNavDidChange = await (nav as any).spyOnEvent('ionNavDidChange');
       const pageOneBackButton = page.locator('page-one ion-back-button');
 
