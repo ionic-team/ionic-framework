@@ -174,6 +174,19 @@ configs().forEach(({ config, title }) => {
 });
 ```
 
+#### `spyOnEvent` with Locators
+
+Locators have been updated with a `spyOnEvent` method which allows you to listen for an event on the element that the locator matches. Note that Playwright does not support changing the type of an existing fixture, so Locators that use `spyOnEvent` need to be manually cast as `E2ELocator`:
+
+```typescript
+import type { E2ELocator } from '@utils/test/playwright';
+
+...
+
+const alert = page.locator('ion-alert') as E2ELocator;
+const ionAlertDidPresent = await alert.spyOnEvent('ionAlertDidPresent');
+```
+
 ### Using `setIonViewport`
 
 `setIonViewport` is only needed when a) you are using `ion-content` and b) you need to take a screenshot of the full page (including content that may overflow offscreen).
