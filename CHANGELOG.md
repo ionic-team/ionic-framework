@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.2...v8.1.0) (2024-05-01)
+
+
+### Features
+
+* add experimental transition focus manager ([#29400](https://github.com/ionic-team/ionic-framework/issues/29400)) ([5b686ef](https://github.com/ionic-team/ionic-framework/commit/5b686efc1025cd4088c89ef29154311a3d7504ba)), closes [#23650](https://github.com/ionic-team/ionic-framework/issues/23650)
+* **content:** add fixedSlotPlacement prop ([#29233](https://github.com/ionic-team/ionic-framework/issues/29233)) ([90a7e70](https://github.com/ionic-team/ionic-framework/commit/90a7e70a1c827835c18fd5f39d53ab17d286b4a7))
+* **datetime:** pass roles to overlay when dismissing ([#29221](https://github.com/ionic-team/ionic-framework/issues/29221)) ([6945adc](https://github.com/ionic-team/ionic-framework/commit/6945adc3cccabf59a2e640462ab4fd09ade59f6f)), closes [#28298](https://github.com/ionic-team/ionic-framework/issues/28298)
+* **input:** add clearInputIcon property ([#29246](https://github.com/ionic-team/ionic-framework/issues/29246)) ([0f5d1c0](https://github.com/ionic-team/ionic-framework/commit/0f5d1c02d20483d47b6907fec696633cc7634554)), closes [#26974](https://github.com/ionic-team/ionic-framework/issues/26974)
+* **modal, popover:** add ability to temporarily disable focus trapping ([#29379](https://github.com/ionic-team/ionic-framework/issues/29379)) ([7c00351](https://github.com/ionic-team/ionic-framework/commit/7c00351680a955130fa10d25d4439d3cc18db805)), closes [#24646](https://github.com/ionic-team/ionic-framework/issues/24646)
+* **picker:** picker column is easier to select with assistive technology ([#29371](https://github.com/ionic-team/ionic-framework/issues/29371)) ([e38e2e4](https://github.com/ionic-team/ionic-framework/commit/e38e2e4d35076fa42241158568fb0ed50094fcbf)), closes [#25221](https://github.com/ionic-team/ionic-framework/issues/25221)
+
+
+
+
+
 ## [8.0.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.1...v8.0.2) (2024-05-01)
 
 
