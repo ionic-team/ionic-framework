@@ -489,8 +489,8 @@ export class Segment implements ComponentInterface {
 
   private onSlottedItemsChange = () => {
     /**
-     * When the slotted segment buttons change we need to 
-     * ensure that the new segment buttons are checked if 
+     * When the slotted segment buttons change we need to
+     * ensure that the new segment buttons are checked if
      * the value matches the segment button value.
      */
     this.valueChanged(this.value);
