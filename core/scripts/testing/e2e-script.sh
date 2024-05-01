@@ -21,52 +21,10 @@ if [ "$updateTruths" = "y" ]; then
   # New line
   echo ""
 
-  # Keep track of whether there are uncommitted changes
-  hasUncommittedChanges=false
-
-  # check if there are any uncommitted changes
-  if [ -n "$(git status --porcelain)" ]; then
-    # There are uncommitted changes
-    hasUncommittedChanges=true
-
-    # Inform the user that there are uncommitted changes
-    echo "There are uncommitted changes in the current branch. Stashing the changes temporarily to avoid conflicts..."
-
-    # New line
-    echo ""
-
-    # Stash the local changes
-    git stash
-  fi
-
-  # Inform the user that the base branch is being updated
-  echo "Updating the base branch..."
-
-  # New line
-  echo ""
-
   # Check if the user provided a base branch
   if [ -z "$baseBranch" ]; then
     # Default base branch is main
     baseBranch="main"
-  fi
-
-  # Update the base branch without checking out the branch
-  git pull origin $baseBranch
-
-  # New line
-  echo ""
-
-  # If there were uncommitted changes then pop the stash
-  if [ "$hasUncommittedChanges" = true ]; then
-    # Inform the user that the local changes are being popped
-    echo "Popping local changes..."
-
-    # New line
-    echo ""
-
-    # Pop the local changes
-    git stash pop
   fi
 fi
 
@@ -147,3 +105,13 @@ read -n 1 viewReport
 if [ "$viewReport" = "y" ]; then
   npx playwright show-report
 fi
+
+# Clean up the local ground truths
+git reset -- src/**/*-linux.png
+git restore -- src/**/*-linux.png
+
+# New line
+echo ""
+
+# Inform the user that the script has finished running
+echo "Script has finished running. Local ground truths have been restored to their original state in order to avoid committing them."
