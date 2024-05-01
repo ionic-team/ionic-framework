@@ -5,46 +5,46 @@
 // --------------------------------------------------
 
 /// @prop - Width of the toggle
-$toggle-ios-width:                     51px !default;
+$toggle-ios-width:                     51px;
 
 /// @prop - Height of the toggle
-$toggle-ios-height:                    31px !default;
+$toggle-ios-height:                    31px;
 
 /// @prop - Border width of the toggle
-$toggle-ios-border-width:              2px !default;
+$toggle-ios-border-width:              2px;
 
 /// @prop - Border radius of the toggle
-$toggle-ios-border-radius:             $toggle-ios-height * 0.5 !default;
+$toggle-ios-border-radius:             $toggle-ios-height * 0.5;
 
 /// @prop - Background color of the unchecked toggle
-$toggle-ios-background-color-off:      rgba($text-color-rgb, .088) !default;
+$toggle-ios-background-color-off:      rgba($text-color-rgb, .088);
 
 /// @prop - Width of the toggle handle
-$toggle-ios-handle-width:              calc(#{$toggle-ios-height} - (#{$toggle-ios-border-width} * 2)) !default;
+$toggle-ios-handle-width:              calc(#{$toggle-ios-height} - (#{$toggle-ios-border-width} * 2));
 
 /// @prop - Height of the toggle handle
-$toggle-ios-handle-height:             $toggle-ios-handle-width !default;
+$toggle-ios-handle-height:             $toggle-ios-handle-width;
 
 /// @prop - Max height of the toggle handle
-$toggle-ios-handle-max-height:         calc(100% - (var(--handle-spacing) * 2)) !default;
+$toggle-ios-handle-max-height:         calc(100% - (var(--handle-spacing) * 2));
 
 /// @prop - Border radius of the toggle handle
-$toggle-ios-handle-border-radius:      $toggle-ios-width * 0.5 !default;
+$toggle-ios-handle-border-radius:      $toggle-ios-width * 0.5;
 
 /// @prop - Box shadow of the toggle handle
-$toggle-ios-handle-box-shadow:         0 3px 4px rgba(0, 0, 0, .06), 0 3px 8px rgba(0, 0, 0, .06) !default;
+$toggle-ios-handle-box-shadow:         0 3px 4px rgba(0, 0, 0, .06), 0 3px 8px rgba(0, 0, 0, .06);
 
 /// @prop - Background color of the toggle handle
-$toggle-ios-handle-background-color:   #ffffff !default;
+$toggle-ios-handle-background-color:   #ffffff;
 
 /// @prop - Transition duration of the toggle icon
-$toggle-ios-transition-duration:       300ms !default;
+$toggle-ios-transition-duration:       300ms;
 
 /// @prop - Transition of the toggle icon
-$toggle-ios-transition:                transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms !default;
+$toggle-ios-transition:                transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;
 
 /// @prop - Opacity of the disabled toggle
-$toggle-ios-disabled-opacity:          .3 !default;
+$toggle-ios-disabled-opacity:          .3;
 
 /// @prop - The text color of the on/off labels when the toggle is checked
-$toggle-ios-on-off-label-checked-color: #fff !default;
+$toggle-ios-on-off-label-checked-color: #fff;

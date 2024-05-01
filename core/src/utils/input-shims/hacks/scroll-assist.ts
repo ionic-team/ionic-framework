@@ -124,7 +124,7 @@ export const enableScrollAssist = (
   const focusOut = () => {
     hasKeyboardBeenPresentedForTextField = false;
     win?.removeEventListener('ionKeyboardDidShow', keyboardShow);
-    componentEl.removeEventListener('focusout', focusOut, true);
+    componentEl.removeEventListener('focusout', focusOut);
   };
 
   /**
@@ -155,15 +155,15 @@ export const enableScrollAssist = (
     );
 
     win?.addEventListener('ionKeyboardDidShow', keyboardShow);
-    componentEl.addEventListener('focusout', focusOut, true);
+    componentEl.addEventListener('focusout', focusOut);
   };
 
-  componentEl.addEventListener('focusin', focusIn, true);
+  componentEl.addEventListener('focusin', focusIn);
 
   return () => {
-    componentEl.removeEventListener('focusin', focusIn, true);
+    componentEl.removeEventListener('focusin', focusIn);
     win?.removeEventListener('ionKeyboardDidShow', keyboardShow);
-    componentEl.removeEventListener('focusout', focusOut, true);
+    componentEl.removeEventListener('focusout', focusOut);
   };
 };
 

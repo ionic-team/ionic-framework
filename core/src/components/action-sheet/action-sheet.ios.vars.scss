@@ -4,145 +4,145 @@
 // --------------------------------------------------
 
 /// @prop - Text align of the action sheet
-$action-sheet-ios-text-align:                                     center !default;
+$action-sheet-ios-text-align:                                     center;
 
 /// @prop - Padding top of the action sheet
-$action-sheet-ios-padding-top:                                    0 !default;
+$action-sheet-ios-padding-top:                                    0;
 
 /// @prop - Padding end of the action sheet
-$action-sheet-ios-padding-end:                                    8px !default;
+$action-sheet-ios-padding-end:                                    8px;
 
 /// @prop - Padding bottom of the action sheet
-$action-sheet-ios-padding-bottom:                                 $action-sheet-ios-padding-top !default;
+$action-sheet-ios-padding-bottom:                                 $action-sheet-ios-padding-top;
 
 /// @prop - Padding start of the action sheet
-$action-sheet-ios-padding-start:                                  $action-sheet-ios-padding-end !default;
+$action-sheet-ios-padding-start:                                  $action-sheet-ios-padding-end;
 
 /// @prop - Top margin of the action sheet button group
-$action-sheet-ios-group-margin-top:                               10px !default;
+$action-sheet-ios-group-margin-top:                               10px;
 
 /// @prop - Bottom margin of the action sheet button group
-$action-sheet-ios-group-margin-bottom:                            10px !default;
+$action-sheet-ios-group-margin-bottom:                            10px;
 
 /// @prop - Background color of the action sheet
-$action-sheet-ios-background-color:                               $overlay-ios-background-color !default;
+$action-sheet-ios-background-color:                               $overlay-ios-background-color;
 
 /// @prop - Border radius of the action sheet
-$action-sheet-ios-border-radius:                                  13px !default;
+$action-sheet-ios-border-radius:                                  13px;
 
 
 // Action Sheet Title
 // --------------------------------------------------
 
 /// @prop - Padding top of the action sheet title
-$action-sheet-ios-title-padding-top:                              14px !default;
+$action-sheet-ios-title-padding-top:                              14px;
 
 /// @prop - Padding end of the action sheet title
-$action-sheet-ios-title-padding-end:                              10px !default;
+$action-sheet-ios-title-padding-end:                              10px;
 
 /// @prop - Padding bottom of the action sheet title
-$action-sheet-ios-title-padding-bottom:                           13px !default;
+$action-sheet-ios-title-padding-bottom:                           13px;
 
 /// @prop - Padding start of the action sheet title
-$action-sheet-ios-title-padding-start:                            $action-sheet-ios-title-padding-end !default;
+$action-sheet-ios-title-padding-start:                            $action-sheet-ios-title-padding-end;
 
 /// @prop - Color of the action sheet title
-$action-sheet-ios-title-color:                                    $text-color-step-600 !default;
+$action-sheet-ios-title-color:                                    $text-color-step-600;
 
 /// @prop - Font size of the action sheet title
-$action-sheet-ios-title-font-size:                                dynamic-font-min(1, 13px) !default;
+$action-sheet-ios-title-font-size:                                dynamic-font-min(1, 13px);
 
 /// @prop - Font weight of the action sheet title
-$action-sheet-ios-title-font-weight:                              400 !default;
+$action-sheet-ios-title-font-weight:                              400;
 
 /// @prop - Font weight of the action sheet title when it has a sub title
-$action-sheet-ios-title-with-sub-title-font-weight:               600 !default;
+$action-sheet-ios-title-with-sub-title-font-weight:               600;
 
 // Action Sheet Subtitle
 // --------------------------------------------------
 
 /// @prop - Font size of the action sheet sub title
-$action-sheet-ios-sub-title-font-size:                            dynamic-font-min(1, 13px) !default;
+$action-sheet-ios-sub-title-font-size:                            dynamic-font-min(1, 13px);
 
 /// @prop - Padding top of the action sheet sub title
-$action-sheet-ios-sub-title-padding-top:                          6px !default;
+$action-sheet-ios-sub-title-padding-top:                          6px;
 
 /// @prop - Padding end of the action sheet sub title
-$action-sheet-ios-sub-title-padding-end:                          0 !default;
+$action-sheet-ios-sub-title-padding-end:                          0;
 
 /// @prop - Padding bottom of the action sheet sub title
-$action-sheet-ios-sub-title-padding-bottom:                       0 !default;
+$action-sheet-ios-sub-title-padding-bottom:                       0;
 
 /// @prop - Padding start of the action sheet sub title
-$action-sheet-ios-sub-title-padding-start:                        $action-sheet-ios-sub-title-padding-end !default;
+$action-sheet-ios-sub-title-padding-start:                        $action-sheet-ios-sub-title-padding-end;
 
 
 // Action Sheet Button
 // --------------------------------------------------
 
 /// @prop - Minimum height of the action sheet button
-$action-sheet-ios-button-height:                                  56px !default;
+$action-sheet-ios-button-height:                                  56px;
 
 /// @prop - Padding of the action sheet button
-$action-sheet-ios-button-padding:                                 14px !default;
+$action-sheet-ios-button-padding:                                 14px;
 
 /// @prop - Text color of the action sheet button
-$action-sheet-ios-button-text-color:                              ion-color(primary, base) !default;
+$action-sheet-ios-button-text-color:                              ion-color(primary, base);
 
 /// @prop - Font size of the action sheet button icon
-$action-sheet-ios-button-icon-font-size:                          dynamic-font-min(1, 28px) !default;
+$action-sheet-ios-button-icon-font-size:                          dynamic-font-min(1, 28px);
 
 /// @prop - Padding right of the action sheet button icon
-$action-sheet-ios-button-icon-padding-right:                      .3em !default;
+$action-sheet-ios-button-icon-padding-right:                      .3em;
 
 /// @prop - Font size of the action sheet button
-$action-sheet-ios-button-font-size:                               dynamic-font-min(1, 20px) !default;
+$action-sheet-ios-button-font-size:                               dynamic-font-min(1, 20px);
 
 /// @prop - Border color alpha of the action sheet button
-$action-sheet-ios-button-border-color-alpha:                      .08 !default;
+$action-sheet-ios-button-border-color-alpha:                      .08;
 
 /// @prop - Border color of the action sheet button
-$action-sheet-ios-button-border-color:                            rgba($text-color-rgb, $action-sheet-ios-button-border-color-alpha) !default;
+$action-sheet-ios-button-border-color:                            rgba($text-color-rgb, $action-sheet-ios-button-border-color-alpha);
 
 /// @prop - Background color of the action sheet button
-$action-sheet-ios-button-background:                              linear-gradient(0deg, $action-sheet-ios-button-border-color, $action-sheet-ios-button-border-color 50%, transparent 50%) bottom / 100% 1px no-repeat transparent !default;
+$action-sheet-ios-button-background:                              linear-gradient(0deg, $action-sheet-ios-button-border-color, $action-sheet-ios-button-border-color 50%, transparent 50%) bottom / 100% 1px no-repeat transparent;
 
 /// @prop - Background color of the activated action sheet button
-$action-sheet-ios-button-background-activated:                    $text-color !default;
+$action-sheet-ios-button-background-activated:                    $text-color;
 
 /// @prop - Background color of the selected action sheet button
-$action-sheet-ios-button-background-selected:                     var(--ion-color-step-150, var(--ion-background-color-step-150, $background-color)) !default;
+$action-sheet-ios-button-background-selected:                     var(--ion-color-step-150, var(--ion-background-color-step-150, $background-color));
 
 /// @prop - Destructive text color of the action sheet button
-$action-sheet-ios-button-destructive-text-color:                  ion-color(danger, base) !default;
+$action-sheet-ios-button-destructive-text-color:                  ion-color(danger, base);
 
 /// @prop - Font weight of the action sheet cancel button
-$action-sheet-ios-button-cancel-font-weight:                      600 !default;
+$action-sheet-ios-button-cancel-font-weight:                      600;
 
 
 // Action Sheet Translucent
 // --------------------------------------------------
 
 /// @prop - Background color alpha of the action sheet when translucent
-$action-sheet-ios-translucent-background-color-alpha:             .8 !default;
+$action-sheet-ios-translucent-background-color-alpha:             .8;
 
 /// @prop - Background color of the action sheet when translucent
-$action-sheet-ios-translucent-background-color:                   rgba($background-color-rgb, $action-sheet-ios-translucent-background-color-alpha) !default;
+$action-sheet-ios-translucent-background-color:                   rgba($background-color-rgb, $action-sheet-ios-translucent-background-color-alpha);
 
 /// @prop - Border color alpha of the action sheet when translucent
-$action-sheet-ios-translucent-border-color-alpha:                 .4 !default;
+$action-sheet-ios-translucent-border-color-alpha:                 .4;
 
 /// @prop - Border color of the action sheet when translucent
-$action-sheet-ios-translucent-border-color:                       rgba($background-color-rgb, $action-sheet-ios-translucent-border-color-alpha) !default;
+$action-sheet-ios-translucent-border-color:                       rgba($background-color-rgb, $action-sheet-ios-translucent-border-color-alpha);
 
 /// @prop - Background color alpha of the activated action sheet when translucent
-$action-sheet-ios-translucent-background-color-activated-alpha:   .7 !default;
+$action-sheet-ios-translucent-background-color-activated-alpha:   .7;
 
 /// @prop - Background color of the activated action sheet when translucent
-$action-sheet-ios-translucent-background-color-activated:         rgba($background-color-rgb, $action-sheet-ios-translucent-background-color-activated-alpha) !default;
+$action-sheet-ios-translucent-background-color-activated:         rgba($background-color-rgb, $action-sheet-ios-translucent-background-color-activated-alpha);
 
 /// @prop - Filter of the translucent action-sheet group
-$action-sheet-ios-group-translucent-filter:                       saturate(280%) blur(20px) !default;
+$action-sheet-ios-group-translucent-filter:                       saturate(280%) blur(20px);
 
 /// @prop - Filter of the translucent action-sheet button
-$action-sheet-ios-button-translucent-filter:                      saturate(120%) !default;
+$action-sheet-ios-button-translucent-filter:                      saturate(120%);

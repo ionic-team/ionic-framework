@@ -75,6 +75,8 @@ export class PickerColumn implements ComponentInterface {
 
   /**
    * Emitted when the value has changed.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<PickerColumnChangeEventDetail>;
 

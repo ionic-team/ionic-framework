@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.1...v8.0.2) (2024-05-01)
+
+
+### Bug Fixes
+
+* **datetime:** navigating months in RTL works correctly ([#29421](https://github.com/ionic-team/ionic-framework/issues/29421)) ([4d09890](https://github.com/ionic-team/ionic-framework/commit/4d09890d69590f0c8c32b387769a6e1e14a03c33)), closes [#29198](https://github.com/ionic-team/ionic-framework/issues/29198)
+* **ios:** large title transition accounts for back button with no text  ([#29327](https://github.com/ionic-team/ionic-framework/issues/29327)) ([bd8d065](https://github.com/ionic-team/ionic-framework/commit/bd8d065e1af038fe24fbe9a6acd9e0f2004bc0b7)), closes [#28751](https://github.com/ionic-team/ionic-framework/issues/28751)
+* **md:** item border has improved contrast in dark mode ([#29398](https://github.com/ionic-team/ionic-framework/issues/29398)) ([fa85f03](https://github.com/ionic-team/ionic-framework/commit/fa85f030cfdb3ef8482ef29faff0144b27c9aa45)), closes [#29386](https://github.com/ionic-team/ionic-framework/issues/29386)
+* **select:** options are visible with fit-content width and fill outline ([#29408](https://github.com/ionic-team/ionic-framework/issues/29408)) ([f15b62a](https://github.com/ionic-team/ionic-framework/commit/f15b62a9ca9a817d2252753d31025d431ac9f8e2)), closes [#29321](https://github.com/ionic-team/ionic-framework/issues/29321)
+
+
+
+
+
+## [8.0.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0...v8.0.1) (2024-04-24)
+
+
+### Bug Fixes
+
+* **input:** clear button can be navigated using screen reader ([#29366](https://github.com/ionic-team/ionic-framework/issues/29366)) ([ee49824](https://github.com/ionic-team/ionic-framework/commit/ee49824a84df7a7b002f41dab7b935fbcdb64946)), closes [#29358](https://github.com/ionic-team/ionic-framework/issues/29358)
+* **input:** debounce is set with binding syntax in angular on load ([#29377](https://github.com/ionic-team/ionic-framework/issues/29377)) ([23321f7](https://github.com/ionic-team/ionic-framework/commit/23321f7ab2a242c3c4193fd6cece3f1c7c0034ef)), closes [#29374](https://github.com/ionic-team/ionic-framework/issues/29374)
+
+
+
+
+
 # [8.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.2...v8.0.0) (2024-04-17)
 
 **Note:** Version bump only for package ionic-framework

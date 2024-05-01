@@ -301,6 +301,8 @@ export class Input implements ComponentInterface {
    * from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.).
    * - When the element loses focus after its value has changed: for elements
    * where the user's interaction is typing.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
 
@@ -789,6 +791,15 @@ export class Input implements ComponentInterface {
                    * button is activated.
                    */
                   ev.preventDefault();
+                }}
+                onFocusin={(ev) => {
+                  /**
+                   * Prevent the focusin event from bubbling otherwise it will cause the focusin
+                   * event listener in scroll assist to fire. When this fires, focus will be moved
+                   * back to the input even if the clear button was never tapped. This poses issues
+                   * for screen readers as it means users would be unable to swipe past the clear button.
+                   */
+                  ev.stopPropagation();
                 }}
                 onClick={this.clearTextInput}
               >
