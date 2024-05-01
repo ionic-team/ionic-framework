@@ -12,3 +12,9 @@ jobs:
         uses:  amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Configure that a scope must always be provided.
+          requireScope: true
+          # Configure additional validation for the subject based on a regex.
+          # This example ensures the subject doesn't start with an uppercase character.
+          subjectPattern: ^(?![A-Z]).+$
