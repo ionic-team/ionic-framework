@@ -160,9 +160,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
   });
 });
 
-/**
- * Shape="rectangular" is only available in the Ionic theme.
- */
+// TODO do we need this test for focused / activated? it should be for all themes if so
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: shape'), () => {
     test.describe('rectangular', () => {
