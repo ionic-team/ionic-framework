@@ -763,6 +763,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'before'`.
+         */
+        "fixedSlotPlacement": 'after' | 'before';
+        /**
           * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
         "forceOverscroll"?: boolean;
@@ -1162,6 +1166,10 @@ export namespace Components {
           * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
          */
         "clearInput": boolean;
+        /**
+          * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+         */
+        "clearInputIcon"?: string;
         /**
           * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
          */
@@ -1716,6 +1724,10 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+         */
+        "focusTrap": boolean;
+        /**
           * Returns the current breakpoint of a sheet style modal
          */
         "getCurrentBreakpoint": () => Promise<number | undefined>;
@@ -2131,6 +2143,10 @@ export namespace Components {
           * The event to pass to the popover animation.
          */
         "event": any;
+        /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+         */
+        "focusTrap": boolean;
         "getParentPopover": () => Promise<HTMLIonPopoverElement | null>;
         "hasController": boolean;
         /**
@@ -5479,6 +5495,10 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'before'`.
+         */
+        "fixedSlotPlacement"?: 'after' | 'before';
+        /**
           * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
         "forceOverscroll"?: boolean;
@@ -5886,6 +5906,10 @@ declare namespace LocalJSX {
           * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
          */
         "clearInput"?: boolean;
+        /**
+          * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+         */
+        "clearInputIcon"?: string;
         /**
           * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
          */
@@ -6442,6 +6466,10 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+         */
+        "focusTrap"?: boolean;
+        /**
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
@@ -6787,6 +6815,10 @@ declare namespace LocalJSX {
           * The event to pass to the popover animation.
          */
         "event"?: any;
+        /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+         */
+        "focusTrap"?: boolean;
         "hasController"?: boolean;
         /**
           * Additional attributes to pass to the popover.

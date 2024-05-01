@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.1.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.2...v8.1.0) (2024-05-01)
+
+
+### Features
+
+* **content:** add fixedSlotPlacement prop ([#29233](https://github.com/ionic-team/ionic-framework/issues/29233)) ([90a7e70](https://github.com/ionic-team/ionic-framework/commit/90a7e70a1c827835c18fd5f39d53ab17d286b4a7))
+* **input:** add clearInputIcon property ([#29246](https://github.com/ionic-team/ionic-framework/issues/29246)) ([0f5d1c0](https://github.com/ionic-team/ionic-framework/commit/0f5d1c02d20483d47b6907fec696633cc7634554)), closes [#26974](https://github.com/ionic-team/ionic-framework/issues/26974)
+* **modal, popover:** add ability to temporarily disable focus trapping ([#29379](https://github.com/ionic-team/ionic-framework/issues/29379)) ([7c00351](https://github.com/ionic-team/ionic-framework/commit/7c00351680a955130fa10d25d4439d3cc18db805)), closes [#24646](https://github.com/ionic-team/ionic-framework/issues/24646)
+
+
+
+
+
 ## [8.0.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.1...v8.0.2) (2024-05-01)
 
 **Note:** Version bump only for package @ionic/vue
