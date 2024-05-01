@@ -16,18 +16,43 @@
       import { popoverController } from '../../../../dist/ionic/index.esm.js';
       window.popoverController = popoverController;
     </script>
+
+    <style>
+      .safe-area-cover {
+        background-color: white;
+        position: absolute;
+
+        top: 5%;
+        bottom: 5%;
+        left: 0;
+        right: 0;
+
+        @media (orientation: landscape) {
+          left: 5%;
+          right: 5%;
+        }
+      }
+    </style>
   </head>
   <body>
     <ion-app>
       <ion-content>
-        <p style="text-align: center">Click everywhere to open the popover.</p>
+        <div style="text-align: center">
+          <p>Click everywhere to open the popover.</p>
+          <ion-checkbox id="safe-area-cb">Show Safe Area Approximation</ion-checkbox>
+        </div>
+
+        <div class="safe-area-cover"></div>
       </ion-content>
     </ion-app>
 
     <script>
       document.querySelector('ion-content').addEventListener('click', handleButtonClick);
+      document.querySelector('#safe-area-cb').addEventListener('ionChange', toggleSafeArea);
 
       async function handleButtonClick(ev) {
+        if (ev.target.tagName === 'ION-CHECKBOX') return;
+
         const popover = await popoverController.create({
           component: 'popover-example-page',
           event: ev,
@@ -35,6 +60,16 @@
         });
 
         popover.present();
+      }
+
+      function toggleSafeArea(ev) {
+        const content = document.querySelector('ion-content');
+
+        if (ev.detail.checked) {
+          content.style.setProperty('--background', 'lightblue');
+        } else {
+          content.style.removeProperty('--background');
+        }
       }
 
       customElements.define(
