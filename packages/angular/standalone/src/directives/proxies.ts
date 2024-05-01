@@ -126,10 +126,9 @@ import type { AccordionGroupChangeEventDetail as IIonAccordionGroupAccordionGrou
 
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {
   /**
-   * Emitted when the value property has changed
-as a result of a user action such as a click.
-This event will not emit when programmatically setting
-the value property.
+   * Emitted when the value property has changed as a result of a user action such as a click.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonAccordionGroupAccordionGroupChangeEventDetail>>;
 }
@@ -1486,6 +1485,8 @@ import type { PickerColumnChangeEventDetail as IIonPickerColumnPickerColumnChang
 export declare interface IonPickerColumn extends Components.IonPickerColumn {
   /**
    * Emitted when the value has changed.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
 }

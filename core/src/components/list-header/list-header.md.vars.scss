@@ -5,13 +5,13 @@
 // --------------------------------------------------
 
 /// @prop - Padding start of the list header
-$list-header-md-padding-start:   $item-md-padding-start !default;
+$list-header-md-padding-start:   $item-md-padding-start;
 
 /// @prop - Minimum height of the list header
-$list-header-md-min-height:      45px !default;
+$list-header-md-min-height:      45px;
 
 /// @prop - Font size of the list header
-$list-header-md-font-size:       dynamic-font(14px) !default;
+$list-header-md-font-size:       dynamic-font(14px);
 
 /// @prop - Text color of the list header
-$list-header-md-color:           $text-color !default;
+$list-header-md-color:           $text-color;

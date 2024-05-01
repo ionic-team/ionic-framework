@@ -4,61 +4,61 @@
 // --------------------------------------------------
 
 /// @prop - Background of the segment button
-$segment-button-ios-background:                       none !default;
+$segment-button-ios-background:                       none;
 
 /// @prop - Background of the checked segment button
-$segment-button-ios-background-checked:               $segment-button-ios-background !default;
+$segment-button-ios-background-checked:               $segment-button-ios-background;
 
 /// @prop - Text color of the segment button
-$segment-button-ios-color:                            $text-color !default;
+$segment-button-ios-color:                            $text-color;
 
 /// @prop - Background of the checked segment button indicator
-$segment-button-ios-indicator-color:                  var(--ion-color-step-350, var(--ion-background-color-step-350, $background-color)) !default;
+$segment-button-ios-indicator-color:                  var(--ion-color-step-350, var(--ion-background-color-step-350, $background-color));
 
 /// @prop - Margin of the segment button
-$segment-button-ios-margin:                           2px !default;
+$segment-button-ios-margin:                           2px;
 
 /// @prop - Opacity of the segment button on hover
-$segment-button-ios-opacity-hover:                    .5 !default;
+$segment-button-ios-opacity-hover:                    .5;
 
 /// @prop - Opacity of the segment button when focused
-$segment-button-ios-opacity-focused:                  .7 !default;
+$segment-button-ios-opacity-focused:                  .7;
 
 /// @prop - Opacity of the disabled segment button
-$segment-button-ios-opacity-disabled:                 .3 !default;
+$segment-button-ios-opacity-disabled:                 .3;
 
 /// @prop - Background of the segment button on hover
-$segment-button-ios-background-hover:                 none !default;
+$segment-button-ios-background-hover:                 none;
 
 /// @prop - Box shadow of the checked segment button
-$segment-button-ios-box-shadow-checked:               0 0 5px rgba(0, 0, 0, 0.16) !default;
+$segment-button-ios-box-shadow-checked:               0 0 5px rgba(0, 0, 0, 0.16);
 
 /// @prop - Border width of the segment button
-$segment-button-ios-border-width:                     1px !default;
+$segment-button-ios-border-width:                     1px;
 
 /// @prop - Border color of the segment button
-$segment-button-ios-border-color:                     rgba($text-color-rgb, 0.12) !default;
+$segment-button-ios-border-color:                     rgba($text-color-rgb, 0.12);
 
 /// @prop - Minimum width of the segment button
-$segment-button-ios-min-width:                        70px !default;
+$segment-button-ios-min-width:                        70px;
 
 /// @prop - Minimum height of the segment button
-$segment-button-ios-min-height:                       28px !default;
+$segment-button-ios-min-height:                       28px;
 
 /// @prop - Line height of the segment button
-$segment-button-ios-line-height:                      37px !default;
+$segment-button-ios-line-height:                      37px;
 
 /// @prop - Font size of the segment button
-$segment-button-ios-font-size:                        13px !default;
+$segment-button-ios-font-size:                        13px;
 
 /// @prop - Border radius of the segment button
-$segment-button-ios-border-radius:                    7px !default;
+$segment-button-ios-border-radius:                    7px;
 
 /// @prop - Size of an icon in the segment button
-$segment-button-ios-icon-size:                        24px !default;
+$segment-button-ios-icon-size:                        24px;
 
 /// @prop - Transition of the segment button
-$segment-button-ios-transition:                       100ms all linear !default;
+$segment-button-ios-transition:                       100ms all linear;
 
 /// @prop - Transition of the animated segment button
-$segment-button-ios-transition-animated:              transform 260ms cubic-bezier(0.4, 0, 0.2, 1) !default;
+$segment-button-ios-transition-animated:              transform 260ms cubic-bezier(0.4, 0, 0.2, 1);

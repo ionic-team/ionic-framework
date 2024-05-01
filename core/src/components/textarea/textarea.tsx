@@ -263,6 +263,8 @@ export class Textarea implements ComponentInterface {
    * The `ionChange` event is fired when the user modifies the textarea's value.
    * Unlike the `ionInput` event, the `ionChange` event is fired when
    * the element loses focus after its value has been modified.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 

@@ -4,10 +4,10 @@
 // --------------------------------------------------
 
 /// @prop - Minimum width of the split pane's side pane
-$split-pane-ios-side-min-width:     $split-pane-side-min-width !default;
+$split-pane-ios-side-min-width:     $split-pane-side-min-width;
 
 /// @prop - Maximum width of the split pane's side pane
-$split-pane-ios-side-max-width:     $split-pane-side-max-width !default;
+$split-pane-ios-side-max-width:     $split-pane-side-max-width;
 
 /// @prop - Border style of the side pane
-$split-pane-ios-border:             $hairlines-width solid $item-ios-border-color !default;
+$split-pane-ios-border:             $hairlines-width solid $item-ios-border-color;

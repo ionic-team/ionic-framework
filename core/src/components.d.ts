@@ -4786,7 +4786,7 @@ declare namespace LocalJSX {
          */
         "multiple"?: boolean;
         /**
-          * Emitted when the value property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the value property.
+          * Emitted when the value property has changed as a result of a user action such as a click.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonAccordionGroupCustomEvent<AccordionGroupChangeEventDetail>) => void;
         /**
@@ -5361,7 +5361,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
-          * Emitted when the checked property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the checked property.
+          * Emitted when the checked property has changed as a result of a user action such as a click.  This event will not emit when programmatically setting the `checked` property.
          */
         "onIonChange"?: (event: IonCheckboxCustomEvent<CheckboxChangeEventDetail>) => void;
         /**
@@ -5621,7 +5621,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonDatetimeCustomEvent<void>) => void;
         /**
-          * Emitted when the value (selected date) has changed.
+          * Emitted when the value (selected date) has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) => void;
         /**
@@ -5995,7 +5995,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * The `ionChange` event is fired when the user modifies the input's value. Unlike the `ionInput` event, the `ionChange` event is only fired when changes are committed, not as the user types.  Depending on the way the users interacts with the element, the `ionChange` event fires at a different moment: - When the user commits the change explicitly (e.g. by selecting a date from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.). - When the element loses focus after its value has changed: for elements where the user's interaction is typing.
+          * The `ionChange` event is fired when the user modifies the input's value. Unlike the `ionInput` event, the `ionChange` event is only fired when changes are committed, not as the user types.  Depending on the way the users interacts with the element, the `ionChange` event fires at a different moment: - When the user commits the change explicitly (e.g. by selecting a date from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.). - When the element loses focus after its value has changed: for elements where the user's interaction is typing.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
         /**
@@ -6648,7 +6648,7 @@ declare namespace LocalJSX {
          */
         "numericInput"?: boolean;
         /**
-          * Emitted when the value has changed.
+          * Emitted when the value has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnChangeEventDetail>) => void;
         /**
@@ -6993,7 +6993,7 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
-          * Emitted when the value has changed.
+          * Emitted when the value has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
         /**
@@ -7055,7 +7055,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonRangeCustomEvent<void>) => void;
         /**
-          * The `ionChange` event is fired for `<ion-range>` elements when the user modifies the element's value: - When the user releases the knob after dragging; - When the user moves the knob with keyboard arrows  `ionChange` is not fired when the value is changed programmatically.
+          * The `ionChange` event is fired for `<ion-range>` elements when the user modifies the element's value: - When the user releases the knob after dragging; - When the user moves the knob with keyboard arrows  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**
@@ -7356,7 +7356,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the value has been committed by the user. This can happen when the element loses focus or when the "Enter" key is pressed. `ionChange` can also fire when clicking the clear or cancel buttons.
+          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the value has been committed by the user. This can happen when the element loses focus or when the "Enter" key is pressed. `ionChange` can also fire when clicking the clear or cancel buttons.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>) => void;
         /**
@@ -7418,7 +7418,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
+          * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**
@@ -7538,7 +7538,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSelectCustomEvent<void>) => void;
         /**
-          * Emitted when the value has changed.
+          * Emitted when the value has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonSelectCustomEvent<SelectChangeEventDetail>) => void;
         /**
@@ -7841,7 +7841,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * The `ionChange` event is fired when the user modifies the textarea's value. Unlike the `ionInput` event, the `ionChange` event is fired when the element loses focus after its value has been modified.
+          * The `ionChange` event is fired when the user modifies the textarea's value. Unlike the `ionInput` event, the `ionChange` event is fired when the element loses focus after its value has been modified.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonTextareaCustomEvent<TextareaChangeEventDetail>) => void;
         /**
@@ -8060,7 +8060,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonToggleCustomEvent<void>) => void;
         /**
-          * Emitted when the user switches the toggle on or off. Does not emit when programmatically changing the value of the `checked` property.
+          * Emitted when the user switches the toggle on or off.  This event will not emit when programmatically setting the `checked` property.
          */
         "onIonChange"?: (event: IonToggleCustomEvent<ToggleChangeEventDetail>) => void;
         /**

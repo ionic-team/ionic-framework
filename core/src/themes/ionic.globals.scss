@@ -17,10 +17,10 @@
 
 // Default General
 // --------------------------------------------------
-$font-family-base:                  var(--ion-font-family, inherit) !default;
+$font-family-base:                  var(--ion-font-family, inherit);
 
 // Hairlines width
-$hairlines-width: .55px !default;
+$hairlines-width: .55px;
 
 // The minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries
@@ -30,19 +30,19 @@ $screen-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1200px
-) !default;
+);
 
 // Input placeholder opacity
 // Ensures that the placeholder has the
 // correct color contrast against the background.
-$placeholder-opacity: var(--ion-placeholder-opacity, 0.6) !default;
+$placeholder-opacity: var(--ion-placeholder-opacity, 0.6);
 
-$form-control-label-margin: 16px !default;
+$form-control-label-margin: 16px;
 
 // How much the stacked labels should be scaled by
 /// The value 0.75 is used to match the MD spec.
 /// iOS does not have a floating label design spec, so we standardize on 0.75.
-$form-control-label-stacked-scale: 0.75 !default;
+$form-control-label-stacked-scale: 0.75;
 
 
 // Z-Index
