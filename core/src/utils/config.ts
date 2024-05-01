@@ -145,7 +145,7 @@ export interface IonicConfig {
   toastEnter?: AnimationBuilder;
 
   /**
-   * Provides a custom enter animation for all `ion-picker`, overriding the default "animation".
+   * Provides a custom enter animation for all `ion-picker-legacy`, overriding the default "animation".
    */
   pickerEnter?: AnimationBuilder;
 
@@ -180,7 +180,7 @@ export interface IonicConfig {
   toastLeave?: AnimationBuilder;
 
   /**
-   * Provides a custom leave animation for all `ion-picker`, overriding the default "animation".
+   * Provides a custom leave animation for all `ion-picker-legacy`, overriding the default "animation".
    */
   pickerLeave?: AnimationBuilder;
 
@@ -203,6 +203,14 @@ export interface IonicConfig {
    * Overrides the default platform detection methods.
    */
   platform?: PlatformConfig;
+
+  /**
+   * @experimental
+   * When defined, Ionic will move focus to the appropriate element after each
+   * page transition. This ensures that users relying on assistive technology
+   * are informed when a page transition happens.
+   */
+  focusManagerPriority?: FocusManagerPriority[];
 
   /**
    * @experimental
@@ -230,6 +238,8 @@ export interface IonicConfig {
   _rel?: (el: any, name: string, cb: any, opts: any) => any;
   _ce?: (eventName: string, opts: any) => any;
 }
+
+type FocusManagerPriority = 'content' | 'heading' | 'banner';
 
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;

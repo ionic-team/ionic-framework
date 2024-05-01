@@ -12,8 +12,3 @@
 # This should make it easy to add new rules without breaking existing ones.
 
 * @ionic-team/framework
-
-# Utilities
-
-/core/src/utils/gesture/ @liamdebeasi
-/core/src/utils/input-shims/ @liamdebeasi

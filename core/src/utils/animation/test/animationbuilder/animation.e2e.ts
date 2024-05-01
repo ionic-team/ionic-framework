@@ -12,11 +12,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto('/src/utils/animation/test/animationbuilder', config);
       await testNavigation(page);
     });
-
-    test('ios-transition css', async ({ page }) => {
-      await page.goto('/src/utils/animation/test/animationbuilder?ionic:_forceCSSAnimations=true', config);
-      await testNavigation(page);
-    });
   });
 });
 

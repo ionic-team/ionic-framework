@@ -45,3 +45,30 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('textarea: item functionality'), () => {
+    test('clicking padded space within item should focus the textarea', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-textarea label="Textarea"></ion-textarea>
+        </ion-item>
+      `,
+        config
+      );
+      const itemNative = page.locator('.item-native');
+      const textarea = page.locator('ion-textarea textarea');
+
+      // Clicks the padded space within the item
+      await itemNative.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      await expect(textarea).toBeFocused();
+    });
+  });
+});

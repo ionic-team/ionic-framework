@@ -1,6 +1,23 @@
+@use "sass:map";
 @import "../themes/ionic.globals";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
+
+:root {
+  /**
+   * Loop through each color object from the
+   * `ionic.theme.default.scss` file
+   * and generate CSS Variables for each color.
+   */
+  @each $color-name, $value in $colors {
+    --ion-color-#{$color-name}: #{map.get($value, base)};
+    --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+    --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+    --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+    --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+    --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+  }
+}
 
 // Ionic Font Family
 // --------------------------------------------------
@@ -13,12 +30,13 @@ html.md {
 }
 
 html {
-  --ion-default-dynamic-font: -apple-system-body;
+  --ion-dynamic-font: -apple-system-body;
   --ion-font-family: var(--ion-default-font);
 }
 
 body {
   background: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 body.backdrop-no-scroll {
@@ -377,6 +395,23 @@ ion-input input::-webkit-date-and-time-value {
 }
 
 /**
+ * When moving focus on page transitions we call .focus() on an element which can
+ * add an undesired outline ring. This CSS removes the outline ring.
+ * We also remove the outline ring from elements that are actively being focused
+ * by the focus manager. We are intentionally selective about which elements this
+ * applies to so we do not accidentally override outlines set by the developer.
+ */
+[ion-last-focus],
+header[tabindex="-1"]:focus,
+[role="banner"][tabindex="-1"]:focus,
+main[tabindex="-1"]:focus,
+[role="main"][tabindex="-1"]:focus,
+h1[tabindex="-1"]:focus,
+[role="heading"][aria-level="1"][tabindex="-1"]:focus {
+  outline: none;
+}
+
+/*
  * If a popover has a child ion-content (or class equivalent) then the .popover-viewport element
  * should not be scrollable to ensure the inner content does scroll. However, if the popover
  * does not have a child ion-content (or class equivalent) then the .popover-viewport element

@@ -56,20 +56,8 @@ interface HapticNotificationOptions {
   type: CapacitorNotificationType;
 }
 
-interface TapticEngine {
-  gestureSelectionStart: () => void;
-  gestureSelectionChanged: () => void;
-  gestureSelectionEnd: () => void;
-}
-
 const HapticEngine = {
   getEngine(): HapticsPlugin | undefined {
-    const tapticEngine = (window as any).TapticEngine;
-    if (tapticEngine) {
-      // Cordova
-      // TODO FW-4707 - Remove this in Ionic 8
-      return tapticEngine;
-    }
     const capacitor = getCapacitor();
 
     if (capacitor?.isPluginAvailable('Haptics')) {
@@ -102,82 +90,45 @@ const HapticEngine = {
 
     return true;
   },
-  isCordova() {
-    return (window as any).TapticEngine !== undefined;
-  },
-  isCapacitor() {
-    return getCapacitor() !== undefined;
-  },
   impact(options: HapticImpactOptions) {
     const engine = this.getEngine();
     if (!engine) {
       return;
     }
-    /**
-     * To provide backwards compatibility with Cordova apps,
-     * we convert the style to lowercase.
-     *
-     * TODO: FW-4707 - Remove this in Ionic 8
-     */
-    const style = this.isCapacitor() ? options.style : (options.style.toLowerCase() as ImpactStyle);
-    engine.impact({ style });
+
+    engine.impact({ style: options.style });
   },
   notification(options: HapticNotificationOptions) {
     const engine = this.getEngine();
     if (!engine) {
       return;
     }
-    /**
-     * To provide backwards compatibility with Cordova apps,
-     * we convert the style to lowercase.
-     *
-     * TODO: FW-4707 - Remove this in Ionic 8
-     */
-    const type = this.isCapacitor() ? options.type : (options.type.toLowerCase() as NotificationType);
-    engine.notification({ type });
+
+    engine.notification({ type: options.type });
   },
   selection() {
-    /**
-     * To provide backwards compatibility with Cordova apps,
-     * we convert the style to lowercase.
-     *
-     * TODO: FW-4707 - Remove this in Ionic 8
-     */
-    const style = this.isCapacitor() ? ImpactStyle.Light : ('light' as ImpactStyle);
-    this.impact({ style });
+    this.impact({ style: ImpactStyle.Light });
   },
   selectionStart() {
     const engine = this.getEngine();
     if (!engine) {
       return;
     }
-    if (this.isCapacitor()) {
-      engine.selectionStart();
-    } else {
-      (engine as unknown as TapticEngine).gestureSelectionStart();
-    }
+    engine.selectionStart();
   },
   selectionChanged() {
     const engine = this.getEngine();
     if (!engine) {
       return;
     }
-    if (this.isCapacitor()) {
-      engine.selectionChanged();
-    } else {
-      (engine as unknown as TapticEngine).gestureSelectionChanged();
-    }
+    engine.selectionChanged();
   },
   selectionEnd() {
     const engine = this.getEngine();
     if (!engine) {
       return;
     }
-    if (this.isCapacitor()) {
-      engine.selectionEnd();
-    } else {
-      (engine as unknown as TapticEngine).gestureSelectionEnd();
-    }
+    engine.selectionEnd();
   },
 };
 

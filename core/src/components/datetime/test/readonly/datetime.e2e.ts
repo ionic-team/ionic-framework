@@ -49,7 +49,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
 
       await calendarMonthYear.click();
       await page.waitForChanges();
-      await page.locator('.month-column .picker-item[data-value="3"]').click();
+      await page.locator('.month-column ion-picker-column-option').nth(2).click();
       await page.waitForChanges();
       await expect(calendarMonthYear).toHaveText('March 2022');
 
@@ -68,7 +68,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
 
       await page.locator('.datetime-ready').waitFor();
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
-      const monthYearButton = page.locator('.calendar-month-year ion-item');
+      const monthYearButton = page.locator('.calendar-month-year-toggle');
       await expect(calendarMonthYear).toHaveText('February 2022');
 
       await page.keyboard.press(tabKey);
@@ -78,7 +78,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
       await page.keyboard.press('Enter');
       await page.waitForChanges();
 
-      const marchPickerItem = page.locator('.month-column .picker-item[data-value="3"]');
+      const marchPickerItem = page.locator('.month-column ion-picker-column-option').nth(2);
       await expect(marchPickerItem).toBeVisible();
     });
 
@@ -114,7 +114,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
       const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       const datetime = page.locator('ion-datetime');
-      const monthYearButton = page.locator('.calendar-month-year ion-item');
+      const monthYearButton = page.locator('.calendar-month-year-toggle');
       const prevButton = page.locator('.calendar-next-prev ion-button:nth-child(1)');
       const nextButton = page.locator('.calendar-next-prev ion-button:nth-child(2)');
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');

@@ -95,7 +95,7 @@ export * from './routing-proxies';
 export { IonAlert } from './IonAlert';
 export { IonLoading } from './IonLoading';
 export * from './IonToast';
-export { IonPicker } from './IonPicker';
+export { IonPickerLegacy } from './IonPickerLegacy';
 
 // createOverlayComponent
 export * from './IonActionSheet';

@@ -23,7 +23,6 @@ const TOGGLE_INPUTS = [
   'enableOnOffLabels',
   'justify',
   'labelPlacement',
-  'legacy',
   'mode',
   'name',
   'value',

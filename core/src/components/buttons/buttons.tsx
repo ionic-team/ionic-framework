@@ -34,7 +34,9 @@ export class Buttons implements ComponentInterface {
           [mode]: true,
           ['buttons-collapse']: this.collapse,
         }}
-      ></Host>
+      >
+        <slot></slot>
+      </Host>
     );
   }
 }

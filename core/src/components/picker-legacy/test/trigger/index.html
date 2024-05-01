@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Picker - Trigger</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Picker - Trigger</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-button id="default">Open Picker</ion-button>
+        <ion-button id="timeout">Open Picker, Close After 500ms</ion-button>
+
+        <ion-picker-legacy
+          id="default-picker"
+          trigger="default"
+          header="Picker"
+          message="Hello World!"
+        ></ion-picker-legacy>
+        <ion-picker-legacy
+          id="timeout-picker"
+          trigger="timeout"
+          header="Picker"
+          message="Hello World!"
+        ></ion-picker-legacy>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const defaultPicker = document.querySelector('#default-picker');
+      const timeoutPicker = document.querySelector('#timeout-picker');
+
+      defaultPicker.buttons = [{ text: 'Ok' }, { text: 'Cancel', role: 'cancel' }];
+      defaultPicker.columns = [
+        {
+          name: 'Colors',
+          options: [
+            {
+              text: 'Red',
+              value: 'red',
+            },
+            {
+              text: 'Blue',
+              value: 'blue',
+            },
+            {
+              text: 'Green',
+              value: 'green',
+            },
+          ],
+        },
+      ];
+
+      timeoutPicker.buttons = [{ text: 'Ok' }, { text: 'Cancel', role: 'cancel' }];
+      timeoutPicker.columns = [
+        {
+          name: 'Colors',
+          options: [
+            {
+              text: 'Red',
+              value: 'red',
+            },
+            {
+              text: 'Blue',
+              value: 'blue',
+            },
+            {
+              text: 'Green',
+              value: 'green',
+            },
+          ],
+        },
+      ];
+
+      timeoutPicker.addEventListener('didPresent', () => {
+        setTimeout(() => {
+          timeoutPicker.dismiss();
+        }, 500);
+      });
+    </script>
+  </body>
+</html>
