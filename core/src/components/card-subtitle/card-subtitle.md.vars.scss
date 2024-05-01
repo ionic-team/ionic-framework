@@ -4,31 +4,31 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the card subtitle
-$card-md-subtitle-font-size:            dynamic-font(14px) !default;
+$card-md-subtitle-font-size:            dynamic-font(14px);
 
 /// @prop - Padding top of the card subtitle
-$card-md-subtitle-padding-top:          0 !default;
+$card-md-subtitle-padding-top:          0;
 
 /// @prop - Padding end of the card subtitle
-$card-md-subtitle-padding-end:          $card-md-subtitle-padding-top !default;
+$card-md-subtitle-padding-end:          $card-md-subtitle-padding-top;
 
 /// @prop - Padding bottom of the card subtitle
-$card-md-subtitle-padding-bottom:       $card-md-subtitle-padding-top !default;
+$card-md-subtitle-padding-bottom:       $card-md-subtitle-padding-top;
 
 /// @prop - Padding start of the card subtitle
-$card-md-subtitle-padding-start:        $card-md-subtitle-padding-end !default;
+$card-md-subtitle-padding-start:        $card-md-subtitle-padding-end;
 
 /// @prop - Margin top of the card subtitle
-$card-md-subtitle-margin-top:           0 !default;
+$card-md-subtitle-margin-top:           0;
 
 /// @prop - Margin end of the card subtitle
-$card-md-subtitle-margin-end:           $card-md-subtitle-margin-top !default;
+$card-md-subtitle-margin-end:           $card-md-subtitle-margin-top;
 
 /// @prop - Margin bottom of the card subtitle
-$card-md-subtitle-margin-bottom:        0 !default;
+$card-md-subtitle-margin-bottom:        0;
 
 /// @prop - Margin start of the card subtitle
-$card-md-subtitle-margin-start:         $card-md-subtitle-margin-end !default;
+$card-md-subtitle-margin-start:         $card-md-subtitle-margin-end;
 
 /// @prop - Color of the card subtitle
-$card-md-subtitle-color:                $text-color-step-450 !default;
+$card-md-subtitle-color:                $text-color-step-450;

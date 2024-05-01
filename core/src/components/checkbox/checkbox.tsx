@@ -97,10 +97,9 @@ export class Checkbox implements ComponentInterface {
   @Prop() alignment: 'start' | 'center' = 'center';
 
   /**
-   * Emitted when the checked property has changed
-   * as a result of a user action such as a click.
-   * This event will not emit when programmatically
-   * setting the checked property.
+   * Emitted when the checked property has changed as a result of a user action such as a click.
+   *
+   * This event will not emit when programmatically setting the `checked` property.
    */
   @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 
