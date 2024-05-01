@@ -175,6 +175,7 @@ configs().forEach(({ config, title }) => {
   });
 });
 ```
+
 <h2 id="practice-describe-type">Test rendering and functionality in separate `test.describe` blocks</h2>
 
 Avoid mixing tests that take screenshots with tests that check functionality. These types of tests often have different requirements that can make a single `test.describe` block hard to understand. For example, a screenshot test might check both iOS and MD modes with LTR and RTL text directions, but a functionality test may not need that if the functionality is consistent across modes and directions.
@@ -207,7 +208,7 @@ configs().forEach(({ config, title }) => {
     });
   });
 });
-````
+```
 
 <h2 id="practice-screenshot-functionality">Avoid using screenshots as a way of verifying functionality</h2>
 
@@ -227,7 +228,7 @@ configs().forEach(({ config, title }) => {
     });
   });
 });
-````
+```
 
 ✅ Correct
 
@@ -244,7 +245,7 @@ configs().forEach(({ config, title }) => {
     });
   });
 });
-````
+```
 
 <h2 id="practice-test-computed">Avoid tests that compare computed values</h2>
 
