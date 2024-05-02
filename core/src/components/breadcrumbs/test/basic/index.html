@@ -12,6 +12,33 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      h1 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #a1a7b0;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      hr {
+        background: #eff1f3;
+
+        margin-top: 18px;
+        margin-bottom: 25px;
+      }
+
+      ion-content ion-breadcrumbs {
+        padding: 3px 5px;
+      }
+    </style>
   </head>
   <body>
     <ion-app>
@@ -366,32 +393,5 @@
         await popover.present();
       }
     </script>
-
-    <style>
-      h1 {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        font-size: 12px;
-        font-weight: normal;
-
-        color: #a1a7b0;
-
-        margin-top: 10px;
-        margin-left: 5px;
-      }
-
-      hr {
-        background: #eff1f3;
-
-        margin-top: 18px;
-        margin-bottom: 25px;
-      }
-
-      ion-content ion-breadcrumbs {
-        padding: 3px 5px;
-      }
-    </style>
   </body>
 </html>

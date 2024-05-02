@@ -26,151 +26,148 @@
       </ion-header>
 
       <ion-content class="ion-padding" id="content">
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="show-bottom-toast"
           onclick="openToast({ message: 'Hellooo', position: 'bottom', duration: 2000, htmlAttributes: { 'data-testid': 'basic-toast' } })"
         >
           Position Bottom
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="show-top-toast"
           onclick="openToast({ message: 'Hellooo', position: 'top', duration: 2000 })"
         >
           Position Top
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="show-middle-toast"
           onclick="openToast({ message: 'Hellooo', position: 'middle', duration: 2000 })"
         >
           Position Middle
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
-          onclick="openToast({header: 'Toast header', message: 'Toast message', duration: 2000})"
-        >
+        <button class="expand" onclick="openToast({header: 'Toast header', message: 'Toast message', duration: 2000})">
           Header Toast
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           onclick="openToast({header: 'Toast header', message: 'Really long message that should go all of the way to the button', buttons: ['Action'] })"
         >
           Header + Action Toast
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="two-line-toast"
           onclick="openToast({message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in elit varius, maximus sem in, bibendum justo.', buttons: ['Action'] })"
         >
           Long Message
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="close-button-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'] })"
         >
           Close Button
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="custom-close-text-toast"
           onclick="openToast({message: 'click to close', buttons: ['closing time'] })"
         >
           Custom Close Button
-        </ion-button>
+        </button>
 
-        <ion-button expand="block" id="custom-action-buttons-toast" onclick="openToastWithButtonOptions()">
+        <button class="expand" id="custom-action-buttons-toast" onclick="openToastWithButtonOptions()">
           Custom Buttons
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="translucent-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true})"
         >
           Translucent Toast
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="color-toast"
           onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'danger'})"
         >
           Color Toast
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="light-color-toast"
           onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'light'})"
         >
           Light Color Toast
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="translucent-color-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true, color: 'success'})"
         >
           Translucent Color Toast
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="custom-class-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'my-custom-class'})"
         >
           Custom Class
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="toast-start-and-end"
           onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'toast-start-and-end'})"
         >
           Show Toast with start-end position
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="toast-html"
-          onclick="openToast({message: '<ion-button>Button in a Toast!</ion-button>', buttons: ['Close'] })"
+          onclick="openToast({message: '<button>Button in a Toast!</button>', buttons: ['Close'] })"
         >
           Show HTML Toast
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="toast-with-icon"
           onclick="openToast({ header: 'Bluetooth', message: 'Device connected.', icon: 'bluetooth', duration: 2000 })"
         >
           Toast with Icon
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="toast-with-icon-2"
           onclick="openToast({ message: 'An error has occurred!', icon: 'warning', color: 'danger', duration: 2000 })"
         >
           Toast with Icon 2
-        </ion-button>
+        </button>
 
-        <ion-button
-          expand="block"
+        <button
+          class="expand"
           id="toast-with-icon-3"
           onclick="openToast({ message: 'Debug me...', icon: 'bug', buttons: ['Close'] })"
         >
           Toast with Icon 3
-        </ion-button>
+        </button>
 
         <ion-grid>
           <ion-row>
