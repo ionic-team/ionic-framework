@@ -241,10 +241,6 @@ export class Select implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
-  componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
-  }
-
   async connectedCallback() {
     const { el } = this;
 
@@ -268,6 +264,14 @@ export class Select implements ComponentInterface {
        */
       forceUpdate(this);
     });
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
+  componentDidLoad() {
+    this.emitStyle();
   }
 
   disconnectedCallback() {
