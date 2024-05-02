@@ -140,7 +140,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       });
     });
 
-    test.describe.only('input: size xlarge', () => {
+    test.describe('input: size xlarge', () => {
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
