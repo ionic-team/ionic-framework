@@ -34,7 +34,4 @@ $breadcrumb-ios-indicator-color: $breadcrumb-ios-separator-color;
 $breadcrumb-ios-indicator-background: var(--ion-color-step-100, var(--ion-background-color-step-100, #e9edf3));
 
 /// @prop - Background color of the breadcrumb indicator when focused
-$breadcrumb-ios-indicator-background-focused: var(
-  --ion-color-step-150,
-  var(--ion-background-color-step-150, #d9e0ea)
-);
+$breadcrumb-ios-indicator-background-focused: var(--ion-color-step-150, var(--ion-background-color-step-150, #d9e0ea));

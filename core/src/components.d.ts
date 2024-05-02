@@ -5981,7 +5981,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
-          * Emitted when the checked property has changed as a result of a user action such as a click.  This event will not emit when programmatically setting the `checked` property.
+          * Emitted when the checked property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the `checked` property.
          */
         "onIonChange"?: (event: IonCheckboxCustomEvent<CheckboxChangeEventDetail>) => void;
         /**

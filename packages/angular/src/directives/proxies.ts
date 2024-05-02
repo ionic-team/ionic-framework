@@ -531,9 +531,10 @@ import type { CheckboxChangeEventDetail as IIonCheckboxCheckboxChangeEventDetail
 
 export declare interface IonCheckbox extends Components.IonCheckbox {
   /**
-   * Emitted when the checked property has changed as a result of a user action such as a click.
-
-This event will not emit when programmatically setting the `checked` property.
+   * Emitted when the checked property has changed
+as a result of a user action such as a click.
+This event will not emit when programmatically
+setting the `checked` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonCheckboxCheckboxChangeEventDetail>>;
   /**

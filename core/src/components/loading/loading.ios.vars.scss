@@ -37,10 +37,7 @@ $loading-ios-background-color: $overlay-ios-background-color;
 $loading-ios-translucent-background-color-alpha: 0.8;
 
 /// @prop - Background color of the translucent loading wrapper
-$loading-ios-translucent-background-color: rgba(
-  $background-color-rgb,
-  $loading-ios-translucent-background-color-alpha
-);
+$loading-ios-translucent-background-color: rgba($background-color-rgb, $loading-ios-translucent-background-color-alpha);
 
 /// @prop - Font weight of the loading content
 $loading-ios-content-font-weight: bold;
