@@ -265,7 +265,7 @@ export class Input implements ComponentInterface {
    * The size of the input. If "large", it will have an increased height. By default the
    * size is medium. This property only applies to the `"ionic"` theme.
    */
-  @Prop() size?: 'medium' | 'large' = 'medium';
+  @Prop() size?: 'medium' | 'large' | 'xlarge' = 'medium';
 
   /**
    * The type of control to display. The default type is text.
@@ -504,9 +504,11 @@ export class Input implements ComponentInterface {
   private getSize() {
     const theme = getIonTheme(this);
     const { size } = this;
-    if (theme !== 'ionic' && size === 'large') {
+    const ionicSizes = ['large', 'xlarge'];
+    if (theme !== 'ionic' && size && ionicSizes.includes(size)) {
       printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
-      return undefined;
+      // Fallback to medium size, which is the default size for all themes.
+      return 'medium';
     }
     return size;
   }
@@ -774,7 +776,7 @@ export class Input implements ComponentInterface {
           'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
-          [`input-size-${size}`]: size !== undefined,
+          [`input-size-${size}`]: true,
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
