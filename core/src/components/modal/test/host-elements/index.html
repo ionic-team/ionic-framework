@@ -27,7 +27,7 @@
 
       <ion-content class="ion-padding">
         <p>
-          <ion-button class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
+          <button class="e2ePresentModal" onclick="presentModal()">Present modal</button>
         </p>
       </ion-content>
     </ion-app>
@@ -52,11 +52,11 @@
           <ion-content>
             <h1>Content of doom</h1>
             <div>Here's some more content</div>
-            <ion-button class="dismiss">Dismiss Modal</ion-button>
+            <button class="dismiss">Dismiss Modal</button>
           </ion-content>`;
 
           // listen for close event
-          const button = this.querySelector('ion-button');
+          const button = this.querySelector('button');
           button.addEventListener('click', async () => {
             await modalController.dismiss();
           });

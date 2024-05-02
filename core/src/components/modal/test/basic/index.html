@@ -32,19 +32,13 @@
         </ion-header>
 
         <ion-content class="ion-padding">
-          <p>
-            <ion-button id="basic-modal" onclick="presentModal()">Present modal</ion-button>
-          </p>
-          <p>
-            <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal()"
-              >Present and close modal</ion-button
-            >
-          </p>
-          <p>
-            <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal2()"
-              >Present and close modal (crash)</ion-button
-            >
-          </p>
+          <button id="basic-modal" onclick="presentModal()">Present modal</button>
+          <button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal()">
+            Present and close modal
+          </button>
+          <button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal2()">
+            Present and close modal (crash)
+          </button>
         </ion-content>
       </div>
     </ion-app>

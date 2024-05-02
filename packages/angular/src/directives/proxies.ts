@@ -53,10 +53,9 @@ import type { AccordionGroupChangeEventDetail as IIonAccordionGroupAccordionGrou
 
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {
   /**
-   * Emitted when the value property has changed
-as a result of a user action such as a click.
-This event will not emit when programmatically setting
-the value property.
+   * Emitted when the value property has changed as a result of a user action such as a click.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonAccordionGroupAccordionGroupChangeEventDetail>>;
 }
@@ -532,10 +531,9 @@ import type { CheckboxChangeEventDetail as IIonCheckboxCheckboxChangeEventDetail
 
 export declare interface IonCheckbox extends Components.IonCheckbox {
   /**
-   * Emitted when the checked property has changed
-as a result of a user action such as a click.
-This event will not emit when programmatically
-setting the checked property.
+   * Emitted when the checked property has changed as a result of a user action such as a click.
+
+This event will not emit when programmatically setting the `checked` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonCheckboxCheckboxChangeEventDetail>>;
   /**
@@ -666,6 +664,8 @@ export declare interface IonDatetime extends Components.IonDatetime {
   ionCancel: EventEmitter<CustomEvent<void>>;
   /**
    * Emitted when the value (selected date) has changed.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonDatetimeDatetimeChangeEventDetail>>;
   /**
@@ -1003,6 +1003,8 @@ event fires at a different moment:
 from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.).
 - When the element loses focus after its value has changed: for elements
 where the user's interaction is typing.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonInputInputChangeEventDetail>>;
   /**
@@ -1490,6 +1492,8 @@ import type { PickerColumnChangeEventDetail as IIonPickerColumnPickerColumnChang
 export declare interface IonPickerColumn extends Components.IonPickerColumn {
   /**
    * Emitted when the value has changed.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
 }
@@ -1659,6 +1663,8 @@ import type { RadioGroupChangeEventDetail as IIonRadioGroupRadioGroupChangeEvent
 export declare interface IonRadioGroup extends Components.IonRadioGroup {
   /**
    * Emitted when the value has changed.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonRadioGroupRadioGroupChangeEventDetail>>;
 }
@@ -1695,7 +1701,7 @@ modifies the element's value:
 - When the user releases the knob after dragging;
 - When the user moves the knob with keyboard arrows
 
-`ionChange` is not fired when the value is changed programmatically.
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonRangeRangeChangeEventDetail>>;
   /**
@@ -1927,6 +1933,8 @@ The `ionChange` event is fired when the value has been committed
 by the user. This can happen when the element loses focus or
 when the "Enter" key is pressed. `ionChange` can also fire
 when clicking the clear or cancel buttons.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonSearchbarSearchbarChangeEventDetail>>;
   /**
@@ -1972,8 +1980,9 @@ import type { SegmentChangeEventDetail as IIonSegmentSegmentChangeEventDetail } 
 
 export declare interface IonSegment extends Components.IonSegment {
   /**
-   * Emitted when the value property has changed and any
-dragging pointer has been released from `ion-segment`.
+   * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonSegmentSegmentChangeEventDetail>>;
 }
@@ -2027,6 +2036,8 @@ import type { SelectChangeEventDetail as IIonSelectSelectChangeEventDetail } fro
 export declare interface IonSelect extends Components.IonSelect {
   /**
    * Emitted when the value has changed.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonSelectSelectChangeEventDetail>>;
   /**
@@ -2237,6 +2248,8 @@ export declare interface IonTextarea extends Components.IonTextarea {
    * The `ionChange` event is fired when the user modifies the textarea's value.
 Unlike the `ionInput` event, the `ionChange` event is fired when
 the element loses focus after its value has been modified.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonTextareaTextareaChangeEventDetail>>;
   /**
@@ -2390,8 +2403,9 @@ import type { ToggleChangeEventDetail as IIonToggleToggleChangeEventDetail } fro
 
 export declare interface IonToggle extends Components.IonToggle {
   /**
-   * Emitted when the user switches the toggle on or off. Does not emit
-when programmatically changing the value of the `checked` property.
+   * Emitted when the user switches the toggle on or off.
+
+This event will not emit when programmatically setting the `checked` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonToggleToggleChangeEventDetail>>;
   /**
