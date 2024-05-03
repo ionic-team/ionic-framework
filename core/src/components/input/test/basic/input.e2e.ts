@@ -154,7 +154,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       await expect(input).toHaveScreenshot(screenshot(`input-with-clear-button`));
     });
 
-    test('should not have visual regressions when clear button is focused', async ({ page }) => {
+    test('should not have visual regressions when clear button is focused', async ({ page, pageUtils }) => {
       // extra padding around input ensures focus ring doesn't get cut off at screenshot edges
       await page.setContent(
         `
@@ -180,9 +180,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       await input.evaluate((el: HTMLIonInputElement) => el.setFocus());
       await page.waitForChanges();
 
-      const clearButton = input.locator('.input-clear-icon');
-      clearButton.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
-      await page.waitForChanges();
+      await pageUtils.pressKeys('Tab');
 
       const container = page.locator('#container');
       await expect(container).toHaveScreenshot(screenshot(`input-clear-button-focused`));
@@ -192,7 +190,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
 
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('input: clear button in ionic theme, functionality checks'), () => {
-    test('should show clear button when any part of input is focused', async ({ page }) => {
+    test('should show clear button when any part of input is focused', async ({ page, pageUtils }) => {
       await page.setContent(
         `
           <ion-input
@@ -214,7 +212,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }
       await expect(clearButton).toBeVisible();
 
       // ensure blurring native input doesn't immediately hide clear button
-      await page.keyboard.press('Tab');
+      await pageUtils.pressKeys('Tab');
       await expect(clearButton).toBeFocused();
       await expect(clearButton).toBeVisible();
     });

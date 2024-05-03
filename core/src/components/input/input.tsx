@@ -843,7 +843,7 @@ export class Input implements ComponentInterface {
               <button
                 aria-label="reset"
                 type="button"
-                class="input-clear-icon ion-focusable"
+                class="input-clear-icon"
                 onPointerDown={(ev) => {
                   /**
                    * This prevents mobile browsers from

@@ -69,7 +69,7 @@
   color: #{$ionic-color-neutral-500};
 }
 
-.input-clear-icon.ion-focused {
+.input-clear-icon:focus-visible {
   @include border-radius($ionic-border-radius-rounded-small);
 
   outline: #{$ionic-border-size-medium} solid #{$ionic-color-primary-100};
