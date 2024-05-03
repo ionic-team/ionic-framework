@@ -271,6 +271,16 @@ export class Select implements ComponentInterface {
   }
 
   componentDidLoad() {
+    /**
+     * If any of the conditions that trigger the styleChanged callback
+     * are met on component load, it is possible the event emitted
+     * prior to a parent web component registering an event listener.
+     *
+     * To ensure the parent web component receives the event, we
+     * emit the style event again after the component has loaded.
+     *
+     * This is often seen in Angular with the `dist` output target.
+     */
     this.emitStyle();
   }
 
