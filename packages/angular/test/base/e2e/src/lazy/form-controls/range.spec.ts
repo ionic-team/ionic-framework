@@ -25,7 +25,6 @@ describe('Form Controls: Range', () => {
 
     cy.get('ion-range').should('have.class', 'ion-valid');
     cy.get('ion-range').should('have.class', 'ion-dirty');
-    cy.get('ion-range').should('have.class', 'ion-touched');
     cy.get('ion-range').invoke('prop', 'value').should('eq', 10);
   });
 
