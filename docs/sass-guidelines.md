@@ -39,10 +39,10 @@ Due to this, Ionic Framework documented the Sass variables as part of the public
 // alert.ios.scss
 
 /// @prop - Max width of the alert
-$alert-ios-max-width:                           270px;
+$alert-ios-max-width:                           270px !default;
 
 /// @prop - Border radius of the alert
-$alert-ios-border-radius:                       13px;
+$alert-ios-border-radius:                       13px !default;
 ```
 
 If a Sass variable was deprecated or hidden from the public API, the `@prop` comment would be removed, or it would never be added, as seen in [v3.9.2](https://github.com/ionic-team/ionic-framework/blob/v3.9.2/src/components/alert/alert.ios.scss#L18-L19):
@@ -51,7 +51,7 @@ If a Sass variable was deprecated or hidden from the public API, the `@prop` com
 // alert.ios.scss
 
 // deprecated
-$alert-ios-head-padding:                        null;
+$alert-ios-head-padding:                        null !default;
 ```
 
 To ensure proper documentation of variables for customizing Ionic Framework, Sass variables were added for components even if they were not used multiple times within the same component or elsewhere:
@@ -60,7 +60,7 @@ To ensure proper documentation of variables for customizing Ionic Framework, Sas
 // alert.ios.scss
 
 /// @prop - Text color of the label for the checked radio alert
-$alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color;
+$alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color !default;
 
 .alert-ios [aria-checked=true] .alert-radio-label {
   color: $alert-ios-radio-label-text-color-checked;
@@ -71,7 +71,7 @@ $alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color;
 
 The abundance of Sass variables currently in Ionic Framework is a result of their historical usage, being used to rebuild the CSS and customize Ionic Framework components.
 
-The comments for Sass variables are also still visible today in [v7.7.0](https://github.com/ionic-team/ionic-framework/blob/v7.7.0/core/src/components/alert/alert.ios.vars.scss), even though they are no longer used by any documentation generators:
+The comments for Sass variables are also still visible today in [v8.1.0](https://github.com/ionic-team/ionic-framework/blob/v8.1.0/core/src/components/alert/alert.ios.vars.scss), even though they are no longer used by any documentation generators:
 
 ```scss
 // alert.ios.vars.scss
