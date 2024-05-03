@@ -18,9 +18,9 @@
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
 
-  letter-spacing: 0.06em;
+  letter-spacing: #{$button-md-letter-spacing};
 
-  text-transform: uppercase;
+  text-transform: #{$button-md-text-transform};
 }
 
 // Solid Button
