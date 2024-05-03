@@ -504,8 +504,7 @@ export class Input implements ComponentInterface {
   private getSize() {
     const theme = getIonTheme(this);
     const { size } = this;
-    const ionicSizes = ['large', 'xlarge'];
-    if (theme !== 'ionic' && size && ionicSizes.includes(size)) {
+    if (theme !== 'ionic' && (size === 'large' || size === 'xlarge')) {
       printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
       // Fallback to medium size, which is the default size for all themes.
       return 'medium';
