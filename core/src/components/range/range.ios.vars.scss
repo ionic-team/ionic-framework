@@ -4,71 +4,71 @@
 // --------------------------------------------------
 
 /// @prop - Padding top/bottom of the range
-$range-ios-padding-vertical: 8px !default;
+$range-ios-padding-vertical: 8px;
 
 /// @prop - Padding start/end of the range - modern syntax
 /**
  * 24px was chosen so the knob and its
  * shadow do not get cut off by the item.
  */
-$range-ios-item-padding-horizontal: 24px !default;
+$range-ios-item-padding-horizontal: 24px;
 
 /// @prop - Height of the range slider
-$range-ios-slider-height: 42px !default;
+$range-ios-slider-height: 42px;
 
 /// @prop - Height of the area that will select the range knob
-$range-ios-hit-height: $range-ios-slider-height !default;
+$range-ios-hit-height: $range-ios-slider-height;
 
 /// @prop - Height of the range bar
-$range-ios-bar-height: 4px !default;
+$range-ios-bar-height: 4px;
 
 /// @prop - Background of the range bar
-$range-ios-bar-background-color: var(--ion-color-step-900, var(--ion-background-color-step-900, #e6e6e6)) !default;
+$range-ios-bar-background-color: var(--ion-color-step-900, var(--ion-background-color-step-900, #e6e6e6));
 
 /// @prop - Border radius of the range bar
-$range-ios-bar-border-radius: 2px !default;
+$range-ios-bar-border-radius: 2px;
 
 /// @prop - Width of the range knob
-$range-ios-knob-width: 26px !default;
+$range-ios-knob-width: 26px;
 
 /// @prop - Box shadow of the range knob
-$range-ios-knob-box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12) !default;
+$range-ios-knob-box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);
 
 /// @prop - Background of the range knob
-$range-ios-knob-background-color: #ffffff !default;
+$range-ios-knob-background-color: #ffffff;
 
 /// @prop - Width of the range tick
-$range-ios-tick-width: $range-ios-bar-height !default;
+$range-ios-tick-width: $range-ios-bar-height;
 
 /// @prop - Height of the range tick
-$range-ios-tick-height: 8px !default;
+$range-ios-tick-height: 8px;
 
 /// @prop - Border radius of the range tick
-$range-ios-tick-border-radius: 0 !default;
+$range-ios-tick-border-radius: 0;
 
 /// @prop - Background of the range tick
-$range-ios-tick-background-color: $range-ios-bar-background-color !default;
+$range-ios-tick-background-color: $range-ios-bar-background-color;
 
 /// @prop - Background of the range pin
-$range-ios-pin-background-color: transparent !default;
+$range-ios-pin-background-color: transparent;
 
 /// @prop - Color of the range pin
-$range-ios-pin-color: $text-color !default;
+$range-ios-pin-color: $text-color;
 
 /// @prop - Font size of the range pin
-$range-ios-pin-font-size: dynamic-font(12px) !default;
+$range-ios-pin-font-size: dynamic-font(12px);
 
 /// @prop - Padding top of the range pin
-$range-ios-pin-padding-top: 8px !default;
+$range-ios-pin-padding-top: 8px;
 
 /// @prop - Padding end of the range pin
-$range-ios-pin-padding-end: $range-ios-pin-padding-top !default;
+$range-ios-pin-padding-end: $range-ios-pin-padding-top;
 
 /// @prop - Padding bottom of the range pin
-$range-ios-pin-padding-bottom: $range-ios-pin-padding-top !default;
+$range-ios-pin-padding-bottom: $range-ios-pin-padding-top;
 
 /// @prop - Padding start of the range pin
-$range-ios-pin-padding-start: $range-ios-pin-padding-end !default;
+$range-ios-pin-padding-start: $range-ios-pin-padding-end;
 
 /// @prop - Opacity of the disabled range
-$range-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;
+$range-ios-disabled-opacity: $form-control-ios-disabled-opacity;

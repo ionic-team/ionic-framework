@@ -4,17 +4,17 @@
 // --------------------------------------------------
 
 /// @prop - Background color of the tab bar
-$tabbar-ionic-background: var(--ion-tab-bar-background, tokens.$ionic-color-neutral-0) !default;
+$tabbar-ionic-background: var(--ion-tab-bar-background, tokens.$ionic-color-neutral-0);
 
 /// @prop - Background color of the tab bar button when activated
 // TODO(FW-6186): use design token here when it is added
-$tabbar-ionic-background-activated: var(--ion-tab-bar-background-activated, #ececec) !default;
+$tabbar-ionic-background-activated: var(--ion-tab-bar-background-activated, #ececec);
 
 /// @prop - Background color of the tab bar button when focused
-$tabbar-ionic-background-focused: var(--ion-tab-bar-background-focused, transparent) !default;
+$tabbar-ionic-background-focused: var(--ion-tab-bar-background-focused, transparent);
 
 /// @prop - Color of the tab bar button
-$tabbar-ionic-color: var(--ion-tab-bar-color, tokens.$ionic-color-neutral-500) !default;
+$tabbar-ionic-color: var(--ion-tab-bar-color, tokens.$ionic-color-neutral-500);
 
 /// @prop - Color of the selected tab bar button
-$tabbar-ionic-color-selected: var(--ion-tab-bar-color-selected, tokens.$ionic-color-primary-400) !default;
+$tabbar-ionic-color-selected: var(--ion-tab-bar-color-selected, tokens.$ionic-color-primary-400);

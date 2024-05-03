@@ -12,53 +12,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  </head>
-  <script type="module">
-    import { alertController } from '../../../../dist/ionic/index.esm.js';
-    window.alertController = alertController;
-  </script>
-
-  <body>
-    <button id="basic" onclick="presentAlert()">Alert</button>
-    <button id="longMessage" onclick="presentAlertLongMessage()">Alert Long Message</button>
-    <button id="multipleButtons" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</button>
-    <button id="noMessage" onclick="presentAlertNoMessage()">Alert No Message</button>
-    <button id="confirm" onclick="presentAlertConfirm()">Confirm</button>
-    <button id="prompt" onclick="presentAlertPrompt()">Prompt</button>
-    <button id="radio" onclick="presentAlertRadio()">Radio</button>
-    <button id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
-    <button onclick="presentWithCssClass()">CssClass</button>
-
-    <div class="f"></div>
-    <div class="f"></div>
-    <div class="f"></div>
-    <div class="f"></div>
-    <div class="f"></div>
-    <div class="f"></div>
-    <div class="f"></div>
-    <div class="f"></div>
-    <div class="f"></div>
-    <div class="f"></div>
-
-    <dialog id="favDialog">
-      <form method="dialog">
-        <section>
-          <p>
-            <label for="favAnimal">Favorite animal:</label>
-            <select id="favAnimal">
-              <option></option>
-              <option>Brine shrimp</option>
-              <option>Red panda</option>
-              <option>Spider monkey</option>
-            </select>
-          </p>
-        </section>
-        <menu>
-          <button id="cancel" type="reset">Cancel</button>
-          <button type="submit">Confirm</button>
-        </menu>
-      </form>
-    </dialog>
 
     <style>
       .f {
@@ -67,19 +20,56 @@
         background: blue;
         margin: 20px auto;
       }
-
-      body > button {
-        display: block;
-        clear: both;
-        width: 100%;
-        padding: 12px 8px;
-        font-size: 1em;
-        background: #f8f8f8;
-        border: 1px solid #eee;
-        border-radius: 4px;
-        margin-bottom: 8px;
-      }
     </style>
+  </head>
+  <script type="module">
+    import { alertController } from '../../../../dist/ionic/index.esm.js';
+    window.alertController = alertController;
+  </script>
+
+  <body>
+    <main>
+      <button class="expand" id="basic" onclick="presentAlert()">Alert</button>
+      <button class="expand" id="longMessage" onclick="presentAlertLongMessage()">Alert Long Message</button>
+      <button class="expand" id="multipleButtons" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</button>
+      <button class="expand" id="noMessage" onclick="presentAlertNoMessage()">Alert No Message</button>
+      <button class="expand" id="confirm" onclick="presentAlertConfirm()">Confirm</button>
+      <button class="expand" id="prompt" onclick="presentAlertPrompt()">Prompt</button>
+      <button class="expand" id="radio" onclick="presentAlertRadio()">Radio</button>
+      <button class="expand" id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
+      <button class="expand" onclick="presentWithCssClass()">CssClass</button>
+
+      <div class="f"></div>
+      <div class="f"></div>
+      <div class="f"></div>
+      <div class="f"></div>
+      <div class="f"></div>
+      <div class="f"></div>
+      <div class="f"></div>
+      <div class="f"></div>
+      <div class="f"></div>
+      <div class="f"></div>
+
+      <dialog id="favDialog">
+        <form method="dialog">
+          <section>
+            <p>
+              <label for="favAnimal">Favorite animal:</label>
+              <select id="favAnimal">
+                <option></option>
+                <option>Brine shrimp</option>
+                <option>Red panda</option>
+                <option>Spider monkey</option>
+              </select>
+            </p>
+          </section>
+          <menu>
+            <button id="cancel" type="reset">Cancel</button>
+            <button type="submit">Confirm</button>
+          </menu>
+        </form>
+      </dialog>
+    </main>
 
     <script>
       async function openAlert(opts) {
