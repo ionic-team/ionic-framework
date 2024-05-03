@@ -19,13 +19,13 @@ $button-md-margin-start: 2px;
 $button-md-padding-top: 8px;
 
 /// @prop - Padding end of the button
-$button-md-padding-end: 1.1em;
+$button-md-padding-end: 24px;
 
 /// @prop - Padding bottom of the button
 $button-md-padding-bottom: $button-md-padding-top;
 
 /// @prop - Padding start of the button
-$button-md-padding-start: 1.1em;
+$button-md-padding-start: $button-md-padding-end;
 
 /// @prop - Minimum height of the button
 $button-md-min-height: 36px;
@@ -35,11 +35,6 @@ $button-md-font-size: dynamic-font(14px);
 
 /// @prop - Font weight of the button text
 $button-md-font-weight: 500;
-
-/// @prop - Capitalization of the button text
-$button-md-text-transform: uppercase;
-
-$button-md-letter-spacing: 0.06em;
 
 /// @prop - Box shadow of the button
 $button-md-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
@@ -90,21 +85,6 @@ $button-md-small-min-height: 2.1em;
 
 /// @prop - Font size of the small button
 $button-md-small-font-size: dynamic-font(13px);
-
-// Material Design Round Button
-// --------------------------------------------------
-
-/// @prop - Padding top of the round button
-$button-md-round-padding-top: $button-round-padding-top;
-
-/// @prop - Padding end of the round button
-$button-md-round-padding-end: $button-round-padding-end;
-
-/// @prop - Padding bottom of the round button
-$button-md-round-padding-bottom: $button-round-padding-bottom;
-
-/// @prop - Padding start of the round button
-$button-md-round-padding-start: $button-round-padding-start;
 
 // Material Design Decorator Button
 // --------------------------------------------------

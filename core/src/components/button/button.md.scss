@@ -18,9 +18,9 @@
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
 
-  letter-spacing: #{$button-md-letter-spacing};
+  letter-spacing: 0.06em;
 
-  text-transform: #{$button-md-text-transform};
+  text-transform: uppercase;
 }
 
 // Solid Button
@@ -78,13 +78,8 @@
   --border-radius: 4px;
 }
 
-// TODO(FW-6202): remove the custom padding styles
 :host(.button-round) {
   --border-radius: 999px;
-  --padding-top: #{$button-md-round-padding-top};
-  --padding-start: #{$button-md-round-padding-start};
-  --padding-end: #{$button-md-round-padding-end};
-  --padding-bottom: #{$button-md-round-padding-bottom};
 }
 
 :host(.button-rectangular) {
