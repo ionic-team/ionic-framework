@@ -237,7 +237,7 @@ export class Range implements ComponentInterface {
    * - When the user releases the knob after dragging;
    * - When the user moves the knob with keyboard arrows
    *
-   * `ionChange` is not fired when the value is changed programmatically.
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<RangeChangeEventDetail>;
 

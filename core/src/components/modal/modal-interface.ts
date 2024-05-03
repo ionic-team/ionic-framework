@@ -11,6 +11,8 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> extends Ove
   cssClass?: string | string[];
   delegate?: FrameworkDelegate;
   canDismiss?: boolean | ((data?: any, role?: string) => Promise<boolean>);
+  focusTrap?: boolean;
+
   keyboardClose?: boolean;
   htmlAttributes?: { [key: string]: any };
 

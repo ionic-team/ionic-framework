@@ -19,6 +19,7 @@ This guide details best practices that should be followed when writing E2E tests
 - [Start your test with the configuration or layout in place if possible](#practice-test-config)
 - [Place your test closest to the fix or feature](#practice-test-close)
 - [Account for different locales when writing tests](#practice-locales)
+- [Avoid using unrelated components in other component's screenshot tests](#unrelated-components)
 
 <h2 id="practice-test">Use the customized `test` function</h2>
 
@@ -51,7 +52,7 @@ Some features can be combined together, and so it is acceptable in this instance
 
 <h2 id="practice-file-format">Follow the file format</h2>
 
-E2E test files should follow this format: 
+E2E test files should follow this format:
 
 ```tsx
 [component name].e2e.ts
@@ -140,7 +141,7 @@ test.describe('button: disabled state', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/button/test', config);
     });
-    
+
     test(title('should not have any visual regressions'), async ({ page }) => {
       ...
     });
@@ -163,7 +164,7 @@ configs().forEach(({ config, title }) => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/button/test', config);
     });
-    
+
     /**
      * Test title is still unique because of our use of title()
      * on the test.describe block.
@@ -174,6 +175,7 @@ configs().forEach(({ config, title }) => {
   });
 });
 ```
+
 <h2 id="practice-describe-type">Test rendering and functionality in separate `test.describe` blocks</h2>
 
 Avoid mixing tests that take screenshots with tests that check functionality. These types of tests often have different requirements that can make a single `test.describe` block hard to understand. For example, a screenshot test might check both iOS and MD modes with LTR and RTL text directions, but a functionality test may not need that if the functionality is consistent across modes and directions.
@@ -190,7 +192,7 @@ By default, we run tests on mobile viewports only (think iPhone sized viewports)
 
 For this scenario, developers must write tests that target the tablet viewport. This can be done by using [page.setViewportSize](https://playwright.dev/docs/api/class-page#page-set-viewport-size). The Playwright test utils directory also contains a `Viewports` constant which contains some common viewport presets. Developers should feel free to add new viewports to this as is applicable.
 
-**Example:** 
+**Example:**
 
 ```javascript
 import { configs, test, Viewports } from '@utils/test/playwright';
@@ -206,7 +208,7 @@ configs().forEach(({ config, title }) => {
     });
   });
 });
-````
+```
 
 <h2 id="practice-screenshot-functionality">Avoid using screenshots as a way of verifying functionality</h2>
 
@@ -221,12 +223,12 @@ configs().forEach(({ config, title }) => {
   test.describe(title('modal: rendering') => {
     test('it should open a modal', async ({ page }) => {
       await page.setContent('<ion-modal is-open="true">...</ion-modal>', config);
-      
+
       await expect(page).toHaveScreenshot(screenshot('modal-open'));
     });
   });
 });
-````
+```
 
 ✅ Correct
 
@@ -237,13 +239,13 @@ configs().forEach(({ config, title }) => {
   test.describe(title('modal: rendering') => {
     test('it should open a modal', async ({ page }) => {
       await page.setContent('<ion-modal is-open="true">...</ion-modal>', config);
-      
+
       const modal = page.locator('ion-modal');
       await expect(modal).toBeVisible();
     });
   });
 });
-````
+```
 
 <h2 id="practice-test-computed">Avoid tests that compare computed values</h2>
 
@@ -264,3 +266,11 @@ Tests should be placed closest to where the fix or feature was implemented. This
 <h2 id="practice-locales">Account for different locales when writing tests</h2>
 
 Tests ran on CI may not run on the same locale as your local machine. It's always a good idea to apply locale considerations to components that support it, when writing tests (i.e. `ion-datetime` should specify `locale="en-US"`).
+
+<h2 id="unrelated-components">Avoid using unrelated components in other component's screenshot tests</h2>
+
+Tests should be focused only on the component(s) they are testing. When unrelated components are included in a test that captures a screenshot, any changes to the style of those unrelated components will trigger updates in all tests for the component(s) using them. If you need to include a styled button in a test, add a native `<button>` within an `ion-content` or `main` element. It can be modified to take up the full width of its container by adding the `expand` class:
+
+```html
+<button class="expand">Full width button</button>
+```

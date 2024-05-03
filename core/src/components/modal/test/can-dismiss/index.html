@@ -11,11 +11,6 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script type="module">
-      import { modalController, actionSheetController } from '../../../../dist/ionic/index.esm.js';
-      window.modalController = modalController;
-      window.actionSheetController = actionSheetController;
-    </script>
 
     <style>
       form {
@@ -24,6 +19,11 @@
       }
     </style>
   </head>
+  <script type="module">
+    import { modalController, actionSheetController } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+    window.actionSheetController = actionSheetController;
+  </script>
 
   <body>
     <ion-app>
@@ -35,47 +35,49 @@
         </ion-header>
 
         <ion-content class="ion-padding">
-          <ion-button
+          <button
             id="sheet-can-dismiss-true"
             onclick="createModal({ canDismiss: true, breakpoints: BREAKPOINTS, initialBreakpoint: BREAKPOINTS[1]  })"
-            >Sheet Modal / canDismiss = true</ion-button
           >
-          <ion-button
+            Sheet Modal / canDismiss = true
+          </button>
+          <button
             id="sheet-can-dismiss-false"
             onclick="createModal({ canDismiss: false, breakpoints: BREAKPOINTS, initialBreakpoint: BREAKPOINTS[1]  })"
-            >Sheet Modal / canDismiss = false</ion-button
           >
-          <ion-button
+            Sheet Modal / canDismiss = false
+          </button>
+          <button
             id="sheet-can-dismiss-promise-true"
             onclick="createModal({ canDismiss: PROMISE_TRUE, breakpoints: BREAKPOINTS, initialBreakpoint: BREAKPOINTS[1]  })"
-            >Sheet Modal / canDismiss = Promise(true)</ion-button
           >
-          <ion-button
+            Sheet Modal / canDismiss = Promise(true)
+          </button>
+          <button
             id="sheet-can-dismiss-promise-false"
             onclick="createModal({ canDismiss: PROMISE_FALSE, breakpoints: BREAKPOINTS, initialBreakpoint: BREAKPOINTS[1]  })"
-            >Sheet Modal / canDismiss = Promise(false)</ion-button
           >
+            Sheet Modal / canDismiss = Promise(false)
+          </button>
 
-          <ion-button
-            id="card-can-dismiss-true"
-            onclick="createModal({ canDismiss: true, presentingElement: rootPage })"
-            >Card Modal / canDismiss = true</ion-button
-          >
-          <ion-button
-            id="card-can-dismiss-false"
-            onclick="createModal({ canDismiss: false, presentingElement: rootPage })"
-            >Card Modal / canDismiss = false</ion-button
-          >
-          <ion-button
+          <button id="card-can-dismiss-true" onclick="createModal({ canDismiss: true, presentingElement: rootPage })">
+            Card Modal / canDismiss = true
+          </button>
+          <button id="card-can-dismiss-false" onclick="createModal({ canDismiss: false, presentingElement: rootPage })">
+            Card Modal / canDismiss = false
+          </button>
+          <button
             id="card-can-dismiss-promise-true"
             onclick="createModal({ canDismiss: PROMISE_TRUE, presentingElement: rootPage  })"
-            >Card Modal / canDismiss = Promise(true)</ion-button
           >
-          <ion-button
+            Card Modal / canDismiss = Promise(true)
+          </button>
+          <button
             id="card-can-dismiss-promise-false"
             onclick="createModal({ canDismiss: PROMISE_FALSE, presentingElement: rootPage  })"
-            >Card Modal / canDismiss = Promise(false)</ion-button
           >
+            Card Modal / canDismiss = Promise(false)
+          </button>
         </ion-content>
       </div>
     </ion-app>
