@@ -13,3 +13,12 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Legacy](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md)
 
 ## Version 9.x
+
+- [Components](#version-9x-components)
+  - [Card](#version-9x-card)
+
+<h2 id="version-9x-components">Components</h2>
+
+<h4 id="version-9x-card">Card</h4>
+
+- The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
