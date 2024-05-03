@@ -7,10 +7,12 @@
   /**
    * @prop --background: Background of the card
    * @prop --color: Color of the card
+   * @prop --border-radius: Border radius of the card
    */
   --ion-safe-area-left: 0px;
   --ion-safe-area-right: 0px;
 
+  @include border-radius(var(--border-radius));
   @include font-smoothing();
 
   display: block;

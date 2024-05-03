@@ -282,11 +282,12 @@ ion-card,prop,mode,"ios" | "md",undefined,false,false
 ion-card,prop,rel,string | undefined,undefined,false,false
 ion-card,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-card,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-card,prop,shape,"rectangular" | "round" | undefined,undefined,false,true
+ion-card,prop,shape,"rectangular" | "round" | "soft" | undefined,'round',false,true
 ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-card,css-prop,--background
+ion-card,css-prop,--border-radius
 ion-card,css-prop,--color
 ion-card,part,native
 
@@ -349,9 +350,10 @@ ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-chip,prop,disabled,boolean,false,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
-ion-chip,prop,shape,"rectangular" | "round" | undefined,undefined,false,false
+ion-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-chip,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-chip,css-prop,--background
+ion-chip,css-prop,--border-radius
 ion-chip,css-prop,--color
 
 ion-col,shadow
