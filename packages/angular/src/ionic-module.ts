@@ -58,7 +58,7 @@ const DECLARATIONS = [
 ];
 
 type OptInAngularFeatures = {
-  useSetInputAPI: boolean;
+  useSetInputAPI?: boolean;
 };
 
 @NgModule({
