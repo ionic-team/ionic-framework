@@ -14,7 +14,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.setContent(
         `
-        <ion-select interface="popover">
+        <ion-select aria-label="Select" interface="popover">
           <ion-select-option value="a" disabled="true">A</ion-select-option>
           <ion-select-option value="b">B</ion-select-option>
         </ion-select>

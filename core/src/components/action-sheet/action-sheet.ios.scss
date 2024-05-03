@@ -17,6 +17,7 @@
   --button-background-selected: #{$action-sheet-ios-button-background-selected};
   --button-background-selected-opacity: 1;
   --button-color: #{$action-sheet-ios-button-text-color};
+  --button-color-disabled: #{$text-color-step-150};
   --color: #{$action-sheet-ios-title-color};
 
   text-align: $action-sheet-ios-text-align;
@@ -26,7 +27,24 @@
 // ---------------------------------------------------
 
 .action-sheet-wrapper {
-  @include margin(var(--ion-safe-area-top, 0), auto, var(--ion-safe-area-bottom, 0), auto);
+  @include margin(var(--ion-safe-area-top, 0), auto, null, auto);
+  /**
+   * Bottom safe area is applied as padding so that it impacts the bounding box.
+   * When the action sheet is shown/hidden, this element is transformed by translating
+   * 100% of its height. This translation needs to include the bottom safe area
+   * otherwise part of the action sheet will still be visible at the end of
+   * the show transition.
+   *
+   * If this code is changed, reviewers should verify that the action
+   * sheet still translates out of the viewport completely when the bottom
+   * safe area is a positive value.
+   */
+  @include padding(null, null, var(--ion-safe-area-bottom, 0), null);
+
+  // Using content-box to increase the height of the action sheet
+  // wrapper by the bottom padding (safe area) to animate the
+  // action sheet completely off the screen when safe area is set.
+  box-sizing: content-box;
 }
 
 // iOS Action Sheet Container

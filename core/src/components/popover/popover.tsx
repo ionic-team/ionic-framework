@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { focusFirstDescendant } from '@utils/focus-trap';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
@@ -8,10 +9,10 @@ import {
   BACKDROP,
   dismiss,
   eventMethod,
-  focusFirstDescendant,
   prepareOverlay,
   present,
   setOverlayId,
+  FOCUS_TRAP_DISABLE_CLASS,
 } from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
@@ -242,6 +243,25 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * behavior in a popover using a list of items.
    */
   @Prop() keyboardEvents = false;
+
+  /**
+   * If `true`, focus will not be allowed to move outside of this overlay.
+   * If `false`, focus will be allowed to move outside of the overlay.
+   *
+   * In most scenarios this property should remain set to `true`. Setting
+   * this property to `false` can cause severe accessibility issues as users
+   * relying on assistive technologies may be able to move focus into
+   * a confusing state. We recommend only setting this to `false` when
+   * absolutely necessary.
+   *
+   * Developers may want to consider disabling focus trapping if this
+   * overlay presents a non-Ionic overlay from a 3rd party library.
+   * Developers would disable focus trapping on the Ionic overlay
+   * when presenting the 3rd party overlay and then re-enable
+   * focus trapping when dismissing the 3rd party overlay and moving
+   * focus back to the Ionic overlay.
+   */
+  @Prop() focusTrap = true;
 
   @Watch('trigger')
   @Watch('triggerAction')
@@ -512,7 +532,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      * descendant inside of the popover.
      */
     if (this.focusDescendantOnPresent) {
-      focusFirstDescendant(this.el, this.el);
+      focusFirstDescendant(el);
     }
 
     unlock();
@@ -525,6 +545,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
    * @param dismissParentPopover If `true`, dismissing this popover will also dismiss
    * a parent popover if this popover is nested. Defaults to `true`.
+   *
+   * This is a no-op if the overlay has not been presented yet. If you want
+   * to remove an overlay from the DOM that was never presented, use the
+   * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
   async dismiss(data?: any, role?: string, dismissParentPopover = true): Promise<boolean> {
@@ -659,7 +683,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
+    const { onLifecycle, parentPopover, dismissOnSelect, side, arrow, htmlAttributes, focusTrap } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
 
@@ -679,6 +703,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
           'overlay-hidden': true,
           'popover-desktop': desktop,
           [`popover-side-${side}`]: true,
+          [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
           'popover-nested': !!parentPopover,
         }}
         onIonPopoverDidPresent={onLifecycle}

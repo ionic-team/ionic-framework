@@ -1,6 +1,5 @@
 import { createAnimation } from '../animation';
 import type { Animation } from '../animation-interface';
-import { processKeyframes } from '../animation-utils';
 import { getTimeGivenProgression } from '../cubic-bezier';
 
 describe('Animation Class', () => {
@@ -52,104 +51,6 @@ describe('Animation Class', () => {
     it('should not be running due to not having keyframes', () => {
       animation.play();
       expect(animation.isRunning()).toEqual(false);
-    });
-
-    it('should be running', () => {
-      const el = document.createElement('div');
-      animation.addElement(el);
-      animation.keyframes([
-        { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 },
-      ]);
-      animation.duration(250);
-
-      animation.play();
-      expect(animation.isRunning()).toEqual(true);
-    });
-
-    it('should not be running after finishing the animation', async () => {
-      const el = document.createElement('div');
-      animation.addElement(el);
-      animation.keyframes([
-        { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 },
-      ]);
-      animation.duration(250);
-
-      await animation.play();
-
-      expect(animation.isRunning()).toEqual(false);
-    });
-
-    it('should not be running after calling pause', () => {
-      const el = document.createElement('div');
-      animation.addElement(el);
-      animation.keyframes([
-        { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 },
-      ]);
-      animation.duration(250);
-
-      animation.play();
-      expect(animation.isRunning()).toEqual(true);
-
-      animation.pause();
-      expect(animation.isRunning()).toEqual(false);
-    });
-
-    it('should not be running when doing progress steps', () => {
-      const el = document.createElement('div');
-      animation.addElement(el);
-      animation.keyframes([
-        { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 },
-      ]);
-      animation.duration(250);
-
-      animation.play();
-
-      animation.progressStart();
-
-      expect(animation.isRunning()).toEqual(false);
-    });
-
-    it('should be running after calling progressEnd', () => {
-      const el = document.createElement('div');
-      animation.addElement(el);
-      animation.keyframes([
-        { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 },
-      ]);
-      animation.duration(250);
-
-      animation.play();
-
-      animation.progressStart();
-      animation.progressEnd(1, 0);
-
-      expect(animation.isRunning()).toEqual(true);
-    });
-
-    it('should not be running after playing to beginning', async () => {
-      const el = document.createElement('div');
-      animation.addElement(el);
-      animation.keyframes([
-        { transform: 'scale(1)', opacity: 1, offset: 0 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 },
-      ]);
-      animation.duration(250);
-
-      await animation.play();
-
-      animation.progressStart();
-      animation.progressEnd(0, 0);
-
-      await new Promise<void>((resolve) => {
-        animation.onFinish(() => {
-          expect(animation.isRunning()).toEqual(false);
-          resolve();
-        });
-      });
     });
   });
 
@@ -226,18 +127,6 @@ describe('Animation Class', () => {
       ]);
 
       expect(animation.getKeyframes().length).toEqual(3);
-    });
-
-    it('should convert properties for CSS Animations', () => {
-      const processedKeyframes = processKeyframes([
-        { borderRadius: '0px', easing: 'ease-in', offset: 0 },
-        { borderRadius: '4px', easing: 'ease-out', offset: 1 },
-      ]);
-
-      expect(processedKeyframes).toEqual([
-        { 'border-radius': '0px', 'animation-timing-function': 'ease-in', offset: 0 },
-        { 'border-radius': '4px', 'animation-timing-function': 'ease-out', offset: 1 },
-      ]);
     });
 
     it('should set the from keyframe properly', () => {

@@ -11,7 +11,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await openDateTimeBtn.click();
 
       await ionPopoverDidPresent.next();
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-position-base`));
 

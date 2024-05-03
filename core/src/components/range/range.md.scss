@@ -18,21 +18,9 @@
   --pin-color: #{ion-color(primary, contrast)};
 }
 
-// TODO FW-2997 Remove this
-:host(.legacy-range) ::slotted([slot="label"]) {
-  font-size: initial;
-}
-
-:host(:not(.legacy-range)) ::slotted(:not(ion-icon)[slot="start"]),
-:host(:not(.legacy-range)) ::slotted(:not(ion-icon)[slot="end"]),
-:host(:not(.legacy-range)) .native-wrapper {
-  font-size: $range-md-pin-font-size;
-}
-
-// TODO FW-2997 remove this
-:host(.legacy-range) {
-  @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
-
+::slotted(:not(ion-icon)[slot="start"]),
+::slotted(:not(ion-icon)[slot="end"]),
+.native-wrapper {
   font-size: $range-md-pin-font-size;
 }
 
@@ -178,6 +166,7 @@
     @include position(null, null, -1px, 50%);
     @include margin-horizontal(-13px, null);
 
+    // Border radius for the pin should not change based on the direction
     @include multi-dir() {
       /* stylelint-disable-next-line property-disallowed-list */
       border-radius: 50% 50% 50% 0;

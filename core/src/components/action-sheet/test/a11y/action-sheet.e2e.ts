@@ -40,7 +40,7 @@ const testAriaButton = async (
   await expect(actionSheetButton).toHaveAttribute('aria-label', expectedAriaLabel);
 };
 
-configs({ directions: ['ltr'], themes: ['dark', 'light'] }).forEach(({ config, title }) => {
+configs({ directions: ['ltr'], palettes: ['dark', 'light'] }).forEach(({ config, title }) => {
   test.describe(title('action-sheet: Axe testing'), () => {
     test('should not have accessibility violations when header is defined', async ({ page }) => {
       await page.setContent(

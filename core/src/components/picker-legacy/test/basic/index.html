@@ -12,21 +12,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  </head>
-  <script type="module">
-    import { pickerController } from '../../../../dist/ionic/index.esm.js';
-    window.pickerController = pickerController;
-  </script>
-
-  <body>
-    <ion-app>
-      <ion-content class="ion-padding">
-        <ion-button id="basic" expand="block" onclick="presentPicker()">Show Picker</ion-button>
-        <ion-button id="custom" expand="block" onclick="presentPicker('my-custom-class')"
-          >Show Custom Picker</ion-button
-        >
-      </ion-content>
-    </ion-app>
 
     <style>
       .my-custom-class {
@@ -42,6 +27,19 @@
         color: #d6d6d6;
       }
     </style>
+  </head>
+  <script type="module">
+    import { pickerController } from '../../../../dist/ionic/index.esm.js';
+    window.pickerController = pickerController;
+  </script>
+
+  <body>
+    <ion-app>
+      <ion-content class="ion-padding">
+        <button id="basic" class="expand" onclick="presentPicker()">Show Picker</button>
+        <button id="custom" class="expand" onclick="presentPicker('my-custom-class')">Show Custom Picker</button>
+      </ion-content>
+    </ion-app>
 
     <script>
       selectedIndex = 0;

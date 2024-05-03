@@ -25,7 +25,7 @@ const QUERY: { [key: string]: string } = {
   shadow: true,
 })
 export class SplitPane implements ComponentInterface {
-  private rmL: any;
+  private rmL?: () => void;
 
   @Element() el!: HTMLElement;
   @State() visible = false;
@@ -72,7 +72,7 @@ export class SplitPane implements ComponentInterface {
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
     // before WC is defined. This needs to be fixed in Stencil.
-    if (typeof (customElements as any) !== 'undefined' && (customElements as any) != null) {
+    if (typeof customElements !== 'undefined' && customElements != null) {
       await customElements.whenDefined('ion-split-pane');
     }
     this.styleMainElement();
@@ -119,17 +119,16 @@ export class SplitPane implements ComponentInterface {
       return;
     }
 
-    if ((window as any).matchMedia) {
-      // Listen on media query
-      const callback = (q: MediaQueryList) => {
-        this.visible = q.matches;
-      };
+    // Listen on media query
+    const callback = (q: MediaQueryList) => {
+      this.visible = q.matches;
+    };
 
-      const mediaList = window.matchMedia(mediaQuery);
-      (mediaList as any).addListener(callback as any);
-      this.rmL = () => (mediaList as any).removeListener(callback as any);
-      this.visible = mediaList.matches;
-    }
+    const mediaList = window.matchMedia(mediaQuery);
+    // TODO FW-5869
+    mediaList.addListener(callback as any);
+    this.rmL = () => mediaList.removeListener(callback as any);
+    this.visible = mediaList.matches;
   }
 
   /**

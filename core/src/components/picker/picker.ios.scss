@@ -10,5 +10,5 @@
 }
 
 :host .picker-highlight {
-  background: var(--highlight-background, var(--ion-color-step-150, #eeeeef));
+  background: var(--highlight-background, var(--ion-color-step-150, var(--ion-background-color-step-150, #eeeeef)));
 }

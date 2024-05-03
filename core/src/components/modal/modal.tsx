@@ -10,13 +10,13 @@ import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
   GESTURE,
   BACKDROP,
-  activeAnimations,
   dismiss,
   eventMethod,
   prepareOverlay,
   present,
   createTriggerController,
   setOverlayId,
+  FOCUS_TRAP_DISABLE_CLASS,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
@@ -259,11 +259,33 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() keepContentsMounted = false;
 
   /**
+   * If `true`, focus will not be allowed to move outside of this overlay.
+   * If `false`, focus will be allowed to move outside of the overlay.
+   *
+   * In most scenarios this property should remain set to `true`. Setting
+   * this property to `false` can cause severe accessibility issues as users
+   * relying on assistive technologies may be able to move focus into
+   * a confusing state. We recommend only setting this to `false` when
+   * absolutely necessary.
+   *
+   * Developers may want to consider disabling focus trapping if this
+   * overlay presents a non-Ionic overlay from a 3rd party library.
+   * Developers would disable focus trapping on the Ionic overlay
+   * when presenting the 3rd party overlay and then re-enable
+   * focus trapping when dismissing the 3rd party overlay and moving
+   * focus back to the Ionic overlay.
+   */
+  @Prop() focusTrap = true;
+
+  /**
    * Determines whether or not a modal can dismiss
    * when calling the `dismiss` method.
    *
    * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
    * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
+   *
+   * See https://ionicframework.com/docs/troubleshooting/runtime#accessing-this
+   * if you need to access `this` from within the callback.
    */
   @Prop() canDismiss: boolean | ((data?: any, role?: string) => Promise<boolean>) = true;
 
@@ -343,10 +365,47 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    const { breakpoints, initialBreakpoint, el } = this;
+    const { breakpoints, initialBreakpoint, el, htmlAttributes } = this;
     const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
-    this.inheritedAttributes = inheritAttributes(el, ['aria-label', 'role']);
+    const attributesToInherit = ['aria-label', 'role'];
+    this.inheritedAttributes = inheritAttributes(el, attributesToInherit);
+
+    /**
+     * When using a controller modal you can set attributes
+     * using the htmlAttributes property. Since the above attributes
+     * need to be inherited inside of the modal, we need to look
+     * and see if these attributes are being set via htmlAttributes.
+     *
+     * We could alternatively move this to componentDidLoad to simplify the work
+     * here, but we'd then need to make inheritedAttributes a State variable,
+     * thus causing another render to always happen after the first render.
+     */
+    if (htmlAttributes !== undefined) {
+      attributesToInherit.forEach((attribute) => {
+        const attributeValue = htmlAttributes[attribute];
+        if (attributeValue) {
+          /**
+           * If an attribute we need to inherit was
+           * set using htmlAttributes then add it to
+           * inheritedAttributes and remove it from htmlAttributes.
+           * This ensures the attribute is inherited and not
+           * set on the host.
+           *
+           * In this case, if an inherited attribute is set
+           * on the host element and using htmlAttributes then
+           * htmlAttributes wins, but that's not a pattern that we recommend.
+           * The only time you'd need htmlAttributes is when using modalController.
+           */
+          this.inheritedAttributes = {
+            ...this.inheritedAttributes,
+            [attribute]: htmlAttributes[attribute],
+          };
+
+          delete htmlAttributes[attribute];
+        }
+      });
+    }
 
     if (isSheetModal) {
       this.currentBreakpoint = this.initialBreakpoint;
@@ -660,6 +719,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    *
    * @param data Any data to emit in the dismiss events.
    * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
+   *
+   * This is a no-op if the overlay has not been presented yet. If you want
+   * to remove an overlay from the DOM that was never presented, use the
+   * [remove](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) method.
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
@@ -702,8 +765,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.keyboardOpenCallback = undefined;
     }
 
-    const enteringAnimation = activeAnimations.get(this) || [];
-
     const dismissed = await dismiss<ModalDismissOptions>(
       this,
       data,
@@ -730,8 +791,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.gesture) {
         this.gesture.destroy();
       }
-
-      enteringAnimation.forEach((ani) => ani.destroy());
     }
     this.currentBreakpoint = undefined;
     this.animation = undefined;
@@ -866,7 +925,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   render() {
-    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
+    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes, focusTrap } =
+      this;
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
@@ -887,6 +947,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
           'overlay-hidden': true,
+          [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
           ...getClassMap(this.cssClass),
         }}
         onIonBackdropTap={this.onBackdropTap}

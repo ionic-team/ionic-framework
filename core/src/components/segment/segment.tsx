@@ -94,8 +94,9 @@ export class Segment implements ComponentInterface {
   @Prop() selectOnFocus = false;
 
   /**
-   * Emitted when the value property has changed and any
-   * dragging pointer has been released from `ion-segment`.
+   * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<SegmentChangeEventDetail>;
 
@@ -486,6 +487,15 @@ export class Segment implements ComponentInterface {
     }
   };
 
+  private onSlottedItemsChange = () => {
+    /**
+     * When the slotted segment buttons change we need to
+     * ensure that the new segment buttons are checked if
+     * the value matches the segment button value.
+     */
+    this.valueChanged(this.value);
+  };
+
   private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
     const buttons = this.getButtons().filter((button) => !button.disabled);
     const currIndex = buttons.findIndex((button) => button === document.activeElement);
@@ -564,7 +574,7 @@ export class Segment implements ComponentInterface {
           'segment-scrollable': this.scrollable,
         })}
       >
-        <slot></slot>
+        <slot onSlotchange={this.onSlottedItemsChange}></slot>
       </Host>
     );
   }

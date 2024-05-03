@@ -48,3 +48,23 @@ html.ios.ios {
   --ion-font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
 }
+
+ion-content button,
+main button {
+  display: inline-block;
+  width: auto;
+  clear: both;
+  padding: 12px 8px;
+  font-size: 1em;
+  background: #008080;
+  border: 1px solid #005555;
+  color: #fff;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+ion-content button.expand,
+main button.expand {
+  display: block;
+  width: 100%;
+}

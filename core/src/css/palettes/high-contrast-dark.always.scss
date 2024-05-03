@@ -1,0 +1,13 @@
+@import "./high-contrast-dark";
+
+:root {
+  @include high-contrast-dark-base-palette();
+}
+
+:root.ios {
+  @include high-contrast-dark-ios-palette();
+}
+
+:root.md {
+  @include high-contrast-dark-md-palette();
+}

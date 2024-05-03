@@ -47,6 +47,8 @@ export class RadioGroup implements ComponentInterface {
 
   /**
    * Emitted when the value has changed.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
@@ -130,7 +132,15 @@ export class RadioGroup implements ComponentInterface {
      * using the `name` attribute.
      */
     const selectedRadio = ev.target && (ev.target as HTMLElement).closest('ion-radio');
-    if (selectedRadio && selectedRadio.disabled === false) {
+    /**
+     * Our current disabled prop definition causes Stencil to mark it
+     * as optional. While this is not desired, fixing this behavior
+     * in Stencil is a significant breaking change, so this effort is
+     * being de-risked in STENCIL-917. Until then, we compromise
+     * here by checking for falsy `disabled` values instead of strictly
+     * checking `disabled === false`.
+     */
+    if (selectedRadio && !selectedRadio.disabled) {
       const currentValue = this.value;
       const newValue = selectedRadio.value;
       if (newValue !== currentValue) {

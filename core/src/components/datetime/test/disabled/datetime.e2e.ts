@@ -27,7 +27,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const febFirstButton = page.locator(`.calendar-day[data-day='1'][data-month='2']`);
 
@@ -42,7 +42,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
       await expect(calendarMonthYear.locator('button')).toBeDisabled();
     });
@@ -71,7 +71,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const clearButton = page.locator('#clear-button button');
 
@@ -86,7 +86,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
         config
       );
 
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
       const calendarBody = page.locator('.calendar-body');
       await expect(calendarMonthYear).toHaveText('February 2022');

@@ -382,7 +382,10 @@ export class Accordion implements ComponentInterface {
   };
 
   private toggleExpanded() {
-    const { accordionGroupEl, value, state } = this;
+    const { accordionGroupEl, disabled, readonly, value, state } = this;
+
+    if (disabled || readonly) return;
+
     if (accordionGroupEl) {
       /**
        * Because the accordion group may or may

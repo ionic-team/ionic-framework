@@ -3,7 +3,7 @@
 @import "../../themes/ionic.globals.md";
 
 :host {
-  --background: var(--ion-color-step-100, #ffffff);
+  --background: var(--ion-color-step-100, var(--ion-background-color-step-100, #ffffff));
   --title-color: #{current-color(contrast)};
 }
 

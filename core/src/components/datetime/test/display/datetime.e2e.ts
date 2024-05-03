@@ -15,7 +15,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-date-time`));
       });
@@ -26,7 +26,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-time-date`));
       });
@@ -37,7 +37,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-time`));
       });
@@ -48,7 +48,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-date`));
       });
@@ -69,7 +69,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-date-time`));
       });
@@ -80,7 +80,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-time-date`));
       });
@@ -91,7 +91,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-time`));
       });
@@ -102,7 +102,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `,
           config
         );
-        await page.waitForSelector('.datetime-ready');
+        await page.locator('.datetime-ready').waitFor();
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-date`));
       });
@@ -119,7 +119,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('month selection should work after changing presentation', async ({ page }) => {
       await page.goto('/src/components/datetime/test/display', config);
       const ionWorkingPartsDidChange = await page.spyOnEvent('ionWorkingPartsDidChange');
-      await page.waitForSelector('.datetime-ready');
+      await page.locator('.datetime-ready').waitFor();
 
       const select = page.locator('select#presentation');
 

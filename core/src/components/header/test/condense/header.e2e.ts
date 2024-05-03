@@ -16,7 +16,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await content.evaluate(async (el: HTMLIonContentElement) => {
         await el.scrollToBottom();
       });
-      await page.waitForSelector('#largeTitleHeader.header-collapse-condense-inactive');
+      await page.locator('#largeTitleHeader.header-collapse-condense-inactive').waitFor();
 
       await expect(smallTitleHeader).toHaveScreenshot(screenshot(`header-condense-large-title-collapsed-diff`));
 
@@ -30,7 +30,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await content.evaluate(async (el: HTMLIonContentElement) => {
         await el.scrollToTop();
       });
-      await page.waitForSelector('#smallTitleHeader.header-collapse-condense-inactive');
+      await page.locator('#smallTitleHeader.header-collapse-condense-inactive').waitFor();
 
       await expect(smallTitleHeader).toHaveAttribute('aria-hidden', 'true');
     });

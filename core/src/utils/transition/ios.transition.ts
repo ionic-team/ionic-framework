@@ -7,8 +7,8 @@ const DURATION = 540;
 
 // TODO(FW-2832): types
 
-const getClonedElement = (tagName: string): any => {
-  return document.querySelector(`${tagName}.ion-cloned-element`) as any;
+const getClonedElement = <T extends HTMLIonBackButtonElement | HTMLIonTitleElement>(tagName: string) => {
+  return document.querySelector<T>(`${tagName}.ion-cloned-element`);
 };
 
 export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
@@ -59,8 +59,8 @@ const createLargeTitleTransition = (
   rootAnimation: Animation,
   rtl: boolean,
   backDirection: boolean,
-  enteringEl: any,
-  leavingEl: any
+  enteringEl: HTMLElement,
+  leavingEl: HTMLElement | undefined
 ) => {
   const enteringBackButton = getBackButton(enteringEl, backDirection);
   const leavingLargeTitle = getLargeTitle(leavingEl);
@@ -75,8 +75,10 @@ const createLargeTitleTransition = (
     const leavingLargeTitleBox = leavingLargeTitle.getBoundingClientRect();
     const enteringBackButtonBox = enteringBackButton.getBoundingClientRect();
 
-    const enteringBackButtonTextEl = shadow(enteringBackButton).querySelector('.button-text')!;
-    const enteringBackButtonTextBox = enteringBackButtonTextEl.getBoundingClientRect();
+    const enteringBackButtonTextEl = shadow(enteringBackButton).querySelector('.button-text');
+
+    // Text element not rendered if developers pass text="" to the back button
+    const enteringBackButtonTextBox = enteringBackButtonTextEl?.getBoundingClientRect();
 
     const leavingLargeTitleTextEl = shadow(leavingLargeTitle).querySelector('.toolbar-title')!;
     const leavingLargeTitleTextBox = leavingLargeTitleTextEl.getBoundingClientRect();
@@ -88,6 +90,7 @@ const createLargeTitleTransition = (
       leavingLargeTitle,
       leavingLargeTitleBox,
       leavingLargeTitleTextBox,
+      enteringBackButtonBox,
       enteringBackButtonTextEl,
       enteringBackButtonTextBox
     );
@@ -106,8 +109,10 @@ const createLargeTitleTransition = (
     const enteringLargeTitleBox = enteringLargeTitle.getBoundingClientRect();
     const leavingBackButtonBox = leavingBackButton.getBoundingClientRect();
 
-    const leavingBackButtonTextEl = shadow(leavingBackButton).querySelector('.button-text')!;
-    const leavingBackButtonTextBox = leavingBackButtonTextEl.getBoundingClientRect();
+    const leavingBackButtonTextEl = shadow(leavingBackButton).querySelector('.button-text');
+
+    // Text element not rendered if developers pass text="" to the back button
+    const leavingBackButtonTextBox = leavingBackButtonTextEl?.getBoundingClientRect();
 
     const enteringLargeTitleTextEl = shadow(enteringLargeTitle).querySelector('.toolbar-title')!;
     const enteringLargeTitleTextBox = enteringLargeTitleTextEl.getBoundingClientRect();
@@ -119,6 +124,7 @@ const createLargeTitleTransition = (
       enteringLargeTitle,
       enteringLargeTitleBox,
       enteringLargeTitleTextBox,
+      leavingBackButtonBox,
       leavingBackButtonTextEl,
       leavingBackButtonTextBox
     );
@@ -147,8 +153,8 @@ const animateBackButton = (
   backDirection: boolean,
   backButtonEl: HTMLIonBackButtonElement,
   backButtonBox: DOMRect,
-  backButtonTextEl: HTMLElement,
-  backButtonTextBox: DOMRect,
+  backButtonTextEl: HTMLElement | null,
+  backButtonTextBox: DOMRect | undefined,
   largeTitleEl: HTMLIonTitleElement,
   largeTitleTextBox: DOMRect
 ) => {
@@ -158,30 +164,34 @@ const animateBackButton = (
   const ICON_ORIGIN_X = rtl ? 'left' : 'right';
 
   const CONTAINER_ORIGIN_X = rtl ? 'right' : 'left';
+  let WIDTH_SCALE = 1;
+  let HEIGHT_SCALE = 1;
 
-  /**
-   * When the title and back button texts match
-   * then they should overlap during the page transition.
-   * If the texts do not match up then the back button text scale adjusts
-   * to not perfectly match the large title text otherwise the
-   * proportions will be incorrect.
-   * When the texts match we scale both the width and height to account for
-   * font weight differences between the title and back button.
-   */
-  const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
-
-  const WIDTH_SCALE = largeTitleTextBox.width / backButtonTextBox.width;
-
-  /**
-   * We subtract an offset to account for slight sizing/padding
-   * differences between the title and the back button.
-   */
-  const HEIGHT_SCALE = (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET) / backButtonTextBox.height;
-
-  const TEXT_START_SCALE = doTitleAndButtonTextsMatch
-    ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})`
-    : `scale(${HEIGHT_SCALE})`;
+  let TEXT_START_SCALE = `scale(${HEIGHT_SCALE})`;
   const TEXT_END_SCALE = 'scale(1)';
+
+  if (backButtonTextEl && backButtonTextBox) {
+    /**
+     * When the title and back button texts match then they should overlap during the
+     * page transition. If the texts do not match up then the back button text scale
+     * adjusts to not perfectly match the large title text otherwise the proportions
+     * will be incorrect. When the texts match we scale both the width and height to
+     * account for font weight differences between the title and back button.
+     */
+    const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
+    WIDTH_SCALE = largeTitleTextBox.width / backButtonTextBox.width;
+    /**
+     * Subtract an offset to account for slight sizing/padding differences between the
+     * title and the back button.
+     */
+    HEIGHT_SCALE = (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET) / backButtonTextBox.height;
+
+    /**
+     * Even though we set TEXT_START_SCALE to HEIGHT_SCALE above, we potentially need
+     * to re-compute this here since the HEIGHT_SCALE may have changed.
+     */
+    TEXT_START_SCALE = doTitleAndButtonTextsMatch ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})` : `scale(${HEIGHT_SCALE})`;
+  }
 
   const backButtonIconEl = shadow(backButtonEl).querySelector('ion-icon')!;
   const backButtonIconBox = backButtonIconEl.getBoundingClientRect();
@@ -268,10 +278,10 @@ const animateBackButton = (
   const enteringBackButtonIconAnimation = createAnimation();
   const enteringBackButtonAnimation = createAnimation();
 
-  const clonedBackButtonEl = getClonedElement('ion-back-button');
+  const clonedBackButtonEl = getClonedElement<HTMLIonBackButtonElement>('ion-back-button')!;
 
-  const clonedBackButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text');
-  const clonedBackButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon');
+  const clonedBackButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text')!;
+  const clonedBackButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon')!;
 
   clonedBackButtonEl.text = backButtonEl.text;
   clonedBackButtonEl.mode = backButtonEl.mode;
@@ -292,12 +302,11 @@ const animateBackButton = (
       top: '0px',
       [CONTAINER_ORIGIN_X]: '0px',
     })
-    .keyframes(CONTAINER_KEYFRAMES);
-
-  enteringBackButtonTextAnimation
-    .beforeStyles({
-      'transform-origin': `${TEXT_ORIGIN_X} top`,
-    })
+    /**
+     * The write hooks must be set on this animation as it is guaranteed to run. Other
+     * animations such as the back button text animation will not run if the back button
+     * has no visible text.
+     */
     .beforeAddWrite(() => {
       backButtonEl.style.setProperty('display', 'none');
       clonedBackButtonEl.style.setProperty(TEXT_ORIGIN_X, BACK_BUTTON_START_OFFSET);
@@ -306,6 +315,12 @@ const animateBackButton = (
       backButtonEl.style.setProperty('display', '');
       clonedBackButtonEl.style.setProperty('display', 'none');
       clonedBackButtonEl.style.removeProperty(TEXT_ORIGIN_X);
+    })
+    .keyframes(CONTAINER_KEYFRAMES);
+
+  enteringBackButtonTextAnimation
+    .beforeStyles({
+      'transform-origin': `${TEXT_ORIGIN_X} top`,
     })
     .keyframes(TEXT_KEYFRAMES);
 
@@ -329,8 +344,9 @@ const animateLargeTitle = (
   largeTitleEl: HTMLIonTitleElement,
   largeTitleBox: DOMRect,
   largeTitleTextBox: DOMRect,
-  backButtonTextEl: HTMLElement,
-  backButtonTextBox: DOMRect
+  backButtonBox: DOMRect,
+  backButtonTextEl: HTMLElement | null,
+  backButtonTextBox: DOMRect | undefined
 ) => {
   /**
    * The horizontal transform origin for the large title
@@ -353,59 +369,76 @@ const animateLargeTitle = (
    * title and the back button due to padding and font weight.
    */
   const LARGE_TITLE_TRANSLATION_OFFSET = 8;
+  let END_TRANSLATE_X = rtl
+    ? `-${window.innerWidth - backButtonBox.right - LARGE_TITLE_TRANSLATION_OFFSET}px`
+    : `${backButtonBox.x + LARGE_TITLE_TRANSLATION_OFFSET}px`;
 
   /**
-   * The scaled title should (roughly) overlap the back button.
-   * This ensures that the back button and title overlap during
-   * the animation. Note that since both elements either fade in
-   * or fade out over the course of the animation, neither element
-   * will be fully visible on top of the other. As a result, the overlap
-   * does not need to be perfect, so approximate values are acceptable here.
+   * How much to scale the large title up/down by.
    */
-  const END_TRANSLATE_X = rtl
-    ? `-${window.innerWidth - backButtonTextBox.right - LARGE_TITLE_TRANSLATION_OFFSET}px`
-    : `${backButtonTextBox.x - LARGE_TITLE_TRANSLATION_OFFSET}px`;
+  let HEIGHT_SCALE = 0.5;
 
   /**
-   * The top of the scaled large title
-   * should match with the top of the
-   * back button text element.
-   * We subtract 2px to account for the top padding
-   * on the large title element.
+   * The large title always starts full size.
    */
-  const LARGE_TITLE_TOP_PADDING = 2;
-  const END_TRANSLATE_Y = `${backButtonTextBox.y - LARGE_TITLE_TOP_PADDING}px`;
-
-  /**
-   * In the forward direction, the large title should start at its
-   * normal size and then scale down to be (roughly) the size of the
-   * back button on the other view. In the backward direction, the
-   * large title should start at (roughly) the size of the back button
-   * and then scale up to its original size.
-   *
-   * Note that since both elements either fade in
-   * or fade out over the course of the animation, neither element
-   * will be fully visible on top of the other. As a result, the overlap
-   * does not need to be perfect, so approximate values are acceptable here.
-   */
-
-  /**
-   * When the title and back button texts match
-   * then they should overlap during the page transition.
-   * If the texts do not match up then the large title text scale adjusts
-   * to not perfectly match the back button text otherwise the
-   * proportions will be incorrect.
-   * When the texts match we scale both the width and height to account for
-   * font weight differences between the title and back button.
-   */
-  const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
-
-  const WIDTH_SCALE = backButtonTextBox.width / largeTitleTextBox.width;
-  const HEIGHT_SCALE = backButtonTextBox.height / (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET);
-
   const START_SCALE = 'scale(1)';
 
-  const END_SCALE = doTitleAndButtonTextsMatch ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})` : `scale(${HEIGHT_SCALE})`;
+  /**
+   * By default, we don't worry about having the large title scaled to perfectly
+   * match the back button because we don't know if the back button's text matches
+   * the large title's text.
+   */
+  let END_SCALE = `scale(${HEIGHT_SCALE})`;
+
+  // Text element not rendered if developers pass text="" to the back button
+  if (backButtonTextEl && backButtonTextBox) {
+    /**
+     * The scaled title should (roughly) overlap the back button. This ensures that
+     * the back button and title overlap during the animation. Note that since both
+     * elements either fade in or fade out over the course of the animation, neither
+     * element will be fully visible on top of the other. As a result, the overlap
+     * does not need to be perfect, so approximate values are acceptable here.
+     */
+    END_TRANSLATE_X = rtl
+      ? `-${window.innerWidth - backButtonTextBox.right - LARGE_TITLE_TRANSLATION_OFFSET}px`
+      : `${backButtonTextBox.x - LARGE_TITLE_TRANSLATION_OFFSET}px`;
+
+    /**
+     * In the forward direction, the large title should start at its normal size and
+     * then scale down to be (roughly) the size of the back button on the other view.
+     * In the backward direction, the large title should start at (roughly) the size
+     * of the back button and then scale up to its original size.
+     * Note that since both elements either fade in or fade out over the course of the
+     * animation, neither element will be fully visible on top of the other. As a result,
+     * the overlap  does not need to be perfect, so approximate values are acceptable here.
+     */
+
+    /**
+     * When the title and back button texts match then they should overlap during the
+     * page transition. If the texts do not match up then the large title text scale
+     * adjusts to not perfectly match the back button text otherwise the proportions
+     * will be incorrect. When the texts match we scale both the width and height to
+     * account for font weight differences between the title and back button.
+     */
+    const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
+
+    const WIDTH_SCALE = backButtonTextBox.width / largeTitleTextBox.width;
+    HEIGHT_SCALE = backButtonTextBox.height / (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET);
+
+    /**
+     * Even though we set TEXT_START_SCALE to HEIGHT_SCALE above, we potentially need
+     * to re-compute this here since the HEIGHT_SCALE may have changed.
+     */
+    END_SCALE = doTitleAndButtonTextsMatch ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})` : `scale(${HEIGHT_SCALE})`;
+  }
+
+  /**
+   * The midpoints of the back button and the title should align such that the back
+   * button and title appear to be centered with each other.
+   */
+  const backButtonMidPoint = backButtonBox.top + backButtonBox.height / 2;
+  const titleMidPoint = (largeTitleBox.height * HEIGHT_SCALE) / 2;
+  const END_TRANSLATE_Y = `${backButtonMidPoint - titleMidPoint}px`;
 
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
@@ -424,7 +457,7 @@ const animateLargeTitle = (
 
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
 
-  const clonedTitleEl = getClonedElement('ion-title');
+  const clonedTitleEl = getClonedElement<HTMLIonTitleElement>('ion-title')!;
   const clonedLargeTitleAnimation = createAnimation();
 
   clonedTitleEl.innerText = largeTitleEl.innerText;
@@ -468,7 +501,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     const CENTER = '0%';
     const OFF_OPACITY = 0.8;
 
-    const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
+    const isRTL = navEl.ownerDocument.dir === 'rtl';
     const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
     const OFF_LEFT = isRTL ? '33%' : '-33%';
 

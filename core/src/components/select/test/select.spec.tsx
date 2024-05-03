@@ -68,4 +68,60 @@ describe('ion-select', () => {
     expect(propEl).not.toBe(null);
     expect(slotEl).toBe(null);
   });
+  it('should prefer aria label if both attribute and visible text provided', async () => {
+    const page = await newSpecPage({
+      components: [Select],
+      html: `
+        <ion-select aria-label="Aria Label Text" label="Label Prop Text"></ion-select>
+      `,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+
+    const nativeButton = select.shadowRoot!.querySelector('button')!;
+
+    expect(nativeButton.getAttribute('aria-label')).toBe('Aria Label Text');
+  });
+  it('should prefer visible label if only visible text provided', async () => {
+    const page = await newSpecPage({
+      components: [Select],
+      html: `
+        <ion-select label="Label Prop Text"></ion-select>
+      `,
+    });
+
+    const select = page.body.querySelector('ion-select')!;
+
+    const nativeButton = select.shadowRoot!.querySelector('button')!;
+
+    expect(nativeButton.getAttribute('aria-label')).toBe('Label Prop Text');
+  });
+});
+
+describe('select: slot interactivity', () => {
+  test('should not prevent click handlers from firing', async () => {
+    // https://github.com/ionic-team/ionic-framework/issues/28818
+    const divSpy = jest.fn();
+    const buttonSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [Select],
+      template: () => (
+        <div onClick={divSpy}>
+          <ion-select label="Label Prop Text">
+            <button slot="end" onClick={buttonSpy}>
+              Button
+            </button>
+          </ion-select>
+        </div>
+      ),
+    });
+
+    const button = page.body.querySelector('button')!;
+
+    await button.click();
+
+    expect(buttonSpy).toHaveBeenCalled();
+    expect(divSpy).toHaveBeenCalled();
+  });
 });

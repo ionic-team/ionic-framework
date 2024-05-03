@@ -28,7 +28,6 @@ const SELECT_INPUTS = [
   'justify',
   'label',
   'labelPlacement',
-  'legacy',
   'mode',
   'multiple',
   'name',

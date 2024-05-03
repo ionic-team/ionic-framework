@@ -12,6 +12,62 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      f {
+        display: block;
+        width: 100%;
+        height: 50px;
+      }
+
+      .red {
+        background-color: #ea445a;
+      }
+
+      .green {
+        background-color: #76d672;
+      }
+
+      .blue {
+        background-color: #3478f6;
+      }
+
+      .light-blue {
+        background-color: #6bbef6;
+      }
+
+      .yellow {
+        background-color: #ffff80;
+      }
+
+      .pink {
+        background-color: #ff6b86;
+      }
+
+      .purple {
+        background-color: #7e34f6;
+      }
+
+      .black {
+        background-color: #000;
+      }
+
+      .fuchsia {
+        background-color: #cc00ff;
+      }
+
+      .orange {
+        background-color: #f69234;
+      }
+
+      .black {
+        background-color: #000;
+      }
+
+      .light {
+        color: #000;
+      }
+    </style>
   </head>
   <script type="module">
     import { alertController } from '../../../../dist/ionic/index.esm.js';
@@ -27,12 +83,10 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-button expand="block" onclick="presentAlert()">Alert</ion-button>
-        <ion-button expand="block" color="secondary" onclick="presentAlertLongMessage()">Alert Long Message</ion-button>
-        <ion-button expand="block" color="danger" onclick="presentAlertMultipleButtons()"
-          >Multiple Buttons (>2)</ion-button
-        >
-        <ion-button expand="block" color="light" onclick="presentAlertNoMessage()">Alert No Message</ion-button>
+        <button class="expand blue" onclick="presentAlert()">Alert</button>
+        <button class="expand light-blue" onclick="presentAlertLongMessage()">Alert Long Message</button>
+        <button class="expand red" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</button>
+        <button class="expand light" onclick="presentAlertNoMessage()">Alert No Message</button>
 
         <ion-grid>
           <ion-row>
@@ -48,10 +102,10 @@
           </ion-row>
         </ion-grid>
 
-        <ion-button expand="block" color="dark" onclick="presentAlertConfirm()">Confirm</ion-button>
-        <ion-button expand="block" color="primary" onclick="presentAlertPrompt()">Prompt</ion-button>
-        <ion-button expand="block" color="secondary" onclick="presentAlertRadio()">Radio</ion-button>
-        <ion-button expand="block" color="danger" onclick="presentAlertCheckbox()">Checkbox</ion-button>
+        <button class="expand black" onclick="presentAlertConfirm()">Confirm</button>
+        <button class="expand blue" onclick="presentAlertPrompt()">Prompt</button>
+        <button class="expand light-blue" onclick="presentAlertRadio()">Radio</button>
+        <button class="expand red" onclick="presentAlertCheckbox()">Checkbox</button>
       </ion-content>
     </ion-app>
 
@@ -303,49 +357,5 @@
         });
       }
     </script>
-
-    <style>
-      f {
-        display: block;
-        width: 100%;
-        height: 50px;
-      }
-
-      .red {
-        background-color: #ea445a;
-      }
-
-      .green {
-        background-color: #76d672;
-      }
-
-      .blue {
-        background-color: #3478f6;
-      }
-
-      .yellow {
-        background-color: #ffff80;
-      }
-
-      .pink {
-        background-color: #ff6b86;
-      }
-
-      .purple {
-        background-color: #7e34f6;
-      }
-
-      .black {
-        background-color: #000;
-      }
-
-      .fuchsia {
-        background-color: #cc00ff;
-      }
-
-      .orange {
-        background-color: #f69234;
-      }
-    </style>
   </body>
 </html>

@@ -7,8 +7,8 @@
     </ion-header>
     <ion-content>
       <ion-item>
-        <ion-label>Select Popover</ion-label>
         <ion-select
+          label="Select Popover"
           id="select-popover"
           interface="popover"
           placeholder="Select fruit"
@@ -30,7 +30,6 @@ import {
   IonTitle,
   IonContent,
   IonItem,
-  IonLabel,
   IonSelect,
   IonSelectOption,
 } from "@ionic/vue";
@@ -44,7 +43,6 @@ export default defineComponent({
     IonTitle,
     IonContent,
     IonItem,
-    IonLabel,
     IonSelect,
     IonSelectOption,
   },

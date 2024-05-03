@@ -10,6 +10,7 @@ describe('Inputs', () => {
     cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
     cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
     cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
+    cy.get('ion-range').should('have.prop', 'value').and('equal', 50);
   });
 
   it('should have reset value', () => {
@@ -27,6 +28,7 @@ describe('Inputs', () => {
     cy.get('ion-input').should('not.have.prop', 'value');
     cy.get('ion-datetime').should('not.have.prop', 'value');
     cy.get('ion-select').should('not.have.prop', 'value');
+    cy.get('ion-range').should('not.have.prop', 'value');
   });
 
   it('should get some value', () => {
@@ -39,6 +41,7 @@ describe('Inputs', () => {
     cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
     cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
     cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
+    cy.get('ion-range').should('have.prop', 'value').and('equal', 50);
   });
 
   it('change values should update angular', () => {

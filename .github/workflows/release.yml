@@ -22,8 +22,6 @@ on:
         options:
           - latest
           - next
-          - v5-lts
-          - v4-lts
       preid:
         type: choice
         description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", "premajor", or "prerelease".
@@ -50,7 +48,7 @@ jobs:
     needs: [release-ionic]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         token: ${{ secrets.IONITRON_TOKEN }}
         fetch-depth: 0
@@ -69,16 +67,45 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
-    # Lerna does not automatically bump versions
-    # of Ionic dependencies that have changed,
-    # so we do that here.
-    - name: Bump Package Lock
-      run: |
-        lerna exec "npm install --package-lock-only"
-        git add .
-        git commit -m "chore(): update package lock files"
-        git push
-      shell: bash
+
+  update-package-lock:
+    # This needs to run after finalize-release
+    # because we also push to the repo in that
+    # job. If these jobs ran in parallel then it is
+    # possible for them to push at the same time.
+    needs: [finalize-release]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        # Pull the latest version of the reference
+        # branch instead of the revision that triggered
+        # the workflow otherwise we won't get the commit
+        # created in the previous job and this next job
+        # will fail.
+        with:
+          ref: ${{ github.ref }}
+      - name: Configure Identity
+        # Commits from github-actions do not
+        # trigger other GitHub Actions. As a result,
+        # we push from Ionitron instead so actions
+        # run when merging the release branch
+        # back into main.
+        run: |
+          git config user.name ionitron
+          git config user.email hi@ionicframework.com
+        shell: bash
+      # Lerna does not automatically bump versions
+      # of Ionic dependencies that have changed,
+      # so we do that here.
+      - name: Bump Package Lock
+        run: |
+          lerna exec "npm install --package-lock-only"
+          git add .
+          git commit -m "chore(): update package lock files"
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
 
   purge-cdn-cache:
     needs: [release-ionic]
@@ -94,7 +121,9 @@ jobs:
           "path": [
             "/npm/@ionic/core@6/dist/ionic/ionic.esm.js",
             "/npm/@ionic/core@latest/dist/ionic/ionic.esm.js",
+            "/npm/@ionic/core@next/dist/ionic/ionic.esm.js",
             "/npm/@ionic/core@6/css/ionic.bundle.css",
             "/npm/@ionic/core@latest/css/ionic.bundle.css"
+            "/npm/@ionic/core@next/css/ionic.bundle.css"
           ]}'
         shell: bash

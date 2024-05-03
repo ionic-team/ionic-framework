@@ -19,14 +19,6 @@
   --handle-transition: #{$toggle-md-transition};
 }
 
-:host(.legacy-toggle) {
-  @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
-  width: $toggle-md-track-width;
-  height: $toggle-md-track-height;
-
-  contain: strict;
-}
-
 // Toggle Native Wrapper
 // ----------------------------------------------------------------
 
@@ -83,33 +75,4 @@
 
 :host(.toggle-disabled) {
   opacity: $toggle-md-disabled-opacity;
-}
-
-// Material Design Toggle Within An Item
-// ----------------------------------------------------------
-
-:host(.in-item.legacy-toggle) {
-  @include margin(
-    $toggle-md-media-margin-top,
-    $toggle-md-media-margin-end,
-    $toggle-md-media-margin-bottom,
-    $toggle-md-media-margin-start
-  );
-  @include padding(
-    $toggle-md-item-end-padding-top,
-    $toggle-md-item-end-padding-end,
-    $toggle-md-item-end-padding-bottom,
-    $toggle-md-item-end-padding-start
-  );
-
-  cursor: pointer;
-}
-
-:host(.in-item.legacy-toggle[slot="start"]) {
-  @include padding(
-    $toggle-md-item-start-padding-top,
-    $toggle-md-item-start-padding-end,
-    $toggle-md-item-start-padding-bottom,
-    $toggle-md-item-start-padding-start
-  );
 }
