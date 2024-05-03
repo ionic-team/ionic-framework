@@ -1,6 +1,7 @@
 import { isIonContent, findClosestIonContent } from '@utils/content';
 import { createGesture } from '@utils/gesture';
 import { clamp, raf, getElementRoot } from '@utils/helpers';
+import { FOCUS_TRAP_DISABLE_CLASS } from '@utils/overlays';
 
 import type { Animation } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
@@ -92,7 +93,7 @@ export const createSheetGesture = (
      * as inputs should not be focusable outside
      * the sheet.
      */
-    baseEl.classList.remove('ion-disable-focus-trap');
+    baseEl.classList.remove(FOCUS_TRAP_DISABLE_CLASS);
   };
 
   const disableBackdrop = () => {
@@ -106,7 +107,7 @@ export const createSheetGesture = (
      * Adding this class disables focus trapping
      * for the sheet temporarily.
      */
-    baseEl.classList.add('ion-disable-focus-trap');
+    baseEl.classList.add(FOCUS_TRAP_DISABLE_CLASS);
   };
 
   /**

@@ -112,7 +112,7 @@ export class Checkbox implements ComponentInterface {
    * Emitted when the checked property has changed
    * as a result of a user action such as a click.
    * This event will not emit when programmatically
-   * setting the checked property.
+   * setting the `checked` property.
    */
   @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 

@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the input
-$input-md-font-size: inherit !default;
+$input-md-font-size: inherit;
 
 /// @prop - The amount of whitespace to display on either side of the floating label
-$input-md-floating-label-padding: 4px !default;
+$input-md-floating-label-padding: 4px;
 
 /// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled input
-$input-md-disabled-opacity: $form-control-md-disabled-opacity !default;
+$input-md-disabled-opacity: $form-control-md-disabled-opacity;

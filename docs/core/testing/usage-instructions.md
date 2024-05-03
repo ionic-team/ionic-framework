@@ -115,7 +115,7 @@ While `npm run test.e2e` can be used to run tests in the same environment that y
 
 This command builds a Docker image before tests run. It will also re-build the Docker image in the event that a Playwright update was merged into the repo.
 
-Note that the Playwright report will not automatically open in your web browser when tests are complete because the tests were run in Docker. Run `npm run test.report` outside of Docker to open the most recent test report.
+Note that the Playwright report will not automatically open in your web browser when tests are complete because the tests were run in Docker. Run `npx playwright show-report` outside of Docker to open the most recent test report.
 
 > [!NOTE]
 > Additional setup is needed to run Playwright tests with headed mode in Docker. See [Configuring Docker for Headed Tests](#configuring-docker-for-headed-tests-optional) for more information.

@@ -31,7 +31,8 @@
     "baseUrl": ".",
     "paths": {
       "@utils/*": ["src/utils/*"],
-      "@utils/test": ["src/utils/test/utils"]
+      "@utils/test": ["src/utils/test/utils"],
+      "@global/*": ["src/global/*"]
     }
   },
   "include": [
