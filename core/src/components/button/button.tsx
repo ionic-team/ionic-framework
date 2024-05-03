@@ -394,7 +394,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [buttonType]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
           [`${buttonType}-${size}`]: size !== undefined,
-          [`${buttonType}-${shape}`]: shape !== undefined,
+          [`${buttonType}-${shape}`]: true,
           [`${buttonType}-${fill}`]: true,
           [`${buttonType}-strong`]: strong,
           'in-toolbar': hostContext('ion-toolbar', this.el),
