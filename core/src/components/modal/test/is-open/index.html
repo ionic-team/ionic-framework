@@ -17,8 +17,6 @@
         grid-template-columns: repeat(2, 1fr);
         grid-row-gap: 20px;
         grid-column-gap: 20px;
-
-        padding: 200px;
       }
       .grid-item {
         margin: 0 auto;
@@ -46,11 +44,11 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Default</h2>
-            <ion-button id="default" onclick="openModal()">Open Modal</ion-button>
+            <button id="default" onclick="openModal()">Open Modal</button>
           </div>
           <div class="grid-item">
             <h2>Open, then close after 500ms</h2>
-            <ion-button id="timeout" onclick="openModal(500)">Open Modal</ion-button>
+            <button id="timeout" onclick="openModal(500)">Open Modal</button>
           </div>
         </div>
 
