@@ -350,9 +350,10 @@ ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-chip,prop,disabled,boolean,false,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
-ion-chip,prop,shape,"rectangular" | "round" | undefined,undefined,false,false
+ion-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-chip,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-chip,css-prop,--background
+ion-chip,css-prop,--border-radius
 ion-chip,css-prop,--color
 
 ion-col,shadow

@@ -16,9 +16,14 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Components](#version-9x-components)
   - [Card](#version-9x-card)
+  - [Chip](#version-9x-chip)
 
 <h2 id="version-9x-components">Components</h2>
 
 <h4 id="version-9x-card">Card</h4>
 
 - The `border-radius` of the `ios` and `md` card now defaults to `14px` and `12px` instead of `8px` and `4px`, respectively, in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"soft"`, or override the `--border-radius` CSS variable to specify a different value.
+
+<h4 id="version-9x-chip">Chip</h4>
+
+- The `border-radius` of the `ios` and `md` chip now defaults to `10px` and `8px`, respectively, instead of `16px` in accordance with the iOS and Material Design 3 guidelines. To revert to the previous appearance, set the `shape` to `"round"`, or override the `--border-radius` CSS variable to specify a different value.
