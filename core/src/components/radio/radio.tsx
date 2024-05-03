@@ -110,6 +110,10 @@ export class Radio implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  componentDidLoad() {
+    this.updateState();
+  }
+
   /** @internal */
   @Method()
   async setFocus(ev: globalThis.Event) {
