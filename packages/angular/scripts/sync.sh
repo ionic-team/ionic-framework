@@ -9,4 +9,5 @@ rm -f *.tgz
 npm pack ../../core
 
 # Install Dependencies
-npm install *.tgz --no-save
+# TODO(FW-xxxx): Remove --legacy-peer-deps once Angular 18 is released
+npm install *.tgz --no-save --legacy-peer-deps
