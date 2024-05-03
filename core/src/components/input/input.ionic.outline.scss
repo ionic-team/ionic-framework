@@ -15,6 +15,11 @@
   --padding-end: 16px;
 }
 
+:host(.input-fill-outline.input-size-xlarge) {
+  --padding-start: 20px;
+  --padding-end: 20px;
+}
+
 /**
  * The bottom content should never have
  * a border with the outline style.

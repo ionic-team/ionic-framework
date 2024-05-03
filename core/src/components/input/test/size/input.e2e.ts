@@ -139,5 +139,74 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         await expect(input).toHaveScreenshot(screenshot(`input-size-large-outline-round`));
       });
     });
+
+    test.describe('input: size xlarge', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-input
+            size="xlarge"
+            label="Email"
+            value="hi@ionic.io"
+          ></ion-input>
+        `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveScreenshot(screenshot(`input-size-xlarge`));
+      });
+      test('should render correctly with stacked label', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-input
+            size="xlarge"
+            label="Email"
+            label-placement="stacked"
+            value="hi@ionic.io"
+          ></ion-input>
+        `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveScreenshot(screenshot(`input-size-xlarge-label-stacked`));
+      });
+      test('should not have visual regressions with fill outline', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-input
+            fill="outline"
+            size="xlarge"
+            label="Email"
+            label-placement="stacked"
+            value="hi@ionic.io"
+          ></ion-input>
+        `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveScreenshot(screenshot(`input-size-xlarge-outline`));
+      });
+      test('should not have visual regressions with fill outline and round shape', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-input
+            fill="outline"
+            shape="round"
+            size="xlarge"
+            label="Email"
+            label-placement="stacked"
+            value="hi@ionic.io"
+          ></ion-input>
+        `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveScreenshot(screenshot(`input-size-xlarge-outline-round`));
+      });
+    });
   });
 });

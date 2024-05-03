@@ -27,6 +27,10 @@
   min-height: 48px;
 }
 
+:host(.input-size-xlarge) .native-wrapper {
+  min-height: 56px;
+}
+
 // Target area
 // --------------------------------------------------
 :host .native-wrapper::after {
