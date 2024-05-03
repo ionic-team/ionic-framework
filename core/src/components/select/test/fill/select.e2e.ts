@@ -237,4 +237,37 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(notchCutout).toBeHidden();
     });
   });
+
+  test(title('select: fill outline: fit-content should display select options'), async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/29321',
+    });
+    await page.setContent(
+      `
+        <ion-select
+          fill="outline"
+          aria-label="Fruit"
+          value="apple"
+          interface="popover"
+          style="width: fit-content"
+        >
+          <ion-select-option value="5">5</ion-select-option>
+          <ion-select-option value="10">10</ion-select-option>
+          <ion-select-option value="15">15</ion-select-option>
+        </ion-select>
+      `,
+      config
+    );
+
+    const select = page.locator('ion-select');
+    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+    await select.click();
+    await ionPopoverDidPresent.next();
+
+    const selectPopover = page.locator('ion-select-popover');
+
+    await expect(selectPopover).toHaveScreenshot(screenshot(`select-fill-outline-fit-content`));
+  });
 });

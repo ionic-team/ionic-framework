@@ -15,6 +15,9 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> extends O
   cssClass?: string | string[];
   event?: Event;
   delegate?: FrameworkDelegate;
+  animated?: boolean;
+  focusTrap?: boolean;
+
   keyboardClose?: boolean;
   htmlAttributes?: { [key: string]: any };
 

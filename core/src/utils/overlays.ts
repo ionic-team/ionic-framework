@@ -199,7 +199,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
    * behind the sheet should be focusable until
    * the backdrop is enabled.
    */
-  if (lastOverlay.classList.contains('ion-disable-focus-trap')) {
+  if (lastOverlay.classList.contains(FOCUS_TRAP_DISABLE_CLASS)) {
     return;
   }
 
@@ -990,3 +990,5 @@ const revealOverlaysToScreenReaders = () => {
     }
   }
 };
+
+export const FOCUS_TRAP_DISABLE_CLASS = 'ion-disable-focus-trap';
