@@ -5,6 +5,8 @@ const styleTestHelpers = `
   <style>
     .grid {
       display: grid;
+      align-items: start;
+      justify-items: start;
       grid-template-columns: repeat(3, auto);
       grid-gap: 10px;
       margin-bottom: 10px;
@@ -26,30 +28,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button size="small">Button</ion-button>
-              </div>
-              <div>
-                <ion-button>Button</ion-button>
-              </div>
-              <div>
-                <ion-button size="large">Button</ion-button>
-              </div>
-              <div>
-                <ion-button size="small">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button>
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button size="large">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button size="small">Button</ion-button>
+              <ion-button>Button</ion-button>
+              <ion-button size="large">Button</ion-button>
+              <ion-button size="small">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button>
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button size="large">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
            `,
             config
@@ -68,30 +58,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button fill="outline" size="small">Button</ion-button>
-              </div>
-              <div>
-                <ion-button fill="outline">Button</ion-button>
-              </div>
-              <div>
-                <ion-button fill="outline" size="large">Button</ion-button>
-              </div>
-              <div>
-                <ion-button size="small" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button size="large" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button fill="outline" size="small">Button</ion-button>
+              <ion-button fill="outline">Button</ion-button>
+              <ion-button fill="outline" size="large">Button</ion-button>
+              <ion-button size="small" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button size="large" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
            `,
             config
@@ -111,30 +89,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button fill="clear" size="small" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button fill="clear" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button fill="clear" size="large" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button size="small" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button size="large" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button fill="clear" size="small" class="ion-focused">Button</ion-button>
+              <ion-button fill="clear" class="ion-focused">Button</ion-button>
+              <ion-button fill="clear" size="large" class="ion-focused">Button</ion-button>
+              <ion-button size="small" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button size="large" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
@@ -155,30 +121,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="soft" size="small">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" size="large">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" size="small">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" size="large">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="soft" size="small">Button</ion-button>
+              <ion-button shape="soft">Button</ion-button>
+              <ion-button shape="soft" size="large">Button</ion-button>
+              <ion-button shape="soft" size="small">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="soft">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="soft" size="large">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
            `,
             config
@@ -197,30 +151,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="soft" fill="outline" size="small">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" fill="outline">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" fill="outline" size="large">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" size="small" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" size="large" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="soft" fill="outline" size="small">Button</ion-button>
+              <ion-button shape="soft" fill="outline">Button</ion-button>
+              <ion-button shape="soft" fill="outline" size="large">Button</ion-button>
+              <ion-button shape="soft" size="small" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="soft" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="soft" size="large" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
@@ -240,30 +182,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="soft" fill="clear" size="small" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" fill="clear" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" fill="clear" size="large" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" size="small" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="soft" size="large" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="soft" fill="clear" size="small" class="ion-focused">Button</ion-button>
+              <ion-button shape="soft" fill="clear" class="ion-focused">Button</ion-button>
+              <ion-button shape="soft" fill="clear" size="large" class="ion-focused">Button</ion-button>
+              <ion-button shape="soft" size="small" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="soft" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="soft" size="large" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
@@ -284,30 +214,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="round" size="small">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" size="large">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" size="small">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="round">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" size="large">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="round" size="small">Button</ion-button>
+              <ion-button shape="round">Button</ion-button>
+              <ion-button shape="round" size="large">Button</ion-button>
+              <ion-button shape="round" size="small">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="round">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="round" size="large">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
@@ -326,30 +244,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="round" fill="outline" size="small">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" fill="outline">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" fill="outline" size="large">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" size="small" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" size="large" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="round" fill="outline" size="small">Button</ion-button>
+              <ion-button shape="round" fill="outline">Button</ion-button>
+              <ion-button shape="round" fill="outline" size="large">Button</ion-button>
+              <ion-button shape="round" size="small" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="round" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="round" size="large" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
@@ -369,30 +275,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="round" fill="clear" size="small" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" fill="clear" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" fill="clear" size="large" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" size="small" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="round" size="large" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="round" fill="clear" size="small" class="ion-focused">Button</ion-button>
+              <ion-button shape="round" fill="clear" class="ion-focused">Button</ion-button>
+              <ion-button shape="round" fill="clear" size="large" class="ion-focused">Button</ion-button>
+              <ion-button shape="round" size="small" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="round" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="round" size="large" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
@@ -413,30 +307,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="rectangular" size="small">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" size="large">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" size="small">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" size="large">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="rectangular" size="small">Button</ion-button>
+              <ion-button shape="rectangular">Button</ion-button>
+              <ion-button shape="rectangular" size="large">Button</ion-button>
+              <ion-button shape="rectangular" size="small">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="rectangular">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="rectangular" size="large">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
@@ -455,30 +337,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="rectangular" fill="outline" size="small">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" fill="outline">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" fill="outline" size="large">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" size="small" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" size="large" fill="outline">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="rectangular" fill="outline" size="small">Button</ion-button>
+              <ion-button shape="rectangular" fill="outline">Button</ion-button>
+              <ion-button shape="rectangular" fill="outline" size="large">Button</ion-button>
+              <ion-button shape="rectangular" size="small" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="rectangular" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="rectangular" size="large" fill="outline">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
@@ -498,30 +368,18 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             ${styleTestHelpers}
 
             <div id="container" class="grid">
-              <div>
-                <ion-button shape="rectangular" fill="clear" size="small" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" fill="clear" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" fill="clear" size="large" class="ion-focused">Button</ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" size="small" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
-              <div>
-                <ion-button shape="rectangular" size="large" fill="clear" class="ion-focused">
-                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
-                </ion-button>
-              </div>
+              <ion-button shape="rectangular" fill="clear" size="small" class="ion-focused">Button</ion-button>
+              <ion-button shape="rectangular" fill="clear" class="ion-focused">Button</ion-button>
+              <ion-button shape="rectangular" fill="clear" size="large" class="ion-focused">Button</ion-button>
+              <ion-button shape="rectangular" size="small" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="rectangular" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
+              <ion-button shape="rectangular" size="large" fill="clear" class="ion-focused">
+                <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+              </ion-button>
             </div>
             `,
             config
