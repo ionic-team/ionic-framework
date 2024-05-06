@@ -112,7 +112,7 @@ export class Radio implements ComponentInterface {
 
   componentDidLoad() {
     /**
-     * The value may be `undefined` if the it
+     * The value may be `undefined` if it
      * gets set before the radio is
      * rendered. This ensures that the radio
      * is checked if the value matches. This
