@@ -517,7 +517,7 @@ export class Input implements ComponentInterface {
   private getShape() {
     const theme = getIonTheme(this);
     const { shape } = this;
-    if (theme === 'ios'  && shape === 'round') {
+    if (theme === 'ios' && shape === 'round') {
       printIonWarning(`The "${shape}" shape is not supported in the ${theme} theme.`);
       return undefined;
     }

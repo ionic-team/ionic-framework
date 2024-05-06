@@ -226,7 +226,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked`));
     });
 
-    test.only('should not have visual regressions with outline fill and large size', async ({ page }) => {
+    test('should not have visual regressions with outline fill and large size', async ({ page }) => {
       await page.setContent(
         `
           <ion-input
