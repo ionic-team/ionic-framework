@@ -20,32 +20,15 @@ import {
 
 import { NavParams } from '../directives/navigation/nav-params';
 
+import { ConfigToken } from './config';
+
 // TODO(FW-2827): types
 
 @Injectable()
 export class AngularDelegate {
   private zone = inject(NgZone);
   private applicationRef = inject(ApplicationRef);
-
-  create(
-    environmentInjector: EnvironmentInjector,
-    injector: Injector,
-    elementReferenceKey?: string
-  ): AngularFrameworkDelegate {
-    return new AngularFrameworkDelegate(
-      environmentInjector,
-      injector,
-      this.applicationRef,
-      this.zone,
-      elementReferenceKey
-    );
-  }
-}
-
-@Injectable()
-export class AngularDelegateWithSignalsSupport {
-  private zone = inject(NgZone);
-  private applicationRef = inject(ApplicationRef);
+  private config = inject(ConfigToken);
 
   create(
     environmentInjector: EnvironmentInjector,
@@ -58,7 +41,7 @@ export class AngularDelegateWithSignalsSupport {
       this.applicationRef,
       this.zone,
       elementReferenceKey,
-      true
+      this.config.useSetInputAPI ?? false
     );
   }
 }

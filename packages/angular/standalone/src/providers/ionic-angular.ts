@@ -1,12 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { APP_INITIALIZER, makeEnvironmentProviders } from '@angular/core';
 import type { EnvironmentProviders } from '@angular/core';
-import {
-  AngularDelegate,
-  AngularDelegateWithSignalsSupport,
-  ConfigToken,
-  provideComponentInputBinding,
-} from '@ionic/angular/common';
+import { AngularDelegate, ConfigToken, provideComponentInputBinding } from '@ionic/angular/common';
 import { initialize } from '@ionic/core/components';
 import type { IonicConfig } from '@ionic/core/components';
 
@@ -17,17 +12,11 @@ type OptInAngularFeatures = {
   useSetInputAPI?: boolean;
 };
 
-export const provideIonicAngular = (config?: IonicConfig & OptInAngularFeatures): EnvironmentProviders => {
-  const { useSetInputAPI, ...rest } = config || {};
-  /**
-   * TODO FW-4967
-   * Use makeEnvironmentProviders once Angular 14 support is dropped.
-   * This prevents provideIonicAngular from being accidentally referenced in an @Component.
-   */
+export const provideIonicAngular = (config: IonicConfig & OptInAngularFeatures = {}): EnvironmentProviders => {
   return makeEnvironmentProviders([
     {
       provide: ConfigToken,
-      useValue: rest,
+      useValue: config,
     },
     {
       provide: APP_INITIALIZER,
@@ -36,7 +25,7 @@ export const provideIonicAngular = (config?: IonicConfig & OptInAngularFeatures)
       deps: [ConfigToken, DOCUMENT],
     },
     provideComponentInputBinding(),
-    useSetInputAPI ? AngularDelegateWithSignalsSupport : AngularDelegate,
+    AngularDelegate,
     ModalController,
     PopoverController,
   ]);

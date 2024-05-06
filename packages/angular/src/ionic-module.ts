@@ -1,11 +1,6 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
-import {
-  ConfigToken,
-  AngularDelegate,
-  AngularDelegateWithSignalsSupport,
-  provideComponentInputBinding,
-} from '@ionic/angular/common';
+import { ConfigToken, AngularDelegate, provideComponentInputBinding } from '@ionic/angular/common';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
@@ -68,15 +63,13 @@ type OptInAngularFeatures = {
   imports: [CommonModule],
 })
 export class IonicModule {
-  static forRoot(config?: IonicConfig & OptInAngularFeatures): ModuleWithProviders<IonicModule> {
-    const { useSetInputAPI, ...rest } = config || {};
-
+  static forRoot(config: IonicConfig & OptInAngularFeatures = {}): ModuleWithProviders<IonicModule> {
     return {
       ngModule: IonicModule,
       providers: [
         {
           provide: ConfigToken,
-          useValue: rest,
+          useValue: config,
         },
         {
           provide: APP_INITIALIZER,
@@ -84,7 +77,7 @@ export class IonicModule {
           multi: true,
           deps: [ConfigToken, DOCUMENT, NgZone],
         },
-        useSetInputAPI ? AngularDelegateWithSignalsSupport : AngularDelegate,
+        AngularDelegate,
         provideComponentInputBinding(),
       ],
     };
