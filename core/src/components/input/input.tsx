@@ -526,6 +526,11 @@ export class Input implements ComponentInterface {
       return shape;
     }
 
+    if (theme !== 'ionic') {
+      // TODO(FW-6229): Remove this warning when the default shape has been decided.
+      return undefined;
+    }
+
     // Fallback to round shape, which is the default shape for the ionic theme.
     return 'round';
   }
