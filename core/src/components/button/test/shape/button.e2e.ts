@@ -1,197 +1,536 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+const styleTestHelpers = `
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      grid-gap: 10px;
+      margin-bottom: 10px;
+      padding: 6px;
+    }
+  </style>
+`;
+
 /**
  * This behavior does not vary across directions.
  */
 configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('button: shape'), () => {
-    test.describe('default', () => {
-      test.describe('default', () => {
+    test.describe('default shape', () => {
+      test.describe('default fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button size="small">Button</ion-button>
+              </div>
+              <div>
+                <ion-button>Button</ion-button>
+              </div>
+              <div>
+                <ion-button size="large">Button</ion-button>
+              </div>
+              <div>
+                <ion-button size="small">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button>
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button size="large">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+           `,
+            config
+          );
 
-          const container = page.locator('#default #default');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-default`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-default-fill-default`));
         });
       });
 
-      test.describe('outline', () => {
+      test.describe('outline fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button fill="outline" size="small">Button</ion-button>
+              </div>
+              <div>
+                <ion-button fill="outline">Button</ion-button>
+              </div>
+              <div>
+                <ion-button fill="outline" size="large">Button</ion-button>
+              </div>
+              <div>
+                <ion-button size="small" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button size="large" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+           `,
+            config
+          );
 
-          const container = page.locator('#default #outline');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-default-outline`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-default-fill-outline`));
         });
       });
 
-      test.describe('clear', () => {
+      // The clear buttons have the `ion-focused` class added to show their shape
+      test.describe('clear fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button fill="clear" size="small" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button fill="clear" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button fill="clear" size="large" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button size="small" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button size="large" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
 
-          const container = page.locator('#default #clear');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-default-clear`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-default-fill-clear`));
+        });
+      });
+    });
+
+    test.describe('soft shape', () => {
+      test.describe('default fill', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.setContent(
+            `
+            ${styleTestHelpers}
+
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="soft" size="small">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" size="large">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" size="small">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" size="large">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+           `,
+            config
+          );
+
+          const container = page.locator('#container');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-soft-fill-default`));
+        });
+      });
+
+      test.describe('outline fill', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.setContent(
+            `
+            ${styleTestHelpers}
+
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="soft" fill="outline" size="small">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" fill="outline">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" fill="outline" size="large">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" size="small" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" size="large" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
+
+          const container = page.locator('#container');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-soft-fill-outline`));
+        });
+      });
+
+      // The clear buttons have the `ion-focused` class added to show their shape
+      test.describe('clear fill', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.setContent(
+            `
+            ${styleTestHelpers}
+
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="soft" fill="clear" size="small" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" fill="clear" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" fill="clear" size="large" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" size="small" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="soft" size="large" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
+
+          const container = page.locator('#container');
+
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-soft-fill-clear`));
         });
       });
     });
 
-    test.describe('soft', () => {
-      test.describe('default', () => {
+    test.describe('round shape', () => {
+      test.describe('default fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="round" size="small">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" size="large">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" size="small">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="round">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" size="large">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
 
-          const container = page.locator('#soft #default');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-soft`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-round-fill-default`));
         });
       });
 
-      test.describe('outline', () => {
+      test.describe('outline fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="round" fill="outline" size="small">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" fill="outline">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" fill="outline" size="large">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" size="small" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" size="large" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
 
-          const container = page.locator('#soft #outline');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-soft-outline`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-round-fill-outline`));
         });
       });
 
-      test.describe('clear', () => {
+      // The clear buttons have the `ion-focused` class added to show their shape
+      test.describe('clear fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="round" fill="clear" size="small" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" fill="clear" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" fill="clear" size="large" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" size="small" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="round" size="large" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
 
-          const container = page.locator('#soft #clear');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-soft-clear`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-round-fill-clear`));
         });
       });
     });
 
-    test.describe('round', () => {
-      test.describe('default', () => {
+    test.describe('rectangular shape', () => {
+      test.describe('default fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="rectangular" size="small">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" size="large">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" size="small">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" size="large">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
 
-          const container = page.locator('#round #default');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-round`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-rectangular-fill-default`));
         });
       });
 
-      test.describe('outline', () => {
+      test.describe('outline fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="rectangular" fill="outline" size="small">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" fill="outline">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" fill="outline" size="large">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" size="small" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" size="large" fill="outline">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
 
-          const container = page.locator('#round #outline');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-round-outline`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-rectangular-fill-outline`));
         });
       });
 
-      test.describe('clear', () => {
+      // The clear buttons have the `ion-focused` class added to show their shape
+      test.describe('clear fill', () => {
         test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
+          await page.setContent(
+            `
+            ${styleTestHelpers}
 
-          await page.setIonViewport();
+            <div id="container" class="grid">
+              <div>
+                <ion-button shape="rectangular" fill="clear" size="small" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" fill="clear" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" fill="clear" size="large" class="ion-focused">Button</ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" size="small" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+              <div>
+                <ion-button shape="rectangular" size="large" fill="clear" class="ion-focused">
+                  <ion-icon slot="icon-only" ios="logo-apple" md="settings-sharp"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            `,
+            config
+          );
 
-          const container = page.locator('#round #clear');
+          const container = page.locator('#container');
 
-          await expect(container).toHaveScreenshot(screenshot(`button-round-clear`));
+          await expect(container).toHaveScreenshot(screenshot(`button-shape-rectangular-fill-clear`));
         });
-      });
-    });
-
-    test.describe('rectangular', () => {
-      test.describe('default', () => {
-        test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
-
-          await page.setIonViewport();
-
-          const container = page.locator('#rectangular #default');
-
-          await expect(container).toHaveScreenshot(screenshot(`button-rectangular`));
-        });
-      });
-
-      test.describe('outline', () => {
-        test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
-
-          await page.setIonViewport();
-
-          const container = page.locator('#rectangular #outline');
-
-          await expect(container).toHaveScreenshot(screenshot(`button-rectangular-outline`));
-        });
-      });
-
-      test.describe('clear', () => {
-        test('should not have visual regressions', async ({ page }) => {
-          await page.goto(`/src/components/button/test/shape`, config);
-
-          await page.setIonViewport();
-
-          const container = page.locator('#rectangular #clear');
-
-          await expect(container).toHaveScreenshot(screenshot(`button-rectangular-clear`));
-        });
-      });
-    });
-  });
-});
-
-// TODO do we need this test for focused / activated? it should be for all themes if so
-configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('button: shape'), () => {
-    test.describe('rectangular', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        await page.setContent(
-          `
-          <style>
-            ion-button {
-              margin: 8px;
-            }
-          </style>
-          <div id="container">
-            <ion-button shape="rectangular" fill="solid">Rectangular Button, Solid</ion-button>
-            <ion-button class="ion-focused" shape="rectangular" fill="solid">Rectangular Button, Solid, Focused</ion-button>
-            <ion-button class="ion-activated" shape="rectangular" fill="solid">Rectangular Button, Solid, Activated</ion-button>
-
-            <ion-button shape="rectangular" fill="outline">Rectangular Button, Outline</ion-button>
-            <ion-button class="ion-focused" shape="rectangular" fill="outline">Rectangular Button, Outline, Focused</ion-button>
-            <ion-button class="ion-activated" shape="rectangular" fill="outline">Rectangular Button, Outline, Activated</ion-button>
-
-            <ion-button shape="rectangular" fill="clear">Rectangular Button</ion-button>
-            <ion-button class="ion-focused" shape="rectangular" fill="clear">Rectangular Button, Focused</ion-button>
-            <ion-button class="ion-activated" shape="rectangular" fill="clear">Rectangular Button, Activated</ion-button>
-          </div>
-          `,
-          config
-        );
-
-        const container = page.locator('#container');
-
-        await expect(container).toHaveScreenshot(screenshot(`button-shape-rectangular`));
       });
     });
   });
