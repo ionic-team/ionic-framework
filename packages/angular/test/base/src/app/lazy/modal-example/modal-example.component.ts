@@ -1,6 +1,6 @@
 import { Component, Input, NgZone, OnInit, Optional } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { ModalController, NavParams, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { ModalController, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 @Component({
   selector: 'app-modal-example',
@@ -9,12 +9,12 @@ import { ModalController, NavParams, IonNav, ViewWillLeave, ViewDidEnter, ViewDi
 export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 
   @Input() value?: string;
+  @Input() prop?: string;
 
   form = new UntypedFormGroup({
     select: new UntypedFormControl([])
   });
 
-  valueFromParams: string;
   onInit = 0;
   willEnter = 0;
   didEnter = 0;
@@ -25,11 +25,8 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
 
   constructor(
     private modalCtrl: ModalController,
-    @Optional() public nav: IonNav,
-    navParams: NavParams
-  ) {
-    this.valueFromParams = navParams.get('prop');
-  }
+    @Optional() public nav: IonNav
+  ) {}
 
   ngOnInit() {
     NgZone.assertInAngularZone();
