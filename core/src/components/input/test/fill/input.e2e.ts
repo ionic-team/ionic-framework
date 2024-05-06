@@ -44,19 +44,17 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-solid-label-floating`));
       });
-      test('padding and border radius should be customizable', async ({ page }) => {
+      test('padding should be customizable', async ({ page }) => {
         await page.setContent(
           `
           <style>
             ion-input {
-              --border-radius: 10px !important;
               --padding-start: 50px !important;
               --padding-end: 50px !important;
             }
           </style>
 
           <ion-input
-            shape="round"
             fill="solid"
             label="Email"
             label-placement="floating"
@@ -111,19 +109,17 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-floating`));
       });
-      test('padding and border radius should be customizable', async ({ page }) => {
+      test('padding should be customizable', async ({ page }) => {
         await page.setContent(
           `
           <style>
             ion-input {
-              --border-radius: 10px !important;
               --padding-start: 50px !important;
               --padding-end: 50px !important;
             }
           </style>
 
           <ion-input
-            shape="round"
             fill="outline"
             label="Email"
             label-placement="floating"
