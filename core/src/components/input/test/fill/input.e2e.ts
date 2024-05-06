@@ -68,7 +68,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-solid-custom`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-solid-custom`));
       });
     });
     test.describe('input: fill outline', () => {
@@ -133,7 +133,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-outline-custom`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-custom`));
       });
     });
   });
