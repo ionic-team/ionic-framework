@@ -247,8 +247,10 @@ export class Input implements ComponentInterface {
 
   /**
    * The shape of the input. If "round" it will have an increased border radius.
+   *
+   * The value, `soft`, is only supported in the `ionic` theme.
    */
-  @Prop() shape?: 'round';
+  @Prop() shape?: 'soft' | 'round';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -517,7 +519,7 @@ export class Input implements ComponentInterface {
   private getShape() {
     const theme = getIonTheme(this);
     const { shape } = this;
-    if (theme === 'ios' && shape === 'round') {
+    if ((theme === 'ios' && shape === 'round') || (theme !== 'ionic' && shape === 'soft')) {
       printIonWarning(`The "${shape}" shape is not supported in the ${theme} theme.`);
       return undefined;
     }

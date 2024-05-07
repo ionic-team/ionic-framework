@@ -105,6 +105,26 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: shape'), () => {
     test.describe('fill outline', () => {
+      test('should not have visual regressions with soft shape', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-input
+            shape="soft"
+            fill="outline"
+            label="Email"
+            value="hi@ionic.io"
+            helper-text="Enter your email"
+            maxlength="20"
+            counter="true"
+          ></ion-input>
+          `,
+          config
+        );
+
+        const input = page.locator('ion-input');
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-soft`));
+      });
+
       test('should not have visual regressions with round shape', async ({ page }) => {
         await page.setContent(
           `
