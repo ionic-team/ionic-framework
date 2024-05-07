@@ -480,6 +480,8 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Emitted when the value (selected date) has changed.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
 
@@ -901,7 +903,8 @@ export class Datetime implements ComponentInterface {
          * Check below the next line ensures that we did not
          * swipe and abort (i.e. we swiped but we are still on the current month).
          */
-        const month = calendarBodyRef.scrollLeft <= 2 ? startMonth : endMonth;
+        const condition = isRTL(this.el) ? calendarBodyRef.scrollLeft >= -2 : calendarBodyRef.scrollLeft <= 2;
+        const month = condition ? startMonth : endMonth;
 
         /**
          * The edge of the month must be lined up with
@@ -1690,6 +1693,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a date"
         class="date-column"
         color={this.color}
         disabled={disabled}
@@ -1809,6 +1813,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a day"
         class="day-column"
         color={this.color}
         disabled={disabled}
@@ -1852,6 +1857,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a month"
         class="month-column"
         color={this.color}
         disabled={disabled}
@@ -1894,6 +1900,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a year"
         class="year-column"
         color={this.color}
         disabled={disabled}
@@ -1967,6 +1974,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select an hour"
         color={this.color}
         disabled={disabled}
         value={activePart.hour}
@@ -2006,6 +2014,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a minute"
         color={this.color}
         disabled={disabled}
         value={activePart.minute}
@@ -2048,6 +2057,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <ion-picker-column
+        aria-label="Select a day period"
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
         disabled={disabled}

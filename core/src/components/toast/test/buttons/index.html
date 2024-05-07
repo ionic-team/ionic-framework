@@ -27,17 +27,15 @@
 
       <ion-content class="ion-padding" id="content">
         <!-- New way using array of buttons -->
-        <ion-button id="closeArray" expand="block" onclick="presentCloseArrayToast()"> Close Button Array </ion-button>
+        <button id="closeArray" class="expand" onclick="presentCloseArrayToast()">Close Button Array</button>
 
-        <ion-button id="twoButtons" expand="block" onclick="presentToastWithTwoButtons()"> Two Buttons </ion-button>
+        <button id="twoButtons" class="expand" onclick="presentToastWithTwoButtons()">Two Buttons</button>
 
-        <ion-button id="multipleButtons" expand="block" onclick="presentToastWithMultipleButtons()">
+        <button id="multipleButtons" class="expand" onclick="presentToastWithMultipleButtons()">
           Multiple Buttons
-        </ion-button>
+        </button>
 
-        <ion-button id="longButton" expand="block" onclick="presentToastWithLongButton()">
-          Really Long Button
-        </ion-button>
+        <button id="longButton" class="expand" onclick="presentToastWithLongButton()">Really Long Button</button>
       </ion-content>
     </ion-app>
 
