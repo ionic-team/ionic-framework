@@ -1,11 +1,11 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-/**
- * Fill is only available in MD mode
- */
 configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: shape'), () => {
+    /**
+     * Solid fill is only available in MD theme.
+     */
     test.describe('fill solid', () => {
       test('should not have visual regressions with round shape', async ({ page }) => {
         await page.setContent(
