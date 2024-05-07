@@ -53,6 +53,11 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-solid-custom`));
       });
     });
+  });
+});
+
+configs({ modes: ['md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe.only(title('input: shape'), () => {
     test.describe('fill outline', () => {
       test('should not have visual regressions with round shape', async ({ page }) => {
         await page.setContent(
@@ -66,13 +71,14 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             maxlength="20"
             counter="true"
           ></ion-input>
-        `,
+          `,
           config
         );
 
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-round`));
       });
+
       test('border radius should be customizable', async ({ page }) => {
         await page.setContent(
           `
@@ -97,32 +103,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-custom`));
-      });
-    });
-  });
-});
-
-configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('input: shape'), () => {
-    test.describe('fill outline', () => {
-      test('should not have visual regressions with round shape', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-input
-            shape="round"
-            fill="outline"
-            label="Email"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-input>
-          `,
-          config
-        );
-
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-round`));
       });
     });
   });
