@@ -109,7 +109,11 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-floating`));
       });
-      test('padding should be customizable', async ({ page }) => {
+      test.only('padding should be customizable', async ({ page }) => {
+        /**
+         * Requires padding at the top to prevent the label
+         * from being clipped by the top of the input.
+         */
         await page.setContent(
           `
           <style>
@@ -122,7 +126,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
           <ion-input
             fill="outline"
             label="Email"
-            label-placement="floating"
             value="hi@ionic.io"
             helper-text="Enter your email"
             maxlength="20"
