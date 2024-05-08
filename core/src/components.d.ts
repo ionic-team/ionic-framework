@@ -1471,9 +1471,9 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * The shape of the input. If "round" it will have an increased border radius.
+          * The shape of the input. Set to `"round"` for an input with more rounded corners, or `"rectangular"` for an input without rounded corners.
          */
-        "shape"?: 'round';
+        "shape"?: 'round' | 'rectangular';
         /**
           * The size of the input. If "large", it will have an increased height. By default the size is medium. This property only applies to the `"ionic"` theme.
          */
@@ -6751,9 +6751,9 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * The shape of the input. If "round" it will have an increased border radius.
+          * The shape of the input. Set to `"round"` for an input with more rounded corners, or `"rectangular"` for an input without rounded corners.
          */
-        "shape"?: 'round';
+        "shape"?: 'round' | 'rectangular';
         /**
           * The size of the input. If "large", it will have an increased height. By default the size is medium. This property only applies to the `"ionic"` theme.
          */

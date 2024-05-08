@@ -55,8 +55,8 @@
 ::slotted([slot="end"]),
 .input-clear-icon {
   /**
-   * The target area has a z-index of 1, so the slotted elements 
-   * should be higher. Otherwise, the slotted elements will not 
+   * The target area has a z-index of 1, so the slotted elements
+   * should be higher. Otherwise, the slotted elements will not
    * be interactable. This is especially important for the clear
    * button, which should be clickable.
    */
@@ -106,6 +106,10 @@
 
 :host(.input-shape-round) {
   --border-radius: #{$ionic-border-radius-rounded-full};
+}
+
+:host(.input-shape-rectangular) {
+  --border-radius: #{$ionic-border-radius-square};
 }
 
 // Input Bottom Content
