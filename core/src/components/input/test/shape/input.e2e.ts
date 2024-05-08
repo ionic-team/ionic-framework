@@ -58,6 +58,28 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
 configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: shape'), () => {
+    test.describe('default shape', () => {
+      test.describe('default fill', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.setContent(
+            `
+            <ion-input
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter your email"
+              maxlength="20"
+              counter="true"
+            ></ion-input>
+            `,
+            config
+          );
+
+          const input = page.locator('ion-input');
+          await expect(input).toHaveScreenshot(screenshot(`input-shape-default-fill-default`));
+        });
+      });
+    });
+
     test.describe('round shape', () => {
       test.describe('outline fill', () => {
         test('should not have visual regressions', async ({ page }) => {
