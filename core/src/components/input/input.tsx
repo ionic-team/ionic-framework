@@ -248,7 +248,9 @@ export class Input implements ComponentInterface {
   /**
    * The shape of the input. If "round" it will have an increased border radius.
    *
-   * The value, `soft`, is only supported in the `ionic` theme.
+   * Default is "round" for the `ionic` theme, and undefined for all other themes.
+   *
+   * The value, "soft", is only supported in the `ionic` theme.
    */
   @Prop() shape?: 'soft' | 'round';
 
@@ -519,6 +521,7 @@ export class Input implements ComponentInterface {
   private getShape() {
     const theme = getIonTheme(this);
     const { shape } = this;
+    // TODO(ROU-5475): Remove the check for `soft` when the shape is supported in ios and md.
     if ((theme === 'ios' && shape === 'round') || (theme !== 'ionic' && shape === 'soft')) {
       printIonWarning(`The "${shape}" shape is not supported in the ${theme} theme.`);
       return undefined;

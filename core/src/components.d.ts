@@ -1471,7 +1471,7 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * The shape of the input. If "round" it will have an increased border radius.  The value, `soft`, is only supported in the `ionic` theme.
+          * The shape of the input. If "round" it will have an increased border radius.  Default is "round" for the `ionic` theme, and undefined for all other themes.  The value, "soft", is only supported in the `ionic` theme.
          */
         "shape"?: 'soft' | 'round';
         /**
@@ -6751,7 +6751,7 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * The shape of the input. If "round" it will have an increased border radius.  The value, `soft`, is only supported in the `ionic` theme.
+          * The shape of the input. If "round" it will have an increased border radius.  Default is "round" for the `ionic` theme, and undefined for all other themes.  The value, "soft", is only supported in the `ionic` theme.
          */
         "shape"?: 'soft' | 'round';
         /**
