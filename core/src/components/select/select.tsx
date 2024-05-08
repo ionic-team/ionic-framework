@@ -865,12 +865,10 @@ export class Select implements ComponentInterface {
    */
   private renderSelectIcon() {
     const { isExpanded, selectExpandIcon, selectCollapsedIcon } = this;
-    let icon: string;
+    let icon = selectCollapsedIcon;
 
     if (isExpanded) {
       icon = selectExpandIcon;
-    } else {
-      icon = selectCollapsedIcon;
     }
 
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
