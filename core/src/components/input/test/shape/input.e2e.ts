@@ -88,7 +88,7 @@ configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) =
                 --border-radius: 10px !important;
               }
             </style>
-  
+
             <ion-input
               shape="round"
               fill="outline"
@@ -104,6 +104,63 @@ configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) =
 
           const input = page.locator('ion-input');
           await expect(input).toHaveScreenshot(screenshot(`input-shape-round-fill-outline-custom`));
+        });
+      });
+    });
+  });
+});
+
+// Rectangular shape is only available in ionic theme
+// TODO(FW-6098): Add test for rectangular shape in md
+// by combining these tests with the above tests
+configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: shape'), () => {
+    test.describe('rectangular shape', () => {
+      test.describe('outline fill', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.setContent(
+            `
+            <ion-input
+              shape="rectangular"
+              fill="outline"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter your email"
+              maxlength="20"
+              counter="true"
+            ></ion-input>
+            `,
+            config
+          );
+
+          const input = page.locator('ion-input');
+          await expect(input).toHaveScreenshot(screenshot(`input-shape-rectangular-fill-outline`));
+        });
+
+        test('border radius should be customizable', async ({ page }) => {
+          await page.setContent(
+            `
+            <style>
+              ion-input {
+                --border-radius: 10px !important;
+              }
+            </style>
+
+            <ion-input
+              shape="rectangular"
+              fill="outline"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter your email"
+              maxlength="20"
+              counter="true"
+            ></ion-input>
+          `,
+            config
+          );
+
+          const input = page.locator('ion-input');
+          await expect(input).toHaveScreenshot(screenshot(`input-shape-rectangular-fill-outline-custom`));
         });
       });
     });
