@@ -5,7 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { hapticSelection } from '@utils/native/haptic';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
-import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
+import { checkmarkOutline, removeOutline, ellipseOutline, pizza } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
@@ -79,7 +79,7 @@ export class Toggle implements ComponentInterface {
   /**
    * Enables the on/off accessibility switch labels within the toggle.
    */
-  @Prop() enableOnOffLabels: boolean | undefined = config.get('toggleOnOffLabels');
+  @Prop() enableOnOffLabels: boolean | undefined = true;
 
   /**
    * Where to place the label relative to the input.
@@ -247,6 +247,11 @@ export class Toggle implements ComponentInterface {
     return checked ? this.toggleCheckedIcon : this.toggleUncheckedIcon;
   };
 
+  get toggleDefaultCheckedIcon(): string {
+    const theme = getIonTheme(this);
+    return theme === 'md' ? checkmarkOutline : removeOutline;
+  }
+
   /**
    * Get the icon to use for the checked icon.
    * Otherwise, use the icon set in the config.
@@ -255,10 +260,7 @@ export class Toggle implements ComponentInterface {
    * @returns {string} The icon to use for the checked icon.
    */
   get toggleCheckedIcon(): string {
-    const theme = getIonTheme(this);
-    const defaultIcon = theme === 'md' ? checkmarkOutline : removeOutline;
-
-    return config.get('toggleCheckedIcon', defaultIcon);
+    return config.get('toggleCheckedIcon', this.toggleDefaultCheckedIcon);
   }
 
   /**
@@ -283,6 +285,17 @@ export class Toggle implements ComponentInterface {
         class={{
           'toggle-switch-icon': true,
           'toggle-switch-icon-checked': checked,
+          /**
+           * The default checked icon is being modified with
+           * styling that causes it to rotate by 90 degrees
+           * when the theme is `ios`.
+           *
+           * To prevent any rotation on a custom icon that is
+           * set through the config, we need to apply a class
+           * that handles the styling only when the default
+           * checked icon is being used.
+           */
+          'toggle-switch-icon-checked-default': checked && icon === this.toggleDefaultCheckedIcon,
         }}
         icon={icon}
         aria-hidden="true"
