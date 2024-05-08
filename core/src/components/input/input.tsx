@@ -514,6 +514,27 @@ export class Input implements ComponentInterface {
     return size;
   }
 
+  private getShape() {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+    if (theme === 'ios' && shape === 'round') {
+      printIonWarning(`The "${shape}" shape is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+
+    if (shape !== undefined) {
+      return shape;
+    }
+
+    // TODO(FW-6229): Update this when the default shape has been decided.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    // Fallback to round shape, which is the default shape for the ionic theme.
+    return 'round';
+  }
+
   private onInput = (ev: InputEvent | Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
@@ -734,10 +755,11 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, el, hasFocus, clearInput, clearInputIcon } = this;
+    const { disabled, fill, readonly, inputId, el, hasFocus, clearInput, clearInputIcon } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const size = this.getSize();
+    const shape = this.getShape();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = (theme === 'md' || theme === 'ionic') && fill !== 'outline' && !inItem;
     const labelPlacement = this.getLabelPlacement();

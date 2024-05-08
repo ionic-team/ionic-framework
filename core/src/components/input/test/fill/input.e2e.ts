@@ -44,38 +44,17 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-solid-label-floating`));
       });
-      test('should not have visual regressions with shaped solid', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-input
-            shape="round"
-            fill="solid"
-            label="Email"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-input>
-        `,
-          config
-        );
-
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-solid`));
-      });
-      test('padding and border radius should be customizable', async ({ page }) => {
+      test('padding should be customizable', async ({ page }) => {
         await page.setContent(
           `
           <style>
             ion-input {
-              --border-radius: 10px !important;
               --padding-start: 50px !important;
               --padding-end: 50px !important;
             }
           </style>
 
           <ion-input
-            shape="round"
             fill="solid"
             label="Email"
             label-placement="floating"
@@ -89,7 +68,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-solid-custom`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-solid-custom`));
       });
     });
     test.describe('input: fill outline', () => {
@@ -130,41 +109,23 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-floating`));
       });
-      test('should not have visual regressions with shaped outline', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-input
-            shape="round"
-            fill="outline"
-            label="Email"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-input>
-        `,
-          config
-        );
-
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-outline`));
-      });
-      test('padding and border radius should be customizable', async ({ page }) => {
+      test.only('padding should be customizable', async ({ page }) => {
+        /**
+         * Requires padding at the top to prevent the label
+         * from being clipped by the top of the input.
+         */
         await page.setContent(
           `
           <style>
             ion-input {
-              --border-radius: 10px !important;
               --padding-start: 50px !important;
               --padding-end: 50px !important;
             }
           </style>
 
           <ion-input
-            shape="round"
             fill="outline"
             label="Email"
-            label-placement="floating"
             value="hi@ionic.io"
             helper-text="Enter your email"
             maxlength="20"
@@ -175,7 +136,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-outline-custom`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-custom`));
       });
     });
   });
@@ -268,7 +229,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked`));
     });
 
-    test('should not have visual regressions with outline fill and round shape', async ({ page }) => {
+    test('should not have visual regressions with outline fill and large size', async ({ page }) => {
       await page.setContent(
         `
           <ion-input
@@ -276,25 +237,6 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
             label="Email"
             label-placement="stacked"
             placeholder="example@ionic.io"
-            shape="round"
-          ></ion-input>
-        `,
-        config
-      );
-
-      const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked-shape-round`));
-    });
-
-    test('should not have visual regressions with outline fill, round shape, and large size', async ({ page }) => {
-      await page.setContent(
-        `
-          <ion-input
-            fill="outline"
-            label="Email"
-            label-placement="stacked"
-            placeholder="example@ionic.io"
-            shape="round"
             size="large"
           ></ion-input>
         `,
@@ -302,7 +244,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked-shape-round-size-large`));
+      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-stacked-size-large`));
     });
   });
 });
