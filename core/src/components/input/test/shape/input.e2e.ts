@@ -112,7 +112,8 @@ configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) =
 
 configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: shape'), () => {
-    // TODO(ROU-5475): Add the `md` theme once the `soft` shape is available in the `md` theme.
+    // TODO(ROU-5475): Add the `md` theme once the `soft` shape is available
+    // in the `md` theme by combining these tests with the above tests.
     test.describe('soft shape', () => {
       test.describe('outline fill', () => {
         test('should not have visual regressions', async ({ page }) => {
