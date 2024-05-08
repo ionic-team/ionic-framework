@@ -148,7 +148,7 @@ export interface IonicConfig {
   /**
    * Overrides the previous icon for all `ion-datetime` components.
    */
-  datetimePrevIcon?: string;
+  datetimePreviousIcon?: string;
 
   /**
    * Overrides the show month and year icon for all `ion-datetime` components.

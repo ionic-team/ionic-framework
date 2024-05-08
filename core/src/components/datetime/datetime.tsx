@@ -2119,7 +2119,7 @@ export class Datetime implements ComponentInterface {
     const { disabled, datetimeShowMonthYearIcon, datetimeHideMonthYearIcon } = this;
 
     const datetimeNextIcon = config.get('datetimeNextIcon', chevronForward);
-    const datetimePrevIcon = config.get('datetimePrevIcon', chevronBack);
+    const datetimePrevIcon = config.get('datetimePreviousIcon', chevronBack);
 
     const prevMonthDisabled = disabled || isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
