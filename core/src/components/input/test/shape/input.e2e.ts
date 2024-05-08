@@ -6,7 +6,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
     /**
      * Solid fill is only available in MD theme.
      */
-    test.describe('fill solid', () => {
+    test.describe('solid fill', () => {
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
