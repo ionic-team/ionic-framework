@@ -7,7 +7,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
      * Solid fill is only available in MD theme.
      */
     test.describe('fill solid', () => {
-      test('should not have visual regressions with round shape', async ({ page }) => {
+      test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
           <ion-input
@@ -24,7 +24,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-solid-round`));
+        await expect(input).toHaveScreenshot(screenshot(`input-shape-round-fill-solid`));
       });
       test('border radius should be customizable', async ({ page }) => {
         await page.setContent(
