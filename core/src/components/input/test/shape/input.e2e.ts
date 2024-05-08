@@ -75,11 +75,11 @@ configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) =
             `,
             config
           );
-  
+
           const input = page.locator('ion-input');
           await expect(input).toHaveScreenshot(screenshot(`input-shape-round-fill-outline`));
         });
-  
+
         test('border radius should be customizable', async ({ page }) => {
           await page.setContent(
             `
@@ -101,7 +101,7 @@ configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) =
           `,
             config
           );
-  
+
           const input = page.locator('ion-input');
           await expect(input).toHaveScreenshot(screenshot(`input-shape-round-fill-outline-custom`));
         });
@@ -109,4 +109,3 @@ configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) =
     });
   });
 });
-
