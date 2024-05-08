@@ -6,6 +6,7 @@ import { inheritAttributes, raf } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { chevronForward } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -61,7 +62,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon = chevronForward;
+  @Prop() detailIcon?: string;
 
   /**
    * If `true`, the user cannot interact with the item.
@@ -244,7 +245,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   render() {
     const {
       detail,
-      detailIcon,
       download,
       labelColorStyles,
       lines,
@@ -262,6 +262,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    const itemDetailIcon = this.detailIcon ?? config.get('itemDetailIcon', chevronForward);
 
     const attrs =
       TagType === 'button'
@@ -368,12 +369,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             <slot name="end"></slot>
             {showDetail && (
               <ion-icon
-                icon={detailIcon}
+                icon={itemDetailIcon}
                 lazy={false}
                 class="item-detail-icon"
                 part="detail-icon"
                 aria-hidden="true"
-                flip-rtl={detailIcon === chevronForward}
+                flip-rtl={itemDetailIcon === chevronForward}
               ></ion-icon>
             )}
           </div>

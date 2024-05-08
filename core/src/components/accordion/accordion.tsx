@@ -79,7 +79,7 @@ export class Accordion implements ComponentInterface {
    * rotated when the accordion is expanded
    * or collapsed.
    */
-  @Prop() toggleIcon = chevronDown;
+  @Prop() toggleIcon?: string;
 
   /**
    * The slot inside of `ion-item` to
@@ -193,7 +193,8 @@ export class Accordion implements ComponentInterface {
       return;
     }
 
-    const { toggleIconSlot, toggleIcon } = this;
+    const { toggleIconSlot } = this;
+    const accordionToggleIcon = this.toggleIcon ?? config.get('accordionToggleIcon', chevronDown);
 
     /**
      * Check if there already is a toggle icon.
@@ -208,7 +209,7 @@ export class Accordion implements ComponentInterface {
     iconEl.slot = toggleIconSlot;
     iconEl.lazy = false;
     iconEl.classList.add('ion-accordion-toggle-icon');
-    iconEl.icon = toggleIcon;
+    iconEl.icon = accordionToggleIcon;
     iconEl.setAttribute('aria-hidden', 'true');
 
     ionItem.appendChild(iconEl);
