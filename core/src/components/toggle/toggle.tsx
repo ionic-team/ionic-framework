@@ -5,7 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { hapticSelection } from '@utils/native/haptic';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
-import { checkmarkOutline, removeOutline, ellipseOutline, pizza } from 'ionicons/icons';
+import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
