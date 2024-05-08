@@ -56,54 +56,57 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('input: shape'), () => {
-    test.describe('fill outline', () => {
-      test('should not have visual regressions with round shape', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-input
-            shape="round"
-            fill="outline"
-            label="Email"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-input>
+configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: shape'), () => {
+    test.describe('round shape', () => {
+      test.describe('outline fill', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.setContent(
+            `
+            <ion-input
+              shape="round"
+              fill="outline"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter your email"
+              maxlength="20"
+              counter="true"
+            ></ion-input>
+            `,
+            config
+          );
+  
+          const input = page.locator('ion-input');
+          await expect(input).toHaveScreenshot(screenshot(`input-shape-round-fill-outline`));
+        });
+  
+        test.only('border radius should be customizable', async ({ page }) => {
+          await page.setContent(
+            `
+            <style>
+              ion-input {
+                --border-radius: 10px !important;
+              }
+            </style>
+  
+            <ion-input
+              shape="round"
+              fill="outline"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter your email"
+              maxlength="20"
+              counter="true"
+            ></ion-input>
           `,
-          config
-        );
-
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-round`));
-      });
-
-      test('border radius should be customizable', async ({ page }) => {
-        await page.setContent(
-          `
-          <style>
-            ion-input {
-              --border-radius: 10px !important;
-            }
-          </style>
-
-          <ion-input
-            shape="round"
-            fill="outline"
-            label="Email"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-input>
-        `,
-          config
-        );
-
-        const input = page.locator('ion-input');
-        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-custom`));
+            config
+          );
+  
+          const input = page.locator('ion-input');
+          await expect(input).toHaveScreenshot(screenshot(`input-shape-round-fill-outline-custom`));
+        });
       });
     });
   });
 });
+
