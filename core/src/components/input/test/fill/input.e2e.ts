@@ -109,7 +109,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-floating`));
       });
-      test('padding should be customizable', async ({ page }) => {
+      test.only('padding should be customizable', async ({ page }) => {
         await page.setContent(
           `
           <style>
