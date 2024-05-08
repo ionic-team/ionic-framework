@@ -656,7 +656,13 @@ export class Searchbar implements ComponentInterface {
     const animated = this.animated && config.getBoolean('animated', true);
     const theme = getIonTheme(this);
     const shouldShowCancelButton = this.shouldShowCancelButton();
-    const searchbarCancelIcon = this.cancelButtonIcon ?? config.get('searchbarCancelIcon', arrowBackSharp);
+    /**
+     * The back button icon will be the default if available when
+     * the searchbar cancel icon is not set.
+     * This provides a backword compatibility since the back button
+     * icon was the default cancel button icon before.
+     */
+    const searchbarCancelIcon = this.cancelButtonIcon ?? config.get('searchbarCancelIcon', config.get('backButtonIcon', arrowBackSharp));
 
     const cancelButton = this.showCancelButton !== 'never' && (
       <button
