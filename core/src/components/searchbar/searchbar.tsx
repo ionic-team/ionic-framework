@@ -662,7 +662,8 @@ export class Searchbar implements ComponentInterface {
      * This provides a backword compatibility since the back button
      * icon was the default cancel button icon before.
      */
-    const searchbarCancelIcon = this.cancelButtonIcon ?? config.get('searchbarCancelIcon', config.get('backButtonIcon', arrowBackSharp));
+    const searchbarCancelIcon =
+      this.cancelButtonIcon ?? config.get('searchbarCancelIcon', config.get('backButtonIcon', arrowBackSharp));
 
     const cancelButton = this.showCancelButton !== 'never' && (
       <button
