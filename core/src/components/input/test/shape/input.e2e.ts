@@ -80,7 +80,7 @@ configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) =
           await expect(input).toHaveScreenshot(screenshot(`input-shape-round-fill-outline`));
         });
   
-        test.only('border radius should be customizable', async ({ page }) => {
+        test('border radius should be customizable', async ({ page }) => {
           await page.setContent(
             `
             <style>
