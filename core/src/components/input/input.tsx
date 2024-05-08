@@ -246,11 +246,13 @@ export class Input implements ComponentInterface {
   @Prop() required = false;
 
   /**
-   * The shape of the input. If "round" it will have an increased border radius.
+   * The shape of the input.
+   * If "soft" it will have a slightly increased border radius.
+   * If "round" it will have an increased border radius.
+   * 
+   * Default is "round" for the ionic theme, and undefined for all other themes.
    *
-   * Default is "round" for the `ionic` theme, and undefined for all other themes.
-   *
-   * The value, "soft", is only supported in the `ionic` theme.
+   * The value, `soft`, is only supported in the `ionic` theme.
    */
   @Prop() shape?: 'soft' | 'round';
 
