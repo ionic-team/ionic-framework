@@ -659,7 +659,7 @@ export class Searchbar implements ComponentInterface {
     /**
      * The `backButtonIcon` config will be used as a fallback if the
      * `searchbarCancelIcon` config is not set. This ensures apps
-     * have a way to keep the back button icon and searchbar cancel 
+     * have a way to keep the back button icon and searchbar cancel
      * icon in sync.
      */
     const searchbarCancelIcon =
