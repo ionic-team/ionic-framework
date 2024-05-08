@@ -528,8 +528,8 @@ export class Input implements ComponentInterface {
       return shape;
     }
 
+    // TODO(FW-6229): Update this when the default shape has been decided.
     if (theme !== 'ionic') {
-      // TODO(FW-6229): Remove this warning when the default shape has been decided.
       return undefined;
     }
 

@@ -122,7 +122,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
           <ion-input
             fill="outline"
             label="Email"
-            label-placement="floating"
             value="hi@ionic.io"
             helper-text="Enter your email"
             maxlength="20"
