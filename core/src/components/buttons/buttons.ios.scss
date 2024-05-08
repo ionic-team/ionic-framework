@@ -4,6 +4,7 @@
 // iOS Toolbar Default Button
 // --------------------------------------------------
 
+// TODO(FW-6203): do we need these styles?
 ::slotted(*) ion-button {
   --padding-top: 3px;
   --padding-bottom: 3px;
@@ -20,6 +21,7 @@
   --padding-bottom: 0;
 }
 
+// TODO(FW-6203): is this value correct?
 ::slotted(*) ion-button:not(.button-round) {
   --border-radius: #{$toolbar-ios-button-border-radius};
 }
