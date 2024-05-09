@@ -109,7 +109,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-floating`));
       });
-      test.only('padding should be customizable', async ({ page }) => {
+      test('padding should be customizable', async ({ page }) => {
         /**
          * Requires padding at the top to prevent the label
          * from being clipped by the top of the input.
