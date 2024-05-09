@@ -92,6 +92,28 @@ async function main() {
       baseBranch = defaultBaseBranch;
     }
 
+    /**
+     * The provided base branch needs to be fetched.
+     * This ensures that the local base branch is up-to-date with the 
+     * remote base branch. Otherwise, there might be errors stating that
+     * certain files don't exist in the local base branch.
+     */
+    const fetchBaseBranch = spinner();
+
+    // Inform the user that the base branch is being fetched.
+    fetchBaseBranch.start(`Fetching "${baseBranch}" to have the latest changes`);
+
+    // Fetch the base branch.
+    await execAsync(`git fetch origin ${baseBranch}`).catch((error) => {
+      fetchBaseBranch.stop(`Failed to fetch "${baseBranch}"`);
+      console.error(error);
+      return process.exit(0);
+    });
+
+    // Inform the user that the base branch has been fetched.
+    fetchBaseBranch.stop(`Fetched "${baseBranch}"`);
+
+
     const updateGroundTruth = spinner();
 
     // Inform the user that the local ground truths are being updated.
