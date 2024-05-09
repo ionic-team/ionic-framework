@@ -101,21 +101,6 @@
   display: none;
 }
 
-// Ionic Input Shapes
-// --------------------------------------------------
-
-:host(.input-shape-soft) {
-  --border-radius: #{$ionic-border-radius-rounded-medium};
-}
-
-:host(.input-shape-round) {
-  --border-radius: #{$ionic-border-radius-rounded-full};
-}
-
-:host(.input-shape-rectangular) {
-  --border-radius: #{$ionic-border-radius-square};
-}
-
 // Input Bottom Content
 // ----------------------------------------------------------------
 
