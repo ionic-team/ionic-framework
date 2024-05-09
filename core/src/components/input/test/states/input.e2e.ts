@@ -38,7 +38,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             `
             <div class="container">
               <ion-input
-                label="Email" 
+                label="Email"
                 value="hi@ionic.io"
                 helper-text="Enter an email"
                 counter="true"
@@ -55,7 +55,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
                 class="ion-valid has-focus"
                 disabled="true"
               ></ion-input>
-  
+
               <ion-input
                 label="Email"
                 value="hi@ionic.io"
@@ -92,7 +92,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             <div class="container">
               <ion-input
                 fill="outline"
-                label="Email" 
+                label="Email"
                 value="hi@ionic.io"
                 helper-text="Enter an email"
                 counter="true"
@@ -110,7 +110,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
                 class="ion-valid has-focus"
                 disabled="true"
               ></ion-input>
-  
+
               <ion-input
                 fill="outline"
                 label="Email"
@@ -149,7 +149,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           `
           <div class="container">
             <ion-input
-              label="Email" 
+              label="Email"
               value="hi@ionic.io"
               helper-text="Enter an email"
               counter="true"
@@ -159,7 +159,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
             <ion-input
               fill="outline"
-              label="Email" 
+              label="Email"
               value="hi@ionic.io"
               helper-text="Enter an email"
               counter="true"
@@ -173,6 +173,55 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
         const container = page.locator('.container');
         await expect(container).toHaveScreenshot(screenshot(`input-focused`));
+      });
+    });
+
+    test.describe(title('readonly'), () => {
+      test.describe(title('no fill'), () => {
+        test('should render readonly input correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-input
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                readonly="true"
+              ></ion-input>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`input-readonly-no-fill`));
+        });
+      });
+
+      test.describe(title('outline'), () => {
+        test('should render readonly input correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-input
+                fill="outline"
+                label="Email"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                readonly="true"
+              ></ion-input>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`input-readonly-outline`));
+        });
       });
     });
   });
