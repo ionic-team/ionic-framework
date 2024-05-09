@@ -246,10 +246,11 @@ export class Input implements ComponentInterface {
   @Prop() required = false;
 
   /**
-   * The shape of the input. Set to `"round"` for an input with more rounded corners,
-   * or `"rectangular"` for an input without rounded corners.
+   * Set to `"soft"` for an input with slightly rounded corners, `"round"` for an input with fully
+   * rounded corners, or `"rectangular"` for an input without rounded corners.
+   * Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
    */
-  @Prop() shape?: 'round' | 'rectangular';
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -518,7 +519,8 @@ export class Input implements ComponentInterface {
   private getShape() {
     const theme = getIonTheme(this);
     const { shape } = this;
-    if (theme === 'ios' && shape === 'round') {
+    // TODO(ROU-5475): Remove the check for `soft` when the shape is supported in ios and md.
+    if ((theme === 'ios' && shape === 'round') || (theme !== 'ionic' && shape === 'soft')) {
       printIonWarning(`The "${shape}" shape is not supported in the ${theme} theme.`);
       return undefined;
     }

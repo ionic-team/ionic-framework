@@ -112,6 +112,32 @@ configs({ modes: ['ionic-md', 'md'] }).forEach(({ title, screenshot, config }) =
 
 configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: shape'), () => {
+    // TODO(ROU-5475): Add the `md` theme once the `soft` shape is available
+    // in the `md` theme by combining these tests with the above tests.
+    test.describe('soft shape', () => {
+      test.describe('outline fill', () => {
+        test('should not have visual regressions', async ({ page }) => {
+          await page.setContent(
+            `
+            <ion-input
+              shape="soft"
+              fill="outline"
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter your email"
+              maxlength="20"
+              counter="true"
+            ></ion-input>
+            `,
+            config
+          );
+
+          const input = page.locator('ion-input');
+          await expect(input).toHaveScreenshot(screenshot(`input-shape-soft-fill-outline`));
+        });
+      });
+    });
+
     /**
      * Rectangular shape is only available in the ionic theme
      * TODO(FW-6098): Add test for rectangular shape in md

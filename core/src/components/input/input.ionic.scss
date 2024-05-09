@@ -104,6 +104,10 @@
 // Ionic Input Shapes
 // --------------------------------------------------
 
+:host(.input-shape-soft) {
+  --border-radius: #{$ionic-border-radius-rounded-medium};
+}
+
 :host(.input-shape-round) {
   --border-radius: #{$ionic-border-radius-rounded-full};
 }
