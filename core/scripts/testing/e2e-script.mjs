@@ -14,7 +14,7 @@ import {
   text,
   log,
 } from '@clack/prompts';
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import fs from 'node:fs';
 import { setTimeout as sleep } from 'node:timers/promises';
 import util from 'node:util';
@@ -22,6 +22,7 @@ import color from 'picocolors';
 
 async function main() {
   const execAsync = util.promisify(exec);
+  const spawnAsync = util.promisify(spawn);
   const cleanUpFiles = async () => {
     // Clean up the local ground truths.
     const cleanUp = spinner();
@@ -216,15 +217,21 @@ async function main() {
 
   // User chose to open the Playwright report.
   if (shouldOpenReport) {
-    await execAsync('npx playwright show-report').catch(() => {
-      console.error('Error: Failed to open the Playwright report or user closed the report');
+    // Use spawn to display the server information and the key to quit the server.
+    spawn('npx', ['playwright', 'show-report'], {
+      stdio: 'inherit',
     });
   } else {
     // Inform the user that the Playwright report can be opened by running the following command.
-    log.info('You can open the Playwright report by running the following command: npx playwright show-report');
+    log.info('If you change your mind, you can open the Playwright report by running the following command:');
+    log.info(color.bold('npx playwright show-report'));
   }
 
-  outro("You're all set!");
+  if (shouldOpenReport) {
+    outro("You're all set! Don't forget to quit serving the Playwright report when you're done.");
+  } else {
+    outro("You're all set!");
+  }
 
   await sleep(1000);
 }
