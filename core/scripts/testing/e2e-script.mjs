@@ -22,7 +22,6 @@ import color from 'picocolors';
 
 async function main() {
   const execAsync = util.promisify(exec);
-  const spawnAsync = util.promisify(spawn);
   const cleanUpFiles = async () => {
     // Clean up the local ground truths.
     const cleanUp = spinner();
