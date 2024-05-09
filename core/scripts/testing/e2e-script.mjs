@@ -12,6 +12,7 @@ import {
   isCancel,
   cancel,
   text,
+  log,
 } from '@clack/prompts';
 import { exec } from 'child_process';
 import fs from 'node:fs';
@@ -218,6 +219,9 @@ async function main() {
     await execAsync('npx playwright show-report').catch(() => {
       console.error('Error: Failed to open the Playwright report or user closed the report');
     });
+  } else {
+    // Inform the user that the Playwright report can be opened by running the following command.
+    log.info('You can open the Playwright report by running the following command: npx playwright show-report');
   }
 
   outro("You're all set!");
