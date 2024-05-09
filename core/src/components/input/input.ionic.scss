@@ -7,6 +7,8 @@
 // --------------------------------------------------
 
 :host {
+  // TODO(ROU-5477): use design token here when it is added
+  --color: #121212;
   --border-width: #{$ionic-border-size-small};
   --border-color: #{$ionic-color-neutral-300};
   --highlight-color-valid: #{$ionic-color-success-400};
@@ -176,6 +178,13 @@
 :host(.input-disabled.ion-color) .input-bottom .helper-text,
 :host(.input-disabled.ion-color) .helper-text {
   opacity: 0.6;
+}
+
+// Input - Readonly
+// ----------------------------------------------------------------
+
+:host(.input-readonly) {
+  --background: #{tokens.$ionic-color-neutral-10};
 }
 
 // Input Highlight

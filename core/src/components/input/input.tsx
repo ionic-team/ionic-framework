@@ -808,6 +808,7 @@ export class Input implements ComponentInterface {
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
+          'input-readonly': readonly,
         })}
       >
         {/**
