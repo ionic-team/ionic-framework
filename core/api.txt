@@ -628,7 +628,7 @@ ion-input,prop,pattern,string | undefined,undefined,false,false
 ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,true
 ion-input,prop,required,boolean,false,false,false
-ion-input,prop,shape,"round" | "soft" | undefined,undefined,false,false
+ion-input,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-input,prop,size,"large" | "medium" | "xlarge" | undefined,'medium',false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
