@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.1](https://github.com/ionic-team/ionic-framework/compare/v8.1.0...v8.1.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* **angular:** add formatOptions property to standalone datetime ([#29468](https://github.com/ionic-team/ionic-framework/issues/29468)) ([bb1db52](https://github.com/ionic-team/ionic-framework/commit/bb1db52567e0884a896f9ccd76c27540b52f5e48)), closes [#29464](https://github.com/ionic-team/ionic-framework/issues/29464)
+
+
+
+
+
+# [8.1.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.2...v8.1.0) (2024-05-01)
+
+
+### Features
+
+* **content:** add fixedSlotPlacement prop ([#29233](https://github.com/ionic-team/ionic-framework/issues/29233)) ([90a7e70](https://github.com/ionic-team/ionic-framework/commit/90a7e70a1c827835c18fd5f39d53ab17d286b4a7))
+* **input:** add clearInputIcon property ([#29246](https://github.com/ionic-team/ionic-framework/issues/29246)) ([0f5d1c0](https://github.com/ionic-team/ionic-framework/commit/0f5d1c02d20483d47b6907fec696633cc7634554)), closes [#26974](https://github.com/ionic-team/ionic-framework/issues/26974)
+
+
+
+
+
+## [8.0.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.1...v8.0.2) (2024-05-01)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [8.0.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0...v8.0.1) (2024-04-24)
 
 **Note:** Version bump only for package @ionic/angular

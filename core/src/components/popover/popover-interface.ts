@@ -21,6 +21,7 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   event?: Event;
   delegate?: FrameworkDelegate;
   animated?: boolean;
+  focusTrap?: boolean;
 
   mode?: Mode;
   keyboardClose?: boolean;

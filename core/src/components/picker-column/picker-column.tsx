@@ -31,6 +31,15 @@ export class PickerColumn implements ComponentInterface {
   private isColumnVisible = false;
   private parentEl?: HTMLIonPickerElement | null;
   private canExitInputMode = true;
+  private assistiveFocusable?: HTMLElement;
+  private updateValueTextOnScroll = false;
+
+  @State() ariaLabel: string | null = null;
+
+  @Watch('aria-label')
+  ariaLabelChanged(newValue: string) {
+    this.ariaLabel = newValue;
+  }
 
   @State() isActive = false;
 
@@ -208,6 +217,10 @@ export class PickerColumn implements ComponentInterface {
     }
   }
 
+  connectedCallback() {
+    this.ariaLabel = this.el.getAttribute('aria-label') ?? 'Select a value';
+  }
+
   private centerPickerItemInView = (target: HTMLElement, smooth = true, canExitInputMode = true) => {
     const { isColumnVisible, scrollEl } = this;
 
@@ -224,6 +237,7 @@ export class PickerColumn implements ComponentInterface {
          * of these can cause a scroll to occur.
          */
         this.canExitInputMode = canExitInputMode;
+        this.updateValueTextOnScroll = false;
         scrollEl.scroll({
           top,
           left: 0,
@@ -398,8 +412,24 @@ export class PickerColumn implements ComponentInterface {
         activeEl = newActiveElement;
         this.setPickerItemActiveState(newActiveElement, true);
 
+        /**
+         * Set the aria-valuetext even though the value prop has not been updated yet.
+         * This enables some screen readers to announce the value as the users drag
+         * as opposed to when their release their pointer from the screen.
+         *
+         * When the value is programmatically updated, we will smoothly scroll
+         * to the new option. However, we do not want to update aria-valuetext mid-scroll
+         * as that can cause the old value to be briefly set before being set to the
+         * correct option. This will cause some screen readers to announce the old value
+         * again before announcing the new value. The correct valuetext will be set on render.
+         */
+        if (this.updateValueTextOnScroll) {
+          this.assistiveFocusable?.setAttribute('aria-valuetext', this.getOptionValueText(newActiveElement));
+        }
+
         timeout = setTimeout(() => {
           this.isScrolling = false;
+          this.updateValueTextOnScroll = true;
           enableHaptics && hapticSelectionEnd();
 
           /**
@@ -483,6 +513,159 @@ export class PickerColumn implements ComponentInterface {
     });
   }
 
+  /**
+   * Find the next enabled option after the active option.
+   * @param stride - How many options to "jump" over in order to select the next option.
+   * This can be used to implement PageUp/PageDown behaviors where pressing these keys
+   * scrolls the picker by more than 1 option. For example, a stride of 5 means select
+   * the enabled option 5 options after the active one. Note that the actual option selected
+   * may be past the stride if the option at the stride is disabled.
+   */
+  private findNextOption = (stride = 1) => {
+    const { activeItem } = this;
+    if (!activeItem) return null;
+
+    let prevNode = activeItem;
+    let node = activeItem.nextElementSibling as HTMLIonPickerColumnOptionElement | null;
+    while (node != null) {
+      if (stride > 0) {
+        stride--;
+      }
+
+      if (node.tagName === 'ION-PICKER-COLUMN-OPTION' && !node.disabled && stride === 0) {
+        return node;
+      }
+      prevNode = node;
+
+      // Use nextElementSibling instead of nextSibling to avoid text/comment nodes
+      node = node.nextElementSibling as HTMLIonPickerColumnOptionElement | null;
+    }
+
+    return prevNode;
+  };
+
+  /**
+   * Find the next enabled option after the active option.
+   * @param stride - How many options to "jump" over in order to select the next option.
+   * This can be used to implement PageUp/PageDown behaviors where pressing these keys
+   * scrolls the picker by more than 1 option. For example, a stride of 5 means select
+   * the enabled option 5 options before the active one. Note that the actual option selected
+   *  may be past the stride if the option at the stride is disabled.
+   */
+  private findPreviousOption = (stride: number = 1) => {
+    const { activeItem } = this;
+    if (!activeItem) return null;
+
+    let nextNode = activeItem;
+    let node = activeItem.previousElementSibling as HTMLIonPickerColumnOptionElement | null;
+    while (node != null) {
+      if (stride > 0) {
+        stride--;
+      }
+
+      if (node.tagName === 'ION-PICKER-COLUMN-OPTION' && !node.disabled && stride === 0) {
+        return node;
+      }
+
+      nextNode = node;
+
+      // Use previousElementSibling instead of previousSibling to avoid text/comment nodes
+      node = node.previousElementSibling as HTMLIonPickerColumnOptionElement | null;
+    }
+
+    return nextNode;
+  };
+
+  private onKeyDown = (ev: KeyboardEvent) => {
+    /**
+     * The below operations should be inverted when running on a mobile device.
+     * For example, swiping up will dispatch an "ArrowUp" event. On desktop,
+     * this should cause the previous option to be selected. On mobile, swiping
+     * up causes a view to scroll down. As a result, swiping up on mobile should
+     * cause the next option to be selected. The Home/End operations remain
+     * unchanged because those always represent the first/last options, respectively.
+     */
+    const mobile = isPlatform('mobile');
+    let newOption: HTMLIonPickerColumnOptionElement | null = null;
+    switch (ev.key) {
+      case 'ArrowDown':
+        newOption = mobile ? this.findPreviousOption() : this.findNextOption();
+        break;
+      case 'ArrowUp':
+        newOption = mobile ? this.findNextOption() : this.findPreviousOption();
+        break;
+      case 'PageUp':
+        newOption = mobile ? this.findNextOption(5) : this.findPreviousOption(5);
+        break;
+      case 'PageDown':
+        newOption = mobile ? this.findPreviousOption(5) : this.findNextOption(5);
+        break;
+      case 'Home':
+        /**
+         * There is no guarantee that the first child will be an ion-picker-column-option,
+         * so we do not use firstElementChild.
+         */
+        newOption = this.el.querySelector<HTMLIonPickerColumnOptionElement>('ion-picker-column-option:first-of-type');
+        break;
+      case 'End':
+        /**
+         * There is no guarantee that the last child will be an ion-picker-column-option,
+         * so we do not use lastElementChild.
+         */
+        newOption = this.el.querySelector<HTMLIonPickerColumnOptionElement>('ion-picker-column-option:last-of-type');
+        break;
+      default:
+        break;
+    }
+
+    if (newOption !== null) {
+      this.value = newOption.value;
+
+      // This stops any default browser behavior such as scrolling
+      ev.preventDefault();
+    }
+  };
+
+  /**
+   * Utility to generate the correct text for aria-valuetext.
+   */
+  private getOptionValueText = (el?: HTMLIonPickerColumnOptionElement) => {
+    return el ? el.getAttribute('aria-label') ?? el.innerText : '';
+  };
+
+  /**
+   * Render an element that overlays the column. This element is for assistive
+   * tech to allow users to navigate the column up/down. This element should receive
+   * focus as it listens for synthesized keyboard events as required by the
+   * slider role: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
+   */
+  private renderAssistiveFocusable = () => {
+    const { activeItem } = this;
+    const valueText = this.getOptionValueText(activeItem);
+
+    /**
+     * When using the picker, the valuetext provides important context that valuenow
+     * does not. Additionally, using non-zero valuemin/valuemax values can cause
+     * WebKit to incorrectly announce numeric valuetext values (such as a year
+     * like "2024") as percentages: https://bugs.webkit.org/show_bug.cgi?id=273126
+     */
+    return (
+      <div
+        ref={(el) => (this.assistiveFocusable = el)}
+        class="assistive-focusable"
+        role="slider"
+        tabindex={this.disabled ? undefined : 0}
+        aria-label={this.ariaLabel}
+        aria-valuemin={0}
+        aria-valuemax={0}
+        aria-valuenow={0}
+        aria-valuetext={valueText}
+        aria-orientation="vertical"
+        onKeyDown={(ev) => this.onKeyDown(ev)}
+      ></div>
+    );
+  };
+
   render() {
     const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
@@ -496,10 +679,11 @@ export class PickerColumn implements ComponentInterface {
           ['picker-column-disabled']: disabled,
         })}
       >
+        {this.renderAssistiveFocusable()}
         <slot name="prefix"></slot>
         <div
+          aria-hidden="true"
           class="picker-opts"
-          tabindex={disabled ? undefined : 0}
           ref={(el) => {
             this.scrollEl = el;
           }}
