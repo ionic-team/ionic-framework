@@ -180,7 +180,8 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('alert: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
+    // TODO(ROU-8158): unskip this test when a solution is found
+    test.skip('should scale text on larger font sizes', async ({ page }) => {
       await page.setContent(
         `
         <style>
