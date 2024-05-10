@@ -105,6 +105,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
     });
 
+    // TODO(FW-6232): remove this skip when tabbing is working properly
     test.skip('tabbing should correctly move focus between columns', async ({ page }) => {
       const firstColumn = page.locator('ion-picker-column#first');
       const secondColumn = page.locator('ion-picker-column#second');
@@ -120,6 +121,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(secondColumn).toBeFocused();
     });
 
+    // TODO(FW-6232): remove this skip when tabbing is working properly
     test.skip('tabbing should correctly move focus back', async ({ page }) => {
       const firstColumn = page.locator('ion-picker-column#first');
       const secondColumn = page.locator('ion-picker-column#second');
