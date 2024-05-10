@@ -11,7 +11,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, screenshot, t
       test('should update the active item', async ({ page }) => {
         const breadcrumbItems = page.locator('ion-breadcrumb');
 
-        const addItemButton = page.locator('ion-button#add-btn');
+        const addItemButton = page.locator('#add-btn');
 
         await expect(breadcrumbItems).toHaveCount(4);
 
