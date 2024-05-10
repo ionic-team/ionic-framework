@@ -24,6 +24,7 @@ const DATETIME_INPUTS = [
   'disabled',
   'doneText',
   'firstDayOfWeek',
+  'formatOptions',
   'highlightedDates',
   'hourCycle',
   'hourValues',

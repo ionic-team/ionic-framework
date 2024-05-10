@@ -16,8 +16,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const pageOne = page.locator('page-one');
       const pageTwo = page.locator('page-two');
 
-      const pageTwoButton = page.locator('ion-button:has-text("Go to Page 2")');
-      const pageTwoTwoButton = page.locator('ion-button:has-text("Go to Page 2.2")');
+      const pageTwoButton = page.locator('button:has-text("Go to Page 2")');
+      const pageTwoTwoButton = page.locator('button:has-text("Go to Page 2.2")');
 
       await pageTwoButton.click();
       await page.waitForChanges();
@@ -35,7 +35,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(pageTwoOne).toHaveCount(1);
       await expect(pageTwoTwo).toBeVisible();
 
-      const pageThreeButton = page.locator('ion-button:has-text("Go to Page 3")');
+      const pageThreeButton = page.locator('button:has-text("Go to Page 3")');
 
       await pageThreeButton.click();
       await page.waitForChanges();
@@ -49,8 +49,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
     test.describe('back button', () => {
       test('should work with nested ion-nav', async ({ page }) => {
-        const pageTwoButton = page.locator('ion-button:has-text("Go to Page 2")');
-        const pageTwoTwoButton = page.locator('ion-button:has-text("Go to Page 2.2")');
+        const pageTwoButton = page.locator('button:has-text("Go to Page 2")');
+        const pageTwoTwoButton = page.locator('button:has-text("Go to Page 2.2")');
 
         await pageTwoButton.click();
         await page.waitForChanges();
@@ -61,7 +61,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await pageTwoTwoButton.click();
         await page.waitForChanges();
 
-        const pageThreeButton = page.locator('ion-button:has-text("Go to Page 3")');
+        const pageThreeButton = page.locator('button:has-text("Go to Page 3")');
         const pageThreeBackButton = page.locator('page-three ion-back-button');
 
         await pageThreeButton.click();
