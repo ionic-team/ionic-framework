@@ -1471,7 +1471,7 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * Set to `"soft"` for an input with slightly rounded corners, `"round"` for an input with fully rounded corners, or `"rectangular"` for an input without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+          * Set to `"soft"` for an input with slightly rounded corners, `"round"` for an input with fully rounded corners, or `"rectangular"` for an input without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes. Only applies when the fill is set to `"solid"` or `"outline"`.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
@@ -6751,7 +6751,7 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * Set to `"soft"` for an input with slightly rounded corners, `"round"` for an input with fully rounded corners, or `"rectangular"` for an input without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+          * Set to `"soft"` for an input with slightly rounded corners, `"round"` for an input with fully rounded corners, or `"rectangular"` for an input without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes. Only applies when the fill is set to `"solid"` or `"outline"`.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
