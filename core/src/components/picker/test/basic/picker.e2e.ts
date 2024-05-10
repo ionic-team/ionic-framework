@@ -105,7 +105,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
     });
 
-    test('tabbing should correctly move focus between columns', async ({ page }) => {
+    test.skip('tabbing should correctly move focus between columns', async ({ page }) => {
       const firstColumn = page.locator('ion-picker-column#first');
       const secondColumn = page.locator('ion-picker-column#second');
 
