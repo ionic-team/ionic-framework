@@ -125,6 +125,108 @@ export interface IonicConfig {
   toastDuration?: number;
 
   /**
+   * Overrides the toggle icon for all `ion-accordion` components.
+   */
+  accordionToggleIcon?: string;
+
+  /**
+   * Overrides the separator icon for all `ion-breadcrumb` components,
+   * only when mode is set to `ios`.
+   */
+  breadcrumbSeparatorIcon?: string;
+
+  /**
+   * Overrides the collapsed icon for all `ion-breadcrumb` components.
+   */
+  breadcrumbCollapsedIcon?: string;
+
+  /**
+   * Overrides the next icon for all `ion-datetime` components.
+   */
+  datetimeNextIcon?: string;
+
+  /**
+   * Overrides the previous icon for all `ion-datetime` components.
+   */
+  datetimePreviousIcon?: string;
+
+  /**
+   * Overrides the show month and year icon for all `ion-datetime` components.
+   */
+  datetimeShowMonthYearIcon?: string;
+
+  /**
+   * Overrides the hide month and year icon for all `ion-datetime` components.
+   */
+  datetimeHideMonthYearIcon?: string;
+
+  /**
+   * Overrides the close icon for all `ion-fab-button` components.
+   */
+  fabButtonCloseIcon?: string;
+
+  /**
+   * Overrides the clear icon for all `ion-input` components.
+   */
+  inputClearIcon?: string;
+
+  /**
+   * Overrides the show icon for all `ion-input-password` components.
+   */
+  inputPasswordShowIcon?: string;
+
+  /**
+   * Overrides the hide icon for all `ion-input-password` components.
+   */
+  inputPasswordHideIcon?: string;
+
+  /**
+   * Overrides the detail icon for all `ion-item` components.
+   */
+  itemDetailIcon?: string;
+
+  /**
+   * Overrides the handle icon for all `ion-reorder` components.
+   */
+  reorderHandleIcon?: string;
+
+  /**
+   * Overrides the cancel icon for all `ion-searchbar` components,
+   * only when mode is set to `md`.
+   */
+  searchbarCancelIcon?: string;
+
+  /**
+   * Overrides the clear icon for all `ion-searchbar` components.
+   */
+  searchbarClearIcon?: string;
+
+  /**
+   * Overrides the search icon for all `ion-searchbar` components.
+   */
+  searchbarSearchIcon?: string;
+
+  /**
+   * Overrides the expand icon for all `ion-select` components.
+   */
+  selectExpandIcon?: string;
+
+  /**
+   * Overrides the collapsed icon for all `ion-select` components.
+   */
+  selectCollapsedIcon?: string;
+
+  /**
+   * Overrides the checked icon for all `ion-toggle` components.
+   */
+  toggleCheckedIcon?: string;
+
+  /**
+   * Overrides the unchecked icon for all `ion-toggle` components.
+   */
+  toggleUncheckedIcon?: string;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */

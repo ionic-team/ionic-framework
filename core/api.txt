@@ -4,7 +4,7 @@ ion-accordion,prop,disabled,boolean,false,false,false
 ion-accordion,prop,mode,"ios" | "md",undefined,false,false
 ion-accordion,prop,readonly,boolean,false,false,false
 ion-accordion,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-accordion,prop,toggleIcon,string,chevronDown,false,false
+ion-accordion,prop,toggleIcon,string | undefined,undefined,false,false
 ion-accordion,prop,toggleIconSlot,"end" | "start",'end',false,false
 ion-accordion,prop,value,string,`ion-accordion-${accordionIds++}`,false,false
 ion-accordion,part,content
@@ -496,7 +496,7 @@ ion-fab,method,close,close() => Promise<void>
 
 ion-fab-button,shadow
 ion-fab-button,prop,activated,boolean,false,false,false
-ion-fab-button,prop,closeIcon,string,close,false,false
+ion-fab-button,prop,closeIcon,string | undefined,undefined,false,false
 ion-fab-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-fab-button,prop,disabled,boolean,false,false,false
 ion-fab-button,prop,download,string | undefined,undefined,false,false
@@ -671,7 +671,7 @@ ion-item,shadow
 ion-item,prop,button,boolean,false,false,false
 ion-item,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-item,prop,detail,boolean | undefined,undefined,false,false
-ion-item,prop,detailIcon,string,chevronForward,false,false
+ion-item,prop,detailIcon,string | undefined,undefined,false,false
 ion-item,prop,disabled,boolean,false,false,false
 ion-item,prop,download,string | undefined,undefined,false,false
 ion-item,prop,href,string | undefined,undefined,false,false
@@ -1284,7 +1284,7 @@ ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocapitalize,string,'off',false,false
 ion-searchbar,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
-ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
+ion-searchbar,prop,cancelButtonIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true

@@ -2,6 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, h } from '@stencil/core';
 import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 
 /**
@@ -35,9 +36,24 @@ export class Reorder implements ComponentInterface {
     }
   }
 
-  render() {
+  /**
+   * Get the icon to use for the handle icon.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @returns {string} The icon to use for the handle icon.
+   */
+  get reorderHandleIcon(): string {
     const theme = getIonTheme(this);
     const reorderIcon = theme === 'ios' ? reorderThreeOutline : reorderTwoSharp;
+
+    return config.get('reorderHandleIcon', reorderIcon);
+  }
+
+  render() {
+    const { reorderHandleIcon } = this;
+    const theme = getIonTheme(this);
+
     return (
       <Host
         class={{
@@ -45,7 +61,7 @@ export class Reorder implements ComponentInterface {
         }}
       >
         <slot>
-          <ion-icon icon={reorderIcon} lazy={false} class="reorder-icon" part="icon" aria-hidden="true" />
+          <ion-icon icon={reorderHandleIcon} lazy={false} class="reorder-icon" part="icon" aria-hidden="true" />
         </slot>
       </Host>
     );

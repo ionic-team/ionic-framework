@@ -53,4 +53,7 @@ if (requestHeaded && !hasHeadedConfigFiles) {
   console.warn(chalk.yellow.bold('\n⚠️ You are running tests in headed mode, but one or more of your headed config files was not found.\nPlease ensure that both docker-display.txt and docker-display-volume.txt have been created in the correct location.\n'));
 }
 
-execa('docker', args, { shell: true, stdio: 'inherit' });
+const res = await execa('docker', args, { shell: true, stdio: 'inherit' });
+
+// If underlying scripts failed this whole process should fail too
+process.exit(res.exitCode);

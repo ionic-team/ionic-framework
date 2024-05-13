@@ -7,7 +7,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await page.goto('/src/components/datetime/test/position', config);
       const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
-      const openDateTimeBtn = page.locator('ion-button#open-datetime');
+      const openDateTimeBtn = page.locator('#open-datetime');
       await openDateTimeBtn.click();
 
       await ionPopoverDidPresent.next();
