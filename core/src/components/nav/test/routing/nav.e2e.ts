@@ -24,8 +24,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const pageOne = page.locator('page-one');
         const pageTwo = page.locator('page-two');
 
-        const pageOneButton = page.locator('ion-button:has-text("Go to Page One")');
-        const pageTwoButton = page.locator('ion-button:has-text("Go to Page Two")');
+        const pageOneButton = page.locator('button:has-text("Go to Page One")');
+        const pageTwoButton = page.locator('button:has-text("Go to Page Two")');
 
         await pageOneButton.click();
         await page.waitForChanges();
@@ -45,7 +45,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
 
       test('should render the back button', async ({ page }) => {
-        const pageOneButton = page.locator('ion-button:has-text("Go to Page One")');
+        const pageOneButton = page.locator('button:has-text("Go to Page One")');
         const pageOneBackButton = page.locator('page-one ion-back-button');
 
         await pageOneButton.click();
@@ -59,7 +59,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const pageRoot = page.locator('page-root');
       const pageOne = page.locator('page-one');
 
-      const pageOneButton = page.locator('ion-button:has-text("Go to Page One")');
+      const pageOneButton = page.locator('button:has-text("Go to Page One")');
       const pageOneBackButton = page.locator('page-one ion-back-button');
 
       await pageOneButton.click();
@@ -80,9 +80,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const pageTwo = page.locator('page-two');
         const pageThree = page.locator('page-three');
 
-        const pageOneButton = page.locator('ion-button:has-text("Go to Page One")');
-        const pageTwoButton = page.locator('ion-button:has-text("Go to Page Two")');
-        const pageThreeButton = page.locator('ion-button:has-text("Go to Page Three")');
+        const pageOneButton = page.locator('button:has-text("Go to Page One")');
+        const pageTwoButton = page.locator('button:has-text("Go to Page Two")');
+        const pageThreeButton = page.locator('button:has-text("Go to Page Three")');
 
         await pageOneButton.click();
         await page.waitForChanges();

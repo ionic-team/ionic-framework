@@ -4,6 +4,7 @@ import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 import { eyeOff, eye } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, TextFieldTypes } from '../../interface';
 
@@ -110,10 +111,9 @@ export class InputPasswordToggle implements ComponentInterface {
 
     const mode = getIonMode(this);
 
-    const showPasswordIcon = this.showIcon ?? eye;
-    const hidePasswordIcon = this.hideIcon ?? eyeOff;
-
     const isPasswordVisible = type === 'text';
+    const inputPasswordShowIcon = this.showIcon ?? config.get('inputPasswordShowIcon', eye);
+    const inputPasswordHideIcon = this.hideIcon ?? config.get('inputPasswordHideIcon', eyeOff);
 
     return (
       <Host
@@ -143,7 +143,7 @@ export class InputPasswordToggle implements ComponentInterface {
           <ion-icon
             slot="icon-only"
             aria-hidden="true"
-            icon={isPasswordVisible ? hidePasswordIcon : showPasswordIcon}
+            icon={isPasswordVisible ? inputPasswordHideIcon : inputPasswordShowIcon}
           ></ion-icon>
         </ion-button>
       </Host>

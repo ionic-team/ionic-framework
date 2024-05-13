@@ -11,6 +11,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type {
   ActionSheetOptions,
@@ -243,10 +244,6 @@ export class Select implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
-  componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
-  }
-
   async connectedCallback() {
     const { el } = this;
 
@@ -270,6 +267,24 @@ export class Select implements ComponentInterface {
        */
       forceUpdate(this);
     });
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
+  componentDidLoad() {
+    /**
+     * If any of the conditions that trigger the styleChanged callback
+     * are met on component load, it is possible the event emitted
+     * prior to a parent web component registering an event listener.
+     *
+     * To ensure the parent web component receives the event, we
+     * emit the style event again after the component has loaded.
+     *
+     * This is often seen in Angular with the `dist` output target.
+     */
+    this.emitStyle();
   }
 
   disconnectedCallback() {
@@ -863,15 +878,11 @@ export class Select implements ComponentInterface {
    * next to the select text.
    */
   private renderSelectIcon() {
-    const theme = getIonTheme(this);
-    const { isExpanded, toggleIcon, expandedIcon } = this;
-    let icon: string;
+    const { isExpanded, selectExpandIcon, selectCollapsedIcon } = this;
+    let icon = selectCollapsedIcon;
 
-    if (isExpanded && expandedIcon !== undefined) {
-      icon = expandedIcon;
-    } else {
-      const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
-      icon = toggleIcon ?? defaultIcon;
+    if (isExpanded) {
+      icon = selectExpandIcon;
     }
 
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
@@ -923,6 +934,53 @@ export class Select implements ComponentInterface {
         ref={(focusEl) => (this.focusEl = focusEl)}
       ></button>
     );
+  }
+
+  /**
+   * Get the icon to use for the expand icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @returns {string} The icon to use for the expand icon.
+   */
+  get selectExpandIcon(): string {
+    const theme = getIonTheme(this);
+    const icon = this.expandedIcon;
+    let defaultExpandIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
+
+    if (icon !== undefined) {
+      // Icon is set on the component.
+      return icon;
+    }
+
+    if (this.toggleIcon) {
+      // If the toggleIcon is set, use that as the default expand icon.
+      defaultExpandIcon = this.toggleIcon;
+    }
+
+    return config.get('selectExpandIcon', defaultExpandIcon);
+  }
+
+  /**
+   * Get the icon to use for the collapsed icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @returns {string} The icon to use for the collapsed icon.
+   */
+  get selectCollapsedIcon(): string {
+    const theme = getIonTheme(this);
+    const icon = this.toggleIcon;
+    const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
+
+    if (icon !== undefined) {
+      // Icon is set on the component.
+      return icon;
+    }
+
+    return config.get('selectCollapsedIcon', defaultIcon);
   }
 
   render() {
