@@ -6,6 +6,7 @@ import type { Attributes } from '@utils/helpers';
 import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { close } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -115,7 +116,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
    * is pressed. Only applies if it is the main button inside of a fab containing a
    * fab list.
    */
-  @Prop() closeIcon = close;
+  @Prop() closeIcon?: string;
 
   /**
    * Emitted when the button has focus.
@@ -166,6 +167,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
             rel: this.rel,
             target: this.target,
           };
+    const fabButtonCloseIcon = this.closeIcon ?? config.get('fabButtonCloseIcon', close);
 
     return (
       <Host
@@ -196,7 +198,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
         >
           <ion-icon
             aria-hidden="true"
-            icon={this.closeIcon}
+            icon={fabButtonCloseIcon}
             part="close-icon"
             class="close-icon"
             lazy={false}

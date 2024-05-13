@@ -9,7 +9,7 @@ import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons'
 
 import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, Theme } from '../../interface';
+import type { Color, Gesture, GestureDetail } from '../../interface';
 
 import type { ToggleChangeEventDetail } from './toggle-interface';
 
@@ -243,21 +243,59 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  private getSwitchLabelIcon = (theme: Theme, checked: boolean) => {
-    if (theme === 'md') {
-      return checked ? checkmarkOutline : removeOutline;
-    }
-    return checked ? removeOutline : ellipseOutline;
+  private getSwitchLabelIcon = (checked: boolean) => {
+    return checked ? this.toggleCheckedIcon : this.toggleUncheckedIcon;
   };
 
-  private renderOnOffSwitchLabels(theme: Theme, checked: boolean) {
-    const icon = this.getSwitchLabelIcon(theme, checked);
+  get toggleDefaultCheckedIcon(): string {
+    const theme = getIonTheme(this);
+    return theme === 'md' ? checkmarkOutline : removeOutline;
+  }
+
+  /**
+   * Get the icon to use for the checked icon.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @returns {string} The icon to use for the checked icon.
+   */
+  get toggleCheckedIcon(): string {
+    return config.get('toggleCheckedIcon', this.toggleDefaultCheckedIcon);
+  }
+
+  /**
+   * Get the icon to use for the unchecked icon.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   *
+   * @returns {string} The icon to use for the unchecked icon.
+   */
+  get toggleUncheckedIcon(): string {
+    const theme = getIonTheme(this);
+    const defaultIcon = theme === 'md' ? removeOutline : ellipseOutline;
+
+    return config.get('toggleUncheckedIcon', defaultIcon);
+  }
+
+  private renderOnOffSwitchLabels(checked: boolean) {
+    const icon = this.getSwitchLabelIcon(checked);
 
     return (
       <ion-icon
         class={{
           'toggle-switch-icon': true,
           'toggle-switch-icon-checked': checked,
+          /**
+           * The default checked icon is being modified with
+           * styling that causes it to rotate by 90 degrees
+           * when the theme is `ios`.
+           *
+           * To prevent any rotation on a custom icon that is
+           * set through the config, we need to apply a class
+           * that handles the styling only when the default
+           * checked icon is being used.
+           */
+          'toggle-switch-icon-checked-default': checked && icon === this.toggleDefaultCheckedIcon,
         }}
         icon={icon}
         aria-hidden="true"
@@ -275,10 +313,10 @@ export class Toggle implements ComponentInterface {
          since the wrapper is translated when the handle is interacted with and
          this would move the on/off labels outside of the view box */}
         {enableOnOffLabels &&
-          theme === 'ios' && [this.renderOnOffSwitchLabels(theme, true), this.renderOnOffSwitchLabels(theme, false)]}
+          theme === 'ios' && [this.renderOnOffSwitchLabels(true), this.renderOnOffSwitchLabels(false)]}
         <div class="toggle-icon-wrapper">
           <div class="toggle-inner" part="handle">
-            {enableOnOffLabels && theme === 'md' && this.renderOnOffSwitchLabels(theme, checked)}
+            {enableOnOffLabels && theme === 'md' && this.renderOnOffSwitchLabels(checked)}
           </div>
         </div>
       </div>

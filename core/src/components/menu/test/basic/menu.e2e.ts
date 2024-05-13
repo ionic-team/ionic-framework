@@ -29,7 +29,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
     test('should trap focus', async ({ page, skip, browserName }) => {
       skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
-      // TODO (FW-2979)
+      // TODO (ROU-5437)
       skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
       const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
