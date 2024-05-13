@@ -212,8 +212,8 @@ export class PickerColumn implements ComponentInterface {
    */
   @Method()
   async setFocus() {
-    if (this.scrollEl) {
-      this.scrollEl.focus();
+    if (this.assistiveFocusable) {
+      this.assistiveFocusable.focus();
     }
   }
 
@@ -619,7 +619,7 @@ export class PickerColumn implements ComponentInterface {
     }
 
     if (newOption !== null) {
-      this.value = newOption.value;
+      this.setValue(newOption.value);
 
       // This stops any default browser behavior such as scrolling
       ev.preventDefault();
@@ -687,6 +687,7 @@ export class PickerColumn implements ComponentInterface {
           ref={(el) => {
             this.scrollEl = el;
           }}
+          tabIndex={-1}
         >
           <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
