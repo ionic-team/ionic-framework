@@ -52,12 +52,12 @@
  */
 :host([slot="start"]),
 :host([slot="end"]) {
-  width: auto;
-
   // Reset the flex property when the checkbox
   // is slotted to avoid growing the element larger
   // than its content.
   flex: initial;
+
+  width: auto;
 }
 
 :host(.ion-color) {

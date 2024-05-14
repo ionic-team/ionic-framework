@@ -206,7 +206,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item: inputs'), () => {
-    test('should not shrink the width of a div next to a checkbox, radio, select or toggle', async ({ page }, testInfo) => {
+    test('should not shrink the width of a div next to a checkbox, radio, select or toggle', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/29319',
