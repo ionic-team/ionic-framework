@@ -212,8 +212,8 @@ export class PickerColumn implements ComponentInterface {
    */
   @Method()
   async setFocus() {
-    if (this.scrollEl) {
-      this.scrollEl.focus();
+    if (this.assistiveFocusable) {
+      this.assistiveFocusable.focus();
     }
   }
 
@@ -619,7 +619,7 @@ export class PickerColumn implements ComponentInterface {
     }
 
     if (newOption !== null) {
-      this.value = newOption.value;
+      this.setValue(newOption.value);
 
       // This stops any default browser behavior such as scrolling
       ev.preventDefault();
@@ -687,6 +687,25 @@ export class PickerColumn implements ComponentInterface {
           ref={(el) => {
             this.scrollEl = el;
           }}
+          /**
+           * When an element has an overlay scroll style and
+           * a fixed height, Firefox will focus the scrollable
+           * container if the content exceeds the container's
+           * dimensions.
+           *
+           * This causes keyboard navigation to focus to this
+           * element instead of going to the next element in
+           * the tab order.
+           *
+           * The desired behavior is for the user to be able to
+           * focus the assistive focusable element and tab to
+           * the next element in the tab order. Instead of tabbing
+           * to this element.
+           *
+           * To prevent this, we set the tabIndex to -1. This
+           * will match the behavior of the other browsers.
+           */
+          tabIndex={-1}
         >
           <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
