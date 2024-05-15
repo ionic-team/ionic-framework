@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.2](https://github.com/ionic-team/ionic-framework/compare/v8.1.0...v8.1.2) (2024-05-15)
+
+
+### Bug Fixes
+
+* **angular:** add formatOptions property to standalone datetime ([#29468](https://github.com/ionic-team/ionic-framework/issues/29468)) ([bb1db52](https://github.com/ionic-team/ionic-framework/commit/bb1db52567e0884a896f9ccd76c27540b52f5e48)), closes [#29464](https://github.com/ionic-team/ionic-framework/issues/29464)
+
+
+
+
+
 ## [8.1.1](https://github.com/ionic-team/ionic-framework/compare/v8.1.0...v8.1.1) (2024-05-08)
 
 
