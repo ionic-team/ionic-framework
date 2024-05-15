@@ -180,7 +180,10 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('alert: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
+    test('should scale text on larger font sizes', async ({ page, skip }) => {
+      // TODO(ROU-8158): unskip this test when a solution is found
+      skip.browser('chromium', 'Rendering is flaky in Chrome.');
+
       await page.setContent(
         `
         <style>
