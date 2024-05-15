@@ -32,10 +32,24 @@ StyleDictionary.registerFormat({
   formatter({ dictionary, file }) {
     // Add a prefix to all variable names
     const prefixedVariables = dictionary.allProperties.map((prop) => {
-      const rgb = hexToRgb(prop.value);
-      return `  --${variablesPrefix}-${prop.name}: ${prop.value};${
-        rgb ? `\n  --${variablesPrefix}-${prop.name}-rgb: ${rgb.r}, ${rgb.g}, ${rgb.b};` : ``
-      }`;
+      if (prop['$type'] === 'typography') {
+        return;
+      }
+
+      if (prop.attributes.category.startsWith('Elevation')) {
+        const cssShadow = prop.value
+          .map((shadow) => {
+            return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${shadow.color}`;
+          })
+          .join(', ');
+
+        return `--${variablesPrefix}-${prop.name}: ${cssShadow};`;
+      } else {
+        const rgb = hexToRgb(prop.value);
+        return `  --${variablesPrefix}-${prop.name}: ${prop.value};${
+          rgb ? `\n  --${variablesPrefix}-${prop.name}-rgb: ${rgb.r}, ${rgb.g}, ${rgb.b};` : ``
+        }`;
+      }
     });
 
     return (
@@ -54,12 +68,39 @@ StyleDictionary.registerFormat({
   formatter({ dictionary, file }) {
     // Add a prefix to all variable names
     const prefixedVariables = dictionary.allProperties.map((prop) => {
-      const rgb = hexToRgb(prop.value);
-      return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${
-        rgb
-          ? `\n$${variablesPrefix}-${prop.name}-rgb: var(--${variablesPrefix}-${prop.name}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`
-          : ``
-      }`;
+      if (prop.attributes.category.startsWith('Elevation')) {
+        const cssShadow = prop.value
+          .map((shadow) => {
+            return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${shadow.color}`;
+          })
+          .join(', ');
+
+        return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${cssShadow});`;
+      } else if (prop['$type'] === 'typography') {
+        const typography = prop.value;
+
+        // Generate CSS for typography tokens
+        const cssTypography = `
+          $${variablesPrefix}-${prop.name}: (
+            font-family: ${typography.fontFamily},
+            font-size: ${typography.fontSize},
+            font-weight: ${typography.fontWeight},
+            letter-spacing: ${typography.letterSpacing},
+            line-height: ${typography.lineHeight},
+            text-transform: ${typography.textTransform},
+            text-decoration: ${typography.textDecoration}
+          );
+        `;
+
+        return cssTypography;
+      } else {
+        const rgb = hexToRgb(prop.value);
+        return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${
+          rgb
+            ? `\n$${variablesPrefix}-${prop.name}-rgb: var(--${variablesPrefix}-${prop.name}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`
+            : ``
+        }`;
+      }
     });
 
     return (
@@ -116,6 +157,8 @@ StyleDictionary.registerFormat({
           utilityClass = `.${variablesPrefix}-margin-${className} {\n  --margin-start: #{$ionic-${prop.name}};\n  --margin-end: #{$ionic-${prop.name}};\n  --margin-top: #{$ionic-${prop.name}};\n  --margin-bottom: #{$ionic-${prop.name}};\n\n  @include margin(${prop.value});\n};\n 
 .${variablesPrefix}-padding-${className} {\n  --padding-start: #{$ionic-${prop.name}};\n  --padding-end: #{$ionic-${prop.name}};\n  --padding-top: #{$ionic-${prop.name}};\n  --padding-bottom: #{$ionic-${prop.name}};\n\n  @include padding(${prop.value});\n};\n`;
           break;
+        case 'scale':
+          return;
         default:
           utilityClass = `.${variablesPrefix}-${className} {\n  ${tokenType}: $ionic-${prop.name};\n}`;
       }
