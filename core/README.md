@@ -96,7 +96,7 @@ const showModal = async () => {
 
 ## How to contribute
 
-[Check out the CONTRIBUTE guide](/.github/CONTRIBUTING.md)
+[Check out the CONTRIBUTE guide](/docs/CONTRIBUTING.md)
 
 ## Related
 
