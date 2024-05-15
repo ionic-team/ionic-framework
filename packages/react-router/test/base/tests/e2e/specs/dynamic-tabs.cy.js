@@ -3,7 +3,7 @@ const port = 3000;
 describe('Dynamic Tabs', () => {
   /*
     This spec tests being able to add a tab at runtime and to be able to go to it
-    Fixes bug https://github.com/ionic-team/ionic/issues/21112
+    Fixes bug https://github.com/ionic-team/ionic-framework/issues/21112
   */
 
   it('/dynamic-tabs > Tab 1 should be visible', () => {

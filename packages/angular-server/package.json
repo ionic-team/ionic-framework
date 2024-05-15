@@ -17,7 +17,7 @@
     "url": "git+https://github.com/ionic-team/ionic-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/ionic-team/ionic/issues"
+    "url": "https://github.com/ionic-team/ionic-framework/issues"
   },
   "publishConfig": {
     "directory": "dist"

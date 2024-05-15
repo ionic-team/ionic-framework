@@ -363,7 +363,7 @@ export class Searchbar implements ComponentInterface {
     this.ionClear.emit();
 
     return new Promise<void>((resolve) => {
-      // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
+      // setTimeout() fixes https://github.com/ionic-team/ionic-framework/issues/7527
       // wait for 4 frames
       setTimeout(() => {
         const value = this.getValue();

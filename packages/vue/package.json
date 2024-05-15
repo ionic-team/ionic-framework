@@ -45,9 +45,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ionic-team/ionic/issues"
+    "url": "https://github.com/ionic-team/ionic-framework/issues"
   },
-  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "homepage": "https://github.com/ionic-team/ionic-framework#readme",
   "devDependencies": {
     "@babel/types": "^7.18.4",
     "@ionic/eslint-config": "^0.3.0",
