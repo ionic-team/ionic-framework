@@ -105,6 +105,9 @@
 .ionic-line-height-1200 {
   line-height: $ionic-line-height-1200;
 }
+.ionic-line-height-full {
+  line-height: $ionic-line-height-full;
+}
 .ionic-margin-space-0 {
   --margin-start: #{$ionic-space-0};
   --margin-end: #{$ionic-space-0};
@@ -1548,6 +1551,12 @@
 .ionic-background-color-primary-1200 {
   background-color: $ionic-color-primary-1200;
 }
+.ionic-color-primary-base {
+  color: $ionic-color-primary-base;
+}
+.ionic-background-color-primary-base {
+  background-color: $ionic-color-primary-base;
+}
 .ionic-color-info-100 {
   color: $ionic-color-info-100;
 }
@@ -1861,9 +1870,6 @@
   z-index: $ionic-z-index-top;
 }
 
-.ionic-font-family-inter {
-  font-family: $ionic-font-family-inter;
-}
 .ionic-state-focus-0 {
   color: $ionic-state-focus-0;
 }

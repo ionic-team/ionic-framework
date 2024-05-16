@@ -7,6 +7,10 @@
   },
   "color": {
     "primary": {
+      "base": {
+        "$type": "color",
+        "$value": "{color.blue.700}"
+      },
       "100": {
         "$type": "color",
         "$value": "{color.blue.100}"

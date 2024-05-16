@@ -9,7 +9,7 @@
   --focus-ring-color: #9ec4fd;
   --focus-ring-width: 2px;
 
-  @include border-radius(tokens.$ionic-border-radius-rounded-medium);
+  @include border-radius(tokens.$ionic-border-radius-200);
 }
 
 // Tab Button Focused

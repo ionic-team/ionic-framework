@@ -137,6 +137,10 @@
     "1200": {
       "$type": "dimension",
       "$value": "{scale.1200}"
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": "100%"
     }
   },
   "space": {

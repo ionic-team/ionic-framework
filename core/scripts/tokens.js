@@ -204,6 +204,8 @@ StyleDictionary.registerFormat({
   text-decoration: ${typography.textDecoration};
 };
 `;
+      } else if (prop.attributes.category.match('font-family')) {
+        return;
       }
 
       switch (tokenType) {
