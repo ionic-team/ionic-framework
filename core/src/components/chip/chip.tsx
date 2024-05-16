@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -41,9 +42,34 @@ export class Chip implements ComponentInterface {
    */
   @Prop() shape?: 'round' | 'rectangular';
 
+  /**
+   * Set to `"small"` for a button with less height and padding.
+   * 
+   * Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+   */
+  @Prop() size?: 'small' | 'large';
+
+  private getSize() {
+    const theme = getIonTheme(this);
+    const { size } = this;
+    if (theme !== 'ionic') {
+      printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+
+    // TODO(ROU-10695): remove the size !== undefined when we add support for the `ios` and `md` modes.
+    if (size !== undefined) {
+      return size;
+    }
+
+    // Fallback to the large size, which is the default size for the ionic theme.
+    return 'large';
+  }
+
   render() {
     const { shape } = this;
     const theme = getIonTheme(this);
+    const size = this.getSize();
 
     return (
       <Host
@@ -56,7 +82,9 @@ export class Chip implements ComponentInterface {
           'chip-disabled': this.disabled,
           'ion-activatable': true,
           'ion-focusable': !this.disabled,
+          [`chip-${size}`]: true,
         })}
+        tabIn
       >
         <slot></slot>
         {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}

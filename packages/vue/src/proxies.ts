@@ -231,7 +231,8 @@ export const IonChip = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', de
   'color',
   'outline',
   'disabled',
-  'shape'
+  'shape',
+  'size'
 ]);
 
 

@@ -767,6 +767,10 @@ export namespace Components {
          */
         "shape"?: 'round' | 'rectangular';
         /**
+          * Set to `"small"` for a button with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+         */
+        "size"?: 'small' | 'large';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -6026,6 +6030,10 @@ declare namespace LocalJSX {
           * Define the Chip corner shape, when using the Ionic Theme.
          */
         "shape"?: 'round' | 'rectangular';
+        /**
+          * Set to `"small"` for a button with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+         */
+        "size"?: 'small' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */

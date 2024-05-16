@@ -1,4 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../../foundations/ionic.vars.scss" as tokens;
 
 // Ionic Chip
 // --------------------------------------------------
@@ -9,14 +10,13 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
 :host {
   --background: #{globals.$ionic-color-neutral-10};
-  --border-color: transparent;
   --border-radius: #{globals.$ionic-border-radius-rounded-small};
   --color: #{globals.$ionic-color-neutral-900};
   --focus-ring-color: #{$ionic-states-focus-primary};
   --focus-ring-width: #{globals.$ionic-border-size-medium};
 
   @include globals.font-smoothing;
-  @include globals.padding(globals.$ionic-space-xs, globals.$ionic-space-xxs);
+  @include globals.padding(globals.$ionic-space-xxs, globals.$ionic-space-xs);
   @include globals.border-radius(var(--border-radius));
 
   display: inline-flex;
@@ -28,18 +28,10 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
   gap: globals.$ionic-space-xxxs;
 
-  min-height: 32px;
-
-  border-width: globals.$ionic-border-size-small;
-  border-style: solid;
-
-  border-color: var(--border-color);
-
   background: var(--background);
   color: var(--color);
 
   font-family: globals.$ionic-font-family;
-  font-size: globals.$ionic-font-size-m;
   font-weight: globals.$ionic-font-weight-medium;
 
   line-height: globals.$ionic-font-line-height-full;
@@ -58,6 +50,8 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
 :host(.chip-outline) {
   --background: transparent;
+  border-width: globals.$ionic-border-size-small;
+
   border-color: globals.$ionic-color-neutral-100;
 }
 
@@ -101,4 +95,19 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 // ---------------------------------------------
 ::slotted(ion-icon) {
   font-size: globals.$ionic-font-size-l;
+}
+
+// Size
+// ---------------------------------------------
+
+:host(.chip-small) {
+  min-height: 24px;
+
+  font-size: #{tokens.$ionic-font-size-s};
+}
+
+:host(.chip-large) {
+  min-height: 32px;
+
+  font-size: globals.$ionic-font-size-m;
 }
