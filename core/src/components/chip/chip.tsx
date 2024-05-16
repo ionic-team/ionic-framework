@@ -43,7 +43,7 @@ export class Chip implements ComponentInterface {
   @Prop() shape?: 'round' | 'rectangular';
 
   /**
-   * Set to `"small"` for a button with less height and padding.
+   * Set to `"small"` for a chip with less height and padding.
    * 
    * Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
    */

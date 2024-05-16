@@ -767,7 +767,7 @@ export namespace Components {
          */
         "shape"?: 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a button with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
          */
         "size"?: 'small' | 'large';
         /**
@@ -6031,7 +6031,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round' | 'rectangular';
         /**
-          * Set to `"small"` for a button with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
          */
         "size"?: 'small' | 'large';
         /**
