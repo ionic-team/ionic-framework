@@ -10,7 +10,6 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
 :host {
   --background: #{globals.$ionic-color-neutral-10};
-  --border-radius: #{globals.$ionic-border-radius-rounded-small};
   --color: #{globals.$ionic-color-neutral-900};
   --focus-ring-color: #{$ionic-states-focus-primary};
   --focus-ring-width: #{globals.$ionic-border-size-medium};
@@ -82,6 +81,10 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
 // Chip Shapes
 // ---------------------------------------------
+
+:host(.chip-soft) {
+  --border-radius: #{globals.$ionic-border-radius-rounded-small};
+}
 
 :host(.chip-round) {
   --border-radius: #{globals.$ionic-border-radius-rounded-large};

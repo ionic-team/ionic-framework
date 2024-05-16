@@ -38,9 +38,25 @@ export class Chip implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * Define the Chip corner shape, when using the Ionic Theme.
+   * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully
+   * rounded corners, or `"rectangular"` for a chip without rounded corners.
+   * Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
    */
-  @Prop() shape?: 'round' | 'rectangular';
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
+
+  /**
+   * Set the shape based on the theme
+   */
+  private getShape(): string {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    if (shape === undefined) {
+      return theme === 'ionic' ? 'round' : 'soft';
+    }
+
+    return shape;
+  }
 
   /**
    * Set to `"small"` for a chip with less height and padding.
@@ -67,17 +83,17 @@ export class Chip implements ComponentInterface {
   }
 
   render() {
-    const { shape } = this;
     const theme = getIonTheme(this);
     const size = this.getSize();
+
+    const shape = this.getShape();
 
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [theme]: true,
-          // TODO(FW-6120): remove the theme==='ionic' when we add support for the `ios` and `md` modes.
-          [`chip-${shape}`]: theme === 'ionic' && shape !== undefined,
+          [`chip-${shape}`]: true,
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
