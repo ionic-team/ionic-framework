@@ -83,9 +83,11 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() routerAnimation: AnimationBuilder | undefined;
 
   /**
-   * Set to `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners.
+   * Set to `"soft"` for a card with slightly rounded corners, `"round"` for a card with more
+   * rounded corners, or `"rectangular"` for a card without rounded corners.
+   * Defaults to `"round"`.
    */
-  @Prop({ reflect: true }) shape?: 'round' | 'rectangular';
+  @Prop({ reflect: true }) shape?: 'soft' | 'round' | 'rectangular' = 'round';
 
   /**
    * Specifies where to display the linked URL.
@@ -144,8 +146,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
-          // TODO(FW-6119): remove theme === 'ionic' when support for other themes is added
-          [`card-${shape}`]: theme === 'ionic' && shape !== undefined,
+          [`card-${shape}`]: shape !== undefined,
           'card-disabled': this.disabled,
           'ion-activatable': this.isClickable(),
         })}
