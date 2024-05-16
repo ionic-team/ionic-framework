@@ -44,6 +44,10 @@ StyleDictionary.registerFormat({
           .join(', ');
 
         return `--${variablesPrefix}-${prop.name}: ${cssShadow};`;
+      } else if (prop.attributes.category.match('font-family')) {
+        // Remove the last word from family token, as it comes already with the name of the font, and we want a more abstract variable name
+        const propName = prop.name.split('-').slice(0, -1).join('-');
+        return `--${variablesPrefix}-${propName}: "${prop.value}", sans-serif;`;
       } else {
         const rgb = hexToRgb(prop.value);
         return `  --${variablesPrefix}-${prop.name}: ${prop.value};${
@@ -79,20 +83,53 @@ StyleDictionary.registerFormat({
       } else if (prop['$type'] === 'typography') {
         const typography = prop.value;
 
+        // Get font-size token type, based on typography font-size value
+        const fontSizeMap = Object.fromEntries(
+          Object.entries(dictionary.properties['font-size']).map(([key, token]) => [token.value, token.attributes.type])
+        );
+
+        // Get font-weight token type, based on typography font-wight value
+        const fontWeightMap = Object.fromEntries(
+          Object.entries(dictionary.properties['font-weight']).map(([key, token]) => [
+            token.value,
+            token.attributes.type,
+          ])
+        );
+
+        // Get line-height token type, based on typography line-height value
+        const lineHeightMap = Object.fromEntries(
+          Object.entries(dictionary.properties['line-height']).map(([key, token]) => [
+            token.value,
+            token.attributes.type,
+          ])
+        );
+
+        // Get letter-spacing token type, based on typography letter-spacing value
+        const letterSpacingMap = Object.fromEntries(
+          Object.entries(dictionary.properties['letter-spacing']).map(([key, token]) => [
+            token.value,
+            token.attributes.type,
+          ])
+        );
+
         // Generate CSS for typography tokens
         const cssTypography = `
           $${variablesPrefix}-${prop.name}: (
-            font-family: ${typography.fontFamily},
-            font-size: ${typography.fontSize},
-            font-weight: ${typography.fontWeight},
-            letter-spacing: ${typography.letterSpacing},
-            line-height: ${typography.lineHeight},
+            font-family: $ionic-font-family,
+            font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]},
+            font-weight: $ionic-font-weight-${fontWeightMap[typography.fontWeight]},
+            letter-spacing: $ionic-letter-spacing-${letterSpacingMap[typography.letterSpacing] || 0},
+            line-height: $ionic-line-height-${lineHeightMap[typography.lineHeight]},
             text-transform: ${typography.textTransform},
             text-decoration: ${typography.textDecoration}
           );
         `;
 
         return cssTypography;
+      } else if (prop.attributes.category.match('font-family')) {
+        // Remove the last word from family token, as it comes already with the name of the font, and we want a more abstract variable name
+        const propName = prop.name.split('-').slice(0, -1).join('-');
+        return `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, "${prop.value}", sans-serif);`;
       } else {
         const rgb = hexToRgb(prop.value);
         return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${
@@ -121,14 +158,66 @@ StyleDictionary.registerFormat({
       const className = `${prop.name}`;
       let utilityClass = '';
 
+      if (tokenType.startsWith('Elevation')) {
+        return (utilityClass = `.${variablesPrefix}-${className} {\n  box-shadow: $ionic-${prop.name};\n}`);
+      } else if (prop['$type'] === 'typography') {
+        const typography = prop.value;
+
+        // Get font-size token type, based on typography font-size value
+        const fontSizeMap = Object.fromEntries(
+          Object.entries(dictionary.properties['font-size']).map(([key, token]) => [token.value, token.attributes.type])
+        );
+
+        // Get font-weight token type, based on typography font-wight value
+        const fontWeightMap = Object.fromEntries(
+          Object.entries(dictionary.properties['font-weight']).map(([key, token]) => [
+            token.value,
+            token.attributes.type,
+          ])
+        );
+
+        // Get line-height token type, based on typography line-height value
+        const lineHeightMap = Object.fromEntries(
+          Object.entries(dictionary.properties['line-height']).map(([key, token]) => [
+            token.value,
+            token.attributes.type,
+          ])
+        );
+
+        // Get letter-spacing token type, based on typography letter-spacing value
+        const letterSpacingMap = Object.fromEntries(
+          Object.entries(dictionary.properties['letter-spacing']).map(([key, token]) => [
+            token.value,
+            token.attributes.type,
+          ])
+        );
+
+        // Generate CSS for typography tokens
+        return `
+.${variablesPrefix}-${prop.name} {
+  font-family: $ionic-font-family;
+  font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]};
+  font-weight: $ionic-font-weight-${fontWeightMap[typography.fontWeight]};
+  letter-spacing: $ionic-letter-spacing-${letterSpacingMap[typography.letterSpacing] || 0};
+  line-height: $ionic-line-height-${lineHeightMap[typography.lineHeight]};
+  text-transform: ${typography.textTransform};
+  text-decoration: ${typography.textDecoration};
+};
+`;
+      }
+
       switch (tokenType) {
         case 'color':
+        case 'state':
+        case 'Guidelines':
+        case 'Disabled':
+        case 'Hover':
+        case 'Pressed':
           utilityClass = `.${variablesPrefix}-${className} {\n  color: $ionic-${prop.name};\n}
 .${variablesPrefix}-background-${className} {\n  background-color: $ionic-${prop.name};\n}`;
           break;
-        case 'border':
-          const borderAttribute = prop.attributes.type === 'radius' ? 'border-radius' : 'border-width';
-          utilityClass = `.${variablesPrefix}-${className} {\n  ${borderAttribute}: $ionic-${prop.name};\n}`;
+        case 'border-size':
+          utilityClass = `.${variablesPrefix}-${className} {\n  border-width: $ionic-${prop.name};\n}`;
           break;
         case 'font':
           let fontAttribute;
@@ -149,9 +238,6 @@ StyleDictionary.registerFormat({
               return;
           }
           utilityClass = `.${variablesPrefix}-${className} {\n  ${fontAttribute}: $ionic-${prop.name};\n}`;
-          break;
-        case 'elevation':
-          utilityClass = `.${variablesPrefix}-${className} {\n  box-shadow: $ionic-${prop.name};\n}`;
           break;
         case 'space':
           utilityClass = `.${variablesPrefix}-margin-${className} {\n  --margin-start: #{$ionic-${prop.name}};\n  --margin-end: #{$ionic-${prop.name}};\n  --margin-top: #{$ionic-${prop.name}};\n  --margin-bottom: #{$ionic-${prop.name}};\n\n  @include margin(${prop.value});\n};\n 

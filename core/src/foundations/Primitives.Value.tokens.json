@@ -139,44 +139,6 @@
       "$value": "{scale.1200}"
     }
   },
-  "paragraph-spacing": {
-    "300": {
-      "$type": "dimension",
-      "$value": "{scale.300}"
-    },
-    "400": {
-      "$type": "dimension",
-      "$value": "{scale.400}"
-    },
-    "500": {
-      "$type": "dimension",
-      "$value": "{scale.500}"
-    },
-    "600": {
-      "$type": "dimension",
-      "$value": "{scale.600}"
-    },
-    "700": {
-      "$type": "dimension",
-      "$value": "{scale.700}"
-    },
-    "800": {
-      "$type": "dimension",
-      "$value": "{scale.800}"
-    },
-    "900": {
-      "$type": "dimension",
-      "$value": "{scale.900}"
-    },
-    "1100": {
-      "$type": "dimension",
-      "$value": "{scale.1100}"
-    },
-    "1200": {
-      "$type": "dimension",
-      "$value": "{scale.1200}"
-    }
-  },
   "space": {
     "0": {
       "$type": "dimension",
