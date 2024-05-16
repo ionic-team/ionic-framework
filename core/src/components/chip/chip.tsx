@@ -84,7 +84,6 @@ export class Chip implements ComponentInterface {
           'ion-focusable': !this.disabled,
           [`chip-${size}`]: true,
         })}
-        tabIn
       >
         <slot></slot>
         {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
