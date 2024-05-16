@@ -68,12 +68,13 @@ export class Chip implements ComponentInterface {
   private getSize() {
     const theme = getIonTheme(this);
     const { size } = this;
+
+    // TODO(ROU-10695): remove the size !== undefined when we add support for the `ios` and `md` modes.
     if (theme !== 'ionic') {
       printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
       return undefined;
     }
 
-    // TODO(ROU-10695): remove the size !== undefined when we add support for the `ios` and `md` modes.
     if (size !== undefined) {
       return size;
     }
@@ -98,7 +99,7 @@ export class Chip implements ComponentInterface {
           'chip-disabled': this.disabled,
           'ion-activatable': true,
           'ion-focusable': !this.disabled,
-          [`chip-${size}`]: true,
+          [`chip-${size}`]: size !== undefined,
         })}
       >
         <slot></slot>
