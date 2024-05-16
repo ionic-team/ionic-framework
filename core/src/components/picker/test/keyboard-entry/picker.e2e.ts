@@ -7,8 +7,7 @@ import type { E2ELocator } from '@utils/test/playwright/page/utils/locator';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('picker: keyboard entry'), () => {
-    // TODO(FW-6232): remove this skip when keyboard entry is working properly
-    test.skip('should scroll to and update the value prop for a single column', async ({ page }) => {
+    test('should scroll to and update the value prop for a single column', async ({ page }) => {
       await page.setContent(
         `
         <ion-picker>
@@ -123,8 +122,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(secondColumn).toHaveJSProperty('value', 24);
     });
 
-    // TODO(FW-6232): remove this skip when keyboard entry is working properly
-    test.skip('should select 00', async ({ page }) => {
+    test('should select 00', async ({ page }) => {
       await page.setContent(
         `
         <ion-picker>

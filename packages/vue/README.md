@@ -50,7 +50,7 @@ npm run build
 
 ## Contributing
 
-See our [Contributing Guide](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md).
+See our [Contributing Guide](https://github.com/ionic-team/ionic-framework/blob/main/docs/CONTRIBUTING.md).
 
 ## Need Help?
 
