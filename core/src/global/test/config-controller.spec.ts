@@ -1,5 +1,5 @@
 import type { IonicConfig } from '../../interface';
-import { Config } from '../config';
+import { Config, configFromURL } from '../config';
 
 describe('Config', () => {
   it('should get a value from the config', () => {
@@ -81,5 +81,17 @@ describe('Config', () => {
     expect(config.get('text0' as any, 'HEY')).toEqual('HEY');
     config.set('text0' as any, 'hola');
     expect(config.get('text0' as any, 'HEY')).toEqual('hola');
+  });
+
+  it('should not throw an exception with a malformed URI', () => {
+    // https://github.com/ionic-team/ionic-framework/issues/29479
+
+    expect(
+      configFromURL({
+        location: {
+          search: '?test=%',
+        },
+      } as unknown as Window)
+    ).toEqual({});
   });
 });

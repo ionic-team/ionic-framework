@@ -60,7 +60,13 @@ export const configFromURL = (win: Window) => {
     .slice(1)
     .split('&')
     .map((entry) => entry.split('='))
-    .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])
+    .map(([key, value]) => {
+      try {
+        return [decodeURIComponent(key), decodeURIComponent(value)];
+      } catch (e) {
+        return ['', ''];
+      }
+    })
     .filter(([key]) => startsWith(key, IONIC_PREFIX))
     .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])
     .forEach(([key, value]) => {
