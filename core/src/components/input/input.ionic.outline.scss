@@ -123,12 +123,6 @@
 :host(.label-floating.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
   @include margin(0);
   @include padding(4px, null);
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the input.
-   */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end)) / 0.8571);
 }
 
 // Start/End Slots
