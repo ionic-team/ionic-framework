@@ -92,11 +92,11 @@
       "$type": "string",
       "$value": "0"
     },
-    "100": {
+    "1": {
       "$type": "string",
       "$value": "1%"
     },
-    "150": {
+    "2": {
       "$type": "string",
       "$value": "1.5%"
     }
@@ -139,14 +139,14 @@
       "$value": "{scale.1200}"
     },
     "full": {
-      "$type": "dimension",
+      "$type": "string",
       "$value": "100%"
     }
   },
   "space": {
     "0": {
       "$type": "dimension",
-      "$value": "0px"
+      "$value": "{scale.0}"
     },
     "100": {
       "$type": "dimension",
@@ -159,6 +159,10 @@
     "200": {
       "$type": "dimension",
       "$value": "{scale.200}"
+    },
+    "250": {
+      "$type": "dimension",
+      "$value": "{scale.250}"
     },
     "300": {
       "$type": "dimension",
@@ -192,6 +196,10 @@
       "$type": "dimension",
       "$value": "{scale.1000}"
     },
+    "1200": {
+      "$type": "dimension",
+      "$value": "{scale.1200}"
+    },
     "050": {
       "$type": "dimension",
       "$value": "{scale.050}"
@@ -200,7 +208,7 @@
   "border-radius": {
     "0": {
       "$type": "dimension",
-      "$value": "0px"
+      "$value": "{scale.0}"
     },
     "100": {
       "$type": "dimension",
@@ -222,6 +230,14 @@
       "$type": "dimension",
       "$value": "{scale.800}"
     },
+    "1000": {
+      "$type": "dimension",
+      "$value": "{scale.1000}"
+    },
+    "050": {
+      "$type": "dimension",
+      "$value": "{scale.050}"
+    },
     "full": {
       "$type": "dimension",
       "$value": "999px"
@@ -229,8 +245,8 @@
   },
   "border-size": {
     "0": {
-      "$type": "string",
-      "$value": "none"
+      "$type": "dimension",
+      "$value": "{scale.0}"
     },
     "025": {
       "$type": "dimension",
@@ -1030,19 +1046,19 @@
       "$type": "dimension",
       "$value": "0"
     },
-    "100": {
+    "1": {
       "$type": "dimension",
       "$value": "100"
     },
-    "200": {
+    "2": {
       "$type": "dimension",
       "$value": "200"
     },
-    "300": {
+    "3": {
       "$type": "dimension",
       "$value": "300"
     },
-    "400": {
+    "4": {
       "$type": "dimension",
       "$value": "400"
     },
@@ -1075,6 +1091,10 @@
     "200": {
       "$type": "dimension",
       "$value": "8px"
+    },
+    "250": {
+      "$type": "dimension",
+      "$value": "10px"
     },
     "300": {
       "$type": "dimension",

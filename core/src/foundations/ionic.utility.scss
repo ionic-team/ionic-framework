@@ -72,11 +72,11 @@
 .ionic-letter-spacing-0 {
   letter-spacing: $ionic-letter-spacing-0;
 }
-.ionic-letter-spacing-100 {
-  letter-spacing: $ionic-letter-spacing-100;
+.ionic-letter-spacing-1 {
+  letter-spacing: $ionic-letter-spacing-1;
 }
-.ionic-letter-spacing-150 {
-  letter-spacing: $ionic-letter-spacing-150;
+.ionic-letter-spacing-2 {
+  letter-spacing: $ionic-letter-spacing-2;
 }
 .ionic-line-height-300 {
   line-height: $ionic-line-height-300;
@@ -178,6 +178,24 @@
   --padding-bottom: #{$ionic-space-200};
 
   @include padding($ionic-space-200);
+}
+
+.ionic-margin-space-250 {
+  --margin-start: #{$ionic-space-250};
+  --margin-end: #{$ionic-space-250};
+  --margin-top: #{$ionic-space-250};
+  --margin-bottom: #{$ionic-space-250};
+
+  @include margin($ionic-space-250);
+}
+
+.ionic-padding-space-250 {
+  --padding-start: #{$ionic-space-250};
+  --padding-end: #{$ionic-space-250};
+  --padding-top: #{$ionic-space-250};
+  --padding-bottom: #{$ionic-space-250};
+
+  @include padding($ionic-space-250);
 }
 
 .ionic-margin-space-300 {
@@ -324,6 +342,24 @@
   @include padding($ionic-space-1000);
 }
 
+.ionic-margin-space-1200 {
+  --margin-start: #{$ionic-space-1200};
+  --margin-end: #{$ionic-space-1200};
+  --margin-top: #{$ionic-space-1200};
+  --margin-bottom: #{$ionic-space-1200};
+
+  @include margin($ionic-space-1200);
+}
+
+.ionic-padding-space-1200 {
+  --padding-start: #{$ionic-space-1200};
+  --padding-end: #{$ionic-space-1200};
+  --padding-top: #{$ionic-space-1200};
+  --padding-bottom: #{$ionic-space-1200};
+
+  @include padding($ionic-space-1200);
+}
+
 .ionic-margin-space-050 {
   --margin-start: #{$ionic-space-050};
   --margin-end: #{$ionic-space-050};
@@ -359,6 +395,12 @@
 }
 .ionic-border-radius-800 {
   border-radius: $ionic-border-radius-800;
+}
+.ionic-border-radius-1000 {
+  border-radius: $ionic-border-radius-1000;
+}
+.ionic-border-radius-050 {
+  border-radius: $ionic-border-radius-050;
 }
 .ionic-border-radius-full {
   border-radius: $ionic-border-radius-full;
@@ -1848,17 +1890,17 @@
 .ionic-z-index-0 {
   z-index: $ionic-z-index-0;
 }
-.ionic-z-index-100 {
-  z-index: $ionic-z-index-100;
+.ionic-z-index-1 {
+  z-index: $ionic-z-index-1;
 }
-.ionic-z-index-200 {
-  z-index: $ionic-z-index-200;
+.ionic-z-index-2 {
+  z-index: $ionic-z-index-2;
 }
-.ionic-z-index-300 {
-  z-index: $ionic-z-index-300;
+.ionic-z-index-3 {
+  z-index: $ionic-z-index-3;
 }
-.ionic-z-index-400 {
-  z-index: $ionic-z-index-400;
+.ionic-z-index-4 {
+  z-index: $ionic-z-index-4;
 }
 .ionic-z-index-500 {
   z-index: $ionic-z-index-500;
@@ -2401,7 +2443,7 @@
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-300;
   font-weight: $ionic-font-weight-medium;
-  letter-spacing: $ionic-letter-spacing-100;
+  letter-spacing: $ionic-letter-spacing-1;
   line-height: $ionic-line-height-400;
   text-transform: none;
   text-decoration: none;
@@ -2411,7 +2453,7 @@
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-350;
   font-weight: $ionic-font-weight-medium;
-  letter-spacing: $ionic-letter-spacing-100;
+  letter-spacing: $ionic-letter-spacing-1;
   line-height: $ionic-line-height-600;
   text-transform: none;
   text-decoration: none;
@@ -2421,7 +2463,7 @@
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-400;
   font-weight: $ionic-font-weight-medium;
-  letter-spacing: $ionic-letter-spacing-100;
+  letter-spacing: $ionic-letter-spacing-1;
   line-height: $ionic-line-height-600;
   text-transform: none;
   text-decoration: none;
@@ -2431,7 +2473,7 @@
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-500;
   font-weight: $ionic-font-weight-medium;
-  letter-spacing: $ionic-letter-spacing-100;
+  letter-spacing: $ionic-letter-spacing-1;
   line-height: $ionic-line-height-600;
   text-transform: none;
   text-decoration: none;
@@ -2441,7 +2483,7 @@
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-300;
   font-weight: $ionic-font-weight-regular;
-  letter-spacing: $ionic-letter-spacing-150;
+  letter-spacing: $ionic-letter-spacing-2;
   line-height: $ionic-line-height-400;
   text-transform: none;
   text-decoration: none;
@@ -2451,7 +2493,7 @@
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-300;
   font-weight: $ionic-font-weight-medium;
-  letter-spacing: $ionic-letter-spacing-150;
+  letter-spacing: $ionic-letter-spacing-2;
   line-height: $ionic-line-height-400;
   text-transform: none;
   text-decoration: none;
@@ -2461,7 +2503,7 @@
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-300;
   font-weight: $ionic-font-weight-bold;
-  letter-spacing: $ionic-letter-spacing-150;
+  letter-spacing: $ionic-letter-spacing-2;
   line-height: $ionic-line-height-400;
   text-transform: none;
   text-decoration: none;
@@ -2471,7 +2513,7 @@
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-300;
   font-weight: $ionic-font-weight-bold;
-  letter-spacing: $ionic-letter-spacing-150;
+  letter-spacing: $ionic-letter-spacing-2;
   line-height: $ionic-line-height-400;
   text-transform: none;
   text-decoration: none;

@@ -25,8 +25,8 @@ $ionic-font-weight-bold: var(--ionic-font-weight-bold, 700);
 $ionic-font-weight-extra-bold: var(--ionic-font-weight-extra-bold, 800);
 $ionic-font-weight-black: var(--ionic-font-weight-black, 900);
 $ionic-letter-spacing-0: var(--ionic-letter-spacing-0, 0);
-$ionic-letter-spacing-100: var(--ionic-letter-spacing-100, 1%);
-$ionic-letter-spacing-150: var(--ionic-letter-spacing-150, 1.5%);
+$ionic-letter-spacing-1: var(--ionic-letter-spacing-1, 1%);
+$ionic-letter-spacing-2: var(--ionic-letter-spacing-2, 1.5%);
 $ionic-line-height-300: var(--ionic-line-height-300, 12px);
 $ionic-line-height-400: var(--ionic-line-height-400, 16px);
 $ionic-line-height-500: var(--ionic-line-height-500, 20px);
@@ -41,6 +41,7 @@ $ionic-space-0: var(--ionic-space-0, 0px);
 $ionic-space-100: var(--ionic-space-100, 4px);
 $ionic-space-150: var(--ionic-space-150, 6px);
 $ionic-space-200: var(--ionic-space-200, 8px);
+$ionic-space-250: var(--ionic-space-250, 10px);
 $ionic-space-300: var(--ionic-space-300, 12px);
 $ionic-space-400: var(--ionic-space-400, 16px);
 $ionic-space-500: var(--ionic-space-500, 20px);
@@ -49,6 +50,7 @@ $ionic-space-700: var(--ionic-space-700, 28px);
 $ionic-space-800: var(--ionic-space-800, 32px);
 $ionic-space-900: var(--ionic-space-900, 36px);
 $ionic-space-1000: var(--ionic-space-1000, 40px);
+$ionic-space-1200: var(--ionic-space-1200, 48px);
 $ionic-space-050: var(--ionic-space-050, 2px);
 $ionic-border-radius-0: var(--ionic-border-radius-0, 0px);
 $ionic-border-radius-100: var(--ionic-border-radius-100, 4px);
@@ -56,8 +58,10 @@ $ionic-border-radius-200: var(--ionic-border-radius-200, 8px);
 $ionic-border-radius-300: var(--ionic-border-radius-300, 12px);
 $ionic-border-radius-400: var(--ionic-border-radius-400, 16px);
 $ionic-border-radius-800: var(--ionic-border-radius-800, 32px);
+$ionic-border-radius-1000: var(--ionic-border-radius-1000, 40px);
+$ionic-border-radius-050: var(--ionic-border-radius-050, 2px);
 $ionic-border-radius-full: var(--ionic-border-radius-full, 999px);
-$ionic-border-size-0: var(--ionic-border-size-0, none);
+$ionic-border-size-0: var(--ionic-border-size-0, 0px);
 $ionic-border-size-025: var(--ionic-border-size-025, 1px);
 $ionic-border-size-050: var(--ionic-border-size-050, 2px);
 $ionic-border-size-075: var(--ionic-border-size-075, 3px);
@@ -552,10 +556,10 @@ $ionic-color-success-1100-rgb: var(--ionic-color-success-1100-rgb, 9, 56, 17);
 $ionic-color-success-1200: var(--ionic-color-success-1200, #051d09);
 $ionic-color-success-1200-rgb: var(--ionic-color-success-1200-rgb, 5, 29, 9);
 $ionic-z-index-0: var(--ionic-z-index-0, 0);
-$ionic-z-index-100: var(--ionic-z-index-100, 100);
-$ionic-z-index-200: var(--ionic-z-index-200, 200);
-$ionic-z-index-300: var(--ionic-z-index-300, 300);
-$ionic-z-index-400: var(--ionic-z-index-400, 400);
+$ionic-z-index-1: var(--ionic-z-index-1, 100);
+$ionic-z-index-2: var(--ionic-z-index-2, 200);
+$ionic-z-index-3: var(--ionic-z-index-3, 300);
+$ionic-z-index-4: var(--ionic-z-index-4, 400);
 $ionic-z-index-500: var(--ionic-z-index-500, 500);
 $ionic-z-index-bottom: var(--ionic-z-index-bottom, -99999);
 $ionic-z-index-top: var(--ionic-z-index-top, 99999);
@@ -563,6 +567,7 @@ $ionic-scale-0: var(--ionic-scale-0, 0px);
 $ionic-scale-100: var(--ionic-scale-100, 4px);
 $ionic-scale-150: var(--ionic-scale-150, 6px);
 $ionic-scale-200: var(--ionic-scale-200, 8px);
+$ionic-scale-250: var(--ionic-scale-250, 10px);
 $ionic-scale-300: var(--ionic-scale-300, 12px);
 $ionic-scale-400: var(--ionic-scale-400, 16px);
 $ionic-scale-500: var(--ionic-scale-500, 20px);
@@ -1070,7 +1075,7 @@ $ionic-action-sm: (
   font-family: $ionic-font-family,
   font-size: $ionic-font-size-300,
   font-weight: $ionic-font-weight-medium,
-  letter-spacing: $ionic-letter-spacing-100,
+  letter-spacing: $ionic-letter-spacing-1,
   line-height: $ionic-line-height-400,
   text-transform: none,
   text-decoration: none,
@@ -1080,7 +1085,7 @@ $ionic-action-md: (
   font-family: $ionic-font-family,
   font-size: $ionic-font-size-350,
   font-weight: $ionic-font-weight-medium,
-  letter-spacing: $ionic-letter-spacing-100,
+  letter-spacing: $ionic-letter-spacing-1,
   line-height: $ionic-line-height-600,
   text-transform: none,
   text-decoration: none,
@@ -1090,7 +1095,7 @@ $ionic-action-lg: (
   font-family: $ionic-font-family,
   font-size: $ionic-font-size-400,
   font-weight: $ionic-font-weight-medium,
-  letter-spacing: $ionic-letter-spacing-100,
+  letter-spacing: $ionic-letter-spacing-1,
   line-height: $ionic-line-height-600,
   text-transform: none,
   text-decoration: none,
@@ -1100,7 +1105,7 @@ $ionic-action-xl: (
   font-family: $ionic-font-family,
   font-size: $ionic-font-size-500,
   font-weight: $ionic-font-weight-medium,
-  letter-spacing: $ionic-letter-spacing-100,
+  letter-spacing: $ionic-letter-spacing-1,
   line-height: $ionic-line-height-600,
   text-transform: none,
   text-decoration: none,
@@ -1110,7 +1115,7 @@ $ionic-overline-regular: (
   font-family: $ionic-font-family,
   font-size: $ionic-font-size-300,
   font-weight: $ionic-font-weight-regular,
-  letter-spacing: $ionic-letter-spacing-150,
+  letter-spacing: $ionic-letter-spacing-2,
   line-height: $ionic-line-height-400,
   text-transform: none,
   text-decoration: none,
@@ -1120,7 +1125,7 @@ $ionic-overline-medium: (
   font-family: $ionic-font-family,
   font-size: $ionic-font-size-300,
   font-weight: $ionic-font-weight-medium,
-  letter-spacing: $ionic-letter-spacing-150,
+  letter-spacing: $ionic-letter-spacing-2,
   line-height: $ionic-line-height-400,
   text-transform: none,
   text-decoration: none,
@@ -1130,7 +1135,7 @@ $ionic-overline-semi-bold: (
   font-family: $ionic-font-family,
   font-size: $ionic-font-size-300,
   font-weight: $ionic-font-weight-bold,
-  letter-spacing: $ionic-letter-spacing-150,
+  letter-spacing: $ionic-letter-spacing-2,
   line-height: $ionic-line-height-400,
   text-transform: none,
   text-decoration: none,
@@ -1140,7 +1145,7 @@ $ionic-overline-bold: (
   font-family: $ionic-font-family,
   font-size: $ionic-font-size-300,
   font-weight: $ionic-font-weight-bold,
-  letter-spacing: $ionic-letter-spacing-150,
+  letter-spacing: $ionic-letter-spacing-2,
   line-height: $ionic-line-height-400,
   text-transform: none,
   text-decoration: none,
