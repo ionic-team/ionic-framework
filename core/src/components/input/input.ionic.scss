@@ -7,8 +7,7 @@
 // --------------------------------------------------
 
 :host {
-  // TODO(ROU-5477): use design token here when it is added
-  --color: #121212;
+  --color: #{$ionic-color-neutral-700};
   --border-width: #{$ionic-border-size-small};
   --border-color: #{$ionic-color-neutral-300};
   --highlight-color-valid: #{$ionic-color-success-400};
@@ -16,6 +15,8 @@
   --placeholder-color: #{$ionic-color-neutral-500};
   --placeholder-opacity: 1;
   --text-color-invalid: #{$ionic-color-error-600};
+
+  font-size: $ionic-font-size-m;
 }
 
 // Ionic Input Sizes
@@ -103,14 +104,27 @@
   display: none;
 }
 
+// Input Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  font-weight: $ionic-font-weight-medium;
+
+  font-size: $ionic-font-size-s;
+  line-height: $ionic-font-line-height-s;
+}
+
+:host(.label-floating) .label-text-wrapper {
+  @include transform(none);
+}
+
 // Input Bottom Content
 // ----------------------------------------------------------------
 
 .input-bottom {
-  @include padding-horizontal(0, 0);
+  @include padding(7px, 0);
 
-  // TODO(FW-6112): Update it to `$ionic-font-weight-medium` when it's available
-  font-weight: var(--ionic-font-weight-medium, 500);
+  font-weight: $ionic-font-weight-medium;
 }
 
 // Input Bottom Text
@@ -161,13 +175,11 @@
 }
 
 :host(.input-disabled.has-focus.ion-valid) {
-  // TODO(FW-6112): Update to use the correct color token when rgb tokens are available
-  --border-color: rgba(var(--ionic-color-success-400-rgb, 82, 165, 24), 0.6);
+  --border-color: rgba(#{$ionic-color-success-400-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-touched.ion-invalid) {
-  // TODO(FW-6112): Update to use the correct color token when rgb tokens are available
-  --border-color: rgba(var(--ionic-color-error-400-rgb, 247, 44, 44), 0.6);
+  --border-color: rgba(#{$ionic-color-error-400-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-color) {
@@ -216,3 +228,4 @@
 :host(.has-focus) .input-highlight {
   transform: scale(1);
 }
+
