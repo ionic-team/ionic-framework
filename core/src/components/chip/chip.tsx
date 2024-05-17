@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -57,8 +58,31 @@ export class Chip implements ComponentInterface {
     return shape;
   }
 
+  /**
+   * Set to `"small"` for a chip with less height and padding.
+   *
+   * Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+   */
+  @Prop() size?: 'small' | 'large';
+
+  private getSize() {
+    const theme = getIonTheme(this);
+    const { size } = this;
+
+    if (theme === 'ionic') {
+      return size !== undefined ? size : 'large';
+      // TODO(ROU-10695): remove the size !== undefined when we add support for
+      // the `ios` and `md` themes.
+    } else if (size !== undefined) {
+      printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
+    }
+
+    return undefined;
+  }
+
   render() {
     const theme = getIonTheme(this);
+    const size = this.getSize();
 
     const shape = this.getShape();
 
@@ -72,6 +96,7 @@ export class Chip implements ComponentInterface {
           'chip-disabled': this.disabled,
           'ion-activatable': true,
           'ion-focusable': !this.disabled,
+          [`chip-${size}`]: size !== undefined,
         })}
       >
         <slot></slot>
