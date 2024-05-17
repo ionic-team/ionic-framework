@@ -114,7 +114,7 @@
   --margin-top: #{$ionic-space-0};
   --margin-bottom: #{$ionic-space-0};
 
-  @include margin(0px);
+  @include margin($ionic-space-0);
 }
 
 .ionic-padding-space-0 {
@@ -123,7 +123,7 @@
   --padding-top: #{$ionic-space-0};
   --padding-bottom: #{$ionic-space-0};
 
-  @include padding(0px);
+  @include padding($ionic-space-0);
 }
 
 .ionic-margin-space-100 {
@@ -132,7 +132,7 @@
   --margin-top: #{$ionic-space-100};
   --margin-bottom: #{$ionic-space-100};
 
-  @include margin(4px);
+  @include margin($ionic-space-100);
 }
 
 .ionic-padding-space-100 {
@@ -141,7 +141,7 @@
   --padding-top: #{$ionic-space-100};
   --padding-bottom: #{$ionic-space-100};
 
-  @include padding(4px);
+  @include padding($ionic-space-100);
 }
 
 .ionic-margin-space-150 {
@@ -150,7 +150,7 @@
   --margin-top: #{$ionic-space-150};
   --margin-bottom: #{$ionic-space-150};
 
-  @include margin(6px);
+  @include margin($ionic-space-150);
 }
 
 .ionic-padding-space-150 {
@@ -159,7 +159,7 @@
   --padding-top: #{$ionic-space-150};
   --padding-bottom: #{$ionic-space-150};
 
-  @include padding(6px);
+  @include padding($ionic-space-150);
 }
 
 .ionic-margin-space-200 {
@@ -168,7 +168,7 @@
   --margin-top: #{$ionic-space-200};
   --margin-bottom: #{$ionic-space-200};
 
-  @include margin(8px);
+  @include margin($ionic-space-200);
 }
 
 .ionic-padding-space-200 {
@@ -177,7 +177,7 @@
   --padding-top: #{$ionic-space-200};
   --padding-bottom: #{$ionic-space-200};
 
-  @include padding(8px);
+  @include padding($ionic-space-200);
 }
 
 .ionic-margin-space-300 {
@@ -186,7 +186,7 @@
   --margin-top: #{$ionic-space-300};
   --margin-bottom: #{$ionic-space-300};
 
-  @include margin(12px);
+  @include margin($ionic-space-300);
 }
 
 .ionic-padding-space-300 {
@@ -195,7 +195,7 @@
   --padding-top: #{$ionic-space-300};
   --padding-bottom: #{$ionic-space-300};
 
-  @include padding(12px);
+  @include padding($ionic-space-300);
 }
 
 .ionic-margin-space-400 {
@@ -204,7 +204,7 @@
   --margin-top: #{$ionic-space-400};
   --margin-bottom: #{$ionic-space-400};
 
-  @include margin(16px);
+  @include margin($ionic-space-400);
 }
 
 .ionic-padding-space-400 {
@@ -213,7 +213,7 @@
   --padding-top: #{$ionic-space-400};
   --padding-bottom: #{$ionic-space-400};
 
-  @include padding(16px);
+  @include padding($ionic-space-400);
 }
 
 .ionic-margin-space-500 {
@@ -222,7 +222,7 @@
   --margin-top: #{$ionic-space-500};
   --margin-bottom: #{$ionic-space-500};
 
-  @include margin(20px);
+  @include margin($ionic-space-500);
 }
 
 .ionic-padding-space-500 {
@@ -231,7 +231,7 @@
   --padding-top: #{$ionic-space-500};
   --padding-bottom: #{$ionic-space-500};
 
-  @include padding(20px);
+  @include padding($ionic-space-500);
 }
 
 .ionic-margin-space-600 {
@@ -240,7 +240,7 @@
   --margin-top: #{$ionic-space-600};
   --margin-bottom: #{$ionic-space-600};
 
-  @include margin(24px);
+  @include margin($ionic-space-600);
 }
 
 .ionic-padding-space-600 {
@@ -249,7 +249,7 @@
   --padding-top: #{$ionic-space-600};
   --padding-bottom: #{$ionic-space-600};
 
-  @include padding(24px);
+  @include padding($ionic-space-600);
 }
 
 .ionic-margin-space-700 {
@@ -258,7 +258,7 @@
   --margin-top: #{$ionic-space-700};
   --margin-bottom: #{$ionic-space-700};
 
-  @include margin(28px);
+  @include margin($ionic-space-700);
 }
 
 .ionic-padding-space-700 {
@@ -267,7 +267,7 @@
   --padding-top: #{$ionic-space-700};
   --padding-bottom: #{$ionic-space-700};
 
-  @include padding(28px);
+  @include padding($ionic-space-700);
 }
 
 .ionic-margin-space-800 {
@@ -276,7 +276,7 @@
   --margin-top: #{$ionic-space-800};
   --margin-bottom: #{$ionic-space-800};
 
-  @include margin(32px);
+  @include margin($ionic-space-800);
 }
 
 .ionic-padding-space-800 {
@@ -285,7 +285,7 @@
   --padding-top: #{$ionic-space-800};
   --padding-bottom: #{$ionic-space-800};
 
-  @include padding(32px);
+  @include padding($ionic-space-800);
 }
 
 .ionic-margin-space-900 {
@@ -294,7 +294,7 @@
   --margin-top: #{$ionic-space-900};
   --margin-bottom: #{$ionic-space-900};
 
-  @include margin(36px);
+  @include margin($ionic-space-900);
 }
 
 .ionic-padding-space-900 {
@@ -303,7 +303,7 @@
   --padding-top: #{$ionic-space-900};
   --padding-bottom: #{$ionic-space-900};
 
-  @include padding(36px);
+  @include padding($ionic-space-900);
 }
 
 .ionic-margin-space-1000 {
@@ -312,7 +312,7 @@
   --margin-top: #{$ionic-space-1000};
   --margin-bottom: #{$ionic-space-1000};
 
-  @include margin(40px);
+  @include margin($ionic-space-1000);
 }
 
 .ionic-padding-space-1000 {
@@ -321,7 +321,7 @@
   --padding-top: #{$ionic-space-1000};
   --padding-bottom: #{$ionic-space-1000};
 
-  @include padding(40px);
+  @include padding($ionic-space-1000);
 }
 
 .ionic-margin-space-050 {
@@ -330,7 +330,7 @@
   --margin-top: #{$ionic-space-050};
   --margin-bottom: #{$ionic-space-050};
 
-  @include margin(2px);
+  @include margin($ionic-space-050);
 }
 
 .ionic-padding-space-050 {
@@ -339,7 +339,7 @@
   --padding-top: #{$ionic-space-050};
   --padding-bottom: #{$ionic-space-050};
 
-  @include padding(2px);
+  @include padding($ionic-space-050);
 }
 
 .ionic-border-radius-0 {
