@@ -69,18 +69,15 @@ export class Chip implements ComponentInterface {
     const theme = getIonTheme(this);
     const { size } = this;
 
-    // TODO(ROU-10695): remove the size !== undefined when we add support for the `ios` and `md` modes.
-    if (theme !== 'ionic') {
+    if (theme === "ionic") {
+      return size !== undefined ? size : "large";
+    // TODO(ROU-10695): remove the size !== undefined when we add support for
+    // the `ios` and `md` themes.
+    } else if (size !== undefined) {
       printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
-      return undefined;
     }
 
-    if (size !== undefined) {
-      return size;
-    }
-
-    // Fallback to the large size, which is the default size for the ionic theme.
-    return 'large';
+    return undefined;
   }
 
   render() {
