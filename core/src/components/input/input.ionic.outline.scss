@@ -128,7 +128,7 @@
    * Label text should not extend
    * beyond the bounds of the input.
    */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end)) / .8571);
+  max-width: calc((100% - var(--padding-start) - var(--padding-end)) / 0.8571);
 }
 
 // Start/End Slots

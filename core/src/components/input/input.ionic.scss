@@ -110,9 +110,10 @@
 
 .label-text-wrapper {
   color: $ionic-color-neutral-700;
-  font-weight: $ionic-font-weight-medium;
 
   font-size: $ionic-font-size-s;
+  font-weight: $ionic-font-weight-medium;
+
   line-height: $ionic-font-line-height-s;
 }
 
@@ -230,4 +231,3 @@
 :host(.has-focus) .input-highlight {
   transform: scale(1);
 }
-
