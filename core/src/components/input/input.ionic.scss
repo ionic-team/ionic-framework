@@ -7,7 +7,8 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{$ionic-color-neutral-700};
+  // TODO(ROU-5477): use design token here when it is added
+  --color: #121212;
   --border-width: #{$ionic-border-size-small};
   --border-color: #{$ionic-color-neutral-300};
   --highlight-color-valid: #{$ionic-color-success-400};
@@ -108,6 +109,7 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
+  color: $ionic-color-neutral-700;
   font-weight: $ionic-font-weight-medium;
 
   font-size: $ionic-font-size-s;
