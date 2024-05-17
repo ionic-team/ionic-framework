@@ -113,15 +113,16 @@
   font-weight: var(--ionic-font-weight-medium, 500);
 }
 
-// Input Hint Text
+// Input Bottom Text
 // ----------------------------------------------------------------
 
-.input-bottom .helper-text {
+.input-bottom .helper-text,
+.input-bottom .counter {
   color: tokens.$ionic-color-neutral-600;
 }
 
 :host(.has-focus.ion-valid) .helper-text {
-  color: #{tokens.$ionic-color-success-800};
+  color: tokens.$ionic-color-success-800;
 }
 
 :host(.ion-touched.ion-invalid) .error-text {
