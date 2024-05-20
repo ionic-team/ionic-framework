@@ -1,66 +1,30 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // For generating Design Tokens, we use Style Dictionary for several reasons:
 // - It's prepared to easily generate tokens for multiple types of outputs (CSS, SCSS, iOS, Android, documentation, etc.).
 // - It also works very well out of the box with any kind of Design Tokens formats, like Figma Tokens, as well as APIs to adjust to more custom ones.
 // - It is probably the most well-known and widely used Design Tokens tool. It has also been regularly maintained for a long time.
 // - It can easily scale to different necessities we might have in the future.
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fs = require('fs');
+const path = require('path');
 const StyleDictionary = require('style-dictionary');
 
+const targetPath = './src/foundations/';
+
+const {
+  variablesPrefix,
+  hexToRgb,
+  generateShadowValue,
+  generateFontFamilyValue,
+  generateTypographyValue,
+  generateRgbValue,
+  generateColorUtilityClasses,
+  generateFontUtilityClass,
+  generateSpaceUtilityClasses,
+  generateTypographyUtilityClass,
+} = require('./tokens-utilities');
+
 const { fileHeader } = StyleDictionary.formatHelpers;
-const customVariables = ''; // Empty for example of how we can add some extra variables, not from the tokens JSON
-const variablesPrefix = 'ionic';
-
-function hexToRgb(hex) {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
-}
-
-function generateShadowValue(shadow) {
-  return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${shadow.color}`;
-}
-
-function generateFontFamilyValue(prop, variableType = 'css') {
-  const propName = prop.name.split('-').slice(0, -1).join('-');
-  return variableType === 'scss'
-    ? `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, "${prop.value}", sans-serif);`
-    : `--${variablesPrefix}-${propName}: "${prop.value}", sans-serif;`;
-}
-
-function generateTypographyValue(prop, dictionary) {
-  const typography = prop.value;
-  const fontSizeMap = createTypeMap(dictionary, 'font-size');
-  const fontWeightMap = createTypeMap(dictionary, 'font-weight');
-  const lineHeightMap = createTypeMap(dictionary, 'line-height');
-  const letterSpacingMap = createTypeMap(dictionary, 'letter-spacing');
-
-  return `
-$${variablesPrefix}-${prop.name}: (
-  font-family: $ionic-font-family,
-  font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]},
-  font-weight: $ionic-font-weight-${fontWeightMap[typography.fontWeight]},
-  letter-spacing: $ionic-letter-spacing-${letterSpacingMap[typography.letterSpacing] || 0},
-  line-height: $ionic-line-height-${lineHeightMap[typography.lineHeight]},
-  text-transform: ${typography.textTransform},
-  text-decoration: ${typography.textDecoration}
-);
-`;
-}
-
-function createTypeMap(dictionary, type) {
-  return Object.fromEntries(
-    Object.entries(dictionary.properties[type]).map(([key, token]) => [token.value, token.attributes.type])
-  );
-}
-
-function generateRgbValue(prop) {
-  const rgb = hexToRgb(prop.value);
-  return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${
-    rgb
-      ? `\n$${variablesPrefix}-${prop.name}-rgb: var(--${variablesPrefix}-${prop.name}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`
-      : ``
-  }`;
-}
 
 // CSS vanilla :root format
 StyleDictionary.registerFormat({
@@ -82,7 +46,7 @@ StyleDictionary.registerFormat({
         }
       });
 
-    return fileHeader({ file }) + ':root {\n' + prefixedVariables.join('\n') + customVariables + '\n}\n';
+    return fileHeader({ file }) + ':root {\n' + prefixedVariables.join('\n') + '\n}\n';
   },
 });
 
@@ -108,7 +72,7 @@ StyleDictionary.registerFormat({
       }
     });
 
-    return fileHeader({ file }) + prefixedVariables.join('\n') + customVariables + '\n';
+    return fileHeader({ file }) + prefixedVariables.join('\n') + '\n';
   },
 });
 
@@ -162,54 +126,100 @@ StyleDictionary.registerFormat({
   },
 });
 
-function generateTypographyUtilityClass(prop, dictionary) {
-  const typography = prop.value;
-  const fontSizeMap = createTypeMap(dictionary, 'font-size');
-  const fontWeightMap = createTypeMap(dictionary, 'font-weight');
-  const lineHeightMap = createTypeMap(dictionary, 'line-height');
-  const letterSpacingMap = createTypeMap(dictionary, 'letter-spacing');
+// Register the custom format to generate HTML
+// Load the HTML template
+const template = fs.readFileSync(path.join(__dirname, 'preview-template.html'), 'utf8');
+StyleDictionary.registerFormat({
+  name: 'html/tokens',
+  formatter: function ({ dictionary }) {
+    let colorTokens = '';
+    let fontSizeTokens = '';
+    let boxShadowTokens = '';
+    let borderSizeTokens = '';
+    let borderRadiusTokens = '';
+    let fontWeightTokens = '';
+    let letterSpacingTokens = '';
+    let spaceTokens = '';
 
-  return `
-.${variablesPrefix}-${prop.name} {
-  font-family: $ionic-font-family;
-  font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]};
-  font-weight: $ionic-font-weight-${fontWeightMap[typography.fontWeight]};
-  letter-spacing: $ionic-letter-spacing-${letterSpacingMap[typography.letterSpacing] || 0};
-  line-height: $ionic-line-height-${lineHeightMap[typography.lineHeight]};
-  text-transform: ${typography.textTransform};
-  text-decoration: ${typography.textDecoration};
-};
-`;
-}
+    dictionary.allProperties.forEach((token) => {
+      if (token.attributes.category === 'color') {
+        colorTokens += `
+          <div class="color-token" style="background-color: ${token.value};">
+              <div>${token.name}</div>
+          </div>
+        `;
+      } else if (token.attributes.category === 'font-size') {
+        fontSizeTokens += `
+          <div class="font-size-token" style="font-size: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      } else if (token.attributes.category.startsWith('Elevation')) {
+        const cssShadow = token.value.map(generateShadowValue).join(', ');
+        boxShadowTokens += `
+          <div class="shadow-token" style="box-shadow: ${cssShadow};">
+              ${token.name}
+          </div>
+        `;
+      } else if (token.attributes.category === 'border-size' || token.attributes.category === 'border-width') {
+        borderSizeTokens += `
+          <div class="border-token" style="border-width: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      } else if (token.attributes.category === 'border-radius') {
+        borderRadiusTokens += `
+          <div class="border-token" style="border-radius: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      } else if (token.attributes.category === 'font-weight') {
+        fontWeightTokens += `
+          <div class="weight-token" style="font-weight: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      } else if (token.attributes.category === 'letter-spacing') {
+        letterSpacingTokens += `
+          <div class="letter-spacing-token" style="letter-spacing: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      } else if (token.attributes.category === 'space') {
+        spaceTokens += `
+          <div class="space-token" style="margin: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      }
+    });
 
-function generateColorUtilityClasses(prop, className) {
-  return `.${variablesPrefix}-${className} {\n  color: $ionic-${prop.name};\n}
-.${variablesPrefix}-background-${className} {\n  background-color: $ionic-${prop.name};\n}`;
-}
+    return template
+      .replace('{{colorTokens}}', colorTokens)
+      .replace('{{fontSizeTokens}}', fontSizeTokens)
+      .replace('{{boxShadowTokens}}', boxShadowTokens)
+      .replace('{{borderSizeTokens}}', borderSizeTokens)
+      .replace('{{borderRadiusTokens}}', borderRadiusTokens)
+      .replace('{{fontWeightTokens}}', fontWeightTokens)
+      .replace('{{letterSpacingTokens}}', letterSpacingTokens)
+      .replace('{{spaceTokens}}', spaceTokens);
+  },
+});
 
-function generateFontUtilityClass(prop, className) {
-  let fontAttribute;
-  switch (prop.attributes.type) {
-    case 'size':
-      fontAttribute = 'font-size';
-      break;
-    case 'weight':
-      fontAttribute = 'font-weight';
-      break;
-    case 'line-height':
-      fontAttribute = 'line-height';
-      break;
-    case 'letter-spacing':
-      fontAttribute = 'letter-spacing';
-      break;
-  }
-  return `.${variablesPrefix}-${className} {\n  ${fontAttribute}: $ionic-${prop.name};\n}`;
-}
+// Custom transform to ensure unique token names
+StyleDictionary.registerTransform({
+  name: 'name/cti/kebab-unique',
+  type: 'name',
+  transformer: function (prop, options) {
+    return [options.prefix].concat(prop.path).join('-').toLowerCase();
+  },
+});
 
-function generateSpaceUtilityClasses(prop, className) {
-  return `.${variablesPrefix}-margin-${className} {\n  --margin-start: #{$ionic-${prop.name}};\n  --margin-end: #{$ionic-${prop.name}};\n  --margin-top: #{$ionic-${prop.name}};\n  --margin-bottom: #{$ionic-${prop.name}};\n\n  @include margin($ionic-${prop.name});\n};\n
-.${variablesPrefix}-padding-${className} {\n  --padding-start: #{$ionic-${prop.name}};\n  --padding-end: #{$ionic-${prop.name}};\n  --padding-top: #{$ionic-${prop.name}};\n  --padding-bottom: #{$ionic-${prop.name}};\n\n  @include padding($ionic-${prop.name});\n};\n`;
-}
+// Register the custom transform group for html file generation
+StyleDictionary.registerTransformGroup({
+  name: 'custom',
+  transforms: ['attribute/cti', 'name/cti/kebab-unique', 'size/rem', 'color/css'],
+});
 
 // Make Style Dictionary comply with the $ format on properties from W3C Guidelines
 const w3cTokenJsonParser = {
@@ -233,7 +243,7 @@ StyleDictionary.extend({
   source: ['./src/foundations/tokens/*.json', './src/foundations/tokens/theme/*.json'],
   platforms: {
     css: {
-      buildPath: './src/foundations/',
+      buildPath: targetPath,
       transformGroup: 'css',
       files: [
         {
@@ -247,7 +257,7 @@ StyleDictionary.extend({
       ],
     },
     scss: {
-      buildPath: './src/foundations/',
+      buildPath: targetPath,
       transformGroup: 'scss',
       files: [
         {
@@ -265,6 +275,16 @@ StyleDictionary.extend({
             outputReferences: true,
             fileHeader: `myFileHeader`,
           },
+        },
+      ],
+    },
+    html: {
+      transformGroup: 'custom',
+      buildPath: targetPath,
+      files: [
+        {
+          destination: 'design-tokens.html',
+          format: 'html/tokens',
         },
       ],
     },

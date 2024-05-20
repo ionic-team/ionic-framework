@@ -148,6 +148,10 @@
       "$type": "dimension",
       "$value": "{scale.0}"
     },
+    "050": {
+      "$type": "dimension",
+      "$value": "{scale.050}"
+    },
     "100": {
       "$type": "dimension",
       "$value": "{scale.100}"
@@ -199,16 +203,16 @@
     "1200": {
       "$type": "dimension",
       "$value": "{scale.1200}"
-    },
-    "050": {
-      "$type": "dimension",
-      "$value": "{scale.050}"
     }
   },
   "border-radius": {
     "0": {
       "$type": "dimension",
       "$value": "{scale.0}"
+    },
+    "050": {
+      "$type": "dimension",
+      "$value": "{scale.050}"
     },
     "100": {
       "$type": "dimension",
@@ -233,10 +237,6 @@
     "1000": {
       "$type": "dimension",
       "$value": "{scale.1000}"
-    },
-    "050": {
-      "$type": "dimension",
-      "$value": "{scale.050}"
     },
     "full": {
       "$type": "dimension",
