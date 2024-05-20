@@ -70,8 +70,15 @@ StyleDictionary.registerFormat({
 StyleDictionary.registerFormat({
   name: 'scssVariablesFormat',
   formatter({ dictionary, file }) {
+    // Separate typography properties
+    const typographyProperties = dictionary.allProperties.filter((prop) => prop['$type'] === 'typography');
+    const otherProperties = dictionary.allProperties.filter((prop) => prop['$type'] !== 'typography');
+
+    // Combine other properties first, then typography properties
+    const sortedProperties = [...otherProperties, ...typographyProperties];
+
     // Add a prefix to all variable names
-    const prefixedVariables = dictionary.allProperties.map((prop) => {
+    const prefixedVariables = sortedProperties.map((prop) => {
       if (prop.attributes.category.startsWith('Elevation')) {
         const cssShadow = prop.value
           .map((shadow) => {
@@ -80,6 +87,10 @@ StyleDictionary.registerFormat({
           .join(', ');
 
         return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${cssShadow});`;
+      } else if (prop.attributes.category.match('font-family')) {
+        // Remove the last word from family token, as it comes already with the name of the font, and we want a more abstract variable name
+        const propName = prop.name.split('-').slice(0, -1).join('-');
+        return `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, "${prop.value}", sans-serif);`;
       } else if (prop['$type'] === 'typography') {
         const typography = prop.value;
 
@@ -88,7 +99,7 @@ StyleDictionary.registerFormat({
           Object.entries(dictionary.properties['font-size']).map(([key, token]) => [token.value, token.attributes.type])
         );
 
-        // Get font-weight token type, based on typography font-wight value
+        // Get font-weight token type, based on typography font-weight value
         const fontWeightMap = Object.fromEntries(
           Object.entries(dictionary.properties['font-weight']).map(([key, token]) => [
             token.value,
@@ -113,7 +124,7 @@ StyleDictionary.registerFormat({
         );
 
         // Generate CSS for typography tokens
-        const cssTypography = `
+        return `
           $${variablesPrefix}-${prop.name}: (
             font-family: $ionic-font-family,
             font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]},
@@ -124,12 +135,6 @@ StyleDictionary.registerFormat({
             text-decoration: ${typography.textDecoration}
           );
         `;
-
-        return cssTypography;
-      } else if (prop.attributes.category.match('font-family')) {
-        // Remove the last word from family token, as it comes already with the name of the font, and we want a more abstract variable name
-        const propName = prop.name.split('-').slice(0, -1).join('-');
-        return `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, "${prop.value}", sans-serif);`;
       } else {
         const rgb = hexToRgb(prop.value);
         return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${

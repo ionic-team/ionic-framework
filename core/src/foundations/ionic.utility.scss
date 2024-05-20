@@ -6,6 +6,54 @@
 @import "./ionic.vars";
 @import "../themes/mixins";
 
+.ionic-guidelines {
+  color: $ionic-guidelines;
+}
+.ionic-background-guidelines {
+  background-color: $ionic-guidelines;
+}
+.ionic-disabled {
+  color: $ionic-disabled;
+}
+.ionic-background-disabled {
+  background-color: $ionic-disabled;
+}
+.ionic-hover {
+  color: $ionic-hover;
+}
+.ionic-background-hover {
+  background-color: $ionic-hover;
+}
+.ionic-pressed {
+  color: $ionic-pressed;
+}
+.ionic-background-pressed {
+  background-color: $ionic-pressed;
+}
+.ionic-elevation-100 {
+  box-shadow: $ionic-elevation-100;
+}
+.ionic-elevation-200 {
+  box-shadow: $ionic-elevation-200;
+}
+.ionic-elevation-300 {
+  box-shadow: $ionic-elevation-300;
+}
+.ionic-elevation-400 {
+  box-shadow: $ionic-elevation-400;
+}
+.ionic-elevation-500 {
+  box-shadow: $ionic-elevation-500;
+}
+.ionic-elevation-600 {
+  box-shadow: $ionic-elevation-600;
+}
+.ionic-elevation-700 {
+  box-shadow: $ionic-elevation-700;
+}
+.ionic-elevation-800 {
+  box-shadow: $ionic-elevation-800;
+}
 .ionic-font-size-275 {
   font-size: $ionic-font-size-275;
 }
@@ -1912,73 +1960,6 @@
   z-index: $ionic-z-index-top;
 }
 
-.ionic-state-focus-0 {
-  color: $ionic-state-focus-0;
-}
-.ionic-background-state-focus-0 {
-  background-color: $ionic-state-focus-0;
-}
-.ionic-state-focus-100 {
-  color: $ionic-state-focus-100;
-}
-.ionic-background-state-focus-100 {
-  background-color: $ionic-state-focus-100;
-}
-.ionic-state-focus-200 {
-  color: $ionic-state-focus-200;
-}
-.ionic-background-state-focus-200 {
-  background-color: $ionic-state-focus-200;
-}
-.ionic-guidelines {
-  color: $ionic-guidelines;
-}
-.ionic-background-guidelines {
-  background-color: $ionic-guidelines;
-}
-.ionic-disabled {
-  color: $ionic-disabled;
-}
-.ionic-background-disabled {
-  background-color: $ionic-disabled;
-}
-.ionic-hover {
-  color: $ionic-hover;
-}
-.ionic-background-hover {
-  background-color: $ionic-hover;
-}
-.ionic-pressed {
-  color: $ionic-pressed;
-}
-.ionic-background-pressed {
-  background-color: $ionic-pressed;
-}
-.ionic-elevation-100 {
-  box-shadow: $ionic-elevation-100;
-}
-.ionic-elevation-200 {
-  box-shadow: $ionic-elevation-200;
-}
-.ionic-elevation-300 {
-  box-shadow: $ionic-elevation-300;
-}
-.ionic-elevation-400 {
-  box-shadow: $ionic-elevation-400;
-}
-.ionic-elevation-500 {
-  box-shadow: $ionic-elevation-500;
-}
-.ionic-elevation-600 {
-  box-shadow: $ionic-elevation-600;
-}
-.ionic-elevation-700 {
-  box-shadow: $ionic-elevation-700;
-}
-.ionic-elevation-800 {
-  box-shadow: $ionic-elevation-800;
-}
-
 .ionic-display-sm-regular {
   font-family: $ionic-font-family;
   font-size: $ionic-font-size-800;
@@ -2517,4 +2498,23 @@
   line-height: $ionic-line-height-400;
   text-transform: none;
   text-decoration: none;
+}
+
+.ionic-state-focus-0 {
+  color: $ionic-state-focus-0;
+}
+.ionic-background-state-focus-0 {
+  background-color: $ionic-state-focus-0;
+}
+.ionic-state-focus-100 {
+  color: $ionic-state-focus-100;
+}
+.ionic-background-state-focus-100 {
+  background-color: $ionic-state-focus-100;
+}
+.ionic-state-focus-200 {
+  color: $ionic-state-focus-200;
+}
+.ionic-background-state-focus-200 {
+  background-color: $ionic-state-focus-200;
 }

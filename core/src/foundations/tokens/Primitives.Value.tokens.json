@@ -1144,6 +1144,10 @@
       "$type": "dimension",
       "$value": "64px"
     },
+    "1800": {
+      "$type": "dimension",
+      "$value": "72px"
+    },
     "2000": {
       "$type": "dimension",
       "$value": "80px"

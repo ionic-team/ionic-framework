@@ -3,6 +3,19 @@
  * Ionic Design System
  */
 
+$ionic-guidelines: var(--ionic-guidelines, #9747ff);
+$ionic-guidelines-rgb: var(--ionic-guidelines-rgb, 151, 71, 255);
+$ionic-disabled: var(--ionic-disabled, #ffffff99);
+$ionic-hover: var(--ionic-hover, #1212120a);
+$ionic-pressed: var(--ionic-pressed, #12121214);
+$ionic-elevation-100: var(--ionic-elevation-100, 0px 3px 9px 0px #00000012, 0px 0px 4px 0px #0000000a);
+$ionic-elevation-200: var(--ionic-elevation-200, 0px 8px 25px 0px #00000014, 0px 1px 5px 0px #0000000d);
+$ionic-elevation-300: var(--ionic-elevation-300, 0px 6px 32px 0px #00000029, 0px 2px 7px 0px #0000000d);
+$ionic-elevation-400: var(--ionic-elevation-400, 0px 15px 48px 0px #0000002e, 0px 3px 12px 0px #0000001f);
+$ionic-elevation-500: var(--ionic-elevation-500, 0px 3px 9px 0px #062b6312, 0px 0px 4px 0px #062b630a);
+$ionic-elevation-600: var(--ionic-elevation-600, 0px 8px 25px 0px #062b6314, 0px 1px 5px 0px #062b630d);
+$ionic-elevation-700: var(--ionic-elevation-700, 0px 15px 32px 0px #062b6317, 0px 2px 7px 0px #062b630d);
+$ionic-elevation-800: var(--ionic-elevation-800, 0px 20px 48px 0px #062b631f, 0px 3px 14px 0px #062b631f);
 $ionic-font-size-275: var(--ionic-font-size-275, 11px);
 $ionic-font-size-300: var(--ionic-font-size-300, 12px);
 $ionic-font-size-350: var(--ionic-font-size-350, 14px);
@@ -580,6 +593,7 @@ $ionic-scale-1100: var(--ionic-scale-1100, 44px);
 $ionic-scale-1200: var(--ionic-scale-1200, 48px);
 $ionic-scale-1400: var(--ionic-scale-1400, 56px);
 $ionic-scale-1600: var(--ionic-scale-1600, 64px);
+$ionic-scale-1800: var(--ionic-scale-1800, 72px);
 $ionic-scale-2000: var(--ionic-scale-2000, 80px);
 $ionic-scale-2400: var(--ionic-scale-2400, 96px);
 $ionic-scale-3200: var(--ionic-scale-3200, 128px);
@@ -597,19 +611,6 @@ $ionic-state-focus-100: var(--ionic-state-focus-100, #9ec4fd);
 $ionic-state-focus-100-rgb: var(--ionic-state-focus-100-rgb, 158, 196, 253);
 $ionic-state-focus-200: var(--ionic-state-focus-200, #ffafaf);
 $ionic-state-focus-200-rgb: var(--ionic-state-focus-200-rgb, 255, 175, 175);
-$ionic-guidelines: var(--ionic-guidelines, #9747ff);
-$ionic-guidelines-rgb: var(--ionic-guidelines-rgb, 151, 71, 255);
-$ionic-disabled: var(--ionic-disabled, #ffffff99);
-$ionic-hover: var(--ionic-hover, #1212120a);
-$ionic-pressed: var(--ionic-pressed, #12121214);
-$ionic-elevation-100: var(--ionic-elevation-100, 0px 3px 9px 0px #00000012, 0px 0px 4px 0px #0000000a);
-$ionic-elevation-200: var(--ionic-elevation-200, 0px 8px 25px 0px #00000014, 0px 1px 5px 0px #0000000d);
-$ionic-elevation-300: var(--ionic-elevation-300, 0px 6px 32px 0px #00000029, 0px 2px 7px 0px #0000000d);
-$ionic-elevation-400: var(--ionic-elevation-400, 0px 15px 48px 0px #0000002e, 0px 3px 12px 0px #0000001f);
-$ionic-elevation-500: var(--ionic-elevation-500, 0px 3px 9px 0px #062b6312, 0px 0px 4px 0px #062b630a);
-$ionic-elevation-600: var(--ionic-elevation-600, 0px 8px 25px 0px #062b6314, 0px 1px 5px 0px #062b630d);
-$ionic-elevation-700: var(--ionic-elevation-700, 0px 15px 32px 0px #062b6317, 0px 2px 7px 0px #062b630d);
-$ionic-elevation-800: var(--ionic-elevation-800, 0px 20px 48px 0px #062b631f, 0px 3px 14px 0px #062b631f);
 
 $ionic-display-sm-regular: (
   font-family: $ionic-font-family,
