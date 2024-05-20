@@ -278,16 +278,17 @@ StyleDictionary.extend({
         },
       ],
     },
-    html: {
-      transformGroup: 'custom',
-      buildPath: targetPath,
-      files: [
-        {
-          destination: 'design-tokens.html',
-          format: 'html/tokens',
-        },
-      ],
-    },
+    // TODO (ROU-4870) - Don't generate html file now to prevent lint conflicts on CI
+    // html: {
+    //   transformGroup: 'custom',
+    //   buildPath: targetPath,
+    //   files: [
+    //     {
+    //       destination: 'design-tokens.html',
+    //       format: 'html/tokens',
+    //     },
+    //   ],
+    // },
   },
   fileHeader: {
     myFileHeader: () => {
