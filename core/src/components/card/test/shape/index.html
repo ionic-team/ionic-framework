@@ -15,13 +15,11 @@
 
     <!-- Styles only for testing purposes to identify the card shape -->
     <style>
-      :root {
-        --ion-background-color: #dde2ef;
+      ion-content {
+        --background: #dde2ef;
       }
 
-      #default,
-      #round,
-      #rectangular {
+      .container {
         padding: 8px;
       }
     </style>
@@ -37,7 +35,7 @@
 
       <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
         <h1>Default</h1>
-        <div id="default" class="ion-margin-top">
+        <div id="default" class="container">
           <ion-card>
             <ion-card-header>
               <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -50,8 +48,24 @@
             </ion-card-content>
           </ion-card>
         </div>
+
+        <h1>Soft</h1>
+        <div id="soft" class="container">
+          <ion-card shape="soft">
+            <ion-card-header>
+              <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+              <ion-card-title>Card Title</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week
+              in the woods. Wash your spirit clean.
+            </ion-card-content>
+          </ion-card>
+        </div>
+
         <h1>Round</h1>
-        <div id="round" class="ion-margin-top">
+        <div id="round" class="container">
           <ion-card shape="round">
             <ion-card-header>
               <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -66,7 +80,7 @@
         </div>
 
         <h1>Rectangular</h1>
-        <div id="rectangular" class="ion-margin-top">
+        <div id="rectangular" class="container">
           <ion-card shape="rectangular">
             <ion-card-header>
               <ion-card-subtitle>Card Subtitle</ion-card-subtitle>

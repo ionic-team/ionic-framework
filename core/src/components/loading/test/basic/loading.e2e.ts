@@ -74,7 +74,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       await ionLoadingDidPresent.next();
 
-      const button = page.locator('ion-loading ion-button');
+      const button = page.locator('ion-loading button');
 
       if (browserName === 'webkit') {
         await page.keyboard.down('Alt');

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chip - Size</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Chip - Size</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content" style="text-align: center">
+        <h2>Default Size</h2>
+        <div class="grid">
+          <div class="grid-item">
+            <ion-chip>
+              <ion-label>Default</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip>
+              <ion-icon name="checkmark-circle"></ion-icon>
+              <ion-label>With Icon</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip>
+              <ion-avatar>
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
+                />
+              </ion-avatar>
+              <ion-label>With Avatar</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip>
+              <ion-avatar>
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
+                />
+              </ion-avatar>
+              <ion-label>With Icon and Avatar</ion-label>
+              <ion-icon name="close-circle"></ion-icon>
+            </ion-chip>
+          </div>
+        </div>
+
+        <h2>Small</h2>
+
+        <div class="grid">
+          <div class="grid-item">
+            <ion-chip size="small">
+              <ion-label>Default</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip size="small">
+              <ion-icon name="checkmark-circle"></ion-icon>
+              <ion-label>With Icon</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip size="small">
+              <ion-avatar>
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
+                />
+              </ion-avatar>
+              <ion-label>With Avatar</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip size="small">
+              <ion-avatar>
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
+                />
+              </ion-avatar>
+              <ion-label>With Icon and Avatar</ion-label>
+              <ion-icon name="close-circle"></ion-icon>
+            </ion-chip>
+          </div>
+        </div>
+
+        <h2>Large</h2>
+
+        <div class="grid">
+          <div class="grid-item">
+            <ion-chip size="large">
+              <ion-label>Default</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip size="large">
+              <ion-icon name="checkmark-circle"></ion-icon>
+              <ion-label>With Icon</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip size="large">
+              <ion-avatar>
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
+                />
+              </ion-avatar>
+              <ion-label>With Avatar</ion-label>
+            </ion-chip>
+          </div>
+
+          <div class="grid-item">
+            <ion-chip size="large">
+              <ion-avatar>
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+"
+                />
+              </ion-avatar>
+              <ion-label>With Icon and Avatar</ion-label>
+              <ion-icon name="close-circle"></ion-icon>
+            </ion-chip>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

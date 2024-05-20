@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.2](https://github.com/ionic-team/ionic-framework/compare/v8.1.1...v8.1.2) (2024-05-15)
+
+
+### Bug Fixes
+
+* **many:** do not grow slotted checkboxes, radios, selects and toggles ([#29501](https://github.com/ionic-team/ionic-framework/issues/29501)) ([c63d07b](https://github.com/ionic-team/ionic-framework/commit/c63d07bdd0c4d9939474c52b03a3f2535511933f)), closes [#29423](https://github.com/ionic-team/ionic-framework/issues/29423)
+* **picker:** update keyboard navigation ([#29497](https://github.com/ionic-team/ionic-framework/issues/29497)) ([32bc681](https://github.com/ionic-team/ionic-framework/commit/32bc681192b1833f1c897e692d2d36ba90c6af53))
+
+
+
+
+
+## [8.1.1](https://github.com/ionic-team/ionic-framework/compare/v8.1.0...v8.1.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* **angular:** add formatOptions property to standalone datetime ([#29468](https://github.com/ionic-team/ionic-framework/issues/29468)) ([bb1db52](https://github.com/ionic-team/ionic-framework/commit/bb1db52567e0884a896f9ccd76c27540b52f5e48)), closes [#29464](https://github.com/ionic-team/ionic-framework/issues/29464)
+* **angular:** persist select disabled state in item ([#29448](https://github.com/ionic-team/ionic-framework/issues/29448)) ([dfb72d7](https://github.com/ionic-team/ionic-framework/commit/dfb72d7ea06e28d76069b23eb90c3426181b7c4c)), closes [#29234](https://github.com/ionic-team/ionic-framework/issues/29234)
+* **angular:** set active segment button when dynamically changing items ([#29418](https://github.com/ionic-team/ionic-framework/issues/29418)) ([ee83388](https://github.com/ionic-team/ionic-framework/commit/ee833881da3ecaa0a9153397f0c7e62c1923f19c)), closes [#29414](https://github.com/ionic-team/ionic-framework/issues/29414)
+* **radio:** persist checked state when items are updated in radio-group ([#29457](https://github.com/ionic-team/ionic-framework/issues/29457)) ([7ea14ae](https://github.com/ionic-team/ionic-framework/commit/7ea14ae41eb27f2a58952bd27d91ef4c77bb6a0c)), closes [#29442](https://github.com/ionic-team/ionic-framework/issues/29442)
+
+
+
+
+
 # [8.1.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.2...v8.1.0) (2024-05-01)
 
 

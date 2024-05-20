@@ -13,6 +13,6 @@ jobs:
       - name: 'Auto-assign issue'
         uses: pozil/auto-assign-issue@65947009a243e6b3993edeef4e64df3ca85d760c # v1.14.0
         with:
-          assignees: sean-perkins, brandyscarney, thetaPC
+          assignees: brandyscarney, thetaPC
           numOfAssignee: 1
           allowSelfAssign: false

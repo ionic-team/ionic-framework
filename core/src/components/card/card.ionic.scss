@@ -18,6 +18,9 @@
   color: var(--color);
 }
 
+// Card Shapes
+// ---------------------------------------------
+
 :host(.card-round) {
   --border-radius: #{globals.$ionic-border-radius-400};
 }

@@ -543,9 +543,9 @@ export namespace Components {
          */
         "routerDirection": RouterDirection;
         /**
-          * Set to `"round"` for a button with more rounded corners.
+          * Set to `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully rounded corners, or `"rectangular"` for a button without rounded corners. Defaults to `"soft"` for the `"ios"` theme and `"round"` for all other themes.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
          */
@@ -619,9 +619,9 @@ export namespace Components {
          */
         "routerDirection": RouterDirection;
         /**
-          * Set to `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners.
+          * Set to `"soft"` for a card with slightly rounded corners, `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners. Defaults to `"round"`.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -763,9 +763,13 @@ export namespace Components {
          */
         "outline": boolean;
         /**
-          * Define the Chip corner shape, when using the Ionic Theme.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+         */
+        "size"?: 'small' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -5791,9 +5795,9 @@ declare namespace LocalJSX {
          */
         "routerDirection"?: RouterDirection;
         /**
-          * Set to `"round"` for a button with more rounded corners.
+          * Set to `"soft"` for a button with slightly rounded corners, `"round"` for a button with fully rounded corners, or `"rectangular"` for a button without rounded corners. Defaults to `"soft"` for the `"ios"` theme and `"round"` for all other themes.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a button with less height and padding, to `"default"` for a button with the default height and padding, or to `"large"` for a button with more height and padding. By default the size is unset, unless the button is inside of an item, where the size is `"small"` by default. Set the size to `"default"` inside of an item to make it a standard size button.
          */
@@ -5867,9 +5871,9 @@ declare namespace LocalJSX {
          */
         "routerDirection"?: RouterDirection;
         /**
-          * Set to `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners.
+          * Set to `"soft"` for a card with slightly rounded corners, `"round"` for a card with more rounded corners, or `"rectangular"` for a card without rounded corners. Defaults to `"round"`.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -6023,9 +6027,13 @@ declare namespace LocalJSX {
          */
         "outline"?: boolean;
         /**
-          * Define the Chip corner shape, when using the Ionic Theme.
+          * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully rounded corners, or `"rectangular"` for a chip without rounded corners. Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
          */
-        "shape"?: 'round' | 'rectangular';
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * Set to `"small"` for a chip with less height and padding.  Defaults to `"large"` for the ionic theme, and  undefined for all other themes.
+         */
+        "size"?: 'small' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
