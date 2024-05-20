@@ -8,15 +8,17 @@ Design tokens represent small, repeated design decisions that make up a design s
 
 ## Design Tokens Architecture
 
-The Ionic Design Tokens are stored on `core/src/foundations/_design-tokens.json`.
+The Ionic Design Tokens are stored on `core/src/foundations/tokens`. Here we have the abstract primitive tokens that will be common between all themes.
+Inside the `core/src/foundations/tokens/theme` we have the tokens that are specific to the new IOnic Theme, like primary colors, font-family and color states.
 
-Currently, five categories of tokens are stored:
+Currently, six categories of tokens are stored:
 
 - Colors
 - Font
-- Space
+- Scale
 - Border
 - Elevation
+- Z-index
 
 Using [Style Dictionary](https://amzn.github.io/style-dictionary/), these tokens generate 3 files inside `core/src/foundations`:
 
@@ -56,19 +58,19 @@ Examples:
 CSS Custom Property:
 
 ```css
---ionic-color-primary-10
+--ionic-color-primary-100
 ```
 
 SCSS Variable:
 
 ```scss
-$ionic-color-primary-10
+$ionic-color-primary-100
 ```
 
 Utility class:
 
 ```css
-.ionic-color-primary-10
+.ionic-color-primary-100
 ```
 
 ## When to change the Design Tokens
