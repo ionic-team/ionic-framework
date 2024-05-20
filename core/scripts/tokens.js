@@ -286,7 +286,7 @@ StyleDictionary.registerParser(w3cTokenJsonParser);
 
 // Generate Tokens
 StyleDictionary.extend({
-  source: ['./src/foundations/tokens/*.json'],
+  source: ['./src/foundations/tokens/*.json', './src/foundations/tokens/theme/*.json'],
   platforms: {
     css: {
       buildPath: './src/foundations/',
