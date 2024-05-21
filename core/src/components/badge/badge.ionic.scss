@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  --padding-start: 4px;
-  --padding-end: 4px;
-  --padding-top: 0;
-  --padding-bottom: 0;
+  --padding-start: tokens.$ionic-space-xxxs;
+  --padding-end: tokens.$ionic-space-xxxs;
+  --padding-top: tokens.$ionic-space-none;
+  --padding-bottom: tokens.$ionic-space-none;
 
   display: inline-flex;
 
@@ -16,7 +16,6 @@
   justify-content: center;
 
   font-size: tokens.$ionic-font-size-l;
-
   font-weight: tokens.$ionic-font-weight-medium;
 
   line-height: tokens.$ionic-font-line-height-m;
