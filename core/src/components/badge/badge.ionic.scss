@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  --padding-start: globals.$ionic-space-xxxs;
-  --padding-end: globals.$ionic-space-xxxs;
-  --padding-top: globals.$ionic-space-none;
-  --padding-bottom: globals.$ionic-space-none;
+  --padding-start: #{globals.$ionic-space-xxxs};
+  --padding-end: #{globals.$ionic-space-xxxs};
+  --padding-top: #{globals.$ionic-space-none};
+  --padding-bottom: #{globals.$ionic-space-none};
 
   display: inline-flex;
 
@@ -29,13 +29,13 @@
 }
 
 :host(.badge-large) {
-  --padding-start: tokens.$ionic-space-xs;
-  --padding-end: tokens.$ionic-space-xs;
+  --padding-start: #{globals.$ionic-space-xs};
+  --padding-end: #{globals.$ionic-space-xs};
 
   min-width: 48px;
   height: 48px;
 
-  font-size: tokens.$ionic-font-size-h5;
+  font-size: globals.$ionic-font-size-h5;
 
-  line-height: tokens.$ionic-font-line-height-l;
+  line-height: globals.$ionic-font-line-height-l;
 }
