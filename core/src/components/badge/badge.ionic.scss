@@ -28,3 +28,15 @@
   min-width: 32px;
   height: 32px;
 }
+
+:host(.badge-large) {
+  --padding-start: tokens.$ionic-space-xs;
+  --padding-end: tokens.$ionic-space-xs;
+
+  min-width: 48px;
+  height: 48px;
+
+  font-size: tokens.$ionic-font-size-h5;
+
+  line-height: tokens.$ionic-font-line-height-l;
+}
