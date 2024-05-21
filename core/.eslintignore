@@ -2,4 +2,3 @@ src/components.d.ts
 **/test/**/*.spec.ts
 **/test/**/*.spec.tsx
 **/test/**/e2e.ts
-src/foundations/*.html
