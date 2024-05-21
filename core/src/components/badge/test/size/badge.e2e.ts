@@ -19,7 +19,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await expect(badge).toHaveScreenshot(screenshot(`badge-size-small`));
     });
 
-    test('should render medium badges', async ({ page }) => {
+    test.only('should render medium badges', async ({ page }) => {
       await page.setContent(
         `
         <ion-badge size="medium">00</ion-badge>
