@@ -14,7 +14,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'badge.ios.scss',
     md: 'badge.md.scss',
-    ionic: 'badge.md.scss',
+    ionic: 'badge.ionic.scss',
   },
   shadow: true,
 })
@@ -26,12 +26,36 @@ export class Badge implements ComponentInterface {
    */
   @Prop({ reflect: true }) color?: Color;
 
+  /**
+   * Set to `"small"` for less height and width.
+   * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() size?: 'small';
+
+  private getSize(): string | undefined {
+    const theme = getIonTheme(this);
+    const { size } = this;
+
+    // TODO(ROU-10747): Remove theme check when sizes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (size === undefined) {
+      return 'small';
+    }
+
+    return size;
+  }
+
   render() {
+    const size = this.getSize();
     const theme = getIonTheme(this);
     return (
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
+          [`badge-${size}`]: size !== undefined,
         })}
       >
         <slot></slot>

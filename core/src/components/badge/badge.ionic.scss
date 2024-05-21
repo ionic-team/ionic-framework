@@ -1,0 +1,18 @@
+@import "./badge";
+
+// Ionic Badge
+// --------------------------------------------------
+
+:host {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+// Button Sizes
+// --------------------------------------------------
+:host(.badge-small) {
+  min-width: 32px;
+  height: 32px;
+}
