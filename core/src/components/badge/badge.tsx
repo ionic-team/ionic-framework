@@ -30,7 +30,7 @@ export class Badge implements ComponentInterface {
    * Set to `"small"` for less height and width. Set to "medium" for slightly larger dimensions.
    * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() size?: 'small';
+  @Prop() size?: 'small' | 'medium';
 
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
