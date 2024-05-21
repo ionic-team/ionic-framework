@@ -1,6 +1,6 @@
-const variablesPrefix = 'ionic'; // varuable that holds the prefix used on all css and scss variables generated
+const variablesPrefix = 'ionic'; // Variable that holds the prefix used on all css and scss variables generated
 
-// Method to translate an hex color value to rgb
+// Generates translate an hex color value to rgb
 function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
@@ -12,12 +12,12 @@ function hexToRgb(hex) {
     : null;
 }
 
-// Method to generated a valid box-shadow value from a shadow Design Token structure
+// Generates a valid box-shadow value from a shadow Design Token structure
 function generateShadowValue(shadow) {
   return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${shadow.color}`;
 }
 
-// Method to generated a valid font-family value from a font-family Design Token structure
+// Generates a valid font-family value from a font-family Design Token structure
 function generateFontFamilyValue(prop, variableType = 'css') {
   // Remove the last word from the token, as it contains the name of the font, which we don't want to be included on the generated variables
   const propName = prop.name.split('-').slice(0, -1).join('-');
@@ -26,7 +26,7 @@ function generateFontFamilyValue(prop, variableType = 'css') {
     : `--${variablesPrefix}-${propName}: "${prop.value}", sans-serif;`;
 }
 
-// Method to generated a typography based scss map from a typography Design Token structure
+// Generates a typography based scss map from a typography Design Token structure
 function generateTypographyValue(prop, dictionary) {
   const typography = prop.value;
   const fontSizeMap = createTypeMap(dictionary, 'font-size');
@@ -55,7 +55,7 @@ function createTypeMap(dictionary, type) {
   );
 }
 
-// Method to generate a rgb color value, based on a color Design Token
+// Generates a rgb color value, based on a color Design Token
 function generateRgbValue(prop) {
   const rgb = hexToRgb(prop.value);
   let rgbDeclaration = '';
@@ -68,7 +68,7 @@ function generateRgbValue(prop) {
   return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${rgbDeclaration}`;
 }
 
-// Method to generated a typography based css utility-class from a typography Design Token structure
+// Generates a typography based css utility-class from a typography Design Token structure
 function generateTypographyUtilityClass(prop, dictionary) {
   const typography = prop.value;
   const fontSizeMap = createTypeMap(dictionary, 'font-size');
@@ -90,13 +90,13 @@ function generateTypographyUtilityClass(prop, dictionary) {
   `;
 }
 
-// Method to generated a color based css utility-class from a color Design Token structure
+// Generates a color based css utility-class from a color Design Token structure
 function generateColorUtilityClasses(prop, className) {
   return `.${variablesPrefix}-${className} {\n  color: $ionic-${prop.name};\n}
   .${variablesPrefix}-background-${className} {\n  background-color: $ionic-${prop.name};\n}`;
 }
 
-// Method to generated a font based css utility-class from a font Design Token structure
+// Generates a font based css utility-class from a font Design Token structure
 function generateFontUtilityClass(prop, className) {
   let fontAttribute;
   switch (prop.attributes.type) {
@@ -116,7 +116,7 @@ function generateFontUtilityClass(prop, className) {
   return `.${variablesPrefix}-${className} {\n  ${fontAttribute}: $ionic-${prop.name};\n}`;
 }
 
-// Method to generate a margin or padding based css utility-class from a space Design Token structure
+// Generates a margin or padding based css utility-class from a space Design Token structure
 function generateSpaceUtilityClasses(prop, className) {
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   const marginPaddingTemplate = (type) => `
