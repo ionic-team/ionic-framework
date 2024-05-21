@@ -59,6 +59,7 @@ function generateRgbValue(prop) {
   const rgb = hexToRgb(prop.value);
   let rgbDeclaration = '';
 
+  // If the token is color, also add a rgb variable using the same color
   if (rgb) {
     rgbDeclaration = `\n$${variablesPrefix}-${prop.name}-rgb: var(--${variablesPrefix}-${prop.name}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`;
   }
