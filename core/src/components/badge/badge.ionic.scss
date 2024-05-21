@@ -16,7 +16,6 @@
   justify-content: center;
 
   font-size: tokens.$ionic-font-size-l;
-
   font-weight: tokens.$ionic-font-weight-medium;
 
   line-height: tokens.$ionic-font-line-height-m;
@@ -27,4 +26,13 @@
 :host(.badge-small) {
   min-width: 32px;
   height: 32px;
+}
+
+:host(.badge-medium) {
+  min-width: 40px;
+  height: 40px;
+
+  font-size: tokens.$ionic-font-size-h6;
+
+  line-height: tokens.$ionic-font-line-height-l;
 }

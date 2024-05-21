@@ -27,7 +27,7 @@ export class Badge implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * Set to `"small"` for less height and width.
+   * Set to `"small"` for less height and width. Set to "medium" for slightly larger dimensions.
    * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
    */
   @Prop() size?: 'small';
