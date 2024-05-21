@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  --padding-start: globals.$ionic-space-xxxs;
-  --padding-end: globals.$ionic-space-xxxs;
-  --padding-top: globals.$ionic-space-none;
-  --padding-bottom: globals.$ionic-space-none;
+  --padding-start: #{globals.$ionic-space-xxxs};
+  --padding-end: #{globals.$ionic-space-xxxs};
+  --padding-top: #{globals.$ionic-space-none};
+  --padding-bottom: #{globals.$ionic-space-none};
 
   display: inline-flex;
 
