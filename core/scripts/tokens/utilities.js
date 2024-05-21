@@ -34,6 +34,7 @@ function generateTypographyValue(prop, dictionary) {
   const lineHeightMap = createTypeMap(dictionary, 'line-height');
   const letterSpacingMap = createTypeMap(dictionary, 'letter-spacing');
 
+  // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
   $${variablesPrefix}-${prop.name}: (
     font-family: $ionic-font-family,
@@ -75,6 +76,7 @@ function generateTypographyUtilityClass(prop, dictionary) {
   const lineHeightMap = createTypeMap(dictionary, 'line-height');
   const letterSpacingMap = createTypeMap(dictionary, 'letter-spacing');
 
+  // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
   .${variablesPrefix}-${prop.name} {
     font-family: $ionic-font-family;
@@ -116,6 +118,7 @@ function generateFontUtilityClass(prop, className) {
 
 // Method to generate a margin or padding based css utility-class from a space Design Token structure
 function generateSpaceUtilityClasses(prop, className) {
+  // This exact format is needed so that it compiles the tokens with the expected lint rules
   const marginPaddingTemplate = (type) => `
 .${variablesPrefix}-${type}-${className} {
   --${type}-start: #{$ionic-${prop.name}};
