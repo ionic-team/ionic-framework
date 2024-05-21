@@ -156,6 +156,7 @@
 .ionic-line-height-full {
   line-height: $ionic-line-height-full;
 }
+
 .ionic-margin-space-0 {
   --margin-start: #{$ionic-space-0};
   --margin-end: #{$ionic-space-0};
@@ -425,7 +426,6 @@
 
   @include padding($ionic-space-050);
 }
-
 .ionic-border-radius-0 {
   border-radius: $ionic-border-radius-0;
 }
