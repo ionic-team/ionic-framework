@@ -48,7 +48,7 @@ function generateTypographyValue(prop, dictionary) {
   `;
 }
 
-// Method to be reused on the others methods of this file, to abstract the need to loop across all tokens from a given type
+// To abstract the need to loop across all tokens from a given type
 function createTypeMap(dictionary, type) {
   return Object.fromEntries(
     Object.entries(dictionary.properties[type]).map(([key, token]) => [token.value, token.attributes.type])

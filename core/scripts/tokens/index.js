@@ -89,9 +89,11 @@ StyleDictionary.registerFormat({
         return `.${variablesPrefix}-${className} {\n  box-shadow: $ionic-${prop.name};\n}`;
       } else if (prop['$type'] === 'typography') {
         return generateTypographyUtilityClass(prop, dictionary);
-        /* Not creating for the tokens below, as they make no sense to exist as utility-classes.
-        Font-family should be defined on global scope, not component.
-        Scale its an abstract token group, to be used by other tokens, like the space ones. */
+        /*
+         * Not creating for the tokens below, as they make no sense to exist as utility-classes.
+         * Font-family should be defined on global scope, not component.
+         * Scale its an abstract token group, to be used by other tokens, like the space ones.
+         */
       } else if (prop.attributes.category.match('font-family') || tokenType === 'scale') {
         return;
       }
