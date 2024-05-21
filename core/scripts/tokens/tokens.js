@@ -57,6 +57,7 @@ StyleDictionary.registerFormat({
     const typographyProperties = dictionary.allProperties.filter((prop) => prop['$type'] === 'typography');
     const otherProperties = dictionary.allProperties.filter((prop) => prop['$type'] !== 'typography');
 
+    // Make sure the reused scss variables are defined first, to avoid compilation errors
     const sortedProperties = [...otherProperties, ...typographyProperties];
 
     const prefixedVariables = sortedProperties.map((prop) => {

@@ -1,5 +1,6 @@
-const variablesPrefix = 'ionic';
+const variablesPrefix = 'ionic'; // varuable that holds the prefix used on all css and scss variables generated
 
+// Method to translate an hex color value to rgb
 function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
@@ -11,17 +12,21 @@ function hexToRgb(hex) {
     : null;
 }
 
+// Method to generated a valid box-shadow value from a shadow Design Token structure
 function generateShadowValue(shadow) {
   return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${shadow.color}`;
 }
 
+// Method to generated a valid font-family value from a font-family Design Token structure
 function generateFontFamilyValue(prop, variableType = 'css') {
+  // Remove the last word from the token, as it contains the name of the font, which we don't want to be included on the generated variables
   const propName = prop.name.split('-').slice(0, -1).join('-');
   return variableType === 'scss'
     ? `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, "${prop.value}", sans-serif);`
     : `--${variablesPrefix}-${propName}: "${prop.value}", sans-serif;`;
 }
 
+// Method to generated a typography based scss map from a typography Design Token structure
 function generateTypographyValue(prop, dictionary) {
   const typography = prop.value;
   const fontSizeMap = createTypeMap(dictionary, 'font-size');
@@ -42,21 +47,26 @@ function generateTypographyValue(prop, dictionary) {
   `;
 }
 
+// Method to be reused on the others methods of this file, to abstract the need to loop across all tokens from a given type
 function createTypeMap(dictionary, type) {
   return Object.fromEntries(
     Object.entries(dictionary.properties[type]).map(([key, token]) => [token.value, token.attributes.type])
   );
 }
 
+// Method to generate a rgb color value, based on a color Design Token
 function generateRgbValue(prop) {
   const rgb = hexToRgb(prop.value);
-  return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${
-    rgb
-      ? `\n$${variablesPrefix}-${prop.name}-rgb: var(--${variablesPrefix}-${prop.name}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`
-      : ``
-  }`;
+  let rgbDeclaration = '';
+
+  if (rgb) {
+    rgbDeclaration = `\n$${variablesPrefix}-${prop.name}-rgb: var(--${variablesPrefix}-${prop.name}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`;
+  }
+
+  return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${rgbDeclaration}`;
 }
 
+// Method to generated a typography based css utility-class from a typography Design Token structure
 function generateTypographyUtilityClass(prop, dictionary) {
   const typography = prop.value;
   const fontSizeMap = createTypeMap(dictionary, 'font-size');
@@ -77,11 +87,13 @@ function generateTypographyUtilityClass(prop, dictionary) {
   `;
 }
 
+// Method to generated a color based css utility-class from a color Design Token structure
 function generateColorUtilityClasses(prop, className) {
   return `.${variablesPrefix}-${className} {\n  color: $ionic-${prop.name};\n}
   .${variablesPrefix}-background-${className} {\n  background-color: $ionic-${prop.name};\n}`;
 }
 
+// Method to generated a font based css utility-class from a font Design Token structure
 function generateFontUtilityClass(prop, className) {
   let fontAttribute;
   switch (prop.attributes.type) {
@@ -101,11 +113,22 @@ function generateFontUtilityClass(prop, className) {
   return `.${variablesPrefix}-${className} {\n  ${fontAttribute}: $ionic-${prop.name};\n}`;
 }
 
+// Method to generate a margin or padding based css utility-class from a space Design Token structure
 function generateSpaceUtilityClasses(prop, className) {
-  return `.${variablesPrefix}-margin-${className} {\n  --margin-start: #{$ionic-${prop.name}};\n  --margin-end: #{$ionic-${prop.name}};\n  --margin-top: #{$ionic-${prop.name}};\n  --margin-bottom: #{$ionic-${prop.name}};\n\n  @include margin($ionic-${prop.name});\n};\n
-  .${variablesPrefix}-padding-${className} {\n  --padding-start: #{$ionic-${prop.name}};\n  --padding-end: #{$ionic-${prop.name}};\n  --padding-top: #{$ionic-${prop.name}};\n  --padding-bottom: #{$ionic-${prop.name}};\n\n  @include padding($ionic-${prop.name});\n};\n`;
+  const marginPaddingTemplate = (type) => `
+.${variablesPrefix}-${type}-${className} {
+  --${type}-start: #{$ionic-${prop.name}};
+  --${type}-end: #{$ionic-${prop.name}};
+  --${type}-top: #{$ionic-${prop.name}};
+  --${type}-bottom: #{$ionic-${prop.name}};
+
+  @include ${type}($ionic-${prop.name});
+};`;
+
+  return `${marginPaddingTemplate('margin')}\n${marginPaddingTemplate('padding')}`;
 }
 
+// Export all methods to be used on the tokens.js script
 module.exports = {
   variablesPrefix,
   hexToRgb,
