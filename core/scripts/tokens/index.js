@@ -22,7 +22,7 @@ const {
   generateFontUtilityClass,
   generateSpaceUtilityClasses,
   generateTypographyUtilityClass,
-} = require('./tokens-utilities');
+} = require('./utilities');
 
 const { fileHeader } = StyleDictionary.formatHelpers;
 
