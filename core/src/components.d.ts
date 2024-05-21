@@ -412,7 +412,7 @@ export namespace Components {
         /**
           * Set to `"small"` for less height and width. Set to "large" for even greater height and width. Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
-        "size"?: 'small';
+        "size"?: 'small' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -5644,7 +5644,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"small"` for less height and width. Set to "large" for even greater height and width. Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
-        "size"?: 'small';
+        "size"?: 'small' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
