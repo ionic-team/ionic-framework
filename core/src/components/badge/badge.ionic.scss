@@ -1,24 +1,24 @@
-@use "../../foundations/ionic.vars.scss" as tokens;
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 @import "./badge";
 
 // Ionic Badge
 // --------------------------------------------------
 
 :host {
-  --padding-start: tokens.$ionic-space-xxxs;
-  --padding-end: tokens.$ionic-space-xxxs;
-  --padding-top: tokens.$ionic-space-none;
-  --padding-bottom: tokens.$ionic-space-none;
+  --padding-start: globals.$ionic-space-xxxs;
+  --padding-end: globals.$ionic-space-xxxs;
+  --padding-top: globals.$ionic-space-none;
+  --padding-bottom: globals.$ionic-space-none;
 
   display: inline-flex;
 
   align-items: center;
   justify-content: center;
 
-  font-size: tokens.$ionic-font-size-l;
-  font-weight: tokens.$ionic-font-weight-medium;
+  font-size: globals.$ionic-font-size-l;
+  font-weight: globals.$ionic-font-weight-medium;
 
-  line-height: tokens.$ionic-font-line-height-m;
+  line-height: globals.$ionic-font-line-height-m;
 }
 
 // Badge Sizes
