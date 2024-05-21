@@ -5,8 +5,6 @@
 // - It is probably the most well-known and widely used Design Tokens tool. It has also been regularly maintained for a long time.
 // - It can easily scale to different necessities we might have in the future.
 
-const fs = require('fs');
-const path = require('path');
 const StyleDictionary = require('style-dictionary');
 
 const targetPath = './src/foundations/';
@@ -98,13 +96,15 @@ StyleDictionary.registerFormat({
         return;
       }
 
-      switch (tokenType) {
+      const tokenTypeLower = tokenType.toLowerCase();
+
+      switch (tokenTypeLower) {
         case 'color':
         case 'state':
-        case 'Guidelines':
-        case 'Disabled':
-        case 'Hover':
-        case 'Pressed':
+        case 'guidelines':
+        case 'disabled':
+        case 'hover':
+        case 'pressed':
           utilityClass = generateColorUtilityClasses(prop, className);
           break;
         case 'border-size':
@@ -128,86 +128,6 @@ StyleDictionary.registerFormat({
       '@import "./ionic.vars";\n@import "../themes/mixins";\n',
       utilityClasses.join('\n'),
     ].join('\n');
-  },
-});
-
-// Register the custom format to generate HTML
-// Load the HTML template
-const template = fs.readFileSync(path.join(__dirname, 'preview-template.html'), 'utf8');
-StyleDictionary.registerFormat({
-  name: 'html/tokens',
-  formatter: function ({ dictionary }) {
-    let colorTokens = '';
-    let fontSizeTokens = '';
-    let boxShadowTokens = '';
-    let borderSizeTokens = '';
-    let borderRadiusTokens = '';
-    let fontWeightTokens = '';
-    let letterSpacingTokens = '';
-    let spaceTokens = '';
-
-    dictionary.allProperties.forEach((token) => {
-      if (token.attributes.category === 'color') {
-        colorTokens += `
-          <div class="color-token" style="background-color: ${token.value};">
-              <div>${token.name}</div>
-          </div>
-        `;
-      } else if (token.attributes.category === 'font-size') {
-        fontSizeTokens += `
-          <div class="font-size-token" style="font-size: ${token.value};">
-              ${token.name} (${token.value})
-          </div>
-        `;
-      } else if (token.attributes.category.startsWith('Elevation')) {
-        const cssShadow = token.value.map(generateShadowValue).join(', ');
-        boxShadowTokens += `
-          <div class="shadow-token" style="box-shadow: ${cssShadow};">
-              ${token.name}
-          </div>
-        `;
-      } else if (token.attributes.category === 'border-size' || token.attributes.category === 'border-width') {
-        borderSizeTokens += `
-          <div class="border-token" style="border-width: ${token.value};">
-              ${token.name} (${token.value})
-          </div>
-        `;
-      } else if (token.attributes.category === 'border-radius') {
-        borderRadiusTokens += `
-          <div class="border-token" style="border-radius: ${token.value};">
-              ${token.name} (${token.value})
-          </div>
-        `;
-      } else if (token.attributes.category === 'font-weight') {
-        fontWeightTokens += `
-          <div class="weight-token" style="font-weight: ${token.value};">
-              ${token.name} (${token.value})
-          </div>
-        `;
-      } else if (token.attributes.category === 'letter-spacing') {
-        letterSpacingTokens += `
-          <div class="letter-spacing-token" style="letter-spacing: ${token.value};">
-              ${token.name} (${token.value})
-          </div>
-        `;
-      } else if (token.attributes.category === 'space') {
-        spaceTokens += `
-          <div class="space-token" style="margin: ${token.value};">
-              ${token.name} (${token.value})
-          </div>
-        `;
-      }
-    });
-
-    return template
-      .replace('{{colorTokens}}', colorTokens)
-      .replace('{{fontSizeTokens}}', fontSizeTokens)
-      .replace('{{boxShadowTokens}}', boxShadowTokens)
-      .replace('{{borderSizeTokens}}', borderSizeTokens)
-      .replace('{{borderRadiusTokens}}', borderRadiusTokens)
-      .replace('{{fontWeightTokens}}', fontWeightTokens)
-      .replace('{{letterSpacingTokens}}', letterSpacingTokens)
-      .replace('{{spaceTokens}}', spaceTokens);
   },
 });
 
