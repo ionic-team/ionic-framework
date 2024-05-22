@@ -29,10 +29,10 @@
 }
 
 :host(.badge-medium) {
-  min-width: 40px;
-  height: 40px;
+  min-width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
 
-  font-size: globals.$ionic-font-size-h6;
+  font-size: globals.$ionic-font-size-450;
 
-  line-height: globals.$ionic-font-line-height-l;
+  line-height: globals.$ionic-line-height-700;
 }
