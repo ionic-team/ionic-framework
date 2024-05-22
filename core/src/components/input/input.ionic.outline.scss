@@ -5,7 +5,7 @@
 // ----------------------------------------------------------------
 
 :host(.input-fill-outline) {
-  --border-radius: #{$ionic-border-radius-rounded-small};
+  --border-radius: #{$ionic-border-radius-100};
   --padding-start: 12px;
   --padding-end: 12px;
 }
@@ -140,20 +140,20 @@
 // --------------------------------------------------
 
 :host(.input-fill-outline.input-shape-soft) {
-  --border-radius: #{$ionic-border-radius-rounded-medium};
+  --border-radius: #{$ionic-border-radius-200};
 }
 
 :host(.input-fill-outline.input-shape-round) {
-  --border-radius: #{$ionic-border-radius-rounded-full};
+  --border-radius: #{$ionic-border-radius-full};
 }
 
 :host(.input-fill-outline.input-shape-rectangular) {
-  --border-radius: #{$ionic-border-radius-square};
+  --border-radius: #{$ionic-border-radius-0};
 }
 
 // Input Focus
 // ----------------------------------------------------------------
 
 :host(.input-fill-outline.has-focus) {
-  --border-width: #{tokens.$ionic-border-size-medium};
+  --border-width: #{tokens.$ionic-border-size-050};
 }
