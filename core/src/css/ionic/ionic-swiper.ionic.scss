@@ -5,7 +5,7 @@
 
 .swiper {
   --bullet-background: #{tokens.$ionic-color-neutral-800};
-  --bullet-background-active: #{tokens.$ionic-color-primary};
+  --bullet-background-active: #{tokens.$ionic-color-primary-base};
   --progress-bar-background: rgba(#010408, 0.25);
   --progress-bar-background-active: #{tokens.$ionic-color-primary-600};
   --scroll-bar-background: rgba(#010408, 0.1);
