@@ -53,3 +53,16 @@
 
   line-height: globals.$ionic-line-height-700;
 }
+
+/* Extra Large Badge */
+:host(.badge-xlarge) {
+  --padding-start: #{globals.$ionic-space-200};
+  --padding-end: #{globals.$ionic-space-200};
+
+  min-width: globals.$ionic-scale-1400;
+  height: globals.$ionic-scale-1400;
+
+  font-size: globals.$ionic-font-size-550;
+
+  line-height: globals.$ionic-line-height-700;
+}

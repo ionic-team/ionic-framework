@@ -44,5 +44,18 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
       await expect(badge).toHaveScreenshot(screenshot(`badge-size-large`));
     });
+
+    test('should render xlarge badges', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="xlarge">00</ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xlarge`));
+    });
   });
 });
