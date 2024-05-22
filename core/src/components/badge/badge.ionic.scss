@@ -29,13 +29,13 @@
 }
 
 :host(.badge-large) {
-  --padding-start: #{globals.$ionic-space-xs};
-  --padding-end: #{globals.$ionic-space-xs};
+  --padding-start: #{globals.$ionic-space-200};
+  --padding-end: #{globals.$ionic-space-200};
 
-  min-width: 48px;
-  height: 48px;
+  min-width: globals.$ionic-scale-1200;
+  height: globals.$ionic-scale-1200;
 
-  font-size: globals.$ionic-font-size-h5;
+  font-size: globals.$ionic-font-size-500;
 
-  line-height: globals.$ionic-font-line-height-l;
+  line-height: globals.$ionic-line-height-700;
 }
