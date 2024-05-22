@@ -6,9 +6,9 @@ html {
 
 body {
   font-weight: globals.$ionic-font-weight-regular;
-  font-size: globals.$ionic-font-size-m;
+  font-size: globals.$ionic-font-size-350;
 
-  line-height: globals.$ionic-font-line-height-m;
+  line-height: globals.$ionic-line-height-600;
 }
 
 /* Composite utility classes for html headings and font classes, that aggregate size and weight, based on tokens*/
@@ -31,58 +31,58 @@ h6,
 
 h1,
 .ionic-heading1 {
-  font-size: globals.$ionic-font-size-h1;
+  font-size: #{globals.$ionic-font-size-700};
 
-  line-height: globals.$ionic-font-line-height-xxl;
+  line-height: globals.$ionic-line-height-900;
 }
 
 h2,
 .ionic-heading2 {
-  font-size: globals.$ionic-font-size-h2;
+  font-size: globals.$ionic-font-size-800;
 
-  line-height: globals.$ionic-font-line-height-xl;
+  line-height: globals.$ionic-line-height-800;
 }
 
 h3,
 .ionic-heading3 {
-  font-size: globals.$ionic-font-size-h3;
+  font-size: globals.$ionic-font-size-600;
 
-  line-height: globals.$ionic-font-line-height-xl;
+  line-height: globals.$ionic-line-height-800;
 }
 
 h4,
 .ionic-heading4 {
-  font-size: globals.$ionic-font-size-h4;
+  font-size: globals.$ionic-font-size-550;
 
-  line-height: globals.$ionic-font-line-height-l;
+  line-height: globals.$ionic-line-height-700;
 }
 
 h5,
 .ionic-heading5 {
-  font-size: globals.$ionic-font-size-h5;
+  font-size: globals.$ionic-font-size-500;
 
-  line-height: globals.$ionic-font-line-height-l;
+  line-height: globals.$ionic-line-height-700;
 }
 
 h6,
 .ionic-heading6 {
-  font-size: globals.$ionic-font-size-h6;
+  font-size: globals.$ionic-font-size-450;
 
-  line-height: globals.$ionic-font-line-height-m;
+  line-height: globals.$ionic-line-height-600;
 }
 
 .ionic-display-s {
-  font-size: globals.$ionic-font-size-display-s;
+  font-size: globals.$ionic-font-size-800;
   font-weight: globals.$ionic-font-weight-regular;
 
-  line-height: globals.$ionic-font-line-height-s;
+  line-height: globals.$ionic-line-height-500;
 }
 
 .ionic-display-m {
-  font-size: globals.$ionic-font-size-display-m;
+  font-size: globals.$ionic-font-size-900;
   font-weight: globals.$ionic-font-weight-regular;
 
-  line-height: globals.$ionic-font-line-height-m;
+  line-height: globals.$ionic-line-height-600;
 }
 
 /* Common */

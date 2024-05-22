@@ -5,27 +5,27 @@
 // --------------------------------------------------
 
 :host {
-  --padding-start: #{globals.$ionic-space-xxxs};
-  --padding-end: #{globals.$ionic-space-xxxs};
-  --padding-top: #{globals.$ionic-space-none};
-  --padding-bottom: #{globals.$ionic-space-none};
+  --padding-start: #{globals.$ionic-space-100};
+  --padding-end: #{globals.$ionic-space-100};
+  --padding-top: #{globals.$ionic-space-0};
+  --padding-bottom: #{globals.$ionic-space-0};
 
   display: inline-flex;
 
   align-items: center;
   justify-content: center;
 
-  font-size: globals.$ionic-font-size-l;
+  font-size: globals.$ionic-font-size-400;
   font-weight: globals.$ionic-font-weight-medium;
 
-  line-height: globals.$ionic-font-line-height-m;
+  line-height: globals.$ionic-line-height-600;
 }
 
 // Badge Sizes
 // --------------------------------------------------
 :host(.badge-small) {
-  min-width: 32px;
-  height: 32px;
+  min-width: globals.$ionic-scale-800;
+  height: globals.$ionic-scale-800;
 }
 
 :host(.badge-medium) {
