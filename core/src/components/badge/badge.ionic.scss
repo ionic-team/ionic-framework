@@ -30,13 +30,13 @@
 
 /* Extra Large Badge */
 :host(.badge-xlarge) {
-  --padding-start: #{globals.$ionic-space-xs};
-  --padding-end: #{globals.$ionic-space-xs};
+  --padding-start: #{globals.$ionic-space-200};
+  --padding-end: #{globals.$ionic-space-200};
 
-  min-width: 56px;
-  height: 56px;
+  min-width: globals.$ionic-scale-1400;
+  height: globals.$ionic-scale-1400;
 
-  font-size: globals.$ionic-font-size-h4;
+  font-size: globals.$ionic-font-size-550;
 
-  line-height: globals.$ionic-font-line-height-l;
+  line-height: globals.$ionic-line-height-700;
 }
