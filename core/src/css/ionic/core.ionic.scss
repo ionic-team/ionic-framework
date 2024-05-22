@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 :root {
-  --ionic-global-background-color: #{globals.$ionic-color-neutral-10};
+  --ionic-global-background-color: #{globals.$ionic-color-neutral-100};
   --ionic-global-text-color: #{globals.$ionic-color-neutral-900};
 }
 
@@ -34,7 +34,7 @@ body.backdrop-no-scroll {
 html.ios ion-modal.modal-card ion-header ion-toolbar:first-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
 html.ios ion-modal ion-footer ion-toolbar:first-of-type {
-  padding-top: globals.$ionic-space-xxs;
+  padding-top: globals.$ionic-space-150;
 }
 
 /**
@@ -44,7 +44,7 @@ html.ios ion-modal ion-footer ion-toolbar:first-of-type {
 */
 html.ios ion-modal.modal-card ion-header ion-toolbar:last-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
-  padding-bottom: globals.$ionic-space-xxs;
+  padding-bottom: globals.$ionic-space-150;
 }
 
 /**
@@ -53,8 +53,8 @@ html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
 * safe area values when in landscape.
 */
 html.ios ion-modal ion-toolbar {
-  padding-right: calc(var(--ion-safe-area-right) + globals.$ionic-space-xs);
-  padding-left: calc(var(--ion-safe-area-left) + globals.$ionic-space-xs);
+  padding-right: calc(var(--ion-safe-area-right) + globals.$ionic-space-200);
+  padding-left: calc(var(--ion-safe-area-left) + globals.$ionic-space-200);
 }
 
 /**
@@ -250,21 +250,21 @@ ion-card-header.ion-color .ion-inherit-color {
 }
 
 .menu-content-reveal {
-  box-shadow: #{globals.$ionic-elevation-1};
+  box-shadow: #{globals.$ionic-elevation-100};
 }
 
 .menu-content-push {
-  box-shadow: #{globals.$ionic-elevation-1};
+  box-shadow: #{globals.$ionic-elevation-100};
 }
 
 // Accordion Styles
 ion-accordion-group.accordion-group-expand-inset > ion-accordion:first-of-type {
-  border-top-left-radius: globals.$ionic-border-radius-rounded-medium;
-  border-top-right-radius: globals.$ionic-border-radius-rounded-medium;
+  border-top-left-radius: globals.$ionic-border-radius-200;
+  border-top-right-radius: globals.$ionic-border-radius-200;
 }
 ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
-  border-bottom-left-radius: globals.$ionic-border-radius-rounded-medium;
-  border-bottom-right-radius: globals.$ionic-border-radius-rounded-medium;
+  border-bottom-left-radius: globals.$ionic-border-radius-200;
+  border-bottom-right-radius: globals.$ionic-border-radius-200;
 }
 ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
   --border-width: 0;
