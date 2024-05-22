@@ -132,20 +132,20 @@
 // -------------------------------------------------------------------------------
 
 :host(.button-soft) {
-  --border-radius: #{globals.$ionic-border-radius-rounded-medium};
+  --border-radius: #{globals.$ionic-border-radius-200};
 }
 
 :host(.button-soft.button-xsmall),
 :host(.button-soft.button-small) {
-  --border-radius: #{globals.$ionic-border-radius-rounded-small};
+  --border-radius: #{globals.$ionic-border-radius-100};
 }
 
 :host(.button-round) {
-  --border-radius: #{globals.$ionic-border-radius-rounded-full};
+  --border-radius: #{globals.$ionic-border-radius-full};
 }
 
 :host(.button-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-square};
+  --border-radius: #{globals.$ionic-border-radius-0};
 }
 
 // Button Focused

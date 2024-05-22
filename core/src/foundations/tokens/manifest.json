@@ -1,0 +1,30 @@
+{
+  "name": "Design Tokens",
+  "collections": {
+    "Primitives": {
+      "modes": {
+        "Value": [
+          "Primitives.Value.tokens.json"
+        ]
+      }
+    },
+    "Theme": {
+      "modes": {
+        "Ionic": [
+          "Theme.Ionic.tokens.json"
+        ]
+      }
+    }
+  },
+  "styles": {
+    "text": [
+      "text.styles.tokens.json"
+    ],
+    "effect": [
+      "effect.styles.tokens.json"
+    ],
+    "color": [
+      "color.styles.tokens.json"
+    ]
+  }
+}
