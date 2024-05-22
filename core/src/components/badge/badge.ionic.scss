@@ -30,3 +30,13 @@
 
   line-height: globals.$ionic-line-height-600;
 }
+
+/* Medium Badge */
+:host(.badge-medium) {
+  min-width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
+
+  font-size: globals.$ionic-font-size-450;
+
+  line-height: globals.$ionic-line-height-700;
+}
