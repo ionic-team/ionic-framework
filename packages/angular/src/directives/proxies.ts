@@ -260,14 +260,14 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
 
 
 @ProxyCmp({
-  inputs: ['color', 'mode', 'theme']
+  inputs: ['color', 'mode', 'size', 'theme']
 })
 @Component({
   selector: 'ion-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'theme'],
+  inputs: ['color', 'mode', 'size', 'theme'],
 })
 export class IonBadge {
   protected el: HTMLElement;

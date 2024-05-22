@@ -1,0 +1,32 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./badge";
+
+// Ionic Badge
+// --------------------------------------------------
+
+:host {
+  --padding-start: #{globals.$ionic-space-100};
+  --padding-end: #{globals.$ionic-space-100};
+  --padding-top: #{globals.$ionic-space-0};
+  --padding-bottom: #{globals.$ionic-space-0};
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-weight: globals.$ionic-font-weight-medium;
+}
+
+// Badge Sizes
+// --------------------------------------------------
+
+/* Small Badge */
+:host(.badge-small) {
+  min-width: globals.$ionic-scale-800;
+  height: globals.$ionic-scale-800;
+
+  font-size: globals.$ionic-font-size-400;
+
+  line-height: globals.$ionic-line-height-600;
+}
