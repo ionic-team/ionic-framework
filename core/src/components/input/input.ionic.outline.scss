@@ -121,14 +121,8 @@
 
 // This makes the label sit above the input.
 :host(.label-floating.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
-  @include transform(translateY(0), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the input.
-   */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end)) / #{$form-control-label-stacked-scale});
+  @include padding(4px, null);
 }
 
 // Start/End Slots
