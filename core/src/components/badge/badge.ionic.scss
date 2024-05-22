@@ -15,19 +15,33 @@
   align-items: center;
   justify-content: center;
 
-  font-size: globals.$ionic-font-size-400;
   font-weight: globals.$ionic-font-weight-medium;
-
-  line-height: globals.$ionic-line-height-600;
 }
 
 // Badge Sizes
 // --------------------------------------------------
+
+/* Small Badge */
 :host(.badge-small) {
   min-width: globals.$ionic-scale-800;
   height: globals.$ionic-scale-800;
+
+  font-size: globals.$ionic-font-size-400;
+
+  line-height: globals.$ionic-line-height-600;
 }
 
+/* Medium Badge */
+:host(.badge-medium) {
+  min-width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
+
+  font-size: globals.$ionic-font-size-450;
+
+  line-height: globals.$ionic-line-height-700;
+}
+
+/* Large Badge */
 :host(.badge-large) {
   --padding-start: #{globals.$ionic-space-200};
   --padding-end: #{globals.$ionic-space-200};
