@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.3](https://github.com/ionic-team/ionic-framework/compare/v8.1.1...v8.1.3) (2024-05-22)
+
+
+### Bug Fixes
+
+* **core:** malformed URIs will not throw exception ([#29486](https://github.com/ionic-team/ionic-framework/issues/29486)) ([4a41983](https://github.com/ionic-team/ionic-framework/commit/4a41983098fe9bf83fdf05ce7ab28c79f414e11b)), closes [#29479](https://github.com/ionic-team/ionic-framework/issues/29479)
+* **many:** do not grow slotted checkboxes, radios, selects and toggles ([#29501](https://github.com/ionic-team/ionic-framework/issues/29501)) ([c63d07b](https://github.com/ionic-team/ionic-framework/commit/c63d07bdd0c4d9939474c52b03a3f2535511933f)), closes [#29423](https://github.com/ionic-team/ionic-framework/issues/29423)
+* **picker:** update keyboard navigation ([#29497](https://github.com/ionic-team/ionic-framework/issues/29497)) ([32bc681](https://github.com/ionic-team/ionic-framework/commit/32bc681192b1833f1c897e692d2d36ba90c6af53))
+
+
+
+
+
 ## [8.1.2](https://github.com/ionic-team/ionic-framework/compare/v8.1.1...v8.1.2) (2024-05-15)
 
 
