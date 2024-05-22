@@ -4,15 +4,15 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ionic-color-neutral-0};
-  --border-radius: #{globals.$ionic-border-radius-rounded-small};
+  --background: #{globals.$ionic-color-base-white};
+  --border-radius: #{globals.$ionic-border-radius-100};
 
-  @include globals.padding(globals.$ionic-space-base);
+  @include globals.padding(globals.$ionic-space-400);
   @include globals.border-radius(var(--border-radius));
 
   display: block;
 
-  border: #{globals.$ionic-border-size-small} solid #{globals.$ionic-color-neutral-50};
+  border: #{globals.$ionic-border-size-025} solid #{globals.$ionic-color-neutral-500};
 
   background: var(--background);
   color: var(--color);
@@ -22,9 +22,9 @@
 // ---------------------------------------------
 
 :host(.card-round) {
-  --border-radius: #{globals.$ionic-border-radius-rounded-large};
+  --border-radius: #{globals.$ionic-border-radius-400};
 }
 
 :host(.card-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-square};
+  --border-radius: #{globals.$ionic-border-radius-0};
 }

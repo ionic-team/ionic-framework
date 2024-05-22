@@ -1,5 +1,5 @@
-@import "../normalize";
-@import "./structure.ionic";
-@import "./typography.ionic";
-@import "./link.ionic";
-@import "./ionic-swiper.ionic";
+@forward "../normalize";
+@forward "./structure.ionic";
+@forward "./typography.ionic";
+@forward "./link.ionic";
+@forward "./ionic-swiper.ionic";
