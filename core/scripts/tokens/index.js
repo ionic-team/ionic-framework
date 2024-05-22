@@ -28,6 +28,10 @@ const { fileHeader } = StyleDictionary.formatHelpers;
 StyleDictionary.registerFormat({
   name: 'rootFormat',
   formatter({ dictionary, file }) {
+    /*
+     * This will loop through all tokens and based on the type it will
+     * call a utility function that will return the expected format for the CSS Variable
+     */
     const prefixedVariables = dictionary.allProperties
       .filter((prop) => prop['$type'] !== 'typography')
       .map((prop) => {
