@@ -20,7 +20,7 @@ export class Avatar implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * Set to "small" for a compact size, or to "medium" for the default height and width.
+   * Set to `"small"` for a compact size, or to `"medium"` for the default height and width.
    *
    * Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
    */
