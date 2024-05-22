@@ -1,6 +1,18 @@
 const variablesPrefix = 'ionic'; // Variable that holds the prefix used on all css and scss variables generated
 
-// Generates translate an hex color value to rgb
+// Generates a valid rgba() color
+function getRgbaValue(propValue) {
+  // Check if its rgba color
+  const isRgba = hexToRgba(propValue);
+  // If it is, then compose rgba() color, otherwise use the normal color
+  if (isRgba !== null) {
+    return (propValue = `rgba(${isRgba.r}, ${isRgba.g}, ${isRgba.b},${isRgba.a})`);
+  } else {
+    return propValue;
+  }
+}
+
+// Translates an hex color value to rgb
 function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
@@ -12,9 +24,26 @@ function hexToRgb(hex) {
     : null;
 }
 
+// Translates an hex color value to rgba
+function hexToRgba(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+        a: Math.round((parseInt(result[4], 16) * 100) / 255) / 100,
+      }
+    : null;
+}
+
 // Generates a valid box-shadow value from a shadow Design Token structure
 function generateShadowValue(shadow) {
-  return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${shadow.color}`;
+  // Check if its rgba color
+  const isRgba = hexToRgba(shadow.color);
+  // If it is, then compose rgba() color, otherwise use the normal color
+  const color = isRgba ? `rgba(${isRgba.r}, ${isRgba.g}, ${isRgba.b},${isRgba.a})` : shadow.color;
+  return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${color}`;
 }
 
 // Generates a valid font-family value from a font-family Design Token structure
@@ -55,15 +84,18 @@ function getTypeMap(dictionary, type) {
   );
 }
 
-// Generates a rgb color value, based on a color Design Token
-function generateRgbValue(prop) {
+// Generates a final value, based if the Design Token is of type color or not
+function generateValue(prop) {
   const rgb = hexToRgb(prop.value);
+
   let rgbDeclaration = '';
 
-  // If the token is color, also add a rgb variable using the same color
   if (rgb) {
+    // If the token is color, also add a rgb variable using the same color
     rgbDeclaration = `\n$${variablesPrefix}-${prop.name}-rgb: var(--${variablesPrefix}-${prop.name}-rgb, ${rgb.r}, ${rgb.g}, ${rgb.b});`;
   }
+
+  prop.value = getRgbaValue(prop.value);
 
   return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${prop.value});${rgbDeclaration}`;
 }
@@ -135,11 +167,13 @@ function generateSpaceUtilityClasses(prop, className) {
 // Export all methods to be used on the tokens.js script
 module.exports = {
   variablesPrefix,
+  getRgbaValue,
   hexToRgb,
+  hexToRgba,
   generateShadowValue,
   generateFontFamilyValue,
   generateTypographyValue,
-  generateRgbValue,
+  generateRgbValue: generateValue,
   generateColorUtilityClasses,
   generateFontUtilityClass,
   generateSpaceUtilityClasses,
