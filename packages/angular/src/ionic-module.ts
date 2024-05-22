@@ -52,14 +52,18 @@ const DECLARATIONS = [
   IonMaxValidator,
 ];
 
+type OptInAngularFeatures = {
+  useSetInputAPI?: boolean;
+};
+
 @NgModule({
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
-  providers: [AngularDelegate, ModalController, PopoverController],
+  providers: [ModalController, PopoverController],
   imports: [CommonModule],
 })
 export class IonicModule {
-  static forRoot(config?: IonicConfig): ModuleWithProviders<IonicModule> {
+  static forRoot(config: IonicConfig & OptInAngularFeatures = {}): ModuleWithProviders<IonicModule> {
     return {
       ngModule: IonicModule,
       providers: [
@@ -73,6 +77,7 @@ export class IonicModule {
           multi: true,
           deps: [ConfigToken, DOCUMENT, NgZone],
         },
+        AngularDelegate,
         provideComponentInputBinding(),
       ],
     };

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.2.0](https://github.com/ionic-team/ionic-framework/compare/v8.1.3...v8.2.0) (2024-05-22)
+
+
+### Features
+
+* **angular:** setting props on a signal works ([#29453](https://github.com/ionic-team/ionic-framework/issues/29453)) ([4640e04](https://github.com/ionic-team/ionic-framework/commit/4640e046ebbd35bf92737368c6262f79a8803a59)), closes [#28876](https://github.com/ionic-team/ionic-framework/issues/28876)
+
+
+
+
+
 ## [8.1.3](https://github.com/ionic-team/ionic-framework/compare/v8.1.2...v8.1.3) (2024-05-22)
 
 **Note:** Version bump only for package @ionic/angular
