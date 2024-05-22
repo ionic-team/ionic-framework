@@ -336,9 +336,9 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"small"` for a compact size, or to `"medium"` for the default height and width.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"small"` for a compact size, `"medium"` for the default height and width, or to `"large"` for a larger size.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
          */
-        "size"?: 'small' | 'medium';
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -5568,9 +5568,9 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"small"` for a compact size, or to `"medium"` for the default height and width.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"small"` for a compact size, `"medium"` for the default height and width, or to `"large"` for a larger size.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
          */
-        "size"?: 'small' | 'medium';
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */
