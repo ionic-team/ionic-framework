@@ -37,7 +37,7 @@ StyleDictionary.registerFormat({
         } else if (prop.attributes.category.match('font-family')) {
           return generateFontFamilyValue(prop);
         } else {
-          // TODO(4870): prevent colors with 8 characters to be created without a rgb transformation
+          // TODO(ROU-4870): prevent colors with 8 characters to be created without a rgb transformation
           const rgb = hexToRgb(prop.value);
           return `  --${variablesPrefix}-${prop.name}: ${prop.value};${
             rgb ? `\n  --${variablesPrefix}-${prop.name}-rgb: ${rgb.r}, ${rgb.g}, ${rgb.b};` : ``
