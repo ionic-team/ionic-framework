@@ -30,3 +30,26 @@
 
   line-height: globals.$ionic-line-height-600;
 }
+
+/* Medium Badge */
+:host(.badge-medium) {
+  min-width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
+
+  font-size: globals.$ionic-font-size-450;
+
+  line-height: globals.$ionic-line-height-700;
+}
+
+/* Large Badge */
+:host(.badge-large) {
+  --padding-start: #{globals.$ionic-space-200};
+  --padding-end: #{globals.$ionic-space-200};
+
+  min-width: globals.$ionic-scale-1200;
+  height: globals.$ionic-scale-1200;
+
+  font-size: globals.$ionic-font-size-500;
+
+  line-height: globals.$ionic-line-height-700;
+}
