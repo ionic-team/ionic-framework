@@ -39,10 +39,8 @@ function hexToRgba(hex) {
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 function generateShadowValue(shadow) {
-  // Check if its rgba color
-  const isRgba = hexToRgba(shadow.color);
-  // If it is, then compose rgba() color, otherwise use the normal color
-  const color = isRgba ? `rgba(${isRgba.r}, ${isRgba.g}, ${isRgba.b},${isRgba.a})` : shadow.color;
+  const color = getRgbaValue(shadow.color);
+
   return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${color}`;
 }
 
