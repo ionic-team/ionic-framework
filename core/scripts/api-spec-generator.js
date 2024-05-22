@@ -33,7 +33,7 @@ function generateComponent(component, content) {
     content.push(`${component.tag},event,${prop.event},${prop.detail},${prop.bubbles}`);
   });
   component.styles.forEach(prop => {
-    content.push(`${component.tag},css-prop,${prop.name}`);
+    content.push(`${component.tag},css-prop,${prop.name}${prop.mode ? ',' + prop.mode : ''}`);
   });
   component.parts.forEach(part => {
     content.push(`${component.tag},part,${part.name}`);

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.1.0",
+  "version": "8.1.3",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -108,7 +108,7 @@
     "url": "git+https://github.com/ionic-team/ionic-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/ionic-team/ionic/issues"
+    "url": "https://github.com/ionic-team/ionic-framework/issues"
   },
   "homepage": "https://ionicframework.com/",
   "jest": {

@@ -18,7 +18,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
     test.describe('pushing a new page', () => {
       test('should render the pushed component', async ({ page }) => {
-        const pageTwoButton = page.locator('ion-button:has-text("Go to Page Two")');
+        const pageTwoButton = page.locator('button:has-text("Go to Page Two")');
         const pageOne = page.locator('page-one');
         const pageTwo = page.locator('page-two');
 
@@ -32,7 +32,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
 
       test('should render the back button', async ({ page }) => {
-        const pageTwoButton = page.locator('ion-button:has-text("Go to Page Two")');
+        const pageTwoButton = page.locator('button:has-text("Go to Page Two")');
         const pageTwoBackButton = page.locator('page-two ion-back-button');
 
         await pageTwoButton.click();
@@ -45,7 +45,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('back button should pop to the previous page', async ({ page }) => {
       const pageOne = page.locator('page-one');
       const pageTwo = page.locator('page-two');
-      const pageTwoButton = page.locator('ion-button:has-text("Go to Page Two")');
+      const pageTwoButton = page.locator('button:has-text("Go to Page Two")');
       const pageTwoBackButton = page.locator('page-two ion-back-button');
 
       await pageTwoButton.click();
@@ -65,8 +65,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const pageTwo = page.locator('page-two');
         const pageThree = page.locator('page-three');
 
-        const pageTwoButton = page.locator('ion-button:has-text("Go to Page Two")');
-        const pageThreeButton = page.locator('ion-button:has-text("Go to Page Three")');
+        const pageTwoButton = page.locator('button:has-text("Go to Page Two")');
+        const pageThreeButton = page.locator('button:has-text("Go to Page Three")');
 
         await pageTwoButton.click();
         await page.waitForChanges();

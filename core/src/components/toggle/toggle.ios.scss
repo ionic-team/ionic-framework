@@ -46,7 +46,7 @@
 
 .toggle-icon {
   // Needed to prevent visual glitch in safari/iOS
-  // See https://github.com/ionic-team/ionic/issues/14626
+  // See https://github.com/ionic-team/ionic-framework/issues/14626
   transform: translate3d(0, 0, 0);
 
   transition: background-color $toggle-ios-transition-duration;

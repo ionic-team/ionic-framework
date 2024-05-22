@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "8.1.0",
+  "version": "8.1.3",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/ionic-team/ionic-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/ionic-team/ionic/issues"
+    "url": "https://github.com/ionic-team/ionic-framework/issues"
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -47,7 +47,7 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^8.1.0",
+    "@ionic/core": "^8.1.3",
     "ionicons": "^7.0.0",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
