@@ -27,3 +27,16 @@
   min-width: 32px;
   height: 32px;
 }
+
+/* Extra Large Badge */
+:host(.badge-xlarge) {
+  --padding-start: #{globals.$ionic-space-xs};
+  --padding-end: #{globals.$ionic-space-xs};
+
+  min-width: 48px;
+  height: 48px;
+
+  font-size: globals.$ionic-font-size-h5;
+
+  line-height: globals.$ionic-font-line-height-l;
+}
