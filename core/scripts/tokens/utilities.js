@@ -29,10 +29,10 @@ function generateFontFamilyValue(prop, variableType = 'css') {
 // Generates a typography based scss map from a typography Design Token structure
 function generateTypographyValue(prop, dictionary) {
   const typography = prop.value;
-  const fontSizeMap = createTypeMap(dictionary, 'font-size');
-  const fontWeightMap = createTypeMap(dictionary, 'font-weight');
-  const lineHeightMap = createTypeMap(dictionary, 'line-height');
-  const letterSpacingMap = createTypeMap(dictionary, 'letter-spacing');
+  const fontSizeMap = getTypeMap(dictionary, 'font-size');
+  const fontWeightMap = getTypeMap(dictionary, 'font-weight');
+  const lineHeightMap = getTypeMap(dictionary, 'line-height');
+  const letterSpacingMap = getTypeMap(dictionary, 'letter-spacing');
 
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
@@ -49,7 +49,7 @@ function generateTypographyValue(prop, dictionary) {
 }
 
 // To abstract the need to loop across all tokens from a given type
-function createTypeMap(dictionary, type) {
+function getTypeMap(dictionary, type) {
   return Object.fromEntries(
     Object.entries(dictionary.properties[type]).map(([key, token]) => [token.value, token.attributes.type])
   );
@@ -71,10 +71,10 @@ function generateRgbValue(prop) {
 // Generates a typography based css utility-class from a typography Design Token structure
 function generateTypographyUtilityClass(prop, dictionary) {
   const typography = prop.value;
-  const fontSizeMap = createTypeMap(dictionary, 'font-size');
-  const fontWeightMap = createTypeMap(dictionary, 'font-weight');
-  const lineHeightMap = createTypeMap(dictionary, 'line-height');
-  const letterSpacingMap = createTypeMap(dictionary, 'letter-spacing');
+  const fontSizeMap = getTypeMap(dictionary, 'font-size');
+  const fontWeightMap = getTypeMap(dictionary, 'font-weight');
+  const lineHeightMap = getTypeMap(dictionary, 'line-height');
+  const letterSpacingMap = getTypeMap(dictionary, 'letter-spacing');
 
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
