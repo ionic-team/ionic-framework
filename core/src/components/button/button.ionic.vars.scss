@@ -3,9 +3,6 @@
 // Ionic Button
 // -------------------------------------------------------------------------------
 
-/// @prop - Border radius of the button
-$button-ionic-border-radius: px-to-rem(8);
-
 /// @prop - Padding top of the button
 $button-ionic-padding-top: px-to-rem(12);
 
@@ -29,9 +26,6 @@ $button-ionic-font-size: dynamic-font-max(14px, 3);
 // Ionic Extra Small Button
 // -------------------------------------------------------------------------------
 
-/// @prop - Border radius of the extra small button
-$button-ionic-xsmall-border-radius: px-to-rem(4);
-
 /// @prop - Padding top of the extra small button
 $button-ionic-xsmall-padding-top: px-to-rem(4);
 
@@ -54,9 +48,6 @@ $button-ionic-xsmall-font-size: dynamic-font-max(12px, 3);
 
 // Ionic Small Button
 // -------------------------------------------------------------------------------
-
-/// @prop - Border radius of the small button
-$button-ionic-small-border-radius: px-to-rem(4);
 
 /// @prop - Padding top of the small button
 $button-ionic-small-padding-top: px-to-rem(8);
@@ -124,18 +115,6 @@ $button-ionic-xlarge-min-height: px-to-rem(56);
 /// and multiplying it by 3, since 310% of the default is the maximum
 $button-ionic-xlarge-font-size: dynamic-font-max(20px, 3);
 
-// Ionic Rectangular Button
-// -------------------------------------------------------------------------------
-
-/// @prop - Border radius of the rectangular button
-$button-ionic-rectangular-border: 0;
-
-// Ionic Round Button
-// -------------------------------------------------------------------------------
-
-/// @prop - Border radius of the round button
-$button-ionic-round-border: px-to-rem(999);
-
 // Ionic Outline Button
 // -------------------------------------------------------------------------------
 
@@ -144,21 +123,3 @@ $button-ionic-outline-border-width: 1px;
 
 /// @prop - Border style of the outline button
 $button-ionic-outline-border-style: solid;
-
-// Ionic Icon Only Button
-// -------------------------------------------------------------------------------
-
-/// @prop - Padding end of the icon only button
-$button-has-icon-only-padding-end: px-to-rem(13);
-
-/// @prop - Padding end of the icon only extra small button
-$button-has-icon-only-padding-end-xsmall: px-to-rem(6);
-
-/// @prop - Padding end of the icon only small button
-$button-has-icon-only-padding-end-small: px-to-rem(10);
-
-/// @prop - Padding end of the icon only large button
-$button-has-icon-only-padding-end-large: px-to-rem(16);
-
-/// @prop - Padding end of the icon only extra large button
-$button-has-icon-only-padding-end-xlarge: px-to-rem(18);
