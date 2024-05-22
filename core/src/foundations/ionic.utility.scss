@@ -6,30 +6,6 @@
 @import "./ionic.vars";
 @import "../themes/mixins";
 
-.ionic-guidelines {
-  color: $ionic-guidelines;
-}
-.ionic-background-guidelines {
-  background-color: $ionic-guidelines;
-}
-.ionic-disabled {
-  color: $ionic-disabled;
-}
-.ionic-background-disabled {
-  background-color: $ionic-disabled;
-}
-.ionic-hover {
-  color: $ionic-hover;
-}
-.ionic-background-hover {
-  background-color: $ionic-hover;
-}
-.ionic-pressed {
-  color: $ionic-pressed;
-}
-.ionic-background-pressed {
-  background-color: $ionic-pressed;
-}
 .ionic-elevation-100 {
   box-shadow: $ionic-elevation-100;
 }
@@ -1719,6 +1695,12 @@
 .ionic-background-color-info-1200 {
   background-color: $ionic-color-info-1200;
 }
+.ionic-color-info-base {
+  color: $ionic-color-info-base;
+}
+.ionic-background-color-info-base {
+  background-color: $ionic-color-info-base;
+}
 .ionic-color-warning-100 {
   color: $ionic-color-warning-100;
 }
@@ -1790,6 +1772,12 @@
 }
 .ionic-background-color-warning-1200 {
   background-color: $ionic-color-warning-1200;
+}
+.ionic-color-warning-base {
+  color: $ionic-color-warning-base;
+}
+.ionic-background-color-warning-base {
+  background-color: $ionic-color-warning-base;
 }
 .ionic-color-danger-100 {
   color: $ionic-color-danger-100;
@@ -1863,6 +1851,12 @@
 .ionic-background-color-danger-1200 {
   background-color: $ionic-color-danger-1200;
 }
+.ionic-color-danger-base {
+  color: $ionic-color-danger-base;
+}
+.ionic-background-color-danger-base {
+  background-color: $ionic-color-danger-base;
+}
 .ionic-color-success-100 {
   color: $ionic-color-success-100;
 }
@@ -1934,6 +1928,12 @@
 }
 .ionic-background-color-success-1200 {
   background-color: $ionic-color-success-1200;
+}
+.ionic-color-success-base {
+  color: $ionic-color-success-base;
+}
+.ionic-background-color-success-base {
+  background-color: $ionic-color-success-base;
 }
 .ionic-z-index-0 {
   z-index: $ionic-z-index-0;
@@ -2506,15 +2506,33 @@
 .ionic-background-state-focus-0 {
   background-color: $ionic-state-focus-0;
 }
-.ionic-state-focus-100 {
-  color: $ionic-state-focus-100;
+.ionic-state-focus-1 {
+  color: $ionic-state-focus-1;
 }
-.ionic-background-state-focus-100 {
-  background-color: $ionic-state-focus-100;
+.ionic-background-state-focus-1 {
+  background-color: $ionic-state-focus-1;
 }
-.ionic-state-focus-200 {
-  color: $ionic-state-focus-200;
+.ionic-state-focus-2 {
+  color: $ionic-state-focus-2;
 }
-.ionic-background-state-focus-200 {
-  background-color: $ionic-state-focus-200;
+.ionic-background-state-focus-2 {
+  background-color: $ionic-state-focus-2;
+}
+.ionic-state-disabled {
+  color: $ionic-state-disabled;
+}
+.ionic-background-state-disabled {
+  background-color: $ionic-state-disabled;
+}
+.ionic-state-hover {
+  color: $ionic-state-hover;
+}
+.ionic-background-state-hover {
+  background-color: $ionic-state-hover;
+}
+.ionic-state-pressed {
+  color: $ionic-state-pressed;
+}
+.ionic-background-state-pressed {
+  background-color: $ionic-state-pressed;
 }
