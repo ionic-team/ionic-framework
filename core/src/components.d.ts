@@ -336,6 +336,10 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
+          * Set to `"medium"` for the default height and width.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
+         */
+        "size"?: 'medium';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -5563,6 +5567,10 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Set to `"medium"` for the default height and width.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
+         */
+        "size"?: 'medium';
         /**
           * The theme determines the visual appearance of the component.
          */
