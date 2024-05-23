@@ -22,7 +22,7 @@
 }
 
 :host(:not(.avatar-image)) {
-  border: 1px solid globals.$ionic-color-neutral-800;
+  border: globals.$ionic-border-size-025 solid globals.$ionic-color-neutral-800;
 }
 
 // Avatar Sizes
