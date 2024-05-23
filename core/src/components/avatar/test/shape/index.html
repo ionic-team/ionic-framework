@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Avatar - Shape</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .container {
+        display: flex;
+        gap: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Avatar - Shape</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content" no-bounce>
+        <h2>Default</h2>
+        <div class="container">
+          <ion-avatar>AB</ion-avatar>
+          <ion-avatar>
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+          <ion-avatar>
+            <img src="/src/components/avatar/test/avatar.svg" />
+          </ion-avatar>
+        </div>
+
+        <h2>Round</h2>
+        <div class="container">
+          <ion-avatar shape="round" size="xsmall">AB</ion-avatar>
+          <ion-avatar shape="round" size="small">AB</ion-avatar>
+          <ion-avatar shape="round" size="medium">AB</ion-avatar>
+          <ion-avatar shape="round" size="large">AB</ion-avatar>
+          <ion-avatar shape="round" size="xlarge">AB</ion-avatar>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
