@@ -184,7 +184,7 @@ ion-app,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-avatar,shadow
 ion-avatar,prop,mode,"ios" | "md",undefined,false,false
-ion-avatar,prop,size,"medium" | "small" | undefined,undefined,false,false
+ion-avatar,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
 ion-avatar,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-avatar,css-prop,--border-radius,ionic
 ion-avatar,css-prop,--border-radius,ios

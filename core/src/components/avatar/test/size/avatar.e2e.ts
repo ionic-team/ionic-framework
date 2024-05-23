@@ -95,5 +95,50 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         await expect(avatar).toHaveScreenshot(screenshot(`avatar-size-medium-image`));
       });
     });
+
+    test.describe('large', () => {
+      test('should not have visual regressions when containing text', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar size="large">AB</ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-size-large-text`));
+      });
+
+      test('should not have visual regressions when containing an icon', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar size="large">
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-size-large-icon`));
+      });
+
+      test('should not have visual regressions when containing an image', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar size="large">
+            <img src="/src/components/avatar/test/avatar.svg"/>
+          </ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-size-large-image`));
+      });
+    });
   });
 });
