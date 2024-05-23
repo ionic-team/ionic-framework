@@ -10,7 +10,7 @@
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <link rel="stylesheet" href="../../scripts/tokens/preview-styles.css" />
+    <link rel="stylesheet" href="../../scripts/tokens/preview.styles.css" />
   </head>
   <body>
     <ion-app>
@@ -19,23 +19,33 @@
           <ion-title>Design Tokens - Preview</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
+      <ion-content class="ion-padding-horizontal">
         <h1>Color Tokens</h1>
-        <div class="color-tokens">{{colorTokens}}</div>
+        <div class="token-wrapper">{{colorTokens}}</div>
+        <hr />
         <h1>Font Size Tokens</h1>
-        <div id="font-size-tokens">{{fontSizeTokens}}</div>
-        <h1>Box Shadow Tokens</h1>
-        <div id="box-shadow-tokens">{{boxShadowTokens}}</div>
-        <h1>Border Size Tokens</h1>
-        <div id="border-size-tokens">{{borderSizeTokens}}</div>
-        <h1>Border Radius Tokens</h1>
-        <div id="border-radius-tokens">{{borderRadiusTokens}}</div>
+        <div class="token-wrapper">{{fontSizeTokens}}</div>
+        <hr />
         <h1>Font Weight Tokens</h1>
-        <div id="font-weight-tokens">{{fontWeightTokens}}</div>
+        <div class="token-wrapper">{{fontWeightTokens}}</div>
+        <hr />
         <h1>Letter Spacing Tokens</h1>
-        <div id="letter-spacing-tokens">{{letterSpacingTokens}}</div>
+        <div class="token-wrapper">{{letterSpacingTokens}}</div>
+        <hr />
+        <h1>Box Shadow Tokens</h1>
+        <div class="token-wrapper">{{boxShadowTokens}}</div>
+        <hr />
+        <h1>Border Size Tokens</h1>
+        <div class="token-wrapper">{{borderSizeTokens}}</div>
+        <hr />
+        <h1>Border Radius Tokens</h1>
+        <div class="token-wrapper">{{borderRadiusTokens}}</div>
+        <hr />
+        <h1>Border Style Tokens</h1>
+        <div class="token-wrapper">{{borderStyleTokens}}</div>
+        <hr />
         <h1>Space Tokens</h1>
-        <div id="space-tokens">{{spaceTokens}}</div>
+        <div class="token-wrapper">{{spaceTokens}}</div>
       </ion-content>
     </ion-app>
   </body>
