@@ -11,6 +11,7 @@ const targetPath = './src/foundations/';
 
 const {
   variablesPrefix,
+  getRgbaValue,
   hexToRgb,
   generateShadowValue,
   generateFontSizeValue,
@@ -44,8 +45,8 @@ StyleDictionary.registerFormat({
         } else if (prop.attributes.category.match('font-size')) {
           return generateFontSizeValue(prop);
         } else {
-          // TODO(ROU-4870): prevent colors with 8 characters to be created without a rgb transformation
           const rgb = hexToRgb(prop.value);
+          prop.value = getRgbaValue(prop.value);
           return `  --${variablesPrefix}-${prop.name}: ${prop.value};${
             rgb ? `\n  --${variablesPrefix}-${prop.name}-rgb: ${rgb.r}, ${rgb.g}, ${rgb.b};` : ``
           }`;
