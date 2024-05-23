@@ -17,6 +17,15 @@ function generateShadowValue(shadow) {
   return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur} ${shadow.spread} ${shadow.color}`;
 }
 
+// Generates a valid font-size value from a font-size Design Token structure, while transforming the pixels to rem
+function generateFontSizeValue(prop, variableType = 'css') {
+  return variableType === 'scss'
+    ? `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, font.px-to-rem(${parseInt(
+        prop.value
+      )}));`
+    : `--${variablesPrefix}-${prop.name}: px-to-rem(${parseInt(prop.value)});`;
+}
+
 // Generates a valid font-family value from a font-family Design Token structure
 function generateFontFamilyValue(prop, variableType = 'css') {
   // Remove the last word from the token, as it contains the name of the font, which we don't want to be included on the generated variables
@@ -137,6 +146,7 @@ module.exports = {
   variablesPrefix,
   hexToRgb,
   generateShadowValue,
+  generateFontSizeValue,
   generateFontFamilyValue,
   generateTypographyValue,
   generateRgbValue,
