@@ -103,7 +103,8 @@ export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionG
 
 
 export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar', defineIonAvatar, [
-  'size'
+  'size',
+  'shape'
 ]);
 
 
