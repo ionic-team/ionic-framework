@@ -89,6 +89,15 @@
 // Avatar Shapes
 // --------------------------------------------------
 
+:host(.avatar-xsmall.avatar-soft),
+:host(.avatar-small.avatar-soft) {
+  --border-radius: #{globals.$ionic-border-radius-100};
+}
+
+:host(.avatar-soft) {
+  --border-radius: #{globals.$ionic-border-radius-200};
+}
+
 :host(.avatar-round) {
   --border-radius: #{globals.$ionic-border-radius-full};
 }

@@ -29,12 +29,13 @@ export class Avatar implements ComponentInterface {
   @Prop() size?: `xsmall` | 'small' | 'medium' | 'large' | 'xlarge';
 
   /**
-   * Set to `"round"` for an avatar with fully rounded corners, or `"rectangular"`
+   * Set to `"soft"` for an avatar with slightly rounded corners,
+   * `"round"` for an avatar with fully rounded corners, or `"rectangular"`
    * for an avatar without rounded corners.
    *
    * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() shape?: 'round' | 'rectangular';
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   get hasImage() {
     return !!this.el.querySelector('ion-img') || !!this.el.querySelector('img');
