@@ -21,11 +21,12 @@ export class Avatar implements ComponentInterface {
 
   /**
    * Set to `"xsmall"` for the smallest size, `"small"` for a compact size, `"medium"`
-   * for the default height and width, or to `"large"` for a larger size.
+   * for the default height and width, `"large"` for a larger size, or `"xlarge"` for
+   * the largest dimensions.
    *
    * Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() size?: `xsmall` | 'small' | 'medium' | 'large';
+  @Prop() size?: `xsmall` | 'small' | 'medium' | 'large' | 'xlarge';
 
   get hasImage() {
     return !!this.el.querySelector('ion-img') || !!this.el.querySelector('img');
