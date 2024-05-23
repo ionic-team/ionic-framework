@@ -1,0 +1,35 @@
+.color-tokens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.color-token {
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  text-align: center;
+  font-weight: bold;
+  padding: 4px;
+}
+
+.color-token > div {
+  color: #fff;
+  mix-blend-mode: difference;
+}
+
+.font-size-token,
+.weight-token {
+  margin: 10px 0;
+}
+
+.border-token,
+.shadow-token,
+.letter-spacing-token,
+.space-token {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #000;
+}
