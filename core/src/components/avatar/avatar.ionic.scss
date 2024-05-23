@@ -5,6 +5,9 @@
 // --------------------------------------------------
 
 :host {
+  --padding-top: #{globals.$ionic-space-0};
+  --padding-bottom: #{globals.$ionic-space-0};
+
   display: flex;
 
   align-items: center;
@@ -25,10 +28,18 @@
 // Avatar Sizes
 // --------------------------------------------------
 
+:host(.avatar-small) {
+  --padding-end: #{globals.$ionic-space-150};
+  --padding-start: #{globals.$ionic-space-150};
+
+  width: globals.$ionic-scale-800;
+  height: globals.$ionic-scale-800;
+
+  font-size: globals.$ionic-font-size-350;
+}
+
 :host(.avatar-medium) {
-  --padding-top: #{globals.$ionic-space-0};
   --padding-end: #{globals.$ionic-space-200};
-  --padding-bottom: #{globals.$ionic-space-0};
   --padding-start: #{globals.$ionic-space-200};
 
   width: globals.$ionic-scale-1000;
