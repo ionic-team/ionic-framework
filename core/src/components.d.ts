@@ -336,9 +336,9 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"round"` for an avatar with fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"round"` for an avatar with fully rounded corners, or `"rectangular"` for an avatar without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
-        "shape"?: 'round';
+        "shape"?: 'round' | 'rectangular';
         /**
           * Set to `"xsmall"` for the smallest size, `"small"` for a compact size, `"medium"` for the default height and width, `"large"` for a larger size, or `"xlarge"` for the largest dimensions.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
          */
@@ -5572,9 +5572,9 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"round"` for an avatar with fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"round"` for an avatar with fully rounded corners, or `"rectangular"` for an avatar without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
-        "shape"?: 'round';
+        "shape"?: 'round' | 'rectangular';
         /**
           * Set to `"xsmall"` for the smallest size, `"small"` for a compact size, `"medium"` for the default height and width, `"large"` for a larger size, or `"xlarge"` for the largest dimensions.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
          */
