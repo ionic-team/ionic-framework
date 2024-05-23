@@ -4,14 +4,14 @@
  */
 
 :root {
-  --ionic-elevation-100: 0px 3px 9px 0px #00000012, 0px 0px 4px 0px #0000000a;
-  --ionic-elevation-200: 0px 8px 25px 0px #00000014, 0px 1px 5px 0px #0000000d;
-  --ionic-elevation-300: 0px 6px 32px 0px #00000029, 0px 2px 7px 0px #0000000d;
-  --ionic-elevation-400: 0px 15px 48px 0px #0000002e, 0px 3px 12px 0px #0000001f;
-  --ionic-elevation-500: 0px 3px 9px 0px #062b6312, 0px 0px 4px 0px #062b630a;
-  --ionic-elevation-600: 0px 8px 25px 0px #062b6314, 0px 1px 5px 0px #062b630d;
-  --ionic-elevation-700: 0px 15px 32px 0px #062b6317, 0px 2px 7px 0px #062b630d;
-  --ionic-elevation-800: 0px 20px 48px 0px #062b631f, 0px 3px 14px 0px #062b631f;
+  --ionic-elevation-100: 0px 3px 9px 0px rgba(0, 0, 0, 0.07), 0px 0px 4px 0px rgba(0, 0, 0, 0.04);
+  --ionic-elevation-200: 0px 8px 25px 0px rgba(0, 0, 0, 0.08), 0px 1px 5px 0px rgba(0, 0, 0, 0.05);
+  --ionic-elevation-300: 0px 6px 32px 0px rgba(0, 0, 0, 0.16), 0px 2px 7px 0px rgba(0, 0, 0, 0.05);
+  --ionic-elevation-400: 0px 15px 48px 0px rgba(0, 0, 0, 0.18), 0px 3px 12px 0px rgba(0, 0, 0, 0.12);
+  --ionic-elevation-500: 0px 3px 9px 0px rgba(6, 43, 99, 0.07), 0px 0px 4px 0px rgba(6, 43, 99, 0.04);
+  --ionic-elevation-600: 0px 8px 25px 0px rgba(6, 43, 99, 0.08), 0px 1px 5px 0px rgba(6, 43, 99, 0.05);
+  --ionic-elevation-700: 0px 15px 32px 0px rgba(6, 43, 99, 0.09), 0px 2px 7px 0px rgba(6, 43, 99, 0.05);
+  --ionic-elevation-800: 0px 20px 48px 0px rgba(6, 43, 99, 0.12), 0px 3px 14px 0px rgba(6, 43, 99, 0.12);
   --ionic-font-size-275: 11px;
   --ionic-font-size-300: 12px;
   --ionic-font-size-350: 14px;
@@ -615,7 +615,7 @@
   --ionic-state-focus-1-rgb: 158, 196, 253;
   --ionic-state-focus-2: #ffafaf;
   --ionic-state-focus-2-rgb: 255, 175, 175;
-  --ionic-state-disabled: #ffffff99;
-  --ionic-state-hover: #2424240a;
-  --ionic-state-pressed: #24242414;
+  --ionic-state-disabled: rgba(255, 255, 255, 0.6);
+  --ionic-state-hover: rgba(36, 36, 36, 0.04);
+  --ionic-state-pressed: rgba(36, 36, 36, 0.08);
 }
