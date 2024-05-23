@@ -50,7 +50,7 @@ function generateFontSizeValue(prop, variableType = 'css') {
     ? `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, font.px-to-rem(${parseInt(
         prop.value
       )}));`
-    : `--${variablesPrefix}-${prop.name}: px-to-rem(${parseInt(prop.value)});`;
+    : `--${variablesPrefix}-${prop.name}: #{px-to-rem(${parseInt(prop.value)})};`;
 }
 
 // Generates a valid font-family value from a font-family Design Token structure
