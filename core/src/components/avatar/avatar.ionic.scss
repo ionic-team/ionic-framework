@@ -1,0 +1,59 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./avatar";
+
+// Ionic Avatar
+// --------------------------------------------------
+
+:host {
+  --padding-top: #{globals.$ionic-space-0};
+  --padding-bottom: #{globals.$ionic-space-0};
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: globals.$ionic-color-neutral-100;
+  color: globals.$ionic-color-neutral-800;
+
+  font-weight: globals.$ionic-font-weight-regular;
+
+  line-height: globals.$ionic-line-height-600;
+}
+
+:host(:not(.avatar-image)) {
+  border: globals.$ionic-border-size-025 solid globals.$ionic-color-neutral-800;
+}
+
+// Avatar Sizes
+// --------------------------------------------------
+
+:host(.avatar-small) {
+  --padding-end: #{globals.$ionic-space-150};
+  --padding-start: #{globals.$ionic-space-150};
+
+  width: globals.$ionic-scale-800;
+  height: globals.$ionic-scale-800;
+
+  font-size: globals.$ionic-font-size-350;
+}
+
+:host(.avatar-medium) {
+  --padding-end: #{globals.$ionic-space-200};
+  --padding-start: #{globals.$ionic-space-200};
+
+  width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
+
+  font-size: globals.$ionic-font-size-400;
+}
+
+:host(.avatar-large) {
+  --padding-end: #{globals.$ionic-space-250};
+  --padding-start: #{globals.$ionic-space-250};
+
+  width: globals.$ionic-scale-1200;
+  height: globals.$ionic-scale-1200;
+
+  font-size: globals.$ionic-font-size-450;
+}
