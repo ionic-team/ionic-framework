@@ -4,7 +4,6 @@
 // -------------------------------------------------------------------------------
 :host {
   --overflow: hidden;
-  --ripple-color: currentColor;
   --border-width: initial;
   --border-color: initial;
   --border-style: initial;
@@ -12,27 +11,26 @@
   --color-focused: var(--color);
   --color-hover: var(--color);
   --box-shadow: none;
-  --padding-bottom: #{globals.$ionic-space-400};
+  --padding-bottom: var(--padding-top);
   --padding-end: #{globals.$ionic-space-400};
-  --padding-start: #{globals.$ionic-space-400};
-  --padding-top: #{globals.$ionic-space-400};
-  // TODO(FW-6187): set this to a design token when it is added
-  --focus-ring-color: #9ec4fd;
-  --focus-ring-width: 2px;
-
-  position: relative;
-
-  min-height: globals.$ionic-scale-1000;
-
-  font-size: globals.$ionic-font-size-500;
+  --padding-start: var(--padding-end);
+  --padding-top: #{globals.$ionic-space-300};
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
+  --focus-ring-width: #{globals.$ionic-border-size-050};
 
   display: inline-block;
 
+  position: relative;
+
   width: auto;
+
+  min-height: globals.$ionic-scale-1000;
 
   color: var(--color);
 
   font-family: globals.$ionic-font-family;
+
+  font-size: globals.$ionic-font-size-350;
 
   text-align: center;
   text-decoration: none;
@@ -51,7 +49,7 @@
     position: absolute;
 
     height: 100%;
-    min-height: px-to-rem(48);
+    min-height: globals.$ionic-scale-1200;
 
     transform: translateY(-50%);
 
@@ -63,11 +61,11 @@
   }
 
   ::slotted(ion-icon[slot="start"]) {
-    @include globals.margin-horizontal(null, px-to-rem(8));
+    @include globals.margin-horizontal(null, globals.$ionic-space-200);
   }
 
   ::slotted(ion-icon[slot="end"]) {
-    @include globals.margin-horizontal(px-to-rem(8), null);
+    @include globals.margin-horizontal(globals.$ionic-space-200, null);
   }
 }
 
@@ -78,17 +76,17 @@
 :host(.button-xsmall),
 :host(.button-small) {
   ::slotted(ion-icon[slot="start"]) {
-    @include globals.margin-horizontal(null, px-to-rem(4));
+    @include globals.margin-horizontal(null, globals.$ionic-space-100);
   }
 
   ::slotted(ion-icon[slot="end"]) {
-    @include globals.margin-horizontal(px-to-rem(4), null);
+    @include globals.margin-horizontal(globals.$ionic-space-100, null);
   }
 }
 
 /* Extra Small Button */
 :host(.button-xsmall) {
-  --padding-top: #{globals.$ionic-space-300};
+  --padding-top: #{globals.$ionic-space-100};
   --padding-end: #{globals.$ionic-space-300};
 
   min-height: globals.$ionic-space-600;
@@ -119,11 +117,11 @@
 /* Extra Large Button */
 :host(.button-xlarge) {
   --padding-top: #{globals.$ionic-space-400};
-  --padding-end: #{globals.$ionic-space-600};
+  --padding-end: #{globals.$ionic-space-800};
 
-  min-height: #{globals.$ionic-scale-1200};
+  min-height: #{globals.$ionic-scale-1400};
 
-  font-size: #{globals.$ionic-font-size-400};
+  font-size: #{globals.$ionic-font-size-500};
 }
 
 // Button with Icons
@@ -143,7 +141,7 @@
   ::slotted(ion-icon[slot="start"]),
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
-    font-size: 1em;
+    font-size: inherit;
   }
 }
 
@@ -178,8 +176,8 @@
 
 // Only show the focus ring when the button is focused
 :host(.ion-focused) .button-native {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
+  outline-offset: globals.$ionic-border-size-050;
 }
 
 // Fill Solid Button
@@ -189,8 +187,8 @@
   --background-activated: #{globals.$ionic-color-primary-base};
 }
 
-:host(.button-solid.ion-color.ion-activated) .button-native::after {
-  background: #{current-color(shade)};
+:host(.button-solid.ion-activated) .button-native::after {
+  background: #{globals.$ionic-color-primary-900};
 }
 
 // Fill Outline Button
@@ -199,12 +197,12 @@
 :host(.button-outline) {
   --border-width: #{globals.$ionic-border-size-025};
   --border-style: #{globals.$ionic-border-style-solid};
-  --background-activated: #e3e3e3;
+  --background-activated: #{globals.$ionic-color-neutral-200};
   --background-activated-opacity: 1;
   --background-focused: transparent;
   --background-hover: transparent;
   --background-focused-opacity: 0.1;
-  --color-activated: #{ion-color(primary, base)};
+  --color-activated: #{globals.$ionic-color-primary-base};
 }
 
 :host(.button-outline.ion-focused) {
@@ -215,7 +213,7 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #e3e3e3;
+  --background-activated: #{globals.$ionic-color-neutral-200};
   --background-activated-opacity: 1;
   --background-focused: transparent;
   --background-hover: transparent;
@@ -224,27 +222,22 @@
 // Button Hover
 // --------------------------------------------------
 
+:host(.button-solid) {
+  --background-hover: #{globals.$ionic-color-primary-800};
+}
+
 :host(.button-outline),
 :host(.button-clear) {
-  --background-hover: #121212;
-  --background-hover-opacity: 0.04;
+  --background-hover: #{globals.$ionic-color-neutral-100};
 }
 
 // Button: Disabled
 // --------------------------------------------------
 
 :host(.button-disabled) {
-  --color: #c9c9c9;
+  --background: #{globals.$ionic-state-disabled};
   --border-color: var(--color);
 
-  opacity: 1;
-}
-
-:host(.button-solid.button-disabled) {
-  --background: #f5f5f5;
-}
-
-:host(.button-disabled) {
   cursor: default;
   opacity: 0.5;
   pointer-events: none;
@@ -264,9 +257,9 @@
 
 // Default Outline Color
 :host(.button-outline) {
-  --border-color: #{ion-color(primary, base)};
-  --background: transparent;
-  --color: #{ion-color(primary, base)};
+  --border-color: #{globals.$ionic-color-primary-base};
+  --background: #{globals.$ionic-color-base-white};
+  --color: #{globals.$ionic-color-primary-base};
 }
 
 // Clear Button
@@ -274,9 +267,9 @@
 
 // Default Clear Color
 :host(.button-clear) {
-  --border-width: 0;
+  --border-width: #{globals.$ionic-border-size-0};
   --background: transparent;
-  --color: #{ion-color(primary, base)};
+  --color: #{globals.$ionic-color-primary-base};
 }
 
 // Block Button
@@ -396,16 +389,8 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  font-size: 1.35em;
+  font-size: globals.$ionic-font-size-500;
   pointer-events: none;
-}
-
-::slotted(ion-icon[slot="start"]) {
-  @include globals.margin(0, 0.3em, 0, -0.3em);
-}
-
-::slotted(ion-icon[slot="end"]) {
-  @include globals.margin(0, -0.2em, 0, 0.3em);
 }
 
 // Button: States
