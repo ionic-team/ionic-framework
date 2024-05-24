@@ -1,19 +1,19 @@
-@import "../../themes/native/native.globals.ios";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Ionic Button
 // -------------------------------------------------------------------------------
 
 /// @prop - Padding top of the button
-$button-ionic-padding-top: px-to-rem(12);
+$button-ionic-padding-top: globals.$ionic-space-500;
 
 /// @prop - Padding end of the button
-$button-ionic-padding-end: px-to-rem(16);
+$button-ionic-padding-end: globals.$ionic-space-500;
 
 /// @prop - Padding bottom of the button
-$button-ionic-padding-bottom: $button-ionic-padding-top;
+$button-ionic-padding-bottom: globals.$ionic-space-500;
 
 /// @prop - Padding start of the button
-$button-ionic-padding-start: $button-ionic-padding-end;
+$button-ionic-padding-start: globals.$ionic-space-500;
 
 /// @prop - Minimum height of the button
 $button-ionic-min-height: px-to-rem(40);
