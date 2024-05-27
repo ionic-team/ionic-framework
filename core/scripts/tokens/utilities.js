@@ -122,8 +122,8 @@ function generateTypographyUtilityClass(prop, dictionary) {
 
 // Generates a color based css utility-class from a color Design Token structure
 function generateColorUtilityClasses(prop, className) {
-  return `.${variablesPrefix}-${className} {\n  color: $ionic-${prop.name};\n}
-  .${variablesPrefix}-background-${className} {\n  background-color: $ionic-${prop.name};\n}`;
+  return `.${variablesPrefix}-${className} {\n  --color: $ionic-${prop.name};\n}
+  .${variablesPrefix}-background-${className} {\n  --background: $ionic-${prop.name};\n}`;
 }
 
 // Generates a font based css utility-class from a font Design Token structure
