@@ -17,9 +17,6 @@ configs({ directions: ['ltr'], modes: ['ios', 'md'] }).forEach(({ title, config,
 });
 
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  /**
-   * This behavior only applies to Ionic Theme.
-   */
   test.describe(title('button: fill: clear'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
