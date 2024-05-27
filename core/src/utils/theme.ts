@@ -12,7 +12,7 @@ export const createColorClasses = (color: Color | undefined | null, cssClassMap:
   return typeof color === 'string' && color.length > 0
     ? cssClassMap.ionic === true
       ? {
-          [`ionic-background-color-${color}-600`]: true,
+          [`ionic-background-color-${color}`]: true,
           ...cssClassMap,
         }
       : {
