@@ -4,96 +4,97 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --background: Background of the item
-   * @prop --background-activated: Background of the item when pressed. Note: setting this will interfere with the Material Design ripple.
-   * @prop --background-activated-opacity: Opacity of the item background when pressed
-   * @prop --background-focused: Background of the item when focused with the tab key
-   * @prop --background-focused-opacity: Opacity of the item background when focused with the tab key
-   * @prop --background-hover: Background of the item on hover
-   * @prop --background-hover-opacity: Opacity of the background of the item on hover
-   *
-   * @prop --border-color: Color of the item border
-   * @prop --border-radius: Radius of the item border
-   * @prop --border-style: Style of the item border
-   * @prop --border-width: Width of the item border
-   *
-   * @prop --color: Color of the item
-   * @prop --color-activated: Color of the item when pressed
-   * @prop --color-focused: Color of the item when focused with the tab key
-   * @prop --color-hover: Color of the item on hover
-   *
-   * @prop --detail-icon-color: Color of the item detail icon
-   * @prop --detail-icon-opacity: Opacity of the item detail icon
-   * @prop --detail-icon-font-size: Font size of the item detail icon
-   *
-   * @prop --inner-border-width: Width of the item inner border
-   * @prop --inner-box-shadow: Box shadow of the item inner
-   * @prop --inner-padding-top: Top padding of the item inner
-   * @prop --inner-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item inner
-   * @prop --inner-padding-bottom: Bottom padding of the item inner
-   * @prop --inner-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item inner
-   *
-   * @prop --min-height: Minimum height of the item
-   *
-   * @prop --padding-bottom: Bottom padding of the item
-   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item
-   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item
-   * @prop --padding-top: Top padding of the item
-   *
-   * @prop --transition: Transition of the item
-   *
-   * @prop --ripple-color: Color of the item ripple effect
-   *
-   */
-   --border-color: #{globals.$ionic-color-neutral-200};
-   --border-radius: 0px;
-   --border-style: solid;
-   --border-width: 1px;
-   --default-background: #{globals.$ionic-color-base-white};  
-   --item-min-height: globals.$ionic-scale-1800;
-   --item-width: globals.$ionic-line-height-full;
+    /**
+    * @prop --background: Background of the item
+    * @prop --background-activated: Background of the item when pressed. Note: setting this will interfere with the Material Design ripple.
+    * @prop --background-activated-opacity: Opacity of the item background when pressed
+    * @prop --background-focused: Background of the item when focused with the tab key
+    * @prop --background-focused-opacity: Opacity of the item background when focused with the tab key
+    * @prop --background-hover: Background of the item on hover
+    * @prop --background-hover-opacity: Opacity of the background of the item on hover
+    *
+    * @prop --border-color: Color of the item border
+    * @prop --border-radius: Radius of the item border
+    * @prop --border-style: Style of the item border
+    * @prop --border-width: Width of the item border
+    *
+    * @prop --color: Color of the item
+    * @prop --color-activated: Color of the item when pressed
+    * @prop --color-focused: Color of the item when focused with the tab key
+    * @prop --color-hover: Color of the item on hover
+    *
+    * @prop --detail-icon-color: Color of the item detail icon
+    * @prop --detail-icon-opacity: Opacity of the item detail icon
+    * @prop --detail-icon-font-size: Font size of the item detail icon
+    *
+    * @prop --inner-border-width: Width of the item inner border
+    * @prop --inner-box-shadow: Box shadow of the item inner
+    * @prop --inner-padding-top: Top padding of the item inner
+    * @prop --inner-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item inner
+    * @prop --inner-padding-bottom: Bottom padding of the item inner
+    * @prop --inner-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item inner
+    *
+    * @prop --min-height: Minimum height of the item
+    *
+    * @prop --padding-bottom: Bottom padding of the item
+    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item
+    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item
+    * @prop --padding-top: Top padding of the item
+    *
+    * @prop --transition: Transition of the item
+    *
+    * @prop --ripple-color: Color of the item ripple effect
+    *
+    */
+    --border-color: #{globals.$ionic-color-neutral-200};
+    --border-radius: 0px;
+    --border-style: solid;
+    --border-width: 1px;
+    --default-background: #{globals.$ionic-color-base-white};  
+    --item-min-height: #{globals.$ionic-scale-1800};
+    --item-width: #{globals.$ionic-line-height-full};
 
-  @include globals.font-smoothing;
+    @include globals.font-smoothing;
 
-  display: flex;
+    display: flex;
 
-  position: relative;
-//   align-self: center;
-  align-items: center;
-  justify-content: space-between;
+    position: relative;
+    //   align-self: center;
+    align-items: center;
+    justify-content: space-between;
 
-  outline: none;
+    outline: none;
 
-  color: var(--color);
+    color: var(--color);
 
-  font-family: globals.$ionic-font-family;
+    font-family: globals.$ionic-font-family;
 
-  text-align: initial;
-  text-decoration: none;
+    text-align: initial;
+    text-decoration: none;
 
-   overflow: hidden;
-   box-sizing: border-box;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 // Item: Structure
 // --------------------------------------------------
 .item-native {
     align-items: center;
-    background: var(default-background);
+    background: var(--default-background);
     border-bottom-color: var(--border-color);
     border-bottom-style:var(--border-style);
     border-bottom-width: var(--border-width); 
     display: flex;
-    min-height: globals.$ionic-scale-1800;
+    min-height: var(--item-min-height);
     @include globals.padding(globals.$ionic-space-200, globals.$ionic-space-400);
-    width: globals.$ionic-line-height-full;
+    width: var(--item-width);
     
     slot[name="start"]::slotted(*) {
-        margin-right: globals.$ionic-space-400;
+        @include globals.margin(none, globals.$ionic-space-400, none, none);
     }
+
     slot[name="end"]::slotted(*) {
-        margin-left: globals.$ionic-space-400;
+        @include globals.margin(none, none, none, globals.$ionic-space-400);
     }
 
     .item-inner {
