@@ -92,3 +92,7 @@
 :host(.avatar-round) {
   --border-radius: #{globals.$ionic-border-radius-full};
 }
+
+:host(.avatar-rectangular) {
+  --border-radius: #{globals.$ionic-border-radius-0};
+}
