@@ -20,12 +20,12 @@ export class Avatar implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * Set to `"small"` for a compact size, `"medium"` for the default height and width, or to
-   * `"large"` for a larger size.
+   * Set to `"xsmall"` for the smallest size, `"small"` for a compact size, `"medium"`
+   * for the default height and width, or to `"large"` for a larger size.
    *
    * Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() size?: 'small' | 'medium' | 'large';
+  @Prop() size?: `xsmall` | 'small' | 'medium' | 'large';
 
   get hasImage() {
     return !!this.el.querySelector('ion-img') || !!this.el.querySelector('img');
