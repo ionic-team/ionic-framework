@@ -82,8 +82,6 @@
    * container that overlaps it so it is always clickable.
    */
   position: relative;
-
-  color: #{$ionic-color-neutral-700};
 }
 
 :host(.input-fill-outline) .native-wrapper {
