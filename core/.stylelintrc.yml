@@ -15,6 +15,7 @@ ignoreFiles:
   - src/themes/functions.string.scss
   - src/themes/native.theme.default.scss
   - src/css/themes/*.scss
+  - scripts/tokens/*.css
 
 indentation: 2
 
