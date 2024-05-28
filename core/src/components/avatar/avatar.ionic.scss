@@ -71,3 +71,15 @@
 
   font-size: globals.$ionic-font-size-450;
 }
+
+:host(.avatar-xlarge) {
+  --padding-end: #{globals.$ionic-space-300};
+  --padding-start: #{globals.$ionic-space-300};
+
+  width: globals.$ionic-scale-1400;
+  height: globals.$ionic-scale-1400;
+
+  font-size: globals.$ionic-font-size-550;
+
+  line-height: globals.$ionic-line-height-700;
+}
