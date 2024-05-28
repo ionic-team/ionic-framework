@@ -10,7 +10,7 @@
   --color: #{tokens.$ionic-color-neutral-1000};
   --border-width: #{tokens.$ionic-border-size-025};
   --border-color: #{tokens.$ionic-color-neutral-300};
-  --highlight-color-valid: #{tokens.$ionic-color-success-400};
+  --highlight-color-valid: #{tokens.$ionic-color-success-base};
   --highlight-color-invalid: #{tokens.$ionic-color-danger-base};
   --placeholder-color: #{tokens.$ionic-color-neutral-800};
   --placeholder-opacity: 1;
@@ -174,7 +174,7 @@
 }
 
 :host(.input-disabled.has-focus.ion-valid) {
-  --border-color: rgba(#{tokens.$ionic-color-success-400-rgb}, 0.6);
+  --border-color: rgba(#{tokens.$ionic-color-success-base-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-touched.ion-invalid) {
