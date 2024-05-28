@@ -95,5 +95,91 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         await expect(avatar).toHaveScreenshot(screenshot(`avatar-shape-rectangular-image`));
       });
     });
+
+    test.describe('soft', () => {
+      test('should not have visual regressions when containing text', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            #container {
+              display: flex;
+              gap: 10px;
+            }
+          </style>
+
+          <div id="container">
+            <ion-avatar shape="soft" size="xsmall">AB</ion-avatar>
+            <ion-avatar shape="soft" size="small">AB</ion-avatar>
+            <ion-avatar shape="soft">AB</ion-avatar>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('#container');
+
+        await expect(container).toHaveScreenshot(screenshot(`avatar-shape-soft-text`));
+      });
+
+      test('should not have visual regressions when containing an icon', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            #container {
+              display: flex;
+              gap: 10px;
+            }
+          </style>
+
+          <div id="container">
+            <ion-avatar shape="soft" size="xsmall">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
+            <ion-avatar shape="soft" size="small">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
+            <ion-avatar shape="soft">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('#container');
+
+        await expect(container).toHaveScreenshot(screenshot(`avatar-shape-soft-icon`));
+      });
+
+      test('should not have visual regressions when containing an image', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            #container {
+              display: flex;
+              gap: 10px;
+            }
+          </style>
+
+          <div id="container">
+            <ion-avatar shape="soft" size="xsmall">
+              <img src="/src/components/avatar/test/avatar.svg"/>
+            </ion-avatar>
+            <ion-avatar shape="soft" size="small">
+              <img src="/src/components/avatar/test/avatar.svg"/>
+            </ion-avatar>
+            <ion-avatar shape="soft">
+              <img src="/src/components/avatar/test/avatar.svg"/>
+            </ion-avatar>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('#container');
+
+        await expect(container).toHaveScreenshot(screenshot(`avatar-shape-soft-image`));
+      });
+    });
   });
 });
