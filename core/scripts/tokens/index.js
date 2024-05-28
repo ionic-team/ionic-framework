@@ -5,6 +5,8 @@
 // - It is probably the most well-known and widely used Design Tokens tool. It has also been regularly maintained for a long time.
 // - It can easily scale to different necessities we might have in the future.
 
+const fs = require('fs');
+const path = require('path');
 const StyleDictionary = require('style-dictionary');
 
 const targetPath = './src/foundations/';
@@ -151,6 +153,137 @@ StyleDictionary.registerFormat({
   },
 });
 
+// Register the custom format to generate HTML
+// Load the HTML template
+const template = fs.readFileSync(path.join(__dirname, 'preview.template.html'), 'utf8');
+
+StyleDictionary.registerFormat({
+  name: 'html/tokens',
+  formatter: function ({ dictionary }) {
+    // Function to extract numerical value from token name
+    const extractValue = (tokenName) => {
+      const match = tokenName.match(/-([0-9]+)/);
+      return match ? parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER;
+    };
+
+    let colorTokens = `
+      <table>
+        <thead>
+          <tr>
+            <th>Color</th>
+            <th>Hex</th>
+            <th>Token Name</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+    let fontSizeTokens = '';
+    let boxShadowTokens = '';
+    let borderSizeTokens = '';
+    let borderRadiusTokens = '';
+    let borderStyleTokens = '';
+    let fontWeightTokens = '';
+    let letterSpacingTokens = '';
+    let spaceTokens = '';
+
+    // Collect border-radius and space tokens for separate sorting
+    let borderRadiusTokenList = [];
+    let spaceTokenList = [];
+
+    dictionary.allProperties.forEach((token) => {
+      if (token.attributes.category === 'color') {
+        colorTokens += `
+          <tr>
+            <td><div class="color-swatch" style="background-color: ${token.value};"></div></td>
+            <td>${token.value}</td>
+            <td>${token.name}</td>
+          </tr>
+        `;
+      } else if (token.attributes.category === 'font-size') {
+        fontSizeTokens += `
+          <div class="font-size-token" style="font-size: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      } else if (token.attributes.category.startsWith('Elevation')) {
+        const cssShadow = token.value.map(generateShadowValue).join(', ');
+        boxShadowTokens += `
+          <div class="shadow-token" style="box-shadow: ${cssShadow};">
+              ${token.name}
+          </div>
+        `;
+      } else if (token.attributes.category === 'border-size' || token.attributes.category === 'border-width') {
+        borderSizeTokens += `
+          <div class="border-token" style="border-width: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      } else if (token.attributes.category === 'border-radius') {
+        borderRadiusTokenList.push(token); // Collect border-radius tokens
+      } else if (token.attributes.category === 'border-style') {
+        borderStyleTokens += `
+        <div class="border-token" style="border: 1px ${token.value} #000;">
+            ${token.name} (${token.value})
+        </div>
+      `;
+      } else if (token.attributes.category === 'font-weight') {
+        fontWeightTokens += `
+          <div class="weight-token" style="font-weight: ${token.value};">
+              ${token.name} (${token.value})
+          </div>
+        `;
+      } else if (token.attributes.category === 'letter-spacing') {
+        // Convert % to px
+        const letterSpacingValue = token.value.replace('%', '') + 'px';
+        letterSpacingTokens += `
+          <div class="letter-spacing-token" style="letter-spacing: ${letterSpacingValue};">
+              ${token.name} (${letterSpacingValue})
+          </div>
+        `;
+      } else if (token.attributes.category === 'space') {
+        spaceTokenList.push(token); // Collect space tokens
+      }
+    });
+
+    // Sort border-radius and space tokens
+    borderRadiusTokenList.sort((a, b) => extractValue(a.name) - extractValue(b.name));
+    spaceTokenList.sort((a, b) => extractValue(a.name) - extractValue(b.name));
+
+    // Generate HTML for sorted border-radius tokens
+    borderRadiusTokenList.forEach((token) => {
+      borderRadiusTokens += `
+        <div class="border-token" style="border-radius: ${token.value};">
+            ${token.name} (${token.value})
+        </div>
+      `;
+    });
+
+    // Generate HTML for sorted space tokens
+    spaceTokenList.forEach((token) => {
+      spaceTokens += `
+      <div class="spacing-wrapper">
+          <div class="space-token" style="margin: ${token.value};">
+          ${token.name} (${token.value})
+          </div>
+      </div>
+      `;
+    });
+
+    colorTokens += '</tbody></table>';
+
+    return template
+      .replace('{{colorTokens}}', colorTokens)
+      .replace('{{fontSizeTokens}}', fontSizeTokens)
+      .replace('{{boxShadowTokens}}', boxShadowTokens)
+      .replace('{{borderSizeTokens}}', borderSizeTokens)
+      .replace('{{borderRadiusTokens}}', borderRadiusTokens)
+      .replace('{{borderStyleTokens}}', borderStyleTokens)
+      .replace('{{fontWeightTokens}}', fontWeightTokens)
+      .replace('{{letterSpacingTokens}}', letterSpacingTokens)
+      .replace('{{spaceTokens}}', spaceTokens);
+  },
+});
+
 // Custom transform to ensure unique token names
 StyleDictionary.registerTransform({
   name: 'name/cti/kebab-unique',
@@ -220,6 +353,16 @@ StyleDictionary.extend({
             outputReferences: true,
             fileHeader: `myFileHeader`,
           },
+        },
+      ],
+    },
+    html: {
+      transformGroup: 'custom',
+      buildPath: targetPath,
+      files: [
+        {
+          destination: 'tokens.preview.html',
+          format: 'html/tokens',
         },
       ],
     },
