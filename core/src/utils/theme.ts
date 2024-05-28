@@ -6,15 +6,20 @@ export const hostContext = (selector: string, el: HTMLElement): boolean => {
 };
 
 /**
- * Create the mode and color classes for the component based on the classes passed in
+ * Create the mode and color classes for the component based on the classes passed in and the theme being used
  */
 export const createColorClasses = (color: Color | undefined | null, cssClassMap: CssClassMap): CssClassMap => {
   return typeof color === 'string' && color.length > 0
-    ? {
-        'ion-color': true,
-        [`ion-color-${color}`]: true,
-        ...cssClassMap,
-      }
+    ? cssClassMap.ionic === true
+      ? {
+          [`ionic-background-color-${color}`]: true,
+          ...cssClassMap,
+        }
+      : {
+          'ion-color': true,
+          [`ion-color-${color}`]: true,
+          ...cssClassMap,
+        }
     : cssClassMap;
 };
 
