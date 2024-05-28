@@ -22,6 +22,8 @@
 }
 
 :host(:not(.avatar-image)) {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   border: globals.$ionic-border-size-025 solid globals.$ionic-color-neutral-800;
 }
 
@@ -79,7 +81,14 @@
   width: globals.$ionic-scale-1400;
   height: globals.$ionic-scale-1400;
 
-  font-size: globals.$ionic-font-size-550;
+  font-size: globals.$ionic-font-size-500;
 
   line-height: globals.$ionic-line-height-700;
+}
+
+// Avatar Shapes
+// --------------------------------------------------
+
+:host(.avatar-round) {
+  --border-radius: #{globals.$ionic-border-radius-full};
 }

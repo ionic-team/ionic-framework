@@ -28,6 +28,13 @@ export class Avatar implements ComponentInterface {
    */
   @Prop() size?: `xsmall` | 'small' | 'medium' | 'large' | 'xlarge';
 
+  /**
+   * Set to `"round"` for an avatar with fully rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'round';
+
   get hasImage() {
     return !!this.el.querySelector('ion-img') || !!this.el.querySelector('img');
   }
@@ -48,15 +55,33 @@ export class Avatar implements ComponentInterface {
     return size;
   }
 
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-10755): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   render() {
     const theme = getIonTheme(this);
     const size = this.getSize();
+    const shape = this.getShape();
 
     return (
       <Host
         class={{
           [theme]: true,
           [`avatar-${size}`]: size !== undefined,
+          [`avatar-${shape}`]: shape !== undefined,
           [`avatar-image`]: this.hasImage,
         }}
       >
