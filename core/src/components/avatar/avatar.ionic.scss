@@ -28,6 +28,20 @@
 // Avatar Sizes
 // --------------------------------------------------
 
+:host(.avatar-xsmall) {
+  --padding-end: #{globals.$ionic-space-050};
+  --padding-start: #{globals.$ionic-space-050};
+
+  width: globals.$ionic-scale-600;
+  height: globals.$ionic-scale-600;
+
+  font-size: globals.$ionic-font-size-300;
+
+  font-weight: globals.$ionic-font-weight-medium;
+
+  line-height: globals.$ionic-line-height-500;
+}
+
 :host(.avatar-small) {
   --padding-end: #{globals.$ionic-space-150};
   --padding-start: #{globals.$ionic-space-150};
