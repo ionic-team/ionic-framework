@@ -6,33 +6,10 @@
 :host {
   /**
     * @prop --background: Background of the item
-    * @prop --background-activated: Background of the item when pressed. Note: setting this will interfere with the Material Design ripple.
-    * @prop --background-activated-opacity: Opacity of the item background when pressed
-    * @prop --background-focused: Background of the item when focused with the tab key
-    * @prop --background-focused-opacity: Opacity of the item background when focused with the tab key
-    * @prop --background-hover: Background of the item on hover
-    * @prop --background-hover-opacity: Opacity of the background of the item on hover
     *
     * @prop --border-color: Color of the item border
-    * @prop --border-radius: Radius of the item border
     * @prop --border-style: Style of the item border
     * @prop --border-width: Width of the item border
-    *
-    * @prop --color: Color of the item
-    * @prop --color-activated: Color of the item when pressed
-    * @prop --color-focused: Color of the item when focused with the tab key
-    * @prop --color-hover: Color of the item on hover
-    *
-    * @prop --detail-icon-color: Color of the item detail icon
-    * @prop --detail-icon-opacity: Opacity of the item detail icon
-    * @prop --detail-icon-font-size: Font size of the item detail icon
-    *
-    * @prop --inner-border-width: Width of the item inner border
-    * @prop --inner-box-shadow: Box shadow of the item inner
-    * @prop --inner-padding-top: Top padding of the item inner
-    * @prop --inner-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item inner
-    * @prop --inner-padding-bottom: Bottom padding of the item inner
-    * @prop --inner-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item inner
     *
     * @prop --min-height: Minimum height of the item
     *
@@ -41,19 +18,16 @@
     * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item
     * @prop --padding-top: Top padding of the item
     *
-    * @prop --transition: Transition of the item
-    *
-    * @prop --ripple-color: Color of the item ripple effect
-    *
     */
+  --background: #{globals.$ionic-color-base-white};
   --border-color: #{globals.$ionic-color-neutral-200};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-width: #{globals.$ionic-border-size-025};
-  --default-background: #{globals.$ionic-color-base-white};
-  --item-min-height: #{globals.$ionic-scale-1800};
-  --item-width: #{globals.$ionic-line-height-full};
-  --space-200: #{globals.$ionic-space-200};
-  --space-400: #{globals.$ionic-space-400};
+  --min-height: #{globals.$ionic-scale-1800};
+  --padding-top: #{globals.$ionic-space-200};
+  --padding-right: #{globals.$ionic-space-400};
+  --padding-bottom: #{globals.$ionic-space-200};
+  --padding-left: #{globals.$ionic-space-400};
 
   @include globals.font-smoothing;
 
@@ -78,36 +52,34 @@
 // Item: Structure
 // --------------------------------------------------
 .item-native {
-  @include globals.padding(var(--space-200), var(--space-400));
-  display: flex;
-
   align-items: center;
-
-  width: var(--item-width);
-  min-height: var(--item-min-height);
-
+  background: var(--background);
   border-bottom-width: var(--border-width);
   border-bottom-style: var(--border-style);
   border-bottom-color: var(--border-color);
-
-  background: var(--default-background);
-
+  box-sizing: border-box;
+  display: flex;
+  
+  
+  min-height: var(--min-height);
   overflow: inherit;
+  @include globals.padding(var(--padding-top), var(--padding-right), var(--padding-bottom), var(--padding-left));
+  
+  width: 100%;
 
   slot[name="start"]::slotted(*) {
-    @include globals.margin(inherit, var(--space-400), inherit, inherit);
+    @include globals.margin(inherit, #{globals.$ionic-space-400}, inherit, inherit);
   }
 
   slot[name="end"]::slotted(*) {
-    @include globals.margin(inherit, inherit, inherit, var(--space-400));
+    @include globals.margin(inherit, inherit, inherit, #{globals.$ionic-space-400});
   }
 
   .item-inner,
   .item-inner .input-wrapper {
+    box-sizing: border-box;
     display: flex;
-
     flex: 1;
-
     overflow: inherit;
   }
 }
