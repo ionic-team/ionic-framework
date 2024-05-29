@@ -18,7 +18,6 @@
 
   // Size
   --size: #{globals.$ionic-scale-600};
-
   --checkbox-background-checked: #{globals.$ionic-color-primary-base};
   --border-color-checked: #{globals.$ionic-color-primary-base};
   --checkmark-color: #{globals.$ionic-color-base-white};
@@ -342,7 +341,9 @@ input {
 // disabled, checked checkbox
 :host(.checkbox-disabled.checkbox-checked) .checkbox-icon {
   border-width: globals.$ionic-border-size-0;
+
   background-color: globals.$ionic-color-primary-base;
+
   opacity: 0.6;
 }
 
