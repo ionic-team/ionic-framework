@@ -6,6 +6,19 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('badge: size'), () => {
+    test('should render xsmall badges', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="xsmall">00</ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xsmall`));
+    });
+
     test('should render small badges', async ({ page }) => {
       await page.setContent(
         `
