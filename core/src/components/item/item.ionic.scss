@@ -52,20 +52,23 @@
 // Item: Structure
 // --------------------------------------------------
 .item-native {
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  display: flex;
+
   align-items: center;
-  background: var(--background);
+
+  width: 100%;
+
+  min-height: var(--min-height);
+
   border-bottom-width: var(--border-width);
   border-bottom-style: var(--border-style);
   border-bottom-color: var(--border-color);
-  box-sizing: border-box;
-  display: flex;
-  
-  
-  min-height: var(--min-height);
+
+  background: var(--background);
+
   overflow: inherit;
-  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  
-  width: 100%;
+  box-sizing: border-box;
 
   slot[name="start"]::slotted(*) {
     @include globals.margin(inherit, #{globals.$ionic-space-400}, inherit, inherit);
@@ -77,9 +80,11 @@
 
   .item-inner,
   .item-inner .input-wrapper {
-    box-sizing: border-box;
     display: flex;
+
     flex: 1;
+
     overflow: inherit;
+    box-sizing: border-box;
   }
 }
