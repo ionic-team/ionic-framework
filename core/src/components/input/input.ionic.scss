@@ -79,7 +79,7 @@
 .input-clear-icon:focus-visible {
   @include border-radius(tokens.$ionic-border-radius-100);
 
-  outline: #{tokens.$ionic-border-size-050} solid #{tokens.$ionic-color-primary-100};
+  outline: #{tokens.$ionic-border-size-050} solid #{tokens.$ionic-state-focus-1};
 
   opacity: 1;
 }
