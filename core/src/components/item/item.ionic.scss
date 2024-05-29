@@ -25,9 +25,9 @@
   --border-width: #{globals.$ionic-border-size-025};
   --min-height: #{globals.$ionic-scale-1800};
   --padding-top: #{globals.$ionic-space-200};
-  --padding-right: #{globals.$ionic-space-400};
+  --padding-end: #{globals.$ionic-space-400};
   --padding-bottom: #{globals.$ionic-space-200};
-  --padding-left: #{globals.$ionic-space-400};
+  --padding-start: #{globals.$ionic-space-400};
 
   @include globals.font-smoothing;
 
