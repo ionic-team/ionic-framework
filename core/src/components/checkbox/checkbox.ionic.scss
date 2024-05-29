@@ -5,7 +5,7 @@
 
 :host {
   // Border
-  --border-radius: calc(var(--size) / #{globals.$ionic-border-radius-100} - #{globals.$ionic-border-radius-050});
+  --border-radius: #{globals.$ionic-border-radius-100};
   --border-width: #{globals.$ionic-border-size-025};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-color: #{globals.$ionic-color-neutral-800};
