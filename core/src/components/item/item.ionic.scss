@@ -63,7 +63,7 @@
   
   min-height: var(--min-height);
   overflow: inherit;
-  @include globals.padding(var(--padding-top), var(--padding-right), var(--padding-bottom), var(--padding-left));
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   
   width: 100%;
 
