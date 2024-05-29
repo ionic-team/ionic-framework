@@ -102,18 +102,12 @@
     @include globals.margin(inherit, inherit, inherit, var(--space-400));
   }
 
-  .item-inner {
+  .item-inner,
+  .item-inner .input-wrapper {
     display: flex;
 
     flex: 1;
 
     overflow: inherit;
-    .input-wrapper {
-      display: flex;
-
-      flex: 1;
-
-      overflow: inherit;
-    }
   }
 }
