@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 :host {
-    /**
+  /**
     * @prop --background: Background of the item
     * @prop --background-activated: Background of the item when pressed. Note: setting this will interfere with the Material Design ripple.
     * @prop --background-activated-opacity: Opacity of the item background when pressed
@@ -46,62 +46,74 @@
     * @prop --ripple-color: Color of the item ripple effect
     *
     */
-    --border-color: #{globals.$ionic-color-neutral-200};
-    --border-radius: 0px;
-    --border-style: solid;
-    --border-width: 1px;
-    --default-background: #{globals.$ionic-color-base-white};  
-    --item-min-height: #{globals.$ionic-scale-1800};
-    --item-width: #{globals.$ionic-line-height-full};
+  --border-color: #{globals.$ionic-color-neutral-200};
+  --border-style: #{globals.$ionic-border-style-solid};
+  --border-width: #{globals.$ionic-border-size-025};
+  --default-background: #{globals.$ionic-color-base-white};
+  --item-min-height: #{globals.$ionic-scale-1800};
+  --item-width: #{globals.$ionic-line-height-full};
+  --space-200: #{globals.$ionic-space-200};
+  --space-400: #{globals.$ionic-space-400};
 
-    @include globals.font-smoothing;
+  @include globals.font-smoothing;
 
-    display: flex;
+  display: flex;
 
-    position: relative;
-    //   align-self: center;
-    align-items: center;
-    justify-content: space-between;
+  position: relative;
 
-    outline: none;
+  align-items: center;
+  justify-content: space-between;
 
-    color: var(--color);
+  outline: none;
 
-    font-family: globals.$ionic-font-family;
+  font-family: globals.$ionic-font-family;
 
-    text-align: initial;
-    text-decoration: none;
+  text-align: initial;
+  text-decoration: none;
 
-    overflow: hidden;
-    box-sizing: border-box;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 // Item: Structure
 // --------------------------------------------------
 .item-native {
-    align-items: center;
-    background: var(--default-background);
-    border-bottom-color: var(--border-color);
-    border-bottom-style:var(--border-style);
-    border-bottom-width: var(--border-width); 
+  @include globals.padding(var(--space-200), var(--space-400));
+  display: flex;
+
+  align-items: center;
+
+  width: var(--item-width);
+  min-height: var(--item-min-height);
+
+  border-bottom-width: var(--border-width);
+  border-bottom-style: var(--border-style);
+  border-bottom-color: var(--border-color);
+
+  background: var(--default-background);
+
+  overflow: inherit;
+
+  slot[name="start"]::slotted(*) {
+    @include globals.margin(inherit, var(--space-400), inherit, inherit);
+  }
+
+  slot[name="end"]::slotted(*) {
+    @include globals.margin(inherit, inherit, inherit, var(--space-400));
+  }
+
+  .item-inner {
     display: flex;
-    min-height: var(--item-min-height);
-    @include globals.padding(globals.$ionic-space-200, globals.$ionic-space-400);
-    width: var(--item-width);
-    
-    slot[name="start"]::slotted(*) {
-        @include globals.margin(none, globals.$ionic-space-400, none, none);
-    }
 
-    slot[name="end"]::slotted(*) {
-        @include globals.margin(none, none, none, globals.$ionic-space-400);
-    }
+    flex: 1;
 
-    .item-inner {
-        display: flex;
-        flex: 1;
-        .input-wrapper {
-            flex: 1;
-        }
+    overflow: inherit;
+    .input-wrapper {
+      display: flex;
+
+      flex: 1;
+
+      overflow: inherit;
     }
+  }
 }
