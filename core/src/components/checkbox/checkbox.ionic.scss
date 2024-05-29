@@ -5,7 +5,7 @@
 
 :host {
   // Border
-  --border-radius: calc(var(--size) / 4 - #{globals.$ionic-border-radius-100});
+  --border-radius: #{globals.$ionic-border-radius-100};
   --border-width: #{globals.$ionic-border-size-025};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-color: #{globals.$ionic-color-neutral-800};
@@ -288,6 +288,10 @@ input {
 :host(.checkbox-size-small) {
   --border-radius: #{globals.$ionic-border-radius-050};
   --size: #{globals.$ionic-scale-400};
+}
+
+:host(.checkbox-size-small.checkbox-shape-rectangular) {
+  --border-radius: #{globals.$ionic-border-radius-0};
 }
 
 // Checked / Indeterminate Checkbox
