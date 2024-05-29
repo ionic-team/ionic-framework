@@ -71,11 +71,11 @@
   box-sizing: border-box;
 
   slot[name="start"]::slotted(*) {
-    @include globals.margin(inherit, #{globals.$ionic-space-400}, inherit, inherit);
+    @include globals.margin(null, #{globals.$ionic-space-400}, null, null);
   }
 
   slot[name="end"]::slotted(*) {
-    @include globals.margin(inherit, inherit, inherit, #{globals.$ionic-space-400});
+    @include globals.margin(null, null, null, #{globals.$ionic-space-400});
   }
 
   .item-inner,
