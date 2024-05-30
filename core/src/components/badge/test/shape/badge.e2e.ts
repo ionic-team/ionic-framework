@@ -31,5 +31,31 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
       await expect(badge).toHaveScreenshot(screenshot(`badge-shape-soft-long-text`));
     });
+
+    test('should render round badges', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge shape="round">1</ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-shape-round`));
+    });
+
+    test('should render round badges with long text', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge shape="round">99+</ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-shape-round-long-text`));
+    });
   });
 });
