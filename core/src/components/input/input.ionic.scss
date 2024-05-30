@@ -1,0 +1,229 @@
+@use "../../foundations/ionic.vars.scss" as tokens;
+@import "./input";
+@import "./input.ionic.vars";
+@import "./input.ionic.outline.scss";
+
+// Ionic Input
+// --------------------------------------------------
+
+:host {
+  --color: #{tokens.$ionic-color-neutral-1000};
+  --border-width: #{tokens.$ionic-border-size-025};
+  --border-color: #{tokens.$ionic-color-neutral-300};
+  --highlight-color-valid: #{tokens.$ionic-color-success-base};
+  --highlight-color-invalid: #{tokens.$ionic-color-danger-base};
+  --placeholder-color: #{tokens.$ionic-color-neutral-800};
+  --placeholder-opacity: 1;
+  --text-color-invalid: #{tokens.$ionic-color-danger-800};
+
+  font-size: tokens.$ionic-font-size-350;
+}
+
+// Ionic Input Sizes
+// --------------------------------------------------
+
+:host(.input-size-medium) .native-wrapper {
+  min-height: 40px;
+}
+
+:host(.input-size-large) .native-wrapper {
+  min-height: 48px;
+}
+
+:host(.input-size-xlarge) .native-wrapper {
+  min-height: 56px;
+}
+
+// Target area
+// --------------------------------------------------
+:host .native-wrapper::after {
+  @include position(50%, 0, null, 0);
+
+  position: absolute;
+
+  height: 100%;
+  min-height: 48px;
+
+  transform: translateY(-50%);
+
+  content: "";
+
+  // Cursor should match the native input when hovering over the target area.
+  cursor: text;
+
+  z-index: 1;
+}
+
+::slotted([slot="start"]),
+::slotted([slot="end"]),
+.input-clear-icon {
+  /**
+   * The target area has a z-index of 1, so the slotted elements
+   * should be higher. Otherwise, the slotted elements will not
+   * be interactable. This is especially important for the clear
+   * button, which should be clickable.
+   */
+  z-index: 2;
+}
+
+// Input Clear Button
+// ----------------------------------------------------------------
+
+.input-clear-icon {
+  width: 16px;
+  height: 16px;
+
+  color: #{tokens.$ionic-color-neutral-500};
+}
+
+.input-clear-icon:focus-visible {
+  @include border-radius(tokens.$ionic-border-radius-100);
+
+  outline: #{tokens.$ionic-border-size-050} solid #{tokens.$ionic-state-focus-1};
+
+  opacity: 1;
+}
+
+.input-clear-icon ion-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * The clear button should be visible if the native input
+ * OR any other interactive elements in the component (the
+ * clear button, slotted buttons, etc.) are focused. If we
+ * only looked at the native input, tabbing to the clear
+ * button would immediately hide it.
+ *
+ * Note that the clear button also requires the native input
+ * to have any value, but this is not specific to the ionic
+ * theme, so it is handled elsewhere.
+ */
+:host(:not(:focus-within)) .input-clear-icon {
+  display: none;
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  color: tokens.$ionic-color-neutral-1000;
+
+  font-size: tokens.$ionic-font-size-300;
+  font-weight: tokens.$ionic-font-weight-medium;
+
+  line-height: tokens.$ionic-line-height-500;
+}
+
+:host(.label-floating) .label-text-wrapper {
+  @include transform(none);
+}
+
+// Input Bottom Content
+// ----------------------------------------------------------------
+
+.input-bottom {
+  @include padding(7px, 0);
+
+  font-weight: tokens.$ionic-font-weight-medium;
+}
+
+.input-bottom .helper-text,
+.input-bottom .counter {
+  color: tokens.$ionic-color-neutral-800;
+}
+
+:host(.has-focus.ion-valid) .helper-text {
+  color: tokens.$ionic-color-success-900;
+}
+
+:host(.ion-touched.ion-invalid) .error-text {
+  color: var(--text-color-invalid);
+}
+
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
+  --border-width: #{tokens.$ionic-border-size-025};
+}
+
+// Input Hover
+// ----------------------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --border-color: #{tokens.$ionic-color-neutral-600};
+  }
+}
+
+// Input - Disabled
+// ----------------------------------------------------------------
+
+:host(.input-disabled) {
+  // color for the text within the input
+  --color: #{tokens.$ionic-color-neutral-400};
+  --background: #{tokens.$ionic-color-neutral-100};
+
+  pointer-events: none;
+}
+
+:host(.input-disabled:not(.ion-valid)) .input-bottom .helper-text,
+:host(.input-disabled) .input-bottom .counter,
+:host(.input-disabled) .label-text-wrapper {
+  color: tokens.$ionic-color-neutral-400;
+}
+
+:host(.input-disabled.has-focus.ion-valid) {
+  --border-color: rgba(#{tokens.$ionic-color-success-base-rgb}, 0.6);
+}
+
+:host(.input-disabled.ion-touched.ion-invalid) {
+  --border-color: rgba(#{tokens.$ionic-color-danger-base-rgb}, 0.6);
+}
+
+:host(.input-disabled.ion-color) {
+  --border-color: #{current-color(base, 0.6)};
+}
+
+:host(.input-disabled.has-focus.ion-valid) .input-bottom .helper-text,
+:host(.input-disabled.ion-touched.ion-invalid) .error-text,
+:host(.input-disabled.ion-color) .input-bottom .helper-text,
+:host(.input-disabled.ion-color) .helper-text {
+  opacity: 0.6;
+}
+
+// Input - Readonly
+// ----------------------------------------------------------------
+
+:host(.input-readonly) {
+  --background: #{tokens.$ionic-color-neutral-100};
+}
+
+// Input Highlight
+// ----------------------------------------------------------------
+
+.input-highlight {
+  @include position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: tokens.$ionic-border-size-050;
+
+  transform: scale(0);
+
+  transition: transform 200ms;
+
+  background: var(--border-color);
+}
+
+// Input Focus
+// ----------------------------------------------------------------
+
+:host(.has-focus) {
+  --border-color: #{tokens.$ionic-color-primary-base};
+}
+
+:host(.has-focus) .input-highlight {
+  transform: scale(1);
+}
