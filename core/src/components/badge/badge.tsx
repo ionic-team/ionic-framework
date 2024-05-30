@@ -27,10 +27,32 @@ export class Badge implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
+   * Set to `"soft"` for slightly rounded corners.
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'soft';
+
+  /**
    * Set to "xsmall" for even less height and width. Set to `"small"` for less height and width. Set to "medium" for slightly larger dimensions. Set to "large" for even greater height and width. Set to `"xlarge"` for the largest badge.
    * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
    */
   @Prop() size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-10777): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
 
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
@@ -49,12 +71,14 @@ export class Badge implements ComponentInterface {
   }
 
   render() {
+    const shape = this.getShape();
     const size = this.getSize();
     const theme = getIonTheme(this);
     return (
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
+          [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
         })}
       >

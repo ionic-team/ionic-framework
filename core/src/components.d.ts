@@ -418,6 +418,10 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
+          * Set to `"soft"` for slightly rounded corners. Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft';
+        /**
           * Set to "xsmall" for even less height and width. Set to `"small"` for less height and width. Set to "medium" for slightly larger dimensions. Set to "large" for even greater height and width. Set to `"xlarge"` for the largest badge. Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
         "size"?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
@@ -5661,6 +5665,10 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Set to `"soft"` for slightly rounded corners. Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft';
         /**
           * Set to "xsmall" for even less height and width. Set to `"small"` for less height and width. Set to "medium" for slightly larger dimensions. Set to "large" for even greater height and width. Set to `"xlarge"` for the largest badge. Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
