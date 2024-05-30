@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
-  test.describe.only(title('badge: size'), () => {
+  test.describe(title('badge: size'), () => {
     test('should render xsmall badges', async ({ page }) => {
       await page.setContent(
         `
