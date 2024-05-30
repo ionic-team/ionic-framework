@@ -1,17 +1,12 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "../../foundations/ionic.vars.scss" as tokens;
 
 // Ionic Chip
 // --------------------------------------------------
 
-// TODO(ROU-4870): there is no token yet for these ones, but it should be created in the future, once UX team has figma tokens done
-$ionic-states-focus-primary: #9ec4fd;
-$ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make this in the future, as we are setting scss variables with a var() and fallback, and it doesn't work inside a rgba().
-
 :host {
   --background: #{globals.$ionic-color-neutral-100};
   --color: #{globals.$ionic-color-neutral-900};
-  --focus-ring-color: #{$ionic-states-focus-primary};
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
   --focus-ring-width: #{globals.$ionic-border-size-050};
 
   @include globals.font-smoothing;
@@ -58,7 +53,7 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 // ---------------------------------------------
 
 :host(.ion-focused) {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-width);
 }
 
@@ -67,7 +62,7 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: #{$ionic-states-hover};
+    --background: #{globals.$ionic-color-neutral-200};
   }
 }
 
@@ -104,13 +99,13 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 // ---------------------------------------------
 
 :host(.chip-small) {
-  min-height: 24px;
+  min-height: globals.$ionic-scale-600;
 
-  font-size: #{tokens.$ionic-font-size-300};
+  font-size: #{globals.$ionic-font-size-300};
 }
 
 :host(.chip-large) {
-  min-height: 32px;
+  min-height: globals.$ionic-scale-800;
 
   font-size: globals.$ionic-font-size-350;
 }

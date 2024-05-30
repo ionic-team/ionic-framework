@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: bottom content'), () => {
     test('entire input component should render correctly with no fill', async ({ page }) => {
       await page.setContent(
@@ -36,6 +36,31 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: bottom content'), () => {
+    test('entire input component should render correctly with no fill', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
+      `,
+        config
+      );
+      const input = page.locator('ion-input');
+      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-no-fill`));
+    });
+    test('entire input component should render correctly with outline fill', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input fill="outline" value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
+      `,
+        config
+      );
+      const input = page.locator('ion-input');
+      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-outline`));
+    });
+  });
+});
+
 /**
  * Rendering is the same across modes
  */
@@ -53,7 +78,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 /**
  * Rendering is the same across modes
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: hint text'), () => {
     test.describe('input: hint text functionality', () => {
       test('helper text should be visible initially', async ({ page }) => {
@@ -80,12 +105,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         await expect(errorText).toBeVisible();
         await expect(errorText).toHaveText('my error');
       });
-      test('error text should change when variable is customized', async ({ page }) => {
+      test('error text and highlight should change when variable is customized', async ({ page }) => {
         await page.setContent(
           `
           <style>
             ion-input.custom-input {
               --highlight-color-invalid: purple;
+              --text-color-invalid: purple; /* ionic only */
             }
           </style>
           <ion-input class="ion-invalid ion-touched custom-input" label="my label" error-text="my error"></ion-input>
@@ -93,8 +119,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           config
         );
 
-        const errorText = page.locator('ion-input .error-text');
-        await expect(errorText).toHaveScreenshot(screenshot(`input-error-custom-color`));
+        const bottomEl = page.locator('ion-input .input-bottom');
+        await expect(bottomEl).toHaveScreenshot(screenshot(`input-error-custom-color`));
       });
     });
     test.describe('input: hint text rendering', () => {

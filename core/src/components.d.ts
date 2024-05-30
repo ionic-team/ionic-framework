@@ -1435,9 +1435,9 @@ export namespace Components {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").  Defaults to "stacked" for the ionic theme, or "start" for all other themes.  In the ionic theme, only the values "stacked" and "floating" are supported.
          */
-        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -1487,9 +1487,13 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * The shape of the input. If "round" it will have an increased border radius.
+          * Set to `"soft"` for an input with slightly rounded corners, `"round"` for an input with fully rounded corners, or `"rectangular"` for an input without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes. Only applies when the fill is set to `"solid"` or `"outline"`.
          */
-        "shape"?: 'round';
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * The size of the input. If "large", it will have an increased height. By default the size is medium. This property only applies to the `"ionic"` theme.
+         */
+        "size"?: 'medium' | 'large' | 'xlarge';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -6715,7 +6719,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").  Defaults to "stacked" for the ionic theme, or "start" for all other themes.  In the ionic theme, only the values "stacked" and "floating" are supported.
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
@@ -6779,9 +6783,13 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * The shape of the input. If "round" it will have an increased border radius.
+          * Set to `"soft"` for an input with slightly rounded corners, `"round"` for an input with fully rounded corners, or `"rectangular"` for an input without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes. Only applies when the fill is set to `"solid"` or `"outline"`.
          */
-        "shape"?: 'round';
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * The size of the input. If "large", it will have an increased height. By default the size is medium. This property only applies to the `"ionic"` theme.
+         */
+        "size"?: 'medium' | 'large' | 'xlarge';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
