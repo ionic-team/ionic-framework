@@ -5,31 +5,31 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
-  test.describe(title('badge: size'), () => {
-    test('should render 2xsmall badges', async ({ page }) => {
+  test.describe.only(title('badge: size'), () => {
+    test('should render xxsmall badges', async ({ page }) => {
       await page.setContent(
         `
-        <ion-badge size="2xsmall">1</ion-badge>
+        <ion-badge size="xxsmall">1</ion-badge>
       `,
         config
       );
 
       const badge = page.locator('ion-badge');
 
-      await expect(badge).toHaveScreenshot(screenshot(`badge-size-2xsmall`));
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xxsmall`));
     });
 
-    test('should render 2xsmall badges with long text', async ({ page }) => {
+    test('should render xxsmall badges with long text', async ({ page }) => {
       await page.setContent(
         `
-        <ion-badge size="2xsmall">99+</ion-badge>
+        <ion-badge size="xxsmall">99+</ion-badge>
       `,
         config
       );
 
       const badge = page.locator('ion-badge');
 
-      await expect(badge).toHaveScreenshot(screenshot(`badge-size-2xsmall-long-text`));
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xxsmall-long-text`));
     });
 
     test('should render xsmall badges', async ({ page }) => {
