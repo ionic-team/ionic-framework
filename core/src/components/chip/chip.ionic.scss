@@ -1,4 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../../foundations/ionic.vars.scss" as tokens;
 
 // Ionic Chip
 // --------------------------------------------------
@@ -8,15 +9,13 @@ $ionic-states-focus-primary: #9ec4fd;
 $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make this in the future, as we are setting scss variables with a var() and fallback, and it doesn't work inside a rgba().
 
 :host {
-  --background: #{globals.$ionic-color-neutral-10};
-  --border-color: transparent;
-  --border-radius: #{globals.$ionic-border-radius-rounded-small};
+  --background: #{globals.$ionic-color-neutral-100};
   --color: #{globals.$ionic-color-neutral-900};
   --focus-ring-color: #{$ionic-states-focus-primary};
-  --focus-ring-width: #{globals.$ionic-border-size-medium};
+  --focus-ring-width: #{globals.$ionic-border-size-050};
 
   @include globals.font-smoothing;
-  @include globals.padding(globals.$ionic-space-xs, globals.$ionic-space-xxs);
+  @include globals.padding(globals.$ionic-space-150, globals.$ionic-space-200);
   @include globals.border-radius(var(--border-radius));
 
   display: inline-flex;
@@ -26,23 +25,15 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
   align-items: center;
   justify-content: center;
 
-  gap: globals.$ionic-space-xxxs;
-
-  min-height: 32px;
-
-  border-width: globals.$ionic-border-size-small;
-  border-style: solid;
-
-  border-color: var(--border-color);
+  gap: globals.$ionic-space-100;
 
   background: var(--background);
   color: var(--color);
 
   font-family: globals.$ionic-font-family;
-  font-size: globals.$ionic-font-size-m;
   font-weight: globals.$ionic-font-weight-medium;
 
-  line-height: globals.$ionic-font-line-height-full;
+  line-height: globals.$ionic-line-height-full;
 
   cursor: pointer;
 
@@ -58,6 +49,8 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 
 :host(.chip-outline) {
   --background: transparent;
+  border-width: globals.$ionic-border-size-025;
+
   border-color: globals.$ionic-color-neutral-100;
 }
 
@@ -89,16 +82,35 @@ $ionic-states-hover: #{rgba(#05080f, 0.16)}; // We should review how to make thi
 // Chip Shapes
 // ---------------------------------------------
 
+:host(.chip-soft) {
+  --border-radius: #{globals.$ionic-border-radius-100};
+}
+
 :host(.chip-round) {
-  --border-radius: #{globals.$ionic-border-radius-rounded-large};
+  --border-radius: #{globals.$ionic-border-radius-400};
 }
 
 :host(.chip-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-square};
+  --border-radius: #{globals.$ionic-border-radius-0};
 }
 
 // Chip Icon
 // ---------------------------------------------
 ::slotted(ion-icon) {
-  font-size: globals.$ionic-font-size-l;
+  font-size: globals.$ionic-font-size-400;
+}
+
+// Size
+// ---------------------------------------------
+
+:host(.chip-small) {
+  min-height: 24px;
+
+  font-size: #{tokens.$ionic-font-size-300};
+}
+
+:host(.chip-large) {
+  min-height: 32px;
+
+  font-size: globals.$ionic-font-size-350;
 }

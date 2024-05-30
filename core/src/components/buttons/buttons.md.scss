@@ -4,6 +4,7 @@
 // Material Design Toolbar Default Button
 // --------------------------------------------------
 
+// TODO(FW-6203): do we need these styles?
 ::slotted(*) ion-button {
   --padding-top: 3px;
   --padding-bottom: 3px;
@@ -21,6 +22,7 @@
   --padding-bottom: 0;
 }
 
+// TODO(FW-6203): is this value correct?
 ::slotted(*) ion-button:not(.button-round) {
   --border-radius: #{$toolbar-md-button-border-radius};
 }
@@ -54,6 +56,7 @@
 // Material Design Toolbar Icon Only Clear Button
 // --------------------------------------------------
 
+// TODO(FW-6203): do we need these styles?
 ::slotted(*) .button-has-icon-only.button-clear {
   --padding-top: 12px;
   --padding-end: 12px;

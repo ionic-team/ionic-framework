@@ -7,17 +7,16 @@
 // --------------------------------------------------
 
 :host {
-  // TODO(ROU-5477): use design token here when it is added
-  --color: #121212;
-  --border-width: #{tokens.$ionic-border-size-small};
+  --color: #{tokens.$ionic-color-neutral-1000};
+  --border-width: #{tokens.$ionic-border-size-025};
   --border-color: #{tokens.$ionic-color-neutral-300};
-  --highlight-color-valid: #{tokens.$ionic-color-success-400};
-  --highlight-color-invalid: #{tokens.$ionic-color-error-400};
-  --placeholder-color: #{tokens.$ionic-color-neutral-500};
+  --highlight-color-valid: #{tokens.$ionic-color-success-base};
+  --highlight-color-invalid: #{tokens.$ionic-color-danger-base};
+  --placeholder-color: #{tokens.$ionic-color-neutral-800};
   --placeholder-opacity: 1;
-  --text-color-invalid: #{tokens.$ionic-color-error-600};
+  --text-color-invalid: #{tokens.$ionic-color-danger-800};
 
-  font-size: tokens.$ionic-font-size-m;
+  font-size: tokens.$ionic-font-size-350;
 }
 
 // Ionic Input Sizes
@@ -78,9 +77,9 @@
 }
 
 .input-clear-icon:focus-visible {
-  @include border-radius(tokens.$ionic-border-radius-rounded-small);
+  @include border-radius(tokens.$ionic-border-radius-100);
 
-  outline: #{tokens.$ionic-border-size-medium} solid #{tokens.$ionic-color-primary-100};
+  outline: #{tokens.$ionic-border-size-050} solid #{tokens.$ionic-state-focus-1};
 
   opacity: 1;
 }
@@ -109,12 +108,12 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  color: tokens.$ionic-color-neutral-700;
+  color: tokens.$ionic-color-neutral-1000;
 
-  font-size: tokens.$ionic-font-size-s;
+  font-size: tokens.$ionic-font-size-300;
   font-weight: tokens.$ionic-font-weight-medium;
 
-  line-height: tokens.$ionic-font-line-height-s;
+  line-height: tokens.$ionic-line-height-500;
 }
 
 :host(.label-floating) .label-text-wrapper {
@@ -132,11 +131,11 @@
 
 .input-bottom .helper-text,
 .input-bottom .counter {
-  color: tokens.$ionic-color-neutral-600;
+  color: tokens.$ionic-color-neutral-800;
 }
 
 :host(.has-focus.ion-valid) .helper-text {
-  color: tokens.$ionic-color-success-800;
+  color: tokens.$ionic-color-success-900;
 }
 
 :host(.ion-touched.ion-invalid) .error-text {
@@ -145,7 +144,7 @@
 
 :host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
-  --border-width: #{tokens.$ionic-border-size-small};
+  --border-width: #{tokens.$ionic-border-size-025};
 }
 
 // Input Hover
@@ -163,7 +162,7 @@
 :host(.input-disabled) {
   // color for the text within the input
   --color: #{tokens.$ionic-color-neutral-400};
-  --background: #{tokens.$ionic-color-neutral-10};
+  --background: #{tokens.$ionic-color-neutral-100};
 
   pointer-events: none;
 }
@@ -175,11 +174,11 @@
 }
 
 :host(.input-disabled.has-focus.ion-valid) {
-  --border-color: rgba(#{tokens.$ionic-color-success-400-rgb}, 0.6);
+  --border-color: rgba(#{tokens.$ionic-color-success-base-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-touched.ion-invalid) {
-  --border-color: rgba(#{tokens.$ionic-color-error-400-rgb}, 0.6);
+  --border-color: rgba(#{tokens.$ionic-color-danger-base-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-color) {
@@ -197,7 +196,7 @@
 // ----------------------------------------------------------------
 
 :host(.input-readonly) {
-  --background: #{tokens.$ionic-color-neutral-10};
+  --background: #{tokens.$ionic-color-neutral-100};
 }
 
 // Input Highlight
@@ -209,7 +208,7 @@
   position: absolute;
 
   width: 100%;
-  height: tokens.$ionic-border-size-medium;
+  height: tokens.$ionic-border-size-050;
 
   transform: scale(0);
 
@@ -222,7 +221,7 @@
 // ----------------------------------------------------------------
 
 :host(.has-focus) {
-  --border-color: #{tokens.$ionic-color-primary};
+  --border-color: #{tokens.$ionic-color-primary-base};
 }
 
 :host(.has-focus) .input-highlight {
