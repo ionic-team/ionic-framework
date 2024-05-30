@@ -4,6 +4,7 @@ import type { NotchController } from '@utils/forms';
 import { createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, inheritAttributes, componentOnReady } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -29,7 +30,7 @@ import { getCounterText } from './input.utils';
   styleUrls: {
     ios: 'input.ios.scss',
     md: 'input.md.scss',
-    ionic: 'input.md.scss',
+    ionic: 'input.ionic.scss',
   },
   scoped: true,
 })
@@ -186,8 +187,12 @@ export class Input implements ComponentInterface {
    * `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
    * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   *
+   * Defaults to "stacked" for the ionic theme, or "start" for all other themes.
+   *
+   * In the ionic theme, only the values "stacked" and "floating" are supported.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+  @Prop({ mutable: true }) labelPlacement?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -242,9 +247,12 @@ export class Input implements ComponentInterface {
   @Prop() required = false;
 
   /**
-   * The shape of the input. If "round" it will have an increased border radius.
+   * Set to `"soft"` for an input with slightly rounded corners, `"round"` for an input with fully
+   * rounded corners, or `"rectangular"` for an input without rounded corners.
+   * Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+   * Only applies when the fill is set to `"solid"` or `"outline"`.
    */
-  @Prop() shape?: 'round';
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -256,6 +264,12 @@ export class Input implements ComponentInterface {
    * Possible values are: `"any"` or a positive floating point number.
    */
   @Prop() step?: string;
+
+  /**
+   * The size of the input. If "large", it will have an increased height. By default the
+   * size is medium. This property only applies to the `"ionic"` theme.
+   */
+  @Prop() size?: 'medium' | 'large' | 'xlarge' = 'medium';
 
   /**
    * The type of control to display. The default type is text.
@@ -344,6 +358,10 @@ export class Input implements ComponentInterface {
       ...inheritAriaAttributes(this.el),
       ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
     };
+
+    if (this.labelPlacement === undefined) {
+      this.labelPlacement = getIonTheme(this) === 'ionic' ? ionicThemeDefaultLabelPlacement : 'start';
+    }
   }
 
   connectedCallback() {
@@ -471,6 +489,55 @@ export class Input implements ComponentInterface {
 
   private getValue(): string {
     return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
+  }
+
+  private getLabelPlacement() {
+    const theme = getIonTheme(this);
+    const { el, labelPlacement } = this;
+
+    if (theme === 'ionic' && labelPlacement !== 'stacked' && labelPlacement !== 'floating') {
+      printIonWarning(
+        `The "${labelPlacement}" label placement is not supported in the ${theme} theme. The default value of "${ionicThemeDefaultLabelPlacement}" will be used instead.`,
+        el
+      );
+      return ionicThemeDefaultLabelPlacement;
+    }
+
+    return labelPlacement;
+  }
+
+  // TODO(FW-6201): Remove this method when size is supported in ios and md
+  private getSize() {
+    const theme = getIonTheme(this);
+    const { size } = this;
+    if (theme !== 'ionic' && (size === 'large' || size === 'xlarge')) {
+      printIonWarning(`The "${size}" size is not supported in the ${theme} theme.`);
+      // Fallback to medium size, which is the default size for all themes.
+      return 'medium';
+    }
+    return size;
+  }
+
+  private getShape() {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+    // TODO(ROU-5475): Remove the check for `soft` when the shape is supported in ios and md.
+    if ((theme === 'ios' && shape === 'round') || (theme !== 'ionic' && shape === 'soft')) {
+      printIonWarning(`The "${shape}" shape is not supported in the ${theme} theme.`);
+      return undefined;
+    }
+
+    if (shape !== undefined) {
+      return shape;
+    }
+
+    // TODO(FW-6229): Update this when the default shape has been decided.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    // Fallback to round shape, which is the default shape for the ionic theme.
+    return 'round';
   }
 
   private onInput = (ev: InputEvent | Event) => {
@@ -655,9 +722,9 @@ export class Input implements ComponentInterface {
    */
   private renderLabelContainer() {
     const theme = getIonTheme(this);
-    const hasOutlineFill = theme === 'md' && this.fill === 'outline';
+    const hasOutlineFill = this.fill === 'outline';
 
-    if (hasOutlineFill) {
+    if (hasOutlineFill && theme === 'md') {
       /**
        * The outline fill has a special outline
        * that appears around the input and the label.
@@ -685,8 +752,9 @@ export class Input implements ComponentInterface {
     }
 
     /**
-     * If not using the outline style,
-     * we can render just the label.
+     * If not using the outline style, OR if using the
+     * ionic theme, just render the label. For the ionic
+     * theme, the outline will be rendered elsewhere.
      */
     return this.renderLabel();
   }
@@ -714,11 +782,14 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, inputClearIcon } = this;
+    const { disabled, fill, readonly, inputId, el, hasFocus, clearInput, inputClearIcon } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
+    const size = this.getSize();
+    const shape = this.getShape();
     const inItem = hostContext('ion-item', this.el);
-    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = (theme === 'md' || theme === 'ionic') && fill !== 'outline' && !inItem;
+    const labelPlacement = this.getLabelPlacement();
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -752,10 +823,12 @@ export class Input implements ComponentInterface {
           'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
+          [`input-size-${size}`]: true,
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
           'input-disabled': disabled,
+          'input-readonly': readonly,
         })}
       >
         {/**
@@ -767,6 +840,18 @@ export class Input implements ComponentInterface {
         <label class="input-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="native-wrapper">
+            {
+              /**
+               * For the ionic theme, we render the outline container here
+               * instead of higher up, so it can be positioned relative to
+               * the native wrapper instead of the <label> element or the
+               * entire component. This allows the label text to be positioned
+               * above the outline, while staying within the bounds of the
+               * <label> element, ensuring that clicking the label text
+               * focuses the input.
+               */
+              theme === 'ionic' && fill === 'outline' && <div class="input-outline"></div>
+            }
             <slot name="start"></slot>
             <input
               class="native-input"
@@ -802,7 +887,7 @@ export class Input implements ComponentInterface {
               onCompositionend={this.onCompositionEnd}
               {...this.inheritedAttributes}
             />
-            {this.clearInput && !readonly && !disabled && (
+            {clearInput && !readonly && !disabled && (
               <button
                 aria-label="reset"
                 type="button"
@@ -840,3 +925,4 @@ export class Input implements ComponentInterface {
 }
 
 let inputIds = 0;
+const ionicThemeDefaultLabelPlacement = 'stacked';
