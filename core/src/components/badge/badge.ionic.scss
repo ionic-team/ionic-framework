@@ -21,6 +21,16 @@
 // Badge Sizes
 // --------------------------------------------------
 
+/* 2-Extra Small Badge */
+:host(.badge-2xsmall) {
+  min-width: globals.$ionic-scale-400;
+  height: globals.$ionic-scale-400;
+
+  font-size: globals.$ionic-font-size-300;
+
+  line-height: globals.$ionic-line-height-400;
+}
+
 /* Extra Small Badge */
 :host(.badge-xsmall) {
   min-width: globals.$ionic-scale-600;

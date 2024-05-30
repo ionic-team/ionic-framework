@@ -27,10 +27,16 @@ export class Badge implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * Set to "xsmall" for even less height and width. Set to `"small"` for less height and width. Set to "medium" for slightly larger dimensions. Set to "large" for even greater height and width. Set to `"xlarge"` for the largest badge.
+   * Set to `"2xsmall"` for the smallest badge.
+   * Set to "xsmall" for even less height and width.
+   * Set to `"small"` for less height and width.
+   * Set to "medium" for slightly larger dimensions.
+   * Set to "large" for even greater height and width.
+   * Set to `"xlarge"` for the largest badge.
+   *
    * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+  @Prop() size?: '2xsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
