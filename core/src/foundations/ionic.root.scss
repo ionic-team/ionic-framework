@@ -3,6 +3,8 @@
  * Ionic Design System
  */
 
+@use "../themes/functions.sizes" as font;
+
 :root {
   --ionic-elevation-100: 0px 3px 9px 0px rgba(0, 0, 0, 0.07), 0px 0px 4px 0px rgba(0, 0, 0, 0.04);
   --ionic-elevation-200: 0px 8px 25px 0px rgba(0, 0, 0, 0.08), 0px 1px 5px 0px rgba(0, 0, 0, 0.05);
@@ -12,18 +14,18 @@
   --ionic-elevation-600: 0px 8px 25px 0px rgba(6, 43, 99, 0.08), 0px 1px 5px 0px rgba(6, 43, 99, 0.05);
   --ionic-elevation-700: 0px 15px 32px 0px rgba(6, 43, 99, 0.09), 0px 2px 7px 0px rgba(6, 43, 99, 0.05);
   --ionic-elevation-800: 0px 20px 48px 0px rgba(6, 43, 99, 0.12), 0px 3px 14px 0px rgba(6, 43, 99, 0.12);
-  --ionic-font-size-275: 11px;
-  --ionic-font-size-300: 12px;
-  --ionic-font-size-350: 14px;
-  --ionic-font-size-400: 16px;
-  --ionic-font-size-450: 18px;
-  --ionic-font-size-500: 20px;
-  --ionic-font-size-550: 22px;
-  --ionic-font-size-600: 24px;
-  --ionic-font-size-650: 26px;
-  --ionic-font-size-700: 28px;
-  --ionic-font-size-800: 32px;
-  --ionic-font-size-900: 36px;
+  --ionic-font-size-275: #{font.px-to-rem(11)};
+  --ionic-font-size-300: #{font.px-to-rem(12)};
+  --ionic-font-size-350: #{font.px-to-rem(14)};
+  --ionic-font-size-400: #{font.px-to-rem(16)};
+  --ionic-font-size-450: #{font.px-to-rem(18)};
+  --ionic-font-size-500: #{font.px-to-rem(20)};
+  --ionic-font-size-550: #{font.px-to-rem(22)};
+  --ionic-font-size-600: #{font.px-to-rem(24)};
+  --ionic-font-size-650: #{font.px-to-rem(26)};
+  --ionic-font-size-700: #{font.px-to-rem(28)};
+  --ionic-font-size-800: #{font.px-to-rem(32)};
+  --ionic-font-size-900: #{font.px-to-rem(36)};
   --ionic-font-weight-thin: 100;
   --ionic-font-weight-extra-light: 200;
   --ionic-font-weight-light: 300;
