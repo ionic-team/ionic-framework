@@ -6,6 +6,32 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('badge: size'), () => {
+    test('should render xxsmall badges', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="xxsmall">1</ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xxsmall`));
+    });
+
+    test('should render xxsmall badges with long text', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="xxsmall">99+</ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xxsmall-long-text`));
+    });
+
     test('should render xsmall badges', async ({ page }) => {
       await page.setContent(
         `

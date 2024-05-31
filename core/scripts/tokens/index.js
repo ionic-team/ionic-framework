@@ -16,6 +16,7 @@ const {
   getRgbaValue,
   hexToRgb,
   generateShadowValue,
+  generateFontSizeValue,
   generateFontFamilyValue,
   generateTypographyValue,
   generateRgbValue,
@@ -43,6 +44,8 @@ StyleDictionary.registerFormat({
           return `--${variablesPrefix}-${prop.name}: ${cssShadow};`;
         } else if (prop.attributes.category.match('font-family')) {
           return generateFontFamilyValue(prop);
+        } else if (prop.attributes.category.match('font-size')) {
+          return generateFontSizeValue(prop);
         } else {
           const rgb = hexToRgb(prop.value);
           prop.value = getRgbaValue(prop.value);
@@ -52,7 +55,11 @@ StyleDictionary.registerFormat({
         }
       });
 
-    return fileHeader({ file }) + ':root {\n' + prefixedVariables.join('\n') + '\n}\n';
+    return [
+      fileHeader({ file }),
+      '@use "../themes/functions.sizes" as font;\n',
+      ':root {\n' + prefixedVariables.join('\n') + '\n}\n',
+    ].join('\n');
   },
 });
 
@@ -72,6 +79,8 @@ StyleDictionary.registerFormat({
         return `$${variablesPrefix}-${prop.name}: var(--${variablesPrefix}-${prop.name}, ${cssShadow});`;
       } else if (prop.attributes.category.match('font-family')) {
         return generateFontFamilyValue(prop, 'scss');
+      } else if (prop.attributes.category.match('font-size')) {
+        return generateFontSizeValue(prop, 'scss');
       } else if (prop['$type'] === 'typography') {
         return generateTypographyValue(prop, dictionary);
       } else {
@@ -79,7 +88,11 @@ StyleDictionary.registerFormat({
       }
     });
 
-    return fileHeader({ file }) + prefixedVariables.join('\n') + '\n';
+    return [
+      fileHeader({ file }),
+      '@use "../themes/functions.sizes" as font;\n',
+      prefixedVariables.join('\n') + '\n',
+    ].join('\n');
   },
 });
 
