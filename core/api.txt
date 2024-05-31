@@ -312,7 +312,7 @@ ion-backdrop,event,ionBackdropTap,void,true
 ion-badge,shadow
 ion-badge,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
-ion-badge,prop,size,"large" | "medium" | "small" | "xlarge" | undefined,undefined,false,false
+ion-badge,prop,size,"large" | "medium" | "small" | "xlarge" | "xsmall" | undefined,undefined,false,false
 ion-badge,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-badge,css-prop,--background,ionic
 ion-badge,css-prop,--background,ios
@@ -910,7 +910,7 @@ ion-input,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-input,prop,helperText,string | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input,prop,label,string | undefined,undefined,false,false
-ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
+ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start" | undefined,undefined,false,false
 ion-input,prop,max,number | string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
 ion-input,prop,min,number | string | undefined,undefined,false,false
@@ -922,7 +922,8 @@ ion-input,prop,pattern,string | undefined,undefined,false,false
 ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,true
 ion-input,prop,required,boolean,false,false,false
-ion-input,prop,shape,"round" | undefined,undefined,false,false
+ion-input,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
+ion-input,prop,size,"large" | "medium" | "xlarge" | undefined,'medium',false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
 ion-input,prop,theme,"ios" | "md" | "ionic",undefined,false,false
@@ -988,6 +989,9 @@ ion-input,css-prop,--placeholder-font-weight,md
 ion-input,css-prop,--placeholder-opacity,ionic
 ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
+ion-input,css-prop,--text-color-invalid,ionic
+ion-input,css-prop,--text-color-invalid,ios
+ion-input,css-prop,--text-color-invalid,md
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true

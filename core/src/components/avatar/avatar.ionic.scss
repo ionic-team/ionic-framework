@@ -16,15 +16,15 @@
   background: globals.$ionic-color-neutral-100;
   color: globals.$ionic-color-neutral-800;
 
-  font-weight: globals.$ionic-font-weight-regular;
+  font-weight: globals.$ionic-font-weight-medium;
 
-  line-height: globals.$ionic-line-height-600;
+  line-height: globals.$ionic-line-height-700;
 }
 
 :host(:not(.avatar-image)) {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  border: globals.$ionic-border-size-025 solid globals.$ionic-color-neutral-800;
+  border: globals.$ionic-border-size-025 globals.$ionic-border-style-solid globals.$ionic-color-neutral-800;
 }
 
 // Avatar Sizes
@@ -39,9 +39,7 @@
 
   font-size: globals.$ionic-font-size-300;
 
-  font-weight: globals.$ionic-font-weight-medium;
-
-  line-height: globals.$ionic-line-height-500;
+  line-height: globals.$ionic-line-height-400;
 }
 
 :host(.avatar-small) {
@@ -51,7 +49,9 @@
   width: globals.$ionic-scale-800;
   height: globals.$ionic-scale-800;
 
-  font-size: globals.$ionic-font-size-350;
+  font-size: globals.$ionic-font-size-400;
+
+  line-height: globals.$ionic-line-height-600;
 }
 
 :host(.avatar-medium) {
@@ -61,7 +61,7 @@
   width: globals.$ionic-scale-1000;
   height: globals.$ionic-scale-1000;
 
-  font-size: globals.$ionic-font-size-400;
+  font-size: globals.$ionic-font-size-450;
 }
 
 :host(.avatar-large) {
@@ -71,7 +71,7 @@
   width: globals.$ionic-scale-1200;
   height: globals.$ionic-scale-1200;
 
-  font-size: globals.$ionic-font-size-450;
+  font-size: globals.$ionic-font-size-500;
 }
 
 :host(.avatar-xlarge) {
@@ -81,9 +81,7 @@
   width: globals.$ionic-scale-1400;
   height: globals.$ionic-scale-1400;
 
-  font-size: globals.$ionic-font-size-500;
-
-  line-height: globals.$ionic-line-height-700;
+  font-size: globals.$ionic-font-size-550;
 }
 
 // Avatar Shapes

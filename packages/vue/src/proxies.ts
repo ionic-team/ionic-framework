@@ -438,6 +438,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'shape',
   'spellcheck',
   'step',
+  'size',
   'type',
   'value',
   'ionInput',
