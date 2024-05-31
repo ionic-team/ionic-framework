@@ -18,6 +18,20 @@
   font-weight: globals.$ionic-font-weight-medium;
 }
 
+// Badge Shapes
+// --------------------------------------------------
+
+/* Soft Badge */
+:host(.badge-soft) {
+  @include border-radius(globals.$ionic-border-radius-200);
+}
+
+:host(.badge-xxsmall.badge-soft),
+:host(.badge-xsmall.badge-soft),
+:host(.badge-small.badge-soft) {
+  @include border-radius(globals.$ionic-border-radius-100);
+}
+
 // Badge Sizes
 // --------------------------------------------------
 

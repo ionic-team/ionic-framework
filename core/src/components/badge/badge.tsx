@@ -27,6 +27,13 @@ export class Badge implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
+   * Set to `"soft"` for slightly rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'soft';
+
+  /**
    * Set to `"xxsmall"` for the smallest badge.
    * Set to "xsmall" for a very small badge.
    * Set to `"small"` for a small badge.
@@ -37,6 +44,22 @@ export class Badge implements ComponentInterface {
    * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
    */
   @Prop() size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-10777): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
 
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
@@ -55,12 +78,14 @@ export class Badge implements ComponentInterface {
   }
 
   render() {
+    const shape = this.getShape();
     const size = this.getSize();
     const theme = getIonTheme(this);
     return (
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
+          [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
         })}
       >
