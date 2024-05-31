@@ -23,10 +23,15 @@
 
 /* Soft Badge */
 :host(.badge-soft) {
+  @include border-radius(globals.$ionic-border-radius-200);
+}
+
+:host(.badge-xxsmall.badge-soft),
+:host(.badge-xsmall.badge-soft),
+:host(.badge-small.badge-soft) {
   @include border-radius(globals.$ionic-border-radius-100);
 }
 
-/* Round Badge */
 :host(.badge-round) {
   @include border-radius(globals.$ionic-border-radius-full);
 }
