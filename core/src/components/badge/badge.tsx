@@ -28,10 +28,11 @@ export class Badge implements ComponentInterface {
 
   /**
    * Set to `"soft"` for slightly rounded corners.
+   * Set to `"round"` for fully rounded corners.
    *
    * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() shape?: 'soft';
+  @Prop() shape?: 'soft' | 'round';
 
   /**
    * Set to `"xxsmall"` for the smallest badge.

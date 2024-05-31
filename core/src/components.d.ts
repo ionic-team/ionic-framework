@@ -418,9 +418,9 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"soft"` for slightly rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
-        "shape"?: 'soft';
+        "shape"?: 'soft' | 'round';
         /**
           * Set to `"xxsmall"` for the smallest badge. Set to "xsmall" for a very small badge. Set to `"small"` for a small badge. Set to "medium" for a medium badge. Set to "large" for a large badge. Set to `"xlarge"` for the largest badge.  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
@@ -5666,9 +5666,9 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"soft"` for slightly rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
-        "shape"?: 'soft';
+        "shape"?: 'soft' | 'round';
         /**
           * Set to `"xxsmall"` for the smallest badge. Set to "xsmall" for a very small badge. Set to `"small"` for a small badge. Set to "medium" for a medium badge. Set to "large" for a large badge. Set to `"xlarge"` for the largest badge.  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */

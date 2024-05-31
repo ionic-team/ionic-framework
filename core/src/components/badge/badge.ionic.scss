@@ -32,6 +32,10 @@
   @include border-radius(globals.$ionic-border-radius-100);
 }
 
+:host(.badge-round) {
+  @include border-radius(globals.$ionic-border-radius-full);
+}
+
 // Badge Sizes
 // --------------------------------------------------
 
