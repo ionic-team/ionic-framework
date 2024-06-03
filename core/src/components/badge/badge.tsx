@@ -27,6 +27,7 @@ export class Badge implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
+   * Set to `"rectangular"` for non-rounded corners.
    * Set to `"soft"` for slightly rounded corners.
    * Set to `"round"` for fully rounded corners.
    *

@@ -99,5 +99,31 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
       await expect(badge).toHaveScreenshot(screenshot(`badge-shape-round-long-text`));
     });
+
+    test('should render rectangular badges', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge shape="rectangular">1</ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-shape-rectangular`));
+    });
+
+    test('should render rectangular badges with long text', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge shape="rectangular">99+</ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-shape-rectangular-long-text`));
+    });
   });
 });
