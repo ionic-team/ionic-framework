@@ -88,3 +88,21 @@
     box-sizing: border-box;
   }
 }
+
+// Item: Disabled
+// --------------------------------------------------
+
+:host(.item-disabled){
+  cursor: default;
+  pointer-events: none;
+
+  &::after {
+    background: #{globals.$ionic-state-disabled};
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
