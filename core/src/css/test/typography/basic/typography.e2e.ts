@@ -18,9 +18,9 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           <h4>H4: The quick brown fox jumps over the lazy dog</h4>
           <h5>H5: The quick brown fox jumps over the lazy dog</h5>
           <h6>H6: The quick brown fox jumps over the lazy dog</h6>
-          <p><ion-text class="ionic-font-size-l"><p>Tag_P FontLarge: The quick brown fox jumps over the lazy dog</p></ion-text><p>
-          <p><ion-text class="ionic-font-size-m">Tag_None FontMedium: The quick brown fox jumps over the lazydog</ion-text></p>
-          <p><ion-text class="ionic-font-size-s"><span>Tag_Span FontSmall: The quick brown fox jumps over the lazy dog</span></ion-text></p>
+          <p><ion-text class="ionic-font-size-400"><p>Tag_P FontLarge: The quick brown fox jumps over the lazy dog</p></ion-text><p>
+          <p><ion-text class="ionic-font-size-350">Tag_None FontMedium: The quick brown fox jumps over the lazydog</ion-text></p>
+          <p><ion-text class="ionic-font-size-300"><span>Tag_Span FontSmall: The quick brown fox jumps over the lazy dog</span></ion-text></p>
         </div>
       `,
         config

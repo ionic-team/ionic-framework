@@ -18,8 +18,52 @@
   font-weight: globals.$ionic-font-weight-medium;
 }
 
+// Badge Shapes
+// --------------------------------------------------
+
+/* Soft Badge */
+:host(.badge-soft) {
+  @include border-radius(globals.$ionic-border-radius-200);
+}
+
+:host(.badge-xxsmall.badge-soft),
+:host(.badge-xsmall.badge-soft),
+:host(.badge-small.badge-soft) {
+  @include border-radius(globals.$ionic-border-radius-100);
+}
+
+/* Round Badge */
+:host(.badge-round) {
+  @include border-radius(globals.$ionic-border-radius-full);
+}
+
+/* Rectangular Badge */
+:host(.badge-rectangular) {
+  @include border-radius(globals.$ionic-border-radius-0);
+}
+
 // Badge Sizes
 // --------------------------------------------------
+
+/* 2-Extra Small Badge */
+:host(.badge-xxsmall) {
+  min-width: globals.$ionic-scale-400;
+  height: globals.$ionic-scale-400;
+
+  font-size: globals.$ionic-font-size-300;
+
+  line-height: globals.$ionic-line-height-400;
+}
+
+/* Extra Small Badge */
+:host(.badge-xsmall) {
+  min-width: globals.$ionic-scale-600;
+  height: globals.$ionic-scale-600;
+
+  font-size: globals.$ionic-font-size-350;
+
+  line-height: globals.$ionic-line-height-600;
+}
 
 /* Small Badge */
 :host(.badge-small) {
