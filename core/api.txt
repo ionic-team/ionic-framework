@@ -312,7 +312,8 @@ ion-backdrop,event,ionBackdropTap,void,true
 ion-badge,shadow
 ion-badge,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
-ion-badge,prop,size,"large" | "medium" | "small" | "xlarge" | undefined,undefined,false,false
+ion-badge,prop,shape,"round" | "soft" | undefined,undefined,false,false
+ion-badge,prop,size,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxsmall" | undefined,undefined,false,false
 ion-badge,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-badge,css-prop,--background,ionic
 ion-badge,css-prop,--background,ios
@@ -899,7 +900,7 @@ ion-input,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-input,prop,helperText,string | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input,prop,label,string | undefined,undefined,false,false
-ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
+ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start" | undefined,undefined,false,false
 ion-input,prop,max,number | string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
 ion-input,prop,min,number | string | undefined,undefined,false,false
@@ -911,7 +912,8 @@ ion-input,prop,pattern,string | undefined,undefined,false,false
 ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,true
 ion-input,prop,required,boolean,false,false,false
-ion-input,prop,shape,"round" | undefined,undefined,false,false
+ion-input,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
+ion-input,prop,size,"large" | "medium" | "xlarge" | undefined,'medium',false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
 ion-input,prop,theme,"ios" | "md" | "ionic",undefined,false,false
@@ -977,6 +979,9 @@ ion-input,css-prop,--placeholder-font-weight,md
 ion-input,css-prop,--placeholder-opacity,ionic
 ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
+ion-input,css-prop,--text-color-invalid,ionic
+ion-input,css-prop,--text-color-invalid,ios
+ion-input,css-prop,--text-color-invalid,md
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -1003,28 +1008,21 @@ ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background,ionic
 ion-item,css-prop,--background,ios
 ion-item,css-prop,--background,md
-ion-item,css-prop,--background-activated,ionic
 ion-item,css-prop,--background-activated,ios
 ion-item,css-prop,--background-activated,md
-ion-item,css-prop,--background-activated-opacity,ionic
 ion-item,css-prop,--background-activated-opacity,ios
 ion-item,css-prop,--background-activated-opacity,md
-ion-item,css-prop,--background-focused,ionic
 ion-item,css-prop,--background-focused,ios
 ion-item,css-prop,--background-focused,md
-ion-item,css-prop,--background-focused-opacity,ionic
 ion-item,css-prop,--background-focused-opacity,ios
 ion-item,css-prop,--background-focused-opacity,md
-ion-item,css-prop,--background-hover,ionic
 ion-item,css-prop,--background-hover,ios
 ion-item,css-prop,--background-hover,md
-ion-item,css-prop,--background-hover-opacity,ionic
 ion-item,css-prop,--background-hover-opacity,ios
 ion-item,css-prop,--background-hover-opacity,md
 ion-item,css-prop,--border-color,ionic
 ion-item,css-prop,--border-color,ios
 ion-item,css-prop,--border-color,md
-ion-item,css-prop,--border-radius,ionic
 ion-item,css-prop,--border-radius,ios
 ion-item,css-prop,--border-radius,md
 ion-item,css-prop,--border-style,ionic
@@ -1033,43 +1031,30 @@ ion-item,css-prop,--border-style,md
 ion-item,css-prop,--border-width,ionic
 ion-item,css-prop,--border-width,ios
 ion-item,css-prop,--border-width,md
-ion-item,css-prop,--color,ionic
 ion-item,css-prop,--color,ios
 ion-item,css-prop,--color,md
-ion-item,css-prop,--color-activated,ionic
 ion-item,css-prop,--color-activated,ios
 ion-item,css-prop,--color-activated,md
-ion-item,css-prop,--color-focused,ionic
 ion-item,css-prop,--color-focused,ios
 ion-item,css-prop,--color-focused,md
-ion-item,css-prop,--color-hover,ionic
 ion-item,css-prop,--color-hover,ios
 ion-item,css-prop,--color-hover,md
-ion-item,css-prop,--detail-icon-color,ionic
 ion-item,css-prop,--detail-icon-color,ios
 ion-item,css-prop,--detail-icon-color,md
-ion-item,css-prop,--detail-icon-font-size,ionic
 ion-item,css-prop,--detail-icon-font-size,ios
 ion-item,css-prop,--detail-icon-font-size,md
-ion-item,css-prop,--detail-icon-opacity,ionic
 ion-item,css-prop,--detail-icon-opacity,ios
 ion-item,css-prop,--detail-icon-opacity,md
-ion-item,css-prop,--inner-border-width,ionic
 ion-item,css-prop,--inner-border-width,ios
 ion-item,css-prop,--inner-border-width,md
-ion-item,css-prop,--inner-box-shadow,ionic
 ion-item,css-prop,--inner-box-shadow,ios
 ion-item,css-prop,--inner-box-shadow,md
-ion-item,css-prop,--inner-padding-bottom,ionic
 ion-item,css-prop,--inner-padding-bottom,ios
 ion-item,css-prop,--inner-padding-bottom,md
-ion-item,css-prop,--inner-padding-end,ionic
 ion-item,css-prop,--inner-padding-end,ios
 ion-item,css-prop,--inner-padding-end,md
-ion-item,css-prop,--inner-padding-start,ionic
 ion-item,css-prop,--inner-padding-start,ios
 ion-item,css-prop,--inner-padding-start,md
-ion-item,css-prop,--inner-padding-top,ionic
 ion-item,css-prop,--inner-padding-top,ios
 ion-item,css-prop,--inner-padding-top,md
 ion-item,css-prop,--min-height,ionic
@@ -1087,10 +1072,8 @@ ion-item,css-prop,--padding-start,md
 ion-item,css-prop,--padding-top,ionic
 ion-item,css-prop,--padding-top,ios
 ion-item,css-prop,--padding-top,md
-ion-item,css-prop,--ripple-color,ionic
 ion-item,css-prop,--ripple-color,ios
 ion-item,css-prop,--ripple-color,md
-ion-item,css-prop,--transition,ionic
 ion-item,css-prop,--transition,ios
 ion-item,css-prop,--transition,md
 ion-item,part,detail-icon

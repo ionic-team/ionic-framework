@@ -1,0 +1,90 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Item
+// --------------------------------------------------
+
+:host {
+  /**
+    * @prop --background: Background of the item
+    *
+    * @prop --border-color: Color of the item border
+    * @prop --border-style: Style of the item border
+    * @prop --border-width: Width of the item border
+    *
+    * @prop --min-height: Minimum height of the item
+    *
+    * @prop --padding-bottom: Bottom padding of the item
+    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item
+    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item
+    * @prop --padding-top: Top padding of the item
+    *
+    */
+  --background: #{globals.$ionic-color-base-white};
+  --border-color: #{globals.$ionic-color-neutral-300};
+  --border-style: #{globals.$ionic-border-style-solid};
+  --border-width: #{globals.$ionic-border-size-025};
+  --min-height: #{globals.$ionic-scale-1800};
+  --padding-top: #{globals.$ionic-space-200};
+  --padding-end: #{globals.$ionic-space-400};
+  --padding-bottom: #{globals.$ionic-space-200};
+  --padding-start: #{globals.$ionic-space-400};
+
+  @include globals.font-smoothing;
+
+  display: flex;
+
+  position: relative;
+
+  align-items: center;
+  justify-content: space-between;
+
+  outline: none;
+
+  font-family: globals.$ionic-font-family;
+
+  text-align: initial;
+  text-decoration: none;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+// Item: Structure
+// --------------------------------------------------
+.item-native {
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+
+  min-height: var(--min-height);
+
+  border-bottom-width: var(--border-width);
+  border-bottom-style: var(--border-style);
+  border-bottom-color: var(--border-color);
+
+  background: var(--background);
+
+  overflow: inherit;
+  box-sizing: border-box;
+
+  slot[name="start"]::slotted(*) {
+    @include globals.margin(null, #{globals.$ionic-space-400}, null, null);
+  }
+
+  slot[name="end"]::slotted(*) {
+    @include globals.margin(null, null, null, #{globals.$ionic-space-400});
+  }
+
+  .item-inner,
+  .item-inner .input-wrapper {
+    display: flex;
+
+    flex: 1;
+
+    overflow: inherit;
+    box-sizing: border-box;
+  }
+}

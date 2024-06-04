@@ -49,58 +49,159 @@
       </ion-header>
 
       <ion-content id="content" class="ion-padding">
+        <h2>Underline</h2>
+
         <div class="grid">
           <div class="grid-item">
             <h2>No Hint</h2>
-            <ion-input label="Email"></ion-input>
+            <ion-input placeholder="Placeholder" label="Email"></ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Helper Hint</h2>
-            <ion-input label="Email" helper-text="Enter your email"></ion-input>
+            <ion-input placeholder="Placeholder" label="Email" helper-text="Helper message"></ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Error Hint</h2>
             <ion-input
+              placeholder="Placeholder"
               class="ion-touched ion-invalid"
               label="Email"
-              error-text="Please enter a valid email"
+              error-text="Helper message"
             ></ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Custom Error Color</h2>
             <ion-input
+              placeholder="Placeholder"
               class="ion-touched ion-invalid custom-error-color"
               label="Email"
-              error-text="Please enter a valid email"
+              error-text="Helper message"
             ></ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Counter</h2>
-            <ion-input label="Email" counter="true" maxlength="100"></ion-input>
+            <ion-input placeholder="Placeholder" label="Email" counter="true" maxlength="100"></ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Custom Counter</h2>
-            <ion-input id="custom-counter" label="Email" counter="true" maxlength="100"></ion-input>
+            <ion-input
+              placeholder="Placeholder"
+              id="custom-counter"
+              label="Email"
+              counter="true"
+              maxlength="100"
+            ></ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Counter with Helper</h2>
-            <ion-input label="Email" counter="true" maxlength="100" helper-text="Enter an email"></ion-input>
+            <ion-input
+              placeholder="Placeholder"
+              label="Email"
+              counter="true"
+              maxlength="100"
+              helper-text="Enter an email"
+            ></ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Counter with Error</h2>
             <ion-input
+              placeholder="Placeholder"
               class="ion-touched ion-invalid"
               label="Email"
               counter="true"
               maxlength="100"
-              error-text="Please enter a valid email"
+              error-text="Helper message"
+            ></ion-input>
+          </div>
+        </div>
+
+        <h2>Outline</h2>
+
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Hint</h2>
+            <ion-input placeholder="Placeholder" fill="outline" label="Email"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Hint</h2>
+            <ion-input placeholder="Placeholder" fill="outline" label="Email" helper-text="Helper message"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Hint</h2>
+            <ion-input
+              placeholder="Placeholder"
+              fill="outline"
+              class="ion-touched ion-invalid"
+              label="Email"
+              error-text="Helper message"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Error Color</h2>
+            <ion-input
+              placeholder="Placeholder"
+              fill="outline"
+              class="ion-touched ion-invalid custom-error-color"
+              label="Email"
+              error-text="Helper message"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter</h2>
+            <ion-input
+              placeholder="Placeholder"
+              fill="outline"
+              label="Email"
+              counter="true"
+              maxlength="100"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Counter</h2>
+            <ion-input
+              placeholder="Placeholder"
+              fill="outline"
+              id="custom-counter"
+              label="Email"
+              counter="true"
+              maxlength="100"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter with Helper</h2>
+            <ion-input
+              placeholder="Placeholder"
+              fill="outline"
+              label="Email"
+              counter="true"
+              maxlength="100"
+              helper-text="Enter an email"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter with Error</h2>
+            <ion-input
+              placeholder="Placeholder"
+              fill="outline"
+              class="ion-touched ion-invalid"
+              label="Email"
+              counter="true"
+              maxlength="100"
+              error-text="Helper message"
             ></ion-input>
           </div>
         </div>
