@@ -274,6 +274,7 @@ input {
   max-width: calc(100% / 0.75);
 }
 
+// TODO(ROU-10796): uncomment this when the scss compilation issue is fixed
 // :host(.checkbox-label-placement-stacked.checkbox-alignment-start) .label-text-wrapper {
 //   @include globals.transform-origin(start, top);
 // }
