@@ -92,7 +92,7 @@
 // Item: Disabled
 // --------------------------------------------------
 
-:host(.item-disabled){
+:host(.item-disabled) {
   cursor: default;
   pointer-events: none;
 
