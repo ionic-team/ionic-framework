@@ -29,7 +29,7 @@ runs:
       shell: bash
       working-directory: ./packages/angular/test
     - name: Install Dependencies
-      run: npm install --legacy-peer-deps # TODO(FW-6227): Remove legacy-peer-deps flag
+      run: npm install
       shell: bash
       working-directory: ./packages/angular/test/build/${{ inputs.app }}
     - name: Sync Built Changes

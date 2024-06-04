@@ -3,7 +3,7 @@ const port = 3000;
 describe('Multiple Tabs', () => {
   /*
     This spec tests that switching between tabs via a menu works
-    Fixes bug https://github.com/ionic-team/ionic/issues/21336
+    Fixes bug https://github.com/ionic-team/ionic-framework/issues/21336
   */
 
   it('/multiple-tabs > PageA should be visible', () => {
