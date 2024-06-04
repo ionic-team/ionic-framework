@@ -97,12 +97,13 @@
   pointer-events: none;
 
   &::after {
-    background: #{globals.$ionic-state-disabled};
-    bottom: 0;
-    content: "";
-    left: 0;
+    @include globals.position-horizontal(0, 0);
     position: absolute;
-    right: 0;
     top: 0;
+    bottom: 0;
+
+    background: #{globals.$ionic-state-disabled};
+
+    content: "";
   }
 }
