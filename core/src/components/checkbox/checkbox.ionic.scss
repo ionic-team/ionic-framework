@@ -289,9 +289,6 @@ input {
   --size: #{globals.$ionic-scale-400};
 }
 
-:host(.checkbox-size-small.checkbox-shape-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-0};
-}
 
 // Checked / Indeterminate Checkbox
 // ---------------------------------------------
