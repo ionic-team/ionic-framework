@@ -41,6 +41,10 @@ export class Avatar implements ComponentInterface {
     return !!this.el.querySelector('ion-img') || !!this.el.querySelector('img');
   }
 
+  get hasIcon() {
+    return !!this.el.querySelector('ion-icon');
+  }
+
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
     const { size } = this;
@@ -85,6 +89,7 @@ export class Avatar implements ComponentInterface {
           [`avatar-${size}`]: size !== undefined,
           [`avatar-${shape}`]: shape !== undefined,
           [`avatar-image`]: this.hasImage,
+          [`avatar-icon`]: this.hasIcon,
         }}
       >
         <slot></slot>

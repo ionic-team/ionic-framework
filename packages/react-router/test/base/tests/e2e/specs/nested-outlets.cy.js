@@ -6,7 +6,7 @@ describe('Nested Outlets', () => {
     and to be able to transition to/from one nested outlet.
     Utilizes `ionPage` prop on `IonRouterOutlet` to make the router outlet
     a target of the transition.
-    Fixes bug https://github.com/ionic-team/ionic/issues/20597
+    Fixes bug https://github.com/ionic-team/ionic-framework/issues/20597
   */
 
   it('/nested-outlet > First Page should be visible', () => {
@@ -59,7 +59,7 @@ describe('Nested Outlets 2', () => {
   outlet is transition from and to itself, therefore it can't animate.
   I think the same issue exists when going from a item page back to the list page.
   This should be fixable through configuring a less complicated route structure in the app.
-  Fixes bug https://github.com/ionic-team/ionic/issues/20219
+  Fixes bug https://github.com/ionic-team/ionic-framework/issues/20219
 */
 
   it('/nested-outlet2 > First Page should be visible', () => {

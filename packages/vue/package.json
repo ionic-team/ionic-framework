@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "8.1.2",
+  "version": "8.2.0",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -45,9 +45,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ionic-team/ionic/issues"
+    "url": "https://github.com/ionic-team/ionic-framework/issues"
   },
-  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "homepage": "https://github.com/ionic-team/ionic-framework#readme",
   "devDependencies": {
     "@babel/types": "^7.18.4",
     "@ionic/eslint-config": "^0.3.0",
@@ -66,7 +66,7 @@
     "vue-router": "^4.0.16"
   },
   "dependencies": {
-    "@ionic/core": "^8.1.2",
+    "@ionic/core": "^8.2.0",
     "ionicons": "^7.0.0"
   },
   "vetur": {
