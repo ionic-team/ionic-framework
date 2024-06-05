@@ -5,7 +5,6 @@
 
 :host {
   // Border
-  --border-radius: #{globals.$ionic-border-radius-100};
   --border-width: #{globals.$ionic-border-size-025};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-color: #{globals.$ionic-color-neutral-800};
@@ -288,7 +287,6 @@ input {
 :host(.checkbox-size-small) {
   --size: #{globals.$ionic-scale-400};
 }
-
 
 // Checked / Indeterminate Checkbox
 // ---------------------------------------------
