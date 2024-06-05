@@ -6,6 +6,7 @@
 :host {
   /**
     * @prop --background: Background of the item
+    * @prop --background-activated: Background of the item when pressed. Note: setting this will interfere with the Material Design ripple.
     *
     * @prop --border-color: Color of the item border
     * @prop --border-style: Style of the item border
@@ -20,6 +21,7 @@
     *
     */
   --background: #{globals.$ionic-color-base-white};
+  --background-activated: #{globals.$ionic-color-neutral-200};
   --border-color: #{globals.$ionic-color-neutral-300};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-width: #{globals.$ionic-border-size-025};
@@ -87,4 +89,11 @@
     overflow: inherit;
     box-sizing: border-box;
   }
+}
+
+// Item: Activated
+// --------------------------------------------------
+
+:host(.ion-activated) .item-native {
+    background: var(--background-activated);
 }
