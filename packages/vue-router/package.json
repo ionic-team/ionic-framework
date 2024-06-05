@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue-router",
-  "version": "8.1.2",
+  "version": "8.2.0",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test.spec": "jest",
@@ -40,11 +40,11 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ionic-team/ionic/issues"
+    "url": "https://github.com/ionic-team/ionic-framework/issues"
   },
-  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "homepage": "https://github.com/ionic-team/ionic-framework#readme",
   "dependencies": {
-    "@ionic/vue": "^8.1.2"
+    "@ionic/vue": "^8.2.0"
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",

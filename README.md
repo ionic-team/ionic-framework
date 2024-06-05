@@ -20,7 +20,7 @@
   <a href="https://github.com/ionic-team/ionic-framework/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Ionic Framework is released under the MIT license." />
   </a>
-  <a href="https://github.com/ionic-team/ionic/blob/main/docs/CONTRIBUTING.md">
+  <a href="https://github.com/ionic-team/ionic-framework/blob/main/docs/CONTRIBUTING.md">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
   <a href="https://twitter.com/Ionicframework">
@@ -38,7 +38,7 @@
     Documentation
   </a>
   <span> · </span>
-  <a href="https://github.com/ionic-team/ionic/blob/main/docs/CONTRIBUTING.md">Contribute</a>
+  <a href="https://github.com/ionic-team/ionic-framework/blob/main/docs/CONTRIBUTING.md">Contribute</a>
   <span> · </span>
   <a href="https://blog.ionicframework.com/">Blog</a>
   <br />
@@ -63,14 +63,15 @@ Looking for the `ionic-angular` package? Ionic 3 has been moved to the [`ionic-v
 
 ### Getting Started
 
-Start a new project by following our quick [Getting Started guide](https://ionicframework.com/getting-started/).
+Start a new project by following our [documentation](https://ionicframework.com/docs/).
 We would love to hear from you! If you have any feedback or run into issues using our framework, please file
-an [issue](https://github.com/ionic-team/ionic/issues/new) on this repository.
+an [issue](https://github.com/ionic-team/ionic-framework/issues/new) on this repository.
 
 ### Migration Guides
 
 Already have an Ionic app? These guides will help you migrate to the latest versions.
 
+* [Migrate from v7 to v8](https://ionicframework.com/docs/updating/8-0)
 * [Migrate from v6 to v7](https://ionicframework.com/docs/updating/7-0)
 * [Migrate from v5 to v6](https://ionicframework.com/docs/updating/6-0)
 * [Migrate from v4 to v5](https://ionicframework.com/docs/updating/5-0)
@@ -82,21 +83,16 @@ The Ionic Conference App is a full featured Ionic app. It is the perfect startin
 
 - [Angular Ionic Conference App](https://github.com/ionic-team/ionic-conference-app)
 - [React Ionic Conference App](https://github.com/ionic-team/ionic-react-conference-app)
-<!-- TODO(FW-3811): add this when the vue conference app is updated -->
-<!-- - [Vue Ionic Conference App](https://github.com/ionic-team/ionic-vue-conference-app) -->
+- [Vue Ionic Conference App](https://github.com/ionic-team/ionic-vue-conference-app)
 
 ### Contributing
 
 Thanks for your interest in contributing! Read up on our guidelines for
-[contributing](https://github.com/ionic-team/ionic/blob/main/docs/CONTRIBUTING.md)
-and then look through our issues with a [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
+[contributing](https://github.com/ionic-team/ionic-framework/blob/main/docs/CONTRIBUTING.md)
+and then look through our issues with a [help wanted](https://github.com/ionic-team/ionic-framework/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
 label.
 
-Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/main/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
-
-### Future Goals
-
-As Ionic Framework components migrate to the web component standard, a goal of ours is to have Ionic Framework easily work within all of the popular frameworks.
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/ionic-team/ionic-framework/blob/main/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ### Earlier Versions
 

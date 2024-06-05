@@ -20,12 +20,15 @@ import {
 
 import { NavParams } from '../directives/navigation/nav-params';
 
+import { ConfigToken } from './config';
+
 // TODO(FW-2827): types
 
 @Injectable()
 export class AngularDelegate {
   private zone = inject(NgZone);
   private applicationRef = inject(ApplicationRef);
+  private config = inject(ConfigToken);
 
   create(
     environmentInjector: EnvironmentInjector,
@@ -37,7 +40,8 @@ export class AngularDelegate {
       injector,
       this.applicationRef,
       this.zone,
-      elementReferenceKey
+      elementReferenceKey,
+      this.config.useSetInputAPI ?? false
     );
   }
 }
@@ -51,7 +55,8 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     private injector: Injector,
     private applicationRef: ApplicationRef,
     private zone: NgZone,
-    private elementReferenceKey?: string
+    private elementReferenceKey?: string,
+    private enableSignalsSupport?: boolean
   ) {}
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
@@ -84,7 +89,8 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
           component,
           componentProps,
           cssClasses,
-          this.elementReferenceKey
+          this.elementReferenceKey,
+          this.enableSignalsSupport
         );
         resolve(el);
       });
@@ -121,7 +127,8 @@ export const attachView = (
   component: any,
   params: any,
   cssClasses: string[] | undefined,
-  elementReferenceKey: string | undefined
+  elementReferenceKey: string | undefined,
+  enableSignalsSupport: boolean | undefined
 ): any => {
   /**
    * Wraps the injector with a custom injector that
@@ -164,7 +171,38 @@ export const attachView = (
       );
     }
 
-    Object.assign(instance, params);
+    /**
+     * Angular 14.1 added support for setInput
+     * so we need to fall back to Object.assign
+     * for Angular 14.0.
+     */
+    if (enableSignalsSupport === true && componentRef.setInput !== undefined) {
+      const { modal, popover, ...otherParams } = params;
+      /**
+       * Any key/value pairs set in componentProps
+       * must be set as inputs on the component instance.
+       */
+      for (const key in otherParams) {
+        componentRef.setInput(key, otherParams[key]);
+      }
+
+      /**
+       * Using setInput will cause an error when
+       * setting modal/popover on a component that
+       * does not define them as an input. For backwards
+       * compatibility purposes we fall back to using
+       * Object.assign for these properties.
+       */
+      if (modal !== undefined) {
+        Object.assign(instance, { modal });
+      }
+
+      if (popover !== undefined) {
+        Object.assign(instance, { popover });
+      }
+    } else {
+      Object.assign(instance, params);
+    }
   }
   if (cssClasses) {
     for (const cssClass of cssClasses) {

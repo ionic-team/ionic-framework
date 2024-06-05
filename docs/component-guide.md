@@ -385,9 +385,9 @@ ion-ripple-effect {
 
 ### Example Components
 
-- [ion-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/button)
-- [ion-back-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/back-button)
-- [ion-menu-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/menu-button)
+- [ion-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/button)
+- [ion-back-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/back-button)
+- [ion-menu-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/menu-button)
 
 ### References
 
@@ -401,7 +401,7 @@ ion-ripple-effect {
 
 #### Example Components
 
-- [ion-checkbox](https://github.com/ionic-team/ionic/tree/main/core/src/components/checkbox)
+- [ion-checkbox](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/checkbox)
 
 #### VoiceOver
 
@@ -480,7 +480,7 @@ render() {
     <Host>
       <label>
         {this.labelText}
-        <input type="checkbox" {...this.inheritedAttributes} /> 
+        <input type="checkbox" {...this.inheritedAttributes} />
       </label>
     </Host>
   )
@@ -512,7 +512,7 @@ This is a compromise we have to make in order for it to work with the other scre
 
 #### Example Components
 
-- [ion-toggle](https://github.com/ionic-team/ionic/tree/main/core/src/components/toggle)
+- [ion-toggle](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/toggle)
 
 #### Voiceover
 
@@ -593,7 +593,7 @@ render() {
     <Host>
       <label>
         {this.labelText}
-        <input type="checkbox" role="switch" {...this.inheritedAttributes} /> 
+        <input type="checkbox" role="switch" {...this.inheritedAttributes} />
       </label>
     </Host>
   )
@@ -625,8 +625,8 @@ There is a WebKit bug open for this: https://bugs.webkit.org/show_bug.cgi?id=196
 
 #### Example Components
 
-- [ion-accordion](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion)
-- [ion-accordion-group](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion-group)
+- [ion-accordion](https://github.com/ionic-team/ionic-framework/tree/master/core/src/components/accordion)
+- [ion-accordion-group](https://github.com/ionic-team/ionic-framework/tree/master/core/src/components/accordion-group)
 
 #### NVDA
 
@@ -641,11 +641,11 @@ Certain components can render an `<a>` or a `<button>` depending on the presence
 
 ### Example Components
 
-- [ion-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/button)
-- [ion-card](https://github.com/ionic-team/ionic/tree/main/core/src/components/card)
-- [ion-fab-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/fab-button)
-- [ion-item-option](https://github.com/ionic-team/ionic/tree/main/core/src/components/item-option)
-- [ion-item](https://github.com/ionic-team/ionic/tree/main/core/src/components/item)
+- [ion-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/button)
+- [ion-card](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/card)
+- [ion-fab-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/fab-button)
+- [ion-item-option](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/item-option)
+- [ion-item](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/item)
 
 ### Component Structure
 

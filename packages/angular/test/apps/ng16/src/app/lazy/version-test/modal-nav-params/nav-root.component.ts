@@ -1,5 +1,5 @@
 import { JsonPipe } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 import { IonicModule } from "@ionic/angular";
 
@@ -23,7 +23,7 @@ let rootParamsException = false;
 })
 export class NavRootComponent {
 
-  params: any;
+  @Input() params: any = {};
 
   ngOnInit() {
     if (this.params === undefined) {
