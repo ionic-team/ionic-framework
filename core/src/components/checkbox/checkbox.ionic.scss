@@ -286,7 +286,6 @@ input {
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
-  --border-radius: #{globals.$ionic-border-radius-050};
   --size: #{globals.$ionic-scale-400};
 }
 
