@@ -382,6 +382,10 @@ input {
   --border-radius: #{globals.$ionic-border-radius-100};
 }
 
+:host(.checkbox-size-small.checkbox-shape-soft) {
+  --border-radius: #{globals.$ionic-border-radius-050};
+}
+
 :host(.checkbox-shape-rectangular) {
   --border-radius: #{globals.$ionic-border-radius-0};
 }
