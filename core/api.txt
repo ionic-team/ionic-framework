@@ -1019,6 +1019,7 @@ ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background,ionic
 ion-item,css-prop,--background,ios
 ion-item,css-prop,--background,md
+ion-item,css-prop,--background-activated,ionic
 ion-item,css-prop,--background-activated,ios
 ion-item,css-prop,--background-activated,md
 ion-item,css-prop,--background-activated-opacity,ios
