@@ -91,9 +91,25 @@
   }
 }
 
+// Item: Disabled
+// --------------------------------------------------
+:host(.item-disabled) {
+  cursor: default;
+  pointer-events: none;
+
+  &::after {
+    @include globals.position(0, 0, 0, 0);
+
+    position: absolute;
+
+    background: #{globals.$ionic-state-disabled};
+
+    content: "";
+  }
+}
+
 // Item: Activated
 // --------------------------------------------------
-
 :host(.ion-activated) .item-native {
   background: var(--background-activated);
 }
