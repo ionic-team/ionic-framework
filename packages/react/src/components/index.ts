@@ -42,6 +42,7 @@ export {
   InfiniteScrollCustomEvent,
   InputCustomEvent,
   InputChangeEventDetail,
+  InputInputEventDetail,
   ItemReorderEventDetail,
   ItemReorderCustomEvent,
   ItemSlidingCustomEvent,

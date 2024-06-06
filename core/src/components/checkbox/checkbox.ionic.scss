@@ -1,34 +1,45 @@
-@import "./checkbox";
-@import "./checkbox.ionic.vars";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Ionic Checkbox
 // --------------------------------------------------
 
 :host {
   // Border
-  --border-radius: #{$checkbox-ionic-border-radius};
-  --border-width: #{$checkbox-ionic-border-width};
-  --border-style: #{$checkbox-ionic-border-style};
-  --border-color: #{$checkbox-ionic-background-color-off};
+  --border-width: #{globals.$ionic-border-size-025};
+  --border-style: #{globals.$ionic-border-style-solid};
+  --border-color: #{globals.$ionic-color-neutral-800};
   --checkmark-width: 3;
 
   // Focus
-  --focus-ring-color: #9ec4fd;
-  --focus-ring-width: 2px;
-  --focus-ring-offset: 2px;
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
+  --focus-ring-width: #{globals.$ionic-border-size-050};
+  --focus-ring-offset: #{globals.$ionic-space-050};
 
   // Size
-  --size: #{$checkbox-ionic-size};
+  --size: #{globals.$ionic-scale-600};
+  --checkbox-background-checked: #{globals.$ionic-color-primary-base};
+  --border-color-checked: #{globals.$ionic-color-primary-base};
+  --checkmark-color: #{globals.$ionic-color-base-white};
+  --transition: none;
+
+  display: inline-block;
+
+  position: relative;
+
+  cursor: pointer;
+
+  user-select: none;
+  z-index: 2;
 
   // Checkbox Target area
   // --------------------------------------------------
   &::after {
-    @include position(50%, 0, null, 0);
+    @include globals.position(50%, 0, null, 0);
 
     position: absolute;
 
     height: 100%;
-    min-height: 48px;
+    min-height: globals.$ionic-scale-1200;
 
     transform: translateY(-50%);
 
@@ -44,60 +55,303 @@
   }
 }
 
+:host(.in-item) {
+  flex: 1 1 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * Checkbox can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
+:host([slot="start"]),
+:host([slot="end"]) {
+  // Reset the flex property when the checkbox
+  // is slotted to avoid growing the element larger
+  // than its content.
+  flex: initial;
+
+  width: auto;
+}
+
+.checkbox-wrapper {
+  display: flex;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: inherit;
+
+  cursor: inherit;
+}
+
+.label-text-wrapper {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+:host(.in-item) .label-text-wrapper {
+  @include globals.margin(globals.$ionic-space-250, null, globals.$ionic-space-250, null);
+}
+
+:host(.in-item.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include globals.margin(globals.$ionic-space-250, null, globals.$ionic-space-400, null);
+}
+
+:host(.in-item.checkbox-label-placement-stacked) .native-wrapper {
+  @include globals.margin(null, null, globals.$ionic-space-250, null);
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+input {
+  @include globals.visually-hidden();
+}
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+}
+
+.checkbox-icon {
+  @include globals.border-radius(var(--border-radius));
+
+  position: relative;
+
+  width: var(--size);
+  height: var(--size);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--checkbox-background);
+
+  box-sizing: border-box;
+}
+
+.checkbox-icon path {
+  fill: none;
+  stroke: var(--checkmark-color);
+  stroke-width: var(--checkmark-width);
+
+  opacity: 0;
+}
+
+// Justify Content
+// ---------------------------------------------
+
+:host(.checkbox-justify-space-between) .checkbox-wrapper {
+  justify-content: space-between;
+}
+
+:host(.checkbox-justify-start) .checkbox-wrapper {
+  justify-content: start;
+}
+
+:host(.checkbox-justify-end) .checkbox-wrapper {
+  justify-content: end;
+}
+
+// Align Items
+// ---------------------------------------------
+
+:host(.checkbox-alignment-start) .checkbox-wrapper {
+  align-items: start;
+}
+
+:host(.checkbox-alignment-center) .checkbox-wrapper {
+  align-items: center;
+}
+
+// Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the checkbox in LTR and
+ * on the right in RTL.
+ */
+:host(.checkbox-label-placement-start) .checkbox-wrapper {
+  flex-direction: row;
+}
+
+:host(.checkbox-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include globals.margin(null, globals.$ionic-space-400, null, 0);
+}
+
+// Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the checkbox in LTR and
+ * on the left in RTL.
+ */
+:host(.checkbox-label-placement-end) .checkbox-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the checkbox should be on the start
+ * when the label sits at the end.
+ */
+:host(.checkbox-label-placement-end) .label-text-wrapper {
+  @include globals.margin(null, 0, null, globals.$ionic-space-400);
+}
+
+// Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include globals.margin(null, globals.$ionic-space-400, null, 0);
+}
+
+/**
+ * Label is on the left of the checkbox in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the checkbox.
+ */
+:host(.checkbox-label-placement-stacked) .checkbox-wrapper {
+  flex-direction: column;
+}
+
+:host(.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include globals.transform(scale(0.75));
+
+  /**
+   * The margin between the label and
+   * the checkbox should be on the bottom
+   * when the label sits at the top.
+   */
+  @include globals.margin(null, 0, globals.$ionic-space-400, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the checkbox.
+   */
+  max-width: calc(100% / 0.75);
+}
+
+// TODO(ROU-10796): uncomment this when the scss compilation issue is fixed
+// :host(.checkbox-label-placement-stacked.checkbox-alignment-start) .label-text-wrapper {
+//   @include globals.transform-origin(start, top);
+// }
+
+// :host(.checkbox-label-placement-stacked.checkbox-alignment-center) .label-text-wrapper {
+//   @include globals.transform-origin(center, top);
+// }
+
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
-  // Size
-  --size: #{$checkbox-ionic-small-size};
+  --size: #{globals.$ionic-scale-400};
+}
+
+// Checked / Indeterminate Checkbox
+// ---------------------------------------------
+
+:host(.checkbox-checked) .checkbox-icon,
+:host(.checkbox-indeterminate) .checkbox-icon {
+  border-color: var(--border-color-checked);
+
+  background: var(--checkbox-background-checked);
+}
+
+:host(.checkbox-checked) .checkbox-icon path,
+:host(.checkbox-indeterminate) .checkbox-icon path {
+  opacity: 1;
 }
 
 // Ionic Design Checkbox Invalid
 // --------------------------------------------------
 :host(.ion-invalid) {
-  --focus-ring-color: #ffafaf;
+  --focus-ring-color: #{globals.$ionic-state-focus-2};
 
   .checkbox-icon {
-    border-color: #f72c2c;
+    border-color: globals.$ionic-color-danger-800;
   }
 }
 
 // Checkbox Disabled
 // --------------------------------------------------
+:host(.checkbox-disabled) {
+  pointer-events: none;
+}
+
 // disabled, indeterminate checkbox
 :host(.checkbox-disabled.checkbox-indeterminate) .checkbox-icon {
-  /* TODO(FW-6183): Use design token variables */
-  border-width: 0;
+  border-width: globals.$ionic-border-size-0;
 
-  background-color: #{$background-color-step-600};
+  background-color: #{globals.$ionic-color-base-white};
 }
 
 // disabled, unchecked checkbox
 :host(.checkbox-disabled) .checkbox-icon {
-  /* TODO(FW-6183): Use design token variables */
-  border-color: #c9c9c9;
+  border-color: globals.$ionic-color-neutral-800;
 
-  background-color: #f5f5f5; // mix of #f5f5f5 with 60% #FFF
+  background-color: globals.$ionic-state-disabled;
 }
 
 // disabled, checked checkbox
 :host(.checkbox-disabled.checkbox-checked) .checkbox-icon {
-  border-width: 0;
+  border-width: globals.$ionic-border-size-0;
 
-  background-color: $background-color-step-100;
+  background-color: globals.$ionic-color-primary-base;
+
+  opacity: 0.6;
 }
 
 // Checkbox Hover
 // --------------------------------------------------------
 @media (any-hover: hover) {
   :host(:hover) .checkbox-icon {
-    /* TODO(FW-6183): Use design token variables */
-    background-color: #ececec; // mix of 'white', '#121212', 0.08, 'rgb'
+    background-color: globals.$ionic-color-neutral-100;
   }
 
   :host(:hover.checkbox-checked) .checkbox-icon,
   :host(:hover.checkbox-indeterminate) .checkbox-icon {
-    /* TODO(FW-6183): Use design token variables */
-    background-color: #1061da; // mix of '#1068eb', '#121212', 0.08, 'rgb'
+    background-color: globals.$ionic-color-primary-800;
   }
 }
 
@@ -105,33 +359,35 @@
 // --------------------------------------------------
 // Only show the focus ring when the checkbox is focused and not disabled
 :host(.ion-focused:not(.checkbox-disabled)) .checkbox-icon {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
 
 // Checkbox: Active
 // --------------------------------------------------------
 :host(.ion-activated) .checkbox-icon {
-  /* TODO(FW-6183): Use design token variables */
-  background-color: #e3e3e3; // mix of 'white', '#121212', 0.12, 'rgb'
+  background-color: globals.$ionic-color-neutral-200;
 }
 
 :host(.ion-activated.checkbox-checked) .checkbox-icon,
 :host(.ion-activated.checkbox-indeterminate) .checkbox-icon {
-  /* TODO(FW-6183): Use design token variables */
-  background-color: #105ed1; // mix of '#1068eb', '#121212', 0.12, 'rgb'
+  background-color: globals.$ionic-color-primary-900;
 }
 
 // Ionic Design Checkbox Shapes
 // --------------------------------------------------
 :host(.checkbox-shape-soft) {
-  --border-radius: #{$checkbox-ionic-border-radius};
+  --border-radius: #{globals.$ionic-border-radius-100};
+}
+
+:host(.checkbox-size-small.checkbox-shape-soft) {
+  --border-radius: #{globals.$ionic-border-radius-050};
 }
 
 :host(.checkbox-shape-rectangular) {
-  --border-radius: #{$checkbox-ionic-rectangular-border};
+  --border-radius: #{globals.$ionic-border-radius-0};
 }
 
 .checkbox-wrapper {
-  min-height: 48px;
+  min-height: #{globals.$ionic-scale-1200};
 }

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.1](https://github.com/ionic-team/ionic-framework/compare/v8.2.0...v8.2.1) (2024-06-05)
+
+* **react:** export InputInputEventDetail type ([#29512](https://github.com/ionic-team/ionic-framework/issues/29512)) ([624ceba](https://github.com/ionic-team/ionic-framework/commit/624ceba2e128bb13a3afe4c35883f603f5488d0e)), closes [#29518](https://github.com/ionic-team/ionic-framework/issues/29518)
+
+
+
+
+
+# [8.2.0](https://github.com/ionic-team/ionic-framework/compare/v8.1.3...v8.2.0) (2024-05-22)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.1.3](https://github.com/ionic-team/ionic-framework/compare/v8.1.2...v8.1.3) (2024-05-22)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [8.1.2](https://github.com/ionic-team/ionic-framework/compare/v8.1.1...v8.1.2) (2024-05-15)
 
 **Note:** Version bump only for package @ionic/react

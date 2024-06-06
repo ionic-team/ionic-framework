@@ -15,8 +15,7 @@ npm pack ../../../dist
 npm pack ../../../../angular-server/dist
 
 # Install Dependencies
-# TODO(FW-6227): Remove --legacy-peer-deps once Angular 18 is released
-npm install *.tgz --no-save --legacy-peer-deps
+npm install *.tgz --no-save
 
 # Delete Angular cache directory
 rm -rf .angular/

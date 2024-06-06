@@ -103,3 +103,35 @@
 :host(.avatar-rectangular) {
   --border-radius: #{globals.$ionic-border-radius-0};
 }
+
+// Avatar Icon
+// --------------------------------------------------
+
+:host(.avatar-icon) {
+  @include padding(0);
+}
+
+:host(.avatar-xsmall) ::slotted(ion-icon) {
+  width: globals.$ionic-scale-400;
+  height: globals.$ionic-scale-400;
+}
+
+:host(.avatar-small) ::slotted(ion-icon) {
+  width: globals.$ionic-scale-500;
+  height: globals.$ionic-scale-500;
+}
+
+:host(.avatar-medium) ::slotted(ion-icon) {
+  width: globals.$ionic-scale-600;
+  height: globals.$ionic-scale-600;
+}
+
+:host(.avatar-large) ::slotted(ion-icon) {
+  width: globals.$ionic-scale-800;
+  height: globals.$ionic-scale-800;
+}
+
+:host(.avatar-xlarge) ::slotted(ion-icon) {
+  width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
+}
