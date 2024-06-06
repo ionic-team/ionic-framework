@@ -107,10 +107,10 @@
 
     content: "";
   }
+}
 
 // Item: Activated
 // --------------------------------------------------
 :host(.ion-activated) .item-native {
   background: var(--background-activated);
-
 }
