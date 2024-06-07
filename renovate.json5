@@ -35,7 +35,6 @@
       matchPackageNames: ["mcr.microsoft.com/playwright"],
       groupName: "playwright",
       matchFileNames: [
-        "core/package.json",
         "core/Dockerfile"
       ],
       versioning: "semver"
