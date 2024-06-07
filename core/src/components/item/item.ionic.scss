@@ -113,3 +113,17 @@
 :host(.ion-activated) .item-native {
   background: var(--background-activated);
 }
+
+// Item: Focused
+// --------------------------------------------------
+:host(.ion-focused) .item-native::after {
+  @include globals.position(0, 0, 0, 0);
+
+  position: absolute;
+
+  border-width: globals.$ionic-border-size-050;
+  border-style: globals.$ionic-border-style-solid;
+  border-color: globals.$ionic-state-focus-1;
+
+  content: "";
+}
