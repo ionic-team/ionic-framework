@@ -12,7 +12,7 @@
 //      }
 //
 // --------------------------------------------------
-@mixin disable-state() {
+@mixin disabled-state() {
   @include mixins.position(0, 0, 0, 0);
   position: absolute;
 
