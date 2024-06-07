@@ -121,10 +121,9 @@
 
   position: absolute;
 
-  border-width: 2px;
-  border-style: solid;
-
-  border-color: #{globals.$ionic-state-focus-1};
+  border-width: globals.$ionic-border-size-050;
+  border-style: globals.$ionic-border-style-solid;
+  border-color: globals.$ionic-state-focus-1;
 
   content: "";
 }
