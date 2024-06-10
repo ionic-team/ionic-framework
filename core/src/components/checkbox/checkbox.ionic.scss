@@ -319,11 +319,8 @@ input {
   pointer-events: none;
 }
 
-// disabled, indeterminate checkbox
-:host(.checkbox-disabled.checkbox-indeterminate) .checkbox-icon {
-  border-width: globals.$ionic-border-size-0;
-
-  background-color: #{globals.$ionic-color-base-white};
+:host(.checkbox-disabled) .native-wrapper:after {
+  @include globals.disabled-state();
 }
 
 // disabled, unchecked checkbox
@@ -338,8 +335,6 @@ input {
   border-width: globals.$ionic-border-size-0;
 
   background-color: globals.$ionic-color-primary-base;
-
-  opacity: 0.6;
 }
 
 // Checkbox Hover

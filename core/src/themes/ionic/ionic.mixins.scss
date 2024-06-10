@@ -1,0 +1,24 @@
+// Ionic Mixins
+// forward the global mixin to be used on component scope
+@forward "../mixins";
+// use global mixins on this ionic.mixin context
+@use "../mixins" as mixins;
+@use "../../foundations/ionic.vars.scss" as tokens;
+
+// Disabled mixin to be used on pseudo elements for the Ionic Theme disabled state
+//
+// ex: :host(.checkbox-disabled) .native-wrapper:after {
+//       @include globals.disable-state();
+//      }
+//
+// --------------------------------------------------
+@mixin disabled-state() {
+  @include mixins.position(0, 0, 0, 0);
+  position: absolute;
+
+  background-color: tokens.$ionic-state-disabled;
+
+  content: "";
+
+  pointer-events: none;
+}
