@@ -54,7 +54,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
 
     // Bug only occurs with the legacy refresher.
     test.describe('legacy refresher', () => {
-      test.only('should display when content is fullscreen', async ({ page, browserName }) => {
+      test('should display when content is fullscreen', async ({ page, browserName }) => {
         test.info().annotations.push({
           type: 'issue',
           description: 'https://github.com/ionic-team/ionic-framework/issues/18714',
