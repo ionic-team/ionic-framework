@@ -1,0 +1,23 @@
+
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Products</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let product of products">
+      <ion-thumbnail style="--border-radius: 10px" slot="end" *ngIf="product.media.source">
+        <img [src]="product.media.source" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.price.formatted_with_symbol }}</p>
+        <ion-button color="dark" (click)="onBuyNowButtonTouched(product)">
+          Buy now
+        </ion-button>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+

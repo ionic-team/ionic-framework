@@ -7,5 +7,13 @@
   },
   "engines": {
     "node": ">= 16"
+  },
+  "dependencies": {
+    "@capacitor/camera": "^6.0.0",
+    "@capacitor/filesystem": "^6.0.0",
+    "@capacitor/preferences": "^6.0.0",
+    "@chec/commerce.js": "^2.8.0",
+    "@ionic/pwa-elements": "^3.3.0",
+    "@types/chec__commerce.js": "^2.8.11"
   }
 }

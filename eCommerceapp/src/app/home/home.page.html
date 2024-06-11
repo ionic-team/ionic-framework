@@ -1,0 +1,61 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Ionic Shopping
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openCart()" #cart>
+      <div class="cart-length">{{ cartItemCount | async }}</div>
+      <ion-icon name="cart" class="cart-icon"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-list>
+    <ion-card *ngFor="let p of products">
+      <ion-card-header>
+        <ion-card-title>{{ p.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="8">
+            <ion-label color="secondary">
+              <b>{{ p.price | currency:'USD' }}</b>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4" class="ion-text-right">
+            <ion-button fill="clear" (click)="addToCart(p)">
+              <ion-icon name="add"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>
+
+
+
+/*<ion-header //[translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+//<ion-content //[fullscreen]="true">
+  <ion-header //collapse="condense">
+    <ion-toolbar>
+      <ion-title //size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id=//"container">
+    <strong>Ready to create an app?</strong>
+    //<p>Start with Ionic //<a //target=//"_blank" //rel="noopener noreferrer" //href="https://ionicframework.com/docs/components">UI Components</a></p>
+  </div>
+</ion-content>*/
