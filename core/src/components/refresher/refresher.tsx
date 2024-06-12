@@ -48,6 +48,7 @@ export class Refresher implements ComponentInterface {
   private pointerDown = false;
   private needsCompletion = false;
   private didRefresh = false;
+  private contentFullscreen = false;
   private lastVelocityY = 0;
   private elementToTransform?: HTMLElement;
   private animations: Animation[] = [];
@@ -476,6 +477,12 @@ export class Refresher implements ComponentInterface {
        * Query the background content element from the host ion-content element directly.
        */
       this.backgroundContentEl = await contentEl.getBackgroundElement();
+      /**
+       * Check if the content element is fullscreen to apply the correct styles
+       * when the refresher is refreshing. Otherwise, the refresher will be
+       * hidden because it is positioned behind the background content element.
+       */
+      this.contentFullscreen = contentEl.fullscreen;
 
       if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
         this.setupNativeRefresher(contentEl);
@@ -578,6 +585,15 @@ export class Refresher implements ComponentInterface {
     this.progress = 0;
     this.state = RefresherState.Inactive;
     this.memoizeOverflowStyle();
+
+    /**
+     * If the content is fullscreen, then we need to
+     * set the offset-top style on the background content
+     * element to ensure that the refresher is shown.
+     */
+    if (this.contentFullscreen && this.backgroundContentEl) {
+      this.backgroundContentEl.style.setProperty('--offset-top', '0px');
+    }
   }
 
   private onMove(detail: GestureDetail) {
@@ -735,6 +751,18 @@ export class Refresher implements ComponentInterface {
        * user can scroll again.
        */
       this.setCss(0, '0ms', false, '', true);
+
+      /**
+       * Reset the offset-top style on the background content
+       * when the refresher is no longer refreshing and the
+       * content is fullscreen.
+       *
+       * This ensures that the behavior of background content
+       * does not change when refreshing is complete.
+       */
+      if (this.contentFullscreen && this.backgroundContentEl) {
+        this.backgroundContentEl?.style.removeProperty('--offset-top');
+      }
     }, 600);
 
     // reset the styles on the scroll element
