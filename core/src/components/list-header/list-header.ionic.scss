@@ -1,0 +1,57 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./list-header";
+@import "../item/item.ionic.vars";
+
+:host {
+  --background: transparent;
+  --color: #{globals.$ionic-color-neutral-1200};
+
+  min-height: 58px;
+
+  font-size: globals.$ionic-font-size-350;
+  font-weight: globals.$ionic-font-weight-medium;
+
+  line-height: globals.$ionic-line-height-600;
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$item-ionic-padding-end});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$item-ionic-padding-start});
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$item-ionic-padding-start});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$item-ionic-padding-end});
+  }
+  /* stylelint-enable */
+}
+
+// List Header: Slotted Components
+// --------------------------------------------------
+
+// Button
+// Buttons are styled to look like links.
+::slotted(ion-button) {
+  --background-activated: transparent;
+  --background-hover: transparent;
+  --color: #{globals.$ionic-color-primary-base};
+  --padding-top: #{globals.$ionic-space-0};
+  --padding-end: #{globals.$ionic-space-0};
+  --focus-ring-color: transparent;
+
+  font-size: globals.$ionic-font-size-350;
+
+  line-height: globals.$ionic-line-height-600;
+}
+
+::slotted(ion-button.ion-focused) {
+  text-decoration: underline;
+  text-decoration-color: var(--color);
+}
+
+@media (any-hover: hover) {
+  ::slotted(ion-button:hover) {
+    text-decoration: underline;
+    text-decoration-color: var(--color);
+  }
+}
