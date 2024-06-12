@@ -8,7 +8,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* **playwright:** bump packages upon new release ([#29596](https://github.com/ionic-team/ionic-framework/issues/29596)) ([e1c0f45](https://github.com/ionic-team/ionic-framework/commit/e1c0f457966ab79c7a8774ec9bd0b34458067305))
 * **refresher:** show when content is fullscreen ([#29608](https://github.com/ionic-team/ionic-framework/issues/29608)) ([5cdfac8](https://github.com/ionic-team/ionic-framework/commit/5cdfac89f5389cb3009427183f7034ba05788bc2)), closes [#18714](https://github.com/ionic-team/ionic-framework/issues/18714)
 
 
