@@ -1,3 +1,4 @@
+import list from '@phosphor-icons/core/assets/regular/list.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, h } from '@stencil/core';
 import type { ButtonInterface } from '@utils/element-interface';
@@ -76,14 +77,29 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     this.visible = await updateVisibility(this.menu);
   }
 
+  get menuIcon() {
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: menuOutline,
+      ionic: list,
+      md: menuSharp
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured menu icon or the default icon
+    return config.get('menuIcon', defaultIcon);
+  }
+
   private onClick = async () => {
     return menuController.toggle(this.menu);
   };
 
   render() {
-    const { color, disabled, inheritedAttributes } = this;
+    const { color, disabled, inheritedAttributes, menuIcon } = this;
     const theme = getIonTheme(this);
-    const menuIcon = config.get('menuIcon', theme === 'ios' ? menuOutline : menuSharp);
     const hidden = this.autoHide && !this.visible;
 
     const attrs = {
