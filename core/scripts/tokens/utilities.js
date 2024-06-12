@@ -73,7 +73,6 @@ function generateTypographyValue(prop, dictionary) {
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
   $${variablesPrefix}-${prop.name}: (
-    font-family: $ionic-font-family,
     font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]},
     font-weight: $ionic-font-weight-${fontWeightMap[typography.fontWeight]},
     letter-spacing: $ionic-letter-spacing-${letterSpacingMap[typography.letterSpacing] || 0},
@@ -118,7 +117,6 @@ function generateTypographyUtilityClass(prop, dictionary) {
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
   .${variablesPrefix}-${prop.name} {
-    font-family: $ionic-font-family;
     font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]};
     font-weight: $ionic-font-weight-${fontWeightMap[typography.fontWeight]};
     letter-spacing: $ionic-letter-spacing-${letterSpacingMap[typography.letterSpacing] || 0};
