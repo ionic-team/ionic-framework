@@ -311,4 +311,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(header).toHaveText('Mon, Oct 10');
     });
   });
+
+  test.describe('with selected days in different months', () => {
+    test('set the working parts to the first selected value', async ({ page }) => {
+      const datetime = await new DatetimeMultipleFixture(page).goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
+      const monthYear = datetime.locator('.calendar-month-year');
+
+      await expect(monthYear).toHaveText(/March 2022/);
+    });
+  });
 });
