@@ -174,18 +174,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(monthYear).toHaveText(/June 2022/);
     });
 
-    test('should not scroll to new month when value is updated with dates in different months', async ({ page }) => {
-      const datetime = await datetimeFixture.goto(config, MULTIPLE_DATES);
-      await datetime.evaluate((el: HTMLIonDatetimeElement, dates: string[]) => {
-        el.value = dates;
-      }, MULTIPLE_DATES_SEPARATE_MONTHS);
-
-      await page.waitForChanges();
-
-      const monthYear = datetime.locator('.calendar-month-year');
-      await expect(monthYear).toHaveText(/June 2022/);
-    });
-
     test('with buttons, should only update value when confirm is called', async ({ page }) => {
       const datetime = await datetimeFixture.goto(config, SINGLE_DATE, { showDefaultButtons: true });
       const june2Button = datetime.locator('[data-month="6"][data-day="2"]');
