@@ -69,11 +69,13 @@ function generateTypographyValue(prop, dictionary) {
   const fontWeightMap = getTypeMap(dictionary, 'font-weight');
   const lineHeightMap = getTypeMap(dictionary, 'line-height');
   const letterSpacingMap = getTypeMap(dictionary, 'letter-spacing');
+  const fontStyle = prop.attributes.item?.toLowerCase() === 'italic' ? 'italic' : 'normal';
 
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
   $${variablesPrefix}-${prop.name}: (
     font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]},
+    font-style: ${fontStyle},
     font-weight: $ionic-font-weight-${fontWeightMap[typography.fontWeight]},
     letter-spacing: $ionic-letter-spacing-${letterSpacingMap[typography.letterSpacing] || 0},
     line-height: $ionic-line-height-${lineHeightMap[typography.lineHeight]},
@@ -113,11 +115,13 @@ function generateTypographyUtilityClass(prop, dictionary) {
   const fontWeightMap = getTypeMap(dictionary, 'font-weight');
   const lineHeightMap = getTypeMap(dictionary, 'line-height');
   const letterSpacingMap = getTypeMap(dictionary, 'letter-spacing');
+  const fontStyle = prop.attributes.item?.toLowerCase() === 'italic' ? 'italic' : 'normal';
 
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
   .${variablesPrefix}-${prop.name} {
     font-size: $ionic-font-size-${fontSizeMap[typography.fontSize]};
+    font-style: ${fontStyle};
     font-weight: $ionic-font-weight-${fontWeightMap[typography.fontWeight]};
     letter-spacing: $ionic-letter-spacing-${letterSpacingMap[typography.letterSpacing] || 0};
     line-height: $ionic-line-height-${lineHeightMap[typography.lineHeight]};
