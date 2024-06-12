@@ -1,3 +1,4 @@
+import caretLeft from '@phosphor-icons/core/assets/regular/caret-left.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 import type { ButtonInterface } from '@utils/element-interface';
@@ -80,19 +81,24 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   get backButtonIcon() {
-    const icon = this.icon;
-    if (icon != null) {
-      // Icon is set on the component or by the config.
-      return icon;
+    // Return the icon if it is explicitly set
+    if (this.icon) {
+      return this.icon;
     }
 
-    if (getIonTheme(this) === 'ios') {
-      // default ios back button icon
-      return config.get('backButtonIcon', chevronBack);
-    }
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: chevronBack,
+      ionic: caretLeft,
+      md: arrowBackSharp
+    };
 
-    // default md back button icon
-    return config.get('backButtonIcon', arrowBackSharp);
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured back button icon or the default icon
+    return config.get('backButtonIcon', defaultIcon);
   }
 
   get backButtonText() {
