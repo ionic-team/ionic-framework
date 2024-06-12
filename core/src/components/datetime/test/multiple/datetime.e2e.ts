@@ -313,11 +313,27 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   });
 
   test.describe('with selected days in different months', () => {
-    test('set the working parts to the first selected value', async ({ page }) => {
+    test(`set the active month view to the latest value's month`, async ({ page }) => {
       const datetime = await new DatetimeMultipleFixture(page).goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
-      const monthYear = datetime.locator('.calendar-month-year');
+      const calendarMonthYear = datetime.locator('.calendar-month-year');
 
-      await expect(monthYear).toHaveText(/March 2022/);
+      await expect(calendarMonthYear).toHaveText(/May 2022/);
+    });
+
+    test('does not change the active month view when selecting a day in a different month', async ({ page }) => {
+      const datetime = await new DatetimeMultipleFixture(page).goto(config, MULTIPLE_DATES_SEPARATE_MONTHS);
+      const nextButton = page.locator('.calendar-next-prev ion-button:nth-child(2)');
+      const calendarMonthYear = datetime.locator('.calendar-month-year');
+
+      await nextButton.click();
+
+      await expect(calendarMonthYear).toHaveText(/June 2022/);
+
+      const june8Button = datetime.locator('[data-month="6"][data-day="8"]');
+
+      await june8Button.click();
+
+      await expect(calendarMonthYear).toHaveText(/June 2022/);
     });
   });
 });
