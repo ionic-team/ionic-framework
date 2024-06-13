@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    
+
     <script src="../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../dist/ionic/ionic.esm.js"></script>
@@ -44,9 +44,10 @@
             <ion-col size="10">
               <ion-card shape="rectangular" class="preview">
                 <ion-card-content>
-                  <ion-avatar size="xlarge">
-                    <img alt="Silhouette of a person's head" src="/src/theme-ionic/test/assets/avatar.png" />
-                  </ion-avatar>
+                  <ion-chip>
+                    <ion-avatar size="xsmall"> <img alt="Silhouette of a person's head" src="/src/theme-ionic/test/assets/avatar.png" /></ion-avatar>
+                    <ion-label>Employee</ion-label>
+                  </ion-chip>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -56,49 +57,31 @@
 
             <ion-col></ion-col>
             <ion-col size="10">
-              <h2 class="title">Image</h2>
-              <ion-text class="subtitle">The user image displayed in the avatar.</ion-text>
-              <ion-avatar>
-                <img alt="Silhouette of a person's head" src="/src/theme-ionic/test/assets/avatar.png" />
-              </ion-avatar>
-            </ion-col>
-            <ion-col></ion-col>
+              <h2 class="title">Info tag</h2>
+              <ion-text class="subtitle">Non-interactive tags that serve uniquely to provide contextual information regarding a specific part of the screen, such as an image or a card.</ion-text>
+              <ion-chip class="info-tag">Info Tag</ion-chip>
+              <ion-chip class="info-tag margin-left-10">
+                <ion-avatar size="xsmall"> <img alt="Silhouette of a person's head" src="/src/theme-ionic/test/assets/avatar.png" /></ion-avatar>
+                <ion-label>Employee</ion-label>
+              </ion-chip>
 
-          </ion-row>
-          <ion-row>
-
-            <ion-col></ion-col>
-            <ion-col size="10">
-              <h2 class="title">User Name</h2>
-              <ion-text class="subtitle">The name of the user. The initials will be used to define the avatar content (2 initials, except 2s that accepts only 1).</ion-text>
-              <ion-avatar shape="round" size="medium">AB</ion-avatar>
-            </ion-col>
-            <ion-col></ion-col>
-
-          </ion-row>
-          <ion-row>
-
-            <ion-col></ion-col>
-            <ion-col size="10">
-              <h2 class="title">Icon</h2>
-              <ion-text class="subtitle">Default avatars come in 6 sizes. The default Size is md (40px). <br>
-                Note: All avatars show 2 characters except 2xs - only 1 char.</ion-text>
-          
-              <ion-avatar shape="round" size="medium">
+              <ion-chip class="info-tag margin-left-10">
                 <ion-icon src="/src/theme-ionic/test/assets/user.svg"></ion-icon>
-              </ion-avatar>
+                <ion-label>Employee</ion-label>
+              </ion-chip>
             </ion-col>
             <ion-col></ion-col>
 
           </ion-row>
+          
 
           <ion-row>
 
             <ion-col></ion-col>
             <ion-col size="10">
               <h2 class="title">Size</h2>
-              <ion-text class="subtitle">Default avatars come in 6 sizes. <br>
-                The default Size is md (40px). </ion-text>
+              <ion-text class="subtitle">Default tag come in 2 sizes. <br>
+                The default Size is large (32px). </ion-text>
             </ion-col>
             <ion-col></ion-col>
 
@@ -106,41 +89,21 @@
 
           <ion-row>
             <ion-col size="1"></ion-col>
-            <ion-col class="center">
-              <h6>xs</h6>
+            <ion-col size="2" class="center">
+              <h6>small</h6>
             </ion-col>
-            <ion-col class="center">
-              <h6>sm</h6>
+            <ion-col size="2" class="center">
+              <h6>large</h6>
             </ion-col>
-            <ion-col class="center">
-              <h6>md</h6>
-            </ion-col>
-            <ion-col class="center">
-              <h6>lg</h6>
-            </ion-col>
-            <ion-col class="center">
-              <h6>xl</h6>
-            </ion-col>
-            <ion-col size="1"></ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="1"></ion-col>
-            <ion-col class="center">
-              <ion-avatar shape="round" size="xsmall">AB</ion-avatar>
+            <ion-col size="2" class="center">
+              <ion-chip size="small" class="info-tag">Info Tag</ion-chip>
             </ion-col>
-            <ion-col class="center">
-              <ion-avatar shape="round" size="small">AB</ion-avatar>
+            <ion-col size="2" class="center">
+              <ion-chip class="info-tag">Info Tag</ion-chip>
             </ion-col>
-            <ion-col class="center">
-              <ion-avatar shape="round">AB</ion-avatar>
-            </ion-col>
-            <ion-col class="center">
-              <ion-avatar shape="round" size="large">AB</ion-avatar>
-            </ion-col>
-            <ion-col class="center">
-              <ion-avatar shape="round" size="xlarge">AB</ion-avatar>
-            </ion-col>
-            <ion-col size="1"></ion-col>
           </ion-row>
 
           <ion-row>
@@ -172,17 +135,69 @@
           <ion-row>
             <ion-col size="1"></ion-col>
             <ion-col class="center">
-              <ion-avatar shape="round" >AB</ion-avatar>
+              <ion-chip class="info-tag">Info Tag</ion-chip>
             </ion-col>
             <ion-col class="center">
-              <ion-avatar shape="soft" >AB</ion-avatar>
+              <ion-chip shape="soft" class="info-tag">Info Tag</ion-chip>
             </ion-col>
             <ion-col class="center">
-              <ion-avatar shape="rectangular">AB</ion-avatar>
+              <ion-chip shape="rectangular" class="info-tag">Info Tag</ion-chip>
             </ion-col>
             <ion-col size="1"></ion-col>
           </ion-row>
-          
+
+          <ion-row>
+
+            <ion-col></ion-col>
+            <ion-col size="10">
+              <h2 class="title">Color  <ion-chip size="small" >TO DO</ion-chip></h2>
+              <ion-text class="subtitle">Default tags have 5 different kinds.
+              </ion-text>
+            </ion-col>
+            <ion-col></ion-col>
+            
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="1"></ion-col>
+            <ion-col class="center">
+              <h6>Default</h6>
+            </ion-col>
+            <ion-col class="center">
+              <h6>Success</h6>
+            </ion-col>
+            <ion-col class="center">
+              <h6>Danger</h6>
+            </ion-col>
+            <ion-col class="center">
+              <h6>Warning</h6>
+            </ion-col>
+            <ion-col class="center">
+              <h6>Neutral</h6>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="1"></ion-col>
+            <ion-col class="center">
+              <ion-chip>Default</ion-chip>
+            </ion-col>
+            <ion-col class="center">
+              <ion-chip color="success">Success</ion-chip>
+            </ion-col>
+            <ion-col class="center">
+              <ion-chip color="danger">Danger</ion-chip>
+            </ion-col>
+            <ion-col class="center">
+              <ion-chip color="warning">Warning</ion-chip>
+            </ion-col>
+            <ion-col class="center">
+              <ion-chip color="medium">Neutral</ion-chip>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+        
         </ion-grid>
        
        
@@ -217,7 +232,7 @@
 
   ion-card.preview{
     margin-top: 50px;
-    --background:#F2F2F2;
+    --background:#FAFAFA;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -248,5 +263,13 @@
     width: 100%;
     margin-bottom: 15px;
     line-height: 150%;
+  }
+
+  .margin-left-10{
+    margin-left:10px;
+  }
+
+  .info-tag{
+    pointer-events:none;
   }
 </style>
