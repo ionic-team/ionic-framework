@@ -1,3 +1,5 @@
+import circle from '@phosphor-icons/core/assets/regular/circle.svg';
+import lineVertical from '@phosphor-icons/core/assets/regular/line-vertical.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
@@ -248,16 +250,25 @@ export class Toggle implements ComponentInterface {
   };
 
   get toggleDefaultCheckedIcon(): string {
+    // Determine the theme and map to default icons
     const theme = getIonTheme(this);
-    return theme === 'md' ? checkmarkOutline : removeOutline;
+    const defaultIcons = {
+      ios: removeOutline,
+      ionic: lineVertical,
+      md: checkmarkOutline,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the default icon
+    return defaultIcon;
   }
 
   /**
    * Get the icon to use for the checked icon.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the checked icon.
    */
   get toggleCheckedIcon(): string {
     return config.get('toggleCheckedIcon', this.toggleDefaultCheckedIcon);
@@ -267,13 +278,20 @@ export class Toggle implements ComponentInterface {
    * Get the icon to use for the unchecked icon.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the unchecked icon.
    */
   get toggleUncheckedIcon(): string {
+    // Determine the theme and map to default icons
     const theme = getIonTheme(this);
-    const defaultIcon = theme === 'md' ? removeOutline : ellipseOutline;
+    const defaultIcons = {
+      ios: ellipseOutline,
+      ionic: circle,
+      md: removeOutline,
+    };
 
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured toggle unchecked icon or the default icon
     return config.get('toggleUncheckedIcon', defaultIcon);
   }
 
@@ -316,7 +334,8 @@ export class Toggle implements ComponentInterface {
           theme === 'ios' && [this.renderOnOffSwitchLabels(true), this.renderOnOffSwitchLabels(false)]}
         <div class="toggle-icon-wrapper">
           <div class="toggle-inner" part="handle">
-            {enableOnOffLabels && theme === 'md' && this.renderOnOffSwitchLabels(checked)}
+            {/* TODO(ROU-10830): The ionic theme will need to be moved up with ios when the design is implemented */}
+            {enableOnOffLabels && (theme === 'md' || theme === 'ionic') && this.renderOnOffSwitchLabels(checked)}
           </div>
         </div>
       </div>
