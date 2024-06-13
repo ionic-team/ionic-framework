@@ -209,7 +209,7 @@ export interface IonicConfig {
   /**
    * Overrides the expand icon for all `ion-select` components.
    */
-  selectExpandIcon?: string;
+  selectExpandedIcon?: string;
 
   /**
    * Overrides the collapsed icon for all `ion-select` components.
