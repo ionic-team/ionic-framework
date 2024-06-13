@@ -1209,7 +1209,7 @@ export declare interface IonLabel extends Components.IonLabel {}
 
 
 @ProxyCmp({
-  inputs: ['inset', 'lines', 'mode', 'theme'],
+  inputs: ['inset', 'lines', 'mode', 'shape', 'theme'],
   methods: ['closeSlidingItems']
 })
 @Component({
@@ -1217,7 +1217,7 @@ export declare interface IonLabel extends Components.IonLabel {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['inset', 'lines', 'mode', 'theme'],
+  inputs: ['inset', 'lines', 'mode', 'shape', 'theme'],
 })
 export class IonList {
   protected el: HTMLElement;
