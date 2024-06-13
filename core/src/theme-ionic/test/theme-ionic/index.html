@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ionic Theme</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    /> 
+    <link href="../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../css/typography.ionic.css" rel="stylesheet" />
+    <link href="../../../../scripts/testing/styles.css" rel="stylesheet" />
+
+    <script src="../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+        <h2 class="page-title">Theme Ionic </h2>
+
+        <!--<h5>Typography</h5>
+
+        <span class="ionic-font-size-display-m ionic-margin-space-l">The quick brown fox jumps over the lazy dog.</span><br>
+        <span class="ionic-font-size-display-s ionic-margin-space-l">The quick brown fox jumps over the lazy dog.</span>
+        <h1 class="ionic-heading1">The quick brown fox jumps over the lazy dog.</h1>
+        <h2 class="ionic-heading2">The quick brown fox jumps over the lazy dog.</h2>
+        <h3 class="ionic-heading3">The quick brown fox jumps over the lazy dog.</h3>
+        <h4 class="ionic-heading4">The quick brown fox jumps over the lazy dog.</h4>
+        <h5 class="ionic-heading5">The quick brown fox jumps over the lazy dog.</h5>-->
+
+        <h5>Button</h5>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>Round</ion-col>
+            <ion-col>Soft</ion-col>
+            <ion-col>Rectangular</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size="xsmall"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="xsmall" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="xsmall" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size="xsmall"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="xsmall" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="xsmall" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+                
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size="xsmall"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="xsmall" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="xsmall" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size="small"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="small" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="small" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size="small"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="small" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="small" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size="small"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="small" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="small" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size=""><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size=""><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size=""><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size="large"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="large" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="large" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size="large"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="large" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="large" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size="large"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="large" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="large" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size="xlarge"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="xlarge" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" size="xlarge" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size="xlarge"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="xlarge" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" size="xlarge" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size="xlarge"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="xlarge" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" size="xlarge" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" disabled size=""><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" disabled size="" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="round" disabled size="" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" disabled size=""><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" disabled size="" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="" disabled size="" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" disabled size=""><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" disabled size="" fill="outline"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+              <ion-button shape="rectangular" disabled size="" fill="clear"><ion-icon slot="start" name="triangle-outline"></ion-icon>Button</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>Circular - Round</ion-col>
+            <ion-col>Circular - Soft</ion-col>
+            <ion-col>Circular - Rectangular</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size="xsmall"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="xsmall" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="xsmall" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="xsmall"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="xsmall" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="xsmall" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size="xsmall"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="xsmall" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="xsmall" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="xsmall"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="xsmall" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="xsmall" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size="xsmall"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="xsmall" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="xsmall" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="xsmall"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="xsmall" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="xsmall" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size="small"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="small" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="small" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="small"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="small" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="small" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size="small"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="small" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="small" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="small"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="small" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="small" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size="small"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="small" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="small" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="small"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="small" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="small" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size=""><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size=""><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size=""><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size=""><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size=""><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size=""><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size="large"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="large" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="large" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="large"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="large" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="large" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size="large"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="large" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="large" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="large"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="large" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="large" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size="large"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="large" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="large" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="large"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="large" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="large" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" size="xlarge"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="xlarge" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" size="xlarge" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="xlarge"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="xlarge" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="round" disabled size="xlarge" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="" size="xlarge"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="xlarge" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" size="xlarge" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="xlarge"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="xlarge" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="" disabled size="xlarge" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="rectangular" size="xlarge"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="xlarge" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" size="xlarge" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="xlarge"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="xlarge" fill="outline"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+              <ion-button shape="rectangular" disabled size="xlarge" fill="clear"><ion-icon slot="icon-only" name="triangle-outline"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <h5>Tag</h5>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>Round</ion-col>
+            <ion-col>Soft</ion-col>
+            <ion-col>Rectangular</ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col><ion-chip shape="round">Info Tag</ion-chip>
+              <ion-chip shape="round" outline="true">Info Tag</ion-chip></ion-col>
+            <ion-col><ion-chip shape="">Info Tag</ion-chip>
+              <ion-chip shape="" outline="true">Info Tag</ion-chip></ion-col>
+            <ion-col><ion-chip shape="rectangular">Info Tag</ion-chip>
+              <ion-chip shape="rectangular" outline="true">Info Tag</ion-chip></ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <h5>Checkbox</h5>
+ 
+        <ion-grid>
+          <ion-row>
+            <ion-col>16px</ion-col>
+            <ion-col>24px</ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-checkbox labelPlacement="start" style="--size: 16px">Unchecked</ion-checkbox>
+              <ion-checkbox checked style="--size: 16px">Checked</ion-checkbox>
+              <ion-checkbox indeterminate style="--size: 16px">Indeterminate</ion-checkbox>
+            </ion-col>
+            <ion-col>
+              <ion-checkbox labelPlacement="start" style="--size: 24px">Unchecked</ion-checkbox>
+              <ion-checkbox checked style="--size: 24px">Checked</ion-checkbox>
+              <ion-checkbox indeterminate style="--size: 24px">Indeterminate</ion-checkbox>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <h5>Input</h5>
+
+
+      </ion-content>
+
+    </ion-app>
+
+    <style>
+      *{
+        font-family: 'Inter';
+      }
+      h1,
+      h2,
+      h5,
+      h3,
+      h4
+       {
+        padding-left: 20px;
+      }
+
+      h5{
+        color:#1068EB
+      }
+
+      .page-title{
+        margin-bottom:50px;
+      }
+      ion-button{
+        font-family: 'Inter';
+        font-weight: 500;
+      }
+      ion-grid {
+        padding-left: 16px;
+      }
+
+      ion-chip + ion-chip {
+        margin-inline-start: 16px;
+      }
+    </style>
+  </body>
+</html>
