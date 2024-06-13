@@ -1,0 +1,123 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./list.ionic.vars.scss";
+
+// Ionic List
+// --------------------------------------------------
+
+ion-list {
+  @include globals.margin(0);
+  @include globals.padding(0);
+
+  display: block;
+
+  contain: content;
+  list-style-type: none;
+}
+
+// Ionic Inset List
+// --------------------------------------------------
+
+.list-ionic.list-inset {
+  @include globals.margin(globals.$ionic-space-100);
+}
+
+// Ionic Shapes
+//
+// The border radius is applied to the list, excluding
+// the header. The header is styled to appear as if
+// it is above the list.
+//
+// This makes the border radius appear to be applied
+// to the first element in the list (skips the header)
+// and the last element in the list. These elements
+// can be either `ion-item` or `ion-item-sliding`.
+// --------------------------------------------------
+
+.list-ionic.list-inset:has(ion-list-header) {
+  /* Round */
+  &.list-round {
+    /**
+     * Only apply the border radius to the bottom of the list.
+     * The top of the list should not have a border radius because
+     * that would include the header.
+     */
+    @include globals.border-radius(initial, initial, $list-ionic-border-radius-round, $list-ionic-border-radius-round);
+  }
+
+  // Target the first element in the list after the header
+  &.list-round ion-list-header + * {
+    /**
+     * Only apply the border radius to the top of the first element.
+     * The bottom of the first element should not have a border radius
+     * because that would not look connected to the rest.
+     */
+    @include globals.border-radius($list-ionic-border-radius-round, $list-ionic-border-radius-round, initial, initial);
+  }
+
+  /* Soft */
+  &.list-soft {
+    /**
+     * Only apply the border radius to the bottom of the list.
+     * The top of the list should not have a border radius because
+     * that would include the header.
+     */
+    @include globals.border-radius(initial, initial, $list-ionic-border-radius-soft, $list-ionic-border-radius-soft);
+  }
+
+  // Target the first element in the list after the header
+  &.list-soft ion-list-header + * {
+    /**
+     * Only apply the border radius to the top of the first element.
+     * The bottom of the first element should not have a border radius
+     * because that would not look connected to the rest.
+     */
+    @include globals.border-radius($list-ionic-border-radius-soft, $list-ionic-border-radius-soft, initial, initial);
+  }
+
+  /* Rectangular */
+  &.list-rectangular {
+    /**
+     * Only apply the border radius to the bottom of the list.
+     * The top of the list should not have a border radius because
+     * that would include the header.
+     */
+    @include globals.border-radius(
+      initial,
+      initial,
+      $list-ionic-border-radius-rectangular,
+      $list-ionic-border-radius-rectangular
+    );
+  }
+
+  // Target the first element in the list after the header
+  &.list-rectangular ion-list-header + * {
+    /**
+     * Only apply the border radius to the top of the first element.
+     * The bottom of the first element should not have a border radius
+     * because that would not look connected to the rest.
+     */
+    @include globals.border-radius(
+      $list-ionic-border-radius-rectangular,
+      $list-ionic-border-radius-rectangular,
+      initial,
+      initial
+    );
+  }
+}
+
+.list-ionic.list-inset:not(:has(ion-list-header)) {
+  /* Round */
+  &.list-round {
+    @include globals.border-radius($list-ionic-border-radius-round);
+  }
+
+  /* Soft */
+  &.list-soft {
+    @include globals.border-radius($list-ionic-border-radius-soft);
+  }
+
+  /* Rectangular */
+  &.list-rectangular {
+    @include globals.border-radius($list-ionic-border-radius-rectangular);
+  }
+}
