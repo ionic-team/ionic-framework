@@ -1,5 +1,5 @@
-import eyeRegular from '@phosphor-icons/core/assets/regular/eye.svg';
 import eyeSlashRegular from '@phosphor-icons/core/assets/regular/eye-slash.svg';
+import eyeRegular from '@phosphor-icons/core/assets/regular/eye.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, Watch } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
