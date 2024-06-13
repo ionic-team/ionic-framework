@@ -58,7 +58,7 @@ export class List implements ComponentInterface {
     const theme = getIonTheme(this);
     const { shape } = this;
 
-    // TODO(ROU-): Remove theme check when shapes are defined for all themes.
+    // TODO(ROU-10831): Remove theme check when shapes are defined for all themes.
     if (theme !== 'ionic') {
       return undefined;
     }
