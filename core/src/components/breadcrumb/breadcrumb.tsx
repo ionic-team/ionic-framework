@@ -141,7 +141,7 @@ export class Breadcrumb implements ComponentInterface {
     const defaultIcons = {
       ios: ellipsisHorizontal,
       ionic: dotsThree,
-      md: ellipsisHorizontal
+      md: ellipsisHorizontal,
     };
 
     // Get the default icon based on the theme, falling back to 'md' icon if necessary
@@ -157,7 +157,7 @@ export class Breadcrumb implements ComponentInterface {
     const defaultIcons = {
       ios: chevronForwardOutline,
       ionic: caretRight,
-      md: chevronForwardOutline
+      md: chevronForwardOutline,
     };
 
     // Get the default icon based on the theme, falling back to 'md' icon if necessary

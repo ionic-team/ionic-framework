@@ -83,7 +83,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     const defaultIcons = {
       ios: menuOutline,
       ionic: list,
-      md: menuSharp
+      md: menuSharp,
     };
 
     // Get the default icon based on the theme, falling back to 'md' icon if necessary

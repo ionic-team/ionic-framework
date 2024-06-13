@@ -199,7 +199,7 @@ export class Accordion implements ComponentInterface {
     const defaultIcons = {
       ios: chevronDown,
       ionic: caretDown,
-      md: chevronDown
+      md: chevronDown,
     };
 
     // Get the default icon based on the theme, falling back to 'md' icon if necessary

@@ -165,7 +165,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     const defaultIcons = {
       ios: close,
       ionic: x,
-      md: close
+      md: close,
     };
 
     // Get the default icon based on the theme, falling back to 'md' icon if necessary
@@ -176,7 +176,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   }
 
   render() {
-    const { el, disabled, fabButtonCloseIcon, color, href, activated, show, translucent, size, inheritedAttributes } = this;
+    const { el, disabled, fabButtonCloseIcon, color, href, activated, show, translucent, size, inheritedAttributes } =
+      this;
     const inList = hostContext('ion-fab-list', el);
     const theme = getIonTheme(this);
     const TagType = href === undefined ? 'button' : ('a' as any);

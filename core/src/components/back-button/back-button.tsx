@@ -91,7 +91,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     const defaultIcons = {
       ios: chevronBack,
       ionic: caretLeft,
-      md: arrowBackSharp
+      md: arrowBackSharp,
     };
 
     // Get the default icon based on the theme, falling back to 'md' icon if necessary
