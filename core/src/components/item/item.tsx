@@ -1,3 +1,4 @@
+import caretRight from '@phosphor-icons/core/assets/regular/caret-right.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
@@ -242,6 +243,27 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return controls[0];
   }
 
+  get itemDetailIcon() {
+    // Return the icon if it is explicitly set
+    if (this.detailIcon) {
+      return this.detailIcon;
+    }
+
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: chevronForward,
+      ionic: caretRight,
+      md: chevronForward,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured item detail icon or the default icon
+    return config.get('itemDetailIcon', defaultIcon);
+  }
+
   render() {
     const {
       detail,
@@ -250,6 +272,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       lines,
       disabled,
       href,
+      itemDetailIcon,
       rel,
       target,
       routerAnimation,
@@ -262,7 +285,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
-    const itemDetailIcon = this.detailIcon ?? config.get('itemDetailIcon', chevronForward);
 
     const attrs =
       TagType === 'button'
