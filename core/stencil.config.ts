@@ -30,7 +30,7 @@ const getAngularOutputTargets = () => {
 
     // auxiliar
     'ion-picker-legacy-column',
-  ];
+  ]
   return [
     angularOutputTarget({
       componentCorePackage,
@@ -63,12 +63,13 @@ const getAngularOutputTargets = () => {
         'ion-toggle',
         'ion-range',
         'ion-radio-group',
-        'ion-select',
+        'ion-select'
+
       ],
       outputType: 'standalone',
-    }),
+    })
   ];
-};
+}
 
 export const config: Config = {
   autoprefixCss: true,
@@ -78,18 +79,7 @@ export const config: Config = {
     { components: ['ion-action-sheet'] },
     { components: ['ion-alert'] },
     { components: ['ion-back-button'] },
-    {
-      components: [
-        'ion-app',
-        'ion-router-outlet',
-        'ion-buttons',
-        'ion-content',
-        'ion-footer',
-        'ion-header',
-        'ion-title',
-        'ion-toolbar',
-      ],
-    },
+    { components: ['ion-app', 'ion-router-outlet', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
     { components: ['ion-button', 'ion-icon'] },
@@ -102,18 +92,7 @@ export const config: Config = {
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
     { components: ['ion-input'] },
     { components: ['ion-textarea'] },
-    {
-      components: [
-        'ion-item',
-        'ion-item-divider',
-        'ion-item-group',
-        'ion-label',
-        'ion-list',
-        'ion-list-header',
-        'ion-skeleton-text',
-        'ion-note',
-      ],
-    },
+    { components: ['ion-item', 'ion-item-divider', 'ion-item-group', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text', 'ion-note'] },
     { components: ['ion-item-sliding', 'ion-item-options', 'ion-item-option'] },
     { components: ['ion-loading'] },
     { components: ['ion-menu', 'ion-menu-toggle', 'ion-menu-button'] },
@@ -141,7 +120,9 @@ export const config: Config = {
     { components: ['ion-accordion-group', 'ion-accordion'] },
     { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
-  plugins: [sass()],
+  plugins: [
+    sass(),
+  ],
   outputTargets: [
     reactOutputTarget({
       componentCorePackage,
@@ -177,8 +158,8 @@ export const config: Config = {
         'ion-toast',
 
         'ion-app',
-        'ion-icon',
-      ],
+        'ion-icon'
+      ]
     }),
     vueOutputTarget({
       componentCorePackage,
@@ -209,24 +190,16 @@ export const config: Config = {
         'ion-toast',
 
         'ion-app',
-        'ion-icon',
+        'ion-icon'
       ],
       componentModels: [
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'ion-change',
+          event: 'ion-change'
         },
         {
-          elements: [
-            'ion-datetime',
-            'ion-radio-group',
-            'ion-radio',
-            'ion-segment',
-            'ion-segment-button',
-            'ion-select',
-            'ion-accordion-group',
-          ],
+          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
           event: 'ion-change',
         },
@@ -234,7 +207,7 @@ export const config: Config = {
           elements: ['ion-input', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
           event: 'ion-input',
-        },
+        }
       ],
     }),
     {
@@ -244,33 +217,27 @@ export const config: Config = {
     },
     {
       type: 'dist',
-      esmLoaderPath: '../loader',
+      esmLoaderPath: '../loader'
     },
     {
       type: 'dist-custom-elements',
       dir: 'components',
-      copy: [
-        {
-          src: '../scripts/custom-elements',
-          dest: 'components',
-          warn: true,
-        },
-        {
-          src: '../src/foundations/tokens/theme/fonts',
-          dest: 'dist/fonts',
-        },
-      ],
-      includeGlobalScripts: false,
+      copy: [{
+        src: '../scripts/custom-elements',
+        dest: 'components',
+        warn: true
+      }],
+      includeGlobalScripts: false
     },
     {
       type: 'docs-json',
-      file: '../packages/docs/core.json',
+      file: '../packages/docs/core.json'
     },
     {
-      type: 'dist-hydrate-script',
+      type: 'dist-hydrate-script'
     },
     apiSpecGenerator({
-      file: 'api.txt',
+      file: 'api.txt'
     }) as any,
     // {
     //   type: 'stats',
@@ -281,10 +248,10 @@ export const config: Config = {
   buildEs5: 'prod',
   testing: {
     moduleNameMapper: {
-      '@utils/test': ['<rootDir>/src/utils/test/utils'],
-      '@utils/logging': ['<rootDir>/src/utils/logging'],
+      "@utils/test": ["<rootDir>/src/utils/test/utils"],
+      "@utils/logging": ["<rootDir>/src/utils/logging"],
     },
-    setupFilesAfterEnv: ['./setupJest.js'],
+    setupFilesAfterEnv: ['./setupJest.js']
   },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
@@ -303,5 +270,5 @@ export const config: Config = {
      * the default behavior (slated for a future Stencil major version).
      */
     experimentalScopedSlotChanges: true,
-  },
+  }
 };
