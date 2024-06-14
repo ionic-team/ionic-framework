@@ -1,12 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
-@font-face {
-  font-family: "Inter";
-  src: url("../../dist/fonts/Inter-VariableFont_slnt\,wght.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
-}
-
 html {
   font-family: globals.$ionic-font-family;
 }
