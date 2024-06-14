@@ -9,17 +9,8 @@ function copyCSS() {
   fs.copySync(src, dst);
 }
 
-function copyFonts() {
-  const src = path.join(__dirname, '..', '..', '..', 'core', 'dist', 'fonts');
-  const dst = path.join(__dirname, '..', 'dist', 'fonts');
-
-  fs.removeSync(dst);
-  fs.copySync(src, dst);
-}
-
 function main() {
   copyCSS();
-  copyFonts();
 }
 
 main();
