@@ -1,19 +1,9 @@
+@import "./header.common";
 @import "../../themes/native/native.globals";
 
 // Header
 // --------------------------------------------------
 
 ion-header {
-  display: block;
-  position: relative;
-
-  order: -1;
-
-  width: 100%;
-
   z-index: $z-index-toolbar;
-}
-
-ion-header ion-toolbar:first-of-type {
-  padding-top: var(--ion-safe-area-top, 0);
 }
