@@ -1,7 +1,6 @@
 describe('Inputs', () => {
   beforeEach(() => {
     cy.visit('/inputs');
-    cy.wait(1000);
   })
   it('should have default value', () => {
     cy.get('ion-checkbox').should('have.prop', 'checked').and('eq', false);
