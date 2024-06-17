@@ -1,0 +1,21 @@
+@use "./toolbar.common";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Toolbar Chip
+// --------------------------------------------------
+$z-index-toolbar: 10;
+
+:host {
+  z-index: $z-index-toolbar;
+}
+
+.toolbar-container {
+  z-index: $z-index-toolbar;
+}
+
+// Toolbar: Transparent
+// --------------------------------------------------
+
+.toolbar-background {
+  z-index: -1;
+}
