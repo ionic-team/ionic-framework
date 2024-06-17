@@ -12,7 +12,7 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
             padding: 10px;
           }
         </style>
-      v
+      
         <div class="container">
           <ion-header>
             <ion-toolbar>
