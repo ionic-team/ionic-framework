@@ -6,17 +6,26 @@ configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ ti
     test('should not have visual regressions with basic header', async ({ page }) => {
       await page.setContent(
         `
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Header - Default</ion-title>
-          </ion-toolbar>
-        </ion-header>
+        <style>
+          .container {
+            background-color: #eaeaea;
+            padding: 10px;
+          }
+        </style>
+      v
+        <div class="container">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Header - Default</ion-title>
+            </ion-toolbar>
+          </ion-header>
+        </div>
       `,
         config
       );
 
-      const header = page.locator('ion-header');
-      await expect(header).toHaveScreenshot(screenshot(`header-diff`));
+      const container = page.locator('.container');
+      await expect(container).toHaveScreenshot(screenshot(`header-diff`));
     });
   });
 });
