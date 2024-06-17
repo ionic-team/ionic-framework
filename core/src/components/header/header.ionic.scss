@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 ion-header {
-  --box-shadow: #{globals.$ionic-elevation-200};
-
-  box-shadow: var(--box-shadow);
+  .header-ionic {
+     box-shadow: #{globals.$ionic-elevation-200};
+  }
 
   z-index: 10;
 }
