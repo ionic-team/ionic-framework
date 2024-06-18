@@ -1,0 +1,39 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./item-options";
+
+// Ionic Item Options
+// --------------------------------------------------
+
+.item-options-ionic {
+  align-items: center;
+
+  gap: globals.$ionic-space-100;
+}
+
+/* stylelint-disable property-disallowed-list */
+[dir="ltr"] .item-options-start ion-item-option:last-child,
+[dir="rtl"] .item-options-start ion-item-option:first-child {
+  margin-right: globals.$ionic-space-200;
+}
+
+[dir="ltr"] .item-options-start ion-item-option:first-child,
+[dir="rtl"] .item-options-start ion-item-option:last-child {
+  // Override the default padding
+  @include globals.padding(0);
+
+  margin-left: calc(globals.$ionic-space-200 + var(--ion-safe-area-left, 0));
+}
+
+[dir="ltr"] .item-options-end ion-item-option:first-child,
+[dir="rtl"] .item-options-end ion-item-option:last-child {
+  margin-left: globals.$ionic-space-200;
+}
+
+[dir="ltr"] .item-options-end ion-item-option:last-child,
+[dir="rtl"] .item-options-end ion-item-option:first-child {
+  // Override the default padding
+  @include globals.padding(0);
+
+  margin-right: calc(globals.$ionic-space-200 + var(--ion-safe-area-right, 0));
+}
+/* stylelint-enable property-disallowed-list */
