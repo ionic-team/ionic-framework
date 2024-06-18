@@ -198,9 +198,19 @@ Instead, use the [Update Reference Screenshots GitHub Action](https://github.com
 
 1. Click the **Run workflow** dropdown.
 2. Select your branch.
-3. Click **Run workflow**.
+3. Leave the input field blank.
+4. Click **Run workflow**.
 
-This workflow will re-run the screenshot tests. Instead of failing any tests with mismatched screenshots, it will take new ground truth screenshots. These ground truth screenshots will be pushed as a single commit to your branch once the workflow is completed.
+This workflow will re-run all of the the screenshot tests. Instead of failing any tests with mismatched screenshots, it will take new ground truth screenshots. These ground truth screenshots will be pushed as a single commit to your branch once the workflow is completed.
+
+If you want to update ground truths for a specific test, you can pass the test file path as an input to the workflow. This is useful when working on a specific component.
+
+1. Click the **Run workflow** dropdown.
+2. Select your branch.
+3. Enter the file path in the input field. Example: `src/components/alert/test/basic/`
+4. Click **Run workflow**.
+
+The input field also accepts component names, such as `alert`. You can enter multiple components by separating them with spaces, for example, `alert button`. For a full list of options, refer to Playwright's [Command Line page](https://playwright.dev/docs/test-cli).
 
 ### Verifying Screenshot Differences
 
