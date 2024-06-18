@@ -1,6 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
-// Ionic Font Family
+// Ionic Font
 // --------------------------------------------------
 
 :root {
@@ -10,7 +10,6 @@
 
 html {
   --ionic-dynamic-font: -apple-system-body;
-  font-family: #{globals.$ionic-font-family};
 }
 
 body {
