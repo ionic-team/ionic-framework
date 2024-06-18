@@ -18,10 +18,9 @@
 
 [dir="ltr"] .item-options-start ion-item-option:first-child,
 [dir="rtl"] .item-options-start ion-item-option:last-child {
-  // Override the default padding
-  @include globals.padding(0);
-
   margin-left: calc(globals.$ionic-space-200 + var(--ion-safe-area-left, 0));
+
+  padding-left: initial;
 }
 
 [dir="ltr"] .item-options-end ion-item-option:first-child,
@@ -31,9 +30,8 @@
 
 [dir="ltr"] .item-options-end ion-item-option:last-child,
 [dir="rtl"] .item-options-end ion-item-option:first-child {
-  // Override the default padding
-  @include globals.padding(0);
-
   margin-right: calc(globals.$ionic-space-200 + var(--ion-safe-area-right, 0));
+
+  padding-right: initial;
 }
 /* stylelint-enable property-disallowed-list */
