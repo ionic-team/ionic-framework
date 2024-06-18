@@ -50,12 +50,7 @@
 .toolbar-container {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  display: flex;
   position: relative;
-
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
 
   width: 100%;
 

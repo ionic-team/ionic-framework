@@ -2,13 +2,12 @@
 <html lang="en" dir="ltr" theme="ionic">
   <head>
     <meta charset="UTF-8" />
-    <title>Chip - Ionic States</title>
+    <title>Ionic Toolbar</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <link href="../../../../../css/ionic/bundle.ionic.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
@@ -18,9 +17,26 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Toolbar</ion-title>
+          <ion-buttons slot="start">
+            <ion-menu-button auto-hide="false"></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Page title</ion-title>
+          <ion-title slot="primary">Page Title</ion-title>
+          <ion-buttons slot="end">
+            <ion-button>
+              <ion-icon slot="icon-only" name="cloud-upload-outline"></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon slot="icon-only" name="ellipsis-horizontal-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
+
+      <ion-toolbar>
+        <ion-button slot="start" fill="clear">Action</ion-button>
+        <ion-title>Page title</ion-title>
+      </ion-toolbar>
     </ion-app>
   </body>
 </html>

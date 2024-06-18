@@ -1,16 +1,79 @@
 @use "./toolbar.common";
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
-// Toolbar Chip
+// Ionic Toolbar
 // --------------------------------------------------
 $z-index-toolbar: 10;
 
 :host {
+  --background: #{globals.$ionic-color-base-white};
+  --color: #{globals.$ionic-color-neutral-1200};
+  --border-color: #{globals.$ionic-color-neutral-300};
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --min-height: #{globals.$ionic-scale-1400};
+
   z-index: $z-index-toolbar;
 }
 
 .toolbar-container {
+  display: grid;
+  grid-template-areas:
+    "start content end"
+    "primary primary primary";
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: var(--min-height) auto;
+  gap: globals.$ionic-space-0 globals.$ionic-space-400;
+
   z-index: $z-index-toolbar;
+}
+
+// Toolbar: Content
+// --------------------------------------------------
+
+.toolbar-content {
+  grid-area: content;
+  justify-self: center;
+  align-self: center;
+}
+
+::slotted(ion-title) {
+  @include globals.typography(globals.$ionic-heading-h6-medium);
+}
+
+::slotted(.buttons-first-slot) {
+  @include globals.padding(globals.$ionic-space-0);
+  --background: red;
+}
+
+// Toolbar Slot Placement
+// --------------------------------------------------
+
+::slotted([slot="start"]) {
+  @include globals.typography(globals.$ionic-action-lg);
+  grid-area: start;
+}
+
+::slotted([slot="primary"]) {
+  @include globals.padding(
+    globals.$ionic-space-200,
+    globals.$ionic-space-400,
+    globals.$ionic-space-200,
+    globals.$ionic-space-400
+  );
+
+  @include globals.typography(globals.$ionic-heading-h1-medium);
+
+  grid-area: primary;
+  min-height: var(--min-height);
+}
+
+::slotted([slot="end"]) {
+  grid-area: end;
+  display: flex;
+  gap: 8px;
 }
 
 // Toolbar: Transparent
