@@ -45,9 +45,9 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       for (const itemID of itemIDs) {
         /**
          * Clicking on the page to release the mouse.
-         * 
+         *
          * This is necessary because the mouse is held down
-         * later in the test to take a screenshot of the 
+         * later in the test to take a screenshot of the
          * expanded item. If the mouse is not released, the
          * next item will not be able to be dragged.
          */
@@ -67,7 +67,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
         await page.waitForChanges();
 
         const lastOption = item.locator('ion-item-option:last-of-type');
-        
+
         await dragElementBy(lastOption, page, dragByX, 0, undefined, undefined, false);
         await page.waitForChanges();
 
