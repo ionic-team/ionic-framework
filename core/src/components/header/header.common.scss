@@ -1,5 +1,3 @@
-@import "../../themes/native/native.globals";
-
 // Header
 // --------------------------------------------------
 
@@ -10,8 +8,6 @@ ion-header {
   order: -1;
 
   width: 100%;
-
-  z-index: $z-index-toolbar;
 }
 
 ion-header ion-toolbar:first-of-type {
