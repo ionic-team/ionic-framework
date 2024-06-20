@@ -518,7 +518,8 @@ export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label',
 
 export const IonList = /*@__PURE__*/ defineContainer<JSX.IonList>('ion-list', defineIonList, [
   'lines',
-  'inset'
+  'inset',
+  'shape'
 ]);
 
 
