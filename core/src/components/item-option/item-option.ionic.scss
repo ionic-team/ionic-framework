@@ -1,0 +1,47 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./item-option";
+
+// Ionic Item Option
+// --------------------------------------------------
+
+:host {
+  @include globals.padding(0);
+
+  min-width: globals.$ionic-scale-1600;
+  height: globals.$ionic-scale-1600;
+
+  font-size: globals.$ionic-font-size-350;
+  font-weight: globals.$ionic-font-weight-medium;
+
+  line-height: globals.$ionic-line-height-500;
+}
+
+.button-native {
+  @include globals.padding(globals.$ionic-space-200);
+}
+
+::slotted([slot="top"]) {
+  @include globals.margin(0, 0, globals.$ionic-space-100, 0);
+}
+
+::slotted([slot="bottom"]) {
+  @include globals.margin(globals.$ionic-space-100, 0, 0, 0);
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, globals.$ionic-space-100, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, globals.$ionic-space-100);
+}
+
+::slotted(ion-icon),
+::slotted([slot="icon-only"]) {
+  @include globals.margin(0);
+
+  width: globals.$ionic-scale-500;
+
+  min-width: initial;
+  height: globals.$ionic-scale-500;
+}
