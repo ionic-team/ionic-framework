@@ -19,11 +19,6 @@
 }
 
 .toolbar-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
   z-index: $z-index-toolbar;
 }
 
