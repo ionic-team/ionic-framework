@@ -1147,6 +1147,7 @@ ion-list,none
 ion-list,prop,inset,boolean,false,false,false
 ion-list,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-list,prop,mode,"ios" | "md",undefined,false,false
+ion-list,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-list,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-list,method,closeSlidingItems,closeSlidingItems() => Promise<boolean>
 
