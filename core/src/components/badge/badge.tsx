@@ -33,7 +33,7 @@ export class Badge implements ComponentInterface {
    *
    * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() shape?: 'soft' | 'round';
+  @Prop() shape?: 'soft' | 'round | rectangular';
 
   /**
    * Set to `"xxsmall"` for the smallest badge.
