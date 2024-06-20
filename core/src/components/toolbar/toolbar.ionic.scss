@@ -2,15 +2,11 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
 $toolbar-order-ionic: (
-  back-button: 0,
-  menu-toggle-start: 1,
-  slot-start: 2,
-  slot-secondary: 3,
-  content: 4,
-  slot-primary: 5,
-  slot-end: 6,
-  menu-toggle-end: 7,
-  title-large: 8,
+  slot-start: 1,
+  slot-secondary: 2,
+  content: 3,
+  slot-primary: 4,
+  slot-end: 5,
 );
 
 // Ionic Toolbar
