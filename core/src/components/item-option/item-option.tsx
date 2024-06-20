@@ -80,6 +80,15 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  /**
+   * Set to `"rectangular"` for non-rounded corners.
+   * Set to `"soft"` for slightly rounded corners.
+   * Set to `"round"` for fully rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
+
   private onClick = (ev: Event) => {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
     if (el) {
@@ -87,10 +96,28 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
     }
   };
 
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-10841): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   render() {
     const { disabled, expandable, href } = this;
     const TagType = href === undefined ? 'button' : ('a' as any);
     const theme = getIonTheme(this);
+    const shape = this.getShape();
+
     const attrs =
       TagType === 'button'
         ? { type: this.type }
@@ -105,6 +132,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
         onClick={this.onClick}
         class={createColorClasses(this.color, {
           [theme]: true,
+          [`item-option-${shape}`]: shape !== undefined,
           'item-option-disabled': disabled,
           'item-option-expandable': expandable,
           'ion-activatable': true,

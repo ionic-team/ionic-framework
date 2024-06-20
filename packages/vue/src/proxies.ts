@@ -492,7 +492,8 @@ export const IonItemOption = /*@__PURE__*/ defineContainer<JSX.IonItemOption>('i
   'href',
   'rel',
   'target',
-  'type'
+  'type',
+  'shape'
 ]);
 
 

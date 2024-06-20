@@ -1105,6 +1105,7 @@ ion-item-option,prop,expandable,boolean,false,false,false
 ion-item-option,prop,href,string | undefined,undefined,false,false
 ion-item-option,prop,mode,"ios" | "md",undefined,false,false
 ion-item-option,prop,rel,string | undefined,undefined,false,false
+ion-item-option,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-item-option,prop,target,string | undefined,undefined,false,false
 ion-item-option,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-item-option,prop,type,"button" | "reset" | "submit",'button',false,false
