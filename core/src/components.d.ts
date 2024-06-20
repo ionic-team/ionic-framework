@@ -1756,7 +1756,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * If inset is `true`, then the corners can be changed.  Set to `"soft"` for slightly rounded corners, `"round"` for fully rounded corners, or `"rectangular"` for no rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"soft"` for slightly rounded corners, `"round"` for fully rounded corners, or `"rectangular"` for no rounded corners.  Defaults to `"round"` for the `ionic` theme when inset is `true` defaults to `"rectangular"` for the `ionic` theme when inset is `false`, undefined for all other themes.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
@@ -7050,7 +7050,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * If inset is `true`, then the corners can be changed.  Set to `"soft"` for slightly rounded corners, `"round"` for fully rounded corners, or `"rectangular"` for no rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"soft"` for slightly rounded corners, `"round"` for fully rounded corners, or `"rectangular"` for no rounded corners.  Defaults to `"round"` for the `ionic` theme when inset is `true` defaults to `"rectangular"` for the `ionic` theme when inset is `false`, undefined for all other themes.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**

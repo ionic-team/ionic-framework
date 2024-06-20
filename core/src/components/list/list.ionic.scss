@@ -33,7 +33,7 @@ ion-list {
 // can be either `ion-item` or `ion-item-sliding`.
 // --------------------------------------------------
 
-.list-ionic.list-inset:has(ion-list-header) {
+.list-ionic:has(ion-list-header) {
   /* Round */
   &.list-round {
     /**
@@ -105,7 +105,7 @@ ion-list {
   }
 }
 
-.list-ionic.list-inset:not(:has(ion-list-header)) {
+.list-ionic:not(:has(ion-list-header)) {
   /* Round */
   &.list-round {
     @include globals.border-radius($list-ionic-border-radius-round);

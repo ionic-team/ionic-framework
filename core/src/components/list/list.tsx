@@ -29,13 +29,15 @@ export class List implements ComponentInterface {
   @Prop() inset = false;
 
   /**
-   * If inset is `true`, then the corners can be changed.
-   *
    * Set to `"soft"` for slightly rounded corners,
    * `"round"` for fully rounded corners,
    * or `"rectangular"` for no rounded corners.
    *
-   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   * Defaults to `"round"` for the `ionic` theme
+   * when inset is `true`
+   * defaults to `"rectangular"` for the `ionic`
+   * theme when inset is `false`,
+   * undefined for all other themes.
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
@@ -56,15 +58,19 @@ export class List implements ComponentInterface {
 
   private getShape(): string | undefined {
     const theme = getIonTheme(this);
-    const { shape } = this;
+    const { shape, inset } = this;
 
     // TODO(ROU-10831): Remove theme check when shapes are defined for all themes.
     if (theme !== 'ionic') {
       return undefined;
     }
 
-    if (shape === undefined) {
+    if (shape === undefined && inset) {
       return 'round';
+    }
+
+    if (shape === undefined) {
+      return 'rectangular';
     }
 
     return shape;
