@@ -1,0 +1,9 @@
+@import "./header.common";
+@import "../../themes/native/native.globals";
+
+// Header
+// --------------------------------------------------
+
+ion-header {
+  z-index: $z-index-toolbar;
+}

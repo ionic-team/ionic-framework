@@ -1,0 +1,10 @@
+@use "./header.common";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Ionic Header
+// --------------------------------------------------
+
+ion-header {
+  box-shadow: #{globals.$ionic-elevation-200};
+  z-index: 10;
+}
