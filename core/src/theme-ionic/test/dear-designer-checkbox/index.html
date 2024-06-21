@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" theme="ionic">
+    <head>
+    <meta charset="UTF-8" />
+    <title>Ionic Theme</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    /> 
+    <link href="../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <script src="../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../dist/ionic/ionic.esm.js"></script>
+
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-grid>
+              <ion-row>
+                <ion-col></ion-col>
+                <ion-col size="10">
+                  <h5>Dear Designer</h5>
+                  <h1 class="">Checkbox</h1>      
+                </ion-col>
+                <ion-col></ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col size="10">
+              <ion-card shape="rectangular" class="preview">
+                <ion-card-content>
+                  <ion-checkbox justify="space-between" label-placement="fixed">Label</ion-checkbox>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col></ion-col>
+          </ion-row>
+          <ion-row>
+
+          <ion-col></ion-col>
+            <ion-col size="10">
+              <h2 class="title">Label Placement</h2>
+              <ion-text class="subtitle">The checkbox label can be placed on the left or right of the label.</ion-text>
+              
+            </ion-col>
+            <ion-col></ion-col>
+
+          </ion-row>
+          <ion-row>
+            <ion-col size="1"></ion-col>
+            <ion-col class="center">
+              <h6>Start</h6>
+            </ion-col>
+            <ion-col class="center">
+              <h6>End</h6>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="1"></ion-col>
+            <ion-col class="center">
+              <ion-checkbox label-placement="start">Label End</ion-checkbox>
+            </ion-col>
+            <ion-col class="center">
+              <ion-checkbox label-placement="end">Label End</ion-checkbox>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+          
+          <ion-row>
+
+          <ion-col></ion-col>
+            <ion-col size="10">
+              <h2 class="title">Indeterminate</h2>
+              <ion-text class="subtitle">The checkbox label can have the Indeterminate state.</ion-text>
+              <ion-checkbox indeterminate>Indeterminate</ion-checkbox>
+            </ion-col>
+            <ion-col></ion-col>
+
+          </ion-row>
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col size="10">
+              <h2 class="title">Disabled</h2>
+              <ion-text class="subtitle">Checkboxes can be disabled.</ion-text>
+              <ion-checkbox Disabled>Disabled</ion-checkbox>
+              <ion-checkbox class="margin-left-10" Disabled checked>Disabled Checked</ion-checkbox>
+            </ion-col>
+            <ion-col></ion-col>
+  
+          </ion-row>
+
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col size="10">
+              <h2 class="title">Helper message <ion-chip size="small" >TO DO</ion-chip></h2>
+              <ion-text class="subtitle">Checkboxes can have an helper message.</ion-text>
+            
+            </ion-col>
+            <ion-col></ion-col>
+  
+          </ion-row>
+
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col size="10">
+              <h2 class="title">Error message <ion-chip size="small" >TO DO</ion-chip></h2>
+              <ion-text class="subtitle">Checkboxes can have an error message.</ion-text>
+            
+            </ion-col>
+            <ion-col></ion-col>
+  
+          </ion-row>
+
+        
+        </ion-grid>
+       
+       
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+        </ion-toolbar>
+      </ion-footer>
+
+    </ion-app>
+
+    <style>
+      
+    </style>
+  </body>
+</html>
+
+
+<style>
+
+  ion-header ion-toolbar{
+    --background:#105CEF;
+    color: white;
+    --padding-top:30px;
+    --padding-bottom:30px;
+  }
+
+  ion-toolbar h1{
+    margin-top:0px;
+    font-size:55px;
+  }
+
+  ion-card.preview{
+    margin-top: 50px;
+    --background:#FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    border:0px;
+  }
+
+  .center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h2.title{
+    margin-top: 50px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #2D4665;
+  }
+
+  ion-text,ion-avatar{
+    font-family: "Inter";
+  }
+
+  .subtitle{
+    margin-top: 10px;
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+    line-height: 150%;
+  }
+
+  .margin-left-10{
+    margin-left:10px;
+  }
+
+  .info-tag{
+    pointer-events:none;
+  }
+</style>
