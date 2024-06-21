@@ -10,14 +10,13 @@
   --color-selected: #{$tabbar-ionic-color-selected};
 
   /**
-    * Tab bar has a box sizing of content-box to ensure the padding
-    * is not included in the height. This is important for the
-    * component to adjust to the safe area bottom.
-    *
-    * In order for the height to be calculated correctly, the padding
-    * top and bottom must be excluded from the height calculation.
-    */
-  // min-height: calc(globals.$ionic-scale-1400 - calc(globals.$ionic-space-100 * 2));
+   * Tab bar has a box sizing of content-box to ensure the padding
+   * is not included in the height. This is important for the
+   * component to adjust to the safe area bottom.
+   *
+   * In order for the height to be calculated correctly, the padding
+   * top and bottom must be excluded from the height calculation.
+   */
   min-height: calc(globals.$ionic-scale-1400 - calc(globals.$ionic-space-100 * 2));
 
   padding-top: calc(globals.$ionic-space-100 + var(--ion-safe-area-top, 0));
