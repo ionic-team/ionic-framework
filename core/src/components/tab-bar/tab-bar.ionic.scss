@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./tab-bar";
+@use "./tab-bar.common";
 @import "./tab-bar.ionic.vars";
 
 :host {
@@ -28,4 +28,6 @@
   /* stylelint-enable */
 
   gap: globals.$ionic-space-300;
+
+  z-index: 10;
 }
