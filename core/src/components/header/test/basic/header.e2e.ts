@@ -1,22 +1,31 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ionic-md', 'md', 'ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('header: rendering'), () => {
     test('should not have visual regressions with basic header', async ({ page }) => {
       await page.setContent(
         `
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Header - Default</ion-title>
-          </ion-toolbar>
-        </ion-header>
+        <style>
+          .container {
+            background-color: #eaeaea;
+            padding: 10px;
+          }
+        </style>
+      
+        <div class="container">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Header - Default</ion-title>
+            </ion-toolbar>
+          </ion-header>
+        </div>
       `,
         config
       );
 
-      const header = page.locator('ion-header');
-      await expect(header).toHaveScreenshot(screenshot(`header-diff`));
+      const container = page.locator('.container');
+      await expect(container).toHaveScreenshot(screenshot(`header-diff`));
     });
   });
 });
