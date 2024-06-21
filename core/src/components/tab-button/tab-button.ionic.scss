@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./tab-button";
+@use "./tab-button.common";
 
 // Ionic Tab Button
 // --------------------------------------------------------------
@@ -9,7 +9,7 @@
   --focus-ring-color: #9ec4fd;
   --focus-ring-width: 2px;
 
-  @include border-radius(globals.$ionic-border-radius-200);
+  @include globals.border-radius(globals.$ionic-border-radius-200);
 
   align-content: center;
 
@@ -22,6 +22,20 @@
   line-height: globals.$ionic-line-height-500;
 }
 
+// Tab Button: Native
+// --------------------------------------------------
+
+.button-native {
+  @include globals.border-radius(inherit);
+  @include globals.margin(0);
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include globals.text-inherit();
+}
+
+.button-native::after {
+  @include globals.button-state();
+}
+
 // Tab Button Focused
 // -------------------------------------------------------------------------------
 
@@ -31,7 +45,7 @@
   overflow: visible;
 
   &::after {
-    @include border-radius(inherit);
+    @include globals.border-radius(inherit);
   }
 }
 
