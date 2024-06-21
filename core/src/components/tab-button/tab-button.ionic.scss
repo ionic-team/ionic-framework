@@ -1,15 +1,14 @@
-@use "../../foundations/ionic.vars.scss" as tokens;
+@use "../../foundations/ionic.vars.scss" as globals;
 @import "./tab-button";
 
 // Ionic Tab Button
 // --------------------------------------------------------------
 
 :host {
-  // TODO(FW-6186): use design token here when it is added
-  --focus-ring-color: #9ec4fd;
-  --focus-ring-width: 2px;
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
+  --focus-ring-width: #{globals.$ionic-border-radius-050};
 
-  @include border-radius(tokens.$ionic-border-radius-200);
+  @include border-radius(globals.$ionic-border-radius-200);
 }
 
 // Tab Button Focused
