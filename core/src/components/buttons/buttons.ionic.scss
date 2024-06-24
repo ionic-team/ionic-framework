@@ -4,39 +4,9 @@
 // Ionic Buttons
 // --------------------------------------------------
 
-::slotted(*) ion-button {
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
-  --padding-end: 0;
-  --box-shadow: none;
-}
-
 ::slotted(*) .button-has-icon-only {
   --padding-top: 0;
   --padding-bottom: 0;
-}
-
-// Toolbar Solid Button
-// --------------------------------------------------
-
-::slotted(*) .button-solid {
-  --color: #{globals.$ionic-color-neutral-1200};
-  --background: transparent;
-  --background-activated: transparent;
-  --background-focused: currentColor;
-}
-
-// Toolbar Outline Button
-// --------------------------------------------------
-
-::slotted(*) .button-outline {
-  --color: initial;
-  --background: transparent;
-  --background-activated: transparent;
-  --background-focused: currentColor;
-  --background-hover: currentColor;
-  --border-color: currentColor;
 }
 
 // Toolbar Clear Button
