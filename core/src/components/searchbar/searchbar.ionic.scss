@@ -1,0 +1,71 @@
+@use "searchbar.common";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// iOS Searchbar
+// --------------------------------------------------
+
+:host {
+  --background: #{globals.$ionic-color-neutral-100};
+  --border-radius: #{globals.$ionic-border-radius-800};
+  --box-shadow: none;
+  --cancel-button-color: #{globals.$ionic-color-neutral-800};
+  --clear-button-color: #{globals.$ionic-color-neutral-800};
+  --color: #{globals.$ionic-color-neutral-800};
+  --icon-color: #{globals.$ionic-color-neutral-800};
+
+  @include globals.padding(0);
+
+  min-height: globals.$ionic-scale-1000;
+
+  contain: content;
+}
+
+.searchbar-input-container {
+  min-height: globals.$ionic-scale-1000;
+}
+
+// Searchbar Search Icon
+// -----------------------------------------
+
+.searchbar-search-icon {
+  display: none;
+}
+
+// Searchbar Input Field
+// -----------------------------------------
+
+.searchbar-input {
+  @include globals.padding(globals.$ionic-space-300);
+
+  height: 100%;
+
+  font-size: globals.$ionic-font-size-350;
+  font-weight: globals.$ionic-font-weight-regular;
+
+  contain: strict;
+}
+
+// Searchbar Clear Input Icon
+// -----------------------------------------
+
+.searchbar-clear-button {
+  @include globals.position(50%, globals.$ionic-space-200, null, null);
+
+  position: absolute;
+
+  width: globals.$ionic-scale-600;
+  height: globals.$ionic-scale-600;
+
+  transform: translateY(-50%);
+
+  font-size: globals.$ionic-font-size-400;
+
+  contain: strict;
+}
+
+// Searchbar in Toolbar
+// -----------------------------------------
+
+:host-context(ion-toolbar) {
+  min-height: globals.$ionic-scale-1000;
+}
