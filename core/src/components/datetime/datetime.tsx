@@ -1,7 +1,7 @@
-import caretDown from '@phosphor-icons/core/assets/regular/caret-down.svg';
-import caretLeft from '@phosphor-icons/core/assets/regular/caret-left.svg';
-import caretRight from '@phosphor-icons/core/assets/regular/caret-right.svg';
-import caretUp from '@phosphor-icons/core/assets/regular/caret-up.svg';
+import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
+import caretLeftRegular from '@phosphor-icons/core/assets/regular/caret-left.svg';
+import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
+import caretUpRegular from '@phosphor-icons/core/assets/regular/caret-up.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { startFocusVisible } from '@utils/focus-visible';
@@ -2606,7 +2606,7 @@ export class Datetime implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronForward,
-      ionic: caretRight,
+      ionic: caretRightRegular,
       md: chevronForward,
     };
 
@@ -2627,7 +2627,7 @@ export class Datetime implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronBack,
-      ionic: caretLeft,
+      ionic: caretLeftRegular,
       md: chevronBack,
     };
 
@@ -2648,7 +2648,7 @@ export class Datetime implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronForward,
-      ionic: caretDown,
+      ionic: caretDownRegular,
       md: caretDownSharp,
     };
 
@@ -2669,7 +2669,7 @@ export class Datetime implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronDown,
-      ionic: caretUp,
+      ionic: caretUpRegular,
       md: caretUpSharp,
     };
 

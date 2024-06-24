@@ -1,4 +1,4 @@
-import caretDown from '@phosphor-icons/core/assets/regular/caret-down.svg';
+import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
@@ -955,7 +955,7 @@ export class Select implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronExpand,
-      ionic: caretDown,
+      ionic: caretDownRegular,
       md: caretDownSharp,
     };
 
@@ -982,7 +982,7 @@ export class Select implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronExpand,
-      ionic: caretDown,
+      ionic: caretDownRegular,
       md: caretDownSharp,
     };
 

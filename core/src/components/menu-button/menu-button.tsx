@@ -1,4 +1,4 @@
-import list from '@phosphor-icons/core/assets/regular/list.svg';
+import listRegular from '@phosphor-icons/core/assets/regular/list.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, h } from '@stencil/core';
 import type { ButtonInterface } from '@utils/element-interface';
@@ -82,7 +82,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: menuOutline,
-      ionic: list,
+      ionic: listRegular,
       md: menuSharp,
     };
 

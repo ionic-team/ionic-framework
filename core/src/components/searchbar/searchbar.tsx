@@ -1,6 +1,6 @@
-import arrowLeft from '@phosphor-icons/core/assets/regular/arrow-left.svg';
-import magnifyingGlass from '@phosphor-icons/core/assets/regular/magnifying-glass.svg';
-import x from '@phosphor-icons/core/assets/regular/x.svg';
+import arrowLeftRegular from '@phosphor-icons/core/assets/regular/arrow-left.svg';
+import magnifyingGlassRegular from '@phosphor-icons/core/assets/regular/magnifying-glass.svg';
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
@@ -628,7 +628,7 @@ export class Searchbar implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: closeCircle,
-      ionic: x,
+      ionic: xRegular,
       md: closeSharp,
     };
 
@@ -655,7 +655,7 @@ export class Searchbar implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: searchOutline,
-      ionic: magnifyingGlass,
+      ionic: magnifyingGlassRegular,
       md: searchSharp,
     };
 
@@ -682,7 +682,7 @@ export class Searchbar implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: arrowBackSharp,
-      ionic: arrowLeft,
+      ionic: arrowLeftRegular,
       md: arrowBackSharp,
     };
 

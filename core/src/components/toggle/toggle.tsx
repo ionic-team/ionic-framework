@@ -1,5 +1,5 @@
-import circle from '@phosphor-icons/core/assets/regular/circle.svg';
-import lineVertical from '@phosphor-icons/core/assets/regular/line-vertical.svg';
+import circleRegular from '@phosphor-icons/core/assets/regular/circle.svg';
+import lineVerticalRegular from '@phosphor-icons/core/assets/regular/line-vertical.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
@@ -254,7 +254,7 @@ export class Toggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: removeOutline,
-      ionic: lineVertical,
+      ionic: lineVerticalRegular,
       md: checkmarkOutline,
     };
 
@@ -284,7 +284,7 @@ export class Toggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: ellipseOutline,
-      ionic: circle,
+      ionic: circleRegular,
       md: removeOutline,
     };
 

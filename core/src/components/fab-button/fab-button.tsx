@@ -1,4 +1,4 @@
-import x from '@phosphor-icons/core/assets/regular/x.svg';
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
@@ -164,7 +164,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: close,
-      ionic: x,
+      ionic: xRegular,
       md: close,
     };
 

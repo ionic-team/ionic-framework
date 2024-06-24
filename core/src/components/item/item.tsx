@@ -1,4 +1,4 @@
-import caretRight from '@phosphor-icons/core/assets/regular/caret-right.svg';
+import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
@@ -253,7 +253,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronForward,
-      ionic: caretRight,
+      ionic: caretRightRegular,
       md: chevronForward,
     };
 

@@ -1,4 +1,4 @@
-import x from '@phosphor-icons/core/assets/regular/x.svg';
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
@@ -779,7 +779,7 @@ export class Input implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: closeCircle,
-      ionic: x,
+      ionic: xRegular,
       md: closeSharp,
     };
 

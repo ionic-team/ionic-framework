@@ -1,5 +1,5 @@
-import caretRight from '@phosphor-icons/core/assets/regular/caret-right.svg';
-import dotsThree from '@phosphor-icons/core/assets/regular/dots-three.svg';
+import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
+import dotsThreeRegular from '@phosphor-icons/core/assets/regular/dots-three.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
@@ -140,7 +140,7 @@ export class Breadcrumb implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: ellipsisHorizontal,
-      ionic: dotsThree,
+      ionic: dotsThreeRegular,
       md: ellipsisHorizontal,
     };
 
@@ -156,7 +156,7 @@ export class Breadcrumb implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronForwardOutline,
-      ionic: caretRight,
+      ionic: caretRightRegular,
       md: chevronForwardOutline,
     };
 

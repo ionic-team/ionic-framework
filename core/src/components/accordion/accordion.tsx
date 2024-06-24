@@ -1,4 +1,4 @@
-import caretDown from '@phosphor-icons/core/assets/regular/caret-down.svg';
+import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '@utils/helpers';
@@ -198,7 +198,7 @@ export class Accordion implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: chevronDown,
-      ionic: caretDown,
+      ionic: caretDownRegular,
       md: chevronDown,
     };
 

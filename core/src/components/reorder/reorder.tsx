@@ -1,4 +1,4 @@
-import list from '@phosphor-icons/core/assets/regular/list.svg';
+import listRegular from '@phosphor-icons/core/assets/regular/list.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, h } from '@stencil/core';
 import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
@@ -49,7 +49,7 @@ export class Reorder implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: reorderThreeOutline,
-      ionic: list,
+      ionic: listRegular,
       md: reorderTwoSharp,
     };
 
