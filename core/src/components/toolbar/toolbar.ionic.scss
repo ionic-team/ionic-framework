@@ -52,25 +52,16 @@ $toolbar-order-ionic: (
 // Toolbar: Title
 // --------------------------------------------------
 
-:host(.toolbar-title-default) ::slotted(ion-title) {
-  @include globals.position(0, null, null, 0);
-
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-
 ::slotted(ion-title) {
   @include globals.padding-horizontal(var(--padding-top), var(--padding-end));
 }
 
+:host(.toolbar-title-default) ::slotted(ion-title) {
+  text-align: center;
+}
+
 // Ionic Toolbar Slot Placement
 // --------------------------------------------------
-
-::slotted(ion-buttons) {
-  min-height: 38px;
-}
 
 ::slotted([slot="start"]) {
   order: map-get($toolbar-order-ionic, slot-start);
