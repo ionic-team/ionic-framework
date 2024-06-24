@@ -54,8 +54,8 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-has-icon-only {
-  height: globals.$ionic-scale-1000;
   width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
 }
 
 ::slotted(*) ion-icon[slot="icon-only"] {
