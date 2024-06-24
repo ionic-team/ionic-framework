@@ -6,20 +6,22 @@
 
 :host {
   @include globals.typography(globals.$ionic-heading-h6-medium);
-  @include globals.position(0, null, null, 0);
   @include globals.padding(var(--padding-top), 0, var(--padding-bottom));
-
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  transform: translateZ(0);
 
   box-sizing: border-box;
   pointer-events: none;
 
   text-align: center;
+}
+
+:host-context(ion-toolbar) {
+  @include globals.position(0, null, null, 0);
+  position: absolute;
+
+  transform: translateZ(0);
+
+  width: 100%;
+  height: 100%;
 }
 
 // Title: Small
