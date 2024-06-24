@@ -1,0 +1,76 @@
+@use "./buttons.common";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Ionic Buttons
+// --------------------------------------------------
+
+::slotted(*) ion-button {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --box-shadow: none;
+}
+
+::slotted(*) .button-has-icon-only {
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+// Toolbar Solid Button
+// --------------------------------------------------
+
+::slotted(*) .button-solid {
+  --color: #{globals.$ionic-color-neutral-1200};
+  --background: transparent;
+  --background-activated: transparent;
+  --background-focused: currentColor;
+}
+
+// Toolbar Outline Button
+// --------------------------------------------------
+
+::slotted(*) .button-outline {
+  --color: initial;
+  --background: transparent;
+  --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
+  --border-color: currentColor;
+}
+
+// Toolbar Clear Button
+// --------------------------------------------------
+
+::slotted(*) .button-clear {
+  --color: initial;
+  --background: transparent;
+  --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
+}
+
+// Toolbar Button Icon
+// --------------------------------------------------
+
+::slotted(*) .button-has-icon-only.button-clear {
+  width: 40px;
+  height: 40px;
+}
+
+::slotted(*) ion-icon[slot="start"] {
+}
+
+::slotted(*) ion-icon[slot="end"] {
+  @include globals.margin(0);
+  @include globals.margin-horizontal(0.4em, null);
+
+  font-size: 1.4em;
+}
+
+::slotted(*) ion-icon[slot="icon-only"] {
+  @include globals.padding(0);
+  @include globals.margin(0);
+
+  font-size: 1.8em;
+}
