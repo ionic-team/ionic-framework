@@ -56,6 +56,10 @@ $toolbar-order-ionic: (
   @include globals.padding-horizontal(var(--padding-top), var(--padding-end));
 }
 
+:host(.toolbar-title-default) ::slotted(ion-title) {
+  text-align: center;
+}
+
 // Ionic Toolbar Slot Placement
 // --------------------------------------------------
 
