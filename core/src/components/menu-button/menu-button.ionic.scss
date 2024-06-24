@@ -13,10 +13,10 @@
   --color: initial;
   --padding-start: 0;
   --padding-end: 0;
+  position: relative;
 
   width: globals.$ionic-scale-1000;
   height: globals.$ionic-scale-1000;
 
   font-size: globals.$ionic-font-size-600;
-  position: relative;
 }
