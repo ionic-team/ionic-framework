@@ -51,16 +51,16 @@
 .searchbar-clear-button {
   @include globals.position(50%, globals.$ionic-space-200, null, null);
 
-  transform: translateY(-50%);
-
   position: absolute;
-
-  contain: strict;
 
   width: globals.$ionic-scale-600;
   height: globals.$ionic-scale-600;
 
+  transform: translateY(-50%);
+
   font-size: globals.$ionic-font-size-400;
+
+  contain: strict;
 }
 
 // Searchbar in Toolbar
