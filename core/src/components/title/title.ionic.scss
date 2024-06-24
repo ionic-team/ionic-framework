@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  @include globals.typography(globals.$ionic-heading-h6-regular);
+  @include globals.typography(globals.$ionic-heading-h6-medium);
   @include globals.position(0, null, null, 0);
   @include globals.padding(var(--padding-top), 0, var(--padding-bottom));
 
