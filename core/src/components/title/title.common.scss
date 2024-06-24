@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 
 // Title
 // --------------------------------------------------
@@ -17,10 +17,6 @@
   transform: translateZ(0);
 
   color: var(--color);
-}
-
-:host(.ion-color) {
-  color: #{current-color(base)};
 }
 
 .toolbar-title {
