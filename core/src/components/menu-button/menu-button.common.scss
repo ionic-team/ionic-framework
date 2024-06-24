@@ -1,4 +1,4 @@
-@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "../../themes/mixins";
 
 // Menu Button
 // --------------------------------------------------
@@ -40,11 +40,11 @@
 }
 
 .button-native {
-  @include globals.border-radius(var(--border-radius));
-  @include globals.text-inherit();
-  @include globals.margin(0);
-  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include globals.font-smoothing();
+  @include border-radius(var(--border-radius));
+  @include text-inherit();
+  @include margin(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include font-smoothing();
 
   display: flex;
 
@@ -94,8 +94,8 @@
 }
 
 ion-icon {
-  @include globals.margin(0);
-  @include globals.padding(0);
+  @include margin(0);
+  @include padding(0);
 
   pointer-events: none;
 }
@@ -124,7 +124,7 @@ ion-icon {
 // --------------------------------------------------
 
 .button-native::after {
-  @include globals.button-state();
+  @include button-state();
 }
 
 @media (any-hover: hover) {
