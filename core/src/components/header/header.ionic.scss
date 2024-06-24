@@ -6,5 +6,5 @@
 
 ion-header {
   box-shadow: #{globals.$ionic-elevation-200};
-  z-index: 10;
+  z-index: 10; // TODO(ROU-10853): replace this value with a layer token.
 }

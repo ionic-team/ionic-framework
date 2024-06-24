@@ -25,7 +25,8 @@ $toolbar-order-ionic: (
 
 .toolbar-container {
   gap: globals.$ionic-space-400;
-  z-index: 10;
+
+  z-index: 10; // TODO(ROU-10853): replace this value with a layer token.
 }
 
 // Toolbar: Content
@@ -79,6 +80,7 @@ $toolbar-order-ionic: (
 
 ::slotted([slot="end"]) {
   gap: globals.$ionic-space-200;
+
   order: map-get($toolbar-order-ionic, slot-end);
 
   text-align: end;
