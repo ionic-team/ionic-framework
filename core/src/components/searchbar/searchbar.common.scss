@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 
 // Searchbar
 // --------------------------------------------------
@@ -20,7 +20,7 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: #{$placeholder-opacity};
+  --placeholder-opacity: 0.5;
 
   @include font-smoothing();
 
@@ -33,22 +33,7 @@
 
   color: var(--color);
 
-  font-family: $font-family-base;
   box-sizing: border-box;
-}
-
-:host(.ion-color) {
-  color: current-color(contrast);
-}
-
-:host(.ion-color) .searchbar-input {
-  background: current-color(base);
-}
-
-:host(.ion-color) .searchbar-clear-button,
-:host(.ion-color) .searchbar-cancel-button,
-:host(.ion-color) .searchbar-search-icon {
-  color: inherit;
 }
 
 .searchbar-search-icon {
@@ -159,10 +144,4 @@
 
 :host(.searchbar-has-value.searchbar-should-show-clear) .searchbar-clear-button {
   display: block;
-}
-
-:host(.searchbar-disabled) {
-  cursor: default;
-  opacity: 0.4;
-  pointer-events: none;
 }
