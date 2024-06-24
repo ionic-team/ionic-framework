@@ -41,8 +41,6 @@ export class Reorder implements ComponentInterface {
    * Get the icon to use for the handle icon.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the handle icon.
    */
   get reorderHandleIcon(): string {
     // Determine the theme and map to default icons

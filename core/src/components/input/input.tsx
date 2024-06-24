@@ -767,7 +767,6 @@ export class Input implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    *
    * @internal
-   * @returns {string} The icon to use for the clear icon.
    */
   get inputClearIcon(): string {
     // Return the icon if it is explicitly set
