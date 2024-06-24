@@ -1,5 +1,3 @@
-@import "../../themes/native/native.globals";
-
 :host {
   /**
    * @prop --background: Background of the tab bar
@@ -28,29 +26,9 @@
 
   contain: strict;
   user-select: none;
-  z-index: $z-index-toolbar;
 
   /* stylelint-disable-next-line declaration-no-important */
   box-sizing: content-box !important;
-}
-
-:host(.ion-color) ::slotted(ion-tab-button) {
-  --background-focused: #{current-color(shade)};
-  --color-selected: #{current-color(contrast)};
-}
-
-:host(.ion-color) ::slotted(.tab-selected) {
-  color: #{current-color(contrast)};
-}
-
-:host(.ion-color),
-:host(.ion-color) ::slotted(ion-tab-button) {
-  color: #{current-color(contrast, 0.7)};
-}
-
-:host(.ion-color),
-:host(.ion-color) ::slotted(ion-tab-button) {
-  background: #{current-color(base)};
 }
 
 :host(.ion-color) ::slotted(ion-tab-button.ion-focused),
