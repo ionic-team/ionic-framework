@@ -58,8 +58,8 @@ $toolbar-order-ionic: (
 }
 
 // This applies to ion-title elements in a toolbar-title-large that follows another ion-toolbar
-:host(.toolbar-title-large) ::slotted(ion-title) {
-  text-align: left;
+:host(.toolbar-title-default) ::slotted(ion-title) {
+  text-align: center;
 }
 
 // Ionic Toolbar Slot Placement
