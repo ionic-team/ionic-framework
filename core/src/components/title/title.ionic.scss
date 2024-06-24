@@ -24,12 +24,12 @@
 // --------------------------------------------------
 
 :host(.title-small) {
-  @include globals.typography(globals.$ionic-heading-h6-regular);
+  @include globals.typography(globals.$ionic-heading-h6-medium);
 }
 
 // Title: Large
 // --------------------------------------------------
 
 :host(.title-large) {
-  @include globals.typography(globals.$ionic-heading-h1-regular);
+  @include globals.typography(globals.$ionic-heading-h1-medium);
 }
