@@ -57,6 +57,7 @@ $toolbar-order-ionic: (
   @include globals.padding-horizontal(var(--padding-top), var(--padding-end));
 }
 
+// This applies to ion-title elements in a toolbar-title-large that follows another ion-toolbar
 :host(.toolbar-title-large) ::slotted(ion-title) {
   text-align: left;
 }
