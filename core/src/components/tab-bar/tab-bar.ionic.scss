@@ -1,5 +1,5 @@
-@use "../../foundations/ionic.vars.scss" as tokens;
-@import "./tab-bar";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./tab-bar.common";
 @import "./tab-bar.ionic.vars";
 
 :host {
@@ -9,10 +9,26 @@
   --color: #{$tabbar-ionic-color};
   --color-selected: #{$tabbar-ionic-color-selected};
 
-  @include padding(4px, 16px);
+  /**
+   * Tab bar has a box sizing of content-box to ensure the padding
+   * is not included in the height. This is important for the
+   * component to adjust to the safe area bottom.
+   *
+   * In order for the height to be calculated correctly, the padding
+   * top and bottom must be excluded from the height calculation.
+   */
+  min-height: calc(globals.$ionic-scale-1400 - calc(globals.$ionic-space-100 * 2));
 
-  height: 52px;
-  gap: 12px;
+  padding-top: calc(globals.$ionic-space-100 + var(--ion-safe-area-top, 0));
+  padding-bottom: calc(globals.$ionic-space-100 + var(--ion-safe-area-bottom, 0));
 
-  box-shadow: tokens.$ionic-elevation-200;
+  /* stylelint-disable */
+  padding-right: calc(globals.$ionic-space-400 + var(--ion-safe-area-right, 0));
+  padding-left: calc(globals.$ionic-space-400 + var(--ion-safe-area-left, 0));
+  /* stylelint-enable */
+
+  gap: globals.$ionic-space-300;
+
+  // TODO(ROU-10853): replace this value with a layer token
+  z-index: 10;
 }

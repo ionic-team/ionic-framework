@@ -1658,6 +1658,10 @@ export namespace Components {
          */
         "rel": string | undefined;
         /**
+          * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target": string | undefined;
@@ -1755,6 +1759,10 @@ export namespace Components {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Set to `"soft"` for slightly rounded corners, `"round"` for fully rounded corners, or `"rectangular"` for no rounded corners.  Defaults to `"round"` for the `ionic` theme when inset is `true` defaults to `"rectangular"` for the `ionic` theme when inset is `false`, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -6958,6 +6966,10 @@ declare namespace LocalJSX {
          */
         "rel"?: string | undefined;
         /**
+          * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
         "target"?: string | undefined;
@@ -7045,6 +7057,10 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Set to `"soft"` for slightly rounded corners, `"round"` for fully rounded corners, or `"rectangular"` for no rounded corners.  Defaults to `"round"` for the `ionic` theme when inset is `true` defaults to `"rectangular"` for the `ionic` theme when inset is `false`, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */

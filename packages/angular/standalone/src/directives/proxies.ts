@@ -1076,14 +1076,14 @@ export declare interface IonItemGroup extends Components.IonItemGroup {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemOption,
-  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'theme', 'type']
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'shape', 'target', 'theme', 'type']
 })
 @Component({
   selector: 'ion-item-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'theme', 'type'],
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'shape', 'target', 'theme', 'type'],
   standalone: true
 })
 export class IonItemOption {
@@ -1185,7 +1185,7 @@ export declare interface IonLabel extends Components.IonLabel {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonList,
-  inputs: ['inset', 'lines', 'mode', 'theme'],
+  inputs: ['inset', 'lines', 'mode', 'shape', 'theme'],
   methods: ['closeSlidingItems']
 })
 @Component({
@@ -1193,7 +1193,7 @@ export declare interface IonLabel extends Components.IonLabel {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['inset', 'lines', 'mode', 'theme'],
+  inputs: ['inset', 'lines', 'mode', 'shape', 'theme'],
   standalone: true
 })
 export class IonList {
