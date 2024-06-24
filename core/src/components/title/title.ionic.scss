@@ -18,10 +18,10 @@
   @include globals.position(0, null, null, 0);
   position: absolute;
 
-  transform: translateZ(0);
-
   width: 100%;
   height: 100%;
+
+  transform: translateZ(0);
 }
 
 // Title: Small
