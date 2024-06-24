@@ -1,0 +1,22 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./menu-button.common";
+
+// Menu Button Ionic
+// --------------------------------------------------
+
+:host {
+  --background-focused: currentColor;
+  --background-focused-opacity: 0.12;
+  --background-hover: currentColor;
+  --background-hover-opacity: 0.04;
+  --border-radius: #{globals.$ionic-border-radius-full};
+  --color: initial;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
+
+  font-size: globals.$ionic-font-size-600;
+  position: relative;
+}

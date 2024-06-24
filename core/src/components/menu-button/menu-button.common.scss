@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Menu Button
 // --------------------------------------------------
@@ -40,11 +40,11 @@
 }
 
 .button-native {
-  @include border-radius(var(--border-radius));
-  @include text-inherit();
-  @include margin(0);
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include font-smoothing();
+  @include globals.border-radius(var(--border-radius));
+  @include globals.text-inherit();
+  @include globals.margin(0);
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include globals.font-smoothing();
 
   display: flex;
 
@@ -94,8 +94,8 @@
 }
 
 ion-icon {
-  @include margin(0);
-  @include padding(0);
+  @include globals.margin(0);
+  @include globals.padding(0);
 
   pointer-events: none;
 }
@@ -105,15 +105,6 @@ ion-icon {
 
 :host(.menu-button-hidden) {
   display: none;
-}
-
-// Menu Button: Disabled
-// --------------------------------------------------
-
-:host(.menu-button-disabled) {
-  cursor: default;
-  opacity: 0.5;
-  pointer-events: none;
 }
 
 // Menu Button: Focused
@@ -133,7 +124,7 @@ ion-icon {
 // --------------------------------------------------
 
 .button-native::after {
-  @include button-state();
+  @include globals.button-state();
 }
 
 @media (any-hover: hover) {
@@ -146,13 +137,6 @@ ion-icon {
       opacity: var(--background-hover-opacity, 0);
     }
   }
-}
-
-// Menu Button with Color
-// --------------------------------------------------
-
-:host(.ion-color) .button-native {
-  color: current-color(base);
 }
 
 // Menu Button in Toolbar: Global Theming
