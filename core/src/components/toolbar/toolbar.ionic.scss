@@ -57,9 +57,12 @@ $toolbar-order-ionic: (
   @include globals.padding-horizontal(var(--padding-top), var(--padding-end));
 }
 
-// This applies to ion-title elements in a toolbar-title-large that follows another ion-toolbar
 :host(.toolbar-title-default) ::slotted(ion-title) {
   text-align: center;
+}
+
+:host(.toolbar-title-large) ::slotted(ion-title) {
+  @include globals.padding-horizontal(globals.$ionic-space-400);
 }
 
 // Ionic Toolbar Slot Placement
