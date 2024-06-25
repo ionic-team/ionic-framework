@@ -48,7 +48,7 @@
 // Link
 ::slotted(a.ionic-link) {
   // Needs to be !important to override the default link color
-  // that is set by the ionic theme a global level.
+  // that is set by the ionic theme at a global level.
   //
   /* stylelint-disable declaration-no-important */
   color: #{globals.$ionic-color-primary-base} !important;
