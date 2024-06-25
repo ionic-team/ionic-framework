@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('list-header: basic'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/list-header/test/basic`, config);
@@ -18,7 +18,7 @@ configs().forEach(({ title, screenshot, config }) => {
  * make sure the safe area padding is applied only to that side
  * regardless of direction
  */
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('list-header: basic'), () => {
     test.describe('safe area', () => {
       test('should have padding added by the safe area', async ({ page }) => {
