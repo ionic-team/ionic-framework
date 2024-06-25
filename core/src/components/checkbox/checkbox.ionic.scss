@@ -149,9 +149,7 @@ input {
 }
 
 .checkbox-icon path {
-  fill: none;
-  stroke: var(--checkmark-color);
-  stroke-width: var(--checkmark-width);
+  fill: var(--checkmark-color);
 
   opacity: 0;
 }
