@@ -63,3 +63,15 @@
 :host(.item-option-rectangular) {
   @include globals.border-radius(globals.$ionic-border-radius-0);
 }
+
+// Item Option States
+// --------------------------------------------------
+
+/* Disabled */
+:host(.item-option-disabled) {
+  opacity: 0.6;
+}
+
+:host(.item-option-disabled) .button-native {
+  opacity: 1;
+}
