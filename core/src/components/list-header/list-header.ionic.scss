@@ -42,7 +42,7 @@
 }
 
 ::slotted(ion-label) ::slotted(p) {
-  font-weight: #{globals.$ionic-font-weight-regular};
+  font-weight: globals.$ionic-font-weight-regular;
 }
 
 // Link
