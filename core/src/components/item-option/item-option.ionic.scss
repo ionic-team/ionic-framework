@@ -1,0 +1,77 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./item-option";
+
+// Ionic Item Option
+// --------------------------------------------------
+
+:host {
+  @include globals.padding(0);
+
+  min-width: globals.$ionic-scale-1600;
+  height: globals.$ionic-scale-1600;
+
+  font-size: globals.$ionic-font-size-350;
+  font-weight: globals.$ionic-font-weight-medium;
+
+  line-height: globals.$ionic-line-height-500;
+}
+
+.button-native {
+  @include globals.padding(globals.$ionic-space-200);
+}
+
+::slotted([slot="top"]) {
+  @include globals.margin(0, 0, globals.$ionic-space-100, 0);
+}
+
+::slotted([slot="bottom"]) {
+  @include globals.margin(globals.$ionic-space-100, 0, 0, 0);
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, globals.$ionic-space-100, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, globals.$ionic-space-100);
+}
+
+::slotted(ion-icon),
+::slotted([slot="icon-only"]) {
+  @include globals.margin(0);
+
+  width: globals.$ionic-scale-500;
+
+  min-width: initial;
+  height: globals.$ionic-scale-500;
+}
+
+// Item Option Shapes
+// --------------------------------------------------
+
+/* Round */
+:host(.item-option-round) {
+  @include globals.border-radius(globals.$ionic-border-radius-300);
+}
+
+/* Soft */
+:host(.item-option-soft) {
+  @include globals.border-radius(globals.$ionic-border-radius-200);
+}
+
+/* Rectangular */
+:host(.item-option-rectangular) {
+  @include globals.border-radius(globals.$ionic-border-radius-0);
+}
+
+// Item Option States
+// --------------------------------------------------
+
+/* Disabled */
+:host(.item-option-disabled) {
+  opacity: 0.6;
+}
+
+:host(.item-option-disabled) .button-native {
+  opacity: 1;
+}

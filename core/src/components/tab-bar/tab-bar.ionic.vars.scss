@@ -1,10 +1,10 @@
-@use "../../foundations/ionic.vars.scss" as tokens;
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Ionic Tab Bar
 // --------------------------------------------------
 
 /// @prop - Background color of the tab bar
-$tabbar-ionic-background: var(--ion-tab-bar-background, tokens.$ionic-color-base-white);
+$tabbar-ionic-background: var(--ion-tab-bar-background, globals.$ionic-color-base-white);
 
 /// @prop - Background color of the tab bar button when activated
 // TODO(FW-6186): use design token here when it is added
@@ -14,7 +14,7 @@ $tabbar-ionic-background-activated: var(--ion-tab-bar-background-activated, #ece
 $tabbar-ionic-background-focused: var(--ion-tab-bar-background-focused, transparent);
 
 /// @prop - Color of the tab bar button
-$tabbar-ionic-color: var(--ion-tab-bar-color, tokens.$ionic-color-neutral-500);
+$tabbar-ionic-color: var(--ion-tab-bar-color, globals.$ionic-color-neutral-800);
 
 /// @prop - Color of the selected tab bar button
-$tabbar-ionic-color-selected: var(--ion-tab-bar-color-selected, tokens.$ionic-color-primary-400);
+$tabbar-ionic-color-selected: var(--ion-tab-bar-color-selected, globals.$ionic-color-primary-base);

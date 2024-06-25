@@ -32,8 +32,8 @@
  * These selectors ensure the last item in the list
  * has the correct border.
  * We need to consider the following scenarios:
- 1. The last item in a list as long as it is not the only item.
- 2. The item in the last item-sliding in a list.
+ * 1. The last item in a list as long as it is not the only item.
+ * 2. The item in the last item-sliding in a list.
  * Note that we do not select "ion-item-sliding ion-item:last-of-type"
  * because that will cause the borders to disappear on
  * items in an item-sliding when the item is the last

@@ -8,7 +8,7 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  * It is important to test all modes to ensure that the
  * child components are being rendered correctly.
  */
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ionic-md', 'ios', 'md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: icons'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/icons`, config);

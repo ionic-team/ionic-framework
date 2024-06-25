@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item Sliding - Shapes</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Item Sliding - Shapes</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-item-sliding id="default">
+            <ion-item>
+              <ion-label>Default</ion-label>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option color="danger">
+                <ion-icon slot="top" name="trash"></ion-icon>
+                Delete
+              </ion-item-option>
+              <ion-item-option color="light">
+                <ion-icon slot="top" name="archive"></ion-icon>
+                Archive
+              </ion-item-option>
+              <ion-item-option color="secondary" expandable>
+                <ion-icon slot="top" name="bookmark"></ion-icon>
+                Save
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding id="round">
+            <ion-item>
+              <ion-label>Round</ion-label>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option shape="round" color="danger">
+                <ion-icon slot="top" name="trash"></ion-icon>
+                Delete
+              </ion-item-option>
+              <ion-item-option shape="round" color="light">
+                <ion-icon slot="top" name="archive"></ion-icon>
+                Archive
+              </ion-item-option>
+              <ion-item-option shape="round" color="secondary" expandable>
+                <ion-icon slot="top" name="bookmark"></ion-icon>
+                Save
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding id="soft">
+            <ion-item>
+              <ion-label>Soft</ion-label>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option shape="soft" color="danger">
+                <ion-icon slot="top" name="trash"></ion-icon>
+                Delete
+              </ion-item-option>
+              <ion-item-option shape="soft" color="light">
+                <ion-icon slot="top" name="archive"></ion-icon>
+                Archive
+              </ion-item-option>
+              <ion-item-option shape="soft" color="secondary" expandable>
+                <ion-icon slot="top" name="bookmark"></ion-icon>
+                Save
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding id="rectangular">
+            <ion-item>
+              <ion-label>Rectangular</ion-label>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option shape="rectangular" color="danger">
+                <ion-icon slot="top" name="trash"></ion-icon>
+                Delete
+              </ion-item-option>
+              <ion-item-option shape="rectangular" color="light">
+                <ion-icon slot="top" name="archive"></ion-icon>
+                Archive
+              </ion-item-option>
+              <ion-item-option shape="rectangular" color="secondary" expandable>
+                <ion-icon slot="top" name="bookmark"></ion-icon>
+                Save
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

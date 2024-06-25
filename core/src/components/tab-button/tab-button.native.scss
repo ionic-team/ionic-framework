@@ -1,0 +1,16 @@
+@import "./tab-button.common";
+@import "../../themes/native/native.globals";
+
+// Tab Button: Native
+// --------------------------------------------------
+
+.button-native {
+  @include border-radius(inherit);
+  @include margin(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
+}
+
+.button-native::after {
+  @include button-state();
+}
