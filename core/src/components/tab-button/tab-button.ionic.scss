@@ -5,9 +5,8 @@
 // --------------------------------------------------------------
 
 :host {
-  // TODO(FW-6186): use design token here when it is added
-  --focus-ring-color: #9ec4fd;
-  --focus-ring-width: 2px;
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
+  --focus-ring-width: #{globals.$ionic-border-radius-050};
 
   @include globals.border-radius(globals.$ionic-border-radius-200);
 
