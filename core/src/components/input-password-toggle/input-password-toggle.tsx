@@ -110,8 +110,8 @@ export class InputPasswordToggle implements ComponentInterface {
 
   get inputPasswordHideIcon() {
     // Return the icon if it is explicitly set
-    if (this.showIcon) {
-      return this.showIcon;
+    if (this.hideIcon) {
+      return this.hideIcon;
     }
 
     // Determine the theme and map to default icons
