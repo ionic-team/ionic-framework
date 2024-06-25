@@ -156,7 +156,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   get fabButtonCloseIcon() {
     // Return the icon if it is explicitly set
-    if (this.closeIcon) {
+    if (this.closeIcon != null) {
       return this.closeIcon;
     }
 

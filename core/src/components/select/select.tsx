@@ -945,9 +945,9 @@ export class Select implements ComponentInterface {
    */
   get selectExpandedIcon(): string {
     // Return the expandedIcon or toggleIcon if either is explicitly set
-    if (this.expandedIcon) {
+    if (this.expandedIcon != null) {
       return this.expandedIcon;
-    } else if (this.toggleIcon) {
+    } else if (this.toggleIcon != null) {
       return this.toggleIcon;
     }
 

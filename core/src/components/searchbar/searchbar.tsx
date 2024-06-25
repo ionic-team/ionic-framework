@@ -620,7 +620,7 @@ export class Searchbar implements ComponentInterface {
    */
   get searchbarClearIcon(): string {
     // Return the icon if it is explicitly set
-    if (this.clearIcon) {
+    if (this.clearIcon != null) {
       return this.clearIcon;
     }
 
@@ -647,7 +647,7 @@ export class Searchbar implements ComponentInterface {
    */
   get searchbarSearchIcon(): string {
     // Return the icon if it is explicitly set
-    if (this.searchIcon) {
+    if (this.searchIcon != null) {
       return this.searchIcon;
     }
 
@@ -674,7 +674,7 @@ export class Searchbar implements ComponentInterface {
    */
   get searchbarCancelIcon(): string {
     // Return the icon if it is explicitly set
-    if (this.cancelButtonIcon) {
+    if (this.cancelButtonIcon != null) {
       return this.cancelButtonIcon;
     }
 

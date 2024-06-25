@@ -110,7 +110,7 @@ export class InputPasswordToggle implements ComponentInterface {
 
   get inputPasswordHideIcon() {
     // Return the icon if it is explicitly set
-    if (this.hideIcon) {
+    if (this.hideIcon != null) {
       return this.hideIcon;
     }
 
@@ -131,7 +131,7 @@ export class InputPasswordToggle implements ComponentInterface {
 
   get inputPasswordShowIcon() {
     // Return the icon if it is explicitly set
-    if (this.showIcon) {
+    if (this.showIcon != null) {
       return this.showIcon;
     }
 

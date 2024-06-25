@@ -82,7 +82,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
 
   get backButtonIcon() {
     // Return the icon if it is explicitly set
-    if (this.icon) {
+    if (this.icon != null) {
       return this.icon;
     }
 

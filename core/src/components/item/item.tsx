@@ -245,7 +245,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   get itemDetailIcon() {
     // Return the icon if it is explicitly set
-    if (this.detailIcon) {
+    if (this.detailIcon != null) {
       return this.detailIcon;
     }
 

@@ -770,7 +770,7 @@ export class Input implements ComponentInterface {
    */
   get inputClearIcon(): string {
     // Return the icon if it is explicitly set
-    if (this.clearInputIcon) {
+    if (this.clearInputIcon != null) {
       return this.clearInputIcon;
     }
 

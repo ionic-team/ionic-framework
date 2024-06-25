@@ -190,7 +190,7 @@ export class Accordion implements ComponentInterface {
 
   get accordionToggleIcon() {
     // Return the icon if it is explicitly set
-    if (this.toggleIcon) {
+    if (this.toggleIcon != null) {
       return this.toggleIcon;
     }
 
