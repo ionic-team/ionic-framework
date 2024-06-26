@@ -51,14 +51,14 @@
 .searchbar-clear-button {
   @include globals.position(50%, globals.$ionic-space-200, null, null);
 
-  background-color: transparent;
-
   position: absolute;
 
   width: globals.$ionic-scale-600;
   height: globals.$ionic-scale-600;
 
   transform: translateY(-50%);
+
+  background-color: transparent;
 
   font-size: globals.$ionic-font-size-400;
 
