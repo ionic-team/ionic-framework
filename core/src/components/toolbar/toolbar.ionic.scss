@@ -25,8 +25,6 @@ $toolbar-order-ionic: (
 
 .toolbar-container {
   gap: globals.$ionic-space-400;
-
-  z-index: 10; // TODO(ROU-10853): replace this value with a layer token.
 }
 
 // Toolbar: Content
