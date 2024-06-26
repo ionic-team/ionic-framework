@@ -1,7 +1,7 @@
 @use "searchbar.common";
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
-// iOS Searchbar
+// Ionic Searchbar
 // --------------------------------------------------
 
 :host {
@@ -50,6 +50,8 @@
 
 .searchbar-clear-button {
   @include globals.position(50%, globals.$ionic-space-200, null, null);
+
+  background-color: transparent;
 
   position: absolute;
 
