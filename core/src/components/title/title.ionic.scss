@@ -20,6 +20,8 @@
   height: 100%;
 
   transform: translateZ(0);
+
+  z-index: -1; // TODO(ROU-10853): replace this value with a layer token. This is here to prevent the title from blokcing interaction with buttons.
 }
 
 // Title: Small
