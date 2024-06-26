@@ -13,7 +13,7 @@
 // --------------------------------------------------
 
 ::slotted(*) .button-clear {
-  --color: initial;
+  --color: globals.$ionic-color-neutral-1200;
   --background: transparent;
   --background-activated: transparent;
   --background-focused: currentColor;
