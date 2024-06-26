@@ -1,5 +1,5 @@
-@use "../../foundations/ionic.vars.scss" as globals;
-@import "./tab-button";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./tab-button.common";
 
 // Ionic Tab Button
 // --------------------------------------------------------------
@@ -8,17 +8,43 @@
   --focus-ring-color: #{globals.$ionic-state-focus-1};
   --focus-ring-width: #{globals.$ionic-border-radius-050};
 
-  @include border-radius(globals.$ionic-border-radius-200);
+  @include globals.border-radius(globals.$ionic-border-radius-200);
+
+  align-content: center;
+
+  min-height: globals.$ionic-scale-1200;
+  max-height: globals.$ionic-scale-1800;
+
+  font-size: globals.$ionic-font-size-300;
+  font-weight: globals.$ionic-font-weight-medium;
+
+  line-height: globals.$ionic-line-height-500;
+}
+
+// Tab Button: Native
+// --------------------------------------------------
+
+.button-native {
+  @include globals.border-radius(inherit);
+  @include globals.margin(0);
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include globals.text-inherit();
+}
+
+.button-native::after {
+  @include globals.button-state();
 }
 
 // Tab Button Focused
 // -------------------------------------------------------------------------------
 
 .button-native {
+  min-width: globals.$ionic-scale-1200;
+
   overflow: visible;
 
   &::after {
-    @include border-radius(inherit);
+    @include globals.border-radius(inherit);
   }
 }
 
@@ -36,4 +62,14 @@
   background: var(--background-activated);
 
   opacity: var(--background-activated-opacity);
+}
+
+// Tab Button Slots
+// -------------------------------------------------------------------------------
+
+// Icon
+
+::slotted(ion-icon) {
+  width: globals.$ionic-scale-600;
+  height: globals.$ionic-scale-600;
 }
