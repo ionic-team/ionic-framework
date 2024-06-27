@@ -40,7 +40,68 @@
           <ion-buttons slot="start">
             <ion-menu-button auto-hide="false"></ion-menu-button>
           </ion-buttons>
-          <ion-title>Page title</ion-title>
+          <div style="text-align: center">
+            <ion-text class="ionic-heading-h6-medium">Ion Text</ion-text>
+          </div>
+          <ion-buttons slot="end">
+            <ion-button>
+              <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-text size="large" class="ionic-heading-h1-medium">Ion Text</ion-text>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="secondary">
+            <ion-button>
+              <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="primary">
+            <ion-button>
+              <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Icon Buttons</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="secondary">
+            <ion-button fill="solid">
+              <ion-icon slot="start" name="person-circle"></ion-icon>
+              Contact
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="primary">
+            <ion-button fill="solid">
+              Help
+              <ion-icon slot="end" name="help-circle"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Solid Buttons</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Back Button</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button auto-hide="false"></ion-menu-button>
+          </ion-buttons>
           <ion-buttons slot="end">
             <ion-button>
               <ion-icon slot="icon-only" name="person-circle"></ion-icon>
@@ -50,55 +111,7 @@
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
-        <ion-toolbar>
-          <ion-title slot="start" size="large" class="ionic-heading-h1-medium">Page title</ion-title>
-        </ion-toolbar>
       </ion-header>
-
-      <ion-toolbar>
-        <ion-buttons slot="secondary">
-          <ion-button>
-            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-          </ion-button>
-          <ion-button>
-            <ion-icon slot="icon-only" name="search"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-buttons slot="primary">
-          <ion-button>
-            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Icon Buttons</ion-title>
-      </ion-toolbar>
-
-      <ion-toolbar>
-        <ion-buttons slot="secondary">
-          <ion-button fill="solid">
-            <ion-icon slot="start" name="person-circle"></ion-icon>
-            Contact
-          </ion-button>
-        </ion-buttons>
-        <ion-buttons slot="primary">
-          <ion-button fill="solid">
-            Help
-            <ion-icon slot="end" name="help-circle"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Solid Buttons</ion-title>
-      </ion-toolbar>
-
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button default-href="#"></ion-back-button>
-        </ion-buttons>
-        <ion-title>Back Button</ion-title>
-      </ion-toolbar>
-
-      <ion-toolbar>
-        <ion-button slot="start" size="small" fill="clear">Action</ion-button>
-        <ion-title>Menu Button</ion-title>
-      </ion-toolbar>
     </ion-app>
   </body>
 </html>
