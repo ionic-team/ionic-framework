@@ -11,6 +11,10 @@ runs:
       run: npm ci
       shell: bash
       working-directory: ./packages/angular-server
+    - name: Install Dependencies
+      run: npx lerna@5 bootstrap --include-dependencies --ignore-scripts -- --legacy-peer-deps
+      shell: bash
+      working-directory: ./packages/angular-server
     - name: Build
       run: npm run build.prod
       shell: bash
