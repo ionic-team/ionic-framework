@@ -245,15 +245,9 @@ export class Checkbox implements ComponentInterface {
           </div>
           <div class="native-wrapper">
             {/* Phosphor Icons define a larger viewBox */}
-            {theme === 'ionic' ? (
-              <svg class="checkbox-icon" viewBox="0 0 256 256" part="container">
-                {path}
-              </svg>
-            ) : (
-              <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
-                {path}
-              </svg>
-            )}
+            <svg class="checkbox-icon" viewBox={theme === 'ionic' ? '0 0 256 256' : '0 0 24 24'} part="container">
+              {path}
+            </svg>
           </div>
         </label>
       </Host>
