@@ -32,7 +32,8 @@
     "lint": "eslint . --ext .ts && npm run prettier",
     "lint.fix": "eslint . --ext .ts --fix && npm run prettier.fix",
     "prettier": "prettier \"**/*.ts\" --check",
-    "prettier.fix": "prettier \"**/*.ts\" --write"
+    "prettier.fix": "prettier \"**/*.ts\" --write",
+    "sync": "sh ./scripts/sync.sh"
   },
   "peerDependencies": {
     "@angular/core": ">=16.0.0",
