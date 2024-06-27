@@ -1,3 +1,5 @@
+import eyeSlashRegular from '@phosphor-icons/core/assets/regular/eye-slash.svg';
+import eyeRegular from '@phosphor-icons/core/assets/regular/eye.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, Watch } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
@@ -5,7 +7,7 @@ import { createColorClasses } from '@utils/theme';
 import { eyeOff, eye } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Color, TextFieldTypes } from '../../interface';
 
 /**
@@ -106,14 +108,54 @@ export class InputPasswordToggle implements ComponentInterface {
     inputElRef.type = inputElRef.type === 'text' ? 'password' : 'text';
   };
 
+  get inputPasswordHideIcon() {
+    // Return the icon if it is explicitly set
+    if (this.hideIcon != null) {
+      return this.hideIcon;
+    }
+
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: eyeOff,
+      ionic: eyeSlashRegular,
+      md: eyeOff,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured input password hide icon or the default icon
+    return config.get('inputPasswordHideIcon', defaultIcon);
+  }
+
+  get inputPasswordShowIcon() {
+    // Return the icon if it is explicitly set
+    if (this.showIcon != null) {
+      return this.showIcon;
+    }
+
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: eye,
+      ionic: eyeRegular,
+      md: eye,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured input password show icon or the default icon
+    return config.get('inputPasswordShowIcon', defaultIcon);
+  }
+
   render() {
-    const { color, type } = this;
+    const { color, inputPasswordHideIcon, inputPasswordShowIcon, type } = this;
 
     const mode = getIonMode(this);
 
     const isPasswordVisible = type === 'text';
-    const inputPasswordShowIcon = this.showIcon ?? config.get('inputPasswordShowIcon', eye);
-    const inputPasswordHideIcon = this.hideIcon ?? config.get('inputPasswordHideIcon', eyeOff);
 
     return (
       <Host

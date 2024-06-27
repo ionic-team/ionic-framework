@@ -1,3 +1,4 @@
+import listRegular from '@phosphor-icons/core/assets/regular/list.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, h } from '@stencil/core';
 import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
@@ -40,14 +41,21 @@ export class Reorder implements ComponentInterface {
    * Get the icon to use for the handle icon.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the handle icon.
    */
   get reorderHandleIcon(): string {
+    // Determine the theme and map to default icons
     const theme = getIonTheme(this);
-    const reorderIcon = theme === 'ios' ? reorderThreeOutline : reorderTwoSharp;
+    const defaultIcons = {
+      ios: reorderThreeOutline,
+      ionic: listRegular,
+      md: reorderTwoSharp,
+    };
 
-    return config.get('reorderHandleIcon', reorderIcon);
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured reorder handle icon or the default icon
+    return config.get('reorderHandleIcon', defaultIcon);
   }
 
   render() {

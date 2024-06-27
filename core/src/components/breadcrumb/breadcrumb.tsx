@@ -1,3 +1,5 @@
+import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
+import dotsThreeRegular from '@phosphor-icons/core/assets/regular/dots-three.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
@@ -133,6 +135,38 @@ export class Breadcrumb implements ComponentInterface {
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  get breadcrumbCollapsedIcon() {
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: ellipsisHorizontal,
+      ionic: dotsThreeRegular,
+      md: ellipsisHorizontal,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured breadcrumb collapsed icon or the default icon
+    return config.get('breadcrumbCollapsedIcon', defaultIcon);
+  }
+
+  get breadcrumbSeparatorIcon() {
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: chevronForwardOutline,
+      ionic: caretRightRegular,
+      md: chevronForwardOutline,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured breadcrumb separator icon or the default icon
+    return config.get('breadcrumbSeparatorIcon', defaultIcon);
+  }
+
   private isClickable(): boolean {
     return this.href !== undefined;
   }
@@ -153,6 +187,8 @@ export class Breadcrumb implements ComponentInterface {
     const {
       color,
       active,
+      breadcrumbCollapsedIcon,
+      breadcrumbSeparatorIcon,
       collapsed,
       disabled,
       download,
@@ -167,9 +203,6 @@ export class Breadcrumb implements ComponentInterface {
     } = this;
     const clickable = this.isClickable();
     const TagType = this.href === undefined ? 'span' : ('a' as any);
-
-    const breadcrumbSeparatorIcon = config.get('breadcrumbSeparatorIcon', chevronForwardOutline);
-    const breadcrumbCollapsedIcon = config.get('breadcrumbCollapsedIcon', ellipsisHorizontal);
 
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
@@ -239,7 +272,7 @@ export class Breadcrumb implements ComponentInterface {
            */
           <span class="breadcrumb-separator" part="separator" aria-hidden="true">
             <slot name="separator">
-              {theme === 'ios' ? (
+              {theme === 'ios' || theme === 'ionic' ? (
                 <ion-icon icon={breadcrumbSeparatorIcon} lazy={false} flip-rtl></ion-icon>
               ) : (
                 <span>/</span>
