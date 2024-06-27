@@ -1,5 +1,3 @@
-@import "../../themes/native/native.globals";
-
 :host {
   /**
    * @prop --background: Background of the tab button
@@ -38,11 +36,6 @@
 // --------------------------------------------------
 
 .button-native {
-  @include border-radius(inherit);
-  @include margin(0);
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include text-inherit();
-
   display: flex;
   position: relative;
 
@@ -65,10 +58,6 @@
   overflow: hidden;
   box-sizing: border-box;
   -webkit-user-drag: none;
-}
-
-.button-native::after {
-  @include button-state();
 }
 
 .button-inner {

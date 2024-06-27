@@ -7,9 +7,6 @@
 :host {
   @include globals.padding(0);
 
-  min-width: globals.$ionic-scale-1600;
-  height: globals.$ionic-scale-1600;
-
   font-size: globals.$ionic-font-size-350;
   font-weight: globals.$ionic-font-weight-medium;
 
@@ -18,6 +15,9 @@
 
 .button-native {
   @include globals.padding(globals.$ionic-space-200);
+
+  min-width: globals.$ionic-scale-1600;
+  height: globals.$ionic-scale-1600;
 }
 
 ::slotted([slot="top"]) {
@@ -62,4 +62,16 @@
 /* Rectangular */
 :host(.item-option-rectangular) {
   @include globals.border-radius(globals.$ionic-border-radius-0);
+}
+
+// Item Option States
+// --------------------------------------------------
+
+/* Disabled */
+:host(.item-option-disabled) {
+  opacity: 0.6;
+}
+
+:host(.item-option-disabled) .button-native {
+  opacity: 1;
 }

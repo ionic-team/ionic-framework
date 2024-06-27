@@ -1,0 +1,55 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./list-header";
+@import "../item/item.ionic.vars";
+
+:host {
+  --background: transparent;
+
+  min-height: 58px;
+
+  font-size: globals.$ionic-font-size-350;
+
+  line-height: globals.$ionic-line-height-600;
+
+  /** 
+   * The focus rings from components like buttons and links
+   * are being cut off. This style ensures that the focus ring
+   * is completely visible.
+   */
+  overflow: visible;
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$item-ionic-padding-end});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$item-ionic-padding-start});
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$item-ionic-padding-start});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$item-ionic-padding-end});
+  }
+  /* stylelint-enable */
+}
+
+// List Header: Slotted Components
+// --------------------------------------------------
+
+// Label
+::slotted(ion-label) {
+  --color: #{globals.$ionic-color-neutral-1200};
+
+  font-weight: globals.$ionic-font-weight-medium;
+}
+
+::slotted(ion-label) ::slotted(p) {
+  font-weight: globals.$ionic-font-weight-regular;
+}
+
+// Link
+::slotted(a.ionic-link) {
+  // Needs to be !important to override the default link color
+  // that is set by the ionic theme at a global level.
+  //
+  /* stylelint-disable declaration-no-important */
+  color: globals.$ionic-color-primary-base !important;
+}
