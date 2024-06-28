@@ -250,6 +250,7 @@ export const config: Config = {
     moduleNameMapper: {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
       "@utils/logging": ["<rootDir>/src/utils/logging"],
+      "^.+\\.svg": "<rootDir>/svgTransform.js"
     },
     setupFilesAfterEnv: ['./setupJest.js']
   },

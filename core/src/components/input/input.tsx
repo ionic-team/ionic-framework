@@ -1,3 +1,4 @@
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
@@ -766,19 +767,26 @@ export class Input implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    *
    * @internal
-   * @returns {string} The icon to use for the clear icon.
    */
   get inputClearIcon(): string {
-    const theme = getIonTheme(this);
-    const defaultClearIcon = theme === 'ios' ? closeCircle : closeSharp;
-    const icon = this.clearInputIcon;
-
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
+    // Return the icon if it is explicitly set
+    if (this.clearInputIcon != null) {
+      return this.clearInputIcon;
     }
 
-    return config.get('inputClearIcon', defaultClearIcon);
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: closeCircle,
+      ionic: xRegular,
+      md: closeSharp,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured input clear icon or the default icon
+    return config.get('inputClearIcon', defaultIcon);
   }
 
   render() {

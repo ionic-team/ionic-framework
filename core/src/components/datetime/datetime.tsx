@@ -1,3 +1,7 @@
+import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
+import caretLeftRegular from '@phosphor-icons/core/assets/regular/caret-left.svg';
+import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
+import caretUpRegular from '@phosphor-icons/core/assets/regular/caret-up.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { startFocusVisible } from '@utils/focus-visible';
@@ -2116,10 +2120,7 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(theme: Theme) {
-    const { disabled, datetimeShowMonthYearIcon, datetimeHideMonthYearIcon } = this;
-
-    const datetimeNextIcon = config.get('datetimeNextIcon', chevronForward);
-    const datetimePrevIcon = config.get('datetimePreviousIcon', chevronBack);
+    const { disabled, datetimeNextIcon, datetimePreviousIcon, datetimeCollapsedIcon, datetimeExpandedIcon } = this;
 
     const prevMonthDisabled = disabled || isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
@@ -2146,7 +2147,7 @@ export class Datetime implements ComponentInterface {
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
                   aria-hidden="true"
-                  icon={this.showMonthAndYear ? datetimeShowMonthYearIcon : datetimeHideMonthYearIcon}
+                  icon={this.showMonthAndYear ? datetimeExpandedIcon : datetimeCollapsedIcon}
                   lazy={false}
                   flipRtl={true}
                 ></ion-icon>
@@ -2162,7 +2163,7 @@ export class Datetime implements ComponentInterface {
                   dir={hostDir}
                   aria-hidden="true"
                   slot="icon-only"
-                  icon={datetimePrevIcon}
+                  icon={datetimePreviousIcon}
                   lazy={false}
                   flipRtl
                 ></ion-icon>
@@ -2596,31 +2597,87 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
+   * Get the icon to use for the next icon.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get datetimeNextIcon(): string {
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: chevronForward,
+      ionic: caretRightRegular,
+      md: chevronForward,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured datetime next icon or the default icon
+    return config.get('datetimeNextIcon', defaultIcon);
+  }
+
+  /**
+   * Get the icon to use for the previous icon.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get datetimePreviousIcon(): string {
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: chevronBack,
+      ionic: caretLeftRegular,
+      md: chevronBack,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured datetime previous icon or the default icon
+    return config.get('datetimePreviousIcon', defaultIcon);
+  }
+
+  /**
    * Get the icon to use for the show month and year icon.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the show month and year icon.
    */
-  get datetimeShowMonthYearIcon(): string {
+  get datetimeCollapsedIcon(): string {
+    // Determine the theme and map to default icons
     const theme = getIonTheme(this);
-    const expandedIcon = theme === 'ios' ? chevronDown : caretUpSharp;
+    const defaultIcons = {
+      ios: chevronForward,
+      ionic: caretDownRegular,
+      md: caretDownSharp,
+    };
 
-    return config.get('datetimeShowMonthYearIcon', expandedIcon);
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured datetime show month and year icon or the default icon
+    return config.get('datetimeCollapsedIcon', defaultIcon);
   }
 
   /**
    * Get the icon to use for the hide month and year icon.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the hide month and year icon.
    */
-  get datetimeHideMonthYearIcon(): string {
+  get datetimeExpandedIcon(): string {
+    // Determine the theme and map to default icons
     const theme = getIonTheme(this);
-    const collapsedIcon = theme === 'ios' ? chevronForward : caretDownSharp;
+    const defaultIcons = {
+      ios: chevronDown,
+      ionic: caretUpRegular,
+      md: caretUpSharp,
+    };
 
-    return config.get('datetimeHideMonthYearIcon', collapsedIcon);
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured datetime hide month and year icon or the default icon
+    return config.get('datetimeExpandedIcon', defaultIcon);
   }
 
   render() {
