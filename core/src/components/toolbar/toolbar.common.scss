@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 
 // Toolbar
 // --------------------------------------------------
@@ -42,26 +42,16 @@
 
   color: var(--color);
 
-  font-family: $font-family-base;
-
   contain: content;
 
-  z-index: $z-index-toolbar;
   box-sizing: border-box;
-}
-
-:host(.ion-color) {
-  color: current-color(contrast);
-}
-
-:host(.ion-color) .toolbar-background {
-  background: current-color(base);
 }
 
 .toolbar-container {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: flex;
+
   position: relative;
 
   flex-direction: row;
@@ -74,7 +64,6 @@
 
   contain: content;
   overflow: hidden;
-  z-index: $z-index-toolbar;
 
   box-sizing: border-box;
 }
@@ -97,7 +86,6 @@
 
   contain: strict;
   opacity: calc(var(--opacity) * var(--opacity-scale));
-  z-index: $z-index-toolbar-background;
   pointer-events: none;
 }
 
