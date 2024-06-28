@@ -47,6 +47,12 @@ export class Header implements ComponentInterface {
   @Prop() collapse?: 'condense' | 'fade';
 
   /**
+   * If `true`, the header will have a line at the bottom.
+   * TODO(ROU-10855): add support for this prop on ios/md themes
+   */
+  @Prop() divider = false;
+
+  /**
    * If `true`, the header will be translucent.
    * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
@@ -207,7 +213,7 @@ export class Header implements ComponentInterface {
   }
 
   render() {
-    const { translucent, inheritedAttributes } = this;
+    const { translucent, inheritedAttributes, divider } = this;
     const theme = getIonTheme(this);
     const collapse = this.collapse || 'none';
 
@@ -226,6 +232,7 @@ export class Header implements ComponentInterface {
           [`header-translucent`]: this.translucent,
           [`header-collapse-${collapse}`]: true,
           [`header-translucent-${theme}`]: this.translucent,
+          ['header-divider']: divider,
         }}
         {...inheritedAttributes}
       >
