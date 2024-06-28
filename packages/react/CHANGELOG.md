@@ -11,6 +11,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
 ## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
 
 **Note:** Version bump only for package @ionic/react
