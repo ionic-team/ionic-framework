@@ -50,7 +50,7 @@ export class Header implements ComponentInterface {
    * If `true`, the header will have a line at the bottom.
    * TODO(ROU-10855): add support for this prop on ios/md themes
    */
-  @Prop({ reflect: true }) divider = false;
+  @Prop() divider = false;
 
   /**
    * If `true`, the header will be translucent.
