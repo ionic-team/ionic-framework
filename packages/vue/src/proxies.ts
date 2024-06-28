@@ -379,6 +379,7 @@ export const IonGrid = /*@__PURE__*/ defineContainer<JSX.IonGrid>('ion-grid', de
 
 export const IonHeader = /*@__PURE__*/ defineContainer<JSX.IonHeader>('ion-header', defineIonHeader, [
   'collapse',
+  'divider',
   'translucent'
 ]);
 
