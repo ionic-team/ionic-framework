@@ -824,14 +824,14 @@ export declare interface IonGrid extends Components.IonGrid {}
 
 
 @ProxyCmp({
-  inputs: ['collapse', 'mode', 'theme', 'translucent']
+  inputs: ['collapse', 'divider', 'mode', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['collapse', 'mode', 'theme', 'translucent'],
+  inputs: ['collapse', 'divider', 'mode', 'theme', 'translucent'],
 })
 export class IonHeader {
   protected el: HTMLElement;

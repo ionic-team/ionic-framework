@@ -1287,6 +1287,10 @@ export namespace Components {
          */
         "collapse"?: 'condense' | 'fade';
         /**
+          * If `true`, the header will have a line at the bottom. TODO(ROU-10855): add support for this prop on ios/md themes
+         */
+        "divider": boolean;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -6574,6 +6578,10 @@ declare namespace LocalJSX {
           * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: 'condense' | 'fade';
+        /**
+          * If `true`, the header will have a line at the bottom. TODO(ROU-10855): add support for this prop on ios/md themes
+         */
+        "divider"?: boolean;
         /**
           * The mode determines the platform behaviors of the component.
          */
