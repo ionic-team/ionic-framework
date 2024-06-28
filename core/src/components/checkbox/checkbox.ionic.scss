@@ -8,7 +8,8 @@
   --border-width: #{globals.$ionic-border-size-025};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-color: #{globals.$ionic-color-neutral-800};
-  --checkmark-width: 3;
+  --checkmark-width: #{globals.$ionic-scale-400};
+  --checkmark-height: var(--checkmark-width);
 
   // Focus
   --focus-ring-color: #{globals.$ionic-state-focus-1};
@@ -149,8 +150,8 @@ input {
 .checkbox-icon {
   position: relative;
 
-  width: globals.$ionic-scale-400;
-  height: globals.$ionic-scale-400;
+  width: var(--checkmark-width);
+  height: var(--checkmark-height);
 }
 
 .checkbox-icon path {
