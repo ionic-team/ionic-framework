@@ -32,7 +32,8 @@
     "lint": "eslint . --ext .ts && npm run prettier",
     "lint.fix": "eslint . --ext .ts --fix && npm run prettier.fix",
     "prettier": "prettier \"**/*.ts\" --check",
-    "prettier.fix": "prettier \"**/*.ts\" --write"
+    "prettier.fix": "prettier \"**/*.ts\" --write",
+    "sync": "sh ./scripts/sync.sh"
   },
   "peerDependencies": {
     "@angular/core": ">=16.0.0",
@@ -52,6 +53,7 @@
     "@angular/platform-server": "^16.0.0",
     "@ionic/eslint-config": "^0.4.0",
     "@ionic/prettier-config": "^2.0.0",
+    "@types/node": "^20.14.9",
     "eslint": "^8.57.0",
     "ng-packagr": "^16.0.0",
     "prettier": "^2.4.1",

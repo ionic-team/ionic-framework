@@ -6,9 +6,17 @@ runs:
     - uses: actions/setup-node@v4
       with:
         node-version: 18.x
-
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
     - name: Install Angular Server Dependencies
       run: npm ci
+      shell: bash
+      working-directory: ./packages/angular-server
+    - name: Sync
+      run: npm run sync
       shell: bash
       working-directory: ./packages/angular-server
     - name: Build
