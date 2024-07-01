@@ -74,13 +74,13 @@
       "$type": "dimension",
       "$value": "600"
     },
-    "extra-bold": {
-      "$type": "dimension",
-      "$value": "800"
-    },
     "bold": {
       "$type": "dimension",
       "$value": "700"
+    },
+    "extra-bold": {
+      "$type": "dimension",
+      "$value": "800"
     },
     "black": {
       "$type": "dimension",
