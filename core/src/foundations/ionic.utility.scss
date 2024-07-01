@@ -331,6 +331,24 @@
   @include padding($ionic-space-800);
 }
 
+.ionic-margin-space-850 {
+  --margin-start: #{$ionic-space-850};
+  --margin-end: #{$ionic-space-850};
+  --margin-top: #{$ionic-space-850};
+  --margin-bottom: #{$ionic-space-850};
+
+  @include margin($ionic-space-850);
+}
+
+.ionic-padding-space-850 {
+  --padding-start: #{$ionic-space-850};
+  --padding-end: #{$ionic-space-850};
+  --padding-top: #{$ionic-space-850};
+  --padding-bottom: #{$ionic-space-850};
+
+  @include padding($ionic-space-850);
+}
+
 .ionic-margin-space-900 {
   --margin-start: #{$ionic-space-900};
   --margin-end: #{$ionic-space-900};
@@ -416,6 +434,9 @@
 }
 .ionic-border-radius-400 {
   border-radius: $ionic-border-radius-400;
+}
+.ionic-border-radius-500 {
+  border-radius: $ionic-border-radius-500;
 }
 .ionic-border-radius-800 {
   border-radius: $ionic-border-radius-800;

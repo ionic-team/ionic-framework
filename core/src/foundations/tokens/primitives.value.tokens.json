@@ -148,10 +148,6 @@
       "$type": "dimension",
       "$value": "{scale.0}"
     },
-    "050": {
-      "$type": "dimension",
-      "$value": "{scale.050}"
-    },
     "100": {
       "$type": "dimension",
       "$value": "{scale.100}"
@@ -192,6 +188,10 @@
       "$type": "dimension",
       "$value": "{scale.800}"
     },
+    "850": {
+      "$type": "dimension",
+      "$value": "{scale.850}"
+    },
     "900": {
       "$type": "dimension",
       "$value": "{scale.900}"
@@ -203,16 +203,16 @@
     "1200": {
       "$type": "dimension",
       "$value": "{scale.1200}"
+    },
+    "050": {
+      "$type": "dimension",
+      "$value": "{scale.050}"
     }
   },
   "border-radius": {
     "0": {
       "$type": "dimension",
       "$value": "{scale.0}"
-    },
-    "050": {
-      "$type": "dimension",
-      "$value": "{scale.050}"
     },
     "100": {
       "$type": "dimension",
@@ -230,6 +230,10 @@
       "$type": "dimension",
       "$value": "{scale.400}"
     },
+    "500": {
+      "$type": "dimension",
+      "$value": "{scale.500}"
+    },
     "800": {
       "$type": "dimension",
       "$value": "{scale.800}"
@@ -237,6 +241,10 @@
     "1000": {
       "$type": "dimension",
       "$value": "{scale.1000}"
+    },
+    "050": {
+      "$type": "dimension",
+      "$value": "{scale.050}"
     },
     "full": {
       "$type": "dimension",
@@ -1120,6 +1128,10 @@
       "$type": "dimension",
       "$value": "32px"
     },
+    "850": {
+      "$type": "dimension",
+      "$value": "34px"
+    },
     "900": {
       "$type": "dimension",
       "$value": "36px"
@@ -1156,9 +1168,21 @@
       "$type": "dimension",
       "$value": "96px"
     },
+    "2800": {
+      "$type": "dimension",
+      "$value": "112px"
+    },
     "3200": {
       "$type": "dimension",
       "$value": "128px"
+    },
+    "3400": {
+      "$type": "dimension",
+      "$value": "136px"
+    },
+    "3600": {
+      "$type": "dimension",
+      "$value": "144px"
     },
     "4000": {
       "$type": "dimension",
