@@ -1,0 +1,92 @@
+@use "./toolbar.common";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+$toolbar-order-ionic: (
+  slot-start: 1,
+  slot-secondary: 2,
+  content: 3,
+  slot-primary: 4,
+  slot-end: 5,
+);
+
+// Ionic Toolbar
+// --------------------------------------------------
+
+:host {
+  --background: #{globals.$ionic-color-base-white};
+  --color: #{globals.$ionic-color-neutral-1200};
+  --border-color: currentColor;
+  --padding-top: #{globals.$ionic-space-200};
+  --padding-bottom: #{globals.$ionic-space-200};
+  --padding-start: #{globals.$ionic-space-200};
+  --padding-end: #{globals.$ionic-space-200};
+  --min-height: #{globals.$ionic-scale-1400};
+}
+
+.toolbar-container {
+  gap: globals.$ionic-space-400;
+}
+
+// Toolbar: Content
+// --------------------------------------------------
+
+.toolbar-content {
+  flex: 2;
+  order: map-get($toolbar-order-ionic, content);
+
+  min-width: 0;
+}
+
+// Toolbar: Searchbar
+// --------------------------------------------------
+
+:host(.toolbar-searchbar) ::slotted(ion-searchbar) {
+  @include globals.padding(0);
+}
+
+// Toolbar: Title
+// --------------------------------------------------
+
+::slotted(ion-title) {
+  @include globals.padding-horizontal(var(--padding-top), var(--padding-end));
+}
+
+:host(.toolbar-title-default) ::slotted(ion-title) {
+  text-align: center;
+}
+
+:host(.toolbar-title-large) ::slotted(ion-title) {
+  @include globals.padding-horizontal(globals.$ionic-space-400);
+}
+
+// Ionic Toolbar Slot Placement
+// --------------------------------------------------
+
+::slotted([slot="secondary"]) {
+  order: map-get($toolbar-order-ionic, slot-secondary);
+}
+
+::slotted([slot="primary"]) {
+  order: map-get($toolbar-order-ionic, slot-primary);
+
+  text-align: end;
+}
+
+::slotted([slot="start"]) {
+  order: map-get($toolbar-order-ionic, slot-start);
+}
+
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  display: flex;
+
+  flex: 1;
+  gap: globals.$ionic-space-200;
+}
+
+::slotted([slot="end"]) {
+  justify-content: end;
+  order: map-get($toolbar-order-ionic, slot-end);
+
+  font-size: var(--ionic-font-size-600, 1.5rem);
+}

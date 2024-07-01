@@ -151,14 +151,14 @@ export interface IonicConfig {
   datetimePreviousIcon?: string;
 
   /**
-   * Overrides the show month and year icon for all `ion-datetime` components.
+   * Overrides the expanded icon for all `ion-datetime` components.
    */
-  datetimeShowMonthYearIcon?: string;
+  datetimeExpandedIcon?: string;
 
   /**
-   * Overrides the hide month and year icon for all `ion-datetime` components.
+   * Overrides the collapsed icon for all `ion-datetime` components.
    */
-  datetimeHideMonthYearIcon?: string;
+  datetimeCollapsedIcon?: string;
 
   /**
    * Overrides the close icon for all `ion-fab-button` components.
@@ -209,7 +209,7 @@ export interface IonicConfig {
   /**
    * Overrides the expand icon for all `ion-select` components.
    */
-  selectExpandIcon?: string;
+  selectExpandedIcon?: string;
 
   /**
    * Overrides the collapsed icon for all `ion-select` components.

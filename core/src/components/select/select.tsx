@@ -1,3 +1,4 @@
+import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { NotchController } from '@utils/forms';
@@ -878,11 +879,11 @@ export class Select implements ComponentInterface {
    * next to the select text.
    */
   private renderSelectIcon() {
-    const { isExpanded, selectExpandIcon, selectCollapsedIcon } = this;
+    const { isExpanded, selectExpandedIcon, selectCollapsedIcon } = this;
     let icon = selectCollapsedIcon;
 
     if (isExpanded) {
-      icon = selectExpandIcon;
+      icon = selectExpandedIcon;
     }
 
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
@@ -941,25 +942,28 @@ export class Select implements ComponentInterface {
    * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the expand icon.
    */
-  get selectExpandIcon(): string {
+  get selectExpandedIcon(): string {
+    // Return the expandedIcon or toggleIcon if either is explicitly set
+    if (this.expandedIcon != null) {
+      return this.expandedIcon;
+    } else if (this.toggleIcon != null) {
+      return this.toggleIcon;
+    }
+
+    // Determine the theme and map to default icons
     const theme = getIonTheme(this);
-    const icon = this.expandedIcon;
-    let defaultExpandIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
+    const defaultIcons = {
+      ios: chevronExpand,
+      ionic: caretDownRegular,
+      md: caretDownSharp,
+    };
 
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
-    }
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
 
-    if (this.toggleIcon) {
-      // If the toggleIcon is set, use that as the default expand icon.
-      defaultExpandIcon = this.toggleIcon;
-    }
-
-    return config.get('selectExpandIcon', defaultExpandIcon);
+    // Return the configured select expanded icon or the default icon
+    return config.get('selectExpandedIcon', defaultIcon);
   }
 
   /**
@@ -967,18 +971,23 @@ export class Select implements ComponentInterface {
    * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the collapsed icon.
    */
   get selectCollapsedIcon(): string {
-    const theme = getIonTheme(this);
-    const icon = this.toggleIcon;
-    const defaultIcon = theme === 'ios' ? chevronExpand : caretDownSharp;
-
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
+    // Return the toggleIcon if it is explicitly set
+    if (this.toggleIcon) {
+      return this.toggleIcon;
     }
+
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: chevronExpand,
+      ionic: caretDownRegular,
+      md: caretDownSharp,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
 
     return config.get('selectCollapsedIcon', defaultIcon);
   }

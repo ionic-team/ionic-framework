@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 
 // Menu Button
 // --------------------------------------------------
@@ -107,15 +107,6 @@ ion-icon {
   display: none;
 }
 
-// Menu Button: Disabled
-// --------------------------------------------------
-
-:host(.menu-button-disabled) {
-  cursor: default;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 // Menu Button: Focused
 // --------------------------------------------------
 
@@ -146,13 +137,6 @@ ion-icon {
       opacity: var(--background-hover-opacity, 0);
     }
   }
-}
-
-// Menu Button with Color
-// --------------------------------------------------
-
-:host(.ion-color) .button-native {
-  color: current-color(base);
 }
 
 // Menu Button in Toolbar: Global Theming

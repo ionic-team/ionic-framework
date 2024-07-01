@@ -1,3 +1,6 @@
+import arrowLeftRegular from '@phosphor-icons/core/assets/regular/arrow-left.svg';
+import magnifyingGlassRegular from '@phosphor-icons/core/assets/regular/magnifying-glass.svg';
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
@@ -21,7 +24,7 @@ import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './se
   styleUrls: {
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss',
-    ionic: 'searchbar.md.scss',
+    ionic: 'searchbar.ionic.scss',
   },
   scoped: true,
 })
@@ -614,19 +617,25 @@ export class Searchbar implements ComponentInterface {
    * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the clear icon.
    */
   get searchbarClearIcon(): string {
-    const theme = getIonTheme(this);
-    const icon = this.clearIcon;
-    const defaultIcon = theme === 'ios' ? closeCircle : closeSharp;
-
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
+    // Return the icon if it is explicitly set
+    if (this.clearIcon != null) {
+      return this.clearIcon;
     }
 
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: closeCircle,
+      ionic: xRegular,
+      md: closeSharp,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured searchbar clear icon or the default icon
     return config.get('searchbarClearIcon', defaultIcon);
   }
 
@@ -635,35 +644,60 @@ export class Searchbar implements ComponentInterface {
    * If an icon is set on the component, use that.
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
-   *
-   * @returns {string} The icon to use for the search icon.
    */
   get searchbarSearchIcon(): string {
-    const theme = getIonTheme(this);
-    const icon = this.searchIcon;
-    const defaultIcon = theme === 'ios' ? searchOutline : searchSharp;
-
-    if (icon !== undefined) {
-      // Icon is set on the component.
-      return icon;
+    // Return the icon if it is explicitly set
+    if (this.searchIcon != null) {
+      return this.searchIcon;
     }
 
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: searchOutline,
+      ionic: magnifyingGlassRegular,
+      md: searchSharp,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured searchbar search icon or the default icon
     return config.get('searchbarSearchIcon', defaultIcon);
   }
 
+  /**
+   * Get the icon to use for the cancel icon.
+   * If an icon is set on the component, use that.
+   * Otherwise, use the icon set in the config.
+   * If no icon is set in the config, use the default icon.
+   */
+  get searchbarCancelIcon(): string {
+    // Return the icon if it is explicitly set
+    if (this.cancelButtonIcon != null) {
+      return this.cancelButtonIcon;
+    }
+
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: arrowBackSharp,
+      ionic: arrowLeftRegular,
+      md: arrowBackSharp,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured searchbar cancel icon, the back button icon or the default icon
+    return config.get('searchbarCancelIcon', config.get('backButtonIcon', defaultIcon));
+  }
+
   render() {
-    const { cancelButtonText, autocapitalize, searchbarClearIcon, searchbarSearchIcon } = this;
+    const { cancelButtonText, autocapitalize, searchbarCancelIcon, searchbarClearIcon, searchbarSearchIcon } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const theme = getIonTheme(this);
     const shouldShowCancelButton = this.shouldShowCancelButton();
-    /**
-     * The `backButtonIcon` config will be used as a fallback if the
-     * `searchbarCancelIcon` config is not set. This ensures apps
-     * have a way to keep the back button icon and searchbar cancel
-     * icon in sync.
-     */
-    const searchbarCancelIcon =
-      this.cancelButtonIcon ?? config.get('searchbarCancelIcon', config.get('backButtonIcon', arrowBackSharp));
 
     const cancelButton = this.showCancelButton !== 'never' && (
       <button
@@ -677,7 +711,7 @@ export class Searchbar implements ComponentInterface {
         class="searchbar-cancel-button"
       >
         <div aria-hidden="true">
-          {theme === 'md' ? (
+          {theme === 'md' || theme === 'ionic' ? (
             <ion-icon aria-hidden="true" icon={searchbarCancelIcon} lazy={false}></ion-icon>
           ) : (
             cancelButtonText
@@ -727,7 +761,7 @@ export class Searchbar implements ComponentInterface {
             {...this.inheritedAttributes}
           />
 
-          {theme === 'md' && cancelButton}
+          {(theme === 'md' || theme === 'ionic') && cancelButton}
 
           <ion-icon aria-hidden="true" icon={searchbarSearchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 

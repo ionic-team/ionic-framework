@@ -1,3 +1,4 @@
+import xRegular from '@phosphor-icons/core/assets/regular/x.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
@@ -153,8 +154,30 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
+  get fabButtonCloseIcon() {
+    // Return the icon if it is explicitly set
+    if (this.closeIcon != null) {
+      return this.closeIcon;
+    }
+
+    // Determine the theme and map to default icons
+    const theme = getIonTheme(this);
+    const defaultIcons = {
+      ios: close,
+      ionic: xRegular,
+      md: close,
+    };
+
+    // Get the default icon based on the theme, falling back to 'md' icon if necessary
+    const defaultIcon = defaultIcons[theme] || defaultIcons.md;
+
+    // Return the configured fab button close icon or the default icon
+    return config.get('fabButtonCloseIcon', defaultIcon);
+  }
+
   render() {
-    const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
+    const { el, disabled, fabButtonCloseIcon, color, href, activated, show, translucent, size, inheritedAttributes } =
+      this;
     const inList = hostContext('ion-fab-list', el);
     const theme = getIonTheme(this);
     const TagType = href === undefined ? 'button' : ('a' as any);
@@ -167,7 +190,6 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
             rel: this.rel,
             target: this.target,
           };
-    const fabButtonCloseIcon = this.closeIcon ?? config.get('fabButtonCloseIcon', close);
 
     return (
       <Host

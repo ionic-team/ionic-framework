@@ -420,7 +420,7 @@ export namespace Components {
         /**
           * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
-        "shape"?: 'soft' | 'round';
+        "shape"?: 'soft' | 'round | rectangular';
         /**
           * Set to `"xxsmall"` for the smallest badge. Set to "xsmall" for a very small badge. Set to `"small"` for a small badge. Set to "medium" for a medium badge. Set to "large" for a large badge. Set to `"xlarge"` for the largest badge.  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
@@ -1286,6 +1286,10 @@ export namespace Components {
           * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: 'condense' | 'fade';
+        /**
+          * If `true`, the header will have a line at the bottom. TODO(ROU-10855): add support for this prop on ios/md themes
+         */
+        "divider": boolean;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -5676,7 +5680,7 @@ declare namespace LocalJSX {
         /**
           * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
-        "shape"?: 'soft' | 'round';
+        "shape"?: 'soft' | 'round | rectangular';
         /**
           * Set to `"xxsmall"` for the smallest badge. Set to "xsmall" for a very small badge. Set to `"small"` for a small badge. Set to "medium" for a medium badge. Set to "large" for a large badge. Set to `"xlarge"` for the largest badge.  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
          */
@@ -6574,6 +6578,10 @@ declare namespace LocalJSX {
           * Describes the scroll effect that will be applied to the header. Only applies when the theme is `"ios"`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: 'condense' | 'fade';
+        /**
+          * If `true`, the header will have a line at the bottom. TODO(ROU-10855): add support for this prop on ios/md themes
+         */
+        "divider"?: boolean;
         /**
           * The mode determines the platform behaviors of the component.
          */

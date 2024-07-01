@@ -1,3 +1,4 @@
+import caretLeftFill from '@phosphor-icons/core/assets/fill/caret-left-fill.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
@@ -17,6 +18,11 @@ import { SPINNERS } from '../spinner/spinner-configs';
  */
 @Component({
   tag: 'ion-refresher-content',
+  styleUrls: {
+    ios: 'refresher-content.scss',
+    md: 'refresher-content.scss',
+    ionic: 'refresher-content.scss',
+  },
 })
 export class RefresherContent implements ComponentInterface {
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
@@ -111,6 +117,7 @@ export class RefresherContent implements ComponentInterface {
     const pullingIcon = this.pullingIcon;
     const hasSpinner = pullingIcon != null && (SPINNERS[pullingIcon] as any) !== undefined;
     const theme = getIonTheme(this);
+    const arrowIcon = theme === 'ionic' ? caretLeftFill : caretBackSharp;
 
     return (
       <Host
@@ -123,9 +130,9 @@ export class RefresherContent implements ComponentInterface {
             <div class="refresher-pulling-icon">
               <div class="spinner-arrow-container">
                 <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
-                {theme === 'md' && this.pullingIcon === 'circular' && (
+                {(theme === 'md' || theme === 'ionic') && this.pullingIcon === 'circular' && (
                   <div class="arrow-container">
-                    <ion-icon icon={caretBackSharp} aria-hidden="true"></ion-icon>
+                    <ion-icon icon={arrowIcon} aria-hidden="true"></ion-icon>
                   </div>
                 )}
               </div>

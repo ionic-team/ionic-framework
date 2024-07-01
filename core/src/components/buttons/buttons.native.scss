@@ -1,12 +1,7 @@
+@import "./buttons.common";
 @import "../../themes/native/native.globals";
 
 :host {
-  display: flex;
-
-  align-items: center;
-
-  transform: translateZ(0);
-
   z-index: $z-index-toolbar-buttons;
 }
 

@@ -6,5 +6,14 @@
 
 ion-header {
   box-shadow: #{globals.$ionic-elevation-200};
-  z-index: 10;
+  z-index: 10; // TODO(ROU-10853): replace this value with a layer token.
+
+  &.header-divider {
+    border-bottom: globals.$ionic-border-size-025 globals.$ionic-border-style-solid globals.$ionic-color-neutral-300;
+  }
+}
+
+ion-toolbar + ion-toolbar {
+  --padding-start: #{globals.$ionic-space-400};
+  --padding-end: #{globals.$ionic-space-400};
 }
