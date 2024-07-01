@@ -129,6 +129,11 @@ input {
 
   display: flex;
 
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
   width: var(--size);
   height: var(--size);
 
@@ -139,10 +144,6 @@ input {
   border-color: var(--border-color);
 
   background: var(--checkbox-background);
-
-  align-items: center;
-
-  justify-content: center;
 
   box-sizing: border-box;
 }
