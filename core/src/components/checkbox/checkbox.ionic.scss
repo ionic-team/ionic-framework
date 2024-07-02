@@ -326,8 +326,10 @@ input {
 
 :host(.checkbox-disabled) .native-wrapper:after {
   @include globals.disabled-state();
+  @include globals.position(unset, unset, unset, unset);
 
-  @include globals.position(calc(-1 * var(--border-width)), calc(-1 * var(--border-width)), calc(-1 * var(--border-width)), calc(-1 * var(--border-width)));
+  width: inherit;
+  height: inherit;
 }
 
 // disabled, unchecked checkbox
