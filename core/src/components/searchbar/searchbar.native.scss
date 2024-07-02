@@ -1,0 +1,31 @@
+@import "../../themes/native/native.globals";
+@import "searchbar.common";
+
+// Searchbar
+// --------------------------------------------------
+
+:host {
+  --placeholder-opacity: #{$placeholder-opacity};
+
+  font-family: $font-family-base;
+}
+
+:host(.ion-color) {
+  color: current-color(contrast);
+}
+
+:host(.ion-color) .searchbar-input {
+  background: current-color(base);
+}
+
+:host(.ion-color) .searchbar-clear-button,
+:host(.ion-color) .searchbar-cancel-button,
+:host(.ion-color) .searchbar-search-icon {
+  color: inherit;
+}
+
+:host(.searchbar-disabled) {
+  cursor: default;
+  opacity: 0.4;
+  pointer-events: none;
+}

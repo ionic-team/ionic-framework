@@ -1,0 +1,19 @@
+@use "../../themes/mixins" as mixins;
+
+:host {
+  display: flex;
+
+  align-items: center;
+
+  transform: translateZ(0);
+}
+
+// Toolbar Buttons
+// --------------------------------------------------
+
+::slotted(*) ion-button {
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  @include mixins.margin(0);
+}

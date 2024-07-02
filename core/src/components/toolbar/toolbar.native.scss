@@ -1,0 +1,30 @@
+@import "./toolbar.common";
+@import "../../themes/native/native.globals";
+
+// Toolbar
+// --------------------------------------------------
+
+:host {
+  font-family: $font-family-base;
+
+  z-index: $z-index-toolbar;
+}
+
+:host(.ion-color) {
+  color: current-color(contrast);
+}
+
+:host(.ion-color) .toolbar-background {
+  background: current-color(base);
+}
+
+.toolbar-container {
+  z-index: $z-index-toolbar;
+}
+
+// Toolbar: Transparent
+// --------------------------------------------------
+
+.toolbar-background {
+  z-index: $z-index-toolbar-background;
+}
