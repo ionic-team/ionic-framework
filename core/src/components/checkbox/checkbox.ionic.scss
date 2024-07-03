@@ -324,6 +324,11 @@ input {
   pointer-events: none;
 }
 
+// Checkbox overrides the disabled state mixin properties
+// to fix positioning issues, as the top and left properties
+// cause the overlay to start inside the border. We unset
+// these position properties and inherit width and height to
+// ensure the border is covered.
 :host(.checkbox-disabled) .native-wrapper:after {
   @include globals.disabled-state();
   @include globals.position(unset, unset, unset, unset);
