@@ -6,9 +6,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
 
 
-### Features
+### Bug Fixes
 
-* **vue:** add optional IonicConfig type parameter to IonicVue plugin ([#29637](https://github.com/ionic-team/ionic-framework/issues/29637)) ([90893f4](https://github.com/ionic-team/ionic-framework/commit/90893f46c930dbccd4251fa2f56bdde30b669158))
+* **vue:** add optional IonicConfig type parameter to IonicVue plugin ([#29637](https://github.com/ionic-team/ionic-framework/issues/29637)) ([90893f4](https://github.com/ionic-team/ionic-framework/commit/90893f46c930dbccd4251fa2f56bdde30b669158)), closes [#29659](https://github.com/ionic-team/ionic-framework/issues/29659)
 
 
 
