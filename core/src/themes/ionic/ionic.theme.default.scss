@@ -1,0 +1,47 @@
+@use '../../foundations/ionic.vars.scss' as tokens;
+
+$primary: #105cef;
+$neutral: #f1f1f1;
+$success: #1ba433;
+$warning: #c37100;
+$danger: #e52929;
+$info: #1ea2bf;
+
+$ionic-colors: (
+  primary: (
+    base: #105cef,
+    contrast: #fff,
+    shade: #0e51d2,
+    tint: #286cf1,
+  ),
+  neutral: (
+    base: #f1f1f1,
+    contrast: #fff,
+    shade: #d4d4d4,
+    tint: #f2f2f2,
+  ),
+  success: (
+    base: #1ba433,
+    contrast: #fff,
+    shade: #18902d,
+    tint: #32ad47,
+  ),
+  warning: (
+    base: #c37100,
+    contrast: #fff,
+    shade: #ac6300,
+    tint: #c97f1a,
+  ),
+  danger: (
+    base: #e52929,
+    contrast: #fff,
+    shade: #ca2424,
+    tint: #e83e3e,
+  ),
+  info: (
+    base: #1ea2bf,
+    contrast: #fff,
+    shade: #1a8fa8,
+    tint: #35abc5,
+  ),
+);
