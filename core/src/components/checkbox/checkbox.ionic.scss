@@ -8,7 +8,8 @@
   --border-width: #{globals.$ionic-border-size-025};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-color: #{globals.$ionic-color-neutral-800};
-  --checkmark-width: 3;
+  --checkmark-width: #{globals.$ionic-scale-400};
+  --checkmark-height: var(--checkmark-width);
 
   // Focus
   --focus-ring-color: #{globals.$ionic-state-focus-1};
@@ -124,15 +125,14 @@ input {
 }
 
 .native-wrapper {
-  display: flex;
-
-  align-items: center;
-}
-
-.checkbox-icon {
   @include globals.border-radius(var(--border-radius));
 
-  position: relative;
+  display: flex;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
 
   width: var(--size);
   height: var(--size);
@@ -146,6 +146,13 @@ input {
   background: var(--checkbox-background);
 
   box-sizing: border-box;
+}
+
+.checkbox-icon {
+  position: relative;
+
+  width: var(--checkmark-width);
+  height: var(--checkmark-height);
 }
 
 .checkbox-icon path {
@@ -289,8 +296,8 @@ input {
 // Checked / Indeterminate Checkbox
 // ---------------------------------------------
 
-:host(.checkbox-checked) .checkbox-icon,
-:host(.checkbox-indeterminate) .checkbox-icon {
+:host(.checkbox-checked) .native-wrapper,
+:host(.checkbox-indeterminate) .native-wrapper {
   border-color: var(--border-color-checked);
 
   background: var(--checkbox-background-checked);
@@ -306,7 +313,7 @@ input {
 :host(.ion-invalid) {
   --focus-ring-color: #{globals.$ionic-state-focus-2};
 
-  .checkbox-icon {
+  .native-wrapper {
     border-color: globals.$ionic-color-danger-800;
   }
 }
@@ -317,19 +324,28 @@ input {
   pointer-events: none;
 }
 
+// Checkbox overrides the disabled state mixin properties
+// to fix positioning issues, as the top and left properties
+// cause the overlay to start inside the border. We unset
+// these position properties and inherit width and height to
+// ensure the border is covered.
 :host(.checkbox-disabled) .native-wrapper:after {
   @include globals.disabled-state();
+  @include globals.position(unset, unset, unset, unset);
+
+  width: inherit;
+  height: inherit;
 }
 
 // disabled, unchecked checkbox
-:host(.checkbox-disabled) .checkbox-icon {
+:host(.checkbox-disabled) .native-wrapper {
   border-color: globals.$ionic-color-neutral-800;
 
   background-color: globals.$ionic-state-disabled;
 }
 
 // disabled, checked checkbox
-:host(.checkbox-disabled.checkbox-checked) .checkbox-icon {
+:host(.checkbox-disabled.checkbox-checked) .native-wrapper {
   border-width: globals.$ionic-border-size-0;
 
   background-color: globals.$ionic-color-primary-base;
@@ -338,12 +354,12 @@ input {
 // Checkbox Hover
 // --------------------------------------------------------
 @media (any-hover: hover) {
-  :host(:hover) .checkbox-icon {
+  :host(:hover) .native-wrapper {
     background-color: globals.$ionic-color-neutral-100;
   }
 
-  :host(:hover.checkbox-checked) .checkbox-icon,
-  :host(:hover.checkbox-indeterminate) .checkbox-icon {
+  :host(:hover.checkbox-checked) .native-wrapper,
+  :host(:hover.checkbox-indeterminate) .native-wrapper {
     background-color: globals.$ionic-color-primary-800;
   }
 }
@@ -351,19 +367,19 @@ input {
 // Checkbox Focus
 // --------------------------------------------------
 // Only show the focus ring when the checkbox is focused and not disabled
-:host(.ion-focused:not(.checkbox-disabled)) .checkbox-icon {
+:host(.ion-focused:not(.checkbox-disabled)) .native-wrapper {
   outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
 
 // Checkbox: Active
 // --------------------------------------------------------
-:host(.ion-activated) .checkbox-icon {
+:host(.ion-activated) .native-wrapper {
   background-color: globals.$ionic-color-neutral-200;
 }
 
-:host(.ion-activated.checkbox-checked) .checkbox-icon,
-:host(.ion-activated.checkbox-indeterminate) .checkbox-icon {
+:host(.ion-activated.checkbox-checked) .native-wrapper,
+:host(.ion-activated.checkbox-indeterminate) .native-wrapper {
   background-color: globals.$ionic-color-primary-900;
 }
 
