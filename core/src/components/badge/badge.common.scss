@@ -1,4 +1,5 @@
-@import "./badge.vars";
+@import "../../themes/mixins";
+@import "./badge.common.vars";
 
 // Badge
 // --------------------------------------------------
@@ -30,7 +31,6 @@
   background: var(--background);
   color: var(--color);
 
-  font-family: $font-family-base;
   font-size: $badge-font-size;
   font-weight: $badge-font-weight;
 

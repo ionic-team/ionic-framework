@@ -1,0 +1,10 @@
+@import "../../themes/native/native.globals.md";
+@import "./badge.common";
+@import "./badge.common.vars";
+
+// Badge
+// --------------------------------------------------
+
+:host {
+  font-family: $font-family-base;
+}
