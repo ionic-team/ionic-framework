@@ -14,8 +14,6 @@
    * @prop --padding-bottom: Bottom padding of the badge
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the badge
    */
-  --background: #{ion-color(primary, base)};
-  --color: #{ion-color(primary, contrast)};
   --padding-top: #{$badge-padding-top};
   --padding-end: #{$badge-padding-end};
   --padding-bottom: #{$badge-padding-bottom};

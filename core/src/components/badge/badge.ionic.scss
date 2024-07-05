@@ -5,6 +5,10 @@
 // --------------------------------------------------
 
 :host {
+  // TODO(ROU-10872): replace this value the color function
+  --background: #{globals.$ionic-color-blue-700};
+  // TODO(ROU-10872): replace this value the color function
+  --color: #{globals.$ionic-color-base-white};
   --padding-start: #{globals.$ionic-space-200};
   --padding-end: #{globals.$ionic-space-200};
   --padding-top: #{globals.$ionic-space-0};

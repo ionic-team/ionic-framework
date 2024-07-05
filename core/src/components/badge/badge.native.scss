@@ -6,5 +6,8 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+
   font-family: $font-family-base;
 }
