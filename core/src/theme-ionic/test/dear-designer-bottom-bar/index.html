@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" theme="ionic">
+    <head>
+    <meta charset="UTF-8" />
+    <title>Ionic Theme</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    /> 
+    <link href="../../../../../css/ionic/bundle.ionic.css" rel="stylesheet" />
+    <link href="../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <!-- TODO(ROU-10833): remove this cdn for the font, when the font loading is solved -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-content>
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-grid>
+              <ion-row>
+                <ion-col></ion-col>
+                <ion-col size="10">
+                  <h5 class="roboto">Dear Designer</h5>
+                  <h1 style="font-weight: 700" class="roboto">Bottom Bar</h1>      
+                </ion-col>
+                <ion-col></ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col size="10">
+              <ion-card shape="rectangular" class="preview">
+                <ion-card-content>
+                  <ion-tabs class="bottom-bar-preview">
+                    <ion-tab-bar slot="bottom">
+                      <ion-tab-button tab="dashboard">
+                        <ion-icon src="/src/theme-ionic/test/assets/triangle_dark.svg"></ion-icon>
+                        Dashboard
+                      </ion-tab-button>
+                      <ion-tab-button tab="apps">
+                        <ion-icon src="/src/theme-ionic/test/assets/apps.svg"></ion-icon>
+                        Apps
+                      </ion-tab-button>
+                      <ion-tab-button tab="settings">
+                        <ion-icon src="/src/theme-ionic/test/assets/settings.svg"></ion-icon>
+                        Settings
+                      </ion-tab-button>
+                    </ion-tab-bar>
+                  </ion-tabs>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col></ion-col>
+          </ion-row>
+      
+        
+        </ion-grid>
+       
+       
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+        </ion-toolbar>
+      </ion-footer>
+
+    </ion-app>
+
+    <style>
+      
+    </style>
+  </body>
+</html>
+
+
+<style>
+
+  .roboto{
+    font-family: 'Roboto';
+  }
+  ion-header ion-toolbar{
+    --background:#105CEF;
+    color: white;
+    --padding-top:30px;
+    --padding-bottom:30px;
+  }
+
+  ion-toolbar h1{
+    margin-top:0px;
+    font-size:55px;
+  }
+
+  ion-card.preview{
+    margin-top: 50px;
+    --background:#F2F2F2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    border:0px;
+  }
+
+  ion-card.preview2{
+    --background:#F2F2F2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    border:0px;
+  }
+
+  .center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h2.title{
+    font-family: "roboto";
+    margin-top: 50px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #2D4665;
+  }
+
+  ion-text,ion-avatar{
+    font-family: "Inter";
+  }
+
+  .subtitle{
+    font-family: "roboto";
+    margin-top: 10px;
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+    line-height: 150%;
+    font-size: 16px;
+  }
+
+  .margin-left-10{
+    margin-left:10px;
+  }
+
+  .info-tag{
+    pointer-events:none;
+  }
+
+  .bottom-bar-preview{
+    width: 500px;
+    margin-left: -250px;
+    margin-top: -20px;
+  }
+
+  .bottom-bar-preview :host-context(ion-icon) svg{
+    fill:red;
+  }
+
+</style>
