@@ -2097,8 +2097,11 @@ ion-spinner,prop,duration,number | undefined,undefined,false,false
 ion-spinner,prop,mode,"ios" | "md",undefined,false,false
 ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | undefined,undefined,false,false
 ion-spinner,prop,paused,boolean,false,false,false
+ion-spinner,prop,size,"large" | "medium" | "small" | "xlarge" | "xsmall" | undefined,undefined,false,false
 ion-spinner,prop,theme,"ios" | "md" | "ionic",undefined,false,false
-ion-spinner,css-prop,--color
+ion-spinner,css-prop,--color,ionic
+ion-spinner,css-prop,--color,ios
+ion-spinner,css-prop,--color,md
 
 ion-split-pane,shadow
 ion-split-pane,prop,contentId,string | undefined,undefined,false,true
