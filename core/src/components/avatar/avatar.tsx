@@ -20,13 +20,16 @@ export class Avatar implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * Set to `"xsmall"` for the smallest size, `"small"` for a compact size, `"medium"`
-   * for the default height and width, `"large"` for a larger size, or `"xlarge"` for
-   * the largest dimensions.
+   * Set to `"xxsmall"` for an smallest size.
+   * Set to `"xsmall"` for a very small size.
+   * Set to `"small"` for a compact size.
+   * Set to `"medium"` for the default height and width.
+   * Set to `"large"` for a larger size.
+   * Set to `"xlarge"` for the largest dimensions.
    *
    * Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() size?: `xsmall` | 'small' | 'medium' | 'large' | 'xlarge';
+  @Prop() size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
   /**
    * Set to `"soft"` for an avatar with slightly rounded corners,

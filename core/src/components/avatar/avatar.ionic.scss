@@ -30,6 +30,20 @@
 // Avatar Sizes
 // --------------------------------------------------
 
+/* 2-Extra Small */
+:host(.avatar-xxsmall) {
+  --padding-end: #{globals.$ionic-space-050};
+  --padding-start: #{globals.$ionic-space-050};
+
+  width: globals.$ionic-scale-400;
+  height: globals.$ionic-scale-400;
+
+  font-size: globals.$ionic-font-size-300;
+
+  line-height: globals.$ionic-line-height-500;
+}
+
+/* Extra Small */
 :host(.avatar-xsmall) {
   --padding-end: #{globals.$ionic-space-050};
   --padding-start: #{globals.$ionic-space-050};
@@ -39,9 +53,10 @@
 
   font-size: globals.$ionic-font-size-300;
 
-  line-height: globals.$ionic-line-height-400;
+  line-height: globals.$ionic-line-height-500;
 }
 
+/* Small */
 :host(.avatar-small) {
   --padding-end: #{globals.$ionic-space-150};
   --padding-start: #{globals.$ionic-space-150};
@@ -54,6 +69,7 @@
   line-height: globals.$ionic-line-height-600;
 }
 
+/* Medium */
 :host(.avatar-medium) {
   --padding-end: #{globals.$ionic-space-200};
   --padding-start: #{globals.$ionic-space-200};
@@ -64,6 +80,7 @@
   font-size: globals.$ionic-font-size-450;
 }
 
+/* Large */
 :host(.avatar-large) {
   --padding-end: #{globals.$ionic-space-250};
   --padding-start: #{globals.$ionic-space-250};
@@ -74,6 +91,7 @@
   font-size: globals.$ionic-font-size-500;
 }
 
+/* Extra Large */
 :host(.avatar-xlarge) {
   --padding-end: #{globals.$ionic-space-300};
   --padding-start: #{globals.$ionic-space-300};
@@ -87,6 +105,7 @@
 // Avatar Shapes
 // --------------------------------------------------
 
+:host(.avatar-xxsmall.avatar-soft),
 :host(.avatar-xsmall.avatar-soft),
 :host(.avatar-small.avatar-soft) {
   --border-radius: #{globals.$ionic-border-radius-100};
