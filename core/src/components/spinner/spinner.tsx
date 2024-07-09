@@ -48,10 +48,10 @@ export class Spinner implements ComponentInterface {
   @Prop() paused = false;
 
   /**
-   * Set to "xsmall" for the smallest size.
+   * Set to `"xsmall"` for the smallest size.
    * Set to `"small"` for a smaller size.
-   * Set to "medium" for a medium size.
-   * Set to "large" for a large size.
+   * Set to `"medium"` for a medium size.
+   * Set to `"large"` for a large size.
    * Set to `"xlarge"` for the largest size.
    *
    * Defaults to `"xsmall"` for the `ionic` theme, undefined for all other themes.
