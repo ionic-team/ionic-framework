@@ -20,7 +20,7 @@ export class Avatar implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * Set to `"xxsmall"` for an smallest size.
+   * Set to `"xxsmall"` for the smallest size.
    * Set to `"xsmall"` for a very small size.
    * Set to `"small"` for a compact size.
    * Set to `"medium"` for the default height and width.
