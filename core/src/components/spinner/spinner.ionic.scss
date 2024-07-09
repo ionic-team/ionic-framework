@@ -1,0 +1,38 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./spinner.common";
+
+// Ionic Spinner
+// --------------------------------------------------
+
+// Sizes
+// --------------------------------------------------
+
+/* Extra Small */
+:host(.spinner-xsmall) {
+  width: globals.$ionic-scale-600;
+  height: globals.$ionic-scale-600;
+}
+
+/* Small */
+:host(.spinner-small) {
+  width: globals.$ionic-scale-800;
+  height: globals.$ionic-scale-800;
+}
+
+/* Medium */
+:host(.spinner-medium) {
+  width: globals.$ionic-scale-1000;
+  height: globals.$ionic-scale-1000;
+}
+
+/* Large */
+:host(.spinner-large) {
+  width: globals.$ionic-scale-1200;
+  height: globals.$ionic-scale-1200;
+}
+
+/* Extra Large */
+:host(.spinner-xlarge) {
+  width: globals.$ionic-scale-1400;
+  height: globals.$ionic-scale-1400;
+}
