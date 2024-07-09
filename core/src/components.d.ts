@@ -340,7 +340,7 @@ export namespace Components {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"xxsmall"` for an smallest size. Set to `"xsmall"` for a very small size. Set to `"small"` for a compact size. Set to `"medium"` for the default height and width. Set to `"large"` for a larger size. Set to `"xlarge"` for the largest dimensions.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"xxsmall"` for the smallest size. Set to `"xsmall"` for a very small size. Set to `"small"` for a compact size. Set to `"medium"` for the default height and width. Set to `"large"` for a larger size. Set to `"xlarge"` for the largest dimensions.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
          */
         "size"?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
         /**
@@ -5596,7 +5596,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * Set to `"xxsmall"` for an smallest size. Set to `"xsmall"` for a very small size. Set to `"small"` for a compact size. Set to `"medium"` for the default height and width. Set to `"large"` for a larger size. Set to `"xlarge"` for the largest dimensions.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
+          * Set to `"xxsmall"` for the smallest size. Set to `"xsmall"` for a very small size. Set to `"small"` for a compact size. Set to `"medium"` for the default height and width. Set to `"large"` for a larger size. Set to `"xlarge"` for the largest dimensions.  Defaults to `"medium"` for the `ionic` theme, undefined for all other themes.
          */
         "size"?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
         /**
