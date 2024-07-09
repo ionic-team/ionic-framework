@@ -58,16 +58,14 @@ export class Spinner implements ComponentInterface {
    */
   @Prop() size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
+  // TODO(ROU-10920): Switch `theme` to `mode`.
   private getName(): SpinnerTypes {
     const spinnerName = this.name || config.get('spinner');
     const theme = getIonTheme(this);
     if (spinnerName) {
       return spinnerName;
     }
-    if (theme === 'ios' || theme === 'ionic') {
-      return 'lines';
-    }
-    return 'circular';
+    return theme === 'ios' ? 'lines' : 'circular';
   }
 
   private getSize(): string | undefined {
