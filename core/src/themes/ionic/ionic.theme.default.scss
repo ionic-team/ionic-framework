@@ -1,0 +1,59 @@
+// Ionic Theme
+// -------------------------------------------------------------------------------------------
+// This file contains the theme variables shared
+// between modes. This should only include variables
+// used to theme the application colors.
+
+// Default Ionic Colors
+// -------------------------------------------------------------------------------------------
+// Color map should provide
+// - base: main color to be used.
+// - contrast: Color that will provide readable text against the base color
+// - shade: 12% darker version of the base color (mix with black)
+// - tint: 10% lighter version of the base color (mix with white)
+
+$primary: #105cef;
+$neutral: #f1f1f1;
+$success: #1ba433;
+$warning: #c37100;
+$danger: #e52929;
+$light: #f4f5f8;
+
+$ionic-colors: (
+  primary: (
+    base: $primary,
+    contrast: #fff,
+    shade: get-color-shade($primary),
+    tint: get-color-tint($primary),
+  ),
+  success: (
+    base: $success,
+    contrast: #000,
+    shade: get-color-shade($success),
+    tint: get-color-tint($success),
+  ),
+  warning: (
+    base: $warning,
+    contrast: #000,
+    shade: get-color-shade($warning),
+    tint: get-color-tint($warning),
+  ),
+  danger: (
+    base: $danger,
+    contrast: #fff,
+    shade: get-color-shade($danger),
+    tint: get-color-tint($danger),
+  ),
+  light: (
+    base: $light,
+    contrast: #000,
+    shade: get-color-shade($light),
+    tint: get-color-tint($light),
+  ),
+  neutral: (
+    base: $neutral,
+    contrast: #fff,
+    shade: get-color-shade($neutral),
+    tint: get-color-tint($neutral),
+  ),
+);
