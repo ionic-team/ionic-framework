@@ -108,6 +108,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           </style>
 
           <div id="container">
+            <ion-avatar shape="soft" size="xxsmall">A</ion-avatar>
             <ion-avatar shape="soft" size="xsmall">AB</ion-avatar>
             <ion-avatar shape="soft" size="small">AB</ion-avatar>
             <ion-avatar shape="soft">AB</ion-avatar>
@@ -132,6 +133,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           </style>
 
           <div id="container">
+            <ion-avatar shape="soft" size="xxsmall">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
             <ion-avatar shape="soft" size="xsmall">
               <ion-icon name="person-outline"></ion-icon>
             </ion-avatar>
@@ -162,6 +166,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
           </style>
 
           <div id="container">
+            <ion-avatar shape="soft" size="xxsmall">
+              <img src="/src/components/avatar/test/avatar.svg"/>
+            </ion-avatar>
             <ion-avatar shape="soft" size="xsmall">
               <img src="/src/components/avatar/test/avatar.svg"/>
             </ion-avatar>
