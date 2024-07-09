@@ -1,0 +1,53 @@
+@import "./item.common";
+@import "./item.vars";
+
+// Item
+// --------------------------------------------------
+
+:host {
+  font-family: $font-family-base;
+}
+
+// Item: Color
+// --------------------------------------------------
+
+:host(.ion-color) .item-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.ion-color) .item-native,
+:host(.ion-color) .item-inner {
+  border-color: current-color(shade);
+}
+
+// Item: Activated
+// --------------------------------------------------
+
+:host(.ion-color.ion-activated) .item-native {
+  color: current-color(contrast);
+}
+
+// Item: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .item-native {
+  color: current-color(contrast);
+
+  &::after {
+    background: current-color(contrast);
+  }
+}
+
+// Item: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.ion-color.ion-activatable:not(.ion-focused):hover) .item-native {
+    color: #{current-color(contrast)};
+
+    &::after {
+      background: #{current-color(contrast)};
+    }
+  }
+}
