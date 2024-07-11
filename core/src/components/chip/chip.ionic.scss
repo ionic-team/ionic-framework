@@ -43,10 +43,15 @@
 // ---------------------------------------------
 
 :host(.chip-outline) {
-  --background: transparent;
   border-width: globals.$ionic-border-size-025;
-
+  border-style: solid;
   border-color: globals.$ionic-color-neutral-100;
+
+  background: transparent;
+}
+
+:host(.chip-outline.ion-color) {
+  border-color: globals.current-color(base, 0.32);
 }
 
 // Chip: Focus
@@ -63,6 +68,10 @@
 @media (any-hover: hover) {
   :host(:hover) {
     --background: #{globals.$ionic-color-neutral-200};
+  }
+
+  :host(.ion-color:hover) {
+    background: globals.current-color(base, 0.12);
   }
 }
 
@@ -108,4 +117,20 @@
   min-height: globals.$ionic-scale-800;
 
   font-size: globals.$ionic-font-size-350;
+}
+
+// Chip Colors
+// ---------------------------------------------
+
+:host(.ion-color) {
+  background: globals.current-color(base, 0.08);
+  color: globals.current-color(shade);
+}
+
+:host(.ion-color:focus) {
+  background: globals.current-color(base, 0.12);
+}
+
+:host(.ion-color.ion-activated) {
+  background: globals.current-color(base, 0.16);
 }

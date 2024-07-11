@@ -1,3 +1,4 @@
+@use "../../themes/functions.color" as color;
 @import "../../themes/mixins";
 @import "./badge.common.vars";
 
@@ -43,8 +44,8 @@
 }
 
 :host(.ion-color) {
-  background: #{current-color(base)};
-  color: #{current-color(contrast)};
+  background: #{color.current-color(base)};
+  color: #{color.current-color(contrast)};
 }
 
 :host(:empty) {

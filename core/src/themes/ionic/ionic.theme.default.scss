@@ -52,7 +52,7 @@ $ionic-colors: (
   ),
   neutral: (
     base: $neutral,
-    contrast: #fff,
+    contrast: #000,
     shade: get-color-shade($neutral),
     tint: get-color-tint($neutral),
   ),
