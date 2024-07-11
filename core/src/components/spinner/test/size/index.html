@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Spinner - Size</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Spinner - Size</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-list>
+          <ion-item>
+            <ion-spinner slot="start"></ion-spinner>
+            <p>Default</p>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" size="xsmall"></ion-spinner>
+            <p>xsmall</p>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" size="small"></ion-spinner>
+            <p>small</p>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" size="medium"></ion-spinner>
+            <p>medium</p>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" size="large"></ion-spinner>
+            <p>large</p>
+          </ion-item>
+          <ion-item>
+            <ion-spinner slot="start" size="xlarge"></ion-spinner>
+            <p>xlarge</p>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

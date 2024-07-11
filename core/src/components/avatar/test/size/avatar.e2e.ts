@@ -6,6 +6,51 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('avatar: size'), () => {
+    test.describe('xxsmall', () => {
+      test('should not have visual regressions when containing text', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar size="xxsmall">A</ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-size-xxsmall-text`));
+      });
+
+      test('should not have visual regressions when containing an icon', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar size="xxsmall">
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-size-xxsmall-icon`));
+      });
+
+      test('should not have visual regressions when containing an image', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar size="xxsmall">
+            <img src="/src/components/avatar/test/avatar.svg"/>
+          </ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-size-xxsmall-image`));
+      });
+    });
+
     test.describe('xsmall', () => {
       test('should not have visual regressions when containing text', async ({ page }) => {
         await page.setContent(
