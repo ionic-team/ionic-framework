@@ -10,30 +10,30 @@
 .md:not(.ionic):root,
 .ios:not(.ionic):root {
   /**
-   * Loop through each color object from the
-   * `native.theme.default.scss` file
-   * and generate CSS Variables for each color.
+   * Set the theme colors from the
+   * `native.theme.default.scss` file.
    */
-  @include generate-color-variables($colors);
+  @include set-theme-colors($colors);
+  @include generate-color-variables();
 
   @each $color-name, $value in $colors {
     .ion-color-#{$color-name} {
-      @include generate-color($color-name, $colors);
+      @include generate-color($color-name);
     }
   }
 }
 
 .ionic:root {
   /**
-   * Loop through each color object from the
-   * `ionic.theme.default.scss` file
-   * and generate CSS Variables for each color.
+   * Set the theme colors from the
+   * `ionic.theme.default.scss` file.
    */
-  @include generate-color-variables($ionic-colors);
+  @include set-theme-colors($ionic-colors);
+  @include generate-color-variables();
 
   @each $color-name, $value in $ionic-colors {
     .ion-color-#{$color-name} {
-      @include generate-color($color-name, $ionic-colors);
+      @include generate-color($color-name);
     }
   }
 }

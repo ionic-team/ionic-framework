@@ -8,6 +8,11 @@
 @forward "../functions.sizes";
 @forward "../functions.string";
 @forward "../functions.color";
+@use "../functions.color" as color;
 
 // Global Font Functions
 @forward "../functions.font";
+
+// Default Theme
+@use "./ionic.theme.default" as ionicTheme;
+@include color.set-theme-colors(ionicTheme.$ionic-colors);

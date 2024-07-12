@@ -1,3 +1,9 @@
+// Set the theme colors map to be used by the color functions
+// --------------------------------------------------------------------------------------------
+@mixin set-theme-colors($colorsMap) {
+  $theme-colors: $colorsMap !global;
+}
+
 // Gets the active color's css variable from a variation. Alpha is optional.
 // --------------------------------------------------------------------------------------------
 // Example usage:
@@ -20,7 +26,11 @@
 // ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.5)
 // --------------------------------------------------------------------------------------------
 @function ion-color($name, $variation, $alpha: null, $rgb: null) {
-  $values: map-get($colors, $name);
+  @if not($theme-colors) {
+    @error 'No theme colors set. Please make sure to call set-theme-colors($colorsMap) before using ion-color()';
+  }
+
+  $values: map-get($theme-colors, $name);
   $value: map-get($values, $variation);
   $variable: --ion-color-#{$name}-#{$variation};
 
@@ -60,11 +70,15 @@
   @return #{red($color)}, #{green($color)}, #{blue($color)};
 }
 
-// Generates the color classes and variables based on the
-// colors map
+// Generates the color classes and variables
+// based on the colors map
 // --------------------------------------------------------------------------------------------
-@mixin generate-color($color-name, $colorsMap) {
-  $value: map-get($colorsMap, $color-name);
+@mixin generate-color($color-name) {
+  @if not($theme-colors) {
+    @error 'No theme colors set. Please make sure to call set-theme-colors($colorsMap) before using ion-color()';
+  }
+
+  $value: map-get($theme-colors, $color-name);
 
   $base: map-get($value, base);
   $contrast: map-get($value, contrast);
@@ -79,10 +93,15 @@
   --ion-color-tint: var(--ion-color-#{$color-name}-tint, #{$tint}) !important;
 }
 
-// Generates the color variables based on the colors map
+// Generates the CSS variables for eacth color
+// based on the colors map
 // --------------------------------------------------------------------------------------------
-@mixin generate-color-variables($colorsMap) {
-  @each $color-name, $value in $colorsMap {
+@mixin generate-color-variables() {
+  @if not($theme-colors) {
+    @error 'No theme colors set. Please make sure to call set-theme-colors($colorsMap) before using ion-color()';
+  }
+
+  @each $color-name, $value in $theme-colors {
     --ion-color-#{$color-name}: #{map.get($value, base)};
     --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
     --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
