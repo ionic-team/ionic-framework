@@ -341,7 +341,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    setOverlayId(this.el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
     this.inputsChanged();
     this.buttonsChanged();
   }
