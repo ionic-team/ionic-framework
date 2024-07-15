@@ -1,13 +1,13 @@
 @import "./dark";
 
-:root {
+:root:not(.ionic) {
   @include dark-base-palette();
 }
 
-:root.ios {
+:root:not(.ionic).ios {
   @include dark-ios-palette();
 }
 
-:root.md {
+:root:not(.ionic).md {
   @include dark-md-palette();
 }

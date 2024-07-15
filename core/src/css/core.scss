@@ -7,8 +7,7 @@
 // Ionic Colors
 // --------------------------------------------------
 
-.md:not(.ionic):root,
-.ios:not(.ionic):root {
+:root:not(.ionic) {
   /**
    * Set the theme colors from the
    * `native.theme.default.scss` file.
@@ -23,7 +22,7 @@
   }
 }
 
-.ionic:root {
+:root.ionic {
   /**
    * Set the theme colors from the
    * `ionic.theme.default.scss` file.

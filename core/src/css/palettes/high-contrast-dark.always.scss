@@ -1,13 +1,13 @@
 @import "./high-contrast-dark";
 
-:root {
+:root:not(.ionic) {
   @include high-contrast-dark-base-palette();
 }
 
-:root.ios {
+:root:not(.ionic).ios {
   @include high-contrast-dark-ios-palette();
 }
 
-:root.md {
+:root:not(.ionic).md {
   @include high-contrast-dark-md-palette();
 }

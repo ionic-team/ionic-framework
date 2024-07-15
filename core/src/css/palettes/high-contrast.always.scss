@@ -1,9 +1,9 @@
 @import "./high-contrast";
 
-:root {
+:root:not(.ionic) {
   @include high-contrast-light-base-palette();
 }
 
-:root.md {
+:root:not(.ionic).md {
   @include high-contrast-light-md-palette();
 }
