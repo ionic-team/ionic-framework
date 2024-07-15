@@ -1,10 +1,8 @@
 // Segment View
+// --------------------------------------------------
 
 :host {
   display: flex;
-
-  // Span all grid columns
-  grid-column: 1 / -1;
 
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
