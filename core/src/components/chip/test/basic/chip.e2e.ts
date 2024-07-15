@@ -28,7 +28,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['ios' ], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('chip: descenders'), () => {
     test('should not clip descenders in item', async ({ page }) => {
       test.info().annotations.push({
@@ -59,7 +59,7 @@ configs({ modes: ['ios' ], directions: ['ltr'] }).forEach(({ title, screenshot, 
 /**
  * `md` mode does not differ from `ios` mode in chip rendering.
  */
-configs({ modes: ['ios', 'ionic-md' ], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('chip: outline'), () => {
     test('should render default outline chip', async ({ page }) => {
       await page.setContent(
