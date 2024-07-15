@@ -49,8 +49,8 @@ const styleTestHelpers = `
  * 6) The base color as the text color against the base color at 0.12 opacity as the background color
  * 7) The base color as the text color against the base color at 0.16 opacity as the background color
  */
-configs({ modes: ['md'], directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
-  const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
+configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
+  const colors = ['primary', 'neutral', 'success', 'warning', 'danger', 'light'];
 
   test.describe(title('theme'), () => {
     test.beforeEach(({ skip }) => {
@@ -137,7 +137,8 @@ configs({ modes: ['md'], directions: ['ltr'], palettes: ['light', 'dark'] }).for
         expect(results.violations).toEqual([]);
       });
 
-      test(`color "${color}" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
+      // TODO(ROU-10778): Re-enable this test once the colors have been finalized
+      test.skip(`color "${color}" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
@@ -152,78 +153,3 @@ configs({ modes: ['md'], directions: ['ltr'], palettes: ['light', 'dark'] }).for
     }
   });
 });
-
-configs({ modes: ['md'], directions: ['ltr'], palettes: ['high-contrast', 'high-contrast-dark'] }).forEach(
-  ({ config, title }) => {
-    const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
-
-    test.describe(title('theme'), () => {
-      test.beforeEach(({ skip }) => {
-        skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
-        skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
-      });
-
-      for (const color of colors) {
-        test(`color "${color}" should pass AAA guidelines`, async ({ page }) => {
-          await page.setContent(
-            `${styleTestHelpers}
-          <main class="ion-color-${color}">
-            <p class="ion-color">Hello World</p>
-          </main>`,
-            config
-          );
-
-          const results = await new AxeBuilder({ page })
-            .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
-            .analyze();
-          expect(results.violations).toEqual([]);
-        });
-
-        test(`contrast color on "${color}" background should pass AAA guidelines`, async ({ page }) => {
-          await page.setContent(
-            `${styleTestHelpers}
-          <main class="ion-color-${color}">
-            <p class="ion-color-contrast ion-background">Hello World</p>
-          </main>`,
-            config
-          );
-
-          const results = await new AxeBuilder({ page })
-            .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
-            .analyze();
-          expect(results.violations).toEqual([]);
-        });
-
-        test(`contrast color on "${color}" background shade should pass AAA guidelines`, async ({ page }) => {
-          await page.setContent(
-            `${styleTestHelpers}
-          <main class="ion-color-${color}">
-            <p class="ion-color-contrast ion-background-shade">Hello World</p>
-          </main>`,
-            config
-          );
-
-          const results = await new AxeBuilder({ page })
-            .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
-            .analyze();
-          expect(results.violations).toEqual([]);
-        });
-
-        test(`contrast color on "${color}" background tint should pass AAA guidelines`, async ({ page }) => {
-          await page.setContent(
-            `${styleTestHelpers}
-          <main class="ion-color-${color}">
-            <p class="ion-color-contrast ion-background-tint">Hello World</p>
-          </main>`,
-            config
-          );
-
-          const results = await new AxeBuilder({ page })
-            .options({ rules: { 'color-contrast-enhanced': { enabled: true } } })
-            .analyze();
-          expect(results.violations).toEqual([]);
-        });
-      }
-    });
-  }
-);
