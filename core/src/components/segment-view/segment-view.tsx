@@ -54,7 +54,7 @@ export class SegmentView implements ComponentInterface {
     });
   };
 
-  private getSegmentButtons(): HTMLIonSegmentButtonElement[] | [] {
+  private getSegmentButtons(): HTMLIonSegmentButtonElement[] {
     const { segmentEl } = this;
 
     if (!segmentEl) {

@@ -220,7 +220,7 @@ export class Segment implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
-  private getButtons(): HTMLIonSegmentButtonElement[] | [] {
+  private getButtons(): HTMLIonSegmentButtonElement[] {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
