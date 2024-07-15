@@ -1,6 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, h } from '@stencil/core';
-import { addEventListener } from '@utils/helpers';
+import { addEventListener, removeEventListener } from '@utils/helpers';
 
 @Component({
   tag: 'ion-segment-view',
@@ -32,6 +32,14 @@ export class SegmentView implements ComponentInterface {
     const segmentEl = (this.segmentEl = document.querySelector(`ion-segment[view=${this.el.id}]`));
     if (segmentEl) {
       addEventListener(segmentEl, 'ionChange', this.updateSection);
+    }
+  }
+
+  disconnectedCallback() {
+    const segmentEl = this.segmentEl;
+    if (segmentEl) {
+      removeEventListener(segmentEl, 'ionChange', this.updateSection);
+      this.segmentEl = null;
     }
   }
 
