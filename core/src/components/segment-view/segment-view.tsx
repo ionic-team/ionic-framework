@@ -50,9 +50,9 @@ export class SegmentView implements ComponentInterface {
     this.el.scrollTo({
       top: 0,
       left: index * sectionWidth,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
-  }
+  };
 
   private getSegmentButtons(): HTMLIonSegmentButtonElement[] | [] {
     const { segmentEl } = this;

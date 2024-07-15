@@ -1,83 +1,83 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segment - Content Component</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Segment - Content Component</title>
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-</head>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Segment - Content Component</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-segment view="myView" value="home">
+            <ion-segment-button value="home">
+              <ion-icon name="triangle-outline"></ion-icon>
+              <ion-label>Home</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="radio">
+              <ion-icon name="triangle-outline"></ion-icon>
+              <ion-label>Radio</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="library">
+              <ion-icon name="triangle-outline"></ion-icon>
+              <ion-label>Library</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="search">
+              <ion-icon name="triangle-outline"></ion-icon>
+              <ion-label>Search</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+      </ion-header>
 
-<body>
-  <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Segment - Content Component</ion-title>
-      </ion-toolbar>
-      <ion-toolbar>
-        <ion-segment view="myView" value="home">
-          <ion-segment-button value="home">
-            <ion-icon name="triangle-outline"></ion-icon>
-            <ion-label>Home</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="radio">
-            <ion-icon name="triangle-outline"></ion-icon>
-            <ion-label>Radio</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="library">
-            <ion-icon name="triangle-outline"></ion-icon>
-            <ion-label>Library</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="search">
-            <ion-icon name="triangle-outline"></ion-icon>
-            <ion-label>Search</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <ion-segment-view id="myView">
-        <ion-segment-content>
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Home card title</ion-card-title>
-              <ion-card-content>Home card content</ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </ion-segment-content>
-        <ion-segment-content>
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Radio card title</ion-card-title>
-              <ion-card-content>Radio card content</ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </ion-segment-content>
-        <ion-segment-content>
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Library card title</ion-card-title>
-              <ion-card-content>Library card content</ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </ion-segment-content>
-        <ion-segment-content>
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Search card title</ion-card-title>
-              <ion-card-content>Search card content</ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </ion-segment-content>
-      </ion-segment-view>
-    </ion-content>
-  </ion-app>
-</body>
-
+      <ion-content>
+        <ion-segment-view id="myView">
+          <ion-segment-content>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Home card title</ion-card-title>
+                <ion-card-content>Home card content</ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </ion-segment-content>
+          <ion-segment-content>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Radio card title</ion-card-title>
+                <ion-card-content>Radio card content</ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </ion-segment-content>
+          <ion-segment-content>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Library card title</ion-card-title>
+                <ion-card-content>Library card content</ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </ion-segment-content>
+          <ion-segment-content>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Search card title</ion-card-title>
+                <ion-card-content>Search card content</ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </ion-segment-content>
+        </ion-segment-view>
+      </ion-content>
+    </ion-app>
+  </body>
 </html>

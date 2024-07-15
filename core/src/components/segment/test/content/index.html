@@ -1,133 +1,133 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segment - Content</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Segment - Content</title>
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      #segment-view {
+        display: flex;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
 
-  <style>
-    #segment-view {
-      display: flex;
-      overflow-x: scroll;
-      scroll-snap-type: x mandatory;
+        /* Hide scrollbar in Firefox */
+        scrollbar-width: none;
 
-      /* Hide scrollbar in Firefox */
-      scrollbar-width: none;
-
-      /* Hide scrollbar in IE and Edge */
-      -ms-overflow-style: none;
-    }
-
-    /* Hide scrollbar in webkit */
-    #segment-view::-webkit-scrollbar {
-      display: none;
-    }
-
-    #segment-view .segment-content {
-      scroll-snap-align: center;
-      flex-shrink: 0;
-      width: 100%;
-    }
-  </style>
-</head>
-
-<body>
-  <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Segment - Content</ion-title>
-      </ion-toolbar>
-      <ion-toolbar>
-        <ion-segment value="0">
-          <ion-segment-button value="0">
-            <ion-icon name="triangle-outline"></ion-icon>
-            <ion-label>Home</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="1">
-            <ion-icon name="triangle-outline"></ion-icon>
-            <ion-label>Radio</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="2">
-            <ion-icon name="triangle-outline"></ion-icon>
-            <ion-label>Library</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="3">
-            <ion-icon name="triangle-outline"></ion-icon>
-            <ion-label>Search</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <div id="segment-view">
-        <div id="home" class="segment-content">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Home card title</ion-card-title>
-              <ion-card-content>Home card content</ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </div>
-        <div id="radio" class="segment-content">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Radio card title</ion-card-title>
-              <ion-card-content>Radio card content</ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </div>
-        <div id="library" class="segment-content">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Library card title</ion-card-title>
-              <ion-card-content>Library card content</ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </div>
-        <div id="search" class="segment-content">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Search card title</ion-card-title>
-              <ion-card-content>Search card content</ion-card-content>
-            </ion-card-header>
-          </ion-card>
-        </div>
-      </div>
-    </ion-content>
-  </ion-app>
-
-  <script>
-    const segment = document.querySelector('ion-segment');
-    const segmentView = document.querySelector('#segment-view');
-
-    segment.addEventListener('ionChange', function(event) {
-      const index = event.detail.value;
-      const sectionWidth = segmentView.offsetWidth;
-      segmentView.scrollTo({
-        top: 0,
-        left: index * sectionWidth,
-        behavior: 'smooth'
-      });
-    });
-
-    segmentView.addEventListener('scroll', function(event) {
-      // Calculate the index of the current section when the scrolling ends
-      var atSnappingPoint = event.target.scrollLeft % event.target.offsetWidth === 0;
-
-      if (atSnappingPoint) {
-        const index = Math.round(event.target.scrollLeft / event.target.offsetWidth);
-        segment.value = `${index}`;
+        /* Hide scrollbar in IE and Edge */
+        -ms-overflow-style: none;
       }
-    });
-  </script>
-</body>
 
+      /* Hide scrollbar in webkit */
+      #segment-view::-webkit-scrollbar {
+        display: none;
+      }
+
+      #segment-view .segment-content {
+        scroll-snap-align: center;
+        flex-shrink: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Segment - Content</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-segment value="0">
+            <ion-segment-button value="0">
+              <ion-icon name="triangle-outline"></ion-icon>
+              <ion-label>Home</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="1">
+              <ion-icon name="triangle-outline"></ion-icon>
+              <ion-label>Radio</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="2">
+              <ion-icon name="triangle-outline"></ion-icon>
+              <ion-label>Library</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="3">
+              <ion-icon name="triangle-outline"></ion-icon>
+              <ion-label>Search</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <div id="segment-view">
+          <div id="home" class="segment-content">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Home card title</ion-card-title>
+                <ion-card-content>Home card content</ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </div>
+          <div id="radio" class="segment-content">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Radio card title</ion-card-title>
+                <ion-card-content>Radio card content</ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </div>
+          <div id="library" class="segment-content">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Library card title</ion-card-title>
+                <ion-card-content>Library card content</ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </div>
+          <div id="search" class="segment-content">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Search card title</ion-card-title>
+                <ion-card-content>Search card content</ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const segment = document.querySelector('ion-segment');
+      const segmentView = document.querySelector('#segment-view');
+
+      segment.addEventListener('ionChange', function (event) {
+        const index = event.detail.value;
+        const sectionWidth = segmentView.offsetWidth;
+        segmentView.scrollTo({
+          top: 0,
+          left: index * sectionWidth,
+          behavior: 'smooth',
+        });
+      });
+
+      segmentView.addEventListener('scroll', function (event) {
+        // Calculate the index of the current section when the scrolling ends
+        var atSnappingPoint = event.target.scrollLeft % event.target.offsetWidth === 0;
+
+        if (atSnappingPoint) {
+          const index = Math.round(event.target.scrollLeft / event.target.offsetWidth);
+          segment.value = `${index}`;
+        }
+      });
+    </script>
+  </body>
 </html>

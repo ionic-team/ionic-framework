@@ -83,8 +83,8 @@ export class Segment implements ComponentInterface {
   protected valueChanged(value: SegmentValue | undefined, oldValue?: SegmentValue | undefined) {
     if (oldValue !== undefined && value !== undefined) {
       const buttons = this.getButtons();
-      const previous = buttons.find(button => button.value === oldValue);
-      const current = buttons.find(button => button.value === value);
+      const previous = buttons.find((button) => button.value === oldValue);
+      const current = buttons.find((button) => button.value === value);
 
       if (previous && current) {
         this.checkButton(previous, current);
