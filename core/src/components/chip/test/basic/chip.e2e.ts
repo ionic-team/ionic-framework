@@ -28,7 +28,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'ionic-md' ], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   /**
    * This behavior does not vary across modes/directions.
    */
