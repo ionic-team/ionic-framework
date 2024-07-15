@@ -3172,6 +3172,10 @@ export namespace Components {
          */
         "value": SegmentValue;
     }
+    interface IonSegmentContent {
+    }
+    interface IonSegmentView {
+    }
     interface IonSelect {
         /**
           * The text to display on the cancel button.
@@ -4973,6 +4977,18 @@ declare global {
         prototype: HTMLIonSegmentButtonElement;
         new (): HTMLIonSegmentButtonElement;
     };
+    interface HTMLIonSegmentContentElement extends Components.IonSegmentContent, HTMLStencilElement {
+    }
+    var HTMLIonSegmentContentElement: {
+        prototype: HTMLIonSegmentContentElement;
+        new (): HTMLIonSegmentContentElement;
+    };
+    interface HTMLIonSegmentViewElement extends Components.IonSegmentView, HTMLStencilElement {
+    }
+    var HTMLIonSegmentViewElement: {
+        prototype: HTMLIonSegmentViewElement;
+        new (): HTMLIonSegmentViewElement;
+    };
     interface HTMLIonSelectElementEventMap {
         "ionChange": SelectChangeEventDetail;
         "ionCancel": void;
@@ -5282,6 +5298,8 @@ declare global {
         "ion-searchbar": HTMLIonSearchbarElement;
         "ion-segment": HTMLIonSegmentElement;
         "ion-segment-button": HTMLIonSegmentButtonElement;
+        "ion-segment-content": HTMLIonSegmentContentElement;
+        "ion-segment-view": HTMLIonSegmentViewElement;
         "ion-select": HTMLIonSelectElement;
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
@@ -8492,6 +8510,10 @@ declare namespace LocalJSX {
          */
         "value"?: SegmentValue;
     }
+    interface IonSegmentContent {
+    }
+    interface IonSegmentView {
+    }
     interface IonSelect {
         /**
           * The text to display on the cancel button.
@@ -9287,6 +9309,8 @@ declare namespace LocalJSX {
         "ion-searchbar": IonSearchbar;
         "ion-segment": IonSegment;
         "ion-segment-button": IonSegmentButton;
+        "ion-segment-content": IonSegmentContent;
+        "ion-segment-view": IonSegmentView;
         "ion-select": IonSelect;
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
@@ -9386,6 +9410,8 @@ declare module "@stencil/core" {
             "ion-searchbar": LocalJSX.IonSearchbar & JSXBase.HTMLAttributes<HTMLIonSearchbarElement>;
             "ion-segment": LocalJSX.IonSegment & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
             "ion-segment-button": LocalJSX.IonSegmentButton & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
+            "ion-segment-content": LocalJSX.IonSegmentContent & JSXBase.HTMLAttributes<HTMLIonSegmentContentElement>;
+            "ion-segment-view": LocalJSX.IonSegmentView & JSXBase.HTMLAttributes<HTMLIonSegmentViewElement>;
             "ion-select": LocalJSX.IonSelect & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
