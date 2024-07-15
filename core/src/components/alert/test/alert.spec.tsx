@@ -41,14 +41,13 @@ describe('alert: custom html', () => {
   });
 
   it('should not overwrite the id set in htmlAttributes', async () => {
-    const id = 'custom-id'
+    const id = 'custom-id';
     const page = await newSpecPage({
       components: [Alert],
-      template: () => <ion-alert htmlAttributes={{id}} overlayIndex={-1}></ion-alert>
+      template: () => <ion-alert htmlAttributes={{ id }} overlayIndex={-1}></ion-alert>,
     });
 
     const alert = page.body.querySelector('ion-alert')!;
     expect(alert.id).toBe(id);
   });
-
 });
