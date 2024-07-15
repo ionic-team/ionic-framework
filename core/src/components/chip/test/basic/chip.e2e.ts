@@ -28,57 +28,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['ios', 'ionic-md' ], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  /**
-   * This behavior does not vary across modes/directions.
-   */
-  test.describe(title('chip: outline'), () => {
-    test('should render default outline chip', async ({ page }) => {
-      await page.setContent(
-        `<ion-chip outline="true">
-          <ion-icon name="checkmark-circle"></ion-icon>
-          <ion-label>Icon</ion-label>
-        </ion-chip>`,
-        config
-      );
-
-      const chip = page.locator('ion-chip');
-
-      await expect(chip).toHaveScreenshot(screenshot(`chip-outline`));
-    });
-  });
-  /**
-   * This behavior does not vary across modes/directions.
-   */
-  test.describe(title('chip: color'), () => {
-    test('should render solid color chip', async ({ page }) => {
-      await page.setContent(
-        `<ion-chip color="tertiary">
-          <ion-icon name="checkmark-circle"></ion-icon>
-          <ion-label>Tertiary with Icon</ion-label>
-        </ion-chip>`,
-        config
-      );
-
-      const chip = page.locator('ion-chip');
-
-      await expect(chip).toHaveScreenshot(screenshot(`chip-solid-color`));
-    });
-    test('should render outline color chip', async ({ page }) => {
-      await page.setContent(
-        `<ion-chip outline="true" color="tertiary">
-          <ion-icon name="checkmark-circle"></ion-icon>
-          <ion-label>Tertiary with Icon</ion-label>
-        </ion-chip>`,
-        config
-      );
-
-      const chip = page.locator('ion-chip');
-
-      await expect(chip).toHaveScreenshot(screenshot(`chip-outline-color`));
-    });
-  });
-
+configs({ modes: ['ios' ], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('chip: descenders'), () => {
     test('should not clip descenders in item', async ({ page }) => {
       test.info().annotations.push({
@@ -102,6 +52,55 @@ configs({ modes: ['ios', 'ionic-md' ], directions: ['ltr'] }).forEach(({ title, 
       const chip = page.locator('ion-chip');
 
       await expect(chip).toHaveScreenshot(screenshot(`chip-descender`));
+    });
+  });
+});
+
+/**
+ * `md` mode does not differ from `ios` mode in chip rendering.
+ */
+configs({ modes: ['ios', 'ionic-md' ], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('chip: outline'), () => {
+    test('should render default outline chip', async ({ page }) => {
+      await page.setContent(
+        `<ion-chip outline="true">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Icon</ion-label>
+        </ion-chip>`,
+        config
+      );
+
+      const chip = page.locator('ion-chip');
+
+      await expect(chip).toHaveScreenshot(screenshot(`chip-outline`));
+    });
+  });
+  test.describe(title('chip: color'), () => {
+    test('should render solid color chip', async ({ page }) => {
+      await page.setContent(
+        `<ion-chip color="success">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Success with Icon</ion-label>
+        </ion-chip>`,
+        config
+      );
+
+      const chip = page.locator('ion-chip');
+
+      await expect(chip).toHaveScreenshot(screenshot(`chip-solid-color`));
+    });
+    test('should render outline color chip', async ({ page }) => {
+      await page.setContent(
+        `<ion-chip outline="true" color="success">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Success with Icon</ion-label>
+        </ion-chip>`,
+        config
+      );
+
+      const chip = page.locator('ion-chip');
+
+      await expect(chip).toHaveScreenshot(screenshot(`chip-outline-color`));
     });
   });
 });
