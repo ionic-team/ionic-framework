@@ -1,6 +1,6 @@
 import type { IonicConfig } from "@ionic/core/components";
 import { initialize } from "@ionic/core/components";
-import type { App, Plugin } from "vue";
+import type { App } from "vue";
 
 // TODO(FW-2969): types
 
@@ -21,7 +21,7 @@ const getHelperFunctions = () => {
   };
 };
 
-export const IonicVue: Plugin<[IonicConfig?]> = {
+export const IonicVue = {
   async install(_: App, config: IonicConfig = {}) {
     /**
      * By default Ionic Framework hides elements that
