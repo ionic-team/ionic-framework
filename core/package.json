@@ -29,6 +29,14 @@
       "require": "./dist/index.cjs.js",
       "types": "./dist/types/interface.d.ts"
     },
+    "./components": {
+      "import": "./components/index.js",
+      "types": "./components/index.d.ts"
+    },
+    "./components/*": {
+      "import": "./components/*",
+      "types": "./components/*"
+    },
     "./ion-accordion-group": {
       "import": "./components/ion-accordion-group.js",
       "types": "./components/ion-accordion-group.d.ts"
