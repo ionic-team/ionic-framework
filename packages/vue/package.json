@@ -62,7 +62,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
     "typescript": "^4.7.3",
-    "vue": "^3.2.37",
+    "vue": "^3.4.31",
     "vue-router": "^4.0.16"
   },
   "dependencies": {
