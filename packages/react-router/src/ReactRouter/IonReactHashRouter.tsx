@@ -2,7 +2,7 @@ import type { Action as HistoryAction, History, Location as HistoryLocation } fr
 import { createHashHistory as createHistory } from 'history';
 import React from 'react';
 import type { BrowserRouterProps } from 'react-router-dom';
-import { Router } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
 
@@ -45,9 +45,9 @@ export class IonReactHashRouter extends React.Component<IonReactHashRouterProps>
   render() {
     const { children, ...props } = this.props;
     return (
-      <Router history={this.history} {...props}>
+      <HashRouter history={this.history} {...props}>
         <IonRouter registerHistoryListener={this.registerHistoryListener}>{children}</IonRouter>
-      </Router>
+      </HashRouter>
     );
   }
 }
