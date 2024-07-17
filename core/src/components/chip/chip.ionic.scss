@@ -44,7 +44,7 @@
 
 :host(.chip-outline) {
   border-width: globals.$ionic-border-size-025;
-  border-style: solid;
+  border-style: globals.$ionic-border-style-solid;
   border-color: globals.$ionic-color-neutral-100;
 
   background: transparent;
