@@ -33,9 +33,18 @@
       "import": "./components/index.js",
       "types": "./components/index.d.ts"
     },
+    "./loader": {
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs.js",
+      "types": "./loader/index.d.ts"
+    },
     "./components/*": {
       "import": "./components/*",
       "types": "./components/*"
+    },
+    "./docs.json": {
+      "import": "./dist/docs.json",
+      "require": "./dist/docs.json"
     },
     "./ion-accordion-group": {
       "import": "./components/ion-accordion-group.js",
