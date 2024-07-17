@@ -1,15 +1,15 @@
 @import "./dark";
 
 @media (prefers-color-scheme: dark) {
-  :root:not(.ionic) {
+  :root {
     @include dark-base-palette();
   }
 
-  :root:not(.ionic).ios {
+  :root.ios {
     @include dark-ios-palette();
   }
 
-  :root:not(.ionic).md {
+  :root.md {
     @include dark-md-palette();
   }
 }

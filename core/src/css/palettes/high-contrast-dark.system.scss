@@ -1,15 +1,15 @@
 @import "./high-contrast-dark";
 
 @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
-  :root:not(.ionic) {
+  :root {
     @include high-contrast-dark-base-palette();
   }
 
-  :root:not(.ionic).ios {
+  :root.ios {
     @include high-contrast-dark-ios-palette();
   }
 
-  :root:not(.ionic).md {
+  :root.md {
     @include high-contrast-dark-md-palette();
   }
 }

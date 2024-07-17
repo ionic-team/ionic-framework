@@ -13,11 +13,15 @@
 // - tint: 10% lighter version of the base color (mix with white)
 
 $primary: #105cef;
-$neutral: #626262;
+$secondary: initial;
+$tertiary: initial;
 $success: #1fbd3b;
 $warning: #e18300;
 $danger: #bf2222;
 $light: #f2f4fd;
+$medium: initial;
+$neutral: #626262;
+$dark: initial;
 
 $ionic-colors: (
   primary: (
@@ -25,6 +29,18 @@ $ionic-colors: (
     contrast: #fff,
     shade: get-color-shade($primary),
     tint: get-color-tint($primary),
+  ),
+  secondary: (
+    base: $secondary,
+    contrast: $secondary,
+    shade: get-color-shade($secondary),
+    tint: get-color-tint($secondary),
+  ),
+  tertiary: (
+    base: $tertiary,
+    contrast: $tertiary,
+    shade: get-color-shade($tertiary),
+    tint: get-color-tint($tertiary),
   ),
   success: (
     base: $success,
@@ -50,10 +66,22 @@ $ionic-colors: (
     shade: get-color-shade($light),
     tint: get-color-tint($light),
   ),
+  medium: (
+    base: $medium,
+    contrast: $medium,
+    shade: get-color-shade($medium),
+    tint: get-color-tint($medium),
+  ),
   neutral: (
     base: $neutral,
     contrast: #fff,
     shade: get-color-shade($neutral),
     tint: get-color-tint($neutral),
+  ),
+  dark: (
+    base: $dark,
+    contrast: $dark,
+    shade: get-color-shade($dark),
+    tint: get-color-tint($dark),
   ),
 );

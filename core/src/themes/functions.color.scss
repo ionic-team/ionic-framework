@@ -55,18 +55,27 @@
 // Mixes a color with black to create its shade.
 // --------------------------------------------------------------------------------------------
 @function get-color-shade($color) {
+  @if (type-of($color) != color) {
+    @return $color;
+  }
   @return mix(#000, $color, 12%);
 }
 
 // Mixes a color with white to create its tint.
 // --------------------------------------------------------------------------------------------
 @function get-color-tint($color) {
+  @if (type-of($color) != color) {
+    @return $color;
+  }
   @return mix(#fff, $color, 10%);
 }
 
 // Converts a color to a comma separated rgb.
 // --------------------------------------------------------------------------------------------
 @function color-to-rgb-list($color) {
+  @if (type-of($color) != color) {
+    @return $color;
+  }
   @return #{red($color)}, #{green($color)}, #{blue($color)};
 }
 
