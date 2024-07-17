@@ -306,9 +306,9 @@
 
 // Default Outline Color
 :host(.button-outline) {
-  --border-color: #{globals.$ionic-color-primary-base};
+  --border-color: #{globals.ion-color(primary, base)};
   --background: #{globals.$ionic-color-base-white};
-  --color: #{globals.$ionic-color-primary-base};
+  --color: #{globals.ion-color(primary, base)};
 }
 
 // Clear Button
