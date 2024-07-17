@@ -12,6 +12,8 @@
 // - shade: 12% darker version of the base color (mix with black)
 // - tint: 10% lighter version of the base color (mix with white)
 
+// TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
+// ios and md. This will allow us to have a single color map.
 $primary: #105cef;
 $secondary: initial;
 $tertiary: initial;
