@@ -126,10 +126,9 @@ import type { AccordionGroupChangeEventDetail as IIonAccordionGroupAccordionGrou
 
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {
   /**
-   * Emitted when the value property has changed
-as a result of a user action such as a click.
-This event will not emit when programmatically setting
-the value property.
+   * Emitted when the value property has changed as a result of a user action such as a click.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonAccordionGroupAccordionGroupChangeEventDetail>>;
 }
@@ -659,7 +658,7 @@ export declare interface IonCol extends Components.IonCol {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonContent,
-  inputs: ['color', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
+  inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
   methods: ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']
 })
 @Component({
@@ -667,7 +666,7 @@ export declare interface IonCol extends Components.IonCol {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
+  inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
   standalone: true
 })
 export class IonContent {
@@ -1486,6 +1485,8 @@ import type { PickerColumnChangeEventDetail as IIonPickerColumnPickerColumnChang
 export declare interface IonPickerColumn extends Components.IonPickerColumn {
   /**
    * Emitted when the value has changed.
+
+This event will not emit when programmatically setting the `value` property.
    */
   ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnChangeEventDetail>>;
 }

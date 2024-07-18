@@ -40,7 +40,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await popover.evaluate((popover: HTMLIonPopoverElement) => {
         popover.remove();
-        document.querySelector('ion-button')?.insertAdjacentElement('afterend', popover);
+        document.querySelector('button')?.insertAdjacentElement('afterend', popover);
       });
       await page.waitForChanges();
 

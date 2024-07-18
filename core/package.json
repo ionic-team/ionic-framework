@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.0.0",
+  "version": "8.2.5",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,19 +31,20 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^4.12.2",
+    "@stencil/core": "^4.19.2",
     "ionicons": "^7.2.2",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.8.5",
-    "@capacitor/core": "^5.7.0",
-    "@capacitor/haptics": "^5.0.7",
-    "@capacitor/keyboard": "^5.0.8",
-    "@capacitor/status-bar": "^5.0.7",
+    "@axe-core/playwright": "^4.9.1",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/haptics": "^6.0.0",
+    "@capacitor/keyboard": "^6.0.0",
+    "@capacitor/status-bar": "^6.0.0",
+    "@clack/prompts": "^0.7.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@playwright/test": "^1.39.0",
+    "@playwright/test": "^1.45.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.8.4",
@@ -99,7 +100,8 @@
     "docker.build": "docker build -t ionic-playwright .",
     "test.e2e.docker": "npm run docker.build && node ./scripts/docker.mjs",
     "test.e2e.docker.update-snapshots": "npm run test.e2e.docker -- --update-snapshots",
-    "test.e2e.docker.ci": "npm run docker.build && CI=true node ./scripts/docker.mjs"
+    "test.e2e.docker.ci": "npm run docker.build && CI=true node ./scripts/docker.mjs",
+    "test.e2e.script": "node scripts/testing/e2e-script.mjs"
   },
   "author": "Ionic Team",
   "license": "MIT",
@@ -108,7 +110,7 @@
     "url": "git+https://github.com/ionic-team/ionic-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/ionic-team/ionic/issues"
+    "url": "https://github.com/ionic-team/ionic-framework/issues"
   },
   "homepage": "https://ionicframework.com/",
   "jest": {

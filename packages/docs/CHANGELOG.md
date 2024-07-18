@@ -3,6 +3,102 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [8.2.4](https://github.com/ionic-team/ionic-framework/compare/v8.2.2...v8.2.4) (2024-06-28)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
+## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [8.2.1](https://github.com/ionic-team/ionic-framework/compare/v8.2.0...v8.2.1) (2024-06-05)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+# [8.2.0](https://github.com/ionic-team/ionic-framework/compare/v8.1.3...v8.2.0) (2024-05-22)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [8.1.3](https://github.com/ionic-team/ionic-framework/compare/v8.1.2...v8.1.3) (2024-05-22)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [8.1.2](https://github.com/ionic-team/ionic-framework/compare/v8.1.1...v8.1.2) (2024-05-15)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [8.1.1](https://github.com/ionic-team/ionic-framework/compare/v8.1.0...v8.1.1) (2024-05-08)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+# [8.1.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.2...v8.1.0) (2024-05-01)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [8.0.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.1...v8.0.2) (2024-05-01)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [8.0.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0...v8.0.1) (2024-04-24)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
 # [8.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.2...v8.0.0) (2024-04-17)
 
 **Note:** Version bump only for package @ionic/docs

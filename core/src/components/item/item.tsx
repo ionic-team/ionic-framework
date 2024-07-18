@@ -64,7 +64,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * If `true`, the user cannot interact with the item.
    */
-  @Prop() disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * This attribute instructs browsers to download a URL instead of navigating to

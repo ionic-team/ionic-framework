@@ -3,6 +3,138 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
+
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+## [8.2.4](https://github.com/ionic-team/ionic-framework/compare/v8.2.2...v8.2.4) (2024-06-28)
+
+
+### Bug Fixes
+
+* **angular:** popover arrow navigation with disabled items ([#29662](https://github.com/ionic-team/ionic-framework/issues/29662)) ([ceb41f3](https://github.com/ionic-team/ionic-framework/commit/ceb41f31f382ff1bcf81de2b11680699d33d5077)), closes [#29640](https://github.com/ionic-team/ionic-framework/issues/29640)
+
+
+
+
+
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
+## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
+
+
+### Bug Fixes
+
+* **refresher:** show when content is fullscreen ([#29608](https://github.com/ionic-team/ionic-framework/issues/29608)) ([5cdfac8](https://github.com/ionic-team/ionic-framework/commit/5cdfac89f5389cb3009427183f7034ba05788bc2)), closes [#18714](https://github.com/ionic-team/ionic-framework/issues/18714)
+
+
+
+
+
+## [8.2.1](https://github.com/ionic-team/ionic-framework/compare/v8.2.0...v8.2.1) (2024-06-05)
+
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+# [8.2.0](https://github.com/ionic-team/ionic-framework/compare/v8.1.3...v8.2.0) (2024-05-22)
+
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+## [8.1.3](https://github.com/ionic-team/ionic-framework/compare/v8.1.2...v8.1.3) (2024-05-22)
+
+
+### Bug Fixes
+
+* **core:** malformed URIs will not throw exception ([#29486](https://github.com/ionic-team/ionic-framework/issues/29486)) ([4a41983](https://github.com/ionic-team/ionic-framework/commit/4a41983098fe9bf83fdf05ce7ab28c79f414e11b)), closes [#29479](https://github.com/ionic-team/ionic-framework/issues/29479)
+
+
+
+
+
+## [8.1.2](https://github.com/ionic-team/ionic-framework/compare/v8.1.1...v8.1.2) (2024-05-15)
+
+
+### Bug Fixes
+
+* **many:** do not grow slotted checkboxes, radios, selects and toggles ([#29501](https://github.com/ionic-team/ionic-framework/issues/29501)) ([c63d07b](https://github.com/ionic-team/ionic-framework/commit/c63d07bdd0c4d9939474c52b03a3f2535511933f)), closes [#29423](https://github.com/ionic-team/ionic-framework/issues/29423)
+* **picker:** update keyboard navigation ([#29497](https://github.com/ionic-team/ionic-framework/issues/29497)) ([32bc681](https://github.com/ionic-team/ionic-framework/commit/32bc681192b1833f1c897e692d2d36ba90c6af53))
+
+
+
+
+
+## [8.1.1](https://github.com/ionic-team/ionic-framework/compare/v8.1.0...v8.1.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* **angular:** persist select disabled state in item ([#29448](https://github.com/ionic-team/ionic-framework/issues/29448)) ([dfb72d7](https://github.com/ionic-team/ionic-framework/commit/dfb72d7ea06e28d76069b23eb90c3426181b7c4c)), closes [#29234](https://github.com/ionic-team/ionic-framework/issues/29234)
+* **angular:** set active segment button when dynamically changing items ([#29418](https://github.com/ionic-team/ionic-framework/issues/29418)) ([ee83388](https://github.com/ionic-team/ionic-framework/commit/ee833881da3ecaa0a9153397f0c7e62c1923f19c)), closes [#29414](https://github.com/ionic-team/ionic-framework/issues/29414)
+* **radio:** persist checked state when items are updated in radio-group ([#29457](https://github.com/ionic-team/ionic-framework/issues/29457)) ([7ea14ae](https://github.com/ionic-team/ionic-framework/commit/7ea14ae41eb27f2a58952bd27d91ef4c77bb6a0c)), closes [#29442](https://github.com/ionic-team/ionic-framework/issues/29442)
+
+
+
+
+
+# [8.1.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.2...v8.1.0) (2024-05-01)
+
+
+### Features
+
+* add experimental transition focus manager ([#29400](https://github.com/ionic-team/ionic-framework/issues/29400)) ([5b686ef](https://github.com/ionic-team/ionic-framework/commit/5b686efc1025cd4088c89ef29154311a3d7504ba)), closes [#23650](https://github.com/ionic-team/ionic-framework/issues/23650)
+* **content:** add fixedSlotPlacement prop ([#29233](https://github.com/ionic-team/ionic-framework/issues/29233)) ([90a7e70](https://github.com/ionic-team/ionic-framework/commit/90a7e70a1c827835c18fd5f39d53ab17d286b4a7))
+* **datetime:** pass roles to overlay when dismissing ([#29221](https://github.com/ionic-team/ionic-framework/issues/29221)) ([6945adc](https://github.com/ionic-team/ionic-framework/commit/6945adc3cccabf59a2e640462ab4fd09ade59f6f)), closes [#28298](https://github.com/ionic-team/ionic-framework/issues/28298)
+* **input:** add clearInputIcon property ([#29246](https://github.com/ionic-team/ionic-framework/issues/29246)) ([0f5d1c0](https://github.com/ionic-team/ionic-framework/commit/0f5d1c02d20483d47b6907fec696633cc7634554)), closes [#26974](https://github.com/ionic-team/ionic-framework/issues/26974)
+* **modal, popover:** add ability to temporarily disable focus trapping ([#29379](https://github.com/ionic-team/ionic-framework/issues/29379)) ([7c00351](https://github.com/ionic-team/ionic-framework/commit/7c00351680a955130fa10d25d4439d3cc18db805)), closes [#24646](https://github.com/ionic-team/ionic-framework/issues/24646)
+* **picker:** picker column is easier to select with assistive technology ([#29371](https://github.com/ionic-team/ionic-framework/issues/29371)) ([e38e2e4](https://github.com/ionic-team/ionic-framework/commit/e38e2e4d35076fa42241158568fb0ed50094fcbf)), closes [#25221](https://github.com/ionic-team/ionic-framework/issues/25221)
+
+
+
+
+
+## [8.0.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.1...v8.0.2) (2024-05-01)
+
+
+### Bug Fixes
+
+* **datetime:** navigating months in RTL works correctly ([#29421](https://github.com/ionic-team/ionic-framework/issues/29421)) ([4d09890](https://github.com/ionic-team/ionic-framework/commit/4d09890d69590f0c8c32b387769a6e1e14a03c33)), closes [#29198](https://github.com/ionic-team/ionic-framework/issues/29198)
+* **ios:** large title transition accounts for back button with no text  ([#29327](https://github.com/ionic-team/ionic-framework/issues/29327)) ([bd8d065](https://github.com/ionic-team/ionic-framework/commit/bd8d065e1af038fe24fbe9a6acd9e0f2004bc0b7)), closes [#28751](https://github.com/ionic-team/ionic-framework/issues/28751)
+* **md:** item border has improved contrast in dark mode ([#29398](https://github.com/ionic-team/ionic-framework/issues/29398)) ([fa85f03](https://github.com/ionic-team/ionic-framework/commit/fa85f030cfdb3ef8482ef29faff0144b27c9aa45)), closes [#29386](https://github.com/ionic-team/ionic-framework/issues/29386)
+* **select:** options are visible with fit-content width and fill outline ([#29408](https://github.com/ionic-team/ionic-framework/issues/29408)) ([f15b62a](https://github.com/ionic-team/ionic-framework/commit/f15b62a9ca9a817d2252753d31025d431ac9f8e2)), closes [#29321](https://github.com/ionic-team/ionic-framework/issues/29321)
+
+
+
+
+
+## [8.0.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0...v8.0.1) (2024-04-24)
+
+
+### Bug Fixes
+
+* **input:** clear button can be navigated using screen reader ([#29366](https://github.com/ionic-team/ionic-framework/issues/29366)) ([ee49824](https://github.com/ionic-team/ionic-framework/commit/ee49824a84df7a7b002f41dab7b935fbcdb64946)), closes [#29358](https://github.com/ionic-team/ionic-framework/issues/29358)
+* **input:** debounce is set with binding syntax in angular on load ([#29377](https://github.com/ionic-team/ionic-framework/issues/29377)) ([23321f7](https://github.com/ionic-team/ionic-framework/commit/23321f7ab2a242c3c4193fd6cece3f1c7c0034ef)), closes [#29374](https://github.com/ionic-team/ionic-framework/issues/29374)
+
+
+
+
+
 # [8.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.2...v8.0.0) (2024-04-17)
 
 **Note:** Version bump only for package @ionic/core

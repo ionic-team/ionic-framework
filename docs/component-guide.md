@@ -152,9 +152,6 @@ The focused state should be enabled for elements with actions when tabbed to via
 > [!WARNING]
 > Do not use `:focus` because that will cause the focus to apply even when an element is tapped (because the element is now focused). Instead, we only want the focus state to be shown when it makes sense which is what the `.ion-focusable` utility mentioned below does.
 
-> [!NOTE]
-> The [`:focus-visible`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible) pseudo-class mostly does the same thing as our JavaScript-driven utility. However, it does not work well with Shadow DOM components as the element that receives focus is typically inside of the Shadow DOM, but we usually want to set the `:focus-visible` state on the host so we can style other parts of the component. Using other combinations such as `:has(:focus-visible)` does not work because `:has` does not pierce the Shadow DOM (as that would leak implementation details about the Shadow DOM contents). `:focus-within` does work with the Shadow DOM, but that has the same problem as `:focus` that was mentioned before. Unfortunately, a [`:focus-visible-within` pseudo-class does not exist yet](https://github.com/WICG/focus-visible/issues/151).
-
 > [!IMPORTANT]
 > Make sure the component has the correct [component structure](#component-structure) before continuing.
 
@@ -215,6 +212,15 @@ ion-button {
 }
 ```
 
+#### When to use `.ion-focusable` versus `:focus-visible`
+
+The [`:focus-visible`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible) pseudo-class mostly does the same thing as our JavaScript-driven utility. However, it does not work well with Shadow DOM components as the element that receives focus is typically inside of the Shadow DOM, but we usually want to set the `:focus-visible` state on the host so we can style other parts of the component.
+
+Using other combinations such as `:has(:focus-visible)` does not work because `:has` does not pierce the Shadow DOM (as that would leak implementation details about the Shadow DOM contents). `:focus-within` does work with the Shadow DOM, but that has the same problem as `:focus` that was mentioned before. Unfortunately, a [`:focus-visible-within` pseudo-class does not exist yet](https://github.com/WICG/focus-visible/issues/151).
+
+The `.ion-focusable` class should be used when you want to style Element A based on the state of Element B. For example, the Button component styles the host of the component (Element A) when the native `button` inside the Shadow DOM (Element B) has focus.
+
+On the other hand, the `:focus-visible` pseudo-class can be used when you want to style the element based on its own state. For example, we could use `:focus-visible` to style the clear icon on Input when the icon itself is focused.
 
 ### Hover
 
@@ -378,9 +384,9 @@ ion-ripple-effect {
 
 ### Example Components
 
-- [ion-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/button)
-- [ion-back-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/back-button)
-- [ion-menu-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/menu-button)
+- [ion-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/button)
+- [ion-back-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/back-button)
+- [ion-menu-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/menu-button)
 
 ### References
 
@@ -394,7 +400,7 @@ ion-ripple-effect {
 
 #### Example Components
 
-- [ion-checkbox](https://github.com/ionic-team/ionic/tree/main/core/src/components/checkbox)
+- [ion-checkbox](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/checkbox)
 
 #### VoiceOver
 
@@ -473,7 +479,7 @@ render() {
     <Host>
       <label>
         {this.labelText}
-        <input type="checkbox" {...this.inheritedAttributes} /> 
+        <input type="checkbox" {...this.inheritedAttributes} />
       </label>
     </Host>
   )
@@ -505,7 +511,7 @@ This is a compromise we have to make in order for it to work with the other scre
 
 #### Example Components
 
-- [ion-toggle](https://github.com/ionic-team/ionic/tree/main/core/src/components/toggle)
+- [ion-toggle](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/toggle)
 
 #### Voiceover
 
@@ -586,7 +592,7 @@ render() {
     <Host>
       <label>
         {this.labelText}
-        <input type="checkbox" role="switch" {...this.inheritedAttributes} /> 
+        <input type="checkbox" role="switch" {...this.inheritedAttributes} />
       </label>
     </Host>
   )
@@ -618,8 +624,8 @@ There is a WebKit bug open for this: https://bugs.webkit.org/show_bug.cgi?id=196
 
 #### Example Components
 
-- [ion-accordion](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion)
-- [ion-accordion-group](https://github.com/ionic-team/ionic/tree/master/core/src/components/accordion-group)
+- [ion-accordion](https://github.com/ionic-team/ionic-framework/tree/master/core/src/components/accordion)
+- [ion-accordion-group](https://github.com/ionic-team/ionic-framework/tree/master/core/src/components/accordion-group)
 
 #### NVDA
 
@@ -634,11 +640,11 @@ Certain components can render an `<a>` or a `<button>` depending on the presence
 
 ### Example Components
 
-- [ion-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/button)
-- [ion-card](https://github.com/ionic-team/ionic/tree/main/core/src/components/card)
-- [ion-fab-button](https://github.com/ionic-team/ionic/tree/main/core/src/components/fab-button)
-- [ion-item-option](https://github.com/ionic-team/ionic/tree/main/core/src/components/item-option)
-- [ion-item](https://github.com/ionic-team/ionic/tree/main/core/src/components/item)
+- [ion-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/button)
+- [ion-card](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/card)
+- [ion-fab-button](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/fab-button)
+- [ion-item-option](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/item-option)
+- [ion-item](https://github.com/ionic-team/ionic-framework/tree/main/core/src/components/item)
 
 ### Component Structure
 

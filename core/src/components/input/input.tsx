@@ -93,6 +93,11 @@ export class Input implements ComponentInterface {
   @Prop() clearInput = false;
 
   /**
+   * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+   */
+  @Prop() clearInputIcon?: string;
+
+  /**
    * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop() clearOnEdit?: boolean;
@@ -296,6 +301,8 @@ export class Input implements ComponentInterface {
    * from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.).
    * - When the element loses focus after its value has changed: for elements
    * where the user's interaction is typing.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
 
@@ -366,6 +373,7 @@ export class Input implements ComponentInterface {
      * such as [type] in Angular.
      */
     this.onTypeChange();
+    this.debounceChanged();
   }
 
   componentDidRender() {
@@ -681,11 +689,13 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, clearInputIcon } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+    const defaultClearIcon = mode === 'ios' ? closeCircle : closeSharp;
+    const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
@@ -782,9 +792,18 @@ export class Input implements ComponentInterface {
                    */
                   ev.preventDefault();
                 }}
+                onFocusin={(ev) => {
+                  /**
+                   * Prevent the focusin event from bubbling otherwise it will cause the focusin
+                   * event listener in scroll assist to fire. When this fires, focus will be moved
+                   * back to the input even if the clear button was never tapped. This poses issues
+                   * for screen readers as it means users would be unable to swipe past the clear button.
+                   */
+                  ev.stopPropagation();
+                }}
                 onClick={this.clearTextInput}
               >
-                <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+                <ion-icon aria-hidden="true" icon={clearIconData}></ion-icon>
               </button>
             )}
             <slot name="end"></slot>

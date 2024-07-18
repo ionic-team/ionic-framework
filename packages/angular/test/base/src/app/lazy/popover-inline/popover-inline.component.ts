@@ -13,13 +13,13 @@ import { IonPopover } from "@ionic/angular";
 })
 export class PopoverInlineComponent {
 
-  items: string[] = [];
+  items: {text: string, disabled?: boolean}[] = [];
 
   openPopover(popover: IonPopover) {
     popover.present();
 
     setTimeout(() => {
-      this.items = ['A', 'B', 'C', 'D'];
+      this.items = [{text: 'A'}, {text: 'B'}, {text: 'C', disabled: true}, {text: 'D'}];
     }, 1000);
   }
 

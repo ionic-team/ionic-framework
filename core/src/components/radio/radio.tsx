@@ -110,6 +110,18 @@ export class Radio implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  componentDidLoad() {
+    /**
+     * The value may be `undefined` if it
+     * gets set before the radio is
+     * rendered. This ensures that the radio
+     * is checked if the value matches. This
+     * happens most often when Angular is
+     * rendering the radio.
+     */
+    this.updateState();
+  }
+
   /** @internal */
   @Method()
   async setFocus(ev: globalThis.Event) {

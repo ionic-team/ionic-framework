@@ -27,7 +27,8 @@
       groupName: "playwright",
       matchFileNames: [
         "core/package.json"
-      ]
+      ],
+      "rangeStrategy": "bump"
     },
     {
       matchDatasources: ["docker"],

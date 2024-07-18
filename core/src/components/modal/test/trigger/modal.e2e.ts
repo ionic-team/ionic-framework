@@ -24,7 +24,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await modal.evaluate((modal: HTMLIonModalElement) => {
         modal.remove();
-        document.querySelector('ion-button')?.insertAdjacentElement('afterend', modal);
+        document.querySelector('button')?.insertAdjacentElement('afterend', modal);
       });
       await page.waitForChanges();
 

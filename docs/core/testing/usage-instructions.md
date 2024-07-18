@@ -115,7 +115,7 @@ While `npm run test.e2e` can be used to run tests in the same environment that y
 
 This command builds a Docker image before tests run. It will also re-build the Docker image in the event that a Playwright update was merged into the repo.
 
-Note that the Playwright report will not automatically open in your web browser when tests are complete because the tests were run in Docker. Run `npm run test.report` outside of Docker to open the most recent test report.
+Note that the Playwright report will not automatically open in your web browser when tests are complete because the tests were run in Docker. Run `npx playwright show-report` outside of Docker to open the most recent test report.
 
 > [!NOTE]
 > Additional setup is needed to run Playwright tests with headed mode in Docker. See [Configuring Docker for Headed Tests](#configuring-docker-for-headed-tests-optional) for more information.
@@ -198,9 +198,19 @@ Instead, use the [Update Reference Screenshots GitHub Action](https://github.com
 
 1. Click the **Run workflow** dropdown.
 2. Select your branch.
-3. Click **Run workflow**.
+3. Leave the input field blank.
+4. Click **Run workflow**.
 
-This workflow will re-run the screenshot tests. Instead of failing any tests with mismatched screenshots, it will take new ground truth screenshots. These ground truth screenshots will be pushed as a single commit to your branch once the workflow is completed.
+This workflow will re-run all of the the screenshot tests. Instead of failing any tests with mismatched screenshots, it will take new ground truth screenshots. These ground truth screenshots will be pushed as a single commit to your branch once the workflow is completed.
+
+If you want to update ground truths for a specific test, you can pass the test file path as an input to the workflow. This is useful when working on a specific component.
+
+1. Click the **Run workflow** dropdown.
+2. Select your branch.
+3. Enter the file path in the input field. Example: `src/components/alert/test/basic/`
+4. Click **Run workflow**.
+
+The input field also accepts component names, such as `alert`. You can enter multiple components by separating them with spaces, for example, `alert button`. For a full list of options, refer to Playwright's [Command Line page](https://playwright.dev/docs/test-cli).
 
 ### Verifying Screenshot Differences
 

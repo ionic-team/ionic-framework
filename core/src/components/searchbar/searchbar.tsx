@@ -225,6 +225,8 @@ export class Searchbar implements ComponentInterface {
    * by the user. This can happen when the element loses focus or
    * when the "Enter" key is pressed. `ionChange` can also fire
    * when clicking the clear or cancel buttons.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<SearchbarChangeEventDetail>;
 
@@ -361,7 +363,7 @@ export class Searchbar implements ComponentInterface {
     this.ionClear.emit();
 
     return new Promise<void>((resolve) => {
-      // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
+      // setTimeout() fixes https://github.com/ionic-team/ionic-framework/issues/7527
       // wait for 4 frames
       setTimeout(() => {
         const value = this.getValue();

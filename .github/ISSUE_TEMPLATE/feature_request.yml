@@ -9,7 +9,7 @@ body:
       label: Prerequisites
       description: Please ensure you have completed all of the following.
       options:
-        - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#creating-an-issue).
+        - label: I have read the [Contributing Guidelines](https://github.com/ionic-team/ionic-framework/blob/main/docs/CONTRIBUTING.md#creating-an-issue).
           required: true
         - label: I agree to follow the [Code of Conduct](https://ionicframework.com/code-of-conduct).
           required: true

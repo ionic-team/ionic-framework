@@ -197,6 +197,8 @@ export class Select implements ComponentInterface {
 
   /**
    * Emitted when the value has changed.
+   *
+   * This event will not emit when programmatically setting the `value` property.
    */
   @Event() ionChange!: EventEmitter<SelectChangeEventDetail>;
 
@@ -239,10 +241,6 @@ export class Select implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
-  componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
-  }
-
   async connectedCallback() {
     const { el } = this;
 
@@ -266,6 +264,24 @@ export class Select implements ComponentInterface {
        */
       forceUpdate(this);
     });
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
+  componentDidLoad() {
+    /**
+     * If any of the conditions that trigger the styleChanged callback
+     * are met on component load, it is possible the event emitted
+     * prior to a parent web component registering an event listener.
+     *
+     * To ensure the parent web component receives the event, we
+     * emit the style event again after the component has loaded.
+     *
+     * This is often seen in Angular with the `dist` output target.
+     */
+    this.emitStyle();
   }
 
   disconnectedCallback() {

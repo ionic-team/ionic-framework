@@ -763,6 +763,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'before'`.
+         */
+        "fixedSlotPlacement": 'after' | 'before';
+        /**
           * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
         "forceOverscroll"?: boolean;
@@ -1162,6 +1166,10 @@ export namespace Components {
           * If `true`, a clear icon will appear in the input when there is a value. Clicking it clears the input.
          */
         "clearInput": boolean;
+        /**
+          * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+         */
+        "clearInputIcon"?: string;
         /**
           * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
          */
@@ -1716,6 +1724,10 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+         */
+        "focusTrap": boolean;
+        /**
           * Returns the current breakpoint of a sheet style modal
          */
         "getCurrentBreakpoint": () => Promise<number | undefined>;
@@ -2131,6 +2143,10 @@ export namespace Components {
           * The event to pass to the popover animation.
          */
         "event": any;
+        /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+         */
+        "focusTrap": boolean;
         "getParentPopover": () => Promise<HTMLIonPopoverElement | null>;
         "hasController": boolean;
         /**
@@ -4770,7 +4786,7 @@ declare namespace LocalJSX {
          */
         "multiple"?: boolean;
         /**
-          * Emitted when the value property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the value property.
+          * Emitted when the value property has changed as a result of a user action such as a click.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonAccordionGroupCustomEvent<AccordionGroupChangeEventDetail>) => void;
         /**
@@ -5345,7 +5361,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
-          * Emitted when the checked property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the checked property.
+          * Emitted when the checked property has changed as a result of a user action such as a click.  This event will not emit when programmatically setting the `checked` property.
          */
         "onIonChange"?: (event: IonCheckboxCustomEvent<CheckboxChangeEventDetail>) => void;
         /**
@@ -5479,6 +5495,10 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Controls where the fixed content is placed relative to the main content in the DOM. This can be used to control the order in which fixed elements receive keyboard focus. For example, if a FAB in the fixed slot should receive keyboard focus before the main page content, set this property to `'before'`.
+         */
+        "fixedSlotPlacement"?: 'after' | 'before';
+        /**
           * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
         "forceOverscroll"?: boolean;
@@ -5601,7 +5621,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonDatetimeCustomEvent<void>) => void;
         /**
-          * Emitted when the value (selected date) has changed.
+          * Emitted when the value (selected date) has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) => void;
         /**
@@ -5887,6 +5907,10 @@ declare namespace LocalJSX {
          */
         "clearInput"?: boolean;
         /**
+          * The icon to use for the clear button. Only applies when `clearInput` is set to `true`.
+         */
+        "clearInputIcon"?: string;
+        /**
           * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
          */
         "clearOnEdit"?: boolean;
@@ -5971,7 +5995,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * The `ionChange` event is fired when the user modifies the input's value. Unlike the `ionInput` event, the `ionChange` event is only fired when changes are committed, not as the user types.  Depending on the way the users interacts with the element, the `ionChange` event fires at a different moment: - When the user commits the change explicitly (e.g. by selecting a date from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.). - When the element loses focus after its value has changed: for elements where the user's interaction is typing.
+          * The `ionChange` event is fired when the user modifies the input's value. Unlike the `ionInput` event, the `ionChange` event is only fired when changes are committed, not as the user types.  Depending on the way the users interacts with the element, the `ionChange` event fires at a different moment: - When the user commits the change explicitly (e.g. by selecting a date from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.). - When the element loses focus after its value has changed: for elements where the user's interaction is typing.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
         /**
@@ -6442,6 +6466,10 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+         */
+        "focusTrap"?: boolean;
+        /**
           * The horizontal line that displays at the top of a sheet modal. It is `true` by default when setting the `breakpoints` and `initialBreakpoint` properties.
          */
         "handle"?: boolean;
@@ -6620,7 +6648,7 @@ declare namespace LocalJSX {
          */
         "numericInput"?: boolean;
         /**
-          * Emitted when the value has changed.
+          * Emitted when the value has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnChangeEventDetail>) => void;
         /**
@@ -6787,6 +6815,10 @@ declare namespace LocalJSX {
           * The event to pass to the popover animation.
          */
         "event"?: any;
+        /**
+          * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
+         */
+        "focusTrap"?: boolean;
         "hasController"?: boolean;
         /**
           * Additional attributes to pass to the popover.
@@ -6961,7 +6993,7 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
-          * Emitted when the value has changed.
+          * Emitted when the value has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
         /**
@@ -7023,7 +7055,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonRangeCustomEvent<void>) => void;
         /**
-          * The `ionChange` event is fired for `<ion-range>` elements when the user modifies the element's value: - When the user releases the knob after dragging; - When the user moves the knob with keyboard arrows  `ionChange` is not fired when the value is changed programmatically.
+          * The `ionChange` event is fired for `<ion-range>` elements when the user modifies the element's value: - When the user releases the knob after dragging; - When the user moves the knob with keyboard arrows  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**
@@ -7324,7 +7356,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the value has been committed by the user. This can happen when the element loses focus or when the "Enter" key is pressed. `ionChange` can also fire when clicking the clear or cancel buttons.
+          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the value has been committed by the user. This can happen when the element loses focus or when the "Enter" key is pressed. `ionChange` can also fire when clicking the clear or cancel buttons.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>) => void;
         /**
@@ -7386,7 +7418,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
+          * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**
@@ -7506,7 +7538,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSelectCustomEvent<void>) => void;
         /**
-          * Emitted when the value has changed.
+          * Emitted when the value has changed.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonSelectCustomEvent<SelectChangeEventDetail>) => void;
         /**
@@ -7809,7 +7841,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * The `ionChange` event is fired when the user modifies the textarea's value. Unlike the `ionInput` event, the `ionChange` event is fired when the element loses focus after its value has been modified.
+          * The `ionChange` event is fired when the user modifies the textarea's value. Unlike the `ionInput` event, the `ionChange` event is fired when the element loses focus after its value has been modified.  This event will not emit when programmatically setting the `value` property.
          */
         "onIonChange"?: (event: IonTextareaCustomEvent<TextareaChangeEventDetail>) => void;
         /**
@@ -8028,7 +8060,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonToggleCustomEvent<void>) => void;
         /**
-          * Emitted when the user switches the toggle on or off. Does not emit when programmatically changing the value of the `checked` property.
+          * Emitted when the user switches the toggle on or off.  This event will not emit when programmatically setting the `checked` property.
          */
         "onIonChange"?: (event: IonToggleCustomEvent<ToggleChangeEventDetail>) => void;
         /**

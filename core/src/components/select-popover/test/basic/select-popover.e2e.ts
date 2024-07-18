@@ -20,7 +20,7 @@ const checkedOptions: SelectPopoverOption[] = [
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('select-popover: basic'), () => {
     test.beforeEach(({ browserName }) => {
-      test.skip(browserName === 'webkit', 'https://ionic-cloud.atlassian.net/browse/FW-2979');
+      test.skip(browserName === 'webkit', 'ROU-5437');
     });
 
     test.describe('single selection', () => {
@@ -55,7 +55,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       });
 
       test('pressing Space on a selected option should dismiss the popover', async ({ browserName }) => {
-        test.skip(browserName === 'firefox', 'Same behavior as https://ionic-cloud.atlassian.net/browse/FW-2979');
+        test.skip(browserName === 'firefox', 'Same behavior as ROU-5437');
 
         await selectPopoverPage.setup(config, checkedOptions, false);
 

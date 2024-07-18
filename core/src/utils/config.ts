@@ -206,6 +206,14 @@ export interface IonicConfig {
 
   /**
    * @experimental
+   * When defined, Ionic will move focus to the appropriate element after each
+   * page transition. This ensures that users relying on assistive technology
+   * are informed when a page transition happens.
+   */
+  focusManagerPriority?: FocusManagerPriority[];
+
+  /**
+   * @experimental
    * If `true`, the [CloseWatcher API](https://github.com/WICG/close-watcher) will be used to handle
    * all Escape key and hardware back button presses to dismiss menus and overlays and to navigate.
    * Note that the `hardwareBackButton` config option must also be `true`.
@@ -230,6 +238,8 @@ export interface IonicConfig {
   _rel?: (el: any, name: string, cb: any, opts: any) => any;
   _ce?: (eventName: string, opts: any) => any;
 }
+
+type FocusManagerPriority = 'content' | 'heading' | 'banner';
 
 export const setupConfig = (config: IonicConfig) => {
   const win = window as any;
