@@ -10,7 +10,15 @@ interface IonReactRouterProps extends BrowserRouterProps {
   history?: History;
 }
 
-export const IonReactRouter = ({ children }: PropsWithChildren<IonReactRouterProps>) => {
+export const IonReactRouter = ({ children, ...rest }: PropsWithChildren<IonReactRouterProps>) => {
+  return (
+    <BrowserRouter>
+      <IonInnerReactRouter {...rest}>{children}</IonInnerReactRouter>
+    </BrowserRouter>
+  );
+};
+
+const IonInnerReactRouter = ({ children }: PropsWithChildren<IonReactRouterProps>) => {
   const location = useLocation();
 
   const historyListenHandler = useRef<(location: HistoryLocation, action: HistoryAction) => void>();
@@ -31,9 +39,5 @@ export const IonReactRouter = ({ children }: PropsWithChildren<IonReactRouterPro
     handleHistoryChange(location, 'POP'); // TODO @sean unsure about this
   }, [location]);
 
-  return (
-    <BrowserRouter>
-      <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>
-    </BrowserRouter>
-  );
+  return <IonRouter registerHistoryListener={registerHistoryListener}>{children}</IonRouter>;
 };

@@ -1,6 +1,7 @@
 import type { RouteInfo, ViewItem } from '@ionic/react';
 import { IonRoute, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
 import React from 'react';
+import { Routes } from 'react-router';
 
 import { matchPath } from './utils/matchPath';
 
@@ -54,32 +55,22 @@ export class ReactRouterViewStack extends ViewStacks {
     });
 
     const children = viewItems.map((viewItem) => {
-      let clonedChild;
-      if (viewItem.ionRoute && !viewItem.disableIonPageManagement) {
-        clonedChild = (
-          <ViewLifeCycleManager
-            key={`view-${viewItem.id}`}
-            mount={viewItem.mount}
-            removeView={() => this.remove(viewItem)}
-          >
+      const clonedChild = (
+        <ViewLifeCycleManager
+          key={`view-${viewItem.id}`}
+          mount={viewItem.mount}
+          removeView={() => this.remove(viewItem)}
+        >
+          <Routes>
             {React.cloneElement(viewItem.reactElement, {
               computedMatch: viewItem.routeData.match,
             })}
-          </ViewLifeCycleManager>
-        );
-      } else {
+          </Routes>
+        </ViewLifeCycleManager>
+      );
+
+      if (!viewItem.ionRoute || viewItem.disableIonPageManagement) {
         const match = matchComponent(viewItem.reactElement, routeInfo.pathname);
-        clonedChild = (
-          <ViewLifeCycleManager
-            key={`view-${viewItem.id}`}
-            mount={viewItem.mount}
-            removeView={() => this.remove(viewItem)}
-          >
-            {React.cloneElement(viewItem.reactElement, {
-              computedMatch: viewItem.routeData.match,
-            })}
-          </ViewLifeCycleManager>
-        );
 
         if (!match && viewItem.routeData.match) {
           viewItem.routeData.match = undefined;
@@ -152,8 +143,9 @@ export class ReactRouterViewStack extends ViewStacks {
          *
          * To validate this, we need to check if the path and url match the view item's route data.
          */
-        const hasParameter = match.path.includes(':');
-        if (!hasParameter || (hasParameter && match.url === v.routeData?.match?.url)) {
+        // changed from match.path
+        const hasParameter = match.params && Object.keys(match.params).length > 0;
+        if (!hasParameter || (hasParameter && match.pathname === v.routeData?.match?.url)) {
           viewItem = v;
           return true;
         }
@@ -165,11 +157,11 @@ export class ReactRouterViewStack extends ViewStacks {
       // try to find a route that doesn't have a path or from prop, that will be our default route
       if (!v.routeData.childProps.path && !v.routeData.childProps.from) {
         match = {
-          path: pathname,
-          url: pathname,
-          isExact: true,
+          pathname: pathname,
+          // url: pathname,
+          // isExact: true,
           params: {},
-        };
+        } as any;
         viewItem = v;
         return true;
       }

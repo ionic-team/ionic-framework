@@ -21,23 +21,23 @@ interface MatchPathOptions {
  */
 export const matchPath = ({
   pathname,
-  componentProps,
+  componentProps
 }: MatchPathOptions): false | ReturnType<typeof reactRouterMatchPath> => {
-  const { exact, component } = componentProps;
+  const { exact: caseSensitive, path, from } = componentProps;
 
-  const path = componentProps.path || componentProps.from;
-  /***
-   * The props to match against, they are identical
-   * to the matching props `Route` accepts. It could also be a string
-   * or an array of strings as shortcut for `{ path }`.
-   */
-  const matchProps = {
-    exact,
-    path,
-    component,
-  };
+  if (!pathname) {
+    console.warn('Attempt to match path on an undefined pathname', {
+      path: componentProps.path,
+      from: componentProps.from,
+    });
+    // TODO @sean this is new behavior, need to debug where it is coming from
+    return false;
+  }
 
-  const match = reactRouterMatchPath(pathname, matchProps);
+  const match = reactRouterMatchPath({
+    path: path ?? from ?? '',
+    caseSensitive
+  }, pathname);
 
   if (!match) {
     return false;
