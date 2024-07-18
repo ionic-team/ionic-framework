@@ -325,7 +325,8 @@ export class Range implements ComponentInterface {
       this.setupGesture();
     }
 
-    this.contentEl = findClosestIonContent(this.el);
+    const ionContent = findClosestIonContent(this.el);
+    this.contentEl = ionContent?.querySelector('.ion-content-scroll-host') ?? ionContent;
   }
 
   disconnectedCallback() {
@@ -418,7 +419,7 @@ export class Range implements ComponentInterface {
      *
      * This only needs to be done once.
      */
-    if (contentEl && this.initialContentScrollY === undefined) {
+    if (contentEl && this.pressedKnob === undefined) {
       this.initialContentScrollY = disableContentScrollY(contentEl);
     }
 
@@ -469,7 +470,7 @@ export class Range implements ComponentInterface {
      *
      * The user can now scroll on the view in the next gesture event.
      */
-    if (contentEl && initialContentScrollY !== undefined) {
+    if (contentEl && this.pressedKnob !== undefined) {
       resetContentScrollY(contentEl, initialContentScrollY);
     }
 

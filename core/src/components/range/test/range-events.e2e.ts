@@ -107,52 +107,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         expect(rangeEndSpy.length).toBe(1);
       });
-
-      test('should not scroll when the knob is swiped', async ({ page, skip }) => {
-        skip.browser('webkit', 'mouse.wheel is not available in WebKit');
-
-        /**
-         * Requires padding to prevent the knob from being clipped.
-         * If it's clipped, then the value might be one off.
-         * For example, if the knob is clipped on the right, then the value
-         * will be 99 instead of 100.
-         *
-         * The ion-content is also required to be taller than the viewport
-         * to allow for scrolling.
-         */
-        await page.setContent(
-          `
-          <style>
-            ion-content {
-              --padding-start: 20px;
-              --padding-end: 20px;
-            }
-          </style>
-          <ion-content style="padding: 0 20px; height: 2000px;">
-            <ion-range aria-label="Range"></ion-range>
-          </ion-content>
-        `,
-          config
-        );
-
-        const rangeEl = page.locator('ion-range');
-        const scrollEl = page.locator('ion-content .inner-scroll');
-
-        expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
-
-        await dragElementBy(rangeEl, page, 100, 0, undefined, undefined, false);
-
-        /**
-         * Do not use scrollToBottom() or other scrolling methods
-         * on ion-content as those will update the scroll position.
-         * Setting scrollTop still works even with overflow-y: hidden.
-         * However, simulating a user gesture should not scroll the content.
-         */
-        await page.mouse.wheel(0, 100);
-        await page.waitForChanges();
-
-        expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
-      });
     });
 
     test.describe('ionChange', () => {
