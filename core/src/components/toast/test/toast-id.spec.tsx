@@ -46,7 +46,7 @@ describe('toast: id', () => {
     const id = 'custom-id';
     const page = await newSpecPage({
       components: [Toast],
-      template: () => <ion-toast htmlAttributes={{id}} overlayIndex={-1}></ion-toast>,
+      template: () => <ion-toast htmlAttributes={{ id }} overlayIndex={-1}></ion-toast>,
     });
 
     const alert = page.body.querySelector('ion-toast')!;

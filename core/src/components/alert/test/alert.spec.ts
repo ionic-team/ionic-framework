@@ -38,5 +38,4 @@ describe('alert: custom html', () => {
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).toBe(null);
   });
-
 });

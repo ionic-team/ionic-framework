@@ -46,7 +46,7 @@ describe('alert: id', () => {
     const id = 'custom-id';
     const page = await newSpecPage({
       components: [Alert],
-      template: () => <ion-alert htmlAttributes={{id}} overlayIndex={-1}></ion-alert>,
+      template: () => <ion-alert htmlAttributes={{ id }} overlayIndex={-1}></ion-alert>,
     });
 
     const alert = page.body.querySelector('ion-alert')!;

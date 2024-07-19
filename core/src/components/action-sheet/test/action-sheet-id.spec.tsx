@@ -46,7 +46,7 @@ describe('action-sheet: id', () => {
     const id = 'custom-id';
     const page = await newSpecPage({
       components: [ActionSheet],
-      template: () => <ion-action-sheet htmlAttributes={{id}} overlayIndex={-1}></ion-action-sheet>,
+      template: () => <ion-action-sheet htmlAttributes={{ id }} overlayIndex={-1}></ion-action-sheet>,
     });
 
     const alert = page.body.querySelector('ion-action-sheet')!;

@@ -46,7 +46,7 @@ describe('loading: id', () => {
     const id = 'custom-id';
     const page = await newSpecPage({
       components: [Loading],
-      template: () => <ion-loading htmlAttributes={{id}} overlayIndex={-1}></ion-loading>,
+      template: () => <ion-loading htmlAttributes={{ id }} overlayIndex={-1}></ion-loading>,
     });
 
     const alert = page.body.querySelector('ion-loading')!;

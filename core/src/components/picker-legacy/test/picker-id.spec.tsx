@@ -46,7 +46,7 @@ describe('picker: id', () => {
     const id = 'custom-id';
     const page = await newSpecPage({
       components: [Picker],
-      template: () => <ion-picker-legacy htmlAttributes={{id}} overlayIndex={-1}></ion-picker-legacy>,
+      template: () => <ion-picker-legacy htmlAttributes={{ id }} overlayIndex={-1}></ion-picker-legacy>,
     });
 
     const alert = page.body.querySelector('ion-picker-legacy')!;

@@ -46,7 +46,7 @@ describe('modal: id', () => {
     const id = 'custom-id';
     const page = await newSpecPage({
       components: [Modal],
-      template: () => <ion-modal htmlAttributes={{id}} overlayIndex={-1}></ion-modal>,
+      template: () => <ion-modal htmlAttributes={{ id }} overlayIndex={-1}></ion-modal>,
     });
 
     const alert = page.body.querySelector('ion-modal')!;

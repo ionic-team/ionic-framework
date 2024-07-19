@@ -46,11 +46,10 @@ describe('popover: id', () => {
     const id = 'custom-id';
     const page = await newSpecPage({
       components: [Popover],
-      template: () => <ion-popover htmlAttributes={{id}} overlayIndex={-1}></ion-popover>,
+      template: () => <ion-popover htmlAttributes={{ id }} overlayIndex={-1}></ion-popover>,
     });
 
     const alert = page.body.querySelector('ion-popover')!;
     expect(alert.id).toBe(id);
   });
-
 });
