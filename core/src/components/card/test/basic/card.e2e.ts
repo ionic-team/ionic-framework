@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('card: rendering'), () => {
     test('should not have visual regressions with basic card', async ({ page }) => {
       await page.setContent(
