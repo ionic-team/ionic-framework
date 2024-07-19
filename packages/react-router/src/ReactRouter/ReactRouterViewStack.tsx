@@ -1,8 +1,9 @@
 import type { RouteInfo, ViewItem } from '@ionic/react';
 import { IonRoute, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
 import React from 'react';
-import { Routes } from 'react-router';
+import { Route } from 'react-router';
 
+import { findRoutesNode } from './utils/findRoutesNode';
 import { matchPath } from './utils/matchPath';
 
 export class ReactRouterViewStack extends ViewStacks {
@@ -45,12 +46,14 @@ export class ReactRouterViewStack extends ViewStacks {
     const viewItems = this.getViewItemsForOutlet(outletId);
 
     // Sync latest routes with viewItems
-    React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      const viewItem = viewItems.find((v) => {
-        return matchComponent(child, v.routeData.childProps.path || v.routeData.childProps.from);
-      });
-      if (viewItem) {
-        viewItem.reactElement = child;
+    React.Children.forEach(findRoutesNode(ionRouterOutlet.props.children), (child: React.ReactElement) => {
+      if (child.type === Route) {
+        const viewItem = viewItems.find((v) => {
+          return matchComponent(child, v.routeData.childProps.path || v.routeData.childProps.from);
+        });
+        if (viewItem) {
+          viewItem.reactElement = child;
+        }
       }
     });
 
@@ -61,11 +64,9 @@ export class ReactRouterViewStack extends ViewStacks {
           mount={viewItem.mount}
           removeView={() => this.remove(viewItem)}
         >
-          <Routes>
-            {React.cloneElement(viewItem.reactElement, {
-              computedMatch: viewItem.routeData.match,
-            })}
-          </Routes>
+          {React.cloneElement(viewItem.reactElement, {
+            computedMatch: viewItem.routeData.match,
+          })}
         </ViewLifeCycleManager>
       );
 

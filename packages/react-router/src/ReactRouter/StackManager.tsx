@@ -1,8 +1,10 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
+import { Route } from 'react-router';
 
 import { clonePageElement } from './clonePageElement';
+import { findRoutesNode } from './utils/findRoutesNode';
 import { matchPath } from './utils/matchPath';
 
 // TODO(FW-2959): types
@@ -113,9 +115,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
 
       if (enteringViewItem) {
-        enteringViewItem.reactElement = enteringRoute;
+        enteringViewItem.reactElement = enteringRoute.props.element;
       } else if (enteringRoute) {
-        enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
+        enteringViewItem = this.context.createViewItem(this.id, enteringRoute.props.element, routeInfo);
         this.context.addViewItem(enteringViewItem);
       }
 
@@ -133,7 +135,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
            * If the route data does not match the current path, the parent router outlet
            * is attempting to transition and we cancel the operation.
            */
-          if (enteringViewItem.routeData.match.url !== routeInfo.pathname) {
+          if (enteringViewItem.routeData.match.pathname !== routeInfo.pathname) {
             return;
           }
         }
@@ -432,13 +434,18 @@ export default StackManager;
 
 function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
   let matchedNode: React.ReactNode;
-  React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
-    const match = matchPath({
-      pathname: routeInfo.pathname,
-      componentProps: child.props,
-    });
-    if (match) {
-      matchedNode = child;
+
+  const routesNode = findRoutesNode(node) ?? node;
+
+  React.Children.forEach(routesNode, (child: React.ReactElement) => {
+    if (child.type === Route) {
+      const match = matchPath({
+        pathname: routeInfo.pathname,
+        componentProps: child.props,
+      });
+      if (match) {
+        matchedNode = child;
+      }
     }
   });
 
@@ -447,9 +454,11 @@ function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
   }
   // If we haven't found a node
   // try to find one that doesn't have a path or from prop, that will be our not found route
-  React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
-    if (!(child.props.path || child.props.from)) {
-      matchedNode = child;
+  React.Children.forEach(routesNode, (child: React.ReactElement) => {
+    if (child.type === Route) {
+      if (!(child.props.path || child.props.from)) {
+        matchedNode = child;
+      }
     }
   });
 
