@@ -1,0 +1,89 @@
+// Ionic Theme
+// -------------------------------------------------------------------------------------------
+// This file contains the theme variables shared
+// between modes. This should only include variables
+// used to theme the application colors.
+
+// Default Ionic Colors
+// -------------------------------------------------------------------------------------------
+// Color map should provide
+// - base: main color to be used.
+// - contrast: Color that will provide readable text against the base color
+// - shade: 12% darker version of the base color (mix with black)
+// - tint: 10% lighter version of the base color (mix with white)
+
+// TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
+// ios and md. This will allow us to have a single color map.
+$primary: #105cef;
+$secondary: initial;
+$tertiary: initial;
+$success: #1fbd3b;
+$warning: #e18300;
+$danger: #bf2222;
+$light: #f2f4fd;
+$medium: initial;
+$neutral: #626262;
+$dark: initial;
+
+$ionic-colors: (
+  primary: (
+    base: $primary,
+    contrast: #fff,
+    shade: get-color-shade($primary),
+    tint: get-color-tint($primary),
+  ),
+  secondary: (
+    base: $secondary,
+    contrast: $secondary,
+    shade: get-color-shade($secondary),
+    tint: get-color-tint($secondary),
+  ),
+  tertiary: (
+    base: $tertiary,
+    contrast: $tertiary,
+    shade: get-color-shade($tertiary),
+    tint: get-color-tint($tertiary),
+  ),
+  success: (
+    base: $success,
+    contrast: #000,
+    shade: get-color-shade($success),
+    tint: get-color-tint($success),
+  ),
+  warning: (
+    base: $warning,
+    contrast: #000,
+    shade: get-color-shade($warning),
+    tint: get-color-tint($warning),
+  ),
+  danger: (
+    base: $danger,
+    contrast: #fff,
+    shade: get-color-shade($danger),
+    tint: get-color-tint($danger),
+  ),
+  light: (
+    base: $light,
+    contrast: #000,
+    shade: get-color-shade($light),
+    tint: get-color-tint($light),
+  ),
+  medium: (
+    base: $medium,
+    contrast: $medium,
+    shade: get-color-shade($medium),
+    tint: get-color-tint($medium),
+  ),
+  neutral: (
+    base: $neutral,
+    contrast: #fff,
+    shade: get-color-shade($neutral),
+    tint: get-color-tint($neutral),
+  ),
+  dark: (
+    base: $dark,
+    contrast: $dark,
+    shade: get-color-shade($dark),
+    tint: get-color-tint($dark),
+  ),
+);
