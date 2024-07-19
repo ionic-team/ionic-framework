@@ -415,7 +415,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       printIonWarning('Your breakpoints array must include the initialBreakpoint value.');
     }
 
-    setOverlayId(el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
   }
 
   componentDidLoad() {
