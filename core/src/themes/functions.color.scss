@@ -102,7 +102,7 @@
   --ion-color-tint: var(--ion-color-#{$color-name}-tint, #{$tint}) !important;
 }
 
-// Generates the CSS variables for eacth color
+// Generates the CSS variables for each color
 // based on the colors map
 // --------------------------------------------------------------------------------------------
 @mixin generate-color-variables() {
