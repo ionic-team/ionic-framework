@@ -60,6 +60,7 @@ const MODAL_INPUTS = [
   'cssClass',
   'enterAnimation',
   'event',
+  'focusTrap',
   'handle',
   'handleBehavior',
   'initialBreakpoint',
