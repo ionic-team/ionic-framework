@@ -56,6 +56,7 @@ const POPOVER_INPUTS = [
   'dismissOnSelect',
   'enterAnimation',
   'event',
+  'focusTrap',
   'isOpen',
   'keyboardClose',
   'leaveAnimation',
