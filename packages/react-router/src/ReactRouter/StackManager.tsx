@@ -112,7 +112,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       }
 
-      const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
+      const enteringRoute = findRouteByRouteInfo(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
+
+      if (enteringRoute === undefined) {
+        console.warn('Could not match a route for', routeInfo, this.ionRouterOutlet?.props.children);
+        return;
+      }
 
       if (enteringViewItem) {
         enteringViewItem.reactElement = enteringRoute.props.element;
@@ -432,37 +437,38 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
 export default StackManager;
 
-function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
+/**
+ * Finds the <Route /> node matching the current route info.
+ * If no <Route /> can be matched, a fallback node is returned.
+ */
+function findRouteByRouteInfo(node: React.ReactNode, routeInfo: RouteInfo) {
   let matchedNode: React.ReactNode;
+  let fallbackNode: React.ReactNode;
 
+  // <Route /> nodes are rendered inside of a <Routes /> node
   const routesNode = findRoutesNode(node) ?? node;
 
   React.Children.forEach(routesNode, (child: React.ReactElement) => {
+    // Ignore any non-<Route /> nodes
     if (child.type === Route) {
       const match = matchPath({
         pathname: routeInfo.pathname,
         componentProps: child.props,
       });
+
       if (match) {
         matchedNode = child;
       }
-    }
-  });
 
-  if (matchedNode) {
-    return matchedNode;
-  }
-  // If we haven't found a node
-  // try to find one that doesn't have a path or from prop, that will be our not found route
-  React.Children.forEach(routesNode, (child: React.ReactElement) => {
-    if (child.type === Route) {
       if (!(child.props.path || child.props.from)) {
-        matchedNode = child;
+        // If we haven't found a node
+        // try to find one that doesn't have a path or from prop, that will be our not found route
+        fallbackNode = child;
       }
     }
   });
 
-  return matchedNode;
+  return matchedNode ?? fallbackNode;
 }
 
 function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
