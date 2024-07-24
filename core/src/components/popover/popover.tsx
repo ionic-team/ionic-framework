@@ -365,7 +365,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   componentWillLoad() {
     const { el } = this;
-    const popoverId = setOverlayId(el);
+    const popoverId = this.htmlAttributes?.id ?? setOverlayId(el);
 
     this.parentPopover = el.closest(`ion-popover:not(#${popoverId})`) as HTMLIonPopoverElement | null;
 

@@ -321,7 +321,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    setOverlayId(this.el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
   }
 
   componentDidLoad() {
