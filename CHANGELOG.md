@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.6](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.6) (2024-07-24)
+
+
+### Bug Fixes
+
+* **alert:** do not overwrite id set in htmlAttributes ([#29708](https://github.com/ionic-team/ionic-framework/issues/29708)) ([1295ced](https://github.com/ionic-team/ionic-framework/commit/1295cedae9ffbcc40389c19499e58e7e21fb424e)), closes [#29704](https://github.com/ionic-team/ionic-framework/issues/29704)
+* **angular:** add focusTrap prop to modal and popover ([#29729](https://github.com/ionic-team/ionic-framework/issues/29729)) ([05913c3](https://github.com/ionic-team/ionic-framework/commit/05913c3cc3f2e8cb91f9a0944cd55e78392b0ba3)), closes [#29728](https://github.com/ionic-team/ionic-framework/issues/29728)
+* **overlays:** do not overwrite id set in htmlAttributes ([#29722](https://github.com/ionic-team/ionic-framework/issues/29722)) ([92ce563](https://github.com/ionic-team/ionic-framework/commit/92ce563c402e557b08a622bd20f78459782312e2)), closes [#29712](https://github.com/ionic-team/ionic-framework/issues/29712)
+
+
+
+
+
 ## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
 
 
