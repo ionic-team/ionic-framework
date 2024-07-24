@@ -89,7 +89,7 @@ export {
   TransitionOptions,
 } from '@ionic/core/components';
 
-export * from './proxies';
+export * from './components';
 export * from './routing-proxies';
 
 // createControllerComponent

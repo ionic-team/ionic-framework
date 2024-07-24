@@ -125,11 +125,8 @@ export const config: Config = {
   ],
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage,
-      includeImportCustomElements: true,
-      includePolyfills: false,
-      includeDefineCustomElements: false,
-      proxiesFile: '../packages/react/src/components/proxies.ts',
+      outDir: '../packages/react/src/components',
+      hydrateModule: '@ionic/core/hydrate',
       excludeComponents: [
         // Routing
         'ion-router',
