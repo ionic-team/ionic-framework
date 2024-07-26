@@ -811,7 +811,8 @@ export const IonSpinner = /*@__PURE__*/ defineContainer<JSX.IonSpinner>('ion-spi
   'color',
   'duration',
   'name',
-  'paused'
+  'paused',
+  'size'
 ]);
 
 

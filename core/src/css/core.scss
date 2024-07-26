@@ -1,21 +1,39 @@
 @use "sass:map";
 @import "../themes/native/native.globals";
+@import "../themes/ionic/ionic.theme.default";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
 
+// Ionic Colors
+// --------------------------------------------------
+
 :root {
   /**
-   * Loop through each color object from the
-   * `ionic.theme.default.scss` file
-   * and generate CSS Variables for each color.
+   * Set the theme colors from the
+   * `native.theme.default.scss` file.
    */
+  @include set-theme-colors($colors);
+  @include generate-color-variables();
+
   @each $color-name, $value in $colors {
-    --ion-color-#{$color-name}: #{map.get($value, base)};
-    --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
-    --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
-    --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
-    --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
-    --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+    .ion-color-#{$color-name} {
+      @include generate-color($color-name);
+    }
+  }
+}
+
+:root.ionic {
+  /**
+   * Set the theme colors from the
+   * `ionic.theme.default.scss` file.
+   */
+  @include set-theme-colors($ionic-colors);
+  @include generate-color-variables();
+
+  @each $color-name, $value in $ionic-colors {
+    .ion-color-#{$color-name} {
+      @include generate-color($color-name);
+    }
   }
 }
 
@@ -132,33 +150,6 @@ ion-modal.modal-default.show-modal ~ ion-modal.modal-default {
  */
 html.ios ion-modal.modal-card .ion-page {
   border-top-left-radius: var(--border-radius);
-}
-
-// Ionic Colors
-// --------------------------------------------------
-// Generates the color classes and variables based on the
-// colors map
-
-@mixin generate-color($color-name) {
-  $value: map-get($colors, $color-name);
-
-  $base: map-get($value, base);
-  $contrast: map-get($value, contrast);
-  $shade: map-get($value, shade);
-  $tint: map-get($value, tint);
-
-  --ion-color-base: var(--ion-color-#{$color-name}, #{$base}) !important;
-  --ion-color-base-rgb: var(--ion-color-#{$color-name}-rgb, #{color-to-rgb-list($base)}) !important;
-  --ion-color-contrast: var(--ion-color-#{$color-name}-contrast, #{$contrast}) !important;
-  --ion-color-contrast-rgb: var(--ion-color-#{$color-name}-contrast-rgb, #{color-to-rgb-list($contrast)}) !important;
-  --ion-color-shade: var(--ion-color-#{$color-name}-shade, #{$shade}) !important;
-  --ion-color-tint: var(--ion-color-#{$color-name}-tint, #{$tint}) !important;
-}
-
-@each $color-name, $value in $colors {
-  .ion-color-#{$color-name} {
-    @include generate-color($color-name);
-  }
 }
 
 // Page Container Structure

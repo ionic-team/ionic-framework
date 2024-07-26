@@ -1,0 +1,13 @@
+@import "../../themes/native/native.globals.md";
+@import "./badge.common";
+@import "./badge.common.vars";
+
+// Badge
+// --------------------------------------------------
+
+:host {
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+
+  font-family: $font-family-base;
+}

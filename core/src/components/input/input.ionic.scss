@@ -15,6 +15,7 @@
   --placeholder-color: #{tokens.$ionic-color-neutral-800};
   --placeholder-opacity: 1;
   --text-color-invalid: #{tokens.$ionic-color-danger-800};
+  --background: #{tokens.$ionic-color-base-white};
 
   font-size: tokens.$ionic-font-size-350;
 }
@@ -170,7 +171,7 @@
 :host(.input-disabled:not(.ion-valid)) .input-bottom .helper-text,
 :host(.input-disabled) .input-bottom .counter,
 :host(.input-disabled) .label-text-wrapper {
-  color: tokens.$ionic-color-neutral-400;
+  color: tokens.$ionic-color-neutral-500;
 }
 
 :host(.input-disabled.has-focus.ion-valid) {

@@ -1,0 +1,57 @@
+/**
+ * Default Colors
+ * -----------------------------------------------------
+ * The default theme uses a white background with
+ * varying shades of black as contrast and the Ionic
+ * primary color as an accent.
+ *
+ * The Ionic colors are already defined in Ionic Framework
+ * and used as fallbacks so they do not need to be defined.
+ *
+ * Looking to create a custom theme? Check out the generator!
+ * https://ionicframework.com/docs/theming/color-generator
+**/
+
+/* :root {
+  --ion-color-primary: #105cef;
+  --ion-color-primary-rgb: 16, 92, 239;
+  --ion-color-primary-contrast: #fff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #0e51d2;
+  --ion-color-primary-tint: #286cf1;
+
+  --ion-color-neutral: #626262;
+  --ion-color-neutral-rgb: 98, 98, 98;
+  --ion-color-neutral-contrast: #fff;
+  --ion-color-neutral-contrast-rgb: 255, 255, 255;
+  --ion-color-neutral-shade: #565656;
+  --ion-color-neutral-tint: #727272;
+
+  --ion-color-success: #1fbd3b;
+  --ion-color-success-rgb: 31, 189, 59;
+  --ion-color-success-contrast: #000;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #1ba634;
+  --ion-color-success-tint: #35c44f;
+
+  --ion-color-warning: #e18300;
+  --ion-color-warning-rgb: 225, 131, 0;
+  --ion-color-warning-contrast: #000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #c67300;
+  --ion-color-warning-tint: #e48f1a;
+
+  --ion-color-danger: #bf2222;
+  --ion-color-danger-rgb: 191, 34, 34;
+  --ion-color-danger-contrast: #fff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #a81e1e;
+  --ion-color-danger-tint: #c53838;
+
+  --ion-color-light: #f2f4fd;
+  --ion-color-light-rgb: 242, 244, 253;
+  --ion-color-light-contrast: #000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d5d7df;
+  --ion-color-light-tint: #f3f5fd;
+} */

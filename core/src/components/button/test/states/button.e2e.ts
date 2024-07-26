@@ -19,7 +19,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render solid button with color', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button color="tertiary" class="ion-activated">Button</ion-button>
+        <ion-button color="warning" class="ion-activated">Button</ion-button>
       `,
         config
       );
@@ -45,7 +45,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render outline button with color', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button color="tertiary" fill="outline" class="ion-activated">Button</ion-button>
+        <ion-button color="warning" fill="outline" class="ion-activated">Button</ion-button>
       `,
         config
       );
@@ -71,7 +71,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ ti
     test('should render clear button with color', async ({ page }) => {
       await page.setContent(
         `
-        <ion-button color="tertiary" fill="clear" class="ion-activated">Button</ion-button>
+        <ion-button color="warning" fill="clear" class="ion-activated">Button</ion-button>
       `,
         config
       );

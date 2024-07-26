@@ -16,7 +16,11 @@ import type { SpinnerConfig } from './spinner-interface';
  */
 @Component({
   tag: 'ion-spinner',
-  styleUrl: 'spinner.scss',
+  styleUrls: {
+    ios: 'spinner.common.scss',
+    md: 'spinner.common.scss',
+    ionic: 'spinner.ionic.scss',
+  },
   shadow: true,
 })
 export class Spinner implements ComponentInterface {
@@ -43,6 +47,18 @@ export class Spinner implements ComponentInterface {
    */
   @Prop() paused = false;
 
+  /**
+   * Set to `"xsmall"` for the smallest size.
+   * Set to `"small"` for a smaller size.
+   * Set to `"medium"` for a medium size.
+   * Set to `"large"` for a large size.
+   * Set to `"xlarge"` for the largest size.
+   *
+   * Defaults to `"xsmall"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
+  // TODO(ROU-10920): Switch `theme` to `mode`.
   private getName(): SpinnerTypes {
     const spinnerName = this.name || config.get('spinner');
     const theme = getIonTheme(this);
@@ -52,10 +68,27 @@ export class Spinner implements ComponentInterface {
     return theme === 'ios' ? 'lines' : 'circular';
   }
 
+  private getSize(): string | undefined {
+    const theme = getIonTheme(this);
+    const { size } = this;
+
+    // TODO(ROU-10912): Remove theme check when sizes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (size === undefined) {
+      return 'xsmall';
+    }
+
+    return size;
+  }
+
   render() {
     const self = this;
     const theme = getIonTheme(self);
     const spinnerName = self.getName();
+    const size = this.getSize();
     const spinner = SPINNERS[spinnerName] ?? SPINNERS['lines'];
     const duration = typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur;
     const svgs: SVGElement[] = [];
@@ -76,6 +109,7 @@ export class Spinner implements ComponentInterface {
           [theme]: true,
           [`spinner-${spinnerName}`]: true,
           'spinner-paused': self.paused || config.getBoolean('_testing'),
+          [`spinner-${size}`]: size !== undefined,
         })}
         role="progressbar"
         style={spinner.elmDuration ? { animationDuration: duration + 'ms' } : {}}
