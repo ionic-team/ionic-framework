@@ -10,6 +10,9 @@ type Props = LocalJSX.IonTabButton &
     routerOptions?: RouterOptions;
     ref?: React.Ref<HTMLIonTabButtonElement>;
     onClick?: (e: CustomEvent) => void;
+    onPointerDown?: React.PointerEventHandler<HTMLIonTabButtonElement>;
+    onTouchEnd?: React.TouchEventHandler<HTMLIonTabButtonElement>;
+    onTouchMove?: React.TouchEventHandler<HTMLIonTabButtonElement>;
   };
 
 export const IonTabButton = /*@__PURE__*/ (() =>
@@ -40,8 +43,16 @@ export const IonTabButton = /*@__PURE__*/ (() =>
        * component would result in duplicate handler calls.
        */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { onClick, ...rest } = this.props;
-      return <IonTabButtonInner onIonTabButtonClick={this.handleIonTabButtonClick} {...rest}></IonTabButtonInner>;
+      const { onClick, onPointerDown, onTouchEnd, onTouchMove, ...rest } = this.props;
+      return (
+        <IonTabButtonInner
+          onIonTabButtonClick={this.handleIonTabButtonClick}
+          onPointerDown={onPointerDown}
+          onTouchEnd={onTouchEnd}
+          onTouchMove={onTouchMove}
+          {...rest}
+        ></IonTabButtonInner>
+      );
     }
 
     static get displayName() {
