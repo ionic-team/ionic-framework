@@ -106,38 +106,8 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: '/tabs/',
+    path: '/tabs',
     component: () => import('@/views/Tabs.vue'),
-    children: [
-      {
-        path: '',
-        redirect: '/tabs/tab1'
-      },
-      {
-        path: 'tab1',
-        component: () => import('@/views/Tab1.vue'),
-      },
-      {
-        path: 'tab1/:id',
-        component: () => import('@/views/Tab1Parameter.vue'),
-        props: true
-      },
-      {
-        path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
-      },
-      {
-        path: 'tab3',
-        beforeEnter: (to, from, next) => {
-          next({ path: '/tabs/tab1' });
-        },
-        component: () => import('@/views/Tab3.vue')
-      },
-      {
-        path: 'tab4',
-        component: () => import('@/views/Tab4.vue')
-      }
-    ]
   },
   {
     path: '/tabs-secondary/',

@@ -7,6 +7,8 @@ import {
   HostListener,
   Output,
   ViewChild,
+  Input,
+  AfterViewInit,
 } from '@angular/core';
 
 import { NavController } from '../../providers/nav-controller';
@@ -17,7 +19,7 @@ import { StackDidChangeEvent, StackWillChangeEvent } from './stack-utils';
   selector: 'ion-tabs',
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
+export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterContentChecked {
   /**
    * Note: These must be redeclared on each child class since it needs
    * access to generated components such as IonRouterOutlet and IonTabBar.
@@ -25,6 +27,10 @@ export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
   abstract outlet: any;
   abstract tabBar: any;
   abstract tabBars: any;
+  abstract tabs: any;
+
+  private selectedTab?: any;
+  private leavingTab?: any;
 
   @ViewChild('tabsInner', { read: ElementRef, static: true }) tabsInner: ElementRef<HTMLDivElement>;
 
@@ -39,7 +45,22 @@ export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
 
   private tabBarSlot = 'bottom';
 
+  @Input() noOutlet = false;
+
   constructor(private navCtrl: NavController) {}
+
+  ngAfterViewInit(): void {
+    if (this.noOutlet) {
+      const tabs = this.tabs;
+      const selectedTab = tabs.get(0);
+  
+      if (tabs.length > 0) {
+        this.select(selectedTab.tab);
+      }
+
+      this.tabBar.selectedTab = selectedTab.tab;
+    }
+  }
 
   ngAfterContentInit(): void {
     this.detectSlotChanges();
@@ -53,6 +74,10 @@ export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
    * @internal
    */
   onStackWillChange({ enteringView, tabSwitch }: StackWillChangeEvent): void {
+    if (this.noOutlet) {
+      return;
+    }
+
     const stackId = enteringView.stackId;
     if (tabSwitch && stackId !== undefined) {
       this.ionTabsWillChange.emit({ tab: stackId });
@@ -63,12 +88,13 @@ export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
    * @internal
    */
   onStackDidChange({ enteringView, tabSwitch }: StackDidChangeEvent): void {
+    if (this.noOutlet) {
+      return;
+    }
+
     const stackId = enteringView.stackId;
     if (tabSwitch && stackId !== undefined) {
-      if (this.tabBar) {
-        this.tabBar.selectedTab = stackId;
-      }
-      this.ionTabsDidChange.emit({ tab: stackId });
+      this.tabSwitch(stackId);
     }
   }
 
@@ -96,6 +122,18 @@ export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
   select(tabOrEvent: string | CustomEvent): Promise<boolean> | undefined {
     const isTabString = typeof tabOrEvent === 'string';
     const tab = isTabString ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
+
+    if (this.noOutlet) {
+      const selectedTab = this.tabs.find((t: any) => t.tab === tab);
+      this.leavingTab = this.selectedTab;
+      this.selectedTab = selectedTab;
+
+      this.ionTabsWillChange.emit({ tab: selectedTab.tab });
+      this.tabSwitch();
+      selectedTab.setActive();
+      return Promise.resolve(true);
+    }
+
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
 
@@ -143,6 +181,10 @@ export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
   }
 
   getSelected(): string | undefined {
+    if (this.noOutlet) {
+      return this.selectedTab?.tab;
+    }
+
     return this.outlet.getActiveStackId();
   }
 
@@ -188,5 +230,23 @@ export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
        */
       this.tabsInner.nativeElement.after(tabBar);
     }
+  }
+
+  private tabSwitch(stackId?: string): void {
+    const selectedTab = this.selectedTab;
+    const selectedTabValue = stackId ?? selectedTab.tab;
+    const leavingTab = this.leavingTab;
+
+    if (this.tabBar) {
+      this.tabBar.selectedTab = selectedTabValue;
+    }
+
+    if (this.noOutlet && leavingTab.tab !== selectedTab.tab) {
+      if (leavingTab) {
+        leavingTab.active = false;
+      }
+    }
+
+    this.ionTabsDidChange.emit({ tab: selectedTabValue });
   }
 }

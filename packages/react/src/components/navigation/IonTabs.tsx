@@ -5,6 +5,7 @@ import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
 import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
+import { IonTabsInner } from '../inner-proxies';
 
 import { IonTabBar } from './IonTabBar';
 import type { IonTabsContextState } from './IonTabsContext';
@@ -91,7 +92,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
     render() {
       let outlet: React.ReactElement<{}> | undefined;
       let tabBar: React.ReactElement | undefined;
-      const { className, onIonTabsDidChange, onIonTabsWillChange, ...props } = this.props;
+      const { className, onIonTabsDidChange, onIonTabsWillChange, noOutlet, ...props } = this.props;
 
       const children =
         typeof this.props.children === 'function'
@@ -144,11 +145,22 @@ export const IonTabs = /*@__PURE__*/ (() =>
         }
       });
 
-      if (!outlet) {
+      if (!outlet && !noOutlet) {
         throw new Error('IonTabs must contain an IonRouterOutlet');
       }
+
+      // Should we also warn about including IonTab when noOutlet is false?
+
+      if (noOutlet && outlet) {
+        throw new Error('IonTabs must not contain an IonRouterOutlet when using the noOutlet prop');
+      }
+
       if (!tabBar) {
         throw new Error('IonTabs needs a IonTabBar');
+      }
+
+      if (!outlet) {
+        return <IonTabsInner {...props}></IonTabsInner>;
       }
 
       return (

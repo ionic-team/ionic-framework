@@ -2149,6 +2149,29 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
 
 
 @ProxyCmp({
+  inputs: ['component', 'tab'],
+  methods: ['setActive']
+})
+@Component({
+  selector: 'ion-tab',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['component', 'tab'],
+})
+export class IonTab {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonTab extends Components.IonTab {}
+
+
+@ProxyCmp({
   inputs: ['color', 'mode', 'selectedTab', 'translucent']
 })
 @Component({

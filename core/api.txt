@@ -1754,6 +1754,7 @@ ion-tab-button,css-prop,--ripple-color,md
 ion-tab-button,part,native
 
 ion-tabs,shadow
+ion-tabs,prop,noOutlet,boolean,false,false,false
 ion-tabs,method,getSelected,getSelected() => Promise<string | undefined>
 ion-tabs,method,getTab,getTab(tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>
 ion-tabs,method,select,select(tab: string | HTMLIonTabElement) => Promise<boolean>
