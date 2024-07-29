@@ -47,12 +47,8 @@ export class Tabs implements NavOutlet {
     if (!this.useRouter && !this.noOutlet) {
       this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
-    // if (!this.useRouter) {
-    //   this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]') && !!this.el.querySelector('ion-router-outlet')
-    // }
     if (!this.useRouter) {
       const tabs = this.tabs;
-      console.log(tabs.length);
       if (tabs.length > 0) {
         await this.select(tabs[0]);
       }
