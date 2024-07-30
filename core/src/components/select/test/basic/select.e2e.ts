@@ -80,9 +80,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
          * is already visible. We manually click() the element instead
          * to avoid flaky tests.
          */
+        /* eslint-disable custom-rules/await-playwright-promise-assertion */
         el.click();
         el.click();
         el.click();
+        /* eslint-enable custom-rules/await-playwright-promise-assertion */
       });
 
       const alerts = await page.$$('ion-alert');
