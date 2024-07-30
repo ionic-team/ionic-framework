@@ -264,6 +264,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return config.get('itemDetailIcon', defaultIcon);
   }
 
+  /**
+   * The icon should be flipped when the app is RTL and
+   * the icon is a variation of chevron.
+   */
+  get shouldFlipIcon() {
+    return this.itemDetailIcon === chevronForward || this.itemDetailIcon === caretRightRegular;
+  }
+
   render() {
     const {
       detail,
@@ -273,6 +281,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       disabled,
       href,
       itemDetailIcon,
+      shouldFlipIcon,
       rel,
       target,
       routerAnimation,
@@ -352,7 +361,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
      */
     const firstInteractiveNeedsPointerCursor =
       firstInteractive !== undefined && !['ION-INPUT', 'ION-TEXTAREA'].includes(firstInteractive.tagName);
-
+    console.log('shouldFlipIcon', shouldFlipIcon);
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -396,7 +405,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                 class="item-detail-icon"
                 part="detail-icon"
                 aria-hidden="true"
-                flip-rtl={itemDetailIcon === chevronForward}
+                flip-rtl={shouldFlipIcon}
               ></ion-icon>
             )}
           </div>
