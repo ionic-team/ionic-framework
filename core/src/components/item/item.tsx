@@ -361,8 +361,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
      */
     const firstInteractiveNeedsPointerCursor =
       firstInteractive !== undefined && !['ION-INPUT', 'ION-TEXTAREA'].includes(firstInteractive.tagName);
-    console.log('shouldFlipIcon', shouldFlipIcon);
-    return (
+
+      return (
       <Host
         aria-disabled={ariaDisabled}
         class={{
