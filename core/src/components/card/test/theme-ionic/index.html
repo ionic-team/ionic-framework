@@ -13,13 +13,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script>
-      window.Ionic = {
-        config: {
-          theme: 'ionic',
-        },
-      };
-    </script>
 
     <style>
       .ion-margin-top {
@@ -40,7 +33,7 @@
         <h4>Preview options</h4>
 
         <p>
-          <ion-select id="select-shape" justify="space-between" interface="alert" label="Shape" placeholder="">
+          <ion-select theme="ionic" id="select-shape" justify="space-between" interface="alert" label="Shape" placeholder="">
             <ion-select-option value="">default</ion-select-option>
             <ion-select-option value="round">Round</ion-select-option>
             <ion-select-option value="rectangular">Rectangular</ion-select-option>
@@ -48,7 +41,7 @@
         </p>
 
         <div id="screenshot-wrapper" class="ion-margin-top">
-          <ion-card>
+          <ion-card theme="ionic">
             <ion-card-header>
               <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
               <ion-card-title>Card Title</ion-card-title>
