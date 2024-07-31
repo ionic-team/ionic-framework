@@ -1,6 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../item/item.ionic.vars" as itemVars;
 @import "./list-header";
-@import "../item/item.ionic.vars";
 
 :host {
   --background: transparent;
@@ -20,13 +20,13 @@
 
   /* stylelint-disable */
   @include ltr() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$item-ionic-padding-end});
-    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$item-ionic-padding-start});
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{itemVars.$item-ionic-padding-end});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{itemVars.$item-ionic-padding-start});
   }
 
   @include rtl() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$item-ionic-padding-start});
-    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$item-ionic-padding-end});
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{itemVars.$item-ionic-padding-start});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{itemVars.$item-ionic-padding-end});
   }
   /* stylelint-enable */
 }

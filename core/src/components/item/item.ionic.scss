@@ -1,11 +1,12 @@
-@use "./item.common";
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./item.common";
+@use "./item.ionic.vars" as vars;
 
 // Item
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ionic-color-base-white};
+  --background: #{vars.$item-ionic-background};
   --background-activated: #{globals.$ionic-color-neutral-200};
   --border-color: #{globals.$ionic-color-neutral-300};
   --border-style: #{globals.$ionic-border-style-solid};
