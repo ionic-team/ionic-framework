@@ -123,6 +123,16 @@ describe('Router Link', () => {
       testBack();
     });
   });
+
+  describe('tabindex', () => {
+    it('should have tabindex="0" with a native span', () => {
+      cy.get('#span').should('have.attr', 'tabindex', '0');
+    });
+
+    it('should not have tabindex set with an ionic button', () => {
+      cy.get('#routerLink').should('not.have.attr', 'tabindex');
+    });
+  });
 });
 
 function testForward() {
