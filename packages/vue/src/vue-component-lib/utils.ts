@@ -176,6 +176,17 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
         }
       }
 
+      // If router link is defined, add href to props
+      // in order to properly render an anchor tag inside
+      // of components that should become activatable and
+      // focusable with router link.
+      if (props[ROUTER_LINK_VALUE] !== EMPTY_PROP) {
+        propsToAdd = {
+          ...propsToAdd,
+          href: props[ROUTER_LINK_VALUE],
+        };
+      }
+
       /**
        * vModelDirective is only needed on components that support v-model.
        * As a result, we conditionally call withDirectives with v-model components.
