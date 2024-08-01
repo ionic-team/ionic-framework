@@ -43,16 +43,8 @@ export const IonTabButton = /*@__PURE__*/ (() =>
        * component would result in duplicate handler calls.
        */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { onClick, onPointerDown, onTouchEnd, onTouchMove, ...rest } = this.props;
-      return (
-        <IonTabButtonInner
-          onIonTabButtonClick={this.handleIonTabButtonClick}
-          onPointerDown={onPointerDown}
-          onTouchEnd={onTouchEnd}
-          onTouchMove={onTouchMove}
-          {...rest}
-        ></IonTabButtonInner>
-      );
+      const { onClick, ...rest } = this.props;
+      return <IonTabButtonInner onIonTabButtonClick={this.handleIonTabButtonClick} {...rest}></IonTabButtonInner>;
     }
 
     static get displayName() {
