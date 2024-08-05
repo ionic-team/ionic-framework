@@ -91,8 +91,17 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
         const eventsNames = Array.isArray(modelUpdateEvent) ? modelUpdateEvent : [modelUpdateEvent];
         eventsNames.forEach((eventName: string) => {
           el.addEventListener(eventName.toLowerCase(), (e: Event) => {
-            modelPropValue = (e?.target as any)[modelProp];
-            emit(UPDATE_VALUE_EVENT, modelPropValue);
+            /**
+             * Only update the v-model binding if the event's target is the element we are
+             * listening on. For example, Component A could emit ionChange, but it could also
+             * have a descendant Component B that also emits ionChange. We only want to update
+             * the v-model for Component A when ionChange originates from that element and not
+             * when ionChange bubbles up from Component B.
+             */
+            if (e.target.tagName === el.tagName) {
+              modelPropValue = (e?.target as any)[modelProp];
+              emit(UPDATE_VALUE_EVENT, modelPropValue);
+            }
           });
         });
       },
@@ -106,6 +115,16 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
       if (routerLink === EMPTY_PROP) return;
 
       if (navManager !== undefined) {
+        /**
+         * This prevents the browser from
+         * performing a page reload when pressing
+         * an Ionic component with routerLink.
+         * The page reload interferes with routing
+         * and causes ion-back-button to disappear
+         * since the local history is wiped on reload.
+         */
+        ev.preventDefault();
+
         let navigationPayload: any = { event: ev };
         for (const key in props) {
           const value = props[key];
@@ -174,6 +193,17 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
             [modelProp]: modelPropValue,
           };
         }
+      }
+
+      // If router link is defined, add href to props
+      // in order to properly render an anchor tag inside
+      // of components that should become activatable and
+      // focusable with router link.
+      if (props[ROUTER_LINK_VALUE] !== EMPTY_PROP) {
+        propsToAdd = {
+          ...propsToAdd,
+          href: props[ROUTER_LINK_VALUE],
+        };
       }
 
       /**
