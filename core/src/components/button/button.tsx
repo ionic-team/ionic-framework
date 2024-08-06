@@ -421,7 +421,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             <slot></slot>
             <slot name="end"></slot>
           </span>
-          {theme === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+          {(theme === 'md' || theme === 'ionic') && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </TagType>
       </Host>
     );
