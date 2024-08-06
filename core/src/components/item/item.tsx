@@ -243,12 +243,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return controls[0];
   }
 
-  get itemDetailIcon() {
-    // Return the icon if it is explicitly set
-    if (this.detailIcon != null) {
-      return this.detailIcon;
-    }
-
+  get itemDefaultDetailIcon() {
     // Determine the theme and map to default icons
     const theme = getIonTheme(this);
     const defaultIcons = {
@@ -260,8 +255,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // Get the default icon based on the theme, falling back to 'md' icon if necessary
     const defaultIcon = defaultIcons[theme] || defaultIcons.md;
 
+    // Return the default icon
+    return defaultIcon;
+  }
+
+  get itemDetailIcon() {
+    // Return the icon if it is explicitly set
+    if (this.detailIcon != null) {
+      return this.detailIcon;
+    }
+
     // Return the configured item detail icon or the default icon
-    return config.get('itemDetailIcon', defaultIcon);
+    return config.get('itemDetailIcon', this.itemDefaultDetailIcon);
   }
 
   /**
@@ -361,7 +366,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
      */
     const firstInteractiveNeedsPointerCursor =
       firstInteractive !== undefined && !['ION-INPUT', 'ION-TEXTAREA'].includes(firstInteractive.tagName);
-
+    console.log('confif', config.get('itemDetailIcon'));
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -402,7 +407,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               <ion-icon
                 icon={itemDetailIcon}
                 lazy={false}
-                class="item-detail-icon"
+                class={{
+                  'item-detail-icon': true,
+                  /**
+                   * IonItem applies its own end padding. However,
+                   * all IonIcons have the same bounding box meaning
+                   * there may be white space for narrow icons. As
+                   * a result, the white space gives the appearance
+                   * that there is too much end margin. We move the default
+                   * chevron icon over to account for this extra whitespace.
+                   */
+                  'item-detail-icon-default': itemDetailIcon === this.itemDefaultDetailIcon,
+                }}
                 part="detail-icon"
                 aria-hidden="true"
                 flip-rtl={shouldFlipIcon}
