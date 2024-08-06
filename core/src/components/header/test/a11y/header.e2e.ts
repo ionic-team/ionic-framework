@@ -15,20 +15,56 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(results.violations).toEqual([]);
     });
 
-    test('should allow for custom role', async ({ page }) => {
-      /**
-       * Note: This example should not be used in production.
-       * This only serves to check that `role` can be customized.
-       */
+    test('should have the banner role', async ({ page }) => {
       await page.setContent(
         `
-        <ion-header role="heading"></ion-header>
+        <ion-header></ion-header>
       `,
         config
       );
       const header = page.locator('ion-header');
 
-      await expect(header).toHaveAttribute('role', 'heading');
+      await expect(header).toHaveAttribute('role', 'banner');
+    });
+
+    test('should have no role in menu', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-menu>
+          <ion-header></ion-header>
+        </ion-menu>
+      `,
+        config
+      );
+      const header = page.locator('ion-header');
+
+      await expect(header).toHaveAttribute('role', 'none');
+    });
+
+    test('should allow for custom role', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-header role="complementary"></ion-header>
+      `,
+        config
+      );
+      const header = page.locator('ion-header');
+
+      await expect(header).toHaveAttribute('role', 'complementary');
+    });
+
+    test('should allow for custom role in menu', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-menu>
+          <ion-header role="complementary"></ion-header>
+        </ion-menu>
+      `,
+        config
+      );
+      const header = page.locator('ion-header');
+
+      await expect(header).toHaveAttribute('role', 'complementary');
     });
   });
 });
