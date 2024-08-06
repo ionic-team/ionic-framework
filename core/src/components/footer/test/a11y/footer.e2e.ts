@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
  * Footer does not have mode-specific styling
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('content: a11y'), () => {
+  test.describe(title('footer: a11y'), () => {
     test('should have the contentinfo role', async ({ page }) => {
       await page.setContent(
         `
