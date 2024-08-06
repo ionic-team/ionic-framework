@@ -18,7 +18,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(content).toHaveAttribute('role', 'main');
     });
 
-    test('should have no role', async ({ page }) => {
+    test('should have no role in popover', async ({ page }) => {
       await page.setContent(
         `
         <ion-popover>
@@ -42,6 +42,20 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await page.setContent(
         `
         <ion-content role="complementary"></ion-content>
+      `,
+        config
+      );
+      const content = page.locator('ion-content');
+
+      await expect(content).toHaveAttribute('role', 'complementary');
+    });
+
+    test('should allow for custom role in popover', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-popover>
+          <ion-content role="complementary"></ion-content>
+        </ion-popover>
       `,
         config
       );
