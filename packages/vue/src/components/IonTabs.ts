@@ -1,3 +1,4 @@
+import { defineCustomElement } from "@ionic/core/components/ion-tabs.js";
 import type { VNode } from "vue";
 import { h, defineComponent } from "vue";
 
@@ -31,8 +32,18 @@ const isTabBar = (node: VNode) => {
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: "IonTabs",
   emits: [WILL_CHANGE, DID_CHANGE],
+  setup(props, { slots, emit }) {
+    // Define the custom element
+    defineCustomElement();
+
+    return {
+      props,
+      slots,
+      emit,
+    };
+  },
   render() {
-    const { $slots: slots, $emit } = this;
+    const { slots, emit, props } = this;
     const slottedContent = slots.default && slots.default();
     let routerOutlet;
 
@@ -47,8 +58,16 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
     }
 
     if (!routerOutlet) {
-      throw new Error(
-        "IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information."
+      // throw new Error(
+      //   "IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information."
+      // );
+      // render as is
+      return h(
+        "ion-tabs",
+        {
+          ...props
+        },
+        slottedContent
       );
     }
 
@@ -99,9 +118,9 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
          * so we do not have code split across two components.
          */
         slottedTabBar.props._tabsWillChange = (tab: string) =>
-          $emit(WILL_CHANGE, { tab });
+          emit(WILL_CHANGE, { tab });
         slottedTabBar.props._tabsDidChange = (tab: string) =>
-          $emit(DID_CHANGE, { tab });
+          emit(DID_CHANGE, { tab });
       }
 
       if (hasTopSlotTabBar) {

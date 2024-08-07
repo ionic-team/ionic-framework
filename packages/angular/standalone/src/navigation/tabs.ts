@@ -1,7 +1,8 @@
-import { Component, ContentChild, ContentChildren, ViewChild, QueryList } from '@angular/core';
+import { Component, ContentChild, ContentChildren, ViewChild, QueryList, Input } from '@angular/core';
 import { IonTabs as IonTabsBase } from '@ionic/angular/common';
 
 import { IonTabBar } from '../directives/proxies';
+import { IonTab } from '../directives/proxies';
 
 import { IonRouterOutlet } from './router-outlet';
 
@@ -10,7 +11,9 @@ import { IonRouterOutlet } from './router-outlet';
   template: `
     <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner" #tabsInner>
+      <ng-content *ngIf="noOutlet" select="ion-tab"></ng-content>
       <ion-router-outlet
+        *ngIf="!noOutlet"
         #outlet
         tabs="true"
         (stackWillChange)="onStackWillChange($event)"
@@ -54,4 +57,7 @@ export class IonTabs extends IonTabsBase {
 
   @ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
   @ContentChildren(IonTabBar) tabBars: QueryList<IonTabBar>;
+  @ContentChildren(IonTab) tabs: QueryList<IonTab>;
+
+  @Input() noOutlet = false;
 }
