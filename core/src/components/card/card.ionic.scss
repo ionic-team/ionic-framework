@@ -1,4 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./card.common";
 
 // Ionic Card
 // --------------------------------------------------
@@ -8,14 +9,8 @@
   --border-radius: #{globals.$ionic-border-radius-100};
 
   @include globals.padding(globals.$ionic-space-400);
-  @include globals.border-radius(var(--border-radius));
 
-  display: block;
-
-  border: #{globals.$ionic-border-size-025} solid #{globals.$ionic-color-neutral-500};
-
-  background: var(--background);
-  color: var(--color);
+  border: #{globals.$ionic-border-size-025} #{globals.$ionic-border-style-solid} #{globals.$ionic-color-neutral-500};
 }
 
 // Card Shapes
