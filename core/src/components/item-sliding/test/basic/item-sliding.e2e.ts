@@ -8,7 +8,7 @@ import { configs, dragElementBy, test } from '@utils/test/playwright';
  * It is important to test all modes to ensure that the
  * child components are being rendered correctly.
  */
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/basic`, config);
@@ -105,7 +105,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
  * make sure the safe area padding is applied only to that side
  * regardless of direction
  */
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
     test.describe('safe area left', () => {
       test('should have padding on the left only', async ({ page }) => {
