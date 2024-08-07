@@ -281,22 +281,6 @@ a {
   opacity: var(--detail-icon-opacity);
 }
 
-.item-detail-icon:not(.item-detail-icon-default) {
-  /**
-   * IonItem applies its own end padding. However,
-   * all IonIcons have the same bounding box meaning
-   * there may be white space for narrow icons. As
-   * a result, the white space gives the appearance
-   * that there is too much end margin. We move the default
-   * chevron icon over to account for this extra whitespace.
-   * 
-   * However, this does not work icons that are not the default.
-   * It leads to those icons to being cut off. We need to adjust
-   * the margin for those icons.
-   */
-  margin-inline-end: 0;
-}
-
 // Item Slots
 // --------------------------------------------------
 
