@@ -10,6 +10,16 @@
   font-size: globals.$ionic-font-size-350;
 
   line-height: globals.$ionic-line-height-600;
+  
+  display: flex;
+
+  flex-direction: column;
+
+  gap: globals.$ionic-space-200;
+
+  img {
+    @include globals.margin(globals.$ionic-space-200, 0, globals.$ionic-space-200, 0);
+  }
 }
 
 ion-card-header + .card-content-ionic {

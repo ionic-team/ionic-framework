@@ -1,1 +1,10 @@
 @use "./card-content.common.scss";
+@import "../../themes/native/native.globals";
+
+// Card Content
+// --------------------------------------------------
+
+ion-card-content {
+    display: block;
+}   
+  
