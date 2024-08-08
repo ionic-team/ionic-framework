@@ -266,5 +266,13 @@
 }
 
 ::slotted(ion-icon[slot="end"]) {
+  @include globals.margin-horizontal(globals.$ionic-space-250, null);
+}
+
+:host(.button-small) ::slotted(ion-icon[slot="end"]) {
   @include globals.margin-horizontal(globals.$ionic-space-200, null);
+}
+
+:host(.button-large) ::slotted(ion-icon[slot="end"]) {
+  @include globals.margin-horizontal(globals.$ionic-space-300, null);
 }
