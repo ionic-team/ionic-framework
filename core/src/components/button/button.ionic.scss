@@ -58,16 +58,12 @@
 :host(.button-outline) {
   --border-width: #{globals.$ionic-border-size-025};
   --border-style: #{globals.$ionic-border-style-solid};
-  --background-activated: transparent;
-  --background-activated-opacity: 0;
-  --background-focused: #{globals.ion-color(primary, base)};
-  --background-focused-opacity: 0.12;
+  --background-activated: #{globals.$ionic-color-neutral-200};
+  --background-focused: transparent;
   --background-hover: #{globals.ion-color(primary, base)};
   --background-hover-opacity: 0.04;
-}
-
-:host(.button-outline.ion-activated.ion-color) .button-native {
-  background: transparent;
+  --ripple-opacity: var(--background-activated-opacity, 1);
+  --ripple-color: var(--background-activated);
 }
 
 // Clear Button
@@ -85,8 +81,12 @@
 // Ripple Effect
 // -------------------------------------------------------------------------------
 
-:host(.ion-color) ion-ripple-effect {
+:host(.button-solid.ion-color) ion-ripple-effect {
   color: #{globals.current-color(shade)};
+}
+
+:host(.button-outline.ion-color) ion-ripple-effect {
+  color: #{globals.$ionic-color-neutral-200};
 }
 
 // Button Sizes
@@ -219,8 +219,7 @@
   background: #{globals.current-color(contrast)};
 }
 
-:host(.button-clear.ion-color.ion-focused) .button-native::after,
-:host(.button-outline.ion-color.ion-focused) .button-native::after {
+:host(.button-clear.ion-color.ion-focused) .button-native::after {
   background: #{globals.current-color(base)};
 }
 
@@ -230,22 +229,8 @@
 :host(.ion-activated) .button-native::after,
 :host(.button-outline.ion-color.ion-activated) .button-native::after,
 :host(.button-solid.ion-color.ion-activated) .button-native::after,
-:host(.button-clear.ion-color.ion-activated) .button-native::after{
+:host(.button-clear.ion-color.ion-activated) .button-native::after {
   background: transparent;
-}
-
-// Button: Hover
-// --------------------------------------------------
-
-@media (any-hover: hover) {
-  // :host(.button-solid.ion-color:hover) .button-native::after {
-  //   background: #{globals.current-color(shade)};
-  // }
-
-  :host(.button-clear.ion-color:hover) .button-native::after,
-  :host(.button-outline.ion-color:hover) .button-native::after {
-    background: #{globals.current-color(base)};
-  }
 }
 
 // Button: Disabled
