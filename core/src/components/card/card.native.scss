@@ -1,0 +1,46 @@
+@import "../../themes/native/native.globals";
+@import "./card.common";
+
+// Card
+// --------------------------------------------------
+
+:host {
+  font-family: $font-family-base;
+}
+
+// Disabled Card
+// --------------------------------------------------
+
+:host(.card-disabled) {
+  cursor: default;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+// Native
+// --------------------------------------------------
+
+.card-native {
+  @include text-inherit();
+  @include padding(0);
+  @include margin(0);
+
+  display: block;
+
+  width: 100%;
+  min-height: var(--min-height);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  outline: none;
+
+  background: inherit;
+}
+
+.card-native::-moz-focus-inner {
+  border: 0;
+}

@@ -14,7 +14,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'card-subtitle.ios.scss',
     md: 'card-subtitle.md.scss',
-    ionic: 'card-subtitle.md.scss',
+    ionic: 'card-subtitle.ionic.scss',
   },
   shadow: true,
 })
