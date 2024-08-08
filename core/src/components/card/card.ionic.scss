@@ -6,7 +6,7 @@
 
 :host {
   --background: #{globals.$ionic-color-base-white};
-  --border-radius: #{globals.$ionic-border-radius-100};
+  --border-radius: #{globals.$ionic-border-radius-400};
   --color: #{globals.$ionic-color-neutral-1200};
 
   border: #{globals.$ionic-border-size-025} #{globals.$ionic-border-style-solid} #{globals.$ionic-color-neutral-300};
@@ -19,8 +19,8 @@
 // Card Shapes
 // ---------------------------------------------
 
-:host(.card-round) {
-  --border-radius: #{globals.$ionic-border-radius-400};
+:host(.card-soft) {
+  --border-radius: #{globals.$ionic-border-radius-100};
 }
 
 :host(.card-rectangular) {
