@@ -1,0 +1,17 @@
+@use "./card-content.common.scss";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Ionic Card Content
+// --------------------------------------------------
+
+.card-content-ionic {
+  @include globals.padding(globals.$ionic-space-400);
+
+  font-size: globals.$ionic-font-size-350;
+
+  line-height: globals.$ionic-line-height-600;
+}
+
+ion-card-header + .card-content-ionic {
+  padding-top: 0;
+}

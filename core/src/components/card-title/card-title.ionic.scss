@@ -1,0 +1,11 @@
+@use "./card-title.common";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Ionic Card Title
+// --------------------------------------------------
+
+:host {
+  --color: #{globals.$ionic-color-neutral-1200};
+
+  @include globals.typography(globals.$ionic-heading-h5-medium);
+}

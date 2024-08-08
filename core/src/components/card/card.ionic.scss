@@ -1,4 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./card.common";
 
 // Ionic Card
 // --------------------------------------------------
@@ -6,16 +7,13 @@
 :host {
   --background: #{globals.$ionic-color-base-white};
   --border-radius: #{globals.$ionic-border-radius-100};
+  --color: #{globals.$ionic-color-neutral-1200};
 
-  @include globals.padding(globals.$ionic-space-400);
-  @include globals.border-radius(var(--border-radius));
+  border: #{globals.$ionic-border-size-025} #{globals.$ionic-border-style-solid} #{globals.$ionic-color-neutral-300};
+}
 
+::slotted(img) {
   display: block;
-
-  border: #{globals.$ionic-border-size-025} solid #{globals.$ionic-color-neutral-500};
-
-  background: var(--background);
-  color: var(--color);
 }
 
 // Card Shapes
