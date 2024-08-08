@@ -37,6 +37,7 @@ export class RippleEffect implements ComponentInterface {
     return new Promise<() => void>((resolve) => {
       readTask(() => {
         const rect = this.el.getBoundingClientRect();
+        console.log('this.el', this.el);
         const width = rect.width;
         const height = rect.height;
         const hypotenuse = Math.sqrt(width * width + height * height);

@@ -43,12 +43,13 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
-  --background-activated: transparent;
+  --background-activated: #{globals.ion-color(primary, shade)};
   --background-hover: #{globals.ion-color(primary, contrast)};
   --background-focused: #{globals.ion-color(primary, contrast)};
-  --background-activated-opacity: 0;
   --background-focused-opacity: 0.24;
   --background-hover-opacity: 0.08;
+  --ripple-opacity: var(--background-activated-opacity, 1);
+  --ripple-color: var(--background-activated);
 }
 
 // Outline Button
@@ -79,6 +80,13 @@
   --background-activated-opacity: 0;
   --background-focused-opacity: 0.12;
   --background-hover-opacity: 0.04;
+}
+
+// Ripple Effect
+// -------------------------------------------------------------------------------
+
+:host(.ion-color) ion-ripple-effect {
+  color: #{globals.current-color(shade)};
 }
 
 // Button Sizes
@@ -219,19 +227,20 @@
 // Button: Activated
 // --------------------------------------------------
 
+:host(.ion-activated) .button-native::after,
+:host(.button-outline.ion-color.ion-activated) .button-native::after,
 :host(.button-solid.ion-color.ion-activated) .button-native::after,
-:host(.button-clear.ion-color.ion-activated) .button-native::after,
-:host(.button-outline.ion-color.ion-activated) .button-native::after {
-  background: #{globals.current-color(shade)};
+:host(.button-clear.ion-color.ion-activated) .button-native::after{
+  background: transparent;
 }
 
 // Button: Hover
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(.button-solid.ion-color:hover) .button-native::after {
-    background: #{globals.current-color(shade)};
-  }
+  // :host(.button-solid.ion-color:hover) .button-native::after {
+  //   background: #{globals.current-color(shade)};
+  // }
 
   :host(.button-clear.ion-color:hover) .button-native::after,
   :host(.button-outline.ion-color:hover) .button-native::after {
