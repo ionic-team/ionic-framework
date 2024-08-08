@@ -253,24 +253,24 @@
   font-size: globals.$ionic-font-size-500;
 }
 
-::slotted(ion-icon[slot="start"]) {
-  @include globals.margin-horizontal(null, globals.$ionic-space-250);
-}
-
 :host(.button-small) ::slotted(ion-icon[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ionic-space-200);
+}
+
+::slotted(ion-icon[slot="start"]) {
+  @include globals.margin-horizontal(null, globals.$ionic-space-250);
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ionic-space-300);
 }
 
-::slotted(ion-icon[slot="end"]) {
-  @include globals.margin-horizontal(globals.$ionic-space-250, null);
-}
-
 :host(.button-small) ::slotted(ion-icon[slot="end"]) {
   @include globals.margin-horizontal(globals.$ionic-space-200, null);
+}
+
+::slotted(ion-icon[slot="end"]) {
+  @include globals.margin-horizontal(globals.$ionic-space-250, null);
 }
 
 :host(.button-large) ::slotted(ion-icon[slot="end"]) {
