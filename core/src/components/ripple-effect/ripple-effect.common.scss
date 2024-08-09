@@ -62,7 +62,7 @@ $fade-out-duration: 150ms;
   }
 
   to {
-    opacity: var(--ripple-opacity, 0.16);
+    opacity: 0.16;
   }
 }
 
@@ -70,7 +70,7 @@ $fade-out-duration: 150ms;
   from {
     animation-timing-function: linear;
 
-    opacity: var(--ripple-opacity, 0.16);
+    opacity: 0.16;
   }
 
   to {

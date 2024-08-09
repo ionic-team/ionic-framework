@@ -9,7 +9,11 @@ import { getIonTheme } from '../../global/ionic-global';
  */
 @Component({
   tag: 'ion-ripple-effect',
-  styleUrl: 'ripple-effect.scss',
+  styleUrls: {
+    ios: 'ripple-effect.common.scss',
+    md: 'ripple-effect.common.scss',
+    ionic: 'ripple-effect.ionic.scss',
+  },
   shadow: true,
 })
 export class RippleEffect implements ComponentInterface {
