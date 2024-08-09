@@ -1,15 +1,19 @@
-@use "./item.common";
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./item.common";
+@use "./item.ionic.vars" as vars;
 
 // Item
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ionic-color-base-white};
+  --background: #{vars.$item-ionic-background};
   --background-activated: #{globals.$ionic-color-neutral-200};
   --border-color: #{globals.$ionic-color-neutral-300};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-width: #{0 0 globals.$ionic-border-size-025 0};
+  --detail-icon-color: #{globals.$ionic-color-neutral-800};
+  --detail-icon-font-size: #{globals.$ionic-scale-600};
+  --detail-icon-opacity: 1;
   --min-height: #{globals.$ionic-scale-1800};
   --padding-top: #{globals.$ionic-space-200};
   --padding-end: #{globals.$ionic-space-400};
@@ -28,6 +32,13 @@
   min-height: initial;
 }
 
+// Item Detail Icon
+// --------------------------------------------------
+
+.item-detail-icon {
+  margin-inline-end: 0;
+}
+
 // Ionic Item Slots
 // --------------------------------------------------
 
@@ -37,6 +48,12 @@ slot[name="start"]::slotted(*) {
 
 slot[name="end"]::slotted(*) {
   @include globals.margin(null, null, null, #{globals.$ionic-space-400});
+}
+
+::slotted(ion-icon:not(.item-detail-icon)) {
+  color: globals.$ionic-color-neutral-1000;
+
+  font-size: globals.$ionic-scale-1000;
 }
 
 // Item: Disabled
