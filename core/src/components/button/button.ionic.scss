@@ -70,12 +70,12 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: transparent;
-  --background-focused: #{ion-color(primary, base)};
-  --background-hover: #{ion-color(primary, base)};
-  --background-activated-opacity: 0;
-  --background-focused-opacity: 0.12;
+  --background-activated: #{globals.$ionic-color-neutral-200};
+  --background-focused: transparent;
+  --background-hover: #{globals.ion-color(primary, base)};
   --background-hover-opacity: 0.04;
+  --ripple-opacity: var(--background-activated-opacity, 1);
+  --ripple-color: var(--background-activated);
 }
 
 // Ripple Effect
@@ -85,7 +85,8 @@
   color: #{globals.current-color(shade)};
 }
 
-:host(.button-outline.ion-color) ion-ripple-effect {
+:host(.button-outline.ion-color) ion-ripple-effect,
+:host(.button-clear.ion-color) ion-ripple-effect {
   color: #{globals.$ionic-color-neutral-200};
 }
 
@@ -217,10 +218,6 @@
 
 :host(.button-solid.ion-color.ion-focused) .button-native::after {
   background: #{globals.current-color(contrast)};
-}
-
-:host(.button-clear.ion-color.ion-focused) .button-native::after {
-  background: #{globals.current-color(base)};
 }
 
 // Button: Activated
