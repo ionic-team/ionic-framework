@@ -465,10 +465,13 @@ ion-card,prop,shape,"rectangular" | "round" | "soft" | undefined,'round',false,t
 ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
+ion-card,css-prop,--background,ionic
 ion-card,css-prop,--background,ios
 ion-card,css-prop,--background,md
+ion-card,css-prop,--border-radius,ionic
 ion-card,css-prop,--border-radius,ios
 ion-card,css-prop,--border-radius,md
+ion-card,css-prop,--color,ionic
 ion-card,css-prop,--color,ios
 ion-card,css-prop,--color,md
 ion-card,part,native

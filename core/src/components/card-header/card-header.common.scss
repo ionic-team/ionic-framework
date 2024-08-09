@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/functions.color" as color;
 
 // Card Header
 // --------------------------------------------------
@@ -17,6 +17,6 @@
 }
 
 :host(.ion-color) {
-  background: current-color(base);
-  color: current-color(contrast);
+  background: color.current-color(base);
+  color: color.current-color(contrast);
 }

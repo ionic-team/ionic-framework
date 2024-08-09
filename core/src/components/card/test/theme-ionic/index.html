@@ -1,6 +1,6 @@
 <!-- TODO: FW-6077 This file can be removed once the additional test cases are added -->
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" theme="ionic">
   <head>
     <meta charset="UTF-8" />
     <title>Card - Theme Ionic</title>
@@ -8,13 +8,16 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../css/ionic/bundle.ionic.css" rel="stylesheet" />
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
     <style>
+      ion-content {
+        --background: #dde2ef;
+      }
       .ion-margin-top {
         margin-top: 32px;
       }
@@ -29,13 +32,13 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
+      <ion-content class="ionic-padding-space-400" id="content" no-bounce>
         <h4>Preview options</h4>
 
         <p>
           <ion-select id="select-shape" justify="space-between" interface="alert" label="Shape" placeholder="">
-            <ion-select-option value="">default</ion-select-option>
-            <ion-select-option value="round">Round</ion-select-option>
+            <ion-select-option value="round">default (round)</ion-select-option>
+            <ion-select-option value="soft">soft</ion-select-option>
             <ion-select-option value="rectangular">Rectangular</ion-select-option>
           </ion-select>
         </p>
@@ -50,6 +53,34 @@
             <ion-card-content>
               Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week
               in the woods. Wash your spirit clean.
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card class="ion-margin-top">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+            <ion-card-header>
+              <ion-card-title>Card Title</ion-card-title>
+              <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              Here's a small text description for the card content. Nothing more, nothing less.
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card class="ion-margin-top">
+            <ion-card-header>
+              <ion-card-title>Header</ion-card-title>
+              <ion-card-subtitle>Subtitle</ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              Lorem ipsum dolor sit amet consectetur. Lorem sem neque mauris ullamcorper enim. Massa tempus sem ligula
+              turpis consequat nam et semper imperdiet. Leo praesent ut feugiat cursus est. Lectus morbi aliquam lacus
+              tellus tempor morbi in pharetra.
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+              <ion-button fill="outline">Secondary</ion-button>
+              <ion-button>Primary</ion-button>
             </ion-card-content>
           </ion-card>
         </div>
