@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ config, screenshot, title }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('button: basic'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/button/test/basic`, config);
@@ -39,9 +39,9 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, title }) => {
 });
 
 /**
- * Ripple effect is only available in MD mode.
+ * Ripple effect is only available in MD and Ionic mode.
  */
-configs({ modes: ['md'] }).forEach(({ config, screenshot, title }) => {
+configs({ modes: ['md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('button: ripple effect'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/button/test/basic?ionic:_testing=false`, config);
