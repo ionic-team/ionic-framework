@@ -224,7 +224,7 @@
 // --------------------------------------------------
 
 :host(.button-solid.ion-color.ion-activated) .button-native::after {
-  background: #{globals.current-color(shade)};
+  background: globals.current-color(shade);
 }
 
 :host(.ion-activated) .button-native:has(ion-ripple-effect)::after,
