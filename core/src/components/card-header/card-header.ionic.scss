@@ -1,0 +1,10 @@
+@use "./card-header.common";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Ionic Card Header
+// --------------------------------------------------
+
+:host {
+  @include globals.padding(globals.$ionic-space-400);
+  gap: globals.$ionic-space-050;
+}
