@@ -87,7 +87,7 @@
 
 :host(.button-outline.ion-color) ion-ripple-effect,
 :host(.button-clear.ion-color) ion-ripple-effect {
-  color: #{globals.$ionic-color-neutral-200};
+  color: globals.$ionic-color-neutral-200;
 }
 
 // Button Sizes
