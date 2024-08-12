@@ -223,10 +223,12 @@
 // Button: Activated
 // --------------------------------------------------
 
-:host(.ion-activated) .button-native::after,
-:host(.button-outline.ion-color.ion-activated) .button-native::after,
-:host(.button-solid.ion-color.ion-activated) .button-native::after,
-:host(.button-clear.ion-color.ion-activated) .button-native::after {
+:host(.button-solid.ion-color.ion-activated) .button-native::after {
+  background: #{globals.current-color(shade)};
+}
+
+:host(.ion-activated) .button-native:has(ion-ripple-effect)::after,
+:host(.button-solid.ion-color.ion-activated) .button-native:has(ion-ripple-effect)::after {
   background: transparent;
 }
 
