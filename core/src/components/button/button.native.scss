@@ -1,0 +1,24 @@
+@use "../../themes/native/native.globals.md" as globals;
+@use "./button.common";
+
+// Button - iOS and Material Design
+// --------------------------------------------------
+
+:host {
+  font-family: globals.$font-family-base;
+}
+
+// Button Icons
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  font-size: 1.35em;
+}
+
+::slotted(ion-icon[slot="start"]) {
+  @include globals.margin(0, 0.3em, 0, -0.3em);
+}
+
+::slotted(ion-icon[slot="end"]) {
+  @include globals.margin(0, -0.2em, 0, 0.3em);
+}
