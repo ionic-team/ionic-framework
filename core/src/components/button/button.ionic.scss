@@ -217,7 +217,7 @@
  */
 
 :host(.button-solid.ion-color.ion-focused) .button-native::after {
-  background: #{globals.current-color(contrast)};
+  background: globals.current-color(contrast);
 }
 
 // Button: Activated
