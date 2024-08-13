@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* **angular:** add focusTrap prop to modal and popover ([#29729](https://github.com/ionic-team/ionic-framework/issues/29729)) ([05913c3](https://github.com/ionic-team/ionic-framework/commit/05913c3cc3f2e8cb91f9a0944cd55e78392b0ba3)), closes [#29728](https://github.com/ionic-team/ionic-framework/issues/29728)
+* **angular:** remove the tabindex set by routerLink from Ionic components ([#29744](https://github.com/ionic-team/ionic-framework/issues/29744)) ([20073e1](https://github.com/ionic-team/ionic-framework/commit/20073e10c934d3704734195c72f4281c9b9658e3)), closes [#20632](https://github.com/ionic-team/ionic-framework/issues/20632)
+
+
+
+
+
 ## [8.2.6](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.6) (2024-07-24)
 
 
