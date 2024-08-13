@@ -43,7 +43,16 @@ export class Tabs implements NavOutlet {
 
   async componentWillLoad() {
     if (!this.useRouter) {
-      this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
+      /**
+       * Router is used if it exists and there is no `no-router` attribute
+       * and the `ion-tab` is not being used.
+       *
+       * If the router is not being used, then the tabs will behave as a
+       * basic tab-based navigation without the history stack or URL updates
+       * associated with the router.
+       */
+      this.useRouter =
+        !!document.querySelector('ion-router') && !this.el.closest('[no-router]') && !this.el.querySelector('ion-tab');
     }
     if (!this.useRouter) {
       const tabs = this.tabs;

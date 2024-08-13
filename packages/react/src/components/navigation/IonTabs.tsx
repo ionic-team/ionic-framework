@@ -5,6 +5,8 @@ import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
 import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
+import { IonTabsInner } from '../inner-proxies';
+import { IonTab } from '../proxies';
 
 import { IonTabBar } from './IonTabBar';
 import type { IonTabsContextState } from './IonTabsContext';
@@ -91,6 +93,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
     render() {
       let outlet: React.ReactElement<{}> | undefined;
       let tabBar: React.ReactElement | undefined;
+      let hasIonTab = false;
       const { className, onIonTabsDidChange, onIonTabsWillChange, ...props } = this.props;
 
       const children =
@@ -107,6 +110,12 @@ export const IonTabs = /*@__PURE__*/ (() =>
           outlet = React.cloneElement(child);
         } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
           outlet = child.props.children[0];
+        } else if (child.type === IonTab) {
+          /**
+           * This indicates that IonTabs will be using a basic tab-based navigation
+           * without the history stack or URL updates associated with the router.
+           */
+          hasIonTab = true;
         }
 
         let childProps: any = {
@@ -144,11 +153,18 @@ export const IonTabs = /*@__PURE__*/ (() =>
         }
       });
 
-      if (!outlet) {
+      if (!outlet && !hasIonTab) {
         throw new Error('IonTabs must contain an IonRouterOutlet');
+      }
+      if (outlet && hasIonTab) {
+        throw new Error('IonTabs cannot contain an IonRouterOutlet and an IonTab at the same time');
       }
       if (!tabBar) {
         throw new Error('IonTabs needs a IonTabBar');
+      }
+
+      if (hasIonTab) {
+        return <IonTabsInner className={className ? `${className}` : ''} {...props} />;
       }
 
       return (
