@@ -5,7 +5,7 @@ interface TabsProps {}
 
 const TabsBasic: React.FC<TabsProps> = () => {
   return (
-    <IonTabs noOutlet={true}>
+    <IonTabs>
       <IonTab tab="tab1">
         <IonLabel>Tab 1 Content</IonLabel>
       </IonTab>
