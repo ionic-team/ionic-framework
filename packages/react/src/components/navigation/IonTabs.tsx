@@ -93,7 +93,8 @@ export const IonTabs = /*@__PURE__*/ (() =>
     render() {
       let outlet: React.ReactElement<{}> | undefined;
       let tabBar: React.ReactElement | undefined;
-      let hasIonTab = false;
+      // Check if IonTabs has any IonTab children
+      let hasTab = false;
       const { className, onIonTabsDidChange, onIonTabsWillChange, ...props } = this.props;
 
       const children =
@@ -115,7 +116,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
            * This indicates that IonTabs will be using a basic tab-based navigation
            * without the history stack or URL updates associated with the router.
            */
-          hasIonTab = true;
+          hasTab = true;
         }
 
         let childProps: any = {
@@ -153,17 +154,17 @@ export const IonTabs = /*@__PURE__*/ (() =>
         }
       });
 
-      if (!outlet && !hasIonTab) {
+      if (!outlet && !hasTab) {
         throw new Error('IonTabs must contain an IonRouterOutlet');
       }
-      if (outlet && hasIonTab) {
+      if (outlet && hasTab) {
         throw new Error('IonTabs cannot contain an IonRouterOutlet and an IonTab at the same time');
       }
       if (!tabBar) {
         throw new Error('IonTabs needs a IonTabBar');
       }
 
-      if (hasIonTab) {
+      if (hasTab) {
         return <IonTabsInner {...this.props}></IonTabsInner>;
       }
 
