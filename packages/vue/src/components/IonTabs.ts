@@ -1,5 +1,8 @@
+import { defineCustomElement } from "@ionic/core/components/ion-tabs.js";
 import type { VNode } from "vue";
-import { h, defineComponent } from "vue";
+import { h, defineComponent, Fragment, isVNode } from "vue";
+
+import { IonTab } from "../proxies";
 
 const WILL_CHANGE = "ionTabsWillChange";
 const DID_CHANGE = "ionTabsDidChange";
@@ -28,27 +31,77 @@ const isTabBar = (node: VNode) => {
   );
 };
 
+const isTab = (node: VNode): boolean => {
+  // The `ion-tab` component was created with the `v-for` directive.
+  if (node.type === Fragment) {
+    if (Array.isArray(node.children)) {
+      return node.children.some((child) => isVNode(child) && isTab(child));
+    }
+
+    return false; // In case the fragment has no children.
+  }
+
+  return (
+    node.type && ((node.type as any).name === "ion-tab" || node.type === IonTab)
+  );
+};
+
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: "IonTabs",
   emits: [WILL_CHANGE, DID_CHANGE],
+  setup(props, { slots, emit }) {
+    // Define the custom element
+    defineCustomElement();
+
+    return {
+      props,
+      slots,
+      emit,
+    };
+  },
   render() {
-    const { $slots: slots, $emit } = this;
+    const { slots, emit, props } = this;
     const slottedContent = slots.default && slots.default();
     let routerOutlet;
+    let hasTab = false;
 
-    /**
-     * Developers must pass an ion-router-outlet
-     * inside of ion-tabs.
-     */
     if (slottedContent && slottedContent.length > 0) {
+      /**
+       * Developers must pass an ion-router-outlet
+       * inside of ion-tabs if they want to use
+       * the history stack or URL updates associated
+       * wit the router.
+       */
       routerOutlet = slottedContent.find((child: VNode) =>
         isRouterOutlet(child)
       );
+
+      /**
+       * Developers must pass at least one ion-tab
+       * inside of ion-tabs if they want to use a
+       * basic tab-based navigation without the
+       * history stack or URL updates associated
+       * with the router.
+       */
+      hasTab = slottedContent.some((child: VNode) => isTab(child));
     }
 
-    if (!routerOutlet) {
+    if (!routerOutlet && !hasTab) {
+      throw new Error("IonTabs must contain an IonRouterOutlet or an IonTab.");
+    }
+    if (routerOutlet && hasTab) {
       throw new Error(
-        "IonTabs must contain an IonRouterOutlet. See https://ionicframework.com/docs/vue/navigation#working-with-tabs for more information."
+        "IonTabs cannot contain an IonRouterOutlet and IonTab at the same time."
+      );
+    }
+
+    if (hasTab) {
+      return h(
+        "ion-tabs",
+        {
+          ...props,
+        },
+        slottedContent
       );
     }
 
@@ -99,9 +152,9 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
          * so we do not have code split across two components.
          */
         slottedTabBar.props._tabsWillChange = (tab: string) =>
-          $emit(WILL_CHANGE, { tab });
+          emit(WILL_CHANGE, { tab });
         slottedTabBar.props._tabsDidChange = (tab: string) =>
-          $emit(DID_CHANGE, { tab });
+          emit(DID_CHANGE, { tab });
       }
 
       if (hasTopSlotTabBar) {
