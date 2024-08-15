@@ -52,7 +52,7 @@ export class Tabs implements NavOutlet {
        * stack or URL updates associated with the router.
        */
       this.useRouter =
-        (!!document.querySelector('ion-router') || !!this.el.querySelector('ion-router-outlet')) &&
+        (!!this.el.querySelector('ion-router-outlet') || !!document.querySelector('ion-router')) &&
         !this.el.closest('[no-router]');
     }
     if (!this.useRouter) {
