@@ -14,7 +14,7 @@ const TabsBasic: React.FC<TabsProps> = () => {
       </IonTab>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1">
-          <IonLabel>Tabs 1</IonLabel>
+          <IonLabel>Tab 1</IonLabel>
         </IonTabButton>
         <IonTabButton tab="tab2">
           <IonLabel>Tab 2</IonLabel>
