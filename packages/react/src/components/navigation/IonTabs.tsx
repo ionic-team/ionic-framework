@@ -155,7 +155,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
       });
 
       if (!outlet && !hasTab) {
-        throw new Error('IonTabs must contain an IonRouterOutlet');
+        throw new Error('IonTabs must contain an IonRouterOutlet or an IonTab');
       }
       if (outlet && hasTab) {
         throw new Error('IonTabs cannot contain an IonRouterOutlet and an IonTab at the same time');
