@@ -105,40 +105,10 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       );
     }
 
-    let childrenToRender = [
-      h(
-        "div",
-        {
-          class: "tabs-inner",
-          style: {
-            position: "relative",
-            flex: "1",
-            contain: "layout size style",
-          },
-        },
-        routerOutlet
-      ),
-    ];
-
-    /**
-     * If ion-tab-bar has slot="top" it needs to be
-     * rendered before `.tabs-inner` otherwise it will
-     * not show above the tab content.
-     */
     if (slottedContent && slottedContent.length > 0) {
-      /**
-       * Render all content except for router outlet
-       * since that needs to be inside of `.tabs-inner`.
-       */
-      const filteredContent = slottedContent.filter(
-        (child: VNode) => !child.type || !isRouterOutlet(child)
-      );
-
-      const slottedTabBar = filteredContent.find((child: VNode) =>
+      const slottedTabBar = slottedContent.find((child: VNode) =>
         isTabBar(child)
       );
-      const hasTopSlotTabBar =
-        slottedTabBar && slottedTabBar.props?.slot === "top";
 
       if (slottedTabBar) {
         if (!slottedTabBar.props) {
@@ -151,16 +121,14 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
          * TODO: We may want to move logic from the tab bar into here
          * so we do not have code split across two components.
          */
-        slottedTabBar.props._tabsWillChange = (tab: string) =>
+        slottedTabBar.props._tabsWillChange = (tab: string) => {
+          console.log(`ionTabsWillChange fired with tab: ${tab}`);
           emit(WILL_CHANGE, { tab });
-        slottedTabBar.props._tabsDidChange = (tab: string) =>
+        };
+        slottedTabBar.props._tabsDidChange = (tab: string) => {
+          console.log(`ionTabsDidChange fired with tab: ${tab}`);
           emit(DID_CHANGE, { tab });
-      }
-
-      if (hasTopSlotTabBar) {
-        childrenToRender = [...filteredContent, ...childrenToRender];
-      } else {
-        childrenToRender = [...childrenToRender, ...filteredContent];
+        };
       }
     }
 
@@ -181,7 +149,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
           "z-index": "0",
         },
       },
-      childrenToRender
+      slottedContent
     );
   },
 });
