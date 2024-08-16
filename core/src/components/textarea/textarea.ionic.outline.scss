@@ -5,7 +5,8 @@
 // ----------------------------------------------------------------
 
 :host(.textarea-fill-outline) {
-  --border-radius: #{globals.$ionic-border-radius-400};
+  --border-width: #{globals.$ionic-border-size-025};
+  --border-color: #{globals.$ionic-color-neutral-500};
   --padding-top: #{globals.$ionic-space-300};
   --padding-end: #{globals.$ionic-space-400};
   --padding-bottom: #{globals.$ionic-space-300};
@@ -15,13 +16,7 @@
 // Textarea Fill: Outline, Textarea Wrapper
 // ----------------------------------------------------------------
 
-:host(.textarea-fill-outline) .textarea-wrapper {
-  gap: #{globals.$ionic-space-100};
-}
-
 :host(.textarea-fill-outline) .textarea-wrapper-inner {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-
   /**
    * The border should be relative to the inner wrapper
    * so that it does not include the label.
