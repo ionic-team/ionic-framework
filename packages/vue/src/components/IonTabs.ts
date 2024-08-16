@@ -121,14 +121,10 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
          * TODO: We may want to move logic from the tab bar into here
          * so we do not have code split across two components.
          */
-        slottedTabBar.props._tabsWillChange = (tab: string) => {
-          console.log(`ionTabsWillChange fired with tab: ${tab}`);
+        slottedTabBar.props._tabsWillChange = (tab: string) =>
           emit(WILL_CHANGE, { tab });
-        };
-        slottedTabBar.props._tabsDidChange = (tab: string) => {
-          console.log(`ionTabsDidChange fired with tab: ${tab}`);
+        slottedTabBar.props._tabsDidChange = (tab: string) =>
           emit(DID_CHANGE, { tab });
-        };
       }
     }
 
