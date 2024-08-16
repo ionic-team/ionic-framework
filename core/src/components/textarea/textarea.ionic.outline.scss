@@ -20,13 +20,13 @@
 }
 
 :host(.textarea-fill-outline) .textarea-wrapper-inner {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   /**
    * The border should be relative to the inner wrapper
    * so that it does not include the label.
    */
   position: relative;
-
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   // Default md height
   height: globals.$ionic-scale-3400;
@@ -56,10 +56,10 @@
  * The bottom content should never have
  * a border with the outline style.
  */
- :host(.textarea-fill-outline) .textarea-bottom {
-  border-top: none;
-
+:host(.textarea-fill-outline) .textarea-bottom {
   @include padding(#{globals.$ionic-space-100}, var(--padding-end), null, var(--padding-start));
+
+  border-top: none;
 }
 
 // Overrides

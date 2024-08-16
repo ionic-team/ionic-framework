@@ -23,9 +23,9 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  color: globals.$ionic-color-neutral-1000;
-
   @include globals.typography(globals.$ionic-body-sm-medium);
+
+  color: globals.$ionic-color-neutral-1000;
 }
 
 :host(.label-floating) .label-text-wrapper {
@@ -44,7 +44,6 @@ ion-icon {
 
 .textarea-bottom {
   @include padding(7px, 0);
-
   @include globals.typography(globals.$ionic-body-sm-medium);
 }
 
