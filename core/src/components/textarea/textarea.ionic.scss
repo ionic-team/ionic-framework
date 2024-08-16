@@ -1,0 +1,54 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./textarea";
+@import "./textarea.ionic.vars";
+@import "./textarea.ionic.outline.scss";
+
+// Ionic Textarea
+// --------------------------------------------------
+
+:host {
+  --color: #{globals.$ionic-color-neutral-1200};
+  --border-width: #{globals.$ionic-border-size-025};
+  --border-color: #{globals.$ionic-color-neutral-500};
+  --highlight-color-valid: #{globals.$ionic-color-success-base};
+  --highlight-color-invalid: #{globals.$ionic-color-danger-base};
+  --placeholder-color: #{globals.$ionic-color-neutral-800};
+  --placeholder-opacity: 1;
+  --background: #{globals.$ionic-color-base-white};
+
+  @include globals.typography(globals.$ionic-body-md-regular);
+}
+
+// Textarea Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  color: globals.$ionic-color-neutral-1000;
+
+  @include globals.typography(globals.$ionic-body-sm-medium);
+}
+
+:host(.label-floating) .label-text-wrapper {
+  @include transform(none);
+}
+
+// Textarea Slotted Content
+// ----------------------------------------------------------------
+
+ion-icon {
+  color: globals.$ionic-color-neutral-800;
+}
+
+// Textarea Bottom Content
+// ----------------------------------------------------------------
+
+.input-bottom {
+  @include padding(7px, 0);
+
+  @include globals.typography(globals.$ionic-body-sm-medium);
+}
+
+.input-bottom .helper-text,
+.input-bottom .counter {
+  color: globals.$ionic-color-neutral-800;
+}
