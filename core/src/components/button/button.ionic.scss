@@ -1,47 +1,22 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./button.common";
 
 // Ionic Button
 // -------------------------------------------------------------------------------
 :host {
-  --overflow: hidden;
-  --border-width: initial;
-  --border-color: initial;
-  --border-style: initial;
-  --color-activated: var(--color);
-  --color-focused: var(--color);
-  --color-hover: var(--color);
-  --box-shadow: none;
   --padding-bottom: var(--padding-top);
-  --padding-end: #{globals.$ionic-space-400};
+  --padding-end: #{globals.$ionic-space-500};
   --padding-start: var(--padding-end);
-  --padding-top: #{globals.$ionic-space-300};
+  --padding-top: #{globals.$ionic-space-0};
   --focus-ring-color: #{globals.$ionic-state-focus-1};
   --focus-ring-width: #{globals.$ionic-border-size-050};
 
-  display: inline-block;
-
   position: relative;
-
-  width: auto;
 
   min-height: globals.$ionic-scale-1000;
 
-  color: var(--color);
-
   font-family: globals.$ionic-font-family;
-
   font-size: globals.$ionic-font-size-350;
-
-  text-align: center;
-  text-decoration: none;
-
-  white-space: normal;
-
-  user-select: none;
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
-
-  font-kerning: none;
 
   // Target area
   &::after {
@@ -59,37 +34,60 @@
 
     z-index: 1;
   }
-
-  ::slotted(ion-icon[slot="start"]) {
-    @include globals.margin-horizontal(null, globals.$ionic-space-200);
-  }
-
-  ::slotted(ion-icon[slot="end"]) {
-    @include globals.margin-horizontal(globals.$ionic-space-200, null);
-  }
 }
 
-// Button Colors
+// Button Fills
+// -------------------------------------------------------------------------------
+
+// Solid Button
 // --------------------------------------------------
 
-// Solid Button with Color
-:host(.button-solid.ion-color) .button-native {
-  background: globals.current-color(base);
-  color: globals.current-color(contrast);
+:host(.button-solid) {
+  --background-activated: #{globals.ion-color(primary, shade)};
+  --background-hover: #{globals.ion-color(primary, contrast)};
+  --background-focused: #{globals.ion-color(primary, contrast)};
+  --background-focused-opacity: 0.24;
+  --background-hover-opacity: 0.08;
+  --ripple-opacity: var(--background-activated-opacity, 1);
+  --ripple-color: var(--background-activated);
 }
 
-// Outline Button with Color
-:host(.button-outline.ion-color) .button-native {
-  border-color: globals.current-color(base);
+// Outline Button
+// --------------------------------------------------
 
-  background: transparent;
-  color: globals.current-color(base);
+:host(.button-outline) {
+  --border-width: #{globals.$ionic-border-size-025};
+  --border-style: #{globals.$ionic-border-style-solid};
+  --background-activated: #{globals.$ionic-color-neutral-200};
+  --background-focused: transparent;
+  --background-hover: #{globals.ion-color(primary, base)};
+  --background-hover-opacity: 0.04;
+  --ripple-opacity: var(--background-activated-opacity, 1);
+  --ripple-color: var(--background-activated);
 }
 
-// Clear Button with Color
-:host(.button-clear.ion-color) .button-native {
-  background: transparent;
-  color: globals.current-color(base);
+// Clear Button
+// --------------------------------------------------
+
+:host(.button-clear) {
+  --background-activated: #{globals.$ionic-color-neutral-200};
+  --background-focused: transparent;
+  --background-hover: #{globals.ion-color(primary, base)};
+  --background-hover-opacity: 0.04;
+  --ripple-opacity: var(--background-activated-opacity, 1);
+  --ripple-color: var(--background-activated);
+}
+
+// Ripple Effect
+// -------------------------------------------------------------------------------
+
+:host(.button-solid.ion-color) ion-ripple-effect {
+  color: globals.current-color(shade);
+}
+
+:host(.button-outline.ion-color) ion-ripple-effect,
+:host(.button-clear.ion-color) ion-ripple-effect {
+  color: globals.$ionic-color-neutral-200;
 }
 
 // Button Sizes
@@ -177,6 +175,9 @@
 // Button Shapes
 // -------------------------------------------------------------------------------
 
+// Soft Button
+// --------------------------------------------------
+
 :host(.button-soft) {
   --border-radius: #{globals.$ionic-border-radius-200};
 }
@@ -186,72 +187,27 @@
   --border-radius: #{globals.$ionic-border-radius-100};
 }
 
+// Round Button
+// --------------------------------------------------
+
 :host(.button-round) {
   --border-radius: #{globals.$ionic-border-radius-full};
 }
+
+// Rectangular Button
+// --------------------------------------------------
 
 :host(.button-rectangular) {
   --border-radius: #{globals.$ionic-border-radius-0};
 }
 
-// Button Focused
+// Button: Focus
 // -------------------------------------------------------------------------------
 
 // Only show the focus ring when the button is focused
 :host(.ion-focused) .button-native {
   outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
   outline-offset: globals.$ionic-border-size-050;
-}
-
-// Fill Solid Button
-// -------------------------------------------------------------------------------
-
-:host(.button-solid) {
-  --background-activated: #{globals.$ionic-color-primary-base};
-}
-
-:host(.button-solid.ion-activated) .button-native::after {
-  background: #{globals.$ionic-color-primary-900};
-}
-
-// Fill Outline Button
-// --------------------------------------------------
-
-:host(.button-outline) {
-  --border-width: #{globals.$ionic-border-size-025};
-  --border-style: #{globals.$ionic-border-style-solid};
-  --background-activated: #{globals.$ionic-color-neutral-200};
-  --background-activated-opacity: 1;
-  --background-focused: transparent;
-  --background-hover: transparent;
-  --background-focused-opacity: 0.1;
-  --color-activated: #{globals.$ionic-color-primary-base};
-}
-
-:host(.button-outline.ion-focused) {
-  --border-color: transparent;
-}
-
-// Fill Clear Button
-// --------------------------------------------------
-
-:host(.button-clear) {
-  --background-activated: #{globals.$ionic-color-neutral-200};
-  --background-activated-opacity: 1;
-  --background-focused: transparent;
-  --background-hover: transparent;
-}
-
-// Button Hover
-// --------------------------------------------------
-
-:host(.button-solid) {
-  --background-hover: #{globals.$ionic-color-primary-800};
-}
-
-:host(.button-outline),
-:host(.button-clear) {
-  --background-hover: #{globals.$ionic-color-neutral-100};
 }
 
 /**
@@ -261,177 +217,26 @@
  */
 
 :host(.button-solid.ion-color.ion-focused) .button-native::after {
-  background: #{current-color(contrast)};
+  background: globals.current-color(contrast);
 }
 
-:host(.button-clear.ion-color.ion-focused) .button-native::after,
-:host(.button-outline.ion-color.ion-focused) .button-native::after {
-  background: #{current-color(base)};
+// Button: Activated
+// --------------------------------------------------
+
+:host(.button-solid.ion-color.ion-activated) .button-native::after {
+  background: globals.current-color(shade);
 }
 
-@media (any-hover: hover) {
-  :host(.button-solid.ion-color:hover) .button-native::after {
-    background: #{current-color(contrast)};
-  }
-
-  :host(.button-clear.ion-color:hover) .button-native::after,
-  :host(.button-outline.ion-color:hover) .button-native::after {
-    background: #{current-color(base)};
-  }
+:host(.ion-activated) .button-native:has(ion-ripple-effect)::after,
+:host(.button-solid.ion-color.ion-activated) .button-native:has(ion-ripple-effect)::after {
+  background: transparent;
 }
 
 // Button: Disabled
 // --------------------------------------------------
 
 :host(.button-disabled) {
-  --background: #{globals.$ionic-state-disabled};
-  --border-color: var(--color);
-
-  cursor: default;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-// Solid Button
-// --------------------------------------------------
-
-// Default Solid Color
-:host(.button-solid) {
-  --background: #{globals.$ionic-color-primary-base};
-  --color: #{globals.$ionic-color-base-white};
-}
-
-// Outline Button
-// --------------------------------------------------
-
-// Default Outline Color
-:host(.button-outline) {
-  --border-color: #{globals.ion-color(primary, base)};
-  --background: #{globals.$ionic-color-base-white};
-  --color: #{globals.ion-color(primary, base)};
-}
-
-// Clear Button
-// --------------------------------------------------
-
-// Default Clear Color
-:host(.button-clear) {
-  --border-width: #{globals.$ionic-border-size-0};
-  --background: transparent;
-  --color: #{globals.$ionic-color-primary-base};
-}
-
-// Block Button
-// --------------------------------------------------
-
-:host(.button-block) {
-  display: block;
-}
-
-:host(.button-block) .button-native {
-  @include globals.margin-horizontal(0);
-
-  width: 100%;
-
-  clear: both;
-
-  contain: content;
-}
-
-:host(.button-block) .button-native::after {
-  clear: both;
-}
-
-// Full Button
-// --------------------------------------------------
-
-:host(.button-full) {
-  display: block;
-}
-
-:host(.button-full) .button-native {
-  @include globals.margin-horizontal(0);
-
-  width: 100%;
-
-  contain: content;
-}
-
-:host(.button-full:not(.button-round)) .button-native {
-  @include globals.border-radius(0);
-
-  border-right-width: 0;
-  border-left-width: 0;
-}
-
-.button-native {
-  @include globals.border-radius(var(--border-radius));
-  @include globals.font-smoothing();
-  @include globals.margin(0);
-  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include globals.text-inherit();
-
-  display: flex;
-
-  position: relative;
-
-  align-items: center;
-
-  width: 100%;
-  height: 100%;
-
-  min-height: inherit;
-
-  transition: var(--transition);
-
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--border-color);
-
-  outline: none;
-
-  background: var(--background);
-
-  line-height: 1;
-
-  box-shadow: var(--box-shadow);
-
-  contain: layout style;
-  cursor: pointer;
-
-  opacity: var(--opacity);
-  overflow: var(--overflow);
-
-  z-index: 0;
-  box-sizing: border-box;
-  appearance: none;
-}
-
-.button-native::-moz-focus-inner {
-  border: 0;
-}
-
-.button-inner {
-  display: flex;
-  position: relative;
-
-  flex-flow: row nowrap;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-
-  z-index: 1;
-}
-
-// Button Slots
-// --------------------------------------------------
-
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
-  flex-shrink: 0;
+  opacity: 0.6;
 }
 
 // Button Icons
@@ -439,47 +244,28 @@
 
 ::slotted(ion-icon) {
   font-size: globals.$ionic-font-size-500;
-  pointer-events: none;
 }
 
-// Button: States
-// --------------------------------------------------
-
-.button-native::after {
-  @include globals.button-state();
+:host(.button-small) ::slotted(ion-icon[slot="start"]) {
+  @include globals.margin-horizontal(null, globals.$ionic-space-200);
 }
 
-// Button Focused
-:host(.ion-focused) {
-  color: var(--color-focused);
+::slotted(ion-icon[slot="start"]) {
+  @include globals.margin-horizontal(null, globals.$ionic-space-250);
 }
 
-:host(.ion-focused) .button-native::after {
-  background: var(--background-focused);
-
-  opacity: var(--background-focused-opacity);
+:host(.button-large) ::slotted(ion-icon[slot="start"]) {
+  @include globals.margin-horizontal(null, globals.$ionic-space-300);
 }
 
-// Button Hover
-@media (any-hover: hover) {
-  :host(:hover) {
-    color: var(--color-hover);
-  }
-
-  :host(:hover) .button-native::after {
-    background: var(--background-hover);
-
-    opacity: var(--background-hover-opacity);
-  }
+:host(.button-small) ::slotted(ion-icon[slot="end"]) {
+  @include globals.margin-horizontal(globals.$ionic-space-200, null);
 }
 
-// Button Activated
-:host(.ion-activated) {
-  color: var(--color-activated);
+::slotted(ion-icon[slot="end"]) {
+  @include globals.margin-horizontal(globals.$ionic-space-250, null);
 }
 
-:host(.ion-activated) .button-native::after {
-  background: var(--background-activated);
-
-  opacity: var(--background-activated-opacity);
+:host(.button-large) ::slotted(ion-icon[slot="end"]) {
+  @include globals.margin-horizontal(globals.$ionic-space-300, null);
 }

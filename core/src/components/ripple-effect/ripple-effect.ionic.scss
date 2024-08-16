@@ -1,0 +1,48 @@
+@use "./ripple-effect.common" as common;
+
+// Ionic Ripple Effect
+// --------------------------------------------------
+
+.ripple-effect {
+  animation-name: rippleAnimation, fadeInAnimation;
+}
+
+.fade-out {
+  animation-name: fadeOutAnimation;
+}
+
+@keyframes rippleAnimation {
+  from {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+    transform: scale(1);
+  }
+
+  to {
+    transform: translate(var(--translate-end)) scale(var(--final-scale, 1));
+  }
+}
+
+@keyframes fadeInAnimation {
+  from {
+    animation-timing-function: linear;
+
+    opacity: 0;
+  }
+
+  to {
+    opacity: var(--ripple-opacity, 0.16);
+  }
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    animation-timing-function: linear;
+
+    opacity: var(--ripple-opacity, 0.16);
+  }
+
+  to {
+    opacity: 0;
+  }
+}

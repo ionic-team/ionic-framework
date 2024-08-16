@@ -51,8 +51,6 @@
 
   color: var(--color);
 
-  font-family: $font-family-base;
-
   text-align: center;
   text-decoration: none;
 
@@ -217,16 +215,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  font-size: 1.35em;
   pointer-events: none;
-}
-
-::slotted(ion-icon[slot="start"]) {
-  @include margin(0, 0.3em, 0, -0.3em);
-}
-
-::slotted(ion-icon[slot="end"]) {
-  @include margin(0, -0.2em, 0, 0.3em);
 }
 
 // Button Ripple effect
