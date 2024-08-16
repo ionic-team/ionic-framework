@@ -249,6 +249,12 @@ export class Textarea implements ComponentInterface {
   @Prop() shape?: 'round';
 
   /**
+   * The size of the input. If "large", it will have an increased height. By default the
+   * size is medium. This property only applies to the `"ionic"` theme.
+   */
+  @Prop() size?: 'small' | 'medium' | 'large' = 'medium';
+
+  /**
    * Update the native input element when the value changes
    */
   @Watch('value')
@@ -619,7 +625,7 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
+    const { inputId, disabled, fill, shape, size, labelPlacement, el, hasFocus } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -657,6 +663,7 @@ export class Textarea implements ComponentInterface {
           'label-floating': labelShouldFloat,
           [`textarea-fill-${fill}`]: fill !== undefined,
           [`textarea-shape-${shape}`]: shape !== undefined,
+          [`textarea-size-${size}`]: true,
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
         })}

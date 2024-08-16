@@ -19,6 +19,13 @@
   @include globals.typography(globals.$ionic-body-md-regular);
 }
 
+// Ionic Textarea Sizes
+// --------------------------------------------------
+
+:host(.textarea-size-medium) .textarea-wrapper-inner {
+  height: globals.$ionic-scale-3400;
+}
+
 // Textarea Label
 // ----------------------------------------------------------------
 
