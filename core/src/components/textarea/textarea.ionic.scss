@@ -42,13 +42,13 @@ ion-icon {
 // Textarea Bottom Content
 // ----------------------------------------------------------------
 
-.input-bottom {
+.textarea-bottom {
   @include padding(7px, 0);
 
   @include globals.typography(globals.$ionic-body-sm-medium);
 }
 
-.input-bottom .helper-text,
-.input-bottom .counter {
+.textarea-bottom .helper-text,
+.textarea-bottom .counter {
   color: globals.$ionic-color-neutral-800;
 }

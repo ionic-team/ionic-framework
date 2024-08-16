@@ -669,19 +669,19 @@ export class Textarea implements ComponentInterface {
          */}
         <label class="textarea-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
-          {
-            /**
-             * For the ionic theme, we render the outline container here
-             * instead of higher up, so it can be positioned relative to
-             * the native wrapper instead of the <label> element or the
-             * entire component. This allows the label text to be positioned
-             * above the outline, while staying within the bounds of the
-             * <label> element, ensuring that clicking the label text
-             * focuses the textarea.
-             */
-            theme === 'ionic' && fill === 'outline' && <div class="textarea-outline"></div>
-          }
           <div class="textarea-wrapper-inner">
+            {
+              /**
+               * For the ionic theme, we render the outline container here
+               * instead of higher up, so it can be positioned relative to
+               * the native wrapper instead of the <label> element or the
+               * entire component. This allows the label text to be positioned
+               * above the outline, while staying within the bounds of the
+               * <label> element, ensuring that clicking the label text
+               * focuses the textarea.
+               */
+              theme === 'ionic' && fill === 'outline' && <div class="textarea-outline"></div>
+            }
             {/**
              * Some elements have their own padding styles which may
              * interfere with slot content alignment (such as icon-
