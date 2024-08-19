@@ -13,20 +13,13 @@
           </ion-tab-button>
         </ion-tab-bar>
 
-        <!-- <ion-tab
-          v-for="tab in tabs"
-          :tab="'tab' + tab.id"
-          :key="tab.id"
-        >
-          <ion-label>Tab {{ tab.id }} Content</ion-label>
-        </ion-tab> -->
-        <ion-tab tab="tab1">
+        <ion-tab tab="tab1" data-pageid="tab1">
           <ion-label>Tab 1 Content</ion-label>
         </ion-tab>
-        <ion-tab tab="tab2">
+        <ion-tab tab="tab2" data-pageid="tab2">
           <ion-label>Tab 2 Content</ion-label>
         </ion-tab>
-        <ion-tab tab="tab3">
+        <ion-tab tab="tab3" data-pageid="tab3">
           <ion-label>Tab 3 Content</ion-label>
         </ion-tab>
       </ion-tabs>
@@ -36,8 +29,7 @@
 
 <script lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonContent, IonLabel, IonIcon, IonPage, IonTab } from '@ionic/vue';
-import { ellipse, square, triangle, shield } from 'ionicons/icons';
-import { useRouter } from 'vue-router';
+import { ellipse, square, triangle } from 'ionicons/icons';
 import { ref, defineComponent } from 'vue';
 
 export default defineComponent({

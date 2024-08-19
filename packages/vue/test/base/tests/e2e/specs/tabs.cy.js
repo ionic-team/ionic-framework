@@ -602,7 +602,39 @@ describe('Tabs', () => {
     })
   })
 
-  describe('Tabs - Swipe to Go Back', () => {
+  describe('Without IonRouterOutlet', () => {
+    beforeEach(() => {
+      cy.visit('/tabs-basic');
+    });
+
+    it('should show correct tab when clicking the tab button', () => {
+      cy.get('ion-tab[data-pageid=tab1]').should('be.visible');
+      cy.get('ion-tab[data-pageid=tab2]').should('not.be.visible');
+
+      const tabbutton = cy.get('ion-tab-button#tab-button-tab2');
+      console.log('tabbutton', tabbutton);
+
+      cy.get('ion-tab-button#tab-button-tab2').click();
+
+      cy.get('ion-tab[data-pageid=tab1]').should('not.be.visible');
+      cy.get('ion-tab[data-pageid=tab2]').should('be.visible');
+
+      cy.get('ion-tab-button#tab-button-tab1').click();
+
+      cy.get('ion-tab[data-pageid=tab1]').should('be.visible');
+      cy.get('ion-tab[data-pageid=tab2]').should('not.be.visible');
+    });
+
+    it('should not change the URL when clicking the tab button', () => {
+      cy.url().should('include', '/tabs-basic');
+
+      cy.get('ion-tab-button#tab-button-tab2').click();
+
+      cy.url().should('include', '/tabs-basic');
+    });
+  })
+
+  describe('Swipe to Go Back', () => {
     beforeEach(() => {
       cy.viewport(320, 568);
       cy.visit('?ionic:mode=ios');
