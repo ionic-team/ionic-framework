@@ -173,13 +173,15 @@ export const IonTabs = /*@__PURE__*/ (() =>
           {this.context.hasIonicRouter() ? (
             <PageManager className={className ? `${className}` : ''} routeInfo={this.context.routeInfo} {...props}>
               <IonTabsInner {...this.props}>
-                {React.Children.map(children, (child: any) => {
-                  if (child.type === IonTabBar || child.type.isTabBar) {
-                    /**
-                     * The modified tabBar needs to be returned to include
-                     * the context and the overridden methods.
-                     */
-                    return tabBar;
+                {React.Children.map(children, (child: React.ReactNode) => {
+                  if (React.isValidElement(child)) {
+                    if (child.type === IonTabBar || (child.type as any).isTabBar) {
+                      /**
+                       * The modified tabBar needs to be returned to include
+                       * the context and the overridden methods.
+                       */
+                      return tabBar;
+                    }
                   }
                   return child;
                 })}
