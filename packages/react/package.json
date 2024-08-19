@@ -64,6 +64,7 @@
     "eslint": "^7.32.0",
     "fs-extra": "^9.0.1",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "np": "^6.4.0",
     "prettier": "^2.8.3",
     "react": "^17.0.2",
@@ -74,6 +75,7 @@
     "typescript": "^5.0.0"
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "preset": "ts-jest",
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.js"
