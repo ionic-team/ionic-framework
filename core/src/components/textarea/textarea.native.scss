@@ -7,6 +7,8 @@
 :host {
   min-height: 44px;
 
+  z-index: globals.$z-index-item-input;
+
   font-family: globals.$font-family-base;
 }
 

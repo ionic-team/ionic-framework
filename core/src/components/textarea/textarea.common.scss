@@ -61,8 +61,6 @@
 
   color: var(--color);
 
-  z-index: $z-index-item-input;
-
   box-sizing: border-box;
 }
 
@@ -382,7 +380,7 @@
 .textarea-bottom .helper-text {
   display: block;
 
-  color: #{$text-color-step-450};
+  color: $text-color-step-450;
 }
 
 :host(.ion-touched.ion-invalid) .textarea-bottom .error-text {
