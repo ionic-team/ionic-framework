@@ -33,7 +33,7 @@
 // ----------------------------------------------------------------
 
 .textarea-wrapper {
-  gap: #{globals.$ionic-space-100};
+  gap: globals.$ionic-space-100;
 }
 
 .textarea-wrapper-inner {
@@ -64,7 +64,7 @@ ion-icon {
 // ----------------------------------------------------------------
 
 .textarea-bottom {
-  @include globals.padding(#{globals.$ionic-space-100}, var(--padding-end), null, var(--padding-start));
+  @include globals.padding(globals.$ionic-space-100, var(--padding-end), null, var(--padding-start));
   @include globals.typography(globals.$ionic-body-sm-medium);
 }
 
