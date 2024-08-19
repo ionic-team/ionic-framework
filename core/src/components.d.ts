@@ -3621,7 +3621,7 @@ export namespace Components {
          */
         "shape"?: 'round';
         /**
-          * The size of the input. If "large", it will have an increased height. By default the size is medium. This property only applies to the `"ionic"` theme.
+          * The size of the textarea. If "large", it will have an increased height. By default the size is "medium". This property only applies to the `"ionic"` theme.
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
@@ -8981,7 +8981,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round';
         /**
-          * The size of the input. If "large", it will have an increased height. By default the size is medium. This property only applies to the `"ionic"` theme.
+          * The size of the textarea. If "large", it will have an increased height. By default the size is "medium". This property only applies to the `"ionic"` theme.
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
