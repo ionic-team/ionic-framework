@@ -22,8 +22,18 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content">
-        <ion-textarea label="Textarea"></ion-textarea>
+      <ion-content id="content" class="ion-padding">
+        <ion-textarea
+          fill="outline"
+          label="Label"
+          label-placement="stacked"
+          placeholder="Placeholder"
+          helper-text="Helper message"
+          counter="true"
+          maxlength="999"
+        >
+          <ion-icon slot="end" name="square-outline"></ion-icon>
+        </ion-textarea>
       </ion-content>
     </ion-app>
   </body>

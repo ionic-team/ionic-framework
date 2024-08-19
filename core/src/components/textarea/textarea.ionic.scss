@@ -21,6 +21,12 @@
 // Ionic Textarea Sizes
 // --------------------------------------------------
 
+// Setting height to 0 allows it to collapse in height
+// instead of growing above the min height by default.
+.textarea-wrapper-inner {
+  height: 0;
+}
+
 :host(.textarea-size-small) .textarea-wrapper-inner {
   --padding-top: #{globals.$ionic-space-200};
   --padding-end: #{globals.$ionic-space-300};
