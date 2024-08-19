@@ -7,10 +7,6 @@
 :host(.textarea-fill-outline) {
   --border-width: #{globals.$ionic-border-size-025};
   --border-color: #{globals.$ionic-color-neutral-500};
-  --padding-top: #{globals.$ionic-space-300};
-  --padding-end: #{globals.$ionic-space-400};
-  --padding-bottom: #{globals.$ionic-space-300};
-  --padding-start: #{globals.$ionic-space-400};
 }
 
 // Textarea Fill: Outline, Textarea Wrapper
@@ -49,43 +45,18 @@
  * a border with the outline style.
  */
 :host(.textarea-fill-outline) .textarea-bottom {
-  @include padding(#{globals.$ionic-space-100}, var(--padding-end), null, var(--padding-start));
-
   border-top: none;
 }
 
-// Overrides
+// Textarea Fill: Outline, Native Textarea
 // ----------------------------------------------------------------
 
-// TODO remove the following overrides in favor of splitting
-// to common and native files
-:host(.textarea-fill-outline) textarea {
-  @include margin(0);
-  @include padding(0);
-}
-
-:host(.textarea-fill-outline) .start-slot-wrapper,
-:host(.textarea-fill-outline) .end-slot-wrapper {
-  @include padding(0);
-}
-
-:host(.textarea-fill-outline) ion-icon {
-  @include margin(0);
-}
-
-:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
-:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
-  margin-top: 0;
-}
-
-// ----------------------------------------------------------------
-
-// TODO see if there is a better way of doing these
 :host(.textarea-fill-outline) textarea {
   margin-top: 4px;
 }
+
+// Textarea Fill: Outline, Start / End Slots
+// ----------------------------------------------------------------
 
 :host(.textarea-fill-outline) .start-slot-wrapper,
 :host(.textarea-fill-outline) .end-slot-wrapper {

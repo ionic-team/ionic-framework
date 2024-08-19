@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./textarea";
+@import "./textarea.common";
 @import "./textarea.ionic.vars";
 @import "./textarea.ionic.outline.scss";
 
@@ -29,15 +29,15 @@
   height: globals.$ionic-scale-3400;
 }
 
-// Textarea Fill: Outline, Textarea Wrapper
+// Textarea Wrapper
 // ----------------------------------------------------------------
 
-:host(.textarea-fill-outline) .textarea-wrapper {
+.textarea-wrapper {
   gap: #{globals.$ionic-space-100};
 }
 
-:host(.textarea-fill-outline) .textarea-wrapper-inner {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+.textarea-wrapper-inner {
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 }
 
 // Textarea Label
@@ -64,7 +64,7 @@ ion-icon {
 // ----------------------------------------------------------------
 
 .textarea-bottom {
-  @include padding(7px, 0);
+  @include globals.padding(#{globals.$ionic-space-100}, var(--padding-end), null, var(--padding-start));
   @include globals.typography(globals.$ionic-body-sm-medium);
 }
 

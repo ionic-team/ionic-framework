@@ -1,0 +1,125 @@
+@use "../../themes/native/native.globals" as globals;
+@use "./textarea.common";
+
+// Textarea - iOS and Material Design
+// --------------------------------------------------
+
+:host {
+  min-height: 44px;
+
+  font-family: globals.$font-family-base;
+}
+
+// Textarea Wrapper
+// ----------------------------------------------------------------
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the textarea text.
+ * Also, floating and stacked labels should not
+ * push the label down since it it
+ * sits on top of the textarea.
+ */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 0px;
+
+  min-height: 56px;
+}
+
+// Textarea Native
+// ----------------------------------------------------------------
+
+.native-wrapper textarea {
+  @include globals.padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+}
+
+// Textarea Bottom Content
+// ----------------------------------------------------------------
+
+.textarea-bottom {
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the textarea.
+   */
+  @include globals.padding(5px, var(--padding-end), 0, var(--padding-start));
+
+  font-size: globals.dynamic-font(12px);
+}
+
+// Textarea Max Length Counter
+// ----------------------------------------------------------------
+
+.textarea-bottom .counter {
+  color: #{globals.$text-color-step-450};
+
+  padding-inline-start: 16px;
+}
+
+// Textarea Label Placement - Start
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the textarea should be on the end
+   * when the label sits at the start.
+   */
+  @include globals.margin(0, globals.$form-control-label-margin, 0, 0);
+}
+
+// Textarea Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * The margin between the label and
+ * the textarea should be on the start
+ * when the label sits at the end.
+ */
+:host(.textarea-label-placement-end) .label-text-wrapper {
+  @include globals.margin(0, 0, 0, globals.$form-control-label-margin);
+}
+
+// Textarea Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the textarea should be on the end
+   * when the label sits at the start.
+   */
+  @include globals.margin(0, globals.$form-control-label-margin, 0, 0);
+}
+
+// Start / End Slots
+// ----------------------------------------------------------------
+
+.start-slot-wrapper,
+.end-slot-wrapper {
+  @include globals.padding(var(--padding-top), 0, var(--padding-bottom), 0);
+}
+
+:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
+:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
+  margin-top: 8px;
+}
+
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  margin-top: 0; // ensure slot content is vertically aligned with label
+}
+
+::slotted([slot="start"]:last-of-type) {
+  margin-inline-end: globals.$form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]:first-of-type) {
+  margin-inline-start: globals.$form-control-label-margin;
+  margin-inline-end: 0;
+}
