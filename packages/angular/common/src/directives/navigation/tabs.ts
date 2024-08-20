@@ -7,6 +7,8 @@ import {
   HostListener,
   Output,
   ViewChild,
+  Input,
+  AfterViewInit,
 } from '@angular/core';
 
 import { NavController } from '../../providers/nav-controller';
@@ -17,7 +19,7 @@ import { StackDidChangeEvent, StackWillChangeEvent } from './stack-utils';
   selector: 'ion-tabs',
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
+export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterContentChecked {
   /**
    * Note: These must be redeclared on each child class since it needs
    * access to generated components such as IonRouterOutlet and IonTabBar.
@@ -25,6 +27,7 @@ export abstract class IonTabs implements AfterContentInit, AfterContentChecked {
   abstract outlet: any;
   abstract tabBar: any;
   abstract tabBars: any;
+  abstract tabs: any;
 
   @ViewChild('tabsInner', { read: ElementRef, static: true }) tabsInner: ElementRef<HTMLDivElement>;
 

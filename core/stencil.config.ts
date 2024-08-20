@@ -26,7 +26,6 @@ const getAngularOutputTargets = () => {
 
     // tabs
     'ion-tabs',
-    'ion-tab',
 
     // auxiliar
     'ion-picker-legacy-column',
