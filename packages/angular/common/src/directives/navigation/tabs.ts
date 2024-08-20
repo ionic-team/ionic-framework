@@ -8,9 +8,12 @@ import {
   Output,
   ViewChild,
   AfterViewInit,
+  // QueryList,
 } from '@angular/core';
+// import type { Components } from '@ionic/core/components';
 
 import { NavController } from '../../providers/nav-controller';
+// import { IonTab } from '../../directives/proxies';
 
 import { StackDidChangeEvent, StackWillChangeEvent } from './stack-utils';
 
@@ -26,6 +29,7 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   abstract outlet: any;
   abstract tabBar: any;
   abstract tabBars: any;
+  // abstract tabs: QueryList<Components.IonTab>;
   abstract tabs: any;
 
   @ViewChild('tabsInner', { read: ElementRef, static: true }) tabsInner: ElementRef<HTMLDivElement>;
@@ -41,11 +45,26 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
 
   private tabBarSlot = 'bottom';
 
+  private hasTab = false;
+  private selectedTab?: any;
+  private leavingTab?: any;
+
   constructor(private navCtrl: NavController) {}
 
   ngAfterViewInit(): void {
-    const tabs = this.tabs;
-    console.log('tabs.length', tabs.length);
+    /**
+     * Developers must pass at least one ion-tab
+     * inside of ion-tabs if they want to use a
+     * basic tab-based navigation without the
+     * history stack or URL updates associated
+     * with the router.
+     */
+    const firstTab = this.tabs.length > 0 ? this.tabs.first : undefined;
+
+    if (firstTab) {
+      this.hasTab = true;
+      this.setActiveTab(firstTab.tab);
+    }
   }
 
   ngAfterContentInit(): void {
@@ -103,7 +122,19 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   select(tabOrEvent: string | CustomEvent): Promise<boolean> | undefined {
     const isTabString = typeof tabOrEvent === 'string';
     const tab = isTabString ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
-    console.log('tab', tab);
+
+    /**
+     * If the tabs are not using the router, then
+     * the tab switch logic is handled by the tabs
+     * component itself.
+     */
+    if (this.hasTab) {
+      this.setActiveTab(tab);
+      this.tabSwitch();
+
+      return;
+    }
+
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
 
@@ -150,7 +181,45 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
     }
   }
 
+  private setActiveTab(tab: string): void {
+    const tabs = this.tabs;
+    const selectedTab = tabs.find((t: any) => t.tab === tab);
+
+    if (!selectedTab) {
+      console.error(`tab with id: "${tab}" does not exist`);
+      return;
+    }
+
+    this.leavingTab = this.selectedTab;
+    this.selectedTab = selectedTab;
+
+    this.ionTabsWillChange.emit({ tab });
+
+    selectedTab.el.active = true;
+  }
+
+  private tabSwitch(): void {
+    const selectedTab = this.selectedTab;
+    const leavingTab = this.leavingTab;
+
+    if (this.tabBar) {
+      this.tabBar.selectedTab = selectedTab.tab;
+    }
+
+    if (leavingTab.tab !== selectedTab.tab) {
+      if (leavingTab) {
+        leavingTab.el.active = false;
+      }
+    }
+
+    this.ionTabsDidChange.emit({ tab: selectedTab.tab });
+  }
+
   getSelected(): string | undefined {
+    if (this.hasTab) {
+      return this.selectedTab.tab;
+    }
+
     return this.outlet.getActiveStackId();
   }
 
