@@ -1,21 +1,25 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonTabBar } from '@ionic/angular';
+import { IonTabBar, IonTabButton, IonIcon, IonLabel, IonTabs, IonTab } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { add, logoIonic, save } from 'ionicons/icons';
+
+addIcons({ add, logoIonic, save });
 
 @Component({
   selector: 'app-tabs-basic',
   templateUrl: './tabs-basic.component.html',
-  styleUrls: ['./tabs-basic.component.css']
+  styleUrls: ['./tabs-basic.component.css'],
+  standalone: true,
+  imports: [IonTabBar, IonTabButton, IonIcon, IonLabel, IonTabs, IonTab]
 })
 export class TabsBasicComponent {
-  constructor() { }
+  tabsDidChangeCounter = 0;
+  tabsDidChangeEvent = '';
+  tabsDidChangeSelectedTab? = '';
 
   tabsWillChangeCounter = 0;
   tabsWillChangeEvent = '';
   tabsWillChangeSelectedTab? = '';
-
-  tabsDidChangeCounter = 0;
-  tabsDidChangeEvent = '';
-  tabsDidChangeSelectedTab? = '';
 
   @ViewChild(IonTabBar) tabBar!: IonTabBar;
 
