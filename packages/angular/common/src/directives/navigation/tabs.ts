@@ -8,12 +8,9 @@ import {
   Output,
   ViewChild,
   AfterViewInit,
-  // QueryList,
 } from '@angular/core';
-// import type { Components } from '@ionic/core/components';
 
 import { NavController } from '../../providers/nav-controller';
-// import { IonTab } from '../../directives/proxies';
 
 import { StackDidChangeEvent, StackWillChangeEvent } from './stack-utils';
 
@@ -29,7 +26,6 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   abstract outlet: any;
   abstract tabBar: any;
   abstract tabBars: any;
-  // abstract tabs: QueryList<Components.IonTab>;
   abstract tabs: any;
 
   @ViewChild('tabsInner', { read: ElementRef, static: true }) tabsInner: ElementRef<HTMLDivElement>;
