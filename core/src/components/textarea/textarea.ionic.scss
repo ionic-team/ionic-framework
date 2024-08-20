@@ -1,7 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./textarea.common";
-@import "./textarea.ionic.vars";
-@import "./textarea.ionic.outline.scss";
+@use "./textarea.common";
+@use "./textarea.ionic.outline.scss" as outline;
 
 // Ionic Textarea
 // --------------------------------------------------
@@ -56,7 +55,7 @@
 }
 
 :host(.label-floating) .label-text-wrapper {
-  @include transform(none);
+  @include globals.transform(none);
 }
 
 // Textarea Slotted Content

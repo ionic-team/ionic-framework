@@ -1,5 +1,4 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./textarea.vars";
 
 // Textarea Fill: Outline
 // ----------------------------------------------------------------
@@ -24,8 +23,8 @@
 // ----------------------------------------------------------------
 
 :host(.textarea-fill-outline) .textarea-outline {
-  @include position(0, 0, 0, 0);
-  @include border-radius(var(--border-radius));
+  @include globals.position(0, 0, 0, 0);
+  @include globals.border-radius(var(--border-radius));
 
   position: absolute;
 
