@@ -45,6 +45,21 @@
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 }
 
+// Textarea Auto Grow
+// ----------------------------------------------------------------
+
+// The height should be auto only when auto-grow is enabled.
+:host([auto-grow]) .textarea-wrapper-inner {
+  height: auto;
+}
+
+// The min and max height should be inherited if auto-grow is enabled.
+// This allows the textarea to grow and shrink as needed.
+:host([auto-grow]) .native-wrapper {
+  min-height: inherit;
+  max-height: inherit;
+}
+
 // Textarea Label
 // ----------------------------------------------------------------
 
