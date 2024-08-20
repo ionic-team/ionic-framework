@@ -53,19 +53,3 @@
 :host(.textarea-fill-outline) textarea {
   margin-top: globals.$ionic-space-100;
 }
-
-// Textarea Fill: Outline, Start / End Slots
-// ----------------------------------------------------------------
-
-:host(.textarea-fill-outline) .start-slot-wrapper,
-:host(.textarea-fill-outline) .end-slot-wrapper {
-  margin-top: 3px;
-}
-
-:host(.textarea-fill-outline) .start-slot-wrapper {
-  margin-inline-start: 1px;
-}
-
-:host(.textarea-fill-outline) .end-slot-wrapper {
-  margin-inline-end: 1px;
-}

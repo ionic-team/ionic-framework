@@ -62,7 +62,14 @@
 // ----------------------------------------------------------------
 
 ion-icon {
+  font-size: globals.$ionic-scale-400;
+
   color: globals.$ionic-color-neutral-800;
+}
+
+.start-slot-wrapper,
+.end-slot-wrapper {
+  margin-top: globals.$ionic-space-050;
 }
 
 // Textarea Bottom Content
