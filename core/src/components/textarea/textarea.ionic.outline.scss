@@ -51,7 +51,7 @@
 // ----------------------------------------------------------------
 
 :host(.textarea-fill-outline) textarea {
-  margin-top: 4px;
+  margin-top: globals.$ionic-space-100;
 }
 
 // Textarea Fill: Outline, Start / End Slots
