@@ -442,19 +442,19 @@ describe('Tabs', () => {
     })
 
     it('should show correct tab when clicking the tab button', () => {
-      cy.get('ion-tab[data-pageid=tab1]').should('be.visible');
-      cy.get('ion-tab[data-pageid=tab2]').should('not.be.visible');
+      cy.get('ion-tab[tab="tab1"]').should('be.visible');
+      cy.get('ion-tab[tab="tab2"]').should('not.be.visible');
 
-      cy.get('ion-tab-button[data-tab=tab2]').click();
+      cy.get('ion-tab-button[tab="tab2"]').click();
 
-      cy.get('ion-tab[data-pageid=tab1]').should('not.be.visible');
-      cy.get('ion-tab[data-pageid=tab2]').should('be.visible');
+      cy.get('ion-tab[tab="tab1"]').should('not.be.visible');
+      cy.get('ion-tab[tab="tab2"]').should('be.visible');
     });
 
     it('should not change the URL when clicking the tab button', () => {
       cy.url().should('include', '/tabs-basic');
 
-      cy.get('ion-tab-button[data-tab=tab2]').click();
+      cy.get('ion-tab-button[tab="tab2"]').click();
 
       cy.url().should('include', '/tabs-basic');
     });
