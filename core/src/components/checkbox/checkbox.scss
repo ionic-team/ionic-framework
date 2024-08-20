@@ -147,6 +147,10 @@ input {
 // Justify Content
 // ---------------------------------------------
 
+:host([class*='checkbox-justify-']) {
+  display: flex;
+}
+
 :host(.checkbox-justify-space-between) .checkbox-wrapper {
   justify-content: space-between;
 }
