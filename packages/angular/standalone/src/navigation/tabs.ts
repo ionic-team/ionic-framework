@@ -1,7 +1,7 @@
 import { Component, ContentChild, ContentChildren, ViewChild, QueryList } from '@angular/core';
 import { IonTabs as IonTabsBase } from '@ionic/angular/common';
 
-import { IonTabBar } from '../directives/proxies';
+import { IonTabBar, IonTab } from '../directives/proxies';
 
 import { IonRouterOutlet } from './router-outlet';
 
@@ -54,4 +54,5 @@ export class IonTabs extends IonTabsBase {
 
   @ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
   @ContentChildren(IonTabBar) tabBars: QueryList<IonTabBar>;
+  @ContentChildren(IonTab) tabs: QueryList<IonTab>;
 }

@@ -7,7 +7,6 @@ import {
   HostListener,
   Output,
   ViewChild,
-  Input,
   AfterViewInit,
 } from '@angular/core';
 
@@ -43,6 +42,11 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   private tabBarSlot = 'bottom';
 
   constructor(private navCtrl: NavController) {}
+
+  ngAfterViewInit(): void {
+    const tabs = this.tabs;
+    console.log('tabs.length', tabs.length);
+  }
 
   ngAfterContentInit(): void {
     this.detectSlotChanges();
@@ -99,6 +103,7 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   select(tabOrEvent: string | CustomEvent): Promise<boolean> | undefined {
     const isTabString = typeof tabOrEvent === 'string';
     const tab = isTabString ? tabOrEvent : (tabOrEvent as CustomEvent).detail.tab;
+    console.log('tab', tab);
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
 

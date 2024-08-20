@@ -11,13 +11,13 @@ import { IonRouterOutlet } from './ion-router-outlet';
     <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner" #tabsInner>
       <ion-router-outlet
-        *ngIf="tabs?.length > 0"
+        *ngIf="tabs?.length === 0"
         #outlet
         tabs="true"
         (stackWillChange)="onStackWillChange($event)"
         (stackDidChange)="onStackDidChange($event)"
       ></ion-router-outlet>
-      <ng-container *ngIf="tabs?.length === 0" select="ion-tab"></ng-container>
+      <ng-container *ngIf="tabs?.length > 0" select="ion-tab"></ng-container>
     </div>
     <ng-content></ng-content>
   `,
