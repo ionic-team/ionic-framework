@@ -249,8 +249,9 @@ export class Textarea implements ComponentInterface {
   @Prop() shape?: 'round';
 
   /**
-   * The size of the textarea. If "large", it will have an increased height. By default the
-   * size is "medium". This property only applies to the `"ionic"` theme.
+   * The size of the textarea. If "large" it will increase the height of the textarea, while
+   * "small" and "medium" provide progressively smaller heights. The default size is "medium".
+   * This property only applies to the `"ionic"` theme.
    */
   @Prop() size?: 'small' | 'medium' | 'large' = 'medium';
 
