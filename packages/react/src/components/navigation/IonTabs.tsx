@@ -102,15 +102,19 @@ export const IonTabs = /*@__PURE__*/ (() =>
           ? (this.props.children as ChildFunction)(this.ionTabContextState)
           : this.props.children;
 
+      const outletProps = {
+        ref: this.routerOutletRef,
+      };
+
       React.Children.forEach(children, (child: any) => {
         // eslint-disable-next-line no-prototype-builtins
         if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
           return;
         }
         if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
-          outlet = React.cloneElement(child);
+          outlet = React.cloneElement(child, outletProps);
         } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
-          outlet = child.props.children[0];
+          outlet = React.cloneElement(child.props.children[0], outletProps);
         } else if (child.type === IonTab) {
           /**
            * This indicates that IonTabs will be using a basic tab-based navigation
@@ -121,6 +125,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
 
         let childProps: any = {
           ref: this.tabBarRef,
+          routerOutletRef: this.routerOutletRef,
         };
 
         /**
@@ -187,12 +192,29 @@ export const IonTabs = /*@__PURE__*/ (() =>
               <IonTabsInner {...this.props}>
                 {React.Children.map(children, (child: React.ReactNode) => {
                   if (React.isValidElement(child)) {
-                    if (child.type === IonTabBar || (child.type as any).isTabBar) {
+                    const isTabBar =
+                      child.type === IonTabBar ||
+                      (child.type as any).isTabBar ||
+                      (child.type === Fragment &&
+                        (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar));
+                    const isRouterOutlet =
+                      child.type === IonRouterOutlet ||
+                      (child.type as any).isRouterOutlet ||
+                      (child.type === Fragment && child.props.children[0].type === IonRouterOutlet);
+
+                    if (isTabBar) {
                       /**
                        * The modified tabBar needs to be returned to include
                        * the context and the overridden methods.
                        */
                       return tabBar;
+                    }
+                    if (isRouterOutlet) {
+                      /**
+                       * The modified outlet needs to be returned to include
+                       * the ref.
+                       */
+                      return outlet;
                     }
                   }
                   return child;
