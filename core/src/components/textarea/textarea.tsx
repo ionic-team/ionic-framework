@@ -244,9 +244,13 @@ export class Textarea implements ComponentInterface {
   @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
   /**
-   * The shape of the textarea. If "round" it will have an increased border radius.
+   * Set to `"soft"` for a textarea with slightly rounded corners,
+   * `"round"` for a textarea with fully rounded corners, or `"rectangular"`
+   * for a textarea without rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
    */
-  @Prop() shape?: 'round';
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * The size of the textarea. If "large" it will increase the height of the textarea, while
@@ -541,6 +545,22 @@ export class Textarea implements ComponentInterface {
     return this.label !== undefined || this.labelSlot !== null;
   }
 
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11050): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   /**
    * Renders the border container when fill="outline".
    */
@@ -626,8 +646,9 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, fill, shape, size, labelPlacement, el, hasFocus } = this;
+    const { inputId, disabled, fill, size, labelPlacement, el, hasFocus } = this;
     const theme = getIonTheme(this);
+    const shape = this.getShape();
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
