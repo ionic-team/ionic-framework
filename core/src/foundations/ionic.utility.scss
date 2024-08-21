@@ -3,7 +3,6 @@
  * Ionic Design System
  */
 
-
 @import "./ionic.vars";
 @import "../themes/mixins";
 
@@ -141,7 +140,7 @@
   --margin-bottom: #{$ionic-space-0};
 
   @include margin($ionic-space-0);
-};
+}
 
 .ionic-padding-space-0 {
   --padding-start: #{$ionic-space-0};
@@ -150,7 +149,7 @@
   --padding-bottom: #{$ionic-space-0};
 
   @include padding($ionic-space-0);
-};
+}
 
 .ionic-margin-space-100 {
   --margin-start: #{$ionic-space-100};
@@ -159,7 +158,7 @@
   --margin-bottom: #{$ionic-space-100};
 
   @include margin($ionic-space-100);
-};
+}
 
 .ionic-padding-space-100 {
   --padding-start: #{$ionic-space-100};
@@ -168,7 +167,7 @@
   --padding-bottom: #{$ionic-space-100};
 
   @include padding($ionic-space-100);
-};
+}
 
 .ionic-margin-space-150 {
   --margin-start: #{$ionic-space-150};
@@ -177,7 +176,7 @@
   --margin-bottom: #{$ionic-space-150};
 
   @include margin($ionic-space-150);
-};
+}
 
 .ionic-padding-space-150 {
   --padding-start: #{$ionic-space-150};
@@ -186,7 +185,7 @@
   --padding-bottom: #{$ionic-space-150};
 
   @include padding($ionic-space-150);
-};
+}
 
 .ionic-margin-space-200 {
   --margin-start: #{$ionic-space-200};
@@ -195,7 +194,7 @@
   --margin-bottom: #{$ionic-space-200};
 
   @include margin($ionic-space-200);
-};
+}
 
 .ionic-padding-space-200 {
   --padding-start: #{$ionic-space-200};
@@ -204,7 +203,7 @@
   --padding-bottom: #{$ionic-space-200};
 
   @include padding($ionic-space-200);
-};
+}
 
 .ionic-margin-space-250 {
   --margin-start: #{$ionic-space-250};
@@ -213,7 +212,7 @@
   --margin-bottom: #{$ionic-space-250};
 
   @include margin($ionic-space-250);
-};
+}
 
 .ionic-padding-space-250 {
   --padding-start: #{$ionic-space-250};
@@ -222,7 +221,7 @@
   --padding-bottom: #{$ionic-space-250};
 
   @include padding($ionic-space-250);
-};
+}
 
 .ionic-margin-space-300 {
   --margin-start: #{$ionic-space-300};
@@ -231,7 +230,7 @@
   --margin-bottom: #{$ionic-space-300};
 
   @include margin($ionic-space-300);
-};
+}
 
 .ionic-padding-space-300 {
   --padding-start: #{$ionic-space-300};
@@ -240,7 +239,7 @@
   --padding-bottom: #{$ionic-space-300};
 
   @include padding($ionic-space-300);
-};
+}
 
 .ionic-margin-space-400 {
   --margin-start: #{$ionic-space-400};
@@ -249,7 +248,7 @@
   --margin-bottom: #{$ionic-space-400};
 
   @include margin($ionic-space-400);
-};
+}
 
 .ionic-padding-space-400 {
   --padding-start: #{$ionic-space-400};
@@ -258,7 +257,7 @@
   --padding-bottom: #{$ionic-space-400};
 
   @include padding($ionic-space-400);
-};
+}
 
 .ionic-margin-space-500 {
   --margin-start: #{$ionic-space-500};
@@ -267,7 +266,7 @@
   --margin-bottom: #{$ionic-space-500};
 
   @include margin($ionic-space-500);
-};
+}
 
 .ionic-padding-space-500 {
   --padding-start: #{$ionic-space-500};
@@ -276,7 +275,7 @@
   --padding-bottom: #{$ionic-space-500};
 
   @include padding($ionic-space-500);
-};
+}
 
 .ionic-margin-space-600 {
   --margin-start: #{$ionic-space-600};
@@ -285,7 +284,7 @@
   --margin-bottom: #{$ionic-space-600};
 
   @include margin($ionic-space-600);
-};
+}
 
 .ionic-padding-space-600 {
   --padding-start: #{$ionic-space-600};
@@ -294,7 +293,7 @@
   --padding-bottom: #{$ionic-space-600};
 
   @include padding($ionic-space-600);
-};
+}
 
 .ionic-margin-space-700 {
   --margin-start: #{$ionic-space-700};
@@ -303,7 +302,7 @@
   --margin-bottom: #{$ionic-space-700};
 
   @include margin($ionic-space-700);
-};
+}
 
 .ionic-padding-space-700 {
   --padding-start: #{$ionic-space-700};
@@ -312,7 +311,7 @@
   --padding-bottom: #{$ionic-space-700};
 
   @include padding($ionic-space-700);
-};
+}
 
 .ionic-margin-space-800 {
   --margin-start: #{$ionic-space-800};
@@ -321,7 +320,7 @@
   --margin-bottom: #{$ionic-space-800};
 
   @include margin($ionic-space-800);
-};
+}
 
 .ionic-padding-space-800 {
   --padding-start: #{$ionic-space-800};
@@ -330,7 +329,7 @@
   --padding-bottom: #{$ionic-space-800};
 
   @include padding($ionic-space-800);
-};
+}
 
 .ionic-margin-space-850 {
   --margin-start: #{$ionic-space-850};
@@ -339,7 +338,7 @@
   --margin-bottom: #{$ionic-space-850};
 
   @include margin($ionic-space-850);
-};
+}
 
 .ionic-padding-space-850 {
   --padding-start: #{$ionic-space-850};
@@ -348,7 +347,7 @@
   --padding-bottom: #{$ionic-space-850};
 
   @include padding($ionic-space-850);
-};
+}
 
 .ionic-margin-space-900 {
   --margin-start: #{$ionic-space-900};
@@ -357,7 +356,7 @@
   --margin-bottom: #{$ionic-space-900};
 
   @include margin($ionic-space-900);
-};
+}
 
 .ionic-padding-space-900 {
   --padding-start: #{$ionic-space-900};
@@ -366,7 +365,7 @@
   --padding-bottom: #{$ionic-space-900};
 
   @include padding($ionic-space-900);
-};
+}
 
 .ionic-margin-space-1000 {
   --margin-start: #{$ionic-space-1000};
@@ -375,7 +374,7 @@
   --margin-bottom: #{$ionic-space-1000};
 
   @include margin($ionic-space-1000);
-};
+}
 
 .ionic-padding-space-1000 {
   --padding-start: #{$ionic-space-1000};
@@ -384,7 +383,7 @@
   --padding-bottom: #{$ionic-space-1000};
 
   @include padding($ionic-space-1000);
-};
+}
 
 .ionic-margin-space-1200 {
   --margin-start: #{$ionic-space-1200};
@@ -393,7 +392,7 @@
   --margin-bottom: #{$ionic-space-1200};
 
   @include margin($ionic-space-1200);
-};
+}
 
 .ionic-padding-space-1200 {
   --padding-start: #{$ionic-space-1200};
@@ -402,7 +401,7 @@
   --padding-bottom: #{$ionic-space-1200};
 
   @include padding($ionic-space-1200);
-};
+}
 
 .ionic-margin-space-050 {
   --margin-start: #{$ionic-space-050};
@@ -411,7 +410,7 @@
   --margin-bottom: #{$ionic-space-050};
 
   @include margin($ionic-space-050);
-};
+}
 
 .ionic-padding-space-050 {
   --padding-start: #{$ionic-space-050};
@@ -420,7 +419,7 @@
   --padding-bottom: #{$ionic-space-050};
 
   @include padding($ionic-space-050);
-};
+}
 .ionic-border-radius-0 {
   border-radius: $ionic-border-radius-0;
 }
@@ -478,1483 +477,1483 @@
 .ionic-color-base-white {
   color: $ionic-color-base-white;
 }
-  .ionic-background-color-base-white {
+.ionic-background-color-base-white {
   background-color: $ionic-color-base-white;
 }
 .ionic-color-base-black {
   color: $ionic-color-base-black;
 }
-  .ionic-background-color-base-black {
+.ionic-background-color-base-black {
   background-color: $ionic-color-base-black;
 }
 .ionic-color-neutral-100 {
   color: $ionic-color-neutral-100;
 }
-  .ionic-background-color-neutral-100 {
+.ionic-background-color-neutral-100 {
   background-color: $ionic-color-neutral-100;
 }
 .ionic-color-neutral-200 {
   color: $ionic-color-neutral-200;
 }
-  .ionic-background-color-neutral-200 {
+.ionic-background-color-neutral-200 {
   background-color: $ionic-color-neutral-200;
 }
 .ionic-color-neutral-300 {
   color: $ionic-color-neutral-300;
 }
-  .ionic-background-color-neutral-300 {
+.ionic-background-color-neutral-300 {
   background-color: $ionic-color-neutral-300;
 }
 .ionic-color-neutral-400 {
   color: $ionic-color-neutral-400;
 }
-  .ionic-background-color-neutral-400 {
+.ionic-background-color-neutral-400 {
   background-color: $ionic-color-neutral-400;
 }
 .ionic-color-neutral-500 {
   color: $ionic-color-neutral-500;
 }
-  .ionic-background-color-neutral-500 {
+.ionic-background-color-neutral-500 {
   background-color: $ionic-color-neutral-500;
 }
 .ionic-color-neutral-600 {
   color: $ionic-color-neutral-600;
 }
-  .ionic-background-color-neutral-600 {
+.ionic-background-color-neutral-600 {
   background-color: $ionic-color-neutral-600;
 }
 .ionic-color-neutral-700 {
   color: $ionic-color-neutral-700;
 }
-  .ionic-background-color-neutral-700 {
+.ionic-background-color-neutral-700 {
   background-color: $ionic-color-neutral-700;
 }
 .ionic-color-neutral-800 {
   color: $ionic-color-neutral-800;
 }
-  .ionic-background-color-neutral-800 {
+.ionic-background-color-neutral-800 {
   background-color: $ionic-color-neutral-800;
 }
 .ionic-color-neutral-900 {
   color: $ionic-color-neutral-900;
 }
-  .ionic-background-color-neutral-900 {
+.ionic-background-color-neutral-900 {
   background-color: $ionic-color-neutral-900;
 }
 .ionic-color-neutral-1000 {
   color: $ionic-color-neutral-1000;
 }
-  .ionic-background-color-neutral-1000 {
+.ionic-background-color-neutral-1000 {
   background-color: $ionic-color-neutral-1000;
 }
 .ionic-color-neutral-1100 {
   color: $ionic-color-neutral-1100;
 }
-  .ionic-background-color-neutral-1100 {
+.ionic-background-color-neutral-1100 {
   background-color: $ionic-color-neutral-1100;
 }
 .ionic-color-neutral-1200 {
   color: $ionic-color-neutral-1200;
 }
-  .ionic-background-color-neutral-1200 {
+.ionic-background-color-neutral-1200 {
   background-color: $ionic-color-neutral-1200;
 }
 .ionic-color-red-100 {
   color: $ionic-color-red-100;
 }
-  .ionic-background-color-red-100 {
+.ionic-background-color-red-100 {
   background-color: $ionic-color-red-100;
 }
 .ionic-color-red-200 {
   color: $ionic-color-red-200;
 }
-  .ionic-background-color-red-200 {
+.ionic-background-color-red-200 {
   background-color: $ionic-color-red-200;
 }
 .ionic-color-red-300 {
   color: $ionic-color-red-300;
 }
-  .ionic-background-color-red-300 {
+.ionic-background-color-red-300 {
   background-color: $ionic-color-red-300;
 }
 .ionic-color-red-400 {
   color: $ionic-color-red-400;
 }
-  .ionic-background-color-red-400 {
+.ionic-background-color-red-400 {
   background-color: $ionic-color-red-400;
 }
 .ionic-color-red-500 {
   color: $ionic-color-red-500;
 }
-  .ionic-background-color-red-500 {
+.ionic-background-color-red-500 {
   background-color: $ionic-color-red-500;
 }
 .ionic-color-red-600 {
   color: $ionic-color-red-600;
 }
-  .ionic-background-color-red-600 {
+.ionic-background-color-red-600 {
   background-color: $ionic-color-red-600;
 }
 .ionic-color-red-700 {
   color: $ionic-color-red-700;
 }
-  .ionic-background-color-red-700 {
+.ionic-background-color-red-700 {
   background-color: $ionic-color-red-700;
 }
 .ionic-color-red-800 {
   color: $ionic-color-red-800;
 }
-  .ionic-background-color-red-800 {
+.ionic-background-color-red-800 {
   background-color: $ionic-color-red-800;
 }
 .ionic-color-red-900 {
   color: $ionic-color-red-900;
 }
-  .ionic-background-color-red-900 {
+.ionic-background-color-red-900 {
   background-color: $ionic-color-red-900;
 }
 .ionic-color-red-1000 {
   color: $ionic-color-red-1000;
 }
-  .ionic-background-color-red-1000 {
+.ionic-background-color-red-1000 {
   background-color: $ionic-color-red-1000;
 }
 .ionic-color-red-1100 {
   color: $ionic-color-red-1100;
 }
-  .ionic-background-color-red-1100 {
+.ionic-background-color-red-1100 {
   background-color: $ionic-color-red-1100;
 }
 .ionic-color-red-1200 {
   color: $ionic-color-red-1200;
 }
-  .ionic-background-color-red-1200 {
+.ionic-background-color-red-1200 {
   background-color: $ionic-color-red-1200;
 }
 .ionic-color-pumpkin-100 {
   color: $ionic-color-pumpkin-100;
 }
-  .ionic-background-color-pumpkin-100 {
+.ionic-background-color-pumpkin-100 {
   background-color: $ionic-color-pumpkin-100;
 }
 .ionic-color-pumpkin-200 {
   color: $ionic-color-pumpkin-200;
 }
-  .ionic-background-color-pumpkin-200 {
+.ionic-background-color-pumpkin-200 {
   background-color: $ionic-color-pumpkin-200;
 }
 .ionic-color-pumpkin-300 {
   color: $ionic-color-pumpkin-300;
 }
-  .ionic-background-color-pumpkin-300 {
+.ionic-background-color-pumpkin-300 {
   background-color: $ionic-color-pumpkin-300;
 }
 .ionic-color-pumpkin-400 {
   color: $ionic-color-pumpkin-400;
 }
-  .ionic-background-color-pumpkin-400 {
+.ionic-background-color-pumpkin-400 {
   background-color: $ionic-color-pumpkin-400;
 }
 .ionic-color-pumpkin-500 {
   color: $ionic-color-pumpkin-500;
 }
-  .ionic-background-color-pumpkin-500 {
+.ionic-background-color-pumpkin-500 {
   background-color: $ionic-color-pumpkin-500;
 }
 .ionic-color-pumpkin-600 {
   color: $ionic-color-pumpkin-600;
 }
-  .ionic-background-color-pumpkin-600 {
+.ionic-background-color-pumpkin-600 {
   background-color: $ionic-color-pumpkin-600;
 }
 .ionic-color-pumpkin-700 {
   color: $ionic-color-pumpkin-700;
 }
-  .ionic-background-color-pumpkin-700 {
+.ionic-background-color-pumpkin-700 {
   background-color: $ionic-color-pumpkin-700;
 }
 .ionic-color-pumpkin-800 {
   color: $ionic-color-pumpkin-800;
 }
-  .ionic-background-color-pumpkin-800 {
+.ionic-background-color-pumpkin-800 {
   background-color: $ionic-color-pumpkin-800;
 }
 .ionic-color-pumpkin-900 {
   color: $ionic-color-pumpkin-900;
 }
-  .ionic-background-color-pumpkin-900 {
+.ionic-background-color-pumpkin-900 {
   background-color: $ionic-color-pumpkin-900;
 }
 .ionic-color-pumpkin-1000 {
   color: $ionic-color-pumpkin-1000;
 }
-  .ionic-background-color-pumpkin-1000 {
+.ionic-background-color-pumpkin-1000 {
   background-color: $ionic-color-pumpkin-1000;
 }
 .ionic-color-pumpkin-1100 {
   color: $ionic-color-pumpkin-1100;
 }
-  .ionic-background-color-pumpkin-1100 {
+.ionic-background-color-pumpkin-1100 {
   background-color: $ionic-color-pumpkin-1100;
 }
 .ionic-color-pumpkin-1200 {
   color: $ionic-color-pumpkin-1200;
 }
-  .ionic-background-color-pumpkin-1200 {
+.ionic-background-color-pumpkin-1200 {
   background-color: $ionic-color-pumpkin-1200;
 }
 .ionic-color-orange-100 {
   color: $ionic-color-orange-100;
 }
-  .ionic-background-color-orange-100 {
+.ionic-background-color-orange-100 {
   background-color: $ionic-color-orange-100;
 }
 .ionic-color-orange-200 {
   color: $ionic-color-orange-200;
 }
-  .ionic-background-color-orange-200 {
+.ionic-background-color-orange-200 {
   background-color: $ionic-color-orange-200;
 }
 .ionic-color-orange-300 {
   color: $ionic-color-orange-300;
 }
-  .ionic-background-color-orange-300 {
+.ionic-background-color-orange-300 {
   background-color: $ionic-color-orange-300;
 }
 .ionic-color-orange-400 {
   color: $ionic-color-orange-400;
 }
-  .ionic-background-color-orange-400 {
+.ionic-background-color-orange-400 {
   background-color: $ionic-color-orange-400;
 }
 .ionic-color-orange-500 {
   color: $ionic-color-orange-500;
 }
-  .ionic-background-color-orange-500 {
+.ionic-background-color-orange-500 {
   background-color: $ionic-color-orange-500;
 }
 .ionic-color-orange-600 {
   color: $ionic-color-orange-600;
 }
-  .ionic-background-color-orange-600 {
+.ionic-background-color-orange-600 {
   background-color: $ionic-color-orange-600;
 }
 .ionic-color-orange-700 {
   color: $ionic-color-orange-700;
 }
-  .ionic-background-color-orange-700 {
+.ionic-background-color-orange-700 {
   background-color: $ionic-color-orange-700;
 }
 .ionic-color-orange-800 {
   color: $ionic-color-orange-800;
 }
-  .ionic-background-color-orange-800 {
+.ionic-background-color-orange-800 {
   background-color: $ionic-color-orange-800;
 }
 .ionic-color-orange-900 {
   color: $ionic-color-orange-900;
 }
-  .ionic-background-color-orange-900 {
+.ionic-background-color-orange-900 {
   background-color: $ionic-color-orange-900;
 }
 .ionic-color-orange-1000 {
   color: $ionic-color-orange-1000;
 }
-  .ionic-background-color-orange-1000 {
+.ionic-background-color-orange-1000 {
   background-color: $ionic-color-orange-1000;
 }
 .ionic-color-orange-1100 {
   color: $ionic-color-orange-1100;
 }
-  .ionic-background-color-orange-1100 {
+.ionic-background-color-orange-1100 {
   background-color: $ionic-color-orange-1100;
 }
 .ionic-color-orange-1200 {
   color: $ionic-color-orange-1200;
 }
-  .ionic-background-color-orange-1200 {
+.ionic-background-color-orange-1200 {
   background-color: $ionic-color-orange-1200;
 }
 .ionic-color-yellow-100 {
   color: $ionic-color-yellow-100;
 }
-  .ionic-background-color-yellow-100 {
+.ionic-background-color-yellow-100 {
   background-color: $ionic-color-yellow-100;
 }
 .ionic-color-yellow-200 {
   color: $ionic-color-yellow-200;
 }
-  .ionic-background-color-yellow-200 {
+.ionic-background-color-yellow-200 {
   background-color: $ionic-color-yellow-200;
 }
 .ionic-color-yellow-300 {
   color: $ionic-color-yellow-300;
 }
-  .ionic-background-color-yellow-300 {
+.ionic-background-color-yellow-300 {
   background-color: $ionic-color-yellow-300;
 }
 .ionic-color-yellow-400 {
   color: $ionic-color-yellow-400;
 }
-  .ionic-background-color-yellow-400 {
+.ionic-background-color-yellow-400 {
   background-color: $ionic-color-yellow-400;
 }
 .ionic-color-yellow-500 {
   color: $ionic-color-yellow-500;
 }
-  .ionic-background-color-yellow-500 {
+.ionic-background-color-yellow-500 {
   background-color: $ionic-color-yellow-500;
 }
 .ionic-color-yellow-600 {
   color: $ionic-color-yellow-600;
 }
-  .ionic-background-color-yellow-600 {
+.ionic-background-color-yellow-600 {
   background-color: $ionic-color-yellow-600;
 }
 .ionic-color-yellow-700 {
   color: $ionic-color-yellow-700;
 }
-  .ionic-background-color-yellow-700 {
+.ionic-background-color-yellow-700 {
   background-color: $ionic-color-yellow-700;
 }
 .ionic-color-yellow-800 {
   color: $ionic-color-yellow-800;
 }
-  .ionic-background-color-yellow-800 {
+.ionic-background-color-yellow-800 {
   background-color: $ionic-color-yellow-800;
 }
 .ionic-color-yellow-900 {
   color: $ionic-color-yellow-900;
 }
-  .ionic-background-color-yellow-900 {
+.ionic-background-color-yellow-900 {
   background-color: $ionic-color-yellow-900;
 }
 .ionic-color-yellow-1000 {
   color: $ionic-color-yellow-1000;
 }
-  .ionic-background-color-yellow-1000 {
+.ionic-background-color-yellow-1000 {
   background-color: $ionic-color-yellow-1000;
 }
 .ionic-color-yellow-1100 {
   color: $ionic-color-yellow-1100;
 }
-  .ionic-background-color-yellow-1100 {
+.ionic-background-color-yellow-1100 {
   background-color: $ionic-color-yellow-1100;
 }
 .ionic-color-yellow-1200 {
   color: $ionic-color-yellow-1200;
 }
-  .ionic-background-color-yellow-1200 {
+.ionic-background-color-yellow-1200 {
   background-color: $ionic-color-yellow-1200;
 }
 .ionic-color-lime-100 {
   color: $ionic-color-lime-100;
 }
-  .ionic-background-color-lime-100 {
+.ionic-background-color-lime-100 {
   background-color: $ionic-color-lime-100;
 }
 .ionic-color-lime-200 {
   color: $ionic-color-lime-200;
 }
-  .ionic-background-color-lime-200 {
+.ionic-background-color-lime-200 {
   background-color: $ionic-color-lime-200;
 }
 .ionic-color-lime-300 {
   color: $ionic-color-lime-300;
 }
-  .ionic-background-color-lime-300 {
+.ionic-background-color-lime-300 {
   background-color: $ionic-color-lime-300;
 }
 .ionic-color-lime-400 {
   color: $ionic-color-lime-400;
 }
-  .ionic-background-color-lime-400 {
+.ionic-background-color-lime-400 {
   background-color: $ionic-color-lime-400;
 }
 .ionic-color-lime-500 {
   color: $ionic-color-lime-500;
 }
-  .ionic-background-color-lime-500 {
+.ionic-background-color-lime-500 {
   background-color: $ionic-color-lime-500;
 }
 .ionic-color-lime-600 {
   color: $ionic-color-lime-600;
 }
-  .ionic-background-color-lime-600 {
+.ionic-background-color-lime-600 {
   background-color: $ionic-color-lime-600;
 }
 .ionic-color-lime-700 {
   color: $ionic-color-lime-700;
 }
-  .ionic-background-color-lime-700 {
+.ionic-background-color-lime-700 {
   background-color: $ionic-color-lime-700;
 }
 .ionic-color-lime-800 {
   color: $ionic-color-lime-800;
 }
-  .ionic-background-color-lime-800 {
+.ionic-background-color-lime-800 {
   background-color: $ionic-color-lime-800;
 }
 .ionic-color-lime-900 {
   color: $ionic-color-lime-900;
 }
-  .ionic-background-color-lime-900 {
+.ionic-background-color-lime-900 {
   background-color: $ionic-color-lime-900;
 }
 .ionic-color-lime-1000 {
   color: $ionic-color-lime-1000;
 }
-  .ionic-background-color-lime-1000 {
+.ionic-background-color-lime-1000 {
   background-color: $ionic-color-lime-1000;
 }
 .ionic-color-lime-1100 {
   color: $ionic-color-lime-1100;
 }
-  .ionic-background-color-lime-1100 {
+.ionic-background-color-lime-1100 {
   background-color: $ionic-color-lime-1100;
 }
 .ionic-color-lime-1200 {
   color: $ionic-color-lime-1200;
 }
-  .ionic-background-color-lime-1200 {
+.ionic-background-color-lime-1200 {
   background-color: $ionic-color-lime-1200;
 }
 .ionic-color-green-100 {
   color: $ionic-color-green-100;
 }
-  .ionic-background-color-green-100 {
+.ionic-background-color-green-100 {
   background-color: $ionic-color-green-100;
 }
 .ionic-color-green-200 {
   color: $ionic-color-green-200;
 }
-  .ionic-background-color-green-200 {
+.ionic-background-color-green-200 {
   background-color: $ionic-color-green-200;
 }
 .ionic-color-green-300 {
   color: $ionic-color-green-300;
 }
-  .ionic-background-color-green-300 {
+.ionic-background-color-green-300 {
   background-color: $ionic-color-green-300;
 }
 .ionic-color-green-400 {
   color: $ionic-color-green-400;
 }
-  .ionic-background-color-green-400 {
+.ionic-background-color-green-400 {
   background-color: $ionic-color-green-400;
 }
 .ionic-color-green-500 {
   color: $ionic-color-green-500;
 }
-  .ionic-background-color-green-500 {
+.ionic-background-color-green-500 {
   background-color: $ionic-color-green-500;
 }
 .ionic-color-green-600 {
   color: $ionic-color-green-600;
 }
-  .ionic-background-color-green-600 {
+.ionic-background-color-green-600 {
   background-color: $ionic-color-green-600;
 }
 .ionic-color-green-700 {
   color: $ionic-color-green-700;
 }
-  .ionic-background-color-green-700 {
+.ionic-background-color-green-700 {
   background-color: $ionic-color-green-700;
 }
 .ionic-color-green-800 {
   color: $ionic-color-green-800;
 }
-  .ionic-background-color-green-800 {
+.ionic-background-color-green-800 {
   background-color: $ionic-color-green-800;
 }
 .ionic-color-green-900 {
   color: $ionic-color-green-900;
 }
-  .ionic-background-color-green-900 {
+.ionic-background-color-green-900 {
   background-color: $ionic-color-green-900;
 }
 .ionic-color-green-1000 {
   color: $ionic-color-green-1000;
 }
-  .ionic-background-color-green-1000 {
+.ionic-background-color-green-1000 {
   background-color: $ionic-color-green-1000;
 }
 .ionic-color-green-1100 {
   color: $ionic-color-green-1100;
 }
-  .ionic-background-color-green-1100 {
+.ionic-background-color-green-1100 {
   background-color: $ionic-color-green-1100;
 }
 .ionic-color-green-1200 {
   color: $ionic-color-green-1200;
 }
-  .ionic-background-color-green-1200 {
+.ionic-background-color-green-1200 {
   background-color: $ionic-color-green-1200;
 }
 .ionic-color-teal-100 {
   color: $ionic-color-teal-100;
 }
-  .ionic-background-color-teal-100 {
+.ionic-background-color-teal-100 {
   background-color: $ionic-color-teal-100;
 }
 .ionic-color-teal-200 {
   color: $ionic-color-teal-200;
 }
-  .ionic-background-color-teal-200 {
+.ionic-background-color-teal-200 {
   background-color: $ionic-color-teal-200;
 }
 .ionic-color-teal-300 {
   color: $ionic-color-teal-300;
 }
-  .ionic-background-color-teal-300 {
+.ionic-background-color-teal-300 {
   background-color: $ionic-color-teal-300;
 }
 .ionic-color-teal-400 {
   color: $ionic-color-teal-400;
 }
-  .ionic-background-color-teal-400 {
+.ionic-background-color-teal-400 {
   background-color: $ionic-color-teal-400;
 }
 .ionic-color-teal-500 {
   color: $ionic-color-teal-500;
 }
-  .ionic-background-color-teal-500 {
+.ionic-background-color-teal-500 {
   background-color: $ionic-color-teal-500;
 }
 .ionic-color-teal-600 {
   color: $ionic-color-teal-600;
 }
-  .ionic-background-color-teal-600 {
+.ionic-background-color-teal-600 {
   background-color: $ionic-color-teal-600;
 }
 .ionic-color-teal-700 {
   color: $ionic-color-teal-700;
 }
-  .ionic-background-color-teal-700 {
+.ionic-background-color-teal-700 {
   background-color: $ionic-color-teal-700;
 }
 .ionic-color-teal-800 {
   color: $ionic-color-teal-800;
 }
-  .ionic-background-color-teal-800 {
+.ionic-background-color-teal-800 {
   background-color: $ionic-color-teal-800;
 }
 .ionic-color-teal-900 {
   color: $ionic-color-teal-900;
 }
-  .ionic-background-color-teal-900 {
+.ionic-background-color-teal-900 {
   background-color: $ionic-color-teal-900;
 }
 .ionic-color-teal-1000 {
   color: $ionic-color-teal-1000;
 }
-  .ionic-background-color-teal-1000 {
+.ionic-background-color-teal-1000 {
   background-color: $ionic-color-teal-1000;
 }
 .ionic-color-teal-1100 {
   color: $ionic-color-teal-1100;
 }
-  .ionic-background-color-teal-1100 {
+.ionic-background-color-teal-1100 {
   background-color: $ionic-color-teal-1100;
 }
 .ionic-color-teal-1200 {
   color: $ionic-color-teal-1200;
 }
-  .ionic-background-color-teal-1200 {
+.ionic-background-color-teal-1200 {
   background-color: $ionic-color-teal-1200;
 }
 .ionic-color-aqua-100 {
   color: $ionic-color-aqua-100;
 }
-  .ionic-background-color-aqua-100 {
+.ionic-background-color-aqua-100 {
   background-color: $ionic-color-aqua-100;
 }
 .ionic-color-aqua-200 {
   color: $ionic-color-aqua-200;
 }
-  .ionic-background-color-aqua-200 {
+.ionic-background-color-aqua-200 {
   background-color: $ionic-color-aqua-200;
 }
 .ionic-color-aqua-300 {
   color: $ionic-color-aqua-300;
 }
-  .ionic-background-color-aqua-300 {
+.ionic-background-color-aqua-300 {
   background-color: $ionic-color-aqua-300;
 }
 .ionic-color-aqua-400 {
   color: $ionic-color-aqua-400;
 }
-  .ionic-background-color-aqua-400 {
+.ionic-background-color-aqua-400 {
   background-color: $ionic-color-aqua-400;
 }
 .ionic-color-aqua-500 {
   color: $ionic-color-aqua-500;
 }
-  .ionic-background-color-aqua-500 {
+.ionic-background-color-aqua-500 {
   background-color: $ionic-color-aqua-500;
 }
 .ionic-color-aqua-600 {
   color: $ionic-color-aqua-600;
 }
-  .ionic-background-color-aqua-600 {
+.ionic-background-color-aqua-600 {
   background-color: $ionic-color-aqua-600;
 }
 .ionic-color-aqua-700 {
   color: $ionic-color-aqua-700;
 }
-  .ionic-background-color-aqua-700 {
+.ionic-background-color-aqua-700 {
   background-color: $ionic-color-aqua-700;
 }
 .ionic-color-aqua-800 {
   color: $ionic-color-aqua-800;
 }
-  .ionic-background-color-aqua-800 {
+.ionic-background-color-aqua-800 {
   background-color: $ionic-color-aqua-800;
 }
 .ionic-color-aqua-900 {
   color: $ionic-color-aqua-900;
 }
-  .ionic-background-color-aqua-900 {
+.ionic-background-color-aqua-900 {
   background-color: $ionic-color-aqua-900;
 }
 .ionic-color-aqua-1000 {
   color: $ionic-color-aqua-1000;
 }
-  .ionic-background-color-aqua-1000 {
+.ionic-background-color-aqua-1000 {
   background-color: $ionic-color-aqua-1000;
 }
 .ionic-color-aqua-1100 {
   color: $ionic-color-aqua-1100;
 }
-  .ionic-background-color-aqua-1100 {
+.ionic-background-color-aqua-1100 {
   background-color: $ionic-color-aqua-1100;
 }
 .ionic-color-aqua-1200 {
   color: $ionic-color-aqua-1200;
 }
-  .ionic-background-color-aqua-1200 {
+.ionic-background-color-aqua-1200 {
   background-color: $ionic-color-aqua-1200;
 }
 .ionic-color-blue-100 {
   color: $ionic-color-blue-100;
 }
-  .ionic-background-color-blue-100 {
+.ionic-background-color-blue-100 {
   background-color: $ionic-color-blue-100;
 }
 .ionic-color-blue-200 {
   color: $ionic-color-blue-200;
 }
-  .ionic-background-color-blue-200 {
+.ionic-background-color-blue-200 {
   background-color: $ionic-color-blue-200;
 }
 .ionic-color-blue-300 {
   color: $ionic-color-blue-300;
 }
-  .ionic-background-color-blue-300 {
+.ionic-background-color-blue-300 {
   background-color: $ionic-color-blue-300;
 }
 .ionic-color-blue-400 {
   color: $ionic-color-blue-400;
 }
-  .ionic-background-color-blue-400 {
+.ionic-background-color-blue-400 {
   background-color: $ionic-color-blue-400;
 }
 .ionic-color-blue-500 {
   color: $ionic-color-blue-500;
 }
-  .ionic-background-color-blue-500 {
+.ionic-background-color-blue-500 {
   background-color: $ionic-color-blue-500;
 }
 .ionic-color-blue-600 {
   color: $ionic-color-blue-600;
 }
-  .ionic-background-color-blue-600 {
+.ionic-background-color-blue-600 {
   background-color: $ionic-color-blue-600;
 }
 .ionic-color-blue-700 {
   color: $ionic-color-blue-700;
 }
-  .ionic-background-color-blue-700 {
+.ionic-background-color-blue-700 {
   background-color: $ionic-color-blue-700;
 }
 .ionic-color-blue-800 {
   color: $ionic-color-blue-800;
 }
-  .ionic-background-color-blue-800 {
+.ionic-background-color-blue-800 {
   background-color: $ionic-color-blue-800;
 }
 .ionic-color-blue-900 {
   color: $ionic-color-blue-900;
 }
-  .ionic-background-color-blue-900 {
+.ionic-background-color-blue-900 {
   background-color: $ionic-color-blue-900;
 }
 .ionic-color-blue-1000 {
   color: $ionic-color-blue-1000;
 }
-  .ionic-background-color-blue-1000 {
+.ionic-background-color-blue-1000 {
   background-color: $ionic-color-blue-1000;
 }
 .ionic-color-blue-1100 {
   color: $ionic-color-blue-1100;
 }
-  .ionic-background-color-blue-1100 {
+.ionic-background-color-blue-1100 {
   background-color: $ionic-color-blue-1100;
 }
 .ionic-color-blue-1200 {
   color: $ionic-color-blue-1200;
 }
-  .ionic-background-color-blue-1200 {
+.ionic-background-color-blue-1200 {
   background-color: $ionic-color-blue-1200;
 }
 .ionic-color-indigo-100 {
   color: $ionic-color-indigo-100;
 }
-  .ionic-background-color-indigo-100 {
+.ionic-background-color-indigo-100 {
   background-color: $ionic-color-indigo-100;
 }
 .ionic-color-indigo-200 {
   color: $ionic-color-indigo-200;
 }
-  .ionic-background-color-indigo-200 {
+.ionic-background-color-indigo-200 {
   background-color: $ionic-color-indigo-200;
 }
 .ionic-color-indigo-300 {
   color: $ionic-color-indigo-300;
 }
-  .ionic-background-color-indigo-300 {
+.ionic-background-color-indigo-300 {
   background-color: $ionic-color-indigo-300;
 }
 .ionic-color-indigo-400 {
   color: $ionic-color-indigo-400;
 }
-  .ionic-background-color-indigo-400 {
+.ionic-background-color-indigo-400 {
   background-color: $ionic-color-indigo-400;
 }
 .ionic-color-indigo-500 {
   color: $ionic-color-indigo-500;
 }
-  .ionic-background-color-indigo-500 {
+.ionic-background-color-indigo-500 {
   background-color: $ionic-color-indigo-500;
 }
 .ionic-color-indigo-600 {
   color: $ionic-color-indigo-600;
 }
-  .ionic-background-color-indigo-600 {
+.ionic-background-color-indigo-600 {
   background-color: $ionic-color-indigo-600;
 }
 .ionic-color-indigo-700 {
   color: $ionic-color-indigo-700;
 }
-  .ionic-background-color-indigo-700 {
+.ionic-background-color-indigo-700 {
   background-color: $ionic-color-indigo-700;
 }
 .ionic-color-indigo-800 {
   color: $ionic-color-indigo-800;
 }
-  .ionic-background-color-indigo-800 {
+.ionic-background-color-indigo-800 {
   background-color: $ionic-color-indigo-800;
 }
 .ionic-color-indigo-900 {
   color: $ionic-color-indigo-900;
 }
-  .ionic-background-color-indigo-900 {
+.ionic-background-color-indigo-900 {
   background-color: $ionic-color-indigo-900;
 }
 .ionic-color-indigo-1000 {
   color: $ionic-color-indigo-1000;
 }
-  .ionic-background-color-indigo-1000 {
+.ionic-background-color-indigo-1000 {
   background-color: $ionic-color-indigo-1000;
 }
 .ionic-color-indigo-1100 {
   color: $ionic-color-indigo-1100;
 }
-  .ionic-background-color-indigo-1100 {
+.ionic-background-color-indigo-1100 {
   background-color: $ionic-color-indigo-1100;
 }
 .ionic-color-indigo-1200 {
   color: $ionic-color-indigo-1200;
 }
-  .ionic-background-color-indigo-1200 {
+.ionic-background-color-indigo-1200 {
   background-color: $ionic-color-indigo-1200;
 }
 .ionic-color-violet-100 {
   color: $ionic-color-violet-100;
 }
-  .ionic-background-color-violet-100 {
+.ionic-background-color-violet-100 {
   background-color: $ionic-color-violet-100;
 }
 .ionic-color-violet-200 {
   color: $ionic-color-violet-200;
 }
-  .ionic-background-color-violet-200 {
+.ionic-background-color-violet-200 {
   background-color: $ionic-color-violet-200;
 }
 .ionic-color-violet-300 {
   color: $ionic-color-violet-300;
 }
-  .ionic-background-color-violet-300 {
+.ionic-background-color-violet-300 {
   background-color: $ionic-color-violet-300;
 }
 .ionic-color-violet-400 {
   color: $ionic-color-violet-400;
 }
-  .ionic-background-color-violet-400 {
+.ionic-background-color-violet-400 {
   background-color: $ionic-color-violet-400;
 }
 .ionic-color-violet-500 {
   color: $ionic-color-violet-500;
 }
-  .ionic-background-color-violet-500 {
+.ionic-background-color-violet-500 {
   background-color: $ionic-color-violet-500;
 }
 .ionic-color-violet-600 {
   color: $ionic-color-violet-600;
 }
-  .ionic-background-color-violet-600 {
+.ionic-background-color-violet-600 {
   background-color: $ionic-color-violet-600;
 }
 .ionic-color-violet-700 {
   color: $ionic-color-violet-700;
 }
-  .ionic-background-color-violet-700 {
+.ionic-background-color-violet-700 {
   background-color: $ionic-color-violet-700;
 }
 .ionic-color-violet-800 {
   color: $ionic-color-violet-800;
 }
-  .ionic-background-color-violet-800 {
+.ionic-background-color-violet-800 {
   background-color: $ionic-color-violet-800;
 }
 .ionic-color-violet-900 {
   color: $ionic-color-violet-900;
 }
-  .ionic-background-color-violet-900 {
+.ionic-background-color-violet-900 {
   background-color: $ionic-color-violet-900;
 }
 .ionic-color-violet-1000 {
   color: $ionic-color-violet-1000;
 }
-  .ionic-background-color-violet-1000 {
+.ionic-background-color-violet-1000 {
   background-color: $ionic-color-violet-1000;
 }
 .ionic-color-violet-1100 {
   color: $ionic-color-violet-1100;
 }
-  .ionic-background-color-violet-1100 {
+.ionic-background-color-violet-1100 {
   background-color: $ionic-color-violet-1100;
 }
 .ionic-color-violet-1200 {
   color: $ionic-color-violet-1200;
 }
-  .ionic-background-color-violet-1200 {
+.ionic-background-color-violet-1200 {
   background-color: $ionic-color-violet-1200;
 }
 .ionic-color-purple-100 {
   color: $ionic-color-purple-100;
 }
-  .ionic-background-color-purple-100 {
+.ionic-background-color-purple-100 {
   background-color: $ionic-color-purple-100;
 }
 .ionic-color-purple-200 {
   color: $ionic-color-purple-200;
 }
-  .ionic-background-color-purple-200 {
+.ionic-background-color-purple-200 {
   background-color: $ionic-color-purple-200;
 }
 .ionic-color-purple-300 {
   color: $ionic-color-purple-300;
 }
-  .ionic-background-color-purple-300 {
+.ionic-background-color-purple-300 {
   background-color: $ionic-color-purple-300;
 }
 .ionic-color-purple-400 {
   color: $ionic-color-purple-400;
 }
-  .ionic-background-color-purple-400 {
+.ionic-background-color-purple-400 {
   background-color: $ionic-color-purple-400;
 }
 .ionic-color-purple-500 {
   color: $ionic-color-purple-500;
 }
-  .ionic-background-color-purple-500 {
+.ionic-background-color-purple-500 {
   background-color: $ionic-color-purple-500;
 }
 .ionic-color-purple-600 {
   color: $ionic-color-purple-600;
 }
-  .ionic-background-color-purple-600 {
+.ionic-background-color-purple-600 {
   background-color: $ionic-color-purple-600;
 }
 .ionic-color-purple-700 {
   color: $ionic-color-purple-700;
 }
-  .ionic-background-color-purple-700 {
+.ionic-background-color-purple-700 {
   background-color: $ionic-color-purple-700;
 }
 .ionic-color-purple-800 {
   color: $ionic-color-purple-800;
 }
-  .ionic-background-color-purple-800 {
+.ionic-background-color-purple-800 {
   background-color: $ionic-color-purple-800;
 }
 .ionic-color-purple-900 {
   color: $ionic-color-purple-900;
 }
-  .ionic-background-color-purple-900 {
+.ionic-background-color-purple-900 {
   background-color: $ionic-color-purple-900;
 }
 .ionic-color-purple-1000 {
   color: $ionic-color-purple-1000;
 }
-  .ionic-background-color-purple-1000 {
+.ionic-background-color-purple-1000 {
   background-color: $ionic-color-purple-1000;
 }
 .ionic-color-purple-1100 {
   color: $ionic-color-purple-1100;
 }
-  .ionic-background-color-purple-1100 {
+.ionic-background-color-purple-1100 {
   background-color: $ionic-color-purple-1100;
 }
 .ionic-color-purple-1200 {
   color: $ionic-color-purple-1200;
 }
-  .ionic-background-color-purple-1200 {
+.ionic-background-color-purple-1200 {
   background-color: $ionic-color-purple-1200;
 }
 .ionic-color-magenta-100 {
   color: $ionic-color-magenta-100;
 }
-  .ionic-background-color-magenta-100 {
+.ionic-background-color-magenta-100 {
   background-color: $ionic-color-magenta-100;
 }
 .ionic-color-magenta-200 {
   color: $ionic-color-magenta-200;
 }
-  .ionic-background-color-magenta-200 {
+.ionic-background-color-magenta-200 {
   background-color: $ionic-color-magenta-200;
 }
 .ionic-color-magenta-300 {
   color: $ionic-color-magenta-300;
 }
-  .ionic-background-color-magenta-300 {
+.ionic-background-color-magenta-300 {
   background-color: $ionic-color-magenta-300;
 }
 .ionic-color-magenta-400 {
   color: $ionic-color-magenta-400;
 }
-  .ionic-background-color-magenta-400 {
+.ionic-background-color-magenta-400 {
   background-color: $ionic-color-magenta-400;
 }
 .ionic-color-magenta-500 {
   color: $ionic-color-magenta-500;
 }
-  .ionic-background-color-magenta-500 {
+.ionic-background-color-magenta-500 {
   background-color: $ionic-color-magenta-500;
 }
 .ionic-color-magenta-600 {
   color: $ionic-color-magenta-600;
 }
-  .ionic-background-color-magenta-600 {
+.ionic-background-color-magenta-600 {
   background-color: $ionic-color-magenta-600;
 }
 .ionic-color-magenta-700 {
   color: $ionic-color-magenta-700;
 }
-  .ionic-background-color-magenta-700 {
+.ionic-background-color-magenta-700 {
   background-color: $ionic-color-magenta-700;
 }
 .ionic-color-magenta-800 {
   color: $ionic-color-magenta-800;
 }
-  .ionic-background-color-magenta-800 {
+.ionic-background-color-magenta-800 {
   background-color: $ionic-color-magenta-800;
 }
 .ionic-color-magenta-900 {
   color: $ionic-color-magenta-900;
 }
-  .ionic-background-color-magenta-900 {
+.ionic-background-color-magenta-900 {
   background-color: $ionic-color-magenta-900;
 }
 .ionic-color-magenta-1000 {
   color: $ionic-color-magenta-1000;
 }
-  .ionic-background-color-magenta-1000 {
+.ionic-background-color-magenta-1000 {
   background-color: $ionic-color-magenta-1000;
 }
 .ionic-color-magenta-1100 {
   color: $ionic-color-magenta-1100;
 }
-  .ionic-background-color-magenta-1100 {
+.ionic-background-color-magenta-1100 {
   background-color: $ionic-color-magenta-1100;
 }
 .ionic-color-magenta-1200 {
   color: $ionic-color-magenta-1200;
 }
-  .ionic-background-color-magenta-1200 {
+.ionic-background-color-magenta-1200 {
   background-color: $ionic-color-magenta-1200;
 }
 .ionic-color-pink-100 {
   color: $ionic-color-pink-100;
 }
-  .ionic-background-color-pink-100 {
+.ionic-background-color-pink-100 {
   background-color: $ionic-color-pink-100;
 }
 .ionic-color-pink-200 {
   color: $ionic-color-pink-200;
 }
-  .ionic-background-color-pink-200 {
+.ionic-background-color-pink-200 {
   background-color: $ionic-color-pink-200;
 }
 .ionic-color-pink-300 {
   color: $ionic-color-pink-300;
 }
-  .ionic-background-color-pink-300 {
+.ionic-background-color-pink-300 {
   background-color: $ionic-color-pink-300;
 }
 .ionic-color-pink-400 {
   color: $ionic-color-pink-400;
 }
-  .ionic-background-color-pink-400 {
+.ionic-background-color-pink-400 {
   background-color: $ionic-color-pink-400;
 }
 .ionic-color-pink-500 {
   color: $ionic-color-pink-500;
 }
-  .ionic-background-color-pink-500 {
+.ionic-background-color-pink-500 {
   background-color: $ionic-color-pink-500;
 }
 .ionic-color-pink-600 {
   color: $ionic-color-pink-600;
 }
-  .ionic-background-color-pink-600 {
+.ionic-background-color-pink-600 {
   background-color: $ionic-color-pink-600;
 }
 .ionic-color-pink-700 {
   color: $ionic-color-pink-700;
 }
-  .ionic-background-color-pink-700 {
+.ionic-background-color-pink-700 {
   background-color: $ionic-color-pink-700;
 }
 .ionic-color-pink-800 {
   color: $ionic-color-pink-800;
 }
-  .ionic-background-color-pink-800 {
+.ionic-background-color-pink-800 {
   background-color: $ionic-color-pink-800;
 }
 .ionic-color-pink-900 {
   color: $ionic-color-pink-900;
 }
-  .ionic-background-color-pink-900 {
+.ionic-background-color-pink-900 {
   background-color: $ionic-color-pink-900;
 }
 .ionic-color-pink-1000 {
   color: $ionic-color-pink-1000;
 }
-  .ionic-background-color-pink-1000 {
+.ionic-background-color-pink-1000 {
   background-color: $ionic-color-pink-1000;
 }
 .ionic-color-pink-1100 {
   color: $ionic-color-pink-1100;
 }
-  .ionic-background-color-pink-1100 {
+.ionic-background-color-pink-1100 {
   background-color: $ionic-color-pink-1100;
 }
 .ionic-color-pink-1200 {
   color: $ionic-color-pink-1200;
 }
-  .ionic-background-color-pink-1200 {
+.ionic-background-color-pink-1200 {
   background-color: $ionic-color-pink-1200;
 }
 .ionic-color-primary-100 {
   color: $ionic-color-primary-100;
 }
-  .ionic-background-color-primary-100 {
+.ionic-background-color-primary-100 {
   background-color: $ionic-color-primary-100;
 }
 .ionic-color-primary-200 {
   color: $ionic-color-primary-200;
 }
-  .ionic-background-color-primary-200 {
+.ionic-background-color-primary-200 {
   background-color: $ionic-color-primary-200;
 }
 .ionic-color-primary-300 {
   color: $ionic-color-primary-300;
 }
-  .ionic-background-color-primary-300 {
+.ionic-background-color-primary-300 {
   background-color: $ionic-color-primary-300;
 }
 .ionic-color-primary-400 {
   color: $ionic-color-primary-400;
 }
-  .ionic-background-color-primary-400 {
+.ionic-background-color-primary-400 {
   background-color: $ionic-color-primary-400;
 }
 .ionic-color-primary-500 {
   color: $ionic-color-primary-500;
 }
-  .ionic-background-color-primary-500 {
+.ionic-background-color-primary-500 {
   background-color: $ionic-color-primary-500;
 }
 .ionic-color-primary-600 {
   color: $ionic-color-primary-600;
 }
-  .ionic-background-color-primary-600 {
+.ionic-background-color-primary-600 {
   background-color: $ionic-color-primary-600;
 }
 .ionic-color-primary-700 {
   color: $ionic-color-primary-700;
 }
-  .ionic-background-color-primary-700 {
+.ionic-background-color-primary-700 {
   background-color: $ionic-color-primary-700;
 }
 .ionic-color-primary-800 {
   color: $ionic-color-primary-800;
 }
-  .ionic-background-color-primary-800 {
+.ionic-background-color-primary-800 {
   background-color: $ionic-color-primary-800;
 }
 .ionic-color-primary-900 {
   color: $ionic-color-primary-900;
 }
-  .ionic-background-color-primary-900 {
+.ionic-background-color-primary-900 {
   background-color: $ionic-color-primary-900;
 }
 .ionic-color-primary-1000 {
   color: $ionic-color-primary-1000;
 }
-  .ionic-background-color-primary-1000 {
+.ionic-background-color-primary-1000 {
   background-color: $ionic-color-primary-1000;
 }
 .ionic-color-primary-1100 {
   color: $ionic-color-primary-1100;
 }
-  .ionic-background-color-primary-1100 {
+.ionic-background-color-primary-1100 {
   background-color: $ionic-color-primary-1100;
 }
 .ionic-color-primary-1200 {
   color: $ionic-color-primary-1200;
 }
-  .ionic-background-color-primary-1200 {
+.ionic-background-color-primary-1200 {
   background-color: $ionic-color-primary-1200;
 }
 .ionic-color-primary-base {
   color: $ionic-color-primary-base;
 }
-  .ionic-background-color-primary-base {
+.ionic-background-color-primary-base {
   background-color: $ionic-color-primary-base;
 }
 .ionic-color-info-100 {
   color: $ionic-color-info-100;
 }
-  .ionic-background-color-info-100 {
+.ionic-background-color-info-100 {
   background-color: $ionic-color-info-100;
 }
 .ionic-color-info-200 {
   color: $ionic-color-info-200;
 }
-  .ionic-background-color-info-200 {
+.ionic-background-color-info-200 {
   background-color: $ionic-color-info-200;
 }
 .ionic-color-info-300 {
   color: $ionic-color-info-300;
 }
-  .ionic-background-color-info-300 {
+.ionic-background-color-info-300 {
   background-color: $ionic-color-info-300;
 }
 .ionic-color-info-400 {
   color: $ionic-color-info-400;
 }
-  .ionic-background-color-info-400 {
+.ionic-background-color-info-400 {
   background-color: $ionic-color-info-400;
 }
 .ionic-color-info-500 {
   color: $ionic-color-info-500;
 }
-  .ionic-background-color-info-500 {
+.ionic-background-color-info-500 {
   background-color: $ionic-color-info-500;
 }
 .ionic-color-info-600 {
   color: $ionic-color-info-600;
 }
-  .ionic-background-color-info-600 {
+.ionic-background-color-info-600 {
   background-color: $ionic-color-info-600;
 }
 .ionic-color-info-700 {
   color: $ionic-color-info-700;
 }
-  .ionic-background-color-info-700 {
+.ionic-background-color-info-700 {
   background-color: $ionic-color-info-700;
 }
 .ionic-color-info-800 {
   color: $ionic-color-info-800;
 }
-  .ionic-background-color-info-800 {
+.ionic-background-color-info-800 {
   background-color: $ionic-color-info-800;
 }
 .ionic-color-info-900 {
   color: $ionic-color-info-900;
 }
-  .ionic-background-color-info-900 {
+.ionic-background-color-info-900 {
   background-color: $ionic-color-info-900;
 }
 .ionic-color-info-1000 {
   color: $ionic-color-info-1000;
 }
-  .ionic-background-color-info-1000 {
+.ionic-background-color-info-1000 {
   background-color: $ionic-color-info-1000;
 }
 .ionic-color-info-1100 {
   color: $ionic-color-info-1100;
 }
-  .ionic-background-color-info-1100 {
+.ionic-background-color-info-1100 {
   background-color: $ionic-color-info-1100;
 }
 .ionic-color-info-1200 {
   color: $ionic-color-info-1200;
 }
-  .ionic-background-color-info-1200 {
+.ionic-background-color-info-1200 {
   background-color: $ionic-color-info-1200;
 }
 .ionic-color-info-base {
   color: $ionic-color-info-base;
 }
-  .ionic-background-color-info-base {
+.ionic-background-color-info-base {
   background-color: $ionic-color-info-base;
 }
 .ionic-color-warning-100 {
   color: $ionic-color-warning-100;
 }
-  .ionic-background-color-warning-100 {
+.ionic-background-color-warning-100 {
   background-color: $ionic-color-warning-100;
 }
 .ionic-color-warning-200 {
   color: $ionic-color-warning-200;
 }
-  .ionic-background-color-warning-200 {
+.ionic-background-color-warning-200 {
   background-color: $ionic-color-warning-200;
 }
 .ionic-color-warning-300 {
   color: $ionic-color-warning-300;
 }
-  .ionic-background-color-warning-300 {
+.ionic-background-color-warning-300 {
   background-color: $ionic-color-warning-300;
 }
 .ionic-color-warning-400 {
   color: $ionic-color-warning-400;
 }
-  .ionic-background-color-warning-400 {
+.ionic-background-color-warning-400 {
   background-color: $ionic-color-warning-400;
 }
 .ionic-color-warning-500 {
   color: $ionic-color-warning-500;
 }
-  .ionic-background-color-warning-500 {
+.ionic-background-color-warning-500 {
   background-color: $ionic-color-warning-500;
 }
 .ionic-color-warning-600 {
   color: $ionic-color-warning-600;
 }
-  .ionic-background-color-warning-600 {
+.ionic-background-color-warning-600 {
   background-color: $ionic-color-warning-600;
 }
 .ionic-color-warning-700 {
   color: $ionic-color-warning-700;
 }
-  .ionic-background-color-warning-700 {
+.ionic-background-color-warning-700 {
   background-color: $ionic-color-warning-700;
 }
 .ionic-color-warning-800 {
   color: $ionic-color-warning-800;
 }
-  .ionic-background-color-warning-800 {
+.ionic-background-color-warning-800 {
   background-color: $ionic-color-warning-800;
 }
 .ionic-color-warning-900 {
   color: $ionic-color-warning-900;
 }
-  .ionic-background-color-warning-900 {
+.ionic-background-color-warning-900 {
   background-color: $ionic-color-warning-900;
 }
 .ionic-color-warning-1000 {
   color: $ionic-color-warning-1000;
 }
-  .ionic-background-color-warning-1000 {
+.ionic-background-color-warning-1000 {
   background-color: $ionic-color-warning-1000;
 }
 .ionic-color-warning-1100 {
   color: $ionic-color-warning-1100;
 }
-  .ionic-background-color-warning-1100 {
+.ionic-background-color-warning-1100 {
   background-color: $ionic-color-warning-1100;
 }
 .ionic-color-warning-1200 {
   color: $ionic-color-warning-1200;
 }
-  .ionic-background-color-warning-1200 {
+.ionic-background-color-warning-1200 {
   background-color: $ionic-color-warning-1200;
 }
 .ionic-color-warning-base {
   color: $ionic-color-warning-base;
 }
-  .ionic-background-color-warning-base {
+.ionic-background-color-warning-base {
   background-color: $ionic-color-warning-base;
 }
 .ionic-color-danger-100 {
   color: $ionic-color-danger-100;
 }
-  .ionic-background-color-danger-100 {
+.ionic-background-color-danger-100 {
   background-color: $ionic-color-danger-100;
 }
 .ionic-color-danger-200 {
   color: $ionic-color-danger-200;
 }
-  .ionic-background-color-danger-200 {
+.ionic-background-color-danger-200 {
   background-color: $ionic-color-danger-200;
 }
 .ionic-color-danger-300 {
   color: $ionic-color-danger-300;
 }
-  .ionic-background-color-danger-300 {
+.ionic-background-color-danger-300 {
   background-color: $ionic-color-danger-300;
 }
 .ionic-color-danger-400 {
   color: $ionic-color-danger-400;
 }
-  .ionic-background-color-danger-400 {
+.ionic-background-color-danger-400 {
   background-color: $ionic-color-danger-400;
 }
 .ionic-color-danger-500 {
   color: $ionic-color-danger-500;
 }
-  .ionic-background-color-danger-500 {
+.ionic-background-color-danger-500 {
   background-color: $ionic-color-danger-500;
 }
 .ionic-color-danger-600 {
   color: $ionic-color-danger-600;
 }
-  .ionic-background-color-danger-600 {
+.ionic-background-color-danger-600 {
   background-color: $ionic-color-danger-600;
 }
 .ionic-color-danger-700 {
   color: $ionic-color-danger-700;
 }
-  .ionic-background-color-danger-700 {
+.ionic-background-color-danger-700 {
   background-color: $ionic-color-danger-700;
 }
 .ionic-color-danger-800 {
   color: $ionic-color-danger-800;
 }
-  .ionic-background-color-danger-800 {
+.ionic-background-color-danger-800 {
   background-color: $ionic-color-danger-800;
 }
 .ionic-color-danger-900 {
   color: $ionic-color-danger-900;
 }
-  .ionic-background-color-danger-900 {
+.ionic-background-color-danger-900 {
   background-color: $ionic-color-danger-900;
 }
 .ionic-color-danger-1000 {
   color: $ionic-color-danger-1000;
 }
-  .ionic-background-color-danger-1000 {
+.ionic-background-color-danger-1000 {
   background-color: $ionic-color-danger-1000;
 }
 .ionic-color-danger-1100 {
   color: $ionic-color-danger-1100;
 }
-  .ionic-background-color-danger-1100 {
+.ionic-background-color-danger-1100 {
   background-color: $ionic-color-danger-1100;
 }
 .ionic-color-danger-1200 {
   color: $ionic-color-danger-1200;
 }
-  .ionic-background-color-danger-1200 {
+.ionic-background-color-danger-1200 {
   background-color: $ionic-color-danger-1200;
 }
 .ionic-color-danger-base {
   color: $ionic-color-danger-base;
 }
-  .ionic-background-color-danger-base {
+.ionic-background-color-danger-base {
   background-color: $ionic-color-danger-base;
 }
 .ionic-color-success-100 {
   color: $ionic-color-success-100;
 }
-  .ionic-background-color-success-100 {
+.ionic-background-color-success-100 {
   background-color: $ionic-color-success-100;
 }
 .ionic-color-success-200 {
   color: $ionic-color-success-200;
 }
-  .ionic-background-color-success-200 {
+.ionic-background-color-success-200 {
   background-color: $ionic-color-success-200;
 }
 .ionic-color-success-300 {
   color: $ionic-color-success-300;
 }
-  .ionic-background-color-success-300 {
+.ionic-background-color-success-300 {
   background-color: $ionic-color-success-300;
 }
 .ionic-color-success-400 {
   color: $ionic-color-success-400;
 }
-  .ionic-background-color-success-400 {
+.ionic-background-color-success-400 {
   background-color: $ionic-color-success-400;
 }
 .ionic-color-success-500 {
   color: $ionic-color-success-500;
 }
-  .ionic-background-color-success-500 {
+.ionic-background-color-success-500 {
   background-color: $ionic-color-success-500;
 }
 .ionic-color-success-600 {
   color: $ionic-color-success-600;
 }
-  .ionic-background-color-success-600 {
+.ionic-background-color-success-600 {
   background-color: $ionic-color-success-600;
 }
 .ionic-color-success-700 {
   color: $ionic-color-success-700;
 }
-  .ionic-background-color-success-700 {
+.ionic-background-color-success-700 {
   background-color: $ionic-color-success-700;
 }
 .ionic-color-success-800 {
   color: $ionic-color-success-800;
 }
-  .ionic-background-color-success-800 {
+.ionic-background-color-success-800 {
   background-color: $ionic-color-success-800;
 }
 .ionic-color-success-900 {
   color: $ionic-color-success-900;
 }
-  .ionic-background-color-success-900 {
+.ionic-background-color-success-900 {
   background-color: $ionic-color-success-900;
 }
 .ionic-color-success-1000 {
   color: $ionic-color-success-1000;
 }
-  .ionic-background-color-success-1000 {
+.ionic-background-color-success-1000 {
   background-color: $ionic-color-success-1000;
 }
 .ionic-color-success-1100 {
   color: $ionic-color-success-1100;
 }
-  .ionic-background-color-success-1100 {
+.ionic-background-color-success-1100 {
   background-color: $ionic-color-success-1100;
 }
 .ionic-color-success-1200 {
   color: $ionic-color-success-1200;
 }
-  .ionic-background-color-success-1200 {
+.ionic-background-color-success-1200 {
   background-color: $ionic-color-success-1200;
 }
 .ionic-color-success-base {
   color: $ionic-color-success-base;
 }
-  .ionic-background-color-success-base {
+.ionic-background-color-success-base {
   background-color: $ionic-color-success-base;
 }
 .ionic-z-index-0 {
@@ -1982,666 +1981,579 @@
   z-index: $ionic-z-index-top;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  .ionic-display-sm-regular {
-    font-size: $ionic-font-size-800;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-1100;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-display-sm-light {
-    font-size: $ionic-font-size-800;
-    font-style: normal;
-    font-weight: $ionic-font-weight-light;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-1100;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-display-lg-regular {
-    font-size: $ionic-font-size-900;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-1200;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-display-lg-light {
-    font-size: $ionic-font-size-900;
-    font-style: normal;
-    font-weight: $ionic-font-weight-light;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-1200;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h1-regular {
-    font-size: $ionic-font-size-700;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-900;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h1-medium {
-    font-size: $ionic-font-size-700;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-900;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h1-semi-bold {
-    font-size: $ionic-font-size-600;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-900;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h1-bold {
-    font-size: $ionic-font-size-700;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-900;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h2-regular {
-    font-size: $ionic-font-size-650;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-900;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h2-medium {
-    font-size: $ionic-font-size-650;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-900;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h2-semi-bold {
-    font-size: $ionic-font-size-650;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-900;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h2-bold {
-    font-size: $ionic-font-size-650;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-900;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h3-regular {
-    font-size: $ionic-font-size-600;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-800;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h3-medium {
-    font-size: $ionic-font-size-600;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-800;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h3-semi-bold {
-    font-size: $ionic-font-size-600;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-800;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h3-bold {
-    font-size: $ionic-font-size-600;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-800;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h4-regular {
-    font-size: $ionic-font-size-550;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h4-medium {
-    font-size: $ionic-font-size-550;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h4-semi-bold {
-    font-size: $ionic-font-size-550;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h4-bold {
-    font-size: $ionic-font-size-550;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h5-regular {
-    font-size: $ionic-font-size-500;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h5-medium {
-    font-size: $ionic-font-size-500;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h5-semi-bold {
-    font-size: $ionic-font-size-500;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h5-bold {
-    font-size: $ionic-font-size-500;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h6-regular {
-    font-size: $ionic-font-size-450;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h6-medium {
-    font-size: $ionic-font-size-450;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h6-semi-bold {
-    font-size: $ionic-font-size-450;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-heading-h6-bold {
-    font-size: $ionic-font-size-450;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-700;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-lg-regular {
-    font-size: $ionic-font-size-400;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-lg-medium {
-    font-size: $ionic-font-size-400;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-lg-semi-bold {
-    font-size: $ionic-font-size-400;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-lg-bold {
-    font-size: $ionic-font-size-400;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-lg-link {
-    font-size: $ionic-font-size-400;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: underline;
-  };
-  
-
-  .ionic-body-lg-italic {
-    font-size: $ionic-font-size-400;
-    font-style: italic;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-md-regular {
-    font-size: $ionic-font-size-350;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-md-medium {
-    font-size: $ionic-font-size-350;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-md-semi-bold {
-    font-size: $ionic-font-size-350;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-md-bold {
-    font-size: $ionic-font-size-350;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-md-link {
-    font-size: $ionic-font-size-350;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: underline;
-  };
-  
-
-  .ionic-body-md-italic {
-    font-size: $ionic-font-size-350;
-    font-style: italic;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-sm-regular {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-500;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-sm-medium {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-500;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-sm-semi-bold {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-500;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-sm-bold {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-500;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-body-sm-link {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-500;
-    text-transform: none;
-    text-decoration: underline;
-  };
-  
-
-  .ionic-body-sm-italic {
-    font-size: $ionic-font-size-300;
-    font-style: italic;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-0;
-    line-height: $ionic-line-height-500;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-action-xl {
-    font-size: $ionic-font-size-500;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-1;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-action-lg {
-    font-size: $ionic-font-size-400;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-1;
-    line-height: $ionic-line-height-600;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-action-md {
-    font-size: $ionic-font-size-350;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-1;
-    line-height: $ionic-line-height-500;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-action-sm {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-1;
-    line-height: $ionic-line-height-500;
-    text-transform: none;
-    text-decoration: none;
-  };
-  
-
-  .ionic-overline-regular {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-regular;
-    letter-spacing: $ionic-letter-spacing-2;
-    line-height: $ionic-line-height-500;
-    text-transform: uppercase;
-    text-decoration: none;
-  };
-  
-
-  .ionic-overline-medium {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-medium;
-    letter-spacing: $ionic-letter-spacing-2;
-    line-height: $ionic-line-height-500;
-    text-transform: uppercase;
-    text-decoration: none;
-  };
-  
-
-  .ionic-overline-semi-bold {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-semi-bold;
-    letter-spacing: $ionic-letter-spacing-2;
-    line-height: $ionic-line-height-500;
-    text-transform: uppercase;
-    text-decoration: none;
-  };
-  
-
-  .ionic-overline-bold {
-    font-size: $ionic-font-size-300;
-    font-style: normal;
-    font-weight: $ionic-font-weight-bold;
-    letter-spacing: $ionic-letter-spacing-2;
-    line-height: $ionic-line-height-500;
-    text-transform: uppercase;
-    text-decoration: none;
-  };
-  
+.ionic-display-sm-regular {
+  font-size: $ionic-font-size-800;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-1100;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-display-sm-light {
+  font-size: $ionic-font-size-800;
+  font-style: normal;
+  font-weight: $ionic-font-weight-light;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-1100;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-display-lg-regular {
+  font-size: $ionic-font-size-900;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-1200;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-display-lg-light {
+  font-size: $ionic-font-size-900;
+  font-style: normal;
+  font-weight: $ionic-font-weight-light;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-1200;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h1-regular {
+  font-size: $ionic-font-size-700;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-900;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h1-medium {
+  font-size: $ionic-font-size-700;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-900;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h1-semi-bold {
+  font-size: $ionic-font-size-600;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-900;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h1-bold {
+  font-size: $ionic-font-size-700;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-900;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h2-regular {
+  font-size: $ionic-font-size-650;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-900;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h2-medium {
+  font-size: $ionic-font-size-650;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-900;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h2-semi-bold {
+  font-size: $ionic-font-size-650;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-900;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h2-bold {
+  font-size: $ionic-font-size-650;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-900;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h3-regular {
+  font-size: $ionic-font-size-600;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-800;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h3-medium {
+  font-size: $ionic-font-size-600;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-800;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h3-semi-bold {
+  font-size: $ionic-font-size-600;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-800;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h3-bold {
+  font-size: $ionic-font-size-600;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-800;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h4-regular {
+  font-size: $ionic-font-size-550;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h4-medium {
+  font-size: $ionic-font-size-550;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h4-semi-bold {
+  font-size: $ionic-font-size-550;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h4-bold {
+  font-size: $ionic-font-size-550;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h5-regular {
+  font-size: $ionic-font-size-500;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h5-medium {
+  font-size: $ionic-font-size-500;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h5-semi-bold {
+  font-size: $ionic-font-size-500;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h5-bold {
+  font-size: $ionic-font-size-500;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h6-regular {
+  font-size: $ionic-font-size-450;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h6-medium {
+  font-size: $ionic-font-size-450;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h6-semi-bold {
+  font-size: $ionic-font-size-450;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-heading-h6-bold {
+  font-size: $ionic-font-size-450;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-700;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-lg-regular {
+  font-size: $ionic-font-size-400;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-lg-medium {
+  font-size: $ionic-font-size-400;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-lg-semi-bold {
+  font-size: $ionic-font-size-400;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-lg-bold {
+  font-size: $ionic-font-size-400;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-lg-link {
+  font-size: $ionic-font-size-400;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: underline;
+}
+
+.ionic-body-lg-italic {
+  font-size: $ionic-font-size-400;
+  font-style: italic;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-md-regular {
+  font-size: $ionic-font-size-350;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-md-medium {
+  font-size: $ionic-font-size-350;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-md-semi-bold {
+  font-size: $ionic-font-size-350;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-md-bold {
+  font-size: $ionic-font-size-350;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-md-link {
+  font-size: $ionic-font-size-350;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: underline;
+}
+
+.ionic-body-md-italic {
+  font-size: $ionic-font-size-350;
+  font-style: italic;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-sm-regular {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-500;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-sm-medium {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-500;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-sm-semi-bold {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-500;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-sm-bold {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-500;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-body-sm-link {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-500;
+  text-transform: none;
+  text-decoration: underline;
+}
+
+.ionic-body-sm-italic {
+  font-size: $ionic-font-size-300;
+  font-style: italic;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-0;
+  line-height: $ionic-line-height-500;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-action-xl {
+  font-size: $ionic-font-size-500;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-1;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-action-lg {
+  font-size: $ionic-font-size-400;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-1;
+  line-height: $ionic-line-height-600;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-action-md {
+  font-size: $ionic-font-size-350;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-1;
+  line-height: $ionic-line-height-500;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-action-sm {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-1;
+  line-height: $ionic-line-height-500;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.ionic-overline-regular {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-regular;
+  letter-spacing: $ionic-letter-spacing-2;
+  line-height: $ionic-line-height-500;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.ionic-overline-medium {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-medium;
+  letter-spacing: $ionic-letter-spacing-2;
+  line-height: $ionic-line-height-500;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.ionic-overline-semi-bold {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-semi-bold;
+  letter-spacing: $ionic-letter-spacing-2;
+  line-height: $ionic-line-height-500;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.ionic-overline-bold {
+  font-size: $ionic-font-size-300;
+  font-style: normal;
+  font-weight: $ionic-font-weight-bold;
+  letter-spacing: $ionic-letter-spacing-2;
+  line-height: $ionic-line-height-500;
+  text-transform: uppercase;
+  text-decoration: none;
+}
 
 .ionic-state-focus-0 {
   color: $ionic-state-focus-0;
 }
-  .ionic-background-state-focus-0 {
+.ionic-background-state-focus-0 {
   background-color: $ionic-state-focus-0;
 }
 .ionic-state-focus-1 {
   color: $ionic-state-focus-1;
 }
-  .ionic-background-state-focus-1 {
+.ionic-background-state-focus-1 {
   background-color: $ionic-state-focus-1;
 }
 .ionic-state-focus-2 {
   color: $ionic-state-focus-2;
 }
-  .ionic-background-state-focus-2 {
+.ionic-background-state-focus-2 {
   background-color: $ionic-state-focus-2;
 }
 .ionic-state-disabled {
   color: $ionic-state-disabled;
 }
-  .ionic-background-state-disabled {
+.ionic-background-state-disabled {
   background-color: $ionic-state-disabled;
 }
 .ionic-state-hover {
   color: $ionic-state-hover;
 }
-  .ionic-background-state-hover {
+.ionic-background-state-hover {
   background-color: $ionic-state-hover;
 }
 .ionic-state-pressed {
   color: $ionic-state-pressed;
 }
-  .ionic-background-state-pressed {
+.ionic-background-state-pressed {
   background-color: $ionic-state-pressed;
 }
