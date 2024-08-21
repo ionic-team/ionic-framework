@@ -125,6 +125,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
           emit(WILL_CHANGE, { tab });
         slottedTabBar.props._tabsDidChange = (tab: string) =>
           emit(DID_CHANGE, { tab });
+        slottedTabBar.props._hasRouterOutlet = !!routerOutlet;
       }
     }
 

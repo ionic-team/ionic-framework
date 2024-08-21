@@ -7,6 +7,7 @@ import { h, defineComponent, getCurrentInstance, inject } from "vue";
 interface TabState {
   activeTab?: string;
   tabs: { [k: string]: Tab };
+  hasRouterOutlet?: boolean;
 }
 
 interface Tab {
@@ -37,6 +38,7 @@ export const IonTabBar = defineComponent({
     /* eslint-disable @typescript-eslint/no-empty-function */
     _tabsWillChange: { type: Function, default: () => {} },
     _tabsDidChange: { type: Function, default: () => {} },
+    _hasRouterOutlet: { type: Boolean, default: false },
     /* eslint-enable @typescript-eslint/no-empty-function */
   },
   data() {
@@ -71,6 +73,8 @@ export const IonTabBar = defineComponent({
           currentHref: child.props.href,
           ref: child,
         };
+
+        tabState.hasRouterOutlet = this.$props._hasRouterOutlet;
 
         /**
          * Passing this prop to each tab button

@@ -37,9 +37,15 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
        */
       const { tab, href, _getTabState } = props;
       const tabState = _getTabState();
+      const hasRouterOutlet = tabState.hasRouterOutlet;
       const tappedTab = tabState.tabs[tab] || {};
       const originalHref = tappedTab.originalHref || href;
-      const currentHref = tappedTab.currentHref || href;
+      /**
+       * If the router outlet is not defined, then the tabs is being used
+       * as a basic tab navigation without the router. In this case, we
+       * don't want to update the href else the URL will change.
+       */
+      const currentHref = hasRouterOutlet ? tappedTab.currentHref || href : "";
       const prevActiveTab = tabState.activeTab;
 
       /**
