@@ -549,12 +549,8 @@ export class Textarea implements ComponentInterface {
     const theme = getIonTheme(this);
     const { shape } = this;
 
-    // TODO(ROU-11050): Remove theme check when shapes are defined for all themes.
-    if (theme !== 'ionic') {
-      return undefined;
-    }
-
-    if (shape === undefined) {
+    // TODO(ROU-11050): Update theme check when shapes are defined for all themes.
+    if (theme === 'ionic' && shape === undefined) {
       return 'round';
     }
 

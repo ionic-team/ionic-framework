@@ -3,8 +3,9 @@ import { configs, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across directions
+ * The round shape is only available in the Ionic and Material Design themes
  */
-configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: shape'), () => {
     test.describe('default', () => {
       test('should not have visual regressions', async ({ page }) => {
@@ -26,27 +27,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       });
     });
 
-    test.describe('soft', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-textarea
-            shape="soft"
-            fill="outline"
-            label="Email"
-            label-placement="stacked"
-            value="hi@ionic.io"
-          ></ion-textarea>
-        `,
-          config
-        );
-
-        const textarea = page.locator('ion-textarea');
-
-        await expect(textarea).toHaveScreenshot(screenshot(`textarea-soft`));
-      });
-    });
-
     test.describe('round', () => {
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
@@ -65,6 +45,34 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         const textarea = page.locator('ion-textarea');
 
         await expect(textarea).toHaveScreenshot(screenshot(`textarea-round`));
+      });
+    });
+  });
+});
+
+/**
+ * The soft and rectangular shapes are only available in the Ionic theme
+ */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: shape'), () => {
+    test.describe('soft', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            shape="soft"
+            fill="outline"
+            label="Email"
+            label-placement="stacked"
+            value="hi@ionic.io"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-soft`));
       });
     });
 
