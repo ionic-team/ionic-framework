@@ -33,6 +33,12 @@
 // Textarea Native
 // ----------------------------------------------------------------
 
+// This is required for auto-grow to work.
+.native-wrapper {
+  min-height: inherit;
+  max-height: inherit;
+}
+
 .native-wrapper textarea {
   @include globals.padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
