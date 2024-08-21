@@ -40,7 +40,7 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
   styleUrls: {
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss',
-    ionic: 'textarea.md.scss',
+    ionic: 'textarea.ionic.scss',
   },
   scoped: true,
 })
@@ -247,6 +247,12 @@ export class Textarea implements ComponentInterface {
    * The shape of the textarea. If "round" it will have an increased border radius.
    */
   @Prop() shape?: 'round';
+
+  /**
+   * The size of the textarea. If "large", it will have an increased height. By default the
+   * size is "medium". This property only applies to the `"ionic"` theme.
+   */
+  @Prop() size?: 'small' | 'medium' | 'large' = 'medium';
 
   /**
    * Update the native input element when the value changes
@@ -619,7 +625,7 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
+    const { inputId, disabled, fill, shape, size, labelPlacement, el, hasFocus } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -657,6 +663,7 @@ export class Textarea implements ComponentInterface {
           'label-floating': labelShouldFloat,
           [`textarea-fill-${fill}`]: fill !== undefined,
           [`textarea-shape-${shape}`]: shape !== undefined,
+          [`textarea-size-${size}`]: true,
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
         })}
@@ -670,6 +677,18 @@ export class Textarea implements ComponentInterface {
         <label class="textarea-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="textarea-wrapper-inner">
+            {
+              /**
+               * For the ionic theme, we render the outline container here
+               * instead of higher up, so it can be positioned relative to
+               * the native wrapper instead of the <label> element or the
+               * entire component. This allows the label text to be positioned
+               * above the outline, while staying within the bounds of the
+               * <label> element, ensuring that clicking the label text
+               * focuses the textarea.
+               */
+              theme === 'ionic' && fill === 'outline' && <div class="textarea-outline"></div>
+            }
             {/**
              * Some elements have their own padding styles which may
              * interfere with slot content alignment (such as icon-

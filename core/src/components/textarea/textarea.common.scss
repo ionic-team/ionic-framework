@@ -59,33 +59,9 @@
 
   width: 100%;
 
-  min-height: 44px;
-
   color: var(--color);
 
-  font-family: $font-family-base;
-
-  z-index: $z-index-item-input;
-
   box-sizing: border-box;
-}
-
-// Textarea Wrapper
-// ----------------------------------------------------------------
-
-/**
- * Since the label sits on top of the element,
- * the component needs to be taller otherwise the
- * label will appear too close to the textarea text.
- * Also, floating and stacked labels should not
- * push the label down since it it
- * sits on top of the textarea.
- */
-:host(.textarea-label-placement-floating),
-:host(.textarea-label-placement-stacked) {
-  --padding-top: 0px;
-
-  min-height: 56px;
 }
 
 /**
@@ -279,17 +255,11 @@
   caret-color: var(--highlight-color);
 }
 
-.native-wrapper textarea {
-  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
-}
-
 .native-wrapper {
   display: grid;
 
   min-width: inherit;
   max-width: inherit;
-  min-height: inherit;
-  max-height: inherit;
 
   /**
    * This avoids a WebKit bug where
@@ -375,20 +345,11 @@
 // ----------------------------------------------------------------
 
 .textarea-bottom {
-  /**
-   * The bottom content should take on the start and end
-   * padding so it is always aligned with either the label
-   * or the start of the textarea.
-   */
-  @include padding(5px, var(--padding-end), 0, var(--padding-start));
-
   display: flex;
 
   justify-content: space-between;
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
-
-  font-size: dynamic-font(12px);
 }
 
 /**
@@ -417,7 +378,7 @@
 .textarea-bottom .helper-text {
   display: block;
 
-  color: #{$text-color-step-450};
+  color: $text-color-step-450;
 }
 
 :host(.ion-touched.ion-invalid) .textarea-bottom .error-text {
@@ -439,11 +400,7 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: #{$text-color-step-450};
-
   white-space: nowrap;
-
-  padding-inline-start: 16px;
 }
 
 // Textarea Label
@@ -524,15 +481,6 @@
   flex-direction: row;
 }
 
-:host(.textarea-label-placement-start) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the textarea should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
-
 // Textarea Label Placement - End
 // ----------------------------------------------------------------
 
@@ -544,26 +492,8 @@
   flex-direction: row-reverse;
 }
 
-/**
- * The margin between the label and
- * the textarea should be on the start
- * when the label sits at the end.
- */
-:host(.textarea-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, $form-control-label-margin);
-}
-
 // Textarea Label Placement - Fixed
 // ----------------------------------------------------------------
-
-:host(.textarea-label-placement-fixed) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the textarea should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
 
 /**
  * Label is on the left of the textarea in LTR and
@@ -624,13 +554,6 @@
   @include margin(8px, 0px, 0px, 0px);
 }
 
-:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
-:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
-:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
-  margin-top: 8px;
-}
-
 /**
  * This makes the label sit over the textarea
  * when the textarea is blurred and has no value.
@@ -666,31 +589,14 @@
   max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
 
-// Start/End Slots
+// Start / End Slots
 // ----------------------------------------------------------------
 
 .start-slot-wrapper,
 .end-slot-wrapper {
-  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
-
   display: flex;
 
   flex-shrink: 0;
 
   align-self: start;
-}
-
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
-  margin-top: 0; // ensure slot content is vertically aligned with label
-}
-
-::slotted([slot="start"]:last-of-type) {
-  margin-inline-end: $form-control-label-margin;
-  margin-inline-start: 0;
-}
-
-::slotted([slot="end"]:first-of-type) {
-  margin-inline-start: $form-control-label-margin;
-  margin-inline-end: 0;
 }

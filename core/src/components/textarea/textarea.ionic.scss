@@ -1,0 +1,101 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./textarea.common";
+@use "./textarea.ionic.outline.scss" as outline;
+
+// Ionic Textarea
+// --------------------------------------------------
+
+:host {
+  --border-radius: #{globals.$ionic-border-radius-400};
+  --color: #{globals.$ionic-color-neutral-1200};
+  --highlight-color-valid: #{globals.$ionic-color-success-base};
+  --highlight-color-invalid: #{globals.$ionic-color-danger-base};
+  --placeholder-color: #{globals.$ionic-color-neutral-800};
+  --placeholder-opacity: 1;
+  --background: #{globals.$ionic-color-base-white};
+  --padding-top: #{globals.$ionic-space-300};
+  --padding-end: #{globals.$ionic-space-400};
+  --padding-bottom: #{globals.$ionic-space-300};
+  --padding-start: #{globals.$ionic-space-400};
+
+  @include globals.typography(globals.$ionic-body-md-regular);
+}
+
+// Ionic Textarea Sizes
+// --------------------------------------------------
+
+// Setting height to 0 allows it to collapse in height
+// instead of growing above the min height by default.
+.textarea-wrapper-inner {
+  height: 0;
+}
+
+:host(.textarea-size-medium) .textarea-wrapper-inner {
+  min-height: globals.$ionic-scale-3400;
+}
+
+// Textarea Wrapper
+// ----------------------------------------------------------------
+
+.textarea-wrapper {
+  gap: globals.$ionic-space-100;
+}
+
+.textarea-wrapper-inner {
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+}
+
+// Textarea Auto Grow
+// ----------------------------------------------------------------
+
+// The height should be auto only when auto-grow is enabled.
+:host([auto-grow]) .textarea-wrapper-inner {
+  height: auto;
+}
+
+// The min and max height should be inherited if auto-grow is enabled.
+// This allows the textarea to grow and shrink as needed.
+:host([auto-grow]) .native-wrapper {
+  min-height: inherit;
+  max-height: inherit;
+}
+
+// Textarea Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  @include globals.typography(globals.$ionic-body-sm-medium);
+
+  color: globals.$ionic-color-neutral-1000;
+}
+
+:host(.label-floating) .label-text-wrapper {
+  @include globals.transform(none);
+}
+
+// Textarea Slotted Content
+// ----------------------------------------------------------------
+
+ion-icon {
+  color: globals.$ionic-color-neutral-800;
+
+  font-size: globals.$ionic-scale-400;
+}
+
+.start-slot-wrapper,
+.end-slot-wrapper {
+  margin-top: globals.$ionic-space-050;
+}
+
+// Textarea Bottom Content
+// ----------------------------------------------------------------
+
+.textarea-bottom {
+  @include globals.padding(globals.$ionic-space-100, var(--padding-end), null, var(--padding-start));
+  @include globals.typography(globals.$ionic-body-sm-medium);
+}
+
+.textarea-bottom .helper-text,
+.textarea-bottom .counter {
+  color: globals.$ionic-color-neutral-800;
+}

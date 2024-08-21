@@ -1,0 +1,55 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Textarea Fill: Outline
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-outline) {
+  --border-width: #{globals.$ionic-border-size-025};
+  --border-color: #{globals.$ionic-color-neutral-500};
+}
+
+// Textarea Fill: Outline, Textarea Wrapper
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-outline) .textarea-wrapper-inner {
+  /**
+   * The border should be relative to the inner wrapper
+   * so that it does not include the label.
+   */
+  position: relative;
+}
+
+// Textarea Fill: Outline, Outline Container
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-outline) .textarea-outline {
+  @include globals.position(0, 0, 0, 0);
+  @include globals.border-radius(var(--border-radius));
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  border: var(--border-width) var(--border-style) var(--border-color);
+}
+
+// Textarea Fill: Outline, Bottom Content
+// ----------------------------------------------------------------
+
+/**
+ * The bottom content should never have
+ * a border with the outline style.
+ */
+:host(.textarea-fill-outline) .textarea-bottom {
+  border-top: none;
+}
+
+// Textarea Fill: Outline, Native Textarea
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-outline) textarea {
+  margin-top: globals.$ionic-space-100;
+}
