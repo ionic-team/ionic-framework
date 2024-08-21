@@ -1,8 +1,10 @@
+import eyeSlashRegular from '@phosphor-icons/core/assets/regular/eye-slash.svg';
+import eyeRegular from '@phosphor-icons/core/assets/regular/eye.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, Watch } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
-import { eyeOff, eye, eyeOutline, eyeOffOutline } from 'ionicons/icons';
+import { eyeOff, eye } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
@@ -117,7 +119,7 @@ export class InputPasswordToggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: eyeOff,
-      ionic: eyeOffOutline,
+      ionic: eyeSlashRegular,
       md: eyeOff,
     };
 
@@ -138,7 +140,7 @@ export class InputPasswordToggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: eye,
-      ionic: eyeOutline,
+      ionic: eyeRegular,
       md: eye,
     };
 
