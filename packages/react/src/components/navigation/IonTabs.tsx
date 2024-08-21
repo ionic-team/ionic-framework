@@ -168,6 +168,18 @@ export const IonTabs = /*@__PURE__*/ (() =>
         return <IonTabsInner {...this.props}></IonTabsInner>;
       }
 
+      /**
+       * TODO(ROU-11051)
+       *
+       * There is no error handling for the case where there
+       * is no associated Route for the given IonTabButton.
+       *
+       * More investigation is needed to determine how to
+       * handle this to prevent any overwriting of the
+       * IonTabButton's onClick handler and how the routing
+       * is handled.
+       */
+
       return (
         <IonTabsContext.Provider value={this.ionTabContextState}>
           {this.context.hasIonicRouter() ? (
