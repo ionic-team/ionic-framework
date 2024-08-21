@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+
+configs({ modes: ['md', 'ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input password toggle: states'), () => {
     test('should be hidden when inside of a readonly input', async ({ page }) => {
       await page.setContent(

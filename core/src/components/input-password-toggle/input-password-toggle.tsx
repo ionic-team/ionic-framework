@@ -1,10 +1,8 @@
-import eyeSlashRegular from '@phosphor-icons/core/assets/regular/eye-slash.svg';
-import eyeRegular from '@phosphor-icons/core/assets/regular/eye.svg';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, Watch } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses } from '@utils/theme';
-import { eyeOff, eye } from 'ionicons/icons';
+import { eyeOff, eye, eyeOutline, eyeOffOutline } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
@@ -21,8 +19,9 @@ import type { Color, TextFieldTypes } from '../../interface';
    * and we will default to MD mode.
    */
   styleUrls: {
-    ios: 'input-password-toggle.scss',
-    md: 'input-password-toggle.scss',
+    ios: 'input-password-toggle.common.scss',
+    md: 'input-password-toggle.common.scss',
+    ionic: 'input-password-toggle.ionic.scss',
   },
   shadow: true,
 })
@@ -118,7 +117,7 @@ export class InputPasswordToggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: eyeOff,
-      ionic: eyeSlashRegular,
+      ionic: eyeOffOutline,
       md: eyeOff,
     };
 
@@ -139,7 +138,7 @@ export class InputPasswordToggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: eye,
-      ionic: eyeRegular,
+      ionic: eyeOutline,
       md: eye,
     };
 
