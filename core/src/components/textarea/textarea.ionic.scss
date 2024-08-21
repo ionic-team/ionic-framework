@@ -13,10 +13,6 @@
   --placeholder-color: #{globals.$ionic-color-neutral-800};
   --placeholder-opacity: 1;
   --background: #{globals.$ionic-color-base-white};
-  --padding-top: #{globals.$ionic-space-300};
-  --padding-end: #{globals.$ionic-space-400};
-  --padding-bottom: #{globals.$ionic-space-300};
-  --padding-start: #{globals.$ionic-space-400};
 
   @include globals.typography(globals.$ionic-body-md-regular);
 }
@@ -30,8 +26,31 @@
   height: 0;
 }
 
+:host(.textarea-size-small) .textarea-wrapper-inner {
+  --padding-top: #{globals.$ionic-space-200};
+  --padding-end: #{globals.$ionic-space-300};
+  --padding-bottom: #{globals.$ionic-space-200};
+  --padding-start: #{globals.$ionic-space-300};
+
+  min-height: globals.$ionic-scale-2800;
+}
+
 :host(.textarea-size-medium) .textarea-wrapper-inner {
+  --padding-top: #{globals.$ionic-space-300};
+  --padding-end: #{globals.$ionic-space-400};
+  --padding-bottom: #{globals.$ionic-space-300};
+  --padding-start: #{globals.$ionic-space-400};
+
   min-height: globals.$ionic-scale-3400;
+}
+
+:host(.textarea-size-large) .textarea-wrapper-inner {
+  --padding-top: #{globals.$ionic-space-400};
+  --padding-end: #{globals.$ionic-space-500};
+  --padding-bottom: #{globals.$ionic-space-400};
+  --padding-start: #{globals.$ionic-space-500};
+
+  min-height: globals.$ionic-scale-3600;
 }
 
 // Textarea Wrapper
