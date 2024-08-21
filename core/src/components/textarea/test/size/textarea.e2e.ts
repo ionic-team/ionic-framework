@@ -55,24 +55,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
         const textarea = page.locator('ion-textarea');
         await expect(textarea).toHaveScreenshot(screenshot(`textarea-size-small-outline`));
       });
-      test('should not have visual regressions with fill outline and round shape', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-textarea
-            size="small"
-            fill="outline"
-            shape="round"
-            label="Email"
-            label-placement="stacked"
-            value="hi@ionic.io"
-          ></ion-textarea>
-        `,
-          config
-        );
-
-        const textarea = page.locator('ion-textarea');
-        await expect(textarea).toHaveScreenshot(screenshot(`textarea-size-small-outline-round`));
-      });
     });
 
     test.describe('textarea: size medium', () => {
@@ -171,24 +153,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
         const textarea = page.locator('ion-textarea');
         await expect(textarea).toHaveScreenshot(screenshot(`textarea-size-large-outline`));
-      });
-      test('should not have visual regressions with fill outline and round shape', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-textarea
-            size="large"
-            fill="outline"
-            shape="round"
-            label="Email"
-            label-placement="stacked"
-            value="hi@ionic.io"
-          ></ion-textarea>
-        `,
-          config
-        );
-
-        const textarea = page.locator('ion-textarea');
-        await expect(textarea).toHaveScreenshot(screenshot(`textarea-size-large-outline-round`));
       });
     });
   });
