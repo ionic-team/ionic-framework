@@ -4,8 +4,16 @@ import { IonLabel, IonTabBar, IonTabButton, IonTabs, IonTab } from '@ionic/react
 interface TabsProps {}
 
 const TabsBasic: React.FC<TabsProps> = () => {
+  const onTabWillChange = (event: CustomEvent) => {
+    console.log('onIonTabsWillChange', event.detail.tab);
+  };
+
+  const onTabDidChange = (event: CustomEvent) => {
+    console.log('onIonTabsDidChange:', event.detail.tab);
+  };
+
   return (
-    <IonTabs>
+    <IonTabs onIonTabsWillChange={onTabWillChange} onIonTabsDidChange={onTabDidChange}>
       <IonTab tab="tab1">
         <IonLabel>Tab 1 Content</IonLabel>
       </IonTab>
