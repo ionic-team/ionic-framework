@@ -87,7 +87,7 @@ export class Checkbox implements ComponentInterface {
    * `"space-between"`: The label and checkbox will appear on opposite
    * ends of the line with space between the two elements.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify?: 'start' | 'end' | 'space-between';
 
   /**
    * How to control the alignment of the checkbox and label on the cross axis.
@@ -163,6 +163,21 @@ export class Checkbox implements ComponentInterface {
     this.toggleChecked(ev);
   };
 
+  /**
+   * Returns `'space-between'` if inside of an item
+   * and the `justify` prop is not set.
+   */
+  private getJustify(): string | undefined {
+    const { el, justify } = this;
+    const inItem = hostContext('ion-item', el);
+
+    if (inItem && justify === undefined) {
+      return 'space-between';
+    }
+
+    return justify;
+  }
+
   render() {
     const {
       color,
@@ -173,7 +188,6 @@ export class Checkbox implements ComponentInterface {
       indeterminate,
       inheritedAttributes,
       inputId,
-      justify,
       labelPlacement,
       name,
       value,
@@ -181,6 +195,7 @@ export class Checkbox implements ComponentInterface {
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
+    const justify = this.getJustify();
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -194,7 +209,7 @@ export class Checkbox implements ComponentInterface {
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
-          [`checkbox-justify-${justify}`]: true,
+          [`checkbox-justify-${justify}`]: justify !== undefined,
           [`checkbox-alignment-${alignment}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
