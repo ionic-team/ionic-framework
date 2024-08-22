@@ -204,7 +204,7 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
     }
 
     if (leavingTab?.tab !== selectedTab?.tab) {
-      if (leavingTab) {
+      if (leavingTab?.el) {
         leavingTab.el.active = false;
       }
     }
