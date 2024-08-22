@@ -46,19 +46,40 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: states (ionic theme)'), () => {
-    test('should render focused and pressed states correctly', async ({ page }) => {
+    test('should render focused toggle correctly', async ({ page }) => {
       await page.setContent(
         `
         <ion-toggle class="ion-focused">Label</ion-toggle>
-        <ion-toggle class="ion-focused" checked>Label</ion-toggle>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-disabled`));
+    });
+
+    test('should render pressed unchecked toggle correctly', async ({ page }) => {
+      await page.setContent(
+        `
         <ion-toggle class="ion-activated">Label</ion-toggle>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-checked`));
+    });
+
+    test('should render pressed checked toggle correctly', async ({ page }) => {
+      await page.setContent(
+        `
         <ion-toggle class="ion-activated" checked>Label</ion-toggle>
       `,
         config
       );
 
       const toggle = page.locator('ion-toggle');
-      await expect(toggle).toHaveScreenshot(screenshot(`toggle-states`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-unchecked`));
     });
   });
 });
