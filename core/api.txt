@@ -2280,6 +2280,7 @@ ion-textarea,prop,readonly,boolean,false,false,false
 ion-textarea,prop,required,boolean,false,false,false
 ion-textarea,prop,rows,number | undefined,undefined,false,false
 ion-textarea,prop,shape,"round" | undefined,undefined,false,false
+ion-textarea,prop,size,"large" | "medium" | "small" | undefined,'medium',false,false
 ion-textarea,prop,spellcheck,boolean,false,false,false
 ion-textarea,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-textarea,prop,value,null | string | undefined,'',false,false

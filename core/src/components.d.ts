@@ -3621,6 +3621,10 @@ export namespace Components {
          */
         "shape"?: 'round';
         /**
+          * The size of the textarea. If "large" it will increase the height of the textarea, while "small" and "medium" provide progressively smaller heights. The default size is "medium". This property only applies to the `"ionic"` theme.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
           * If `true`, the element will have its spelling and grammar checked.
          */
         "spellcheck": boolean;
@@ -8976,6 +8980,10 @@ declare namespace LocalJSX {
           * The shape of the textarea. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        /**
+          * The size of the textarea. If "large" it will increase the height of the textarea, while "small" and "medium" provide progressively smaller heights. The default size is "medium". This property only applies to the `"ionic"` theme.
+         */
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
