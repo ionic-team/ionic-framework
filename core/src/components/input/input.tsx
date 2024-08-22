@@ -492,6 +492,17 @@ export class Input implements ComponentInterface {
     return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
   }
 
+  private getFill(): string | undefined {
+    const theme = getIonTheme(this);
+    const { fill } = this;
+
+    if (theme === 'ionic' && fill === undefined) {
+      return 'outline';
+    }
+
+    return fill;
+  }
+
   private getLabelPlacement() {
     const theme = getIonTheme(this);
     const { el, labelPlacement } = this;
@@ -725,7 +736,7 @@ export class Input implements ComponentInterface {
     const theme = getIonTheme(this);
     const hasOutlineFill = this.fill === 'outline';
 
-    if (hasOutlineFill && theme === 'md') {
+    if (hasOutlineFill && theme !== 'ios') {
       /**
        * The outline fill has a special outline
        * that appears around the input and the label.
@@ -790,9 +801,10 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, inputId, el, hasFocus, clearInput, inputClearIcon } = this;
+    const { disabled, readonly, inputId, el, hasFocus, clearInput, inputClearIcon } = this;
     const theme = getIonTheme(this);
     const value = this.getValue();
+    const fill = this.getFill();
     const size = this.getSize();
     const shape = this.getShape();
     const inItem = hostContext('ion-item', this.el);
