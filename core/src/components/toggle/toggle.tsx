@@ -1,5 +1,5 @@
-import circleRegular from '@phosphor-icons/core/assets/regular/circle.svg';
-import lineVerticalRegular from '@phosphor-icons/core/assets/regular/line-vertical.svg';
+import minusRegular from '@phosphor-icons/core/assets/regular/minus.svg';
+import checkRegular from '@phosphor-icons/core/assets/regular/check.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
@@ -30,7 +30,7 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
   styleUrls: {
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss',
-    ionic: 'toggle.md.scss',
+    ionic: 'toggle.ionic.scss',
   },
   shadow: true,
 })
@@ -254,7 +254,7 @@ export class Toggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: removeOutline,
-      ionic: lineVerticalRegular,
+      ionic: checkRegular,
       md: checkmarkOutline,
     };
 
@@ -284,7 +284,7 @@ export class Toggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const defaultIcons = {
       ios: ellipseOutline,
-      ionic: circleRegular,
+      ionic: minusRegular,
       md: removeOutline,
     };
 
@@ -352,6 +352,7 @@ export class Toggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const value = this.getValue();
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
+    const isIonicTheme = theme === "ionic";
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (
@@ -367,6 +368,8 @@ export class Toggle implements ComponentInterface {
           [`toggle-alignment-${alignment}`]: true,
           [`toggle-label-placement-${labelPlacement}`]: true,
           [`toggle-${rtl}`]: true,
+          'ion-activatable': isIonicTheme,
+          'ion-focusable': isIonicTheme,
         })}
       >
         <label class="toggle-wrapper">

@@ -1,0 +1,35 @@
+@import "../../themes/ionic/ionic.globals.scss";
+
+// Ionic Toggle
+// --------------------------------------------------
+
+/// @prop - Border width of the toggle
+$toggle-ionic-border-width: $ionic-space-050;
+
+/// @prop - Border radius of the toggle
+$toggle-ionic-border-radius: $ionic-border-radius-full;
+
+/// @prop - Background color of the unchecked toggle
+$toggle-ionic-background-color-off: $ionic-color-neutral-800;
+
+/// @prop - Width of the toggle handle
+$toggle-ionic-handle-width: $ionic-scale-500;
+
+/// @prop - Height of the toggle handle
+$toggle-ionic-handle-height: $ionic-scale-500;
+
+/// @prop - Max height of the toggle handle
+$toggle-ionic-handle-max-height: $ionic-scale-500;
+
+/// @prop - Border radius of the toggle handle
+$toggle-ionic-handle-border-radius: $ionic-border-radius-full;
+
+/// @prop - Background color of the toggle handle
+$toggle-ionic-handle-background-color: $ionic-color-base-white;
+
+/// @prop - Transition duration of the toggle icon
+$toggle-ionic-transition-duration: 300ms;
+
+/// @prop - Transition of the toggle icon
+$toggle-ionic-transition: transform $toggle-ionic-transition-duration, width 120ms ease-in-out 80ms,
+  left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;

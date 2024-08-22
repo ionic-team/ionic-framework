@@ -1,0 +1,138 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./toggle.common";
+@import "./toggle.ionic.vars";
+
+// Ionic Toggle
+// -----------------------------------------
+
+:host {
+  @include globals.typography(globals.$ionic-body-md-regular);
+
+  width: 100%;
+
+  --track-background: #{$toggle-ionic-background-color-off};
+  --track-background-checked: #{ion-color(primary, base)};
+  --border-radius: #{$toggle-ionic-border-radius};
+  --handle-background: #{$toggle-ionic-handle-background-color};
+  --handle-background-checked: #{$toggle-ionic-handle-background-color};
+  --handle-border-radius: #{$toggle-ionic-handle-border-radius};
+  --handle-height: #{$toggle-ionic-handle-height};
+  --handle-max-height: #{$toggle-ionic-handle-max-height};
+  --handle-width: #{$toggle-ionic-handle-width};
+  --handle-spacing: #{$toggle-ionic-border-width};
+  --handle-transition: #{$toggle-ionic-transition};
+}
+
+// Toggle Wrapper
+// --------------------------------------------------
+
+.toggle-wrapper {
+  align-items: center;
+  min-height: globals.$ionic-scale-1200;
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .toggle-icon {
+  height: globals.$ionic-scale-600;
+  width: globals.$ionic-scale-1100;
+
+  /**
+   * The handle box shadow should not
+   * overflow outside of the track container.
+   */
+  overflow: hidden;
+}
+
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base);
+}
+
+:host(.toggle-activated) .toggle-switch-icon {
+  opacity: 0;
+}
+
+// Toggle Native Wrapper: Focused
+// ----------------------------------------------------------------
+
+:host(.ion-focused) .toggle-icon {
+  outline: globals.$ionic-border-size-050 solid globals.$ionic-state-focus-1;
+  outline-offset: globals.$ionic-border-size-050;
+}
+
+// Toggle Native Wrapper: Pressed
+// ----------------------------------------------------------------
+
+:host(.ion-activated) .toggle-icon::after {
+  @include globals.pressed-state();
+}
+
+// Ionic Toggle: Disabled
+// ----------------------------------------------------------
+
+:host(.toggle-disabled) .toggle-icon::after {
+  @include globals.disabled-state();
+}
+
+// Ionic Toggle Inner Knob: Unchecked
+// ----------------------------------------------------------
+
+.toggle-inner {
+  will-change: background-color, transform;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: globals.$ionic-color-neutral-1200;
+}
+
+.toggle-inner .toggle-switch-icon {
+  width: globals.$ionic-scale-400;
+  height: globals.$ionic-scale-400;
+}
+
+// Toggle Label Placement - Start/Default
+// ----------------------------------------------------------------
+
+/**
+* Label is on the left of the input in LTR and
+* on the right in RTL.
+*/
+:host .toggle-wrapper {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+:host .label-text-wrapper {
+  /**
+  * The margin between the label and
+  * the input should be on the end
+  * when the label sits at the start.
+  */
+  @include margin(null, globals.$ionic-space-400, null, 0);
+}
+
+// Toggle Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+* Label is on the right of the input in LTR and
+* on the left in RTL.
+*/
+:host(.toggle-label-placement-end) .toggle-wrapper {
+  flex-direction: row-reverse;
+  justify-content: start;
+}
+
+/**
+* The margin between the label and
+* the input should be on the start
+* when the label sits at the end.
+*/
+:host(.toggle-label-placement-end) .label-text-wrapper {
+  @include margin(null, 0, null, globals.$ionic-space-400);
+}
+

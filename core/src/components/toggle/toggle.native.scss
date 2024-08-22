@@ -1,0 +1,155 @@
+@import "../../themes/native/native.globals";
+@import 'toggle.common';
+
+// Input Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+    text-overflow: ellipsis;
+  
+    white-space: nowrap;
+  
+    overflow: hidden;
+}
+
+// Toggle Justify
+// --------------------------------------------------
+
+:host(.toggle-justify-space-between) .toggle-wrapper {
+    justify-content: space-between;
+}
+  
+  :host(.toggle-justify-start) .toggle-wrapper {
+    justify-content: start;
+}
+  
+  :host(.toggle-justify-end) .toggle-wrapper {
+    justify-content: end;
+}
+  
+// Toggle Align
+// --------------------------------------------------
+
+:host(.toggle-alignment-start) .toggle-wrapper {
+    align-items: start;
+}
+
+:host(.toggle-alignment-center) .toggle-wrapper {
+    align-items: center;
+}
+
+// Input Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.toggle-label-placement-fixed) .label-text-wrapper {
+    /**
+     * The margin between the label and
+     * the input should be on the end
+     * when the label sits at the start.
+     */
+    @include margin(null, $form-control-label-margin, null, 0);
+}
+  
+/**
+* Label is on the left of the input in LTR and
+* on the right in RTL. Label also has a fixed width.
+*/
+:host(.toggle-label-placement-fixed) .label-text-wrapper {
+    flex: 0 0 100px;
+
+    width: 100px;
+    min-width: 100px;
+    max-width: 200px;
+}
+
+// Toggle Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+* Label is on top of the toggle.
+*/
+:host(.toggle-label-placement-stacked) .toggle-wrapper {
+    flex-direction: column;
+}
+
+:host(.toggle-label-placement-stacked) .label-text-wrapper {
+    @include transform(scale(#{$form-control-label-stacked-scale}));
+
+    /**
+    * The margin between the label and
+    * the toggle should be on the bottom
+    * when the label sits on top.
+    */
+    @include margin(null, 0, $form-control-label-margin, 0);
+
+    /**
+    * Label text should not extend
+    * beyond the bounds of the toggle.
+    */
+    max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+:host(.toggle-label-placement-stacked.toggle-alignment-start) .label-text-wrapper {
+    @include transform-origin(start, top);
+}
+
+:host(.toggle-label-placement-stacked.toggle-alignment-center) .label-text-wrapper {
+    @include transform-origin(center, top);
+}
+
+
+// Toggle Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+* Label is on the left of the input in LTR and
+* on the right in RTL.
+*/
+:host(.toggle-label-placement-start) .toggle-wrapper {
+    flex-direction: row;
+}
+
+:host(.toggle-label-placement-start) .label-text-wrapper {
+    /**
+    * The margin between the label and
+    * the input should be on the end
+    * when the label sits at the start.
+    */
+    @include margin(null, $form-control-label-margin, null, 0);
+}
+
+// Toggle Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+* Label is on the right of the input in LTR and
+* on the left in RTL.
+*/
+:host(.toggle-label-placement-end) .toggle-wrapper {
+    flex-direction: row-reverse;
+}
+  
+/**
+* The margin between the label and
+* the input should be on the start
+* when the label sits at the end.
+*/
+:host(.toggle-label-placement-end) .label-text-wrapper {
+    @include margin(null, 0, null, $form-control-label-margin);
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+:host(.in-item) .label-text-wrapper {
+    @include margin($toggle-item-label-margin-top, null, $toggle-item-label-margin-bottom, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .label-text-wrapper {
+    @include margin($toggle-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .native-wrapper {
+    @include margin(null, null, $toggle-item-label-margin-bottom, null);
+}
+  
