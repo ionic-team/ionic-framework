@@ -44,7 +44,7 @@ export class Tabs implements NavOutlet {
   async componentWillLoad() {
     if (!this.useRouter) {
       /**
-       * JavaScript andd StencilJS use `ion-router`, while
+       * JavaScript and StencilJS use `ion-router`, while
        * the other frameworks use `ion-router-outlet`.
        *
        * If either component is present then tabs will not use

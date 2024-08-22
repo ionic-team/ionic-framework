@@ -177,7 +177,6 @@ export const config: Config = {
         'ion-back-button',
         'ion-tab-button',
         'ion-tabs',
-        'ion-tab',
         'ion-tab-bar',
 
         // Overlays
