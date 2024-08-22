@@ -90,7 +90,7 @@ export const IonTabBar = defineComponent({
         child.component.props._getTabState = () => tabState;
 
         /**
-         * If the router outlet is not defined, then the tabs is being used
+         * If the router outlet is not defined, then the tabs are being used
          * as a basic tab navigation without the router. In this case, the
          * tabs will not emit the `ionTabsDidChange` and `ionTabsWillChange`
          * events through the `checkActiveTab` method. Instead, we need to
