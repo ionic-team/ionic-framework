@@ -2,12 +2,10 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * By default ion-checkbox only takes up
- * as much space as it needs. Justification is
- * used for when the checkbox takes up the full
- * line (such as in an ion-item). As a result,
- * we set the width of the checkbox so we can
- * see the justification results.
+ * By default ion-checkbox only takes up as much space
+ * as it needs. Justification is used for when the
+ * checkbox should take up the full line (such as in an
+ * ion-item or when it has 100% width).
  */
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: label'), () => {
@@ -15,7 +13,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a start justification with label in the start position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="start" justify="start" style="width: 200px">Label</ion-checkbox>
+           <ion-checkbox label-placement="start" justify="start">Label</ion-checkbox>
          `,
           config
         );
@@ -27,7 +25,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render an end justification with label in the start position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="start" justify="end" style="width: 200px">Label</ion-checkbox>
+           <ion-checkbox label-placement="start" justify="end">Label</ion-checkbox>
          `,
           config
         );
@@ -39,7 +37,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a space between justification with label in the start position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="start" justify="space-between" style="width: 200px">Label</ion-checkbox>
+           <ion-checkbox label-placement="start" justify="space-between">Label</ion-checkbox>
          `,
           config
         );
@@ -51,7 +49,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should truncate long labels with ellipses', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="start" justify="start" style="width: 200px">
+           <ion-checkbox label-placement="start" justify="start">
              Long Label Long Label Long Label Long Label Long Label Long Label
            </ion-checkbox>
          `,
@@ -59,7 +57,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-long-label`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-start-justify-start-long-label`));
       });
     });
 
@@ -67,7 +65,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a start justification with label in the end position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="end" justify="start" style="width: 200px">Label</ion-checkbox>
+           <ion-checkbox label-placement="end" justify="start">Label</ion-checkbox>
          `,
           config
         );
@@ -79,7 +77,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render an end justification with label in the end position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="end" justify="end" style="width: 200px">Label</ion-checkbox>
+           <ion-checkbox label-placement="end" justify="end">Label</ion-checkbox>
          `,
           config
         );
@@ -91,7 +89,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a space between justification with label in the end position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="end" justify="space-between" style="width: 200px">Label</ion-checkbox>
+           <ion-checkbox label-placement="end" justify="space-between">Label</ion-checkbox>
          `,
           config
         );
@@ -105,7 +103,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a start justification with label in the fixed position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="fixed" justify="start" style="width: 200px">This is a long label</ion-checkbox>
+           <ion-checkbox label-placement="fixed" justify="start">This is a long label</ion-checkbox>
          `,
           config
         );
@@ -117,7 +115,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render an end justification with label in the fixed position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="fixed" justify="end" style="width: 200px">This is a long label</ion-checkbox>
+           <ion-checkbox label-placement="fixed" justify="end">This is a long label</ion-checkbox>
          `,
           config
         );
@@ -129,7 +127,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render a space between justification with label in the fixed position', async ({ page }) => {
         await page.setContent(
           `
-           <ion-checkbox label-placement="fixed" justify="space-between" style="width: 200px">This is a long label</ion-checkbox>
+           <ion-checkbox label-placement="fixed" justify="space-between">This is a long label</ion-checkbox>
          `,
           config
         );
@@ -143,7 +141,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should align the label to the start of the container in the stacked position', async ({ page }) => {
         await page.setContent(
           `
-            <ion-checkbox label-placement="stacked" alignment="start" style="width: 200px">This is a long label</ion-checkbox>
+            <ion-checkbox label-placement="stacked" alignment="start">This is a long label</ion-checkbox>
           `,
           config
         );
@@ -155,7 +153,7 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should align the label to the center of the container in the stacked position', async ({ page }) => {
         await page.setContent(
           `
-            <ion-checkbox label-placement="stacked" alignment="center" style="width: 200px">This is a long label</ion-checkbox>
+            <ion-checkbox label-placement="stacked" alignment="center">This is a long label</ion-checkbox>
           `,
           config
         );
@@ -172,7 +170,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screen
     test('long label should truncate', async ({ page }) => {
       await page.setContent(
         `
-          <ion-checkbox label-placement="stacked" alignment="start" style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-checkbox>
+          <ion-checkbox label-placement="stacked" alignment="start">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-checkbox>
         `,
         config
       );
