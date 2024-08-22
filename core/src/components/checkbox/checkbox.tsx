@@ -163,21 +163,6 @@ export class Checkbox implements ComponentInterface {
     this.toggleChecked(ev);
   };
 
-  /**
-   * Returns `'space-between'` if inside of an item
-   * and the `justify` prop is not set.
-   */
-  private getJustify(): string | undefined {
-    const { el, justify } = this;
-    const inItem = hostContext('ion-item', el);
-
-    if (inItem && justify === undefined) {
-      return 'space-between';
-    }
-
-    return justify;
-  }
-
   render() {
     const {
       color,
@@ -188,6 +173,7 @@ export class Checkbox implements ComponentInterface {
       indeterminate,
       inheritedAttributes,
       inputId,
+      justify,
       labelPlacement,
       name,
       value,
@@ -195,7 +181,6 @@ export class Checkbox implements ComponentInterface {
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
-    const justify = this.getJustify();
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
