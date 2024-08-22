@@ -183,7 +183,7 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
     const selectedTab = tabs.find((t: any) => t.tab === tab);
 
     if (!selectedTab) {
-      console.error(`tab with id: "${tab}" does not exist`);
+      console.error(`[Ionic Error]: Tab with id: "${tab}" does not exist`);
       return;
     }
 
