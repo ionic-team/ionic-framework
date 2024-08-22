@@ -129,6 +129,17 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       );
     }
 
+    /**
+     * TODO(ROU-11056)
+     *
+     * Vue handles the error case for when there is no
+     * associated page matching the tab `href`.
+     *
+     * More investigation is needed to determine if we
+     * override the error handling and provide our own
+     * error message.
+     */
+
     return h(
       "ion-tabs",
       {
