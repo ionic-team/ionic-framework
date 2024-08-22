@@ -1,5 +1,5 @@
-import minusRegular from '@phosphor-icons/core/assets/regular/minus.svg';
 import checkRegular from '@phosphor-icons/core/assets/regular/check.svg';
+import minusRegular from '@phosphor-icons/core/assets/regular/minus.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
@@ -352,7 +352,7 @@ export class Toggle implements ComponentInterface {
     const theme = getIonTheme(this);
     const value = this.getValue();
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const isIonicTheme = theme === "ionic";
+    const isIonicTheme = theme === 'ionic';
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (

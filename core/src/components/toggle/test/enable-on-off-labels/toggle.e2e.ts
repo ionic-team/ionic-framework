@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ palettes: ['light', 'dark'], modes: ['ios', 'md', 'ionic-md']}).forEach(({ title, screenshot, config }) => {
+configs({ palettes: ['light', 'dark'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: enable-on-off-labels'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(

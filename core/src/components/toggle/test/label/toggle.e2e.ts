@@ -170,7 +170,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screen
   });
 });
 
-configs({modes: ['ionic-md']}).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: start placement'), () => {
     test('should render the label in the start position', async ({ page }) => {
       await page.setContent(

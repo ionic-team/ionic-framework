@@ -6,10 +6,6 @@
 // -----------------------------------------
 
 :host {
-  @include globals.typography(globals.$ionic-body-md-regular);
-
-  width: 100%;
-
   --track-background: #{$toggle-ionic-background-color-off};
   --track-background-checked: #{ion-color(primary, base)};
   --border-radius: #{$toggle-ionic-border-radius};
@@ -21,6 +17,10 @@
   --handle-width: #{$toggle-ionic-handle-width};
   --handle-spacing: #{$toggle-ionic-border-width};
   --handle-transition: #{$toggle-ionic-transition};
+
+  @include globals.typography(globals.$ionic-body-md-regular);
+
+  width: 100%;
 }
 
 // Toggle Wrapper
@@ -28,6 +28,7 @@
 
 .toggle-wrapper {
   align-items: center;
+
   min-height: globals.$ionic-scale-1200;
 }
 
@@ -35,8 +36,8 @@
 // ----------------------------------------------------------------
 
 .native-wrapper .toggle-icon {
-  height: globals.$ionic-scale-600;
   width: globals.$ionic-scale-1100;
+  height: globals.$ionic-scale-600;
 
   /**
    * The handle box shadow should not
@@ -135,4 +136,3 @@
 :host(.toggle-label-placement-end) .label-text-wrapper {
   @include margin(null, 0, null, globals.$ionic-space-400);
 }
-

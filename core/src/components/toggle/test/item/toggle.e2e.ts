@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({modes: ['ios', 'md', 'ionic-md']}).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: item'), () => {
     test('should render correctly in list', async ({ page }) => {
       await page.setContent(
