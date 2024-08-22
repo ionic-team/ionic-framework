@@ -12,6 +12,18 @@
     overflow: hidden;
 }
 
+:host(.in-item) .label-text-wrapper {
+    @include margin($toggle-item-label-margin-top, null, $toggle-item-label-margin-bottom, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .label-text-wrapper {
+    @include margin($toggle-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .native-wrapper {
+    @include margin(null, null, $toggle-item-label-margin-bottom, null);
+}
+
 // Toggle Justify
 // --------------------------------------------------
 
@@ -137,19 +149,3 @@
 :host(.toggle-label-placement-end) .label-text-wrapper {
     @include margin(null, 0, null, $form-control-label-margin);
 }
-
-// Input Label
-// ----------------------------------------------------------------
-
-:host(.in-item) .label-text-wrapper {
-    @include margin($toggle-item-label-margin-top, null, $toggle-item-label-margin-bottom, null);
-}
-
-:host(.in-item.toggle-label-placement-stacked) .label-text-wrapper {
-    @include margin($toggle-item-label-margin-top, null, $form-control-label-margin, null);
-}
-
-:host(.in-item.toggle-label-placement-stacked) .native-wrapper {
-    @include margin(null, null, $toggle-item-label-margin-bottom, null);
-}
-  

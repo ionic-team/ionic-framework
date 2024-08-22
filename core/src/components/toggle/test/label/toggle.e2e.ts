@@ -169,3 +169,33 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screen
     });
   });
 });
+
+configs({modes: ['ionic-md']}).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toggle: start placement'), () => {
+    test('should render the label in the start position', async ({ page }) => {
+      await page.setContent(
+        `
+         <ion-toggle label-placement="start">Label</ion-toggle>
+       `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-start-justify-start`));
+    });
+  });
+
+  test.describe(title('toggle: end placement'), () => {
+    test('should render the label in the end position', async ({ page }) => {
+      await page.setContent(
+        `
+         <ion-toggle label-placement="end">Label</ion-toggle>
+       `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-end-justify-start`));
+    });
+  });
+});

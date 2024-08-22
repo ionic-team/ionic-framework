@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({modes: ['ios', 'md', 'ionic-md']}).forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: item'), () => {
     test('should render correctly in list', async ({ page }) => {
       await page.setContent(
@@ -34,7 +34,7 @@ configs().forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: item color contrast'), () => {
     test('label should have correct contrast when used in an item', async ({ page }) => {
       await page.setContent(
@@ -89,7 +89,9 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await expect(list).toHaveScreenshot(screenshot(`toggle-stacked-label-in-item`));
     });
   });
+});
 
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, config }) => {
   test.describe(title('toggle: ionChange'), () => {
     test('clicking padded space within item should click the toggle', async ({ page }) => {
       await page.setContent(
