@@ -196,8 +196,7 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   }
 
   private tabSwitch(): void {
-    const selectedTab = this.selectedTab;
-    const leavingTab = this.leavingTab;
+    const { selectedTab, leavingTab } = this;
 
     if (this.tabBar && selectedTab) {
       this.tabBar.selectedTab = selectedTab.tab;
