@@ -42,7 +42,7 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
   private tabBarSlot = 'bottom';
 
   private hasTab = false;
-  private selectedTab?: any;
+  private selectedTab?: { tab: string };
   private leavingTab?: any;
 
   constructor(private navCtrl: NavController) {}
@@ -199,22 +199,24 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
     const selectedTab = this.selectedTab;
     const leavingTab = this.leavingTab;
 
-    if (this.tabBar) {
+    if (this.tabBar && selectedTab) {
       this.tabBar.selectedTab = selectedTab.tab;
     }
 
-    if (leavingTab?.tab !== selectedTab.tab) {
+    if (leavingTab?.tab !== selectedTab?.tab) {
       if (leavingTab) {
         leavingTab.el.active = false;
       }
     }
 
-    this.ionTabsDidChange.emit({ tab: selectedTab.tab });
+    if (selectedTab) {
+      this.ionTabsDidChange.emit({ tab: selectedTab.tab });
+    }
   }
 
   getSelected(): string | undefined {
     if (this.hasTab) {
-      return this.selectedTab.tab;
+      return this.selectedTab?.tab;
     }
 
     return this.outlet.getActiveStackId();
