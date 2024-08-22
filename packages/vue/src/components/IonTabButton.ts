@@ -18,6 +18,10 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
     selected: Boolean,
     tab: String,
     target: String,
+    _onClick: {
+      type: Function,
+      required: false,
+    },
   },
   setup(props, { slots }) {
     defineCustomElement();
@@ -47,6 +51,18 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
        */
       const currentHref = hasRouterOutlet ? tappedTab.currentHref || href : "";
       const prevActiveTab = tabState.activeTab;
+
+      if (!hasRouterOutlet && props._onClick) {
+        props._onClick(
+          new CustomEvent("ionTabButtonClick", {
+            detail: {
+              href: currentHref,
+              selected: tab === prevActiveTab,
+              tab,
+            },
+          })
+        );
+      }
 
       /**
        * If we are still on the same

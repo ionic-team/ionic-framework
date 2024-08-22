@@ -1,7 +1,7 @@
 <template>
   <ion-page data-pageid="tabs">
     <ion-content>
-      <ion-tabs id="tabs">
+      <ion-tabs id="tabs" @ionTabsWillChange="onTabWillChange" @ionTabsDidChange="onTabDidChange">
         <ion-tab-bar slot="bottom">
           <ion-tab-button
             v-for="tab in tabs"
@@ -41,7 +41,15 @@ export default defineComponent({
       { id: 3, icon: square }
     ])
 
-    return { tabs }
+    const onTabWillChange = (e: { tab: string }) => {
+      console.log('Tab will change', e.tab);
+    }
+
+    const onTabDidChange = (e: { tab: string }) => {
+      console.log('Tab did change', e.tab);
+    }
+
+    return { tabs, onTabWillChange, onTabDidChange }
   }
 });
 </script>

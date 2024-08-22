@@ -95,16 +95,6 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       );
     }
 
-    if (hasTab) {
-      return h(
-        "ion-tabs",
-        {
-          ...props,
-        },
-        slottedContent
-      );
-    }
-
     if (slottedContent && slottedContent.length > 0) {
       const slottedTabBar = slottedContent.find((child: VNode) =>
         isTabBar(child)
@@ -127,6 +117,16 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
           emit(DID_CHANGE, { tab });
         slottedTabBar.props._hasRouterOutlet = !!routerOutlet;
       }
+    }
+
+    if (hasTab) {
+      return h(
+        "ion-tabs",
+        {
+          ...props,
+        },
+        slottedContent
+      );
     }
 
     return h(
