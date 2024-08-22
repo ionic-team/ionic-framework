@@ -48,11 +48,11 @@ export default defineComponent({
     }
 
     const onTabWillChange = (e: { tab: string }) => {
-      console.log('Tab will change', e.tab);
+      console.log('ionTabsWillChange', e.tab);
     }
 
     const onTabDidChange = (e: { tab: string }) => {
-      console.log('Tab did change', e.tab);
+      console.log('ionTabsDidChange', e.tab);
     }
 
     return { tabs, addTab, onTabWillChange, onTabDidChange }
