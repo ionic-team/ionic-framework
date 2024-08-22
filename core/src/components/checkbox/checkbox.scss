@@ -27,7 +27,7 @@
   --checkmark-color: #{ion-color(primary, contrast)};
   --transition: none;
 
-  display: flex;
+  display: inline-block;
 
   position: relative;
 
@@ -73,7 +73,6 @@
 
   align-items: center;
 
-  width: 100%;
   height: inherit;
 
   cursor: inherit;
