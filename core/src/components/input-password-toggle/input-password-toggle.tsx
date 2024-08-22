@@ -21,8 +21,9 @@ import type { Color, TextFieldTypes } from '../../interface';
    * and we will default to MD mode.
    */
   styleUrls: {
-    ios: 'input-password-toggle.scss',
-    md: 'input-password-toggle.scss',
+    ios: 'input-password-toggle.common.scss',
+    md: 'input-password-toggle.common.scss',
+    ionic: 'input-password-toggle.ionic.scss',
   },
   shadow: true,
 })
