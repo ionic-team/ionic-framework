@@ -3617,9 +3617,9 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * The shape of the textarea. If "round" it will have an increased border radius.
+          * Set to `"soft"` for a textarea with slightly rounded corners, `"round"` for a textarea with fully rounded corners, or `"rectangular"` for a textarea without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
-        "shape"?: 'round';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The size of the textarea. If "large" it will increase the height of the textarea, while "small" and "medium" provide progressively smaller heights. The default size is "medium". This property only applies to the `"ionic"` theme.
          */
@@ -8977,9 +8977,9 @@ declare namespace LocalJSX {
          */
         "rows"?: number;
         /**
-          * The shape of the textarea. If "round" it will have an increased border radius.
+          * Set to `"soft"` for a textarea with slightly rounded corners, `"round"` for a textarea with fully rounded corners, or `"rectangular"` for a textarea without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
-        "shape"?: 'round';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The size of the textarea. If "large" it will increase the height of the textarea, while "small" and "medium" provide progressively smaller heights. The default size is "medium". This property only applies to the `"ionic"` theme.
          */

@@ -15,7 +15,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(250px, 1fr));
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
@@ -27,7 +27,6 @@
         color: #6f7378;
 
         margin-top: 10px;
-        padding-left: 16px;
       }
 
       @media screen and (max-width: 800px) {
@@ -61,32 +60,9 @@
           </div>
 
           <div class="grid-item">
-            <h2>Outline: Small Size, Round Shape</h2>
-            <ion-textarea
-              size="small"
-              fill="outline"
-              shape="round"
-              label="Label"
-              label-placement="stacked"
-              placeholder="Placeholder"
-            ></ion-textarea>
-          </div>
-
-          <div class="grid-item">
             <h2>Outline: No Size</h2>
             <ion-textarea
               fill="outline"
-              label="Label"
-              label-placement="stacked"
-              placeholder="Placeholder"
-            ></ion-textarea>
-          </div>
-
-          <div class="grid-item">
-            <h2>Outline: No Size, Round Shape</h2>
-            <ion-textarea
-              fill="outline"
-              shape="round"
               label="Label"
               label-placement="stacked"
               placeholder="Placeholder"
@@ -98,18 +74,6 @@
             <ion-textarea
               size="large"
               fill="outline"
-              label="Label"
-              label-placement="stacked"
-              placeholder="Placeholder"
-            ></ion-textarea>
-          </div>
-
-          <div class="grid-item">
-            <h2>Outline: Large Size, Round Shape</h2>
-            <ion-textarea
-              size="large"
-              fill="outline"
-              shape="round"
               label="Label"
               label-placement="stacked"
               placeholder="Placeholder"
