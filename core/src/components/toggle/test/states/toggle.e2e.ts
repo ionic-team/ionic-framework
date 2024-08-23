@@ -45,7 +45,7 @@ configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ ti
  * Focused and Pressed states are only available in the Ionic theme
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('toggle: states (ionic theme)'), () => {
+  test.describe(title('toggle: states'), () => {
     test('should render focused toggle correctly', async ({ page }) => {
       await page.setContent(
         `

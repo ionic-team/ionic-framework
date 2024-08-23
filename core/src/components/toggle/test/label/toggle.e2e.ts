@@ -198,4 +198,18 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-end-justify-start`));
     });
   });
+
+  test.describe(title('toggle: start long label'), () => {
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-toggle label-placement="start">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-toggle>
+        `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-start-long-label`));
+    });
+  });
 });
