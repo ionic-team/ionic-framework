@@ -393,7 +393,7 @@ ion-card-title,css-prop,--color,ios
 ion-card-title,css-prop,--color,md
 
 ion-checkbox,shadow
-ion-checkbox,prop,alignment,"center" | "start",'center',false,false
+ion-checkbox,prop,alignment,"center" | "start" | undefined,undefined,false,false
 ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false

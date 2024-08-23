@@ -603,7 +603,7 @@ export namespace Components {
         /**
           * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
-        "alignment": 'start' | 'center';
+        "alignment"?: 'start' | 'center';
         /**
           * If `true`, the checkbox is selected.
          */
