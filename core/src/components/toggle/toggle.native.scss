@@ -1,15 +1,8 @@
 @import "../../themes/native/native.globals";
 @import "toggle.common";
 
-// Input Label
-// ----------------------------------------------------------------
-
-.label-text-wrapper {
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
+:host {
+  z-index: $z-index-item-input;
 }
 
 :host(.in-item) .label-text-wrapper {
@@ -22,6 +15,17 @@
 
 :host(.in-item.toggle-label-placement-stacked) .native-wrapper {
   @include margin(null, null, $toggle-item-label-margin-bottom, null);
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
 }
 
 // Toggle Justify
@@ -112,14 +116,6 @@
 // Toggle Label Placement - Start
 // ----------------------------------------------------------------
 
-/**
-* Label is on the left of the input in LTR and
-* on the right in RTL.
-*/
-:host(.toggle-label-placement-start) .toggle-wrapper {
-  flex-direction: row;
-}
-
 :host(.toggle-label-placement-start) .label-text-wrapper {
   /**
     * The margin between the label and
@@ -131,14 +127,6 @@
 
 // Toggle Label Placement - End
 // ----------------------------------------------------------------
-
-/**
-* Label is on the right of the input in LTR and
-* on the left in RTL.
-*/
-:host(.toggle-label-placement-end) .toggle-wrapper {
-  flex-direction: row-reverse;
-}
 
 /**
 * The margin between the label and

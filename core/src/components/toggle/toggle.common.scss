@@ -35,7 +35,6 @@
 
   cursor: pointer;
   user-select: none;
-  z-index: 2;
 }
 
 :host(.in-item) {
@@ -109,6 +108,28 @@ input {
   display: flex;
 
   align-items: center;
+}
+
+// Toggle Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.toggle-label-placement-start) .toggle-wrapper {
+  flex-direction: row;
+}
+
+// Toggle Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the input in LTR and
+ * on the left in RTL.
+ */
+:host(.toggle-label-placement-end) .toggle-wrapper {
+  flex-direction: row-reverse;
 }
 
 // Toggle Background Track: Unchecked

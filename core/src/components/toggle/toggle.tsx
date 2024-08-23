@@ -334,7 +334,6 @@ export class Toggle implements ComponentInterface {
           theme === 'ios' && [this.renderOnOffSwitchLabels(true), this.renderOnOffSwitchLabels(false)]}
         <div class="toggle-icon-wrapper">
           <div class="toggle-inner" part="handle">
-            {/* TODO(ROU-10830): The ionic theme will need to be moved up with ios when the design is implemented */}
             {enableOnOffLabels && (theme === 'md' || theme === 'ionic') && this.renderOnOffSwitchLabels(checked)}
           </div>
         </div>

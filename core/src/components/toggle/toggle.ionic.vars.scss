@@ -1,31 +1,37 @@
-@import "../../themes/ionic/ionic.globals.scss";
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 
 // Ionic Toggle
 // --------------------------------------------------
 
 /// @prop - Border width of the toggle
-$toggle-ionic-border-width: $ionic-space-050;
+$toggle-ionic-border-width: globals.$ionic-space-050;
 
 /// @prop - Border radius of the toggle
-$toggle-ionic-border-radius: $ionic-border-radius-full;
+$toggle-ionic-border-radius: globals.$ionic-border-radius-full;
 
 /// @prop - Background color of the unchecked toggle
-$toggle-ionic-background-color-off: $ionic-color-neutral-800;
+$toggle-ionic-background-color-off: globals.$ionic-color-neutral-800;
+
+/// @prop - Color of the toggle focus ring
+$toggle-ionic-focus-ring-color: globals.$ionic-state-focus-1;
+
+/// @prop - Width of the toggle focus ring
+$toggle-ionic-focus-ring-width: globals.$ionic-border-size-050;
 
 /// @prop - Width of the toggle handle
-$toggle-ionic-handle-width: $ionic-scale-500;
+$toggle-ionic-handle-width: globals.$ionic-scale-500;
 
 /// @prop - Height of the toggle handle
-$toggle-ionic-handle-height: $ionic-scale-500;
+$toggle-ionic-handle-height: globals.$ionic-scale-500;
 
 /// @prop - Max height of the toggle handle
-$toggle-ionic-handle-max-height: $ionic-scale-500;
+$toggle-ionic-handle-max-height: globals.$ionic-scale-500;
 
 /// @prop - Border radius of the toggle handle
-$toggle-ionic-handle-border-radius: $ionic-border-radius-full;
+$toggle-ionic-handle-border-radius: globals.$ionic-border-radius-full;
 
 /// @prop - Background color of the toggle handle
-$toggle-ionic-handle-background-color: $ionic-color-base-white;
+$toggle-ionic-handle-background-color: globals.$ionic-color-base-white;
 
 /// @prop - Transition duration of the toggle icon
 $toggle-ionic-transition-duration: 300ms;

@@ -1,26 +1,30 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./toggle.common";
-@import "./toggle.ionic.vars";
+@use "./toggle.common" as common;
+@use "./toggle.ionic.vars" as variables;
 
 // Ionic Toggle
 // -----------------------------------------
 
 :host {
-  --track-background: #{$toggle-ionic-background-color-off};
-  --track-background-checked: #{ion-color(primary, base)};
-  --border-radius: #{$toggle-ionic-border-radius};
-  --handle-background: #{$toggle-ionic-handle-background-color};
-  --handle-background-checked: #{$toggle-ionic-handle-background-color};
-  --handle-border-radius: #{$toggle-ionic-handle-border-radius};
-  --handle-height: #{$toggle-ionic-handle-height};
-  --handle-max-height: #{$toggle-ionic-handle-max-height};
-  --handle-width: #{$toggle-ionic-handle-width};
-  --handle-spacing: #{$toggle-ionic-border-width};
-  --handle-transition: #{$toggle-ionic-transition};
+  --track-background: #{variables.$toggle-ionic-background-color-off};
+  --track-background-checked: #{globals.ion-color(primary, base)};
+  --border-radius: #{variables.$toggle-ionic-border-radius};
+  --focus-ring-color: #{variables.$toggle-ionic-focus-ring-color};
+  --focus-ring-width: #{variables.$toggle-ionic-focus-ring-width};
+  --handle-background: #{variables.$toggle-ionic-handle-background-color};
+  --handle-background-checked: #{variables.$toggle-ionic-handle-background-color};
+  --handle-border-radius: #{variables.$toggle-ionic-handle-border-radius};
+  --handle-height: #{variables.$toggle-ionic-handle-height};
+  --handle-max-height: #{variables.$toggle-ionic-handle-max-height};
+  --handle-width: #{variables.$toggle-ionic-handle-width};
+  --handle-spacing: #{variables.$toggle-ionic-border-width};
+  --handle-transition: #{variables.$toggle-ionic-transition};
 
   @include globals.typography(globals.$ionic-body-md-regular);
 
   width: 100%;
+
+  z-index: 2; // TODO(ROU-10853): replace this value with a layer token.
 }
 
 // Toggle Wrapper
@@ -47,19 +51,15 @@
 }
 
 :host(.ion-color.toggle-checked) .toggle-icon {
-  background: current-color(base);
-}
-
-:host(.toggle-activated) .toggle-switch-icon {
-  opacity: 0;
+  background: globals.current-color(base);
 }
 
 // Toggle Native Wrapper: Focused
 // ----------------------------------------------------------------
 
 :host(.ion-focused) .toggle-icon {
-  outline: globals.$ionic-border-size-050 solid globals.$ionic-state-focus-1;
-  outline-offset: globals.$ionic-border-size-050;
+  outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-width);
 }
 
 // Toggle Native Wrapper: Pressed
@@ -103,7 +103,6 @@
 * on the right in RTL.
 */
 :host .toggle-wrapper {
-  flex-direction: row;
   justify-content: space-between;
 }
 
@@ -113,7 +112,8 @@
   * the input should be on the end
   * when the label sits at the start.
   */
-  @include margin(null, globals.$ionic-space-400, null, 0);
+  @include globals.margin(null, globals.$ionic-space-400, null, 0);
+  color: globals.$ionic-color-neutral-1200;
 }
 
 // Toggle Label Placement - End
@@ -124,7 +124,6 @@
 * on the left in RTL.
 */
 :host(.toggle-label-placement-end) .toggle-wrapper {
-  flex-direction: row-reverse;
   justify-content: start;
 }
 
@@ -134,5 +133,5 @@
 * when the label sits at the end.
 */
 :host(.toggle-label-placement-end) .label-text-wrapper {
-  @include margin(null, 0, null, globals.$ionic-space-400);
+  @include globals.margin(null, 0, null, globals.$ionic-space-400);
 }
