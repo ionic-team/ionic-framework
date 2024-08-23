@@ -736,7 +736,7 @@ export class Input implements ComponentInterface {
     const theme = getIonTheme(this);
     const hasOutlineFill = this.fill === 'outline';
 
-    if (hasOutlineFill && theme !== 'ios') {
+    if (hasOutlineFill && theme === 'md') {
       /**
        * The outline fill has a special outline
        * that appears around the input and the label.
