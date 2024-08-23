@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Textarea - Size</title>
+    <title>Textarea - Shape</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -15,7 +15,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
@@ -42,25 +42,14 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Textarea - Size</ion-title>
+          <ion-title>Textarea - Shape</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content id="content" class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Outline: Small Size</h2>
-            <ion-textarea
-              size="small"
-              fill="outline"
-              label="Label"
-              label-placement="stacked"
-              placeholder="Placeholder"
-            ></ion-textarea>
-          </div>
-
-          <div class="grid-item">
-            <h2>Outline: No Size</h2>
+            <h2>Default</h2>
             <ion-textarea
               fill="outline"
               label="Label"
@@ -70,9 +59,31 @@
           </div>
 
           <div class="grid-item">
-            <h2>Outline: Large Size</h2>
+            <h2>Round</h2>
             <ion-textarea
-              size="large"
+              shape="round"
+              fill="outline"
+              label="Label"
+              label-placement="stacked"
+              placeholder="Placeholder"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Soft</h2>
+            <ion-textarea
+              shape="soft"
+              fill="outline"
+              label="Label"
+              label-placement="stacked"
+              placeholder="Placeholder"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Rectangular</h2>
+            <ion-textarea
+              shape="rectangular"
               fill="outline"
               label="Label"
               label-placement="stacked"
