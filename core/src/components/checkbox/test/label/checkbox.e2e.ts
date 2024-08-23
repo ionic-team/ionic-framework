@@ -9,6 +9,38 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: label'), () => {
+    test.describe('checkbox: default placement', () => {
+      test('should render a space between justification with a full width checkbox', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-checkbox style="width: 100%">
+             Label
+           </ion-checkbox>
+         `,
+          config
+        );
+
+        const checkbox = page.locator('ion-checkbox');
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-full-width`));
+      });
+
+      test('should truncate long labels with ellipses', async ({ page }) => {
+        // Checkbox needs to be full width to truncate properly
+        // because it is not inside of an `ion-app` in tests
+        await page.setContent(
+          `
+          <ion-checkbox style="width: 100%">
+             Long Label Long Label Long Label Long Label Long Label Long Label
+           </ion-checkbox>
+         `,
+          config
+        );
+
+        const checkbox = page.locator('ion-checkbox');
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-long-label`));
+      });
+    });
+
     test.describe('checkbox: start placement', () => {
       test('should render a start justification with label in the start position', async ({ page }) => {
         await page.setContent(
