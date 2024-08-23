@@ -55,7 +55,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       );
 
       const toggle = page.locator('ion-toggle');
-      await expect(toggle).toHaveScreenshot(screenshot(`toggle-disabled`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-focused`));
     });
 
     test('should render pressed unchecked toggle correctly', async ({ page }) => {
@@ -67,7 +67,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       );
 
       const toggle = page.locator('ion-toggle');
-      await expect(toggle).toHaveScreenshot(screenshot(`toggle-checked`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-unchecked-pressed`));
     });
 
     test('should render pressed checked toggle correctly', async ({ page }) => {
@@ -79,7 +79,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       );
 
       const toggle = page.locator('ion-toggle');
-      await expect(toggle).toHaveScreenshot(screenshot(`toggle-unchecked`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-checked-pressed`));
     });
   });
 });
