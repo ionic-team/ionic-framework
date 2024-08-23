@@ -181,7 +181,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-start-justify-start`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-start`));
     });
   });
 
@@ -195,7 +195,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-end-justify-start`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-end`));
     });
   });
 
