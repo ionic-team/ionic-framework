@@ -1,24 +1,24 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "./toggle.common" as common;
-@use "./toggle.ionic.vars" as variables;
+@use "./toggle.common";
 
 // Ionic Toggle
 // -----------------------------------------
 
 :host {
-  --track-background: #{variables.$toggle-ionic-background-color-off};
+  --track-background: #{globals.$ionic-color-neutral-800};
   --track-background-checked: #{globals.ion-color(primary, base)};
-  --border-radius: #{variables.$toggle-ionic-border-radius};
-  --focus-ring-color: #{variables.$toggle-ionic-focus-ring-color};
-  --focus-ring-width: #{variables.$toggle-ionic-focus-ring-width};
-  --handle-background: #{variables.$toggle-ionic-handle-background-color};
-  --handle-background-checked: #{variables.$toggle-ionic-handle-background-color};
-  --handle-border-radius: #{variables.$toggle-ionic-handle-border-radius};
-  --handle-height: #{variables.$toggle-ionic-handle-height};
-  --handle-max-height: #{variables.$toggle-ionic-handle-max-height};
-  --handle-width: #{variables.$toggle-ionic-handle-width};
-  --handle-spacing: #{variables.$toggle-ionic-border-width};
-  --handle-transition: #{variables.$toggle-ionic-transition};
+  --border-radius: #{globals.$ionic-border-radius-full};
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
+  --focus-ring-width: #{globals.$ionic-border-size-050};
+  --handle-background: #{globals.$ionic-color-base-white};
+  --handle-background-checked: #{globals.$ionic-color-base-white};
+  --handle-border-radius: #{globals.$ionic-border-radius-full};
+  --handle-height: #{globals.$ionic-scale-500};
+  --handle-max-height: #{globals.$ionic-scale-500};
+  --handle-width: #{globals.$ionic-scale-500};
+  --handle-spacing: #{globals.$ionic-space-050};
+  --handle-transition: transform 300ms, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms,
+    right 110ms ease-in-out 80ms;
 
   @include globals.typography(globals.$ionic-body-md-regular);
 
