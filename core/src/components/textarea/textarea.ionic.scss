@@ -6,7 +6,6 @@
 // --------------------------------------------------
 
 :host {
-  --border-radius: #{globals.$ionic-border-radius-400};
   --color: #{globals.$ionic-color-neutral-1200};
   --highlight-color-valid: #{globals.$ionic-color-success-base};
   --highlight-color-invalid: #{globals.$ionic-color-danger-base};
@@ -51,6 +50,21 @@
   --padding-start: #{globals.$ionic-space-500};
 
   min-height: globals.$ionic-scale-3600;
+}
+
+// Ionic Textarea Shapes
+// --------------------------------------------------
+
+:host(.textarea-shape-soft) {
+  --border-radius: #{globals.$ionic-border-radius-200};
+}
+
+:host(.textarea-shape-round) {
+  --border-radius: #{globals.$ionic-border-radius-400};
+}
+
+:host(.textarea-shape-rectangular) {
+  --border-radius: #{globals.$ionic-border-radius-0};
 }
 
 // Textarea Wrapper
