@@ -175,7 +175,7 @@ input {
 // Justify Content & Align Items
 // ---------------------------------------------
 
-// The checkbox should be displayed as flex when either justify
+// The checkbox should be displayed as block when either justify
 // or alignment is set; otherwise, these properties will have no
 // visible effect.
 :host(.checkbox-justify-space-between),
@@ -183,7 +183,7 @@ input {
 :host(.checkbox-justify-end),
 :host(.checkbox-alignment-start),
 :host(.checkbox-alignment-center) {
-  display: flex;
+  display: block;
 }
 
 // Label Placement - Start
