@@ -1615,7 +1615,7 @@ ion-select,prop,expandedIcon,string | undefined,undefined,false,false
 ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
-ion-select,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-select,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-select,prop,label,string | undefined,undefined,false,false
 ion-select,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start" | undefined,'start',false,false
 ion-select,prop,mode,"ios" | "md",undefined,false,false

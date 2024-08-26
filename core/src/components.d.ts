@@ -2748,7 +2748,7 @@ export namespace Components {
         /**
           * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `"floating"` or `"stacked"`. `"start"`: The label and select will appear on the left in LTR and on the right in RTL. `"end"`: The label and select will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and select will appear on opposite ends of the line with space between the two elements.
          */
-        "justify": 'start' | 'end' | 'space-between';
+        "justify"?: 'start' | 'end' | 'space-between';
         /**
           * The visible label associated with the select.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
