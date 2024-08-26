@@ -39,11 +39,12 @@
     const linkTag = document.querySelector('link[href*="css/ionic.bundle.css"]');
     const ionicThemeLinkTag = document.querySelector('link[href*="css/ionic/bundle.ionic.css"]');
 
-  if (!linkTag || ionicThemeLinkTag) {
-    return;
-  }
+    if (!linkTag || ionicThemeLinkTag) {
+      return;
+    }
 
-  linkTag.setAttribute('href', linkTag.getAttribute('href').replace('ionic.bundle.css', 'ionic/bundle.ionic.css')); }
+    linkTag.setAttribute('href', linkTag.getAttribute('href').replace('ionic.bundle.css', 'ionic/bundle.ionic.css')); 
+  }
 
   window.Ionic = window.Ionic || {};
   window.Ionic.config = window.Ionic.config || {};
