@@ -5,6 +5,23 @@
 @use "../mixins" as mixins;
 @use "../../foundations/ionic.vars.scss" as tokens;
 
+// Pressed mixin to be used on pseudo elements for the Ionic Theme pressed state
+//
+// ex: :host(.ion-activated) .toggle-icon:after {
+//       @include globals.pressed-state();
+//      }
+//
+// --------------------------------------------------
+@mixin pressed-state() {
+  @include mixins.position(0, 0, 0, 0);
+
+  position: absolute;
+
+  background-color: tokens.$ionic-state-pressed;
+
+  content: "";
+}
+
 // Disabled mixin to be used on pseudo elements for the Ionic Theme disabled state
 //
 // ex: :host(.checkbox-disabled) .native-wrapper:after {

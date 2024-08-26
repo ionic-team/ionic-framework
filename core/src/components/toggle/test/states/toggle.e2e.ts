@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: states'), () => {
     test('should render disabled toggle correctly', async ({ page }) => {
       await page.setContent(
@@ -37,6 +37,49 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const toggle = page.locator('ion-toggle');
       await expect(toggle).toHaveScreenshot(screenshot(`toggle-unchecked`));
+    });
+  });
+});
+
+/**
+ * Focused and Pressed states are only available in the Ionic theme
+ */
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('toggle: states'), () => {
+    test('should render focused toggle correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-toggle class="ion-focused">Label</ion-toggle>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-focused`));
+    });
+
+    test('should render pressed unchecked toggle correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-toggle class="ion-activated">Label</ion-toggle>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-unchecked-pressed`));
+    });
+
+    test('should render pressed checked toggle correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-toggle class="ion-activated" checked>Label</ion-toggle>
+      `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-checked-pressed`));
     });
   });
 });
