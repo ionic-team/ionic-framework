@@ -1,0 +1,101 @@
+@import "../../themes/native/native.globals";
+@import "./radio.common";
+@import "./radio.vars.scss";
+
+// Radio
+// --------------------------------------------------
+
+:host {
+  z-index: $z-index-item-input;
+}
+
+input {
+  @include visually-hidden();
+}
+
+// Radio Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+:host(.in-item) .label-text-wrapper {
+  @include margin($radio-item-label-margin-top, null, $radio-item-label-margin-bottom, null);
+}
+
+:host(.in-item.radio-label-placement-stacked) .label-text-wrapper {
+  @include margin($radio-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.radio-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $radio-item-label-margin-bottom, null);
+}
+
+// Radio Label Placement - Start
+// ----------------------------------------------------------------
+
+:host(.radio-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the radio should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(null, $form-control-label-margin, null, 0);
+}
+
+// Radio Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * The margin between the label and
+ * the radio should be on the start
+ * when the label sits at the end.
+ */
+:host(.radio-label-placement-end) .label-text-wrapper {
+  @include margin(null, 0, null, $form-control-label-margin);
+}
+
+// Radio Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.radio-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the radio should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(null, $form-control-label-margin, null, 0);
+}
+
+// Radio Label Placement - Stacked
+// ----------------------------------------------------------------
+
+:host(.radio-label-placement-stacked) .label-text-wrapper {
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
+  /**
+   * The margin between the label and
+   * the radio should be on the bottom
+   * when the label sits on top.
+   */
+  @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the radio.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+:host(.radio-label-placement-stacked.radio-alignment-start) .label-text-wrapper {
+  @include transform-origin(start, top);
+}
+
+:host(.radio-label-placement-stacked.radio-alignment-center) .label-text-wrapper {
+  @include transform-origin(center, top);
+}

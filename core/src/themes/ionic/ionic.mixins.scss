@@ -41,6 +41,22 @@
   pointer-events: none;
 }
 
+// Focused mixin to be used on regular elements for the Ionic Theme focused state
+//
+// ex: :host(.ion-focused) .toggle-icon {
+//       @include globals.focused-state();
+//      }
+//
+// --------------------------------------------------
+@mixin focused-state(
+  $width: tokens.$ionic-border-size-050,
+  $color: tokens.$ionic-state-focus-1,
+  $style: tokens.$ionic-border-style-solid
+) {
+  outline: $width $style $color;
+  outline-offset: $width;
+}
+
 // Typography mixin to be used with typography scss variables (ionic.vars.scss)
 //
 // ex: @include typography($ionic-heading-h3-medium);

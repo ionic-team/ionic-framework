@@ -60,3 +60,66 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+/**
+ * Focused and Pressed states are only available in the Ionic theme
+ */
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: states'), () => {
+    test('should render pressed unchecked radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group>
+          <ion-radio class="ion-activated">Enable Notifications</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-unchecked-pressed`));
+    });
+
+    test('should render pressed checked radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group value="true">
+          <ion-radio class="ion-activated" value="true">Enable Notifications</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-checked-pressed`));
+    });
+
+    test('should render focused unchecked radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group>
+          <ion-radio class="ion-focused">Enable Notifications</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-unchecked-focused`));
+    });
+
+    test('should render focused checked radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group value="true">
+          <ion-radio class="ion-focused" value="true">Enable Notifications</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-checked-focused`));
+    });
+  });
+});

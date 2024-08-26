@@ -1,0 +1,126 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./radio.common";
+
+// Ionic Radio
+// --------------------------------------------------
+
+:host {
+  --color: #{globals.$ionic-color-neutral-500};
+  --color-checked: #{globals.ion-color(primary, base)};
+  --border-width: #{globals.$ionic-border-size-025};
+  --border-style: #{globals.$ionic-border-style-solid};
+  --border-radius: #{globals.$ionic-border-radius-full};
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
+  --focus-ring-width: #{globals.$ionic-border-size-050};
+
+  @include globals.typography(globals.$ionic-body-md-regular);
+  min-height: globals.$ionic-scale-1200;
+
+  color: globals.$ionic-color-neutral-1200;
+}
+
+input {
+  @include globals.visually-hidden();
+}
+
+// Radio Color
+// --------------------------------------------------
+
+:host(.ion-color) .radio-inner {
+  background: globals.current-color(base);
+}
+
+:host(.ion-color.radio-checked) .radio-icon {
+  border-color: globals.current-color(base);
+}
+
+// Radio Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .radio-icon {
+  width: globals.$ionic-scale-600;
+  height: globals.$ionic-scale-600;
+}
+
+// Ionic Radio Outer Circle: Unchecked
+// -----------------------------------------
+
+.radio-icon {
+  @include globals.margin(0);
+  @include globals.border-radius(var(--border-radius));
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--color);
+
+  background-color: globals.$ionic-color-base-white;
+}
+
+// Ionic Radio Inner Circle: Unchecked
+// -----------------------------------------
+
+.radio-inner {
+  @include globals.border-radius(var(--inner-border-radius));
+
+  width: calc(40% + var(--border-width));
+  height: calc(40% + var(--border-width));
+
+  transform: scale3d(0, 0, 0);
+
+  background-color: globals.$ionic-color-base-white;
+}
+
+// Ionic Radio Outer Circle: Checked
+// -----------------------------------------
+
+:host(.radio-checked) .radio-icon {
+  border-color: var(--color-checked);
+
+  background-color: var(--color-checked);
+}
+
+// Ionic Radio Inner Circle: Checked
+// -----------------------------------------
+
+:host(.radio-checked) .radio-inner {
+  transform: scale3d(1, 1, 1);
+}
+
+// Ionic Radio: Disabled
+// -----------------------------------------
+
+:host(.radio-disabled) .radio-icon::after {
+  @include globals.disabled-state();
+  @include globals.border-radius(inherit);
+
+  // The border-width is added to the width and height to ensure
+  // the disabled state covers the entire radio icon. The top and
+  // left are adjusted to ensure the disabled state is centered on
+  // the radio icon.
+  @include globals.position(calc(var(--border-width) * -1), 0, 0, calc(var(--border-width) * -1));
+  width: calc(100% + (2 * var(--border-width)));
+  height: calc(100% + (2 * var(--border-width)));
+}
+
+// Ionic Radio: Keyboard Focus
+// -----------------------------------------
+
+:host(.ion-focused) .radio-icon {
+  @include globals.focused-state(var(--focus-ring-width), var(--focus-ring-color));
+}
+
+// Ionic Radio: Pressed
+// -----------------------------------------
+
+:host(.ion-activated) .radio-icon::after {
+  @include globals.pressed-state();
+  @include globals.border-radius(inherit);
+
+  // The border-width is added to the width and height to ensure
+  // the activated state covers the entire radio icon. The top and
+  // left are adjusted to ensure the activated state is centered on
+  // the radio icon.
+  @include globals.position(calc(var(--border-width) * -1), 0, 0, calc(var(--border-width) * -1));
+  width: calc(100% + (2 * var(--border-width)));
+  height: calc(100% + (2 * var(--border-width)));
+}

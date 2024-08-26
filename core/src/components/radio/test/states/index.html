@@ -61,7 +61,7 @@
 
           <div class="grid-item">
             <h2>Checked</h2>
-            <ion-radio-group value="true">
+            <ion-radio-group value="true" allow-empty-selection="true">
               <ion-radio value="true">Enable Notifications</ion-radio>
             </ion-radio-group>
           </div>
@@ -77,6 +77,34 @@
             <h2>Disabled, Checked</h2>
             <ion-radio-group value="true">
               <ion-radio disabled="true" value="true">Enable Notifications</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <h2>Pressed, Unchecked</h2>
+            <ion-radio-group allow-empty-selection="true">
+              <ion-radio class="ion-activated">Enable Notifications</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <h2>Pressed, Checked</h2>
+            <ion-radio-group value="true" allow-empty-selection="true">
+              <ion-radio class="ion-activated" value="true">Enable Notifications</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <h2>Focused, Unchecked</h2>
+            <ion-radio-group>
+              <ion-radio class="ion-focused">Enable Notifications</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <h2>Focused, Checked</h2>
+            <ion-radio-group value="true">
+              <ion-radio class="ion-focused" value="true">Enable Notifications</ion-radio>
             </ion-radio-group>
           </div>
         </div>
