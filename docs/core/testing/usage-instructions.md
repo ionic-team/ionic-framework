@@ -14,7 +14,7 @@ E2E tests verify Ionic components in a real browser. This is useful for testing 
 
 Follow these steps to install Playwright dependencies. These steps must also be run whenever the installed version of Playwright changes to ensure that you are testing with the correct browser binaries.
 
-1. Install the Playwright dependency in the `core` directory: `npm ci` 
+1. Install the Playwright dependency in the `core` directory: `npm ci`
 2. Download the correct browsers: `npx playwright install`
 
 ## Configuring Docker
@@ -132,15 +132,79 @@ npm run test.e2e src/components/chip
 ```
 
  Playwright supports the `--headed` flag to run in headed mode which causes the visual representation of the browser to appear:
- 
+
  ```shell
  # Will run tests in headed mode
  npm run test.e2e src/components/chip -- --headed
  ```
 
+### Debugging Tests
+
+Playwright offers several ways to efficiently isolate and debug specific issues, helping to quickly identify and resolve problems within your test suite.
+
+#### 1. Running Only Individual Tests
+
+The `.only` suffix can be added to individual tests to limit execution to just those tests during debugging. If you add `.only` to a specific test, only that test will be executed, and all other tests in the test suite will be skipped.
+
+**Example:**
+
+```ts
+test.only('should do something', async ({ page }) => {
+  // test code here
+});
+```
+
+> [!IMPORTANT]
+> After debugging, make sure to remove the `.only` suffix to ensure all tests run again during normal execution.
+
+#### 2. Running Only a Test Suite
+
+Similarly, you can focus on an entire test suite by adding `.only` to a `describe` block. This ensures that only the tests within that suite will be executed, while others will be skipped.
+
+**Example:**
+
+```ts
+test.describe.only('group of tests', () => {
+  test('test 1', async ({ page }) => {
+    // test 1 code here
+  });
+
+  test('test 2', async ({ page }) => {
+    // test 2 code here
+  });
+});
+```
+
+> [!IMPORTANT]
+> After debugging, make sure to remove the `.only` suffix to ensure all tests run again during normal execution.
+
+#### 3. Pausing Test Execution
+
+Additionally, you can pause execution of a test by using the `page.pause()` method. This pauses the script execution and allows you to manually inspect the page in the browser.
+
+**Example:**
+
+```ts
+const { test, expect } = require('@playwright/test');
+
+test('example test', async ({ page }) => {
+  await page.goto('https://example.com');
+
+  // Pausing the page to inspect manually
+  await page.pause();
+
+  // Further actions will resume after unpausing
+  const title = await page.title();
+  expect(title).toBe('Example Domain');
+});
+```
+
+> [!IMPORTANT]
+> After debugging, make sure to remove the `page.pause()` call to restore normal test execution.
+
 ## Managing Screenshots
 
-If you are running a test that takes a screenshot, you must first generate the reference screenshot from your reference branch. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth. 
+If you are running a test that takes a screenshot, you must first generate the reference screenshot from your reference branch. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth.
 
 ### Generating or Updating Ground Truths With Docker (Local Development)
 
