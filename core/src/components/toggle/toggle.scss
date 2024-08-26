@@ -81,6 +81,9 @@ input {
 
   position: relative;
 
+  align-items: center;
+  justify-content: space-between;
+
   flex-grow: 1;
 
   height: inherit;
@@ -156,6 +159,20 @@ input {
 
 :host(.toggle-alignment-center) .toggle-wrapper {
   align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The toggle should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.toggle-justify-space-between),
+:host(.toggle-justify-start),
+:host(.toggle-justify-end),
+:host(.toggle-alignment-start),
+:host(.toggle-alignment-center) {
+  display: block;
 }
 
 // Toggle Label Placement - Start
