@@ -26,12 +26,10 @@ input {
 // Radio Color
 // --------------------------------------------------
 
-:host(.ion-color) .radio-inner {
-  background: globals.current-color(base);
-}
-
 :host(.ion-color.radio-checked) .radio-icon {
   border-color: globals.current-color(base);
+
+  background-color: globals.current-color(base);
 }
 
 // Radio Native Wrapper
@@ -62,8 +60,8 @@ input {
 .radio-inner {
   @include globals.border-radius(var(--inner-border-radius));
 
-  width: calc(40% + var(--border-width));
-  height: calc(40% + var(--border-width));
+  width: calc(35% + var(--border-width));
+  height: calc(35% + var(--border-width));
 
   transform: scale3d(0, 0, 0);
 
