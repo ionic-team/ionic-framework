@@ -28,6 +28,23 @@
     document.head.appendChild(linkTag);
   }
 
+  /**
+  * The `ionic` theme uses a different stylesheet than the `iOs` and `md` themes.
+  * This is to ensure that the `ionic` theme is loaded when the `ionic:theme=ionic`
+  * and makes sure that the snapshot tests are rendered correctly.
+  */
+  const theme = window.location.search.match(/ionic:theme=([a-z]+)/);
+ 
+  if (theme && theme[1] === 'ionic') {
+    const linkTag = document.querySelector('link[href*="css/ionic.bundle.css"]');
+    const ionicThemeLinkTag = document.querySelector('link[href*="css/ionic/bundle.ionic.css"]');
+
+  if (!linkTag || ionicThemeLinkTag) {
+    return;
+  }
+
+  linkTag.setAttribute('href', linkTag.getAttribute('href').replace('ionic.bundle.css', 'ionic/bundle.ionic.css')); }
+
   window.Ionic = window.Ionic || {};
   window.Ionic.config = window.Ionic.config || {};
 
