@@ -71,10 +71,8 @@
 .radio-inner {
   @include globals.border-radius(var(--inner-border-radius));
 
-  width: calc(35% + var(--border-width));
-  height: calc(35% + var(--border-width));
-
-  transform: scale3d(0, 0, 0);
+  width: calc(32% + var(--border-width));
+  height: calc(32% + var(--border-width));
 
   background-color: globals.$ionic-color-base-white;
 }
@@ -86,13 +84,6 @@
   border-color: var(--color-checked);
 
   background-color: var(--color-checked);
-}
-
-// Ionic Radio Inner Circle: Checked
-// -----------------------------------------
-
-:host(.radio-checked) .radio-inner {
-  transform: scale3d(1, 1, 1);
 }
 
 // Radio Label Placement - Start
