@@ -53,9 +53,9 @@
 }
 
 .calendar-day:focus {
-  background: current-color(base, 0.2);
+  background: globals.current-color(base, 0.2);
 
-  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
+  box-shadow: 0px 0px 0px 4px globals.current-color(base, 0.2);
 }
 
 // Time / Header
@@ -79,14 +79,14 @@
 }
 
 :host .time-body-active {
-  color: current-color(base);
+  color: globals.current-color(base);
 }
 
 // Year Picker
 // -----------------------------------
 
 :host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
-  color: #{current-color(base)};
+  color: globals.current-color(base);
 }
 
 .calendar-month-year-toggle {
