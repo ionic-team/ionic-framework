@@ -106,7 +106,7 @@ import { checkForPresentationFormatMismatch, warnIfTimeZoneProvided } from './ut
   styleUrls: {
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss',
-    ionic: 'datetime.md.scss',
+    ionic: 'datetime.ionic.scss',
   },
   shadow: true,
 })

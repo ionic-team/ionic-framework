@@ -1,6 +1,9 @@
-@import "./datetime.scss";
+@import "./datetime.native.scss";
 @import "./datetime.ios.vars.scss";
 @import "../../themes/native/native.globals.ios";
+
+// iOS Datetime
+// --------------------------------------------------
 
 :host {
   --background: #{ion-color(light, base)};

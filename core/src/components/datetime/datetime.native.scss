@@ -1,6 +1,7 @@
-@import "../../themes/native/native.globals";
+@use "../../themes/native/native.globals" as globals;
+@use "./datetime.common";
 
-// Datetime
+// Datetime: Native Styles
 // --------------------------------------------------
 
 :host {
@@ -68,6 +69,7 @@
 
   opacity: 1;
 }
+
 /**
  * Changing the physical order of the
  * picker columns in the DOM is added
@@ -232,7 +234,7 @@
    * if the container size is changed as a result
    * of Dynamic Type.
    */
-  @include margin(0, auto);
+  @include globals.margin(0, auto);
 }
 
 // Calendar / Body
@@ -330,9 +332,9 @@
  * and horizontally within its grid cell.
  */
 .calendar-day {
-  @include border-radius(50%);
-  @include padding(0px);
-  @include margin(0px);
+  @include globals.border-radius(50%);
+  @include globals.padding(0px);
+  @include globals.margin(0px);
 
   display: flex;
 
@@ -348,7 +350,7 @@
   background: none;
   color: currentColor;
 
-  font-family: $font-family-base;
+  font-family: globals.$font-family-base;
 
   cursor: pointer;
 
@@ -379,7 +381,7 @@
 }
 
 :host(.datetime-presentation-time) .datetime-time {
-  @include padding(0);
+  @include globals.padding(0);
 }
 
 :host ion-popover {
@@ -393,8 +395,8 @@
 }
 
 :host .time-body {
-  @include border-radius(8px);
-  @include padding(6px, 12px, 6px, 12px);
+  @include globals.border-radius(8px);
+  @include globals.padding(6px, 12px, 6px, 12px);
 
   display: flex;
 
@@ -402,7 +404,7 @@
 
   background: var(--ion-color-step-300, var(--ion-background-color-step-300, #edeef0));
 
-  color: $text-color;
+  color: globals.$text-color;
 
   font-family: inherit;
   font-size: inherit;
@@ -431,7 +433,7 @@
 }
 
 .calendar-month-year-toggle {
-  @include text-inherit();
+  @include globals.text-inherit();
 
   position: relative;
 
@@ -446,7 +448,7 @@
   z-index: 1;
 
   &::after {
-    @include button-state();
+    @include globals.button-state();
 
     transition: opacity 15ms linear, background-color 15ms linear;
 
@@ -464,7 +466,7 @@
 }
 
 .calendar-month-year-toggle ion-icon {
-  @include padding(0, 0, 0, 4px);
+  @include globals.padding(0, 0, 0, 4px);
 
   flex-shrink: 0;
 }
