@@ -85,10 +85,6 @@
 // Year Picker
 // -----------------------------------
 
-:host(.show-month-and-year) .calendar-next-prev {
-  display: none;
-}
-
 :host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
   color: #{current-color(base)};
 }

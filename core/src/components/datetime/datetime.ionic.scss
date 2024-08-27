@@ -32,14 +32,14 @@
   @include globals.padding(globals.$ionic-space-200, null);
 
   align-items: center;
+
+  height: globals.$ionic-scale-1400;
+
+  box-sizing: border-box;
 }
 
 .calendar-next-prev ion-button.button-has-icon-only {
   --color: #{globals.$ionic-color-neutral-1000};
-}
-
-:host(.show-month-and-year) .calendar-next-prev {
-  opacity: 0;
 }
 
 // Calendar Days of Week
@@ -47,6 +47,10 @@
 
 .calendar-days-of-week {
   @include globals.typography(globals.$ionic-overline-medium);
+
+  align-content: center;
+
+  height: globals.$ionic-scale-1200;
 
   color: globals.$ionic-color-neutral-800;
 }

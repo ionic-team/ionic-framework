@@ -99,6 +99,7 @@
   display: flex;
 }
 
+:host(.show-month-and-year) .calendar-next-prev,
 :host(.show-month-and-year) .calendar-days-of-week,
 :host(.show-month-and-year) .calendar-body,
 :host(.show-month-and-year) .datetime-time {

@@ -2647,12 +2647,9 @@ export class Datetime implements ComponentInterface {
     // Determine the theme and map to default icons
     const theme = getIonTheme(this);
 
-    if (theme == 'ionic') {
-      return undefined;
-    }
-
     const defaultIcons = {
       ios: chevronForward,
+      ionic: undefined,
       md: caretDownSharp,
     };
 
@@ -2672,12 +2669,9 @@ export class Datetime implements ComponentInterface {
     // Determine the theme and map to default icons
     const theme = getIonTheme(this);
 
-    if (theme == 'ionic') {
-      return undefined;
-    }
-
     const defaultIcons = {
       ios: chevronDown,
+      ionic: undefined,
       md: caretUpSharp,
     };
 
