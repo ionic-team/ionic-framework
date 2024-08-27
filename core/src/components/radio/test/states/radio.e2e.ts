@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: states'), () => {
     test('should render disabled radio correctly', async ({ page }) => {
       await page.setContent(
@@ -66,7 +66,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: states'), () => {
-    test('should render pressed unchecked radio correctly', async ({ page }) => {
+    test('should render pressed radio correctly', async ({ page }) => {
       await page.setContent(
         `
         <ion-radio-group>
@@ -77,7 +77,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       );
 
       const radio = page.locator('ion-radio');
-      await expect(radio).toHaveScreenshot(screenshot(`radio-unchecked-pressed`));
+      await expect(radio).toHaveScreenshot(screenshot(`radio-pressed`));
     });
 
     test('should render pressed checked radio correctly', async ({ page }) => {
@@ -94,7 +94,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       await expect(radio).toHaveScreenshot(screenshot(`radio-checked-pressed`));
     });
 
-    test('should render focused unchecked radio correctly', async ({ page }) => {
+    test('should render focused radio correctly', async ({ page }) => {
       await page.setContent(
         `
         <ion-radio-group>
@@ -105,7 +105,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       );
 
       const radio = page.locator('ion-radio');
-      await expect(radio).toHaveScreenshot(screenshot(`radio-unchecked-focused`));
+      await expect(radio).toHaveScreenshot(screenshot(`radio-focused`));
     });
 
     test('should render focused checked radio correctly', async ({ page }) => {
