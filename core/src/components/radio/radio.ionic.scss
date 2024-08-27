@@ -19,8 +19,11 @@
   color: globals.$ionic-color-neutral-1200;
 }
 
-input {
-  @include globals.visually-hidden();
+// Toggle Label Placement - Start/Default
+// ----------------------------------------------------------------
+
+:host .radio-wrapper {
+  gap: globals.$ionic-space-400;
 }
 
 // Radio Color
@@ -30,6 +33,21 @@ input {
   border-color: globals.current-color(base);
 
   background-color: globals.current-color(base);
+}
+
+// Radio Label
+// ----------------------------------------------------------------
+
+:host(.in-item) .label-text-wrapper {
+  @include globals.margin(globals.$ionic-space-250, null, globals.$ionic-space-250, null);
+}
+
+:host(.in-item.radio-label-placement-stacked) .label-text-wrapper {
+  @include globals.margin(globals.$ionic-space-250, null, globals.$ionic-space-400, null);
+}
+
+:host(.in-item.radio-label-placement-stacked) .native-wrapper {
+  @include globals.margin(null, null, globals.$ionic-space-250, null);
 }
 
 // Radio Native Wrapper
@@ -82,6 +100,62 @@ input {
 
 :host(.radio-checked) .radio-inner {
   transform: scale3d(1, 1, 1);
+}
+
+// Radio Label Placement - Start
+// ----------------------------------------------------------------
+
+:host(.radio-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the radio should be on the end
+   * when the label sits at the start.
+   */
+  @include globals.margin(null, globals.$ionic-space-400, null, 0);
+}
+
+// Radio Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * The margin between the label and
+ * the radio should be on the start
+ * when the label sits at the end.
+ */
+:host(.radio-label-placement-end) .label-text-wrapper {
+  @include globals.margin(null, 0, null, globals.$ionic-space-400);
+}
+
+// Radio Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.radio-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the radio should be on the end
+   * when the label sits at the start.
+   */
+  @include globals.margin(null, globals.$ionic-space-400, null, 0);
+}
+
+// Radio Label Placement - Stacked
+// ----------------------------------------------------------------
+
+:host(.radio-label-placement-stacked) .label-text-wrapper {
+  @include globals.transform(scale(0.75));
+
+  /**
+   * The margin between the label and
+   * the radio should be on the bottom
+   * when the label sits on top.
+   */
+  @include globals.margin(null, 0, globals.$ionic-space-400, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the radio.
+   */
+  max-width: calc(100% / 0.75);
 }
 
 // Ionic Radio: Disabled

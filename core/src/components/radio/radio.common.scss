@@ -1,4 +1,5 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/functions.string";
+@import "../../themes/mixins";
 @import "./radio.vars.scss";
 
 // Radio
@@ -25,6 +26,10 @@
   user-select: none;
 
   box-sizing: border-box;
+}
+
+input {
+  @include visually-hidden();
 }
 
 :host(.radio-disabled) {
@@ -181,4 +186,12 @@
  */
 :host(.radio-label-placement-stacked) .radio-wrapper {
   flex-direction: column;
+}
+
+:host(.radio-label-placement-stacked.radio-alignment-start) .label-text-wrapper {
+  @include transform-origin(start, top);
+}
+
+:host(.radio-label-placement-stacked.radio-alignment-center) .label-text-wrapper {
+  @include transform-origin(center, top);
 }

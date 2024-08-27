@@ -9,10 +9,6 @@
   z-index: $z-index-item-input;
 }
 
-input {
-  @include visually-hidden();
-}
-
 // Radio Label
 // ----------------------------------------------------------------
 
@@ -90,12 +86,4 @@ input {
    * beyond the bounds of the radio.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
-}
-
-:host(.radio-label-placement-stacked.radio-alignment-start) .label-text-wrapper {
-  @include transform-origin(start, top);
-}
-
-:host(.radio-label-placement-stacked.radio-alignment-center) .label-text-wrapper {
-  @include transform-origin(center, top);
 }
