@@ -19,6 +19,25 @@ configs().forEach(({ title, screenshot, config }) => {
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`radio-list`));
     });
+    test('should render multiple correctly in list', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-list>
+          <ion-radio-group>
+            <ion-item>
+              <ion-radio>Enable Notifications</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio>Enable Notifications</ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`radio-list-multiple`));
+    });
     test('should render correctly in inset list', async ({ page }) => {
       await page.setContent(
         `
