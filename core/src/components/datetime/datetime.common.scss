@@ -4,6 +4,13 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: The primary background of the datetime component.
+   */
+  background: var(--background);
+}
+
+:host {
   display: flex;
 
   flex-flow: column;
@@ -92,7 +99,6 @@
   display: flex;
 }
 
-:host(.show-month-and-year) .calendar-next-prev,
 :host(.show-month-and-year) .calendar-days-of-week,
 :host(.show-month-and-year) .calendar-body,
 :host(.show-month-and-year) .datetime-time {

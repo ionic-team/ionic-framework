@@ -688,6 +688,7 @@ ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
 ion-datetime,event,ionFocus,void,true
+ion-datetime,css-prop,--background,ionic
 ion-datetime,css-prop,--background,ios
 ion-datetime,css-prop,--background,md
 ion-datetime,css-prop,--background-rgb,ios

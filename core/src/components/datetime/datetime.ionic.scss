@@ -3,3 +3,80 @@
 
 // Ionic Datetime
 // --------------------------------------------------
+
+:host {
+  --background: #{globals.$ionic-color-base-white};
+}
+
+// Calendar Header
+// -----------------------------------
+
+.calendar-month-year {
+  @include globals.padding(globals.$ionic-space-0, globals.$ionic-space-400);
+
+  display: flex;
+
+  flex: 1 0 0;
+  align-items: center;
+  align-self: stretch;
+}
+
+.calendar-month-year-toggle {
+  @include globals.padding(0);
+  @include globals.typography(globals.$ionic-action-lg);
+
+  color: globals.$ionic-color-primary-base;
+}
+
+.calendar-action-buttons {
+  @include globals.padding(globals.$ionic-space-200, null);
+
+  align-items: center;
+}
+
+.calendar-next-prev ion-button.button-has-icon-only {
+  --color: #{globals.$ionic-color-neutral-1000};
+}
+
+:host(.show-month-and-year) .calendar-next-prev {
+  opacity: 0;
+}
+
+// Calendar Days of Week
+// -----------------------------------
+
+.calendar-days-of-week {
+  @include globals.typography(globals.$ionic-overline-medium);
+
+  color: globals.$ionic-color-neutral-800;
+}
+
+// Calendar Day
+// -----------------------------------
+
+.calendar-day {
+  @include globals.border-radius(globals.$ionic-border-radius-full);
+  @include globals.typography(globals.$ionic-action-md);
+
+  width: globals.$ionic-scale-1200;
+  min-width: globals.$ionic-scale-1200;
+
+  height: globals.$ionic-scale-1200;
+
+  color: globals.$ionic-color-neutral-1200;
+}
+
+// Disabled Day
+.calendar-day[disabled]:not(.calendar-day-constrained) {
+  color: globals.$ionic-color-neutral-500;
+}
+
+// Current Day
+.calendar-day.calendar-day-today {
+  color: globals.$ionic-color-primary-base;
+}
+
+// Selected Day
+.calendar-day.calendar-day-active {
+  background: globals.$ionic-color-primary-100;
+}

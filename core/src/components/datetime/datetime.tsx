@@ -1,7 +1,5 @@
-import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg';
 import caretLeftRegular from '@phosphor-icons/core/assets/regular/caret-left.svg';
 import caretRightRegular from '@phosphor-icons/core/assets/regular/caret-right.svg';
-import caretUpRegular from '@phosphor-icons/core/assets/regular/caret-up.svg';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { startFocusVisible } from '@utils/focus-visible';
@@ -2145,12 +2143,14 @@ export class Datetime implements ComponentInterface {
             >
               <span id="toggle-wrapper">
                 {getMonthAndYear(this.locale, this.workingParts)}
-                <ion-icon
-                  aria-hidden="true"
-                  icon={this.showMonthAndYear ? datetimeExpandedIcon : datetimeCollapsedIcon}
-                  lazy={false}
-                  flipRtl={true}
-                ></ion-icon>
+                {theme !== 'ionic' && (
+                  <ion-icon
+                    aria-hidden="true"
+                    icon={this.showMonthAndYear ? datetimeExpandedIcon : datetimeCollapsedIcon}
+                    lazy={false}
+                    flipRtl={true}
+                  ></ion-icon>
+                )}
               </span>
               {theme === 'md' && <ion-ripple-effect></ion-ripple-effect>}
             </button>
@@ -2643,12 +2643,16 @@ export class Datetime implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get datetimeCollapsedIcon(): string {
+  get datetimeCollapsedIcon(): string | undefined {
     // Determine the theme and map to default icons
     const theme = getIonTheme(this);
+
+    if (theme == 'ionic') {
+      return undefined;
+    }
+
     const defaultIcons = {
       ios: chevronForward,
-      ionic: caretDownRegular,
       md: caretDownSharp,
     };
 
@@ -2664,12 +2668,16 @@ export class Datetime implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get datetimeExpandedIcon(): string {
+  get datetimeExpandedIcon(): string | undefined {
     // Determine the theme and map to default icons
     const theme = getIonTheme(this);
+
+    if (theme == 'ionic') {
+      return undefined;
+    }
+
     const defaultIcons = {
       ios: chevronDown,
-      ionic: caretUpRegular,
       md: caretUpSharp,
     };
 

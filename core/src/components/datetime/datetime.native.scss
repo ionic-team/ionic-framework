@@ -6,7 +6,6 @@
 
 :host {
   /**
-   * @prop --background: The primary background of the datetime component.
    * @prop --background-rgb: The primary background of the datetime component in RGB format.
    * @prop --title-color: The text color of the title.
    *
@@ -18,7 +17,6 @@
    * when using a wheel style layout, or in the month/year picker for grid style layouts. Must
    * be in RGB format, e.g. `255, 255, 255`.
    */
-  background: var(--background);
 }
 
 :host(.datetime-size-fixed:not(.datetime-prefer-wheel)) {
@@ -86,6 +84,10 @@
 
 // Year Picker
 // -----------------------------------
+
+:host(.show-month-and-year) .calendar-next-prev {
+  display: none;
+}
 
 :host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
   color: #{current-color(base)};
