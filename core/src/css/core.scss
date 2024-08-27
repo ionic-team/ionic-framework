@@ -1,6 +1,5 @@
 @use "sass:map";
 @import "../themes/native/native.globals";
-@import "../themes/ionic/ionic.theme.default";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
 
@@ -16,21 +15,6 @@
   @include generate-color-variables();
 
   @each $color-name, $value in $colors {
-    .ion-color-#{$color-name} {
-      @include generate-color($color-name);
-    }
-  }
-}
-
-:root.ionic {
-  /**
-   * Set the theme colors from the
-   * `ionic.theme.default.scss` file.
-   */
-  @include set-theme-colors($ionic-colors);
-  @include generate-color-variables();
-
-  @each $color-name, $value in $ionic-colors {
     .ion-color-#{$color-name} {
       @include generate-color($color-name);
     }
