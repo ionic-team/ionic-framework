@@ -32,14 +32,6 @@
 // Radio Label
 // ----------------------------------------------------------------
 
-:host(.in-item) .label-text-wrapper {
-  @include globals.margin(globals.$ionic-space-250, null, globals.$ionic-space-250, null);
-}
-
-:host(.in-item.radio-label-placement-stacked) .label-text-wrapper {
-  @include globals.margin(globals.$ionic-space-250, null, globals.$ionic-space-400, null);
-}
-
 :host(.in-item.radio-label-placement-stacked) .native-wrapper {
   @include globals.margin(null, null, globals.$ionic-space-250, null);
 }
