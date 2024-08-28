@@ -144,7 +144,7 @@
 // -----------------------------------------
 
 :host(.ion-focused) .radio-icon {
-  @include globals.focused-state(var(--focus-ring-width), var(--focus-ring-color));
+  @include globals.focused-state(var(--focus-ring-width), null, var(--focus-ring-color));
 }
 
 // Ionic Radio: Pressed

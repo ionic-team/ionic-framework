@@ -50,9 +50,23 @@
 // --------------------------------------------------
 @mixin focused-state(
   $width: tokens.$ionic-border-size-050,
-  $color: tokens.$ionic-state-focus-1,
-  $style: tokens.$ionic-border-style-solid
+  $style: tokens.$ionic-border-style-solid,
+  $color: tokens.$ionic-state-focus-1
 ) {
+  // If a user passes in null, then they are opting out
+  // of using a specific parameter and we should use the default
+  @if $width == null {
+    $width: tokens.$ionic-border-size-050;
+  }
+
+  @if $style == null {
+    $style: tokens.$ionic-border-style-solid;
+  }
+
+  @if $color == null {
+    $color: tokens.$ionic-state-focus-1;
+  }
+
   outline: $width $style $color;
   outline-offset: $width;
 }
