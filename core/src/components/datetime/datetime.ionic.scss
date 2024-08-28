@@ -5,7 +5,13 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --focus-ring-color: The color of the ring around the focused element.
+   * @prop --focus-ring-width: The width of the ring around the focused element.
+   */
   --background: #{globals.$ionic-color-base-white};
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
+  --focus-ring-width: #{globals.$ionic-border-radius-050};
 }
 
 // Calendar Header
@@ -60,6 +66,7 @@
 
 .calendar-day {
   @include globals.border-radius(globals.$ionic-border-radius-full);
+  @include globals.padding(globals.$ionic-space-100);
   @include globals.typography(globals.$ionic-action-md);
 
   width: globals.$ionic-scale-1200;
@@ -83,4 +90,21 @@
 // Selected Day
 .calendar-day.calendar-day-active {
   background: globals.$ionic-color-primary-100;
+}
+
+// Focused Day
+.calendar-day:focus-visible {
+  border: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
+}
+
+// Hovered Day
+@media (any-hover: hover) {
+  .calendar-day:not([disabled]):not(:active):hover {
+    background: globals.$ionic-color-primary-200;
+  }
+}
+
+// Pressed Day
+.calendar-day:active {
+  background: globals.$ionic-color-primary-300;
 }

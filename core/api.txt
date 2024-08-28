@@ -693,6 +693,8 @@ ion-datetime,css-prop,--background,ios
 ion-datetime,css-prop,--background,md
 ion-datetime,css-prop,--background-rgb,ios
 ion-datetime,css-prop,--background-rgb,md
+ion-datetime,css-prop,--focus-ring-color,ionic
+ion-datetime,css-prop,--focus-ring-width,ionic
 ion-datetime,css-prop,--title-color,ios
 ion-datetime,css-prop,--title-color,md
 ion-datetime,css-prop,--wheel-fade-background-rgb,ios

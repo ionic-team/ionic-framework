@@ -194,6 +194,7 @@
 
 // Calendar / Header / Days of Week
 // -----------------------------------
+
 :host .calendar-days-of-week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -212,6 +213,7 @@
 
 // Calendar / Body
 // -----------------------------------
+
 :host .calendar-body {
   /**
    * Show all calendar months inline
@@ -327,6 +329,10 @@
   appearance: none;
 
   z-index: 0;
+}
+
+.calendar-day[disabled] {
+  pointer-events: none;
 }
 
 // Time / Header
