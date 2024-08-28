@@ -51,7 +51,8 @@
 @mixin focused-state(
   $width: tokens.$ionic-border-size-050,
   $style: tokens.$ionic-border-style-solid,
-  $color: tokens.$ionic-state-focus-1
+  $color: tokens.$ionic-state-focus-1,
+  $addOffset: true
 ) {
   // If a user passes in null, then they are opting out
   // of using a specific parameter and we should use the default
@@ -67,8 +68,11 @@
     $color: tokens.$ionic-state-focus-1;
   }
 
+  @if $addOffset {
+    outline-offset: $width;
+  }
+
   outline: $width $style $color;
-  outline-offset: $width;
 }
 
 // Typography mixin to be used with typography scss variables (ionic.vars.scss)
