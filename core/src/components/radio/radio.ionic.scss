@@ -14,7 +14,7 @@
   --focus-ring-width: #{globals.$ionic-border-size-050};
 
   @include globals.typography(globals.$ionic-body-md-regular);
-  
+
   min-height: globals.$ionic-scale-1200;
 
   color: globals.$ionic-color-neutral-1200;
