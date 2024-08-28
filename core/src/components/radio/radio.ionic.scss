@@ -6,7 +6,7 @@
 
 :host {
   --color: #{globals.$ionic-color-neutral-500};
-  --color-checked: #{globals.ion-color(primary, base)};
+  --color-checked: #{globals.$ionic-color-primary-base};
   --border-width: #{globals.$ionic-border-size-025};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-radius: #{globals.$ionic-border-radius-full};
