@@ -36,7 +36,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
                 font-size: 310%;
               }
             </style>
-            <ion-checkbox justify="start" checked>Checked</ion-checkbox>
+            <ion-checkbox checked>Checked</ion-checkbox>
           `,
           config
         );
