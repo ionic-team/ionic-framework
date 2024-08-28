@@ -12,6 +12,16 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-toggle {
+        margin-bottom: 8px;
+      }
+
+      hr {
+        background: #ddd;
+      }
+    </style>
   </head>
 
   <body>
@@ -19,18 +29,21 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>Toggle - Basic</ion-title>
-          <ion-buttons slot="primary">
-            <ion-toggle aria-label="Enable Notifications"></ion-toggle>
-          </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-toggle
-          >Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications
-          Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable
-          Notifications</ion-toggle
-        >
+        <ion-toggle>Unchecked</ion-toggle><br />
+        <ion-toggle checked>Checked</ion-toggle><br />
+        <ion-toggle disabled>Disabled</ion-toggle><br />
+        <ion-toggle disabled checked>Disabled, Checked</ion-toggle><br />
+
+        <hr />
+
+        <ion-toggle> Default width </ion-toggle><br />
+        <ion-toggle style="width: 200px"> Specified width </ion-toggle><br />
+        <ion-toggle style="width: 100%"> Full-width </ion-toggle><br />
+        <ion-toggle> Long Label Long Label Long Label Long Label Long Label Long Label </ion-toggle><br />
       </ion-content>
     </ion-app>
   </body>
