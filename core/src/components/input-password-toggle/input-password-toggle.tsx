@@ -8,7 +8,7 @@ import { eyeOff, eye } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
-import type { Color, Components, TextFieldTypes } from '../../interface';
+import type { Color, TextFieldTypes } from '../../interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -173,7 +173,6 @@ export class InputPasswordToggle implements ComponentInterface {
           aria-label="show password"
           role="switch"
           type="button"
-          size={this.el.closest('ion-input')?.size as unknown as Components.IonButton['size']}
           class="in-input-password-toggle"
           onPointerDown={(ev) => {
             /**
