@@ -79,10 +79,11 @@
   background-color: var(--color-checked);
 }
 
-// Radio Label Placement - Start
+// Radio Label Placement - Start & Fixed
 // ----------------------------------------------------------------
 
-:host(.radio-label-placement-start) .label-text-wrapper {
+:host(.radio-label-placement-start) .label-text-wrapper,
+:host(.radio-label-placement-fixed) .label-text-wrapper {
   /**
    * The margin between the label and
    * the radio should be on the end
@@ -101,18 +102,6 @@
  */
 :host(.radio-label-placement-end) .label-text-wrapper {
   @include globals.margin(null, 0, null, globals.$ionic-space-400);
-}
-
-// Radio Label Placement - Fixed
-// ----------------------------------------------------------------
-
-:host(.radio-label-placement-fixed) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the radio should be on the end
-   * when the label sits at the start.
-   */
-  @include globals.margin(null, globals.$ionic-space-400, null, 0);
 }
 
 // Radio Label Placement - Stacked
