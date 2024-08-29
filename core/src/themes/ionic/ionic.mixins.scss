@@ -48,22 +48,17 @@
 //      }
 //
 // --------------------------------------------------
-@mixin focused-state(
-  $width: tokens.$ionic-border-size-050,
-  $style: tokens.$ionic-border-style-solid,
-  $color: tokens.$ionic-state-focus-1,
-  $addOffset: true
-) {
+@mixin focused-state($width: null, $style: null, $color: null, $addOffset: true) {
   // Use default values if null is passed
   $width: if($width != null, $width, tokens.$ionic-border-size-050);
   $style: if($style != null, $style, tokens.$ionic-border-style-solid);
   $color: if($color != null, $color, tokens.$ionic-state-focus-1);
 
-  outline: $width $style $color;
-
   @if $addOffset {
     outline-offset: $width;
   }
+
+  outline: $width $style $color;
 }
 
 // Typography mixin to be used with typography scss variables (ionic.vars.scss)
