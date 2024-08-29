@@ -19,6 +19,9 @@
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
+      .margin-top {
+        margin-top: 20px;
+      }
       h2 {
         font-size: 12px;
         font-weight: normal;
@@ -47,7 +50,7 @@
       <ion-content id="content" class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Default</h2>
+            <h2>Default - Size Medium</h2>
             <ion-input
               fill="outline"
               shape="soft"
@@ -59,6 +62,22 @@
               <ion-input-password-toggle slot="end"></ion-input-password-toggle>
             </ion-input>
           </div>
+          <div class="grid-item">
+            <h2>Default - Size Large</h2>
+            <ion-input
+              fill="outline"
+              shape="soft"
+              placeholder="Enter your password"
+              type="password"
+              value="supersecurepassword"
+              label="Password"
+              size="large"
+            >
+              <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+            </ion-input>
+          </div>
+        </div>
+        <div class="grid margin-top">
           <div class="grid-item">
             <h2>Custom Icon</h2>
             <ion-input type="password" value="supersecurepassword" label="Password">
