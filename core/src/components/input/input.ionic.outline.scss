@@ -153,5 +153,5 @@
 // ----------------------------------------------------------------
 
 :host(.input-fill-outline.has-focus) {
-  --border-width: #{tokens.$ionic-border-size-050};
+  --border-width: #{globals.$ionic-border-size-050};
 }

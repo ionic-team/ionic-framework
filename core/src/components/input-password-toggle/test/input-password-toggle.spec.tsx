@@ -1,10 +1,10 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
+import { initialize } from '../../../global/ionic-global';
+import { Button } from '../../button/button';
 import { Input } from '../../input/input';
 import { InputPasswordToggle } from '../input-password-toggle';
-import { Button } from '../../button/button';
-import { initialize } from '../../../global/ionic-global';
 
 describe('input password toggle', () => {
   it('should toggle input type when clicked', async () => {

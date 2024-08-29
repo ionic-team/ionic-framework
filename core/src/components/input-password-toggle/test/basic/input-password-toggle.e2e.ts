@@ -47,4 +47,21 @@ configs({ modes: ['md', 'ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await expect(inputPasswordToggle).toHaveScreenshot(screenshot('input-password-toggle'));
     });
   });
+
+  test.describe(title('input password toggle - large size: rendering'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-input label="input" type="password" size="large">
+            <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+          </ion-input>
+        `,
+        config
+      );
+
+      const inputPasswordToggle = page.locator('ion-input-password-toggle');
+
+      await expect(inputPasswordToggle).toHaveScreenshot(screenshot('input-password-toggle-large-size'));
+    });
+  });
 });
