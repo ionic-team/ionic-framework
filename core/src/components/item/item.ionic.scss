@@ -89,3 +89,29 @@ slot[name="end"]::slotted(*) {
 
   content: "";
 }
+
+// Ionic Item Lines
+// --------------------------------------------------
+
+// Full lines - apply the border to the item
+// Inset lines - apply the border to the item inner
+:host(.item-lines-full) {
+  --border-width: #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025} #{globals.$ionic-border-size-0};
+}
+
+:host(.item-lines-inset) {
+  --inner-border-width: #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025} #{globals.$ionic-border-size-0};
+}
+
+// Full lines - remove the border from the item inner (inset list items)
+// Inset lines - remove the border on the item (full list items)
+// No lines - remove the border on both (full / inset list items)
+:host(.item-lines-inset),
+:host(.item-lines-none) {
+  --border-width: #{globals.$ionic-border-size-0};
+}
+
+:host(.item-lines-full),
+:host(.item-lines-none) {
+  --inner-border-width: #{globals.$ionic-border-size-0};
+}
