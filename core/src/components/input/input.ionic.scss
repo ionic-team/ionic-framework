@@ -92,7 +92,7 @@
 .input-clear-icon:focus-visible {
   @include border-radius(globals.$ionic-border-radius-100);
 
-  outline: #{globals.$ionic-border-size-050} solid #{globals.$ionic-state-focus-1};
+  outline: globals.$ionic-border-size-050 globals.$ionic-border-style-solid globals.$ionic-state-focus-1;
 
   opacity: 1;
 }
