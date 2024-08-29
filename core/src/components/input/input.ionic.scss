@@ -44,7 +44,7 @@
 }
 
 :host(.input-size-large) ion-input-password-toggle {
-  --size: 50px;
+  --size: #{globals.$ionic-scale-1200};
 }
 
 // Target area
