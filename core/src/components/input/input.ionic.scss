@@ -39,8 +39,6 @@
 // --------------------------------------------------
 
 :host ion-input-password-toggle {
-  --size: 40px;
-  --icon-size: #{globals.dynamic-font(16px)};
 }
 
 :host(.input-size-large) ion-input-password-toggle {
