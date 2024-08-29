@@ -151,7 +151,6 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await expect(list).toHaveScreenshot(screenshot(`list-lines-inset-item-lines`));
       });
 
-
       test('should not have visual regressions with item lines and color set', async ({ page }) => {
         await page.setContent(
           `
