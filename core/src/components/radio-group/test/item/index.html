@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Radio Group - Basic</title>
+    <title>Radio Group - Item</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -12,29 +12,40 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-
-    <style>
-      ion-radio {
-        width: 100%;
-      }
-    </style>
   </head>
 
   <body>
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Radio Group - Basic</ion-title>
+          <ion-title>Radio Group - Item</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
-        <ion-radio-group name="items" id="group" value="1">
-          <ion-radio justify="space-between" value="1">Label</ion-radio><br />
-          <ion-radio justify="space-between" value="2">Label</ion-radio><br />
-          <ion-radio justify="space-between" value="3">Label</ion-radio><br />
-          <ion-radio justify="space-between" value="4">Label</ion-radio><br />
-        </ion-radio-group>
+        <ion-list lines="none">
+          <ion-radio-group name="items" id="group" value="1">
+            <ion-list-header>
+              <ion-label>Radio Group Header</ion-label>
+            </ion-list-header>
+
+            <ion-item>
+              <ion-radio value="1">Item 1</ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-radio value="2">Item 2</ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-radio value="3">Item 3</ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-radio value="4">Item 4</ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
       </ion-content>
     </ion-app>
   </body>

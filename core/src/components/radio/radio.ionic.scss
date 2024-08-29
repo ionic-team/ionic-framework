@@ -124,6 +124,13 @@
   max-width: calc(100% / 0.75);
 }
 
+// Radio Not In Item
+// -----------------------------------------
+
+:host(:not(.in-item):not(:last-of-type)) {
+  @include globals.margin(null, null, globals.$ionic-space-200, null);
+}
+
 // Ionic Radio: Disabled
 // -----------------------------------------
 
