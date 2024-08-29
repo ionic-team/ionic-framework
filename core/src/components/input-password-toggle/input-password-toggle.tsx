@@ -173,7 +173,6 @@ export class InputPasswordToggle implements ComponentInterface {
           aria-label="show password"
           role="switch"
           type="button"
-          class="in-input-password-toggle"
           onPointerDown={(ev) => {
             /**
              * This prevents mobile browsers from
