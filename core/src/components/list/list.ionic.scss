@@ -138,13 +138,14 @@ ion-list {
 
 .list-ionic-lines-full .item-lines-default {
   --inner-border-width: #{globals.$ionic-border-size-0};
-  --border-width: #{#{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025} #{globals.$ionic-border-size-0}};
+  --border-width: #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025} #{globals.$ionic-border-size-0};
 }
 
 // Ionic Inset Lines List
 // --------------------------------------------------
 
 .list-ionic-lines-inset .item-lines-default {
-  --inner-border-width: #{#{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025} #{globals.$ionic-border-size-0}};
+  --inner-border-width: #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025}
+    #{globals.$ionic-border-size-0};
   --border-width: #{globals.$ionic-border-size-0};
 }
