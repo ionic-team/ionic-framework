@@ -123,9 +123,9 @@
   pointer-events: none;
 
   /**
-  * Allow user to navigate months
-  * while in readonly mode
-  */
+   * Allow user to navigate months
+   * while in readonly mode
+   */
   .calendar-action-buttons,
   .calendar-body,
   .datetime-year {
@@ -133,10 +133,9 @@
   }
 
   /**
-  * Disabled buttons should have full opacity
-  * in readonly mode
-  */
-
+   * Disabled buttons should have full opacity
+   * in readonly mode
+   */
   .calendar-day[disabled]:not(.calendar-day-constrained),
   .datetime-action-buttons ion-button[disabled] {
     opacity: 1;
@@ -144,10 +143,10 @@
 }
 
 /**
-* Title should not wrap
-* to the next line and should
-* show ellipsis instead.
-*/
+ * Title should not wrap
+ * to the next line and should
+ * show ellipsis instead.
+ */
 :host .datetime-header .datetime-title {
   text-overflow: ellipsis;
 
