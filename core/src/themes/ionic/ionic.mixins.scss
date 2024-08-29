@@ -54,25 +54,16 @@
   $color: tokens.$ionic-state-focus-1,
   $addOffset: true
 ) {
-  // If a user passes in null, then they are opting out
-  // of using a specific parameter and we should use the default
-  @if $width == null {
-    $width: tokens.$ionic-border-size-050;
-  }
+  // Use default values if null is passed
+  $width: if($width != null, $width, tokens.$ionic-border-size-050);
+  $style: if($style != null, $style, tokens.$ionic-border-style-solid);
+  $color: if($color != null, $color, tokens.$ionic-state-focus-1);
 
-  @if $style == null {
-    $style: tokens.$ionic-border-style-solid;
-  }
-
-  @if $color == null {
-    $color: tokens.$ionic-state-focus-1;
-  }
+  outline: $width $style $color;
 
   @if $addOffset {
     outline-offset: $width;
   }
-
-  outline: $width $style $color;
 }
 
 // Typography mixin to be used with typography scss variables (ionic.vars.scss)
