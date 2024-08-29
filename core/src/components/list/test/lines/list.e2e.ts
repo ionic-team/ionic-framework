@@ -3,26 +3,361 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('list: lines'), () => {
-    test('lines="full" should render correctly', async ({ page }) => {
-      await page.goto(`/src/components/list/test/lines`, config);
+    test.describe('default', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Lines: default</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
 
-      const list = page.locator('ion-list[lines="full"]');
+        const list = page.locator('ion-list');
 
-      await expect(list).toHaveScreenshot(screenshot(`list-lines-full`));
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-default`));
+      });
+
+      test('should not have visual regressions with item lines set', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Lines: default</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-label>Item Inset</ion-label>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>Item Full</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>Item None</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-default-item-lines`));
+      });
+
+      test('should not have visual regressions with item lines and color set', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Lines: default</ion-label>
+            </ion-list-header>
+            <ion-item color="danger">
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="inset">
+              <ion-label>Item Inset</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="full">
+              <ion-label>Item Full</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="none">
+              <ion-label>Item None</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-default-item-lines-colors`));
+      });
     });
-    test('lines="inset" should render correctly', async ({ page }) => {
-      await page.goto(`/src/components/list/test/lines`, config);
 
-      const list = page.locator('ion-list[lines="inset"]');
+    test.describe('inset', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="inset">
+            <ion-list-header>
+              <ion-label>Lines: inset</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
 
-      await expect(list).toHaveScreenshot(screenshot(`list-lines-inset`));
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-inset`));
+      });
+
+      test('should not have visual regressions with item lines set', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="inset">
+            <ion-list-header>
+              <ion-label>Lines: inset</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-label>Item Inset</ion-label>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>Item Full</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>Item None</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-inset-item-lines`));
+      });
+
+
+      test('should not have visual regressions with item lines and color set', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="inset">
+            <ion-list-header>
+              <ion-label>Lines: inset</ion-label>
+            </ion-list-header>
+            <ion-item color="danger">
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="inset">
+              <ion-label>Item Inset</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="full">
+              <ion-label>Item Full</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="none">
+              <ion-label>Item None</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-inset-item-lines-colors`));
+      });
     });
-    test('lines="none" should render correctly', async ({ page }) => {
-      await page.goto(`/src/components/list/test/lines`, config);
 
-      const list = page.locator('ion-list[lines="none"]');
+    test.describe('full', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="full">
+            <ion-list-header>
+              <ion-label>Lines: full</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
 
-      await expect(list).toHaveScreenshot(screenshot(`list-lines-none`));
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-full`));
+      });
+
+      test('should not have visual regressions with item lines set', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="full">
+            <ion-list-header>
+              <ion-label>Lines: full</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-label>Item Inset</ion-label>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>Item Full</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>Item None</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-full-item-lines`));
+      });
+
+      test('should not have visual regressions with item lines and color set', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="full">
+            <ion-list-header>
+              <ion-label>Lines: full</ion-label>
+            </ion-list-header>
+            <ion-item color="danger">
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="inset">
+              <ion-label>Item Inset</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="full">
+              <ion-label>Item Full</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="none">
+              <ion-label>Item None</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-full-item-lines-colors`));
+      });
+    });
+
+    test.describe('none', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="none">
+            <ion-list-header>
+              <ion-label>Lines: none</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-none`));
+      });
+
+      test('should not have visual regressions with item lines set', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="none">
+            <ion-list-header>
+              <ion-label>Lines: none</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-label>Item Inset</ion-label>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-label>Item Full</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>Item None</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-none-item-lines`));
+      });
+
+      test('should not have visual regressions with item lines and color set', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-list lines="none">
+            <ion-list-header>
+              <ion-label>Lines: none</ion-label>
+            </ion-list-header>
+            <ion-item color="danger">
+              <ion-label>Item</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="inset">
+              <ion-label>Item Inset</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="full">
+              <ion-label>Item Full</ion-label>
+            </ion-item>
+            <ion-item color="danger" lines="none">
+              <ion-label>Item None</ion-label>
+            </ion-item>
+          </ion-list>
+        `,
+          config
+        );
+
+        const list = page.locator('ion-list');
+
+        await expect(list).toHaveScreenshot(screenshot(`list-lines-none-item-lines-colors`));
+      });
     });
   });
 });
