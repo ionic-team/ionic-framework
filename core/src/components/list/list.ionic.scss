@@ -124,3 +124,27 @@ ion-list {
     @include globals.border-radius($list-ionic-border-radius-rectangular);
   }
 }
+
+// Ionic No Lines List
+// --------------------------------------------------
+
+.list-ionic-lines-none .item-lines-default {
+  --inner-border-width: #{globals.$ionic-border-size-0};
+  --border-width: #{globals.$ionic-border-size-0};
+}
+
+// Ionic Full Lines List
+// --------------------------------------------------
+
+.list-ionic-lines-full .item-lines-default {
+  --inner-border-width: #{globals.$ionic-border-size-0};
+  --border-width: #{#{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025} #{globals.$ionic-border-size-0}};
+}
+
+// Ionic Inset Lines List
+// --------------------------------------------------
+
+.list-ionic-lines-inset .item-lines-default {
+  --inner-border-width: #{#{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025} #{globals.$ionic-border-size-0}};
+  --border-width: #{globals.$ionic-border-size-0};
+}
