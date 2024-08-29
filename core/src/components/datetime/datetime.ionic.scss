@@ -17,23 +17,6 @@
 // Calendar Header
 // -----------------------------------
 
-.calendar-month-year {
-  @include globals.padding(globals.$ionic-space-0, globals.$ionic-space-400);
-
-  display: flex;
-
-  flex: 1 0 0;
-  align-items: center;
-  align-self: stretch;
-}
-
-.calendar-month-year-toggle {
-  @include globals.padding(0);
-  @include globals.typography(globals.$ionic-action-lg);
-
-  color: globals.$ionic-color-primary-base;
-}
-
 .calendar-action-buttons {
   @include globals.padding(globals.$ionic-space-200, null);
 
@@ -44,8 +27,55 @@
   box-sizing: border-box;
 }
 
+.calendar-month-year {
+  flex: 1 0 0;
+}
+
+// Month year toggle should match the
+// default round clear button style
+.calendar-month-year-toggle {
+  @include globals.border-radius(globals.$ionic-border-radius-full);
+  @include globals.typography(globals.$ionic-action-lg);
+  @include globals.padding(globals.$ionic-space-200, globals.$ionic-space-400);
+
+  min-width: globals.$ionic-scale-1600;
+  min-height: globals.$ionic-scale-1000;
+
+  border: var(--focus-ring-width) globals.$ionic-border-style-solid transparent;
+
+  color: globals.$ionic-color-primary-base;
+}
+
+// Hovered Month Year Toggle
+@media (any-hover: hover) {
+  .calendar-month-year-toggle:hover {
+    background: globals.$ionic-color-neutral-200;
+  }
+}
+
+// Focused Month Year Toggle
+.calendar-month-year-toggle.ion-focused {
+  border-color: var(--focus-ring-color);
+}
+
+// Activated Month Year Toggle
+.calendar-month-year-toggle.ion-activated {
+  background: globals.$ionic-color-neutral-200;
+}
+
+// TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
 .calendar-next-prev ion-button.button-has-icon-only {
   --color: #{globals.$ionic-color-neutral-1000};
+  --background-activated: #{globals.$ionic-color-neutral-200};
+  --background-hover: #{globals.$ionic-color-neutral-200};
+  --background-hover-opacity: 1;
+}
+
+// TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
+.calendar-next-prev ion-button.button-has-icon-only.ion-focused::part(native) {
+  border: globals.$ionic-border-size-050 globals.$ionic-border-style-solid globals.$ionic-state-focus-1;
+
+  outline: none;
 }
 
 // Calendar Days of Week
