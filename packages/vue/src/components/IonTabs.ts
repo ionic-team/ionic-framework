@@ -50,14 +50,22 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
   name: "IonTabs",
   emits: [WILL_CHANGE, DID_CHANGE],
   setup(props, { slots, emit }) {
-    // Define the custom element
-    defineCustomElement();
-
     return {
       props,
       slots,
       emit,
     };
+  },
+  mounted() {
+    /**
+     * `defineCustomElement` must be called in the `mounted` hook
+     * to ensure that the custom element is defined after the
+     * component has been fully rendered and initialized.
+     * This prevents issues with undefined properties, like
+     * `selectedTab` from core, which may occur if the custom
+     * element is defined too early in the component's lifecycle.
+     */
+    defineCustomElement();
   },
   render() {
     const { slots, emit, props } = this;

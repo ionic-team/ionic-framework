@@ -253,8 +253,7 @@ describe('Tabs', () => {
     });
 
     // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22597
-    // TODO(ROU-11114): Re-enable this test after investigating and fixing the cause of its failure.
-    it.skip('should deselect old tab button when going to a tab that does not have a tab button', () => {
+    it('should deselect old tab button when going to a tab that does not have a tab button', () => {
       cy.visit('/tabs/tab1');
       cy.ionPageVisible('tab1');
 
@@ -314,8 +313,7 @@ describe('Tabs', () => {
     });
 
     // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22847
-    // TODO(ROU-11114): Re-enable this test after investigating and fixing the cause of its failure.
-    it.skip('should support dynamic tabs', () => {
+    it('should support dynamic tabs', () => {
       cy.visit('/tabs/tab1');
       cy.ionPageVisible('tab1');
 
