@@ -7,13 +7,11 @@
   /**
    * @prop --background: The primary background of the datetime component.
    */
-  background: var(--background);
-}
-
-:host {
   display: flex;
 
   flex-flow: column;
+
+  background: var(--background);
 
   overflow: hidden;
 }
