@@ -10,7 +10,7 @@ import { configs, test } from '@utils/test/playwright';
  * see the justification results.
  */
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: label'), () => {
     test.describe('radio: start placement', () => {
       test('should render a start justification with label in the start position', async ({ page }) => {
@@ -181,6 +181,22 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screen
 
       const radio = page.locator('ion-radio');
       await expect(radio).toHaveScreenshot(screenshot(`radio-label-stacked-long-label`));
+    });
+  });
+});
+
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+  test.describe(title('radio: long label'), () => {
+    test('long label should wrap', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-radio style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-radio>
+        `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-label-long-label`));
     });
   });
 });

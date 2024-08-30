@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: states'), () => {
     test('should render disabled radio correctly', async ({ page }) => {
       await page.setContent(
@@ -57,6 +57,69 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const radio = page.locator('ion-radio');
       await expect(radio).toHaveScreenshot(screenshot(`radio-unchecked`));
+    });
+  });
+});
+
+/**
+ * Focused and Pressed states are only available in the Ionic theme
+ */
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: states'), () => {
+    test('should render pressed radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group>
+          <ion-radio class="ion-activated">Enable Notifications</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-pressed`));
+    });
+
+    test('should render pressed checked radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group value="true">
+          <ion-radio class="ion-activated" value="true">Enable Notifications</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-checked-pressed`));
+    });
+
+    test('should render focused radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group>
+          <ion-radio class="ion-focused">Enable Notifications</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-focused`));
+    });
+
+    test('should render focused checked radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group value="true">
+          <ion-radio class="ion-focused" value="true">Enable Notifications</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-checked-focused`));
     });
   });
 });
