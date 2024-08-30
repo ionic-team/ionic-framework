@@ -31,10 +31,43 @@ export class RouterLinkDelegateDirective implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.updateTargetUrlAndHref();
+    this.updateTabindex();
   }
 
   ngOnChanges(): void {
     this.updateTargetUrlAndHref();
+  }
+
+  /**
+   * The `tabindex` is set to `0` by default on the host element when
+   * the `routerLink` directive is used. This causes issues with Ionic
+   * components that wrap an `a` or `button` element, such as `ion-item`.
+   * See issue https://github.com/angular/angular/issues/28345
+   *
+   * This method removes the `tabindex` attribute from the host element
+   * to allow the Ionic component to manage the focus state correctly.
+   */
+  private updateTabindex() {
+    // Ionic components that render a native anchor or button element
+    const ionicComponents = [
+      'ION-BACK-BUTTON',
+      'ION-BREADCRUMB',
+      'ION-BUTTON',
+      'ION-CARD',
+      'ION-FAB-BUTTON',
+      'ION-ITEM',
+      'ION-ITEM-OPTION',
+      'ION-MENU-BUTTON',
+      'ION-SEGMENT-BUTTON',
+      'ION-TAB-BUTTON',
+    ];
+    const hostElement = this.elementRef.nativeElement;
+
+    if (ionicComponents.includes(hostElement.tagName)) {
+      if (hostElement.getAttribute('tabindex') === '0') {
+        hostElement.removeAttribute('tabindex');
+      }
+    }
   }
 
   private updateTargetUrlAndHref() {

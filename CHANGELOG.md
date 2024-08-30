@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* **alert:** do not overwrite id set in htmlAttributes ([#29708](https://github.com/ionic-team/ionic-framework/issues/29708)) ([1295ced](https://github.com/ionic-team/ionic-framework/commit/1295cedae9ffbcc40389c19499e58e7e21fb424e)), closes [#29704](https://github.com/ionic-team/ionic-framework/issues/29704)
+* **angular:** add focusTrap prop to modal and popover ([#29729](https://github.com/ionic-team/ionic-framework/issues/29729)) ([05913c3](https://github.com/ionic-team/ionic-framework/commit/05913c3cc3f2e8cb91f9a0944cd55e78392b0ba3)), closes [#29728](https://github.com/ionic-team/ionic-framework/issues/29728)
+* **angular:** remove the tabindex set by routerLink from Ionic components ([#29744](https://github.com/ionic-team/ionic-framework/issues/29744)) ([20073e1](https://github.com/ionic-team/ionic-framework/commit/20073e10c934d3704734195c72f4281c9b9658e3)), closes [#20632](https://github.com/ionic-team/ionic-framework/issues/20632)
+* **content:** allow custom roles and aria attributes to be set on content ([#29753](https://github.com/ionic-team/ionic-framework/issues/29753)) ([7b16397](https://github.com/ionic-team/ionic-framework/commit/7b16397714be773fda28658ab4009755f545b735))
+* **item:** router-link remains clickable with item cover ([#29743](https://github.com/ionic-team/ionic-framework/issues/29743)) ([a9f278a](https://github.com/ionic-team/ionic-framework/commit/a9f278ad67758a19e0e12ce7ed6d13eb573b0765))
+* **overlays:** do not overwrite id set in htmlAttributes ([#29722](https://github.com/ionic-team/ionic-framework/issues/29722)) ([92ce563](https://github.com/ionic-team/ionic-framework/commit/92ce563c402e557b08a622bd20f78459782312e2)), closes [#29712](https://github.com/ionic-team/ionic-framework/issues/29712)
+* **react:** add onPointerDown, onTouchEnd, add onTouchMove ([#29736](https://github.com/ionic-team/ionic-framework/issues/29736)) ([bfee3cd](https://github.com/ionic-team/ionic-framework/commit/bfee3cd064a9b495489c2679ccfb762e622dbf09)), closes [#29174](https://github.com/ionic-team/ionic-framework/issues/29174)
+* **vue:** pass router-link value to href to properly render clickable elements ([#29745](https://github.com/ionic-team/ionic-framework/issues/29745)) ([ab4f279](https://github.com/ionic-team/ionic-framework/commit/ab4f2791c1968adbb1d858c5f009fa251bb9101b))
+
+
+
+
+
+## [8.2.6](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.6) (2024-07-24)
+
+
+### Bug Fixes
+
+* **alert:** do not overwrite id set in htmlAttributes ([#29708](https://github.com/ionic-team/ionic-framework/issues/29708)) ([1295ced](https://github.com/ionic-team/ionic-framework/commit/1295cedae9ffbcc40389c19499e58e7e21fb424e)), closes [#29704](https://github.com/ionic-team/ionic-framework/issues/29704)
+* **angular:** add focusTrap prop to modal and popover ([#29729](https://github.com/ionic-team/ionic-framework/issues/29729)) ([05913c3](https://github.com/ionic-team/ionic-framework/commit/05913c3cc3f2e8cb91f9a0944cd55e78392b0ba3)), closes [#29728](https://github.com/ionic-team/ionic-framework/issues/29728)
+* **overlays:** do not overwrite id set in htmlAttributes ([#29722](https://github.com/ionic-team/ionic-framework/issues/29722)) ([92ce563](https://github.com/ionic-team/ionic-framework/commit/92ce563c402e557b08a622bd20f78459782312e2)), closes [#29712](https://github.com/ionic-team/ionic-framework/issues/29712)
+
+
+
+
+
+## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
+
+
+### Bug Fixes
+
+* **dependencies:** use latest @stencil/core to remove DOMException errors ([#29685](https://github.com/ionic-team/ionic-framework/issues/29685)) ([d70ea4](https://github.com/ionic-team/ionic/commit/d70ea400a4713bd091af1393e196e10844a190b6)), closes [#29681](https://github.com/ionic-team/ionic/issues/29681)
+* **vue:** add optional IonicConfig type parameter to IonicVue plugin ([#29637](https://github.com/ionic-team/ionic-framework/issues/29637)) ([90893f4](https://github.com/ionic-team/ionic-framework/commit/90893f46c930dbccd4251fa2f56bdde30b669158)), closes [#29659](https://github.com/ionic-team/ionic-framework/issues/29659)
+
+
+
+
+
+## [8.2.4](https://github.com/ionic-team/ionic-framework/compare/v8.2.2...v8.2.4) (2024-06-28)
+
+
+### Bug Fixes
+
+* **angular:** popover arrow navigation with disabled items ([#29662](https://github.com/ionic-team/ionic-framework/issues/29662)) ([ceb41f3](https://github.com/ionic-team/ionic-framework/commit/ceb41f31f382ff1bcf81de2b11680699d33d5077)), closes [#29640](https://github.com/ionic-team/ionic-framework/issues/29640)
+
+
+
+
+
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
 ## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
 
 
