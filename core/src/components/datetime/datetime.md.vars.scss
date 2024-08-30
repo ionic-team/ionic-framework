@@ -1,14 +1,16 @@
+@use "../../themes/native/native.globals" as globals;
+
 // MD Datetime
 // --------------------------------------------------
 
 /// @prop - Font size for title in header
-$datetime-md-title-font-size: dynamic-font(12px);
+$datetime-md-title-font-size: globals.dynamic-font(12px);
 
 /// @prop - Font size for selected date in header
-$datetime-md-selected-date-font-size: dynamic-font(34px);
+$datetime-md-selected-date-font-size: globals.dynamic-font(34px);
 
 /// @prop - Font size for calendar day button
-$datetime-md-calendar-item-font-size: dynamic-font(14px);
+$datetime-md-calendar-item-font-size: globals.dynamic-font(14px);
 
 /// @prop - Padding for content in header
 $datetime-md-header-padding: 20px;

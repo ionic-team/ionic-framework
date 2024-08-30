@@ -2,9 +2,38 @@ import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { configs, test } from '@utils/test/playwright';
 
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: basic'), () => {
+    test('should render inline datetime', async ({ page }) => {
+      await page.setContent(
+        `
+        <script>
+          const mockToday = '2024-07-16T12:00';
+          Date = class extends Date {
+            constructor(...args) {
+              if (args.length === 0) {
+                super(mockToday)
+              } else {
+                super(...args);
+              }
+            }
+          }
+        </script>
+
+        <ion-datetime value="2024-07-18T12:00"></ion-datetime>
+      `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-basic`));
+    });
+  });
+});
+
 /**
- * This behavior does not differ across
- * modes/directions.
+ * This behavior does not differ across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: closing time popover'), () => {
@@ -41,8 +70,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
- * This behavior does not differ across
- * modes/directions.
+ * This behavior does not differ across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: selecting a day'), () => {
@@ -125,8 +153,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
- * This behavior does not differ across
- * modes/directions.
+ * This behavior does not differ across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: confirm date'), () => {
@@ -242,8 +269,7 @@ configs().forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * This behavior does not differ across
- * modes/directions.
+ * This behavior does not differ across modes/directions.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: swiping'), () => {
@@ -318,8 +344,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
- * This behavior does not differ across
- * modes/directions.
+ * This behavior does not differ across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: visibility'), () => {
@@ -363,10 +388,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
- * We are setting RTL on the component
- * instead, so we don't need to test
- * both directions. Also, this behavior
- * does not vary across modes.
+ * We are setting RTL on the component instead, so we don't need to test
+ * both directions. Also, this behavior does not vary across modes.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: RTL set on component'), () => {
@@ -386,8 +409,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
- * This behavior does not differ across
- * modes/directions.
+ * This behavior does not differ across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: clear button'), () => {
@@ -420,8 +442,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 /**
- * This behavior does not differ across
- * modes/directions.
+ * This behavior does not differ across modes/directions.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: ionChange'), () => {
@@ -535,8 +556,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 });
 
 /**
- * This behavior does not differ across
- * directions.
+ * This behavior does not differ across directions.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: focus'), () => {
@@ -588,8 +608,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * This behavior does not differ across
- * directions.
+ * This behavior does not differ across directions.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: formatOptions'), () => {
@@ -622,8 +641,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 });
 
 /**
- * This behavior does not differ across
- * modes/directions.
+ * This behavior does not differ across modes/directions.
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: formatOptions misconfiguration errors'), () => {
