@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* **vue:** pass router-link value to href to properly render clickable elements ([#29745](https://github.com/ionic-team/ionic-framework/issues/29745)) ([ab4f279](https://github.com/ionic-team/ionic-framework/commit/ab4f2791c1968adbb1d858c5f009fa251bb9101b))
+
+
+
+
+
+## [8.2.6](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.6) (2024-07-24)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
+
+
+### Bug Fixes
+
+* **vue:** add optional IonicConfig type parameter to IonicVue plugin ([#29637](https://github.com/ionic-team/ionic-framework/issues/29637)) ([90893f4](https://github.com/ionic-team/ionic-framework/commit/90893f46c930dbccd4251fa2f56bdde30b669158)), closes [#29659](https://github.com/ionic-team/ionic-framework/issues/29659)
+
+
+
+
+
+## [8.2.4](https://github.com/ionic-team/ionic-framework/compare/v8.2.2...v8.2.4) (2024-06-28)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
 ## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
 
 **Note:** Version bump only for package @ionic/vue

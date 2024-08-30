@@ -216,7 +216,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
       const theme = getIonTheme(this);
       this.spinner = config.get('loadingSpinner', config.get('spinner', theme === 'ios' ? 'lines' : 'crescent'));
     }
-    setOverlayId(this.el);
+    if (!this.htmlAttributes?.id) {
+      setOverlayId(this.el);
+    }
   }
 
   componentDidLoad() {

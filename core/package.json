@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.2.2",
+  "version": "8.2.7",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -32,12 +32,12 @@
   ],
   "dependencies": {
     "@phosphor-icons/core": "^2.1.1",
-    "@stencil/core": "^4.17.2",
+    "@stencil/core": "^4.19.2",
     "ionicons": "^7.2.2",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.8.5",
+    "@axe-core/playwright": "^4.9.1",
     "@capacitor/core": "^6.0.0",
     "@capacitor/haptics": "^6.0.0",
     "@capacitor/keyboard": "^6.0.0",
@@ -45,15 +45,15 @@
     "@clack/prompts": "^0.7.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@playwright/test": "^1.39.0",
+    "@playwright/test": "^1.46.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.8.4",
-    "@stencil/react-output-target": "^0.5.3",
+    "@stencil/react-output-target": "^0.6.0",
     "@stencil/sass": "^3.0.9",
-    "@stencil/vue-output-target": "^0.8.7",
+    "@stencil/vue-output-target": "^0.8.9",
     "@types/jest": "^29.5.6",
-    "@types/node": "^14.6.0",
+    "@types/node": "^18.19.47",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "chalk": "^5.3.0",

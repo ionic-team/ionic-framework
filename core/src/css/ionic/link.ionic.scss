@@ -31,6 +31,10 @@
 // -------------------------------------------------------------------------------
 
 @mixin ionic-link {
+  color: globals.$ionic-color-info-400;
+
+  text-decoration: none;
+
   @include link-shared;
 
   // Link: Standalone - Hover
@@ -41,10 +45,6 @@
       text-decoration: underline;
     }
   }
-
-  color: globals.$ionic-color-info-400;
-
-  text-decoration: none;
 
   // Link: Standalone - Focus
   // -------------------------------------------------------------------------------
@@ -77,6 +77,10 @@ a.ionic-link,
 // -------------------------------------------------------------------------------
 
 @mixin ionic-link-underline {
+  color: currentColor;
+
+  text-decoration: underline;
+
   @include link-shared;
 
   // Link: Underline - Hover
@@ -87,10 +91,6 @@ a.ionic-link,
       color: globals.$ionic-color-info-400;
     }
   }
-
-  color: currentColor;
-
-  text-decoration: underline;
 
   // Link: Underline - Focus
   // -------------------------------------------------------------------------------

@@ -2,5 +2,5 @@ dist
 dist-transpiled
 *.md
 build
-proxies.ts
+components.ts
 react-component-lib
