@@ -18,9 +18,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-radio-group value="one" allow-empty-selection="false">
-          <ion-item>
-            <ion-radio id="one" value="one">One</ion-radio>
-          </ion-item>
+          <ion-radio id="one" value="one">One</ion-radio>
         </ion-radio-group>
       `,
         config
@@ -34,9 +32,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-radio-group value="one" allow-empty-selection="true">
-          <ion-item>
-            <ion-radio id="one" value="one">One</ion-radio>
-          </ion-item>
+          <ion-radio id="one" value="one">One</ion-radio>
         </ion-radio-group>
       `,
         config
@@ -50,9 +46,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-radio-group value="one" allow-empty-selection="false">
-          <ion-item>
-            <ion-radio id="one" value="one">One</ion-radio>
-          </ion-item>
+          <ion-radio id="one" value="one">One</ion-radio>
         </ion-radio-group>
       `,
         config
@@ -66,9 +60,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-radio-group value="one" allow-empty-selection="true">
-          <ion-item>
-            <ion-radio id="one" value="one">One</ion-radio>
-          </ion-item>
+          <ion-radio id="one" value="one">One</ion-radio>
         </ion-radio-group>
       `,
         config
@@ -82,17 +74,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-radio-group value="1">
-          <ion-item>
-            <ion-radio value="1">Item 1</ion-radio>
-          </ion-item>
+          <ion-radio value="1">Item 1</ion-radio>
 
-          <ion-item>
-            <ion-radio value="2">Item 2</ion-radio>
-          </ion-item>
+          <ion-radio value="2">Item 2</ion-radio>
 
-          <ion-item>
-            <ion-radio value="3">Item 3</ion-radio>
-          </ion-item>
+          <ion-radio value="3">Item 3</ion-radio>
         </ion-radio-group>
       `,
         config
