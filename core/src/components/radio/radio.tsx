@@ -22,7 +22,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
-    ionic: 'radio.md.scss',
+    ionic: 'radio.ionic.scss',
   },
   shadow: true,
 })

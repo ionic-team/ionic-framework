@@ -1,0 +1,140 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./datetime.common";
+
+// Ionic Datetime
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --focus-ring-color: The color of the ring around the focused element.
+   * @prop --focus-ring-width: The width of the ring around the focused element.
+   */
+  --background: #{globals.$ionic-color-base-white};
+  --focus-ring-color: #{globals.$ionic-state-focus-1};
+  --focus-ring-width: #{globals.$ionic-border-radius-050};
+}
+
+// Calendar Header
+// -----------------------------------
+
+.calendar-action-buttons {
+  @include globals.padding(globals.$ionic-space-200, null);
+
+  align-items: center;
+
+  height: globals.$ionic-scale-1400;
+
+  box-sizing: border-box;
+}
+
+.calendar-month-year {
+  flex: 1 0 0;
+}
+
+// Month year toggle should match the
+// default round clear button style
+.calendar-month-year-toggle {
+  @include globals.border-radius(globals.$ionic-border-radius-full);
+  @include globals.typography(globals.$ionic-action-lg);
+  @include globals.padding(globals.$ionic-space-200, globals.$ionic-space-400);
+
+  min-width: globals.$ionic-scale-1600;
+  min-height: globals.$ionic-scale-1000;
+
+  border: var(--focus-ring-width) globals.$ionic-border-style-solid transparent;
+
+  color: globals.$ionic-color-primary-base;
+}
+
+// Hovered Month Year Toggle
+@media (any-hover: hover) {
+  .calendar-month-year-toggle:hover {
+    background: globals.$ionic-color-neutral-200;
+  }
+}
+
+// Focused Month Year Toggle
+.calendar-month-year-toggle.ion-focused {
+  border-color: var(--focus-ring-color);
+}
+
+// Activated Month Year Toggle
+.calendar-month-year-toggle.ion-activated {
+  background: globals.$ionic-color-neutral-200;
+}
+
+// TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
+.calendar-next-prev ion-button.button-has-icon-only {
+  --color: #{globals.$ionic-color-neutral-1000};
+  --background-activated: #{globals.$ionic-color-neutral-200};
+  --background-hover: #{globals.$ionic-color-neutral-200};
+  --background-hover-opacity: 1;
+}
+
+// TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
+.calendar-next-prev ion-button.button-has-icon-only.ion-focused::part(native) {
+  border: globals.$ionic-border-size-050 globals.$ionic-border-style-solid globals.$ionic-state-focus-1;
+
+  outline: none;
+}
+
+// Calendar Days of Week
+// -----------------------------------
+
+.calendar-days-of-week {
+  @include globals.typography(globals.$ionic-overline-medium);
+
+  align-content: center;
+
+  height: globals.$ionic-scale-1200;
+
+  color: globals.$ionic-color-neutral-800;
+}
+
+// Calendar Day
+// -----------------------------------
+
+.calendar-day {
+  @include globals.border-radius(globals.$ionic-border-radius-full);
+  @include globals.padding(globals.$ionic-space-100);
+  @include globals.typography(globals.$ionic-action-md);
+
+  width: globals.$ionic-scale-1200;
+  min-width: globals.$ionic-scale-1200;
+
+  height: globals.$ionic-scale-1200;
+
+  color: globals.$ionic-color-neutral-1200;
+}
+
+// Disabled Day
+.calendar-day[disabled]:not(.calendar-day-constrained) {
+  color: globals.$ionic-color-neutral-500;
+}
+
+// Current Day
+.calendar-day.calendar-day-today {
+  color: globals.$ionic-color-primary-base;
+}
+
+// Selected Day
+.calendar-day.calendar-day-active {
+  background: globals.$ionic-color-primary-100;
+}
+
+// Focused Day
+.calendar-day:focus-visible {
+  border: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
+}
+
+// Hovered Day
+@media (any-hover: hover) {
+  .calendar-day:not([disabled]):not(:active):hover {
+    background: globals.$ionic-color-primary-200;
+  }
+}
+
+// Pressed Day
+.calendar-day:active {
+  background: globals.$ionic-color-primary-300;
+}

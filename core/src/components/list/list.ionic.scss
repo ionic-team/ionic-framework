@@ -24,6 +24,14 @@ ion-list {
   @include globals.margin(globals.$ionic-space-100);
 }
 
+// Ionic No Lines List
+// --------------------------------------------------
+
+.list-ionic-lines-none .item-lines-default {
+  --inner-border-width: 0px;
+  --border-width: 0px;
+}
+
 // Ionic Shapes
 //
 // The border radius is applied to the list, excluding

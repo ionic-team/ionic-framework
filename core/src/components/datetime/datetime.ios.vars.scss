@@ -1,8 +1,10 @@
+@use "../../themes/native/native.globals" as globals;
+
 // iOS Datetime
 // --------------------------------------------------
 
 /// @prop - Border color for dividers between header and footer
-$datetime-ios-border-color: 0.55px solid $background-color-step-200;
+$datetime-ios-border-color: 0.55px solid globals.$background-color-step-200;
 
 /// @prop - Padding for content
 $datetime-ios-padding: 16px;

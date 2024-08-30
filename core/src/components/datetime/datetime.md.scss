@@ -1,6 +1,9 @@
-@import "./datetime.scss";
+@import "./datetime.native.scss";
 @import "./datetime.md.vars.scss";
 @import "../../themes/native/native.globals.md";
+
+// Material Design Datetime
+// --------------------------------------------------
 
 :host {
   --background: var(--ion-color-step-100, var(--ion-background-color-step-100, #ffffff));

@@ -1,23 +1,12 @@
 @import "../../themes/native/native.globals";
 
-// Datetime
+// Datetime: Common Styles
 // --------------------------------------------------
 
 :host {
   /**
    * @prop --background: The primary background of the datetime component.
-   * @prop --background-rgb: The primary background of the datetime component in RGB format.
-   * @prop --title-color: The text color of the title.
-   *
-   * @prop --wheel-highlight-background: The background of the highlight under the selected
-   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
-   * @prop --wheel-highlight-border-radius: The border radius of the highlight under the selected
-   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
-   * @prop --wheel-fade-background-rgb: The color of the gradient covering non-selected items
-   * when using a wheel style layout, or in the month/year picker for grid style layouts. Must
-   * be in RGB format, e.g. `255, 255, 255`.
    */
-
   display: flex;
 
   flex-flow: column;
@@ -30,19 +19,6 @@
 :host(.datetime-size-fixed) {
   width: auto;
   height: auto;
-}
-
-:host(.datetime-size-fixed:not(.datetime-prefer-wheel)) {
-  max-width: 350px;
-}
-
-/**
- * This ensures that the picker is appropriately
- * sized and never truncates the text.
- */
-:host(.datetime-size-fixed.datetime-prefer-wheel) {
-  min-width: 350px;
-  max-width: max-content;
 }
 
 :host(.datetime-size-cover) {
@@ -68,6 +44,7 @@
 
   opacity: 1;
 }
+
 /**
  * Changing the physical order of the
  * picker columns in the DOM is added
@@ -157,7 +134,6 @@
    * Disabled buttons should have full opacity
    * in readonly mode
    */
-
   .calendar-day[disabled]:not(.calendar-day-constrained),
   .datetime-action-buttons ion-button[disabled] {
     opacity: 1;
@@ -213,12 +189,9 @@
   justify-content: space-between;
 }
 
-:host .calendar-action-buttons ion-button {
-  --background: transparent;
-}
-
 // Calendar / Header / Days of Week
 // -----------------------------------
+
 :host .calendar-days-of-week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -237,6 +210,7 @@
 
 // Calendar / Body
 // -----------------------------------
+
 :host .calendar-body {
   /**
    * Show all calendar months inline
@@ -330,7 +304,6 @@
  * and horizontally within its grid cell.
  */
 .calendar-day {
-  @include border-radius(50%);
   @include padding(0px);
   @include margin(0px);
 
@@ -348,8 +321,6 @@
   background: none;
   color: currentColor;
 
-  font-family: $font-family-base;
-
   cursor: pointer;
 
   appearance: none;
@@ -357,16 +328,8 @@
   z-index: 0;
 }
 
-:host .calendar-day[disabled] {
+.calendar-day[disabled] {
   pointer-events: none;
-
-  opacity: 0.4;
-}
-
-.calendar-day:focus {
-  background: current-color(base, 0.2);
-
-  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
 }
 
 // Time / Header
@@ -378,14 +341,6 @@
   justify-content: space-between;
 }
 
-:host(.datetime-presentation-time) .datetime-time {
-  @include padding(0);
-}
-
-:host ion-popover {
-  --height: 200px;
-}
-
 :host .time-header {
   display: flex;
 
@@ -393,16 +348,9 @@
 }
 
 :host .time-body {
-  @include border-radius(8px);
-  @include padding(6px, 12px, 6px, 12px);
-
   display: flex;
 
   border: none;
-
-  background: var(--ion-color-step-300, var(--ion-background-color-step-300, #edeef0));
-
-  color: $text-color;
 
   font-family: inherit;
   font-size: inherit;
@@ -412,19 +360,12 @@
   appearance: none;
 }
 
-:host .time-body-active {
-  color: current-color(base);
-}
-
 :host(.in-item) {
   position: static;
 }
 
 // Year Picker
 // -----------------------------------
-:host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
-  color: #{current-color(base)};
-}
 
 .calendar-month-year {
   min-width: 0;
@@ -444,28 +385,9 @@
   cursor: pointer;
 
   z-index: 1;
-
-  &::after {
-    @include button-state();
-
-    transition: opacity 15ms linear, background-color 15ms linear;
-
-    z-index: -1;
-  }
-
-  &.ion-focused::after {
-    background: currentColor;
-  }
-
-  &:disabled {
-    opacity: 0.3;
-    pointer-events: none;
-  }
 }
 
 .calendar-month-year-toggle ion-icon {
-  @include padding(0, 0, 0, 4px);
-
   flex-shrink: 0;
 }
 
@@ -473,13 +395,4 @@
   display: inline-flex;
 
   align-items: center;
-}
-
-// Picker Custom Variables
-// -----------------------------------
-
-ion-picker {
-  --highlight-background: var(--wheel-highlight-background);
-  --highlight-border-radius: var(--wheel-highlight-border-radius);
-  --fade-background-rgb: var(--wheel-fade-background-rgb);
 }
