@@ -29,6 +29,19 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-basic`));
     });
+
+    test('should render default title', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime show-default-title="true" value="2022-06-06T16:30"></ion-datetime>
+      `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-basic-default-title`));
+    });
   });
 });
 
