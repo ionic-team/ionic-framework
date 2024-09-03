@@ -100,7 +100,7 @@
  */
 :host([slot="start"]),
 :host([slot="end"]) {
-  // Reset the flex property when the checkbox
+  // Reset the flex property when the select
   // is slotted to avoid growing the element larger
   // than its content.
   flex: initial;

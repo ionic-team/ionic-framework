@@ -21,7 +21,7 @@ const getHelperFunctions = () => {
   };
 };
 
-export const IonicVue: Plugin = {
+export const IonicVue: Plugin<[IonicConfig?]> = {
   async install(_: App, config: IonicConfig = {}) {
     /**
      * By default Ionic Framework hides elements that

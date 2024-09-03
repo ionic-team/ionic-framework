@@ -265,7 +265,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const backdrop = page.locator('ion-modal ion-backdrop');
 
       await handle.click();
-      backdrop.click();
+      await backdrop.click();
 
       await ionBreakpointDidChange.next();
 

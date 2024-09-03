@@ -67,4 +67,5 @@ const ASYNC_PLAYWRIGHT_ASSERTS = [
   'toHaveTitle',
   'toHaveURL',
   'toBeOK',
+  'click'
 ];

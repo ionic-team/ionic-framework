@@ -68,7 +68,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * If `true`, the user cannot interact with the item.
    */
-  @Prop() disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * This attribute instructs browsers to download a URL instead of navigating to
@@ -195,7 +195,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     );
 
     // The following elements should also stay clickable when an input with cover is present
-    const clickables = this.el.querySelectorAll('ion-anchor, ion-button, a, button');
+    const clickables = this.el.querySelectorAll('ion-router-link, ion-button, a, button');
 
     // Check for multiple inputs to change the position of the input cover to relative
     // for all of the covered inputs above

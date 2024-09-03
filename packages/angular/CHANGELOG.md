@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* **angular:** add focusTrap prop to modal and popover ([#29729](https://github.com/ionic-team/ionic-framework/issues/29729)) ([05913c3](https://github.com/ionic-team/ionic-framework/commit/05913c3cc3f2e8cb91f9a0944cd55e78392b0ba3)), closes [#29728](https://github.com/ionic-team/ionic-framework/issues/29728)
+* **angular:** remove the tabindex set by routerLink from Ionic components ([#29744](https://github.com/ionic-team/ionic-framework/issues/29744)) ([20073e1](https://github.com/ionic-team/ionic-framework/commit/20073e10c934d3704734195c72f4281c9b9658e3)), closes [#20632](https://github.com/ionic-team/ionic-framework/issues/20632)
+
+
+
+
+
+## [8.2.6](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.6) (2024-07-24)
+
+
+### Bug Fixes
+
+* **angular:** add focusTrap prop to modal and popover ([#29729](https://github.com/ionic-team/ionic-framework/issues/29729)) ([05913c3](https://github.com/ionic-team/ionic-framework/commit/05913c3cc3f2e8cb91f9a0944cd55e78392b0ba3)), closes [#29728](https://github.com/ionic-team/ionic-framework/issues/29728)
+
+
+
+
+
+## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [8.2.4](https://github.com/ionic-team/ionic-framework/compare/v8.2.2...v8.2.4) (2024-06-28)
+
+
+### Bug Fixes
+
+* **angular:** popover arrow navigation with disabled items ([#29662](https://github.com/ionic-team/ionic-framework/issues/29662)) ([ceb41f3](https://github.com/ionic-team/ionic-framework/commit/ceb41f31f382ff1bcf81de2b11680699d33d5077)), closes [#29640](https://github.com/ionic-team/ionic-framework/issues/29640)
+
+
+
+
+
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
 ## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
 
 **Note:** Version bump only for package @ionic/angular

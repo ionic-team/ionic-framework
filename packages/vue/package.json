@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "8.2.2",
+  "version": "8.2.7",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -62,11 +62,11 @@
     "rimraf": "^3.0.2",
     "rollup": "^4.2.0",
     "typescript": "^4.7.3",
-    "vue": "^3.2.37",
+    "vue": "3.2.47",
     "vue-router": "^4.0.16"
   },
   "dependencies": {
-    "@ionic/core": "^8.2.2",
+    "@ionic/core": "^8.2.7",
     "ionicons": "^7.0.0"
   },
   "vetur": {
