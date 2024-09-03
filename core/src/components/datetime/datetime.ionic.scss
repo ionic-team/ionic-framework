@@ -24,16 +24,17 @@
     globals.$ionic-space-400
   );
 
-  height: globals.$ionic-scale-1400;
-
-  border-bottom: globals.$ionic-border-style-solid globals.$ionic-border-size-025 globals.$ionic-color-neutral-300;
-
-  margin-bottom: globals.$ionic-space-200;
-
   display: flex;
+
   flex-direction: column;
   align-items: start;
   justify-content: space-between;
+
+  height: globals.$ionic-scale-1400;
+
+  margin-bottom: globals.$ionic-space-200;
+
+  border-bottom: globals.$ionic-border-style-solid globals.$ionic-border-size-025 globals.$ionic-color-neutral-300;
 }
 
 :host .datetime-header .datetime-title {
