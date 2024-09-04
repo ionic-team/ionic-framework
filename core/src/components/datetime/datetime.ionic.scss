@@ -173,3 +173,30 @@
 .calendar-day:active {
   background: globals.$ionic-color-primary-300;
 }
+
+// Time / Header
+// -----------------------------------
+:host .datetime-time {
+  @include globals.padding(globals.$ionic-space-100, globals.$ionic-space-400);
+
+  height: globals.$ionic-scale-800;
+}
+
+:host .datetime-time .time-header {
+  @include globals.typography(globals.$ionic-action-lg);
+
+  color: globals.$ionic-color-neutral-800;
+}
+
+:host .datetime-time button {
+  @include globals.padding(globals.$ionic-space-0, globals.$ionic-space-200);
+  @include globals.typography(globals.$ionic-body-md-medium);
+  @include globals.border-radius(globals.$ionic-border-radius-full);
+
+  display: flex;
+
+  align-items: center;
+
+  background-color: globals.$ionic-color-neutral-100;
+  color: globals.$ionic-color-neutral-1200;
+}
