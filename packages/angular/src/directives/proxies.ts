@@ -2153,8 +2153,9 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean }>>;
 }
 
+
 @ProxyCmp({
-  inputs: ['component', 'tab'],
+  inputs: ['component', 'mode', 'tab', 'theme'],
   methods: ['setActive']
 })
 @Component({
@@ -2162,7 +2163,7 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['component', 'tab'],
+  inputs: ['component', 'mode', 'tab', 'theme'],
 })
 export class IonTab {
   protected el: HTMLElement;
