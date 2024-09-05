@@ -26,7 +26,6 @@ const getAngularOutputTargets = () => {
 
     // tabs
     'ion-tabs',
-    'ion-tab',
 
     // auxiliar
     'ion-picker-legacy-column',
@@ -173,7 +172,6 @@ export const config: Config = {
         'ion-back-button',
         'ion-tab-button',
         'ion-tabs',
-        'ion-tab',
         'ion-tab-bar',
 
         // Overlays
