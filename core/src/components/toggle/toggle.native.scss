@@ -28,32 +28,6 @@
   overflow: hidden;
 }
 
-// Toggle Justify
-// --------------------------------------------------
-
-:host(.toggle-justify-space-between) .toggle-wrapper {
-  justify-content: space-between;
-}
-
-:host(.toggle-justify-start) .toggle-wrapper {
-  justify-content: start;
-}
-
-:host(.toggle-justify-end) .toggle-wrapper {
-  justify-content: end;
-}
-
-// Toggle Align
-// --------------------------------------------------
-
-:host(.toggle-alignment-start) .toggle-wrapper {
-  align-items: start;
-}
-
-:host(.toggle-alignment-center) .toggle-wrapper {
-  align-items: center;
-}
-
 // Input Label Placement - Fixed
 // ----------------------------------------------------------------
 

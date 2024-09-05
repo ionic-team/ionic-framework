@@ -21,6 +21,7 @@ interface InternalProps extends IonTabBarProps {
   forwardedRef?: React.ForwardedRef<HTMLIonIconElement>;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   routeInfo: RouteInfo;
+  routerOutletRef?: React.RefObject<HTMLIonRouterOutletElement> | undefined;
 }
 
 interface TabUrls {
@@ -182,7 +183,12 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
   ) {
     const tappedTab = this.state.tabs[e.detail.tab];
     const originalHref = tappedTab.originalHref;
-    const currentHref = e.detail.href;
+    /**
+     * If the router outlet is not defined, then the tabs is being used
+     * as a basic tab navigation without the router. In this case, we
+     * don't want to update the href else the URL will change.
+     */
+    const currentHref = this.props.routerOutletRef?.current ? e.detail.href : '';
     const { activeTab: prevActiveTab } = this.state;
 
     if (onClickFn) {

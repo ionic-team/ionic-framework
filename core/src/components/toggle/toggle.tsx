@@ -100,15 +100,17 @@ export class Toggle implements ComponentInterface {
    * on the left in RTL.
    * `"space-between"`: The label and toggle will appear on opposite
    * ends of the line with space between the two elements.
+   * Setting this property will change the toggle `display` to `block`.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify?: 'start' | 'end' | 'space-between';
 
   /**
    * How to control the alignment of the toggle and label on the cross axis.
    * `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
    * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+   * Setting this property will change the toggle `display` to `block`.
    */
-  @Prop() alignment: 'start' | 'center' = 'center';
+  @Prop() alignment?: 'start' | 'center';
 
   /**
    * Emitted when the user switches the toggle on or off.
@@ -363,8 +365,8 @@ export class Toggle implements ComponentInterface {
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
-          [`toggle-justify-${justify}`]: true,
-          [`toggle-alignment-${alignment}`]: true,
+          [`toggle-justify-${justify}`]: justify !== undefined,
+          [`toggle-alignment-${alignment}`]: alignment !== undefined,
           [`toggle-label-placement-${labelPlacement}`]: true,
           [`toggle-${rtl}`]: true,
           'ion-activatable': isIonicTheme,

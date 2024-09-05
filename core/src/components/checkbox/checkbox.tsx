@@ -88,15 +88,17 @@ export class Checkbox implements ComponentInterface {
    * on the left in RTL.
    * `"space-between"`: The label and checkbox will appear on opposite
    * ends of the line with space between the two elements.
+   * Setting this property will change the checkbox `display` to `block`.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify?: 'start' | 'end' | 'space-between';
 
   /**
    * How to control the alignment of the checkbox and label on the cross axis.
    * `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
    * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+   * Setting this property will change the checkbox `display` to `block`.
    */
-  @Prop() alignment: 'start' | 'center' = 'center';
+  @Prop() alignment?: 'start' | 'center';
 
   /**
    * Set to `"small"` for a checkbox with less height and padding.
@@ -210,8 +212,8 @@ export class Checkbox implements ComponentInterface {
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
-          [`checkbox-justify-${justify}`]: true,
-          [`checkbox-alignment-${alignment}`]: true,
+          [`checkbox-justify-${justify}`]: justify !== undefined,
+          [`checkbox-alignment-${alignment}`]: alignment !== undefined,
           [`checkbox-label-placement-${labelPlacement}`]: true,
           [`checkbox-size-${size}`]: size !== undefined,
           [`checkbox-shape-${shape}`]: true,
