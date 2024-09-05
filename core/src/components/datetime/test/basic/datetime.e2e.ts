@@ -122,7 +122,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(datetime).toHaveJSProperty('value', '2022-10-01T16:22:00');
     });
 
-    test('should display today\'s date and time when value is an empty string', async ({ page }) => {
+    test("should display today's date and time when value is an empty string", async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime locale="en-US" presentation="date-time" value=""></ion-datetime>
