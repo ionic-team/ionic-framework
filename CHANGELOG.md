@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.8](https://github.com/ionic-team/ionic-framework/compare/v8.2.7...v8.2.8) (2024-09-05)
+
+
+### Bug Fixes
+
+* **range:** emit correct value when knob is at start of bar ([#29820](https://github.com/ionic-team/ionic-framework/issues/29820)) ([6a3d7c7](https://github.com/ionic-team/ionic-framework/commit/6a3d7c7247f74e21a8377676daf228822f879b26)), closes [#29792](https://github.com/ionic-team/ionic-framework/issues/29792)
+* **react:** intellisense works with IntelliJ ([#29782](https://github.com/ionic-team/ionic-framework/issues/29782)) ([bacded5](https://github.com/ionic-team/ionic-framework/commit/bacded500b826df98d3ca5322c87f50f643c4692)), closes [#29755](https://github.com/ionic-team/ionic-framework/issues/29755)
+* **test:** fix Stencil Nightly build ([#29780](https://github.com/ionic-team/ionic-framework/issues/29780)) ([bf7f6f6](https://github.com/ionic-team/ionic-framework/commit/bf7f6f6acf63ac4d7d536c8a297ff14f704b13c7)), closes [#5926](https://github.com/ionic-team/ionic-framework/issues/5926)
+
+
+
+
+
 ## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
 
 
