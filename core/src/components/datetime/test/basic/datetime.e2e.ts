@@ -121,6 +121,38 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(datetime).toHaveJSProperty('value', '2022-10-01T16:22:00');
     });
+
+    test("should display today's date and time when value is an empty string", async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime locale="en-US" presentation="date-time" value=""></ion-datetime>
+
+        <script>
+          const mockToday = '2024-07-24T16:22';
+          Date = class extends Date {
+            constructor(...args) {
+              if (args.length === 0) {
+                super(mockToday)
+              } else {
+                super(...args);
+              }
+            }
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      // July 24, 2024
+      const todayButton = page.locator('.calendar-day[data-day="24"][data-month="7"][data-year="2024"]');
+      await expect(todayButton).toHaveClass(/calendar-day-today/);
+
+      // 4:22 PM
+      const timeBody = page.locator('ion-datetime .time-body');
+      await expect(timeBody).toHaveText('4:22 PM');
+    });
   });
 });
 
