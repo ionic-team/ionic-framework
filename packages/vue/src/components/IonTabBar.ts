@@ -7,6 +7,7 @@ import { h, defineComponent, getCurrentInstance, inject } from "vue";
 interface TabState {
   activeTab?: string;
   tabs: { [k: string]: Tab };
+  hasRouterOutlet?: boolean;
 }
 
 interface Tab {
@@ -37,6 +38,7 @@ export const IonTabBar = defineComponent({
     /* eslint-disable @typescript-eslint/no-empty-function */
     _tabsWillChange: { type: Function, default: () => {} },
     _tabsDidChange: { type: Function, default: () => {} },
+    _hasRouterOutlet: { type: Boolean, default: false },
     /* eslint-enable @typescript-eslint/no-empty-function */
   },
   data() {
@@ -53,6 +55,7 @@ export const IonTabBar = defineComponent({
   },
   methods: {
     setupTabState(ionRouter: any) {
+      const hasRouterOutlet = this.$props._hasRouterOutlet;
       /**
        * For each tab, we need to keep track of its
        * base href as well as any child page that
@@ -74,24 +77,73 @@ export const IonTabBar = defineComponent({
 
         /**
          * Passing this prop to each tab button
+         * lets it be aware of the presence of
+         * the router outlet.
+         */
+        tabState.hasRouterOutlet = hasRouterOutlet;
+
+        /**
+         * Passing this prop to each tab button
          * lets it be aware of the state that
          * ion-tab-bar is managing for it.
          */
         child.component.props._getTabState = () => tabState;
+
+        /**
+         * If the router outlet is not defined, then the tabs are being used
+         * as a basic tab navigation without the router. In this case, the
+         * tabs will not emit the `ionTabsDidChange` and `ionTabsWillChange`
+         * events through the `checkActiveTab` method. Instead, we need to
+         * handle those events through the tab buttons.
+         */
+        if (!hasRouterOutlet) {
+          child.component.props._onClick = (
+            event: CustomEvent<{
+              href: string;
+              selected: boolean;
+              tab: string;
+            }>
+          ) => {
+            this.handleIonTabButtonClick(event);
+          };
+        }
       });
 
       this.checkActiveTab(ionRouter);
     },
+    /**
+     * This method is called upon setup and when the
+     * history changes. It checks the current route
+     * and updates the active tab accordingly.
+     *
+     * History changes only occur when the router
+     * outlet is present. Due to this, the
+     * `ionTabsDidChange` and `ionTabsWillChange`
+     * events are only emitted when the router
+     * outlet is present. A different approach must
+     * be taken for tabs without a router outlet.
+     *
+     * @param ionRouter
+     */
     checkActiveTab(ionRouter: any) {
+      const hasRouterOutlet = this.$props._hasRouterOutlet;
       const currentRoute = ionRouter.getCurrentRouteInfo();
       const childNodes = this.$data.tabVnodes;
       const { tabs, activeTab: prevActiveTab } = this.$data.tabState;
-      const tabState = this.$data.tabState;
       const tabKeys = Object.keys(tabs);
-      const activeTab = tabKeys.find((key) => {
+      let activeTab = tabKeys.find((key) => {
         const href = tabs[key].originalHref;
         return currentRoute.pathname.startsWith(href);
       });
+
+      /**
+       * Tabs is being used as a basic tab navigation,
+       * so we need to set the first tab as active since
+       * `checkActiveTab` will not be called after setup.
+       */
+      if (!activeTab && !hasRouterOutlet) {
+        activeTab = tabKeys[0];
+      }
 
       /**
        * For each tab, check to see if the
@@ -147,6 +199,24 @@ export const IonTabBar = defineComponent({
         }
       }
 
+      this.tabSwitch(activeTab, ionRouter);
+    },
+    handleIonTabButtonClick(
+      event: CustomEvent<{
+        href: string;
+        selected: boolean;
+        tab: string;
+      }>
+    ) {
+      const activeTab = event.detail.tab;
+
+      this.tabSwitch(activeTab);
+    },
+    tabSwitch(activeTab: string, ionRouter?: any) {
+      const hasRouterOutlet = this.$props._hasRouterOutlet;
+      const childNodes = this.$data.tabVnodes;
+      const { activeTab: prevActiveTab } = this.$data.tabState;
+      const tabState = this.$data.tabState;
       const activeChild = childNodes.find(
         (child: VNode) => isTabButton(child) && child.props?.tab === activeTab
       );
@@ -156,17 +226,20 @@ export const IonTabBar = defineComponent({
         if (activeChild) {
           tabDidChange && this.$props._tabsWillChange(activeTab);
 
-          ionRouter.handleSetCurrentTab(activeTab);
+          if (hasRouterOutlet && ionRouter) {
+            ionRouter.handleSetCurrentTab(activeTab);
+          }
+
           tabBar.selectedTab = tabState.activeTab = activeTab;
 
           tabDidChange && this.$props._tabsDidChange(activeTab);
+        } else {
           /**
            * When going to a tab that does
            * not have an associated ion-tab-button
            * we need to remove the selected state from
            * the old tab.
            */
-        } else {
           tabBar.selectedTab = tabState.activeTab = "";
         }
       }

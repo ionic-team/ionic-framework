@@ -44,6 +44,9 @@
         <ion-item router-link="/tabs-secondary" id="tab-secondary">
           <ion-label>Tabs Secondary</ion-label>
         </ion-item>
+        <ion-item router-link="/tabs-basic" id="tab-basic">
+          <ion-label>Tabs with Basic Navigation</ion-label>
+        </ion-item>
         <ion-item router-link="/lifecycle" id="lifecycle">
           <ion-label>Lifecycle</ion-label>
         </ion-item>

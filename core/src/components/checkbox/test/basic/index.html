@@ -15,7 +15,6 @@
   </head>
   <style>
     ion-checkbox {
-      display: block;
       margin-bottom: 8px;
     }
 
@@ -31,6 +30,9 @@
     /* The ionic theme sets the width of the svg not stroke-width */
     .checkmark-width.ionic {
       --checkmark-width: 22px;
+    }
+    hr {
+      background: #ddd;
     }
   </style>
   <body>
@@ -54,6 +56,19 @@
           <ion-checkbox justify="start" checked class="checkbox-part">Checkmark Shadow Part</ion-checkbox>
           <ion-checkbox justify="start" checked style="--size: 100px">--size</ion-checkbox>
         </div>
+        <ion-checkbox>Unchecked</ion-checkbox><br />
+        <ion-checkbox checked>Checked</ion-checkbox><br />
+        <ion-checkbox disabled>Disabled</ion-checkbox><br />
+        <ion-checkbox disabled checked>Disabled, Checked</ion-checkbox><br />
+        <ion-checkbox checked style="--checkmark-width: 7">Checkmark Width</ion-checkbox><br />
+        <ion-checkbox checked class="checkbox-part">Checkmark Shadow Part</ion-checkbox><br />
+        <ion-checkbox checked style="--size: 100px">--size</ion-checkbox><br />
+
+        <hr />
+
+        <ion-checkbox checked>Default width</ion-checkbox><br />
+        <ion-checkbox checked style="width: 200px">Specified width</ion-checkbox><br />
+        <ion-checkbox checked style="width: 100%">Full-width</ion-checkbox><br />
       </ion-content>
     </ion-app>
   </body>
