@@ -451,7 +451,7 @@ export class Range implements ComponentInterface {
    */
   private onEnd(detail: GestureDetail | MouseEvent) {
     const { contentEl, initialContentScrollY } = this;
-    const currentX = (detail as GestureDetail).currentX || (detail as MouseEvent).clientX;
+    const currentX = (detail as GestureDetail).currentX ?? (detail as MouseEvent).clientX;
 
     /**
      * The `pressedKnob` can be undefined if the user never

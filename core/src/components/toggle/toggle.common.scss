@@ -82,6 +82,9 @@ input {
 
   flex-grow: 1;
 
+  align-items: center;
+  justify-content: space-between;
+
   height: inherit;
 
   transition: background-color 15ms linear;
@@ -108,6 +111,46 @@ input {
   display: flex;
 
   align-items: center;
+}
+
+// Toggle Justify
+// --------------------------------------------------
+
+:host(.toggle-justify-space-between) .toggle-wrapper {
+  justify-content: space-between;
+}
+
+:host(.toggle-justify-start) .toggle-wrapper {
+  justify-content: start;
+}
+
+:host(.toggle-justify-end) .toggle-wrapper {
+  justify-content: end;
+}
+
+// Toggle Align
+// --------------------------------------------------
+
+:host(.toggle-alignment-start) .toggle-wrapper {
+  align-items: start;
+}
+
+:host(.toggle-alignment-center) .toggle-wrapper {
+  align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The toggle should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.toggle-justify-space-between),
+:host(.toggle-justify-start),
+:host(.toggle-justify-end),
+:host(.toggle-alignment-start),
+:host(.toggle-alignment-center) {
+  display: block;
 }
 
 // Toggle Label Placement - Start

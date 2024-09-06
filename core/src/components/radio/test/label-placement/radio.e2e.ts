@@ -2,22 +2,56 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * By default ion-radio only takes up
- * as much space as it needs. Justification is
- * used for when the radio takes up the full
- * line (such as in an ion-item). As a result,
- * we set the width of the radio so we can
- * see the justification results.
+ * By default ion-radio only takes up as much space
+ * as it needs. Justification is used for when the
+ * radio should take up the full line (such as in an
+ * ion-item or when it has 100% width).
  */
 
 configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: label'), () => {
+    test.describe('radio: default placement', () => {
+      test('should render a space between justification with a full width radio', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-radio-group value="1">
+            <ion-radio value="1" style="width: 100%">
+              Label
+            </ion-radio>
+           </ion-radio-group>
+         `,
+          config
+        );
+
+        const radio = page.locator('ion-radio');
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-full-width`));
+      });
+
+      test('should truncate long labels with ellipses', async ({ page }) => {
+        // radio needs to be full width to truncate properly
+        // because it is not inside of an `ion-app` in tests
+        await page.setContent(
+          `
+          <ion-radio-group value="1">
+            <ion-radio value="1" style="width: 100%">
+              Long Label Long Label Long Label Long Label Long Label Long Label
+            </ion-radio>
+           </ion-radio-group>
+         `,
+          config
+        );
+
+        const radio = page.locator('ion-radio');
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-long-label`));
+      });
+    });
+
     test.describe('radio: start placement', () => {
       test('should render a start justification with label in the start position', async ({ page }) => {
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="start" justify="start" style="width: 200px" value="1">Label</ion-radio>
+             <ion-radio label-placement="start" justify="start" value="1">Label</ion-radio>
            </ion-radio-group>
            `,
           config
@@ -30,7 +64,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="start" justify="end" style="width: 200px" value="1">Label</ion-radio>
+             <ion-radio label-placement="start" justify="end" value="1">Label</ion-radio>
            </ion-radio-group>
          `,
           config
@@ -43,7 +77,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="start" justify="space-between" style="width: 200px" value="1">Label</ion-radio>
+             <ion-radio label-placement="start" justify="space-between" value="1">Label</ion-radio>
            </ion-radio-group>
          `,
           config
@@ -52,6 +86,22 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         const radio = page.locator('ion-radio');
         await expect(radio).toHaveScreenshot(screenshot(`radio-label-start-justify-space-between`));
       });
+
+      test('should truncate long labels with ellipses', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-radio-group value="1">
+            <ion-radio value="1" label-placement="start" justify="start">
+              Long Label Long Label Long Label Long Label Long Label Long Label
+            </ion-radio>
+           </ion-radio-group>
+         `,
+          config
+        );
+
+        const radio = page.locator('ion-radio');
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-start-justify-start-long-label`));
+      });
     });
 
     test.describe('radio: end placement', () => {
@@ -59,7 +109,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="end" justify="start" style="width: 200px" value="1">Label</ion-radio>
+             <ion-radio label-placement="end" justify="start" value="1">Label</ion-radio>
            </ion-radio-group>
          `,
           config
@@ -72,7 +122,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="end" justify="end" style="width: 200px" value="1">Label</ion-radio>
+             <ion-radio label-placement="end" justify="end" value="1">Label</ion-radio>
            </ion-radio-group>
          `,
           config
@@ -85,7 +135,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="end" justify="space-between" style="width: 200px" value="1">Label</ion-radio>
+             <ion-radio label-placement="end" justify="space-between" value="1">Label</ion-radio>
            </ion-radio-group>
          `,
           config
@@ -101,7 +151,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="fixed" justify="start" style="width: 200px" value="1">This is a long label</ion-radio>
+             <ion-radio label-placement="fixed" justify="start" value="1">This is a long label</ion-radio>
            </ion-radio-group>
          `,
           config
@@ -114,7 +164,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="fixed" justify="end" style="width: 200px" value="1">This is a long label</ion-radio>
+             <ion-radio label-placement="fixed" justify="end" value="1">This is a long label</ion-radio>
            </ion-radio-group>
          `,
           config
@@ -127,7 +177,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
            <ion-radio-group value="1">
-             <ion-radio label-placement="fixed" justify="space-between" style="width: 200px" value="1">This is a long label</ion-radio>
+             <ion-radio label-placement="fixed" justify="space-between" value="1">This is a long label</ion-radio>
            </ion-radio-group>
          `,
           config
@@ -142,7 +192,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
             <ion-radio-group value="1">
-              <ion-radio label-placement="stacked" alignment="start" style="width: 200px" value="1">This is a long label</ion-radio>
+              <ion-radio label-placement="stacked" alignment="start" value="1">This is a long label</ion-radio>
             </ion-radio-group>
           `,
           config
@@ -156,7 +206,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, conf
         await page.setContent(
           `
             <ion-radio-group value="1">
-              <ion-radio label-placement="stacked" alignment="center" style="width: 200px" value="1">This is a long label</ion-radio>
+              <ion-radio label-placement="stacked" alignment="center" value="1">This is a long label</ion-radio>
             </ion-radio-group>
           `,
           config
@@ -174,29 +224,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screen
     test('long label should truncate', async ({ page }) => {
       await page.setContent(
         `
-          <ion-radio label-placement="stacked" alignment="start" style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-radio>
+          <ion-radio label-placement="stacked" alignment="start">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-radio>
         `,
         config
       );
 
       const radio = page.locator('ion-radio');
       await expect(radio).toHaveScreenshot(screenshot(`radio-label-stacked-long-label`));
-    });
-  });
-});
-
-configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
-  test.describe(title('radio: long label'), () => {
-    test('long label should wrap', async ({ page }) => {
-      await page.setContent(
-        `
-          <ion-radio style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-radio>
-        `,
-        config
-      );
-
-      const radio = page.locator('ion-radio');
-      await expect(radio).toHaveScreenshot(screenshot(`radio-label-long-label`));
     });
   });
 });

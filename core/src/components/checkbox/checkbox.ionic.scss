@@ -161,6 +161,9 @@ input {
   opacity: 0;
 }
 
+// TODO move all justify and alignment styles to the common file
+// when it is created
+
 // Justify Content
 // ---------------------------------------------
 
@@ -185,6 +188,20 @@ input {
 
 :host(.checkbox-alignment-center) .checkbox-wrapper {
   align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The checkbox should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.checkbox-justify-space-between),
+:host(.checkbox-justify-start),
+:host(.checkbox-justify-end),
+:host(.checkbox-alignment-start),
+:host(.checkbox-alignment-center) {
+  display: block;
 }
 
 // Label Placement - Start
