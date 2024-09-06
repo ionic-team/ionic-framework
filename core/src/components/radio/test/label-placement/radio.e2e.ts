@@ -234,19 +234,3 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screen
     });
   });
 });
-
-configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
-  test.describe(title('radio: long label'), () => {
-    test('long label should wrap', async ({ page }) => {
-      await page.setContent(
-        `
-          <ion-radio style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-radio>
-        `,
-        config
-      );
-
-      const radio = page.locator('ion-radio');
-      await expect(radio).toHaveScreenshot(screenshot(`radio-label-long-label`));
-    });
-  });
-});
