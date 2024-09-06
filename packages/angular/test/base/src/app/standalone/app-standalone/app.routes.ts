@@ -28,6 +28,7 @@ export const routes: Routes = [
           { path: 'tab-three', loadComponent: () => import('../tabs/tab3.component').then(c => c.TabThreeComponent) }
         ]
       },
+      { path: 'tabs-basic', loadComponent: () => import('../tabs-basic/tabs-basic.component').then(c => c.TabsBasicComponent) },
       {
         path: 'value-accessors',
         children: [

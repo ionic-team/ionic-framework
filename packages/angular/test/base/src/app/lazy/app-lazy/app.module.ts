@@ -27,6 +27,7 @@ import { NavigationPage3Component } from '../navigation-page3/navigation-page3.c
 import { AlertComponent } from '../alert/alert.component';
 import { AccordionComponent } from '../accordion/accordion.component';
 import { AccordionModalComponent } from '../accordion/accordion-modal/accordion-modal.component';
+import { TabsBasicComponent } from '../tabs-basic/tabs-basic.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { AccordionModalComponent } from '../accordion/accordion-modal/accordion-
     NavigationPage3Component,
     AlertComponent,
     AccordionComponent,
-    AccordionModalComponent
+    AccordionModalComponent,
+    TabsBasicComponent
   ],
   imports: [
     CommonModule,
