@@ -87,7 +87,8 @@
   overflow: hidden;
 }
 
-:host(.in-item) .label-text-wrapper {
+:host(.in-item) .label-text-wrapper,
+:host(.in-item:not(.checkbox-label-placement-stacked)) .native-wrapper {
   @include margin($checkbox-item-label-margin-top, null, $checkbox-item-label-margin-bottom, null);
 }
 
