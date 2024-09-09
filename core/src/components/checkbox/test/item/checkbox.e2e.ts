@@ -69,7 +69,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`checkbox-long-label-in-item`));
     });
-    test('should render margins correctly when using long label in item with start alignment', async ({ page }) => {
+    test('should render margins correctly when using long label in item with start alignment', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/29837',
+      });
       await page.setContent(
         `
           <ion-list>
