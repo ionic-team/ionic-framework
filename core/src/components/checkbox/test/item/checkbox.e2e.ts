@@ -69,6 +69,22 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`checkbox-long-label-in-item`));
     });
+    test('should render margins correctly when using long label in item with start alignment', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-item>
+              <ion-checkbox justify="start" alignment="start">
+                <ion-label class="ion-text-wrap">Enable Notifications Enable Notifications Enable Notifications</ion-label>
+              </ion-checkbox>
+            </ion-item>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`checkbox-long-label-in-item-align-start`));
+    });
   });
 
   test.describe(title('checkbox: stacked label in item'), () => {
