@@ -2098,6 +2098,10 @@ export namespace Components {
          */
         "setCurrentBreakpoint": (breakpoint: number) => Promise<void>;
         /**
+          * Set to `"soft"` for a modal with slightly rounded corners, `"round"` for a modal with fully rounded corners, or `"rectangular"` for a modal without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
@@ -7431,6 +7435,10 @@ declare namespace LocalJSX {
           * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.
          */
         "presentingElement"?: HTMLElement;
+        /**
+          * Set to `"soft"` for a modal with slightly rounded corners, `"round"` for a modal with fully rounded corners, or `"rectangular"` for a modal without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */

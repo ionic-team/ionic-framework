@@ -62,7 +62,7 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
   styleUrls: {
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
-    ionic: 'modal.md.scss',
+    ionic: 'modal.ionic.scss',
   },
   shadow: true,
 })
@@ -290,6 +290,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * if you need to access `this` from within the callback.
    */
   @Prop() canDismiss: boolean | ((data?: any, role?: string) => Promise<boolean>) = true;
+
+  /**
+   * Set to `"soft"` for a modal with slightly rounded corners,
+   * `"round"` for a modal with fully rounded corners, or `"rectangular"`
+   * for a modal without rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * Emitted after the modal has presented.
@@ -888,6 +897,22 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return true;
   }
 
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11167): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   private onHandleClick = () => {
     const { sheetTransition, handleBehavior } = this;
     if (handleBehavior !== 'cycle' || sheetTransition !== undefined) {
@@ -936,6 +961,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const theme = getIonTheme(this);
     const isCardModal = presentingElement !== undefined && theme === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';
+    const shape = this.getShape();
 
     return (
       <Host
@@ -950,6 +976,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           ['modal-default']: !isCardModal && !isSheetModal,
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
+          [`modal-${shape}`]: shape !== undefined,
           'overlay-hidden': true,
           [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
           ...getClassMap(this.cssClass),
