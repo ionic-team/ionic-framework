@@ -87,10 +87,7 @@
   overflow: hidden;
 }
 
-// Checkboxes that are not slotted inside an item and are not used with a
-// stacked label should have margins equal to those of the label.
-:host(.in-item) .label-text-wrapper,
-:host(.in-item:not(.checkbox-label-placement-stacked):not([slot])) .native-wrapper {
+:host(.in-item) .label-text-wrapper {
   @include margin($checkbox-item-label-margin-top, null, $checkbox-item-label-margin-bottom, null);
 }
 
