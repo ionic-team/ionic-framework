@@ -1,3 +1,4 @@
+import { config } from '@global/config';
 import { Build, writeTask } from '@stencil/core';
 
 import {
@@ -8,10 +9,12 @@ import {
 } from '../../components/nav/constants';
 import type { NavOptions, NavDirection } from '../../components/nav/nav-interface';
 import type { Animation, AnimationBuilder } from '../animation/animation-interface';
+import { createFocusController } from '../focus-controller';
 import { raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
+const focusController = createFocusController();
 
 // TODO(FW-2832): types
 
@@ -39,6 +42,8 @@ export const transition = (opts: TransitionOptions): Promise<TransitionResult> =
 const beforeTransition = (opts: TransitionOptions) => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
+
+  focusController.saveViewFocus(leavingEl);
 
   setZIndex(enteringEl, leavingEl, opts.direction);
 
@@ -80,6 +85,8 @@ const afterTransition = (opts: TransitionOptions) => {
     leavingEl.classList.remove('ion-page-invisible');
     leavingEl.style.removeProperty('pointer-events');
   }
+
+  focusController.setViewFocus(enteringEl);
 };
 
 const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBuilder | undefined> => {
@@ -125,8 +132,13 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
 const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> => {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
+  const focusManagerEnabled = config.get('focusManagerPriority', false);
 
-  await waitForReady(opts, false);
+  /**
+   * If the focus manager is enabled then we need to wait for Ionic components to be
+   * rendered otherwise the component to focus may not be focused because it is hidden.
+   */
+  await waitForReady(opts, focusManagerEnabled);
 
   fireWillEvents(enteringEl, leavingEl);
   fireDidEvents(enteringEl, leavingEl);

@@ -43,7 +43,17 @@ export class Tabs implements NavOutlet {
 
   async componentWillLoad() {
     if (!this.useRouter) {
-      this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
+      /**
+       * JavaScript and StencilJS use `ion-router`, while
+       * the other frameworks use `ion-router-outlet`.
+       *
+       * If either component is present then tabs will not use
+       * a basic tab-based navigation. It will use the history
+       * stack or URL updates associated with the router.
+       */
+      this.useRouter =
+        (!!this.el.querySelector('ion-router-outlet') || !!document.querySelector('ion-router')) &&
+        !this.el.closest('[no-router]');
     }
     if (!this.useRouter) {
       const tabs = this.tabs;

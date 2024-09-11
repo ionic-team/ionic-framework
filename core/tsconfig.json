@@ -15,7 +15,8 @@
       "dom.iterable",
       "es2017",
       "es2020",
-      "es2021"
+      "es2021",
+      "esnext"
     ],
     "module": "esnext",
     "moduleResolution": "node",
@@ -30,7 +31,8 @@
     "baseUrl": ".",
     "paths": {
       "@utils/*": ["src/utils/*"],
-      "@utils/test": ["src/utils/test/utils"]
+      "@utils/test": ["src/utils/test/utils"],
+      "@global/*": ["src/global/*"]
     }
   },
   "include": [

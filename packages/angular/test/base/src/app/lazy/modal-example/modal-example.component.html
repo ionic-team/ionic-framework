@@ -11,7 +11,7 @@
 <ion-content class="ion-padding">
   <h1>Value</h1>
   <h2>{{value}}</h2>
-  <h3>{{valueFromParams}}</h3>
+  <h3>{{prop}}</h3>
   <p>modal is defined: <span id="modalInstance">{{ !!modal }}</span></p>
   <p>ngOnInit: <span id="ngOnInit">{{onInit}}</span></p>
   <p>ionViewWillEnter: <span id="ionViewWillEnter">{{willEnter}}</span></p>
@@ -25,8 +25,8 @@
 
   <form [formGroup]="form">
     <ion-item id="inputWithFloatingLabel">
-      <ion-label color="primary" position="floating">Floating Label</ion-label>
-      <ion-select multiple="false" formControlName="select">
+      <ion-select label-placement="floating" multiple="false" formControlName="select">
+        <ion-label slot="label" color="Primary">Floating Label</ion-label>
         <ion-select-option [value]="0">Option 0</ion-select-option>
         <ion-select-option [value]="1">Option 1</ion-select-option>
       </ion-select>

@@ -228,7 +228,7 @@ describe('Routing Tests', () => {
   });
 
   it('/ > Details 1 on settings > Back > Settings Tab, should be on setting home', () => {
-    // For bug https://github.com/ionic-team/ionic/issues/21031
+    // For bug https://github.com/ionic-team/ionic-framework/issues/21031
     cy.visit(`http://localhost:${port}/routing/`);
     cy.ionNav('ion-item', 'Details 1 on settings');
     cy.ionPageVisible('settings-details-page-1');

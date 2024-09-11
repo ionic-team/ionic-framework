@@ -17,43 +17,46 @@
       </ion-header>
 
       <ion-list>
-        <ion-item button router-link="/overlays">
+        <ion-item router-link="/overlays">
           <ion-label>Overlays</ion-label>
         </ion-item>
-        <ion-item button router-link="/icons">
+        <ion-item router-link="/icons">
           <ion-label>Icons</ion-label>
         </ion-item>
-        <ion-item button router-link="/inputs">
+        <ion-item router-link="/inputs">
           <ion-label>Inputs</ion-label>
         </ion-item>
-        <ion-item button router-link="/navigation" id="navigation">
+        <ion-item router-link="/navigation" id="navigation">
           <ion-label>Navigation</ion-label>
         </ion-item>
-        <ion-item button router-link="/routing" id="routing">
+        <ion-item router-link="/routing" id="routing">
           <ion-label>Routing</ion-label>
         </ion-item>
-        <ion-item button router-link="/default-href" id="default-href">
+        <ion-item router-link="/default-href" id="default-href">
           <ion-label>Default Href</ion-label>
         </ion-item>
-        <ion-item button router-link="/nested" id="nested">
+        <ion-item router-link="/nested" id="nested">
           <ion-label>Nested Router Outlet</ion-label>
         </ion-item>
-        <ion-item button router-link="/tabs" id="tabs">
+        <ion-item router-link="/tabs" id="tabs">
           <ion-label>Tabs</ion-label>
         </ion-item>
-        <ion-item button router-link="/tabs-secondary" id="tab-secondary">
+        <ion-item router-link="/tabs-secondary" id="tab-secondary">
           <ion-label>Tabs Secondary</ion-label>
         </ion-item>
-        <ion-item button router-link="/lifecycle" id="lifecycle">
+        <ion-item router-link="/tabs-basic" id="tab-basic">
+          <ion-label>Tabs with Basic Navigation</ion-label>
+        </ion-item>
+        <ion-item router-link="/lifecycle" id="lifecycle">
           <ion-label>Lifecycle</ion-label>
         </ion-item>
-        <ion-item button router-link="/lifecycle-setup" id="lifecycle-setup">
+        <ion-item router-link="/lifecycle-setup" id="lifecycle-setup">
           <ion-label>Lifecycle (Setup)</ion-label>
         </ion-item>
-        <ion-item button router-link="/delayed-redirect" id="delayed-redirect">
+        <ion-item router-link="/delayed-redirect" id="delayed-redirect">
           <ion-label>Delayed Redirect</ion-label>
         </ion-item>
-        <ion-item button router-link="/components">
+        <ion-item router-link="/components">
           <ion-label>Components</ion-label>
         </ion-item>
       </ion-list>

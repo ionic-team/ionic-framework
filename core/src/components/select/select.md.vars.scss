@@ -4,22 +4,10 @@
 // Material Design Select
 // --------------------------------------------------
 
-/// @prop - Padding top of the select
-$select-md-padding-top:         $item-md-padding-top !default;
-
-/// @prop - Padding end of the select
-$select-md-padding-end:         0 !default;
-
-/// @prop - Padding bottom of the select
-$select-md-padding-bottom:      $select-md-padding-top !default;
-
-/// @prop - Padding start of the select
-$select-md-padding-start:       $item-md-padding-start !default;
-
 /// @prop - Size of the select icon
-$select-md-icon-size:           dynamic-font(13px) !default;
+$select-md-icon-size:           dynamic-font(13px);
 /// @prop - The amount of whitespace to display on either side of the floating label
-$select-md-floating-label-padding:         4px !default;
+$select-md-floating-label-padding:         4px;
 
 /// @prop - Opacity of the disabled select
-$select-md-disabled-opacity: $form-control-md-disabled-opacity !default;
+$select-md-disabled-opacity: $form-control-md-disabled-opacity;

@@ -52,7 +52,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await ionModalDidPresent.next();
 
-      const input = page.locator('#root-input input').first();
+      const input = page.locator('#root-input').first();
       await input.click();
       await expect(input).toBeFocused();
     });
@@ -265,7 +265,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const backdrop = page.locator('ion-modal ion-backdrop');
 
       await handle.click();
-      backdrop.click();
+      await backdrop.click();
 
       await ionBreakpointDidChange.next();
 

@@ -1,7 +1,7 @@
 const port = 3000;
 /*
 This spec covers that routes can be added and navigated to at runtime.
-Fixes bug reported in https://github.com/ionic-team/ionic/issues/21329
+Fixes bug reported in https://github.com/ionic-team/ionic-framework/issues/21329
 */
 
 describe('Dynamic Routes', () => {

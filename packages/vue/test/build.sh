@@ -22,6 +22,12 @@ FULL_BASE_DIR="${BASE_DIR}/."
 # The full path to the built application.
 BUILD_APP_DIR="${BUILD_DIR}/${APP_DIR}/"
 
+# Make sure the full app directory exists.
+if [ ! -d $FULL_APP_DIR ]; then
+  echo "Could not find test app: ${FULL_APP_DIR}"
+  exit 1
+fi
+
 # Make the build directory if it does not already exist.
 mkdir -p $BUILD_DIR
 

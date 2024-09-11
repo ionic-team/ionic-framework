@@ -30,28 +30,23 @@
       </ion-header>
 
       <ion-item>
-        <ion-label>Checkbox</ion-label>
-        <ion-checkbox slot="start" v-model="checkbox"></ion-checkbox>
+        <ion-checkbox v-model="checkbox">Checkbox</ion-checkbox>
       </ion-item>
 
       <ion-item>
-        <ion-label>Toggle</ion-label>
-        <ion-toggle slot="end" v-model="toggle"></ion-toggle>
+        <ion-toggle v-model="toggle">Toggle</ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label>Input</ion-label>
-        <ion-input slot="end" v-model="input"></ion-input>
+        <ion-input v-model="input" label="Input"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label>Range</ion-label>
-        <ion-range :dual-knobs="true" :min="0" :max="100" slot="end" v-model="range"></ion-range>
+        <ion-range label="Range" :dual-knobs="true" :min="0" :max="100" slot="end" v-model="range"></ion-range>
       </ion-item>
 
       <ion-item>
-        <ion-label>Textarea</ion-label>
-        <ion-textarea slot="end" v-model="textarea"></ion-textarea>
+        <ion-textarea label="Textarea" v-model="textarea"></ion-textarea>
       </ion-item>
 
       <ion-item>
@@ -61,22 +56,18 @@
 
       <ion-radio-group v-model="radio">
         <ion-item>
-          <ion-label>Red</ion-label>
-          <ion-radio value="red"></ion-radio>
+          <ion-radio value="red">Red</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Green</ion-label>
-          <ion-radio value="green"></ion-radio>
+          <ion-radio value="green">Green</ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Blue</ion-label>
-          <ion-radio value="blue"></ion-radio>
+          <ion-radio value="blue">Blue</ion-radio>
         </ion-item>
       </ion-radio-group>
 
       <ion-item>
-        <ion-label>Select</ion-label>
-        <ion-select v-model="select">
+        <ion-select v-model="select" label="Select">
           <ion-select-option value="apples">Apples</ion-select-option>
           <ion-select-option value="bananas">Bananas</ion-select-option>
         </ion-select>

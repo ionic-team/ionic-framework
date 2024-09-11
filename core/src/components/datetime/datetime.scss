@@ -11,6 +11,8 @@
    *
    * @prop --wheel-highlight-background: The background of the highlight under the selected
    * item when using a wheel style layout, or in the month/year picker for grid style layouts.
+   * @prop --wheel-highlight-border-radius: The border radius of the highlight under the selected
+   * item when using a wheel style layout, or in the month/year picker for grid style layouts.
    * @prop --wheel-fade-background-rgb: The color of the gradient covering non-selected items
    * when using a wheel style layout, or in the month/year picker for grid style layouts. Must
    * be in RGB format, e.g. `255, 255, 255`.
@@ -25,19 +27,6 @@
   overflow: hidden;
 }
 
-/**
- * When using the wheel picker to switch
- * between months, sometimes the allowed
- * dates may be filtered. As a result, it
- * is possible to get a layout shift as
- * the picker column will shrink to fit the
- * widest item in the column. Setting a minimum
- * width avoids this layout shifting.
- */
-ion-picker-column-internal {
-  min-width: 26px;
-}
-
 :host(.datetime-size-fixed) {
   width: auto;
   height: auto;
@@ -48,7 +37,7 @@ ion-picker-column-internal {
 }
 
 /**
- * This ensures that the picker is apppropriately
+ * This ensures that the picker is appropriately
  * sized and never truncates the text.
  */
 :host(.datetime-size-fixed.datetime-prefer-wheel) {
@@ -131,54 +120,11 @@ ion-picker-column-internal {
   display: flex;
 }
 
-/**
- * Safari 14 has an issue where a scroll event
- * is incorrectly fired when unhiding the calendar content.
- * To workaround this, we set the opacity
- * of the content to 0 and hide it offscreen.
- *
- * -webkit-named-image is something only WebKit supports
- * so we use this to detect general WebKit support.
- * aspect-ratio is only supported in Safari 15+
- * so by checking lack of aspect-ratio support, we know
- * that we are in a pre-Safari 15 browser.
- *
- * TODO(FW-554): Remove when iOS 14 support is dropped.
- */
-@supports (background: -webkit-named-image(apple-pay-logo-black)) and (not (aspect-ratio: 1/1)) {
-  :host(.show-month-and-year) .calendar-next-prev,
-  :host(.show-month-and-year) .calendar-days-of-week,
-  :host(.show-month-and-year) .calendar-body,
-  :host(.show-month-and-year) .datetime-time {
-    @include position(null, null, null, -99999px);
-
-    position: absolute;
-
-    /**
-     * Use visibility instead of
-     * opacity to ensure element
-     * cannot receive focus
-     */
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-
-/**
- * This support check two cases:
- * 1. A WebKit browser that supports aspect-ratio (Safari 15+)
- * 2. Any non-WebKit browser.
- * Note that just overriding this display: none is not
- * sufficient to resolve the issue mentioned above, which
- * is why we do another set of @supports checks.
- */
-@supports (not (background: -webkit-named-image(apple-pay-logo-black))) or ((background: -webkit-named-image(apple-pay-logo-black)) and (aspect-ratio: 1/1)) {
-  :host(.show-month-and-year) .calendar-next-prev,
-  :host(.show-month-and-year) .calendar-days-of-week,
-  :host(.show-month-and-year) .calendar-body,
-  :host(.show-month-and-year) .datetime-time {
-    display: none;
-  }
+:host(.show-month-and-year) .calendar-next-prev,
+:host(.show-month-and-year) .calendar-days-of-week,
+:host(.show-month-and-year) .calendar-body,
+:host(.show-month-and-year) .datetime-time {
+  display: none;
 }
 
 :host(.month-year-picker-open) .datetime-footer {
@@ -267,27 +213,8 @@ ion-picker-column-internal {
   justify-content: space-between;
 }
 
-// TODO(FW-3547): the styles targeting ion-item
-// can be removed if we refactor datetime to
-// not use an ion-item
-:host .calendar-action-buttons ion-item,
 :host .calendar-action-buttons ion-button {
-  --background: translucent;
-}
-
-:host .calendar-action-buttons ion-item ion-label {
-  display: flex;
-
-  align-items: center;
-
-  // Width is set to auto because it is set
-  // to min-content elsewhere and we want to
-  // prevent wrapping the label in datetime
-  width: auto;
-}
-
-:host .calendar-action-buttons ion-item ion-icon {
-  @include padding(0, 0, 0, 4px);
+  --background: transparent;
 }
 
 // Calendar / Header / Days of Week
@@ -474,7 +401,7 @@ ion-picker-column-internal {
 
   border: none;
 
-  background: var(--ion-color-step-300, #edeef0);
+  background: var(--ion-color-step-300, var(--ion-background-color-step-300, #edeef0));
 
   color: $text-color;
 
@@ -496,6 +423,64 @@ ion-picker-column-internal {
 
 // Year Picker
 // -----------------------------------
-:host(.show-month-and-year) .calendar-action-buttons ion-item {
-  --color: #{current-color(base)};
+:host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
+  color: #{current-color(base)};
+}
+
+.calendar-month-year {
+  min-width: 0;
+}
+
+.calendar-month-year-toggle {
+  @include text-inherit();
+
+  position: relative;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  z-index: 1;
+
+  &::after {
+    @include button-state();
+
+    transition: opacity 15ms linear, background-color 15ms linear;
+
+    z-index: -1;
+  }
+
+  &.ion-focused::after {
+    background: currentColor;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+.calendar-month-year-toggle ion-icon {
+  @include padding(0, 0, 0, 4px);
+
+  flex-shrink: 0;
+}
+
+.calendar-month-year-toggle #toggle-wrapper {
+  display: inline-flex;
+
+  align-items: center;
+}
+
+// Picker Custom Variables
+// -----------------------------------
+
+ion-picker {
+  --highlight-background: var(--wheel-highlight-background);
+  --highlight-border-radius: var(--wheel-highlight-border-radius);
+  --fade-background-rgb: var(--wheel-fade-background-rgb);
 }

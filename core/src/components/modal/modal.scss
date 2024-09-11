@@ -129,7 +129,7 @@ ion-backdrop {
 
   border: 0;
 
-  background: var(--ion-color-step-350, #c0c0be);
+  background: var(--ion-color-step-350, var(--ion-background-color-step-350, #c0c0be));
 
   cursor: pointer;
 

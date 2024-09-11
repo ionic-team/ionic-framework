@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('select: disabled options'), () => {
     test('should not focus a disabled option when no value is set', async ({ page, skip }) => {
-      // TODO (FW-2979)
+      // TODO (ROU-5437)
       skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
 
       test.info().annotations.push({
@@ -14,7 +14,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.setContent(
         `
-        <ion-select interface="popover">
+        <ion-select aria-label="Select" interface="popover">
           <ion-select-option value="a" disabled="true">A</ion-select-option>
           <ion-select-option value="b">B</ion-select-option>
         </ion-select>

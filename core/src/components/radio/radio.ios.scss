@@ -8,12 +8,6 @@
   --color-checked: #{ion-color(primary, base)};
 }
 
-// TODO FW-3125: Remove styles
-:host(.legacy-radio) {
-  width: $radio-ios-icon-width;
-  height: $radio-ios-icon-height;
-}
-
 :host(.ion-color.radio-checked) .radio-inner {
   border-color: current-color(base);
 }
@@ -67,30 +61,6 @@
 
   content: "";
   opacity: 0.2;
-}
-
-// iOS Radio Within An Item
-// -----------------------------------------
-
-:host(.in-item.legacy-radio) {
-  @include margin(
-    $radio-ios-item-end-margin-top,
-    $radio-ios-item-end-margin-end,
-    $radio-ios-item-end-margin-bottom,
-    $radio-ios-item-end-margin-start
-  );
-
-  display: block;
-  position: static;
-}
-
-:host(.in-item.legacy-radio[slot="start"]) {
-  @include margin(
-    $radio-ios-item-start-margin-top,
-    $radio-ios-item-start-margin-end,
-    $radio-ios-item-start-margin-bottom,
-    $radio-ios-item-start-margin-start
-  );
 }
 
 // Radio Native Wrapper

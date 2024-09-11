@@ -18,30 +18,23 @@
     window.popoverController = popoverController;
   </script>
   <body>
-    <button id="basic-popover" onclick="presentPopover({ component: 'profile-page', event: event })">
-      Show Popover
-    </button>
-    <button onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">
-      Show Translucent Popover
-    </button>
-    <button color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">
-      Show Long List Popover
-    </button>
-    <button color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</button>
-
-    <style>
-      body > button {
-        display: block;
-        clear: both;
-        width: 100%;
-        padding: 12px 8px;
-        font-size: 1em;
-        background: #f8f8f8;
-        border: 1px solid #eee;
-        border-radius: 4px;
-        margin-bottom: 8px;
-      }
-    </style>
+    <main>
+      <button class="expand" id="basic-popover" onclick="presentPopover({ component: 'profile-page', event: event })">
+        Show Popover
+      </button>
+      <button
+        class="expand"
+        onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })"
+      >
+        Show Translucent Popover
+      </button>
+      <button class="expand" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">
+        Show Long List Popover
+      </button>
+      <button class="expand" color="danger" onclick="presentPopover({ component: 'profile-page' })">
+        No Event Popover
+      </button>
+    </main>
 
     <script>
       async function presentPopover(opts) {

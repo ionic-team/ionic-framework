@@ -121,6 +121,38 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(datetime).toHaveJSProperty('value', '2022-10-01T16:22:00');
     });
+
+    test("should display today's date and time when value is an empty string", async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime locale="en-US" presentation="date-time" value=""></ion-datetime>
+
+        <script>
+          const mockToday = '2024-07-24T16:22';
+          Date = class extends Date {
+            constructor(...args) {
+              if (args.length === 0) {
+                super(mockToday)
+              } else {
+                super(...args);
+              }
+            }
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      // July 24, 2024
+      const todayButton = page.locator('.calendar-day[data-day="24"][data-month="7"][data-year="2024"]');
+      await expect(todayButton).toHaveClass(/calendar-day-today/);
+
+      // 4:22 PM
+      const timeBody = page.locator('ion-datetime .time-body');
+      await expect(timeBody).toHaveText('4:22 PM');
+    });
   });
 });
 
@@ -323,7 +355,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: visibility'), () => {
-    test('should reset month/year interface when hiding datetime', async ({ page }) => {
+    // TODO FW-6015 re-enable on webkit when bug is fixed
+    test('should reset month/year interface when hiding datetime', async ({ page, skip }) => {
+      skip.browser(
+        'webkit',
+        'This is buggy in a headless Linux environment: https://bugs.webkit.org/show_bug.cgi?id=270358'
+      );
       await page.setContent(
         `
         <ion-datetime></ion-datetime>
@@ -562,6 +599,126 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(nextDay).toBeFocused();
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-focus-calendar-day`));
+    });
+  });
+
+  test.describe(title('datetime: calendar month toggle'), () => {
+    test('should have focus styles', async ({ page }) => {
+      await page.setContent('<ion-datetime value="2021-01-01"></ion-datetime>', config);
+
+      const datetime = page.locator('ion-datetime');
+
+      await page.waitForSelector('.datetime-ready');
+
+      const monthYearToggle = datetime.locator('.calendar-month-year-toggle');
+
+      monthYearToggle.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
+
+      await expect(datetime).toHaveScreenshot(screenshot(`date-month-toggle-focused`));
+    });
+  });
+});
+
+/**
+ * This behavior does not differ across
+ * directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: formatOptions'), () => {
+    test('should format header and time button', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            time: { hour: '2-digit', minute: '2-digit' },
+            date: { day: '2-digit', month: 'long', era: 'short' },
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      const headerDate = page.locator('ion-datetime .datetime-selected-date');
+      await expect(headerDate).toHaveText('February 01 AD');
+
+      const timeBody = page.locator('ion-datetime .time-body');
+      await expect(timeBody).toHaveText('04:30 PM');
+    });
+  });
+});
+
+/**
+ * This behavior does not differ across
+ * modes/directions.
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: formatOptions misconfiguration errors'), () => {
+    test('should log a warning if time zone is provided', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00" presentation="date">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {
+            date: { timeZone: 'UTC' },
+          }
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        '[Ionic Warning]: Datetime: "timeZone" and "timeZoneName" are not supported in "formatOptions".'
+      );
+    });
+
+    test('should log a warning if the required formatOptions are not provided for a presentation', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-01T16:30:00">
+          <span slot="title">Select Date</span>
+        </ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.formatOptions = {}
+        </script>
+      `,
+        config
+      );
+
+      await page.locator('.datetime-ready').waitFor();
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        "[Ionic Warning]: Datetime: The 'date-time' presentation requires either a date or time object (or both) in formatOptions."
+      );
     });
   });
 });

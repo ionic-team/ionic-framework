@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
-import { componentOnReady, hasLazyBuild } from '@utils/helpers';
+import { componentOnReady, hasLazyBuild, inheritAriaAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -33,6 +34,7 @@ export class Content implements ComponentInterface {
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+  private inheritedAttributes: Attributes = {};
 
   private tabsElement: HTMLElement | null = null;
   private tabsLoadCallback?: () => void;
@@ -76,6 +78,15 @@ export class Content implements ComponentInterface {
   @Prop() fullscreen = false;
 
   /**
+   * Controls where the fixed content is placed relative to the main content
+   * in the DOM. This can be used to control the order in which fixed elements
+   * receive keyboard focus.
+   * For example, if a FAB in the fixed slot should receive keyboard focus before
+   * the main page content, set this property to `'before'`.
+   */
+  @Prop() fixedSlotPlacement: 'after' | 'before' = 'after';
+
+  /**
    * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
    * If the content exceeds the bounds of ionContent, nothing will change.
    * Note, this does not disable the system bounce on iOS. That is an OS level setting.
@@ -115,6 +126,10 @@ export class Content implements ComponentInterface {
    * Set `scrollEvents` to `true` to enable.
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
+  }
 
   connectedCallback() {
     this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
@@ -423,17 +438,17 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { isMainContent, scrollX, scrollY, el } = this;
+    const { fixedSlotPlacement, inheritedAttributes, isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
-    const TagType = isMainContent ? 'main' : ('div' as any);
 
     this.resize();
 
     return (
       <Host
+        role={isMainContent ? 'main' : undefined}
         class={createColorClasses(this.color, {
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
@@ -444,21 +459,25 @@ export class Content implements ComponentInterface {
           '--offset-top': `${this.cTop}px`,
           '--offset-bottom': `${this.cBottom}px`,
         }}
+        {...inheritedAttributes}
       >
         <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
-        <TagType
+
+        {fixedSlotPlacement === 'before' ? <slot name="fixed"></slot> : null}
+
+        <div
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
             overscroll: (scrollX || scrollY) && forceOverscroll,
           }}
-          ref={(scrollEl: HTMLElement) => (this.scrollEl = scrollEl!)}
+          ref={(scrollEl) => (this.scrollEl = scrollEl)}
           onScroll={this.scrollEvents ? (ev: UIEvent) => this.onScroll(ev) : undefined}
           part="scroll"
         >
           <slot></slot>
-        </TagType>
+        </div>
 
         {transitionShadow ? (
           <div class="transition-effect">
@@ -467,7 +486,7 @@ export class Content implements ComponentInterface {
           </div>
         ) : null}
 
-        <slot name="fixed"></slot>
+        {fixedSlotPlacement === 'after' ? <slot name="fixed"></slot> : null}
       </Host>
     );
   }

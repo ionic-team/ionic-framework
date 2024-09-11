@@ -40,7 +40,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
     test.describe('select: popover', () => {
       test('it should open a popover select', async ({ page, skip }) => {
-        // TODO (FW-2979)
+        // TODO (ROU-5437)
         skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
 
         const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
@@ -80,9 +80,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
          * is already visible. We manually click() the element instead
          * to avoid flaky tests.
          */
+        /* eslint-disable custom-rules/await-playwright-promise-assertion */
         el.click();
         el.click();
         el.click();
+        /* eslint-enable custom-rules/await-playwright-promise-assertion */
       });
 
       const alerts = await page.$$('ion-alert');

@@ -33,6 +33,7 @@
    * @prop --button-color-hover: Color of the action sheet button on hover
    * @prop --button-color-focused: Color of the action sheet button when tabbed to
    * @prop --button-color-selected: Color of the selected action sheet button
+   * @prop --button-color-disabled: Color of the selected action sheet button when disabled
    */
   --color: initial;
   --button-color-activated: var(--button-color);
@@ -100,6 +101,12 @@
   font-family: inherit;
 
   overflow: hidden;
+}
+
+.action-sheet-button:disabled {
+  color: var(--button-color-disabled);
+
+  opacity: 0.4;
 }
 
 .action-sheet-button-inner {
@@ -220,7 +227,7 @@
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  .action-sheet-button:hover {
+  .action-sheet-button:not(:disabled):hover {
     color: var(--button-color-hover);
 
     &::after {

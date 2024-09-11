@@ -48,7 +48,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
 
       await expect(accordion).toHaveClass(/accordion-collapsed/);
 
-      accordion.click();
+      await accordion.click();
       await page.waitForChanges();
 
       await expect(accordion).toHaveClass(/accordion-collapsed/);
@@ -71,7 +71,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
 
       await expect(accordion).toHaveClass(/accordion-collapsed/);
 
-      accordion.click();
+      await accordion.click();
       await page.waitForChanges();
 
       await expect(accordion).toHaveClass(/accordion-collapsed/);

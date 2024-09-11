@@ -35,6 +35,7 @@ import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
 import { defineCustomElement as defineIonInput } from '@ionic/core/components/ion-input.js';
+import { defineCustomElement as defineIonInputPasswordToggle } from '@ionic/core/components/ion-input-password-toggle.js';
 import { defineCustomElement as defineIonItem } from '@ionic/core/components/ion-item.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
 import { defineCustomElement as defineIonItemGroup } from '@ionic/core/components/ion-item-group.js';
@@ -50,6 +51,9 @@ import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/componen
 import { defineCustomElement as defineIonNav } from '@ionic/core/components/ion-nav.js';
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
+import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
+import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/components/ion-picker-column.js';
+import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
 import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
 import { defineCustomElement as defineIonRadioGroup } from '@ionic/core/components/ion-radio-group.js';
@@ -68,6 +72,7 @@ import { defineCustomElement as defineIonSelectOption } from '@ionic/core/compon
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
 import { defineCustomElement as defineIonSplitPane } from '@ionic/core/components/ion-split-pane.js';
+import { defineCustomElement as defineIonTab } from '@ionic/core/components/ion-tab.js';
 import { defineCustomElement as defineIonText } from '@ionic/core/components/ion-text.js';
 import { defineCustomElement as defineIonTextarea } from '@ionic/core/components/ion-textarea.js';
 import { defineCustomElement as defineIonThumbnail } from '@ionic/core/components/ion-thumbnail.js';
@@ -213,11 +218,9 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox, JSX.Io
   'labelPlacement',
   'justify',
   'alignment',
-  'legacy',
   'ionChange',
   'ionFocus',
-  'ionBlur',
-  'ionStyle'
+  'ionBlur'
 ],
 'checked', 'ion-change');
 
@@ -260,6 +263,7 @@ export const IonCol = /*@__PURE__*/ defineContainer<JSX.IonCol>('ion-col', defin
 export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-content', defineIonContent, [
   'color',
   'fullscreen',
+  'fixedSlotPlacement',
   'forceOverscroll',
   'scrollX',
   'scrollY',
@@ -274,6 +278,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime, JSX.Io
   'color',
   'name',
   'disabled',
+  'formatOptions',
   'readonly',
   'isDateEnabled',
   'min',
@@ -394,12 +399,12 @@ export const IonInfiniteScrollContent = /*@__PURE__*/ defineContainer<JSX.IonInf
 
 export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput["value"]>('ion-input', defineIonInput, [
   'color',
-  'accept',
   'autocapitalize',
   'autocomplete',
   'autocorrect',
   'autofocus',
   'clearInput',
+  'clearInputIcon',
   'clearOnEdit',
   'counter',
   'counterFormatter',
@@ -412,7 +417,6 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'helperText',
   'label',
   'labelPlacement',
-  'legacy',
   'max',
   'maxlength',
   'min',
@@ -426,16 +430,22 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput
   'shape',
   'spellcheck',
   'step',
-  'size',
   'type',
   'value',
   'ionInput',
   'ionChange',
   'ionBlur',
-  'ionFocus',
-  'ionStyle'
+  'ionFocus'
 ],
 'value', 'ion-input');
+
+
+export const IonInputPasswordToggle = /*@__PURE__*/ defineContainer<JSX.IonInputPasswordToggle>('ion-input-password-toggle', defineIonInputPasswordToggle, [
+  'color',
+  'showIcon',
+  'hideIcon',
+  'type'
+]);
 
 
 export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', defineIonItem, [
@@ -445,17 +455,13 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', de
   'detailIcon',
   'disabled',
   'download',
-  'fill',
-  'shape',
   'href',
   'rel',
   'lines',
-  'counter',
   'routerAnimation',
   'routerDirection',
   'target',
-  'type',
-  'counterFormatter'
+  'type'
 ]);
 
 
@@ -569,6 +575,27 @@ export const IonNote = /*@__PURE__*/ defineContainer<JSX.IonNote>('ion-note', de
 ]);
 
 
+export const IonPicker = /*@__PURE__*/ defineContainer<JSX.IonPicker>('ion-picker', defineIonPicker, [
+  'ionInputModeChange'
+]);
+
+
+export const IonPickerColumn = /*@__PURE__*/ defineContainer<JSX.IonPickerColumn>('ion-picker-column', defineIonPickerColumn, [
+  'disabled',
+  'value',
+  'color',
+  'numericInput',
+  'ionChange'
+]);
+
+
+export const IonPickerColumnOption = /*@__PURE__*/ defineContainer<JSX.IonPickerColumnOption>('ion-picker-column-option', defineIonPickerColumnOption, [
+  'disabled',
+  'value',
+  'color'
+]);
+
+
 export const IonProgressBar = /*@__PURE__*/ defineContainer<JSX.IonProgressBar>('ion-progress-bar', defineIonProgressBar, [
   'type',
   'reversed',
@@ -584,10 +611,8 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio, JSX.IonRadio
   'disabled',
   'value',
   'labelPlacement',
-  'legacy',
   'justify',
   'alignment',
-  'ionStyle',
   'ionFocus',
   'ionBlur'
 ],
@@ -622,10 +647,8 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange
   'disabled',
   'value',
   'labelPlacement',
-  'legacy',
   'ionChange',
   'ionInput',
-  'ionStyle',
   'ionFocus',
   'ionBlur',
   'ionKnobMoveStart',
@@ -675,6 +698,7 @@ export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row', defin
 export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.IonSearchbar["value"]>('ion-searchbar', defineIonSearchbar, [
   'color',
   'animated',
+  'autocapitalize',
   'autocomplete',
   'autocorrect',
   'cancelButtonIcon',
@@ -684,6 +708,8 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.
   'disabled',
   'inputmode',
   'enterkeyhint',
+  'maxlength',
+  'minlength',
   'name',
   'placeholder',
   'searchIcon',
@@ -737,7 +763,6 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'justify',
   'label',
   'labelPlacement',
-  'legacy',
   'multiple',
   'name',
   'okText',
@@ -785,6 +810,14 @@ export const IonSplitPane = /*@__PURE__*/ defineContainer<JSX.IonSplitPane>('ion
 ]);
 
 
+export const IonTab = /*@__PURE__*/ defineContainer<JSX.IonTab>('ion-tab', defineIonTab, [
+  'active',
+  'delegate',
+  'tab',
+  'component'
+]);
+
+
 export const IonText = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', defineIonText, [
   'color'
 ]);
@@ -818,11 +851,9 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea, JSX.Io
   'helperText',
   'label',
   'labelPlacement',
-  'legacy',
   'shape',
   'ionChange',
   'ionInput',
-  'ionStyle',
   'ionBlur',
   'ionFocus'
 ],
@@ -847,13 +878,11 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'value',
   'enableOnOffLabels',
   'labelPlacement',
-  'legacy',
   'justify',
   'alignment',
   'ionChange',
   'ionFocus',
-  'ionBlur',
-  'ionStyle'
+  'ionBlur'
 ],
 'checked', 'ion-change');
 

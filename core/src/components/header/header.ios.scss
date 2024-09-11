@@ -132,8 +132,11 @@
  * We use opacity: 0 to avoid a layout shift.
  * We target both the attribute and the class in the event that the attribute
  * is not reflected on the host in some frameworks.
+ *
+ * Both headers should be scoped to iOS mode otherwise an MD app that uses an
+ * iOS header may cause other MD headers to be unexpectedly hidden.
  */
-ion-header:not(.header-collapse-main):has(~ ion-content ion-header[collapse="condense"], 
-~ ion-content ion-header.header-collapse-condense) {
+ion-header.header-ios:not(.header-collapse-main):has(~ ion-content ion-header.header-ios[collapse="condense"],
+~ ion-content ion-header.header-ios.header-collapse-condense) {
   opacity: 0;
 }

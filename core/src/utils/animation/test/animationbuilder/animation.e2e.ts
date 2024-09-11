@@ -12,11 +12,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto('/src/utils/animation/test/animationbuilder', config);
       await testNavigation(page);
     });
-
-    test('ios-transition css', async ({ page }) => {
-      await page.goto('/src/utils/animation/test/animationbuilder?ionic:_forceCSSAnimations=true', config);
-      await testNavigation(page);
-    });
   });
 });
 
@@ -25,14 +20,14 @@ const testNavigation = async (page: E2EPage) => {
 
   await page.click('page-root ion-button.next');
   await ionRouteDidChange.next();
-  page.click('page-one ion-button.next');
+  await page.click('page-one ion-button.next');
   await ionRouteDidChange.next();
-  page.click('page-two ion-button.next');
+  await page.click('page-two ion-button.next');
   await ionRouteDidChange.next();
-  page.click('page-three ion-back-button');
+  await page.click('page-three ion-back-button');
   await ionRouteDidChange.next();
-  page.click('page-two ion-back-button');
+  await page.click('page-two ion-back-button');
   await ionRouteDidChange.next();
-  page.click('page-one ion-back-button');
+  await page.click('page-one ion-back-button');
   await ionRouteDidChange.next();
 };

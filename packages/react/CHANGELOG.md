@@ -3,6 +3,331 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.3.0](https://github.com/ionic-team/ionic-framework/compare/v8.2.8...v8.3.0) (2024-09-05)
+
+
+### Features
+
+* **react, vue, angular:** use tabs without router ([#29794](https://github.com/ionic-team/ionic-framework/issues/29794)) ([867066b](https://github.com/ionic-team/ionic-framework/commit/867066b4eba369de025f3c7c8ef33e7089cdf3bc)), closes [#25184](https://github.com/ionic-team/ionic-framework/issues/25184)
+
+
+
+
+
+## [8.2.8](https://github.com/ionic-team/ionic-framework/compare/v8.2.7...v8.2.8) (2024-09-05)
+
+
+### Bug Fixes
+
+* **react:** intellisense works with IntelliJ ([#29782](https://github.com/ionic-team/ionic-framework/issues/29782)) ([bacded5](https://github.com/ionic-team/ionic-framework/commit/bacded500b826df98d3ca5322c87f50f643c4692)), closes [#29755](https://github.com/ionic-team/ionic-framework/issues/29755)
+
+
+
+
+
+## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* **react:** add onPointerDown, onTouchEnd, add onTouchMove ([#29736](https://github.com/ionic-team/ionic-framework/issues/29736)) ([bfee3cd](https://github.com/ionic-team/ionic-framework/commit/bfee3cd064a9b495489c2679ccfb762e622dbf09)), closes [#29174](https://github.com/ionic-team/ionic-framework/issues/29174)
+
+
+
+
+
+## [8.2.6](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.6) (2024-07-24)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.2.5](https://github.com/ionic-team/ionic-framework/compare/v8.2.4...v8.2.5) (2024-07-03)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.2.4](https://github.com/ionic-team/ionic-framework/compare/v8.2.2...v8.2.4) (2024-06-28)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## 8.2.3
+
+This version should be skipped. Install 8.2.4 instead.
+
+
+
+
+
+## [8.2.2](https://github.com/ionic-team/ionic-framework/compare/v8.2.1...v8.2.2) (2024-06-12)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.2.1](https://github.com/ionic-team/ionic-framework/compare/v8.2.0...v8.2.1) (2024-06-05)
+
+* **react:** export InputInputEventDetail type ([#29512](https://github.com/ionic-team/ionic-framework/issues/29512)) ([624ceba](https://github.com/ionic-team/ionic-framework/commit/624ceba2e128bb13a3afe4c35883f603f5488d0e)), closes [#29518](https://github.com/ionic-team/ionic-framework/issues/29518)
+
+
+
+
+
+# [8.2.0](https://github.com/ionic-team/ionic-framework/compare/v8.1.3...v8.2.0) (2024-05-22)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.1.3](https://github.com/ionic-team/ionic-framework/compare/v8.1.2...v8.1.3) (2024-05-22)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.1.2](https://github.com/ionic-team/ionic-framework/compare/v8.1.1...v8.1.2) (2024-05-15)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.1.1](https://github.com/ionic-team/ionic-framework/compare/v8.1.0...v8.1.1) (2024-05-08)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.1.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.2...v8.1.0) (2024-05-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.0.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.1...v8.0.2) (2024-05-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [8.0.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0...v8.0.1) (2024-04-24)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.0.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.2...v8.0.0) (2024-04-17)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.0.0-rc.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.1...v8.0.0-rc.2) (2024-04-17)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.8.5](https://github.com/ionic-team/ionic-framework/compare/v7.8.4...v7.8.5) (2024-04-17)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.0.0-rc.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-rc.0...v8.0.0-rc.1) (2024-04-10)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.8.4](https://github.com/ionic-team/ionic-framework/compare/v7.8.3...v7.8.4) (2024-04-10)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.8.3](https://github.com/ionic-team/ionic-framework/compare/v7.8.2...v7.8.3) (2024-04-03)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.0.0-rc.0](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.4...v8.0.0-rc.0) (2024-03-27)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.0.0-beta.4](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.3...v8.0.0-beta.4) (2024-03-27)
+
+
+### Features
+
+* **input:** add input-password-toggle component ([#29175](https://github.com/ionic-team/ionic-framework/issues/29175)) ([6c500fd](https://github.com/ionic-team/ionic-framework/commit/6c500fd6b2e2553c11fcddc9d86ac9a29f76e172))
+
+
+
+
+
+## [7.8.2](https://github.com/ionic-team/ionic-framework/compare/v7.8.1...v7.8.2) (2024-03-27)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.0.0-beta.3](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.2...v8.0.0-beta.3) (2024-03-20)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.8.1](https://github.com/ionic-team/ionic-framework/compare/v7.8.0...v7.8.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* **react:** avoid definitely typed errors with @types/react@18 ([#29182](https://github.com/ionic-team/ionic-framework/issues/29182)) ([58d217d](https://github.com/ionic-team/ionic-framework/commit/58d217d0cf6b716da855c71c169fb1870d4067d3)), closes [#29178](https://github.com/ionic-team/ionic-framework/issues/29178)
+
+
+
+
+
+# [8.0.0-beta.2](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.1...v8.0.0-beta.2) (2024-03-13)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.8.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.5...v7.8.0) (2024-03-13)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.7.5](https://github.com/ionic-team/ionic-framework/compare/v7.7.4...v7.7.5) (2024-03-13)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.0.0-beta.1](https://github.com/ionic-team/ionic-framework/compare/v8.0.0-beta.0...v8.0.0-beta.1) (2024-03-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.7.4](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v7.7.4) (2024-03-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [8.0.0-beta.0](https://github.com/ionic-team/ionic-framework/compare/v7.7.3...v8.0.0-beta.0) (2024-02-28)
+
+
+### Features
+
+* **picker:** add inline picker ([#28689](https://github.com/ionic-team/ionic-framework/issues/28689)) ([cd5c099](https://github.com/ionic-team/ionic-framework/commit/cd5c099dd32ac1283de26a27ef572d05952538b2)), closes [#24905](https://github.com/ionic-team/ionic-framework/issues/24905) [#26840](https://github.com/ionic-team/ionic-framework/issues/26840) [#15710](https://github.com/ionic-team/ionic-framework/issues/15710)
+
+
+
+
+
+## [7.7.3](https://github.com/ionic-team/ionic-framework/compare/v7.7.2...v7.7.3) (2024-02-21)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.7.2](https://github.com/ionic-team/ionic-framework/compare/v7.7.1...v7.7.2) (2024-02-14)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.7.1](https://github.com/ionic-team/ionic-framework/compare/v7.7.0...v7.7.1) (2024-02-07)
+
+
+### Bug Fixes
+
+* **react:** route with redirect will mount page ([#28961](https://github.com/ionic-team/ionic-framework/issues/28961)) ([5777ce2](https://github.com/ionic-team/ionic-framework/commit/5777ce258119d2715b1326cdc103bd4ad7612bd1)), closes [#28838](https://github.com/ionic-team/ionic-framework/issues/28838)
+
+
+
+
+
+# [7.7.0](https://github.com/ionic-team/ionic-framework/compare/v7.6.7...v7.7.0) (2024-01-31)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.6.7](https://github.com/ionic-team/ionic-framework/compare/v7.6.6...v7.6.7) (2024-01-31)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [7.6.6](https://github.com/ionic-team/ionic-framework/compare/v7.6.5...v7.6.6) (2024-01-24)
 
 **Note:** Version bump only for package @ionic/react

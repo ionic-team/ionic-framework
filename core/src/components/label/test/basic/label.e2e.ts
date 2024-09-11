@@ -34,7 +34,7 @@ configs().forEach(({ title, screenshot, config }) => {
         `
         <ion-item>
           <ion-label position="stacked">My Label</ion-label>
-          <ion-input></ion-input>
+          <ion-input aria-label="My Label"></ion-input>
         </ion-item>
       `,
         config
@@ -49,7 +49,7 @@ configs().forEach(({ title, screenshot, config }) => {
         `
         <ion-item>
           <ion-label position="floating">My Label</ion-label>
-          <ion-input></ion-input>
+          <ion-input aria-label="My Label"></ion-input>
         </ion-item>
       `,
         config

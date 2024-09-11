@@ -42,6 +42,7 @@ export {
   InfiniteScrollCustomEvent,
   InputCustomEvent,
   InputChangeEventDetail,
+  InputInputEventDetail,
   ItemReorderEventDetail,
   ItemReorderCustomEvent,
   ItemSlidingCustomEvent,
@@ -88,14 +89,14 @@ export {
   TransitionOptions,
 } from '@ionic/core/components';
 
-export * from './proxies';
+export * from './components';
 export * from './routing-proxies';
 
 // createControllerComponent
 export { IonAlert } from './IonAlert';
 export { IonLoading } from './IonLoading';
 export * from './IonToast';
-export { IonPicker } from './IonPicker';
+export { IonPickerLegacy } from './IonPickerLegacy';
 
 // createOverlayComponent
 export * from './IonActionSheet';

@@ -1,7 +1,8 @@
+import { NgIf } from '@angular/common';
 import { Component, ContentChild, ContentChildren, ViewChild, QueryList } from '@angular/core';
 import { IonTabs as IonTabsBase } from '@ionic/angular/common';
 
-import { IonTabBar } from '../directives/proxies';
+import { IonTabBar, IonTab } from '../directives/proxies';
 
 import { IonRouterOutlet } from './router-outlet';
 
@@ -11,11 +12,13 @@ import { IonRouterOutlet } from './router-outlet';
     <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner" #tabsInner>
       <ion-router-outlet
+        *ngIf="tabs.length === 0"
         #outlet
         tabs="true"
         (stackWillChange)="onStackWillChange($event)"
         (stackDidChange)="onStackDidChange($event)"
       ></ion-router-outlet>
+      <ng-content *ngIf="tabs.length > 0" select="ion-tab"></ng-content>
     </div>
     <ng-content></ng-content>
   `,
@@ -46,7 +49,7 @@ import { IonRouterOutlet } from './router-outlet';
       }
     `,
   ],
-  imports: [IonRouterOutlet],
+  imports: [IonRouterOutlet, NgIf],
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class IonTabs extends IonTabsBase {
@@ -54,4 +57,5 @@ export class IonTabs extends IonTabsBase {
 
   @ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
   @ContentChildren(IonTabBar) tabBars: QueryList<IonTabBar>;
+  @ContentChildren(IonTab) tabs: QueryList<IonTab>;
 }

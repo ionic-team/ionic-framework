@@ -4,6 +4,7 @@ import { defineCustomElement as defineIonBackButton } from '@ionic/core/componen
 import { defineCustomElement as defineIonRouterOutlet } from '@ionic/core/components/ion-router-outlet.js';
 import { defineCustomElement as defineIonTabBar } from '@ionic/core/components/ion-tab-bar.js';
 import { defineCustomElement as defineIonTabButton } from '@ionic/core/components/ion-tab-button.js';
+import { defineCustomElement as defineIonTabs } from '@ionic/core/components/ion-tabs.js';
 import type { JSX as IoniconsJSX } from 'ionicons';
 import { defineCustomElement as defineIonIcon } from 'ionicons/components/ion-icon.js';
 
@@ -18,6 +19,12 @@ export const IonTabBarInner = /*@__PURE__*/ createReactComponent<JSX.IonTabBar, 
   undefined,
   undefined,
   defineIonTabBar
+);
+export const IonTabsInner = /*@__PURE__*/ createReactComponent<JSX.IonTabs, HTMLIonTabsElement>(
+  'ion-tabs',
+  undefined,
+  undefined,
+  defineIonTabs
 );
 export const IonBackButtonInner = /*@__PURE__*/ createReactComponent<
   Omit<JSX.IonBackButton, 'icon'>,

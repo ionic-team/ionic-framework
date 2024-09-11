@@ -1,6 +1,23 @@
+@use "sass:map";
 @import "../themes/ionic.globals";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
+
+:root {
+  /**
+   * Loop through each color object from the
+   * `ionic.theme.default.scss` file
+   * and generate CSS Variables for each color.
+   */
+  @each $color-name, $value in $colors {
+    --ion-color-#{$color-name}: #{map.get($value, base)};
+    --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map.get($value, base))};
+    --ion-color-#{$color-name}-contrast: #{map.get($value, contrast)};
+    --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map.get($value, contrast))};
+    --ion-color-#{$color-name}-shade: #{map.get($value, shade)};
+    --ion-color-#{$color-name}-tint: #{map.get($value, tint)};
+  }
+}
 
 // Ionic Font Family
 // --------------------------------------------------
@@ -13,12 +30,13 @@ html.md {
 }
 
 html {
-  --ion-default-dynamic-font: -apple-system-body;
+  --ion-dynamic-font: -apple-system-body;
   --ion-font-family: var(--ion-default-font);
 }
 
 body {
   background: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 body.backdrop-no-scroll {
@@ -374,4 +392,48 @@ ion-input input::-webkit-date-and-time-value {
 .ion-datetime-button-overlay ion-datetime.datetime-grid {
   width: 320px;
   min-height: 320px;
+}
+
+/**
+ * When moving focus on page transitions we call .focus() on an element which can
+ * add an undesired outline ring. This CSS removes the outline ring.
+ * We also remove the outline ring from elements that are actively being focused
+ * by the focus manager. We are intentionally selective about which elements this
+ * applies to so we do not accidentally override outlines set by the developer.
+ */
+[ion-last-focus],
+header[tabindex="-1"]:focus,
+[role="banner"][tabindex="-1"]:focus,
+main[tabindex="-1"]:focus,
+[role="main"][tabindex="-1"]:focus,
+h1[tabindex="-1"]:focus,
+[role="heading"][aria-level="1"][tabindex="-1"]:focus {
+  outline: none;
+}
+
+/*
+ * If a popover has a child ion-content (or class equivalent) then the .popover-viewport element
+ * should not be scrollable to ensure the inner content does scroll. However, if the popover
+ * does not have a child ion-content (or class equivalent) then the .popover-viewport element
+ * should remain scrollable. This code exists globally because popover targets
+ * .popover-viewport using ::slotted which only supports simple selectors.
+ *
+ * Note that we do not need to account for .ion-content-scroll-host here because that
+ * class should always be placed within ion-content even if ion-content is not scrollable.
+ */
+.popover-viewport:has(> ion-content) {
+  overflow: hidden;
+}
+
+/**
+ * :has has cross-browser support, but it is still relatively new. As a result,
+ * we should fallback to the old behavior for environments that do not support :has.
+ * Developers can explicitly enable this behavior by setting overflow: visible
+ * on .popover-viewport if they know they are not going to use an ion-content.
+ * TODO FW-6106 Remove this
+ */
+@supports not selector(:has(> ion-content)) {
+  .popover-viewport {
+    overflow: hidden;
+  }
 }

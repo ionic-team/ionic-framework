@@ -4,28 +4,28 @@
 // --------------------------------------------------
 
 /// @prop - Minimum height of the infinite scroll content
-$infinite-scroll-content-min-height:              84px !default;
+$infinite-scroll-content-min-height:              84px;
 
 /// @prop - Margin top of the infinite scroll loading icon
-$infinite-scroll-loading-margin-top:              0 !default;
+$infinite-scroll-loading-margin-top:              0;
 
 /// @prop - Margin end of the infinite scroll loading icon
-$infinite-scroll-loading-margin-end:              0 !default;
+$infinite-scroll-loading-margin-end:              0;
 
 /// @prop - Margin bottom of the infinite scroll loading icon
-$infinite-scroll-loading-margin-bottom:           32px !default;
+$infinite-scroll-loading-margin-bottom:           32px;
 
 /// @prop - Margin start of the infinite scroll loading icon
-$infinite-scroll-loading-margin-start:            $infinite-scroll-loading-margin-end !default;
+$infinite-scroll-loading-margin-start:            $infinite-scroll-loading-margin-end;
 
 /// @prop - Margin top of the infinite scroll loading text
-$infinite-scroll-loading-text-margin-top:         4px !default;
+$infinite-scroll-loading-text-margin-top:         4px;
 
 /// @prop - Margin end of the infinite scroll loading text
-$infinite-scroll-loading-text-margin-end:         32px !default;
+$infinite-scroll-loading-text-margin-end:         32px;
 
 /// @prop - Margin bottom of the infinite scroll loading text
-$infinite-scroll-loading-text-margin-bottom:      0 !default;
+$infinite-scroll-loading-text-margin-bottom:      0;
 
 /// @prop - Margin start of the infinite scroll loading text
-$infinite-scroll-loading-text-margin-start:       $infinite-scroll-loading-text-margin-end !default;
+$infinite-scroll-loading-text-margin-start:       $infinite-scroll-loading-text-margin-end;

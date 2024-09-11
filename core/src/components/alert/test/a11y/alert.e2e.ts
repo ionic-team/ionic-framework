@@ -28,6 +28,35 @@ const testAria = async (
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
 };
 
+configs({ directions: ['ltr'], palettes: ['dark', 'light'] }).forEach(({ title, config }) => {
+  test.describe(title('alert: Axe testing'), () => {
+    test('should not have accessibility violations when header and message are defined', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-alert></ion-alert>
+
+          <script>
+            const alert = document.querySelector('ion-alert');
+            alert.header = 'Header';
+            alert.subHeader = 'Subtitle';
+            alert.buttons = ['OK'];
+          </script>
+        `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const alert = page.locator('ion-alert');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
+
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('alert: text wrapping'), () => {
     test('should break on words and white spaces for radios', async ({ page }, testInfo) => {
@@ -94,17 +123,6 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/alert/test/a11y`, config);
     });
-    test('should not have accessibility violations when header and message are defined', async ({ page }) => {
-      const didPresent = await page.spyOnEvent('ionAlertDidPresent');
-      const button = page.locator('#bothHeaders');
-      await button.click();
-
-      await didPresent.next();
-
-      // TODO FW-4375
-      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
-      expect(results.violations).toEqual([]);
-    });
 
     test('should have aria-labelledby when header is set', async ({ page }) => {
       await testAria(page, 'noMessage', 'alert-1-hdr', null);
@@ -162,7 +180,10 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('alert: font scaling'), () => {
-    test('should scale text on larger font sizes', async ({ page }) => {
+    test('should scale text on larger font sizes', async ({ page, skip }) => {
+      // TODO(ROU-8158): unskip this test when a solution is found
+      skip.browser('chromium', 'Rendering is flaky in Chrome.');
+
       await page.setContent(
         `
         <style>
@@ -288,6 +309,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await alert.evaluate((el: HTMLIonAlertElement) => el.present());
       await ionAlertDidPresent.next();
 
+      /**
+       * The borders on the text fields may not be visible in the screenshot
+       * when using Safari, this is due to a WebKit rendering quirk.
+       */
       await expect(page).toHaveScreenshot(screenshot(`alert-text-fields-scale`));
     });
   });

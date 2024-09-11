@@ -96,6 +96,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await toastFixture.screenshot('translucent', screenshot, container);
     });
 
+    // TODO(FW-6220): investigate why backdrop filter is not being captured in screenshot
     test('should set translucency correctly when color is provided', async ({ page }) => {
       const toastFixture = new ToastFixture(page);
       await toastFixture.goto(config);
