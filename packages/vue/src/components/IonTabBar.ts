@@ -127,13 +127,13 @@ export const IonTabBar = defineComponent({
      */
     checkActiveTab(ionRouter: any) {
       const hasRouterOutlet = this.$props._hasRouterOutlet;
-      const currentRoute = ionRouter.getCurrentRouteInfo();
+      const currentRoute = ionRouter?.getCurrentRouteInfo();
       const childNodes = this.$data.tabVnodes;
       const { tabs, activeTab: prevActiveTab } = this.$data.tabState;
       const tabKeys = Object.keys(tabs);
       let activeTab = tabKeys.find((key) => {
         const href = tabs[key].originalHref;
-        return currentRoute.pathname.startsWith(href);
+        return currentRoute && currentRoute.pathname.startsWith(href);
       });
 
       /**
@@ -170,7 +170,10 @@ export const IonTabBar = defineComponent({
          * If we went to tab2 then back to tab1, we should
          * land on /tabs/tab1/child instead of /tabs/tab1.
          */
-        if (activeTab !== prevActiveTab || prevHref !== currentRoute.pathname) {
+        if (
+          activeTab !== prevActiveTab ||
+          (currentRoute && prevHref !== currentRoute.pathname)
+        ) {
           /**
            * By default the search is `undefined` in Ionic Vue,
            * but Vue Router can set the search to the empty string.
@@ -189,6 +192,7 @@ export const IonTabBar = defineComponent({
          * set the previous tab back to its original href.
          */
         if (
+          currentRoute &&
           currentRoute.routerAction === "pop" &&
           activeTab !== prevActiveTab
         ) {
