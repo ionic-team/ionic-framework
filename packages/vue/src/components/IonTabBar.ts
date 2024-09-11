@@ -254,7 +254,7 @@ export const IonTabBar = defineComponent({
 
     this.setupTabState(ionRouter);
 
-    ionRouter.registerHistoryChangeListener(() =>
+    ionRouter?.registerHistoryChangeListener(() =>
       this.checkActiveTab(ionRouter)
     );
   },
