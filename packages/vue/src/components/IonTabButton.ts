@@ -27,7 +27,7 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
     defineCustomElement();
 
     // TODO(FW-2969): type
-    const ionRouter: any = inject("navManager");
+    const ionRouter: any = inject("navManager", null);
     const onClick = (ev: Event) => {
       if (ev.cancelable) {
         ev.preventDefault();
@@ -72,7 +72,7 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
        * should direct users back to the root
        * of the tab.
        */
-      if (ionRouter) {
+      if (ionRouter !== null) {
         if (prevActiveTab === tab) {
           if (originalHref !== currentHref) {
             ionRouter.resetTab(tab);

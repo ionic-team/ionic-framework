@@ -51,7 +51,7 @@ export const IonTabBar = defineComponent({
     };
   },
   updated() {
-    this.setupTabState(inject("navManager"));
+    this.setupTabState(inject("navManager", null));
   },
   methods: {
     setupTabState(ionRouter: any) {
@@ -133,7 +133,7 @@ export const IonTabBar = defineComponent({
       const tabKeys = Object.keys(tabs);
       let activeTab = tabKeys.find((key) => {
         const href = tabs[key].originalHref;
-        return currentRoute && currentRoute.pathname.startsWith(href);
+        return currentRoute?.pathname.startsWith(href);
       });
 
       /**
@@ -171,8 +171,8 @@ export const IonTabBar = defineComponent({
          * land on /tabs/tab1/child instead of /tabs/tab1.
          */
         if (
-          currentRoute &&
-          (activeTab !== prevActiveTab || prevHref !== currentRoute.pathname)
+          activeTab !== prevActiveTab ||
+          prevHref !== currentRoute?.pathname
         ) {
           /**
            * By default the search is `undefined` in Ionic Vue,
@@ -180,10 +180,10 @@ export const IonTabBar = defineComponent({
            * We check for truthy here because empty string is falsy
            * and currentRoute.search cannot ever be a boolean.
            */
-          const search = currentRoute.search ? `?${currentRoute.search}` : "";
+          const search = currentRoute?.search ? `?${currentRoute.search}` : "";
           tabs[activeTab] = {
             ...tabs[activeTab],
-            currentHref: currentRoute.pathname + search,
+            currentHref: currentRoute?.pathname + search,
           };
         }
 
@@ -192,8 +192,7 @@ export const IonTabBar = defineComponent({
          * set the previous tab back to its original href.
          */
         if (
-          currentRoute &&
-          currentRoute.routerAction === "pop" &&
+          currentRoute?.routerAction === "pop" &&
           activeTab !== prevActiveTab
         ) {
           tabs[prevActiveTab] = {
@@ -230,7 +229,7 @@ export const IonTabBar = defineComponent({
         if (activeChild) {
           tabDidChange && this.$props._tabsWillChange(activeTab);
 
-          if (hasRouterOutlet && ionRouter) {
+          if (hasRouterOutlet && ionRouter !== null) {
             ionRouter.handleSetCurrentTab(activeTab);
           }
 
@@ -250,7 +249,7 @@ export const IonTabBar = defineComponent({
     },
   },
   mounted() {
-    const ionRouter: any = inject("navManager");
+    const ionRouter: any = inject("navManager", null);
 
     this.setupTabState(ionRouter);
 
