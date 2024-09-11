@@ -171,8 +171,8 @@ export const IonTabBar = defineComponent({
          * land on /tabs/tab1/child instead of /tabs/tab1.
          */
         if (
-          activeTab !== prevActiveTab ||
-          (currentRoute && prevHref !== currentRoute.pathname)
+          currentRoute &&
+          (activeTab !== prevActiveTab || prevHref !== currentRoute.pathname)
         ) {
           /**
            * By default the search is `undefined` in Ionic Vue,
