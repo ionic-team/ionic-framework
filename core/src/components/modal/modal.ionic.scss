@@ -1,0 +1,19 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./modal";
+
+// Ionic Modal
+// --------------------------------------------------
+
+// Shape
+// -------------------------------------
+:host(.modal-round) {
+  --border-radius: #{globals.$ionic-border-radius-1000};
+}
+
+:host(.modal-soft) {
+  --border-radius: #{globals.$ionic-border-radius-400};
+}
+
+:host(.modal-rectangular) {
+  --border-radius: #{globals.$ionic-border-radius-0};
+}

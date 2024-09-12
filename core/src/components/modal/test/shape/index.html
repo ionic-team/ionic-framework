@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modal - Shape</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-modal {
+        --box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .container {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+
+  <script type="module">
+    import { modalController } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal - Shape</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content" no-bounce>
+        <div class="container">
+          <h1>Sheet</h1>
+          <button id="sheet-modal-default" onclick="presentSheetModal()">Present Sheet Modal (Default)</button>
+          <button id="sheet-modal-round" onclick="presentSheetModal({ shape: 'round' })">
+            Present Sheet Modal (Round)
+          </button>
+          <button id="sheet-modal-soft" onclick="presentSheetModal({ shape: 'soft' })">
+            Present Sheet Modal (Soft)
+          </button>
+          <button id="sheet-modal-rectangular" onclick="presentSheetModal({ shape: 'rectangular' })">
+            Present Sheet Modal (Rectangular)
+          </button>
+        </div>
+
+        <div class="container">
+          <h1>Card</h1>
+          <button id="card-modal-default" onclick="presentCardModal()">Present Card Modal (Default)</button>
+          <button id="card-modal-round" onclick="presentCardModal({ shape: 'round' })">
+            Present Card Modal (Round)
+          </button>
+          <button id="card-modal-soft" onclick="presentCardModal({ shape: 'soft' })">Present Card Modal (Soft)</button>
+          <button id="card-modal-rectangular" onclick="presentCardModal({ shape: 'rectangular' })">
+            Present Card Modal (Rectangular)
+          </button>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+
+  <script>
+    function renderContent() {
+      let items = '';
+
+      for (var i = 0; i < 25; i++) {
+        items += `<ion-item>Item ${i}</ion-item>`;
+      }
+
+      return items;
+    }
+
+    async function presentSheetModal(options) {
+      const modal = await createSheetModal(options);
+      await modal.present();
+
+      await modal.onDidDismiss();
+      modal.remove();
+    }
+
+    async function createSheetModal(options) {
+      // create component to open
+      const element = document.createElement('div');
+      element.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Super Modal</ion-title>
+          <ion-buttons slot="end">
+            <ion-button class="dismiss">Dismiss Modal</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          ${renderContent()}
+        </ion-list>
+      </ion-content>
+      `;
+
+      let extraOptions = {
+        initialBreakpoint: 0.75,
+        breakpoints: [0, 0.25, 0.5, 0.75, 1],
+      };
+
+      if (options) {
+        extraOptions = {
+          ...extraOptions,
+          ...options,
+        };
+      }
+
+      // present the modal
+      const modalElement = Object.assign(document.createElement('ion-modal'), {
+        component: element,
+        ...extraOptions,
+      });
+
+      // listen for close event
+      const button = element.querySelector('ion-button');
+      button.addEventListener('click', () => {
+        modalElement.dismiss();
+      });
+      document.body.appendChild(modalElement);
+      return modalElement;
+    }
+
+    async function presentCardModal(opts) {
+      const modal = await createCardModal(document.querySelectorAll('.ion-page')[1], opts);
+      await modal.present();
+    }
+
+    async function createCardModal(presentingEl, opts) {
+      // create component to open
+      const element = document.createElement('div');
+      element.innerHTML = `
+      <ion-header id="modal-header">
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button class="dismiss">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <div class="content-wrapper">${renderContent()}</div>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+      `;
+
+      // listen for close event
+      const button = element.querySelector('ion-button.dismiss');
+      button.addEventListener('click', () => {
+        modalController.dismiss();
+      });
+
+      // present the modal
+      const modalElement = await modalController.create({
+        presentingElement: presentingEl,
+        component: element,
+        ...opts,
+      });
+      return modalElement;
+    }
+  </script>
+</html>
