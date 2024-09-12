@@ -14,6 +14,7 @@
         "core/package.json"
       ]
     },
+    // TODO(ROU-11172): unpin React output target version
     {
       matchPackageNames: ["@stencil/react-output-target"],
       matchFileNames: [
@@ -21,6 +22,7 @@
       ],
       allowedVersions: ["<=0.5.3"]
     },
+    // TODO(ROU-11173): unpin Stencil version
     {
       matchPackageNames: ["@stencil/core"],
       matchFileNames: [
