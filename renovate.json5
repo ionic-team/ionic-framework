@@ -15,6 +15,20 @@
       ]
     },
     {
+      matchPackageNames: ["@stencil/react-output-target"],
+      matchFileNames: [
+        "core/package.json"
+      ],
+      allowedVersions: ["<=0.5.3"]
+    },
+    {
+      matchPackageNames: ["@stencil/core"],
+      matchFileNames: [
+        "core/package.json"
+      ],
+      allowedVersions: ["<=4.20.0"]
+    },
+    {
       matchPackagePatterns: ["@capacitor/core", "@capacitor/keyboard", "@capacitor/haptics", "@capacitor/status-bar"],
       groupName: "capacitor",
       matchFileNames: [
