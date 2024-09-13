@@ -1,0 +1,7 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./backdrop";
+
+:host {
+  background-color: globals.$ionic-color-base-black;
+  backdrop-filter: blur(2px);
+}
