@@ -2,6 +2,6 @@
 @import "./backdrop";
 
 :host {
-  background-color: globals.$ionic-color-base-black;
+  background-color: rgba(globals.$ionic-color-base-black-rgb, 0.7);
   backdrop-filter: blur(2px);
 }
