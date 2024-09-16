@@ -5,7 +5,10 @@
 
 :host {
   /**
+   * @prop --background: Background of the modal content
+   *
    * @prop --border-color: Border color of the modal content
+   * @prop --border-radius: Border radius of the modal content
    * @prop --border-width: Border width of the modal content
    * @prop --border-style: Border style of the modal content
    *
@@ -16,6 +19,8 @@
    * @prop --min-height: Minimum height of the modal
    * @prop --height: Height of the modal
    * @prop --max-height: Maximum height of the modal
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --width: 100%;
   --min-width: auto;
