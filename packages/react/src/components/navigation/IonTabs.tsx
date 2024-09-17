@@ -5,8 +5,8 @@ import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
 import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
-import { IonTab } from '../components';
 import { IonTabsInner } from '../inner-proxies';
+import { IonTab } from '../proxies';
 
 import { IonTabBar } from './IonTabBar';
 import type { IonTabsContextState } from './IonTabsContext';
@@ -165,9 +165,6 @@ export const IonTabs = /*@__PURE__*/ (() =>
       if (outlet && hasTab) {
         throw new Error('IonTabs cannot contain an IonRouterOutlet and an IonTab at the same time');
       }
-      if (!tabBar) {
-        throw new Error('IonTabs needs a IonTabBar');
-      }
 
       if (hasTab) {
         return <IonTabsInner {...this.props}></IonTabsInner>;
@@ -223,11 +220,11 @@ export const IonTabs = /*@__PURE__*/ (() =>
             </PageManager>
           ) : (
             <div className={className ? `${className}` : 'ion-tabs'} {...props} style={hostStyles}>
-              {tabBar.props.slot === 'top' ? tabBar : null}
+              {tabBar?.props.slot === 'top' ? tabBar : null}
               <div style={tabsInner} className="tabs-inner">
                 {outlet}
               </div>
-              {tabBar.props.slot === 'bottom' ? tabBar : null}
+              {tabBar?.props.slot === 'bottom' ? tabBar : null}
             </div>
           )}
         </IonTabsContext.Provider>
