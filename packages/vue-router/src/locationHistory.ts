@@ -239,15 +239,14 @@ export const createLocationHistory = () => {
         }
       }
     }
-    if (delta < -1) {
-      return locationHistory[locationHistory.length - 1 + delta];
-    } else {
-      for (let i = locationHistory.length - 2; i >= 0; i--) {
-        const ri = locationHistory[i];
-        if (ri) {
-          if (ri.pathname === routeInfo.pushedByRoute) {
+    for (let i = locationHistory.length - 2; i >= 0; i--) {
+      const ri = locationHistory[i];
+      if (ri) {
+        if (ri.pathname === routeInfo.pushedByRoute) {
+          if (delta >= -1) {
             return ri;
           }
+          return locationHistory[i + 1 + delta]
         }
       }
     }
