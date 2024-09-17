@@ -78,8 +78,18 @@ export class Segment implements ComponentInterface {
   @Prop({ mutable: true }) value?: SegmentValue;
 
   @Watch('value')
-  protected valueChanged(value: SegmentValue | undefined) {
-    /**
+  protected valueChanged(value: SegmentValue | undefined, oldValue?: SegmentValue | undefined) {
+    if (oldValue !== undefined && value !== undefined) {
+      const buttons = this.getButtons();
+      const previous = buttons.find(button => button.value === oldValue);
+      const current = buttons.find(button => button.value === value);
+
+      if (previous && current) {
+        this.checkButton(previous, current);
+      }
+    }
+
+      /**
      * `ionSelect` is emitted every time the value changes (internal or external changes).
      * Used by `ion-segment-button` to determine if the button should be checked.
      */
@@ -208,7 +218,7 @@ export class Segment implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
-  private getButtons() {
+  private getButtons(): HTMLIonSegmentButtonElement[] {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
