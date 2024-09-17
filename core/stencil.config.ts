@@ -125,7 +125,11 @@ export const config: Config = {
   ],
   outputTargets: [
     reactOutputTarget({
-      outDir: '../packages/react/src/components/',
+      componentCorePackage,
+      includeImportCustomElements: true,
+      includePolyfills: false,
+      includeDefineCustomElements: false,
+      proxiesFile: '../packages/react/src/components/proxies.ts',
       excludeComponents: [
         // Routing
         'ion-router',

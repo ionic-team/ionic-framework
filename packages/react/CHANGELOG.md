@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.9](https://github.com/ionic-team/ionic-framework/compare/v8.2.8...v8.2.9) (2024-09-17)
+
+
+### Bug Fixes
+
+* **react:** revert react output target version ([#29869](https://github.com/ionic-team/ionic-framework/issues/29869)) ([6fb087f](https://github.com/ionic-team/ionic-framework/commit/6fb087f768d6cfe8857f3ac7bd27ac9415a63d0d)), closes [ionic-team/stencil-ds-output-targets#476](https://github.com/ionic-team/stencil-ds-output-targets/issues/476) [ionic-team/stencil-ds-output-targets#475](https://github.com/ionic-team/stencil-ds-output-targets/issues/475) [#29848](https://github.com/ionic-team/ionic-framework/issues/29848)
+
+
+
+
+
 ## [8.2.8](https://github.com/ionic-team/ionic-framework/compare/v8.2.7...v8.2.8) (2024-09-05)
 
 

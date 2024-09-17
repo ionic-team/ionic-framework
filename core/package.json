@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "8.2.8",
+  "version": "8.2.9",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,7 +31,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^4.19.2",
+    "@stencil/core": "4.20.0",
     "ionicons": "^7.2.2",
     "tslib": "^2.1.0"
   },
@@ -48,7 +48,7 @@
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.8.4",
-    "@stencil/react-output-target": "^0.6.0",
+    "@stencil/react-output-target": "0.5.3",
     "@stencil/sass": "^3.0.9",
     "@stencil/vue-output-target": "^0.8.9",
     "@types/jest": "^29.5.6",
