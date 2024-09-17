@@ -243,9 +243,6 @@ export const createLocationHistory = () => {
       const ri = locationHistory[i];
       if (ri) {
         if (ri.pathname === routeInfo.pushedByRoute) {
-          if (delta >= -1) {
-            return ri;
-          }
           return locationHistory[i + 1 + delta]
         }
       }
