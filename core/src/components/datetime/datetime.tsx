@@ -1234,7 +1234,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    const hasValue = value !== null && value !== undefined && (!Array.isArray(value) || value.length > 0);
+    const hasValue =
+      value !== null && value !== undefined && value !== '' && (!Array.isArray(value) || value.length > 0);
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
     const { minParts, maxParts, workingParts, el } = this;
