@@ -14,6 +14,22 @@
         "core/package.json"
       ]
     },
+    // TODO(ROU-11172): unpin React output target version
+    {
+      matchPackageNames: ["@stencil/react-output-target"],
+      matchFileNames: [
+        "core/package.json"
+      ],
+      allowedVersions: ["<=0.5.3"]
+    },
+    // TODO(ROU-11173): unpin Stencil version
+    {
+      matchPackageNames: ["@stencil/core"],
+      matchFileNames: [
+        "core/package.json"
+      ],
+      allowedVersions: ["<=4.20.0"]
+    },
     {
       matchPackagePatterns: ["@capacitor/core", "@capacitor/keyboard", "@capacitor/haptics", "@capacitor/status-bar"],
       groupName: "capacitor",
