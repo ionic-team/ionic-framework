@@ -1,0 +1,20 @@
+// Segment View
+// --------------------------------------------------
+
+:host {
+  display: flex;
+
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+
+  /* Hide scrollbar in Firefox */
+  scrollbar-width: none;
+
+  /* Hide scrollbar in IE and Edge */
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar in webkit */
+:host::-webkit-scrollbar {
+  display: none;
+}

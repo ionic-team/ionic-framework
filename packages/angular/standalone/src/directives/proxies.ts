@@ -65,6 +65,8 @@ import { defineCustomElement as defineIonReorderGroup } from '@ionic/core/compon
 import { defineCustomElement as defineIonRippleEffect } from '@ionic/core/components/ion-ripple-effect.js';
 import { defineCustomElement as defineIonRow } from '@ionic/core/components/ion-row.js';
 import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/components/ion-segment-button.js';
+import { defineCustomElement as defineIonSegmentContent } from '@ionic/core/components/ion-segment-content.js';
+import { defineCustomElement as defineIonSegmentView } from '@ionic/core/components/ion-segment-view.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
@@ -1839,6 +1841,52 @@ export class IonSegmentButton {
 
 
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonSegmentContent
+})
+@Component({
+  selector: 'ion-segment-content',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: [],
+  standalone: true
+})
+export class IonSegmentContent {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonSegmentContent extends Components.IonSegmentContent {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonSegmentView
+})
+@Component({
+  selector: 'ion-segment-view',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: [],
+  standalone: true
+})
+export class IonSegmentView {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonSegmentView extends Components.IonSegmentView {}
 
 
 @ProxyCmp({

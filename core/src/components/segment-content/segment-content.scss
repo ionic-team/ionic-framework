@@ -1,0 +1,10 @@
+// Segment Content
+// --------------------------------------------------
+
+:host {
+  scroll-snap-align: center;
+
+  flex-shrink: 0;
+
+  width: 100%;
+}
