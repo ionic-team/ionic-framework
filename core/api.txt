@@ -1606,6 +1606,10 @@ ion-segment-button,part,indicator
 ion-segment-button,part,indicator-background
 ion-segment-button,part,native
 
+ion-segment-content,shadow
+
+ion-segment-view,shadow
+
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
 ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
