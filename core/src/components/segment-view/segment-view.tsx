@@ -17,7 +17,7 @@ export class SegmentView implements ComponentInterface {
     if (!atSnappingPoint) return;
 
     const index = Math.round(scrollLeft / offsetWidth);
-    const segmentContent = this.getSegmentContentAtIndex(index);
+    const segmentContent = this.getSegmentContents()[index];
 
     if (segmentContent === null || segmentContent === undefined) {
       return;
@@ -48,10 +48,6 @@ export class SegmentView implements ComponentInterface {
 
   private getSegmentContents(): HTMLIonSegmentContentElement[] {
     return Array.from(this.el.querySelectorAll('ion-segment-content'));
-  }
-
-  private getSegmentContentAtIndex(index: number) {
-    return this.getSegmentContents()[index];
   }
 
   private getSegmentButtonById(id: string) {
