@@ -32,3 +32,32 @@
   // TODO(ROU-10853): replace this value with a layer token
   z-index: 10;
 }
+
+:host([slot="fixed"]) {
+  @include globals.margin(null, auto);
+
+  bottom: 16px;
+
+  width: fit-content;
+  height: fit-content;
+
+  box-shadow: #{globals.$ionic-elevation-200};
+}
+
+:host(.tab-bar-width-auto) {
+  position: absolute;
+
+  align-self: center;
+
+  width: fit-content;
+
+  contain: content;
+}
+
+:host([slot="top"].tab-bar-width-auto) {
+  top: 16px;
+}
+
+:host([slot="bottom"].tab-bar-width-auto) {
+  bottom: 16px;
+}

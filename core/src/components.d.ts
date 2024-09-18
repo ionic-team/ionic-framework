@@ -3427,6 +3427,10 @@ export namespace Components {
           * If `true`, the tab bar will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * The width of the tab bar. Defaults to full width. `auto` will display a size based on the items inside the tab bar. Only available for `"ionic"` theme.
+         */
+        "width"?: 'auto';
     }
     interface IonTabButton {
         /**
@@ -8783,6 +8787,10 @@ declare namespace LocalJSX {
           * If `true`, the tab bar will be translucent. Only applies when the theme is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * The width of the tab bar. Defaults to full width. `auto` will display a size based on the items inside the tab bar. Only available for `"ionic"` theme.
+         */
+        "width"?: 'auto';
     }
     interface IonTabButton {
         /**

@@ -37,6 +37,13 @@ export class TabBar implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
+   * The width of the tab bar. Defaults to full width.
+   * `auto` will display a size based on the items inside the tab bar.
+   * Only available for `"ionic"` theme.
+   */
+  @Prop() width?: 'auto';
+
+  /**
    * The selected tab component
    */
   @Prop() selectedTab?: string;
@@ -97,9 +104,10 @@ export class TabBar implements ComponentInterface {
   }
 
   render() {
-    const { color, translucent, keyboardVisible } = this;
+    const { color, translucent, keyboardVisible, width } = this;
     const theme = getIonTheme(this);
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
+    console.log('width', width);
 
     return (
       <Host
@@ -109,6 +117,7 @@ export class TabBar implements ComponentInterface {
           [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
+          [`tab-bar-width-${width}`]: width !== undefined,
         })}
       >
         <slot></slot>

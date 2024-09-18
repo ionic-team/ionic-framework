@@ -1,3 +1,5 @@
+@use "../../themes/mixins" as mixins;
+
 :host {
   /**
    * @prop --background: Background of the tab bar
