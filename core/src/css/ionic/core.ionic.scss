@@ -36,27 +36,32 @@ body.backdrop-no-scroll {
 
 // Modal - Card Style
 // --------------------------------------------------
+html.ionic ion-modal.modal-sheet ion-header {
+  box-shadow: none;
+}
+
 /**
- * Card style modal needs additional padding on the
+ * Modals need additional padding on the
  * top of the header. We accomplish this by targeting
  * the first toolbar in the header.
  * Footer also needs this. We do not adjust the bottom
  * padding though because of the safe area.
  */
-html.ios ion-modal.modal-card ion-header ion-toolbar:first-of-type,
-html.ios ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
-html.ios ion-modal ion-footer ion-toolbar:first-of-type {
-  padding-top: globals.$ionic-space-150;
+html.ionic ion-modal.modal-card ion-header ion-toolbar:first-of-type,
+html.ionic ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
+html.ionic ion-modal ion-footer ion-toolbar:first-of-type {
+  padding-top: globals.$ionic-space-400;
 }
 
 /**
-* Card style modal needs additional padding on the
+* Modals need additional padding on the
 * bottom of the header. We accomplish this by targeting
 * the last toolbar in the header.
 */
-html.ios ion-modal.modal-card ion-header ion-toolbar:last-of-type,
-html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
-  padding-bottom: globals.$ionic-space-150;
+html.ionic ion-modal.modal-card ion-header ion-toolbar:last-of-type,
+html.ionic ion-modal.modal-sheet ion-header ion-toolbar:last-of-type,
+html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
+  padding-bottom: globals.$ionic-space-400;
 }
 
 /**
@@ -64,9 +69,20 @@ html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
 * of toolbars while accounting for
 * safe area values when in landscape.
 */
-html.ios ion-modal ion-toolbar {
-  padding-right: calc(var(--ion-safe-area-right) + globals.$ionic-space-200);
-  padding-left: calc(var(--ion-safe-area-left) + globals.$ionic-space-200);
+html.ionic ion-modal ion-toolbar {
+  padding-right: calc(var(--ion-safe-area-right) + globals.$ionic-space-400);
+  padding-left: calc(var(--ion-safe-area-left) + globals.$ionic-space-400);
+}
+
+/**
+* Add padding to the left, right, and bottom of `ion-content`
+* within a modal.
+*/
+html.ionic ion-modal.modal-sheet ion-content {
+  --padding-start: #{globals.$ionic-space-400};
+  --padding-end: #{globals.$ionic-space-400};
+  --padding-bottom: #{globals.$ionic-space-400};
+  --background: #{globals.$ionic-color-base-white};
 }
 
 /**
@@ -74,7 +90,7 @@ html.ios ion-modal ion-toolbar {
  * should only have backdrop on first instance.
  */
 @media screen and (min-width: 768px) {
-  html.ios ion-modal.modal-card:first-of-type {
+  html.ionic ion-modal.modal-card:first-of-type {
     --backdrop-opacity: 0.18;
   }
 }
@@ -121,7 +137,7 @@ ion-modal.modal-default.show-modal ~ ion-modal.modal-default {
  * radius no matter the platform.
  * This behavior only applies to card modals.
  */
-html.ios ion-modal.modal-card .ion-page {
+html.ionic ion-modal.modal-card .ion-page {
   border-top-left-radius: var(--border-radius);
 }
 
