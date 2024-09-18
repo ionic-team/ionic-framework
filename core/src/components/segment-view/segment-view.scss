@@ -4,6 +4,8 @@
 :host {
   display: flex;
 
+  height: 100%;
+
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
 

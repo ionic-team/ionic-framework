@@ -12,37 +12,56 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-segment-view {
+        height: 200px;
+      }
+
+      ion-segment-content:nth-of-type(even) {
+        background: lightblue;
+      }
+
+      ion-segment-content:nth-of-type(odd) {
+        background: lightpink;
+      }
+    </style>
   </head>
 
-  <body onload="listenForEvent()">
+  <body>
     <ion-app>
       <ion-header>
         <ion-toolbar>
           <ion-title>Segment View - Basic</ion-title>
         </ion-toolbar>
+      </ion-header>
 
+      <ion-content>
         <ion-toolbar>
-          <ion-segment view="myView" value="Paid">
-            <ion-segment-button value="Paid">
+          <ion-segment value="Paid">
+            <ion-segment-button content-id="paid" value="Paid">
               <ion-label>Paid</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="Free">
+            <ion-segment-button content-id="free" value="Free">
               <ion-label>Free</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="Top">
+            <ion-segment-button content-id="top" value="Top">
               <ion-label>Top</ion-label>
             </ion-segment-button>
           </ion-segment>
         </ion-toolbar>
-      </ion-header>
-
-      <ion-content>
-        <ion-segment-view id="myView">
-          <ion-segment-content> Paid </ion-segment-content>
-          <ion-segment-content> Free </ion-segment-content>
-          <ion-segment-content> Top </ion-segment-content>
+        <ion-segment-view>
+          <ion-segment-content id="paid">Paid</ion-segment-content>
+          <ion-segment-content id="free">Free</ion-segment-content>
+          <ion-segment-content id="top">Top</ion-segment-content>
         </ion-segment-view>
       </ion-content>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
     </ion-app>
   </body>
 </html>

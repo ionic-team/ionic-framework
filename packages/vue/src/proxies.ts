@@ -746,6 +746,7 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment, JSX.IonS
 
 
 export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton, JSX.IonSegmentButton["value"]>('ion-segment-button', defineIonSegmentButton, [
+  'contentId',
   'disabled',
   'layout',
   'type',
