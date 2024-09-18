@@ -2694,6 +2694,10 @@ export namespace Components {
     }
     interface IonSegmentButton {
         /**
+          * The `id` of the segment content.
+         */
+        "contentId"?: string;
+        /**
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled": boolean;
@@ -2718,6 +2722,7 @@ export namespace Components {
     interface IonSegmentContent {
     }
     interface IonSegmentView {
+        "setContent": (id: string) => Promise<void>;
     }
     interface IonSelect {
         /**
@@ -7468,6 +7473,10 @@ declare namespace LocalJSX {
         "value"?: SegmentValue;
     }
     interface IonSegmentButton {
+        /**
+          * The `id` of the segment content.
+         */
+        "contentId"?: string;
         /**
           * If `true`, the user cannot interact with the segment button.
          */

@@ -1,6 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, h } from '@stencil/core';
-import { addEventListener, removeEventListener } from '@utils/helpers';
+import { Component, Element, Host, Listen, Method, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-segment-view',
@@ -8,76 +7,59 @@ import { addEventListener, removeEventListener } from '@utils/helpers';
   shadow: true,
 })
 export class SegmentView implements ComponentInterface {
-  private segmentEl: HTMLIonSegmentElement | null = null;
-
   @Element() el!: HTMLElement;
 
   @Listen('scroll')
-  segmentViewScroll(ev: any) {
-    const { segmentEl } = this;
+  handleScroll(ev: any) {
+    const { scrollLeft, offsetWidth } = ev.target;
+    const atSnappingPoint = scrollLeft % offsetWidth === 0;
 
-    const atSnappingPoint = ev.target.scrollLeft % ev.target.offsetWidth === 0;
+    if (!atSnappingPoint) return;
 
-    if (atSnappingPoint) {
-      const index = Math.round(ev.target.scrollLeft / ev.target.offsetWidth);
-      const segmentButton = this.getSegmentButtonAtIndex(index);
+    const index = Math.round(scrollLeft / offsetWidth);
+    const segmentContent = this.getSegmentContentAtIndex(index);
 
-      if (segmentEl) {
-        segmentEl.value = segmentButton.value;
-      }
+    if (segmentContent === null || segmentContent === undefined) {
+      return;
+    }
+
+    const segmentButton = this.getSegmentButtonById(segmentContent.id) as HTMLIonSegmentButtonElement;
+    const segment = this.getParentSegment(segmentButton);
+
+    if (segment) {
+      segment.value = segmentButton.value;
     }
   }
 
-  connectedCallback() {
-    const segmentEl = (this.segmentEl = document.querySelector(`ion-segment[view=${this.el.id}]`));
-    if (segmentEl) {
-      addEventListener(segmentEl, 'ionChange', this.updateSection);
-    }
-  }
+  @Method()
+  async setContent(id: string) {
+    const contents = this.getSegmentContents();
+    const index = contents.findIndex((content) => content.id === id);
 
-  disconnectedCallback() {
-    const segmentEl = this.segmentEl;
-    if (segmentEl) {
-      removeEventListener(segmentEl, 'ionChange', this.updateSection);
-      this.segmentEl = null;
-    }
-  }
+    if (index === -1) return;
 
-  private updateSection = () => {
-    const { segmentEl } = this;
-
-    if (segmentEl) {
-      const value = segmentEl.value;
-      const index = this.getSegmentButtonIndexWithValue(value);
-      this.setSection(index);
-    }
-  };
-
-  private setSection = (index: number) => {
-    const sectionWidth = this.el.offsetWidth;
+    const contentWidth = this.el.offsetWidth;
     this.el.scrollTo({
       top: 0,
-      left: index * sectionWidth,
+      left: index * contentWidth,
       behavior: 'smooth',
     });
-  };
-
-  private getSegmentButtons(): HTMLIonSegmentButtonElement[] {
-    const { segmentEl } = this;
-
-    if (!segmentEl) {
-      return [];
-    }
-
-    return Array.from(segmentEl.querySelectorAll('ion-segment-button'));
   }
 
-  private getSegmentButtonAtIndex(index: number) {
-    return this.getSegmentButtons()[index];
+  private getSegmentContents(): HTMLIonSegmentContentElement[] {
+    return Array.from(this.el.querySelectorAll('ion-segment-content'));
   }
 
-  private getSegmentButtonIndexWithValue(value: any) {
-    return this.getSegmentButtons().findIndex((b) => b.value === value);
+  private getSegmentContentAtIndex(index: number) {
+    return this.getSegmentContents()[index];
+  }
+
+  private getSegmentButtonById(id: string) {
+    return document.querySelector(`ion-segment-button[content-id="${id}"]`);
+  }
+
+  private getParentSegment(button: Element) {
+    return button.closest('ion-segment');
   }
 
   render() {

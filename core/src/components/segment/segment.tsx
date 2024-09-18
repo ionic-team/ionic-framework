@@ -307,6 +307,7 @@ export class Segment implements ComponentInterface {
 
     this.value = current.value;
     this.setCheckedClasses();
+    this.updateSegmentView();
   }
 
   private setCheckedClasses() {
@@ -319,6 +320,24 @@ export class Segment implements ComponentInterface {
     }
     if (next < buttons.length) {
       buttons[next].classList.add('segment-button-after-checked');
+    }
+  }
+
+  private updateSegmentView() {
+    const buttons = this.getButtons();
+    const button = buttons.find((btn) => btn.value === this.value);
+
+    // If the button does not have a contentId then there is
+    // no associated segment view to update
+    if (!button?.contentId) {
+      return;
+    }
+
+    const content = document.getElementById(button.contentId);
+    const segmentView = content?.closest('ion-segment-view');
+
+    if (segmentView) {
+      segmentView.setContent(button.contentId);
     }
   }
 

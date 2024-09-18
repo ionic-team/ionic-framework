@@ -37,6 +37,11 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   @State() checked = false;
 
   /**
+   * The `id` of the segment content.
+   */
+  @Prop({ reflect: true }) contentId?: string;
+
+  /**
    * If `true`, the user cannot interact with the segment button.
    */
   @Prop({ mutable: true }) disabled = false;
