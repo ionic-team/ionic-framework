@@ -36,7 +36,7 @@ body.backdrop-no-scroll {
 
 // Modal - Card Style
 // --------------------------------------------------
-html.ionic ion-modal.modal-sheet ion-header {
+html.ionic ion-modal ion-header {
   box-shadow: none;
 }
 
@@ -70,6 +70,8 @@ html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
 * safe area values when in landscape.
 */
 html.ionic ion-modal ion-toolbar {
+  --border-color: transparent;
+
   padding-right: calc(var(--ion-safe-area-right) + globals.$ionic-space-400);
   padding-left: calc(var(--ion-safe-area-left) + globals.$ionic-space-400);
 }
