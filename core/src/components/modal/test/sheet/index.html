@@ -72,6 +72,10 @@
       .grid-item {
         height: 200px;
       }
+
+      .half-sheet {
+        --height: 50%;
+      }
     </style>
   </head>
 
@@ -138,6 +142,13 @@
             onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
           >
             Backdrop is inactive
+          </button>
+
+          <button
+            id="half-sheet"
+            onclick="presentHalfSheetModal({ cssClass: 'half-sheet', backdropBreakpoint: 0.5, initialBreakpoint: 1, breakpoints: [1] })"
+          >
+            Half Sheet w/ Footer
           </button>
 
           <div class="grid">
@@ -214,12 +225,65 @@
         modal.remove();
       }
 
-      async function presentCardModal() {
-        const presentingEl = document.querySelectorAll('.ion-page')[1];
-        const modal = createModal('card', {
-          presentingElement: presentingEl,
+      async function presentHalfSheetModal(options) {
+        let items = '';
+
+        for (var i = 0; i < 3; i++) {
+          items += `<ion-item>Item ${i}</ion-item>`;
+        }
+
+        // create component to open
+        const element = document.createElement('div');
+        element.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Super Modal</ion-title>
+          <ion-buttons slot="end">
+            <ion-button class="dismiss">Dismiss Modal</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          ${items}
+        </ion-list>
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-button expand="block">Action</ion-button>
+        </ion-toolbar>
+      </ion-footer>
+      `;
+
+        let extraOptions = {
+          initialBreakpoint: 0.25,
+          breakpoints: [0, 0.25, 0.5, 0.75, 1],
+        };
+
+        if (options) {
+          extraOptions = {
+            ...extraOptions,
+            ...options,
+          };
+        }
+
+        // present the modal
+        const modalElement = Object.assign(document.createElement('ion-modal'), {
+          component: element,
+          ...extraOptions,
         });
-        await modal.present();
+
+        // listen for close event
+        const button = element.querySelector('ion-button');
+        button.addEventListener('click', () => {
+          modalElement.dismiss();
+        });
+        document.body.appendChild(modalElement);
+
+        await modalElement.present();
+
+        await modalElement.onDidDismiss();
+        modalElement.remove();
       }
     </script>
   </body>

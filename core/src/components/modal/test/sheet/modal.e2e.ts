@@ -25,6 +25,30 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('sheet modal: half screen rendering'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#half-sheet');
+
+      await ionModalDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`modal-half-sheet-present`), {
+        /**
+         * Animations must be enabled to capture the screenshot.
+         * By default, animations are disabled with toHaveScreenshot,
+         * and when capturing the screenshot will call animation.finish().
+         * This will cause the modal to close and the screenshot capture
+         * to be invalid.
+         */
+        animations: 'allow',
+      });
+    });
+  });
+});
+
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('sheet modal: backdrop'), () => {
     test.beforeEach(async ({ page }) => {
