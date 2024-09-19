@@ -340,6 +340,7 @@ export class Segment implements ComponentInterface {
          * scroll container.
          */
         const centeredX = activeButtonLeft - scrollContainerBox.width / 2 + activeButtonBox.width / 2;
+        console.log(centeredX);
 
         /**
          * We intentionally use scrollBy here instead of scrollIntoView
@@ -354,10 +355,24 @@ export class Segment implements ComponentInterface {
          * within the scroll container, the browser will attempt
          * to center by as much as it can.
          */
-        el.scrollBy({
-          top: 0,
-          left: centeredX,
+        // el.scrollBy({
+        //   top: 0,
+        //   left: centeredX,
+        //   behavior: smoothScroll ? 'smooth' : 'instant',
+        // });
+
+        activeButton.scrollIntoView({
           behavior: smoothScroll ? 'smooth' : 'instant',
+          inline: 'center',
+
+          /**
+           * Segment should scroll on the
+           * horizontal axis. `block: 'nearest'`
+           * ensures that the vertical axis
+           * does not scroll if the segment
+           * as a whole is already in view.
+           */
+          block: 'nearest',
         });
       }
     }
