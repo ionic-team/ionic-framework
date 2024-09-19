@@ -74,6 +74,23 @@ html.ionic ion-modal ion-toolbar {
 }
 
 /**
+* Center an `ion-title` within a modal header. This works around
+* limitations with `:host-context()` not being supported in all browsers.
+*/
+html.ionic ion-modal ion-header ion-toolbar ion-title {
+  @include globals.position(0, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  transform: translateZ(0);
+
+  text-align: center;
+}
+
+/**
 * Add padding to the left, right, and bottom of `ion-content`
 * within a modal.
 */
