@@ -65,15 +65,12 @@ html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
 }
 
 /**
-* Add padding on the left and right
-* of toolbars while accounting for
-* safe area values when in landscape.
+* Add additional padding to the left and right of toolbars while accounting
+* for the safe area insets.
 */
 html.ionic ion-modal ion-toolbar {
-  --border-color: transparent;
-
-  padding-right: calc(var(--ion-safe-area-right) + globals.$ionic-space-400);
-  padding-left: calc(var(--ion-safe-area-left) + globals.$ionic-space-400);
+  --padding-start: calc(var(--ion-safe-area-right) + #{globals.$ionic-space-200});
+  --padding-end: calc(var(--ion-safe-area-left) + #{globals.$ionic-space-200});
 }
 
 /**
@@ -84,7 +81,6 @@ html.ionic ion-modal.modal-sheet ion-content {
   --padding-start: #{globals.$ionic-space-400};
   --padding-end: #{globals.$ionic-space-400};
   --padding-bottom: #{globals.$ionic-space-400};
-  --background: #{globals.$ionic-color-base-white};
 }
 
 /**
