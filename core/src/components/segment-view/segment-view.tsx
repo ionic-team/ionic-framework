@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Method, h } from '@stencil/core';
+import { Component, Element, Host, Listen, Method, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-segment-view',
@@ -8,6 +8,11 @@ import { Component, Element, Host, Listen, Method, h } from '@stencil/core';
 })
 export class SegmentView implements ComponentInterface {
   @Element() el!: HTMLElement;
+
+  /**
+   * If `true`, the segment view cannot be interacted with.
+   */
+  @Prop() disabled = false;
 
   @Listen('scroll')
   handleScroll(ev: any) {
@@ -59,8 +64,14 @@ export class SegmentView implements ComponentInterface {
   }
 
   render() {
+    const { disabled } = this;
+
     return (
-      <Host>
+      <Host
+        class={{
+          'segment-view-disabled': disabled,
+        }}
+      >
         <slot></slot>
       </Host>
     );

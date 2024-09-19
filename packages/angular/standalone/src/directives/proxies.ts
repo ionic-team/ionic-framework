@@ -1868,6 +1868,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSegmentView,
+  inputs: ['disabled'],
   methods: ['setContent']
 })
 @Component({
@@ -1875,7 +1876,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['disabled'],
   standalone: true
 })
 export class IonSegmentView {

@@ -2722,6 +2722,10 @@ export namespace Components {
     interface IonSegmentContent {
     }
     interface IonSegmentView {
+        /**
+          * If `true`, the segment view cannot be interacted with.
+         */
+        "disabled": boolean;
         "setContent": (id: string) => Promise<void>;
     }
     interface IonSelect {
@@ -7501,6 +7505,10 @@ declare namespace LocalJSX {
     interface IonSegmentContent {
     }
     interface IonSegmentView {
+        /**
+          * If `true`, the segment view cannot be interacted with.
+         */
+        "disabled"?: boolean;
     }
     interface IonSelect {
         /**

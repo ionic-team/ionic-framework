@@ -758,7 +758,9 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
 export const IonSegmentContent = /*@__PURE__*/ defineContainer<JSX.IonSegmentContent>('ion-segment-content', defineIonSegmentContent);
 
 
-export const IonSegmentView = /*@__PURE__*/ defineContainer<JSX.IonSegmentView>('ion-segment-view', defineIonSegmentView);
+export const IonSegmentView = /*@__PURE__*/ defineContainer<JSX.IonSegmentView>('ion-segment-view', defineIonSegmentView, [
+  'disabled'
+]);
 
 
 export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSelect["value"]>('ion-select', defineIonSelect, [

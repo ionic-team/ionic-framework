@@ -55,6 +55,25 @@
           <ion-segment-content id="free">Free</ion-segment-content>
           <ion-segment-content id="top">Top</ion-segment-content>
         </ion-segment-view>
+
+        <ion-toolbar>
+          <ion-segment disabled color="danger">
+            <ion-segment-button content-id="bookmarks" value="Bookmarks">
+              <ion-label>Bookmarks</ion-label>
+            </ion-segment-button>
+            <ion-segment-button content-id="reading-list" value="Reading List">
+              <ion-label>Reading List</ion-label>
+            </ion-segment-button>
+            <ion-segment-button content-id="shared-links" value="Shared Links">
+              <ion-label>Shared Links</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+        <ion-segment-view disabled>
+          <ion-segment-content id="bookmarks">Bookmarks</ion-segment-content>
+          <ion-segment-content id="reading-list">Reading List</ion-segment-content>
+          <ion-segment-content id="shared-links">Shared Links</ion-segment-content>
+        </ion-segment-view>
       </ion-content>
 
       <ion-footer>
