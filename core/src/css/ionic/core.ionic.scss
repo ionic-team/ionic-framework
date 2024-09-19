@@ -69,8 +69,8 @@ html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
 * for the safe area insets.
 */
 html.ionic ion-modal ion-toolbar {
-  --padding-start: calc(var(--ion-safe-area-right) + #{globals.$ionic-space-200});
-  --padding-end: calc(var(--ion-safe-area-left) + #{globals.$ionic-space-200});
+  --padding-start: calc(var(--ion-safe-area-right) + #{globals.$ionic-space-400});
+  --padding-end: calc(var(--ion-safe-area-left) + #{globals.$ionic-space-400});
 }
 
 /**
