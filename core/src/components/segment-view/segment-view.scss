@@ -20,3 +20,12 @@
 :host::-webkit-scrollbar {
   display: none;
 }
+
+:host(.segment-view-disabled) {
+  scroll-snap-type: none;
+
+  touch-action: none;
+  overflow-x: hidden;
+
+  opacity: 0.7;
+}
