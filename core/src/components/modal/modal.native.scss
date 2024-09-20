@@ -1,0 +1,50 @@
+@use "./modal.common";
+@use "./modal.vars" as vars;
+@forward "./modal.vars.scss";
+
+// Modals: Native Styles
+// --------------------------------------------------
+
+:host {
+  --background: #{vars.$background-color};
+  --border-radius: 0;
+  --backdrop-opacity: 0;
+
+  color: vars.$modal-text-color;
+}
+
+@media only screen and (min-width: vars.$modal-inset-min-width) and (min-height: vars.$modal-inset-min-height-small) {
+  :host {
+    --width: #{vars.$modal-inset-width};
+    --height: #{vars.$modal-inset-height-small};
+    --ion-safe-area-top: 0px;
+    --ion-safe-area-bottom: 0px;
+    --ion-safe-area-right: 0px;
+    --ion-safe-area-left: 0px;
+  }
+}
+
+@media only screen and (min-width: vars.$modal-inset-min-width) and (min-height: vars.$modal-inset-min-height-large) {
+  :host {
+    --width: #{vars.$modal-inset-width};
+    --height: #{vars.$modal-inset-height-large};
+  }
+}
+
+// Sheet Modal
+// --------------------------------------------------
+
+.modal-handle {
+  @include vars.position(5px, 0px, null, 0px);
+  @include vars.border-radius(8px, 8px, 8px, 8px);
+
+  width: 36px;
+  height: 5px;
+
+  background: var(--ion-color-step-350, var(--ion-background-color-step-350, #c0c0be));
+
+  &::before {
+    width: 36px;
+    height: 5px;
+  }
+}

@@ -1,11 +1,15 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./modal";
+@use "./modal.common";
 
 // Ionic Modal
 // --------------------------------------------------
 
 :host {
+  --background: #{globals.$ionic-color-base-white};
+  --box-shadow: #{globals.$ionic-elevation-300};
   --backdrop-opacity: 1;
+
+  color: globals.$ionic-color-neutral-1200;
 }
 
 // Shape
@@ -20,4 +24,21 @@
 
 :host(.modal-rectangular) {
   --border-radius: #{globals.$ionic-border-radius-0};
+}
+
+// Sheet Modal
+// --------------------------------------------------
+
+.modal-handle {
+  @include globals.position(globals.$ionic-space-300, 0px, null, 0px);
+  @include globals.border-radius(globals.$ionic-border-radius-100);
+
+  width: globals.$ionic-scale-1100;
+  height: globals.$ionic-scale-100;
+
+  background-color: globals.$ionic-color-neutral-300;
+}
+
+:host(.modal-sheet) .modal-wrapper {
+  @include globals.border-radius(var(--border-radius), var(--border-radius), 0, 0);
 }

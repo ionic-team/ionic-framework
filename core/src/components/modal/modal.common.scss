@@ -1,6 +1,6 @@
-@import "./modal.vars";
+@import "../../themes/mixins.scss";
 
-// Modals
+// Modals: Common Styles
 // --------------------------------------------------
 
 :host {
@@ -29,13 +29,10 @@
   --min-height: auto;
   --max-height: auto;
   --overflow: hidden;
-  --border-radius: 0;
   --border-width: 0;
   --border-style: none;
   --border-color: transparent;
-  --background: #{$background-color};
   --box-shadow: none;
-  --backdrop-opacity: 0;
 
   @include position(0, 0, 0, 0);
 
@@ -46,8 +43,6 @@
   justify-content: center;
 
   outline: none;
-
-  color: $modal-text-color;
 
   contain: strict;
 }
@@ -90,36 +85,13 @@ ion-backdrop {
   background: transparent;
 }
 
-@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-  :host {
-    --width: #{$modal-inset-width};
-    --height: #{$modal-inset-height-small};
-    --ion-safe-area-top: 0px;
-    --ion-safe-area-bottom: 0px;
-    --ion-safe-area-right: 0px;
-    --ion-safe-area-left: 0px;
-  }
-}
-
-@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-large) {
-  :host {
-    --width: #{$modal-inset-width};
-    --height: #{$modal-inset-height-large};
-  }
-}
-
 // Sheet Modal
 // --------------------------------------------------
 
 .modal-handle {
-  @include position(5px, 0px, null, 0px);
-  @include border-radius(8px, 8px, 8px, 8px);
   @include margin(null, auto, null, auto);
 
   position: absolute;
-
-  width: 36px;
-  height: 5px;
 
   /**
    * This allows the handle to appear
@@ -128,8 +100,6 @@ ion-backdrop {
   transform: translateZ(0);
 
   border: 0;
-
-  background: var(--ion-color-step-350, var(--ion-background-color-step-350, #c0c0be));
 
   cursor: pointer;
 
@@ -143,9 +113,6 @@ ion-backdrop {
     @include padding(4px, 4px, 4px, 4px);
 
     position: absolute;
-
-    width: 36px;
-    height: 5px;
 
     transform: translate(-50%, -50%);
 
