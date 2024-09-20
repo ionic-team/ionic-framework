@@ -1,21 +1,22 @@
 @use "./modal.common";
-@import "./modal.vars";
+@use "./modal.vars" as vars;
+@forward "./modal.vars.scss";
 
 // Modals: Native Styles
 // --------------------------------------------------
 
 :host {
-  --background: #{$background-color};
+  --background: #{vars.$background-color};
   --border-radius: 0;
   --backdrop-opacity: 0;
 
-  color: $modal-text-color;
+  color: vars.$modal-text-color;
 }
 
-@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+@media only screen and (min-width: vars.$modal-inset-min-width) and (min-height: vars.$modal-inset-min-height-small) {
   :host {
-    --width: #{$modal-inset-width};
-    --height: #{$modal-inset-height-small};
+    --width: #{vars.$modal-inset-width};
+    --height: #{vars.$modal-inset-height-small};
     --ion-safe-area-top: 0px;
     --ion-safe-area-bottom: 0px;
     --ion-safe-area-right: 0px;
@@ -23,10 +24,10 @@
   }
 }
 
-@media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-large) {
+@media only screen and (min-width: vars.$modal-inset-min-width) and (min-height: vars.$modal-inset-min-height-large) {
   :host {
-    --width: #{$modal-inset-width};
-    --height: #{$modal-inset-height-large};
+    --width: #{vars.$modal-inset-width};
+    --height: #{vars.$modal-inset-height-large};
   }
 }
 
@@ -34,8 +35,8 @@
 // --------------------------------------------------
 
 .modal-handle {
-  @include position(5px, 0px, null, 0px);
-  @include border-radius(8px, 8px, 8px, 8px);
+  @include vars.position(5px, 0px, null, 0px);
+  @include vars.border-radius(8px, 8px, 8px, 8px);
 
   width: 36px;
   height: 5px;
