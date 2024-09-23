@@ -130,10 +130,11 @@
       </ion-footer>
 
       <script>
-        let currentValue;
-
         function changeSegmentContent() {
+          const segment = document.querySelector('#noValueSegment');
           const segmentView = document.querySelector('#noValueSegmentView');
+
+          let currentValue = segment.value;
 
           if (currentValue === 'value') {
             currentValue = 'no';
