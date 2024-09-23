@@ -33,8 +33,10 @@
   z-index: 10;
 }
 
-// Expand: Compact
+// Tab Bar Expand
 // --------------------------------------------------
+
+/* Compact */
 :host(.tab-bar-compact) {
   position: absolute;
 
@@ -47,10 +49,28 @@
   contain: content;
 }
 
-:host([slot="top"].tab-bar-expand-compact) {
+:host([slot="top"].tab-bar-compact) {
   top: globals.$ionic-space-400;
 }
 
-:host([slot="bottom"].tab-bar-expand-compact) {
+:host([slot="bottom"].tab-bar-compact) {
   bottom: globals.$ionic-space-400;
+}
+
+// Tab Bar Shapes
+// --------------------------------------------------
+
+/* Soft */
+:host(.tab-bar-soft) {
+  @include globals.border-radius(globals.$ionic-border-radius-400);
+}
+
+/* Round */
+:host(.tab-bar-round) {
+  @include globals.border-radius(globals.$ionic-border-radius-full);
+}
+
+/* Rectangular */
+:host(.tab-bar-rectangular) {
+  @include globals.border-radius(globals.$ionic-border-radius-0);
 }

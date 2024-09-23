@@ -3424,6 +3424,10 @@ export namespace Components {
          */
         "selectedTab"?: string;
         /**
+          * Set to `"soft"` for a tab bar with slightly rounded corners, `"round"` for a tab bar with fully rounded corners, or `"rectangular"` for a tab bar without rounded corners.  Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -8783,6 +8787,10 @@ declare namespace LocalJSX {
           * The selected tab component
          */
         "selectedTab"?: string;
+        /**
+          * Set to `"soft"` for a tab bar with slightly rounded corners, `"round"` for a tab bar with fully rounded corners, or `"rectangular"` for a tab bar without rounded corners.  Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */

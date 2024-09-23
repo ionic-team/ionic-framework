@@ -50,6 +50,13 @@ export class TabBar implements ComponentInterface {
   }
 
   /**
+   * If `true`, the tab bar will be translucent.
+   * Only applies when the theme is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+   */
+  @Prop() translucent = false;
+
+  /**
    * Set to `"compact"` to display a width based on the items
    * inside the tab bar. This value will only work for the
    * `ionic` theme.
@@ -61,11 +68,13 @@ export class TabBar implements ComponentInterface {
   @Prop() expand: 'compact' | 'full' = 'full';
 
   /**
-   * If `true`, the tab bar will be translucent.
-   * Only applies when the theme is `"ios"` and the device supports
-   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+   * Set to `"soft"` for a tab bar with slightly rounded corners,
+   * `"round"` for a tab bar with fully rounded corners, or
+   * `"rectangular"` for a tab bar without rounded corners.
+   *
+   * Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
    */
-  @Prop() translucent = false;
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
@@ -108,7 +117,7 @@ export class TabBar implements ComponentInterface {
   }
 
   render() {
-    const { color, translucent, keyboardVisible } = this;
+    const { color, translucent, keyboardVisible, expand, shape } = this;
     const theme = getIonTheme(this);
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
@@ -120,7 +129,8 @@ export class TabBar implements ComponentInterface {
           [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
-          [`tab-bar-${this.expand}`]: true,
+          [`tab-bar-${expand}`]: true,
+          [`tab-bar-${shape}`]: shape !== undefined,
         })}
       >
         <slot></slot>
