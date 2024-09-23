@@ -202,6 +202,7 @@ export class Segment implements ComponentInterface {
     if (value !== undefined) {
       if (this.valueBeforeGesture !== value) {
         this.emitValueChange();
+        this.updateSegmentView();
       }
     }
     this.valueBeforeGesture = undefined;
@@ -234,11 +235,7 @@ export class Segment implements ComponentInterface {
     const buttons = this.getButtons();
 
     buttons.forEach((button) => {
-      if (activated) {
-        button.classList.add('segment-button-activated');
-      } else {
-        button.classList.remove('segment-button-activated');
-      }
+      button.classList.toggle('segment-button-activated', activated);
     });
     this.activated = activated;
   }
@@ -307,7 +304,6 @@ export class Segment implements ComponentInterface {
 
     this.value = current.value;
     this.setCheckedClasses();
-    this.updateSegmentView();
   }
 
   private setCheckedClasses() {
@@ -323,6 +319,13 @@ export class Segment implements ComponentInterface {
     }
   }
 
+  /**
+   * Finds the related segment view and sets its current content
+   * based on the selected segment button. This method
+   * should be called only after the gesture is completed
+   * (if dragging between segments) or when a segment button
+   * is clicked directly.
+   */
   private updateSegmentView() {
     const buttons = this.getButtons();
     const button = buttons.find((btn) => btn.value === this.value);
@@ -505,6 +508,7 @@ export class Segment implements ComponentInterface {
 
     if (current !== previous) {
       this.emitValueChange();
+      this.updateSegmentView();
     }
 
     if (this.scrollable || !this.swipeGesture) {
