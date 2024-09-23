@@ -15,15 +15,25 @@
 
     <style>
       ion-segment-view {
-        height: 200px;
+        height: 100px;
       }
 
-      ion-segment-content:nth-of-type(even) {
+      ion-segment-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      ion-segment-content:nth-of-type(1) {
+        background: lightpink;
+      }
+
+      ion-segment-content:nth-of-type(2) {
         background: lightblue;
       }
 
-      ion-segment-content:nth-of-type(odd) {
-        background: lightpink;
+      ion-segment-content:nth-of-type(3) {
+        background: lightgreen;
       }
     </style>
   </head>
@@ -38,14 +48,42 @@
 
       <ion-content>
         <ion-toolbar>
-          <ion-segment value="Paid">
-            <ion-segment-button content-id="paid" value="Paid">
+          <ion-segment>
+            <ion-segment-button content-id="no" value="no">
+              <ion-label>No</ion-label>
+            </ion-segment-button>
+            <ion-segment-button content-id="value" value="value">
+              <ion-label>Value</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+        <ion-segment-view>
+          <ion-segment-content id="no">No</ion-segment-content>
+          <ion-segment-content id="value">Value</ion-segment-content>
+        </ion-segment-view>
+
+          <ion-segment value="all">
+            <ion-segment-button content-id="all" value="all">
+              <ion-label>All</ion-label>
+            </ion-segment-button>
+            <ion-segment-button content-id="favorites" value="favorites">
+              <ion-label>Favorites</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+        <ion-segment-view>
+          <ion-segment-content id="all">All</ion-segment-content>
+          <ion-segment-content id="favorites">Favorites</ion-segment-content>
+        </ion-segment-view>
+
+          <ion-segment value="free">
+            <ion-segment-button content-id="paid" value="paid">
               <ion-label>Paid</ion-label>
             </ion-segment-button>
-            <ion-segment-button content-id="free" value="Free">
+            <ion-segment-button content-id="free" value="free">
               <ion-label>Free</ion-label>
             </ion-segment-button>
-            <ion-segment-button content-id="top" value="Top">
+            <ion-segment-button content-id="top" value="top">
               <ion-label>Top</ion-label>
             </ion-segment-button>
           </ion-segment>
@@ -57,14 +95,14 @@
         </ion-segment-view>
 
         <ion-toolbar>
-          <ion-segment disabled color="danger">
-            <ion-segment-button content-id="bookmarks" value="Bookmarks">
+          <ion-segment disabled value="reading-list">
+            <ion-segment-button content-id="bookmarks" value="bookmarks">
               <ion-label>Bookmarks</ion-label>
             </ion-segment-button>
-            <ion-segment-button content-id="reading-list" value="Reading List">
+            <ion-segment-button content-id="reading-list" value="reading-list">
               <ion-label>Reading List</ion-label>
             </ion-segment-button>
-            <ion-segment-button content-id="shared-links" value="Shared Links">
+            <ion-segment-button content-id="shared-links" value="shared-links">
               <ion-label>Shared Links</ion-label>
             </ion-segment-button>
           </ion-segment>

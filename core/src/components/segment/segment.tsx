@@ -180,6 +180,10 @@ export class Segment implements ComponentInterface {
     if (this.disabled) {
       this.disabledChanged();
     }
+
+    // Update segment view based on the initial value,
+    // but do not animate the scroll
+    this.updateSegmentView(false);
   }
 
   onStart(detail: GestureDetail) {
@@ -322,11 +326,11 @@ export class Segment implements ComponentInterface {
   /**
    * Finds the related segment view and sets its current content
    * based on the selected segment button. This method
-   * should be called only after the gesture is completed
-   * (if dragging between segments) or when a segment button
-   * is clicked directly.
+   * should be called on initial load of the segment,
+   * after the gesture is completed (if dragging between segments)
+   * and when a segment button is clicked directly.
    */
-  private updateSegmentView() {
+  private updateSegmentView(smoothScroll = true) {
     const buttons = this.getButtons();
     const button = buttons.find((btn) => btn.value === this.value);
 
@@ -340,7 +344,7 @@ export class Segment implements ComponentInterface {
     const segmentView = content?.closest('ion-segment-view');
 
     if (segmentView) {
-      segmentView.setContent(button.contentId);
+      segmentView.setContent(button.contentId, smoothScroll);
     }
   }
 

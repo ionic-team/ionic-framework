@@ -1611,7 +1611,8 @@ ion-segment-button,part,native
 ion-segment-content,shadow
 
 ion-segment-view,shadow
-ion-segment-view,method,setContent,setContent(id: string) => Promise<void>
+ion-segment-view,prop,disabled,boolean,false,false,false
+ion-segment-view,method,setContent,setContent(id: string, smoothScroll?: boolean) => Promise<void>
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false

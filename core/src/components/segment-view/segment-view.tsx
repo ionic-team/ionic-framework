@@ -37,7 +37,7 @@ export class SegmentView implements ComponentInterface {
   }
 
   @Method()
-  async setContent(id: string) {
+  async setContent(id: string, smoothScroll = true) {
     const contents = this.getSegmentContents();
     const index = contents.findIndex((content) => content.id === id);
 
@@ -47,7 +47,7 @@ export class SegmentView implements ComponentInterface {
     this.el.scrollTo({
       top: 0,
       left: index * contentWidth,
-      behavior: 'smooth',
+      behavior: smoothScroll ? 'smooth' : 'auto',
     });
   }
 
