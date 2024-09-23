@@ -62,6 +62,7 @@
           <ion-segment-content id="value">Value</ion-segment-content>
         </ion-segment-view>
 
+        <ion-toolbar>
           <ion-segment value="all">
             <ion-segment-button content-id="all" value="all">
               <ion-label>All</ion-label>
@@ -141,12 +142,20 @@
           } else {
             currentValue = 'value';
           }
+
           segmentView.setContent(currentValue);
         }
 
-        function clearSegmentValue() {
-          const segment = document.querySelector('#noValueSegment');
-          segment.value = undefined;
+        async function clearSegmentValue() {
+          const segmentView = document.querySelector('#noValueSegmentView');
+          segmentView.setContent('no', false);
+
+          // Set timeout to ensure the value is cleared after
+          // the segment content is updated
+          setTimeout(() => {
+            const segment = document.querySelector('#noValueSegment');
+            segment.value = undefined;
+          });
         }
       </script>
     </ion-app>
