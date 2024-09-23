@@ -2009,13 +2009,14 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
 
 
 @ProxyCmp({
+  inputs: ['disabled']
 })
 @Component({
   selector: 'ion-segment-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [],
+  inputs: ['disabled'],
 })
 export class IonSegmentContent {
   protected el: HTMLElement;
