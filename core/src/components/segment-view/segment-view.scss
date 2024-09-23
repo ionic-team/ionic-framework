@@ -22,10 +22,6 @@
 }
 
 :host(.segment-view-disabled) {
-  scroll-snap-type: none;
-
-  opacity: 0.7;
-
   touch-action: none;
   overflow-x: hidden;
 }

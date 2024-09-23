@@ -3,7 +3,10 @@ import { Component, Element, Host, Listen, Method, Prop, h } from '@stencil/core
 
 @Component({
   tag: 'ion-segment-view',
-  styleUrl: 'segment-view.scss',
+  styleUrls: {
+    ios: 'segment-view.ios.scss',
+    md: 'segment-view.md.scss',
+  },
   shadow: true,
 })
 export class SegmentView implements ComponentInterface {
