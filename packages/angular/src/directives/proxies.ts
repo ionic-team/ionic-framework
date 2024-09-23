@@ -2178,14 +2178,14 @@ export declare interface IonTab extends Components.IonTab {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'mode', 'selectedTab', 'theme', 'translucent']
+  inputs: ['color', 'expand', 'mode', 'selectedTab', 'shape', 'theme', 'translucent']
 })
 @Component({
   selector: 'ion-tab-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'selectedTab', 'theme', 'translucent'],
+  inputs: ['color', 'expand', 'mode', 'selectedTab', 'shape', 'theme', 'translucent'],
 })
 export class IonTabBar {
   protected el: HTMLElement;
