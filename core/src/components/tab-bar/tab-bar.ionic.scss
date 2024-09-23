@@ -32,3 +32,25 @@
   // TODO(ROU-10853): replace this value with a layer token
   z-index: 10;
 }
+
+// Expand: Compact
+// --------------------------------------------------
+:host(.tab-bar-compact) {
+  position: absolute;
+
+  align-self: center;
+
+  width: fit-content;
+
+  box-shadow: #{globals.$ionic-elevation-200};
+
+  contain: content;
+}
+
+:host([slot="top"].tab-bar-expand-compact) {
+  top: globals.$ionic-space-400;
+}
+
+:host([slot="bottom"].tab-bar-expand-compact) {
+  bottom: globals.$ionic-space-400;
+}

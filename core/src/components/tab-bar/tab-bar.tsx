@@ -50,6 +50,17 @@ export class TabBar implements ComponentInterface {
   }
 
   /**
+   * Set to `"compact"` to display a width based on the items
+   * inside the tab bar. This value will only work for the
+   * `ionic` theme.
+   *
+   * Set to `"full"` to display a full width tab bar.
+   *
+   * Defaults to `"full"`.
+   */
+  @Prop() expand: 'compact' | 'full' = 'full';
+
+  /**
    * If `true`, the tab bar will be translucent.
    * Only applies when the theme is `"ios"` and the device supports
    * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
@@ -109,6 +120,7 @@ export class TabBar implements ComponentInterface {
           [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
+          [`tab-bar-${this.expand}`]: true,
         })}
       >
         <slot></slot>

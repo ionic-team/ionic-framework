@@ -9,8 +9,6 @@
   align-items: center;
   justify-content: center;
 
-  width: auto;
-
   /* stylelint-disable */
   padding-right: var(--ion-safe-area-right);
   padding-bottom: var(--ion-safe-area-bottom, 0);
@@ -24,7 +22,6 @@
 
   text-align: center;
 
-  contain: strict;
   user-select: none;
 
   /* stylelint-disable-next-line declaration-no-important */
@@ -51,4 +48,12 @@
 :host(.tab-bar-hidden) {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
+}
+
+// Expand: Full
+// --------------------------------------------------
+:host(.tab-bar-full) {
+  width: auto;
+
+  contain: strict;
 }

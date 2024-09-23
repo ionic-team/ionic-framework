@@ -3412,6 +3412,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Set to `"compact"` to display a width based on the items inside the tab bar. This value will only work for the `ionic` theme.  Set to `"full"` to display a full width tab bar.  Defaults to `"full"`.
+         */
+        "expand": 'compact' | 'full';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -8765,6 +8769,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * Set to `"compact"` to display a width based on the items inside the tab bar. This value will only work for the `ionic` theme.  Set to `"full"` to display a full width tab bar.  Defaults to `"full"`.
+         */
+        "expand"?: 'compact' | 'full';
         /**
           * The mode determines the platform behaviors of the component.
          */
