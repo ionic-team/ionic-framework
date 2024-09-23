@@ -96,32 +96,9 @@
           <ion-segment-content id="top">Top</ion-segment-content>
         </ion-segment-view>
 
-        <ion-toolbar>
-          <ion-segment disabled value="reading-list">
-            <ion-segment-button content-id="bookmarks" value="bookmarks">
-              <ion-label>Bookmarks</ion-label>
-            </ion-segment-button>
-            <ion-segment-button content-id="reading-list" value="reading-list">
-              <ion-label>Reading List</ion-label>
-            </ion-segment-button>
-            <ion-segment-button content-id="shared-links" value="shared-links">
-              <ion-label>Shared Links</ion-label>
-            </ion-segment-button>
-          </ion-segment>
-        </ion-toolbar>
-        <ion-segment-view disabled>
-          <ion-segment-content id="bookmarks">Bookmarks</ion-segment-content>
-          <ion-segment-content id="reading-list">Reading List</ion-segment-content>
-          <ion-segment-content id="shared-links">Shared Links</ion-segment-content>
-        </ion-segment-view>
+        <button class="expand" onClick="changeSegmentContent()">Change Segment Content</button>
 
-        <button class="expand" onClick="changeSegmentContent()">
-          Change Segment Content
-        </button>
-
-        <button class="expand" onClick="clearSegmentValue()">
-          Clear Segment Value
-        </button>
+        <button class="expand" onClick="clearSegmentValue()">Clear Segment Value</button>
       </ion-content>
 
       <ion-footer>
