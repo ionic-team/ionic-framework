@@ -62,7 +62,7 @@ export class SegmentView implements ComponentInterface {
   }
 
   private getSegmentContents(): HTMLIonSegmentContentElement[] {
-    return Array.from(this.el.querySelectorAll('ion-segment-content'));
+    return Array.from(this.el.querySelectorAll('ion-segment-content:not([disabled])'));
   }
 
   private getSegmentButtonById(id: string) {
