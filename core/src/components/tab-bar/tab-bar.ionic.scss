@@ -19,10 +19,8 @@
    */
   min-height: calc(globals.$ionic-scale-1400 - calc(globals.$ionic-space-100 * 2));
 
-  padding-top: calc(globals.$ionic-space-100 + var(--ion-safe-area-top, 0));
-  padding-bottom: calc(globals.$ionic-space-100 + var(--ion-safe-area-bottom, 0));
-
   /* stylelint-disable */
+  padding-bottom: calc(globals.$ionic-space-100 + var(--ion-safe-area-bottom, 0));
   padding-right: calc(globals.$ionic-space-400 + var(--ion-safe-area-right, 0));
   padding-left: calc(globals.$ionic-space-400 + var(--ion-safe-area-left, 0));
   /* stylelint-enable */
@@ -31,6 +29,15 @@
 
   // TODO(ROU-10853): replace this value with a layer token
   z-index: 10;
+}
+
+// Tab Bar: Slot
+// --------------------------------------------------
+
+/* Top */
+:host([slot="top"]) {
+  padding-top: calc(globals.$ionic-space-100 + var(--ion-safe-area-top, 0));
+  padding-bottom: 0;
 }
 
 // Tab Bar Expand
