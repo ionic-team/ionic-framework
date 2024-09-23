@@ -48,7 +48,7 @@
 
       <ion-content>
         <ion-toolbar>
-          <ion-segment>
+          <ion-segment id="noValueSegment">
             <ion-segment-button content-id="no" value="no">
               <ion-label>No</ion-label>
             </ion-segment-button>
@@ -57,7 +57,7 @@
             </ion-segment-button>
           </ion-segment>
         </ion-toolbar>
-        <ion-segment-view>
+        <ion-segment-view id="noValueSegmentView">
           <ion-segment-content id="no">No</ion-segment-content>
           <ion-segment-content id="value">Value</ion-segment-content>
         </ion-segment-view>
@@ -76,6 +76,7 @@
           <ion-segment-content id="favorites">Favorites</ion-segment-content>
         </ion-segment-view>
 
+        <ion-toolbar>
           <ion-segment value="free">
             <ion-segment-button content-id="paid" value="paid">
               <ion-label>Paid</ion-label>
@@ -112,6 +113,14 @@
           <ion-segment-content id="reading-list">Reading List</ion-segment-content>
           <ion-segment-content id="shared-links">Shared Links</ion-segment-content>
         </ion-segment-view>
+
+        <button class="expand" onClick="changeSegmentContent()">
+          Change Segment Content
+        </button>
+
+        <button class="expand" onClick="clearSegmentValue()">
+          Clear Segment Value
+        </button>
       </ion-content>
 
       <ion-footer>
@@ -119,6 +128,26 @@
           <ion-title>Footer</ion-title>
         </ion-toolbar>
       </ion-footer>
+
+      <script>
+        let currentValue;
+
+        function changeSegmentContent() {
+          const segmentView = document.querySelector('#noValueSegmentView');
+
+          if (currentValue === 'value') {
+            currentValue = 'no';
+          } else {
+            currentValue = 'value';
+          }
+          segmentView.setContent(currentValue);
+        }
+
+        function clearSegmentValue() {
+          const segment = document.querySelector('#noValueSegment');
+          segment.value = undefined;
+        }
+      </script>
     </ion-app>
   </body>
 </html>

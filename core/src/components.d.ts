@@ -2723,6 +2723,11 @@ export namespace Components {
           * If `true`, the segment view cannot be interacted with.
          */
         "disabled": boolean;
+        /**
+          * This method is used to programmatically set the displayed segment content in the segment view. Calling this method will update the `value` of the corresponding segment button.
+          * @param id : The id of the segment content to display.
+          * @param smoothScroll : Whether to animate the scroll transition.
+         */
         "setContent": (id: string, smoothScroll?: boolean) => Promise<void>;
     }
     interface IonSelect {
