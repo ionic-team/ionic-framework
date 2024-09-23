@@ -1608,6 +1608,7 @@ ion-segment-button,part,indicator-background
 ion-segment-button,part,native
 
 ion-segment-content,shadow
+ion-segment-content,prop,disabled,boolean,false,false,false
 
 ion-segment-view,shadow
 ion-segment-view,prop,disabled,boolean,false,false,false

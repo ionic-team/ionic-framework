@@ -2717,6 +2717,10 @@ export namespace Components {
         "value": SegmentValue;
     }
     interface IonSegmentContent {
+        /**
+          * If `true`, the segment content will not be displayed.
+         */
+        "disabled": boolean;
     }
     interface IonSegmentView {
         /**
@@ -7505,6 +7509,10 @@ declare namespace LocalJSX {
         "value"?: SegmentValue;
     }
     interface IonSegmentContent {
+        /**
+          * If `true`, the segment content will not be displayed.
+         */
+        "disabled"?: boolean;
     }
     interface IonSegmentView {
         /**
