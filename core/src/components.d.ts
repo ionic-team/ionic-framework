@@ -2723,7 +2723,7 @@ export namespace Components {
           * If `true`, the segment view cannot be interacted with.
          */
         "disabled": boolean;
-        "setContent": (id: string) => Promise<void>;
+        "setContent": (id: string, smoothScroll?: boolean) => Promise<void>;
     }
     interface IonSelect {
         /**
