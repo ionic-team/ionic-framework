@@ -65,7 +65,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(segmentContent).toBeInViewport();
     });
 
-    test.only('should scroll to the third content and update the segment value when the second segment content is disabled', async ({ page }) => {
+    test('should scroll to the third content and update the segment value when the second segment content is disabled', async ({ page }) => {
       await page.setContent(
         `
         <ion-segment>
