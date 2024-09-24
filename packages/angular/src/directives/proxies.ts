@@ -2043,11 +2043,15 @@ export class IonSegmentView {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSegmentViewScroll']);
   }
 }
 
 
-export declare interface IonSegmentView extends Components.IonSegmentView {}
+export declare interface IonSegmentView extends Components.IonSegmentView {
+
+  ionSegmentViewScroll: EventEmitter<CustomEvent<{ scrollDirection: string; scrollDistance: number }>>;
+}
 
 
 @ProxyCmp({

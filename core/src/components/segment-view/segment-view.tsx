@@ -1,5 +1,5 @@
-import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Method, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-segment-view',
@@ -10,6 +10,8 @@ import { Component, Element, Host, Listen, Method, Prop, h } from '@stencil/core
   shadow: true,
 })
 export class SegmentView implements ComponentInterface {
+  private previousScrollLeft = 0;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -17,9 +19,23 @@ export class SegmentView implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  @Event() ionSegmentViewScroll!: EventEmitter<{ scrollDirection: string; scrollDistance: number }>;
+
   @Listen('scroll')
-  handleScroll(ev: any) {
-    const { scrollLeft, offsetWidth } = ev.target;
+  handleScroll(ev: Event) {
+    const { scrollLeft, offsetWidth } = ev.target as HTMLElement;
+
+    const scrollDirection = scrollLeft > this.previousScrollLeft ? 'right' : 'left';
+    this.previousScrollLeft = scrollLeft;
+
+    const scrollDistance = scrollLeft;
+
+    // Emit the scroll direction and distance
+    this.ionSegmentViewScroll.emit({
+      scrollDirection,
+      scrollDistance
+    });
+
     const atSnappingPoint = scrollLeft % offsetWidth === 0;
 
     if (!atSnappingPoint) return;
@@ -57,7 +73,7 @@ export class SegmentView implements ComponentInterface {
     this.el.scrollTo({
       top: 0,
       left: index * contentWidth,
-      behavior: smoothScroll ? 'smooth' : 'auto',
+      behavior: smoothScroll ? 'smooth' : 'instant',
     });
   }
 

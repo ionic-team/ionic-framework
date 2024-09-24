@@ -27,6 +27,8 @@ export class Segment implements ComponentInterface {
   // Value before the segment is dragged
   private valueBeforeGesture?: SegmentValue;
 
+  private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
+
   @Element() el!: HTMLIonSegmentElement;
 
   @State() activated = false;
@@ -142,6 +144,12 @@ export class Segment implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
+
+    this.segmentViewEl = this.getSegmentView();
+  }
+
+  disconnectedCallback() {
+    this.segmentViewEl = null;
   }
 
   componentWillLoad() {
@@ -320,6 +328,60 @@ export class Segment implements ComponentInterface {
     }
     if (next < buttons.length) {
       buttons[next].classList.add('segment-button-after-checked');
+    }
+  }
+
+  private getSegmentView() {
+    const buttons = this.getButtons();
+    // Get the first button with a contentId
+    const firstContentId = buttons.find((button: HTMLIonSegmentButtonElement) => button.contentId);
+    // Get the segment content with an id matching the button's contentId
+    const segmentContent = document.querySelector(`ion-segment-content[id="${firstContentId?.contentId}"]`);
+    // Return the segment view for that matching segment content
+    return segmentContent?.closest('ion-segment-view');
+  }
+
+  @Listen('ionSegmentViewScroll', { target: 'body' })
+  handleSegmentViewScroll(ev: CustomEvent) {
+    const dispatchedFrom = ev.target as HTMLElement;
+    const segmentViewEl = this.segmentViewEl as EventTarget;
+    const segmentEl = this.el;
+
+    // Only update the indicator if the event was dispatched from the segment view
+    // containing the segment contents that matches this segment's buttons
+    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
+      const buttons = this.getButtons();
+
+      // If no buttons are found or there is no value set then do nothing
+      if (!buttons.length || this.value === undefined) return;
+
+      const index = buttons.findIndex((button) => button.value === this.value);
+      const current = buttons[index];
+      const indicatorEl = this.getIndicator(current);
+
+      const { scrollDirection, scrollDistance } = ev.detail;
+
+      // Transform the indicator element to match the scroll of the segment view.
+      if (indicatorEl) {
+        indicatorEl.style.transition = 'transform 0.3s ease-out';
+
+        // Get dimensions of the segment and the button
+        const segmentRect = segmentEl.getBoundingClientRect();
+        const buttonRect = current.getBoundingClientRect();
+
+        // Calculate the potential transform value based on scroll direction
+        const transformValue = scrollDirection === 'left' ? -scrollDistance : scrollDistance;
+
+        // Calculate the max allowed transformation (indicator should not move beyond the segment boundaries)
+        const maxTransform = segmentRect.width - buttonRect.width;
+        const minTransform = 0;
+
+        // Clamp the transform value to ensure it doesn't go out of bounds
+        const clampedTransform = Math.max(minTransform, Math.min(transformValue, maxTransform));
+
+        // Apply the clamped transform value to the indicator element
+        indicatorEl.style.transform = `translate3d(${clampedTransform}px, 0, 0)`;
+      }
     }
   }
 
