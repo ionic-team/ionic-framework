@@ -11,6 +11,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
+          <style>
+            :root {
+              background: #ccc7c7;
+            }
+          </style>
+
           <ion-tab-bar shape="soft">
             <ion-tab-button tab="1">
               <ion-icon name="triangle-outline"></ion-icon>
@@ -41,6 +47,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
+          <style>
+            :root {
+              background: #ccc7c7;
+            }
+          </style>
+
           <ion-tab-bar shape="round">
             <ion-tab-button tab="1">
               <ion-icon name="triangle-outline"></ion-icon>
@@ -71,6 +83,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
+          <style>
+            :root {
+              background: #ccc7c7;
+            }
+          </style>
+
           <ion-tab-bar shape="rectangular">
             <ion-tab-button tab="1">
               <ion-icon name="triangle-outline"></ion-icon>
