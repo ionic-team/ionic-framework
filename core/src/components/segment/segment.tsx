@@ -374,8 +374,7 @@ export class Segment implements ComponentInterface {
 
         // Calculate the max and min allowed transformations based on the scroll direction
         const maxTransform = scrollDirection === 'left' ? 0 : segmentRect.width - buttonRect.width;
-        const minTransform = scrollDirection === 'left' ?
-            -(segmentRect.width - buttonRect.width) : 0;
+        const minTransform = scrollDirection === 'left' ? -(segmentRect.width - buttonRect.width) : 0;
 
         // Clamp the transform value to ensure it doesn't go out of bounds
         const clampedTransform = Math.max(minTransform, Math.min(transformValue, maxTransform));
