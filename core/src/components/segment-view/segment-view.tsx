@@ -10,6 +10,7 @@ import { Component, Element, Event, Host, Listen, Method, Prop, h } from '@stenc
   shadow: true,
 })
 export class SegmentView implements ComponentInterface {
+  private initialScrollLeft = 0;
   private previousScrollLeft = 0;
 
   @Element() el!: HTMLElement;
@@ -23,12 +24,17 @@ export class SegmentView implements ComponentInterface {
 
   @Listen('scroll')
   handleScroll(ev: Event) {
+    const { initialScrollLeft, previousScrollLeft } = this;
     const { scrollLeft, offsetWidth } = ev.target as HTMLElement;
 
-    const scrollDirection = scrollLeft > this.previousScrollLeft ? 'right' : 'left';
+    const scrollDirection = scrollLeft > previousScrollLeft ? 'right' : 'left';
     this.previousScrollLeft = scrollLeft;
 
-    const scrollDistance = scrollLeft;
+    let scrollDistance = scrollLeft;
+
+    if (scrollDirection === 'left') {
+      scrollDistance = initialScrollLeft - scrollLeft;
+    }
 
     // Emit the scroll direction and distance
     this.ionSegmentViewScroll.emit({
@@ -53,6 +59,11 @@ export class SegmentView implements ComponentInterface {
     if (segment) {
       segment.value = segmentButton.value;
     }
+  }
+
+  @Listen('touchstart')
+  handleTouchStart() {
+    this.initialScrollLeft = this.el.scrollLeft;
   }
 
   /**
