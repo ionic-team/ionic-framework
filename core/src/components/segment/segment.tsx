@@ -372,15 +372,17 @@ export class Segment implements ComponentInterface {
         // Calculate the potential transform value based on scroll direction
         const transformValue = scrollDirection === 'left' ? -scrollDistance : scrollDistance;
 
-        // Calculate the max allowed transformation (indicator should not move beyond the segment boundaries)
-        const maxTransform = segmentRect.width - buttonRect.width;
-        const minTransform = 0;
+        // Calculate the max and min allowed transformations based on the scroll direction
+        const maxTransform = scrollDirection === 'left' ? 0 : segmentRect.width - buttonRect.width;
+        const minTransform = scrollDirection === 'left' ?
+            -(segmentRect.width - buttonRect.width) : 0;
 
         // Clamp the transform value to ensure it doesn't go out of bounds
         const clampedTransform = Math.max(minTransform, Math.min(transformValue, maxTransform));
 
         // Apply the clamped transform value to the indicator element
-        indicatorEl.style.transform = `translate3d(${clampedTransform}px, 0, 0)`;
+        const transform = `translate3d(${clampedTransform}px, 0, 0)`;
+        indicatorEl.style.setProperty('transform', transform);
       }
     }
   }
