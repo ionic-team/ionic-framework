@@ -39,7 +39,7 @@ export class SegmentView implements ComponentInterface {
     // Emit the scroll direction and distance
     this.ionSegmentViewScroll.emit({
       scrollDirection,
-      scrollDistance
+      scrollDistance,
     });
 
     const atSnappingPoint = scrollLeft % offsetWidth === 0;
