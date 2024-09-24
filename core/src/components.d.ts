@@ -3438,6 +3438,10 @@ export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSegmentElement;
 }
+export interface IonSegmentViewCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonSegmentViewElement;
+}
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
@@ -4440,7 +4444,18 @@ declare global {
         prototype: HTMLIonSegmentContentElement;
         new (): HTMLIonSegmentContentElement;
     };
+    interface HTMLIonSegmentViewElementEventMap {
+        "ionSegmentViewScroll": { scrollDirection: string; scrollDistance: number };
+    }
     interface HTMLIonSegmentViewElement extends Components.IonSegmentView, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonSegmentViewElement: {
         prototype: HTMLIonSegmentViewElement;
@@ -7522,6 +7537,7 @@ declare namespace LocalJSX {
           * If `true`, the segment view cannot be interacted with.
          */
         "disabled"?: boolean;
+        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<{ scrollDirection: string; scrollDistance: number }>) => void;
     }
     interface IonSelect {
         /**

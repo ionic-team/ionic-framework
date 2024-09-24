@@ -168,10 +168,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
         </button>
         <div
           part="indicator"
-          class={{
-            'segment-button-indicator': true,
-            'segment-button-indicator-animated': true,
-          }}
+          class="segment-button-indicator segment-button-indicator-animated"
         >
           <div part="indicator-background" class="segment-button-indicator-background"></div>
         </div>
