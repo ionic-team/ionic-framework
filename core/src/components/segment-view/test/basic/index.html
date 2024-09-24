@@ -47,49 +47,43 @@
       </ion-header>
 
       <ion-content>
-        <ion-toolbar>
-          <ion-segment id="noValueSegment">
-            <ion-segment-button content-id="no" value="no">
-              <ion-label>No</ion-label>
-            </ion-segment-button>
-            <ion-segment-button content-id="value" value="value">
-              <ion-label>Value</ion-label>
-            </ion-segment-button>
-          </ion-segment>
-        </ion-toolbar>
+        <ion-segment id="noValueSegment">
+          <ion-segment-button content-id="no" value="no">
+            <ion-label>No</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="value" value="value">
+            <ion-label>Value</ion-label>
+          </ion-segment-button>
+        </ion-segment>
         <ion-segment-view id="noValueSegmentView">
           <ion-segment-content id="no">No</ion-segment-content>
           <ion-segment-content id="value">Value</ion-segment-content>
         </ion-segment-view>
 
-        <ion-toolbar>
-          <ion-segment value="all">
-            <ion-segment-button content-id="all" value="all">
-              <ion-label>All</ion-label>
-            </ion-segment-button>
-            <ion-segment-button content-id="favorites" value="favorites">
-              <ion-label>Favorites</ion-label>
-            </ion-segment-button>
-          </ion-segment>
-        </ion-toolbar>
+        <ion-segment value="all">
+          <ion-segment-button content-id="all" value="all">
+            <ion-label>All</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="favorites" value="favorites">
+            <ion-label>Favorites</ion-label>
+          </ion-segment-button>
+        </ion-segment>
         <ion-segment-view>
           <ion-segment-content id="all">All</ion-segment-content>
           <ion-segment-content id="favorites">Favorites</ion-segment-content>
         </ion-segment-view>
 
-        <ion-toolbar>
-          <ion-segment value="free">
-            <ion-segment-button content-id="paid" value="paid">
-              <ion-label>Paid</ion-label>
-            </ion-segment-button>
-            <ion-segment-button content-id="free" value="free">
-              <ion-label>Free</ion-label>
-            </ion-segment-button>
-            <ion-segment-button content-id="top" value="top">
-              <ion-label>Top</ion-label>
-            </ion-segment-button>
-          </ion-segment>
-        </ion-toolbar>
+        <ion-segment value="free">
+          <ion-segment-button content-id="paid" value="paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="free" value="free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="top" value="top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
         <ion-segment-view>
           <ion-segment-content id="paid">Paid</ion-segment-content>
           <ion-segment-content id="free">Free</ion-segment-content>
