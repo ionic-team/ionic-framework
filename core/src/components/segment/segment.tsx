@@ -347,8 +347,7 @@ export class Segment implements ComponentInterface {
     const segmentViewEl = this.segmentViewEl as EventTarget;
     const segmentEl = this.el;
 
-    // Only update the indicator if the event was dispatched from the segment view
-    // containing the segment contents that matches this segment's buttons
+    // Only update the indicator if the event was dispatched from the correct segment view
     if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
       const buttons = this.getButtons();
 
@@ -359,19 +358,24 @@ export class Segment implements ComponentInterface {
       const current = buttons[index];
       const indicatorEl = this.getIndicator(current);
 
-      const { scrollDirection, scrollDistance } = ev.detail;
+      const { scrollDistance } = ev.detail;
 
-      // Transform the indicator element to match the scroll of the segment view.
       if (indicatorEl) {
         indicatorEl.style.transition = 'transform 0.3s ease-out';
 
-        // Get dimensions of the segment and the button
-        const segmentRect = segmentEl.getBoundingClientRect();
-        const buttonRect = current.getBoundingClientRect();
+        // Calculate total width of buttons to the left of the current button
+        const totalButtonWidthBefore = buttons
+          .slice(0, index)
+          .reduce((acc, button) => acc + button.getBoundingClientRect().width, 0);
 
-        // Calculate the max and min allowed transformations based on the scroll direction
-        const maxTransform = scrollDirection === 'left' ? 0 : segmentRect.width - buttonRect.width;
-        const minTransform = scrollDirection === 'left' ? -(segmentRect.width - buttonRect.width) : 0;
+        // Calculate total width of buttons to the right of the current button
+        const totalButtonWidthAfter = buttons
+          .slice(index + 1)
+          .reduce((acc, button) => acc + button.getBoundingClientRect().width, 0);
+
+        // Set minTransform and maxTransform
+        const minTransform = -totalButtonWidthBefore;
+        const maxTransform = totalButtonWidthAfter;
 
         // Clamp the transform value to ensure it doesn't go out of bounds
         const clampedTransform = Math.max(minTransform, Math.min(scrollDistance, maxTransform));
