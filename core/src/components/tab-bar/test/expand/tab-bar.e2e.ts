@@ -10,6 +10,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
+          <style>
+            :root {
+              background: #ccc7c7;
+            }
+          </style>
+
           <ion-tab-bar expand="compact">
             <ion-tab-button tab="1">
               <ion-icon name="triangle-outline"></ion-icon>
