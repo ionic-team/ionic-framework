@@ -44,7 +44,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
-        ${theme === 'ionic' ? `<link href="${baseUrl}/css/ionic/bundle.ionic.css" rel="stylesheet" />` : '' }
+        ${theme === 'ionic' ? `<link href="${baseUrl}/css/ionic/bundle.ionic.css" rel="stylesheet" />` : ''}
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
         ${palette !== 'light' ? `<link href="${baseUrl}/css/palettes/${palette}.always.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
