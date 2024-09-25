@@ -2052,7 +2052,7 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
   /**
    * Emitted when the segment view is scrolled.
    */
-  ionSegmentViewScroll: EventEmitter<CustomEvent<{ scrollDirection: string; scrollDistance: number }>>;
+  ionSegmentViewScroll: EventEmitter<CustomEvent<{ scrollDirection: string; scrollDistancePercentage: number }>>;
   /**
    * Emitted when the segment view scroll has ended.
    */

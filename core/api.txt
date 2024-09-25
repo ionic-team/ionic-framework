@@ -1613,7 +1613,7 @@ ion-segment-content,prop,disabled,boolean,false,false,false
 ion-segment-view,shadow
 ion-segment-view,prop,disabled,boolean,false,false,false
 ion-segment-view,method,setContent,setContent(id: string, smoothScroll?: boolean) => Promise<void>
-ion-segment-view,event,ionSegmentViewScroll,{ scrollDirection: string; scrollDistance: number; },true
+ion-segment-view,event,ionSegmentViewScroll,{ scrollDirection: string; scrollDistancePercentage: number; },true
 ion-segment-view,event,ionSegmentViewScrollEnd,void,true
 
 ion-select,shadow
