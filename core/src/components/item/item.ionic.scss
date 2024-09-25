@@ -19,8 +19,10 @@
   --padding-end: #{globals.$ionic-space-400};
   --padding-bottom: #{globals.$ionic-space-200};
   --padding-start: #{globals.$ionic-space-400};
+  --color: #{globals.$ionic-color-neutral-1200};
 
   font-family: globals.$ionic-font-family;
+  font-size: globals.$ionic-font-size-400;
 }
 
 // Inner Item
