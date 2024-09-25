@@ -358,10 +358,13 @@ export class Segment implements ComponentInterface {
       const current = buttons[index];
       const indicatorEl = this.getIndicator(current);
 
-      const { scrollDistance } = ev.detail;
+      const { scrollDirection, scrollDistancePercentage } = ev.detail;
 
       if (indicatorEl) {
         indicatorEl.style.transition = 'transform 0.3s ease-out';
+
+        const scrollDistance = scrollDistancePercentage * current.getBoundingClientRect().width;
+        const transformValue = scrollDirection === 'left' ? -scrollDistance : scrollDistance;
 
         // Calculate total width of buttons to the left of the current button
         const totalButtonWidthBefore = buttons
@@ -378,7 +381,7 @@ export class Segment implements ComponentInterface {
         const maxTransform = totalButtonWidthAfter;
 
         // Clamp the transform value to ensure it doesn't go out of bounds
-        const clampedTransform = Math.max(minTransform, Math.min(scrollDistance, maxTransform));
+        const clampedTransform = Math.max(minTransform, Math.min(transformValue, maxTransform));
 
         // Apply the clamped transform value to the indicator element
         const transform = `translate3d(${clampedTransform}px, 0, 0)`;

@@ -25,7 +25,7 @@ export class SegmentView implements ComponentInterface {
   /**
    * Emitted when the segment view is scrolled.
    */
-  @Event() ionSegmentViewScroll!: EventEmitter<{ scrollDirection: string; scrollDistance: number }>;
+  @Event() ionSegmentViewScroll!: EventEmitter<{ scrollDirection: string; scrollDistancePercentage: number }>;
 
   /**
    * Emitted when the segment view scroll has ended.
@@ -46,12 +46,14 @@ export class SegmentView implements ComponentInterface {
     this.previousScrollLeft = scrollLeft;
 
     // Calculate the distance scrolled based on the initial scroll position
+    // and then transform it to a percentage of the segment view width
     const scrollDistance = scrollLeft - initialScrollLeft!;
+    const scrollDistancePercentage = Math.abs(scrollDistance) / offsetWidth;
 
     // Emit the scroll direction and distance
     this.ionSegmentViewScroll.emit({
       scrollDirection,
-      scrollDistance,
+      scrollDistancePercentage,
     });
 
     const atSnappingPoint = scrollLeft % offsetWidth === 0;
