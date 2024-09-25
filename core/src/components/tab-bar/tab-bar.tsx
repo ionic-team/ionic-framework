@@ -116,9 +116,26 @@ export class TabBar implements ComponentInterface {
     this.ionTabBarLoaded.emit();
   }
 
-  render() {
-    const { color, translucent, keyboardVisible, expand, shape } = this;
+  private getShape(): string | undefined {
     const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11234): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
+  render() {
+    const { color, translucent, keyboardVisible, expand } = this;
+    const theme = getIonTheme(this);
+    const shape = this.getShape();
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
     return (
