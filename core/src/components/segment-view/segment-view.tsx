@@ -10,8 +10,10 @@ import { Component, Element, Event, Host, Listen, Method, Prop, h } from '@stenc
   shadow: true,
 })
 export class SegmentView implements ComponentInterface {
-  private initialScrollLeft = 0;
+  private initialScrollLeft?: number;
   private previousScrollLeft = 0;
+  private scrollEndTimeout: ReturnType<typeof setTimeout> | null = null;
+  private isTouching = false;
 
   @Element() el!: HTMLElement;
 
@@ -20,21 +22,31 @@ export class SegmentView implements ComponentInterface {
    */
   @Prop() disabled = false;
 
+  /**
+   * Emitted when the segment view is scrolled.
+   */
   @Event() ionSegmentViewScroll!: EventEmitter<{ scrollDirection: string; scrollDistance: number }>;
+
+  /**
+   * Emitted when the segment view scroll has ended.
+   */
+  @Event() ionSegmentViewScrollEnd!: EventEmitter<void>;
 
   @Listen('scroll')
   handleScroll(ev: Event) {
     const { initialScrollLeft, previousScrollLeft } = this;
     const { scrollLeft, offsetWidth } = ev.target as HTMLElement;
 
+    if (initialScrollLeft === undefined) {
+      this.initialScrollLeft = scrollLeft;
+    }
+
     const scrollDirection = scrollLeft > previousScrollLeft ? 'right' : 'left';
     this.previousScrollLeft = scrollLeft;
 
-    let scrollDistance = scrollLeft;
-
-    if (scrollDirection === 'left') {
-      scrollDistance = initialScrollLeft - scrollLeft;
-    }
+    // If the scroll direction is left then we need to calculate where we started and subtract
+    // the current scrollLeft to get the distance scrolled. Otherwise, we use the scrollLeft.
+    const scrollDistance = scrollDirection === 'left' ? initialScrollLeft! - scrollLeft : scrollLeft;
 
     // Emit the scroll direction and distance
     this.ionSegmentViewScroll.emit({
@@ -59,11 +71,54 @@ export class SegmentView implements ComponentInterface {
     if (segment) {
       segment.value = segmentButton.value;
     }
+
+    this.resetScrollEndTimeout();
   }
 
+  /**
+   * Handle touch start event to know when the user is actively dragging the segment view.
+   */
   @Listen('touchstart')
-  handleTouchStart() {
-    this.initialScrollLeft = this.el.scrollLeft;
+  handleScrollStart() {
+    if (this.scrollEndTimeout) {
+      clearTimeout(this.scrollEndTimeout);
+      this.scrollEndTimeout = null;
+    }
+
+    this.isTouching = true;
+  }
+
+  /**
+   * Handle touch end event to know when the user is no longer dragging the segment view.
+   */
+  @Listen('touchend')
+  handleTouchEnd() {
+    this.isTouching = false;
+  }
+
+  /**
+   * Reset the scroll end detection timer. This is called on every scroll event.
+   */
+  private resetScrollEndTimeout() {
+    if (this.scrollEndTimeout) {
+      clearTimeout(this.scrollEndTimeout);
+      this.scrollEndTimeout = null;
+    }
+    this.scrollEndTimeout = setTimeout(() => {
+      this.checkForScrollEnd();
+    }, 150);
+  }
+
+  /**
+   * Check if the scroll has ended and the user is not actively touching.
+   * If both conditions are met, reset the initial scroll position and
+   * emit the scroll end event.
+   */
+  private checkForScrollEnd() {
+    if (!this.isTouching) {
+      this.ionSegmentViewScrollEnd.emit();
+      this.initialScrollLeft = undefined;
+    }
   }
 
   /**
