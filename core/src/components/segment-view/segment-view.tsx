@@ -41,12 +41,12 @@ export class SegmentView implements ComponentInterface {
       this.initialScrollLeft = scrollLeft;
     }
 
+    // Determine the scroll direction based on the previous scroll position
     const scrollDirection = scrollLeft > previousScrollLeft ? 'right' : 'left';
     this.previousScrollLeft = scrollLeft;
 
-    // If the scroll direction is left then we need to calculate where we started and subtract
-    // the current scrollLeft to get the distance scrolled. Otherwise, we use the scrollLeft.
-    const scrollDistance = scrollDirection === 'left' ? initialScrollLeft! - scrollLeft : scrollLeft;
+    // Calculate the distance scrolled based on the initial scroll position
+    const scrollDistance = scrollLeft - initialScrollLeft!;
 
     // Emit the scroll direction and distance
     this.ionSegmentViewScroll.emit({
