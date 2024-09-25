@@ -1,6 +1,7 @@
+@import "segment-button.common";
 @import "../../themes/native/native.globals";
 
-// Segment Button
+// Segment Button: Native
 // --------------------------------------------------
 
 :host {
@@ -50,89 +51,14 @@
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
-
-  @include border-radius(var(--border-radius));
-
-  display: flex;
-
-  position: relative;
-
-  flex-direction: column;
-
-  height: auto;
-
-  background: var(--background);
-
-  color: var(--color);
-
-  text-decoration: none;
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  cursor: pointer;
-
-  grid-row: 1;
-
-  font-kerning: none;
 }
 
 .button-native {
-  @include border-radius(0);
   @include text-inherit();
-  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include transform(translate3d(0, 0, 0));
-
-  display: flex;
-  position: relative;
-
-  flex-direction: inherit;
-
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  min-width: inherit;
-  max-width: inherit;
-
-  height: auto;
-  min-height: inherit;
-  max-height: inherit;
-
-  transition: var(--transition);
-
-  border: none;
-
-  outline: none;
-
-  background: transparent;
-
-  contain: content;
-  pointer-events: none;
-
-  overflow: hidden;
-
-  z-index: 2;
 }
 
 .button-native::after {
   @include button-state();
-}
-
-.button-inner {
-  display: flex;
-  position: relative;
-
-  flex-flow: inherit;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-
-  z-index: 1;
 }
 
 // Segment Button: Checked
@@ -187,71 +113,11 @@
   }
 }
 
-// Segment Button Icon
-// --------------------------------------------------
-
-::slotted(ion-icon) {
-  flex-shrink: 0;
-
-  order: -1;
-
-  pointer-events: none;
-}
-
 // Segment Button Label
 // --------------------------------------------------
 
 ::slotted(ion-label) {
-  display: block;
-
-  align-self: center;
-
-  max-width: 100%;
-
   line-height: 22px;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-  box-sizing: border-box;
-
-  pointer-events: none;
-}
-
-// Segment Button Layout
-// --------------------------------------------------
-
-// Layout: icon top
-:host(.segment-button-layout-icon-top) .button-native {
-  flex-direction: column;
-}
-
-// Layout: icon start
-:host(.segment-button-layout-icon-start) .button-native {
-  flex-direction: row;
-}
-
-// Layout: icon end
-:host(.segment-button-layout-icon-end) .button-native {
-  flex-direction: row-reverse;
-}
-
-// Layout: icon bottom
-:host(.segment-button-layout-icon-bottom) .button-native {
-  flex-direction: column-reverse;
-}
-
-// Layout: icon hide
-:host(.segment-button-layout-icon-hide) ::slotted(ion-icon) {
-  display: none;
-}
-
-// Layout: label hide
-:host(.segment-button-layout-label-hide) ::slotted(ion-label) {
-  display: none;
 }
 
 // Segment Button Ripple
@@ -259,53 +125,4 @@
 
 ion-ripple-effect {
   color: var(--ripple-color, var(--color-checked));
-}
-
-// Segment Button: Indicator
-// --------------------------------------------------
-
-.segment-button-indicator {
-  @include transform-origin(left);
-
-  position: absolute;
-
-  opacity: 0;
-
-  box-sizing: border-box;
-
-  will-change: transform, opacity;
-
-  pointer-events: none;
-}
-
-.segment-button-indicator-background {
-  width: 100%;
-  height: var(--indicator-height);
-
-  transform: var(--indicator-transform);
-
-  box-shadow: var(--indicator-box-shadow);
-
-  pointer-events: none;
-}
-
-.segment-button-indicator-animated {
-  transition: var(--indicator-transition);
-}
-
-:host(.segment-button-checked) .segment-button-indicator {
-  opacity: 1;
-}
-
-// Segment: Reduced Motion
-// --------------------------------------------------
-
-@media (prefers-reduced-motion: reduce) {
-  .segment-button-indicator-background {
-    transform: none;
-  }
-
-  .segment-button-indicator-animated {
-    transition: none;
-  }
 }

@@ -1,0 +1,11 @@
+@import "../../themes/native/native.globals";
+@import "./segment.common";
+
+// Segment: Native
+// --------------------------------------------------
+
+:host {
+  --ripple-color: currentColor;
+
+  font-family: $font-family-base;
+}

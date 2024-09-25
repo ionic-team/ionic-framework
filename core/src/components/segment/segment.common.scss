@@ -1,14 +1,12 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 
-// Segment
+// Segment: Common
 // --------------------------------------------------
 
 :host {
   /**
    * @prop --background: Background of the segment button
    */
-  --ripple-color: currentColor;
-
   @include font-smoothing();
 
   display: grid;
@@ -23,8 +21,6 @@
   width: 100%;
 
   background: var(--background);
-
-  font-family: $font-family-base;
 
   text-align: center;
 
