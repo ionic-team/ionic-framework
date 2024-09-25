@@ -3412,6 +3412,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Set to `"compact"` to display a width based on the items inside the tab bar. This value will only work for the `ionic` theme.  Set to `"full"` to display a full width tab bar.  Defaults to `"full"`.
+         */
+        "expand": 'compact' | 'full';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -3419,6 +3423,10 @@ export namespace Components {
           * The selected tab component
          */
         "selectedTab"?: string;
+        /**
+          * Set to `"soft"` for a tab bar with slightly rounded corners, `"round"` for a tab bar with fully rounded corners, or `"rectangular"` for a tab bar without rounded corners.  Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -8766,6 +8774,10 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Set to `"compact"` to display a width based on the items inside the tab bar. This value will only work for the `ionic` theme.  Set to `"full"` to display a full width tab bar.  Defaults to `"full"`.
+         */
+        "expand"?: 'compact' | 'full';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -8775,6 +8787,10 @@ declare namespace LocalJSX {
           * The selected tab component
          */
         "selectedTab"?: string;
+        /**
+          * Set to `"soft"` for a tab bar with slightly rounded corners, `"round"` for a tab bar with fully rounded corners, or `"rectangular"` for a tab bar without rounded corners.  Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */

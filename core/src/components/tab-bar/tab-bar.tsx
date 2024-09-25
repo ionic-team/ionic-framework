@@ -56,6 +56,26 @@ export class TabBar implements ComponentInterface {
    */
   @Prop() translucent = false;
 
+  /**
+   * Set to `"compact"` to display a width based on the items
+   * inside the tab bar. This value will only work for the
+   * `ionic` theme.
+   *
+   * Set to `"full"` to display a full width tab bar.
+   *
+   * Defaults to `"full"`.
+   */
+  @Prop() expand: 'compact' | 'full' = 'full';
+
+  /**
+   * Set to `"soft"` for a tab bar with slightly rounded corners,
+   * `"round"` for a tab bar with fully rounded corners, or
+   * `"rectangular"` for a tab bar without rounded corners.
+   *
+   * Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
+
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
@@ -96,9 +116,26 @@ export class TabBar implements ComponentInterface {
     this.ionTabBarLoaded.emit();
   }
 
-  render() {
-    const { color, translucent, keyboardVisible } = this;
+  private getShape(): string | undefined {
     const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11234): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
+  render() {
+    const { color, translucent, keyboardVisible, expand } = this;
+    const theme = getIonTheme(this);
+    const shape = this.getShape();
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
     return (
@@ -109,6 +146,8 @@ export class TabBar implements ComponentInterface {
           [theme]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': shouldHide,
+          [`tab-bar-${expand}`]: true,
+          [`tab-bar-${shape}`]: shape !== undefined,
         })}
       >
         <slot></slot>

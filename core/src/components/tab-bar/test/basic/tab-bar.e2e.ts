@@ -9,6 +9,12 @@ configs({ modes: ['ionic-md', 'md', 'ios'] }).forEach(({ title, screenshot, conf
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
+        <style>
+          :root {
+            background: #ccc7c7;
+          }
+        </style>
+
         <ion-tab-bar selected-tab="2">
           <ion-tab-button tab="1">
             <ion-icon name="home-outline"></ion-icon>
