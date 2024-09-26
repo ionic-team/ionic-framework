@@ -33,6 +33,9 @@
 
 .button-native {
   border-bottom: var(--border-width) var(--border-style) var(--border-color);
+
+  // Ensures the indicator moves correctly between segment buttons
+  z-index: 1;
 }
 
 .button-inner {
@@ -87,5 +90,6 @@
 .segment-button-indicator {
   @include globals.position(null, 0, 0, 0);
 
+  // Ensures the indicator displays correctly above the border
   z-index: 2;
 }
