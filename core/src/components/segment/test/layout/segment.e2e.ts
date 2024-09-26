@@ -7,7 +7,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('segment: layout'), () => {
     ['icon-top', 'icon-bottom', 'icon-start', 'icon-end'].forEach((layout) => {
-      test(`${layout} - should not have visual regressions`, async ({ page }) => {
+      test(`${layout} layout - should not have visual regressions`, async ({ page }) => {
         await page.setContent(
           `
           <ion-segment value="a">
@@ -34,7 +34,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       });
     });
 
-    test('should not have visual regressions with icon only layout', async ({ page }) => {
+    test('icon only layout - should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
         <ion-segment value="a">
@@ -57,7 +57,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
       await expect(segment).toHaveScreenshot(screenshot(`segment-layout-icon-only`));
     });
 
-    test('should not have visual regressions with label only layout', async ({ page }) => {
+    test('label only layout - should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
         <ion-segment value="a">
