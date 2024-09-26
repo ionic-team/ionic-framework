@@ -177,6 +177,10 @@
 // Segment Button: Indicator
 // --------------------------------------------------
 
+.segment-button-indicator {
+  @include position(null, 0, 0, 0);
+}
+
 // Segment button indicator color should use the background checked variable with
 // a fallback to the default value of --indicator-color
 :host(.in-toolbar:not(.in-segment-color)) .segment-button-indicator-background {

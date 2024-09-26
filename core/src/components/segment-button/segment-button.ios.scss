@@ -95,11 +95,12 @@
   @include margin-horizontal(0, 2px);
 }
 
-// Segment Button: Checked Indicator
+// Segment Button: Indicator
 // --------------------------------------------------
 
 .segment-button-indicator {
   @include padding(null, $segment-button-ios-margin);
+  @include position(0, 0, 0, 0);
 }
 
 .segment-button-indicator-background {
