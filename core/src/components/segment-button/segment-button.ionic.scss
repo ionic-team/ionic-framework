@@ -1,8 +1,68 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 @import "./segment-button.common";
 
 // Ionic Segment Button
 // --------------------------------------------------
 
 :host {
+  --background: #{globals.$ionic-color-base-white};
+  --background-checked: var(--background);
+  --color: #{globals.$ionic-color-neutral-1000};
+  --color-checked: #{globals.$ionic-color-primary-base};
+  --color-disabled: #{globals.$ionic-color-neutral-500};
+  --indicator-color: var(--color-checked);
+  --indicator-height: #{globals.$ionic-border-size-025};
+  --indicator-transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --indicator-transform: none;
+  --padding-top: #{globals.$ionic-space-100};
+  --padding-end: #{globals.$ionic-space-200};
+  --padding-bottom: #{globals.$ionic-space-100};
+  --padding-start: #{globals.$ionic-space-200};
+  --transition: color 0.15s linear 0s, opacity 0.15s linear 0s;
 
+  min-width: globals.$ionic-scale-1200;
+  min-height: globals.$ionic-scale-1200;
+
+  border-bottom: globals.$ionic-border-size-025 globals.$ionic-border-style-solid globals.$ionic-color-neutral-300;
+}
+
+.button-inner {
+  @include padding(globals.$ionic-space-100, null, globals.$ionic-space-100, null);
+
+  gap: globals.$ionic-space-100;
+}
+
+// Segment Button Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  @include globals.typography(globals.$ionic-action-md);
+
+  color: var(--color);
+}
+
+// Segment Button Icon
+// --------------------------------------------------
+
+::slotted(ion-icon) {
+  width: globals.$ionic-scale-600;
+  height: globals.$ionic-scale-600;
+
+  color: var(--color);
+}
+
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.segment-button-checked) ::slotted(ion-label),
+:host(.segment-button-checked) ::slotted(ion-icon) {
+  color: var(--color-checked);
+}
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) ::slotted(ion-label),
+:host(.segment-button-disabled) ::slotted(ion-icon) {
+  color: var(--color-disabled);
 }

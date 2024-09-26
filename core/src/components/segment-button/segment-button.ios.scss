@@ -100,16 +100,11 @@
 
 .segment-button-indicator {
   @include padding(null, $segment-button-ios-margin);
-  @include position(0, 0, 0, 0);
 }
 
 .segment-button-indicator-background {
   @include border-radius(var(--border-radius));
 
-  background: var(--indicator-color);
-}
-
-.segment-button-indicator-background {
   transition: var(--indicator-transition);
 }
 

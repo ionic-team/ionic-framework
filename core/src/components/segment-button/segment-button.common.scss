@@ -84,6 +84,22 @@
   z-index: 1;
 }
 
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.segment-button-checked) {
+  background: var(--background-checked);
+  color: var(--color-checked);
+}
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  cursor: default;
+  pointer-events: none;
+}
+
 // Segment Button Icon
 // --------------------------------------------------
 
@@ -153,7 +169,8 @@
 // --------------------------------------------------
 
 .segment-button-indicator {
-  // @include transform-origin(left);
+  @include position(null, 0, 0, 0);
+  @include transform-origin(left);
 
   position: absolute;
 
@@ -169,6 +186,8 @@
 .segment-button-indicator-background {
   width: 100%;
   height: var(--indicator-height);
+
+  background: var(--indicator-color);
 
   transform: var(--indicator-transform);
 

@@ -46,7 +46,6 @@
   --color: initial;
   --color-hover: var(--color);
   --color-checked: var(--color);
-  --color-disabled: var(--color);
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;
@@ -59,22 +58,6 @@
 
 .button-native::after {
   @include button-state();
-}
-
-// Segment Button: Checked
-// --------------------------------------------------
-
-:host(.segment-button-checked) {
-  background: var(--background-checked);
-  color: var(--color-checked);
-}
-
-// Segment Button: Disabled
-// --------------------------------------------------
-
-:host(.segment-button-disabled) {
-  cursor: default;
-  pointer-events: none;
 }
 
 // Segment Button: Focused

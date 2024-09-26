@@ -1,9 +1,10 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./segment.common";
 
 // Ionic Segment
 // --------------------------------------------------
 
 :host {
-
+  --background: #{globals.$ionic-color-base-white};
 }
 
