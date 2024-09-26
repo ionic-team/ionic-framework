@@ -10,6 +10,7 @@
   --color: #{globals.$ionic-color-neutral-1000};
   --color-checked: #{globals.$ionic-color-primary-base};
   --color-disabled: #{globals.$ionic-color-neutral-500};
+  --indicator-box-shadow: none;
   --indicator-color: var(--color-checked);
   --indicator-height: #{globals.$ionic-border-size-025};
   --indicator-transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -27,7 +28,7 @@
 }
 
 .button-inner {
-  @include padding(globals.$ionic-space-100, null, globals.$ionic-space-100, null);
+  @include padding(globals.$ionic-space-100, globals.$ionic-space-0, globals.$ionic-space-100, globals.$ionic-space-0);
 
   gap: globals.$ionic-space-100;
 }
