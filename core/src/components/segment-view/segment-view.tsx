@@ -25,12 +25,20 @@ export class SegmentView implements ComponentInterface {
   /**
    * Emitted when the segment view is scrolled.
    */
-  @Event() ionSegmentViewScroll!: EventEmitter<{ scrollDirection: string; scrollDistancePercentage: number }>;
+  @Event() ionSegmentViewScroll!: EventEmitter<{
+    scrollDirection: string;
+    scrollDistance: number;
+    scrollDistancePercentage: number;
+  }>;
 
   /**
    * Emitted when the segment view scroll has ended.
    */
-  @Event() ionSegmentViewScrollEnd!: EventEmitter<void>;
+  @Event() ionSegmentViewScrollEnd!: EventEmitter<{ activeContentId: string }>;
+
+  @Event() ionSegmentViewScrollStart!: EventEmitter<void>;
+
+  private activeContentId = '';
 
   @Listen('scroll')
   handleScroll(ev: Event) {
@@ -53,6 +61,7 @@ export class SegmentView implements ComponentInterface {
     // Emit the scroll direction and distance
     this.ionSegmentViewScroll.emit({
       scrollDirection,
+      scrollDistance,
       scrollDistancePercentage,
     });
 
@@ -67,12 +76,8 @@ export class SegmentView implements ComponentInterface {
       return;
     }
 
-    const segmentButton = this.getSegmentButtonById(segmentContent.id) as HTMLIonSegmentButtonElement;
-    const segment = this.getParentSegment(segmentButton);
-
-    if (segment) {
-      segment.value = segmentButton.value;
-    }
+    // Store the active `ion-segment-content` id so we can emit it when the scroll ends
+    this.activeContentId = segmentContent.id;
 
     this.resetScrollEndTimeout();
   }
@@ -82,6 +87,8 @@ export class SegmentView implements ComponentInterface {
    */
   @Listen('touchstart')
   handleScrollStart() {
+    this.ionSegmentViewScrollStart.emit();
+
     if (this.scrollEndTimeout) {
       clearTimeout(this.scrollEndTimeout);
       this.scrollEndTimeout = null;
@@ -118,7 +125,7 @@ export class SegmentView implements ComponentInterface {
    */
   private checkForScrollEnd() {
     if (!this.isTouching) {
-      this.ionSegmentViewScrollEnd.emit();
+      this.ionSegmentViewScrollEnd.emit({ activeContentId: this.activeContentId });
       this.initialScrollLeft = undefined;
     }
   }
@@ -147,14 +154,6 @@ export class SegmentView implements ComponentInterface {
 
   private getSegmentContents(): HTMLIonSegmentContentElement[] {
     return Array.from(this.el.querySelectorAll('ion-segment-content:not([disabled])'));
-  }
-
-  private getSegmentButtonById(id: string) {
-    return document.querySelector(`ion-segment-button[content-id="${id}"]`);
-  }
-
-  private getParentSegment(button: Element) {
-    return button.closest('ion-segment');
   }
 
   render() {
