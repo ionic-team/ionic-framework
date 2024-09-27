@@ -4,12 +4,10 @@
 
 :host {
   --background: transparent;
-  --color: #{globals.$ionic-color-neutral-1200};
 
   min-height: 58px;
 
   font-size: globals.$ionic-font-size-350;
-  font-weight: globals.$ionic-font-weight-medium;
 
   line-height: globals.$ionic-line-height-600;
 
@@ -37,6 +35,12 @@
 // --------------------------------------------------
 
 // Label
+::slotted(ion-label) {
+  --color: #{globals.$ionic-color-neutral-1200};
+
+  font-weight: globals.$ionic-font-weight-medium;
+}
+
 ::slotted(ion-label) ::slotted(p) {
   font-weight: globals.$ionic-font-weight-regular;
 }
