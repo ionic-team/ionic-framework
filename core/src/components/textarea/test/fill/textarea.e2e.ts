@@ -110,7 +110,7 @@ configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, sc
 /**
  * Fill with floating label is only available in MD mode
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: fill'), () => {
     test.describe('textarea: fill solid', () => {
       test('should render correctly with floating label', async ({ page }) => {
