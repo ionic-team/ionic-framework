@@ -4442,8 +4442,13 @@ declare global {
         new (): HTMLIonSegmentContentElement;
     };
     interface HTMLIonSegmentViewElementEventMap {
-        "ionSegmentViewScroll": { scrollDirection: string; scrollDistancePercentage: number };
-        "ionSegmentViewScrollEnd": void;
+        "ionSegmentViewScroll": {
+    scrollDirection: string;
+    scrollDistance: number;
+    scrollDistancePercentage: number;
+  };
+        "ionSegmentViewScrollEnd": { activeContentId: string };
+        "ionSegmentViewScrollStart": void;
     }
     interface HTMLIonSegmentViewElement extends Components.IonSegmentView, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7538,11 +7543,16 @@ declare namespace LocalJSX {
         /**
           * Emitted when the segment view is scrolled.
          */
-        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<{ scrollDirection: string; scrollDistancePercentage: number }>) => void;
+        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<{
+    scrollDirection: string;
+    scrollDistance: number;
+    scrollDistancePercentage: number;
+  }>) => void;
         /**
           * Emitted when the segment view scroll has ended.
          */
-        "onIonSegmentViewScrollEnd"?: (event: IonSegmentViewCustomEvent<void>) => void;
+        "onIonSegmentViewScrollEnd"?: (event: IonSegmentViewCustomEvent<{ activeContentId: string }>) => void;
+        "onIonSegmentViewScrollStart"?: (event: IonSegmentViewCustomEvent<void>) => void;
     }
     interface IonSelect {
         /**
