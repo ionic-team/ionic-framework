@@ -11,6 +11,7 @@
   --border-color: #{globals.$ionic-color-neutral-300};
   --border-style: #{globals.$ionic-border-style-solid};
   --border-width: #{0 0 globals.$ionic-border-size-025 0};
+  --color: #{globals.$ionic-color-neutral-1200};
   --detail-icon-color: #{globals.$ionic-color-neutral-800};
   --detail-icon-font-size: #{globals.$ionic-scale-600};
   --detail-icon-opacity: 1;
@@ -21,6 +22,7 @@
   --padding-start: #{globals.$ionic-space-400};
 
   font-family: globals.$ionic-font-family;
+  font-size: globals.$ionic-font-size-400;
 }
 
 // Inner Item
