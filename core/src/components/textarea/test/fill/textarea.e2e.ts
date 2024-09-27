@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * Fill is only available in MD and Ionic
  */
-configs({ modes: ['md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: fill'), () => {
     test.describe('textarea: fill solid', () => {
       test('should not have visual regressions', async ({ page }) => {
@@ -148,7 +148,7 @@ configs({ modes: ['md', 'ionic-md'] }).forEach(({ title, screenshot, config }) =
 /**
  * Fill with floating label is only available in MD mode
  */
-configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: fill'), () => {
     test.describe('textarea: fill solid', () => {
       test('should render correctly with floating label', async ({ page }) => {
