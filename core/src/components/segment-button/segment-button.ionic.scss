@@ -21,9 +21,9 @@
   --indicator-height: #{globals.$ionic-border-size-025};
   --indicator-transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --indicator-transform: none;
-  --padding-top: #{globals.$ionic-space-100};
+  --padding-top: #{globals.$ionic-space-200};
   --padding-end: #{globals.$ionic-space-200};
-  --padding-bottom: #{globals.$ionic-space-100};
+  --padding-bottom: #{globals.$ionic-space-200};
   --padding-start: #{globals.$ionic-space-200};
   --transition: color 0.15s linear 0s, opacity 0.15s linear 0s;
 
@@ -39,13 +39,6 @@
 }
 
 .button-inner {
-  @include globals.padding(
-    globals.$ionic-space-100,
-    globals.$ionic-space-0,
-    globals.$ionic-space-100,
-    globals.$ionic-space-0
-  );
-
   gap: globals.$ionic-space-100;
 }
 
@@ -92,4 +85,23 @@
 
   // Ensures the indicator displays correctly above the border
   z-index: 2;
+}
+
+// Segment Button Layout
+// --------------------------------------------------
+
+// Segments with icons above or below the label
+// should have a fixed height of 64px
+:host(.segment-button-layout-icon-top),
+:host(.segment-button-layout-icon-bottom) {
+  height: globals.$ionic-scale-1600;
+}
+
+// Segments with icons at the start or end, or with only
+// icons or labels, should have a fixed height of 48px
+:host(.segment-button-has-label-only),
+:host(.segment-button-has-icon-only),
+:host(.segment-button-layout-icon-start),
+:host(.segment-button-layout-icon-end) {
+  height: globals.$ionic-scale-1200;
 }
