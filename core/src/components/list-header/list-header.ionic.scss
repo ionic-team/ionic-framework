@@ -6,12 +6,9 @@
   --background: transparent;
   --color: #{globals.$ionic-color-neutral-1200};
 
+  @include globals.typography(globals.$ionic-body-md-medium);
+
   min-height: 58px;
-
-  font-size: globals.$ionic-font-size-350;
-  font-weight: globals.$ionic-font-weight-medium;
-
-  line-height: globals.$ionic-line-height-600;
 
   /** 
    * The focus rings from components like buttons and links
