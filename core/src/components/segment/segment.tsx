@@ -368,15 +368,13 @@ export class Segment implements ComponentInterface {
       const indicatorEl = this.getIndicator(current);
       this.scrolledIndicator = indicatorEl;
 
-      const { scrollDirection, scrollDistancePercentage, scrollDistance } = ev.detail;
-
-      console.log('scroll', scrollDistancePercentage, scrollDistance);
+      const { scrollDistancePercentage, scrollDistance: evScrollDistance } = ev.detail;
 
       if (indicatorEl && !isNaN(scrollDistancePercentage)) {
         indicatorEl.style.transition = 'transform 0.3s ease-out';
 
         const scrollDistance = scrollDistancePercentage * current.getBoundingClientRect().width;
-        const transformValue = scrollDirection === 'left' ? -scrollDistance : scrollDistance;
+        const transformValue = evScrollDistance < 0 ? -scrollDistance : scrollDistance;
 
         // Calculate total width of buttons to the left of the current button
         const totalButtonWidthBefore = buttons
