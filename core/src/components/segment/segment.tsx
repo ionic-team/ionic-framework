@@ -28,6 +28,7 @@ export class Segment implements ComponentInterface {
   private valueBeforeGesture?: SegmentValue;
 
   private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
+  private scrolledIndicator?: HTMLDivElement | null = null;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -87,7 +88,11 @@ export class Segment implements ComponentInterface {
       const current = buttons.find((button) => button.value === value);
 
       if (previous && current) {
-        this.checkButton(previous, current);
+        if (!this.segmentViewEl) {
+          this.checkButton(previous, current);
+        } else {
+          this.setCheckedClasses();
+        }
       }
     }
 
@@ -96,7 +101,11 @@ export class Segment implements ComponentInterface {
      * Used by `ion-segment-button` to determine if the button should be checked.
      */
     this.ionSelect.emit({ value });
-    this.scrollActiveButtonIntoView();
+
+    // The scroll listener should handle scrolling the active button into view as needed
+    if (!this.segmentViewEl) {
+      this.scrollActiveButtonIntoView();
+    }
   }
 
   /**
@@ -357,10 +366,13 @@ export class Segment implements ComponentInterface {
       const index = buttons.findIndex((button) => button.value === this.value);
       const current = buttons[index];
       const indicatorEl = this.getIndicator(current);
+      this.scrolledIndicator = indicatorEl;
 
-      const { scrollDirection, scrollDistancePercentage } = ev.detail;
+      const { scrollDirection, scrollDistancePercentage, scrollDistance } = ev.detail;
 
-      if (indicatorEl) {
+      console.log('scroll', scrollDistancePercentage, scrollDistance);
+
+      if (indicatorEl && !isNaN(scrollDistancePercentage)) {
         indicatorEl.style.transition = 'transform 0.3s ease-out';
 
         const scrollDistance = scrollDistancePercentage * current.getBoundingClientRect().width;
@@ -387,6 +399,19 @@ export class Segment implements ComponentInterface {
         const transform = `translate3d(${clampedTransform}px, 0, 0)`;
         indicatorEl.style.setProperty('transform', transform);
       }
+    }
+  }
+
+  @Listen('ionSegmentViewScrollStart', { target: 'body' })
+  onScrollStart() {}
+
+  @Listen('ionSegmentViewScrollEnd', { target: 'body' })
+  onScrollEnd(ev: CustomEvent<{ activeContentId: string }>) {
+    this.value = ev.detail.activeContentId;
+
+    if (this.scrolledIndicator) {
+      this.scrolledIndicator.style.transition = '';
+      this.scrolledIndicator.style.transform = '';
     }
   }
 
