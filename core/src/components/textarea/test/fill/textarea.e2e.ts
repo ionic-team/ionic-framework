@@ -13,6 +13,7 @@ configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, sc
           <ion-textarea
             fill="solid"
             label="Email"
+            label-placement="stacked"
             value="hi@ionic.io"
             helper-text="Enter your email"
             maxlength="20"
@@ -62,6 +63,7 @@ configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, sc
           <ion-textarea
             fill="outline"
             label="Email"
+            label-placement="stacked"
             value="hi@ionic.io"
             helper-text="Enter your email"
             maxlength="20"
