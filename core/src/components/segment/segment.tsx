@@ -29,6 +29,7 @@ export class Segment implements ComponentInterface {
 
   private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
   private scrolledIndicator?: HTMLDivElement | null = null;
+  private isScrolling = false;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -352,6 +353,10 @@ export class Segment implements ComponentInterface {
 
   @Listen('ionSegmentViewScroll', { target: 'body' })
   handleSegmentViewScroll(ev: CustomEvent) {
+    if (!this.isScrolling) {
+      return;
+    }
+
     const dispatchedFrom = ev.target as HTMLElement;
     const segmentViewEl = this.segmentViewEl as EventTarget;
     const segmentEl = this.el;
@@ -401,7 +406,9 @@ export class Segment implements ComponentInterface {
   }
 
   @Listen('ionSegmentViewScrollStart', { target: 'body' })
-  onScrollStart() {}
+  onScrollStart() {
+    this.isScrolling = true;
+  }
 
   @Listen('ionSegmentViewScrollEnd', { target: 'body' })
   onScrollEnd(ev: CustomEvent<{ activeContentId: string }>) {
@@ -411,6 +418,8 @@ export class Segment implements ComponentInterface {
       this.scrolledIndicator.style.transition = '';
       this.scrolledIndicator.style.transform = '';
     }
+
+    this.isScrolling = false;
   }
 
   /**
