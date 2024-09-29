@@ -406,20 +406,32 @@ export class Segment implements ComponentInterface {
   }
 
   @Listen('ionSegmentViewScrollStart', { target: 'body' })
-  onScrollStart() {
-    this.isScrolling = true;
+  onScrollStart(ev: CustomEvent) {
+    const dispatchedFrom = ev.target as HTMLElement;
+    const segmentViewEl = this.segmentViewEl as EventTarget;
+    const segmentEl = this.el;
+
+    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
+      this.isScrolling = true;
+    }
   }
 
   @Listen('ionSegmentViewScrollEnd', { target: 'body' })
   onScrollEnd(ev: CustomEvent<{ activeContentId: string }>) {
-    this.value = ev.detail.activeContentId;
+    const dispatchedFrom = ev.target as HTMLElement;
+    const segmentViewEl = this.segmentViewEl as EventTarget;
+    const segmentEl = this.el;
 
-    if (this.scrolledIndicator) {
-      this.scrolledIndicator.style.transition = '';
-      this.scrolledIndicator.style.transform = '';
+    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
+      this.value = ev.detail.activeContentId;
+
+      if (this.scrolledIndicator) {
+        this.scrolledIndicator.style.transition = '';
+        this.scrolledIndicator.style.transform = '';
+      }
+
+      this.isScrolling = false;
     }
-
-    this.isScrolling = false;
   }
 
   /**
