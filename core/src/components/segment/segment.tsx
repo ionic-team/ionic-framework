@@ -401,6 +401,23 @@ export class Segment implements ComponentInterface {
         // Apply the clamped transform value to the indicator element
         const transform = `translate3d(${clampedTransform}px, 0, 0)`;
         indicatorEl.style.setProperty('transform', transform);
+
+        // Scroll the buttons if the indicator is out of view
+        const indicatorX = indicatorEl.getBoundingClientRect().x;
+        const buttonWidth = current.getBoundingClientRect().width;
+        if (evScrollDistance < 0 && indicatorX < 0) {
+          this.el.scrollBy({
+            top: 0,
+            left: indicatorX,
+            behavior: 'instant',
+          });
+        } else if (evScrollDistance > 0 && indicatorX + buttonWidth > this.el.offsetWidth) {
+          this.el.scrollBy({
+            top: 0,
+            left: indicatorX + buttonWidth - this.el.offsetWidth,
+            behavior: 'instant',
+          });
+        }
       }
     }
   }
