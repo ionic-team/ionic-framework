@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.1](https://github.com/ionic-team/ionic-framework/compare/v8.3.0...v8.3.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* **react, vue:** add default value for navManager on tabs ([#29865](https://github.com/ionic-team/ionic-framework/issues/29865)) ([df39cea](https://github.com/ionic-team/ionic-framework/commit/df39ceac6db6511518aed4766e6a59aa24fb53ec))
+* **react:** revert react output target version ([#29869](https://github.com/ionic-team/ionic-framework/issues/29869)) ([f64458d](https://github.com/ionic-team/ionic-framework/commit/f64458dc63a05acb955aa1f2ec3755c738466cf4)), closes [ionic-team/stencil-ds-output-targets#476](https://github.com/ionic-team/stencil-ds-output-targets/issues/476) [ionic-team/stencil-ds-output-targets#475](https://github.com/ionic-team/stencil-ds-output-targets/issues/475) [#29848](https://github.com/ionic-team/ionic-framework/issues/29848)
+
+
+
+
+
+# [8.3.0](https://github.com/ionic-team/ionic-framework/compare/v8.2.8...v8.3.0) (2024-09-05)
+
+
+### Features
+
+* **react, vue, angular:** use tabs without router ([#29794](https://github.com/ionic-team/ionic-framework/issues/29794)) ([867066b](https://github.com/ionic-team/ionic-framework/commit/867066b4eba369de025f3c7c8ef33e7089cdf3bc)), closes [#25184](https://github.com/ionic-team/ionic-framework/issues/25184)
+
+
+
+
+
+## [8.2.8](https://github.com/ionic-team/ionic-framework/compare/v8.2.7...v8.2.8) (2024-09-05)
+
+
+### Bug Fixes
+
+* **react:** intellisense works with IntelliJ ([#29782](https://github.com/ionic-team/ionic-framework/issues/29782)) ([bacded5](https://github.com/ionic-team/ionic-framework/commit/bacded500b826df98d3ca5322c87f50f643c4692)), closes [#29755](https://github.com/ionic-team/ionic-framework/issues/29755)
+
+
+
+
+
 ## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
 
 

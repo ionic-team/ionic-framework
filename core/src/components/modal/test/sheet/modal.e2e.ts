@@ -11,7 +11,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await ionModalDidPresent.next();
 
-      await expect(page).toHaveScreenshot(screenshot(`modal-sheet-present`));
+      await expect(page).toHaveScreenshot(screenshot(`modal-sheet-present`), {
+        /**
+         * Animations must be enabled to capture the screenshot.
+         * By default, animations are disabled with toHaveScreenshot,
+         * and when capturing the screenshot will call animation.finish().
+         * This will cause the modal to close and the screenshot capture
+         * to be invalid.
+         */
+        animations: 'allow',
+      });
     });
   });
 });

@@ -125,7 +125,7 @@ export class Select implements ComponentInterface {
    * `"space-between"`: The label and select will appear on opposite
    * ends of the line with space between the two elements.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify?: 'start' | 'end' | 'space-between';
 
   /**
    * The visible label associated with the select.
@@ -942,7 +942,7 @@ export class Select implements ComponentInterface {
       this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
-    const justifyEnabled = !hasFloatingOrStackedLabel;
+    const justifyEnabled = !hasFloatingOrStackedLabel && justify !== undefined;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;

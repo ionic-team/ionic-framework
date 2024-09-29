@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.1](https://github.com/ionic-team/ionic-framework/compare/v8.3.0...v8.3.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* **checkbox:** align checkbox properly in item using start alignment ([#29850](https://github.com/ionic-team/ionic-framework/issues/29850)) ([88b7013](https://github.com/ionic-team/ionic-framework/commit/88b701363c1865e81d7d136acab4b9fef3b1ab7a)), closes [#29837](https://github.com/ionic-team/ionic-framework/issues/29837)
+* **datetime:** display today's date and time when value is an empty string ([#29839](https://github.com/ionic-team/ionic-framework/issues/29839)) ([f1d50c0](https://github.com/ionic-team/ionic-framework/commit/f1d50c0f645b3adf51426c24a1da0bbd1223f1d5)), closes [#29669](https://github.com/ionic-team/ionic-framework/issues/29669)
+* **range:** disable scroll when range is being dragged ([#29241](https://github.com/ionic-team/ionic-framework/issues/29241)) ([35b1a45](https://github.com/ionic-team/ionic-framework/commit/35b1a459294657b609f683457e71babd4673a3a8))
+* **react:** revert react output target version ([#29869](https://github.com/ionic-team/ionic-framework/issues/29869)) ([f64458d](https://github.com/ionic-team/ionic-framework/commit/f64458dc63a05acb955aa1f2ec3755c738466cf4)), closes [ionic-team/stencil-ds-output-targets#476](https://github.com/ionic-team/stencil-ds-output-targets/issues/476) [ionic-team/stencil-ds-output-targets#475](https://github.com/ionic-team/stencil-ds-output-targets/issues/475) [#29848](https://github.com/ionic-team/ionic-framework/issues/29848)
+
+
+
+
+
+# [8.3.0](https://github.com/ionic-team/ionic-framework/compare/v8.2.8...v8.3.0) (2024-09-05)
+
+
+### Features
+
+* **checkbox:** display as block when justify or alignment properties are defined ([#29783](https://github.com/ionic-team/ionic-framework/issues/29783)) ([4ccd15e](https://github.com/ionic-team/ionic-framework/commit/4ccd15e47ad4ec7cb59d2694c5738eab1bb265ff))
+* **radio:** display as block when justify or alignment properties are defined ([#29801](https://github.com/ionic-team/ionic-framework/issues/29801)) ([18b02b3](https://github.com/ionic-team/ionic-framework/commit/18b02b3574f54a2f377f5bfe4e074bf015418dd3))
+* **react, vue, angular:** use tabs without router ([#29794](https://github.com/ionic-team/ionic-framework/issues/29794)) ([867066b](https://github.com/ionic-team/ionic-framework/commit/867066b4eba369de025f3c7c8ef33e7089cdf3bc)), closes [#25184](https://github.com/ionic-team/ionic-framework/issues/25184)
+* **toggle:** display as block when justify or alignment properties are defined ([#29802](https://github.com/ionic-team/ionic-framework/issues/29802)) ([0332c8c](https://github.com/ionic-team/ionic-framework/commit/0332c8c6ceb612840e73f789d5c5b66f05cb53d4))
+
+
+
+
+
+## [8.2.8](https://github.com/ionic-team/ionic-framework/compare/v8.2.7...v8.2.8) (2024-09-05)
+
+
+### Bug Fixes
+
+* **range:** emit correct value when knob is at start of bar ([#29820](https://github.com/ionic-team/ionic-framework/issues/29820)) ([6a3d7c7](https://github.com/ionic-team/ionic-framework/commit/6a3d7c7247f74e21a8377676daf228822f879b26)), closes [#29792](https://github.com/ionic-team/ionic-framework/issues/29792)
+* **react:** intellisense works with IntelliJ ([#29782](https://github.com/ionic-team/ionic-framework/issues/29782)) ([bacded5](https://github.com/ionic-team/ionic-framework/commit/bacded500b826df98d3ca5322c87f50f643c4692)), closes [#29755](https://github.com/ionic-team/ionic-framework/issues/29755)
+
+
+
+
+
 ## [8.2.7](https://github.com/ionic-team/ionic-framework/compare/v8.2.5...v8.2.7) (2024-08-13)
 
 

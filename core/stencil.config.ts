@@ -26,7 +26,6 @@ const getAngularOutputTargets = () => {
 
     // tabs
     'ion-tabs',
-    'ion-tab',
 
     // auxiliar
     'ion-picker-legacy-column',
@@ -125,7 +124,11 @@ export const config: Config = {
   ],
   outputTargets: [
     reactOutputTarget({
-      outDir: '../packages/react/src/components/',
+      componentCorePackage,
+      includeImportCustomElements: true,
+      includePolyfills: false,
+      includeDefineCustomElements: false,
+      proxiesFile: '../packages/react/src/components/proxies.ts',
       excludeComponents: [
         // Routing
         'ion-router',
@@ -173,7 +176,6 @@ export const config: Config = {
         'ion-back-button',
         'ion-tab-button',
         'ion-tabs',
-        'ion-tab',
         'ion-tab-bar',
 
         // Overlays
