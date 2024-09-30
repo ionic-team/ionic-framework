@@ -107,3 +107,8 @@
 :host(.segment-button-layout-icon-end) {
   height: globals.$ionic-scale-1200;
 }
+
+:host(.segment-button-layout-icon-start) .button-inner,
+:host(.segment-button-layout-icon-end) .button-inner {
+  gap: globals.$ionic-space-200;
+}
