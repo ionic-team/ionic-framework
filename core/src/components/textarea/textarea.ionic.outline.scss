@@ -11,6 +11,10 @@
 // Textarea Fill: Outline, Textarea Wrapper
 // ----------------------------------------------------------------
 
+:host(.textarea-fill-outline) .textarea-wrapper {
+  background: initial;
+}
+
 :host(.textarea-fill-outline) .textarea-wrapper-inner {
   /**
    * The border should be relative to the inner wrapper
@@ -34,6 +38,8 @@
   pointer-events: none;
 
   border: var(--border-width) var(--border-style) var(--border-color);
+
+  background: var(--background);
 }
 
 // Textarea Fill: Outline, Bottom Content
