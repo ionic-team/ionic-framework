@@ -140,7 +140,7 @@
 // ----------------------------------------------------------------
 
 .input-bottom {
-  @include padding(7px, 0);
+  @include padding(globals.$ionic-space-100, 0, 0, 0);
 
   font-weight: globals.$ionic-font-weight-medium;
 }
