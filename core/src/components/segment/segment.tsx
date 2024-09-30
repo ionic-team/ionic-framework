@@ -373,13 +373,15 @@ export class Segment implements ComponentInterface {
       const indicatorEl = this.getIndicator(current);
       this.scrolledIndicator = indicatorEl;
 
-      const { scrollDistancePercentage, scrollDistance: evScrollDistance } = ev.detail;
+      const { scrollDistancePercentage, scrollDistance } = ev.detail;
 
       if (indicatorEl && !isNaN(scrollDistancePercentage)) {
         indicatorEl.style.transition = 'transform 0.3s ease-out';
 
-        const scrollDistance = scrollDistancePercentage * current.getBoundingClientRect().width;
-        const transformValue = evScrollDistance < 0 ? -scrollDistance : scrollDistance;
+        // Calculate the amount the indicator should move based on the scroll percentage
+        // and the width of the current button
+        const scrollAmount = scrollDistancePercentage * current.getBoundingClientRect().width;
+        const transformValue = scrollDistance < 0 ? -scrollAmount : scrollAmount;
 
         // Calculate total width of buttons to the left of the current button
         const totalButtonWidthBefore = buttons
@@ -405,13 +407,13 @@ export class Segment implements ComponentInterface {
         // Scroll the buttons if the indicator is out of view
         const indicatorX = indicatorEl.getBoundingClientRect().x;
         const buttonWidth = current.getBoundingClientRect().width;
-        if (evScrollDistance < 0 && indicatorX < 0) {
+        if (scrollDistance < 0 && indicatorX < 0) {
           this.el.scrollBy({
             top: 0,
             left: indicatorX,
             behavior: 'instant',
           });
-        } else if (evScrollDistance > 0 && indicatorX + buttonWidth > this.el.offsetWidth) {
+        } else if (scrollDistance > 0 && indicatorX + buttonWidth > this.el.offsetWidth) {
           this.el.scrollBy({
             top: 0,
             left: indicatorX + buttonWidth - this.el.offsetWidth,
