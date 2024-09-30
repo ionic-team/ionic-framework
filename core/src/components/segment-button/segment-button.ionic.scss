@@ -39,6 +39,8 @@
 }
 
 .button-inner {
+  @include globals.padding(globals.$ionic-space-100, null, globals.$ionic-space-100, null);
+
   gap: globals.$ionic-space-100;
 }
 
@@ -91,15 +93,17 @@
 // --------------------------------------------------
 
 // Segments with icons above or below the label
-// should have a minimum height of 72px
+// should have a fixed height of 72px
 :host(.segment-button-layout-icon-top),
 :host(.segment-button-layout-icon-bottom) {
-  min-height: globals.$ionic-scale-1800;
+  height: globals.$ionic-scale-1800;
 }
 
-// Segments with only icons or labels
-// should have a minimum height of 48px
+// Segments with icons at the start or end, or with only
+// icons or labels, should have a fixed height of 48px
 :host(.segment-button-has-label-only),
-:host(.segment-button-has-icon-only) {
-  min-height: globals.$ionic-scale-1200;
+:host(.segment-button-has-icon-only),
+:host(.segment-button-layout-icon-start),
+:host(.segment-button-layout-icon-end) {
+  height: globals.$ionic-scale-1200;
 }
