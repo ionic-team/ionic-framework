@@ -8,7 +8,7 @@
   /**
    * @prop --color-disabled: Color of the disabled segment button
    */
-  --background: #{globals.$ionic-color-base-white};
+  --background: none;
   --background-checked: var(--background);
   --color: #{globals.$ionic-color-neutral-1000};
   --color-checked: #{globals.$ionic-color-primary-base};
