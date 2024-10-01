@@ -1,3 +1,5 @@
+@use "../functions.color" as color;
+
 // Ionic Theme
 // -------------------------------------------------------------------------------------------
 // This file contains the theme variables shared
@@ -29,61 +31,61 @@ $ionic-colors: (
   primary: (
     base: $primary,
     contrast: #fff,
-    shade: get-color-shade($primary),
-    tint: get-color-tint($primary),
+    shade: color.get-color-shade($primary),
+    tint: color.get-color-tint($primary),
   ),
   secondary: (
     base: $secondary,
     contrast: $secondary,
-    shade: get-color-shade($secondary),
-    tint: get-color-tint($secondary),
+    shade: color.get-color-shade($secondary),
+    tint: color.get-color-tint($secondary),
   ),
   tertiary: (
     base: $tertiary,
     contrast: $tertiary,
-    shade: get-color-shade($tertiary),
-    tint: get-color-tint($tertiary),
+    shade: color.get-color-shade($tertiary),
+    tint: color.get-color-tint($tertiary),
   ),
   success: (
     base: $success,
     contrast: #000,
-    shade: get-color-shade($success),
-    tint: get-color-tint($success),
+    shade: color.get-color-shade($success),
+    tint: color.get-color-tint($success),
   ),
   warning: (
     base: $warning,
     contrast: #000,
-    shade: get-color-shade($warning),
-    tint: get-color-tint($warning),
+    shade: color.get-color-shade($warning),
+    tint: color.get-color-tint($warning),
   ),
   danger: (
     base: $danger,
     contrast: #fff,
-    shade: get-color-shade($danger),
-    tint: get-color-tint($danger),
+    shade: color.get-color-shade($danger),
+    tint: color.get-color-tint($danger),
   ),
   light: (
     base: $light,
     contrast: #000,
-    shade: get-color-shade($light),
-    tint: get-color-tint($light),
+    shade: color.get-color-shade($light),
+    tint: color.get-color-tint($light),
   ),
   medium: (
     base: $medium,
     contrast: $medium,
-    shade: get-color-shade($medium),
-    tint: get-color-tint($medium),
+    shade: color.get-color-shade($medium),
+    tint: color.get-color-tint($medium),
   ),
   neutral: (
     base: $neutral,
     contrast: #fff,
-    shade: get-color-shade($neutral),
-    tint: get-color-tint($neutral),
+    shade: color.get-color-shade($neutral),
+    tint: color.get-color-tint($neutral),
   ),
   dark: (
     base: $dark,
     contrast: $dark,
-    shade: get-color-shade($dark),
-    tint: get-color-tint($dark),
+    shade: color.get-color-shade($dark),
+    tint: color.get-color-tint($dark),
   ),
 );

@@ -92,6 +92,8 @@
 }
 
 .label-text-wrapper {
+  color: globals.$ionic-color-neutral-1200;
+
   text-overflow: ellipsis;
 
   white-space: nowrap;
