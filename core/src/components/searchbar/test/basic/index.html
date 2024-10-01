@@ -16,22 +16,18 @@
     <style>
       /* Remove the border that is added through the testing styling */
       ion-searchbar button {
-        background: initial;
         border: none;
       }
     </style>
   </head>
 
   <body>
+    <ion-searchbar show-cancel-button="always" show-clear-button="always"></ion-searchbar>
     <ion-app>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Searchbar - Basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
 
       <ion-content id="content">
         <h5 class="ion-padding-start ion-padding-top">Search - Default</h5>
+        <ion-searchbar show-cancel-button="always" show-clear-button="always"></ion-searchbar>
         <ion-searchbar id="basic" value="test" type="tel" show-cancel-button="focus" debounce="500"> </ion-searchbar>
 
         <h5 class="ion-padding-start ion-padding-top">Search - Always Show Cancel Button</h5>

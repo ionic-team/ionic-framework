@@ -89,6 +89,8 @@
    */
   @include globals.position(0, null, null, 9px);
 
+  background-color: transparent;
+
   font-size: globals.$ionic-font-size-400;
 }
 
