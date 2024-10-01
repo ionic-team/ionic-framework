@@ -2,6 +2,26 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['md', 'ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('searchbar: disabled'), () => {
+    test('should render disabled searchbar', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-searchbar disabled="true"></ion-searchbar>
+      `,
+        config
+      );
+
+      const searchbar = page.locator('ion-searchbar');
+
+      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-state-disabled`));
+    });
+  });
+});
+
+/**
  * This behavior is only applicable to the `ionic-md` mode.
  * This behavior does not vary across directions.
  */

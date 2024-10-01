@@ -143,19 +143,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-color`));
     });
 
-    test('should render disabled searchbar', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-searchbar disabled="true"></ion-searchbar>
-      `,
-        config
-      );
-
-      const searchbar = page.locator('ion-searchbar');
-
-      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-disabled`));
-    });
-
     test('should render custom search icon', async ({ page }) => {
       await page.setContent(
         `
