@@ -1,0 +1,23 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Ionic Searchbar
+// --------------------------------------------------
+
+/// @prop - Size of the searchbar input search icon
+$searchbar-ionic-input-search-icon-size: globals.$ionic-scale-400;
+
+/// @prop - Size of the searchbar input clear icon
+$searchbar-ionic-input-clear-icon-size: globals.$ionic-scale-400;
+
+/// @prop - Gap between searchbar elements
+$searchbar-ionic-gap: globals.$ionic-space-200;
+
+/// @prop - Padding start of the searchbar
+$searchbar-ionic-padding-start: calc(
+  globals.$ionic-space-400 + $searchbar-ionic-input-search-icon-size + $searchbar-ionic-gap
+);
+
+/// @prop - Padding end of the searchbar
+$searchbar-ionic-padding-end: calc(
+  globals.$ionic-space-400 + $searchbar-ionic-input-clear-icon-size + $searchbar-ionic-gap
+);
