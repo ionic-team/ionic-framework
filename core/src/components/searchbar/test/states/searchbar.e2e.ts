@@ -7,6 +7,30 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('searchbar: focused'), () => {
+    test('should render focus ring on the component', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <style>
+          /* Add padding to the container to prevent the focus ring from being clipped */
+          #container {
+            padding: 5px;
+          }
+        </style>
+
+        <div id="container">
+          <ion-searchbar></ion-searchbar>
+        </div>
+      `,
+        config
+      );
+
+      await pageUtils.pressKeys('Tab'); // Focused on the input
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`searchbar-state-focused`));
+    });
+
     test('should render focus ring on the cancel button', async ({ page, pageUtils }) => {
       await page.setContent(
         `
@@ -22,9 +46,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
       await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-state-focused-cancel-button`));
     });
-  });
 
-  test.describe(title('searchbar: focused'), () => {
     test('should render focus ring on the clear button', async ({ page, pageUtils }) => {
       await page.setContent(
         `
