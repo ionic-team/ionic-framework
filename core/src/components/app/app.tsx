@@ -61,7 +61,6 @@ export class App implements ComponentInterface {
   }
 
   /**
-   * @internal
    * Used to set focus on an element that uses `ion-focusable`.
    * Do not use this if focusing the element as a result of a keyboard
    * event as the focus utility should handle this for us. This method
