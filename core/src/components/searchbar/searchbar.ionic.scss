@@ -103,6 +103,18 @@
   position: absolute;
 }
 
+// Clear Icon & Cancel Icon
+// -----------------------------------------
+
+.searchbar-clear-button:focus-visible,
+.searchbar-cancel-button:focus-visible ion-icon {
+  @include globals.border-radius(globals.$ionic-border-radius-100);
+
+  outline: globals.$ionic-border-size-050 globals.$ionic-border-style-solid globals.$ionic-state-focus-1;
+
+  opacity: 1;
+}
+
 // Searchbar in Toolbar
 // -----------------------------------------
 
