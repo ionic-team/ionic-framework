@@ -3,7 +3,10 @@ import { Component, Host, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-segment-content',
-  styleUrl: 'segment-content.scss',
+  styleUrls: {
+    ios: 'segment-content.ios.scss',
+    md: 'segment-content.md.scss',
+  },
   shadow: true,
 })
 export class SegmentContent implements ComponentInterface {
