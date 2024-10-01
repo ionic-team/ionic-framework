@@ -49,6 +49,10 @@ html.ios.ios {
   font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
 }
 
+:root.ionic {
+  --ionic-global-background-color: var(--background);
+}
+
 ion-content button,
 main button {
   display: inline-block;
