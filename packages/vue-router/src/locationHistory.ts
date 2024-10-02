@@ -240,7 +240,11 @@ export const createLocationHistory = () => {
       }
     }
     if (delta < -1) {
-      return locationHistory[locationHistory.length - 1 + delta];
+      let routeIndex = locationHistory.findIndex(history => history === routeInfo);
+      if (routeIndex === -1) {
+        routeIndex = locationHistory.length - 1;
+      }
+      return locationHistory[Math.max(0, routeIndex + delta)];
     } else {
       for (let i = locationHistory.length - 2; i >= 0; i--) {
         const ri = locationHistory[i];
