@@ -44,7 +44,10 @@ class ToastFixture {
   }
 }
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toast: position rendering'), () => {
     let toastFixture: ToastFixture;
     test.beforeEach(async ({ page }) => {
@@ -124,7 +127,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 });
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toast: rendering'), () => {
     let toastFixture: ToastFixture;
     test.beforeEach(async ({ page }) => {
