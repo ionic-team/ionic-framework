@@ -22,10 +22,11 @@ export interface FocusVisibleUtility {
 
 let focusVisibleUtility: FocusVisibleUtility | null = null;
 
-export const initFocusVisibleUtility = () => {
+export const getOrInitFocusVisibleUtility = () => {
   if (!focusVisibleUtility) {
     focusVisibleUtility = startFocusVisible();
   }
+
   return focusVisibleUtility;
 };
 
