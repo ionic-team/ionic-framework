@@ -16,6 +16,7 @@
 
   @include globals.typography(globals.$ionic-body-md-medium);
 
+  // TODO(ROU-10853): replace this value with a layer token.
   z-index: 1001;
 }
 
@@ -27,6 +28,7 @@
 
   opacity: 0.01;
 
+  // TODO(ROU-10853): replace this value with a layer token.
   z-index: 10;
 }
 
