@@ -327,7 +327,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
       if (typeof (window as any) !== 'undefined') {
         import('../utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
       }
-      import('../utils/focus-visible').then((module) => (module.initFocusVisibleUtility()));
+      import('../utils/focus-visible').then((module) => module.getOrInitFocusVisibleUtility());
     });
   }
 };
