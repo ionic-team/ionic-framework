@@ -18,3 +18,57 @@
 
   z-index: 1001;
 }
+
+.toast-wrapper {
+  @include globals.margin(auto);
+
+  display: block;
+  position: absolute;
+
+  opacity: 0.01;
+
+  z-index: 10;
+}
+
+.toast-content {
+  @include globals.padding(globals.$ionic-space-300, globals.$ionic-space-400);
+}
+
+// Toast Button
+// --------------------------------------------------
+
+.toast-layout-baseline .toast-button-group-start {
+  @include globals.margin(null, null, null, globals.$ionic-space-400);
+}
+
+.toast-layout-stacked .toast-button-group-start {
+  @include globals.margin(globals.$ionic-space-400, globals.$ionic-space-400, null, null);
+}
+
+.toast-layout-baseline .toast-button-group-end {
+  @include globals.margin(null, globals.$ionic-space-400, null, null);
+}
+
+.toast-layout-stacked .toast-button-group-end {
+  @include globals.margin(null, globals.$ionic-space-400, globals.$ionic-space-400, null);
+}
+
+.toast-button {
+  @include globals.typography(globals.$ionic-body-md-link);
+  @include globals.padding(0);
+
+  // necessary for ripple to work properly
+  position: relative;
+
+  background-color: transparent;
+
+  overflow: hidden;
+}
+
+// Toast Icon
+// --------------------------------------------------
+
+.toast-icon,
+.toast-button-icon {
+  font-size: globals.$ionic-font-size-600;
+}
