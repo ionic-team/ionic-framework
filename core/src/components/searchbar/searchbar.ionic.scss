@@ -135,10 +135,7 @@
   outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
 }
 
-:host(.searchbar-has-focus) .searchbar-search-icon {
-  display: block;
-}
-
+:host(.searchbar-has-focus) .searchbar-search-icon,
 :host(.searchbar-has-focus) .searchbar-cancel-button,
 :host(.searchbar-should-show-cancel) .searchbar-cancel-button {
   display: block;
