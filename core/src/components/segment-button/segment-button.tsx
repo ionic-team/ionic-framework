@@ -25,7 +25,7 @@ let ids = 0;
   styleUrls: {
     ios: 'segment-button.ios.scss',
     md: 'segment-button.md.scss',
-    ionic: 'segment-button.md.scss',
+    ionic: 'segment-button.ionic.scss',
   },
   shadow: true,
 })

@@ -1,0 +1,83 @@
+@import "segment-button.common";
+@import "../../themes/native/native.globals";
+
+// Segment Button: Native
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background-hover: Background of the segment button on hover
+   * @prop --background-focused: Background of the segment button when focused with the tab key
+   *
+   * @prop --background-hover-opacity: Opacity of the segment button background on hover
+   * @prop --background-focused-opacity: Opacity of the segment button background when focused with the tab key
+   *
+   * @prop --color-hover: Color of the segment button on hover
+   * @prop --color-focused: Color of the segment button when focused with the tab key
+   */
+  --color: initial;
+  --color-hover: var(--color);
+  --color-checked: var(--color);
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+.button-native {
+  @include text-inherit();
+}
+
+.button-native::after {
+  @include button-state();
+}
+
+// Segment Button: Focused
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native {
+    color: var(--color-hover);
+
+    &::after {
+      background: var(--background-hover);
+
+      opacity: var(--background-hover-opacity);
+    }
+  }
+
+  :host(.segment-button-checked:hover) .button-native {
+    color: var(--color-checked);
+  }
+}
+
+// Segment Button Label
+// --------------------------------------------------
+
+::slotted(ion-label) {
+  line-height: 22px;
+}
+
+// Segment Button Ripple
+// --------------------------------------------------
+
+ion-ripple-effect {
+  color: var(--ripple-color, var(--color-checked));
+}
