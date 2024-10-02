@@ -1,0 +1,20 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./toast.common";
+
+// Ionic Toast
+// --------------------------------------------------
+
+:host {
+  --background: #{globals.$ionic-color-neutral-1200};
+  --border-radius: #{globals.$ionic-border-radius-400};
+  --box-shadow: #{globals.$ionic-elevation-400};
+  --button-color: #{globals.$ionic-color-base-white};
+  --color: #{globals.$ionic-color-base-white};
+  --max-width: 343px;
+  --start: 8px;
+  --end: 8px;
+
+  @include globals.typography(globals.$ionic-body-md-medium);
+
+  z-index: 1001;
+}
