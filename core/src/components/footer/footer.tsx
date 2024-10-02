@@ -84,7 +84,7 @@ export class Footer implements ComponentInterface {
     this.destroyCollapsibleFooter();
 
     if (hasFade) {
-      const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+      const pageEl = this.el.closest('ion-app,.ion-app,ion-page,.ion-page,page-inner');
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       if (!contentEl) {

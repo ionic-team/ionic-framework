@@ -266,7 +266,7 @@ export const focusVisibleElement = (el: HTMLElement) => {
    * which will let us explicitly set the elements to focus.
    */
   if (el.classList.contains('ion-focusable')) {
-    const app = el.closest('ion-app');
+    const app = el.closest('ion-app, .ion-app') as HTMLIonAppElement | null;
     if (app) {
       app.setFocus([el]);
     }

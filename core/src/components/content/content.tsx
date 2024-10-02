@@ -515,7 +515,7 @@ const getPageElement = (el: HTMLElement) => {
    * between the popover and the edges of the screen. But if the popover contains
    * its own page element, we should use that instead.
    */
-  const page = el.closest('ion-app, ion-page, .ion-page, page-inner, .popover-content');
+  const page = el.closest('ion-app, .ion-app, ion-page, .ion-page, page-inner, .popover-content');
   if (page) {
     return page;
   }

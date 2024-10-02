@@ -697,7 +697,7 @@ export const dismiss = async <OverlayDismissOptions>(
 };
 
 const getAppRoot = (doc: Document) => {
-  return doc.querySelector('ion-app') || doc.body;
+  return doc.querySelector('ion-app, .ion-app') || doc.body;
 };
 
 const overlayAnimation = async (

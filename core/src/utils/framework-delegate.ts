@@ -128,7 +128,7 @@ export const CoreDelegate = () => {
      * Get the root of the app and
      * add the overlay there.
      */
-    const app = document.querySelector('ion-app') || document.body;
+    const app = document.querySelector('ion-app, .ion-app') || document.body;
 
     /**
      * Create a placeholder comment so that
