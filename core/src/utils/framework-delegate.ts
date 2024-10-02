@@ -1,3 +1,4 @@
+import { config } from '../global/config';
 import type { ComponentRef, FrameworkDelegate } from '../interface';
 
 import { componentOnReady } from './helpers';
@@ -128,7 +129,8 @@ export const CoreDelegate = () => {
      * Get the root of the app and
      * add the overlay there.
      */
-    const app = document.querySelector('ion-app, .ion-app') || document.body;
+    const appRootClass = config.get('appRootClass', 'ion-app');
+    const app = document.querySelector(`ion-app, ${appRootClass}`) || document.body;
 
     /**
      * Create a placeholder comment so that
