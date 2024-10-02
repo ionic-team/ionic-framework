@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * Fill is only available in MD mode
+ * Fill is only available in MD and Ionic
  */
-configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: fill'), () => {
     test.describe('textarea: fill solid', () => {
       test('should not have visual regressions', async ({ page }) => {
@@ -13,6 +13,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
           <ion-textarea
             fill="solid"
             label="Email"
+            label-placement="stacked"
             value="hi@ionic.io"
             helper-text="Enter your email"
             maxlength="20"
@@ -25,49 +26,12 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const textarea = page.locator('ion-textarea');
         await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-solid`));
       });
-      test('should render correctly with floating label', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-textarea
-            fill="solid"
-            label="Email"
-            label-placement="floating"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-textarea>
-        `,
-          config
-        );
-
-        const textarea = page.locator('ion-textarea');
-        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-solid-label-floating`));
-      });
-      test('should not have visual regressions with shaped solid', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-textarea
-            shape="round"
-            fill="solid"
-            label="Email"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-textarea>
-        `,
-          config
-        );
-
-        const textarea = page.locator('ion-textarea');
-        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-shaped-solid`));
-      });
-      test('padding and border radius should be customizable', async ({ page }) => {
+      test('padding, border radius, and background should be customizable', async ({ page }) => {
         await page.setContent(
           `
           <style>
             ion-textarea {
+              --background: #e5e5e5 !important;
               --border-radius: 10px !important;
               --padding-start: 50px !important;
               --padding-end: 50px !important;
@@ -78,7 +42,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             shape="round"
             fill="solid"
             label="Email"
-            label-placement="floating"
+            label-placement="stacked"
             value="hi@ionic.io"
             helper-text="Enter your email"
             maxlength="20"
@@ -99,6 +63,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
           <ion-textarea
             fill="outline"
             label="Email"
+            label-placement="stacked"
             value="hi@ionic.io"
             helper-text="Enter your email"
             maxlength="20"
@@ -111,6 +76,66 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const textarea = page.locator('ion-textarea');
         await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-outline`));
       });
+      test('padding, border radius, and background should be customizable', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            ion-textarea {
+              --background: #e5e5e5 !important;
+              --border-radius: 10px !important;
+              --padding-start: 50px !important;
+              --padding-end: 50px !important;
+            }
+          </style>
+
+          <ion-textarea
+            shape="round"
+            fill="outline"
+            label="Email"
+            label-placement="stacked"
+            value="hi@ionic.io"
+            helper-text="Enter your email"
+            maxlength="20"
+            counter="true"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-shaped-outline-custom`));
+      });
+    });
+  });
+});
+
+/**
+ * Fill with floating label is only available in MD mode
+ */
+configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: fill'), () => {
+    test.describe('textarea: fill solid', () => {
+      test('should render correctly with floating label', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            fill="solid"
+            label="Email"
+            label-placement="floating"
+            value="hi@ionic.io"
+            helper-text="Enter your email"
+            maxlength="20"
+            counter="true"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-solid-label-floating`));
+      });
+    });
+    test.describe('textarea: fill outline', () => {
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
           `
@@ -129,53 +154,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
         const textarea = page.locator('ion-textarea');
         await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-outline-label-floating`));
-      });
-      test('should not have visual regressions with shaped outline', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-textarea
-            shape="round"
-            fill="outline"
-            label="Email"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-textarea>
-        `,
-          config
-        );
-
-        const textarea = page.locator('ion-textarea');
-        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-shaped-outline`));
-      });
-      test('padding and border radius should be customizable', async ({ page }) => {
-        await page.setContent(
-          `
-          <style>
-            ion-textarea {
-              --border-radius: 10px !important;
-              --padding-start: 50px !important;
-              --padding-end: 50px !important;
-            }
-          </style>
-
-          <ion-textarea
-            shape="round"
-            fill="outline"
-            label="Email"
-            label-placement="floating"
-            value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
-          ></ion-textarea>
-        `,
-          config
-        );
-
-        const textarea = page.locator('ion-textarea');
-        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-shaped-outline-custom`));
       });
     });
   });
