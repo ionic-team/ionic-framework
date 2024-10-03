@@ -30,14 +30,14 @@
 
 .searchbar-search-icon {
   @include globals.position(
-    searchbarVars.$searchbar-ionic-input-search-icon-size,
+    vars.$searchbar-ionic-input-search-icon-size,
     null,
     null,
-    searchbarVars.$searchbar-ionic-input-search-icon-size
+    vars.$searchbar-ionic-input-search-icon-size
   );
 
-  width: searchbarVars.$searchbar-ionic-input-search-icon-size;
-  height: searchbarVars.$searchbar-ionic-input-search-icon-size;
+  width: vars.$searchbar-ionic-input-search-icon-size;
+  height: vars.$searchbar-ionic-input-search-icon-size;
 }
 
 // Searchbar Input Field
@@ -46,9 +46,9 @@
 .searchbar-input {
   @include globals.padding(
     globals.$ionic-space-300,
-    searchbarVars.$searchbar-ionic-padding-end,
+    vars.$searchbar-ionic-padding-end,
     globals.$ionic-space-300,
-    searchbarVars.$searchbar-ionic-padding-start
+    vars.$searchbar-ionic-padding-start
   );
 
   min-height: globals.$ionic-scale-1200;
@@ -61,14 +61,14 @@
 
 .searchbar-clear-button {
   @include globals.position(
-    searchbarVars.$searchbar-ionic-input-clear-icon-size,
-    searchbarVars.$searchbar-ionic-input-clear-icon-size,
+    vars.$searchbar-ionic-input-clear-icon-size,
+    vars.$searchbar-ionic-input-clear-icon-size,
     null,
     null
   );
 
-  width: searchbarVars.$searchbar-ionic-input-clear-icon-size;
-  height: searchbarVars.$searchbar-ionic-input-clear-icon-size;
+  width: vars.$searchbar-ionic-input-clear-icon-size;
+  height: vars.$searchbar-ionic-input-clear-icon-size;
 
   background-color: transparent;
 
