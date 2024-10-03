@@ -127,7 +127,7 @@
 
 /* Hover */
 :host(:hover) {
-  --icon-color: #{globals.$ionic-color-neutral-900};
+  --background: #{globals.$ionic-color-neutral-200};
 }
 
 /* Focus */
