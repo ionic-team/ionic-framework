@@ -55,6 +55,10 @@
   @include globals.margin(null, globals.$ionic-space-400, globals.$ionic-space-400, null);
 }
 
+.toast-button-group {
+  gap: globals.$ionic-space-400;
+}
+
 .toast-button {
   @include globals.typography(globals.$ionic-body-md-link);
   @include globals.padding(0);
