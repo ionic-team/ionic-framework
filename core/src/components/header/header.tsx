@@ -5,6 +5,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 
 import {
@@ -92,7 +93,8 @@ export class Header implements ComponentInterface {
     this.destroyCollapsibleHeader();
 
     if (hasCondense) {
-      const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+      const appRootSelector = config.get('appRootSelector', 'ion-app');
+      const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       // Cloned elements are always needed in iOS transition
@@ -104,7 +106,7 @@ export class Header implements ComponentInterface {
 
       await this.setupCondenseHeader(contentEl, pageEl);
     } else if (hasFade) {
-      const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+      const pageEl = this.el.closest('ion-app,.ion-app,ion-page,.ion-page,page-inner');
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       if (!contentEl) {
