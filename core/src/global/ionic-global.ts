@@ -1,7 +1,8 @@
-import { getMode, setMode, setPlatformHelpers, getElement } from '@stencil/core';
+import { Build, getMode, setMode, setPlatformHelpers, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
+import { shouldUseCloseWatcher } from '../utils/hardware-back-button';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { config, configFromSession, configFromURL, saveConfig } from './config';
@@ -131,6 +132,36 @@ export const getIonTheme = (ref?: any): Theme => {
   return defaultTheme;
 };
 
+export const rIC = (callback: () => void) => {
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(callback);
+  } else {
+    setTimeout(callback, 32);
+  }
+};
+
+export const needInputShims = () => {
+  /**
+   * iOS always needs input shims
+   */
+  const needsShimsIOS = isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+  if (needsShimsIOS) {
+    return true;
+  }
+
+  /**
+   * Android only needs input shims when running
+   * in the browser and only if the browser is using the
+   * new Chrome 108+ resize behavior: https://developer.chrome.com/blog/viewport-resize-behavior/
+   */
+  const isAndroidMobileWeb = isPlatform(window, 'android') && isPlatform(window, 'mobileweb');
+  if (isAndroidMobileWeb) {
+    return true;
+  }
+
+  return false;
+};
+
 export const initialize = (userConfig: IonicConfig = {}) => {
   if (typeof (window as any) === 'undefined') {
     return;
@@ -255,6 +286,51 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     }
     return defaultTheme;
   });
+
+  // `IonApp` code
+  // ----------------------------------------------
+
+  if (Build.isBrowser) {
+    rIC(async () => {
+      const isHybrid = isPlatform(window, 'hybrid');
+      if (!config.getBoolean('_testing')) {
+        import('../utils/tap-click').then((module) => module.startTapClick(config));
+      }
+      if (config.getBoolean('statusTap', isHybrid)) {
+        import('../utils/status-tap').then((module) => module.startStatusTap());
+      }
+      if (config.getBoolean('inputShims', needInputShims())) {
+        /**
+         * needInputShims() ensures that only iOS and Android
+         * platforms proceed into this block.
+         */
+        const platform = isPlatform(window, 'ios') ? 'ios' : 'android';
+        import('../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
+      }
+      const hardwareBackButtonModule = await import('../utils/hardware-back-button');
+      const supportsHardwareBackButtonEvents = isHybrid || shouldUseCloseWatcher();
+      if (config.getBoolean('hardwareBackButton', supportsHardwareBackButtonEvents)) {
+        hardwareBackButtonModule.startHardwareBackButton();
+      } else {
+        /**
+         * If an app sets hardwareBackButton: false and experimentalCloseWatcher: true
+         * then the close watcher will not be used.
+         */
+        if (shouldUseCloseWatcher()) {
+          printIonWarning(
+            'experimentalCloseWatcher was set to `true`, but hardwareBackButton was set to `false`. Both config options must be `true` for the Close Watcher API to be used.'
+          );
+        }
+
+        hardwareBackButtonModule.blockHardwareBackButton();
+      }
+      if (typeof (window as any) !== 'undefined') {
+        import('../utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
+      }
+      // TODO
+      // import('../../utils/focus-visible').then((module) => (this.focusVisible = module.startFocusVisible()));
+    });
+  }
 };
 
 export default initialize;
