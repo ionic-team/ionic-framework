@@ -1,9 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Build, Component, Element, Host, Method, h } from '@stencil/core';
-import type { FocusVisibleUtility } from '@utils/focus-visible';
+import { Component, Element, Host, Method, h } from '@stencil/core';
+import { initFocusVisibleUtility } from '@utils/focus-visible';
 
 import { config } from '../../global/config';
-import { getIonTheme, rIC } from '../../global/ionic-global';
+import { getIonTheme } from '../../global/ionic-global';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines the platform behaviors of the component.
@@ -14,18 +14,7 @@ import { getIonTheme, rIC } from '../../global/ionic-global';
   styleUrl: 'app.scss',
 })
 export class App implements ComponentInterface {
-  private focusVisible?: FocusVisibleUtility;
-
   @Element() el!: HTMLElement;
-
-  componentDidLoad() {
-    // TODO can we move focus visible to global
-    if (Build.isBrowser) {
-      rIC(async () => {
-        import('../../utils/focus-visible').then((module) => (this.focusVisible = module.startFocusVisible()));
-      });
-    }
-  }
 
   /**
    * @internal
@@ -39,9 +28,8 @@ export class App implements ComponentInterface {
    */
   @Method()
   async setFocus(elements: HTMLElement[]) {
-    if (this.focusVisible) {
-      this.focusVisible.setFocus(elements);
-    }
+    const focusVisible = initFocusVisibleUtility();
+    focusVisible.setFocus(elements);
   }
 
   render() {
