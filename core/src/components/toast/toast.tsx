@@ -60,7 +60,7 @@ import type {
   styleUrls: {
     ios: 'toast.ios.scss',
     md: 'toast.md.scss',
-    ionic: 'toast.md.scss',
+    ionic: 'toast.ionic.scss',
   },
   shadow: true,
 })
