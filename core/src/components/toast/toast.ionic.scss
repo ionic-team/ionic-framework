@@ -36,6 +36,13 @@
   @include globals.padding(globals.$ionic-space-300, globals.$ionic-space-400);
 }
 
+// Toast Header
+// --------------------------------------------------
+
+.toast-header {
+  @include globals.typography(globals.$ionic-heading-h6-medium);
+}
+
 // Toast Button
 // --------------------------------------------------
 
