@@ -1,6 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "searchbar.common";
-@use "./searchbar.ionic.vars" as vars;
 
 // Ionic Searchbar
 // --------------------------------------------------
@@ -29,26 +28,33 @@
 // -----------------------------------------
 
 .searchbar-search-icon {
-  @include globals.position(
-    vars.$searchbar-ionic-input-search-icon-size,
-    null,
-    null,
-    vars.$searchbar-ionic-input-search-icon-size
-  );
+  // Position is based on the size of the search icon.
+  @include globals.position(globals.$ionic-scale-400, null, null, globals.$ionic-scale-400);
 
-  width: vars.$searchbar-ionic-input-search-icon-size;
-  height: vars.$searchbar-ionic-input-search-icon-size;
+  width: globals.$ionic-scale-400;
+  height: globals.$ionic-scale-400;
 }
 
 // Searchbar Input Field
 // -----------------------------------------
 
 .searchbar-input {
+  /**
+   * Padding start is based on
+   * desired padding from design,
+   * the size of the search icon,
+   * and the gap between the icon and the input.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * the size of the clear icon,
+   * and the gap between the icon and the input.
+   */
   @include globals.padding(
     globals.$ionic-space-300,
-    vars.$searchbar-ionic-padding-end,
+    calc(globals.$ionic-space-400 + globals.$ionic-scale-400 + globals.$ionic-space-200),
     globals.$ionic-space-300,
-    vars.$searchbar-ionic-padding-start
+    calc(globals.$ionic-space-400 + globals.$ionic-scale-400 + globals.$ionic-space-200)
   );
 
   min-height: globals.$ionic-scale-1200;
@@ -60,15 +66,11 @@
 // -----------------------------------------
 
 .searchbar-clear-button {
-  @include globals.position(
-    vars.$searchbar-ionic-input-clear-icon-size,
-    vars.$searchbar-ionic-input-clear-icon-size,
-    null,
-    null
-  );
+  // Position is based on the size of the clear icon.
+  @include globals.position(globals.$ionic-scale-400, globals.$ionic-scale-400, null, null);
 
-  width: vars.$searchbar-ionic-input-clear-icon-size;
-  height: vars.$searchbar-ionic-input-clear-icon-size;
+  width: globals.$ionic-scale-400;
+  height: globals.$ionic-scale-400;
 
   background-color: transparent;
 
