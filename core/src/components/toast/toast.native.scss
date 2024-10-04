@@ -1,0 +1,8 @@
+@use "./toast.common";
+@import "./toast.vars";
+
+:host {
+  font-family: $font-family-base;
+
+  z-index: $z-index-overlay;
+}
