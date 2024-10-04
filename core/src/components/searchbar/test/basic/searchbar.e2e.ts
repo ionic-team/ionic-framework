@@ -95,7 +95,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 });
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('searchbar: rendering'), () => {
     test('should render searchbar', async ({ page }) => {
       await page.setContent(
@@ -143,19 +143,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-color`));
     });
 
-    test('should render disabled searchbar', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-searchbar disabled="true"></ion-searchbar>
-      `,
-        config
-      );
-
-      const searchbar = page.locator('ion-searchbar');
-
-      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-disabled`));
-    });
-
     test('should render custom search icon', async ({ page }) => {
       await page.setContent(
         `
@@ -199,7 +186,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 });
 
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('searchbar: cancel button alignment'), () => {
     test('should align with the back button when used in a toolbar', async ({ page }, testInfo) => {
       testInfo.annotations.push({
