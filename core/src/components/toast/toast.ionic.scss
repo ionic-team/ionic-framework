@@ -32,7 +32,7 @@
   z-index: 10;
 }
 
-.toast-content {
+.toast-container {
   @include globals.padding(globals.$ionic-space-300, globals.$ionic-space-400);
 }
 
@@ -40,19 +40,19 @@
 // --------------------------------------------------
 
 .toast-layout-baseline .toast-button-group-start {
-  @include globals.margin(null, null, null, globals.$ionic-space-400);
+  @include globals.margin-horizontal(null, globals.$ionic-space-400);
 }
 
 .toast-layout-stacked .toast-button-group-start {
-  @include globals.margin(globals.$ionic-space-400, globals.$ionic-space-400, null, null);
+  @include globals.margin(null, null, globals.$ionic-space-400, null);
 }
 
 .toast-layout-baseline .toast-button-group-end {
-  @include globals.margin(null, globals.$ionic-space-400, null, null);
+  @include globals.margin-horizontal(globals.$ionic-space-400, null);
 }
 
 .toast-layout-stacked .toast-button-group-end {
-  @include globals.margin(null, globals.$ionic-space-400, globals.$ionic-space-400, null);
+  @include globals.margin(globals.$ionic-space-400, null, null, null);
 }
 
 .toast-button-group {
@@ -69,6 +69,13 @@
   background-color: transparent;
 
   overflow: hidden;
+}
+
+// Toast Icon & Button Icon
+// --------------------------------------------------
+
+.toast-icon {
+  @include globals.margin-horizontal(0, globals.$ionic-space-200);
 }
 
 // Toast Icon
