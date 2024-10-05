@@ -344,21 +344,35 @@ export class Segment implements ComponentInterface {
         const centeredX = activeButtonLeft - scrollContainerBox.width / 2 + activeButtonBox.width / 2;
 
         /**
-         * We intentionally use scrollBy here instead of scrollIntoView
+         * newScrollPosition is the absolute scroll position that the
+         * container needs to move to in order to center the active button.
+         * It is calculated by adding the current scroll position
+         * (scrollLeft) to the offset needed to center the button
+         * (centeredX).
+         */
+        const newScrollPosition = el.scrollLeft + centeredX;
+
+        /**
+         * We intentionally use scrollTo here instead of scrollIntoView
          * to avoid a WebKit bug where accelerated animations break
          * when using scrollIntoView. Using scrollIntoView will cause the
          * segment container to jump during the transition and then snap into place.
          * This is because scrollIntoView can potentially cause parent element
-         * containers to also scroll. scrollBy does not have this same behavior, so
+         * containers to also scroll. scrollTo does not have this same behavior, so
          * we use this API instead.
+         *
+         * scrollTo is used instead of scrollBy because there is a
+         * Webkit bug that causes scrollBy to not work smoothly when
+         * the active button is near the edge of the scroll container.
+         * This leads to the buttons to jump around during the transition.
          *
          * Note that if there is not enough scrolling space to center the element
          * within the scroll container, the browser will attempt
          * to center by as much as it can.
          */
-        el.scrollBy({
+        el.scrollTo({
           top: 0,
-          left: centeredX,
+          left: newScrollPosition,
           behavior: smoothScroll ? 'smooth' : 'instant',
         });
       }
