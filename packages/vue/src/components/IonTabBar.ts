@@ -38,7 +38,18 @@ export const IonTabBar = defineComponent({
     /* eslint-disable @typescript-eslint/no-empty-function */
     _tabsWillChange: { type: Function, default: () => {} },
     _tabsDidChange: { type: Function, default: () => {} },
-    _hasRouterOutlet: { type: Boolean, default: false },
+    /**
+     * This prop is set by the `ion-tabs` component. If
+     * the value is `undefined`, then the `ion-tab-bar`
+     * component was not found within the slotted content.
+     * Most likely, the tab bar was not passed as a direct
+     * child of `ion-tabs`.
+     *
+     * A workaround will be used to determine if the tabs
+     * are being used as a basic tab navigation or with
+     * the router.
+     */
+    _hasRouterOutlet: { type: Boolean, default: undefined },
     /* eslint-enable @typescript-eslint/no-empty-function */
   },
   data() {
@@ -46,6 +57,12 @@ export const IonTabBar = defineComponent({
       tabState: {
         activeTab: undefined,
         tabs: {},
+        /**
+         * Passing this prop to each tab button
+         * lets it be aware of the presence of
+         * the router outlet.
+         */
+        hasRouterOutlet: false,
       },
       tabVnodes: [],
     };
@@ -55,7 +72,7 @@ export const IonTabBar = defineComponent({
   },
   methods: {
     setupTabState(ionRouter: any) {
-      const hasRouterOutlet = this.$props._hasRouterOutlet;
+      const hasRouterOutlet = this.$data.tabState.hasRouterOutlet;
       /**
        * For each tab, we need to keep track of its
        * base href as well as any child page that
@@ -74,13 +91,6 @@ export const IonTabBar = defineComponent({
           currentHref: child.props.href,
           ref: child,
         };
-
-        /**
-         * Passing this prop to each tab button
-         * lets it be aware of the presence of
-         * the router outlet.
-         */
-        tabState.hasRouterOutlet = hasRouterOutlet;
 
         /**
          * Passing this prop to each tab button
@@ -126,7 +136,7 @@ export const IonTabBar = defineComponent({
      * @param ionRouter
      */
     checkActiveTab(ionRouter: any) {
-      const hasRouterOutlet = this.$props._hasRouterOutlet;
+      const hasRouterOutlet = this.$data.tabState.hasRouterOutlet;
       const currentRoute = ionRouter?.getCurrentRouteInfo();
       const childNodes = this.$data.tabVnodes;
       const { tabs, activeTab: prevActiveTab } = this.$data.tabState;
@@ -216,7 +226,7 @@ export const IonTabBar = defineComponent({
       this.tabSwitch(activeTab);
     },
     tabSwitch(activeTab: string, ionRouter?: any) {
-      const hasRouterOutlet = this.$props._hasRouterOutlet;
+      const hasRouterOutlet = this.$data.tabState.hasRouterOutlet;
       const childNodes = this.$data.tabVnodes;
       const { activeTab: prevActiveTab } = this.$data.tabState;
       const tabState = this.$data.tabState;
@@ -250,6 +260,30 @@ export const IonTabBar = defineComponent({
   },
   mounted() {
     const ionRouter: any = inject("navManager", null);
+    const hasRouterOutlet = this.$props._hasRouterOutlet;
+
+    /**
+     * If `hasRouterOutlet` prop is not provided,
+     * then the `ion-tab-bar` could not be found
+     * within the slotted content of `ion-tabs`.
+     * This means that the tab bar was not passed
+     * as a direct child of `ion-tabs`.
+     *
+     * In this case, the router outlet needs to be
+     * searched for within the `ion-tab-bar` component.
+     * This is necessary to determine if the tabs
+     * are being used as a basic tab navigation or
+     * with the router.
+     */
+    if (hasRouterOutlet === undefined) {
+      const ionRouterOutlet = this.$refs.ionTabBar
+        .closest("ion-tabs")
+        ?.querySelector("ion-router-outlet");
+
+      this.$data.tabState.hasRouterOutlet = !!ionRouterOutlet;
+    } else {
+      this.$data.tabState.hasRouterOutlet = hasRouterOutlet;
+    }
 
     this.setupTabState(ionRouter);
 
