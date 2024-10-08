@@ -45,9 +45,8 @@ export class SegmentView implements ComponentInterface {
     const { initialScrollLeft, previousScrollLeft } = this;
     const { scrollLeft, offsetWidth } = ev.target as HTMLElement;
 
-    if (initialScrollLeft === undefined) {
-      this.initialScrollLeft = scrollLeft;
-    }
+    // Set initial scroll position if it's undefined
+    this.initialScrollLeft = initialScrollLeft ?? scrollLeft;
 
     // Determine the scroll direction based on the previous scroll position
     const scrollDirection = scrollLeft > previousScrollLeft ? 'right' : 'left';
@@ -55,7 +54,7 @@ export class SegmentView implements ComponentInterface {
 
     // Calculate the distance scrolled based on the initial scroll position
     // and then transform it to a percentage of the segment view width
-    const scrollDistance = scrollLeft - initialScrollLeft!;
+    const scrollDistance = scrollLeft - this.initialScrollLeft;
     const scrollDistancePercentage = Math.abs(scrollDistance) / offsetWidth;
 
     // Emit the scroll direction and distance
@@ -65,20 +64,28 @@ export class SegmentView implements ComponentInterface {
       scrollDistancePercentage,
     });
 
+    // Check if the scroll is at a snapping point and return if not
     const atSnappingPoint = scrollLeft % offsetWidth === 0;
-
     if (!atSnappingPoint) return;
 
-    const index = Math.round(scrollLeft / offsetWidth);
-    const segmentContent = this.getSegmentContents()[index];
+    // Find the current segment content based on the scroll position
+    const currentIndex = Math.round(scrollLeft / offsetWidth);
+    let segmentContent = this.getSegmentContents()[currentIndex];
 
-    if (segmentContent === null || segmentContent === undefined) {
-      return;
+    // Exit if no valid segment content found
+    if (!segmentContent) return;
+
+    // If the current content is disabled, find the next enabled content
+    if (segmentContent.disabled) {
+      const nextIndex = scrollDirection === 'right' ? currentIndex + 1 : currentIndex - 1;
+      segmentContent = this.getNextSegmentContent(nextIndex);
     }
 
-    // Store the active `ion-segment-content` id so we can emit it when the scroll ends
+    // Update active content ID and scroll to the segment content
     this.activeContentId = segmentContent.id;
+    this.setContent(segmentContent.id);
 
+    // Reset the timeout to check for scroll end
     this.resetScrollEndTimeout();
   }
 
@@ -120,11 +127,15 @@ export class SegmentView implements ComponentInterface {
 
   /**
    * Check if the scroll has ended and the user is not actively touching.
-   * If both conditions are met, reset the initial scroll position and
-   * emit the scroll end event.
+   * If the conditions are met (active content is enabled and no active touch),
+   * reset the scroll position and emit the scroll end event.
    */
   private checkForScrollEnd() {
-    if (!this.isTouching) {
+    const activeContent = this.getSegmentContents().find(content => content.id === this.activeContentId);
+
+    // Only emit scroll end event if the active content is not disabled and
+    // the user is not touching the segment view
+    if (activeContent?.disabled === false && !this.isTouching) {
       this.ionSegmentViewScrollEnd.emit({ activeContentId: this.activeContentId });
       this.initialScrollLeft = undefined;
     }
@@ -153,7 +164,12 @@ export class SegmentView implements ComponentInterface {
   }
 
   private getSegmentContents(): HTMLIonSegmentContentElement[] {
-    return Array.from(this.el.querySelectorAll('ion-segment-content:not([disabled])'));
+    return Array.from(this.el.querySelectorAll('ion-segment-content'));
+  }
+
+  private getNextSegmentContent(index: number): HTMLIonSegmentContentElement {
+    const contents = this.getSegmentContents();
+    return contents[index];
   }
 
   render() {

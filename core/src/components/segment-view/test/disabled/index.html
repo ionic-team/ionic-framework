@@ -35,6 +35,10 @@
       ion-segment-content:nth-of-type(3) {
         background: lightgreen;
       }
+
+      ion-segment-content:nth-of-type(4) {
+        background: lightgoldenrodyellow;
+      }
     </style>
   </head>
 
@@ -75,6 +79,27 @@
           <ion-segment-content id="paid">Paid</ion-segment-content>
           <ion-segment-content disabled id="free">Free</ion-segment-content>
           <ion-segment-content id="top">Top</ion-segment-content>
+        </ion-segment-view>
+
+        <ion-segment value="a">
+          <ion-segment-button content-id="a" value="a">
+            <ion-label>a</ion-label>
+          </ion-segment-button>
+          <ion-segment-button disabled content-id="b" value="b">
+            <ion-label>b</ion-label>
+          </ion-segment-button>
+          <ion-segment-button disabled content-id="c" value="c">
+            <ion-label>c</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="d" value="d">
+            <ion-label>d</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="a">a</ion-segment-content>
+          <ion-segment-content disabled id="b">b</ion-segment-content>
+          <ion-segment-content disabled id="c">c</ion-segment-content>
+          <ion-segment-content id="d">d</ion-segment-content>
         </ion-segment-view>
 
         <ion-segment disabled value="reading-list">
