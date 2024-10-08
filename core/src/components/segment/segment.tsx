@@ -442,14 +442,44 @@ export class Segment implements ComponentInterface {
     const segmentEl = this.el;
 
     if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
-      this.value = ev.detail.activeContentId;
-
       if (this.scrolledIndicator) {
-        this.scrolledIndicator.style.transition = '';
-        this.scrolledIndicator.style.transform = '';
+        const computedStyle = window.getComputedStyle(this.scrolledIndicator);
+        const isTransitioning = computedStyle.transitionDuration !== '0s';
+
+        if (isTransitioning) {
+          // Add a transitionend listener if the indicator is transitioning
+          this.waitForTransitionEnd(this.scrolledIndicator, () => {
+            this.updateValueAfterTransition(ev.detail.activeContentId);
+          });
+        } else {
+          // Immediately update the value if there's no transition
+          this.updateValueAfterTransition(ev.detail.activeContentId);
+        }
+      } else {
+        // Immediately update the value if there's no indicator
+        this.updateValueAfterTransition(ev.detail.activeContentId);
       }
 
       this.isScrolling = false;
+    }
+  }
+
+  // Wait for the transition to end, then execute the callback
+  private waitForTransitionEnd(indicator: HTMLElement, callback: () => void) {
+    const onTransitionEnd = () => {
+      indicator.removeEventListener('transitionend', onTransitionEnd);
+      callback();
+    };
+    indicator.addEventListener('transitionend', onTransitionEnd);
+  }
+
+  // Update the Segment value after the ionSegmentViewScrollEnd transition has ended
+  private updateValueAfterTransition(activeContentId: string) {
+    this.value = activeContentId;
+
+    if (this.scrolledIndicator) {
+      this.scrolledIndicator.style.transition = '';
+      this.scrolledIndicator.style.transform = '';
     }
   }
 
