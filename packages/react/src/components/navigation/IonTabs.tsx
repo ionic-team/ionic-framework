@@ -8,7 +8,6 @@ import { IonRouterOutlet } from '../IonRouterOutlet';
 import { IonTabsInner } from '../inner-proxies';
 import { IonTab } from '../proxies';
 
-import { IonTabBar } from './IonTabBar';
 import type { IonTabsContextState } from './IonTabsContext';
 import { IonTabsContext } from './IonTabsContext';
 
@@ -43,29 +42,9 @@ interface Props extends LocalJSX.IonTabs {
   children: ChildFunction | React.ReactNode;
 }
 
-const hostStyles: React.CSSProperties = {
-  display: 'flex',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  right: '0',
-  bottom: '0',
-  flexDirection: 'column',
-  width: '100%',
-  height: '100%',
-  contain: 'layout size style',
-};
-
-const tabsInner: React.CSSProperties = {
-  position: 'relative',
-  flex: 1,
-  contain: 'layout size style',
-};
-
 export const IonTabs = /*@__PURE__*/ (() =>
   class extends React.Component<Props> {
     context!: React.ContextType<typeof NavContext>;
-    routerOutletRef: React.Ref<HTMLIonRouterOutletElement> = React.createRef();
     selectTabHandler?: (tag: string) => boolean;
     tabBarRef = React.createRef<any>();
 
@@ -73,6 +52,13 @@ export const IonTabs = /*@__PURE__*/ (() =>
       activeTab: undefined,
       selectTab: () => false,
       hasRouterOutlet: false,
+      /**
+       * Tab bar can be used as a standalone component,
+       * so the props can not be passed directly to the
+       * tab bar component. Instead, props will be
+       * passed through the context.
+       */
+      tabBarProps: { ref: this.tabBarRef },
     };
 
     constructor(props: Props) {
@@ -91,9 +77,32 @@ export const IonTabs = /*@__PURE__*/ (() =>
       }
     }
 
+    renderTabsInner(children: React.ReactNode, outlet: React.ReactElement<{}> | undefined) {
+      return (
+        <IonTabsInner {...this.props}>
+          {React.Children.map(children, (child: React.ReactNode) => {
+            if (React.isValidElement(child)) {
+              const isRouterOutlet =
+                child.type === IonRouterOutlet ||
+                (child.type as any).isRouterOutlet ||
+                (child.type === Fragment && child.props.children[0].type === IonRouterOutlet);
+
+              if (isRouterOutlet) {
+                /**
+                 * The modified outlet needs to be returned to include
+                 * the ref.
+                 */
+                return outlet;
+              }
+            }
+            return child;
+          })}
+        </IonTabsInner>
+      );
+    }
+
     render() {
       let outlet: React.ReactElement<{}> | undefined;
-      let tabBar: React.ReactElement | undefined;
       // Check if IonTabs has any IonTab children
       let hasTab = false;
       const { className, onIonTabsDidChange, onIonTabsWillChange, ...props } = this.props;
@@ -103,19 +112,15 @@ export const IonTabs = /*@__PURE__*/ (() =>
           ? (this.props.children as ChildFunction)(this.ionTabContextState)
           : this.props.children;
 
-      const outletProps = {
-        ref: this.routerOutletRef,
-      };
-
       React.Children.forEach(children, (child: any) => {
         // eslint-disable-next-line no-prototype-builtins
         if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
           return;
         }
         if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
-          outlet = React.cloneElement(child, outletProps);
+          outlet = React.cloneElement(child);
         } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
-          outlet = React.cloneElement(child.props.children[0], outletProps);
+          outlet = React.cloneElement(child.props.children[0]);
         } else if (child.type === IonTab) {
           /**
            * This indicates that IonTabs will be using a basic tab-based navigation
@@ -127,8 +132,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
         this.ionTabContextState.hasRouterOutlet = !!outlet;
 
         let childProps: any = {
-          ref: this.tabBarRef,
-          routerOutletRef: this.routerOutletRef,
+          ...this.ionTabContextState.tabBarProps,
         };
 
         /**
@@ -152,14 +156,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
           };
         }
 
-        if (child.type === IonTabBar || child.type.isTabBar) {
-          tabBar = React.cloneElement(child, childProps);
-        } else if (
-          child.type === Fragment &&
-          (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar)
-        ) {
-          tabBar = React.cloneElement(child.props.children[1], childProps);
-        }
+        this.ionTabContextState.tabBarProps = childProps;
       });
 
       if (!outlet && !hasTab) {
@@ -189,46 +186,10 @@ export const IonTabs = /*@__PURE__*/ (() =>
         <IonTabsContext.Provider value={this.ionTabContextState}>
           {this.context.hasIonicRouter() ? (
             <PageManager className={className ? `${className}` : ''} routeInfo={this.context.routeInfo} {...props}>
-              <IonTabsInner {...this.props}>
-                {React.Children.map(children, (child: React.ReactNode) => {
-                  if (React.isValidElement(child)) {
-                    const isTabBar =
-                      child.type === IonTabBar ||
-                      (child.type as any).isTabBar ||
-                      (child.type === Fragment &&
-                        (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar));
-                    const isRouterOutlet =
-                      child.type === IonRouterOutlet ||
-                      (child.type as any).isRouterOutlet ||
-                      (child.type === Fragment && child.props.children[0].type === IonRouterOutlet);
-
-                    if (isTabBar) {
-                      /**
-                       * The modified tabBar needs to be returned to include
-                       * the context and the overridden methods.
-                       */
-                      return tabBar;
-                    }
-                    if (isRouterOutlet) {
-                      /**
-                       * The modified outlet needs to be returned to include
-                       * the ref.
-                       */
-                      return outlet;
-                    }
-                  }
-                  return child;
-                })}
-              </IonTabsInner>
+              {this.renderTabsInner(children, outlet)}
             </PageManager>
           ) : (
-            <div className={className ? `${className}` : 'ion-tabs'} {...props} style={hostStyles}>
-              {tabBar?.props.slot === 'top' ? tabBar : null}
-              <div style={tabsInner} className="tabs-inner">
-                {outlet}
-              </div>
-              {tabBar?.props.slot === 'bottom' ? tabBar : null}
-            </div>
+            this.renderTabsInner(children, outlet)
           )}
         </IonTabsContext.Provider>
       );
