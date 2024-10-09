@@ -8,6 +8,7 @@ import { IonTabBarInner } from '../inner-proxies';
 import { createForwardRef } from '../utils';
 
 import { IonTabButton } from './IonTabButton';
+import { IonTabsContext } from './IonTabsContext';
 
 type IonTabBarProps = LocalJSX.IonTabBar &
   IonicReactProps & {
@@ -32,7 +33,7 @@ interface InternalProps extends IonTabBarProps {
    * are being used as a basic tab navigation or with
    * the router.
    */
-  routerOutletRef?: React.RefObject<HTMLIonRouterOutletElement> | undefined;
+  hasRouterOutlet: boolean;
 }
 
 interface TabUrls {
@@ -196,33 +197,13 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
   ) {
     const tappedTab = this.state.tabs[e.detail.tab];
     const originalHref = tappedTab.originalHref;
-    let hasIonRouterOutlet = !!this.props.routerOutletRef?.current;
-
-    /**
-     * If `hasRouterOutlet` prop is not provided,
-     * then the `IonTabBar` could not be found
-     * within the slotted content of `IonTabs`.
-     * This means that the tab bar might not
-     * have been passed as a direct child of
-     * `IonTabs`.
-     *
-     * In this case, the router outlet needs to be
-     * searched for within the `IonTabBar` component.
-     * This is necessary to determine if the tabs
-     * are being used as a basic tab navigation or
-     * with the router.
-     */
-    if (!hasIonRouterOutlet) {
-      const ionRouterOutlet = this.tabBarRef.current?.closest('ion-tabs')?.querySelector('ion-router-outlet');
-      hasIonRouterOutlet = !!ionRouterOutlet;
-    }
 
     /**
      * If the router outlet is not defined, then the tabs is being used
      * as a basic tab navigation without the router. In this case, we
      * don't want to update the href else the URL will change.
      */
-    const currentHref = hasIonRouterOutlet ? e.detail.href : '';
+    const currentHref = this.props.hasRouterOutlet ? e.detail.href : '';
     const { activeTab: prevActiveTab } = this.state;
 
     if (onClickFn) {
@@ -246,7 +227,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       if (this.props.onIonTabsDidChange) {
         this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
       }
-      if (hasIonRouterOutlet) {
+      if (this.props.hasRouterOutlet) {
         this.setActiveTabOnContext(e.detail.tab);
         this.context.changeTab(e.detail.tab, currentHref, e.detail.routeOptions);
       }
@@ -296,12 +277,15 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
 
 const IonTabBarContainer: React.FC<InternalProps> = React.memo<InternalProps>(({ forwardedRef, ...props }) => {
   const context = useContext(NavContext);
+  const tabsContext = useContext(IonTabsContext);
+
   return (
     <IonTabBarUnwrapped
       ref={forwardedRef}
       {...(props as any)}
       routeInfo={props.routeInfo || context.routeInfo || { pathname: window.location.pathname }}
       onSetCurrentTab={context.setCurrentTab}
+      hasRouterOutlet={tabsContext.hasRouterOutlet}
     >
       {props.children}
     </IonTabBarUnwrapped>

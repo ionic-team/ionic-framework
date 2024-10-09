@@ -72,6 +72,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
     ionTabContextState: IonTabsContextState = {
       activeTab: undefined,
       selectTab: () => false,
+      hasRouterOutlet: false,
     };
 
     constructor(props: Props) {
@@ -122,6 +123,8 @@ export const IonTabs = /*@__PURE__*/ (() =>
            */
           hasTab = true;
         }
+
+        this.ionTabContextState.hasRouterOutlet = !!outlet;
 
         let childProps: any = {
           ref: this.tabBarRef,
