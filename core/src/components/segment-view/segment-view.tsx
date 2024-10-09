@@ -82,6 +82,8 @@ export class SegmentView implements ComponentInterface {
     }
 
     // Update active content ID and scroll to the segment content
+    // TODO this is erroring because all of the segment contents are disabled
+    // in the last example
     this.activeContentId = segmentContent.id;
     this.setContent(segmentContent.id);
 
