@@ -92,8 +92,9 @@ export class Header implements ComponentInterface {
 
     this.destroyCollapsibleHeader();
 
+    const appRootSelector = config.get('appRootSelector', 'ion-app');
+
     if (hasCondense) {
-      const appRootSelector = config.get('appRootSelector', 'ion-app');
       const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
@@ -106,7 +107,7 @@ export class Header implements ComponentInterface {
 
       await this.setupCondenseHeader(contentEl, pageEl);
     } else if (hasFade) {
-      const pageEl = this.el.closest('ion-app,.ion-app,ion-page,.ion-page,page-inner');
+      const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       if (!contentEl) {
