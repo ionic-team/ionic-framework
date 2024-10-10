@@ -33,7 +33,7 @@ const enum AccordionState {
   styleUrls: {
     ios: 'accordion.ios.scss',
     md: 'accordion.md.scss',
-    ionic: 'accordion.md.scss',
+    ionic: 'accordion.ionic.scss',
   },
   shadow: {
     delegatesFocus: true,
