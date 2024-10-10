@@ -125,6 +125,14 @@ export interface IonicConfig {
   toastDuration?: number;
 
   /**
+   * The selector that will be used to query the root of the Ionic application.
+   * This element is used for things like injecting overlay elements into the DOM and managing focus.
+   *
+   * @default 'ion-app'
+   */
+  appRootSelector?: string;
+
+  /**
    * Overrides the toggle icon for all `ion-accordion` components.
    */
   accordionToggleIcon?: string;

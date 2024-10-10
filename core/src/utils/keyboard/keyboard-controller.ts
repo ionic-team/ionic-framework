@@ -1,5 +1,6 @@
 import { doc, win } from '@utils/browser';
 
+import { config } from '../../global/config';
 import { Keyboard, KeyboardResize } from '../native/keyboard';
 
 /**
@@ -25,7 +26,8 @@ const getResizeContainer = (resizeMode?: KeyboardResize): HTMLElement | null => 
    * on that. In the event `ion-app` is not available then
    * we can fall back to `body`.
    */
-  const ionApp = doc.querySelector('ion-app');
+  const appRootSelector = config.get('appRootSelector', 'ion-app');
+  const ionApp = doc.querySelector(appRootSelector) as HTMLIonAppElement | null;
 
   return ionApp ?? doc.body;
 };
