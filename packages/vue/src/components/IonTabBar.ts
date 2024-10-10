@@ -259,9 +259,8 @@ export const IonTabBar = defineComponent({
      * the provide/inject.
      */
     const tabBarData = inject<Ref<TabBarData>>("tabBarData");
-    const hasRouterOutlet = tabBarData.value.hasRouterOutlet;
-    this.$data.tabState.hasRouterOutlet = hasRouterOutlet;
 
+    this.$data.tabState.hasRouterOutlet = tabBarData.value.hasRouterOutlet;
     this.$data._tabsWillChange = tabBarData.value._tabsWillChange;
     this.$data._tabsDidChange = tabBarData.value._tabsDidChange;
 
