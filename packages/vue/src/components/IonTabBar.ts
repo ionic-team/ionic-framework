@@ -1,5 +1,5 @@
 import { defineCustomElement } from "@ionic/core/components/ion-tab-bar.js";
-import type { VNode } from "vue";
+import type { VNode, Ref } from "vue";
 import { h, defineComponent, getCurrentInstance, inject } from "vue";
 
 // TODO(FW-2969): types
@@ -14,6 +14,12 @@ interface Tab {
   originalHref: string;
   currentHref: string;
   ref: VNode;
+}
+
+interface TabBarData {
+  hasRouterOutlet: boolean;
+  _tabsWillChange: Function;
+  _tabsDidChange: Function;
 }
 
 const isTabButton = (child: any) => child.type?.name === "IonTabButton";
@@ -34,24 +40,6 @@ const getTabs = (nodes: VNode[]) => {
 
 export const IonTabBar = defineComponent({
   name: "IonTabBar",
-  props: {
-    /* eslint-disable @typescript-eslint/no-empty-function */
-    _tabsWillChange: { type: Function, default: () => {} },
-    _tabsDidChange: { type: Function, default: () => {} },
-    /**
-     * This prop is set by the `ion-tabs` component. If
-     * the value is `undefined`, then the `ion-tab-bar`
-     * component was not found within the slotted content.
-     * Most likely, the tab bar was not passed as a direct
-     * child of `ion-tabs`.
-     *
-     * A workaround will be used to determine if the tabs
-     * are being used as a basic tab navigation or with
-     * the router.
-     */
-    _hasRouterOutlet: { type: Boolean, default: undefined },
-    /* eslint-enable @typescript-eslint/no-empty-function */
-  },
   data() {
     return {
       tabState: {
@@ -65,6 +53,10 @@ export const IonTabBar = defineComponent({
         hasRouterOutlet: false,
       },
       tabVnodes: [],
+      /* eslint-disable @typescript-eslint/no-empty-function */
+      _tabsWillChange: { type: Function, default: () => {} },
+      _tabsDidChange: { type: Function, default: () => {} },
+      /* eslint-enable @typescript-eslint/no-empty-function */
     };
   },
   updated() {
@@ -237,7 +229,7 @@ export const IonTabBar = defineComponent({
       const tabDidChange = activeTab !== prevActiveTab;
       if (tabBar) {
         if (activeChild) {
-          tabDidChange && this.$props._tabsWillChange(activeTab);
+          tabDidChange && this.$data._tabsWillChange(activeTab);
 
           if (hasRouterOutlet && ionRouter !== null) {
             ionRouter.handleSetCurrentTab(activeTab);
@@ -245,7 +237,7 @@ export const IonTabBar = defineComponent({
 
           tabBar.selectedTab = tabState.activeTab = activeTab;
 
-          tabDidChange && this.$props._tabsDidChange(activeTab);
+          tabDidChange && this.$data._tabsDidChange(activeTab);
         } else {
           /**
            * When going to a tab that does
@@ -260,30 +252,18 @@ export const IonTabBar = defineComponent({
   },
   mounted() {
     const ionRouter: any = inject("navManager", null);
-    const hasRouterOutlet = this.$props._hasRouterOutlet;
-
     /**
-     * If `hasRouterOutlet` prop is not provided,
-     * then the `ion-tab-bar` could not be found
-     * within the slotted content of `ion-tabs`.
-     * This means that the tab bar was not passed
-     * as a direct child of `ion-tabs`.
-     *
-     * In this case, the router outlet needs to be
-     * searched for within the `ion-tab-bar` component.
-     * This is necessary to determine if the tabs
-     * are being used as a basic tab navigation or
-     * with the router.
+     * Tab bar can be used as a standalone component,
+     * so it cannot be modified directly through
+     * IonTabs. Instead, data will be passed through
+     * the provide/inject.
      */
-    if (hasRouterOutlet === undefined) {
-      const ionRouterOutlet = this.$refs.ionTabBar
-        .closest("ion-tabs")
-        ?.querySelector("ion-router-outlet");
+    const tabBarData = inject<Ref<TabBarData>>("tabBarData");
+    const hasRouterOutlet = tabBarData.value.hasRouterOutlet;
+    this.$data.tabState.hasRouterOutlet = hasRouterOutlet;
 
-      this.$data.tabState.hasRouterOutlet = !!ionRouterOutlet;
-    } else {
-      this.$data.tabState.hasRouterOutlet = hasRouterOutlet;
-    }
+    this.$data._tabsWillChange = tabBarData.value._tabsWillChange;
+    this.$data._tabsDidChange = tabBarData.value._tabsDidChange;
 
     this.setupTabState(ionRouter);
 
