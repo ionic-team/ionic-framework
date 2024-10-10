@@ -1,0 +1,9 @@
+@import "./segment-view";
+@import "../segment-button/segment-button.md.vars";
+
+// Material Design Segment View
+// --------------------------------------------------
+
+:host(.segment-view-disabled) {
+  opacity: $segment-button-md-opacity-disabled;
+}

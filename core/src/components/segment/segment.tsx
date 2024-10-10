@@ -27,6 +27,10 @@ export class Segment implements ComponentInterface {
   // Value before the segment is dragged
   private valueBeforeGesture?: SegmentValue;
 
+  private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
+  private scrolledIndicator?: HTMLDivElement | null = null;
+  private isScrolling = false;
+
   @Element() el!: HTMLIonSegmentElement;
 
   @State() activated = false;
@@ -78,13 +82,31 @@ export class Segment implements ComponentInterface {
   @Prop({ mutable: true }) value?: SegmentValue;
 
   @Watch('value')
-  protected valueChanged(value: SegmentValue | undefined) {
+  protected valueChanged(value: SegmentValue | undefined, oldValue?: SegmentValue | undefined) {
+    if (oldValue !== undefined && value !== undefined) {
+      const buttons = this.getButtons();
+      const previous = buttons.find((button) => button.value === oldValue);
+      const current = buttons.find((button) => button.value === value);
+
+      if (previous && current) {
+        if (!this.segmentViewEl) {
+          this.checkButton(previous, current);
+        } else {
+          this.setCheckedClasses();
+        }
+      }
+    }
+
     /**
      * `ionSelect` is emitted every time the value changes (internal or external changes).
      * Used by `ion-segment-button` to determine if the button should be checked.
      */
     this.ionSelect.emit({ value });
-    this.scrollActiveButtonIntoView();
+
+    // The scroll listener should handle scrolling the active button into view as needed
+    if (!this.segmentViewEl) {
+      this.scrollActiveButtonIntoView();
+    }
   }
 
   /**
@@ -132,6 +154,12 @@ export class Segment implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
+
+    this.segmentViewEl = this.getSegmentView();
+  }
+
+  disconnectedCallback() {
+    this.segmentViewEl = null;
   }
 
   componentWillLoad() {
@@ -170,6 +198,10 @@ export class Segment implements ComponentInterface {
     if (this.disabled) {
       this.disabledChanged();
     }
+
+    // Update segment view based on the initial value,
+    // but do not animate the scroll
+    this.updateSegmentView(false);
   }
 
   onStart(detail: GestureDetail) {
@@ -192,6 +224,7 @@ export class Segment implements ComponentInterface {
     if (value !== undefined) {
       if (this.valueBeforeGesture !== value) {
         this.emitValueChange();
+        this.updateSegmentView();
       }
     }
     this.valueBeforeGesture = undefined;
@@ -208,7 +241,7 @@ export class Segment implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
-  private getButtons() {
+  private getButtons(): HTMLIonSegmentButtonElement[] {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
@@ -224,11 +257,7 @@ export class Segment implements ComponentInterface {
     const buttons = this.getButtons();
 
     buttons.forEach((button) => {
-      if (activated) {
-        button.classList.add('segment-button-activated');
-      } else {
-        button.classList.remove('segment-button-activated');
-      }
+      button.classList.toggle('segment-button-activated', activated);
     });
     this.activated = activated;
   }
@@ -309,6 +338,173 @@ export class Segment implements ComponentInterface {
     }
     if (next < buttons.length) {
       buttons[next].classList.add('segment-button-after-checked');
+    }
+  }
+
+  private getSegmentView() {
+    const buttons = this.getButtons();
+    // Get the first button with a contentId
+    const firstContentId = buttons.find((button: HTMLIonSegmentButtonElement) => button.contentId);
+    // Get the segment content with an id matching the button's contentId
+    const segmentContent = document.querySelector(`ion-segment-content[id="${firstContentId?.contentId}"]`);
+    // Return the segment view for that matching segment content
+    return segmentContent?.closest('ion-segment-view');
+  }
+
+  @Listen('ionSegmentViewScroll', { target: 'body' })
+  handleSegmentViewScroll(ev: CustomEvent) {
+    if (!this.isScrolling) {
+      return;
+    }
+
+    const dispatchedFrom = ev.target as HTMLElement;
+    const segmentViewEl = this.segmentViewEl as EventTarget;
+    const segmentEl = this.el;
+
+    // Only update the indicator if the event was dispatched from the correct segment view
+    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
+      const buttons = this.getButtons();
+
+      // If no buttons are found or there is no value set then do nothing
+      if (!buttons.length || this.value === undefined) return;
+
+      const index = buttons.findIndex((button) => button.value === this.value);
+      const current = buttons[index];
+      const indicatorEl = this.getIndicator(current);
+      this.scrolledIndicator = indicatorEl;
+
+      const { scrollDistancePercentage, scrollDistance } = ev.detail;
+
+      if (indicatorEl && !isNaN(scrollDistancePercentage)) {
+        indicatorEl.style.transition = 'transform 0.3s ease-out';
+
+        // Calculate the amount the indicator should move based on the scroll percentage
+        // and the width of the current button
+        const scrollAmount = scrollDistancePercentage * current.getBoundingClientRect().width;
+        const transformValue = scrollDistance < 0 ? -scrollAmount : scrollAmount;
+
+        // Calculate total width of buttons to the left of the current button
+        const totalButtonWidthBefore = buttons
+          .slice(0, index)
+          .reduce((acc, button) => acc + button.getBoundingClientRect().width, 0);
+
+        // Calculate total width of buttons to the right of the current button
+        const totalButtonWidthAfter = buttons
+          .slice(index + 1)
+          .reduce((acc, button) => acc + button.getBoundingClientRect().width, 0);
+
+        // Set minTransform and maxTransform
+        const minTransform = -totalButtonWidthBefore;
+        const maxTransform = totalButtonWidthAfter;
+
+        // Clamp the transform value to ensure it doesn't go out of bounds
+        const clampedTransform = Math.max(minTransform, Math.min(transformValue, maxTransform));
+
+        // Apply the clamped transform value to the indicator element
+        const transform = `translate3d(${clampedTransform}px, 0, 0)`;
+        indicatorEl.style.setProperty('transform', transform);
+
+        // Scroll the buttons if the indicator is out of view
+        const indicatorX = indicatorEl.getBoundingClientRect().x;
+        const buttonWidth = current.getBoundingClientRect().width;
+        if (scrollDistance < 0 && indicatorX < 0) {
+          this.el.scrollBy({
+            top: 0,
+            left: indicatorX,
+            behavior: 'instant',
+          });
+        } else if (scrollDistance > 0 && indicatorX + buttonWidth > this.el.offsetWidth) {
+          this.el.scrollBy({
+            top: 0,
+            left: indicatorX + buttonWidth - this.el.offsetWidth,
+            behavior: 'instant',
+          });
+        }
+      }
+    }
+  }
+
+  @Listen('ionSegmentViewScrollStart', { target: 'body' })
+  onScrollStart(ev: CustomEvent) {
+    const dispatchedFrom = ev.target as HTMLElement;
+    const segmentViewEl = this.segmentViewEl as EventTarget;
+    const segmentEl = this.el;
+
+    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
+      this.isScrolling = true;
+    }
+  }
+
+  @Listen('ionSegmentViewScrollEnd', { target: 'body' })
+  onScrollEnd(ev: CustomEvent<{ activeContentId: string }>) {
+    const dispatchedFrom = ev.target as HTMLElement;
+    const segmentViewEl = this.segmentViewEl as EventTarget;
+    const segmentEl = this.el;
+
+    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
+      if (this.scrolledIndicator) {
+        const computedStyle = window.getComputedStyle(this.scrolledIndicator);
+        const isTransitioning = computedStyle.transitionDuration !== '0s';
+
+        if (isTransitioning) {
+          // Add a transitionend listener if the indicator is transitioning
+          this.waitForTransitionEnd(this.scrolledIndicator, () => {
+            this.updateValueAfterTransition(ev.detail.activeContentId);
+          });
+        } else {
+          // Immediately update the value if there's no transition
+          this.updateValueAfterTransition(ev.detail.activeContentId);
+        }
+      } else {
+        // Immediately update the value if there's no indicator
+        this.updateValueAfterTransition(ev.detail.activeContentId);
+      }
+
+      this.isScrolling = false;
+    }
+  }
+
+  // Wait for the transition to end, then execute the callback
+  private waitForTransitionEnd(indicator: HTMLElement, callback: () => void) {
+    const onTransitionEnd = () => {
+      indicator.removeEventListener('transitionend', onTransitionEnd);
+      callback();
+    };
+    indicator.addEventListener('transitionend', onTransitionEnd);
+  }
+
+  // Update the Segment value after the ionSegmentViewScrollEnd transition has ended
+  private updateValueAfterTransition(activeContentId: string) {
+    this.value = activeContentId;
+
+    if (this.scrolledIndicator) {
+      this.scrolledIndicator.style.transition = '';
+      this.scrolledIndicator.style.transform = '';
+    }
+  }
+
+  /**
+   * Finds the related segment view and sets its current content
+   * based on the selected segment button. This method
+   * should be called on initial load of the segment,
+   * after the gesture is completed (if dragging between segments)
+   * and when a segment button is clicked directly.
+   */
+  private updateSegmentView(smoothScroll = true) {
+    const buttons = this.getButtons();
+    const button = buttons.find((btn) => btn.value === this.value);
+
+    // If the button does not have a contentId then there is
+    // no associated segment view to update
+    if (!button?.contentId) {
+      return;
+    }
+
+    const content = document.getElementById(button.contentId);
+    const segmentView = content?.closest('ion-segment-view');
+
+    if (segmentView) {
+      segmentView.setContent(button.contentId, smoothScroll);
     }
   }
 
@@ -476,6 +672,7 @@ export class Segment implements ComponentInterface {
 
     if (current !== previous) {
       this.emitValueChange();
+      this.updateSegmentView();
     }
 
     if (this.scrollable || !this.swipeGesture) {

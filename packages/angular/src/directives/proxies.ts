@@ -1984,14 +1984,14 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['disabled', 'layout', 'mode', 'type', 'value']
+  inputs: ['contentId', 'disabled', 'layout', 'mode', 'type', 'value']
 })
 @Component({
   selector: 'ion-segment-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'layout', 'mode', 'type', 'value'],
+  inputs: ['contentId', 'disabled', 'layout', 'mode', 'type', 'value'],
 })
 export class IonSegmentButton {
   protected el: HTMLElement;
@@ -2003,6 +2003,63 @@ export class IonSegmentButton {
 
 
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
+
+
+@ProxyCmp({
+  inputs: ['disabled']
+})
+@Component({
+  selector: 'ion-segment-content',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['disabled'],
+})
+export class IonSegmentContent {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonSegmentContent extends Components.IonSegmentContent {}
+
+
+@ProxyCmp({
+  inputs: ['disabled'],
+  methods: ['setContent']
+})
+@Component({
+  selector: 'ion-segment-view',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['disabled'],
+})
+export class IonSegmentView {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSegmentViewScroll', 'ionSegmentViewScrollEnd', 'ionSegmentViewScrollStart']);
+  }
+}
+
+
+export declare interface IonSegmentView extends Components.IonSegmentView {
+  /**
+   * Emitted when the segment view is scrolled.
+   */
+  ionSegmentViewScroll: EventEmitter<CustomEvent<{ scrollDirection: string; scrollDistance: number; scrollDistancePercentage: number; }>>;
+  /**
+   * Emitted when the segment view scroll has ended.
+   */
+  ionSegmentViewScrollEnd: EventEmitter<CustomEvent<{ activeContentId: string }>>;
+
+  ionSegmentViewScrollStart: EventEmitter<CustomEvent<void>>;
+}
 
 
 @ProxyCmp({

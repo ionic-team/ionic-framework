@@ -1,0 +1,9 @@
+@import "./segment-content";
+@import "../segment-button/segment-button.md.vars";
+
+// Material Design Segment Content
+// --------------------------------------------------
+
+:host(.segment-content-disabled) {
+  opacity: $segment-button-md-opacity-disabled;
+}
