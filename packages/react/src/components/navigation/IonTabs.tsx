@@ -45,6 +45,7 @@ interface Props extends LocalJSX.IonTabs {
 export const IonTabs = /*@__PURE__*/ (() =>
   class extends React.Component<Props> {
     context!: React.ContextType<typeof NavContext>;
+    routerOutletRef: React.Ref<HTMLIonRouterOutletElement> = React.createRef();
     selectTabHandler?: (tag: string) => boolean;
     tabBarRef = React.createRef<any>();
 
