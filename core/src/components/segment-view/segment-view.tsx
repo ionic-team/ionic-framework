@@ -70,20 +70,14 @@ export class SegmentView implements ComponentInterface {
 
     // Find the current segment content based on the scroll position
     const currentIndex = Math.round(scrollLeft / offsetWidth);
-    let segmentContent = this.getSegmentContents()[currentIndex];
+
+    // Recursively search for the next enabled content in the scroll direction
+    const segmentContent = this.getNextEnabledContent(currentIndex, scrollDirection);
 
     // Exit if no valid segment content found
     if (!segmentContent) return;
 
-    // If the current content is disabled, find the next enabled content
-    if (segmentContent.disabled) {
-      const nextIndex = scrollDirection === 'right' ? currentIndex + 1 : currentIndex - 1;
-      segmentContent = this.getNextSegmentContent(nextIndex);
-    }
-
     // Update active content ID and scroll to the segment content
-    // TODO this is erroring because all of the segment contents are disabled
-    // in the last example
     this.activeContentId = segmentContent.id;
     this.setContent(segmentContent.id);
 
@@ -169,9 +163,26 @@ export class SegmentView implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-segment-content'));
   }
 
-  private getNextSegmentContent(index: number): HTMLIonSegmentContentElement {
+  /**
+   * Recursively find the next enabled segment content based on the scroll direction.
+   * If no enabled content is found, it will return null.
+   */
+  private getNextEnabledContent(index: number, direction: string): HTMLIonSegmentContentElement | null {
     const contents = this.getSegmentContents();
-    return contents[index];
+
+    // Stop if we reach the beginning or end of the content array
+    if (index < 0 || index >= contents.length) return null;
+
+    const segmentContent = contents[index];
+
+    // If the content is not disabled, return it
+    if (!segmentContent.disabled) {
+      return segmentContent;
+    }
+
+    // Otherwise, keep searching in the same direction
+    const nextIndex = direction === 'right' ? index + 1 : index - 1;
+    return this.getNextEnabledContent(nextIndex, direction);
   }
 
   render() {
