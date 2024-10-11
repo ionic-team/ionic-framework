@@ -15,14 +15,19 @@
 // accordion, rather than just the header.
 :host::after {
   @include globals.margin(null, globals.$ionic-space-400, null, globals.$ionic-space-400);
+  @include globals.position(null, 0, 0, 0);
 
   display: block;
+
+  position: absolute;
 
   height: globals.$ionic-border-size-025;
 
   background-color: globals.$ionic-color-neutral-300;
 
   content: "";
+
+  z-index: 1;
 }
 
 :host(.accordion-animated) {
@@ -56,7 +61,7 @@
 // --------------------------------------------------
 
 #content {
-  @include globals.padding(null, globals.$ionic-space-400, globals.$ionic-space-400, globals.$ionic-space-400);
+  @include globals.padding(null, globals.$ionic-space-400, globals.$ionic-space-300, globals.$ionic-space-400);
   @include globals.typography(globals.$ionic-body-md-regular);
 
   color: globals.$ionic-color-neutral-1000;
