@@ -134,28 +134,6 @@ export class SegmentView implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-segment-content'));
   }
 
-  /**
-   * Recursively find the next enabled segment content based on the scroll direction.
-   * If no enabled content is found, it will return null.
-   */
-  private getNextEnabledContent(index: number, direction: string): HTMLIonSegmentContentElement | null {
-    const contents = this.getSegmentContents();
-
-    // Stop if we reach the beginning or end of the content array
-    if (index < 0 || index >= contents.length) return null;
-
-    const segmentContent = contents[index];
-
-    // If the content is not disabled, return it
-    if (!segmentContent.disabled) {
-      return segmentContent;
-    }
-
-    // Otherwise, keep searching in the same direction
-    const nextIndex = direction === 'right' ? index + 1 : index - 1;
-    return this.getNextEnabledContent(nextIndex, direction);
-  }
-
   render() {
     const { disabled } = this;
 

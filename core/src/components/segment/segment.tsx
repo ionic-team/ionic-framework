@@ -452,11 +452,44 @@ export class Segment implements ComponentInterface {
                 distanceToNextButton + distanceToCurrentButton - distanceToCurrentButton * scrollDistancePercentage
               }px`;
 
-        // Transition the color of the indicator if we've crossed the halfway point
-        if (scrollDistancePercentage > 0.5) {
-          const color = getComputedStyle(nextButton).getPropertyValue('--indicator-color');
-          indicator.querySelector('div')!.style.backgroundColor = color;
-        }
+        const standardize_color = (str: string) => {
+          const ctx = document.createElement('canvas').getContext('2d');
+          ctx!.fillStyle = str;
+          return ctx!.fillStyle;
+        };
+        // Helper function to convert hex to RGB
+        const hexToRgb = (hex: string) => {
+          const bigint = parseInt(hex.slice(1), 16);
+          const r = (bigint >> 16) & 255;
+          const g = (bigint >> 8) & 255;
+          const b = bigint & 255;
+
+          return { r, g, b };
+        };
+        // Helper function to convert RGB to hex
+        const rgbToHex = (r: number, g: number, b: number) => {
+          const componentToHex = (c: number) => {
+            const hex = c.toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+          };
+
+          return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+        };
+        // Function to calculate the color in between based on percentage
+        const interpolateColor = (percentage = scrollDistancePercentage) => {
+          const currentColor = standardize_color(getComputedStyle(currentButton).getPropertyValue('--indicator-color'));
+          const nextColor = standardize_color(getComputedStyle(nextButton).getPropertyValue('--indicator-color'));
+
+          const rgb1 = hexToRgb(currentColor);
+          const rgb2 = hexToRgb(nextColor);
+
+          const r = Math.round(rgb1.r + (rgb2.r - rgb1.r) * percentage);
+          const g = Math.round(rgb1.g + (rgb2.g - rgb1.g) * percentage);
+          const b = Math.round(rgb1.b + (rgb2.b - rgb1.b) * percentage);
+
+          return rgbToHex(r, g, b);
+        };
+        indicator.querySelector('div')!.style.backgroundColor = interpolateColor();
 
         // Scroll the segment container if the indicator is out of view
         const indicatorRect = indicator.getBoundingClientRect();
