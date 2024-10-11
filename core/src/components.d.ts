@@ -2698,6 +2698,7 @@ export namespace Components {
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled": boolean;
+        "hasIndicator": boolean;
         /**
           * Set the layout of the text and icon in the segment.
          */
@@ -7512,6 +7513,7 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled"?: boolean;
+        "hasIndicator"?: boolean;
         /**
           * Set the layout of the text and icon in the segment.
          */

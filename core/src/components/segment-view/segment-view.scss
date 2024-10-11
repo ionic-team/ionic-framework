@@ -9,6 +9,8 @@
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
 
+  scroll-behavior: smooth;
+
   /* Hide scrollbar in Firefox */
   scrollbar-width: none;
 

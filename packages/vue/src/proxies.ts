@@ -750,7 +750,8 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
   'disabled',
   'layout',
   'type',
-  'value'
+  'value',
+  'hasIndicator'
 ],
 'value', 'ion-change');
 

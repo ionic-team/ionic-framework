@@ -127,7 +127,7 @@ export class SegmentView implements ComponentInterface {
    * reset the scroll position and emit the scroll end event.
    */
   private checkForScrollEnd() {
-    const activeContent = this.getSegmentContents().find(content => content.id === this.activeContentId);
+    const activeContent = this.getSegmentContents().find((content) => content.id === this.activeContentId);
 
     // Only emit scroll end event if the active content is not disabled and
     // the user is not touching the segment view

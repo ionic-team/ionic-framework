@@ -65,6 +65,8 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     this.updateState();
   }
 
+  @Prop() hasIndicator = true;
+
   connectedCallback() {
     const segmentEl = (this.segmentEl = this.el.closest('ion-segment'));
     if (segmentEl) {
@@ -187,9 +189,11 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
-        <div part="indicator" class="segment-button-indicator segment-button-indicator-animated">
-          <div part="indicator-background" class="segment-button-indicator-background"></div>
-        </div>
+        {this.hasIndicator && (
+          <div part="indicator" class="segment-button-indicator segment-button-indicator-animated">
+            <div part="indicator-background" class="segment-button-indicator-background"></div>
+          </div>
+        )}
       </Host>
     );
   }

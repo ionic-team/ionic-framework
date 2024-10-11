@@ -156,6 +156,10 @@ export class Segment implements ComponentInterface {
     this.emitStyle();
 
     this.segmentViewEl = this.getSegmentView();
+
+    if (this.segmentViewEl) {
+      this.getButtons().forEach((ref) => (ref.hasIndicator = false));
+    }
   }
 
   disconnectedCallback() {
@@ -202,6 +206,28 @@ export class Segment implements ComponentInterface {
     // Update segment view based on the initial value,
     // but do not animate the scroll
     this.updateSegmentView(false);
+
+    // TODO: this isn't always consistent, button width can sometimes be 0
+    if (this.segmentViewEl) {
+      const buttons = this.getButtons();
+      const activeButtonIndex = buttons.findIndex((ref) => ref.value === this.value);
+      if (activeButtonIndex >= 0) {
+        const activeButtonStyles = buttons[activeButtonIndex].getBoundingClientRect();
+        const indicator = this.el.shadowRoot!.querySelector('.segment-indicator') as HTMLDivElement | null;
+        if (indicator) {
+          const startingX = buttons
+            .slice(0, activeButtonIndex)
+            .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
+
+          indicator.style.width = `${activeButtonStyles.width}px`;
+          indicator.style.left = `${startingX}px`;
+
+          // setTimeout(() => {
+          //   indicator.style.transition = 'left 0.3s linear, width 0.3s linear';
+          // });
+        }
+      }
+    }
   }
 
   onStart(detail: GestureDetail) {
@@ -364,62 +390,36 @@ export class Segment implements ComponentInterface {
     // Only update the indicator if the event was dispatched from the correct segment view
     if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
       const buttons = this.getButtons();
+      const currentIndex = buttons.findIndex((button) => button.value === this.value);
+      const currentButton = buttons[currentIndex];
+      const indicator = this.el.shadowRoot!.querySelector('.segment-indicator') as HTMLDivElement | null;
 
       // If no buttons are found or there is no value set then do nothing
-      if (!buttons.length || this.value === undefined) return;
-
-      const index = buttons.findIndex((button) => button.value === this.value);
-      const current = buttons[index];
-      const indicatorEl = this.getIndicator(current);
-      this.scrolledIndicator = indicatorEl;
+      if (!buttons.length || this.value === undefined || !indicator) return;
 
       const { scrollDistancePercentage, scrollDistance } = ev.detail;
 
-      if (indicatorEl && !isNaN(scrollDistancePercentage)) {
-        indicatorEl.style.transition = 'transform 0.3s ease-out';
+      const nextIndex = scrollDistance > 0 ? currentIndex + 1 : currentIndex - 1;
+      if (nextIndex >= 0 && nextIndex < buttons.length) {
+        const nextButton = buttons[nextIndex];
+        const nextButtonWidth = nextButton.getBoundingClientRect().width;
 
-        // Calculate the amount the indicator should move based on the scroll percentage
-        // and the width of the current button
-        const scrollAmount = scrollDistancePercentage * current.getBoundingClientRect().width;
-        const transformValue = scrollDistance < 0 ? -scrollAmount : scrollAmount;
+        // Scale the width based on the width of the next button
+        const diff = nextButtonWidth - currentButton.getBoundingClientRect().width;
+        const width = currentButton.getBoundingClientRect().width + diff * scrollDistancePercentage;
+        indicator.style.width = `${width}px`;
 
-        // Calculate total width of buttons to the left of the current button
-        const totalButtonWidthBefore = buttons
-          .slice(0, index)
-          .reduce((acc, button) => acc + button.getBoundingClientRect().width, 0);
-
-        // Calculate total width of buttons to the right of the current button
-        const totalButtonWidthAfter = buttons
-          .slice(index + 1)
-          .reduce((acc, button) => acc + button.getBoundingClientRect().width, 0);
-
-        // Set minTransform and maxTransform
-        const minTransform = -totalButtonWidthBefore;
-        const maxTransform = totalButtonWidthAfter;
-
-        // Clamp the transform value to ensure it doesn't go out of bounds
-        const clampedTransform = Math.max(minTransform, Math.min(transformValue, maxTransform));
-
-        // Apply the clamped transform value to the indicator element
-        const transform = `translate3d(${clampedTransform}px, 0, 0)`;
-        indicatorEl.style.setProperty('transform', transform);
-
-        // Scroll the buttons if the indicator is out of view
-        const indicatorX = indicatorEl.getBoundingClientRect().x;
-        const buttonWidth = current.getBoundingClientRect().width;
-        if (scrollDistance < 0 && indicatorX < 0) {
-          this.el.scrollBy({
-            top: 0,
-            left: indicatorX,
-            behavior: 'instant',
-          });
-        } else if (scrollDistance > 0 && indicatorX + buttonWidth > this.el.offsetWidth) {
-          this.el.scrollBy({
-            top: 0,
-            left: indicatorX + buttonWidth - this.el.offsetWidth,
-            behavior: 'instant',
-          });
-        }
+        // Translate the indicator based on the scroll distance
+        const distanceToNextButton = buttons
+          .slice(0, nextIndex)
+          .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
+        const distanceToCurrentButton = buttons
+          .slice(0, currentIndex)
+          .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
+        indicator.style.left =
+          scrollDistance > 0
+            ? `${distanceToCurrentButton + currentButton.getBoundingClientRect().width * scrollDistancePercentage}px`
+            : `${distanceToNextButton + nextButtonWidth - nextButtonWidth * scrollDistancePercentage}px`;
       }
     }
   }
@@ -442,25 +442,9 @@ export class Segment implements ComponentInterface {
     const segmentEl = this.el;
 
     if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
-      if (this.scrolledIndicator) {
-        const computedStyle = window.getComputedStyle(this.scrolledIndicator);
-        const isTransitioning = computedStyle.transitionDuration !== '0s';
-
-        if (isTransitioning) {
-          // Add a transitionend listener if the indicator is transitioning
-          this.waitForTransitionEnd(this.scrolledIndicator, () => {
-            this.updateValueAfterTransition(ev.detail.activeContentId);
-          });
-        } else {
-          // Immediately update the value if there's no transition
-          this.updateValueAfterTransition(ev.detail.activeContentId);
-        }
-      } else {
-        // Immediately update the value if there's no indicator
-        this.updateValueAfterTransition(ev.detail.activeContentId);
-      }
-
       this.isScrolling = false;
+
+      this.value = ev.detail.activeContentId;
     }
   }
 
@@ -771,6 +755,11 @@ export class Segment implements ComponentInterface {
           'segment-scrollable': this.scrollable,
         })}
       >
+        {this.segmentViewEl && (
+          <div part="indicator" class="segment-indicator">
+            <div part="indicator-background"></div>
+          </div>
+        )}
         <slot onSlotchange={this.onSlottedItemsChange}></slot>
       </Host>
     );

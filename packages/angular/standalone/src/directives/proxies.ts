@@ -1818,14 +1818,14 @@ export declare interface IonRow extends Components.IonRow {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSegmentButton,
-  inputs: ['contentId', 'disabled', 'layout', 'mode', 'type', 'value']
+  inputs: ['contentId', 'disabled', 'hasIndicator', 'layout', 'mode', 'type', 'value']
 })
 @Component({
   selector: 'ion-segment-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['contentId', 'disabled', 'layout', 'mode', 'type', 'value'],
+  inputs: ['contentId', 'disabled', 'hasIndicator', 'layout', 'mode', 'type', 'value'],
   standalone: true
 })
 export class IonSegmentButton {

@@ -31,8 +31,19 @@
   contain: paint;
 
   user-select: none;
-}
 
+  .segment-indicator {
+    @include transform-origin(left);
+
+    position: absolute;
+    height: 100%;
+
+    div {
+      background: red;
+      height: 100%;
+    }
+  }
+}
 
 // Segment: Scrollable
 // --------------------------------------------------
