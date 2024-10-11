@@ -437,9 +437,11 @@ export class Segment implements ComponentInterface {
         const nextButton = buttons[nextIndex];
         const nextButtonWidth = nextButton.getBoundingClientRect().width;
 
+        const currentButtonWidth = currentButton.getBoundingClientRect().width;
+
         // Scale the width based on the width of the next button
-        const diff = nextButtonWidth - currentButton.getBoundingClientRect().width;
-        const width = currentButton.getBoundingClientRect().width + diff * scrollDistancePercentage;
+        const diff = nextButtonWidth - currentButtonWidth;
+        const width = currentButtonWidth + diff * scrollDistancePercentage;
         indicator.style.width = `${width}px`;
 
         // Translate the indicator based on the scroll distance
@@ -460,6 +462,21 @@ export class Segment implements ComponentInterface {
         if (scrollDistancePercentage > 0.5) {
           const color = getComputedStyle(nextButton).getPropertyValue('--indicator-color');
           indicator.querySelector('div')!.style.backgroundColor = color;
+        }
+
+        const indicatorX = indicator.getBoundingClientRect().x;
+        if (scrollDistance < 0 && indicatorX < 0) {
+          this.el.scrollBy({
+            top: 0,
+            left: indicatorX,
+            behavior: 'instant',
+          });
+        } else if (scrollDistance > 0 && indicatorX + currentButtonWidth > this.el.offsetWidth) {
+          this.el.scrollBy({
+            top: 0,
+            left: indicatorX + currentButtonWidth - this.el.offsetWidth,
+            behavior: 'instant',
+          });
         }
       }
     }
