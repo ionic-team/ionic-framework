@@ -31,6 +31,7 @@ import type {
   FrameworkDelegate,
   Gesture,
   OverlayInterface,
+  Theme,
 } from '../../interface';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
@@ -573,6 +574,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
+      theme: getIonTheme(this),
     });
 
     /* tslint:disable-next-line */
@@ -789,6 +791,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         presentingEl: presentingElement,
         currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
+        theme: getIonTheme(this),
       }
     );
 
@@ -1048,6 +1051,10 @@ interface ModalOverlayOptions {
    * to fade in when using a sheet modal.
    */
   backdropBreakpoint: number;
+  /**
+   * The theme used by the sheet modal
+   */
+  theme: Theme;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;

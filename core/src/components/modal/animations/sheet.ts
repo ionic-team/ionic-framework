@@ -1,7 +1,7 @@
 import { createAnimation } from '@utils/animation/animation';
 
 import type { ModalAnimationOptions } from '../modal-interface';
-import { getBackdropValueForSheet } from '../utils';
+import { getBackdropValueForSheet, staticBackdropOpacity } from '../utils';
 
 export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   const { currentBreakpoint, backdropBreakpoint } = opts;
@@ -12,7 +12,13 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
    * current breakpoint, then the backdrop should be fading in.
    */
   const shouldShowBackdrop = backdropBreakpoint === undefined || backdropBreakpoint < currentBreakpoint!;
-  const initialBackdrop = shouldShowBackdrop ? `calc(var(--backdrop-opacity) * ${currentBreakpoint!})` : '0';
+
+  const initialBackdrop =
+    opts.theme === 'ionic'
+      ? staticBackdropOpacity
+      : shouldShowBackdrop
+      ? `calc(var(--backdrop-opacity) * ${currentBreakpoint!})`
+      : '0';
 
   const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdrop);
 
@@ -40,10 +46,11 @@ export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
    * is defined, so we need to account for that offset by figuring out
    * what the current backdrop value should be.
    */
-  const backdropValue = `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
-    currentBreakpoint!,
-    backdropBreakpoint!
-  )})`;
+  const backdropValue =
+    opts.theme === 'ionic'
+      ? staticBackdropOpacity
+      : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(currentBreakpoint!, backdropBreakpoint!)})`;
+
   const defaultBackdrop = [
     { offset: 0, opacity: backdropValue },
     { offset: 1, opacity: 0 },

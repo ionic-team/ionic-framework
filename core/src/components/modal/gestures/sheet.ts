@@ -1,3 +1,4 @@
+import { getIonTheme } from '@global/ionic-global';
 import { isIonContent, findClosestIonContent } from '@utils/content';
 import { createGesture } from '@utils/gesture';
 import { clamp, raf, getElementRoot } from '@utils/helpers';
@@ -5,7 +6,7 @@ import { FOCUS_TRAP_DISABLE_CLASS } from '@utils/overlays';
 
 import type { Animation } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
-import { getBackdropValueForSheet } from '../utils';
+import { getBackdropValueForSheet, staticBackdropOpacity } from '../utils';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
@@ -53,6 +54,7 @@ export const createSheetGesture = (
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
+  const theme = getIonTheme(baseEl);
   // Defaults for the sheet swipe animation
   const defaultBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
@@ -65,12 +67,18 @@ export const createSheetGesture = (
     { offset: 1, opacity: 0 },
   ];
 
+  const ionicThemeBackdrop = [
+    { offset: 0, opacity: staticBackdropOpacity },
+    { offset: 1, opacity: staticBackdropOpacity },
+  ];
+
   const SheetDefaults = {
     WRAPPER_KEYFRAMES: [
       { offset: 0, transform: 'translateY(0%)' },
       { offset: 1, transform: 'translateY(100%)' },
     ],
-    BACKDROP_KEYFRAMES: backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
+    BACKDROP_KEYFRAMES:
+      theme === 'ionic' ? ionicThemeBackdrop : backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
   };
 
   const contentEl = baseEl.querySelector('ion-content');
@@ -309,19 +317,35 @@ export const createSheetGesture = (
         { offset: 1, transform: `translateY(${(1 - snapToBreakpoint) * 100}%)` },
       ]);
 
-      backdropAnimation.keyframes([
-        {
-          offset: 0,
-          opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
-            1 - breakpointOffset,
-            backdropBreakpoint
-          )})`,
-        },
-        {
-          offset: 1,
-          opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})`,
-        },
-      ]);
+      backdropAnimation.keyframes(
+        theme === 'ionic'
+          ? [
+              {
+                offset: 0,
+                opacity: staticBackdropOpacity,
+              },
+              {
+                offset: 1,
+                opacity: staticBackdropOpacity,
+              },
+            ]
+          : [
+              {
+                offset: 0,
+                opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
+                  1 - breakpointOffset,
+                  backdropBreakpoint
+                )})`,
+              },
+              {
+                offset: 1,
+                opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
+                  snapToBreakpoint,
+                  backdropBreakpoint
+                )})`,
+              },
+            ]
+      );
 
       animation.progressStep(0);
     }
