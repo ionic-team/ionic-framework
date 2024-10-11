@@ -71,18 +71,18 @@ export class SegmentView implements ComponentInterface {
     // Find the current segment content based on the scroll position
     const currentIndex = Math.round(scrollLeft / offsetWidth);
 
-    // Recursively search for the next enabled content in the scroll direction
-    const segmentContent = this.getNextEnabledContent(currentIndex, scrollDirection);
+    // // Update active content ID and scroll to the segment content
+    const activeContent = this.getSegmentContents().filter(
+      (ref) => !ref.classList.contains('segment-content-disabled')
+    )[currentIndex];
+    this.activeContentId = activeContent.id;
 
-    // Exit if no valid segment content found
-    if (!segmentContent) return;
-
-    // Update active content ID and scroll to the segment content
-    this.activeContentId = segmentContent.id;
-    this.setContent(segmentContent.id);
-
-    // Reset the timeout to check for scroll end
-    this.resetScrollEndTimeout();
+    // Only emit scroll end event if the active content is not disabled and
+    // the user is not touching the segment view
+    if (activeContent?.disabled === false && !this.isTouching) {
+      this.ionSegmentViewScrollEnd.emit({ activeContentId: this.activeContentId });
+      this.initialScrollLeft = undefined;
+    }
   }
 
   /**
@@ -106,35 +106,6 @@ export class SegmentView implements ComponentInterface {
   @Listen('touchend')
   handleTouchEnd() {
     this.isTouching = false;
-  }
-
-  /**
-   * Reset the scroll end detection timer. This is called on every scroll event.
-   */
-  private resetScrollEndTimeout() {
-    if (this.scrollEndTimeout) {
-      clearTimeout(this.scrollEndTimeout);
-      this.scrollEndTimeout = null;
-    }
-    this.scrollEndTimeout = setTimeout(() => {
-      this.checkForScrollEnd();
-    }, 150);
-  }
-
-  /**
-   * Check if the scroll has ended and the user is not actively touching.
-   * If the conditions are met (active content is enabled and no active touch),
-   * reset the scroll position and emit the scroll end event.
-   */
-  private checkForScrollEnd() {
-    const activeContent = this.getSegmentContents().find((content) => content.id === this.activeContentId);
-
-    // Only emit scroll end event if the active content is not disabled and
-    // the user is not touching the segment view
-    if (activeContent?.disabled === false && !this.isTouching) {
-      this.ionSegmentViewScrollEnd.emit({ activeContentId: this.activeContentId });
-      this.initialScrollLeft = undefined;
-    }
   }
 
   /**

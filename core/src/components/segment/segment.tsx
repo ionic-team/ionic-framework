@@ -28,8 +28,6 @@ export class Segment implements ComponentInterface {
   private valueBeforeGesture?: SegmentValue;
 
   private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
-  private scrolledIndicator?: HTMLDivElement | null = null;
-  private isScrolling = false;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -381,10 +379,6 @@ export class Segment implements ComponentInterface {
 
   @Listen('ionSegmentViewScroll', { target: 'body' })
   handleSegmentViewScroll(ev: CustomEvent) {
-    if (!this.isScrolling) {
-      return;
-    }
-
     const dispatchedFrom = ev.target as HTMLElement;
     const segmentViewEl = this.segmentViewEl as EventTarget;
     const segmentEl = this.el;
@@ -464,6 +458,7 @@ export class Segment implements ComponentInterface {
           indicator.querySelector('div')!.style.backgroundColor = color;
         }
 
+        // Scroll the segment container if the indicator is out of view
         const indicatorX = indicator.getBoundingClientRect().x;
         if (scrollDistance < 0 && indicatorX < 0) {
           this.el.scrollBy({
@@ -482,17 +477,6 @@ export class Segment implements ComponentInterface {
     }
   }
 
-  @Listen('ionSegmentViewScrollStart', { target: 'body' })
-  onScrollStart(ev: CustomEvent) {
-    const dispatchedFrom = ev.target as HTMLElement;
-    const segmentViewEl = this.segmentViewEl as EventTarget;
-    const segmentEl = this.el;
-
-    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
-      this.isScrolling = true;
-    }
-  }
-
   @Listen('ionSegmentViewScrollEnd', { target: 'body' })
   onScrollEnd(ev: CustomEvent<{ activeContentId: string }>) {
     const dispatchedFrom = ev.target as HTMLElement;
@@ -500,28 +484,7 @@ export class Segment implements ComponentInterface {
     const segmentEl = this.el;
 
     if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
-      this.isScrolling = false;
-
       this.value = ev.detail.activeContentId;
-    }
-  }
-
-  // Wait for the transition to end, then execute the callback
-  private waitForTransitionEnd(indicator: HTMLElement, callback: () => void) {
-    const onTransitionEnd = () => {
-      indicator.removeEventListener('transitionend', onTransitionEnd);
-      callback();
-    };
-    indicator.addEventListener('transitionend', onTransitionEnd);
-  }
-
-  // Update the Segment value after the ionSegmentViewScrollEnd transition has ended
-  private updateValueAfterTransition(activeContentId: string) {
-    this.value = activeContentId;
-
-    if (this.scrolledIndicator) {
-      this.scrolledIndicator.style.transition = '';
-      this.scrolledIndicator.style.transform = '';
     }
   }
 
