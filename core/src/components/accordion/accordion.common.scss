@@ -24,6 +24,11 @@
   z-index: 0;
 }
 
+:host(.accordion-expanding) ::slotted(ion-item[slot="header"]),
+:host(.accordion-expanded) ::slotted(ion-item[slot="header"]) {
+  --border-width: 0px;
+}
+
 #content {
   overflow: hidden;
 
@@ -47,7 +52,7 @@
  * Prevent margins of content-wrapper
  * from collapsing, breaking the animation.
  */
- :host(.accordion-expanding) #content-wrapper {
+:host(.accordion-expanding) #content-wrapper {
   overflow: auto;
 }
 

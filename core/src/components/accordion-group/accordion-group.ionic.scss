@@ -4,4 +4,9 @@
 // Ionic Accordion Group
 // --------------------------------------------------
 
+:host {
+  @include globals.border-radius(globals.$ionic-border-radius-400);
+  @include globals.padding(globals.$ionic-space-100);
 
+  background-color: globals.$ionic-color-base-white;
+}

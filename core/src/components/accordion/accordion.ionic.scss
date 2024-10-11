@@ -3,3 +3,61 @@
 
 // Ionic Accordion
 // --------------------------------------------------
+
+:host {
+  position: relative;
+
+  background-color: globals.$ionic-color-base-white;
+}
+
+// The border is added to the ::after element
+// to properly inset the border relative to the entire
+// accordion, rather than just the header.
+:host::after {
+  @include globals.margin(null, globals.$ionic-space-400, null, globals.$ionic-space-400);
+
+  display: block;
+
+  height: globals.$ionic-border-size-025;
+
+  background-color: globals.$ionic-color-neutral-300;
+
+  content: "";
+}
+
+:host(.accordion-animated) {
+  transition: all 300ms cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+
+:host(.accordion-animated) #content {
+  transition: max-height 300ms cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+
+// Accordion Header
+// --------------------------------------------------
+
+// The border is removed from the item in the header because
+// we are adding a border to the ::after element of the accordion.
+::slotted(ion-item[slot="header"]) {
+  --border-radius: #{globals.$ionic-border-radius-400};
+  --color: #{globals.$ionic-color-neutral-1200};
+  --border-width: 0;
+  --inner-border-width: 0;
+  --min-height: #{globals.$ionic-scale-700};
+  --padding-top: #{globals.$ionic-space-300};
+  --padding-end: #{globals.$ionic-space-400};
+  --padding-bottom: #{globals.$ionic-space-300};
+  --padding-start: #{globals.$ionic-space-400};
+
+  @include globals.typography(globals.$ionic-heading-h6-medium);
+}
+
+// Accordion Content
+// --------------------------------------------------
+
+#content {
+  @include globals.padding(null, globals.$ionic-space-400, globals.$ionic-space-400, globals.$ionic-space-400);
+  @include globals.typography(globals.$ionic-body-md-regular);
+
+  color: globals.$ionic-color-neutral-1000;
+}
