@@ -401,7 +401,38 @@ export class Segment implements ComponentInterface {
 
       const { scrollDistancePercentage, scrollDistance } = ev.detail;
 
-      const nextIndex = scrollDistance > 0 ? currentIndex + 1 : currentIndex - 1;
+      const findIndexFrom = (
+        array: HTMLIonSegmentButtonElement[],
+        predicate: (button: HTMLIonSegmentButtonElement) => boolean,
+        startIndex: number
+      ) => {
+        for (let i = startIndex; i < array.length; i++) {
+          if (predicate(array[i])) {
+            return i;
+          }
+        }
+        return -1;
+      };
+
+      const findIndexFromReverse = (
+        array: HTMLIonSegmentButtonElement[],
+        predicate: (button: HTMLIonSegmentButtonElement) => boolean,
+        startIndex: number
+      ) => {
+        for (let i = startIndex; i >= 0; i--) {
+          if (predicate(array[i])) {
+            return i;
+          }
+        }
+        return -1;
+      };
+
+      // Find the next valid button (i.e. we need to ignore any disabled buttons)
+      const nextIndex =
+        scrollDistance > 0
+          ? findIndexFrom(buttons, (ref) => !ref.disabled, currentIndex + 1)
+          : findIndexFromReverse(buttons, (ref) => !ref.disabled, currentIndex - 1);
+
       if (nextIndex >= 0 && nextIndex < buttons.length) {
         const nextButton = buttons[nextIndex];
         const nextButtonWidth = nextButton.getBoundingClientRect().width;
@@ -420,8 +451,10 @@ export class Segment implements ComponentInterface {
           .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
         indicator.style.left =
           scrollDistance > 0
-            ? `${distanceToCurrentButton + currentButton.getBoundingClientRect().width * scrollDistancePercentage}px`
-            : `${distanceToNextButton + nextButtonWidth - nextButtonWidth * scrollDistancePercentage}px`;
+            ? `${distanceToCurrentButton + distanceToNextButton * scrollDistancePercentage}px`
+            : `${
+                distanceToNextButton + distanceToCurrentButton - distanceToCurrentButton * scrollDistancePercentage
+              }px`;
 
         // Transition the color of the indicator if we've crossed the halfway point
         if (scrollDistancePercentage > 0.5) {

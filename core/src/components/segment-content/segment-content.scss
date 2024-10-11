@@ -9,3 +9,7 @@
 
   width: 100%;
 }
+
+:host(.segment-content-disabled) {
+  display: none;
+}
