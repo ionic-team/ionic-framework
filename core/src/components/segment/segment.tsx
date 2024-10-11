@@ -212,15 +212,17 @@ export class Segment implements ComponentInterface {
       const buttons = this.getButtons();
       const activeButtonIndex = buttons.findIndex((ref) => ref.value === this.value);
       if (activeButtonIndex >= 0) {
-        const activeButtonStyles = buttons[activeButtonIndex].getBoundingClientRect();
+        const activeButtonPosition = buttons[activeButtonIndex].getBoundingClientRect();
+        const activeButtonStyles = getComputedStyle(buttons[activeButtonIndex]);
         const indicator = this.el.shadowRoot!.querySelector('.segment-indicator') as HTMLDivElement | null;
         if (indicator) {
           const startingX = buttons
             .slice(0, activeButtonIndex)
             .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
 
-          indicator.style.width = `${activeButtonStyles.width}px`;
+          indicator.style.width = `${activeButtonPosition.width}px`;
           indicator.style.left = `${startingX}px`;
+          indicator.style.backgroundColor = activeButtonStyles.getPropertyValue('--indicator-color');
 
           // setTimeout(() => {
           //   indicator.style.transition = 'left 0.3s linear, width 0.3s linear';
@@ -420,6 +422,12 @@ export class Segment implements ComponentInterface {
           scrollDistance > 0
             ? `${distanceToCurrentButton + currentButton.getBoundingClientRect().width * scrollDistancePercentage}px`
             : `${distanceToNextButton + nextButtonWidth - nextButtonWidth * scrollDistancePercentage}px`;
+
+        // Transition the color of the indicator if we've crossed the halfway point
+        if (scrollDistancePercentage > 0.5) {
+          const color = getComputedStyle(nextButton).getPropertyValue('--indicator-color');
+          indicator.querySelector('div')!.style.backgroundColor = color;
+        }
       }
     }
   }
