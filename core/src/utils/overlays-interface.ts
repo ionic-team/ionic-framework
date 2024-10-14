@@ -77,4 +77,8 @@ export interface HTMLIonOverlayElement extends HTMLStencilElement {
   present: () => Promise<void>;
 }
 
-export type OverlaySelect = HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
+export type OverlaySelect =
+  | HTMLIonActionSheetElement
+  | HTMLIonAlertElement
+  | HTMLIonPopoverElement
+  | HTMLIonModalElement;

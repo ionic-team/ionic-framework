@@ -35,6 +35,7 @@ import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./compone
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+import { SelectModalOption } from "./components/select-modal/select-modal-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
@@ -70,6 +71,7 @@ export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./compone
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+export { SelectModalOption } from "./components/select-modal/select-modal-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
@@ -3267,6 +3269,12 @@ export namespace Components {
          */
         "value"?: any | null;
     }
+    interface IonSelectModal {
+        "confirmHandler"?: (value?: any | null) => void;
+        "header"?: string;
+        "multiple"?: boolean;
+        "options": SelectModalOption[];
+    }
     interface IonSelectOption {
         /**
           * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
@@ -5015,6 +5023,12 @@ declare global {
         prototype: HTMLIonSelectElement;
         new (): HTMLIonSelectElement;
     };
+    interface HTMLIonSelectModalElement extends Components.IonSelectModal, HTMLStencilElement {
+    }
+    var HTMLIonSelectModalElement: {
+        prototype: HTMLIonSelectModalElement;
+        new (): HTMLIonSelectModalElement;
+    };
     interface HTMLIonSelectOptionElement extends Components.IonSelectOption, HTMLStencilElement {
     }
     var HTMLIonSelectOptionElement: {
@@ -5303,6 +5317,7 @@ declare global {
         "ion-segment": HTMLIonSegmentElement;
         "ion-segment-button": HTMLIonSegmentButtonElement;
         "ion-select": HTMLIonSelectElement;
+        "ion-select-modal": HTMLIonSelectModalElement;
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
@@ -8626,6 +8641,12 @@ declare namespace LocalJSX {
          */
         "value"?: any | null;
     }
+    interface IonSelectModal {
+        "confirmHandler"?: (value?: any | null) => void;
+        "header"?: string;
+        "multiple"?: boolean;
+        "options"?: SelectModalOption[];
+    }
     interface IonSelectOption {
         /**
           * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
@@ -9328,6 +9349,7 @@ declare namespace LocalJSX {
         "ion-segment": IonSegment;
         "ion-segment-button": IonSegmentButton;
         "ion-select": IonSelect;
+        "ion-select-modal": IonSelectModal;
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
         "ion-skeleton-text": IonSkeletonText;
@@ -9427,6 +9449,7 @@ declare module "@stencil/core" {
             "ion-segment": LocalJSX.IonSegment & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
             "ion-segment-button": LocalJSX.IonSegmentButton & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
             "ion-select": LocalJSX.IonSelect & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
+            "ion-select-modal": LocalJSX.IonSelectModal & JSXBase.HTMLAttributes<HTMLIonSelectModalElement>;
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;

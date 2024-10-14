@@ -51,6 +51,14 @@
               <ion-select-option value="pears">Pears</ion-select-option>
             </ion-select>
           </ion-item>
+
+          <ion-item>
+            <ion-select label="Modal" placeholder="Select one" interface="modal">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-list>
 
         <ion-list>
@@ -70,6 +78,15 @@
 
           <ion-item>
             <ion-select label="Popover" multiple="true" interface="popover">
+              <ion-select-option value="bird">Bird</ion-select-option>
+              <ion-select-option value="cat">Cat</ion-select-option>
+              <ion-select-option value="dog">Dog</ion-select-option>
+              <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Modal" multiple="true" interface="modal">
               <ion-select-option value="bird">Bird</ion-select-option>
               <ion-select-option value="cat">Cat</ion-select-option>
               <ion-select-option value="dog">Dog</ion-select-option>
@@ -124,6 +141,16 @@
               <ion-select-option value="onions">Onions</ion-select-option>
             </ion-select>
           </ion-item>
+
+          <ion-item color="secondary">
+            <ion-select label="Modal Sheet" id="customModalSelect" interface="modal" placeholder="Select One">
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="bacon">Bacon</ion-select-option>
+              <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+              <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+              <ion-select-option value="onions">Onions</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-list>
       </ion-content>
 
@@ -152,6 +179,14 @@
           message: '$1.50 charge for every topping',
         };
         customActionSheetSelect.interfaceOptions = customActionSheetOptions;
+
+        var customModalSelect = document.getElementById('customModalSelect');
+        var customModalSheetOptions = {
+          header: 'Pizza Toppings',
+          breakpoints: [0.5],
+          initialBreakpoint: 0.5,
+        };
+        customModalSelect.interfaceOptions = customModalSheetOptions;
       </script>
     </ion-app>
   </body>

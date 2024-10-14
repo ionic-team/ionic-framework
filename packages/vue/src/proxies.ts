@@ -68,6 +68,7 @@ import { defineCustomElement as defineIonSearchbar } from '@ionic/core/component
 import { defineCustomElement as defineIonSegment } from '@ionic/core/components/ion-segment.js';
 import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/components/ion-segment-button.js';
 import { defineCustomElement as defineIonSelect } from '@ionic/core/components/ion-select.js';
+import { defineCustomElement as defineIonSelectModal } from '@ionic/core/components/ion-select-modal.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
@@ -794,6 +795,14 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'ionStyle'
 ],
 'value', 'ion-change');
+
+
+export const IonSelectModal = /*@__PURE__*/ defineContainer<JSX.IonSelectModal>('ion-select-modal', defineIonSelectModal, [
+  'header',
+  'multiple',
+  'confirmHandler',
+  'options'
+]);
 
 
 export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption>('ion-select-option', defineIonSelectOption, [

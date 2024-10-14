@@ -62,6 +62,7 @@ import { defineCustomElement as defineIonSearchbar } from '@ionic/core/component
 import { defineCustomElement as defineIonSegment } from '@ionic/core/components/ion-segment.js';
 import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/components/ion-segment-button.js';
 import { defineCustomElement as defineIonSelect } from '@ionic/core/components/ion-select.js';
+import { defineCustomElement as defineIonSelectModal } from '@ionic/core/components/ion-select-modal.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
@@ -131,6 +132,7 @@ export const IonSearchbar = /*@__PURE__*/createReactComponent<JSX.IonSearchbar, 
 export const IonSegment = /*@__PURE__*/createReactComponent<JSX.IonSegment, HTMLIonSegmentElement>('ion-segment', undefined, undefined, defineIonSegment);
 export const IonSegmentButton = /*@__PURE__*/createReactComponent<JSX.IonSegmentButton, HTMLIonSegmentButtonElement>('ion-segment-button', undefined, undefined, defineIonSegmentButton);
 export const IonSelect = /*@__PURE__*/createReactComponent<JSX.IonSelect, HTMLIonSelectElement>('ion-select', undefined, undefined, defineIonSelect);
+export const IonSelectModal = /*@__PURE__*/createReactComponent<JSX.IonSelectModal, HTMLIonSelectModalElement>('ion-select-modal', undefined, undefined, defineIonSelectModal);
 export const IonSelectOption = /*@__PURE__*/createReactComponent<JSX.IonSelectOption, HTMLIonSelectOptionElement>('ion-select-option', undefined, undefined, defineIonSelectOption);
 export const IonSkeletonText = /*@__PURE__*/createReactComponent<JSX.IonSkeletonText, HTMLIonSkeletonTextElement>('ion-skeleton-text', undefined, undefined, defineIonSkeletonText);
 export const IonSpinner = /*@__PURE__*/createReactComponent<JSX.IonSpinner, HTMLIonSpinnerElement>('ion-spinner', undefined, undefined, defineIonSpinner);
