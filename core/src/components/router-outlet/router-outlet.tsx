@@ -111,7 +111,9 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
             this.ani.easing('cubic-bezier(1, 0, 0.68, 0.28)');
             newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], step)[0];
           } else {
-            newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
+            this.ani.easing('linear');
+
+            newStepValue += step;
           }
 
           this.ani.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
