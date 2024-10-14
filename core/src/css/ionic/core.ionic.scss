@@ -338,11 +338,6 @@ ion-accordion.accordion-expanded > [slot="header"] .ion-accordion-toggle-icon {
   transform: rotate(180deg);
 }
 
-ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-previous ion-item[slot="header"] {
-  --border-width: 0;
-  --inner-border-width: 0;
-}
-
 // Items inside of an accordion should have reduced padding
 // due to the padding added to the accordion content.
 ion-accordion > [slot="content"] ion-item {
