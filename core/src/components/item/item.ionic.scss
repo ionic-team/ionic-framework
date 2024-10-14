@@ -33,8 +33,7 @@
 .item-inner {
   // This prevents the padding/margin from
   // being excluded from the height calculation.
-  // TODO this breaks Accordion styles
-  // min-height: initial;
+  min-height: initial;
 }
 
 // Item Detail Icon
