@@ -66,16 +66,16 @@
 .action-sheet-button {
   @include padding($action-sheet-md-button-padding-top, $action-sheet-md-button-padding-end, $action-sheet-md-button-padding-bottom, $action-sheet-md-button-padding-start);
 
-  position: relative;
+  // position: relative;
 
   min-height: $action-sheet-md-button-height;
 
   font-size: $action-sheet-md-button-font-size;
 
-  text-align: $action-sheet-md-text-align;
+  // text-align: $action-sheet-md-text-align;
 
   contain: content;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .action-sheet-icon {
