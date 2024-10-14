@@ -14,12 +14,18 @@
     generateColorUtilityClasses,
     generateSpaceUtilityClasses,
     removeConsecutiveRepeatedWords,
-    setPrefixValue
+    setPrefixValue,
+    generateRadiusUtilityClasses,
+    generateBorderSizeUtilityClasses,
+    generateFontUtilityClasses,
+    generateShadowUtilityClasses,
+    generateUtilityClasses
   } = require('./utils.js');
 
   const StyleDictionary = (await import('style-dictionary')).default;
+  
   // Set the prefix for variables and classes
-  const variablesPrefix = setPrefixValue('ion')
+  setPrefixValue('ion')
 
   // Register a custom file header
   StyleDictionary.registerFileHeader({
@@ -36,37 +42,37 @@
 
       console.log('Generating SCSS variables...');
 
-        //setVariablePrefix(options.platforms.css.prefix);
-        const typographyProperties = dictionary.allTokens.filter((prop) => prop['$type'] === 'typography');
-        const otherProperties = dictionary.allTokens.filter((prop) => prop['$type'] !== 'typography');
+        // Separate typography tokens from the rest
+        const typographyProperties = dictionary.allTokens.filter((prop) => prop.$type === 'typography');
+        const otherProperties = dictionary.allTokens.filter((prop) => prop.$type !== 'typography');
 
         // Make sure the reused scss variables are defined first, to avoid compilation errors
         const sortedProperties = [...otherProperties, ...typographyProperties];
 
         const prefixedVariables = sortedProperties.map((prop) => {
-        // Remove consecutive repeated words from the token name, like border-border-color
-        const propName = removeConsecutiveRepeatedWords(prop.name);
+          // Remove consecutive repeated words from the token name, like border-border-color
+          const propName = removeConsecutiveRepeatedWords(prop.name);
 
-        if (prop.attributes.category.startsWith('elevation')) {
-            const cssShadow = prop.$value.map(generateShadowValue).join(', ');
-            return `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${cssShadow});`;
-        } else if (prop.$type === 'fontFamilies') {
-            return generateFontFamilyValue(prop, propName, 'scss');
-        } else if (prop.$type === 'fontSizes') {
-            return generateFontSizeValue(prop, propName, 'scss');
-        } else if (prop.$type === 'typography') {
-            return generateTypographyOutput(prop, propName, true);
-        } else {
-            return generateValue(prop, propName);
-        }
+            switch (prop.$type) {
+              case 'boxShadow':
+                  return generateShadowValue(prop, propName);
+              case 'fontFamilies':
+                  return generateFontFamilyValue(prop, propName, 'scss');
+              case 'fontSizes':
+                  return generateFontSizeValue(prop, propName, 'scss');
+              case 'typography':
+                  return generateTypographyOutput(prop, propName, true);
+              default:
+                  return generateValue(prop, propName);
+          }
         });
 
         const fileHeader = await file.options.fileHeader();
               
         return [
-        `/*\n${fileHeader.join('\n')}\n*/`,
-        '@use "../themes/functions.sizes" as font;\n',
-        prefixedVariables.join('\n') + '\n',
+            `/*\n${fileHeader.join('\n')}\n*/`,
+            '@use "../themes/functions.sizes" as font;\n',
+            prefixedVariables.join('\n') + '\n',
         ].join('\n');
     },
   });
@@ -84,30 +90,30 @@
 
         // Generate utility classes for each token
         dictionary.allTokens.map((prop) => {
-            const tokenType = prop.attributes.category;
+
+            const tokenCategory = prop.attributes.category;
+
+            if (prop.$type === 'fontFamilies' || tokenCategory === 'scale' || tokenCategory === 'backdrop') {
+              // Not creating for the tokens below, as they make no sense to exist as utility-classes.
+              return;
+          }
+
             // Remove consecutive repeated words from the token name, like border-border-color
             const propName = removeConsecutiveRepeatedWords(prop.name);
             
-            // Typography tokens are handled differently, as each might have a different tokenType
-            if (prop['$type'] === 'typography') {
+            if (prop.$type === 'typography') {
+                // Typography tokens are handled differently, as each might have a different tokenType
                 return typographyUtilityClasses.push(generateTypographyOutput(prop, propName, false));
-                // Generate utility classes for border-radius tokens, as they have their own token json file, based on primitive tokens
-            } else if(tokenType.startsWith('round') || tokenType.startsWith('rectangular') || tokenType.startsWith('soft')) {
-                return otherUtilityClasses.push(`.${variablesPrefix}-${propName} {\n  border-radius: $ionic-${propName};\n}`);
+                
+            } else if(tokenCategory.startsWith('round') || tokenCategory.startsWith('rectangular') || tokenCategory.startsWith('soft')) {
+                // Generate utility classes for border-radius shape tokens, as they have their own token json file, based on primitive tokens
+                return otherUtilityClasses.push(generateRadiusUtilityClasses(propName));
 
-                /*
-                * Not creating for the tokens below, as they make no sense to exist as utility-classes.
-                * Font-family should be defined on global scope, not component.
-                * Scale its an abstract token group, to be used by other tokens, like the space ones.
-                * And backdrop is a token that is targeted to a specific type of element.
-                */
-            } else if (prop.$type === 'fontFamilies' || tokenType === 'scale' || tokenType === 'backdrop') {
-                return;
-            }
+            } 
 
             let utilityClass = '';
 
-            switch (tokenType) {
+            switch (tokenCategory) {
                 case 'color':
                 case 'primitives':
                 case 'semantics':
@@ -116,22 +122,22 @@
                 case 'icon':
                 case 'state':
                   utilityClass = generateColorUtilityClasses(prop, propName);
-                break;
+                  break;
                 case 'border-size':
-                  utilityClass = `.${variablesPrefix}-${propName} {\n  border-width: $ionic-${propName};\n}`;
-                break;
+                  utilityClass = generateBorderSizeUtilityClasses(propName);
+                  break;
                 case 'font':
-                  utilityClass = `.${variablesPrefix}-${propName} {\n  ${prop.attributes.type}: $ionic-${propName};\n}`;
-                break;
+                  utilityClass = generateFontUtilityClasses(prop, propName);
+                  break;
                 case 'space':
                   utilityClass = generateSpaceUtilityClasses(prop, propName);
-                break;
+                  break;
                 case 'shadow':
                 case 'elevation':
-                  utilityClass = `.${variablesPrefix}-${propName} {\n  box-shadow: $ionic-${propName};\n}`;
-                break;
+                  utilityClass = generateShadowUtilityClasses(propName);
+                  break;
                 default:
-                  utilityClass = `.${variablesPrefix}-${propName} {\n  ${tokenType}: $ionic-${propName};\n}`;
+                  utilityClass = generateUtilityClasses(tokenCategory, propName);
             }
 
             return otherUtilityClasses.push(utilityClass);
@@ -143,9 +149,9 @@
         const fileHeader = await file.options.fileHeader();
               
         return [
-        `/*\n${fileHeader.join('\n')}\n*/`,
-        '@import "./ionic.vars";\n@import "../themes/mixins";\n',
-        finalOutput,
+            `/*\n${fileHeader.join('\n')}\n*/`,
+            '@import "./ionic.vars";\n@import "../themes/mixins";\n',
+            finalOutput,
         ].join('\n');
     },
   });

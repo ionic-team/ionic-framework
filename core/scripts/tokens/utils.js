@@ -49,10 +49,14 @@ function removeConsecutiveRepeatedWords(str) {
 }
 
 // Generates a valid box-shadow value from a shadow Design Token structure
-function generateShadowValue(shadow) {
-  const color = getRgbaValue(shadow.color);
+function generateShadowValue(prop, propName) {
+  const cssShadow = prop.$value.map(shadow => {
+    // Assuming shadow is an object with properties like offsetX, offsetY, blurRadius, spreadRadius, color
+    const color = getRgbaValue(shadow.color);
+    return `${shadow.x}px ${shadow.y}px ${shadow.blur}px ${shadow.spread}px ${color}`;
+}).join(', ');
 
-  return `${shadow.x} ${shadow.y} ${shadow.blur} ${shadow.spread} ${color}`;
+  return `$${variablesPrefix}-${propName}: var(--${variablesPrefix}-${propName}, ${cssShadow});`;
 }
 
 // Generates a valid font-size value from a font-size Design Token structure, while transforming the pixels to rem
@@ -64,6 +68,7 @@ function generateFontSizeValue(prop, propName, variableType = 'css') {
     : `--${propName}: #{font.px-to-rem(${parseInt(prop.$value)})};`;
 }
 
+// Generates a valid font-family value from a font-family Design Token structure
 function generateFontFamilyValue(prop, propName, variableType = 'css') {
   // Remove the last word from the token, as it contains the name of the font, which we don't want to be included on the generated variables
   const _propName = propName.split('-').slice(0, -1).join('-');
@@ -162,6 +167,31 @@ function generateSpaceUtilityClasses(prop, className) {
   return `${marginPaddingTemplate('margin')}\n${marginPaddingTemplate('padding')}`;
 }
 
+// Generates a valid box-shadow value from a shadow Design Token structure
+function generateRadiusUtilityClasses(propName) {
+  return `.${variablesPrefix}-${propName} {\n  border-radius: $ionic-${propName};\n}`;
+}
+
+// Generates a font based css utility-class from a font Design Token structure
+function generateBorderSizeUtilityClasses(propName) {
+  return `.${variablesPrefix}-${propName} {\n  border-width: $ionic-${propName};\n}`;
+}
+
+// Generates a font based css utility-class from a font Design Token structure
+function generateFontUtilityClasses(prop, propName) {
+  return `.${variablesPrefix}-${propName} {\n  ${prop.attributes.type}: $ionic-${propName};\n}`;
+}
+
+// Generates a valid box-shadow value from a shadow Design Token structure
+function generateShadowUtilityClasses(propName) {
+  return `.${variablesPrefix}-${propName} {\n  box-shadow: $ionic-${propName};\n}`;
+}
+
+// Generates a utility class for a given token category and name
+function generateUtilityClasses(tokenCategory, propName){
+  return `.${variablesPrefix}-${propName} {\n  ${tokenCategory}: $ionic-${propName};\n}`;
+}
+
 module.exports = {
     getRgbaValue,
     hexToRgb,
@@ -171,7 +201,12 @@ module.exports = {
     generateTypographyOutput,
     generateValue,
     setPrefixValue,
+    generateRadiusUtilityClasses,
     generateColorUtilityClasses,
     generateSpaceUtilityClasses,
-    removeConsecutiveRepeatedWords
+    removeConsecutiveRepeatedWords,
+    generateBorderSizeUtilityClasses,
+    generateFontUtilityClasses,
+    generateShadowUtilityClasses,
+    generateUtilityClasses
 };
