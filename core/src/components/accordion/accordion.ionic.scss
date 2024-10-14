@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 :host {
-  position: relative;
+  @include globals.border-radius(globals.$ionic-border-radius-400);
 
-  background-color: globals.$ionic-color-base-white;
+  position: relative;
 }
 
 // The border is added to the ::after element
@@ -27,7 +27,7 @@
 
   content: "";
 
-  z-index: 1;
+  z-index: 3;
 }
 
 :host(.accordion-animated) {
@@ -65,4 +65,14 @@
   @include globals.typography(globals.$ionic-body-md-regular);
 
   color: globals.$ionic-color-neutral-1000;
+}
+
+// Disabled Accordion
+// --------------------------------------------------
+
+:host(.accordion-disabled)::before {
+  @include globals.border-radius(inherit);
+  @include globals.disabled-state();
+
+  z-index: 2;
 }
