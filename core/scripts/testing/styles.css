@@ -55,6 +55,10 @@ html.ios.ios {
  * Ionic framework.
  * Otherwise, the styles may not appear correctly
  * when comparing between testing and production.
+ * This issue occurs only with `scoped` components,
+ * which is why `sc-ion-` is used as a filter,
+ * since this class is specifically added to `scoped`
+ * components.
  */
 ion-content button:not([class*="sc-ion-"]),
 main button:not([class*="sc-ion-"]) {
@@ -76,6 +80,10 @@ main button:not([class*="sc-ion-"]) {
  * Ionic framework.
  * Otherwise, the styles may not appear correctly
  * when comparing between testing and production.
+ * This issue occurs only with `scoped` components,
+ * which is why `sc-ion-` is used as a filter,
+ * since this class is specifically added to `scoped`
+ * components.
  */
 ion-content button.expand:not([class*="sc-ion-"]),
 main button.expand:not([class*="sc-ion-"]) {
