@@ -2,6 +2,7 @@ import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '@utils/helpers';
+import { hostContext } from '@utils/theme';
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
@@ -48,7 +49,7 @@ export class Accordion implements ComponentInterface {
 
   private currentRaf: number | undefined;
 
-  @Element() el?: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() state: AccordionState = AccordionState.Collapsed;
   @State() isNext = false;
@@ -449,6 +450,8 @@ export class Accordion implements ComponentInterface {
           'accordion-readonly': readonly,
 
           'accordion-animated': this.shouldAnimate(),
+
+          'in-accordion-group-expand-inset': hostContext('.accordion-group-expand-inset', this.el),
         }}
       >
         <div

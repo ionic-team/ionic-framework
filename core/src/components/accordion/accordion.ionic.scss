@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 :host {
-  @include globals.border-radius(globals.$ionic-border-radius-400);
-
   position: relative;
+
+  min-width: 272px;
 }
 
 // The border is added to the ::after element
@@ -44,7 +44,7 @@
 // The border is removed from the item in the header because
 // we are adding a border to the ::after element of the accordion.
 ::slotted(ion-item[slot="header"]) {
-  --border-radius: #{globals.$ionic-border-radius-400};
+  --border-radius: #{globals.$ionic-border-radius-0};
   --color: #{globals.$ionic-color-neutral-1200};
   --border-width: 0;
   --inner-border-width: 0;
@@ -55,6 +55,11 @@
   --padding-start: #{globals.$ionic-space-400};
 
   @include globals.typography(globals.$ionic-heading-h6-medium);
+}
+
+// Shape only applies when inside an inset accordion group
+:host(.in-accordion-group-expand-inset) ::slotted(ion-item[slot="header"]) {
+  --border-radius: #{globals.$ionic-border-radius-400};
 }
 
 // Accordion Content
