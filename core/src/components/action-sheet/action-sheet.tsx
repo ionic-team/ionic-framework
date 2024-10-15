@@ -19,7 +19,7 @@ import {
 import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
+import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import type { ActionSheetButton } from './action-sheet-interface';
@@ -253,17 +253,17 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 
-  private async buttonClick(button: ActionSheetButton) {
-    const role = button.role;
-    if (isCancel(role)) {
-      return this.dismiss(button.data, role);
-    }
-    const shouldDismiss = await this.callButtonHandler(button);
-    if (shouldDismiss) {
-      return this.dismiss(button.data, button.role);
-    }
-    return Promise.resolve();
-  }
+  // private async buttonClick(button: ActionSheetButton) {
+  //   const role = button.role;
+  //   if (isCancel(role)) {
+  //     return this.dismiss(button.data, role);
+  //   }
+  //   const shouldDismiss = await this.callButtonHandler(button);
+  //   if (shouldDismiss) {
+  //     return this.dismiss(button.data, button.role);
+  //   }
+  //   return Promise.resolve();
+  // }
 
   private async callButtonHandler(button: ActionSheetButton | undefined) {
     if (button) {
@@ -359,9 +359,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   render() {
     const { header, htmlAttributes, overlayIndex } = this;
     const mode = getIonMode(this);
-    const allButtons = this.getButtons();
-    const cancelButton = allButtons.find((b) => b.role === 'cancel');
-    const buttons = allButtons.filter((b) => b.role !== 'cancel');
+    // const allButtons = this.getButtons();
+    // const cancelButton = allButtons.find((b) => b.role === 'cancel');
+    // const buttons = allButtons.filter((b) => b.role !== 'cancel');
     const headerID = `action-sheet-${overlayIndex}-header`;
 
     return (
@@ -388,61 +388,20 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         <div tabindex="0"></div>
 
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
-          <div class="action-sheet-container">
-            <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
-              {header !== undefined && (
-                <div
-                  id={headerID}
-                  class={{
-                    'action-sheet-title': true,
-                    'action-sheet-has-sub-title': this.subHeader !== undefined,
-                  }}
-                >
-                  {header}
-                  {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
-                </div>
-              )}
-              {buttons.map((b) => (
-                <button
-                  {...b.htmlAttributes}
-                  type="button"
-                  id={b.id}
-                  class={buttonClass(b)}
-                  onClick={() => this.buttonClick(b)}
-                  disabled={b.disabled}
-                  tabIndex={b.disabled ? -1 : 0}
-                >
-                  <span class="action-sheet-button-inner">
-                    {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
-                    {b.text}
-                  </span>
-                  {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-                </button>
-              ))}
-            </div>
-
-            {cancelButton && (
-              <div class="action-sheet-group action-sheet-group-cancel">
-                {/*
-                  Cancel buttons intentionally do not
-                  receive a disabled state here as we should
-                  not make it difficult to dismiss the overlay.
-                */}
-                <button
-                  {...cancelButton.htmlAttributes}
-                  type="button"
-                  class={buttonClass(cancelButton)}
-                  onClick={() => this.buttonClick(cancelButton)}
-                >
-                  <span class="action-sheet-button-inner">
-                    {cancelButton.icon && (
-                      <ion-icon icon={cancelButton.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />
-                    )}
-                    {cancelButton.text}
-                  </span>
-                  {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-                </button>
-              </div>
+          <div class="action-sheet-head">
+            {header !== undefined && (
+              <h2
+                id={headerID}
+                class={{
+                  'action-sheet-title': true,
+                  'action-sheet-has-sub-title': this.subHeader !== undefined,
+                }}
+              >
+                {header}
+              </h2>
+            )}
+            {this.subHeader !== undefined && (
+              <h2 class="action-sheet-sub-title">{this.subHeader}</h2>
             )}
           </div>
         </div>
@@ -453,12 +412,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   }
 }
 
-const buttonClass = (button: ActionSheetButton): CssClassMap => {
-  return {
-    'action-sheet-button': true,
-    'ion-activatable': !button.disabled,
-    'ion-focusable': !button.disabled,
-    [`action-sheet-${button.role}`]: button.role !== undefined,
-    ...getClassMap(button.cssClass),
-  };
-};
+// const buttonClass = (button: ActionSheetButton): CssClassMap => {
+//   return {
+//     'action-sheet-button': true,
+//     'ion-activatable': !button.disabled,
+//     'ion-focusable': !button.disabled,
+//     [`action-sheet-${button.role}`]: button.role !== undefined,
+//     ...getClassMap(button.cssClass),
+//   };
+// };
