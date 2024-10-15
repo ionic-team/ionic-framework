@@ -101,6 +101,8 @@
   font-family: inherit;
 
   overflow: hidden;
+
+  z-index: 0;
 }
 
 .action-sheet-button:disabled {
@@ -123,7 +125,7 @@
   width: 100%;
   height: 100%;
 
-  z-index: 1;
+  // z-index: 1;
 }
 
 .action-sheet-container {
@@ -177,9 +179,9 @@
 // Action Sheet: States
 // --------------------------------------------------
 
-.action-sheet-button::after {
-  @include button-state();
-}
+// .action-sheet-button::after {
+//   @include button-state();
+// }
 
 
 // Action Sheet: Selected

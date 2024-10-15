@@ -388,6 +388,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         <div tabindex="0"></div>
 
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
+          <div class="action-sheet-container">
             <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
               {header !== undefined && (
                 <div
@@ -442,6 +443,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 </button>
               </div>
             )}
+          </div>
         </div>
 
         <div tabindex="0"></div>
