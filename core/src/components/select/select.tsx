@@ -104,15 +104,15 @@ export class Select implements ComponentInterface {
   @Prop() fill?: 'outline' | 'solid';
 
   /**
-   * The interface the select should use: `action-sheet`, `popover` or `alert`.
+   * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
    */
   @Prop() interface: SelectInterface = 'alert';
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
    * can take. See the [ion-alert docs](./alert), the
-   * [ion-action-sheet docs](./action-sheet) and the
-   * [ion-popover docs](./popover) for the
+   * [ion-action-sheet docs](./action-sheet), the
+   * [ion-popover docs](./popover), and the [ion-modal docs](./modal) for the
    * create options for each interface.
    *
    * Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
@@ -518,6 +518,8 @@ export class Select implements ComponentInterface {
     return popoverOptions;
   }
 
+  // TODO(ROU-11272): Not needed if we follow popover's behavior for multi-select (i.e. no confirmation button).
+  // In that case, modal and popover could use the same utility to construct options.
   private createModalOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectModalOption[] {
     const modalOptions = data.map((option) => {
       const value = getOptionValue(option);
