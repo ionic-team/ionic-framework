@@ -379,10 +379,6 @@ export class Accordion implements ComponentInterface {
   };
 
   private getNextSibling = () => {
-    if (!this.el) {
-      return;
-    }
-
     const nextSibling = this.el.nextElementSibling;
 
     if (nextSibling?.tagName !== 'ION-ACCORDION') {
@@ -393,10 +389,6 @@ export class Accordion implements ComponentInterface {
   };
 
   private getPreviousSibling = () => {
-    if (!this.el) {
-      return;
-    }
-
     const previousSibling = this.el.previousElementSibling;
 
     if (previousSibling?.tagName !== 'ION-ACCORDION') {
