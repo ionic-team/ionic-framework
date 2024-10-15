@@ -448,11 +448,14 @@ export class Segment implements ComponentInterface {
         const distanceToCurrentButton = buttons
           .slice(0, currentIndex)
           .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
+
         indicator.style.left =
           scrollDistance > 0
-            ? `${distanceToCurrentButton + distanceToNextButton * scrollDistancePercentage}px`
+            ? `${
+                distanceToCurrentButton + (distanceToNextButton - distanceToCurrentButton) * scrollDistancePercentage
+              }px`
             : `${
-                distanceToNextButton + distanceToCurrentButton - distanceToCurrentButton * scrollDistancePercentage
+                distanceToCurrentButton - (distanceToCurrentButton - distanceToNextButton) * scrollDistancePercentage
               }px`;
 
         const standardize_color = (str: string) => {
