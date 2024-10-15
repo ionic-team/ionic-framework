@@ -410,6 +410,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   class={buttonClass(b)}
                   onClick={() => this.buttonClick(b)}
                   disabled={b.disabled}
+                  tabIndex={b.disabled ? -1 : 0}
                 >
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
