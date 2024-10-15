@@ -6,6 +6,7 @@
 
 :host {
   --background: transparent;
+  --indicator-height: 2px;
 
   grid-auto-columns: minmax(auto, $segment-button-md-max-width);
 }
@@ -23,10 +24,13 @@
   min-height: var(--min-height);
 }
 
-
 // Segment: Scrollable
 // --------------------------------------------------
 
 :host(.segment-scrollable) ::slotted(ion-segment-button) {
   min-width: auto;
+}
+
+.segment-indicator {
+  @include position(null, 0, 0, 0);
 }

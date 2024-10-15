@@ -205,29 +205,28 @@ export class Segment implements ComponentInterface {
     // but do not animate the scroll
     this.updateSegmentView(this.value!, false);
 
-    // TODO: this isn't always consistent, button width can sometimes be 0
-    if (this.segmentViewEl) {
-      const buttons = this.getButtons();
-      const activeButtonIndex = buttons.findIndex((ref) => ref.value === this.value);
-      if (activeButtonIndex >= 0) {
-        const activeButtonPosition = buttons[activeButtonIndex].getBoundingClientRect();
-        const activeButtonStyles = getComputedStyle(buttons[activeButtonIndex]);
-        const indicator = this.el.shadowRoot!.querySelector('.segment-indicator') as HTMLDivElement | null;
-        if (indicator) {
-          const startingX = buttons
-            .slice(0, activeButtonIndex)
-            .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
+    writeTask(() => {
+      if (this.segmentViewEl) {
+        const buttons = this.getButtons();
+        const activeButtonIndex = buttons.findIndex((ref) => ref.value === this.value);
+        if (activeButtonIndex >= 0) {
+          const activeButtonPosition = buttons[activeButtonIndex].getBoundingClientRect();
+          const activeButtonStyles = getComputedStyle(buttons[activeButtonIndex]);
+          const indicator = this.el.shadowRoot!.querySelector('.segment-indicator') as HTMLDivElement | null;
+          if (indicator) {
+            const startingX = buttons
+              .slice(0, activeButtonIndex)
+              .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
 
-          indicator.style.width = `${activeButtonPosition.width}px`;
-          indicator.style.left = `${startingX}px`;
-          indicator.style.backgroundColor = activeButtonStyles.getPropertyValue('--indicator-color');
+            indicator.style.width = `${activeButtonPosition.width}px`;
+            indicator.style.left = `${startingX}px`;
 
-          // setTimeout(() => {
-          //   indicator.style.transition = 'left 0.3s linear, width 0.3s linear';
-          // });
+            // Setting a CSS variable works around issue where background element might not be rendered yet
+            this.el.style.setProperty('--indicator-color', activeButtonStyles.getPropertyValue('--indicator-color'));
+          }
         }
       }
-    }
+    });
   }
 
   onStart(detail: GestureDetail) {
@@ -439,7 +438,11 @@ export class Segment implements ComponentInterface {
         // Scale the width based on the width of the next button
         const diff = nextButtonWidth - currentButtonWidth;
         const width = currentButtonWidth + diff * scrollDistancePercentage;
-        indicator.style.width = `${width}px`;
+        const indicatorStyles = getComputedStyle(indicator);
+        const indicatorPadding =
+          parseFloat(indicatorStyles.paddingLeft.replace('px', '')) +
+          parseFloat(indicatorStyles.paddingRight.replace('px', ''));
+        indicator.style.width = `${width - indicatorPadding}px`;
 
         // Translate the indicator based on the scroll distance
         const distanceToNextButton = buttons
@@ -497,10 +500,12 @@ export class Segment implements ComponentInterface {
         };
         indicator.querySelector('div')!.style.backgroundColor = interpolateColor();
 
-        // Scroll the segment container so the indicator is always in view
-        indicator.scrollIntoView({
-          behavior: 'instant',
-        });
+        if (this.scrollable) {
+          // Scroll the segment container so the indicator is always in view
+          indicator.scrollIntoView({
+            behavior: 'instant',
+          });
+        }
       }
     }
   }
@@ -809,7 +814,7 @@ export class Segment implements ComponentInterface {
       >
         {this.segmentViewEl && (
           <div part="indicator" class="segment-indicator">
-            <div part="indicator-background"></div>
+            <div part="indicator-background" class="segment-indicator-background"></div>
           </div>
         )}
         <slot onSlotchange={this.onSlottedItemsChange}></slot>

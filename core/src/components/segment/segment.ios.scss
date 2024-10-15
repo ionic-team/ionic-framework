@@ -6,14 +6,13 @@
 
 :host {
   --background: #{$segment-ios-background-color};
-
-  @include border-radius($segment-ios-border-radius);
+  --indicator-height: 100%;
+  --indicator-box-shadow: 0 0 5px rgba(0, 0, 0, 0.16) @include border-radius($segment-ios-border-radius);
 
   overflow: hidden;
 
   z-index: 0;
 }
-
 
 // Segment: Color
 // --------------------------------------------------
@@ -21,7 +20,6 @@
 :host(.ion-color) {
   background: #{current-color(base, 0.065)};
 }
-
 
 // Segment: Default Toolbar
 // --------------------------------------------------
@@ -37,11 +35,21 @@
   background: var(--ion-toolbar-segment-background, var(--background));
 }
 
-
 // Segment: Color Toolbar
 // --------------------------------------------------
 
 // Toolbar with Color, Default Segment
 :host(.in-toolbar-color:not(.ion-color)) {
   background: #{current-color(contrast, 0.11)};
+}
+
+.segment-indicator {
+  @include position(0, 0, 0, 0);
+
+  padding: 0 2px;
+
+  .segment-indicator-background {
+    transform: scale(0.95);
+    border-radius: 7px;
+  }
 }

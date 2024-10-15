@@ -35,12 +35,16 @@
   .segment-indicator {
     @include transform-origin(left);
 
-    position: absolute;
-    height: 100%;
+    z-index: -1;
 
-    div {
+    position: absolute;
+
+    .segment-indicator-background {
+      height: var(--indicator-height);
+      box-shadow: var(--indicator-box-shadow);
+      background-color: var(--indicator-color);
+
       transition: background-color 0.3s linear;
-      height: 100%;
     }
   }
 }
