@@ -203,7 +203,7 @@ export class Segment implements ComponentInterface {
 
     // Update segment view based on the initial value,
     // but do not animate the scroll
-    this.updateSegmentView(false);
+    this.updateSegmentView(this.value!, false);
 
     // TODO: this isn't always consistent, button width can sometimes be 0
     if (this.segmentViewEl) {
@@ -249,8 +249,11 @@ export class Segment implements ComponentInterface {
     const value = this.value;
     if (value !== undefined) {
       if (this.valueBeforeGesture !== value) {
-        this.emitValueChange();
-        this.updateSegmentView();
+        if (this.segmentViewEl) {
+          this.updateSegmentView(value);
+        } else {
+          this.emitValueChange();
+        }
       }
     }
     this.valueBeforeGesture = undefined;
@@ -519,6 +522,7 @@ export class Segment implements ComponentInterface {
 
     if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
       this.value = ev.detail.activeContentId;
+      this.emitValueChange();
     }
   }
 
@@ -529,9 +533,9 @@ export class Segment implements ComponentInterface {
    * after the gesture is completed (if dragging between segments)
    * and when a segment button is clicked directly.
    */
-  private updateSegmentView(smoothScroll = true) {
+  private updateSegmentView(value: SegmentValue, smoothScroll = true) {
     const buttons = this.getButtons();
-    const button = buttons.find((btn) => btn.value === this.value);
+    const button = buttons.find((btn) => btn.value === value);
 
     // If the button does not have a contentId then there is
     // no associated segment view to update
@@ -707,11 +711,13 @@ export class Segment implements ComponentInterface {
       return;
     }
 
-    this.value = current.value;
-
     if (current !== previous) {
-      this.emitValueChange();
-      this.updateSegmentView();
+      if (this.segmentViewEl) {
+        this.updateSegmentView(current.value);
+      } else {
+        this.value = current.value;
+        this.emitValueChange();
+      }
     }
 
     if (this.scrollable || !this.swipeGesture) {
