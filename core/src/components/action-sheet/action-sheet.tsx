@@ -388,7 +388,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         <div tabindex="0"></div>
 
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
-          <div class="action-sheet-container">
             <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
               {header !== undefined && (
                 <div
@@ -410,7 +409,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   class={buttonClass(b)}
                   onClick={() => this.buttonClick(b)}
                   disabled={b.disabled}
-                  tabIndex={b.disabled ? -1 : 0}
                 >
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
@@ -444,7 +442,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 </button>
               </div>
             )}
-          </div>
         </div>
 
         <div tabindex="0"></div>
