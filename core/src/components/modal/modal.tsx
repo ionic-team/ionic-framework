@@ -681,6 +681,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: this.presentingElement,
       currentBreakpoint: initialBreakpoint,
       backdropBreakpoint,
+      theme: getIonTheme(this),
     }));
 
     ani.progressStart(true, 1);
