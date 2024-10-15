@@ -497,22 +497,10 @@ export class Segment implements ComponentInterface {
         };
         indicator.querySelector('div')!.style.backgroundColor = interpolateColor();
 
-        // Scroll the segment container if the indicator is out of view
-        const indicatorRect = indicator.getBoundingClientRect();
-        const indicatorX = indicatorRect.x;
-        if (scrollDistance < 0 && indicatorX < 0) {
-          this.el.scrollBy({
-            top: 0,
-            left: indicatorX,
-            behavior: 'instant',
-          });
-        } else if (scrollDistance > 0 && indicatorX + currentButtonWidth > this.el.offsetWidth) {
-          this.el.scrollBy({
-            top: 0,
-            left: indicatorX + indicatorRect.width - this.el.offsetWidth,
-            behavior: 'instant',
-          });
-        }
+        // Scroll the segment container so the indicator is always in view
+        indicator.scrollIntoView({
+          behavior: 'instant',
+        });
       }
     }
   }
