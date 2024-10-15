@@ -30,9 +30,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         config
       );
 
-      const accordion = page.locator('ion-accordion-group');
+      const accordionGroup = page.locator('ion-accordion-group');
 
-      await expect(accordion).toHaveScreenshot(screenshot('accordion-states-disabled'));
+      await expect(accordionGroup).toHaveScreenshot(screenshot('accordion-states-disabled'));
     });
 
     test('should render activated state', async ({ page }) => {
@@ -62,9 +62,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         config
       );
 
-      const accordion = page.locator('ion-accordion-group');
+      const accordionGroup = page.locator('ion-accordion-group');
 
-      await expect(accordion).toHaveScreenshot(screenshot('accordion-states-activated'));
+      await expect(accordionGroup).toHaveScreenshot(screenshot('accordion-states-activated'));
     });
 
     test('should render focused state', async ({ page }) => {
@@ -94,9 +94,105 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         config
       );
 
-      const accordion = page.locator('ion-accordion-group');
+      const accordionGroup = page.locator('ion-accordion-group');
 
-      await expect(accordion).toHaveScreenshot(screenshot('accordion-states-focused'));
+      await expect(accordionGroup).toHaveScreenshot(screenshot('accordion-states-focused'));
+    });
+
+    test('should render disabled state when group is inset', async ({ page }) => {
+      await page.setContent(
+        `
+      <ion-accordion-group value="first" expand="inset">
+        <ion-accordion value="first" disabled="true">
+          <ion-item slot="header">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+        <ion-accordion value="second">
+          <ion-item slot="header">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+        <ion-accordion value="third">
+          <ion-item slot="header">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `,
+        config
+      );
+
+      const accordionGroup = page.locator('ion-accordion-group');
+
+      await expect(accordionGroup).toHaveScreenshot(screenshot('accordion-states-inset-disabled'));
+    });
+
+    test('should render activated state when group is inset', async ({ page }) => {
+      await page.setContent(
+        `
+      <ion-accordion-group value="first" expand="inset">
+        <ion-accordion value="first">
+          <ion-item slot="header" class="ion-activated">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+        <ion-accordion value="second">
+          <ion-item slot="header">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+        <ion-accordion value="third">
+          <ion-item slot="header">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `,
+        config
+      );
+
+      const accordionGroup = page.locator('ion-accordion-group');
+
+      await expect(accordionGroup).toHaveScreenshot(screenshot('accordion-states-inset-activated'));
+    });
+
+    test('should render focused state when group is inset', async ({ page }) => {
+      await page.setContent(
+        `
+      <ion-accordion-group value="first" expand="inset">
+        <ion-accordion value="first">
+          <ion-item slot="header" class="ion-focused">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+        <ion-accordion value="second">
+          <ion-item slot="header">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+        <ion-accordion value="third">
+          <ion-item slot="header">
+            <ion-label>Accordion title</ion-label>
+          </ion-item>
+          <div slot="content">This is the body of the accordion.</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `,
+        config
+      );
+
+      const accordionGroup = page.locator('ion-accordion-group');
+
+      await expect(accordionGroup).toHaveScreenshot(screenshot('accordion-states-inset-focused'));
     });
   });
 });
