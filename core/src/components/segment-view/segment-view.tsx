@@ -42,11 +42,14 @@ export class SegmentView implements ComponentInterface {
 
   @Listen('scroll')
   handleScroll(ev: Event) {
-    const { initialScrollLeft, previousScrollLeft } = this;
+    const { previousScrollLeft } = this;
     const { scrollLeft, offsetWidth } = ev.target as HTMLElement;
 
     // Set initial scroll position if it's undefined
-    this.initialScrollLeft = initialScrollLeft ?? scrollLeft;
+    // Must be a multiple of the offset width
+    if (this.initialScrollLeft === undefined) {
+      this.initialScrollLeft = Math.round(scrollLeft / offsetWidth) * offsetWidth;
+    }
 
     // Determine the scroll direction based on the previous scroll position
     const scrollDirection = scrollLeft > previousScrollLeft ? 'right' : 'left';
