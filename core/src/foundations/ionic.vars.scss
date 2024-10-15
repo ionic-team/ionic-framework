@@ -720,10 +720,10 @@ $ion-z-index-500: var(--ion-z-index-500, 500px);
 $ion-z-index-bottom: var(--ion-z-index-bottom, -99999px);
 $ion-z-index-top: var(--ion-z-index-top, 99999px);
 $ion-transition-curve-linear: var(--ion-transition-curve-linear, linear);
-$ion-transition-curve-quick: var(--ion-transition-curve-quick, cubic-bezier(0,0,0.2,1));
-$ion-transition-curve-base: var(--ion-transition-curve-base, cubic-bezier(0.4,0,1,1));
-$ion-transition-curve-expressive: var(--ion-transition-curve-expressive, cubic-bezier(0.4,0,0.2,1));
-$ion-transition-curve-bounce: var(--ion-transition-curve-bounce, cubic-bezier(0.47,0,0.23,1.38));
+$ion-transition-curve-quick: var(--ion-transition-curve-quick, cubic-bezier(0, 0, 0.2, 1));
+$ion-transition-curve-base: var(--ion-transition-curve-base, cubic-bezier(0.4, 0, 1, 1));
+$ion-transition-curve-expressive: var(--ion-transition-curve-expressive, cubic-bezier(0.4, 0, 0.2, 1));
+$ion-transition-curve-bounce: var(--ion-transition-curve-bounce, cubic-bezier(0.47, 0, 0.23, 1.38));
 $ion-transition-time-0: var(--ion-transition-time-0, 0);
 $ion-transition-time-100: var(--ion-transition-time-100, 100);
 $ion-transition-time-150: var(--ion-transition-time-150, 150);
@@ -789,530 +789,482 @@ $ion-soft-lg: var(--ion-soft-lg, 8px);
 $ion-soft-xl: var(--ion-soft-xl, 8px);
 $ion-soft-2xl: var(--ion-soft-2xl, 16px);
 
-  $ion-display-sm-regular: (
-    font-size: $ionic-font-size-800,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-1100,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-display-sm-regular: (
+  font-size: $ionic-font-size-800,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-1100,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-display-sm-light: (
-    font-size: $ionic-font-size-800,
-    font-style: normal,
-    font-weight: $ionic-font-weight-light,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-1100,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-display-sm-light: (
+  font-size: $ionic-font-size-800,
+  font-style: normal,
+  font-weight: $ionic-font-weight-light,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-1100,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-display-lg-regular: (
-    font-size: $ionic-font-size-900,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-1200,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-display-lg-regular: (
+  font-size: $ionic-font-size-900,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-1200,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-display-lg-light: (
-    font-size: $ionic-font-size-900,
-    font-style: normal,
-    font-weight: $ionic-font-weight-light,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-1200,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-display-lg-light: (
+  font-size: $ionic-font-size-900,
+  font-style: normal,
+  font-weight: $ionic-font-weight-light,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-1200,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h1-regular: (
-    font-size: $ionic-font-size-700,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-900,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h1-regular: (
+  font-size: $ionic-font-size-700,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-900,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h1-medium: (
-    font-size: $ionic-font-size-700,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-900,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h1-medium: (
+  font-size: $ionic-font-size-700,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-900,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h1-semi-bold: (
-    font-size: $ionic-font-size-700,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-900,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h1-semi-bold: (
+  font-size: $ionic-font-size-700,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-900,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h1-bold: (
-    font-size: $ionic-font-size-700,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-900,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h1-bold: (
+  font-size: $ionic-font-size-700,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-900,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h2-regular: (
-    font-size: $ionic-font-size-650,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-900,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h2-regular: (
+  font-size: $ionic-font-size-650,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-900,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h2-medium: (
-    font-size: $ionic-font-size-650,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-900,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h2-medium: (
+  font-size: $ionic-font-size-650,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-900,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h2-semi-bold: (
-    font-size: $ionic-font-size-650,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-900,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h2-semi-bold: (
+  font-size: $ionic-font-size-650,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-900,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h2-bold: (
-    font-size: $ionic-font-size-650,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-900,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h2-bold: (
+  font-size: $ionic-font-size-650,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-900,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h3-regular: (
-    font-size: $ionic-font-size-600,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-800,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h3-regular: (
+  font-size: $ionic-font-size-600,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-800,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h3-medium: (
-    font-size: $ionic-font-size-600,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-800,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h3-medium: (
+  font-size: $ionic-font-size-600,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-800,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h3-semi-bold: (
-    font-size: $ionic-font-size-600,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-800,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h3-semi-bold: (
+  font-size: $ionic-font-size-600,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-800,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h3-bold: (
-    font-size: $ionic-font-size-600,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-800,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h3-bold: (
+  font-size: $ionic-font-size-600,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-800,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h4-regular: (
-    font-size: $ionic-font-size-550,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h4-regular: (
+  font-size: $ionic-font-size-550,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h4-medium: (
-    font-size: $ionic-font-size-550,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h4-medium: (
+  font-size: $ionic-font-size-550,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h4-semi-bold: (
-    font-size: $ionic-font-size-550,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h4-semi-bold: (
+  font-size: $ionic-font-size-550,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h4-bold: (
-    font-size: $ionic-font-size-550,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h4-bold: (
+  font-size: $ionic-font-size-550,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h5-regular: (
-    font-size: $ionic-font-size-500,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h5-regular: (
+  font-size: $ionic-font-size-500,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h5-medium: (
-    font-size: $ionic-font-size-500,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h5-medium: (
+  font-size: $ionic-font-size-500,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h5-semi-bold: (
-    font-size: $ionic-font-size-500,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h5-semi-bold: (
+  font-size: $ionic-font-size-500,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h5-bold: (
-    font-size: $ionic-font-size-500,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h5-bold: (
+  font-size: $ionic-font-size-500,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h6-regular: (
-    font-size: $ionic-font-size-450,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h6-regular: (
+  font-size: $ionic-font-size-450,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h6-medium: (
-    font-size: $ionic-font-size-450,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h6-medium: (
+  font-size: $ionic-font-size-450,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h6-semi-bold: (
-    font-size: $ionic-font-size-450,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h6-semi-bold: (
+  font-size: $ionic-font-size-450,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-heading-h6-bold: (
-    font-size: $ionic-font-size-450,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-700,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-heading-h6-bold: (
+  font-size: $ionic-font-size-450,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-700,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-action-xl: (
-    font-size: $ionic-font-size-500,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-1,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-action-xl: (
+  font-size: $ionic-font-size-500,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-1,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-action-lg: (
-    font-size: $ionic-font-size-400,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-1,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-action-lg: (
+  font-size: $ionic-font-size-400,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-1,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-action-md: (
-    font-size: $ionic-font-size-350,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-1,
-    line-height: $ionic-line-height-500,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-action-md: (
+  font-size: $ionic-font-size-350,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-1,
+  line-height: $ionic-line-height-500,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-action-sm: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-1,
-    line-height: $ionic-line-height-500,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-action-sm: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-1,
+  line-height: $ionic-line-height-500,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-lg-regular: (
-    font-size: $ionic-font-size-400,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-lg-regular: (
+  font-size: $ionic-font-size-400,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-lg-medium: (
-    font-size: $ionic-font-size-400,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-lg-medium: (
+  font-size: $ionic-font-size-400,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-lg-semi-bold: (
-    font-size: $ionic-font-size-400,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-lg-semi-bold: (
+  font-size: $ionic-font-size-400,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-lg-bold: (
-    font-size: $ionic-font-size-400,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-lg-bold: (
+  font-size: $ionic-font-size-400,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-md-regular: (
-    font-size: $ionic-font-size-350,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-md-regular: (
+  font-size: $ionic-font-size-350,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-md-medium: (
-    font-size: $ionic-font-size-350,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-md-medium: (
+  font-size: $ionic-font-size-350,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-md-semi-bold: (
-    font-size: $ionic-font-size-350,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-md-semi-bold: (
+  font-size: $ionic-font-size-350,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-md-bold: (
-    font-size: $ionic-font-size-350,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-600,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-md-bold: (
+  font-size: $ionic-font-size-350,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-600,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-sm-regular: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-500,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-sm-regular: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-500,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-sm-medium: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-500,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-sm-medium: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-500,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-sm-semi-bold: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-500,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-sm-semi-bold: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-500,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-body-sm-bold: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-0,
-    line-height: $ionic-line-height-500,
-    text-transform: none,
-    text-decoration: none,
-  );
-  
+$ion-body-sm-bold: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-0,
+  line-height: $ionic-line-height-500,
+  text-transform: none,
+  text-decoration: none,
+);
 
-  $ion-overline-regular: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-regular,
-    letter-spacing: $ionic-letter-spacing-2,
-    line-height: $ionic-line-height-500,
-    text-transform: uppercase,
-    text-decoration: none,
-  );
-  
+$ion-overline-regular: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-regular,
+  letter-spacing: $ionic-letter-spacing-2,
+  line-height: $ionic-line-height-500,
+  text-transform: uppercase,
+  text-decoration: none,
+);
 
-  $ion-overline-medium: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-medium,
-    letter-spacing: $ionic-letter-spacing-2,
-    line-height: $ionic-line-height-500,
-    text-transform: uppercase,
-    text-decoration: none,
-  );
-  
+$ion-overline-medium: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-medium,
+  letter-spacing: $ionic-letter-spacing-2,
+  line-height: $ionic-line-height-500,
+  text-transform: uppercase,
+  text-decoration: none,
+);
 
-  $ion-overline-semi-bold: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-semi-bold,
-    letter-spacing: $ionic-letter-spacing-2,
-    line-height: $ionic-line-height-500,
-    text-transform: uppercase,
-    text-decoration: none,
-  );
-  
+$ion-overline-semi-bold: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-semi-bold,
+  letter-spacing: $ionic-letter-spacing-2,
+  line-height: $ionic-line-height-500,
+  text-transform: uppercase,
+  text-decoration: none,
+);
 
-  $ion-overline-bold: (
-    font-size: $ionic-font-size-300,
-    font-style: normal,
-    font-weight: $ionic-font-weight-bold,
-    letter-spacing: $ionic-letter-spacing-2,
-    line-height: $ionic-line-height-500,
-    text-transform: uppercase,
-    text-decoration: none,
-  );
-  
+$ion-overline-bold: (
+  font-size: $ionic-font-size-300,
+  font-style: normal,
+  font-weight: $ionic-font-weight-bold,
+  letter-spacing: $ionic-letter-spacing-2,
+  line-height: $ionic-line-height-500,
+  text-transform: uppercase,
+  text-decoration: none,
+);
