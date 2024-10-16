@@ -20,9 +20,8 @@ Currently, six categories of tokens are stored:
 - Elevation
 - Z-index
 
-Using [Style Dictionary](https://amzn.github.io/style-dictionary/), these tokens generate 3 files inside `core/src/foundations`:
+Using [Style Dictionary](https://amzn.github.io/style-dictionary/), these tokens generate 2 files inside `core/src/foundations`:
 
-- `ionic.root.scss` - native CSS Custom Properties inside a `:root` element.
 - `ionic.vars.scss` - SCSS variables, based on the native ones, that are used internally on all CSS/SCSS code.
 - `ionic.utility.scss` - list of utility classes based on each Design Token.
 
@@ -53,24 +52,18 @@ Example:
 
 The `tokens.js` script, responsible for generating CSS and SCSS variables along with utility classes, will follow the same nomenclature: `prefix - CSS property name - type variation - modifier name`.
 
-Examples:
-
-CSS Custom Property:
-
-```css
---ionic-color-primary-100
-```
+Examples: 
 
 SCSS Variable:
 
 ```scss
-$ionic-color-primary-100
+$ion-color-primary-100
 ```
 
 Utility class:
 
 ```css
-.ionic-color-primary-100
+.ion-color-primary-100
 ```
 
 ## When to change the Design Tokens
