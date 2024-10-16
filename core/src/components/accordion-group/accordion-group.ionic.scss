@@ -5,6 +5,8 @@
 // --------------------------------------------------
 
 :host {
+  min-width: 272px;
+
   background-color: globals.$ionic-color-base-white;
 }
 
