@@ -1058,7 +1058,13 @@ interface ModalOverlayOptions {
    * to fade in when using a sheet modal.
    */
   backdropBreakpoint: number;
+  /**
+   * The initial backdrop opacity value
+   */
   initialBackdropOpacity?: string;
+  /**
+   * The current backdrop opacity value
+   */
   backdropOpacityValue?: string;
 }
 
