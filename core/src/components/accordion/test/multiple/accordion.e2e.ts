@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
+configs({ directions: ['ltr'], modes: ['ionic-md', 'md', 'ios'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('accordion: multiple'), () => {
     test('should update value and visually expand items', async ({ page }) => {
       await page.goto(`/src/components/accordion/test/multiple`, config);
