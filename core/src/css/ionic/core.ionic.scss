@@ -223,7 +223,7 @@ ion-toast-controller,
 
 html.plt-ios.plt-hybrid,
 html.plt-ios.plt-pwa {
-  --ion-statusbar-padding: globals.$ionic-space-m;
+  --ion-statusbar-padding: #{globals.$ionic-space-500};
 }
 
 @supports (padding-top: 20px) {
