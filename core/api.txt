@@ -1915,6 +1915,8 @@ ion-searchbar,css-prop,--clear-button-color,md
 ion-searchbar,css-prop,--color,ionic
 ion-searchbar,css-prop,--color,ios
 ion-searchbar,css-prop,--color,md
+ion-searchbar,css-prop,--focus-ring-color,ionic
+ion-searchbar,css-prop,--focus-ring-width,ionic
 ion-searchbar,css-prop,--icon-color,ionic
 ion-searchbar,css-prop,--icon-color,ios
 ion-searchbar,css-prop,--icon-color,md

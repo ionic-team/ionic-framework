@@ -2,6 +2,7 @@ import caretDownRegular from '@phosphor-icons/core/assets/regular/caret-down.svg
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '@utils/helpers';
+import { hostContext } from '@utils/theme';
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
@@ -33,7 +34,7 @@ const enum AccordionState {
   styleUrls: {
     ios: 'accordion.ios.scss',
     md: 'accordion.md.scss',
-    ionic: 'accordion.md.scss',
+    ionic: 'accordion.ionic.scss',
   },
   shadow: {
     delegatesFocus: true,
@@ -48,7 +49,7 @@ export class Accordion implements ComponentInterface {
 
   private currentRaf: number | undefined;
 
-  @Element() el?: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() state: AccordionState = AccordionState.Collapsed;
   @State() isNext = false;
@@ -378,10 +379,6 @@ export class Accordion implements ComponentInterface {
   };
 
   private getNextSibling = () => {
-    if (!this.el) {
-      return;
-    }
-
     const nextSibling = this.el.nextElementSibling;
 
     if (nextSibling?.tagName !== 'ION-ACCORDION') {
@@ -392,10 +389,6 @@ export class Accordion implements ComponentInterface {
   };
 
   private getPreviousSibling = () => {
-    if (!this.el) {
-      return;
-    }
-
     const previousSibling = this.el.previousElementSibling;
 
     if (previousSibling?.tagName !== 'ION-ACCORDION') {
@@ -449,6 +442,8 @@ export class Accordion implements ComponentInterface {
           'accordion-readonly': readonly,
 
           'accordion-animated': this.shouldAnimate(),
+
+          'in-accordion-group-expand-inset': hostContext('.accordion-group-expand-inset', this.el),
         }}
       >
         <div

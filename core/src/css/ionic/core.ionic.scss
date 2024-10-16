@@ -223,7 +223,7 @@ ion-toast-controller,
 
 html.plt-ios.plt-hybrid,
 html.plt-ios.plt-pwa {
-  --ion-statusbar-padding: globals.$ionic-space-m;
+  --ion-statusbar-padding: #{globals.$ionic-space-500};
 }
 
 @supports (padding-top: 20px) {
@@ -309,8 +309,12 @@ ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
   border-bottom-left-radius: globals.$ionic-border-radius-200;
   border-bottom-right-radius: globals.$ionic-border-radius-200;
 }
-ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
-  --border-width: 0;
+
+// The toggle icon is nested in the accordion item so we need to
+// style it from a global level.
+ion-accordion > [slot="header"] .ion-accordion-toggle-icon {
+  color: globals.$ionic-color-neutral-1000;
+  font-size: globals.$ionic-scale-600;
 }
 
 ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
@@ -334,14 +338,18 @@ ion-accordion.accordion-expanded > [slot="header"] .ion-accordion-toggle-icon {
   transform: rotate(180deg);
 }
 
-ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-previous ion-item[slot="header"] {
-  --border-width: 0;
-  --inner-border-width: 0;
-}
+// Items inside of an accordion should have reduced padding
+// due to the padding added to the accordion content.
+ion-accordion > [slot="content"] ion-item {
+  @include globals.typography(globals.$ionic-body-md-regular);
 
-ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-expanding:first-of-type,
-ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-expanded:first-of-type {
-  margin-top: 0;
+  color: globals.$ionic-color-neutral-1000;
+
+  --padding-start: 0;
+  --padding-top: #{globals.$ionic-space-300};
+  --padding-bottom: #{globals.$ionic-space-300};
+  --padding-end: 0;
+  --min-height: #{globals.$ionic-scale-700};
 }
 
 // Safari/iOS 15 changes the appearance of input[type="date"].
