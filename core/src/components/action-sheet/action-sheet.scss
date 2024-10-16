@@ -96,6 +96,7 @@
   outline: none;
 
   background: var(--button-background);
+
   color: var(--button-color);
 
   font-family: inherit;
@@ -214,9 +215,9 @@
 // --------------------------------------------------
 
 .action-sheet-button.ion-focused {
+  background-color: var(--button-background-focused);
   color: var(--button-color-focused);
 
-  background-color: var(--button-background-focused);
   opacity: var(--button-background-focused-opacity);
 
   &::after {
