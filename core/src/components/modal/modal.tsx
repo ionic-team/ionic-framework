@@ -44,7 +44,7 @@ import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
-import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
+import { setCardStatusBarDark, setCardStatusBarDefault, staticBackdropOpacity } from './utils';
 
 // TODO(FW-2832): types
 
@@ -82,6 +82,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
   private inheritedAttributes: Attributes = {};
   private statusBarStyle?: StatusBarStyle;
+
+  get theme(): Theme {
+    return getIonTheme(this);
+  }
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -574,7 +578,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
-      theme: getIonTheme(this),
+      initialBackdropOpacity: this.theme === 'ionic' ? staticBackdropOpacity : undefined,
+      backdropOpacityValue: this.theme === 'ionic' ? staticBackdropOpacity : undefined,
     });
 
     /* tslint:disable-next-line */
@@ -792,7 +797,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
         presentingEl: presentingElement,
         currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
-        theme: getIonTheme(this),
+        initialBackdropOpacity: this.theme === 'ionic' ? staticBackdropOpacity : undefined,
+        backdropOpacityValue: this.theme === 'ionic' ? staticBackdropOpacity : undefined,
       }
     );
 
@@ -1048,14 +1054,12 @@ interface ModalOverlayOptions {
    */
   currentBreakpoint?: number;
   /**
-   * The point after which the backdrop will being
+   * The point after which the backdrop will begin
    * to fade in when using a sheet modal.
    */
   backdropBreakpoint: number;
-  /**
-   * The theme used by the sheet modal
-   */
-  theme: Theme;
+  initialBackdropOpacity?: string;
+  backdropOpacityValue?: string;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;

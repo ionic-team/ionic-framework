@@ -1,7 +1,7 @@
 import { createAnimation } from '@utils/animation/animation';
 
 import type { ModalAnimationOptions } from '../modal-interface';
-import { getBackdropValueForSheet, staticBackdropOpacity } from '../utils';
+import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   const { currentBreakpoint, backdropBreakpoint } = opts;
@@ -13,14 +13,14 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
    */
   const shouldShowBackdrop = backdropBreakpoint === undefined || backdropBreakpoint < currentBreakpoint!;
 
-  const initialBackdrop =
-    opts.theme === 'ionic'
-      ? staticBackdropOpacity
-      : shouldShowBackdrop
-      ? `calc(var(--backdrop-opacity) * ${currentBreakpoint!})`
-      : '0';
+  let initialBackdropOpacity = '0';
+  if (opts.initialBackdropOpacity) {
+    initialBackdropOpacity = opts.initialBackdropOpacity;
+  } else if (shouldShowBackdrop) {
+    initialBackdropOpacity = `calc(var(--backdrop-opacity) * ${currentBreakpoint!})`;
+  }
 
-  const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdrop);
+  const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdropOpacity);
 
   if (shouldShowBackdrop) {
     backdropAnimation
@@ -46,18 +46,17 @@ export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
    * is defined, so we need to account for that offset by figuring out
    * what the current backdrop value should be.
    */
-  const backdropValue =
-    opts.theme === 'ionic'
-      ? staticBackdropOpacity
-      : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(currentBreakpoint!, backdropBreakpoint!)})`;
+  const backdropOpacityValue = opts.backdropOpacityValue
+    ? opts.backdropOpacityValue
+    : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(currentBreakpoint!, backdropBreakpoint!)})`;
 
   const defaultBackdrop = [
-    { offset: 0, opacity: backdropValue },
+    { offset: 0, opacity: backdropOpacityValue },
     { offset: 1, opacity: 0 },
   ];
 
   const customBackdrop = [
-    { offset: 0, opacity: backdropValue },
+    { offset: 0, opacity: backdropOpacityValue },
     { offset: backdropBreakpoint!, opacity: 0 },
     { offset: 1, opacity: 0 },
   ];

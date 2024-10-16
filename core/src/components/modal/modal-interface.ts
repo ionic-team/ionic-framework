@@ -1,6 +1,6 @@
 import type { OverlayOptions } from '@utils/overlays-interface';
 
-import type { ComponentProps, ComponentRef, FrameworkDelegate, Theme } from '../../interface';
+import type { ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
 
 export interface ModalOptions<T extends ComponentRef = ComponentRef> extends OverlayOptions {
   component: T;
@@ -27,7 +27,8 @@ export interface ModalAnimationOptions {
   presentingEl?: HTMLElement;
   currentBreakpoint?: number;
   backdropBreakpoint?: number;
-  theme: Theme;
+  initialBackdropOpacity?: string;
+  backdropOpacityValue?: string;
 }
 
 export interface ModalBreakpointChangeEventDetail {

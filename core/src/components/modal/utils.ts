@@ -1,7 +1,7 @@
 import { win } from '@utils/browser';
 import { StatusBar, Style } from '@utils/native/status-bar';
 
-export const staticBackdropOpacity = 0.7;
+export const staticBackdropOpacity = '0.7';
 
 /**
  * Use y = mx + b to

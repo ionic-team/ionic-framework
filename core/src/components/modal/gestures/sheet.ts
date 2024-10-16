@@ -72,13 +72,19 @@ export const createSheetGesture = (
     { offset: 1, opacity: staticBackdropOpacity },
   ];
 
+  let backdropKeyframes = defaultBackdrop;
+  if (theme === 'ionic') {
+    backdropKeyframes = ionicThemeBackdrop;
+  } else if (backdropBreakpoint !== 0) {
+    backdropKeyframes = customBackdrop;
+  }
+
   const SheetDefaults = {
     WRAPPER_KEYFRAMES: [
       { offset: 0, transform: 'translateY(0%)' },
       { offset: 1, transform: 'translateY(100%)' },
     ],
-    BACKDROP_KEYFRAMES:
-      theme === 'ionic' ? ionicThemeBackdrop : backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
+    BACKDROP_KEYFRAMES: backdropKeyframes,
   };
 
   const contentEl = baseEl.querySelector('ion-content');
