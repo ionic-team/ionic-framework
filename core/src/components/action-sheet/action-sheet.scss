@@ -50,8 +50,11 @@
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
-  display: block;
-  position: fixed;
+  display: flex;
+  position: absolute;
+
+  align-items: center;
+  justify-content: center;
 
   outline: none;
 
@@ -67,11 +70,9 @@
 }
 
 .action-sheet-wrapper {
-  @include position(null, 0, 0, 0);
-  @include transform(translate3d(0, 100%, 0));
+  display: flex;
 
-  display: block;
-  position: absolute;
+  flex-direction: column;
 
   width: var(--width);
   min-width: var(--min-width);
@@ -96,7 +97,6 @@
   outline: none;
 
   background: var(--button-background);
-
   color: var(--button-color);
 
   font-family: inherit;
@@ -178,9 +178,9 @@
 // Action Sheet: States
 // --------------------------------------------------
 
-// .action-sheet-button::after {
-//   @include button-state();
-// }
+.action-sheet-button::after {
+  @include button-state();
+}
 
 
 // Action Sheet: Selected
@@ -215,10 +215,7 @@
 // --------------------------------------------------
 
 .action-sheet-button.ion-focused {
-  background-color: var(--button-background-focused);
   color: var(--button-color-focused);
-
-  opacity: var(--button-background-focused-opacity);
 
   &::after {
     background: var(--button-background-focused);

@@ -361,7 +361,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
-    // const buttons = allButtons.filter((b) => b.role !== 'cancel');
+    const buttons = allButtons.filter((b) => b.role !== 'cancel');
     const headerID = `action-sheet-${overlayIndex}-header`;
 
     return (
@@ -389,12 +389,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
           <div class="action-sheet-container">
-            {header && (
-              <h2 id={headerID} class="action-sheet-title">
-                {header}
-              </h2>
-            )}
-            {/* <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
+            <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
               {header !== undefined && (
                 <div
                   id={headerID}
@@ -423,7 +418,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
                 </button>
               ))}
-            </div> */}
+            </div>
 
             {cancelButton && (
               <div class="action-sheet-group action-sheet-group-cancel">
