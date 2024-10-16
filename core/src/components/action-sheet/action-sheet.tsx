@@ -253,27 +253,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 
-  private focusFirstElement() {
-    if (!this.wrapperEl) return; // Check if wrapperEl is defined
-    const firstFocusable = this.wrapperEl?.querySelector(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (firstFocusable) {
-      (firstFocusable as HTMLElement).focus();
-    }
-  }
-
-  // Method to focus the last focusable element
-  private focusLastElement() {
-    if (!this.wrapperEl) return; // Check if wrapperEl is defined
-    const focusableElements = this.wrapperEl.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (focusableElements.length > 0) {
-      (focusableElements[focusableElements.length - 1] as HTMLElement).focus();
-    }
-  }
-
   private async buttonClick(button: ActionSheetButton) {
     const role = button.role;
     if (isCancel(role)) {
@@ -406,13 +385,13 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop tappable={this.backdropDismiss} />
 
-        <div tabindex="0" aria-hidden="true" onFocus={() => this.focusLastElement()}></div>
+        <div tabindex="0" aria-hidden="true"></div>
 
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
           <div class="action-sheet-container">
             <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
               {header !== undefined && (
-                <div
+                <h2
                   id={headerID}
                   class={{
                     'action-sheet-title': true,
@@ -420,9 +399,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   }}
                 >
                   {header}
-                  {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
-                </div>
+                </h2>
               )}
+              {this.subHeader && <h2 class="action-sheet-sub-title">{this.subHeader}</h2>}
               {buttons.map((b) => (
                 <button
                   {...b.htmlAttributes}
@@ -467,7 +446,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           </div>
         </div>
 
-        <div tabindex="0" aria-hidden="true" onFocus={() => this.focusFirstElement()}></div>
+        <div tabindex="0" aria-hidden="true"></div>
       </Host>
     );
   }
