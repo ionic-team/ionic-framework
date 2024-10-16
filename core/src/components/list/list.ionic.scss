@@ -21,7 +21,7 @@ ion-list {
 // --------------------------------------------------
 
 .list-ionic.list-inset {
-  @include globals.margin(globals.$ionic-space-100);
+  @include globals.margin(globals.$ion-space-100);
 }
 
 // Ionic No Lines List
@@ -137,23 +137,23 @@ ion-list {
 // --------------------------------------------------
 
 .list-ionic-lines-none .item-lines-default {
-  --inner-border-width: #{globals.$ionic-border-size-0};
-  --border-width: #{globals.$ionic-border-size-0};
+  --inner-border-width: #{globals.$ion-border-size-0};
+  --border-width: #{globals.$ion-border-size-0};
 }
 
 // Ionic Full Lines List
 // --------------------------------------------------
 
 .list-ionic-lines-full .item-lines-default {
-  --inner-border-width: #{globals.$ionic-border-size-0};
-  --border-width: #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025} #{globals.$ionic-border-size-0};
+  --inner-border-width: #{globals.$ion-border-size-0};
+  --border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
 }
 
 // Ionic Inset Lines List
 // --------------------------------------------------
 
 .list-ionic-lines-inset .item-lines-default {
-  --inner-border-width: #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-0} #{globals.$ionic-border-size-025}
-    #{globals.$ionic-border-size-0};
-  --border-width: #{globals.$ionic-border-size-0};
+  --inner-border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025}
+    #{globals.$ion-border-size-0};
+  --border-width: #{globals.$ion-border-size-0};
 }

@@ -5,16 +5,16 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ionic-color-neutral-1200};
-  --border-radius: #{globals.$ionic-border-radius-400};
-  --box-shadow: #{globals.$ionic-elevation-400};
-  --button-color: #{globals.$ionic-color-base-white};
-  --color: #{globals.$ionic-color-base-white};
+  --background: #{globals.$ion-primitives-neutral-1200};
+  --border-radius: #{globals.$ion-border-radius-400};
+  --box-shadow: #{globals.$ion-elevation-4};
+  --button-color: #{globals.$ion-primitives-base-white};
+  --color: #{globals.$ion-primitives-base-white};
   --max-width: 343px;
   --start: 8px;
   --end: 8px;
 
-  @include globals.typography(globals.$ionic-body-md-medium);
+  @include globals.typography(globals.$ion-body-md-medium);
 
   // TODO(ROU-10853): replace this value with a layer token.
   z-index: 1001;
@@ -33,41 +33,41 @@
 }
 
 .toast-container {
-  @include globals.padding(globals.$ionic-space-300, globals.$ionic-space-400);
+  @include globals.padding(globals.$ion-space-300, globals.$ion-space-400);
 }
 
 // Toast Header
 // --------------------------------------------------
 
 .toast-header {
-  @include globals.typography(globals.$ionic-heading-h6-medium);
+  @include globals.typography(globals.$ion-heading-h6-medium);
 }
 
 // Toast Button
 // --------------------------------------------------
 
 .toast-layout-baseline .toast-button-group-start {
-  @include globals.margin-horizontal(null, globals.$ionic-space-400);
+  @include globals.margin-horizontal(null, globals.$ion-space-400);
 }
 
 .toast-layout-stacked .toast-button-group-start {
-  @include globals.margin(null, null, globals.$ionic-space-400, null);
+  @include globals.margin(null, null, globals.$ion-space-400, null);
 }
 
 .toast-layout-baseline .toast-button-group-end {
-  @include globals.margin-horizontal(globals.$ionic-space-400, null);
+  @include globals.margin-horizontal(globals.$ion-space-400, null);
 }
 
 .toast-layout-stacked .toast-button-group-end {
-  @include globals.margin(globals.$ionic-space-400, null, null, null);
+  @include globals.margin(globals.$ion-space-400, null, null, null);
 }
 
 .toast-button-group {
-  gap: globals.$ionic-space-400;
+  gap: globals.$ion-space-400;
 }
 
 .toast-button {
-  @include globals.typography(globals.$ionic-body-md-link);
+  @include globals.typography(globals.$ion-text-link-default);
   @include globals.padding(0);
 
   // necessary for ripple to work properly
@@ -82,7 +82,7 @@
 // --------------------------------------------------
 
 .toast-icon {
-  @include globals.margin-horizontal(0, globals.$ionic-space-200);
+  @include globals.margin-horizontal(0, globals.$ion-space-200);
 }
 
 // Toast Icon
@@ -90,5 +90,5 @@
 
 .toast-icon,
 .toast-button-icon {
-  font-size: globals.$ionic-scale-600;
+  font-size: globals.$ion-scale-600;
 }

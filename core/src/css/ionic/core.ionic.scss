@@ -4,8 +4,8 @@
 // --------------------------------------------------
 
 :root {
-  --ionic-global-background-color: #{globals.$ionic-color-neutral-100};
-  --ionic-global-text-color: #{globals.$ionic-color-neutral-900};
+  --ionic-global-background-color: #{globals.$ion-primitives-neutral-100};
+  --ionic-global-text-color: #{globals.$ion-primitives-neutral-900};
 
   /**
    * Set the theme colors from the
@@ -50,7 +50,7 @@ html.ionic ion-modal ion-header {
 html.ionic ion-modal.modal-card ion-header ion-toolbar:first-of-type,
 html.ionic ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
 html.ionic ion-modal ion-footer ion-toolbar:first-of-type {
-  padding-top: globals.$ionic-space-400;
+  padding-top: globals.$ion-space-400;
 }
 
 /**
@@ -61,7 +61,7 @@ html.ionic ion-modal ion-footer ion-toolbar:first-of-type {
 html.ionic ion-modal.modal-card ion-header ion-toolbar:last-of-type,
 html.ionic ion-modal.modal-sheet ion-header ion-toolbar:last-of-type,
 html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
-  padding-bottom: globals.$ionic-space-400;
+  padding-bottom: globals.$ion-space-400;
 }
 
 /**
@@ -69,8 +69,8 @@ html.ionic ion-modal ion-footer ion-toolbar:last-of-type {
 * for the safe area insets.
 */
 html.ionic ion-modal ion-toolbar {
-  --padding-start: calc(var(--ion-safe-area-right) + #{globals.$ionic-space-400});
-  --padding-end: calc(var(--ion-safe-area-left) + #{globals.$ionic-space-400});
+  --padding-start: calc(var(--ion-safe-area-right) + #{globals.$ion-space-400});
+  --padding-end: calc(var(--ion-safe-area-left) + #{globals.$ion-space-400});
 }
 
 /**
@@ -95,9 +95,9 @@ html.ionic ion-modal ion-header ion-toolbar ion-title {
 * within a modal.
 */
 html.ionic ion-modal.modal-sheet ion-content {
-  --padding-start: #{globals.$ionic-space-400};
-  --padding-end: #{globals.$ionic-space-400};
-  --padding-bottom: #{globals.$ionic-space-400};
+  --padding-start: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-400};
+  --padding-bottom: #{globals.$ion-space-400};
 }
 
 /**
@@ -293,21 +293,21 @@ ion-card-header.ion-color .ion-inherit-color {
 }
 
 .menu-content-reveal {
-  box-shadow: #{globals.$ionic-elevation-100};
+  box-shadow: #{globals.$ion-elevation-1};
 }
 
 .menu-content-push {
-  box-shadow: #{globals.$ionic-elevation-100};
+  box-shadow: #{globals.$ion-elevation-1};
 }
 
 // Accordion Styles
 ion-accordion-group.accordion-group-expand-inset > ion-accordion:first-of-type {
-  border-top-left-radius: globals.$ionic-border-radius-200;
-  border-top-right-radius: globals.$ionic-border-radius-200;
+  border-top-left-radius: globals.$ion-border-radius-200;
+  border-top-right-radius: globals.$ion-border-radius-200;
 }
 ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
-  border-bottom-left-radius: globals.$ionic-border-radius-200;
-  border-bottom-right-radius: globals.$ionic-border-radius-200;
+  border-bottom-left-radius: globals.$ion-border-radius-200;
+  border-bottom-right-radius: globals.$ion-border-radius-200;
 }
 ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
   --border-width: 0;

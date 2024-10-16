@@ -5,22 +5,22 @@
 
 :host {
   // Border
-  --border-width: #{globals.$ionic-border-size-025};
-  --border-style: #{globals.$ionic-border-style-solid};
-  --border-color: #{globals.$ionic-color-neutral-800};
-  --checkmark-width: #{globals.$ionic-scale-400};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-style: #{globals.$ion-border-style-solid};
+  --border-color: #{globals.$ion-primitives-neutral-800};
+  --checkmark-width: #{globals.$ion-scale-400};
   --checkmark-height: var(--checkmark-width);
 
   // Focus
-  --focus-ring-color: #{globals.$ionic-state-focus-1};
-  --focus-ring-width: #{globals.$ionic-border-size-050};
-  --focus-ring-offset: #{globals.$ionic-space-050};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-size-050};
+  --focus-ring-offset: #{globals.$ion-space-050};
 
   // Size
-  --size: #{globals.$ionic-scale-600};
-  --checkbox-background-checked: #{globals.$ionic-color-primary-base};
-  --border-color-checked: #{globals.$ionic-color-primary-base};
-  --checkmark-color: #{globals.$ionic-color-base-white};
+  --size: #{globals.$ion-scale-600};
+  --checkbox-background-checked: #{globals.$ion-semantics-primary-base};
+  --border-color-checked: #{globals.$ion-semantics-primary-base};
+  --checkmark-color: #{globals.$ion-primitives-base-white};
   --transition: none;
 
   display: inline-block;
@@ -40,7 +40,7 @@
     position: absolute;
 
     height: 100%;
-    min-height: globals.$ionic-scale-1200;
+    min-height: globals.$ion-scale-1200;
 
     transform: translateY(-50%);
 
@@ -92,7 +92,7 @@
 }
 
 .label-text-wrapper {
-  color: globals.$ionic-color-neutral-1200;
+  color: globals.$ion-primitives-neutral-1200;
 
   text-overflow: ellipsis;
 
@@ -102,15 +102,15 @@
 }
 
 :host(.in-item) .label-text-wrapper {
-  @include globals.margin(globals.$ionic-space-250, null, globals.$ionic-space-250, null);
+  @include globals.margin(globals.$ion-space-250, null, globals.$ion-space-250, null);
 }
 
 :host(.in-item.checkbox-label-placement-stacked) .label-text-wrapper {
-  @include globals.margin(globals.$ionic-space-250, null, globals.$ionic-space-400, null);
+  @include globals.margin(globals.$ion-space-250, null, globals.$ion-space-400, null);
 }
 
 :host(.in-item.checkbox-label-placement-stacked) .native-wrapper {
-  @include globals.margin(null, null, globals.$ionic-space-250, null);
+  @include globals.margin(null, null, globals.$ion-space-250, null);
 }
 
 /**
@@ -223,7 +223,7 @@ input {
    * the checkbox should be on the end
    * when the label sits at the start.
    */
-  @include globals.margin(null, globals.$ionic-space-400, null, 0);
+  @include globals.margin(null, globals.$ion-space-400, null, 0);
 }
 
 // Label Placement - End
@@ -243,7 +243,7 @@ input {
  * when the label sits at the end.
  */
 :host(.checkbox-label-placement-end) .label-text-wrapper {
-  @include globals.margin(null, 0, null, globals.$ionic-space-400);
+  @include globals.margin(null, 0, null, globals.$ion-space-400);
 }
 
 // Label Placement - Fixed
@@ -255,7 +255,7 @@ input {
    * the checkbox should be on the end
    * when the label sits at the start.
    */
-  @include globals.margin(null, globals.$ionic-space-400, null, 0);
+  @include globals.margin(null, globals.$ion-space-400, null, 0);
 }
 
 /**
@@ -288,7 +288,7 @@ input {
    * the checkbox should be on the bottom
    * when the label sits at the top.
    */
-  @include globals.margin(null, 0, globals.$ionic-space-400, 0);
+  @include globals.margin(null, 0, globals.$ion-space-400, 0);
 
   /**
    * Label text should not extend
@@ -309,7 +309,7 @@ input {
 // Ionic Design Checkbox Sizes
 // --------------------------------------------------
 :host(.checkbox-size-small) {
-  --size: #{globals.$ionic-scale-400};
+  --size: #{globals.$ion-scale-400};
 }
 
 // Checked / Indeterminate Checkbox
@@ -330,10 +330,10 @@ input {
 // Ionic Design Checkbox Invalid
 // --------------------------------------------------
 :host(.ion-invalid) {
-  --focus-ring-color: #{globals.$ionic-state-focus-2};
+  --focus-ring-color: #{globals.$ion-border-danger};
 
   .native-wrapper {
-    border-color: globals.$ionic-color-danger-800;
+    border-color: globals.$ion-semantics-danger-800;
   }
 }
 
@@ -358,28 +358,28 @@ input {
 
 // disabled, unchecked checkbox
 :host(.checkbox-disabled) .native-wrapper {
-  border-color: globals.$ionic-color-neutral-800;
+  border-color: globals.$ion-primitives-neutral-800;
 
-  background-color: globals.$ionic-state-disabled;
+  background-color: globals.$ion-icon-disabled;
 }
 
 // disabled, checked checkbox
 :host(.checkbox-disabled.checkbox-checked) .native-wrapper {
-  border-width: globals.$ionic-border-size-0;
+  border-width: globals.$ion-border-size-0;
 
-  background-color: globals.$ionic-color-primary-base;
+  background-color: globals.$ion-semantics-primary-base;
 }
 
 // Checkbox Hover
 // --------------------------------------------------------
 @media (any-hover: hover) {
   :host(:hover) .native-wrapper {
-    background-color: globals.$ionic-color-neutral-100;
+    background-color: globals.$ion-primitives-neutral-100;
   }
 
   :host(:hover.checkbox-checked) .native-wrapper,
   :host(:hover.checkbox-indeterminate) .native-wrapper {
-    background-color: globals.$ionic-color-primary-800;
+    background-color: globals.$ion-semantics-primary-800;
   }
 }
 
@@ -387,35 +387,35 @@ input {
 // --------------------------------------------------
 // Only show the focus ring when the checkbox is focused and not disabled
 :host(.ion-focused:not(.checkbox-disabled)) .native-wrapper {
-  outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
 
 // Checkbox: Active
 // --------------------------------------------------------
 :host(.ion-activated) .native-wrapper {
-  background-color: globals.$ionic-color-neutral-200;
+  background-color: globals.$ion-primitives-neutral-200;
 }
 
 :host(.ion-activated.checkbox-checked) .native-wrapper,
 :host(.ion-activated.checkbox-indeterminate) .native-wrapper {
-  background-color: globals.$ionic-color-primary-900;
+  background-color: globals.$ion-semantics-primary-900;
 }
 
 // Ionic Design Checkbox Shapes
 // --------------------------------------------------
 :host(.checkbox-shape-soft) {
-  --border-radius: #{globals.$ionic-border-radius-100};
+  --border-radius: #{globals.$ion-border-radius-100};
 }
 
 :host(.checkbox-size-small.checkbox-shape-soft) {
-  --border-radius: #{globals.$ionic-border-radius-050};
+  --border-radius: #{globals.$ion-border-radius-025};
 }
 
 :host(.checkbox-shape-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 .checkbox-wrapper {
-  min-height: #{globals.$ionic-scale-1200};
+  min-height: #{globals.$ion-scale-1200};
 }

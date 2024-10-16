@@ -5,38 +5,38 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ionic-color-base-white};
-  --box-shadow: #{globals.$ionic-elevation-300};
+  --background: #{globals.$ion-primitives-base-white};
+  --box-shadow: #{globals.$ion-elevation-3};
   --backdrop-opacity: 1;
 
-  color: globals.$ionic-color-neutral-1200;
+  color: globals.$ion-primitives-neutral-1200;
 }
 
 // Shape
 // -------------------------------------
 :host(.modal-round) {
-  --border-radius: #{globals.$ionic-border-radius-1000};
+  --border-radius: #{globals.$ion-border-radius-1000};
 }
 
 :host(.modal-soft) {
-  --border-radius: #{globals.$ionic-border-radius-400};
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 :host(.modal-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Sheet Modal
 // --------------------------------------------------
 
 .modal-handle {
-  @include globals.position(globals.$ionic-space-300, 0px, null, 0px);
-  @include globals.border-radius(globals.$ionic-border-radius-100);
+  @include globals.position(globals.$ion-space-300, 0px, null, 0px);
+  @include globals.border-radius(globals.$ion-border-radius-100);
 
-  width: globals.$ionic-scale-1100;
-  height: globals.$ionic-scale-100;
+  width: globals.$ion-scale-1100;
+  height: globals.$ion-scale-100;
 
-  background-color: globals.$ionic-color-neutral-300;
+  background-color: globals.$ion-primitives-neutral-300;
 }
 
 :host(.modal-sheet) .modal-wrapper {

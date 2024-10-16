@@ -10,25 +10,25 @@
    */
   --background: none;
   --background-checked: var(--background);
-  --color: #{globals.$ionic-color-neutral-1000};
-  --color-checked: #{globals.$ionic-color-primary-base};
-  --color-disabled: #{globals.$ionic-color-neutral-500};
-  --border-width: #{globals.$ionic-border-size-025};
-  --border-color: #{globals.$ionic-color-neutral-300};
-  --border-style: #{globals.$ionic-border-style-solid};
+  --color: #{globals.$ion-primitives-neutral-1000};
+  --color-checked: #{globals.$ion-semantics-primary-base};
+  --color-disabled: #{globals.$ion-primitives-neutral-500};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-color: #{globals.$ion-primitives-neutral-300};
+  --border-style: #{globals.$ion-border-style-solid};
   --indicator-box-shadow: none;
   --indicator-color: var(--color-checked);
-  --indicator-height: #{globals.$ionic-border-size-025};
+  --indicator-height: #{globals.$ion-border-size-025};
   --indicator-transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --indicator-transform: none;
-  --padding-top: #{globals.$ionic-space-200};
-  --padding-end: #{globals.$ionic-space-200};
-  --padding-bottom: #{globals.$ionic-space-200};
-  --padding-start: #{globals.$ionic-space-200};
+  --padding-top: #{globals.$ion-space-200};
+  --padding-end: #{globals.$ion-space-200};
+  --padding-bottom: #{globals.$ion-space-200};
+  --padding-start: #{globals.$ion-space-200};
   --transition: color 0.15s linear 0s, opacity 0.15s linear 0s;
 
-  min-width: globals.$ionic-scale-1200;
-  min-height: globals.$ionic-scale-1200;
+  min-width: globals.$ion-scale-1200;
+  min-height: globals.$ion-scale-1200;
 }
 
 .button-native {
@@ -39,16 +39,16 @@
 }
 
 .button-inner {
-  @include globals.padding(globals.$ionic-space-100, null, globals.$ionic-space-100, null);
+  @include globals.padding(globals.$ion-space-100, null, globals.$ion-space-100, null);
 
-  gap: globals.$ionic-space-100;
+  gap: globals.$ion-space-100;
 }
 
 // Segment Button Label
 // --------------------------------------------------
 
 ::slotted(ion-label) {
-  @include globals.typography(globals.$ionic-action-md);
+  @include globals.typography(globals.$ion-body-action-md);
 
   color: var(--color);
 }
@@ -57,8 +57,8 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  width: globals.$ionic-scale-600;
-  height: globals.$ionic-scale-600;
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 
   color: var(--color);
 }
@@ -96,7 +96,7 @@
 // should have a fixed height of 72px
 :host(.segment-button-layout-icon-top),
 :host(.segment-button-layout-icon-bottom) {
-  height: globals.$ionic-scale-1800;
+  height: globals.$ion-scale-1800;
 }
 
 // Segments with icons at the start or end, or with only
@@ -105,10 +105,10 @@
 :host(.segment-button-has-icon-only),
 :host(.segment-button-layout-icon-start),
 :host(.segment-button-layout-icon-end) {
-  height: globals.$ionic-scale-1200;
+  height: globals.$ion-scale-1200;
 }
 
 :host(.segment-button-layout-icon-start) .button-inner,
 :host(.segment-button-layout-icon-end) .button-inner {
-  gap: globals.$ionic-space-200;
+  gap: globals.$ion-space-200;
 }

@@ -4,8 +4,8 @@
 // ----------------------------------------------------------------
 
 :host(.textarea-fill-outline) {
-  --border-width: #{globals.$ionic-border-size-025};
-  --border-color: #{globals.$ionic-color-neutral-500};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-color: #{globals.$ion-primitives-neutral-500};
 }
 
 // Textarea Fill: Outline, Textarea Wrapper
@@ -57,5 +57,5 @@
 // ----------------------------------------------------------------
 
 :host(.textarea-fill-outline) textarea {
-  margin-top: globals.$ionic-space-100;
+  margin-top: globals.$ion-space-100;
 }

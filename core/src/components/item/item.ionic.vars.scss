@@ -1,10 +1,10 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 
 /// @prop - Padding start for the item content
-$item-ionic-padding-start: globals.$ionic-space-400;
+$item-ionic-padding-start: globals.$ion-space-400;
 
 /// @prop - Padding end for the item content
-$item-ionic-padding-end: globals.$ionic-space-400;
+$item-ionic-padding-end: globals.$ion-space-400;
 
 /// @prop - Background color for the item content
-$item-ionic-background: globals.$ionic-color-base-white;
+$item-ionic-background: globals.$ion-primitives-base-white;

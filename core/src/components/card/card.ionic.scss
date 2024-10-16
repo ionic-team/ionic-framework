@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ionic-color-base-white};
-  --border-radius: #{globals.$ionic-border-radius-400};
-  --color: #{globals.$ionic-color-neutral-1200};
+  --background: #{globals.$ion-primitives-base-white};
+  --border-radius: #{globals.$ion-border-radius-400};
+  --color: #{globals.$ion-primitives-neutral-1200};
 }
 
 ::slotted(img) {
@@ -18,9 +18,9 @@
 // ---------------------------------------------
 
 :host(.card-soft) {
-  --border-radius: #{globals.$ionic-border-radius-200};
+  --border-radius: #{globals.$ion-border-radius-200};
 }
 
 :host(.card-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
