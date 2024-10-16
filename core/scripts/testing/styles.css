@@ -49,8 +49,19 @@ html.ios.ios {
   font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
 }
 
-ion-content button,
-main button {
+/**
+ * Button styles should only be applied
+ * to native buttons that are not part of the
+ * Ionic framework.
+ * Otherwise, the styles may not appear correctly
+ * when comparing between testing and production.
+ * This issue occurs only with `scoped` components,
+ * which is why `sc-ion-` is used as a filter,
+ * since this class is specifically added to `scoped`
+ * components.
+ */
+ion-content button:not([class*="sc-ion-"]),
+main button:not([class*="sc-ion-"]) {
   display: inline-block;
   width: auto;
   clear: both;
@@ -63,8 +74,19 @@ main button {
   margin: 8px 0;
 }
 
-ion-content button.expand,
-main button.expand {
+/**
+ * Button styles should only be applied
+ * to native buttons that are not part of the
+ * Ionic framework.
+ * Otherwise, the styles may not appear correctly
+ * when comparing between testing and production.
+ * This issue occurs only with `scoped` components,
+ * which is why `sc-ion-` is used as a filter,
+ * since this class is specifically added to `scoped`
+ * components.
+ */
+ion-content button.expand:not([class*="sc-ion-"]),
+main button.expand:not([class*="sc-ion-"]) {
   display: block;
   width: 100%;
 }
