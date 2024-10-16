@@ -4,6 +4,7 @@ import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@util
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 
+import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
 
 import { handleFooterFade } from './footer.utils';
@@ -86,7 +87,8 @@ export class Footer implements ComponentInterface {
     this.destroyCollapsibleFooter();
 
     if (hasFade) {
-      const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+      const appRootSelector = config.get('appRootSelector', 'ion-app');
+      const pageEl = this.el.closest(`${appRootSelector},ion-page,.ion-page,page-inner`);
       const contentEl = pageEl ? findIonContent(pageEl) : null;
 
       if (!contentEl) {
