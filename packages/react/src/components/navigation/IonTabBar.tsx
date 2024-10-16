@@ -8,6 +8,8 @@ import { IonTabBarInner } from '../inner-proxies';
 import { createForwardRef } from '../utils';
 
 import { IonTabButton } from './IonTabButton';
+import { IonTabsContext } from './IonTabsContext';
+import type { IonTabsContextState } from './IonTabsContext';
 
 type IonTabBarProps = LocalJSX.IonTabBar &
   IonicReactProps & {
@@ -21,7 +23,7 @@ interface InternalProps extends IonTabBarProps {
   forwardedRef?: React.ForwardedRef<HTMLIonIconElement>;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   routeInfo: RouteInfo;
-  routerOutletRef?: React.RefObject<HTMLIonRouterOutletElement> | undefined;
+  tabsContext?: IonTabsContextState;
 }
 
 interface TabUrls {
@@ -183,12 +185,14 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
   ) {
     const tappedTab = this.state.tabs[e.detail.tab];
     const originalHref = tappedTab.originalHref;
+    const hasRouterOutlet = this.props.tabsContext?.hasRouterOutlet;
+
     /**
      * If the router outlet is not defined, then the tabs is being used
      * as a basic tab navigation without the router. In this case, we
      * don't want to update the href else the URL will change.
      */
-    const currentHref = this.props.routerOutletRef?.current ? e.detail.href : '';
+    const currentHref = hasRouterOutlet ? e.detail.href : '';
     const { activeTab: prevActiveTab } = this.state;
 
     if (onClickFn) {
@@ -212,7 +216,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       if (this.props.onIonTabsDidChange) {
         this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
       }
-      if (this.props.routerOutletRef?.current) {
+      if (hasRouterOutlet) {
         this.setActiveTabOnContext(e.detail.tab);
         this.context.changeTab(e.detail.tab, currentHref, e.detail.routeOptions);
       }
@@ -262,12 +266,29 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
 
 const IonTabBarContainer: React.FC<InternalProps> = React.memo<InternalProps>(({ forwardedRef, ...props }) => {
   const context = useContext(NavContext);
+  const tabsContext = useContext(IonTabsContext);
+  const tabBarRef = forwardedRef || tabsContext.tabBarProps.ref;
+  const updatedTabBarProps = {
+    ...tabsContext.tabBarProps,
+    ref: tabBarRef,
+  };
+
   return (
     <IonTabBarUnwrapped
-      ref={forwardedRef}
+      ref={tabBarRef}
       {...(props as any)}
       routeInfo={props.routeInfo || context.routeInfo || { pathname: window.location.pathname }}
       onSetCurrentTab={context.setCurrentTab}
+      /**
+       * Tab bar can be used as a standalone component,
+       * so it cannot be modified directly through
+       * IonTabs. Instead, props will be passed through
+       * the context.
+       */
+      tabsContext={{
+        ...tabsContext,
+        tabBarProps: updatedTabBarProps,
+      }}
     >
       {props.children}
     </IonTabBarUnwrapped>
