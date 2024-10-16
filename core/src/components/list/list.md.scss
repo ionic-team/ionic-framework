@@ -51,11 +51,6 @@
   --inner-border-width: 0;
 }
 
-.list-md.list-inset + ion-list.list-inset {
-  @include margin(0, null, null, null);
-}
-
-
 // Material Design No Lines List
 // --------------------------------------------------
 
