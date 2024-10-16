@@ -108,11 +108,11 @@ function generateTypographyOutput(prop, propName, isVariable) {
   // This exact format is needed so that it compiles the tokens with the expected lint rules
   return `
   ${_prefix}${variablesPrefix}-${propName}${_initialWrapper}
-    font-size: $ionic-font-size-${extractLastPart(typography.fontSize)}${_endChar}
+    font-size: $${variablesPrefix}-font-size-${extractLastPart(typography.fontSize)}${_endChar}
     font-style: ${prop.attributes.item?.toLowerCase() === 'italic' ? 'italic' : 'normal'}${_endChar}
-    font-weight: $ionic-font-weight-${extractLastPart(typography.fontWeight)}${_endChar}
-    letter-spacing: $ionic-letter-spacing-${extractLastPart(typography.letterSpacing) || 0}${_endChar}
-    line-height: $ionic-line-height-${extractLastPart(typography.lineHeight)}${_endChar}
+    font-weight: $${variablesPrefix}-font-weight-${extractLastPart(typography.fontWeight)}${_endChar}
+    letter-spacing: $${variablesPrefix}-letter-spacing-${extractLastPart(typography.letterSpacing) || 0}${_endChar}
+    line-height: $${variablesPrefix}-line-height-${extractLastPart(typography.lineHeight)}${_endChar}
     text-transform: ${typography.textCase}${_endChar}
     text-decoration: ${typography.textDecoration}${_endChar}
   ${_endWrapper};
@@ -121,8 +121,8 @@ function generateTypographyOutput(prop, propName, isVariable) {
 
 // Generates a color based css utility-class from a color Design Token structure
 function generateColorUtilityClasses(prop, className) {
-  return `.${variablesPrefix}-${className} {\n  color: $ionic-${prop.name};\n}
-  .${variablesPrefix}-background-${className} {\n  background-color: $ionic-${prop.name};\n}`;
+  return `.${variablesPrefix}-${className} {\n  color: $${variablesPrefix}-${prop.name};\n}
+  .${variablesPrefix}-background-${className} {\n  background-color: $${variablesPrefix}-${prop.name};\n}`;
 }
 
 // Generates a margin or padding based css utility-class from a space Design Token structure
@@ -131,36 +131,36 @@ function generateSpaceUtilityClasses(prop, className) {
   // It will generate classes for margin and padding, for equal sizing on all side and each direction
   const marginPaddingTemplate = (type) => `
 .${variablesPrefix}-${type}-${className} {
-  --${type}-top: #{$ionic-${prop.name}};
-  --${type}-end: #{$ionic-${prop.name}};
-  --${type}-bottom: #{$ionic-${prop.name}};
-  --${type}-start: #{$ionic-${prop.name}};
+  --${type}-top: #{$${variablesPrefix}-${prop.name}};
+  --${type}-end: #{$${variablesPrefix}-${prop.name}};
+  --${type}-bottom: #{$${variablesPrefix}-${prop.name}};
+  --${type}-start: #{$${variablesPrefix}-${prop.name}};
 
-  @include ${type}($ionic-${prop.name});
+  @include ${type}($${variablesPrefix}-${prop.name});
 };
 
 .${variablesPrefix}-${type}-top-${className} {
-  --${type}-top: #{$ionic-${prop.name}};
+  --${type}-top: #{$${variablesPrefix}-${prop.name}};
 
-  @include ${type}($ionic-${prop.name}, null, null, null);
+  @include ${type}($${variablesPrefix}-${prop.name}, null, null, null);
 };
 
 .${variablesPrefix}-${type}-end-${className} {
-  --${type}-end: #{$ionic-${prop.name}};
+  --${type}-end: #{$${variablesPrefix}-${prop.name}};
 
-  @include ${type}(null, $ionic-${prop.name}, null, null);
+  @include ${type}(null, $${variablesPrefix}-${prop.name}, null, null);
 };
 
 .${variablesPrefix}-${type}-bottom-${className} {
-  --${type}-bottom: #{$ionic-${prop.name}};
+  --${type}-bottom: #{$${variablesPrefix}-${prop.name}};
 
-  @include ${type}(null, null, $ionic-${prop.name}, null);
+  @include ${type}(null, null, $${variablesPrefix}-${prop.name}, null);
 };
 
 .${variablesPrefix}-${type}-start-${className} {
-  --${type}-start: #{$ionic-${prop.name}};
+  --${type}-start: #{$${variablesPrefix}-${prop.name}};
 
-  @include ${type}(null, null, null, $ionic-${prop.name});
+  @include ${type}(null, null, null, $${variablesPrefix}-${prop.name});
 };
 `;
 
@@ -169,27 +169,27 @@ function generateSpaceUtilityClasses(prop, className) {
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 function generateRadiusUtilityClasses(propName) {
-  return `.${variablesPrefix}-${propName} {\n  border-radius: $ionic-${propName};\n}`;
+  return `.${variablesPrefix}-${propName} {\n  border-radius: $${variablesPrefix}-${propName};\n}`;
 }
 
 // Generates a font based css utility-class from a font Design Token structure
 function generateBorderSizeUtilityClasses(propName) {
-  return `.${variablesPrefix}-${propName} {\n  border-width: $ionic-${propName};\n}`;
+  return `.${variablesPrefix}-${propName} {\n  border-width: $${variablesPrefix}-${propName};\n}`;
 }
 
 // Generates a font based css utility-class from a font Design Token structure
 function generateFontUtilityClasses(prop, propName) {
-  return `.${variablesPrefix}-${propName} {\n  ${prop.attributes.type}: $ionic-${propName};\n}`;
+  return `.${variablesPrefix}-${propName} {\n  ${prop.attributes.type}: $${variablesPrefix}-${propName};\n}`;
 }
 
 // Generates a valid box-shadow value from a shadow Design Token structure
 function generateShadowUtilityClasses(propName) {
-  return `.${variablesPrefix}-${propName} {\n  box-shadow: $ionic-${propName};\n}`;
+  return `.${variablesPrefix}-${propName} {\n  box-shadow: $${variablesPrefix}-${propName};\n}`;
 }
 
 // Generates a utility class for a given token category and name
 function generateUtilityClasses(tokenCategory, propName){
-  return `.${variablesPrefix}-${propName} {\n  ${tokenCategory}: $ionic-${propName};\n}`;
+  return `.${variablesPrefix}-${propName} {\n  ${tokenCategory}: $${variablesPrefix}-${propName};\n}`;
 }
 
 module.exports = {
