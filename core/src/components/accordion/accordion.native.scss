@@ -1,0 +1,27 @@
+@import "./accordion.common";
+@import "./accordion.vars.scss";
+
+// Accordion: Native
+// --------------------------------------------------
+
+:host {
+  background-color: $accordion-background-color;
+}
+
+:host(.accordion-animated) {
+  transition: all $accordion-transition-duration $accordion-transition-easing;
+}
+
+:host(.accordion-animated) #content {
+  transition: max-height $accordion-transition-duration $accordion-transition-easing;
+}
+
+/**
+ * We do not set the opacity on the
+ * host otherwise you would see the
+ * box-shadow behind it.
+ */
+:host(.accordion-disabled) #header,
+:host(.accordion-disabled) #content {
+  opacity: $accordion-disabled-opacity;
+}
