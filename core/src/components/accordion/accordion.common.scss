@@ -1,6 +1,7 @@
-@import "./accordion.vars.scss";
+// @import "../../themes/functions.string";
+// @import "../../themes/mixins";
 
-// Accordion
+// Accordion: Common
 // --------------------------------------------------
 
 :host {
@@ -9,8 +10,6 @@
   position: relative;
 
   width: 100%;
-
-  background-color: $accordion-background-color;
 
   overflow: hidden;
 
@@ -28,14 +27,6 @@
 :host(.accordion-expanding) ::slotted(ion-item[slot="header"]),
 :host(.accordion-expanded) ::slotted(ion-item[slot="header"]) {
   --border-width: 0px;
-}
-
-:host(.accordion-animated) {
-  transition: all $accordion-transition-duration $accordion-transition-easing;
-}
-
-:host(.accordion-animated) #content {
-  transition: max-height $accordion-transition-duration $accordion-transition-easing;
 }
 
 #content {
@@ -70,16 +61,6 @@
 :host(.accordion-disabled) #content,
 :host(.accordion-readonly) #content {
   pointer-events: none;
-}
-
-/**
- * We do not set the opacity on the
- * host otherwise you would see the
- * box-shadow behind it.
- */
-:host(.accordion-disabled) #header,
-:host(.accordion-disabled) #content {
-  opacity: $accordion-disabled-opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {

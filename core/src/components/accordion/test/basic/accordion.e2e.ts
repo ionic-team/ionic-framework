@@ -12,6 +12,7 @@ configs().forEach(({ config, screenshot, title }) => {
     });
   });
 });
+
 configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('accordion: ionChange'), () => {
     test.beforeEach(async ({ page }) => {
@@ -55,6 +56,42 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
 
       await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => (el.value = 'second'));
       await expect(ionChange).not.toHaveReceivedEvent();
+    });
+  });
+});
+
+configs({ modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('accordion: basic'), () => {
+    test('should not have visual regressions with text content', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-accordion-group value="first">
+          <ion-accordion value="first">
+            <ion-item slot="header">
+              <ion-label>Accordion title</ion-label>
+            </ion-item>
+            <div slot="content">This is the body of the accordion.</div>
+          </ion-accordion>
+          <ion-accordion value="second">
+            <ion-item slot="header">
+              <ion-label>Accordion title</ion-label>
+            </ion-item>
+            <div slot="content">This is the body of the accordion.</div>
+          </ion-accordion>
+          <ion-accordion value="third">
+            <ion-item slot="header">
+              <ion-label>Accordion title</ion-label>
+            </ion-item>
+            <div slot="content">This is the body of the accordion.</div>
+          </ion-accordion>
+        </ion-accordion-group>
+      `,
+        config
+      );
+
+      const accordion = page.locator('ion-accordion-group');
+
+      await expect(accordion).toHaveScreenshot(screenshot('accordion-basic-text'));
     });
   });
 });

@@ -6,6 +6,7 @@ import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
+import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
 import type { Color, Mode } from '../../interface';
 
@@ -518,7 +519,8 @@ const getPageElement = (el: HTMLElement) => {
    * between the popover and the edges of the screen. But if the popover contains
    * its own page element, we should use that instead.
    */
-  const page = el.closest('ion-app, ion-page, .ion-page, page-inner, .popover-content');
+  const appRootSelector = config.get('appRootSelector', 'ion-app');
+  const page = el.closest(`${appRootSelector}, ion-page, .ion-page, page-inner, .popover-content`);
   if (page) {
     return page;
   }
