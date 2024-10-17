@@ -29,16 +29,21 @@
   @include margin(var(--ion-safe-area-top, 0), auto, 0, auto);
 }
 
-.action-sheet-title {
+// Material Design Action Sheet Header
+// --------------------------------------------------
+
+.action-sheet-head {
   @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
 
   min-height: $action-sheet-md-title-height;
 
   color: var(--color, $action-sheet-md-title-color);
 
-  font-size: $action-sheet-md-title-font-size;
-
   text-align: $action-sheet-md-text-align;
+}
+
+.action-sheet-title {
+  font-size: $action-sheet-md-title-font-size;
 }
 
 .action-sheet-sub-title {

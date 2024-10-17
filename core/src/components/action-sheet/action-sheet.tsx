@@ -390,17 +390,22 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
           <div class="action-sheet-container">
             <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
-              {header && (
-                <h2
-                  id={headerID}
-                  class={{
-                    'action-sheet-title': true,
-                  }}
-                >
-                  {header}
-                </h2>
+              {(header || this.subHeader) && (
+                <div class="action-sheet-head">
+                  {header && (
+                    <h2
+                      id={headerID}
+                      class={{
+                        'action-sheet-title': true,
+                        'action-sheet-has-sub-title': this.subHeader !== undefined,
+                      }}
+                    >
+                      {header}
+                    </h2>
+                  )}
+                  {this.subHeader && <h2 class="action-sheet-sub-title">{this.subHeader}</h2>}
+                </div>
               )}
-              {this.subHeader && <h2 class="action-sheet-sub-title">{this.subHeader}</h2>}
               {buttons.map((b) => (
                 <button
                   {...b.htmlAttributes}

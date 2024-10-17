@@ -88,6 +88,21 @@
   z-index: $z-index-overlay-wrapper;
 }
 
+.action-sheet-title,
+.action-sheet-sub-title {
+  font-weight: normal;
+}
+
+.action-sheet-title {
+  @include margin(0);
+  @include padding(0);
+}
+
+.action-sheet-sub-title {
+  @include margin(0, 0, 0);
+  @include padding(0);
+}
+
 .action-sheet-button {
   display: block;
 
