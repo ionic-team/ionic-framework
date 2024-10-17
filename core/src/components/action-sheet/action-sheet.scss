@@ -60,7 +60,6 @@
 
   font-family: $font-family-base;
 
-  contain: strict;
   touch-action: none;
   user-select: none;
   z-index: $z-index-overlay;
@@ -83,8 +82,6 @@
   min-height: var(--min-height);
   max-height: var(--max-height);
 
-  contain: content;
-  // opacity: 0;
   z-index: $z-index-overlay-wrapper;
 }
 
