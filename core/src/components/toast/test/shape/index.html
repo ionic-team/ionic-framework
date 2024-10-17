@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast - Shape</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <script type="module">
+    import { toastController } from '../../../../dist/ionic/index.esm.js';
+    window.toastController = toastController;
+  </script>
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Toast - Shape</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content">
+        (Only available for ionic theme)
+        <button class="expand" id="default-toast" onclick="openToast({ message: 'Hello, world!', duration: 2000 })">
+          Default Toast
+        </button>
+
+        <button
+          class="expand"
+          id="soft-shape-toast"
+          onclick="openToast({ message: 'Hello, world!', duration: 2000, shape: 'soft' })"
+        >
+          Soft Toast
+        </button>
+
+        <button
+          class="expand"
+          id="round-shape-toast"
+          onclick="openToast({ message: 'Hello, world!', duration: 2000, shape: 'round' })"
+        >
+          Round Toast
+        </button>
+
+        <button
+          class="expand"
+          id="rect-shape-toast"
+          onclick="openToast({ message: 'Hello, world!', duration: 2000, shape: 'rectangular' })"
+        >
+          Rectangular Toast
+        </button>
+      </ion-content>
+    </ion-app>
+    <script>
+      async function openToast(opts) {
+        const toast = await toastController.create(opts);
+        await toast.present();
+      }
+    </script>
+  </body>
+</html>

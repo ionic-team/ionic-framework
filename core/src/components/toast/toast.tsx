@@ -22,7 +22,7 @@ import { createColorClasses, getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode, getIonTheme } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
+import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate, Theme } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
@@ -71,6 +71,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
   private gesture?: Gesture;
+  private get theme(): Theme {
+    return getIonTheme(this);
+  }
 
   /**
    * Holds the position of the toast calculated in the present
@@ -171,6 +174,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * With `position="middle"`, the value of `positionAnchor` is ignored.
    */
   @Prop() positionAnchor?: HTMLElement | string;
+
+  /**
+   * Set to `"soft"` for a toast with slightly rounded corners,
+   * `"round"` for a toast with fully rounded corners, or `"rectangular"`
+   * for a toast without rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * An array of buttons for the toast.
@@ -484,6 +496,21 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return buttons;
   }
 
+  private getShape(): string | undefined {
+    const { theme, shape } = this;
+
+    // TODO(ROU-11300): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (theme === 'ionic' && shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   /**
    * Returns the element specified by the positionAnchor prop,
    * or undefined if prop's value is an ID string and the element
@@ -609,11 +636,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   };
 
   renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
+    const { theme } = this;
+
     if (buttons.length === 0) {
       return;
     }
 
-    const theme = getIonTheme(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
       [`toast-button-group-${side}`]: true,
@@ -691,11 +719,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { layout, el, revealContentToScreenReader, header, message } = this;
+    const { layout, el, revealContentToScreenReader, theme, header, message } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
-    const theme = getIonTheme(this);
+    const shape = this.getShape();
     const wrapperClass = {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true,
@@ -725,6 +753,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           ...getClassMap(this.cssClass),
           'overlay-hidden': true,
           'toast-translucent': this.translucent,
+          [`toast-shape-${shape}`]: shape !== undefined,
         })}
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
