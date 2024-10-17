@@ -25,7 +25,7 @@
   const StyleDictionary = (await import('style-dictionary')).default;
   
   // Set the prefix for variables and classes
-  setPrefixValue('ion')
+  setPrefixValue('ion');
 
   // Register a custom file header
   StyleDictionary.registerFileHeader({
