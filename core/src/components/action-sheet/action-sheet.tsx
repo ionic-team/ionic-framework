@@ -201,9 +201,17 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   async present(): Promise<void> {
     const unlock = await this.lockController.lock();
 
+    // hide from screen readers before animating
+    // this is to avoid reading the action sheet content
+    // before it's fully visible
+    this.el.setAttribute('aria-hidden', 'true');
+
     await this.delegateController.attachViewToDom();
 
     await present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
+
+    // show to screen readers after animation
+    this.el.removeAttribute('aria-hidden');
 
     unlock();
   }

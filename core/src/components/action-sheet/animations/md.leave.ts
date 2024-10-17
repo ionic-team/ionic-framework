@@ -14,10 +14,7 @@ export const mdLeaveAnimation = (baseEl: HTMLElement): Animation => {
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.action-sheet-wrapper')!)
-    .keyframes([
-    { offset: 0, transform: 'translateY(0%)' },
-    { offset: 1, transform: 'translateY(100%)' }
-  ]);
+    .fromTo('transform', 'translateY(0%)', 'translateY(100%)');
 
   return baseAnimation
     .addElement(baseEl)
