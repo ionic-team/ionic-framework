@@ -71,6 +71,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
   private gesture?: Gesture;
+  private get theme(): Theme {
+    return getIonTheme(this);
+  }
 
   /**
    * Holds the position of the toast calculated in the present
@@ -493,8 +496,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return buttons;
   }
 
-  private getShape(theme: Theme): string | undefined {
-    const { shape } = this;
+  private getShape(): string | undefined {
+    const { theme, shape } = this;
+
+    // TODO(ROU-11300): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
 
     if (theme === 'ionic' && shape === undefined) {
       return 'round';
@@ -628,11 +636,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   };
 
   renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
+    const { theme } = this;
+
     if (buttons.length === 0) {
       return;
     }
 
-    const theme = getIonTheme(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
       [`toast-button-group-${side}`]: true,
@@ -710,12 +719,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { layout, el, revealContentToScreenReader, header, message } = this;
+    const { layout, el, revealContentToScreenReader, theme, header, message } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
-    const theme = getIonTheme(this);
-    const shape = this.getShape(theme);
+    const shape = this.getShape();
     const wrapperClass = {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true,

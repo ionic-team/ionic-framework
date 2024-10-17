@@ -55,19 +55,24 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ config, screens
       await toastFixture.goto(config);
     });
 
+    test('should render the default toast', async () => {
+      await toastFixture.openToast('#default-toast');
+      await toastFixture.screenshot('shape-round', screenshot);
+    });
+
     test('should render a soft toast', async () => {
       await toastFixture.openToast('#soft-shape-toast');
-      await toastFixture.screenshot('soft', screenshot);
+      await toastFixture.screenshot('shape-soft', screenshot);
     });
 
     test('should render a round toast', async () => {
       await toastFixture.openToast('#round-shape-toast');
-      await toastFixture.screenshot('round', screenshot);
+      await toastFixture.screenshot('shape-round', screenshot);
     });
 
     test('should render a rectangular toast', async () => {
       await toastFixture.openToast('#rect-shape-toast');
-      await toastFixture.screenshot('rect', screenshot);
+      await toastFixture.screenshot('shape-rectangular', screenshot);
     });
   });
 });

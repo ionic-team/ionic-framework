@@ -29,6 +29,14 @@
         (Only available for ionic theme)
         <button
           class="expand"
+          id="default-toast"
+          onclick="openToast({ message: 'Hello, world!', duration: 2000 })"
+        >
+          Default Toast
+        </button>
+
+        <button
+          class="expand"
           id="soft-shape-toast"
           onclick="openToast({ message: 'Hello, world!', duration: 2000, shape: 'soft' })"
         >
