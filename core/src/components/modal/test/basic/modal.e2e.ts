@@ -60,7 +60,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 });
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('modal: rendering'), () => {
     const runVisualTests = async (page: E2EPage, screenshotModifier = '') => {
       await page.goto('/src/components/modal/test/basic', config);

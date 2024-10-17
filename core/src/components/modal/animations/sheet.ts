@@ -12,9 +12,15 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
    * current breakpoint, then the backdrop should be fading in.
    */
   const shouldShowBackdrop = backdropBreakpoint === undefined || backdropBreakpoint < currentBreakpoint!;
-  const initialBackdrop = shouldShowBackdrop ? `calc(var(--backdrop-opacity) * ${currentBreakpoint!})` : '0';
 
-  const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdrop);
+  let initialBackdropOpacity = '0';
+  if (opts.initialBackdropOpacity) {
+    initialBackdropOpacity = opts.initialBackdropOpacity;
+  } else if (shouldShowBackdrop) {
+    initialBackdropOpacity = `calc(var(--backdrop-opacity) * ${currentBreakpoint!})`;
+  }
+
+  const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdropOpacity);
 
   if (shouldShowBackdrop) {
     backdropAnimation
@@ -40,17 +46,17 @@ export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
    * is defined, so we need to account for that offset by figuring out
    * what the current backdrop value should be.
    */
-  const backdropValue = `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
-    currentBreakpoint!,
-    backdropBreakpoint!
-  )})`;
+  const backdropOpacityValue = opts.backdropOpacityValue
+    ? opts.backdropOpacityValue
+    : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(currentBreakpoint!, backdropBreakpoint!)})`;
+
   const defaultBackdrop = [
-    { offset: 0, opacity: backdropValue },
+    { offset: 0, opacity: backdropOpacityValue },
     { offset: 1, opacity: 0 },
   ];
 
   const customBackdrop = [
-    { offset: 0, opacity: backdropValue },
+    { offset: 0, opacity: backdropOpacityValue },
     { offset: backdropBreakpoint!, opacity: 0 },
     { offset: 1, opacity: 0 },
   ];

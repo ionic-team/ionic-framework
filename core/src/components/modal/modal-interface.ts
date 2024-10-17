@@ -27,6 +27,8 @@ export interface ModalAnimationOptions {
   presentingEl?: HTMLElement;
   currentBreakpoint?: number;
   backdropBreakpoint?: number;
+  initialBackdropOpacity?: string;
+  backdropOpacityValue?: string;
 }
 
 export interface ModalBreakpointChangeEventDetail {
