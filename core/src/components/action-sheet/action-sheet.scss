@@ -70,7 +70,11 @@
 }
 
 .action-sheet-wrapper {
-  display: flex;
+  @include position(null, 0, 0, 0);
+  @include transform(translate3d(0, 100%, 0));
+
+  display: block;
+  position: absolute;
 
   flex-direction: column;
 
@@ -83,6 +87,7 @@
   max-height: var(--max-height);
 
   z-index: $z-index-overlay-wrapper;
+  pointer-events: none;
 }
 
 .action-sheet-title,
