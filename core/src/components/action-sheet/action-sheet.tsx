@@ -385,13 +385,13 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop tappable={this.backdropDismiss} />
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <div tabindex="0"></div>
 
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
           <div class="action-sheet-container">
             <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
               {header !== undefined && (
-                <h2
+                <div
                   id={headerID}
                   class={{
                     'action-sheet-title': true,
@@ -399,9 +399,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                   }}
                 >
                   {header}
-                </h2>
+                  {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
+                </div>
               )}
-              {this.subHeader && <h2 class="action-sheet-sub-title">{this.subHeader}</h2>}
               {buttons.map((b) => (
                 <button
                   {...b.htmlAttributes}
@@ -446,7 +446,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           </div>
         </div>
 
-        <div tabindex="0" aria-hidden="true"></div>
+        <div tabindex="0"></div>
       </Host>
     );
   }
