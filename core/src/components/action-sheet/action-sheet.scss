@@ -50,8 +50,8 @@
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
-  display: flex;
-  position: absolute;
+  display: block;
+  position: fixed;
 
   align-items: center;
   justify-content: center;
@@ -70,11 +70,7 @@
 }
 
 .action-sheet-wrapper {
-  @include position(null, 0, 0, 0);
-  @include transform(translate3d(0, 100%, 0));
-
-  display: block;
-  position: absolute;
+  display: flex;
 
   flex-direction: column;
 
@@ -87,7 +83,6 @@
   max-height: var(--max-height);
 
   z-index: $z-index-overlay-wrapper;
-  pointer-events: none;
 }
 
 .action-sheet-title,
