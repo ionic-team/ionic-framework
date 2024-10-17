@@ -20,6 +20,16 @@ export interface FocusVisibleUtility {
   setFocus: (elements: Element[]) => void;
 }
 
+let focusVisibleUtility: FocusVisibleUtility | null = null;
+
+export const getOrInitFocusVisibleUtility = () => {
+  if (!focusVisibleUtility) {
+    focusVisibleUtility = startFocusVisible();
+  }
+
+  return focusVisibleUtility;
+};
+
 export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => {
   let currentFocus: Element[] = [];
   let keyboardMode = true;
