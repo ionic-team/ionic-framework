@@ -67,7 +67,7 @@
 }
 
 .toast-button {
-  @include globals.typography(globals.$ion-text-link-default);
+  @include globals.typography(globals.$ion-body-sm-regular);
   @include globals.padding(0);
 
   // necessary for ripple to work properly

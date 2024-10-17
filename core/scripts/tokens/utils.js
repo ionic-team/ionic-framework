@@ -111,8 +111,8 @@ function generateTypographyOutput(prop, propName, isVariable) {
     font-size: $${variablesPrefix}-font-size-${extractLastPart(typography.fontSize)}${_endChar}
     font-style: ${prop.attributes.item?.toLowerCase() === 'italic' ? 'italic' : 'normal'}${_endChar}
     font-weight: $${variablesPrefix}-font-weight-${extractLastPart(typography.fontWeight)}${_endChar}
-    letter-spacing: $${variablesPrefix}-letter-spacing-${extractLastPart(typography.letterSpacing) || 0}${_endChar}
-    line-height: $${variablesPrefix}-line-height-${extractLastPart(typography.lineHeight)}${_endChar}
+    letter-spacing: $${variablesPrefix}-font-letter-spacing-${extractLastPart(typography.letterSpacing) || 0}${_endChar}
+    line-height: $${variablesPrefix}-font-line-height-${extractLastPart(typography.lineHeight)}${_endChar}
     text-transform: ${typography.textCase}${_endChar}
     text-decoration: ${typography.textDecoration}${_endChar}
   ${_endWrapper};
