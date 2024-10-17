@@ -1,6 +1,7 @@
 import type { EventEmitter } from '@stencil/core';
 
 import type { Side } from '../components/menu/menu-interface';
+import { config } from '../global/config';
 
 // TODO(FW-2832): types
 
@@ -266,7 +267,8 @@ export const focusVisibleElement = (el: HTMLElement) => {
    * which will let us explicitly set the elements to focus.
    */
   if (el.classList.contains('ion-focusable')) {
-    const app = el.closest('ion-app');
+    const appRootSelector = config.get('appRootSelector', 'ion-app');
+    const app = el.closest(appRootSelector) as HTMLIonAppElement | null;
     if (app) {
       app.setFocus([el]);
     }
