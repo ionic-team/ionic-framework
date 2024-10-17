@@ -20,7 +20,10 @@ export const mdEnterAnimation = (baseEl: HTMLElement): Animation => {
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.action-sheet-wrapper')!)
-    .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
+    .keyframes([
+      { offset: 0, transform: 'translateY(100%)' },
+      { offset: 1, transform: 'translateY(0%)' }
+    ]);
 
   return baseAnimation
     .addElement(baseEl)
