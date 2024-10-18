@@ -31,7 +31,6 @@ import type {
   FrameworkDelegate,
   Gesture,
   OverlayInterface,
-  Theme,
 } from '../../interface';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
@@ -44,7 +43,7 @@ import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
-import { setCardStatusBarDark, setCardStatusBarDefault, staticBackdropOpacity } from './utils';
+import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 // TODO(FW-2832): types
 
@@ -82,10 +81,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
   private inheritedAttributes: Attributes = {};
   private statusBarStyle?: StatusBarStyle;
-
-  get theme(): Theme {
-    return getIonTheme(this);
-  }
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -578,8 +573,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
-      initialBackdropOpacity: this.theme === 'ionic' ? staticBackdropOpacity : undefined,
-      backdropOpacityValue: this.theme === 'ionic' ? staticBackdropOpacity : undefined,
+      staticBackdropOpacity: getIonTheme(this) === 'ionic',
     });
 
     /* tslint:disable-next-line */
@@ -686,7 +680,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: this.presentingElement,
       currentBreakpoint: initialBreakpoint,
       backdropBreakpoint,
-      theme: getIonTheme(this),
+      staticBackdropOpacity: getIonTheme(this) === 'ionic',
     }));
 
     ani.progressStart(true, 1);
@@ -706,7 +700,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
         }
-      }
+      },
+      getIonTheme(this) === 'ionic'
     );
 
     this.gesture = gesture;
@@ -797,8 +792,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
         presentingEl: presentingElement,
         currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
-        initialBackdropOpacity: this.theme === 'ionic' ? staticBackdropOpacity : undefined,
-        backdropOpacityValue: this.theme === 'ionic' ? staticBackdropOpacity : undefined,
       }
     );
 
@@ -1059,13 +1052,10 @@ interface ModalOverlayOptions {
    */
   backdropBreakpoint: number;
   /**
-   * The initial backdrop opacity value
+   * Defines whether the backdrop should have a
+   * static opacity.
    */
-  initialBackdropOpacity?: string;
-  /**
-   * The current backdrop opacity value
-   */
-  backdropOpacityValue?: string;
+  staticBackdropOpacity?: boolean;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;

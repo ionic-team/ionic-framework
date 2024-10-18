@@ -1,4 +1,3 @@
-import { getIonTheme } from '@global/ionic-global';
 import { isIonContent, findClosestIonContent } from '@utils/content';
 import { createGesture } from '@utils/gesture';
 import { clamp, raf, getElementRoot } from '@utils/helpers';
@@ -6,7 +5,7 @@ import { FOCUS_TRAP_DISABLE_CLASS } from '@utils/overlays';
 
 import type { Animation } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
-import { getBackdropValueForSheet, staticBackdropOpacity } from '../utils';
+import { getBackdropValueForSheet } from '../utils';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
@@ -52,39 +51,27 @@ export const createSheetGesture = (
   breakpoints: number[] = [],
   getCurrentBreakpoint: () => number,
   onDismiss: () => void,
-  onBreakpointChange: (breakpoint: number) => void
+  onBreakpointChange: (breakpoint: number) => void,
+  staticBackdropOpacity: boolean
 ) => {
-  const theme = getIonTheme(baseEl);
   // Defaults for the sheet swipe animation
   const defaultBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: 1, opacity: 0.01 },
+    { offset: 1, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0.01 },
   ];
 
   const customBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: 1 - backdropBreakpoint, opacity: 0 },
-    { offset: 1, opacity: 0 },
+    { offset: 1 - backdropBreakpoint, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0 },
+    { offset: 1, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0 },
   ];
-
-  const ionicThemeBackdrop = [
-    { offset: 0, opacity: staticBackdropOpacity },
-    { offset: 1, opacity: staticBackdropOpacity },
-  ];
-
-  let backdropKeyframes = defaultBackdrop;
-  if (theme === 'ionic') {
-    backdropKeyframes = ionicThemeBackdrop;
-  } else if (backdropBreakpoint !== 0) {
-    backdropKeyframes = customBackdrop;
-  }
 
   const SheetDefaults = {
     WRAPPER_KEYFRAMES: [
       { offset: 0, transform: 'translateY(0%)' },
       { offset: 1, transform: 'translateY(100%)' },
     ],
-    BACKDROP_KEYFRAMES: backdropKeyframes,
+    BACKDROP_KEYFRAMES: backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
   };
 
   const contentEl = baseEl.querySelector('ion-content');
@@ -323,35 +310,20 @@ export const createSheetGesture = (
         { offset: 1, transform: `translateY(${(1 - snapToBreakpoint) * 100}%)` },
       ]);
 
-      backdropAnimation.keyframes(
-        theme === 'ionic'
-          ? [
-              {
-                offset: 0,
-                opacity: staticBackdropOpacity,
-              },
-              {
-                offset: 1,
-                opacity: staticBackdropOpacity,
-              },
-            ]
-          : [
-              {
-                offset: 0,
-                opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
-                  1 - breakpointOffset,
-                  backdropBreakpoint
-                )})`,
-              },
-              {
-                offset: 1,
-                opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
-                  snapToBreakpoint,
-                  backdropBreakpoint
-                )})`,
-              },
-            ]
-      );
+      backdropAnimation.keyframes([
+        {
+          offset: 0,
+          opacity: staticBackdropOpacity
+            ? 'var(--backdrop-opacity)'
+            : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - breakpointOffset, backdropBreakpoint)})`,
+        },
+        {
+          offset: 1,
+          opacity: staticBackdropOpacity
+            ? 'var(--backdrop-opacity)'
+            : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})`,
+        },
+      ]);
 
       animation.progressStep(0);
     }
