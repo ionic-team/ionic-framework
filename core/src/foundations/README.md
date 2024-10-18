@@ -8,19 +8,9 @@ Design tokens represent small, repeated design decisions that make up a design s
 
 ## Design Tokens Architecture
 
-The Ionic Design Tokens are stored on `core/src/foundations/tokens`. Here we have the abstract primitive tokens that will be common between all themes.
-Inside the `core/src/foundations/tokens/theme` we have the tokens that are specific to the new IOnic Theme, like primary colors, font-family and color states.
+The Ionic Design Tokens come from the [outsystems-design-tokens repo](https://github.com/OutSystems/outsystems-design-tokens). 
 
-Currently, six categories of tokens are stored:
-
-- Colors
-- Font
-- Scale
-- Border
-- Elevation
-- Z-index
-
-Using [Style Dictionary](https://amzn.github.io/style-dictionary/), these tokens generate 2 files inside `core/src/foundations`:
+Using the [outsystems-design-tokens package](https://www.npmjs.com/package/outsystems-design-tokens), we use its npx run build.tokens to pass our configuration file, that will generate 2 files inside `core/src/foundations`:
 
 - `ionic.vars.scss` - SCSS variables, based on the native ones, that are used internally on all CSS/SCSS code.
 - `ionic.utility.scss` - list of utility classes based on each Design Token.
@@ -50,7 +40,7 @@ Example:
 }
 ```
 
-The `tokens.js` script, responsible for generating CSS and SCSS variables along with utility classes, will follow the same nomenclature: `prefix - CSS property name - type variation - modifier name`.
+The `index.js` script, on the scripts/tokens folder, is responsible for generating SCSS variables and utility classes, will follow the same nomenclature: `prefix - CSS property name - type variation - modifier name`.
 
 Examples: 
 
@@ -66,17 +56,11 @@ Utility class:
 .ion-color-primary-100
 ```
 
-## When to change the Design Tokens
+## Managing the Design Tokens
 
-It's not expected that the `design-tokens.json` needs to be changed frequently. This represents the base of all the Ionic Design System and any change to the json file should be taken carefully, synced with the UX/UI Team and reviewed by other devs.
+It's not expected that the Tokens need to be changed frequently. This represents the base of all the Ionic Design System and any change to them should be taken carefully, synced with the UX/UI Team and reviewed by other devs. 
 
-Adding new tokens is more or less risk free. However, changing values will result in visual breaking changes and renaming tokens might cause the build to be broken.
-
-## How to change the Design Tokens
-
-Using `npm run build.tokens` will generate the `ionic.root.scss`, `ionic.vars.scss`, and `ionic.utility.scss` files with the updated values that come from the `design-tokens.json`.
-
-Design Tokens will also be generated automatically with the `npm run build` command. This ensures that if someone modifies the JSON without running the build tokens command, the changes will be applied correctly.
+With the current architecture, this management is done on the [outsystems-design-tokens repo](https://github.com/OutSystems/outsystems-design-tokens) and updated its dependency here when necessary.
 
 ## How to use
 
