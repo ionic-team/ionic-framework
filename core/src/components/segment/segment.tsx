@@ -29,6 +29,8 @@ export class Segment implements ComponentInterface {
 
   private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
 
+  private io?: IntersectionObserver;
+
   @Element() el!: HTMLIonSegmentElement;
 
   @State() activated = false;
@@ -162,11 +164,17 @@ export class Segment implements ComponentInterface {
 
     if (this.segmentViewEl) {
       this.getButtons().forEach((ref) => (ref.hasIndicator = false));
+
+      this.addIntersectionObserver();
     }
   }
 
   disconnectedCallback() {
     this.segmentViewEl = null;
+    if (this.io) {
+      this.io.disconnect();
+      this.io = undefined;
+    }
   }
 
   componentWillLoad() {
@@ -205,33 +213,6 @@ export class Segment implements ComponentInterface {
     if (this.disabled) {
       this.disabledChanged();
     }
-
-    // Update segment view based on the initial value,
-    // but do not animate the scroll
-    this.updateSegmentView(this.value!, false);
-
-    writeTask(() => {
-      if (this.segmentViewEl) {
-        const buttons = this.getButtons();
-        const activeButtonIndex = buttons.findIndex((ref) => ref.value === this.value);
-        if (activeButtonIndex >= 0) {
-          const activeButtonPosition = buttons[activeButtonIndex].getBoundingClientRect();
-          const activeButtonStyles = getComputedStyle(buttons[activeButtonIndex]);
-          const indicator = this.el.shadowRoot!.querySelector('.segment-indicator') as HTMLDivElement | null;
-          if (indicator) {
-            const startingX = buttons
-              .slice(0, activeButtonIndex)
-              .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
-
-            indicator.style.width = `${activeButtonPosition.width}px`;
-            indicator.style.left = `${startingX}px`;
-
-            // Setting a CSS variable works around issue where background element might not be rendered yet
-            this.el.style.setProperty('--indicator-color', activeButtonStyles.getPropertyValue('--indicator-color'));
-          }
-        }
-      }
-    });
   }
 
   onStart(detail: GestureDetail) {
@@ -261,6 +242,54 @@ export class Segment implements ComponentInterface {
       }
     }
     this.valueBeforeGesture = undefined;
+  }
+
+  private addIntersectionObserver() {
+    if (
+      typeof (window as any) !== 'undefined' &&
+      'IntersectionObserver' in window &&
+      'IntersectionObserverEntry' in window &&
+      'isIntersecting' in window.IntersectionObserverEntry.prototype
+    ) {
+      this.io = new IntersectionObserver((data) => {
+        /**
+         * On slower devices, it is possible for an intersection observer entry to contain multiple
+         * objects in the array. This happens when quickly scrolling an image into view and then out of
+         * view. In this case, the last object represents the current state of the component.
+         */
+        if (data[data.length - 1].isIntersecting) {
+          this.updateSegmentView(this.value!, false);
+          this.initIndicator();
+        }
+      });
+
+      this.io.observe(this.el);
+    }
+  }
+
+  private initIndicator() {
+    writeTask(() => {
+      if (this.segmentViewEl) {
+        const buttons = this.getButtons();
+        const activeButtonIndex = buttons.findIndex((ref) => ref.value === this.value);
+        if (activeButtonIndex >= 0) {
+          const activeButtonPosition = buttons[activeButtonIndex].getBoundingClientRect();
+          const activeButtonStyles = getComputedStyle(buttons[activeButtonIndex]);
+          const indicator = this.el.shadowRoot!.querySelector('.segment-indicator') as HTMLDivElement | null;
+          if (indicator) {
+            const startingX = buttons
+              .slice(0, activeButtonIndex)
+              .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
+
+            indicator.style.width = `${activeButtonPosition.width}px`;
+            indicator.style.left = `${startingX}px`;
+
+            // Setting a CSS variable works around issue where background element might not be rendered yet
+            this.el.style.setProperty('--indicator-color', activeButtonStyles.getPropertyValue('--indicator-color'));
+          }
+        }
+      }
+    });
   }
 
   /**
