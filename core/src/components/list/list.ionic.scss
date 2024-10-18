@@ -153,7 +153,6 @@ ion-list {
 // --------------------------------------------------
 
 .list-ionic-lines-inset .item-lines-default {
-  --inner-border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025}
-    #{globals.$ion-border-size-0};
+  --inner-border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
   --border-width: #{globals.$ion-border-size-0};
 }

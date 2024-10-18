@@ -105,8 +105,7 @@ slot[name="end"]::slotted(*) {
 }
 
 :host(.item-lines-inset) {
-  --inner-border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025}
-    #{globals.$ion-border-size-0};
+  --inner-border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
 }
 
 // Full lines - remove the border from the item inner (inset list items)
