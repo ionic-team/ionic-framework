@@ -6,7 +6,6 @@
 
 :host {
   --background: #{globals.$ion-primitives-neutral-1200};
-  --border-radius: #{globals.$ion-border-radius-400};
   --box-shadow: #{globals.$ion-elevation-4};
   --button-color: #{globals.$ion-primitives-base-white};
   --color: #{globals.$ion-primitives-base-white};
@@ -34,6 +33,21 @@
 
 .toast-container {
   @include globals.padding(globals.$ion-space-300, globals.$ion-space-400);
+}
+
+// Toast Shapes
+// --------------------------------------------------
+
+:host(.toast-shape-soft) {
+  --border-radius: #{globals.$ionic-border-radius-200};
+}
+
+:host(.toast-shape-round) {
+  --border-radius: #{globals.$ionic-border-radius-400};
+}
+
+:host(.toast-shape-rectangular) {
+  --border-radius: #{globals.$ionic-border-radius-0};
 }
 
 // Toast Header
