@@ -246,6 +246,16 @@ export class Segment implements ComponentInterface {
     this.valueBeforeGesture = undefined;
   }
 
+  private distanceToButton(index: number) {
+    const buttons = this.getButtons();
+    const button = buttons[index];
+
+    const buttonRect = button.getBoundingClientRect();
+    const segmentRect = this.el.getBoundingClientRect();
+
+    return this.el.scrollLeft + buttonRect.x - segmentRect.x;
+  }
+
   private addIntersectionObserver() {
     if (
       typeof (window as any) !== 'undefined' &&
@@ -279,9 +289,7 @@ export class Segment implements ComponentInterface {
           const activeButtonStyles = getComputedStyle(buttons[activeButtonIndex]);
           const indicator = this.el.shadowRoot!.querySelector('.segment-indicator') as HTMLDivElement | null;
           if (indicator) {
-            const startingX = buttons
-              .slice(0, activeButtonIndex)
-              .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
+            const startingX = this.distanceToButton(activeButtonIndex);
 
             indicator.style.width = `${activeButtonPosition.width}px`;
             indicator.style.left = `${startingX}px`;
@@ -491,12 +499,8 @@ export class Segment implements ComponentInterface {
         indicator.style.width = `${width - indicatorPadding}px`;
 
         // Translate the indicator based on the scroll distance
-        const distanceToNextButton = buttons
-          .slice(0, nextIndex)
-          .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
-        const distanceToCurrentButton = buttons
-          .slice(0, currentIndex)
-          .reduce((acc, ref) => acc + ref.getBoundingClientRect().width, 0);
+        const distanceToNextButton = this.distanceToButton(nextIndex);
+        const distanceToCurrentButton = this.distanceToButton(currentIndex);
 
         indicator.style.left =
           scrollDistance > 0
