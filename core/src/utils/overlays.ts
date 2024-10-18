@@ -515,19 +515,7 @@ export const present = async <OverlayPresentOptions>(
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
   hideUnderlyingOverlaysFromScreenReaders(overlay.el);
-
-  /**
-   * Set aria-hidden="true" to hide the overlay from screen readers
-   * during the animation. This ensures that assistive technologies
-   * like TalkBack do not announce or interact with the content until
-   * the animation is complete, avoiding confusion for users.
-   *
-   * Additionally, it prevents focus rings from appearing in incorrect
-   * positions due to the transition (specifically `transform` styles),
-   * ensuring that when aria-hidden is removed, the focus rings are
-   * correctly displayed in the final location of the elements.
-   */
-  overlay.el.setAttribute('aria-hidden', 'true');
+  hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -573,6 +561,11 @@ export const present = async <OverlayPresentOptions>(
    * it would still have aria-hidden on being presented again.
    * Removing it here ensures the overlay is visible to screen
    * readers.
+   *
+   * If this overlay was being presented, then it was hidden
+   * from screen readers during the animation. Now that the
+   * animation is complete, we can reveal the overlay to
+   * screen readers.
    */
   overlay.el.removeAttribute('aria-hidden');
 };
@@ -657,6 +650,13 @@ export const dismiss = async <OverlayDismissOptions>(
   overlay.presented = false;
 
   try {
+    /**
+     * There is no need to show the overlay to screen readers during
+     * the dismiss animation. This is because the overlay will be removed
+     * from the DOM after the animation is complete.
+     */
+    hideAnimatingOverlayFromScreenReaders(overlay.el);
+
     // Overlay contents should not be clickable during dismiss
     overlay.el.style.setProperty('pointer-events', 'none');
     overlay.willDismiss.emit({ data, role });
@@ -940,6 +940,25 @@ export const createTriggerController = () => {
     addClickListener,
     removeClickListener,
   };
+};
+
+/**
+ * The overlay that is being animated also needs to hide from screen
+ * readers during its animation. This ensures that assistive technologies
+ * like TalkBack do not announce or interact with the content until the
+ * animation is complete, avoiding confusion for users.
+ *
+ * If the overlay is being presented, it prevents focus rings from appearing
+ * in incorrect positions due to the transition (specifically `transform`
+ * styles), ensuring that when aria-hidden is removed, the focus rings are
+ * correctly displayed in the final location of the elements.
+ *
+ * @param overlay - The overlay that is being animated.
+ */
+const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
+  if (doc === undefined) return;
+
+  overlay.setAttribute('aria-hidden', 'true');
 };
 
 /**
