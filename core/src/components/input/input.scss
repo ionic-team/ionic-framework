@@ -593,6 +593,13 @@
   max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
 
+/**
+ * This removes the slotted items on floating label when empty and no focus.
+ */
+:host(.input-label-placement-floating:not(.has-focus):not(.has-value)) .native-wrapper > [slot] {
+  display: none;
+}
+
 // Start/End Slots
 // ----------------------------------------------------------------
 
