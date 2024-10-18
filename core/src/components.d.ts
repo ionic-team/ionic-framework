@@ -3772,6 +3772,10 @@ export namespace Components {
          */
         "present": () => Promise<void>;
         /**
+          * Set to `"soft"` for a toast with slightly rounded corners, `"round"` for a toast with fully rounded corners, or `"rectangular"` for a toast without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
          */
         "swipeGesture"?: ToastSwipeGestureDirection;
@@ -9161,6 +9165,10 @@ declare namespace LocalJSX {
           * The element to anchor the toast's position to. Can be set as a direct reference or the ID of the element. With `position="bottom"`, the toast will sit above the chosen element. With `position="top"`, the toast will sit below the chosen element. With `position="middle"`, the value of `positionAnchor` is ignored.
          */
         "positionAnchor"?: HTMLElement | string;
+        /**
+          * Set to `"soft"` for a toast with slightly rounded corners, `"round"` for a toast with fully rounded corners, or `"rectangular"` for a toast without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * If set to 'vertical', the Toast can be dismissed with a swipe gesture. The swipe direction is determined by the value of the `position` property: `top`: The Toast can be swiped up to dismiss. `bottom`: The Toast can be swiped down to dismiss. `middle`: The Toast can be swiped up or down to dismiss.
          */
