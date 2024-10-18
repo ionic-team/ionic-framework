@@ -1952,14 +1952,14 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value']
+  inputs: ['color', 'disabled', 'mode', 'scrollable', 'segmentViewId', 'selectOnFocus', 'swipeGesture', 'value']
 })
 @Component({
   selector: 'ion-segment',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'scrollable', 'segmentViewId', 'selectOnFocus', 'swipeGesture', 'value'],
 })
 export class IonSegment {
   protected el: HTMLElement;

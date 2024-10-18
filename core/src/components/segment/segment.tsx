@@ -33,6 +33,8 @@ export class Segment implements ComponentInterface {
 
   @State() activated = false;
 
+  @Prop() segmentViewId?: string;
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -153,7 +155,10 @@ export class Segment implements ComponentInterface {
   connectedCallback() {
     this.emitStyle();
 
-    this.segmentViewEl = this.getSegmentView();
+    const segmentViewEl = this.getSegmentView();
+    if (segmentViewEl) {
+      this.segmentViewEl = segmentViewEl;
+    }
 
     if (this.segmentViewEl) {
       this.getButtons().forEach((ref) => (ref.hasIndicator = false));
@@ -370,6 +375,14 @@ export class Segment implements ComponentInterface {
   }
 
   private getSegmentView() {
+    if (this.segmentViewId) {
+      const segmentView = document.getElementById(this.segmentViewId);
+
+      if (segmentView && segmentView.tagName === 'ION-SEGMENT-VIEW') {
+        return segmentView as HTMLIonSegmentViewElement;
+      }
+    }
+
     const buttons = this.getButtons();
     // Get the first button with a contentId
     const firstContentId = buttons.find((button: HTMLIonSegmentButtonElement) => button.contentId);
@@ -540,7 +553,7 @@ export class Segment implements ComponentInterface {
     }
 
     const content = document.getElementById(button.contentId);
-    const segmentView = content?.closest('ion-segment-view');
+    const segmentView = this.segmentViewEl ?? content?.closest('ion-segment-view');
 
     if (segmentView) {
       segmentView.setContent(button.contentId, smoothScroll);

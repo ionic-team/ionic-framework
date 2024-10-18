@@ -732,6 +732,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.
 
 
 export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment, JSX.IonSegment["value"]>('ion-segment', defineIonSegment, [
+  'segmentViewId',
   'color',
   'disabled',
   'scrollable',
