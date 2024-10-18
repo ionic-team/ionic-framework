@@ -90,7 +90,7 @@ slot[name="end"]::slotted(*) {
 
   border-width: globals.$ion-border-size-050;
   border-style: globals.$ion-border-style-solid;
-  border-color: globals.$ion-border-input-focus;
+  border-color: globals.$ion-border-focus-default;
 
   content: "";
 }
