@@ -7,30 +7,30 @@
 .item-options-ionic {
   align-items: center;
 
-  gap: globals.$ionic-space-100;
+  gap: globals.$ion-space-100;
 }
 
 /* stylelint-disable property-disallowed-list */
 [dir="ltr"] .item-options-start ion-item-option:last-child,
 [dir="rtl"] .item-options-start ion-item-option:first-child {
-  margin-right: globals.$ionic-space-200;
+  margin-right: globals.$ion-space-200;
 }
 
 [dir="ltr"] .item-options-start ion-item-option:first-child,
 [dir="rtl"] .item-options-start ion-item-option:last-child {
-  margin-left: calc(globals.$ionic-space-200 + var(--ion-safe-area-left, 0));
+  margin-left: calc(globals.$ion-space-200 + var(--ion-safe-area-left, 0));
 
   padding-left: initial;
 }
 
 [dir="ltr"] .item-options-end ion-item-option:first-child,
 [dir="rtl"] .item-options-end ion-item-option:last-child {
-  margin-left: globals.$ionic-space-200;
+  margin-left: globals.$ion-space-200;
 }
 
 [dir="ltr"] .item-options-end ion-item-option:last-child,
 [dir="rtl"] .item-options-end ion-item-option:first-child {
-  margin-right: calc(globals.$ionic-space-200 + var(--ion-safe-area-right, 0));
+  margin-right: calc(globals.$ion-space-200 + var(--ion-safe-area-right, 0));
 
   padding-right: initial;
 }

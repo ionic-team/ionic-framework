@@ -17,7 +17,7 @@
 
   position: absolute;
 
-  background-color: tokens.$ionic-state-pressed;
+  background-color: tokens.$ion-state-press;
 
   content: "";
 }
@@ -34,7 +34,7 @@
 
   position: absolute;
 
-  background-color: tokens.$ionic-state-disabled;
+  background-color: tokens.$ion-state-disabled;
 
   content: "";
 
@@ -50,9 +50,9 @@
 // --------------------------------------------------
 @mixin focused-state($width: null, $style: null, $color: null, $addOffset: true) {
   // Use default values if null is passed
-  $width: if($width != null, $width, tokens.$ionic-border-size-050);
-  $style: if($style != null, $style, tokens.$ionic-border-style-solid);
-  $color: if($color != null, $color, tokens.$ionic-state-focus-1);
+  $width: if($width != null, $width, tokens.$ion-border-size-050);
+  $style: if($style != null, $style, tokens.$ion-border-style-solid);
+  $color: if($color != null, $color, tokens.$ion-border-focus-default);
 
   @if $addOffset {
     outline-offset: $width;
@@ -63,7 +63,7 @@
 
 // Typography mixin to be used with typography scss variables (ionic.vars.scss)
 //
-// ex: @include typography($ionic-heading-h3-medium);
+// ex: @include typography($ion-heading-h3-medium);
 //
 // --------------------------------------------------
 @mixin typography($properties) {

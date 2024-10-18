@@ -9,18 +9,18 @@
    * @prop --focus-ring-color: The color of the ring around the focused element.
    * @prop --focus-ring-width: The width of the ring around the focused element.
    */
-  --background: #{globals.$ionic-color-neutral-100};
-  --border-radius: #{globals.$ionic-border-radius-400};
+  --background: #{globals.$ion-primitives-neutral-100};
+  --border-radius: #{globals.$ion-border-radius-400};
   --box-shadow: none;
-  --cancel-button-color: #{globals.$ionic-color-neutral-800};
-  --clear-button-color: #{globals.$ionic-color-neutral-1000};
-  --color: #{globals.$ionic-color-neutral-1200};
-  --icon-color: #{globals.$ionic-color-neutral-800};
-  --placeholder-color: #{globals.$ionic-color-neutral-800};
-  --focus-ring-color: #{globals.$ionic-state-focus-1};
-  --focus-ring-width: #{globals.$ionic-border-size-050};
+  --cancel-button-color: #{globals.$ion-primitives-neutral-800};
+  --clear-button-color: #{globals.$ion-primitives-neutral-1000};
+  --color: #{globals.$ion-primitives-neutral-1200};
+  --icon-color: #{globals.$ion-primitives-neutral-800};
+  --placeholder-color: #{globals.$ion-primitives-neutral-800};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-size-050};
 
-  @include globals.typography(globals.$ionic-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
   @include globals.padding(0);
 }
 
@@ -29,10 +29,10 @@
 
 .searchbar-search-icon {
   // Position is based on the size of the search icon.
-  @include globals.position(globals.$ionic-scale-400, null, null, globals.$ionic-scale-400);
+  @include globals.position(globals.$ion-scale-400, null, null, globals.$ion-scale-400);
 
-  width: globals.$ionic-scale-400;
-  height: globals.$ionic-scale-400;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 // Searchbar Input Field
@@ -51,13 +51,13 @@
    * and the gap between the icon and the input.
    */
   @include globals.padding(
-    globals.$ionic-space-300,
-    calc(globals.$ionic-space-400 + globals.$ionic-scale-400 + globals.$ionic-space-200),
-    globals.$ionic-space-300,
-    calc(globals.$ionic-space-400 + globals.$ionic-scale-400 + globals.$ionic-space-200)
+    globals.$ion-space-300,
+    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200),
+    globals.$ion-space-300,
+    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200)
   );
 
-  min-height: globals.$ionic-scale-1200;
+  min-height: globals.$ion-scale-1200;
 
   contain: strict;
 }
@@ -67,14 +67,14 @@
 
 .searchbar-clear-button {
   // Position is based on the size of the clear icon.
-  @include globals.position(globals.$ionic-scale-400, globals.$ionic-scale-400, null, null);
+  @include globals.position(globals.$ion-scale-400, globals.$ion-scale-400, null, null);
 
-  width: globals.$ionic-scale-400;
-  height: globals.$ionic-scale-400;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 
   background-color: transparent;
 
-  font-size: globals.$ionic-scale-400;
+  font-size: globals.$ion-scale-400;
 
   contain: strict;
 }
@@ -93,7 +93,7 @@
 
   background-color: transparent;
 
-  font-size: globals.$ionic-font-size-400;
+  font-size: globals.$ion-font-size-400;
 }
 
 // Searchbar Search & Clear Icon & Cancel Icon
@@ -110,9 +110,9 @@
 
 .searchbar-clear-button:focus-visible,
 .searchbar-cancel-button:focus-visible ion-icon {
-  @include globals.border-radius(globals.$ionic-border-radius-100);
+  @include globals.border-radius(globals.$ion-border-radius-100);
 
-  outline: globals.$ionic-border-size-050 globals.$ionic-border-style-solid globals.$ionic-state-focus-1;
+  outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
   opacity: 1;
 }
@@ -121,7 +121,7 @@
 // -----------------------------------------
 
 :host-context(ion-toolbar) {
-  min-height: globals.$ionic-scale-1200;
+  min-height: globals.$ion-scale-1200;
 }
 
 // Searchbar States
@@ -129,12 +129,12 @@
 
 /* Hover */
 :host(:hover) {
-  --background: #{globals.$ionic-color-neutral-200};
+  --background: #{globals.$ion-primitives-neutral-200};
 }
 
 /* Focus */
 :host(.searchbar-has-focus) .searchbar-input {
-  outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
 }
 
 :host(.searchbar-has-focus) .searchbar-search-icon,
@@ -150,9 +150,9 @@
 
 /* Disabled */
 :host(.searchbar-disabled) {
-  --color: #{globals.$ionic-color-neutral-500};
-  --icon-color: #{globals.$ionic-color-neutral-500};
-  --placeholder-color: #{globals.$ionic-color-neutral-500};
+  --color: #{globals.$ion-primitives-neutral-500};
+  --icon-color: #{globals.$ion-primitives-neutral-500};
+  --placeholder-color: #{globals.$ion-primitives-neutral-500};
 
   cursor: default;
   pointer-events: none;

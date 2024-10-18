@@ -12,16 +12,16 @@
 // to properly inset the border relative to the entire
 // accordion, rather than just the header.
 :host::after {
-  @include globals.margin(null, globals.$ionic-space-400, null, globals.$ionic-space-400);
+  @include globals.margin(null, globals.$ion-space-400, null, globals.$ion-space-400);
   @include globals.position(null, 0, 0, 0);
 
   display: block;
 
   position: absolute;
 
-  height: globals.$ionic-border-size-025;
+  height: globals.$ion-border-size-025;
 
-  background-color: globals.$ionic-color-neutral-300;
+  background-color: globals.$ion-primitives-neutral-300;
 
   content: "";
 
@@ -42,32 +42,32 @@
 // The border is removed from the item in the header because
 // we are adding a border to the ::after element of the accordion.
 ::slotted(ion-item[slot="header"]) {
-  --border-radius: #{globals.$ionic-border-radius-0};
-  --color: #{globals.$ionic-color-neutral-1200};
+  --border-radius: #{globals.$ion-border-radius-0};
+  --color: #{globals.$ion-primitives-neutral-1200};
   --border-width: 0;
   --inner-border-width: 0;
-  --min-height: #{globals.$ionic-scale-700};
-  --padding-top: #{globals.$ionic-space-300};
-  --padding-end: #{globals.$ionic-space-400};
-  --padding-bottom: #{globals.$ionic-space-300};
-  --padding-start: #{globals.$ionic-space-400};
+  --min-height: #{globals.$ion-scale-700};
+  --padding-top: #{globals.$ion-space-300};
+  --padding-end: #{globals.$ion-space-400};
+  --padding-bottom: #{globals.$ion-space-300};
+  --padding-start: #{globals.$ion-space-400};
 
-  @include globals.typography(globals.$ionic-heading-h6-medium);
+  @include globals.typography(globals.$ion-heading-h6-medium);
 }
 
 // Shape only applies when inside an inset accordion group
 :host(.in-accordion-group-expand-inset) ::slotted(ion-item[slot="header"]) {
-  --border-radius: #{globals.$ionic-border-radius-400};
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 // Accordion Content
 // --------------------------------------------------
 
 #content {
-  @include globals.padding(null, globals.$ionic-space-400, globals.$ionic-space-300, globals.$ionic-space-400);
-  @include globals.typography(globals.$ionic-body-md-regular);
+  @include globals.padding(null, globals.$ion-space-400, globals.$ion-space-300, globals.$ion-space-400);
+  @include globals.typography(globals.$ion-body-md-regular);
 
-  color: globals.$ionic-color-neutral-1000;
+  color: globals.$ion-primitives-neutral-1000;
 }
 
 // Disabled Accordion

@@ -5,20 +5,20 @@
 // --------------------------------------------------------------
 
 :host {
-  --focus-ring-color: #{globals.$ionic-state-focus-1};
-  --focus-ring-width: #{globals.$ionic-border-radius-050};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-radius-025};
 
-  @include globals.border-radius(globals.$ionic-border-radius-200);
+  @include globals.border-radius(globals.$ion-border-radius-200);
 
   align-content: center;
 
-  min-height: globals.$ionic-scale-1200;
-  max-height: globals.$ionic-scale-1800;
+  min-height: globals.$ion-scale-1200;
+  max-height: globals.$ion-scale-1800;
 
-  font-size: globals.$ionic-font-size-300;
-  font-weight: globals.$ionic-font-weight-medium;
+  font-size: globals.$ion-font-size-300;
+  font-weight: globals.$ion-font-weight-medium;
 
-  line-height: globals.$ionic-line-height-500;
+  line-height: globals.$ion-font-line-height-500;
 }
 
 // Tab Button: Native
@@ -39,7 +39,7 @@
 // -------------------------------------------------------------------------------
 
 .button-native {
-  min-width: globals.$ionic-scale-1200;
+  min-width: globals.$ion-scale-1200;
 
   overflow: visible;
 
@@ -70,6 +70,6 @@
 // Icon
 
 ::slotted(ion-icon) {
-  width: globals.$ionic-scale-600;
-  height: globals.$ionic-scale-600;
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 }
