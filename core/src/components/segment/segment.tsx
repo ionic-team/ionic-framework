@@ -35,6 +35,9 @@ export class Segment implements ComponentInterface {
 
   @State() activated = false;
 
+  /**
+   * The `id` of the `segment-view` element to be associated with this segment.
+   */
   @Prop() segmentViewId?: string;
 
   /**
@@ -105,7 +108,7 @@ export class Segment implements ComponentInterface {
      */
     this.ionSelect.emit({ value });
 
-    // The scroll listener should handle scrolling the active button into view as needed
+    // The scroll listener should handle scrolling the active button into view as needed when there is a segment view
     if (!this.segmentViewEl) {
       this.scrollActiveButtonIntoView();
     }
@@ -157,12 +160,11 @@ export class Segment implements ComponentInterface {
   connectedCallback() {
     this.emitStyle();
 
-    const segmentViewEl = this.getSegmentView();
-    if (segmentViewEl) {
-      this.segmentViewEl = segmentViewEl;
-    }
+    this.segmentViewEl = this.getSegmentView();
 
     if (this.segmentViewEl) {
+      // Disable each button indicator when using a segment view
+      // Instead, a single indicator instance will be used
       this.getButtons().forEach((ref) => (ref.hasIndicator = false));
 
       this.addIntersectionObserver();
@@ -404,21 +406,23 @@ export class Segment implements ComponentInterface {
   }
 
   private getSegmentView() {
-    if (this.segmentViewId) {
-      const segmentView = document.getElementById(this.segmentViewId);
-
-      if (segmentView && segmentView.tagName === 'ION-SEGMENT-VIEW') {
-        return segmentView as HTMLIonSegmentViewElement;
-      }
+    if (!this.segmentViewId) {
+      return null;
     }
 
-    const buttons = this.getButtons();
-    // Get the first button with a contentId
-    const firstContentId = buttons.find((button: HTMLIonSegmentButtonElement) => button.contentId);
-    // Get the segment content with an id matching the button's contentId
-    const segmentContent = document.querySelector(`ion-segment-content[id="${firstContentId?.contentId}"]`);
-    // Return the segment view for that matching segment content
-    return segmentContent?.closest('ion-segment-view');
+    const segmentViewEl = document.getElementById(this.segmentViewId);
+
+    if (!segmentViewEl) {
+      console.warn(`Segment: Unable to find 'ion-segment-view' with id="${this.segmentViewId}"`);
+      return null;
+    }
+
+    if (segmentViewEl.tagName !== 'ION-SEGMENT-VIEW') {
+      console.warn(`Segment: Element with id="${this.segmentViewId}" is not an <ion-segment-view> element.`);
+      return null;
+    }
+
+    return segmentViewEl as HTMLIonSegmentViewElement;
   }
 
   @Listen('ionSegmentViewScroll', { target: 'body' })
@@ -581,11 +585,8 @@ export class Segment implements ComponentInterface {
       return;
     }
 
-    const content = document.getElementById(button.contentId);
-    const segmentView = this.segmentViewEl ?? content?.closest('ion-segment-view');
-
-    if (segmentView) {
-      segmentView.setContent(button.contentId, smoothScroll);
+    if (this.segmentViewEl) {
+      this.segmentViewEl.setContent(button.contentId, smoothScroll);
     }
   }
 
