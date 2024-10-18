@@ -34,7 +34,8 @@ export class Toggle implements ComponentInterface {
   private inputId = `ion-tg-${toggleIds++}`;
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
-  private hapticEl?: HTMLElement;
+  private enableIOSHapticFeedback = config.getBoolean('toggleIOSHapticFeedback', false);
+  private hapticEl?: HTMLElement | null = null;
   private lastDrag = 0;
   private inheritedAttributes: Attributes = {};
   private toggleTrack?: HTMLElement;
@@ -139,7 +140,7 @@ export class Toggle implements ComponentInterface {
     const isNowChecked = !checked;
     this.checked = isNowChecked;
 
-    if (this.hapticEl) {
+    if (this.enableIOSHapticFeedback && this.hapticEl) {
       this.hapticEl.click();
     }
 
@@ -300,7 +301,7 @@ export class Toggle implements ComponentInterface {
     const { inputId } = this;
     const mode = getIonMode(this);
 
-    if (hapticAvailable() || mode !== 'ios') {
+    if (!this.enableIOSHapticFeedback || hapticAvailable() || mode !== 'ios') {
       return;
     }
 

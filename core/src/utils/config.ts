@@ -72,6 +72,13 @@ export interface IonicConfig {
   toggleOnOffLabels?: boolean;
 
   /**
+   * Whenever changing the toggle state should produce a haptic feedback (slight vibration)
+   * on iOS in browser and PWA environments. Requires iOS 18 or later.
+   * Defaults to `false`.
+   */
+  toggleIOSHapticFeedback?: boolean;
+
+  /**
    * Overrides the default spinner for all `ion-loading` overlays, ie. the ones
    * created with `ion-loading-controller`.
    */
