@@ -1053,7 +1053,7 @@ interface ModalOverlayOptions {
   backdropBreakpoint: number;
   /**
    * Defines whether the backdrop should have a
-   * static opacity.
+   * static opacity. (true for ionic theme only)
    */
   staticBackdropOpacity?: boolean;
 }
