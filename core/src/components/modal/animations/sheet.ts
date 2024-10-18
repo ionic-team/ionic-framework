@@ -15,7 +15,7 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   const initialBackdrop = shouldShowBackdrop
     ? `calc(var(--backdrop-opacity) * ${staticBackdropOpacity ? 1 : currentBreakpoint!})`
     : '0';
-  console.log('initial backdrop', initialBackdrop);
+
   const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdrop);
 
   if (shouldShowBackdrop) {
