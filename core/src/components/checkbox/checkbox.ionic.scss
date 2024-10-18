@@ -330,7 +330,7 @@ input {
 // Ionic Design Checkbox Invalid
 // --------------------------------------------------
 :host(.ion-invalid) {
-  --focus-ring-color: #{globals.$ion-border-danger};
+  --focus-ring-color: #{globals.$ion-border-focus-error};
 
   .native-wrapper {
     border-color: globals.$ion-semantics-danger-800;

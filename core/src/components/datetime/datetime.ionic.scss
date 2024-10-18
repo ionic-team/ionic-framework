@@ -108,7 +108,7 @@
 
 // TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
 .calendar-next-prev ion-button.button-has-icon-only.ion-focused::part(native) {
-  border: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-input-focus;
+  border: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
   outline: none;
 }
