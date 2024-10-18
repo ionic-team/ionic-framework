@@ -29,6 +29,8 @@ export class Segment implements ComponentInterface {
 
   private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
 
+  private nextButtonIndex?: number;
+
   private io?: IntersectionObserver;
 
   @Element() el!: HTMLIonSegmentElement;
@@ -250,10 +252,7 @@ export class Segment implements ComponentInterface {
     const buttons = this.getButtons();
     const button = buttons[index];
 
-    const buttonRect = button.getBoundingClientRect();
-    const segmentRect = this.el.getBoundingClientRect();
-
-    return this.el.scrollLeft + buttonRect.x - segmentRect.x;
+    return button.offsetLeft;
   }
 
   private addIntersectionObserver() {
@@ -479,11 +478,23 @@ export class Segment implements ComponentInterface {
 
       // Find the next valid button (i.e. we need to ignore any disabled buttons)
       const nextIndex =
-        scrollDistance > 0
+        this.nextButtonIndex ??
+        (scrollDistance > 0
           ? findIndexFrom(buttons, (ref) => !ref.disabled, currentIndex + 1)
-          : findIndexFromReverse(buttons, (ref) => !ref.disabled, currentIndex - 1);
+          : findIndexFromReverse(buttons, (ref) => !ref.disabled, currentIndex - 1));
 
       if (nextIndex >= 0 && nextIndex < buttons.length) {
+        // Figure out the number of disabled buttons between the current and next button
+        const disabledButtons = (
+          nextIndex > currentIndex ? buttons.slice(currentIndex, nextIndex) : buttons.slice(nextIndex, currentIndex)
+        ).filter((button) => button.disabled).length;
+
+        // Adjust the scroll distance percentage based on the number of "views" scrolled
+        // We need to do this because all subsequent calculations are based on the assumption that
+        // only one view can be scrolled at a time, but this is not the case when clicking a segment button
+        const adjustedScrollDistancePercentage =
+          scrollDistancePercentage / (Math.abs(nextIndex - currentIndex) - disabledButtons);
+
         const nextButton = buttons[nextIndex];
         const nextButtonWidth = nextButton.getBoundingClientRect().width;
 
@@ -491,7 +502,7 @@ export class Segment implements ComponentInterface {
 
         // Scale the width based on the width of the next button
         const diff = nextButtonWidth - currentButtonWidth;
-        const width = currentButtonWidth + diff * scrollDistancePercentage;
+        const width = currentButtonWidth + diff * adjustedScrollDistancePercentage;
         const indicatorStyles = getComputedStyle(indicator);
         const indicatorPadding =
           parseFloat(indicatorStyles.paddingLeft.replace('px', '')) +
@@ -501,14 +512,15 @@ export class Segment implements ComponentInterface {
         // Translate the indicator based on the scroll distance
         const distanceToNextButton = this.distanceToButton(nextIndex);
         const distanceToCurrentButton = this.distanceToButton(currentIndex);
-
         indicator.style.left =
           scrollDistance > 0
             ? `${
-                distanceToCurrentButton + (distanceToNextButton - distanceToCurrentButton) * scrollDistancePercentage
+                distanceToCurrentButton +
+                (distanceToNextButton - distanceToCurrentButton) * adjustedScrollDistancePercentage
               }px`
             : `${
-                distanceToCurrentButton - (distanceToCurrentButton - distanceToNextButton) * scrollDistancePercentage
+                distanceToCurrentButton -
+                (distanceToCurrentButton - distanceToNextButton) * adjustedScrollDistancePercentage
               }px`;
 
         const standardize_color = (str: string) => {
@@ -535,7 +547,7 @@ export class Segment implements ComponentInterface {
           return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
         };
         // Function to calculate the color in between based on percentage
-        const interpolateColor = (percentage = scrollDistancePercentage) => {
+        const interpolateColor = (percentage = adjustedScrollDistancePercentage) => {
           const currentColor = standardize_color(getComputedStyle(currentButton).getPropertyValue('--indicator-color'));
           const nextColor = standardize_color(getComputedStyle(nextButton).getPropertyValue('--indicator-color'));
 
@@ -568,6 +580,7 @@ export class Segment implements ComponentInterface {
 
     if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
       this.value = ev.detail.activeContentId;
+      this.nextButtonIndex = undefined;
       this.emitValueChange();
     }
   }
@@ -756,6 +769,7 @@ export class Segment implements ComponentInterface {
 
     if (current !== previous) {
       if (this.segmentViewEl) {
+        this.nextButtonIndex = this.getButtons().findIndex((button) => button.value === current.value);
         this.updateSegmentView(current.value);
       } else {
         this.value = current.value;
