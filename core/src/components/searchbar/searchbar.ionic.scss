@@ -112,7 +112,7 @@
 .searchbar-cancel-button:focus-visible ion-icon {
   @include globals.border-radius(globals.$ion-border-radius-100);
 
-  outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-input-focus;
+  outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
   opacity: 1;
 }
