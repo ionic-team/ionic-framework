@@ -39,15 +39,15 @@
 // --------------------------------------------------
 
 :host(.toast-shape-soft) {
-  --border-radius: #{globals.$ionic-border-radius-200};
+  --border-radius: #{globals.$ion-border-radius-200};
 }
 
 :host(.toast-shape-round) {
-  --border-radius: #{globals.$ionic-border-radius-400};
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 :host(.toast-shape-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Toast Header
