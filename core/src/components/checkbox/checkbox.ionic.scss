@@ -356,13 +356,6 @@ input {
   height: inherit;
 }
 
-// disabled, unchecked checkbox
-:host(.checkbox-disabled) .native-wrapper {
-  border-color: globals.$ion-primitives-neutral-800;
-
-  background-color: globals.$ion-icon-disabled;
-}
-
 // disabled, checked checkbox
 :host(.checkbox-disabled.checkbox-checked) .native-wrapper {
   border-width: globals.$ion-border-size-0;
