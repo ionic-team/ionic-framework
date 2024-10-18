@@ -47,13 +47,13 @@ Examples:
 SCSS Variable:
 
 ```scss
-$ion-color-primary-100
+$ion-semantics-primary-300
 ```
 
 Utility class:
 
 ```css
-.ion-color-primary-100
+.ion-semantics-primary-300
 ```
 
 ## Managing the Design Tokens
