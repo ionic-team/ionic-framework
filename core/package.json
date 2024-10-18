@@ -34,7 +34,7 @@
     "@phosphor-icons/core": "^2.1.1",
     "@stencil/core": "4.20.0",
     "ionicons": "^7.2.2",
-    "outsystems-design-tokens": "^1.0.0",
+    "outsystems-design-tokens": "^1.0.1",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
