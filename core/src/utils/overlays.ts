@@ -514,7 +514,20 @@ export const present = async <OverlayPresentOptions>(
 
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
-  hideOverlaysFromScreenReaders(overlay.el);
+  hideUnderlyingOverlaysFromScreenReaders(overlay.el);
+
+  /**
+   * Set aria-hidden="true" to hide the overlay from screen readers
+   * during the animation. This ensures that assistive technologies
+   * like TalkBack do not announce or interact with the content until
+   * the animation is complete, avoiding confusion for users.
+   *
+   * Additionally, it prevents focus rings from appearing in incorrect
+   * positions due to the transition (specifically `transform` styles),
+   * ensuring that when aria-hidden is removed, the focus rings are
+   * correctly displayed in the final location of the elements.
+   */
+  overlay.el.setAttribute('aria-hidden', 'true');
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -939,7 +952,7 @@ export const createTriggerController = () => {
  * @param newTopMostOverlay - The overlay that is being presented. Since the overlay has not been
  * fully presented yet at the time this function is called it will not be included in the getPresentedOverlays result.
  */
-const hideOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement) => {
+const hideUnderlyingOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement) => {
   if (doc === undefined) return;
 
   const overlays = getPresentedOverlays(doc);

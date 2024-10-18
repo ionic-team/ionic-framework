@@ -111,27 +111,23 @@
 // Border is made with a linear gradient in order
 // to get the proper color and iOS blur effect
 
-.action-sheet-head {
+.action-sheet-title {
   background: $action-sheet-ios-button-background;
 }
 
-// iOS Action Sheet Header
-// --------------------------------------------------
-
-.action-sheet-head {
-  @include padding($action-sheet-ios-title-padding-top, $action-sheet-ios-title-padding-end, $action-sheet-ios-title-padding-bottom, $action-sheet-ios-title-padding-start);
-
-  color: var(--color, $action-sheet-ios-title-color);
-
-  text-align: $action-sheet-ios-text-align;
-}
 
 // iOS Action Sheet Title
 // ---------------------------------------------------
 
 .action-sheet-title {
+  @include padding($action-sheet-ios-title-padding-top, $action-sheet-ios-title-padding-end, $action-sheet-ios-title-padding-bottom, $action-sheet-ios-title-padding-start);
+
+  color: var(--color, $action-sheet-ios-title-color);
+
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
+
+  text-align: $action-sheet-ios-text-align;
 }
 
 .action-sheet-title.action-sheet-has-sub-title {

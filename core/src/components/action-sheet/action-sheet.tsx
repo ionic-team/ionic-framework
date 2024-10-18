@@ -201,17 +201,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   async present(): Promise<void> {
     const unlock = await this.lockController.lock();
 
-    // hide from screen readers before animating
-    // this is to avoid reading the action sheet content
-    // before it's fully visible
-    this.el.setAttribute('aria-hidden', 'true');
-
     await this.delegateController.attachViewToDom();
 
     await present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
-
-    // show to screen readers after animation
-    this.el.removeAttribute('aria-hidden');
 
     unlock();
   }
@@ -398,20 +390,16 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         <div class="action-sheet-wrapper ion-overlay-wrapper" ref={(el) => (this.wrapperEl = el)}>
           <div class="action-sheet-container">
             <div class="action-sheet-group" ref={(el) => (this.groupEl = el)}>
-              {(header || this.subHeader) && (
-                <div class="action-sheet-head">
-                  {header && (
-                    <h2
-                      id={headerID}
-                      class={{
-                        'action-sheet-title': true,
-                        'action-sheet-has-sub-title': this.subHeader !== undefined,
-                      }}
-                    >
-                      {header}
-                    </h2>
-                  )}
-                  {this.subHeader && <h2 class="action-sheet-sub-title">{this.subHeader}</h2>}
+              {header !== undefined && (
+                <div
+                  id={headerID}
+                  class={{
+                    'action-sheet-title': true,
+                    'action-sheet-has-sub-title': this.subHeader !== undefined,
+                  }}
+                >
+                  {header}
+                  {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
                 </div>
               )}
               {buttons.map((b) => (
