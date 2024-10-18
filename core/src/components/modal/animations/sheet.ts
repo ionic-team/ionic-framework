@@ -4,7 +4,7 @@ import type { ModalAnimationOptions } from '../modal-interface';
 import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
-  const { currentBreakpoint, backdropBreakpoint } = opts;
+  const { currentBreakpoint, backdropBreakpoint, staticBackdropOpacity } = opts;
 
   /**
    * If the backdropBreakpoint is undefined, then the backdrop
@@ -12,7 +12,9 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
    * current breakpoint, then the backdrop should be fading in.
    */
   const shouldShowBackdrop = backdropBreakpoint === undefined || backdropBreakpoint < currentBreakpoint!;
-  const initialBackdrop = shouldShowBackdrop ? `calc(var(--backdrop-opacity) * ${currentBreakpoint!})` : '0';
+  const initialBackdrop = shouldShowBackdrop
+    ? `calc(var(--backdrop-opacity) * ${staticBackdropOpacity ? 1 : currentBreakpoint!})`
+    : '0';
 
   const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdrop);
 

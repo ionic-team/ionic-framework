@@ -573,6 +573,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
+      staticBackdropOpacity: getIonTheme(this) === 'ionic',
     });
 
     /* tslint:disable-next-line */
@@ -679,6 +680,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: this.presentingElement,
       currentBreakpoint: initialBreakpoint,
       backdropBreakpoint,
+      staticBackdropOpacity: getIonTheme(this) === 'ionic',
     }));
 
     ani.progressStart(true, 1);
@@ -698,7 +700,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
         }
-      }
+      },
+      getIonTheme(this) === 'ionic'
     );
 
     this.gesture = gesture;
@@ -1044,10 +1047,17 @@ interface ModalOverlayOptions {
    */
   currentBreakpoint?: number;
   /**
-   * The point after which the backdrop will being
+   * The point after which the backdrop will begin
    * to fade in when using a sheet modal.
    */
   backdropBreakpoint: number;
+  /**
+   * Defines whether the backdrop should have a
+   * static opacity = var(--backdrop-opacity).
+   * This option is true only when the widget
+   * is using the ionic theme.
+   */
+  staticBackdropOpacity?: boolean;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;
