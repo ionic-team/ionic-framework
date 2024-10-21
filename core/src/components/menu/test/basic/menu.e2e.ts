@@ -209,8 +209,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await ionWillClose.next();
       await ionDidClose.next();
-      await expect(ionWillClose).toHaveReceivedEventDetail({ role: 'escape' });
-      await expect(ionDidClose).toHaveReceivedEventDetail({ role: 'escape' });
+      await expect(ionWillClose).toHaveReceivedEventDetail({ role: 'backdrop' });
+      await expect(ionDidClose).toHaveReceivedEventDetail({ role: 'backdrop' });
     });
 
     test('should not pass role when clicking a menu toggle button to close', async ({ page }) => {

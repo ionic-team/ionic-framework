@@ -7,7 +7,7 @@ import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
-import { BACKDROP, ESCAPE, GESTURE, getPresentedOverlay } from '@utils/overlays';
+import { BACKDROP, GESTURE, getPresentedOverlay } from '@utils/overlays';
 import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
@@ -324,7 +324,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   onKeydown(ev: KeyboardEvent) {
     if (ev.key === 'Escape') {
-      this.close(undefined, ESCAPE);
+      this.close(undefined, BACKDROP);
     }
   }
 
