@@ -322,6 +322,20 @@ export class Menu implements ComponentInterface, MenuI {
     }
   }
 
+  @Listen('click', { capture: true })
+  onBackdropClick(ev: any) {
+    // TODO(FW-2832): type (CustomEvent triggers errors which should be sorted)
+    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
+      const shouldClose = ev.composedPath ? !ev.composedPath().includes(this.menuInnerEl) : false;
+
+      if (shouldClose) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.close(undefined, BACKDROP);
+      }
+    }
+  }
+
   onKeydown(ev: KeyboardEvent) {
     if (ev.key === 'Escape') {
       this.close(undefined, BACKDROP);
@@ -724,19 +738,6 @@ export class Menu implements ComponentInterface, MenuI {
     }
   }
 
-  private onBackdropTap = (ev: any) => {
-    // TODO(FW-2832): type (CustomEvent triggers errors which should be sorted)
-    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
-      const shouldClose = ev.composedPath ? !ev.composedPath().includes(this.menuInnerEl) : false;
-
-      if (shouldClose) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.close(undefined, BACKDROP);
-      }
-    }
-  };
-
   private updateState() {
     const isActive = this._isActive();
     if (this.gesture) {
@@ -792,13 +793,18 @@ export class Menu implements ComponentInterface, MenuI {
           'menu-pane-visible': isPaneVisible,
           'split-pane-side': hostContext('ion-split-pane', el),
         }}
-        onIonBackdropTap={this.onBackdropTap}
       >
         <div class="menu-inner" part="container" ref={(el) => (this.menuInnerEl = el)}>
           <slot></slot>
         </div>
 
-        <ion-backdrop ref={(el) => (this.backdropEl = el)} class="menu-backdrop" tappable={true} part="backdrop" />
+        <ion-backdrop
+          ref={(el) => (this.backdropEl = el)}
+          class="menu-backdrop"
+          tappable={false}
+          stopPropagation={false}
+          part="backdrop"
+        />
       </Host>
     );
   }
