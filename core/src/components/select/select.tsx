@@ -5,7 +5,7 @@ import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
-import { actionSheetController, alertController, popoverController } from '@utils/overlays';
+import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -21,6 +21,8 @@ import type {
   CssClassMap,
   PopoverOptions,
   StyleEventDetail,
+  ModalOptions,
+  SelectModalOption,
 } from '../../interface';
 import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
 import type { AlertInput } from '../alert/alert-interface';
@@ -102,15 +104,15 @@ export class Select implements ComponentInterface {
   @Prop() fill?: 'outline' | 'solid';
 
   /**
-   * The interface the select should use: `action-sheet`, `popover` or `alert`.
+   * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
    */
   @Prop() interface: SelectInterface = 'alert';
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
    * can take. See the [ion-alert docs](./alert), the
-   * [ion-action-sheet docs](./action-sheet) and the
-   * [ion-popover docs](./popover) for the
+   * [ion-action-sheet docs](./action-sheet), the
+   * [ion-popover docs](./popover), and the [ion-modal docs](./modal) for the
    * create options for each interface.
    *
    * Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
@@ -393,6 +395,9 @@ export class Select implements ComponentInterface {
     if (selectInterface === 'popover') {
       return this.openPopover(ev!);
     }
+    if (selectInterface === 'modal') {
+      return this.openModal();
+    }
     return this.openAlert();
   }
 
@@ -411,6 +416,12 @@ export class Select implements ComponentInterface {
         const popover = overlay.querySelector('ion-select-popover');
         if (popover) {
           popover.options = this.createPopoverOptions(childOpts, value);
+        }
+        break;
+      case 'modal':
+        const modal = overlay.querySelector('ion-select-modal');
+        if (modal) {
+          modal.options = this.createPopoverOptions(childOpts, value);
         }
         break;
       case 'alert':
@@ -505,6 +516,36 @@ export class Select implements ComponentInterface {
     });
 
     return popoverOptions;
+  }
+
+  // TODO(ROU-11272): Not needed if we follow popover's behavior for multi-select (i.e. no confirmation button).
+  // In that case, modal and popover could use the same utility to construct options.
+  private createModalOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectModalOption[] {
+    const modalOptions = data.map((option) => {
+      const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList)
+        .filter((cls) => cls !== 'hydrated')
+        .join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
+      return {
+        text: option.textContent || '',
+        cssClass: optClass,
+        value,
+        checked: isOptionSelected(selectValue, value, this.compareWith),
+        disabled: option.disabled,
+        handler: (selected: any) => {
+          if (!this.multiple) {
+            this.setValue(selected);
+            this.close();
+          }
+        },
+      };
+    });
+
+    return modalOptions;
   }
 
   private async openPopover(ev: UIEvent) {
@@ -649,6 +690,47 @@ export class Select implements ComponentInterface {
     }
 
     return alertController.create(alertOpts);
+  }
+
+  private openModal() {
+    const { multiple, value, interfaceOptions } = this;
+    const theme = getIonTheme(this);
+
+    const modalOpts: ModalOptions = {
+      // TODO(ROU-11272): If OS only wants to use the sheet modal style, we can set default breakpoints for the modal.
+      // We could also set them contingent on the theme if this is an interface we want to support outside of ODC
+
+      ...interfaceOptions,
+      theme,
+
+      cssClass: ['select-modal', interfaceOptions.cssClass],
+      component: 'ion-select-modal',
+      componentProps: {
+        header: interfaceOptions.header,
+        multiple,
+        value,
+        // TODO(ROU-11272): Not needed if we follow popover's behavior for multi-select (i.e. no confirmation button).
+        // In that case, modal and popover could use the same utility to construct options.
+        options: this.createModalOptions(this.childOpts, value),
+        // TODO(ROU-11272): Not needed if we follow popover's behavior for multi-select (i.e. no confirmation button)
+        confirmHandler: this.setValue.bind(this),
+      },
+    };
+
+    /**
+     * Workaround for Stencil to autodefine
+     * ion-select-modal and ion-modal when
+     * using Custom Elements build.
+     */
+    // eslint-disable-next-line
+    if (false) {
+      // eslint-disable-next-line
+      // @ts-ignore
+      document.createElement('ion-select-mdoal');
+      document.createElement('ion-modal');
+    }
+
+    return modalController.create(modalOpts);
   }
 
   /**

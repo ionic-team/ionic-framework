@@ -70,6 +70,7 @@ export const DIRECTIVES = [
   d.IonSegment,
   d.IonSegmentButton,
   d.IonSelect,
+  d.IonSelectModal,
   d.IonSelectOption,
   d.IonSkeletonText,
   d.IonSpinner,

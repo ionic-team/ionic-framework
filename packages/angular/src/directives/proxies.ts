@@ -2061,6 +2061,28 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
+  inputs: ['confirmHandler', 'header', 'multiple', 'options']
+})
+@Component({
+  selector: 'ion-select-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['confirmHandler', 'header', 'multiple', 'options'],
+})
+export class IonSelectModal {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonSelectModal extends Components.IonSelectModal {}
+
+
+@ProxyCmp({
   inputs: ['disabled', 'mode', 'theme', 'value']
 })
 @Component({
