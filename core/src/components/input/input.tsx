@@ -575,7 +575,28 @@ export class Input implements ComponentInterface {
   private renderHintText() {
     const { helperText, errorText } = this;
 
-    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+    return [
+      <div id={HELPER_TEXT_ID} class="helper-text">
+        {helperText}
+      </div>,
+      <div id={ERROR_TEXT_ID} class="error-text">
+        {errorText}
+      </div>,
+    ];
+  }
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return ERROR_TEXT_ID;
+    }
+
+    if (helperText) {
+      return HELPER_TEXT_ID;
+    }
+
+    return undefined;
   }
 
   private renderCounter() {
@@ -700,6 +721,8 @@ export class Input implements ComponentInterface {
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
 
+    console.log('el', this.el);
+    console.log('id', this.getHintTextID());
     /**
      * If the label is stacked, it should always sit above the input.
      * For floating labels, the label should move above the input if
@@ -777,6 +800,8 @@ export class Input implements ComponentInterface {
               onKeyDown={this.onKeydown}
               onCompositionstart={this.onCompositionStart}
               onCompositionend={this.onCompositionEnd}
+              aria-describedby={this.getHintTextID()}
+              aria-invalid={this.getHintTextID() === ERROR_TEXT_ID}
               {...this.inheritedAttributes}
             />
             {this.clearInput && !readonly && !disabled && (
@@ -817,3 +842,5 @@ export class Input implements ComponentInterface {
 }
 
 let inputIds = 0;
+const HELPER_TEXT_ID = `${'helper-text-' + inputIds}`;
+const ERROR_TEXT_ID = `${'error-text-' + inputIds}`;
