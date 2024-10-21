@@ -12,9 +12,12 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
    * current breakpoint, then the backdrop should be fading in.
    */
   const shouldShowBackdrop = backdropBreakpoint === undefined || backdropBreakpoint < currentBreakpoint!;
-  const initialBackdrop = shouldShowBackdrop
-    ? `calc(var(--backdrop-opacity) * ${staticBackdropOpacity ? 1 : currentBreakpoint!})`
-    : '0';
+  let initialBackdrop = '0';
+  if (staticBackdropOpacity) {
+    initialBackdrop = 'calc(var(--backdrop-opacity)';
+  } else if (shouldShowBackdrop) {
+    initialBackdrop = `calc(var(--backdrop-opacity) * ${currentBreakpoint!})`;
+  }
 
   const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdrop);
 
