@@ -181,6 +181,7 @@ ion-alert,css-prop,--width,md
 ion-app,none
 ion-app,prop,mode,"ios" | "md",undefined,false,false
 ion-app,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-app,method,setFocus,setFocus(elements: HTMLElement[]) => Promise<void>
 
 ion-avatar,shadow
 ion-avatar,prop,mode,"ios" | "md",undefined,false,false

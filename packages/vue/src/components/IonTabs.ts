@@ -1,6 +1,13 @@
 import { defineCustomElement } from "@ionic/core/components/ion-tabs.js";
 import type { VNode } from "vue";
-import { h, defineComponent, Fragment, isVNode } from "vue";
+import {
+  h,
+  defineComponent,
+  Fragment,
+  isVNode,
+  provide,
+  shallowRef,
+} from "vue";
 
 import { IonTab } from "../proxies";
 
@@ -8,6 +15,12 @@ const WILL_CHANGE = "ionTabsWillChange";
 const DID_CHANGE = "ionTabsDidChange";
 
 // TODO(FW-2969): types
+
+interface TabBarData {
+  hasRouterOutlet: boolean;
+  _tabsWillChange: Function;
+  _tabsDidChange: Function;
+}
 
 /**
  * Vue 3.2.38 fixed an issue where Web Component
@@ -21,13 +34,6 @@ const isRouterOutlet = (node: VNode) => {
     node.type &&
     ((node.type as any).name === "IonRouterOutlet" ||
       node.type === "ion-router-outlet")
-  );
-};
-
-const isTabBar = (node: VNode) => {
-  return (
-    node.type &&
-    ((node.type as any).name === "IonTabBar" || node.type === "ion-tab-bar")
   );
 };
 
@@ -49,7 +55,43 @@ const isTab = (node: VNode): boolean => {
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: "IonTabs",
   emits: [WILL_CHANGE, DID_CHANGE],
+  data() {
+    return {
+      hasRouterOutlet: false,
+    };
+  },
   setup(props, { slots, emit }) {
+    const slottedContent: VNode[] | undefined =
+      slots.default && slots.default();
+    let routerOutlet: VNode | undefined = undefined;
+
+    if (slottedContent && slottedContent.length > 0) {
+      /**
+       * Developers must pass an ion-router-outlet
+       * inside of ion-tabs if they want to use
+       * the history stack or URL updates associated
+       * with the router.
+       */
+      routerOutlet = slottedContent.find((child: VNode) =>
+        isRouterOutlet(child)
+      );
+    }
+
+    /**
+     * Tab bar can be used as a standalone component,
+     * so it cannot be modified directly through
+     * IonTabs. Instead, data will be passed through
+     * the provide/inject.
+     */
+    provide(
+      "tabBarData",
+      shallowRef<TabBarData>({
+        hasRouterOutlet: !!routerOutlet,
+        _tabsWillChange: (tab: string) => emit(WILL_CHANGE, { tab }),
+        _tabsDidChange: (tab: string) => emit(DID_CHANGE, { tab }),
+      })
+    );
+
     return {
       props,
       slots,
@@ -68,9 +110,10 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
     defineCustomElement();
   },
   render() {
-    const { slots, emit, props } = this;
-    const slottedContent = slots.default && slots.default();
-    let routerOutlet;
+    const { slots, props } = this;
+    const slottedContent: VNode[] | undefined =
+      slots.default && slots.default();
+    let routerOutlet: VNode | undefined = undefined;
     let hasTab = false;
 
     if (slottedContent && slottedContent.length > 0) {
@@ -78,7 +121,7 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
        * Developers must pass an ion-router-outlet
        * inside of ion-tabs if they want to use
        * the history stack or URL updates associated
-       * wit the router.
+       * with the router.
        */
       routerOutlet = slottedContent.find((child: VNode) =>
         isRouterOutlet(child)
@@ -101,30 +144,6 @@ export const IonTabs = /*@__PURE__*/ defineComponent({
       throw new Error(
         "IonTabs cannot contain an IonRouterOutlet and IonTab at the same time."
       );
-    }
-
-    if (slottedContent && slottedContent.length > 0) {
-      const slottedTabBar = slottedContent.find((child: VNode) =>
-        isTabBar(child)
-      );
-
-      if (slottedTabBar) {
-        if (!slottedTabBar.props) {
-          slottedTabBar.props = {};
-        }
-        /**
-         * ionTabsWillChange and ionTabsDidChange are
-         * fired from `ion-tabs`, so we need to pass these down
-         * as props so they can fire when the active tab changes.
-         * TODO: We may want to move logic from the tab bar into here
-         * so we do not have code split across two components.
-         */
-        slottedTabBar.props._tabsWillChange = (tab: string) =>
-          emit(WILL_CHANGE, { tab });
-        slottedTabBar.props._tabsDidChange = (tab: string) =>
-          emit(DID_CHANGE, { tab });
-        slottedTabBar.props._hasRouterOutlet = !!routerOutlet;
-      }
     }
 
     if (hasTab) {

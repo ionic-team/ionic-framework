@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.3](https://github.com/ionic-team/ionic-framework/compare/v8.3.2...v8.3.3) (2024-10-16)
+
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+## [8.3.2](https://github.com/ionic-team/ionic-framework/compare/v8.3.1...v8.3.2) (2024-10-02)
+
+
+### Bug Fixes
+
+* **segment:** prevent flickering for scrollable on iOS ([#29884](https://github.com/ionic-team/ionic-framework/issues/29884)) ([078ed0b](https://github.com/ionic-team/ionic-framework/commit/078ed0b86a0d8e9f8457481cb739ea214195adce)), closes [#29523](https://github.com/ionic-team/ionic-framework/issues/29523)
+
+
+
+
+
 ## [8.3.1](https://github.com/ionic-team/ionic-framework/compare/v8.3.0...v8.3.1) (2024-09-17)
 
 

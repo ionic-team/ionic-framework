@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.3](https://github.com/ionic-team/ionic-framework/compare/v8.3.2...v8.3.3) (2024-10-16)
+
+
+### Bug Fixes
+
+* **tabs, tab-bar:** use standalone tab bar in Vue, React ([#29940](https://github.com/ionic-team/ionic-framework/issues/29940)) ([b7b383b](https://github.com/ionic-team/ionic-framework/commit/b7b383bee080b72de2e6307ff9a9a051314c69ed)), closes [#29885](https://github.com/ionic-team/ionic-framework/issues/29885) [#29924](https://github.com/ionic-team/ionic-framework/issues/29924)
+
+
+
+
+
+## [8.3.2](https://github.com/ionic-team/ionic-framework/compare/v8.3.1...v8.3.2) (2024-10-02)
+
+
+### Bug Fixes
+
+* **segment:** prevent flickering for scrollable on iOS ([#29884](https://github.com/ionic-team/ionic-framework/issues/29884)) ([078ed0b](https://github.com/ionic-team/ionic-framework/commit/078ed0b86a0d8e9f8457481cb739ea214195adce)), closes [#29523](https://github.com/ionic-team/ionic-framework/issues/29523)
+
+
+
+
+
 ## [8.3.1](https://github.com/ionic-team/ionic-framework/compare/v8.3.0...v8.3.1) (2024-09-17)
 
 
