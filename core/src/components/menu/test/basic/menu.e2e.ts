@@ -213,7 +213,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(ionDidClose).toHaveReceivedEventDetail({ role: 'escape' });
     });
 
-    test.only('should not pass role when clicking a menu toggle button to close', async ({ page }) => {
+    test('should not pass role when clicking a menu toggle button to close', async ({ page }) => {
       const ionDidOpen = await page.spyOnEvent('ionDidOpen');
       const ionWillClose = await page.spyOnEvent('ionWillClose');
       const ionDidClose = await page.spyOnEvent('ionDidClose');
