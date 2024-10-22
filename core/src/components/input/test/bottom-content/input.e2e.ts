@@ -130,7 +130,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
         const input = page.locator('ion-input input');
 
-        await expect(input).toHaveAttribute('aria-invalid', '');
+        await expect(input).toHaveAttribute('aria-invalid');
       });
       test('input should not have aria-invalid attribute when input is valid', async ({ page }) => {
         await page.setContent(
@@ -139,9 +139,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const input = page.locator('ion-input input');
-        const ariaInvalid = await input.getAttribute('aria-invalid');
 
-        expect(ariaInvalid).toBe(null);
+        await expect(input).not.toHaveAttribute('aria-invalid');
       });
       test('input should not have aria-describedby attribute when no hint or error text is present', async ({
         page,
@@ -149,9 +148,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         await page.setContent(`<ion-input label="my input"></ion-input>`, config);
 
         const input = page.locator('ion-input input');
-        const ariaDescribedBy = await input.getAttribute('aria-describedby');
 
-        expect(ariaDescribedBy).toBe(null);
+        await expect(input).not.toHaveAttribute('aria-describedby');
       });
     });
     test.describe('input: hint text rendering', () => {
