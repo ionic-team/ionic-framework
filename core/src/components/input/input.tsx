@@ -33,8 +33,8 @@ import { getCounterText } from './input.utils';
 export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
-  private helperTextId = `helper-text-${inputIds++}`;
-  private errorTextId = `error-text-${inputIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private slotMutationController?: SlotMutationController;

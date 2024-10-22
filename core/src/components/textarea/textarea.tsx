@@ -45,8 +45,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-textarea-${textareaIds++}`;
-  private helperTextId = `helper-text-${textareaIds++}`;
-  private errorTextId = `error-text-${textareaIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   /**
    * `true` if the textarea was cleared as a result of the user typing
    * with `clearOnEdit` enabled.
