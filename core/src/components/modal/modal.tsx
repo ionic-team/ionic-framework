@@ -1049,6 +1049,8 @@ interface ModalOverlayOptions {
   /**
    * The point after which the backdrop will begin
    * to fade in when using a sheet modal.
+   * This option is ignored for the ionic theme
+   * due to the option below.
    */
   backdropBreakpoint: number;
   /**
