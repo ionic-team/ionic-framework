@@ -34,7 +34,6 @@
     "@phosphor-icons/core": "^2.1.1",
     "@stencil/core": "4.20.0",
     "ionicons": "^7.2.2",
-    "outsystems-design-tokens": "^1.0.1",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
@@ -67,6 +66,7 @@
     "fs-extra": "^9.0.1",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
+    "outsystems-design-tokens": "^1.0.1",
     "prettier": "^2.8.8",
     "rollup": "^2.26.4",
     "sass": "^1.33.0",
