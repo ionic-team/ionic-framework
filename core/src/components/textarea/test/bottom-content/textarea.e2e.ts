@@ -27,6 +27,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         await expect(helperText).toHaveText('my helper');
         await expect(errorText).toBeHidden();
       });
+      test('textarea should have an aria-describedby attribute when helper text is present', async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea helper-text="my helper" error-text="my error" label="my textarea"></ion-textarea>`,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea textarea');
+        const helperText = page.locator('ion-textarea .helper-text');
+        const helperTextId = await helperText.getAttribute('id');
+        const ariaDescribedBy = await textarea.getAttribute('aria-describedby');
+
+        expect(ariaDescribedBy).toBe(helperTextId);
+      });
       test('error text should be visible when textarea is invalid', async ({ page }) => {
         await page.setContent(
           `<ion-textarea class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my textarea"></ion-textarea>`,
@@ -54,6 +67,48 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
         const errorText = page.locator('ion-textarea .error-text');
         await expect(errorText).toHaveScreenshot(screenshot(`textarea-error-custom-color`));
+      });
+      test('textarea should have an aria-describedby attribute when error text is present', async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my textarea"></ion-textarea>`,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea textarea');
+        const errorText = page.locator('ion-textarea .error-text');
+        const errorTextId = await errorText.getAttribute('id');
+        const ariaDescribedBy = await textarea.getAttribute('aria-describedby');
+
+        expect(ariaDescribedBy).toBe(errorTextId);
+      });
+      test('textarea should have aria-invalid attribute when input is invalid', async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my textarea"></ion-textarea>`,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea textarea');
+
+        await expect(textarea).toHaveAttribute('aria-invalid');
+      });
+      test('textarea should not have aria-invalid attribute when input is valid', async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea helper-text="my helper" error-text="my error" label="my textarea"></ion-textarea>`,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea textarea');
+
+        await expect(textarea).not.toHaveAttribute('aria-invalid');
+      });
+      test('textarea should not have aria-describedby attribute when no hint or error text is present', async ({
+        page,
+      }) => {
+        await page.setContent(`<ion-textarea label="my textarea"></ion-textarea>`, config);
+
+        const textarea = page.locator('ion-textarea textarea');
+
+        await expect(textarea).not.toHaveAttribute('aria-describedby');
       });
     });
     test.describe('textarea: hint text rendering', () => {
