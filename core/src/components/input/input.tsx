@@ -33,6 +33,8 @@ import { getCounterText } from './input.utils';
 export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
+  private helperTextId = `helper-text-${inputIds++}`;
+  private errorTextId = `error-text-${inputIds++}`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private slotMutationController?: SlotMutationController;
@@ -573,27 +575,27 @@ export class Input implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText } = this;
+    const { helperText, errorText, helperTextId, errorTextId } = this;
 
     return [
-      <div id={HELPER_TEXT_ID} class="helper-text">
+      <div id={helperTextId} class="helper-text">
         {helperText}
       </div>,
-      <div id={ERROR_TEXT_ID} class="error-text">
+      <div id={errorTextId} class="error-text">
         {errorText}
       </div>,
     ];
   }
 
   private getHintTextID(): string | undefined {
-    const { el, helperText, errorText } = this;
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
 
     if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
-      return ERROR_TEXT_ID;
+      return errorTextId;
     }
 
     if (helperText) {
-      return HELPER_TEXT_ID;
+      return helperTextId;
     }
 
     return undefined;
@@ -721,8 +723,6 @@ export class Input implements ComponentInterface {
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
 
-    console.log('el', this.el);
-    console.log('id', this.getHintTextID());
     /**
      * If the label is stacked, it should always sit above the input.
      * For floating labels, the label should move above the input if
@@ -801,7 +801,7 @@ export class Input implements ComponentInterface {
               onCompositionstart={this.onCompositionStart}
               onCompositionend={this.onCompositionEnd}
               aria-describedby={this.getHintTextID()}
-              aria-invalid={this.getHintTextID() === ERROR_TEXT_ID}
+              aria-invalid={this.getHintTextID() === this.errorTextId}
               {...this.inheritedAttributes}
             />
             {this.clearInput && !readonly && !disabled && (
@@ -842,5 +842,3 @@ export class Input implements ComponentInterface {
 }
 
 let inputIds = 0;
-const HELPER_TEXT_ID = `${'helper-text-' + inputIds}`;
-const ERROR_TEXT_ID = `${'error-text-' + inputIds}`;
