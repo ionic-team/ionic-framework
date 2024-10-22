@@ -51,18 +51,19 @@ export const createSheetGesture = (
   breakpoints: number[] = [],
   getCurrentBreakpoint: () => number,
   onDismiss: () => void,
-  onBreakpointChange: (breakpoint: number) => void
+  onBreakpointChange: (breakpoint: number) => void,
+  staticBackdropOpacity: boolean
 ) => {
   // Defaults for the sheet swipe animation
   const defaultBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: 1, opacity: 0.01 },
+    { offset: 1, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0.01 },
   ];
 
   const customBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
-    { offset: 1 - backdropBreakpoint, opacity: 0 },
-    { offset: 1, opacity: 0 },
+    { offset: 1 - backdropBreakpoint, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0 },
+    { offset: 1, opacity: staticBackdropOpacity ? 'var(--backdrop-opacity)' : 0 },
   ];
 
   const SheetDefaults = {
@@ -312,14 +313,15 @@ export const createSheetGesture = (
       backdropAnimation.keyframes([
         {
           offset: 0,
-          opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(
-            1 - breakpointOffset,
-            backdropBreakpoint
-          )})`,
+          opacity: staticBackdropOpacity
+            ? 'var(--backdrop-opacity)'
+            : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(1 - breakpointOffset, backdropBreakpoint)})`,
         },
         {
           offset: 1,
-          opacity: `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})`,
+          opacity: staticBackdropOpacity
+            ? 'var(--backdrop-opacity)'
+            : `calc(var(--backdrop-opacity) * ${getBackdropValueForSheet(snapToBreakpoint, backdropBreakpoint)})`,
         },
       ]);
 

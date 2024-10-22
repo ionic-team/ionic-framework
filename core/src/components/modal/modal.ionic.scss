@@ -7,7 +7,7 @@
 :host {
   --background: #{globals.$ion-primitives-base-white};
   --box-shadow: #{globals.$ion-elevation-3};
-  --backdrop-opacity: 1;
+  --backdrop-opacity: 0.7;
 
   color: globals.$ion-primitives-neutral-1200;
 }
