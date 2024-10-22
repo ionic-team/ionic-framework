@@ -49,40 +49,67 @@
       </ion-header>
 
       <ion-content id="content" class="ion-padding">
-        <ion-input
-          type="email"
-          fill="solid"
-          label="Email"
-          label-placement="floating"
-          helper-text="Enter a valid email"
-          error-text="Invalid email"
-        ></ion-input>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Hint</h2>
+            <ion-input label="Email"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Hint</h2>
+            <ion-input label="Email" helper-text="Enter your email"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Hint</h2>
+            <ion-input
+              class="ion-touched ion-invalid"
+              label="Email"
+              error-text="Please enter a valid email"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Error Color</h2>
+            <ion-input
+              class="ion-touched ion-invalid custom-error-color"
+              label="Email"
+              error-text="Please enter a valid email"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter</h2>
+            <ion-input label="Email" counter="true" maxlength="100"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Counter</h2>
+            <ion-input id="custom-counter" label="Email" counter="true" maxlength="100"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter with Helper</h2>
+            <ion-input label="Email" counter="true" maxlength="100" helper-text="Enter an email"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter with Error</h2>
+            <ion-input
+              class="ion-touched ion-invalid"
+              label="Email"
+              counter="true"
+              maxlength="100"
+              error-text="Please enter a valid email"
+            ></ion-input>
+          </div>
+        </div>
 
         <script>
-          const input = document.querySelector('ion-input');
-
-          input.addEventListener('ionInput', (ev) => validate(ev));
-          input.addEventListener('ionBlur', () => markTouched());
-
-          const validateEmail = (email) => {
-            return email.match(
-              /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-            );
-          };
-
-          const validate = (ev) => {
-            const value = ev.target.value;
-
-            input.classList.remove('ion-valid');
-            input.classList.remove('ion-invalid');
-
-            if (value === '') return;
-
-            validateEmail(value) ? input.classList.add('ion-valid') : input.classList.add('ion-invalid');
-          };
-
-          const markTouched = () => {
-            input.classList.add('ion-touched');
+          const customCounterInput = document.querySelector('ion-input#custom-counter');
+          customCounterInput.counterFormatter = (inputLength, maxLength) => {
+            const length = maxLength - inputLength;
+            return `${maxLength - inputLength} characters left`;
           };
         </script>
       </ion-content>
