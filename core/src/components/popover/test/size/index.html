@@ -16,7 +16,7 @@
       ion-app > ion-content {
         --background: #dddddd;
       }
-      ion-content button {
+      ion-content button.trigger {
         padding: 12px 16px;
       }
       .grid {
@@ -57,26 +57,30 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Cover</h2>
-            <button id="cover-trigger">Trigger</button>
+            <button id="cover-trigger" class="trigger">Trigger</button>
             <ion-popover show-backdrop="false" class="cover-popover" trigger="cover-trigger" size="cover">
               <ion-content class="ion-padding"> My really really really really long content </ion-content>
             </ion-popover>
           </div>
           <div class="grid-item">
             <h2>With Event</h2>
-            <button id="event-trigger" onclick="openPopover('event-popover', event, 'false')">Trigger</button>
+            <button id="event-trigger" class="trigger" onclick="openPopover('event-popover', event, 'false')">
+              Trigger
+            </button>
           </div>
 
           <div class="grid-item">
             <h2>Auto</h2>
-            <button id="auto-trigger">Trigger</button>
+            <button id="auto-trigger" class="trigger">Trigger</button>
             <ion-popover show-backdrop="false" class="auto-popover" trigger="auto-trigger">
               <ion-content class="ion-padding"> My really really really really long content </ion-content>
             </ion-popover>
           </div>
           <div class="grid-item">
             <h2>No Event</h2>
-            <button id="no-event-trigger" onclick="openPopover('no-event-popover', null, 'true')">Trigger</button>
+            <button id="no-event-trigger" class="trigger" onclick="openPopover('no-event-popover', null, 'true')">
+              Trigger
+            </button>
           </div>
         </div>
       </ion-content>

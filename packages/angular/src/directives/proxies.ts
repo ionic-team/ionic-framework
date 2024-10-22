@@ -188,7 +188,8 @@ Shorthand for ionAlertDidDismiss.
 
 
 @ProxyCmp({
-  inputs: ['mode', 'theme']
+  inputs: ['mode', 'theme'],
+  methods: ['setFocus']
 })
 @Component({
   selector: 'ion-app',
