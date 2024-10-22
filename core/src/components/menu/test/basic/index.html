@@ -51,7 +51,9 @@
         </ion-header>
         <ion-content>
           <ion-list>
-            <ion-button id="start-menu-button">Button</ion-button>
+            <ion-menu-toggle>
+              <ion-button id="start-menu-button">Button</ion-button>
+            </ion-menu-toggle>
             <ion-item>Menu Item</ion-item>
             <ion-item>Menu Item</ion-item>
             <ion-item>Menu Item</ion-item>
@@ -125,6 +127,19 @@
     </ion-app>
 
     <script>
+      window.addEventListener('ionWillOpen', function (e) {
+        console.log('ionWillOpen', e);
+      });
+      window.addEventListener('ionDidOpen', function (e) {
+        console.log('ionDidOpen', e);
+      });
+      window.addEventListener('ionWillClose', function (e) {
+        console.log('ionWillClose', e);
+      });
+      window.addEventListener('ionDidClose', function (e) {
+        console.log('ionDidClose', e);
+      });
+
       async function openStart() {
         // Open the menu by menu-id
         await menuController.enable(true, 'start-menu');
