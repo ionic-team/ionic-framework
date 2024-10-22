@@ -7,14 +7,14 @@ import { shouldUseCloseWatcher } from '@utils/hardware-back-button';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
-import { getPresentedOverlay } from '@utils/overlays';
+import { BACKDROP, GESTURE, getPresentedOverlay } from '@utils/overlays';
 import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 
-import type { MenuChangeEventDetail, MenuI, MenuType, Side } from './menu-interface';
+import type { MenuChangeEventDetail, MenuCloseEventDetail, MenuI, MenuType, Side } from './menu-interface';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
@@ -179,7 +179,7 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * Emitted when the menu is about to be closed.
    */
-  @Event() ionWillClose!: EventEmitter<void>;
+  @Event() ionWillClose!: EventEmitter<MenuCloseEventDetail>;
   /**
    * Emitted when the menu is open.
    */
@@ -188,7 +188,7 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * Emitted when the menu is closed.
    */
-  @Event() ionDidClose!: EventEmitter<void>;
+  @Event() ionDidClose!: EventEmitter<MenuCloseEventDetail>;
 
   /**
    * Emitted when the menu state is changed.
@@ -331,14 +331,14 @@ export class Menu implements ComponentInterface, MenuI {
       if (shouldClose) {
         ev.preventDefault();
         ev.stopPropagation();
-        this.close();
+        this.close(undefined, BACKDROP);
       }
     }
   }
 
   onKeydown(ev: KeyboardEvent) {
     if (ev.key === 'Escape') {
-      this.close();
+      this.close(undefined, BACKDROP);
     }
   }
 
@@ -375,8 +375,8 @@ export class Menu implements ComponentInterface, MenuI {
    * it returns `false`.
    */
   @Method()
-  close(animated = true): Promise<boolean> {
-    return this.setOpen(false, animated);
+  close(animated = true, role?: string): Promise<boolean> {
+    return this.setOpen(false, animated, role);
   }
 
   /**
@@ -393,8 +393,8 @@ export class Menu implements ComponentInterface, MenuI {
    * If the operation can't be completed successfully, it returns `false`.
    */
   @Method()
-  setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
-    return menuController._setOpen(this, shouldOpen, animated);
+  setOpen(shouldOpen: boolean, animated = true, role?: string): Promise<boolean> {
+    return menuController._setOpen(this, shouldOpen, animated, role);
   }
 
   private trapKeyboardFocus(ev: Event, doc: Document) {
@@ -438,13 +438,13 @@ export class Menu implements ComponentInterface, MenuI {
     }
   }
 
-  async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
+  async _setOpen(shouldOpen: boolean, animated = true, role?: string): Promise<boolean> {
     // If the menu is disabled or it is currently being animated, let's do nothing
     if (!this._isActive() || this.isAnimating || shouldOpen === this._isOpen) {
       return false;
     }
 
-    this.beforeAnimation(shouldOpen);
+    this.beforeAnimation(shouldOpen, role);
 
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
@@ -459,7 +459,7 @@ export class Menu implements ComponentInterface, MenuI {
       return false;
     }
 
-    this.afterAnimation(shouldOpen);
+    this.afterAnimation(shouldOpen, role);
 
     return true;
   }
@@ -542,7 +542,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   private onWillStart(): Promise<void> {
-    this.beforeAnimation(!this._isOpen);
+    this.beforeAnimation(!this._isOpen, GESTURE);
     return this.loadAnimation();
   }
 
@@ -624,11 +624,11 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
-      .onFinish(() => this.afterAnimation(shouldOpen), { oneTimeCallback: true })
+      .onFinish(() => this.afterAnimation(shouldOpen, GESTURE), { oneTimeCallback: true })
       .progressEnd(playTo ? 1 : 0, this._isOpen ? 1 - newStepValue : newStepValue, 300);
   }
 
-  private beforeAnimation(shouldOpen: boolean) {
+  private beforeAnimation(shouldOpen: boolean, role?: string) {
     assert(!this.isAnimating, '_before() should not be called while animating');
 
     // this places the menu into the correct location before it animates in
@@ -671,11 +671,11 @@ export class Menu implements ComponentInterface, MenuI {
     if (shouldOpen) {
       this.ionWillOpen.emit();
     } else {
-      this.ionWillClose.emit();
+      this.ionWillClose.emit({ role });
     }
   }
 
-  private afterAnimation(isOpen: boolean) {
+  private afterAnimation(isOpen: boolean, role?: string) {
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
@@ -731,7 +731,7 @@ export class Menu implements ComponentInterface, MenuI {
       }
 
       // emit close event
-      this.ionDidClose.emit();
+      this.ionDidClose.emit({ role });
 
       // undo focus trapping so multiple menus don't collide
       document.removeEventListener('focus', this.handleFocus, true);
@@ -767,7 +767,7 @@ export class Menu implements ComponentInterface, MenuI {
        * If the menu is disabled then we should
        * forcibly close the menu even if it is open.
        */
-      this.afterAnimation(false);
+      this.afterAnimation(false, GESTURE);
     }
   }
 
