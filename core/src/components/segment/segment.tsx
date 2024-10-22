@@ -477,11 +477,12 @@ export class Segment implements ComponentInterface {
       };
 
       // Find the next valid button (i.e. we need to ignore any disabled buttons)
+      const indexOffset = Math.ceil(scrollDistancePercentage);
       const nextIndex =
         this.nextButtonIndex ??
         (scrollDistance > 0
-          ? findIndexFrom(buttons, (ref) => !ref.disabled, currentIndex + 1)
-          : findIndexFromReverse(buttons, (ref) => !ref.disabled, currentIndex - 1));
+          ? findIndexFrom(buttons, (ref) => !ref.disabled, currentIndex + indexOffset)
+          : findIndexFromReverse(buttons, (ref) => !ref.disabled, currentIndex - indexOffset));
 
       if (nextIndex >= 0 && nextIndex < buttons.length) {
         // Figure out the number of disabled buttons between the current and next button
