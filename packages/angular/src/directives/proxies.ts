@@ -1952,14 +1952,14 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value']
+  inputs: ['color', 'disabled', 'mode', 'scrollable', 'segmentViewId', 'selectOnFocus', 'swipeGesture', 'value']
 })
 @Component({
   selector: 'ion-segment',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'scrollable', 'segmentViewId', 'selectOnFocus', 'swipeGesture', 'value'],
 })
 export class IonSegment {
   protected el: HTMLElement;
@@ -2006,14 +2006,13 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
 
 
 @ProxyCmp({
-  inputs: ['disabled']
 })
 @Component({
   selector: 'ion-segment-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled'],
+  inputs: [],
 })
 export class IonSegmentContent {
   protected el: HTMLElement;
@@ -2052,11 +2051,11 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
   /**
    * Emitted when the segment view is scrolled.
    */
-  ionSegmentViewScroll: EventEmitter<CustomEvent<{ scrollDirection: string; scrollDistance: number; scrollDistancePercentage: number; }>>;
+  ionSegmentViewScroll: EventEmitter<CustomEvent<{ scrollRatio: number; isManualScroll: boolean; }>>;
   /**
    * Emitted when the segment view scroll has ended.
    */
-  ionSegmentViewScrollEnd: EventEmitter<CustomEvent<{ activeContentId: string }>>;
+  ionSegmentViewScrollEnd: EventEmitter<CustomEvent<void>>;
 
   ionSegmentViewScrollStart: EventEmitter<CustomEvent<void>>;
 }

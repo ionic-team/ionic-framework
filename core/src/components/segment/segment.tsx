@@ -28,8 +28,7 @@ export class Segment implements ComponentInterface {
   private valueBeforeGesture?: SegmentValue;
 
   private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
-  private scrolledIndicator?: HTMLDivElement | null = null;
-  private isScrolling = false;
+  private lastNextIndex?: number;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -114,6 +113,11 @@ export class Segment implements ComponentInterface {
    * If `false`, keyboard navigation will only focus the `ion-segment-button` element.
    */
   @Prop() selectOnFocus = false;
+
+  /**
+   * The `id` of the segment view that this segment component should be linked to.
+   */
+  @Prop() segmentViewId?: string;
 
   /**
    * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
@@ -342,18 +346,30 @@ export class Segment implements ComponentInterface {
   }
 
   private getSegmentView() {
-    const buttons = this.getButtons();
-    // Get the first button with a contentId
-    const firstContentId = buttons.find((button: HTMLIonSegmentButtonElement) => button.contentId);
-    // Get the segment content with an id matching the button's contentId
-    const segmentContent = document.querySelector(`ion-segment-content[id="${firstContentId?.contentId}"]`);
-    // Return the segment view for that matching segment content
-    return segmentContent?.closest('ion-segment-view');
+    if (!this.segmentViewId) {
+      return null;
+    }
+
+    const segmentViewEl = document.getElementById(this.segmentViewId);
+
+    if (!segmentViewEl) {
+      console.warn(`Segment: Unable to find 'ion-segment-view' with id="${this.segmentViewId}"`);
+      return null;
+    }
+
+    if (segmentViewEl.tagName !== 'ION-SEGMENT-VIEW') {
+      console.warn(`Segment: Element with id="${this.segmentViewId}" is not an <ion-segment-view> element.`);
+      return null;
+    }
+
+    return segmentViewEl as HTMLIonSegmentViewElement;
   }
 
   @Listen('ionSegmentViewScroll', { target: 'body' })
   handleSegmentViewScroll(ev: CustomEvent) {
-    if (!this.isScrolling) {
+    const { scrollRatio, isManualScroll } = ev.detail;
+
+    if (!isManualScroll) {
       return;
     }
 
@@ -370,116 +386,15 @@ export class Segment implements ComponentInterface {
 
       const index = buttons.findIndex((button) => button.value === this.value);
       const current = buttons[index];
-      const indicatorEl = this.getIndicator(current);
-      this.scrolledIndicator = indicatorEl;
 
-      const { scrollDistancePercentage, scrollDistance } = ev.detail;
+      const next = Math.round(scrollRatio * (buttons.length - 1));
 
-      if (indicatorEl && !isNaN(scrollDistancePercentage)) {
-        indicatorEl.style.transition = 'transform 0.3s ease-out';
+      if (this.lastNextIndex === undefined || this.lastNextIndex !== next) {
+        this.lastNextIndex = next;
 
-        // Calculate the amount the indicator should move based on the scroll percentage
-        // and the width of the current button
-        const scrollAmount = scrollDistancePercentage * current.getBoundingClientRect().width;
-        const transformValue = scrollDistance < 0 ? -scrollAmount : scrollAmount;
-
-        // Calculate total width of buttons to the left of the current button
-        const totalButtonWidthBefore = buttons
-          .slice(0, index)
-          .reduce((acc, button) => acc + button.getBoundingClientRect().width, 0);
-
-        // Calculate total width of buttons to the right of the current button
-        const totalButtonWidthAfter = buttons
-          .slice(index + 1)
-          .reduce((acc, button) => acc + button.getBoundingClientRect().width, 0);
-
-        // Set minTransform and maxTransform
-        const minTransform = -totalButtonWidthBefore;
-        const maxTransform = totalButtonWidthAfter;
-
-        // Clamp the transform value to ensure it doesn't go out of bounds
-        const clampedTransform = Math.max(minTransform, Math.min(transformValue, maxTransform));
-
-        // Apply the clamped transform value to the indicator element
-        const transform = `translate3d(${clampedTransform}px, 0, 0)`;
-        indicatorEl.style.setProperty('transform', transform);
-
-        // Scroll the buttons if the indicator is out of view
-        const indicatorX = indicatorEl.getBoundingClientRect().x;
-        const buttonWidth = current.getBoundingClientRect().width;
-        if (scrollDistance < 0 && indicatorX < 0) {
-          this.el.scrollBy({
-            top: 0,
-            left: indicatorX,
-            behavior: 'instant',
-          });
-        } else if (scrollDistance > 0 && indicatorX + buttonWidth > this.el.offsetWidth) {
-          this.el.scrollBy({
-            top: 0,
-            left: indicatorX + buttonWidth - this.el.offsetWidth,
-            behavior: 'instant',
-          });
-        }
+        this.checkButton(current, buttons[next]);
+        this.emitValueChange();
       }
-    }
-  }
-
-  @Listen('ionSegmentViewScrollStart', { target: 'body' })
-  onScrollStart(ev: CustomEvent) {
-    const dispatchedFrom = ev.target as HTMLElement;
-    const segmentViewEl = this.segmentViewEl as EventTarget;
-    const segmentEl = this.el;
-
-    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
-      this.isScrolling = true;
-    }
-  }
-
-  @Listen('ionSegmentViewScrollEnd', { target: 'body' })
-  onScrollEnd(ev: CustomEvent<{ activeContentId: string }>) {
-    const dispatchedFrom = ev.target as HTMLElement;
-    const segmentViewEl = this.segmentViewEl as EventTarget;
-    const segmentEl = this.el;
-
-    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
-      if (this.scrolledIndicator) {
-        const computedStyle = window.getComputedStyle(this.scrolledIndicator);
-        const isTransitioning = computedStyle.transitionDuration !== '0s';
-
-        if (isTransitioning) {
-          // Add a transitionend listener if the indicator is transitioning
-          this.waitForTransitionEnd(this.scrolledIndicator, () => {
-            this.updateValueAfterTransition(ev.detail.activeContentId);
-          });
-        } else {
-          // Immediately update the value if there's no transition
-          this.updateValueAfterTransition(ev.detail.activeContentId);
-        }
-      } else {
-        // Immediately update the value if there's no indicator
-        this.updateValueAfterTransition(ev.detail.activeContentId);
-      }
-
-      this.isScrolling = false;
-    }
-  }
-
-  // Wait for the transition to end, then execute the callback
-  private waitForTransitionEnd(indicator: HTMLElement, callback: () => void) {
-    const onTransitionEnd = () => {
-      indicator.removeEventListener('transitionend', onTransitionEnd);
-      callback();
-    };
-    indicator.addEventListener('transitionend', onTransitionEnd);
-  }
-
-  // Update the Segment value after the ionSegmentViewScrollEnd transition has ended
-  private updateValueAfterTransition(activeContentId: string) {
-    this.value = activeContentId;
-
-    if (this.scrolledIndicator) {
-      this.scrolledIndicator.style.transition = '';
-      this.scrolledIndicator.style.transform = '';
     }
   }
 
@@ -672,10 +587,11 @@ export class Segment implements ComponentInterface {
 
     if (current !== previous) {
       this.emitValueChange();
-      this.updateSegmentView();
     }
 
-    if (this.scrollable || !this.swipeGesture) {
+    if (this.segmentViewEl) {
+      this.updateSegmentView();
+    } else if (this.scrollable || !this.swipeGesture) {
       if (previous) {
         this.checkButton(previous, current);
       } else {

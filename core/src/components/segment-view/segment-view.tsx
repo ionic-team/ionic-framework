@@ -10,10 +10,9 @@ import { Component, Element, Event, Host, Listen, Method, Prop, h } from '@stenc
   shadow: true,
 })
 export class SegmentView implements ComponentInterface {
-  private initialScrollLeft?: number;
-  private previousScrollLeft = 0;
   private scrollEndTimeout: ReturnType<typeof setTimeout> | null = null;
   private isTouching = false;
+  private isManualScroll = true;
 
   @Element() el!: HTMLElement;
 
@@ -26,60 +25,26 @@ export class SegmentView implements ComponentInterface {
    * Emitted when the segment view is scrolled.
    */
   @Event() ionSegmentViewScroll!: EventEmitter<{
-    scrollDirection: string;
-    scrollDistance: number;
-    scrollDistancePercentage: number;
+    scrollRatio: number;
+    isManualScroll: boolean;
   }>;
 
   /**
    * Emitted when the segment view scroll has ended.
    */
-  @Event() ionSegmentViewScrollEnd!: EventEmitter<{ activeContentId: string }>;
+  @Event() ionSegmentViewScrollEnd!: EventEmitter<void>;
 
   @Event() ionSegmentViewScrollStart!: EventEmitter<void>;
 
-  private activeContentId = '';
-
   @Listen('scroll')
   handleScroll(ev: Event) {
-    const { initialScrollLeft, previousScrollLeft } = this;
-    const { scrollLeft, offsetWidth } = ev.target as HTMLElement;
+    const { scrollLeft, scrollWidth, clientWidth } = ev.target as HTMLElement;
+    const scrollRatio = scrollLeft / (scrollWidth - clientWidth);
 
-    // Set initial scroll position if it's undefined
-    this.initialScrollLeft = initialScrollLeft ?? scrollLeft;
-
-    // Determine the scroll direction based on the previous scroll position
-    const scrollDirection = scrollLeft > previousScrollLeft ? 'right' : 'left';
-    this.previousScrollLeft = scrollLeft;
-
-    // Calculate the distance scrolled based on the initial scroll position
-    // and then transform it to a percentage of the segment view width
-    const scrollDistance = scrollLeft - this.initialScrollLeft;
-    const scrollDistancePercentage = Math.abs(scrollDistance) / offsetWidth;
-
-    // Emit the scroll direction and distance
     this.ionSegmentViewScroll.emit({
-      scrollDirection,
-      scrollDistance,
-      scrollDistancePercentage,
+      scrollRatio,
+      isManualScroll: this.isManualScroll,
     });
-
-    // Check if the scroll is at a snapping point and return if not
-    const atSnappingPoint = scrollLeft % offsetWidth === 0;
-    if (!atSnappingPoint) return;
-
-    // Find the current segment content based on the scroll position
-    const currentIndex = Math.round(scrollLeft / offsetWidth);
-
-    // Recursively search for the next enabled content in the scroll direction
-    const segmentContent = this.getNextEnabledContent(currentIndex, scrollDirection);
-
-    // Exit if no valid segment content found
-    if (!segmentContent) return;
-
-    // Update active content ID and scroll to the segment content
-    this.activeContentId = segmentContent.id;
-    this.setContent(segmentContent.id);
 
     // Reset the timeout to check for scroll end
     this.resetScrollEndTimeout();
@@ -127,13 +92,11 @@ export class SegmentView implements ComponentInterface {
    * reset the scroll position and emit the scroll end event.
    */
   private checkForScrollEnd() {
-    const activeContent = this.getSegmentContents().find(content => content.id === this.activeContentId);
-
     // Only emit scroll end event if the active content is not disabled and
     // the user is not touching the segment view
-    if (activeContent?.disabled === false && !this.isTouching) {
-      this.ionSegmentViewScrollEnd.emit({ activeContentId: this.activeContentId });
-      this.initialScrollLeft = undefined;
+    if (!this.isTouching) {
+      this.ionSegmentViewScrollEnd.emit();
+      this.isManualScroll = true;
     }
   }
 
@@ -151,6 +114,8 @@ export class SegmentView implements ComponentInterface {
 
     if (index === -1) return;
 
+    this.isManualScroll = false;
+
     const contentWidth = this.el.offsetWidth;
     this.el.scrollTo({
       top: 0,
@@ -161,28 +126,6 @@ export class SegmentView implements ComponentInterface {
 
   private getSegmentContents(): HTMLIonSegmentContentElement[] {
     return Array.from(this.el.querySelectorAll('ion-segment-content'));
-  }
-
-  /**
-   * Recursively find the next enabled segment content based on the scroll direction.
-   * If no enabled content is found, it will return null.
-   */
-  private getNextEnabledContent(index: number, direction: string): HTMLIonSegmentContentElement | null {
-    const contents = this.getSegmentContents();
-
-    // Stop if we reach the beginning or end of the content array
-    if (index < 0 || index >= contents.length) return null;
-
-    const segmentContent = contents[index];
-
-    // If the content is not disabled, return it
-    if (!segmentContent.disabled) {
-      return segmentContent;
-    }
-
-    // Otherwise, keep searching in the same direction
-    const nextIndex = direction === 'right' ? index + 1 : index - 1;
-    return this.getNextEnabledContent(nextIndex, direction);
   }
 
   render() {

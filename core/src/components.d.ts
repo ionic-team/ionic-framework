@@ -2677,6 +2677,10 @@ export namespace Components {
          */
         "scrollable": boolean;
         /**
+          * The `id` of the segment view that this segment component should be linked to.
+         */
+        "segmentViewId"?: string;
+        /**
           * If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `false`, keyboard navigation will only focus the `ion-segment-button` element.
          */
         "selectOnFocus": boolean;
@@ -2717,10 +2721,6 @@ export namespace Components {
         "value": SegmentValue;
     }
     interface IonSegmentContent {
-        /**
-          * If `true`, the segment content will not be displayed.
-         */
-        "disabled": boolean;
     }
     interface IonSegmentView {
         /**
@@ -4443,11 +4443,10 @@ declare global {
     };
     interface HTMLIonSegmentViewElementEventMap {
         "ionSegmentViewScroll": {
-    scrollDirection: string;
-    scrollDistance: number;
-    scrollDistancePercentage: number;
+    scrollRatio: number;
+    isManualScroll: boolean;
   };
-        "ionSegmentViewScrollEnd": { activeContentId: string };
+        "ionSegmentViewScrollEnd": void;
         "ionSegmentViewScrollStart": void;
     }
     interface HTMLIonSegmentViewElement extends Components.IonSegmentView, HTMLStencilElement {
@@ -7491,6 +7490,10 @@ declare namespace LocalJSX {
          */
         "scrollable"?: boolean;
         /**
+          * The `id` of the segment view that this segment component should be linked to.
+         */
+        "segmentViewId"?: string;
+        /**
           * If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `false`, keyboard navigation will only focus the `ion-segment-button` element.
          */
         "selectOnFocus"?: boolean;
@@ -7530,10 +7533,6 @@ declare namespace LocalJSX {
         "value"?: SegmentValue;
     }
     interface IonSegmentContent {
-        /**
-          * If `true`, the segment content will not be displayed.
-         */
-        "disabled"?: boolean;
     }
     interface IonSegmentView {
         /**
@@ -7544,14 +7543,13 @@ declare namespace LocalJSX {
           * Emitted when the segment view is scrolled.
          */
         "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<{
-    scrollDirection: string;
-    scrollDistance: number;
-    scrollDistancePercentage: number;
+    scrollRatio: number;
+    isManualScroll: boolean;
   }>) => void;
         /**
           * Emitted when the segment view scroll has ended.
          */
-        "onIonSegmentViewScrollEnd"?: (event: IonSegmentViewCustomEvent<{ activeContentId: string }>) => void;
+        "onIonSegmentViewScrollEnd"?: (event: IonSegmentViewCustomEvent<void>) => void;
         "onIonSegmentViewScrollStart"?: (event: IonSegmentViewCustomEvent<void>) => void;
     }
     interface IonSelect {
