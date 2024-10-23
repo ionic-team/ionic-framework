@@ -21,19 +21,19 @@ const testAria = async (
   const subHeader = alert.locator('.alert-sub-title');
 
   // If a header exists, it should be an h2 element
-  if (await header.count() > 0) {
+  if ((await header.count()) > 0) {
     const headerTagName = await header.evaluate((el) => el.tagName);
     expect(headerTagName).toBe('H2');
   }
 
   // If a header and subHeader exist, the subHeader should be an h3 element
-  if (await header.count() > 0 && await subHeader.count() > 0) {
+  if ((await header.count()) > 0 && (await subHeader.count()) > 0) {
     const subHeaderTagName = await subHeader.evaluate((el) => el.tagName);
     expect(subHeaderTagName).toBe('H3');
   }
 
   // If a subHeader exists without a header, the subHeader should be an h2 element
-  if (await header.count() === 0 && await subHeader.count() > 0) {
+  if ((await header.count()) === 0 && (await subHeader.count()) > 0) {
     const subHeaderTagName = await subHeader.evaluate((el) => el.tagName);
     expect(subHeaderTagName).toBe('H2');
   }
