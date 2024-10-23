@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, State, h } from '@stencil/core';
+
+import type { SegmentViewScrollEvent } from './segment-view-interface';
 
 @Component({
   tag: 'ion-segment-view',
@@ -12,7 +14,6 @@ import { Component, Element, Event, Host, Listen, Method, Prop, h } from '@stenc
 export class SegmentView implements ComponentInterface {
   private scrollEndTimeout: ReturnType<typeof setTimeout> | null = null;
   private isTouching = false;
-  private isManualScroll = true;
 
   @Element() el!: HTMLElement;
 
@@ -22,12 +23,16 @@ export class SegmentView implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * If `true`, the segment view is scrollable.
+   * If `false`, pointer events will be disabled. This is to prevent issues with
+   * quickly scrolling after interacting with a segment button.
+   */
+  @State() isManualScroll = true;
+
+  /**
    * Emitted when the segment view is scrolled.
    */
-  @Event() ionSegmentViewScroll!: EventEmitter<{
-    scrollRatio: number;
-    isManualScroll: boolean;
-  }>;
+  @Event() ionSegmentViewScroll!: EventEmitter<SegmentViewScrollEvent>;
 
   /**
    * Emitted when the segment view scroll has ended.
@@ -83,7 +88,7 @@ export class SegmentView implements ComponentInterface {
     }
     this.scrollEndTimeout = setTimeout(() => {
       this.checkForScrollEnd();
-    }, 150);
+    }, 50);
   }
 
   /**
@@ -129,12 +134,13 @@ export class SegmentView implements ComponentInterface {
   }
 
   render() {
-    const { disabled } = this;
+    const { disabled, isManualScroll } = this;
 
     return (
       <Host
         class={{
           'segment-view-disabled': disabled,
+          'segment-view-scroll-disabled': !isManualScroll,
         }}
       >
         <slot></slot>

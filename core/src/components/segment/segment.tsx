@@ -7,6 +7,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
+import type { SegmentViewScrollEvent } from '../segment-view/segment-view-interface';
 
 import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface';
 
@@ -366,7 +367,7 @@ export class Segment implements ComponentInterface {
   }
 
   @Listen('ionSegmentViewScroll', { target: 'body' })
-  handleSegmentViewScroll(ev: CustomEvent) {
+  handleSegmentViewScroll(ev: CustomEvent<SegmentViewScrollEvent>) {
     const { scrollRatio, isManualScroll } = ev.detail;
 
     if (!isManualScroll) {

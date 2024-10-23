@@ -1886,11 +1886,13 @@ export class IonSegmentView {
 }
 
 
+import type { SegmentViewScrollEvent as IIonSegmentViewSegmentViewScrollEvent } from '@ionic/core/components';
+
 export declare interface IonSegmentView extends Components.IonSegmentView {
   /**
    * Emitted when the segment view is scrolled.
    */
-  ionSegmentViewScroll: EventEmitter<CustomEvent<{ scrollRatio: number; isManualScroll: boolean; }>>;
+  ionSegmentViewScroll: EventEmitter<CustomEvent<IIonSegmentViewSegmentViewScrollEvent>>;
   /**
    * Emitted when the segment view scroll has ended.
    */

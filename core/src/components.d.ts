@@ -34,6 +34,7 @@ import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+import { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
@@ -69,6 +70,7 @@ export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+export { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
@@ -4442,10 +4444,7 @@ declare global {
         new (): HTMLIonSegmentContentElement;
     };
     interface HTMLIonSegmentViewElementEventMap {
-        "ionSegmentViewScroll": {
-    scrollRatio: number;
-    isManualScroll: boolean;
-  };
+        "ionSegmentViewScroll": SegmentViewScrollEvent;
         "ionSegmentViewScrollEnd": void;
         "ionSegmentViewScrollStart": void;
     }
@@ -7542,10 +7541,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the segment view is scrolled.
          */
-        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<{
-    scrollRatio: number;
-    isManualScroll: boolean;
-  }>) => void;
+        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<SegmentViewScrollEvent>) => void;
         /**
           * Emitted when the segment view scroll has ended.
          */

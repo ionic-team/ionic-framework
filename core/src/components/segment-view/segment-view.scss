@@ -25,3 +25,7 @@
   touch-action: none;
   overflow-x: hidden;
 }
+
+:host(.segment-view-scroll-disabled) {
+  pointer-events: none;
+}
