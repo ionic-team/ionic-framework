@@ -958,6 +958,10 @@ export const createTriggerController = () => {
 const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
   if (doc === undefined) return;
 
+  /**
+   * Once the animation is complete, this attribute will be removed.
+   * This is done at the end of the `present` method.
+   */
   overlay.setAttribute('aria-hidden', 'true');
 };
 
