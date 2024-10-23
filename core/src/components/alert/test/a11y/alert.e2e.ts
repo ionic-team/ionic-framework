@@ -124,16 +124,24 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
       await page.goto(`/src/components/alert/test/a11y`, config);
     });
 
-    test('should have aria-labelledby when header is set', async ({ page }) => {
-      await testAria(page, 'noMessage', 'alert-1-hdr', null);
+    test('should have aria-labelledby set to both when header and subHeader are set', async ({ page }) => {
+      await testAria(page, 'bothHeadersOnly', 'alert-1-hdr alert-1-sub-hdr', null);
+    });
+
+    test('should have aria-labelledby set when only header is set', async ({ page }) => {
+      await testAria(page, 'headerOnly', 'alert-1-hdr', null);
+    });
+
+    test('should fall back to subHeader for aria-labelledby if header is not defined', async ({ page }) => {
+      await testAria(page, 'subHeaderOnly', 'alert-1-sub-hdr', null);
     });
 
     test('should have aria-describedby when message is set', async ({ page }) => {
       await testAria(page, 'noHeaders', null, 'alert-1-msg');
     });
 
-    test('should fall back to subHeader for aria-labelledby if header is not defined', async ({ page }) => {
-      await testAria(page, 'subHeaderOnly', 'alert-1-sub-hdr', 'alert-1-msg');
+    test('should have aria-labelledby and aria-describedby when headers and message are set', async ({ page }) => {
+      await testAria(page, 'headersAndMessage', 'alert-1-hdr alert-1-sub-hdr', 'alert-1-msg');
     });
 
     test('should allow for manually specifying aria attributes', async ({ page }) => {
