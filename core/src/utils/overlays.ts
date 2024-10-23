@@ -510,7 +510,17 @@ export const present = async <OverlayPresentOptions>(
     return;
   }
 
-  setRootAriaHidden(true);
+  
+  /**
+   * Due to accessibility guidelines, toasts do not have
+   * focus traps.
+   * 
+   * All other overlays should have focus traps to prevent
+   * the keyboard focus from leaving the overlay.
+   */
+  if (overlay.el.tagName !== 'ION-TOAST') {
+    setRootAriaHidden(true);
+  }
 
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
