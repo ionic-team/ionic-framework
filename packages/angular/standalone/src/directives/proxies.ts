@@ -1865,8 +1865,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSegmentView,
-  inputs: ['disabled'],
-  methods: ['setContent']
+  inputs: ['disabled']
 })
 @Component({
   selector: 'ion-segment-view',

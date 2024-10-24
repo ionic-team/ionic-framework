@@ -2027,8 +2027,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
 
 
 @ProxyCmp({
-  inputs: ['disabled'],
-  methods: ['setContent']
+  inputs: ['disabled']
 })
 @Component({
   selector: 'ion-segment-view',

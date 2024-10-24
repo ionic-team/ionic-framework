@@ -106,6 +106,12 @@ export class Segment implements ComponentInterface {
     // The scroll listener should handle scrolling the active button into view as needed
     if (!this.segmentViewEl) {
       this.scrollActiveButtonIntoView();
+    } else {
+      const activeButton = this.getButtons().find((button) => button.value === value);
+
+      if (activeButton?.contentId) {
+        this.segmentViewEl.setContent(activeButton.contentId);
+      }
     }
   }
 
