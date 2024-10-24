@@ -52,8 +52,10 @@ html.ios.ios {
 /* Override above styles for testing scopes */
 :root.ionic,
 :root.ionic.ios,
+:root.ionic.md,
 html.ionic,
-html.ionic.ios {
+html.ionic.ios,
+html.ionic.md {
   --ionic-global-background-color: var(--background);
   --ion-font-family: initial;
 }
