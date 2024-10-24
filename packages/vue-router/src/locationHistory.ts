@@ -239,11 +239,15 @@ export const createLocationHistory = () => {
         }
       }
     }
-    for (let i = locationHistory.length - 2; i >= 0; i--) {
-      const ri = locationHistory[i];
-      if (ri) {
-        if (ri.pathname === routeInfo.pushedByRoute) {
-          return locationHistory[i + 1 + delta]
+    if (delta < -1) {
+      return locationHistory[locationHistory.length - 1 + delta];
+    } else {
+      for (let i = locationHistory.length - 2; i >= 0; i--) {
+        const ri = locationHistory[i];
+        if (ri) {
+          if (ri.pathname === routeInfo.pushedByRoute) {
+            return ri;
+          }
         }
       }
     }
