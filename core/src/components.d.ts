@@ -2679,10 +2679,6 @@ export namespace Components {
          */
         "scrollable": boolean;
         /**
-          * The `id` of the segment view that this segment component should be linked to.
-         */
-        "segmentViewId"?: string;
-        /**
           * If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `false`, keyboard navigation will only focus the `ion-segment-button` element.
          */
         "selectOnFocus": boolean;
@@ -7487,10 +7483,6 @@ declare namespace LocalJSX {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable"?: boolean;
-        /**
-          * The `id` of the segment view that this segment component should be linked to.
-         */
-        "segmentViewId"?: string;
         /**
           * If `true`, navigating to an `ion-segment-button` with the keyboard will focus and select the element. If `false`, keyboard navigation will only focus the `ion-segment-button` element.
          */

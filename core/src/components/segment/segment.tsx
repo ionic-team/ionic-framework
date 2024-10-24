@@ -133,11 +133,6 @@ export class Segment implements ComponentInterface {
   @Prop() selectOnFocus = false;
 
   /**
-   * The `id` of the segment view that this segment component should be linked to.
-   */
-  @Prop() segmentViewId?: string;
-
-  /**
    * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
    *
    * This event will not emit when programmatically setting the `value` property.
@@ -366,23 +361,13 @@ export class Segment implements ComponentInterface {
   }
 
   private getSegmentView() {
-    if (!this.segmentViewId) {
-      return null;
-    }
-
-    const segmentViewEl = document.getElementById(this.segmentViewId);
-
-    if (!segmentViewEl) {
-      console.warn(`Segment: Unable to find 'ion-segment-view' with id="${this.segmentViewId}"`);
-      return null;
-    }
-
-    if (segmentViewEl.tagName !== 'ION-SEGMENT-VIEW') {
-      console.warn(`Segment: Element with id="${this.segmentViewId}" is not an <ion-segment-view> element.`);
-      return null;
-    }
-
-    return segmentViewEl as HTMLIonSegmentViewElement;
+    const buttons = this.getButtons();
+    // Get the first button with a contentId
+    const firstContentId = buttons.find((button: HTMLIonSegmentButtonElement) => button.contentId);
+    // Get the segment content with an id matching the button's contentId
+    const segmentContent = document.querySelector(`ion-segment-content[id="${firstContentId?.contentId}"]`);
+    // Return the segment view for that matching segment content
+    return segmentContent?.closest('ion-segment-view');
   }
 
   @Listen('ionSegmentViewScroll', { target: 'body' })
