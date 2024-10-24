@@ -38,11 +38,6 @@
   --inner-border-width: 0;
 }
 
-.list-ios.list-inset + ion-list.list-inset {
-  @include margin(0, null, null, null);
-}
-
-
 // iOS No Lines List
 // --------------------------------------------------
 
