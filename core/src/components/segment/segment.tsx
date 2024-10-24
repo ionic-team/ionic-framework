@@ -31,6 +31,13 @@ export class Segment implements ComponentInterface {
   private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
   private lastNextIndex?: number;
 
+  /**
+   * Whether to update the segment view, if exists, when the value changes.
+   * This behavior is enabled by default, but is set false when scrolling content views
+   * since we don't want to "double scroll" the segment view.
+   */
+  private triggerScrollOnValueChange?: boolean;
+
   @Element() el!: HTMLIonSegmentElement;
 
   @State() activated = false;
@@ -83,6 +90,12 @@ export class Segment implements ComponentInterface {
 
   @Watch('value')
   protected valueChanged(value: SegmentValue | undefined, oldValue?: SegmentValue | undefined) {
+    // Force a value to exist if we're using a segment view
+    if (this.segmentViewEl && value === undefined) {
+      this.value = this.getButtons()[0].value;
+      return;
+    }
+
     if (oldValue !== undefined && value !== undefined) {
       const buttons = this.getButtons();
       const previous = buttons.find((button) => button.value === oldValue);
@@ -91,10 +104,12 @@ export class Segment implements ComponentInterface {
       if (previous && current) {
         if (!this.segmentViewEl) {
           this.checkButton(previous, current);
-        } else {
-          this.setCheckedClasses();
+        } else if (this.triggerScrollOnValueChange !== false) {
+          this.updateSegmentView();
         }
       }
+    } else if (value !== undefined && oldValue === undefined && this.segmentViewEl) {
+      this.updateSegmentView();
     }
 
     /**
@@ -106,13 +121,9 @@ export class Segment implements ComponentInterface {
     // The scroll listener should handle scrolling the active button into view as needed
     if (!this.segmentViewEl) {
       this.scrollActiveButtonIntoView();
-    } else {
-      const activeButton = this.getButtons().find((button) => button.value === value);
-
-      if (activeButton?.contentId) {
-        this.segmentViewEl.setContent(activeButton.contentId);
-      }
     }
+
+    this.triggerScrollOnValueChange = undefined;
   }
 
   /**
@@ -391,17 +402,18 @@ export class Segment implements ComponentInterface {
       const buttons = this.getButtons();
 
       // If no buttons are found or there is no value set then do nothing
-      if (!buttons.length || this.value === undefined) return;
+      if (!buttons.length) return;
 
       const index = buttons.findIndex((button) => button.value === this.value);
       const current = buttons[index];
 
-      const next = Math.round(scrollRatio * (buttons.length - 1));
+      const nextIndex = Math.round(scrollRatio * (buttons.length - 1));
 
-      if (this.lastNextIndex === undefined || this.lastNextIndex !== next) {
-        this.lastNextIndex = next;
+      if (this.lastNextIndex === undefined || this.lastNextIndex !== nextIndex) {
+        this.lastNextIndex = nextIndex;
+        this.triggerScrollOnValueChange = false;
 
-        this.checkButton(current, buttons[next]);
+        this.checkButton(current, buttons[nextIndex]);
         this.emitValueChange();
       }
     }
@@ -424,8 +436,7 @@ export class Segment implements ComponentInterface {
       return;
     }
 
-    const content = document.getElementById(button.contentId);
-    const segmentView = content?.closest('ion-segment-view');
+    const segmentView = this.segmentViewEl;
 
     if (segmentView) {
       segmentView.setContent(button.contentId, smoothScroll);
@@ -600,7 +611,10 @@ export class Segment implements ComponentInterface {
 
     if (this.segmentViewEl) {
       this.updateSegmentView();
-      current.scrollIntoView();
+
+      if (this.scrollable && previous) {
+        this.checkButton(previous, current);
+      }
     } else if (this.scrollable || !this.swipeGesture) {
       if (previous) {
         this.checkButton(previous, current);

@@ -23,11 +23,13 @@ export class SegmentView implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * @internal
+   *
    * If `true`, the segment view is scrollable.
    * If `false`, pointer events will be disabled. This is to prevent issues with
    * quickly scrolling after interacting with a segment button.
    */
-  @State() isManualScroll = true;
+  @State() isManualScroll?: boolean;
 
   /**
    * Emitted when the segment view is scrolled.
@@ -48,7 +50,7 @@ export class SegmentView implements ComponentInterface {
 
     this.ionSegmentViewScroll.emit({
       scrollRatio,
-      isManualScroll: this.isManualScroll,
+      isManualScroll: this.isManualScroll ?? true,
     });
 
     // Reset the timeout to check for scroll end
@@ -101,7 +103,7 @@ export class SegmentView implements ComponentInterface {
     // the user is not touching the segment view
     if (!this.isTouching) {
       this.ionSegmentViewScrollEnd.emit();
-      this.isManualScroll = true;
+      this.isManualScroll = undefined;
     }
   }
 
@@ -123,6 +125,7 @@ export class SegmentView implements ComponentInterface {
     if (index === -1) return;
 
     this.isManualScroll = false;
+    this.resetScrollEndTimeout();
 
     const contentWidth = this.el.offsetWidth;
     this.el.scrollTo({
@@ -143,7 +146,7 @@ export class SegmentView implements ComponentInterface {
       <Host
         class={{
           'segment-view-disabled': disabled,
-          'segment-view-scroll-disabled': !isManualScroll,
+          'segment-view-scroll-disabled': isManualScroll === false,
         }}
       >
         <slot></slot>
