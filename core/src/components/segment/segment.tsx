@@ -157,9 +157,13 @@ export class Segment implements ComponentInterface {
   disabledChanged() {
     this.gestureChanged();
 
-    const buttons = this.getButtons();
-    for (const button of buttons) {
-      button.disabled = this.disabled;
+    if (!this.segmentViewEl) {
+      const buttons = this.getButtons();
+      for (const button of buttons) {
+        button.disabled = this.disabled;
+      }
+    } else {
+      this.segmentViewEl.disabled = this.disabled;
     }
   }
 
