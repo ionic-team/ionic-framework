@@ -344,7 +344,7 @@ export class Segment implements ComponentInterface {
       // Remove the transform to slide the indicator back to the button clicked
       currentIndicator.style.setProperty('transform', '');
 
-      current.scrollIntoView();
+      this.scrollActiveButtonIntoView(true);
     });
 
     this.value = current.value;
