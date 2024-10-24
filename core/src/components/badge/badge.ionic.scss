@@ -7,17 +7,17 @@
 :host {
   --background: #{globals.ion-color(primary, base)};
   --color: #{globals.ion-color(primary, contrast)};
-  --padding-start: #{globals.$ionic-space-200};
-  --padding-end: #{globals.$ionic-space-200};
-  --padding-top: #{globals.$ionic-space-0};
-  --padding-bottom: #{globals.$ionic-space-0};
+  --padding-start: #{globals.$ion-space-200};
+  --padding-end: #{globals.$ion-space-200};
+  --padding-top: #{globals.$ion-space-0};
+  --padding-bottom: #{globals.$ion-space-0};
 
   display: inline-flex;
 
   align-items: center;
   justify-content: center;
 
-  font-weight: globals.$ionic-font-weight-medium;
+  font-weight: globals.$ion-font-weight-medium;
 }
 
 // Badge Shapes
@@ -25,23 +25,23 @@
 
 /* Soft Badge */
 :host(.badge-soft) {
-  @include globals.border-radius(globals.$ionic-border-radius-200);
+  @include globals.border-radius(globals.$ion-border-radius-200);
 }
 
 :host(.badge-xxsmall.badge-soft),
 :host(.badge-xsmall.badge-soft),
 :host(.badge-small.badge-soft) {
-  @include globals.border-radius(globals.$ionic-border-radius-100);
+  @include globals.border-radius(globals.$ion-border-radius-100);
 }
 
 /* Round Badge */
 :host(.badge-round) {
-  @include globals.border-radius(globals.$ionic-border-radius-full);
+  @include globals.border-radius(globals.$ion-border-radius-full);
 }
 
 /* Rectangular Badge */
 :host(.badge-rectangular) {
-  @include globals.border-radius(globals.$ionic-border-radius-0);
+  @include globals.border-radius(globals.$ion-border-radius-0);
 }
 
 // Badge Sizes
@@ -49,69 +49,69 @@
 
 /* 2-Extra Small Badge */
 :host(.badge-xxsmall) {
-  --padding-start: #{globals.$ionic-space-050};
-  --padding-end: #{globals.$ionic-space-050};
+  --padding-start: #{globals.$ion-space-050};
+  --padding-end: #{globals.$ion-space-050};
 
-  min-width: globals.$ionic-scale-400;
-  height: globals.$ionic-scale-400;
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 
-  font-size: globals.$ionic-font-size-300;
+  font-size: globals.$ion-font-size-300;
 
-  line-height: globals.$ionic-line-height-400;
+  line-height: globals.$ion-font-line-height-400;
 }
 
 /* Extra Small Badge */
 :host(.badge-xsmall) {
-  --padding-start: #{globals.$ionic-space-100};
-  --padding-end: #{globals.$ionic-space-100};
+  --padding-start: #{globals.$ion-space-100};
+  --padding-end: #{globals.$ion-space-100};
 
-  min-width: globals.$ionic-scale-600;
-  height: globals.$ionic-scale-600;
+  min-width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 
-  font-size: globals.$ionic-font-size-350;
+  font-size: globals.$ion-font-size-350;
 
-  line-height: globals.$ionic-line-height-600;
+  line-height: globals.$ion-font-line-height-600;
 }
 
 /* Small Badge */
 :host(.badge-small) {
-  --padding-start: #{globals.$ionic-space-100};
-  --padding-end: #{globals.$ionic-space-100};
+  --padding-start: #{globals.$ion-space-100};
+  --padding-end: #{globals.$ion-space-100};
 
-  min-width: globals.$ionic-scale-800;
-  height: globals.$ionic-scale-800;
+  min-width: globals.$ion-scale-800;
+  height: globals.$ion-scale-800;
 
-  font-size: globals.$ionic-font-size-400;
+  font-size: globals.$ion-font-size-400;
 
-  line-height: globals.$ionic-line-height-600;
+  line-height: globals.$ion-font-line-height-600;
 }
 
 /* Medium Badge */
 :host(.badge-medium) {
-  min-width: globals.$ionic-scale-1000;
-  height: globals.$ionic-scale-1000;
+  min-width: globals.$ion-scale-1000;
+  height: globals.$ion-scale-1000;
 
-  font-size: globals.$ionic-font-size-450;
+  font-size: globals.$ion-font-size-450;
 
-  line-height: globals.$ionic-line-height-700;
+  line-height: globals.$ion-font-line-height-700;
 }
 
 /* Large Badge */
 :host(.badge-large) {
-  min-width: globals.$ionic-scale-1200;
-  height: globals.$ionic-scale-1200;
+  min-width: globals.$ion-scale-1200;
+  height: globals.$ion-scale-1200;
 
-  font-size: globals.$ionic-font-size-500;
+  font-size: globals.$ion-font-size-500;
 
-  line-height: globals.$ionic-line-height-700;
+  line-height: globals.$ion-font-line-height-700;
 }
 
 /* Extra Large Badge */
 :host(.badge-xlarge) {
-  min-width: globals.$ionic-scale-1400;
-  height: globals.$ionic-scale-1400;
+  min-width: globals.$ion-scale-1400;
+  height: globals.$ion-scale-1400;
 
-  font-size: globals.$ionic-font-size-550;
+  font-size: globals.$ion-font-size-550;
 
-  line-height: globals.$ionic-line-height-700;
+  line-height: globals.$ion-font-line-height-700;
 }

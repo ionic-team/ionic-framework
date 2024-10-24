@@ -49,8 +49,15 @@ html.ios.ios {
   font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
 }
 
-:root.ionic {
+/* Override above styles for testing scopes */
+:root.ionic,
+:root.ionic.ios,
+:root.ionic.md,
+html.ionic,
+html.ionic.ios,
+html.ionic.md {
   --ionic-global-background-color: var(--background);
+  --ion-font-family: initial;
 }
 
 /**

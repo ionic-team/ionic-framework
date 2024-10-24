@@ -17,9 +17,9 @@
    * In order for the height to be calculated correctly, the padding
    * top and bottom must be excluded from the height calculation.
    */
-  min-height: calc(globals.$ionic-scale-1400 - calc(globals.$ionic-space-100 * 2));
+  min-height: calc(globals.$ion-scale-1400 - calc(globals.$ion-space-100 * 2));
 
-  gap: globals.$ionic-space-300;
+  gap: globals.$ion-space-300;
 
   // TODO(ROU-10853): replace this value with a layer token
   z-index: 10;
@@ -31,22 +31,22 @@
 /* Full */
 :host(.tab-bar-full) {
   /* stylelint-disable */
-  padding-top: globals.$ionic-space-100;
-  padding-bottom: calc(globals.$ionic-space-100 + var(--ion-safe-area-bottom, 0));
+  padding-top: globals.$ion-space-100;
+  padding-bottom: calc(globals.$ion-space-100 + var(--ion-safe-area-bottom, 0));
 
-  padding-right: calc(globals.$ionic-space-400 + var(--ion-safe-area-right, 0));
-  padding-left: calc(globals.$ionic-space-400 + var(--ion-safe-area-left, 0));
+  padding-right: calc(globals.$ion-space-400 + var(--ion-safe-area-right, 0));
+  padding-left: calc(globals.$ion-space-400 + var(--ion-safe-area-left, 0));
   /* stylelint-enable */
 }
 
 :host([slot="top"].tab-bar-full) {
-  padding-top: calc(globals.$ionic-space-100 + var(--ion-safe-area-top, 0));
-  padding-bottom: globals.$ionic-space-100;
+  padding-top: calc(globals.$ion-space-100 + var(--ion-safe-area-top, 0));
+  padding-bottom: globals.$ion-space-100;
 }
 
 /* Compact */
 :host(.tab-bar-compact) {
-  @include globals.padding(globals.$ionic-space-100, globals.$ionic-space-400);
+  @include globals.padding(globals.$ion-space-100, globals.$ion-space-400);
 
   position: absolute;
 
@@ -54,17 +54,17 @@
 
   width: fit-content;
 
-  box-shadow: #{globals.$ionic-elevation-200};
+  box-shadow: #{globals.$ion-elevation-2};
 
   contain: content;
 }
 
 :host([slot="top"].tab-bar-compact) {
-  top: calc(globals.$ionic-space-100 + var(--ion-safe-area-top, 0));
+  top: calc(globals.$ion-space-100 + var(--ion-safe-area-top, 0));
 }
 
 :host([slot="bottom"].tab-bar-compact) {
-  bottom: calc(globals.$ionic-space-100 + var(--ion-safe-area-bottom, 0));
+  bottom: calc(globals.$ion-space-100 + var(--ion-safe-area-bottom, 0));
 }
 
 // Tab Bar Shapes
@@ -72,15 +72,15 @@
 
 /* Soft */
 :host(.tab-bar-soft) {
-  @include globals.border-radius(globals.$ionic-border-radius-400);
+  @include globals.border-radius(globals.$ion-border-radius-400);
 }
 
 /* Round */
 :host(.tab-bar-round) {
-  @include globals.border-radius(globals.$ionic-border-radius-full);
+  @include globals.border-radius(globals.$ion-border-radius-full);
 }
 
 /* Rectangular */
 :host(.tab-bar-rectangular) {
-  @include globals.border-radius(globals.$ionic-border-radius-0);
+  @include globals.border-radius(globals.$ion-border-radius-0);
 }

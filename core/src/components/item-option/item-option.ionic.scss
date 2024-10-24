@@ -7,43 +7,43 @@
 :host {
   @include globals.padding(0);
 
-  font-size: globals.$ionic-font-size-350;
-  font-weight: globals.$ionic-font-weight-medium;
+  font-size: globals.$ion-font-size-350;
+  font-weight: globals.$ion-font-weight-medium;
 
-  line-height: globals.$ionic-line-height-500;
+  line-height: globals.$ion-font-line-height-500;
 }
 
 .button-native {
-  @include globals.padding(globals.$ionic-space-200);
+  @include globals.padding(globals.$ion-space-200);
 
-  min-width: globals.$ionic-scale-1600;
-  height: globals.$ionic-scale-1600;
+  min-width: globals.$ion-scale-1600;
+  height: globals.$ion-scale-1600;
 }
 
 ::slotted([slot="top"]) {
-  @include globals.margin(0, 0, globals.$ionic-space-100, 0);
+  @include globals.margin(0, 0, globals.$ion-space-100, 0);
 }
 
 ::slotted([slot="bottom"]) {
-  @include globals.margin(globals.$ionic-space-100, 0, 0, 0);
+  @include globals.margin(globals.$ion-space-100, 0, 0, 0);
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, globals.$ionic-space-100, 0, 0);
+  @include margin(0, globals.$ion-space-100, 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, globals.$ionic-space-100);
+  @include margin(0, 0, 0, globals.$ion-space-100);
 }
 
 ::slotted(ion-icon),
 ::slotted([slot="icon-only"]) {
   @include globals.margin(0);
 
-  width: globals.$ionic-scale-500;
+  width: globals.$ion-scale-500;
 
   min-width: initial;
-  height: globals.$ionic-scale-500;
+  height: globals.$ion-scale-500;
 }
 
 // Item Option Shapes
@@ -51,17 +51,17 @@
 
 /* Round */
 :host(.item-option-round) {
-  @include globals.border-radius(globals.$ionic-border-radius-300);
+  @include globals.border-radius(globals.$ion-border-radius-300);
 }
 
 /* Soft */
 :host(.item-option-soft) {
-  @include globals.border-radius(globals.$ionic-border-radius-200);
+  @include globals.border-radius(globals.$ion-border-radius-200);
 }
 
 /* Rectangular */
 :host(.item-option-rectangular) {
-  @include globals.border-radius(globals.$ionic-border-radius-0);
+  @include globals.border-radius(globals.$ion-border-radius-0);
 }
 
 // Item Option States
