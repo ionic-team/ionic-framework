@@ -68,6 +68,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         await expect(helperText).toHaveText('my helper');
         await expect(errorText).toBeHidden();
       });
+      test('input should have an aria-describedby attribute when helper text is present', async ({ page }) => {
+        await page.setContent(
+          `<ion-input helper-text="my helper" error-text="my error" label="my input"></ion-input>`,
+          config
+        );
+
+        const input = page.locator('ion-input input');
+        const helperText = page.locator('ion-input .helper-text');
+        const helperTextId = await helperText.getAttribute('id');
+        const ariaDescribedBy = await input.getAttribute('aria-describedby');
+
+        expect(ariaDescribedBy).toBe(helperTextId);
+      });
       test('error text should be visible when input is invalid', async ({ page }) => {
         await page.setContent(
           `<ion-input class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my input"></ion-input>`,
@@ -95,6 +108,48 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
         const errorText = page.locator('ion-input .error-text');
         await expect(errorText).toHaveScreenshot(screenshot(`input-error-custom-color`));
+      });
+      test('input should have an aria-describedby attribute when error text is present', async ({ page }) => {
+        await page.setContent(
+          `<ion-input class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my input"></ion-input>`,
+          config
+        );
+
+        const input = page.locator('ion-input input');
+        const errorText = page.locator('ion-input .error-text');
+        const errorTextId = await errorText.getAttribute('id');
+        const ariaDescribedBy = await input.getAttribute('aria-describedby');
+
+        expect(ariaDescribedBy).toBe(errorTextId);
+      });
+      test('input should have aria-invalid attribute when input is invalid', async ({ page }) => {
+        await page.setContent(
+          `<ion-input class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my input"></ion-input>`,
+          config
+        );
+
+        const input = page.locator('ion-input input');
+
+        await expect(input).toHaveAttribute('aria-invalid');
+      });
+      test('input should not have aria-invalid attribute when input is valid', async ({ page }) => {
+        await page.setContent(
+          `<ion-input helper-text="my helper" error-text="my error" label="my input"></ion-input>`,
+          config
+        );
+
+        const input = page.locator('ion-input input');
+
+        await expect(input).not.toHaveAttribute('aria-invalid');
+      });
+      test('input should not have aria-describedby attribute when no hint or error text is present', async ({
+        page,
+      }) => {
+        await page.setContent(`<ion-input label="my input"></ion-input>`, config);
+
+        const input = page.locator('ion-input input');
+
+        await expect(input).not.toHaveAttribute('aria-describedby');
       });
     });
     test.describe('input: hint text rendering', () => {

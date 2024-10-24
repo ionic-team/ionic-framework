@@ -45,6 +45,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-textarea-${textareaIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   /**
    * `true` if the textarea was cleared as a result of the user typing
    * with `clearOnEdit` enabled.
@@ -576,9 +578,30 @@ export class Textarea implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText } = this;
+    const { helperText, errorText, helperTextId, errorTextId } = this;
 
-    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+    return [
+      <div id={helperTextId} class="helper-text">
+        {helperText}
+      </div>,
+      <div id={errorTextId} class="error-text">
+        {errorText}
+      </div>,
+    ];
+  }
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
   }
 
   private renderCounter() {
@@ -703,6 +726,8 @@ export class Textarea implements ComponentInterface {
                 onBlur={this.onBlur}
                 onFocus={this.onFocus}
                 onKeyDown={this.onKeyDown}
+                aria-describedby={this.getHintTextID()}
+                aria-invalid={this.getHintTextID() === this.errorTextId}
                 {...this.inheritedAttributes}
               >
                 {value}
