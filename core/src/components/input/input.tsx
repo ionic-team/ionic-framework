@@ -689,7 +689,7 @@ export class Input implements ComponentInterface {
   }
 
   render() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus, clearInputIcon } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, hasFocus, clearInputIcon } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
@@ -698,7 +698,6 @@ export class Input implements ComponentInterface {
     const clearIconData = clearInputIcon ?? defaultClearIcon;
 
     const hasValue = this.hasValue();
-    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
 
     /**
      * If the label is stacked, it should always sit above the input.
@@ -714,11 +713,9 @@ export class Input implements ComponentInterface {
      * other when the label isn't floating above the input. This doesn't
      * apply to the outline fill, but this was not accounted for to keep
      * things consistent.
-     *
-     * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
-      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus));
 
     return (
       <Host
