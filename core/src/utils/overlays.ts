@@ -639,13 +639,26 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
-  const lastOverlay = doc !== undefined && getPresentedOverlays(doc).length === 1;
+  /**
+   * For accessibility, toasts lack focus traps and don’t receive
+   * `aria-hidden` on the root element when presented.
+   *
+   * All other overlays use focus traps to keep keyboard focus
+   * within the overlay, setting `aria-hidden` on the root element
+   * to enhance accessibility.
+   *
+   * Therefore, we must remove `aria-hidden` from the root element
+   * when the last non-toast overlay is dismissed.
+   */
+  const overlaysNotToast = doc !== undefined ? getPresentedOverlays(doc).filter((o) => o.tagName !== 'ION-TOAST') : [];
+
+  const lastOverlayNotToast = overlaysNotToast.length === 1 && overlaysNotToast[0].id === overlay.el.id;
 
   /**
-   * If this is the last visible overlay then
-   * we want to re-add the root to the accessibility tree.
+   * If this is the last visible overlay that is not a toast
+   * then we want to re-add the root to the accessibility tree.
    */
-  if (lastOverlay) {
+  if (lastOverlayNotToast) {
     setRootAriaHidden(false);
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
