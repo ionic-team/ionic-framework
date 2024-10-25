@@ -34,6 +34,7 @@ import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+import { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
@@ -69,6 +70,7 @@ export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+export { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
@@ -2720,10 +2722,6 @@ export namespace Components {
         "value": SegmentValue;
     }
     interface IonSegmentContent {
-        /**
-          * If `true`, the segment content will not be displayed.
-         */
-        "disabled": boolean;
     }
     interface IonSegmentView {
         /**
@@ -2731,7 +2729,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * This method is used to programmatically set the displayed segment content in the segment view. Calling this method will update the `value` of the corresponding segment button.
           * @param id : The id of the segment content to display.
           * @param smoothScroll : Whether to animate the scroll transition.
          */
@@ -4445,12 +4442,8 @@ declare global {
         new (): HTMLIonSegmentContentElement;
     };
     interface HTMLIonSegmentViewElementEventMap {
-        "ionSegmentViewScroll": {
-    scrollDirection: string;
-    scrollDistance: number;
-    scrollDistancePercentage: number;
-  };
-        "ionSegmentViewScrollEnd": { activeContentId: string };
+        "ionSegmentViewScroll": SegmentViewScrollEvent;
+        "ionSegmentViewScrollEnd": void;
         "ionSegmentViewScrollStart": void;
     }
     interface HTMLIonSegmentViewElement extends Components.IonSegmentView, HTMLStencilElement {
@@ -7533,10 +7526,6 @@ declare namespace LocalJSX {
         "value"?: SegmentValue;
     }
     interface IonSegmentContent {
-        /**
-          * If `true`, the segment content will not be displayed.
-         */
-        "disabled"?: boolean;
     }
     interface IonSegmentView {
         /**
@@ -7546,15 +7535,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the segment view is scrolled.
          */
-        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<{
-    scrollDirection: string;
-    scrollDistance: number;
-    scrollDistancePercentage: number;
-  }>) => void;
+        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<SegmentViewScrollEvent>) => void;
         /**
           * Emitted when the segment view scroll has ended.
          */
-        "onIonSegmentViewScrollEnd"?: (event: IonSegmentViewCustomEvent<{ activeContentId: string }>) => void;
+        "onIonSegmentViewScrollEnd"?: (event: IonSegmentViewCustomEvent<void>) => void;
         "onIonSegmentViewScrollStart"?: (event: IonSegmentViewCustomEvent<void>) => void;
     }
     interface IonSelect {

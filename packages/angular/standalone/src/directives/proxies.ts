@@ -1844,15 +1844,14 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
 
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonSegmentContent,
-  inputs: ['disabled']
+  defineCustomElementFn: defineIonSegmentContent
 })
 @Component({
   selector: 'ion-segment-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled'],
+  inputs: [],
   standalone: true
 })
 export class IonSegmentContent {
@@ -1869,8 +1868,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSegmentView,
-  inputs: ['disabled'],
-  methods: ['setContent']
+  inputs: ['disabled']
 })
 @Component({
   selector: 'ion-segment-view',
@@ -1890,15 +1888,17 @@ export class IonSegmentView {
 }
 
 
+import type { SegmentViewScrollEvent as IIonSegmentViewSegmentViewScrollEvent } from '@ionic/core/components';
+
 export declare interface IonSegmentView extends Components.IonSegmentView {
   /**
    * Emitted when the segment view is scrolled.
    */
-  ionSegmentViewScroll: EventEmitter<CustomEvent<{ scrollDirection: string; scrollDistance: number; scrollDistancePercentage: number; }>>;
+  ionSegmentViewScroll: EventEmitter<CustomEvent<IIonSegmentViewSegmentViewScrollEvent>>;
   /**
    * Emitted when the segment view scroll has ended.
    */
-  ionSegmentViewScrollEnd: EventEmitter<CustomEvent<{ activeContentId: string }>>;
+  ionSegmentViewScrollEnd: EventEmitter<CustomEvent<void>>;
 
   ionSegmentViewScrollStart: EventEmitter<CustomEvent<void>>;
 }

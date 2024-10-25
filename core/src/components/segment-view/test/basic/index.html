@@ -16,6 +16,8 @@
     <style>
       ion-segment-view {
         height: 100px;
+
+        margin-bottom: 20px;
       }
 
       ion-segment-content {
@@ -24,15 +26,15 @@
         align-items: center;
       }
 
-      ion-segment-content:nth-of-type(1) {
+      ion-segment-content:nth-of-type(3n + 1) {
         background: lightpink;
       }
 
-      ion-segment-content:nth-of-type(2) {
+      ion-segment-content:nth-of-type(3n + 2) {
         background: lightblue;
       }
 
-      ion-segment-content:nth-of-type(3) {
+      ion-segment-content:nth-of-type(3n + 3) {
         background: lightgreen;
       }
     </style>
@@ -60,24 +62,11 @@
           <ion-segment-content id="value">Value</ion-segment-content>
         </ion-segment-view>
 
-        <ion-segment value="all">
-          <ion-segment-button content-id="all" value="all">
-            <ion-label>All</ion-label>
-          </ion-segment-button>
-          <ion-segment-button content-id="favorites" value="favorites">
-            <ion-label>Favorites</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-        <ion-segment-view>
-          <ion-segment-content id="all">All</ion-segment-content>
-          <ion-segment-content id="favorites">Favorites</ion-segment-content>
-        </ion-segment-view>
-
         <ion-segment value="free">
           <ion-segment-button content-id="paid" value="paid">
             <ion-label>Paid</ion-label>
           </ion-segment-button>
-          <ion-segment-button content-id="free" value="free">
+          <ion-segment-button style="width: 200px" content-id="free" value="free">
             <ion-label>Free</ion-label>
           </ion-segment-button>
           <ion-segment-button content-id="top" value="top">
@@ -88,6 +77,47 @@
           <ion-segment-content id="paid">Paid</ion-segment-content>
           <ion-segment-content id="free">Free</ion-segment-content>
           <ion-segment-content id="top">Top</ion-segment-content>
+        </ion-segment-view>
+
+        <ion-segment value="peach" scrollable>
+          <ion-segment-button content-id="orange" value="orange">
+            <ion-label>Orange</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="banana" value="banana">
+            <ion-label>Banana</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="pear" value="pear">
+            <ion-label>Pear</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="peach" value="peach">
+            <ion-label>Peach</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="grape" value="grape">
+            <ion-label>Grape</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="mango" value="mango">
+            <ion-label>Mango</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="apple" value="apple">
+            <ion-label>Apple</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="strawberry" value="strawberry">
+            <ion-label>Strawberry</ion-label>
+          </ion-segment-button>
+          <ion-segment-button content-id="cherry" value="cherry">
+            <ion-label>Cherry</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+          <ion-segment-content id="orange">Orange</ion-segment-content>
+          <ion-segment-content id="banana">Banana</ion-segment-content>
+          <ion-segment-content id="pear">Pear</ion-segment-content>
+          <ion-segment-content id="peach">Peach</ion-segment-content>
+          <ion-segment-content id="grape">Grape</ion-segment-content>
+          <ion-segment-content id="mango">Mango</ion-segment-content>
+          <ion-segment-content id="apple">Apple</ion-segment-content>
+          <ion-segment-content id="strawberry">Strawberry</ion-segment-content>
+          <ion-segment-content id="cherry">Cherry</ion-segment-content>
         </ion-segment-view>
 
         <button class="expand" onClick="changeSegmentContent()">Change Segment Content</button>
@@ -114,7 +144,7 @@
             currentValue = 'value';
           }
 
-          segmentView.setContent(currentValue);
+          segment.value = currentValue;
         }
 
         async function clearSegmentValue() {
