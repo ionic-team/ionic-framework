@@ -2805,7 +2805,6 @@ export namespace Components {
         "value"?: any | null;
     }
     interface IonSelectModal {
-        "confirmHandler"?: (value?: any | null) => void;
         "header"?: string;
         "multiple"?: boolean;
         "options": SelectModalOption[];
@@ -7593,7 +7592,6 @@ declare namespace LocalJSX {
         "value"?: any | null;
     }
     interface IonSelectModal {
-        "confirmHandler"?: (value?: any | null) => void;
         "header"?: string;
         "multiple"?: boolean;
         "options"?: SelectModalOption[];

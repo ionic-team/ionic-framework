@@ -786,7 +786,6 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
 export const IonSelectModal = /*@__PURE__*/ defineContainer<JSX.IonSelectModal>('ion-select-modal', defineIonSelectModal, [
   'header',
   'multiple',
-  'confirmHandler',
   'options'
 ]);
 

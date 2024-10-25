@@ -25,9 +25,6 @@ export class SelectModal implements ComponentInterface {
 
   @Prop() multiple?: boolean;
 
-  // TODO(ROU-11272): Not needed if we follow popover's behavior for multi-select (i.e. no confirmation button)
-  @Prop() confirmHandler?: (value?: any | null) => void;
-
   @Prop() options: SelectModalOption[] = [];
 
   private closeModal() {
@@ -144,36 +141,18 @@ export class SelectModal implements ComponentInterface {
   render() {
     return (
       <Host class={getIonMode(this)}>
-        {this.header !== undefined && (
-          <ion-header>
-            <ion-toolbar>
-              <ion-title>{this.header}</ion-title>
-            </ion-toolbar>
-          </ion-header>
-        )}
+        <ion-header>
+          <ion-toolbar>
+            {this.header !== undefined && <ion-title>{this.header}</ion-title>}
+
+            <ion-buttons slot="end">
+              <ion-button onClick={() => this.closeModal()}>Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
         <ion-content>
           <ion-list>{this.multiple === true ? this.renderCheckboxOptions() : this.renderRadioOptions()}</ion-list>
         </ion-content>
-        {/* TODO(ROU-11272): Design did not provide designs for how this component should work for multi-select.
-         * `ion-select-popover` automatically posts data back to the select component, but this feels like an incorrect pattern for modals.
-         * We'll need to chat with design to figure out the desired UI/UX here.
-         */}
-        {this.multiple === true && (
-          <ion-footer>
-            <ion-toolbar>
-              <ion-buttons slot="end">
-                <ion-button
-                  onClick={() => {
-                    this.confirmHandler?.(this.getValues());
-                    this.closeModal();
-                  }}
-                >
-                  Done
-                </ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-footer>
-        )}
       </Host>
     );
   }

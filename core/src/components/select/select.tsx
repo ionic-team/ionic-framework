@@ -20,7 +20,6 @@ import type {
   PopoverOptions,
   StyleEventDetail,
   ModalOptions,
-  SelectModalOption,
 } from '../../interface';
 import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
 import type { AlertInput } from '../alert/alert-interface';
@@ -514,36 +513,6 @@ export class Select implements ComponentInterface {
     return popoverOptions;
   }
 
-  // TODO(ROU-11272): Not needed if we follow popover's behavior for multi-select (i.e. no confirmation button).
-  // In that case, modal and popover could use the same utility to construct options.
-  private createModalOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectModalOption[] {
-    const modalOptions = data.map((option) => {
-      const value = getOptionValue(option);
-
-      // Remove hydrated before copying over classes
-      const copyClasses = Array.from(option.classList)
-        .filter((cls) => cls !== 'hydrated')
-        .join(' ');
-      const optClass = `${OPTION_CLASS} ${copyClasses}`;
-
-      return {
-        text: option.textContent || '',
-        cssClass: optClass,
-        value,
-        checked: isOptionSelected(selectValue, value, this.compareWith),
-        disabled: option.disabled,
-        handler: (selected: any) => {
-          if (!this.multiple) {
-            this.setValue(selected);
-            this.close();
-          }
-        },
-      };
-    });
-
-    return modalOptions;
-  }
-
   private async openPopover(ev: UIEvent) {
     const { fill, labelPlacement } = this;
     const interfaceOptions = this.interfaceOptions;
@@ -702,11 +671,7 @@ export class Select implements ComponentInterface {
         header: interfaceOptions.header,
         multiple,
         value,
-        // TODO(ROU-11272): Not needed if we follow popover's behavior for multi-select (i.e. no confirmation button).
-        // In that case, modal and popover could use the same utility to construct options.
-        options: this.createModalOptions(this.childOpts, value),
-        // TODO(ROU-11272): Not needed if we follow popover's behavior for multi-select (i.e. no confirmation button)
-        confirmHandler: this.setValue.bind(this),
+        options: this.createPopoverOptions(this.childOpts, value),
       },
     };
 
