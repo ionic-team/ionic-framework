@@ -7,17 +7,17 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{globals.$ionic-color-neutral-1000};
-  --border-width: #{globals.$ionic-border-size-025};
-  --border-color: #{globals.$ionic-color-neutral-300};
-  --highlight-color-valid: #{globals.$ionic-color-success-base};
-  --highlight-color-invalid: #{globals.$ionic-color-danger-base};
-  --placeholder-color: #{globals.$ionic-color-neutral-800};
+  --color: #{globals.$ion-primitives-neutral-1000};
+  --border-width: #{globals.$ion-border-size-025};
+  --border-color: #{globals.$ion-primitives-neutral-300};
+  --highlight-color-valid: #{globals.$ion-semantics-success-base};
+  --highlight-color-invalid: #{globals.$ion-semantics-danger-base};
+  --placeholder-color: #{globals.$ion-primitives-neutral-800};
   --placeholder-opacity: 1;
-  --text-color-invalid: #{globals.$ionic-color-danger-800};
-  --background: #{globals.$ionic-color-base-white};
+  --text-color-invalid: #{globals.$ion-semantics-danger-800};
+  --background: #{globals.$ion-primitives-base-white};
 
-  font-size: globals.$ionic-font-size-350;
+  font-size: globals.$ion-font-size-350;
 }
 
 // Ionic Input Sizes
@@ -39,15 +39,15 @@
 // --------------------------------------------------
 
 :host ion-input-password-toggle {
-  --size: #{globals.$ionic-scale-1000};
+  --size: #{globals.$ion-scale-1000};
 }
 
 :host(.input-size-large) ion-input-password-toggle {
-  --size: #{globals.$ionic-scale-1200};
+  --size: #{globals.$ion-scale-1200};
 }
 
 :host(.input-size-xlarge) ion-input-password-toggle {
-  --size: #{globals.$ionic-scale-1400};
+  --size: #{globals.$ion-scale-1400};
 }
 
 // Target area
@@ -89,13 +89,13 @@
   width: 16px;
   height: 16px;
 
-  color: globals.$ionic-color-neutral-500;
+  color: globals.$ion-primitives-neutral-500;
 }
 
 .input-clear-icon:focus-visible {
-  @include border-radius(globals.$ionic-border-radius-100);
+  @include border-radius(globals.$ion-border-radius-100);
 
-  outline: globals.$ionic-border-size-050 globals.$ionic-border-style-solid globals.$ionic-state-focus-1;
+  outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
   opacity: 1;
 }
@@ -124,12 +124,12 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  color: globals.$ionic-color-neutral-1000;
+  color: globals.$ion-primitives-neutral-1000;
 
-  font-size: globals.$ionic-font-size-300;
-  font-weight: globals.$ionic-font-weight-medium;
+  font-size: globals.$ion-font-size-300;
+  font-weight: globals.$ion-font-weight-medium;
 
-  line-height: globals.$ionic-line-height-500;
+  line-height: globals.$ion-font-line-height-500;
 }
 
 :host(.label-floating) .label-text-wrapper {
@@ -140,18 +140,18 @@
 // ----------------------------------------------------------------
 
 .input-bottom {
-  @include padding(globals.$ionic-space-100, 0, 0, 0);
+  @include padding(globals.$ion-space-100, 0, 0, 0);
 
-  font-weight: globals.$ionic-font-weight-medium;
+  font-weight: globals.$ion-font-weight-medium;
 }
 
 .input-bottom .helper-text,
 .input-bottom .counter {
-  color: globals.$ionic-color-neutral-800;
+  color: globals.$ion-primitives-neutral-800;
 }
 
 :host(.has-focus.ion-valid) .helper-text {
-  color: globals.$ionic-color-success-900;
+  color: globals.$ion-semantics-success-900;
 }
 
 :host(.ion-touched.ion-invalid) .error-text {
@@ -160,7 +160,7 @@
 
 :host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
-  --border-width: #{globals.$ionic-border-size-025};
+  --border-width: #{globals.$ion-border-size-025};
 }
 
 // Input Hover
@@ -168,7 +168,7 @@
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --border-color: #{globals.$ionic-color-neutral-600};
+    --border-color: #{globals.$ion-primitives-neutral-600};
   }
 }
 
@@ -177,8 +177,8 @@
 
 :host(.input-disabled) {
   // color for the text within the input
-  --color: #{globals.$ionic-color-neutral-400};
-  --background: #{globals.$ionic-color-neutral-100};
+  --color: #{globals.$ion-primitives-neutral-400};
+  --background: #{globals.$ion-primitives-neutral-100};
 
   pointer-events: none;
 }
@@ -186,15 +186,15 @@
 :host(.input-disabled:not(.ion-valid)) .input-bottom .helper-text,
 :host(.input-disabled) .input-bottom .counter,
 :host(.input-disabled) .label-text-wrapper {
-  color: globals.$ionic-color-neutral-500;
+  color: globals.$ion-primitives-neutral-500;
 }
 
 :host(.input-disabled.has-focus.ion-valid) {
-  --border-color: rgba(#{globals.$ionic-color-success-base-rgb}, 0.6);
+  --border-color: rgba(#{globals.$ion-semantics-success-base-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-touched.ion-invalid) {
-  --border-color: rgba(#{globals.$ionic-color-danger-base-rgb}, 0.6);
+  --border-color: rgba(#{globals.$ion-semantics-danger-base-rgb}, 0.6);
 }
 
 :host(.input-disabled.ion-color) {
@@ -212,7 +212,7 @@
 // ----------------------------------------------------------------
 
 :host(.input-readonly) {
-  --background: #{globals.$ionic-color-neutral-100};
+  --background: #{globals.$ion-primitives-neutral-100};
 }
 
 // Input Highlight
@@ -224,7 +224,7 @@
   position: absolute;
 
   width: 100%;
-  height: globals.$ionic-border-size-050;
+  height: globals.$ion-border-size-050;
 
   transform: scale(0);
 
@@ -237,7 +237,7 @@
 // ----------------------------------------------------------------
 
 :host(.has-focus) {
-  --border-color: #{globals.$ionic-color-primary-base};
+  --border-color: #{globals.$ion-semantics-primary-base};
 }
 
 :host(.has-focus) .input-highlight {

@@ -7,11 +7,11 @@
 
   align-items: center;
 
-  gap: globals.$ionic-space-100;
+  gap: globals.$ion-space-100;
 
   transition: color 0.2s ease-in-out;
 
-  font-weight: globals.$ionic-font-weight-regular;
+  font-weight: globals.$ion-font-weight-regular;
 
   text-decoration-color: inherit;
 
@@ -23,7 +23,7 @@
   // -------------------------------------------------------------------------------
 
   &:visited {
-    color: globals.$ionic-color-info-500;
+    color: globals.$ion-semantics-info-500;
   }
 }
 
@@ -31,7 +31,7 @@
 // -------------------------------------------------------------------------------
 
 @mixin ionic-link {
-  color: globals.$ionic-color-info-400;
+  color: globals.$ion-semantics-info-400;
 
   text-decoration: none;
 
@@ -51,7 +51,7 @@
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid globals.$ionic-color-primary-100;
+    outline: 2px solid globals.$ion-semantics-primary-100;
     outline-offset: 2px;
 
     text-decoration: underline;
@@ -62,7 +62,7 @@
 
   &:active,
   &.ion-activated {
-    color: globals.$ionic-color-info-500;
+    color: globals.$ion-semantics-info-500;
 
     text-decoration: underline;
   }
@@ -88,7 +88,7 @@ a.ionic-link,
 
   @media (any-hover: hover) {
     &:hover {
-      color: globals.$ionic-color-info-400;
+      color: globals.$ion-semantics-info-400;
     }
   }
 
@@ -97,7 +97,7 @@ a.ionic-link,
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid globals.$ionic-color-primary-100;
+    outline: 2px solid globals.$ion-semantics-primary-100;
     outline-offset: 2px;
 
     color: currentColor;
@@ -110,7 +110,7 @@ a.ionic-link,
 
   &:active,
   &.ion-activated {
-    color: globals.$ionic-color-info-500;
+    color: globals.$ion-semantics-info-500;
   }
 }
 

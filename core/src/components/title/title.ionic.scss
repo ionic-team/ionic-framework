@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  @include globals.typography(globals.$ionic-heading-h6-medium);
+  @include globals.typography(globals.$ion-heading-h6-medium);
   @include globals.padding(var(--padding-top), 0, var(--padding-bottom));
 
   box-sizing: border-box;
@@ -28,5 +28,5 @@
 // --------------------------------------------------
 
 :host(.title-large) {
-  @include globals.typography(globals.$ionic-heading-h1-medium);
+  @include globals.typography(globals.$ion-heading-h1-medium);
 }

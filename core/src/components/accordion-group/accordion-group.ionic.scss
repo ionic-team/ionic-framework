@@ -7,7 +7,7 @@
 :host {
   min-width: 272px;
 
-  background-color: globals.$ionic-color-base-white;
+  background-color: globals.$ion-primitives-base-white;
 }
 
 // Inset Accordion Group
@@ -15,6 +15,6 @@
 
 // Shape and padding only apply if the group is inset
 :host(.accordion-group-expand-inset) {
-  @include globals.border-radius(globals.$ionic-border-radius-400);
-  @include globals.padding(globals.$ionic-space-100);
+  @include globals.border-radius(globals.$ion-border-radius-400);
+  @include globals.padding(globals.$ion-space-100);
 }
