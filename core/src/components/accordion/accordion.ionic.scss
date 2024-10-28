@@ -56,8 +56,16 @@
 }
 
 // Shape only applies when inside an inset accordion group
-:host(.in-accordion-group-expand-inset) ::slotted(ion-item[slot="header"]) {
+:host(.in-accordion-group-expand-inset.in-accordion-group-shape-round) ::slotted(ion-item[slot="header"]) {
   --border-radius: #{globals.$ion-border-radius-400};
+}
+
+:host(.in-accordion-group-expand-inset.in-accordion-group-shape-soft) ::slotted(ion-item[slot="header"]) {
+  --border-radius: #{globals.$ion-border-radius-200};
+}
+
+:host(.in-accordion-group-expand-inset.in-accordion-group-shape-rectangular) ::slotted(ion-item[slot="header"]) {
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Accordion Content

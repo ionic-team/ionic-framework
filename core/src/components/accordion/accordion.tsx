@@ -444,6 +444,9 @@ export class Accordion implements ComponentInterface {
           'accordion-animated': this.shouldAnimate(),
 
           'in-accordion-group-expand-inset': hostContext('.accordion-group-expand-inset', this.el),
+          'in-accordion-group-shape-round': hostContext('.accordion-group-shape-round', this.el),
+          'in-accordion-group-shape-soft': hostContext('.accordion-group-shape-soft', this.el),
+          'in-accordion-group-shape-rectangular': hostContext('.accordion-group-shape-rectangular', this.el),
         }}
       >
         <div
