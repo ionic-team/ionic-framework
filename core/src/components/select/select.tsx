@@ -419,13 +419,13 @@ export class Select implements ComponentInterface {
       case 'popover':
         const popover = overlay.querySelector('ion-select-popover');
         if (popover) {
-          popover.options = this.createPopoverOptions(childOpts, value);
+          popover.options = this.createOverlaySelectOptions(childOpts, value);
         }
         break;
       case 'modal':
         const modal = overlay.querySelector('ion-select-modal');
         if (modal) {
-          modal.options = this.createPopoverOptions(childOpts, value);
+          modal.options = this.createOverlaySelectOptions(childOpts, value);
         }
         break;
       case 'alert':
@@ -494,7 +494,7 @@ export class Select implements ComponentInterface {
     return alertInputs;
   }
 
-  private createPopoverOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
+  private createOverlaySelectOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
     const popoverOptions = data.map((option) => {
       const value = getOptionValue(option);
 
@@ -572,7 +572,7 @@ export class Select implements ComponentInterface {
         message: interfaceOptions.message,
         multiple,
         value,
-        options: this.createPopoverOptions(this.childOpts, value),
+        options: this.createOverlaySelectOptions(this.childOpts, value),
       },
     };
 
@@ -680,7 +680,7 @@ export class Select implements ComponentInterface {
         header: interfaceOptions.header,
         multiple,
         value,
-        options: this.createPopoverOptions(this.childOpts, value),
+        options: this.createOverlaySelectOptions(this.childOpts, value),
       },
     };
 
