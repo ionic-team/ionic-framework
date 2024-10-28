@@ -12,9 +12,9 @@ import type { SelectModalOption } from './select-modal-interface';
 @Component({
   tag: 'ion-select-modal',
   styleUrls: {
-    ios: 'select-modal.scss',
-    md: 'select-modal.scss',
-    ionic: 'select-modal.scss',
+    ios: 'select-modal.ios.scss',
+    md: 'select-modal.md.scss',
+    ionic: 'select-modal.md.scss',
   },
   scoped: true,
 })
@@ -90,6 +90,8 @@ export class SelectModal implements ComponentInterface {
             <ion-radio
               value={option.value}
               disabled={option.disabled}
+              justify="start"
+              labelPlacement="end"
               onClick={() => this.closeModal()}
               onKeyUp={(ev) => {
                 if (ev.key === ' ') {
@@ -123,8 +125,8 @@ export class SelectModal implements ComponentInterface {
           value={option.value}
           disabled={option.disabled}
           checked={option.checked}
-          justify="space-between"
-          labelPlacement="start"
+          justify="start"
+          labelPlacement="end"
           onIonChange={(ev) => {
             this.setChecked(ev);
             this.callOptionHandler(ev);
