@@ -61,6 +61,16 @@ export class AccordionGroup implements ComponentInterface {
   @Prop() expand: 'compact' | 'inset' = 'compact';
 
   /**
+   * Set to `"soft"` for an accordion group with slightly rounded corners,
+   * `"round"` for an accordion group with fully rounded corners, or
+   * `"rectangular"` for an accordion group without rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   * Only applies when `expand` is set to `"inset"`.
+   */
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
+
+  /**
    * Emitted when the value property has changed as a result of a user action such as a click.
    *
    * This event will not emit when programmatically setting the `value` property.
@@ -278,9 +288,26 @@ export class AccordionGroup implements ComponentInterface {
     return Array.from(this.el.querySelectorAll(':scope > ion-accordion')) as HTMLIonAccordionElement[];
   }
 
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11328): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   render() {
     const { disabled, readonly, expand } = this;
     const theme = getIonTheme(this);
+    const shape = this.getShape();
 
     return (
       <Host
@@ -289,6 +316,7 @@ export class AccordionGroup implements ComponentInterface {
           'accordion-group-disabled': disabled,
           'accordion-group-readonly': readonly,
           [`accordion-group-expand-${expand}`]: true,
+          [`accordion-group-shape-${shape}`]: shape !== undefined,
         }}
         role="presentation"
       >

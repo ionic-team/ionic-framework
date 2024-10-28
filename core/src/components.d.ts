@@ -137,6 +137,10 @@ export namespace Components {
          */
         "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
         /**
+          * Set to `"soft"` for an accordion group with slightly rounded corners, `"round"` for an accordion group with fully rounded corners, or `"rectangular"` for an accordion group without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes. Only applies when `expand` is set to `"inset"`.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -5392,6 +5396,10 @@ declare namespace LocalJSX {
           * If `true`, the accordion group cannot be interacted with, but does not alter the opacity.
          */
         "readonly"?: boolean;
+        /**
+          * Set to `"soft"` for an accordion group with slightly rounded corners, `"round"` for an accordion group with fully rounded corners, or `"rectangular"` for an accordion group without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes. Only applies when `expand` is set to `"inset"`.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */
