@@ -42,7 +42,7 @@
 // The border is removed from the item in the header because
 // we are adding a border to the ::after element of the accordion.
 ::slotted(ion-item[slot="header"]) {
-  --border-radius: #{globals.$ion-border-radius-0};
+  --border-radius: inherit;
   --color: #{globals.$ion-primitives-neutral-1200};
   --border-width: 0;
   --inner-border-width: 0;
@@ -53,19 +53,6 @@
   --padding-start: #{globals.$ion-space-400};
 
   @include globals.typography(globals.$ion-heading-h6-medium);
-}
-
-// Shape only applies when inside an inset accordion group
-:host(.in-accordion-group-expand-inset.in-accordion-group-shape-round) ::slotted(ion-item[slot="header"]) {
-  --border-radius: #{globals.$ion-border-radius-400};
-}
-
-:host(.in-accordion-group-expand-inset.in-accordion-group-shape-soft) ::slotted(ion-item[slot="header"]) {
-  --border-radius: #{globals.$ion-border-radius-200};
-}
-
-:host(.in-accordion-group-expand-inset.in-accordion-group-shape-rectangular) ::slotted(ion-item[slot="header"]) {
-  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Accordion Content
