@@ -60,7 +60,7 @@ Utility class:
 
 It's not expected that the tokens need to be changed frequently. This represents the base of all the Ionic Design System and any change to them should be taken carefully, synced with the UX/UI Team and reviewed by other devs. 
 
-With the current architecture, this management is done on the [outsystems-design-tokens repo](https://github.com/OutSystems/outsystems-design-tokens) and updated its dependency here when necessary.
+With the current architecture, this management is done on the [outsystems-design-tokens repo](https://github.com/OutSystems/outsystems-design-tokens), and its dependency is updated here as needed.
 
 ## How to use
 
