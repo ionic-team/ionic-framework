@@ -7,7 +7,7 @@
 :host {
   min-width: 272px;
 
-  background-color: globals.$ionic-color-base-white;
+  background-color: globals.$ion-primitives-base-white;
 }
 
 // Inset Accordion Group
@@ -15,17 +15,17 @@
 // Shape and padding only apply if the group is inset
 
 :host(.accordion-group-expand-inset) {
-  @include globals.padding(globals.$ionic-space-100);
+  @include globals.padding(globals.$ion-space-100);
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-round) {
-  @include globals.border-radius(globals.$ionic-border-radius-400);
+  @include globals.border-radius(globals.$ion-border-radius-400);
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-soft) {
-  @include globals.border-radius(globals.$ionic-border-radius-200);
+  @include globals.border-radius(globals.$ion-border-radius-200);
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-rectangular) {
-  @include globals.border-radius(globals.$ionic-border-radius-0);
+  @include globals.border-radius(globals.$ion-border-radius-0);
 }

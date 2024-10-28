@@ -9,19 +9,19 @@
    * @prop --focus-ring-color: The color of the ring around the focused element.
    * @prop --focus-ring-width: The width of the ring around the focused element.
    */
-  --background: #{globals.$ionic-color-base-white};
-  --focus-ring-color: #{globals.$ionic-state-focus-1};
-  --focus-ring-width: #{globals.$ionic-border-radius-050};
+  --background: #{globals.$ion-primitives-base-white};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-radius-025};
 }
 
 // Header
 // -----------------------------------
 :host .datetime-header {
   @include globals.padding(
-    globals.$ionic-space-200,
-    globals.$ionic-space-400,
-    globals.$ionic-space-400,
-    globals.$ionic-space-400
+    globals.$ion-space-200,
+    globals.$ion-space-400,
+    globals.$ion-space-400,
+    globals.$ion-space-400
   );
 
   display: flex;
@@ -30,34 +30,34 @@
   align-items: start;
   justify-content: space-between;
 
-  height: globals.$ionic-scale-1400;
+  height: globals.$ion-scale-1400;
 
-  margin-bottom: globals.$ionic-space-200;
+  margin-bottom: globals.$ion-space-200;
 
-  border-bottom: globals.$ionic-border-style-solid globals.$ionic-border-size-025 globals.$ionic-color-neutral-300;
+  border-bottom: globals.$ion-border-style-solid globals.$ion-border-size-025 globals.$ion-primitives-neutral-300;
 }
 
 :host .datetime-header .datetime-title {
-  @include globals.typography(globals.$ionic-heading-h6-medium);
+  @include globals.typography(globals.$ion-heading-h6-medium);
 
-  color: globals.$ionic-color-neutral-800;
+  color: globals.$ion-primitives-neutral-800;
 }
 
 :host .datetime-header .datetime-selected-date {
-  @include globals.typography(globals.$ionic-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 
-  color: globals.$ionic-color-neutral-1000;
+  color: globals.$ion-primitives-neutral-1000;
 }
 
 // Calendar Header
 // -----------------------------------
 
 .calendar-action-buttons {
-  @include globals.padding(globals.$ionic-space-200, null);
+  @include globals.padding(globals.$ion-space-200, null);
 
   align-items: center;
 
-  height: globals.$ionic-scale-1400;
+  height: globals.$ion-scale-1400;
 
   box-sizing: border-box;
 }
@@ -69,22 +69,22 @@
 // Month year toggle should match the
 // default round clear button style
 .calendar-month-year-toggle {
-  @include globals.border-radius(globals.$ionic-border-radius-full);
-  @include globals.typography(globals.$ionic-action-lg);
-  @include globals.padding(globals.$ionic-space-200, globals.$ionic-space-400);
+  @include globals.border-radius(globals.$ion-border-radius-full);
+  @include globals.typography(globals.$ion-body-action-lg);
+  @include globals.padding(globals.$ion-space-200, globals.$ion-space-400);
 
-  min-width: globals.$ionic-scale-1600;
-  min-height: globals.$ionic-scale-1000;
+  min-width: globals.$ion-scale-1600;
+  min-height: globals.$ion-scale-1000;
 
-  border: var(--focus-ring-width) globals.$ionic-border-style-solid transparent;
+  border: var(--focus-ring-width) globals.$ion-border-style-solid transparent;
 
-  color: globals.$ionic-color-primary-base;
+  color: globals.$ion-semantics-primary-base;
 }
 
 // Hovered Month Year Toggle
 @media (any-hover: hover) {
   .calendar-month-year-toggle:hover {
-    background: globals.$ionic-color-neutral-200;
+    background: globals.$ion-primitives-neutral-200;
   }
 }
 
@@ -95,20 +95,20 @@
 
 // Activated Month Year Toggle
 .calendar-month-year-toggle.ion-activated {
-  background: globals.$ionic-color-neutral-200;
+  background: globals.$ion-primitives-neutral-200;
 }
 
 // TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
 .calendar-next-prev ion-button.button-has-icon-only {
-  --color: #{globals.$ionic-color-neutral-1000};
-  --background-activated: #{globals.$ionic-color-neutral-200};
-  --background-hover: #{globals.$ionic-color-neutral-200};
+  --color: #{globals.$ion-primitives-neutral-1000};
+  --background-activated: #{globals.$ion-primitives-neutral-200};
+  --background-hover: #{globals.$ion-primitives-neutral-200};
   --background-hover-opacity: 1;
 }
 
 // TODO(ROU-11119): Rewrite this when we replace the ion-button with a native button
 .calendar-next-prev ion-button.button-has-icon-only.ion-focused::part(native) {
-  border: globals.$ionic-border-size-050 globals.$ionic-border-style-solid globals.$ionic-state-focus-1;
+  border: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
   outline: none;
 }
@@ -117,86 +117,86 @@
 // -----------------------------------
 
 .calendar-days-of-week {
-  @include globals.typography(globals.$ionic-overline-medium);
+  @include globals.typography(globals.$ion-overline-medium);
 
   align-content: center;
 
-  height: globals.$ionic-scale-1200;
+  height: globals.$ion-scale-1200;
 
-  color: globals.$ionic-color-neutral-800;
+  color: globals.$ion-primitives-neutral-800;
 }
 
 // Calendar Day
 // -----------------------------------
 
 .calendar-day {
-  @include globals.border-radius(globals.$ionic-border-radius-full);
-  @include globals.padding(globals.$ionic-space-100);
-  @include globals.typography(globals.$ionic-action-md);
+  @include globals.border-radius(globals.$ion-border-radius-full);
+  @include globals.padding(globals.$ion-space-100);
+  @include globals.typography(globals.$ion-body-action-md);
 
-  width: globals.$ionic-scale-1200;
-  min-width: globals.$ionic-scale-1200;
+  width: globals.$ion-scale-1200;
+  min-width: globals.$ion-scale-1200;
 
-  height: globals.$ionic-scale-1200;
+  height: globals.$ion-scale-1200;
 
-  color: globals.$ionic-color-neutral-1200;
+  color: globals.$ion-primitives-neutral-1200;
 }
 
 // Disabled Day
 .calendar-day[disabled]:not(.calendar-day-constrained) {
-  color: globals.$ionic-color-neutral-500;
+  color: globals.$ion-primitives-neutral-500;
 }
 
 // Current Day
 .calendar-day.calendar-day-today {
-  color: globals.$ionic-color-primary-base;
+  color: globals.$ion-semantics-primary-base;
 }
 
 // Selected Day
 .calendar-day.calendar-day-active {
-  background: globals.$ionic-color-primary-100;
+  background: globals.$ion-semantics-primary-100;
 }
 
 // Focused Day
 .calendar-day:focus-visible {
-  border: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
+  border: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
 }
 
 // Hovered Day
 @media (any-hover: hover) {
   .calendar-day:not([disabled]):not(:active):hover {
-    background: globals.$ionic-color-primary-200;
+    background: globals.$ion-semantics-primary-200;
   }
 }
 
 // Pressed Day
 .calendar-day:active {
-  background: globals.$ionic-color-primary-300;
+  background: globals.$ion-semantics-primary-300;
 }
 
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
-  @include globals.padding(globals.$ionic-space-100, globals.$ionic-space-400);
+  @include globals.padding(globals.$ion-space-100, globals.$ion-space-400);
 
-  height: globals.$ionic-scale-800;
+  height: globals.$ion-scale-800;
 }
 
 :host .datetime-time .time-header {
-  @include globals.typography(globals.$ionic-action-lg);
+  @include globals.typography(globals.$ion-body-action-lg);
 
-  color: globals.$ionic-color-neutral-800;
+  color: globals.$ion-primitives-neutral-800;
 }
 
 :host .datetime-time button {
-  @include globals.padding(globals.$ionic-space-0, globals.$ionic-space-200);
-  @include globals.typography(globals.$ionic-body-md-medium);
-  @include globals.border-radius(globals.$ionic-border-radius-full);
+  @include globals.padding(globals.$ion-space-0, globals.$ion-space-200);
+  @include globals.typography(globals.$ion-body-md-medium);
+  @include globals.border-radius(globals.$ion-border-radius-full);
 
   display: flex;
 
   align-items: center;
 
-  background-color: globals.$ionic-color-neutral-100;
-  color: globals.$ionic-color-neutral-1200;
+  background-color: globals.$ion-primitives-neutral-100;
+  color: globals.$ion-primitives-neutral-1200;
 }

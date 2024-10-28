@@ -5,26 +5,26 @@
 // --------------------------------------------------
 
 :host {
-  --padding-top: #{globals.$ionic-space-0};
-  --padding-bottom: #{globals.$ionic-space-0};
+  --padding-top: #{globals.$ion-space-0};
+  --padding-bottom: #{globals.$ion-space-0};
 
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  background: globals.$ionic-color-neutral-100;
-  color: globals.$ionic-color-neutral-800;
+  background: globals.$ion-primitives-neutral-100;
+  color: globals.$ion-primitives-neutral-800;
 
-  font-weight: globals.$ionic-font-weight-medium;
+  font-weight: globals.$ion-font-weight-medium;
 
-  line-height: globals.$ionic-line-height-700;
+  line-height: globals.$ion-font-line-height-700;
 }
 
 :host(:not(.avatar-image)) {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  border: globals.$ionic-border-size-025 globals.$ionic-border-style-solid globals.$ionic-color-neutral-800;
+  border: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-primitives-neutral-800;
 }
 
 // Avatar Sizes
@@ -32,74 +32,74 @@
 
 /* 2-Extra Small */
 :host(.avatar-xxsmall) {
-  --padding-end: #{globals.$ionic-space-050};
-  --padding-start: #{globals.$ionic-space-050};
+  --padding-end: #{globals.$ion-space-050};
+  --padding-start: #{globals.$ion-space-050};
 
-  width: globals.$ionic-scale-400;
-  height: globals.$ionic-scale-400;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 
-  font-size: globals.$ionic-font-size-300;
+  font-size: globals.$ion-font-size-300;
 
-  line-height: globals.$ionic-line-height-500;
+  line-height: globals.$ion-font-line-height-500;
 }
 
 /* Extra Small */
 :host(.avatar-xsmall) {
-  --padding-end: #{globals.$ionic-space-050};
-  --padding-start: #{globals.$ionic-space-050};
+  --padding-end: #{globals.$ion-space-050};
+  --padding-start: #{globals.$ion-space-050};
 
-  width: globals.$ionic-scale-600;
-  height: globals.$ionic-scale-600;
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 
-  font-size: globals.$ionic-font-size-300;
+  font-size: globals.$ion-font-size-300;
 
-  line-height: globals.$ionic-line-height-500;
+  line-height: globals.$ion-font-line-height-500;
 }
 
 /* Small */
 :host(.avatar-small) {
-  --padding-end: #{globals.$ionic-space-150};
-  --padding-start: #{globals.$ionic-space-150};
+  --padding-end: #{globals.$ion-space-150};
+  --padding-start: #{globals.$ion-space-150};
 
-  width: globals.$ionic-scale-800;
-  height: globals.$ionic-scale-800;
+  width: globals.$ion-scale-800;
+  height: globals.$ion-scale-800;
 
-  font-size: globals.$ionic-font-size-400;
+  font-size: globals.$ion-font-size-400;
 
-  line-height: globals.$ionic-line-height-600;
+  line-height: globals.$ion-font-line-height-600;
 }
 
 /* Medium */
 :host(.avatar-medium) {
-  --padding-end: #{globals.$ionic-space-200};
-  --padding-start: #{globals.$ionic-space-200};
+  --padding-end: #{globals.$ion-space-200};
+  --padding-start: #{globals.$ion-space-200};
 
-  width: globals.$ionic-scale-1000;
-  height: globals.$ionic-scale-1000;
+  width: globals.$ion-scale-1000;
+  height: globals.$ion-scale-1000;
 
-  font-size: globals.$ionic-font-size-450;
+  font-size: globals.$ion-font-size-450;
 }
 
 /* Large */
 :host(.avatar-large) {
-  --padding-end: #{globals.$ionic-space-250};
-  --padding-start: #{globals.$ionic-space-250};
+  --padding-end: #{globals.$ion-space-250};
+  --padding-start: #{globals.$ion-space-250};
 
-  width: globals.$ionic-scale-1200;
-  height: globals.$ionic-scale-1200;
+  width: globals.$ion-scale-1200;
+  height: globals.$ion-scale-1200;
 
-  font-size: globals.$ionic-font-size-500;
+  font-size: globals.$ion-font-size-500;
 }
 
 /* Extra Large */
 :host(.avatar-xlarge) {
-  --padding-end: #{globals.$ionic-space-300};
-  --padding-start: #{globals.$ionic-space-300};
+  --padding-end: #{globals.$ion-space-300};
+  --padding-start: #{globals.$ion-space-300};
 
-  width: globals.$ionic-scale-1400;
-  height: globals.$ionic-scale-1400;
+  width: globals.$ion-scale-1400;
+  height: globals.$ion-scale-1400;
 
-  font-size: globals.$ionic-font-size-550;
+  font-size: globals.$ion-font-size-550;
 }
 
 // Avatar Shapes
@@ -108,19 +108,19 @@
 :host(.avatar-xxsmall.avatar-soft),
 :host(.avatar-xsmall.avatar-soft),
 :host(.avatar-small.avatar-soft) {
-  --border-radius: #{globals.$ionic-border-radius-100};
+  --border-radius: #{globals.$ion-border-radius-100};
 }
 
 :host(.avatar-soft) {
-  --border-radius: #{globals.$ionic-border-radius-200};
+  --border-radius: #{globals.$ion-border-radius-200};
 }
 
 :host(.avatar-round) {
-  --border-radius: #{globals.$ionic-border-radius-full};
+  --border-radius: #{globals.$ion-border-radius-full};
 }
 
 :host(.avatar-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Avatar Icon
@@ -131,26 +131,26 @@
 }
 
 :host(.avatar-xsmall) ::slotted(ion-icon) {
-  width: globals.$ionic-scale-400;
-  height: globals.$ionic-scale-400;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 :host(.avatar-small) ::slotted(ion-icon) {
-  width: globals.$ionic-scale-500;
-  height: globals.$ionic-scale-500;
+  width: globals.$ion-scale-500;
+  height: globals.$ion-scale-500;
 }
 
 :host(.avatar-medium) ::slotted(ion-icon) {
-  width: globals.$ionic-scale-600;
-  height: globals.$ionic-scale-600;
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 }
 
 :host(.avatar-large) ::slotted(ion-icon) {
-  width: globals.$ionic-scale-800;
-  height: globals.$ionic-scale-800;
+  width: globals.$ion-scale-800;
+  height: globals.$ion-scale-800;
 }
 
 :host(.avatar-xlarge) ::slotted(ion-icon) {
-  width: globals.$ionic-scale-1000;
-  height: globals.$ionic-scale-1000;
+  width: globals.$ion-scale-1000;
+  height: globals.$ion-scale-1000;
 }

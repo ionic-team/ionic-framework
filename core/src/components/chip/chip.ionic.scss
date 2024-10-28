@@ -4,13 +4,13 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ionic-color-neutral-100};
-  --color: #{globals.$ionic-color-neutral-900};
-  --focus-ring-color: #{globals.$ionic-state-focus-1};
-  --focus-ring-width: #{globals.$ionic-border-size-050};
+  --background: #{globals.$ion-primitives-neutral-100};
+  --color: #{globals.$ion-primitives-neutral-900};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
+  --focus-ring-width: #{globals.$ion-border-size-050};
 
   @include globals.font-smoothing;
-  @include globals.padding(globals.$ionic-space-150, globals.$ionic-space-200);
+  @include globals.padding(globals.$ion-space-150, globals.$ion-space-200);
   @include globals.border-radius(var(--border-radius));
 
   display: inline-flex;
@@ -20,15 +20,15 @@
   align-items: center;
   justify-content: center;
 
-  gap: globals.$ionic-space-100;
+  gap: globals.$ion-space-100;
 
   background: var(--background);
   color: var(--color);
 
-  font-family: globals.$ionic-font-family;
-  font-weight: globals.$ionic-font-weight-medium;
+  font-family: globals.$ion-font-family;
+  font-weight: globals.$ion-font-weight-medium;
 
-  line-height: globals.$ionic-line-height-full;
+  line-height: globals.$ion-font-line-height-full;
 
   cursor: pointer;
 
@@ -43,9 +43,9 @@
 // ---------------------------------------------
 
 :host(.chip-outline) {
-  border-width: globals.$ionic-border-size-025;
-  border-style: globals.$ionic-border-style-solid;
-  border-color: globals.$ionic-color-neutral-100;
+  border-width: globals.$ion-border-size-025;
+  border-style: globals.$ion-border-style-solid;
+  border-color: globals.$ion-primitives-neutral-100;
 
   background: transparent;
 }
@@ -58,7 +58,7 @@
 // ---------------------------------------------
 
 :host(.ion-focused) {
-  outline: var(--focus-ring-width) globals.$ionic-border-style-solid var(--focus-ring-color);
+  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-width);
 }
 
@@ -67,7 +67,7 @@
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: #{globals.$ionic-color-neutral-200};
+    --background: #{globals.$ion-primitives-neutral-200};
   }
 
   :host(.ion-color:hover) {
@@ -87,36 +87,36 @@
 // ---------------------------------------------
 
 :host(.chip-soft) {
-  --border-radius: #{globals.$ionic-border-radius-100};
+  --border-radius: #{globals.$ion-border-radius-100};
 }
 
 :host(.chip-round) {
-  --border-radius: #{globals.$ionic-border-radius-400};
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 :host(.chip-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Chip Icon
 // ---------------------------------------------
 ::slotted(ion-icon) {
-  font-size: globals.$ionic-font-size-400;
+  font-size: globals.$ion-font-size-400;
 }
 
 // Size
 // ---------------------------------------------
 
 :host(.chip-small) {
-  min-height: globals.$ionic-scale-600;
+  min-height: globals.$ion-scale-600;
 
-  font-size: #{globals.$ionic-font-size-300};
+  font-size: #{globals.$ion-font-size-300};
 }
 
 :host(.chip-large) {
-  min-height: globals.$ionic-scale-800;
+  min-height: globals.$ion-scale-800;
 
-  font-size: globals.$ionic-font-size-350;
+  font-size: globals.$ion-font-size-350;
 }
 
 // Chip Colors

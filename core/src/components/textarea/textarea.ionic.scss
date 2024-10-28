@@ -6,14 +6,14 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{globals.$ionic-color-neutral-1200};
-  --highlight-color-valid: #{globals.$ionic-color-success-base};
-  --highlight-color-invalid: #{globals.$ionic-color-danger-base};
-  --placeholder-color: #{globals.$ionic-color-neutral-800};
+  --color: #{globals.$ion-primitives-neutral-1200};
+  --highlight-color-valid: #{globals.$ion-semantics-success-base};
+  --highlight-color-invalid: #{globals.$ion-semantics-danger-base};
+  --placeholder-color: #{globals.$ion-primitives-neutral-800};
   --placeholder-opacity: 1;
-  --background: #{globals.$ionic-color-base-white};
+  --background: #{globals.$ion-primitives-base-white};
 
-  @include globals.typography(globals.$ionic-body-md-regular);
+  @include globals.typography(globals.$ion-body-md-regular);
 }
 
 // Ionic Textarea Sizes
@@ -26,52 +26,52 @@
 }
 
 :host(.textarea-size-small) .textarea-wrapper-inner {
-  --padding-top: #{globals.$ionic-space-200};
-  --padding-end: #{globals.$ionic-space-300};
-  --padding-bottom: #{globals.$ionic-space-200};
-  --padding-start: #{globals.$ionic-space-300};
+  --padding-top: #{globals.$ion-space-200};
+  --padding-end: #{globals.$ion-space-300};
+  --padding-bottom: #{globals.$ion-space-200};
+  --padding-start: #{globals.$ion-space-300};
 
-  min-height: globals.$ionic-scale-2800;
+  min-height: globals.$ion-scale-2800;
 }
 
 :host(.textarea-size-medium) .textarea-wrapper-inner {
-  --padding-top: #{globals.$ionic-space-300};
-  --padding-end: #{globals.$ionic-space-400};
-  --padding-bottom: #{globals.$ionic-space-300};
-  --padding-start: #{globals.$ionic-space-400};
+  --padding-top: #{globals.$ion-space-300};
+  --padding-end: #{globals.$ion-space-400};
+  --padding-bottom: #{globals.$ion-space-300};
+  --padding-start: #{globals.$ion-space-400};
 
-  min-height: globals.$ionic-scale-3400;
+  min-height: globals.$ion-scale-3400;
 }
 
 :host(.textarea-size-large) .textarea-wrapper-inner {
-  --padding-top: #{globals.$ionic-space-400};
-  --padding-end: #{globals.$ionic-space-500};
-  --padding-bottom: #{globals.$ionic-space-400};
-  --padding-start: #{globals.$ionic-space-500};
+  --padding-top: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-500};
+  --padding-bottom: #{globals.$ion-space-400};
+  --padding-start: #{globals.$ion-space-500};
 
-  min-height: globals.$ionic-scale-3600;
+  min-height: globals.$ion-scale-3600;
 }
 
 // Ionic Textarea Shapes
 // --------------------------------------------------
 
 :host(.textarea-shape-soft) {
-  --border-radius: #{globals.$ionic-border-radius-200};
+  --border-radius: #{globals.$ion-border-radius-200};
 }
 
 :host(.textarea-shape-round) {
-  --border-radius: #{globals.$ionic-border-radius-400};
+  --border-radius: #{globals.$ion-border-radius-400};
 }
 
 :host(.textarea-shape-rectangular) {
-  --border-radius: #{globals.$ionic-border-radius-0};
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Textarea Wrapper
 // ----------------------------------------------------------------
 
 .textarea-wrapper {
-  gap: globals.$ionic-space-100;
+  gap: globals.$ion-space-100;
 }
 
 .textarea-wrapper-inner {
@@ -97,9 +97,9 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  @include globals.typography(globals.$ionic-body-sm-medium);
+  @include globals.typography(globals.$ion-body-sm-medium);
 
-  color: globals.$ionic-color-neutral-1000;
+  color: globals.$ion-primitives-neutral-1000;
 }
 
 :host(.label-floating) .label-text-wrapper {
@@ -110,25 +110,25 @@
 // ----------------------------------------------------------------
 
 ion-icon {
-  color: globals.$ionic-color-neutral-800;
+  color: globals.$ion-primitives-neutral-800;
 
-  font-size: globals.$ionic-scale-400;
+  font-size: globals.$ion-scale-400;
 }
 
 .start-slot-wrapper,
 .end-slot-wrapper {
-  margin-top: globals.$ionic-space-050;
+  margin-top: globals.$ion-space-050;
 }
 
 // Textarea Bottom Content
 // ----------------------------------------------------------------
 
 .textarea-bottom {
-  @include globals.padding(globals.$ionic-space-100, var(--padding-end), null, var(--padding-start));
-  @include globals.typography(globals.$ionic-body-sm-medium);
+  @include globals.padding(globals.$ion-space-100, var(--padding-end), null, var(--padding-start));
+  @include globals.typography(globals.$ion-body-sm-medium);
 }
 
 .textarea-bottom .helper-text,
 .textarea-bottom .counter {
-  color: globals.$ionic-color-neutral-800;
+  color: globals.$ion-primitives-neutral-800;
 }

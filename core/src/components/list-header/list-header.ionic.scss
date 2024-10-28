@@ -4,9 +4,9 @@
 
 :host {
   --background: transparent;
-  --color: #{globals.$ionic-color-neutral-1200};
+  --color: #{globals.$ion-primitives-neutral-1200};
 
-  @include globals.typography(globals.$ionic-body-md-medium);
+  @include globals.typography(globals.$ion-body-md-medium);
 
   min-height: 58px;
 
@@ -35,7 +35,7 @@
 
 // Label
 ::slotted(ion-label) ::slotted(p) {
-  font-weight: globals.$ionic-font-weight-regular;
+  font-weight: globals.$ion-font-weight-regular;
 }
 
 // Link
@@ -44,5 +44,5 @@
   // that is set by the ionic theme at a global level.
   //
   /* stylelint-disable declaration-no-important */
-  color: globals.$ionic-color-primary-base !important;
+  color: globals.$ion-semantics-primary-base !important;
 }
