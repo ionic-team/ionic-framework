@@ -1,4 +1,11 @@
 @forward "../../foundations/ionic.utility";
 
-// CSS Utils
-@import "../utils.bundle";
+// TODO(ROU-5316): The padding utility is not included here
+// because it uses hardcoded pixel values instead of values
+// from the design tokens. We need to investigate how to
+// align the padding utility with the design tokens.
+@import "../float-elements";
+@import "../text-alignment";
+@import "../text-transformation";
+@import "../flex-utils";
+@import "../display";
