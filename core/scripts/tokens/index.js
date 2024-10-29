@@ -12,6 +12,7 @@
     generateTypographyOutput,
     generateValue,
     generateColorUtilityClasses,
+    generateDefaultSpaceUtilityClasses,
     generateSpaceUtilityClasses,
     removeConsecutiveRepeatedWords,
     setPrefixValue,
@@ -141,6 +142,9 @@
 
         return otherUtilityClasses.push(utilityClass);
       });
+
+      const defaultSpaceUtilityClasses = generateDefaultSpaceUtilityClasses();
+      otherUtilityClasses.push(defaultSpaceUtilityClasses);
 
       // Concatenate typography utility classes at the beginning
       const finalOutput = typographyUtilityClasses.concat(otherUtilityClasses).join('\n');
