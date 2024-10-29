@@ -23,136 +23,135 @@
   } = require('./utils.js');
 
   const StyleDictionary = (await import('style-dictionary')).default;
-  
+
   // Set the prefix for variables and classes
   setPrefixValue('ion');
 
   // Register a custom file header
   StyleDictionary.registerFileHeader({
-      name: 'custom-header',
-      fileHeader: async (defaultMessages = []) => {
-        return [...defaultMessages, 'Do not edit directly, this file was auto-generated.'];
-      },
+    name: 'custom-header',
+    fileHeader: async (defaultMessages = []) => {
+      return [...defaultMessages, 'Do not edit directly, this file was auto-generated.'];
+    },
   });
 
   // SCSS variables format
   StyleDictionary.registerFormat({
     name: 'scssVariablesFormat',
-    format: async function({ dictionary, file}) {
+    format: async function ({ dictionary, file }) {
 
       console.log('Generating SCSS variables...');
 
-        // Separate typography tokens from the rest
-        const typographyProperties = dictionary.allTokens.filter((prop) => prop.$type === 'typography');
-        const otherProperties = dictionary.allTokens.filter((prop) => prop.$type !== 'typography');
+      // Separate typography tokens from the rest
+      const typographyProperties = dictionary.allTokens.filter((prop) => prop.$type === 'typography');
+      const otherProperties = dictionary.allTokens.filter((prop) => prop.$type !== 'typography');
 
-        // Make sure the reused scss variables are defined first, to avoid compilation errors
-        const sortedProperties = [...otherProperties, ...typographyProperties];
+      // Make sure the reused scss variables are defined first, to avoid compilation errors
+      const sortedProperties = [...otherProperties, ...typographyProperties];
 
-        const prefixedVariables = sortedProperties.map((prop) => {
-          // Remove consecutive repeated words from the token name, like border-border-color
-          const propName = removeConsecutiveRepeatedWords(prop.name);
+      const prefixedVariables = sortedProperties.map((prop) => {
+        // Remove consecutive repeated words from the token name, like border-border-color
+        const propName = removeConsecutiveRepeatedWords(prop.name);
 
-            switch (prop.$type) {
-              case 'boxShadow':
-                  return generateShadowValue(prop, propName);
-              case 'fontFamilies':
-                  return generateFontFamilyValue(prop, propName, 'scss');
-              case 'fontSizes':
-                  return generateFontSizeValue(prop, propName, 'scss');
-              case 'typography':
-                  return generateTypographyOutput(prop, propName, true);
-              default:
-                  return generateValue(prop, propName);
-          }
-        });
+        switch (prop.$type) {
+          case 'boxShadow':
+            return generateShadowValue(prop, propName);
+          case 'fontFamilies':
+            return generateFontFamilyValue(prop, propName, 'scss');
+          case 'fontSizes':
+            return generateFontSizeValue(prop, propName, 'scss');
+          case 'typography':
+            return generateTypographyOutput(prop, propName, true);
+          default:
+            return generateValue(prop, propName);
+        }
+      });
 
-        const fileHeader = await file.options.fileHeader();
-              
-        return [
-            `/*\n${fileHeader.join('\n')}\n*/`,
-            '@use "../themes/functions.sizes" as font;\n',
-            prefixedVariables.join('\n') + '\n',
-        ].join('\n');
+      const fileHeader = await file.options.fileHeader();
+
+      return [
+        `/*\n${fileHeader.join('\n')}\n*/`,
+        '@use "../themes/functions.sizes" as font;\n',
+        prefixedVariables.join('\n') + '\n',
+      ].join('\n');
     },
   });
 
   // Create utility-classes
   StyleDictionary.registerFormat({
     name: 'cssUtilityClassesFormat',
-    format: async function({ dictionary, file})  {
+    format: async function ({ dictionary, file }) {
 
-        console.log('Generating Utility-Classes...');
-        
-        // Arrays to store specific utility classes
-        const typographyUtilityClasses = [];
-        const otherUtilityClasses = [];
+      console.log('Generating Utility-Classes...');
 
-        // Generate utility classes for each token
-        dictionary.allTokens.map((prop) => {
+      // Arrays to store specific utility classes
+      const typographyUtilityClasses = [];
+      const otherUtilityClasses = [];
 
-            const tokenCategory = prop.attributes.category;
+      // Generate utility classes for each token
+      dictionary.allTokens.map((prop) => {
 
-            if (prop.$type === 'fontFamilies' || tokenCategory === 'scale' || tokenCategory === 'backdrop') {
-              // Not creating for the tokens below, as they make no sense to exist as utility-classes.
-              return;
-          }
+        const tokenCategory = prop.attributes.category;
 
-            // Remove consecutive repeated words from the token name, like border-border-color
-            const propName = removeConsecutiveRepeatedWords(prop.name);
-            
-            if (prop.$type === 'typography') {
-                // Typography tokens are handled differently, as each might have a different tokenType
-                return typographyUtilityClasses.push(generateTypographyOutput(prop, propName, false));
-                
-            } else if(tokenCategory.startsWith('round') || tokenCategory.startsWith('rectangular') || tokenCategory.startsWith('soft')) {
-                // Generate utility classes for border-radius shape tokens, as they have their own token json file, based on primitive tokens
-                return otherUtilityClasses.push(generateRadiusUtilityClasses(propName));
+        if (prop.$type === 'fontFamilies' || tokenCategory === 'scale' || tokenCategory === 'backdrop') {
+          // Not creating for the tokens below, as they make no sense to exist as utility-classes.
+          return;
+        }
 
-            } 
+        // Remove consecutive repeated words from the token name, like border-border-color
+        const propName = removeConsecutiveRepeatedWords(prop.name);
 
-            let utilityClass = '';
+        if (prop.$type === 'typography') {
+          // Typography tokens are handled differently, as each might have a different tokenType
+          return typographyUtilityClasses.push(generateTypographyOutput(prop, propName, false));
 
-            switch (tokenCategory) {
-                case 'color':
-                case 'primitives':
-                case 'semantics':
-                case 'text':
-                case 'bg':
-                case 'icon':
-                case 'state':
-                  utilityClass = generateColorUtilityClasses(prop, propName);
-                  break;
-                case 'border-size':
-                  utilityClass = generateBorderSizeUtilityClasses(propName);
-                  break;
-                case 'font':
-                  utilityClass = generateFontUtilityClasses(prop, propName);
-                  break;
-                case 'space':
-                  utilityClass = generateSpaceUtilityClasses(prop, propName);
-                  break;
-                case 'shadow':
-                case 'elevation':
-                  utilityClass = generateShadowUtilityClasses(propName);
-                  break;
-                default:
-                  utilityClass = generateUtilityClasses(tokenCategory, propName);
-            }
+        } else if (tokenCategory.startsWith('round') || tokenCategory.startsWith('rectangular') || tokenCategory.startsWith('soft')) {
+          // Generate utility classes for border-radius shape tokens, as they have their own token json file, based on primitive tokens
+          return otherUtilityClasses.push(generateRadiusUtilityClasses(propName));
+        }
 
-            return otherUtilityClasses.push(utilityClass);
-        });
+        let utilityClass = '';
 
-        // Concatenate typography utility classes at the beginning
-        const finalOutput = typographyUtilityClasses.concat(otherUtilityClasses).join('\n');
+        switch (tokenCategory) {
+          case 'color':
+          case 'primitives':
+          case 'semantics':
+          case 'text':
+          case 'bg':
+          case 'icon':
+          case 'state':
+            utilityClass = generateColorUtilityClasses(prop, propName);
+            break;
+          case 'border-size':
+            utilityClass = generateBorderSizeUtilityClasses(propName);
+            break;
+          case 'font':
+            utilityClass = generateFontUtilityClasses(prop, propName);
+            break;
+          case 'space':
+            utilityClass = generateSpaceUtilityClasses(prop, propName);
+            break;
+          case 'shadow':
+          case 'elevation':
+            utilityClass = generateShadowUtilityClasses(propName);
+            break;
+          default:
+            utilityClass = generateUtilityClasses(tokenCategory, propName);
+        }
 
-        const fileHeader = await file.options.fileHeader();
-              
-        return [
-            `/*\n${fileHeader.join('\n')}\n*/`,
-            '@import "./ionic.vars";\n@import "../themes/mixins";\n',
-            finalOutput,
-        ].join('\n');
+        return otherUtilityClasses.push(utilityClass);
+      });
+
+      // Concatenate typography utility classes at the beginning
+      const finalOutput = typographyUtilityClasses.concat(otherUtilityClasses).join('\n');
+
+      const fileHeader = await file.options.fileHeader();
+
+      return [
+        `/*\n${fileHeader.join('\n')}\n*/`,
+        '@import "./ionic.vars";\n@import "../themes/mixins";\n',
+        finalOutput,
+      ].join('\n');
     },
   });
 
@@ -163,24 +162,24 @@ module.exports = {
   source: ["node_modules/outsystems-design-tokens/tokens/**/*.json"],
   platforms: {
     scss: {
-        transformGroup: "scss",
-        buildPath: './src/foundations/',
-        files: [
-          {
-              destination: "ionic.vars.scss",
-              format: "scssVariablesFormat",
-              options: {
-                  fileHeader: `custom-header`,
-                },
+      transformGroup: "scss",
+      buildPath: './src/foundations/',
+      files: [
+        {
+          destination: "ionic.vars.scss",
+          format: "scssVariablesFormat",
+          options: {
+            fileHeader: `custom-header`,
           },
-          {
-              destination: "ionic.utility.scss",
-              format: "cssUtilityClassesFormat",
-              options: {
-                  fileHeader: `custom-header`
-              }
+        },
+        {
+          destination: "ionic.utility.scss",
+          format: "cssUtilityClassesFormat",
+          options: {
+            fileHeader: `custom-header`
           }
-          ]
+        }
+      ]
     }
   }
 };
