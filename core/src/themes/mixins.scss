@@ -1,3 +1,5 @@
+@use "./functions.string" as string;
+
 /**
  * A heuristic that applies CSS to tablet
  * viewports.
@@ -239,9 +241,9 @@
 @mixin rtl() {
   $root: #{&};
 
-  $rootSplit: str-split($root, ",");
-  $selectors: #{add-root-selector($root, "[dir=rtl]")};
-  $selectorsSplit: str-split($selectors, ",");
+  $rootSplit: string.str-split($root, ",");
+  $selectors: #{string.add-root-selector($root, "[dir=rtl]")};
+  $selectorsSplit: string.str-split($selectors, ",");
 
   $hostContextSelectors: ();
   $restSelectors: ();
@@ -292,7 +294,7 @@
     // -- @link https://bugs.webkit.org/show_bug.cgi?id=257133
 
     // Supported by Firefox.
-    @at-root #{add-root-selector($root, ":dir(rtl)", false)} {
+    @at-root #{string.add-root-selector($root, ":dir(rtl)", false)} {
       @content;
     }
   }
