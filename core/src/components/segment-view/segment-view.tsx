@@ -90,7 +90,7 @@ export class SegmentView implements ComponentInterface {
     }
     this.scrollEndTimeout = setTimeout(() => {
       this.checkForScrollEnd();
-    }, 50);
+    }, 100);
   }
 
   /**
