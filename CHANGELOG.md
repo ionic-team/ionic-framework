@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.4](https://github.com/ionic-team/ionic-framework/compare/v8.3.3...v8.3.4) (2024-10-30)
+
+
+### Bug Fixes
+
+* **angular:** add missing 'compareWith' input to standalone ion-radio-group ([#29870](https://github.com/ionic-team/ionic-framework/issues/29870)) ([47ba703](https://github.com/ionic-team/ionic-framework/commit/47ba703a57d1ca506f943f6b790d0bf7583d79cb)), closes [#29826](https://github.com/ionic-team/ionic-framework/issues/29826)
+* **backdrop:** remove tabindex for improved accessibility ([#29956](https://github.com/ionic-team/ionic-framework/issues/29956)) ([7294e96](https://github.com/ionic-team/ionic-framework/commit/7294e969bb913692eaf28e54860614f445132713)), closes [#29773](https://github.com/ionic-team/ionic-framework/issues/29773)
+* **input, textarea:** ensure screen readers announce helper and error text when focused ([#29958](https://github.com/ionic-team/ionic-framework/issues/29958)) ([5a73145](https://github.com/ionic-team/ionic-framework/commit/5a7314553a8def87bd19275640c92dd72a6ef1a4))
+* **overlay:** hide from screen readers while animating ([#29951](https://github.com/ionic-team/ionic-framework/issues/29951)) ([cb60073](https://github.com/ionic-team/ionic-framework/commit/cb6007363a8d42b5f126945427c2bfc3d7209c21)), closes [#29857](https://github.com/ionic-team/ionic-framework/issues/29857)
+* **overlays:** do not hide root when toast appears ([#29962](https://github.com/ionic-team/ionic-framework/issues/29962)) ([322d7c9](https://github.com/ionic-team/ionic-framework/commit/322d7c98cf6613df0b0db3f119e3f892e6a17e7b)), closes [#29773](https://github.com/ionic-team/ionic-framework/issues/29773)
+* **overlays:** hide the focus trap div from screen readers ([#29970](https://github.com/ionic-team/ionic-framework/issues/29970)) ([c3b58f1](https://github.com/ionic-team/ionic-framework/commit/c3b58f1620bcb74db43e3983ef570b7b982abd83)), closes [#29858](https://github.com/ionic-team/ionic-framework/issues/29858)
+* **vue:** incorrect view rendered when using router.go(-n) ([#29877](https://github.com/ionic-team/ionic-framework/issues/29877)) ([e32fbe0](https://github.com/ionic-team/ionic-framework/commit/e32fbe02102fe80db29f73c26496a40852032354)), closes [#28201](https://github.com/ionic-team/ionic-framework/issues/28201) [#28201](https://github.com/ionic-team/ionic-framework/issues/28201) [#29847](https://github.com/ionic-team/ionic-framework/issues/29847)
+
+
+
+
+
 ## [8.3.3](https://github.com/ionic-team/ionic-framework/compare/v8.3.2...v8.3.3) (2024-10-16)
 
 
