@@ -1,4 +1,5 @@
 @use "../functions.color" as color;
+@use "../../foundations/ionic.vars.scss" as globals;
 
 // Ionic Theme
 // -------------------------------------------------------------------------------------------
@@ -89,3 +90,13 @@ $ionic-colors: (
     tint: color.get-color-tint($dark),
   ),
 );
+
+// Ionic Tabs & Tab Bar
+// --------------------------------------------------
+
+$tabbar-ionic-background: var(--ion-tab-bar-background, globals.$ion-primitives-base-white);
+$tabbar-ionic-background-activated: var(--ion-tab-bar-background-activated, globals.$ion-primitives-neutral-100);
+$tabbar-ionic-background-focused: var(--ion-tab-bar-background-focused, transparent);
+$tabbar-ionic-color: var(--ion-tab-bar-color, globals.$ion-primitives-neutral-800);
+$tabbar-ionic-color-selected: var(--ion-tab-bar-color-selected, globals.$ion-semantics-primary-base);
+$tabbar-ionic-border-color: var(--ion-tab-bar-border-color, transparent);
