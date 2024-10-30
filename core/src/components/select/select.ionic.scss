@@ -1,0 +1,12 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./select.common";
+
+// Ionic Select
+// -------------------------------------------------
+
+// Select Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  @include globals.typography(globals.$ion-body-sm-medium);
+}

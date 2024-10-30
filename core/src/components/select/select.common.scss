@@ -1,3 +1,4 @@
+@use "../../themes/mixins" as mixins;
 @import "./select.vars";
 
 // Select
@@ -31,7 +32,6 @@
   --padding-bottom: 0px;
   --padding-start: 0px;
   --placeholder-color: currentColor;
-  --placeholder-opacity: #{$placeholder-opacity};
   --background: transparent;
   --border-style: solid;
   --highlight-color-focused: #{ion-color(primary, base)};
@@ -52,12 +52,9 @@
   width: 100%;
   min-height: 44px;
 
-  font-family: $font-family-base;
-
   white-space: nowrap;
 
   cursor: pointer;
-  z-index: $z-index-item-input;
 }
 
 /**
@@ -115,15 +112,13 @@
 }
 
 button {
-  @include visually-hidden();
+  @include mixins.visually-hidden();
 }
 
 // Select Icon
 // --------------------------------------------------
 
 .select-icon {
-  @include margin(0, 0, 0, $select-icon-margin-start);
-
   position: relative;
 
   /**
@@ -193,9 +188,6 @@ button {
 // --------------------------------------------------
 
 .select-wrapper {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include border-radius(var(--border-radius));
-
   display: flex;
 
   position: relative;
@@ -389,15 +381,6 @@ button {
   flex-direction: row;
 }
 
-:host(.select-label-placement-start) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the select should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
-
 // Select Label Placement - End
 // ----------------------------------------------------------------
 
@@ -407,27 +390,6 @@ button {
  */
 :host(.select-label-placement-end) .select-wrapper {
   flex-direction: row-reverse;
-}
-
-/**
- * The margin between the label and
- * the select should be on the start
- * when the label sits at the end.
- */
-:host(.select-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, $form-control-label-margin);
-}
-
-// Select Label Placement - Fixed
-// ----------------------------------------------------------------
-
-:host(.select-label-placement-fixed) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the select should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 /**
@@ -488,26 +450,9 @@ button {
  */
 :host(.select-label-placement-stacked) .native-wrapper,
 :host(.select-label-placement-floating) .native-wrapper {
-  @include margin(1px, 0, 0, 0);
-
   flex-grow: 1;
 
   width: 100%;
-}
-
-/**
- * This makes the label sit over the select
- * when the select is blurred and has no value.
- * The label should not sit over the select if the
- * select has a placeholder.
- * Note: This is different from what ion-input does
- * because the activating the select causes an overlay
- * to appear. This makes it hard to read the placeholder.
- * With ion-input, the input just focuses and the placeholder
- * is still easy to read.
- */
-:host(.select-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(100%), scale(1));
 }
 
 /**
@@ -537,19 +482,6 @@ button {
   opacity: 1;
 }
 
-/**
- * This makes the label sit above the input.
- */
-:host(.label-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the input.
-   */
-  max-width: calc(100% / #{$form-control-label-stacked-scale});
-}
-
 // Start/End Slots
 // ----------------------------------------------------------------
 
@@ -564,11 +496,9 @@ button {
 }
 
 ::slotted([slot="start"]:last-of-type) {
-  margin-inline-end: $form-control-label-margin;
   margin-inline-start: 0;
 }
 
 ::slotted([slot="end"]:first-of-type) {
-  margin-inline-start: $form-control-label-margin;
   margin-inline-end: 0;
 }

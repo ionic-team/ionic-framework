@@ -49,7 +49,7 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
   styleUrls: {
     ios: 'select.ios.scss',
     md: 'select.md.scss',
-    ionic: 'select.md.scss',
+    ionic: 'select.ionic.scss',
   },
   shadow: true,
 })
