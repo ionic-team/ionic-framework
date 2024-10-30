@@ -44,12 +44,12 @@ export class SelectModal implements ComponentInterface {
     const { multiple, options } = this;
 
     if (multiple) {
-      // this is a popover with checkboxes (multiple value select)
+      // this is a modal with checkboxes (multiple value select)
       // return an array of all the checked values
       return options.filter((o) => o.checked).map((o) => o.value);
     }
 
-    // this is a popover with radio buttons (single value select)
+    // this is a modal with radio buttons (single value select)
     // return the value that was clicked, otherwise undefined
     const option = ev ? this.findOptionFromEvent(ev) : null;
     return option ? option.value : undefined;
@@ -67,7 +67,7 @@ export class SelectModal implements ComponentInterface {
     const { multiple } = this;
     const option = this.findOptionFromEvent(ev);
 
-    // this is a popover with checkboxes (multiple value select)
+    // this is a modal with checkboxes (multiple value select)
     // we need to set the checked value for this option
     if (multiple && option) {
       option.checked = ev.detail.checked;
