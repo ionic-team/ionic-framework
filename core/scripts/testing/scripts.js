@@ -47,6 +47,11 @@
       linkTag.setAttribute('href', '/css/ionic/bundle.ionic.css');
       document.head.appendChild(linkTag);
     }
+
+    const defaultThemeLinkTag = document.querySelector('link[href*="css/ionic.bundle.css"]');
+    if (defaultThemeLinkTag) {
+      defaultThemeLinkTag.remove();
+    }
   }
 
   window.Ionic = window.Ionic || {};

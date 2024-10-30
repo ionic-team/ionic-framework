@@ -18,6 +18,7 @@ ion-accordion-group,prop,expand,"compact" | "inset",'compact',false,false
 ion-accordion-group,prop,mode,"ios" | "md",undefined,false,false
 ion-accordion-group,prop,multiple,boolean | undefined,undefined,false,false
 ion-accordion-group,prop,readonly,boolean,false,false,false
+ion-accordion-group,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-accordion-group,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-accordion-group,prop,value,null | string | string[] | undefined,undefined,false,false
 ion-accordion-group,event,ionChange,AccordionGroupChangeEventDetail<any>,true

@@ -12,9 +12,20 @@
 
 // Inset Accordion Group
 // --------------------------------------------------
-
 // Shape and padding only apply if the group is inset
+
 :host(.accordion-group-expand-inset) {
-  @include globals.border-radius(globals.$ion-border-radius-400);
   @include globals.padding(globals.$ion-space-100);
+}
+
+:host(.accordion-group-expand-inset.accordion-group-shape-round) {
+  @include globals.border-radius(globals.$ion-border-radius-400);
+}
+
+:host(.accordion-group-expand-inset.accordion-group-shape-soft) {
+  @include globals.border-radius(globals.$ion-border-radius-200);
+}
+
+:host(.accordion-group-expand-inset.accordion-group-shape-rectangular) {
+  @include globals.border-radius(globals.$ion-border-radius-0);
 }
