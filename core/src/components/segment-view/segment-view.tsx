@@ -36,13 +36,6 @@ export class SegmentView implements ComponentInterface {
    */
   @Event() ionSegmentViewScroll!: EventEmitter<SegmentViewScrollEvent>;
 
-  /**
-   * Emitted when the segment view scroll has ended.
-   */
-  @Event() ionSegmentViewScrollEnd!: EventEmitter<void>;
-
-  @Event() ionSegmentViewScrollStart!: EventEmitter<void>;
-
   @Listen('scroll')
   handleScroll(ev: Event) {
     const { scrollLeft, scrollWidth, clientWidth } = ev.target as HTMLElement;
@@ -62,8 +55,6 @@ export class SegmentView implements ComponentInterface {
    */
   @Listen('touchstart')
   handleScrollStart() {
-    this.ionSegmentViewScrollStart.emit();
-
     if (this.scrollEndTimeout) {
       clearTimeout(this.scrollEndTimeout);
       this.scrollEndTimeout = null;
@@ -88,9 +79,16 @@ export class SegmentView implements ComponentInterface {
       clearTimeout(this.scrollEndTimeout);
       this.scrollEndTimeout = null;
     }
-    this.scrollEndTimeout = setTimeout(() => {
-      this.checkForScrollEnd();
-    }, 100);
+    this.scrollEndTimeout = setTimeout(
+      () => {
+        this.checkForScrollEnd();
+      },
+      // Setting this to a lower value may result in inconsistencies in behavior
+      // across browsers (particularly Firefox).
+      // Ideally, all of this logic is removed once the scroll end event is
+      // supported on all browsers (https://caniuse.com/?search=scrollend)
+      100
+    );
   }
 
   /**
@@ -102,7 +100,6 @@ export class SegmentView implements ComponentInterface {
     // Only emit scroll end event if the active content is not disabled and
     // the user is not touching the segment view
     if (!this.isTouching) {
-      this.ionSegmentViewScrollEnd.emit();
       this.isManualScroll = undefined;
     }
   }

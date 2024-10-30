@@ -83,7 +83,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         config
       );
 
-      await page.click('ion-segment-button[value="top"]');
+      await page.locator('ion-segment-button[value="top"]').click();
 
       const segmentContent = page.locator('ion-segment-content[id="top"]');
       await expect(segmentContent).toBeInViewport();
