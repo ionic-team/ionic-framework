@@ -3650,3 +3650,115 @@ Do not edit directly, this file was auto-generated.
 .ion-soft-2xl {
   border-radius: $ion-soft-2xl;
 }
+
+.ion-no-margin {
+  --margin-top: #{$ion-space-0};
+  --margin-end: #{$ion-space-0};
+  --margin-bottom: #{$ion-space-0};
+  --margin-start: #{$ion-space-0};
+
+  @include margin($ion-space-0);
+}
+
+.ion-margin {
+  --margin-top: #{$ion-space-400};
+  --margin-end: #{$ion-space-400};
+  --margin-bottom: #{$ion-space-400};
+  --margin-start: #{$ion-space-400};
+
+  @include margin($ion-space-400);
+}
+
+.ion-margin-top {
+  --margin-top: #{$ion-space-400};
+
+  @include margin($ion-space-400, null, null, null);
+}
+
+.ion-margin-end {
+  --margin-end: #{$ion-space-400};
+
+  @include margin(null, $ion-space-400, null, null);
+}
+
+.ion-margin-bottom {
+  --margin-bottom: #{$ion-space-400};
+
+  @include margin(null, null, $ion-space-400, null);
+}
+
+.ion-margin-start {
+  --margin-start: #{$ion-space-400};
+
+  @include margin(null, null, null, $ion-space-400);
+}
+
+.ion-margin-vertical {
+  --margin-top: #{$ion-space-400};
+  --margin-bottom: #{$ion-space-400};
+
+  @include margin($ion-space-400, null, $ion-space-400, null);
+}
+
+.ion-margin-horizontal {
+  --margin-start: #{$ion-space-400};
+  --margin-end: #{$ion-space-400};
+
+  @include margin(null, $ion-space-400, null, $ion-space-400);
+}
+
+.ion-no-padding {
+  --padding-top: #{$ion-space-0};
+  --padding-end: #{$ion-space-0};
+  --padding-bottom: #{$ion-space-0};
+  --padding-start: #{$ion-space-0};
+
+  @include padding($ion-space-0);
+}
+
+.ion-padding {
+  --padding-top: #{$ion-space-400};
+  --padding-end: #{$ion-space-400};
+  --padding-bottom: #{$ion-space-400};
+  --padding-start: #{$ion-space-400};
+
+  @include padding($ion-space-400);
+}
+
+.ion-padding-top {
+  --padding-top: #{$ion-space-400};
+
+  @include padding($ion-space-400, null, null, null);
+}
+
+.ion-padding-end {
+  --padding-end: #{$ion-space-400};
+
+  @include padding(null, $ion-space-400, null, null);
+}
+
+.ion-padding-bottom {
+  --padding-bottom: #{$ion-space-400};
+
+  @include padding(null, null, $ion-space-400, null);
+}
+
+.ion-padding-start {
+  --padding-start: #{$ion-space-400};
+
+  @include padding(null, null, null, $ion-space-400);
+}
+
+.ion-padding-vertical {
+  --padding-top: #{$ion-space-400};
+  --padding-bottom: #{$ion-space-400};
+
+  @include padding($ion-space-400, null, $ion-space-400, null);
+}
+
+.ion-padding-horizontal {
+  --padding-start: #{$ion-space-400};
+  --padding-end: #{$ion-space-400};
+
+  @include padding(null, $ion-space-400, null, $ion-space-400);
+}

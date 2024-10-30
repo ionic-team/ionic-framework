@@ -103,14 +103,14 @@ export declare interface IonAccordion extends Components.IonAccordion {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonAccordionGroup,
-  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'theme', 'value']
+  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'shape', 'theme', 'value']
 })
 @Component({
   selector: 'ion-accordion-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'theme', 'value'],
+  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'shape', 'theme', 'value'],
   standalone: true
 })
 export class IonAccordionGroup {
