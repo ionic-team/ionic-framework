@@ -125,6 +125,73 @@ function generateColorUtilityClasses(prop, className) {
   .${variablesPrefix}-background-${className} {\n  background-color: $${variablesPrefix}-${prop.name};\n}`;
 }
 
+// Generates margin and padding utility classes to match the token-agnostic
+// utilities provided by the Ionic Framework
+function generateDefaultSpaceUtilityClasses() {
+  const zeroMarginPaddingToken = 'space-0';
+  const defaultMarginPaddingToken = 'space-400';
+
+  const marginPaddingTemplate = (type) => `
+.${variablesPrefix}-no-${type} {
+  --${type}-top: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
+  --${type}-end: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
+  --${type}-bottom: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
+  --${type}-start: #{$${variablesPrefix}-${zeroMarginPaddingToken}};
+
+  @include ${type}($${variablesPrefix}-${zeroMarginPaddingToken});
+};
+
+.${variablesPrefix}-${type} {
+  --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+  --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+  --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+  --${type}-start: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+
+  @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken});
+};
+
+.${variablesPrefix}-${type}-top {
+  --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+
+  @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken}, null, null, null);
+};
+
+.${variablesPrefix}-${type}-end {
+  --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+
+  @include ${type}(null, $${variablesPrefix}-${defaultMarginPaddingToken}, null, null);
+};
+
+.${variablesPrefix}-${type}-bottom {
+  --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+
+  @include ${type}(null, null, $${variablesPrefix}-${defaultMarginPaddingToken}, null);
+};
+
+.${variablesPrefix}-${type}-start {
+  --${type}-start: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+
+  @include ${type}(null, null, null, $${variablesPrefix}-${defaultMarginPaddingToken});
+};
+
+.${variablesPrefix}-${type}-vertical {
+  --${type}-top: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+  --${type}-bottom: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+
+  @include ${type}($${variablesPrefix}-${defaultMarginPaddingToken}, null, $${variablesPrefix}-${defaultMarginPaddingToken}, null);
+};
+
+.${variablesPrefix}-${type}-horizontal {
+  --${type}-start: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+  --${type}-end: #{$${variablesPrefix}-${defaultMarginPaddingToken}};
+
+  @include ${type}(null, $${variablesPrefix}-${defaultMarginPaddingToken}, null, $${variablesPrefix}-${defaultMarginPaddingToken});
+};
+`;
+
+  return `${marginPaddingTemplate('margin')}\n${marginPaddingTemplate('padding')}`;
+}
+
 // Generates a margin or padding based css utility-class from a space Design Token structure
 function generateSpaceUtilityClasses(prop, className) {
   // This exact format is needed so that it compiles the tokens with the expected lint rules
@@ -203,6 +270,7 @@ module.exports = {
     setPrefixValue,
     generateRadiusUtilityClasses,
     generateColorUtilityClasses,
+    generateDefaultSpaceUtilityClasses,
     generateSpaceUtilityClasses,
     removeConsecutiveRepeatedWords,
     generateBorderSizeUtilityClasses,
