@@ -1,5 +1,4 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "../item/item.ionic.vars" as itemVars;
 @import "./list-header";
 
 :host {
@@ -10,7 +9,7 @@
 
   min-height: 58px;
 
-  /** 
+  /**
    * The focus rings from components like buttons and links
    * are being cut off. This style ensures that the focus ring
    * is completely visible.
@@ -19,13 +18,13 @@
 
   /* stylelint-disable */
   @include ltr() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + #{itemVars.$item-ionic-padding-end});
-    padding-left: calc(var(--ion-safe-area-left, 0px) + #{itemVars.$item-ionic-padding-start});
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{globals.$ion-space-400});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{globals.$ion-space-400});
   }
 
   @include rtl() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + #{itemVars.$item-ionic-padding-start});
-    padding-left: calc(var(--ion-safe-area-left, 0px) + #{itemVars.$item-ionic-padding-end});
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{globals.$ion-space-400});
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{globals.$ion-space-400});
   }
   /* stylelint-enable */
 }

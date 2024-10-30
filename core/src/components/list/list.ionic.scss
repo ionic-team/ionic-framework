@@ -1,5 +1,4 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "../item/item.ionic.vars" as itemVars;
 @import "./list.ionic.vars.scss";
 
 // Ionic List
@@ -11,7 +10,7 @@ ion-list {
 
   display: block;
 
-  background: #{itemVars.$item-ionic-background};
+  background: #{globals.$ion-primitives-base-white};
 
   contain: content;
   list-style-type: none;
