@@ -18,7 +18,6 @@
    * @prop --pin-background: Background of the range pin (only available in MD mode)
    * @prop --pin-color: Color of the range pin (only available in MD mode)
    */
-  --knob-handle-size: calc(var(--knob-size) * 2);
 
   display: flex;
   position: relative;

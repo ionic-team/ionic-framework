@@ -1,0 +1,6 @@
+@import "range.common";
+@import "./range.vars.scss";
+
+:host {
+  --knob-handle-size: calc(var(--knob-size) * 2);
+}
