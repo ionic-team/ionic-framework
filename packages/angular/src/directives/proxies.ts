@@ -2044,7 +2044,7 @@ export class IonSegmentView {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSegmentViewScroll', 'ionSegmentViewScrollEnd', 'ionSegmentViewScrollStart']);
+    proxyOutputs(this, this.el, ['ionSegmentViewScroll']);
   }
 }
 
@@ -2056,12 +2056,6 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
    * Emitted when the segment view is scrolled.
    */
   ionSegmentViewScroll: EventEmitter<CustomEvent<IIonSegmentViewSegmentViewScrollEvent>>;
-  /**
-   * Emitted when the segment view scroll has ended.
-   */
-  ionSegmentViewScrollEnd: EventEmitter<CustomEvent<void>>;
-
-  ionSegmentViewScrollStart: EventEmitter<CustomEvent<void>>;
 }
 
 

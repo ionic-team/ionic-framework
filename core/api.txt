@@ -1613,8 +1613,6 @@ ion-segment-content,shadow
 ion-segment-view,shadow
 ion-segment-view,prop,disabled,boolean,false,false,false
 ion-segment-view,event,ionSegmentViewScroll,SegmentViewScrollEvent,true
-ion-segment-view,event,ionSegmentViewScrollEnd,void,true
-ion-segment-view,event,ionSegmentViewScrollStart,void,true
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false

@@ -760,9 +760,7 @@ export const IonSegmentContent = /*@__PURE__*/ defineContainer<JSX.IonSegmentCon
 
 export const IonSegmentView = /*@__PURE__*/ defineContainer<JSX.IonSegmentView>('ion-segment-view', defineIonSegmentView, [
   'disabled',
-  'ionSegmentViewScroll',
-  'ionSegmentViewScrollEnd',
-  'ionSegmentViewScrollStart'
+  'ionSegmentViewScroll'
 ]);
 
 
