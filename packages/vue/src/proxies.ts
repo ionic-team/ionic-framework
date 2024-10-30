@@ -97,6 +97,7 @@ export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionG
   'disabled',
   'readonly',
   'expand',
+  'shape',
   'ionChange',
   'ionValueChange'
 ],

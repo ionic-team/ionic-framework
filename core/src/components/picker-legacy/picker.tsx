@@ -376,7 +376,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}></ion-backdrop>
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
 
         <div class="picker-wrapper ion-overlay-wrapper" role="dialog">
           <div class="picker-toolbar">
@@ -396,7 +396,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
           </div>
         </div>
 
-        <div tabindex="0"></div>
+        <div tabindex="0" aria-hidden="true"></div>
       </Host>
     );
   }
