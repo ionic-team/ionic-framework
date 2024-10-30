@@ -1187,6 +1187,7 @@ ion-label,prop,position,"fixed" | "floating" | "stacked" | undefined,undefined,f
 ion-label,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-label,css-prop,--color,ionic
 ion-label,css-prop,--color,ios
+ion-label,css-prop,--color,md
 
 ion-list,none
 ion-list,prop,inset,boolean,false,false,false
@@ -1203,16 +1204,22 @@ ion-list-header,prop,mode,"ios" | "md",undefined,false,false
 ion-list-header,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-list-header,css-prop,--background,ionic
 ion-list-header,css-prop,--background,ios
+ion-list-header,css-prop,--background,md
 ion-list-header,css-prop,--border-color,ionic
 ion-list-header,css-prop,--border-color,ios
+ion-list-header,css-prop,--border-color,md
 ion-list-header,css-prop,--border-style,ionic
 ion-list-header,css-prop,--border-style,ios
+ion-list-header,css-prop,--border-style,md
 ion-list-header,css-prop,--border-width,ionic
 ion-list-header,css-prop,--border-width,ios
+ion-list-header,css-prop,--border-width,md
 ion-list-header,css-prop,--color,ionic
 ion-list-header,css-prop,--color,ios
+ion-list-header,css-prop,--color,md
 ion-list-header,css-prop,--inner-border-width,ionic
 ion-list-header,css-prop,--inner-border-width,ios
+ion-list-header,css-prop,--inner-border-width,md
 
 ion-loading,scoped
 ion-loading,prop,animated,boolean,true,false,false
@@ -1485,14 +1492,20 @@ ion-note,shadow
 ion-note,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-note,css-prop,--color,ionic
+ion-note,css-prop,--color,ios
+ion-note,css-prop,--color,md
 
 ion-picker,shadow
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-picker,css-prop,--fade-background-rgb,ionic
 ion-picker,css-prop,--fade-background-rgb,ios
 ion-picker,css-prop,--fade-background-rgb,md
+ion-picker,css-prop,--highlight-background,ionic
 ion-picker,css-prop,--highlight-background,ios
 ion-picker,css-prop,--highlight-background,md
+ion-picker,css-prop,--highlight-border-radius,ionic
 ion-picker,css-prop,--highlight-border-radius,ios
 ion-picker,css-prop,--highlight-border-radius,md
 
@@ -1722,26 +1735,37 @@ ion-range,event,ionFocus,void,true
 ion-range,event,ionInput,RangeChangeEventDetail,true
 ion-range,event,ionKnobMoveEnd,RangeKnobMoveEndEventDetail,true
 ion-range,event,ionKnobMoveStart,RangeKnobMoveStartEventDetail,true
+ion-range,css-prop,--bar-background,ionic
 ion-range,css-prop,--bar-background,ios
 ion-range,css-prop,--bar-background,md
+ion-range,css-prop,--bar-background-active,ionic
 ion-range,css-prop,--bar-background-active,ios
 ion-range,css-prop,--bar-background-active,md
+ion-range,css-prop,--bar-border-radius,ionic
 ion-range,css-prop,--bar-border-radius,ios
 ion-range,css-prop,--bar-border-radius,md
+ion-range,css-prop,--bar-height,ionic
 ion-range,css-prop,--bar-height,ios
 ion-range,css-prop,--bar-height,md
+ion-range,css-prop,--height,ionic
 ion-range,css-prop,--height,ios
 ion-range,css-prop,--height,md
+ion-range,css-prop,--knob-background,ionic
 ion-range,css-prop,--knob-background,ios
 ion-range,css-prop,--knob-background,md
+ion-range,css-prop,--knob-border-radius,ionic
 ion-range,css-prop,--knob-border-radius,ios
 ion-range,css-prop,--knob-border-radius,md
+ion-range,css-prop,--knob-box-shadow,ionic
 ion-range,css-prop,--knob-box-shadow,ios
 ion-range,css-prop,--knob-box-shadow,md
+ion-range,css-prop,--knob-size,ionic
 ion-range,css-prop,--knob-size,ios
 ion-range,css-prop,--knob-size,md
+ion-range,css-prop,--pin-background,ionic
 ion-range,css-prop,--pin-background,ios
 ion-range,css-prop,--pin-background,md
+ion-range,css-prop,--pin-color,ionic
 ion-range,css-prop,--pin-color,ios
 ion-range,css-prop,--pin-color,md
 ion-range,part,bar
@@ -2042,6 +2066,54 @@ ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail<any>,true
 ion-select,event,ionDismiss,void,true
 ion-select,event,ionFocus,void,true
+ion-select,css-prop,--background,ionic
+ion-select,css-prop,--background,ios
+ion-select,css-prop,--background,md
+ion-select,css-prop,--border-color,ionic
+ion-select,css-prop,--border-color,ios
+ion-select,css-prop,--border-color,md
+ion-select,css-prop,--border-radius,ionic
+ion-select,css-prop,--border-radius,ios
+ion-select,css-prop,--border-radius,md
+ion-select,css-prop,--border-style,ionic
+ion-select,css-prop,--border-style,ios
+ion-select,css-prop,--border-style,md
+ion-select,css-prop,--border-width,ionic
+ion-select,css-prop,--border-width,ios
+ion-select,css-prop,--border-width,md
+ion-select,css-prop,--highlight-color-focused,ionic
+ion-select,css-prop,--highlight-color-focused,ios
+ion-select,css-prop,--highlight-color-focused,md
+ion-select,css-prop,--highlight-color-invalid,ionic
+ion-select,css-prop,--highlight-color-invalid,ios
+ion-select,css-prop,--highlight-color-invalid,md
+ion-select,css-prop,--highlight-color-valid,ionic
+ion-select,css-prop,--highlight-color-valid,ios
+ion-select,css-prop,--highlight-color-valid,md
+ion-select,css-prop,--highlight-height,ionic
+ion-select,css-prop,--highlight-height,ios
+ion-select,css-prop,--highlight-height,md
+ion-select,css-prop,--padding-bottom,ionic
+ion-select,css-prop,--padding-bottom,ios
+ion-select,css-prop,--padding-bottom,md
+ion-select,css-prop,--padding-end,ionic
+ion-select,css-prop,--padding-end,ios
+ion-select,css-prop,--padding-end,md
+ion-select,css-prop,--padding-start,ionic
+ion-select,css-prop,--padding-start,ios
+ion-select,css-prop,--padding-start,md
+ion-select,css-prop,--padding-top,ionic
+ion-select,css-prop,--padding-top,ios
+ion-select,css-prop,--padding-top,md
+ion-select,css-prop,--placeholder-color,ionic
+ion-select,css-prop,--placeholder-color,ios
+ion-select,css-prop,--placeholder-color,md
+ion-select,css-prop,--placeholder-opacity,ionic
+ion-select,css-prop,--placeholder-opacity,ios
+ion-select,css-prop,--placeholder-opacity,md
+ion-select,css-prop,--ripple-color,ionic
+ion-select,css-prop,--ripple-color,ios
+ion-select,css-prop,--ripple-color,md
 ion-select,part,container
 ion-select,part,icon
 ion-select,part,label
@@ -2275,12 +2347,15 @@ ion-textarea,css-prop,--placeholder-opacity,md
 ion-thumbnail,shadow
 ion-thumbnail,prop,mode,"ios" | "md",undefined,false,false
 ion-thumbnail,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-thumbnail,css-prop,--border-radius
+ion-thumbnail,css-prop,--size
 
 ion-title,shadow
 ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-title,prop,mode,"ios" | "md",undefined,false,false
 ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-title,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-title,css-prop,--color,ionic
 ion-title,css-prop,--color,ios
 ion-title,css-prop,--color,md
 
@@ -2436,3 +2511,36 @@ ion-toolbar,shadow
 ion-toolbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toolbar,prop,mode,"ios" | "md",undefined,false,false
 ion-toolbar,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-toolbar,css-prop,--background,ionic
+ion-toolbar,css-prop,--background,ios
+ion-toolbar,css-prop,--background,md
+ion-toolbar,css-prop,--border-color,ionic
+ion-toolbar,css-prop,--border-color,ios
+ion-toolbar,css-prop,--border-color,md
+ion-toolbar,css-prop,--border-style,ionic
+ion-toolbar,css-prop,--border-style,ios
+ion-toolbar,css-prop,--border-style,md
+ion-toolbar,css-prop,--border-width,ionic
+ion-toolbar,css-prop,--border-width,ios
+ion-toolbar,css-prop,--border-width,md
+ion-toolbar,css-prop,--color,ionic
+ion-toolbar,css-prop,--color,ios
+ion-toolbar,css-prop,--color,md
+ion-toolbar,css-prop,--min-height,ionic
+ion-toolbar,css-prop,--min-height,ios
+ion-toolbar,css-prop,--min-height,md
+ion-toolbar,css-prop,--opacity,ionic
+ion-toolbar,css-prop,--opacity,ios
+ion-toolbar,css-prop,--opacity,md
+ion-toolbar,css-prop,--padding-bottom,ionic
+ion-toolbar,css-prop,--padding-bottom,ios
+ion-toolbar,css-prop,--padding-bottom,md
+ion-toolbar,css-prop,--padding-end,ionic
+ion-toolbar,css-prop,--padding-end,ios
+ion-toolbar,css-prop,--padding-end,md
+ion-toolbar,css-prop,--padding-start,ionic
+ion-toolbar,css-prop,--padding-start,ios
+ion-toolbar,css-prop,--padding-start,md
+ion-toolbar,css-prop,--padding-top,ionic
+ion-toolbar,css-prop,--padding-top,ios
+ion-toolbar,css-prop,--padding-top,md

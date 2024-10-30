@@ -10,6 +10,7 @@
   --knob-background: #{$range-ion-knob-background-color};
   --knob-box-shadow: #{$range-ion-knob-box-shadow};
   --knob-size: #{$range-ion-knob-width};
+  --knob-handle-size: #{$range-ion-knob-handle-width};
   --bar-height: #{$range-ion-bar-height};
   --bar-background: #{$range-ion-bar-background-color};
   --bar-background-active: #{ion-color(primary, base)};
@@ -77,11 +78,11 @@
 }
 
 .range-tick {
-  @include margin(null, calc($range-ios-tick-width * -0.5), null, null);
+  @include margin-horizontal(calc($range-ion-tick-width * -0.5), null);
   @include border-radius($range-ion-tick-border-radius);
 
   position: absolute;
-  top: ($range-ion-hit-height * 0.5) - ($range-ion-tick-height * 0.5);
+  top: calc(($range-ion-hit-height * 0.5) - ($range-ion-tick-height * 0.5));
 
   width: $range-ion-tick-width;
   height: $range-ion-tick-height;
@@ -115,6 +116,12 @@
   text-align: center;
 }
 
+.range-knob {
+  border-style: solid;
+  border-width: $ion-border-size-025;
+  border-color: #{ion-color(primary, base)};
+}
+
 /**
  * The -100% ensures the pin sits on top
  * of the range-knob-handle container.
@@ -129,7 +136,7 @@
   transform: translate3d(0, calc(-100% + 11px), 0) scale(1);
 }
 
-// iOS Range: Disabled
+// Ionic Range: Disabled (based on iOS Range)
 // --------------------------------------------------
 // When the range is disabled, the entire range,
 // range label, any slotted labels, and any slotted
