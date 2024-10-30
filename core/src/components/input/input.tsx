@@ -38,6 +38,8 @@ import { getCounterText } from './input.utils';
 export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private slotMutationController?: SlotMutationController;
@@ -655,9 +657,30 @@ export class Input implements ComponentInterface {
    * Renders the helper text or error text values
    */
   private renderHintText() {
-    const { helperText, errorText } = this;
+    const { helperText, errorText, helperTextId, errorTextId } = this;
 
-    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+    return [
+      <div id={helperTextId} class="helper-text">
+        {helperText}
+      </div>,
+      <div id={errorTextId} class="error-text">
+        {errorText}
+      </div>,
+    ];
+  }
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
   }
 
   private renderCounter() {
@@ -905,6 +928,8 @@ export class Input implements ComponentInterface {
               onKeyDown={this.onKeydown}
               onCompositionstart={this.onCompositionStart}
               onCompositionend={this.onCompositionEnd}
+              aria-describedby={this.getHintTextID()}
+              aria-invalid={this.getHintTextID() === this.errorTextId}
               {...this.inheritedAttributes}
             />
             {clearInput && !readonly && !disabled && (

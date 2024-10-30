@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.4](https://github.com/ionic-team/ionic-framework/compare/v8.3.3...v8.3.4) (2024-10-30)
+
+
+### Bug Fixes
+
+* **angular:** add missing 'compareWith' input to standalone ion-radio-group ([#29870](https://github.com/ionic-team/ionic-framework/issues/29870)) ([47ba703](https://github.com/ionic-team/ionic-framework/commit/47ba703a57d1ca506f943f6b790d0bf7583d79cb)), closes [#29826](https://github.com/ionic-team/ionic-framework/issues/29826)
+
+
+
+
+
 ## [8.3.3](https://github.com/ionic-team/ionic-framework/compare/v8.3.2...v8.3.3) (2024-10-16)
 
 **Note:** Version bump only for package @ionic/angular
