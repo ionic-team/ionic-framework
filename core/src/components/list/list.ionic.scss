@@ -90,12 +90,7 @@ ion-list {
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(
-      initial,
-      initial,
-      globals.$ion-border-radius-0,
-      globals.$ion-border-radius-0
-    );
+    @include globals.border-radius(initial, initial, globals.$ion-border-radius-0, globals.$ion-border-radius-0);
   }
 
   // Target the first element in the list after the header
@@ -105,12 +100,7 @@ ion-list {
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius(
-      globals.$ion-border-radius-0,
-      globals.$ion-border-radius-0,
-      initial,
-      initial
-    );
+    @include globals.border-radius(globals.$ion-border-radius-0, globals.$ion-border-radius-0, initial, initial);
   }
 }
 
