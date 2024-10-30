@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.4](https://github.com/ionic-team/ionic-framework/compare/v8.3.3...v8.3.4) (2024-10-30)
+
+
+### Bug Fixes
+
+* **vue:** incorrect view rendered when using router.go(-n) ([#29877](https://github.com/ionic-team/ionic-framework/issues/29877)) ([e32fbe0](https://github.com/ionic-team/ionic-framework/commit/e32fbe02102fe80db29f73c26496a40852032354)), closes [#28201](https://github.com/ionic-team/ionic-framework/issues/28201) [#28201](https://github.com/ionic-team/ionic-framework/issues/28201) [#29847](https://github.com/ionic-team/ionic-framework/issues/29847)
+
+
+
+
+
 ## [8.3.3](https://github.com/ionic-team/ionic-framework/compare/v8.3.2...v8.3.3) (2024-10-16)
 
 **Note:** Version bump only for package @ionic/vue-router
