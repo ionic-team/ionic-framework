@@ -99,9 +99,9 @@
   @include transform(translate3d(0, 100%, 0), scale(0.01));
   @include padding(
     $range-ion-pin-padding-top,
-                  $range-ion-pin-padding-end,
-                  $range-ion-pin-padding-bottom,
-                  $range-ion-pin-padding-start
+    $range-ion-pin-padding-end,
+    $range-ion-pin-padding-bottom,
+    $range-ion-pin-padding-start
   );
 
   min-width: 28px;
@@ -117,8 +117,8 @@
 }
 
 .range-knob {
-  border-style: solid;
   border-width: $ion-border-size-025;
+  border-style: solid;
   border-color: #{ion-color(primary, base)};
 }
 
