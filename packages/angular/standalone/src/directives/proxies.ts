@@ -1320,6 +1320,8 @@ export class IonMenu {
 }
 
 
+import type { MenuCloseEventDetail as IIonMenuMenuCloseEventDetail } from '@ionic/core/components';
+
 export declare interface IonMenu extends Components.IonMenu {
   /**
    * Emitted when the menu is about to be opened.
@@ -1328,7 +1330,7 @@ export declare interface IonMenu extends Components.IonMenu {
   /**
    * Emitted when the menu is about to be closed.
    */
-  ionWillClose: EventEmitter<CustomEvent<void>>;
+  ionWillClose: EventEmitter<CustomEvent<IIonMenuMenuCloseEventDetail>>;
   /**
    * Emitted when the menu is open.
    */
@@ -1336,7 +1338,7 @@ export declare interface IonMenu extends Components.IonMenu {
   /**
    * Emitted when the menu is closed.
    */
-  ionDidClose: EventEmitter<CustomEvent<void>>;
+  ionDidClose: EventEmitter<CustomEvent<IIonMenuMenuCloseEventDetail>>;
 }
 
 

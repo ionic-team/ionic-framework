@@ -18,7 +18,7 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
+import { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
@@ -54,7 +54,7 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
+export { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
@@ -1599,7 +1599,7 @@ export namespace Components {
         /**
           * Closes the menu. If the menu is already closed or it can't be closed, it returns `false`.
          */
-        "close": (animated?: boolean) => Promise<boolean>;
+        "close": (animated?: boolean, role?: string) => Promise<boolean>;
         /**
           * The `id` of the main content. When using a router this is typically `ion-router-outlet`. When not using a router, this is typically your main view's `ion-content`. This is not the id of the `ion-content` inside of your `ion-menu`.
          */
@@ -1631,7 +1631,7 @@ export namespace Components {
         /**
           * Opens or closes the button. If the operation can't be completed successfully, it returns `false`.
          */
-        "setOpen": (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
+        "setOpen": (shouldOpen: boolean, animated?: boolean, role?: string) => Promise<boolean>;
         /**
           * Which side of the view the menu should be placed.
          */
@@ -3977,9 +3977,9 @@ declare global {
     };
     interface HTMLIonMenuElementEventMap {
         "ionWillOpen": void;
-        "ionWillClose": void;
+        "ionWillClose": MenuCloseEventDetail;
         "ionDidOpen": void;
-        "ionDidClose": void;
+        "ionDidClose": MenuCloseEventDetail;
         "ionMenuChange": MenuChangeEventDetail;
     }
     interface HTMLIonMenuElement extends Components.IonMenu, HTMLStencilElement {
@@ -6379,7 +6379,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the menu is closed.
          */
-        "onIonDidClose"?: (event: IonMenuCustomEvent<void>) => void;
+        "onIonDidClose"?: (event: IonMenuCustomEvent<MenuCloseEventDetail>) => void;
         /**
           * Emitted when the menu is open.
          */
@@ -6391,7 +6391,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the menu is about to be closed.
          */
-        "onIonWillClose"?: (event: IonMenuCustomEvent<void>) => void;
+        "onIonWillClose"?: (event: IonMenuCustomEvent<MenuCloseEventDetail>) => void;
         /**
           * Emitted when the menu is about to be opened.
          */

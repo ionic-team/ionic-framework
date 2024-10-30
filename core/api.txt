@@ -1000,15 +1000,15 @@ ion-menu,prop,menuId,string | undefined,undefined,false,true
 ion-menu,prop,side,"end" | "start",'start',false,true
 ion-menu,prop,swipeGesture,boolean,true,false,false
 ion-menu,prop,type,"overlay" | "push" | "reveal" | undefined,undefined,false,false
-ion-menu,method,close,close(animated?: boolean) => Promise<boolean>
+ion-menu,method,close,close(animated?: boolean, role?: string) => Promise<boolean>
 ion-menu,method,isActive,isActive() => Promise<boolean>
 ion-menu,method,isOpen,isOpen() => Promise<boolean>
 ion-menu,method,open,open(animated?: boolean) => Promise<boolean>
-ion-menu,method,setOpen,setOpen(shouldOpen: boolean, animated?: boolean) => Promise<boolean>
+ion-menu,method,setOpen,setOpen(shouldOpen: boolean, animated?: boolean, role?: string) => Promise<boolean>
 ion-menu,method,toggle,toggle(animated?: boolean) => Promise<boolean>
-ion-menu,event,ionDidClose,void,true
+ion-menu,event,ionDidClose,MenuCloseEventDetail,true
 ion-menu,event,ionDidOpen,void,true
-ion-menu,event,ionWillClose,void,true
+ion-menu,event,ionWillClose,MenuCloseEventDetail,true
 ion-menu,event,ionWillOpen,void,true
 ion-menu,css-prop,--background,ios
 ion-menu,css-prop,--background,md
