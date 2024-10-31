@@ -107,7 +107,7 @@
 }
 
 .range-pin {
-  @include padding($ion-space-300, $ion-space-300, $ion-space-300, $ion-space-300);
+  @include padding(globals.$ion-space-300, globals.$ion-space-300, globals.$ion-space-300, globals.$ion-space-300);
 
   min-width: 28px;
 
