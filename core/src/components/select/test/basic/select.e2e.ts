@@ -58,6 +58,24 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         await expect(popover).toBeVisible();
       });
     });
+
+    test.describe('select: modal', () => {
+      test('it should open a modal select', async ({ page }) => {
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#customModalSelect');
+
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+
+        // select has no value, so first option should be focused by default
+        const modalOption1 = modal.locator('.select-interface-option:first-of-type ion-radio');
+        await expect(modalOption1).toBeFocused();
+
+        await expect(modal).toBeVisible();
+      });
+    });
   });
 });
 
