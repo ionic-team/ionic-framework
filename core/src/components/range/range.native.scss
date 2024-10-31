@@ -3,4 +3,72 @@
 
 :host {
   --knob-handle-size: calc(var(--knob-size) * 2);
+
+  font-family: $font-family-base;
+
+  z-index: $z-index-item-input;
+}
+
+::slotted(ion-icon[slot]) {
+  font-size: 24px;
+}
+
+::slotted([slot="label"]) {
+  max-width: 200px;
+}
+
+// Range Label Placement - Start
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+// Range Label Placement - End
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-end) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the start
+   * when the label sits at the end.
+   */
+  @include margin(0, 0, 0, $form-control-label-margin);
+}
+
+// Range Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+// Range Label Placement - Stacked
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-stacked) .label-text-wrapper {
+  /**
+  * The margin between the label and
+  * the range should be on the bottom
+  * when the label sits on top.
+  */
+  @include margin(null, 0, $form-control-label-margin, 0);
+}
+
+:host(.in-item.range-label-placement-stacked) .label-text-wrapper {
+  @include margin($range-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.range-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $range-item-label-margin-bottom, null);
 }
