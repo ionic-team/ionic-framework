@@ -47,6 +47,7 @@ body.backdrop-no-scroll {
 
 // Modal - Card Style
 // --------------------------------------------------
+
 /**
  * Card style modal needs additional padding on the
  * top of the header. We accomplish this by targeting
@@ -293,14 +294,18 @@ ion-card-header.ion-color .ion-inherit-color {
 }
 
 // Accordion Styles
+// --------------------------------------------------
+
 ion-accordion-group.accordion-group-expand-inset > ion-accordion:first-of-type {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
+
 ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+
 ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
   --border-width: 0px;
 }
@@ -315,6 +320,7 @@ ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
     transition: none !important;
   }
 }
+
 /**
  * The > [slot="header"] selector ensures that we do
  * not modify toggle icons for any nested accordions. The state
@@ -335,6 +341,9 @@ ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-ex
 ion-accordion-group.accordion-group-expand-inset.md > ion-accordion.accordion-expanded:first-of-type {
   margin-top: 0;
 }
+
+// Datetime Styles
+// --------------------------------------------------
 
 // Safari/iOS 15 changes the appearance of input[type="date"].
 // For backwards compatibility from Ionic 5/Safari 14 designs,
@@ -382,6 +391,9 @@ h1[tabindex="-1"]:focus,
 [role="heading"][aria-level="1"][tabindex="-1"]:focus {
   outline: none;
 }
+
+// Popover Styles
+// --------------------------------------------------
 
 /*
  * If a popover has a child ion-content (or class equivalent) then the .popover-viewport element
