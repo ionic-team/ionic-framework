@@ -43,7 +43,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const segmentButton = page.locator('ion-segment-button[value="free"]');
-      await expect(segmentButton).not.toHaveAttribute('disabled');
+      await expect(segmentButton).not.toHaveClass(/segment-button-disabled/);
     });
   });
 });

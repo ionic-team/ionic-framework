@@ -44,7 +44,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   /**
    * If `true`, the user cannot interact with the segment button.
    */
-  @Prop({ mutable: true, reflect: true }) disabled = false;
+  @Prop({ mutable: true }) disabled = false;
 
   /**
    * Set the layout of the text and icon in the segment.
