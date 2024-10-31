@@ -35,6 +35,7 @@ import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./compone
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+import { SelectModalOption } from "./components/select-modal/select-modal-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
@@ -70,6 +71,7 @@ export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./compone
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+export { SelectModalOption } from "./components/select-modal/select-modal-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
@@ -639,6 +641,7 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        "setFocus": () => Promise<void>;
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
@@ -2279,7 +2282,7 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
-        "setFocus": (ev: globalThis.Event) => Promise<void>;
+        "setFocus": (ev?: globalThis.Event) => Promise<void>;
         /**
           * the value of the radio.
          */
@@ -2741,11 +2744,11 @@ export namespace Components {
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * The interface the select should use: `action-sheet`, `popover` or `alert`.
+          * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
         "interface": SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet), the [ion-popover docs](./popover), and the [ion-modal docs](./modal) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
         /**
@@ -2801,6 +2804,11 @@ export namespace Components {
           * The value of the select.
          */
         "value"?: any | null;
+    }
+    interface IonSelectModal {
+        "header"?: string;
+        "multiple"?: boolean;
+        "options": SelectModalOption[];
     }
     interface IonSelectOption {
         /**
@@ -4434,6 +4442,12 @@ declare global {
         prototype: HTMLIonSelectElement;
         new (): HTMLIonSelectElement;
     };
+    interface HTMLIonSelectModalElement extends Components.IonSelectModal, HTMLStencilElement {
+    }
+    var HTMLIonSelectModalElement: {
+        prototype: HTMLIonSelectModalElement;
+        new (): HTMLIonSelectModalElement;
+    };
     interface HTMLIonSelectOptionElement extends Components.IonSelectOption, HTMLStencilElement {
     }
     var HTMLIonSelectOptionElement: {
@@ -4722,6 +4736,7 @@ declare global {
         "ion-segment": HTMLIonSegmentElement;
         "ion-segment-button": HTMLIonSegmentButtonElement;
         "ion-select": HTMLIonSelectElement;
+        "ion-select-modal": HTMLIonSelectModalElement;
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
@@ -7497,11 +7512,11 @@ declare namespace LocalJSX {
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * The interface the select should use: `action-sheet`, `popover` or `alert`.
+          * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
         "interface"?: SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet), the [ion-popover docs](./popover), and the [ion-modal docs](./modal) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
         /**
@@ -7576,6 +7591,11 @@ declare namespace LocalJSX {
           * The value of the select.
          */
         "value"?: any | null;
+    }
+    interface IonSelectModal {
+        "header"?: string;
+        "multiple"?: boolean;
+        "options"?: SelectModalOption[];
     }
     interface IonSelectOption {
         /**
@@ -8163,6 +8183,7 @@ declare namespace LocalJSX {
         "ion-segment": IonSegment;
         "ion-segment-button": IonSegmentButton;
         "ion-select": IonSelect;
+        "ion-select-modal": IonSelectModal;
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
         "ion-skeleton-text": IonSkeletonText;
@@ -8262,6 +8283,7 @@ declare module "@stencil/core" {
             "ion-segment": LocalJSX.IonSegment & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
             "ion-segment-button": LocalJSX.IonSegmentButton & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
             "ion-select": LocalJSX.IonSelect & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
+            "ion-select-modal": LocalJSX.IonSelectModal & JSXBase.HTMLAttributes<HTMLIonSelectModalElement>;
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
