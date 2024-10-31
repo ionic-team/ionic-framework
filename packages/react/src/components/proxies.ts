@@ -64,6 +64,7 @@ import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/compo
 import { defineCustomElement as defineIonSegmentContent } from '@ionic/core/components/ion-segment-content.js';
 import { defineCustomElement as defineIonSegmentView } from '@ionic/core/components/ion-segment-view.js';
 import { defineCustomElement as defineIonSelect } from '@ionic/core/components/ion-select.js';
+import { defineCustomElement as defineIonSelectModal } from '@ionic/core/components/ion-select-modal.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
@@ -135,6 +136,7 @@ export const IonSegmentButton = /*@__PURE__*/createReactComponent<JSX.IonSegment
 export const IonSegmentContent = /*@__PURE__*/createReactComponent<JSX.IonSegmentContent, HTMLIonSegmentContentElement>('ion-segment-content', undefined, undefined, defineIonSegmentContent);
 export const IonSegmentView = /*@__PURE__*/createReactComponent<JSX.IonSegmentView, HTMLIonSegmentViewElement>('ion-segment-view', undefined, undefined, defineIonSegmentView);
 export const IonSelect = /*@__PURE__*/createReactComponent<JSX.IonSelect, HTMLIonSelectElement>('ion-select', undefined, undefined, defineIonSelect);
+export const IonSelectModal = /*@__PURE__*/createReactComponent<JSX.IonSelectModal, HTMLIonSelectModalElement>('ion-select-modal', undefined, undefined, defineIonSelectModal);
 export const IonSelectOption = /*@__PURE__*/createReactComponent<JSX.IonSelectOption, HTMLIonSelectOptionElement>('ion-select-option', undefined, undefined, defineIonSelectOption);
 export const IonSkeletonText = /*@__PURE__*/createReactComponent<JSX.IonSkeletonText, HTMLIonSkeletonTextElement>('ion-skeleton-text', undefined, undefined, defineIonSkeletonText);
 export const IonSpinner = /*@__PURE__*/createReactComponent<JSX.IonSpinner, HTMLIonSpinnerElement>('ion-spinner', undefined, undefined, defineIonSpinner);

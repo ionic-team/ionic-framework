@@ -67,6 +67,7 @@ import { defineCustomElement as defineIonRow } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/components/ion-segment-button.js';
 import { defineCustomElement as defineIonSegmentContent } from '@ionic/core/components/ion-segment-content.js';
 import { defineCustomElement as defineIonSegmentView } from '@ionic/core/components/ion-segment-view.js';
+import { defineCustomElement as defineIonSelectModal } from '@ionic/core/components/ion-select-modal.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
@@ -1896,6 +1897,30 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
    */
   ionSegmentViewScroll: EventEmitter<CustomEvent<IIonSegmentViewSegmentViewScrollEvent>>;
 }
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonSelectModal,
+  inputs: ['header', 'multiple', 'options']
+})
+@Component({
+  selector: 'ion-select-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['header', 'multiple', 'options'],
+  standalone: true
+})
+export class IonSelectModal {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonSelectModal extends Components.IonSelectModal {}
 
 
 @ProxyCmp({

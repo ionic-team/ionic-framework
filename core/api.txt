@@ -1543,7 +1543,7 @@ ion-segment,css-prop,--background,md
 
 ion-segment-button,shadow
 ion-segment-button,prop,contentId,string | undefined,undefined,false,true
-ion-segment-button,prop,disabled,boolean,false,false,true
+ion-segment-button,prop,disabled,boolean,false,false,false
 ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false,false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false,false
 ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
@@ -1621,7 +1621,7 @@ ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) 
 ion-select,prop,disabled,boolean,false,false,false
 ion-select,prop,expandedIcon,string | undefined,undefined,false,false
 ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
-ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
+ion-select,prop,interface,"action-sheet" | "alert" | "modal" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
 ion-select,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-select,prop,label,string | undefined,undefined,false,false
@@ -1678,6 +1678,11 @@ ion-select,part,icon
 ion-select,part,label
 ion-select,part,placeholder
 ion-select,part,text
+
+ion-select-modal,scoped
+ion-select-modal,prop,header,string | undefined,undefined,false,false
+ion-select-modal,prop,multiple,boolean | undefined,undefined,false,false
+ion-select-modal,prop,options,SelectModalOption[],[],false,false
 
 ion-select-option,shadow
 ion-select-option,prop,disabled,boolean,false,false,false
