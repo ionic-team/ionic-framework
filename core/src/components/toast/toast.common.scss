@@ -1,4 +1,6 @@
 @import "../../themes/mixins";
+// Required to use the current-color function
+@import "../../themes/functions.color";
 
 // Toast
 // --------------------------------------------------
