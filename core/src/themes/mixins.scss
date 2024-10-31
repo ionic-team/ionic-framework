@@ -309,7 +309,7 @@
 // ----------------------------------------------------------
 @mixin svg-background-image($svg, $flip-rtl: false) {
   $url: url-encode($svg);
-  $viewBox: str-split(str-extract($svg, "viewBox='", "'"), " ");
+  $viewBox: string.str-split(string.str-extract($svg, "viewBox='", "'"), " ");
 
   @if $flip-rtl != true or $viewBox == null {
     @include multi-dir() {
@@ -318,9 +318,9 @@
   } @else {
     $transform: "transform='translate(#{nth($viewBox, 3)}, 0) scale(-1, 1)'";
     $flipped-url: $svg;
-    $flipped-url: str-replace($flipped-url, "<path", "<path #{$transform}");
-    $flipped-url: str-replace($flipped-url, "<line", "<line #{$transform}");
-    $flipped-url: str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
+    $flipped-url: string.str-replace($flipped-url, "<path", "<path #{$transform}");
+    $flipped-url: string.str-replace($flipped-url, "<line", "<line #{$transform}");
+    $flipped-url: string.str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
     $flipped-url: url-encode($flipped-url);
 
     @include ltr() {
@@ -575,10 +575,10 @@
 
   @each $transform in $transforms {
     @if (str-index($transform, translate3d)) {
-      $transform: str-replace($transform, "translate3d(");
-      $transform: str-replace($transform, ")");
+      $transform: string.str-replace($transform, "translate3d(");
+      $transform: string.str-replace($transform, ")");
 
-      $coordinates: str-split($transform, ",");
+      $coordinates: string.str-split($transform, ",");
 
       $x: nth($coordinates, 1);
       $y: nth($coordinates, 2);
