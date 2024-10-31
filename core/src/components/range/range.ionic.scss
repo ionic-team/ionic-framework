@@ -108,12 +108,9 @@
 }
 
 .range-pin {
-  @include transform(translate3d(0, 100%, 0), scale(0.01));
-  @include padding($ion-space-200, $ion-space-200, $ion-space-200, $ion-space-200);
+  @include padding($ion-space-300, $ion-space-300, $ion-space-300, $ion-space-300);
 
   min-width: 28px;
-
-  transition: transform 120ms ease;
 
   background: transparent;
   color: $text-color;
@@ -121,26 +118,14 @@
   font-size: dynamic-font(12px);
 
   text-align: center;
+
+  transform: translate3d(0, calc(-100% + 11px), 0) scale(1);
 }
 
 .range-knob {
   border-width: $ion-border-size-025;
   border-style: solid;
   border-color: #{ion-color(primary, base)};
-}
-
-/**
- * The -100% ensures the pin sits on top
- * of the range-knob-handle container.
- * We apply 11px so that the pin
- * text is closer to the knob inside of the container.
- * We also apply the 11px here instead of using "top"
- * otherwise the pin text will translate below the knob
- * when the text is scaled.
- */
-.range-knob-pressed .range-pin,
-.range-knob-handle.ion-focused .range-pin {
-  transform: translate3d(0, calc(-100% + 11px), 0) scale(1);
 }
 
 // Ionic Range: Disabled (based on iOS Range)
