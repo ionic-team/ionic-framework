@@ -1,5 +1,4 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-
 @import "./range.common";
 @import "../../foundations/ionic.vars";
 
@@ -110,12 +109,7 @@
 
 .range-pin {
   @include transform(translate3d(0, 100%, 0), scale(0.01));
-  @include padding(
-    $ion-space-200,
-    $ion-space-200,
-    $ion-space-200,
-    $ion-space-200
-  );
+  @include padding($ion-space-200, $ion-space-200, $ion-space-200, $ion-space-200);
 
   min-width: 28px;
 
