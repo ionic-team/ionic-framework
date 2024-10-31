@@ -279,7 +279,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`alert-radio-scale`));
     });
-    test('should scale text on larger font sizes with text fields', async ({ page }) => {
+    test('should scale text on larger font sizes with text fields', async ({ page, skip }) => {
+      // TODO(ROU-8158): unskip this test when a solution is found
+      skip.browser('chromium', 'Rendering is flaky in Chrome.');
+
       await page.setContent(
         `
         <style>
