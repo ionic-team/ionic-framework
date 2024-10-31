@@ -34,6 +34,7 @@ import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+import { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectModalOption } from "./components/select-modal/select-modal-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
@@ -70,6 +71,7 @@ export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+export { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectModalOption } from "./components/select-modal/select-modal-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
@@ -2697,6 +2699,10 @@ export namespace Components {
     }
     interface IonSegmentButton {
         /**
+          * The `id` of the segment content.
+         */
+        "contentId"?: string;
+        /**
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled": boolean;
@@ -2717,6 +2723,19 @@ export namespace Components {
           * The value of the segment button.
          */
         "value": SegmentValue;
+    }
+    interface IonSegmentContent {
+    }
+    interface IonSegmentView {
+        /**
+          * If `true`, the segment view cannot be interacted with.
+         */
+        "disabled": boolean;
+        /**
+          * @param id : The id of the segment content to display.
+          * @param smoothScroll : Whether to animate the scroll transition.
+         */
+        "setContent": (id: string, smoothScroll?: boolean) => Promise<void>;
     }
     interface IonSelect {
         /**
@@ -3423,6 +3442,10 @@ export interface IonSearchbarCustomEvent<T> extends CustomEvent<T> {
 export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSegmentElement;
+}
+export interface IonSegmentViewCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonSegmentViewElement;
 }
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4420,6 +4443,29 @@ declare global {
         prototype: HTMLIonSegmentButtonElement;
         new (): HTMLIonSegmentButtonElement;
     };
+    interface HTMLIonSegmentContentElement extends Components.IonSegmentContent, HTMLStencilElement {
+    }
+    var HTMLIonSegmentContentElement: {
+        prototype: HTMLIonSegmentContentElement;
+        new (): HTMLIonSegmentContentElement;
+    };
+    interface HTMLIonSegmentViewElementEventMap {
+        "ionSegmentViewScroll": SegmentViewScrollEvent;
+    }
+    interface HTMLIonSegmentViewElement extends Components.IonSegmentView, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLIonSegmentViewElement: {
+        prototype: HTMLIonSegmentViewElement;
+        new (): HTMLIonSegmentViewElement;
+    };
     interface HTMLIonSelectElementEventMap {
         "ionChange": SelectChangeEventDetail;
         "ionCancel": void;
@@ -4735,6 +4781,8 @@ declare global {
         "ion-searchbar": HTMLIonSearchbarElement;
         "ion-segment": HTMLIonSegmentElement;
         "ion-segment-button": HTMLIonSegmentButtonElement;
+        "ion-segment-content": HTMLIonSegmentContentElement;
+        "ion-segment-view": HTMLIonSegmentViewElement;
         "ion-select": HTMLIonSelectElement;
         "ion-select-modal": HTMLIonSelectModalElement;
         "ion-select-option": HTMLIonSelectOptionElement;
@@ -7466,6 +7514,10 @@ declare namespace LocalJSX {
     }
     interface IonSegmentButton {
         /**
+          * The `id` of the segment content.
+         */
+        "contentId"?: string;
+        /**
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled"?: boolean;
@@ -7485,6 +7537,18 @@ declare namespace LocalJSX {
           * The value of the segment button.
          */
         "value"?: SegmentValue;
+    }
+    interface IonSegmentContent {
+    }
+    interface IonSegmentView {
+        /**
+          * If `true`, the segment view cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Emitted when the segment view is scrolled.
+         */
+        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<SegmentViewScrollEvent>) => void;
     }
     interface IonSelect {
         /**
@@ -8182,6 +8246,8 @@ declare namespace LocalJSX {
         "ion-searchbar": IonSearchbar;
         "ion-segment": IonSegment;
         "ion-segment-button": IonSegmentButton;
+        "ion-segment-content": IonSegmentContent;
+        "ion-segment-view": IonSegmentView;
         "ion-select": IonSelect;
         "ion-select-modal": IonSelectModal;
         "ion-select-option": IonSelectOption;
@@ -8282,6 +8348,8 @@ declare module "@stencil/core" {
             "ion-searchbar": LocalJSX.IonSearchbar & JSXBase.HTMLAttributes<HTMLIonSearchbarElement>;
             "ion-segment": LocalJSX.IonSegment & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
             "ion-segment-button": LocalJSX.IonSegmentButton & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
+            "ion-segment-content": LocalJSX.IonSegmentContent & JSXBase.HTMLAttributes<HTMLIonSegmentContentElement>;
+            "ion-segment-view": LocalJSX.IonSegmentView & JSXBase.HTMLAttributes<HTMLIonSegmentViewElement>;
             "ion-select": LocalJSX.IonSelect & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
             "ion-select-modal": LocalJSX.IonSelectModal & JSXBase.HTMLAttributes<HTMLIonSelectModalElement>;
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
