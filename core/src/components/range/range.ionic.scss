@@ -111,13 +111,13 @@
 
   min-width: 28px;
 
+  transform: translate3d(0, calc(-100% + 11px), 0) scale(1);
+
   background: transparent;
 
   font-size: globals.dynamic-font(12px);
 
   text-align: center;
-
-  transform: translate3d(0, calc(-100% + 11px), 0) scale(1);
 }
 
 .range-knob {

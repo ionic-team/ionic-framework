@@ -8,7 +8,7 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
-import type {Color, Gesture, GestureDetail, Theme} from '../../interface';
+import type { Color, Gesture, GestureDetail, Theme } from '../../interface';
 import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
 import type {
@@ -882,7 +882,20 @@ interface RangeKnob {
 
 const renderKnob = (
   rtl: boolean,
-  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, pinFormatter, inheritedAttributes, theme }: RangeKnob
+  {
+    knob,
+    value,
+    ratio,
+    min,
+    max,
+    disabled,
+    pressed,
+    pin,
+    handleKeyboard,
+    pinFormatter,
+    inheritedAttributes,
+    theme,
+  }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
