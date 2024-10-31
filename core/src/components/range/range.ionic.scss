@@ -63,7 +63,7 @@
   * overlapping the range. The buffer is added to the
   * bottom of the range label instead of the host.
   */
-  @include padding(calc(#{globals.$ion-space-200} + globals.dynamic-font(12px)), null, null, null);
+  @include padding(calc(globals.$ion-space-200 + globals.dynamic-font(12px)), null, null, null);
 }
 
 :host(.range-has-pin.range-label-placement-stacked) .label-text-wrapper {
@@ -72,7 +72,7 @@
   * margin to the bottom of the label, it provides a buffer
   * for the pin to move into when it is pressed.
   */
-  @include margin(null, null, calc(#{globals.$ion-space-200} + globals.dynamic-font(12px)), null);
+  @include margin(null, null, calc(globals.$ion-space-200 + globals.dynamic-font(12px)), null);
 }
 
 .range-bar-active {
@@ -84,16 +84,16 @@
 
   &.has-ticks {
     @include border-radius(0);
-    @include margin(null, calc(-1 * #{globals.$ion-scale-100} * 0.5), null, calc(-1 * #{globals.$ion-scale-100} * 0.5));
+    @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
   }
 }
 
 .range-tick {
-  @include margin-horizontal(calc(#{globals.$ion-scale-100} * -0.5), null);
+  @include margin-horizontal(calc(globals.$ion-scale-100 * -0.5), null);
   @include border-radius(globals.$ion-border-radius-0);
 
   position: absolute;
-  top: calc((42px * 0.5) - (#{globals.$ion-scale-300} * 0.5));
+  top: calc((42px * 0.5) - (globals.$ion-scale-300 * 0.5));
 
   width: globals.$ion-scale-100;
   height: globals.$ion-scale-300;
@@ -124,7 +124,7 @@
 .range-knob {
   border-width: globals.$ion-border-size-025;
   border-style: solid;
-  border-color: #{globals.ion-color(primary, base)};
+  border-color: globals.ion-color(primary, base);
 }
 
 /**
