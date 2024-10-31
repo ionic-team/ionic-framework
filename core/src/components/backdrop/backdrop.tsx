@@ -56,7 +56,6 @@ export class Backdrop implements ComponentInterface {
     const theme = getIonTheme(this);
     return (
       <Host
-        tabindex="-1"
         aria-hidden="true"
         class={{
           [theme]: true,
