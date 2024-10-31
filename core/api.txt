@@ -1542,6 +1542,7 @@ ion-segment,css-prop,--background,ios
 ion-segment,css-prop,--background,md
 
 ion-segment-button,shadow
+ion-segment-button,prop,contentId,string | undefined,undefined,false,true
 ion-segment-button,prop,disabled,boolean,false,false,false
 ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false,false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false,false
@@ -1606,6 +1607,12 @@ ion-segment-button,css-prop,--transition,md
 ion-segment-button,part,indicator
 ion-segment-button,part,indicator-background
 ion-segment-button,part,native
+
+ion-segment-content,shadow
+
+ion-segment-view,shadow
+ion-segment-view,prop,disabled,boolean,false,false,false
+ion-segment-view,event,ionSegmentViewScroll,SegmentViewScrollEvent,true
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
