@@ -36,6 +36,7 @@ body.backdrop-no-scroll {
 
 // Modal - Card Style
 // --------------------------------------------------
+
 html.ionic ion-modal ion-header {
   box-shadow: none;
 }
@@ -301,14 +302,7 @@ ion-card-header.ion-color .ion-inherit-color {
 }
 
 // Accordion Styles
-ion-accordion-group.accordion-group-expand-inset > ion-accordion:first-of-type {
-  border-top-left-radius: globals.$ion-border-radius-200;
-  border-top-right-radius: globals.$ion-border-radius-200;
-}
-ion-accordion-group.accordion-group-expand-inset > ion-accordion:last-of-type {
-  border-bottom-left-radius: globals.$ion-border-radius-200;
-  border-bottom-right-radius: globals.$ion-border-radius-200;
-}
+// --------------------------------------------------
 
 // The toggle icon is nested in the accordion item so we need to
 // style it from a global level.
@@ -327,6 +321,7 @@ ion-accordion.accordion-animated > [slot="header"] .ion-accordion-toggle-icon {
     transition: none !important;
   }
 }
+
 /**
  * The > [slot="header"] selector ensures that we do
  * not modify toggle icons for any nested accordions. The state
@@ -351,6 +346,9 @@ ion-accordion > [slot="content"] ion-item {
   --padding-end: 0;
   --min-height: #{globals.$ion-scale-700};
 }
+
+// Datetime Styles
+// --------------------------------------------------
 
 // Safari/iOS 15 changes the appearance of input[type="date"].
 // For backwards compatibility from Ionic 5/Safari 14 designs,
@@ -381,6 +379,9 @@ ion-input input::-webkit-date-and-time-value {
   width: 320px;
   min-height: 320px;
 }
+
+// Popover Styles
+// --------------------------------------------------
 
 /**
  * If a popover has a child ion-content (or class equivalent) then the .popover-viewport element

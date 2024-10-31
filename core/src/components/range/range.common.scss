@@ -1,4 +1,5 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
+@import "../../themes/functions.string";
 @import "./range.vars.scss";
 
 // Range
@@ -284,11 +285,4 @@
 
 :host(.range-label-placement-stacked) .label-text-wrapper {
   @include transform-origin(start, top);
-  @include transform(scale(#{$form-control-label-stacked-scale}));
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the range.
-   */
-  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
