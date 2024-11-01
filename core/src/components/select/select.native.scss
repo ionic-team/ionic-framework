@@ -17,6 +17,20 @@
 
 .select-icon {
   @include margin(0, 0, 0, $select-icon-margin-start);
+
+  position: relative;
+}
+
+/**
+ * The select icon should be centered with
+ * the entire container not just the control
+ * with floating/stacked labels.
+ */
+:host(.select-label-placement-stacked) .select-icon,
+:host(.select-label-placement-floating) .select-icon {
+  position: absolute;
+
+  height: 100%;
 }
 
 // Select Wrapper

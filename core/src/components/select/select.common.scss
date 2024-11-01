@@ -119,8 +119,6 @@ button {
 // --------------------------------------------------
 
 .select-icon {
-  position: relative;
-
   /**
    * Prevent the icon from shrinking when the label and/or
    * selected item text is long enough to fill the rest of
@@ -136,18 +134,6 @@ button {
  */
 :host(.in-item-color) .select-icon {
   color: inherit;
-}
-
-/**
- * The select icon should be centered with
- * the entire container not just the control
- * with floating/stacked labels.
- */
-:host(.select-label-placement-stacked) .select-icon,
-:host(.select-label-placement-floating) .select-icon {
-  position: absolute;
-
-  height: 100%;
 }
 
 /**

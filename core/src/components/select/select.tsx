@@ -997,6 +997,8 @@ export class Select implements ComponentInterface {
       this;
     const theme = getIonTheme(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
+    const shouldRenderOuterIcon = theme !== 'ionic' && hasFloatingOrStackedLabel;
+    const shouldRenderInnerIcon = theme === 'ionic' || !hasFloatingOrStackedLabel;
     const justifyEnabled = !hasFloatingOrStackedLabel && justify !== undefined;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const inItem = hostContext('ion-item', this.el);
@@ -1051,13 +1053,25 @@ export class Select implements ComponentInterface {
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
           <div class="select-wrapper-inner">
+            {
+              /**
+               * For the ionic theme, we render the outline container here
+               * instead of higher up, so it can be positioned relative to
+               * the native wrapper instead of the <label> element or the
+               * entire component. This allows the label text to be positioned
+               * above the outline, while staying within the bounds of the
+               * <label> element, ensuring that clicking the label text
+               * focuses the select.
+               */
+              theme === 'ionic' && fill === 'outline' && <div class="select-outline"></div>
+            }
             <slot name="start"></slot>
             <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
               {this.renderSelectText()}
               {this.renderListbox()}
             </div>
             <slot name="end"></slot>
-            {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
+            {shouldRenderInnerIcon && this.renderSelectIcon()}
           </div>
           {/**
            * The icon in a floating/stacked select
@@ -1068,7 +1082,7 @@ export class Select implements ComponentInterface {
            * icon outside the inner wrapper, which holds
            * those components.
            */}
-          {hasFloatingOrStackedLabel && this.renderSelectIcon()}
+          {shouldRenderOuterIcon && this.renderSelectIcon()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>
       </Host>

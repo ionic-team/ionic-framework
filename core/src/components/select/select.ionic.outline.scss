@@ -1,0 +1,74 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+
+// Select Fill: Outline (Ionic Theme)
+// ----------------------------------------------------------------
+
+:host(.select-fill-outline) {
+  // TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
+  // ios and md. This will allow us to have a single color map.
+  --border-color: #{globals.current-color(neutral)};
+  --border-radius: #{globals.$ion-border-radius-400};
+  --border-width: #{globals.$ion-border-size-025};
+}
+
+:host(.ion-color) {
+  --border-color: #{globals.current-color(base)};
+}
+
+// Select Wrapper
+// --------------------------------------------------
+
+:host(.select-fill-outline.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-fill-outline.select-label-placement-floating) .label-text-wrapper {
+  /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   */
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+// Select Label
+// ----------------------------------------------------------------
+
+:host(.select-fill-outline) .label-text-wrapper {
+  /**
+   * The label should appear on top of an outline
+   * container that overlaps it so it is always clickable.
+   */
+  position: relative;
+}
+
+// Select Inner Wrapper
+// ----------------------------------------------------------------
+
+:host(.select-fill-outline) .select-wrapper-inner {
+  @include globals.border-radius(var(--border-radius));
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  min-height: 40px;
+
+  /**
+  * Apply the background to the native select
+  * wrapper to only style the select.
+  */
+  background: var(--background);
+}
+
+// Outline Container
+// ----------------------------------------------------------------
+
+:host(.select-fill-outline) .select-outline {
+  @include globals.position(0, 0, 0, 0);
+  @include globals.border-radius(var(--border-radius));
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  border: var(--border-width) var(--border-style) var(--border-color);
+
+  box-sizing: border-box;
+}
