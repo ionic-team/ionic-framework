@@ -1,13 +1,13 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./tab-bar.common";
-@import "./tab-bar.ionic.vars";
 
 :host {
-  --background: #{$tabbar-ionic-background};
-  --background-activated: #{$tabbar-ionic-background-activated};
-  --background-focused: #{$tabbar-ionic-background-focused};
-  --color: #{$tabbar-ionic-color};
-  --color-selected: #{$tabbar-ionic-color-selected};
+  --background: #{globals.$tabbar-ionic-background};
+  --background-activated: #{globals.$tabbar-ionic-background-activated};
+  --background-focused: #{globals.$tabbar-ionic-background-focused};
+  --border: #{globals.$ion-border-size-0} #{globals.$ion-border-style-solid} #{globals.$tabbar-ionic-border-color};
+  --color: #{globals.$tabbar-ionic-color};
+  --color-selected: #{globals.$tabbar-ionic-color-selected};
 
   /**
    * Tab bar has a box sizing of content-box to ensure the padding
