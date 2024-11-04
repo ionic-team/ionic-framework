@@ -159,7 +159,9 @@ export class RadioGroup implements ComponentInterface {
 
   @Listen('keydown', { target: 'document' })
   onKeydown(ev: KeyboardEvent) {
-    const inSelectPopover = !!this.el.closest('ion-select-popover');
+    // We don't want the value to automatically change/emit when the radio group is part of a select interface
+    // as this will cause the interface to close when navigating through the radio group options
+    const inSelectInterface = !!this.el.closest('ion-select-popover') || !!this.el.closest('ion-select-modal');
 
     if (ev.target && !this.el.contains(ev.target as HTMLElement)) {
       return;
@@ -191,7 +193,7 @@ export class RadioGroup implements ComponentInterface {
       if (next && radios.includes(next)) {
         next.setFocus(ev);
 
-        if (!inSelectPopover) {
+        if (!inSelectInterface) {
           this.value = next.value;
           this.emitValueChange(ev);
         }

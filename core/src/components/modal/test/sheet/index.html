@@ -165,6 +165,13 @@
       </div>
     </ion-app>
     <script>
+      window.addEventListener('ionModalDidDismiss', function (e) {
+        console.log('DidDismiss', e);
+      });
+      window.addEventListener('ionModalWillDismiss', function (e) {
+        console.log('WillDismiss', e);
+      });
+
       function createModal(options) {
         let items = '';
 
