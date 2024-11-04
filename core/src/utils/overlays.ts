@@ -510,11 +510,21 @@ export const present = async <OverlayPresentOptions>(
     return;
   }
 
-  setRootAriaHidden(true);
+  /**
+   * Due to accessibility guidelines, toasts do not have
+   * focus traps.
+   *
+   * All other overlays should have focus traps to prevent
+   * the keyboard focus from leaving the overlay.
+   */
+  if (overlay.el.tagName !== 'ION-TOAST') {
+    setRootAriaHidden(true);
+  }
 
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
-  hideOverlaysFromScreenReaders(overlay.el);
+  hideUnderlyingOverlaysFromScreenReaders(overlay.el);
+  hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -560,6 +570,11 @@ export const present = async <OverlayPresentOptions>(
    * it would still have aria-hidden on being presented again.
    * Removing it here ensures the overlay is visible to screen
    * readers.
+   *
+   * If this overlay was being presented, then it was hidden
+   * from screen readers during the animation. Now that the
+   * animation is complete, we can reveal the overlay to
+   * screen readers.
    */
   overlay.el.removeAttribute('aria-hidden');
 };
@@ -630,13 +645,26 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
-  const lastOverlay = doc !== undefined && getPresentedOverlays(doc).length === 1;
+  /**
+   * For accessibility, toasts lack focus traps and don’t receive
+   * `aria-hidden` on the root element when presented.
+   *
+   * All other overlays use focus traps to keep keyboard focus
+   * within the overlay, setting `aria-hidden` on the root element
+   * to enhance accessibility.
+   *
+   * Therefore, we must remove `aria-hidden` from the root element
+   * when the last non-toast overlay is dismissed.
+   */
+  const overlaysNotToast = doc !== undefined ? getPresentedOverlays(doc).filter((o) => o.tagName !== 'ION-TOAST') : [];
+
+  const lastOverlayNotToast = overlaysNotToast.length === 1 && overlaysNotToast[0].id === overlay.el.id;
 
   /**
-   * If this is the last visible overlay then
-   * we want to re-add the root to the accessibility tree.
+   * If this is the last visible overlay that is not a toast
+   * then we want to re-add the root to the accessibility tree.
    */
-  if (lastOverlay) {
+  if (lastOverlayNotToast) {
     setRootAriaHidden(false);
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
@@ -644,6 +672,13 @@ export const dismiss = async <OverlayDismissOptions>(
   overlay.presented = false;
 
   try {
+    /**
+     * There is no need to show the overlay to screen readers during
+     * the dismiss animation. This is because the overlay will be removed
+     * from the DOM after the animation is complete.
+     */
+    hideAnimatingOverlayFromScreenReaders(overlay.el);
+
     // Overlay contents should not be clickable during dismiss
     overlay.el.style.setProperty('pointer-events', 'none');
     overlay.willDismiss.emit({ data, role });
@@ -930,6 +965,29 @@ export const createTriggerController = () => {
 };
 
 /**
+ * The overlay that is being animated also needs to hide from screen
+ * readers during its animation. This ensures that assistive technologies
+ * like TalkBack do not announce or interact with the content until the
+ * animation is complete, avoiding confusion for users.
+ *
+ * If the overlay is being presented, it prevents focus rings from appearing
+ * in incorrect positions due to the transition (specifically `transform`
+ * styles), ensuring that when aria-hidden is removed, the focus rings are
+ * correctly displayed in the final location of the elements.
+ *
+ * @param overlay - The overlay that is being animated.
+ */
+const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
+  if (doc === undefined) return;
+
+  /**
+   * Once the animation is complete, this attribute will be removed.
+   * This is done at the end of the `present` method.
+   */
+  overlay.setAttribute('aria-hidden', 'true');
+};
+
+/**
  * Ensure that underlying overlays have aria-hidden if necessary so that screen readers
  * cannot move focus to these elements. Note that we cannot rely on focus/focusin/focusout
  * events here because those events do not fire when the screen readers moves to a non-focusable
@@ -939,7 +997,7 @@ export const createTriggerController = () => {
  * @param newTopMostOverlay - The overlay that is being presented. Since the overlay has not been
  * fully presented yet at the time this function is called it will not be included in the getPresentedOverlays result.
  */
-const hideOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement) => {
+const hideUnderlyingOverlaysFromScreenReaders = (newTopMostOverlay: HTMLIonOverlayElement) => {
   if (doc === undefined) return;
 
   const overlays = getPresentedOverlays(doc);
