@@ -1,6 +1,4 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@use "../item/item.ionic.vars" as itemVars;
-@import "./list.ionic.vars.scss";
 
 // Ionic List
 // --------------------------------------------------
@@ -11,7 +9,7 @@ ion-list {
 
   display: block;
 
-  background: #{itemVars.$item-ionic-background};
+  background: #{globals.$ion-primitives-base-white};
 
   contain: content;
   list-style-type: none;
@@ -52,7 +50,7 @@ ion-list {
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(initial, initial, $list-ionic-border-radius-round, $list-ionic-border-radius-round);
+    @include globals.border-radius(initial, initial, globals.$ion-border-radius-400, globals.$ion-border-radius-400);
   }
 
   // Target the first element in the list after the header
@@ -62,7 +60,7 @@ ion-list {
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius($list-ionic-border-radius-round, $list-ionic-border-radius-round, initial, initial);
+    @include globals.border-radius(globals.$ion-border-radius-400, globals.$ion-border-radius-400, initial, initial);
   }
 
   /* Soft */
@@ -72,7 +70,7 @@ ion-list {
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(initial, initial, $list-ionic-border-radius-soft, $list-ionic-border-radius-soft);
+    @include globals.border-radius(initial, initial, globals.$ion-border-radius-200, globals.$ion-border-radius-200);
   }
 
   // Target the first element in the list after the header
@@ -82,7 +80,7 @@ ion-list {
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius($list-ionic-border-radius-soft, $list-ionic-border-radius-soft, initial, initial);
+    @include globals.border-radius(globals.$ion-border-radius-200, globals.$ion-border-radius-200, initial, initial);
   }
 
   /* Rectangular */
@@ -92,12 +90,7 @@ ion-list {
      * The top of the list should not have a border radius because
      * that would include the header.
      */
-    @include globals.border-radius(
-      initial,
-      initial,
-      $list-ionic-border-radius-rectangular,
-      $list-ionic-border-radius-rectangular
-    );
+    @include globals.border-radius(initial, initial, globals.$ion-border-radius-0, globals.$ion-border-radius-0);
   }
 
   // Target the first element in the list after the header
@@ -107,29 +100,24 @@ ion-list {
      * The bottom of the first element should not have a border radius
      * because that would not look connected to the rest.
      */
-    @include globals.border-radius(
-      $list-ionic-border-radius-rectangular,
-      $list-ionic-border-radius-rectangular,
-      initial,
-      initial
-    );
+    @include globals.border-radius(globals.$ion-border-radius-0, globals.$ion-border-radius-0, initial, initial);
   }
 }
 
 .list-ionic:not(:has(ion-list-header)) {
   /* Round */
   &.list-round {
-    @include globals.border-radius($list-ionic-border-radius-round);
+    @include globals.border-radius(globals.$ion-border-radius-400);
   }
 
   /* Soft */
   &.list-soft {
-    @include globals.border-radius($list-ionic-border-radius-soft);
+    @include globals.border-radius(globals.$ion-border-radius-200);
   }
 
   /* Rectangular */
   &.list-rectangular {
-    @include globals.border-radius($list-ionic-border-radius-rectangular);
+    @include globals.border-radius(globals.$ion-border-radius-0);
   }
 }
 
