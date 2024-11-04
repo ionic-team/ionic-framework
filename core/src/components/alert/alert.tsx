@@ -730,10 +730,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const role = this.inputs.length > 0 || this.buttons.length > 0 ? 'alertdialog' : 'alert';
 
     /**
-     * If the header is defined, use that. Otherwise, fall back to the subHeader.
-     * If neither is defined, don't set aria-labelledby.
+     * Use both the header and subHeader ids if they are defined.
+     * If only the header is defined, use the header id.
+     * If only the subHeader is defined, use the subHeader id.
+     * If neither are defined, do not set aria-labelledby.
      */
-    const ariaLabelledBy = header ? hdrId : subHeader ? subHdrId : null;
+    const ariaLabelledBy = header && subHeader ? `${hdrId} ${subHdrId}` : header ? hdrId : subHeader ? subHdrId : null;
 
     return (
       <Host
@@ -766,10 +768,17 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 {header}
               </h2>
             )}
-            {subHeader && (
+            {/* If no header exists, subHeader should be the highest heading level, h2 */}
+            {subHeader && !header && (
               <h2 id={subHdrId} class="alert-sub-title">
                 {subHeader}
               </h2>
+            )}
+            {/* If a header exists, subHeader should be one level below it, h3 */}
+            {subHeader && header && (
+              <h3 id={subHdrId} class="alert-sub-title">
+                {subHeader}
+              </h3>
             )}
           </div>
 

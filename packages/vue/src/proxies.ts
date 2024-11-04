@@ -67,7 +67,10 @@ import { defineCustomElement as defineIonRow } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonSearchbar } from '@ionic/core/components/ion-searchbar.js';
 import { defineCustomElement as defineIonSegment } from '@ionic/core/components/ion-segment.js';
 import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/components/ion-segment-button.js';
+import { defineCustomElement as defineIonSegmentContent } from '@ionic/core/components/ion-segment-content.js';
+import { defineCustomElement as defineIonSegmentView } from '@ionic/core/components/ion-segment-view.js';
 import { defineCustomElement as defineIonSelect } from '@ionic/core/components/ion-select.js';
+import { defineCustomElement as defineIonSelectModal } from '@ionic/core/components/ion-select-modal.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
@@ -744,12 +747,22 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment, JSX.IonS
 
 
 export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton, JSX.IonSegmentButton["value"]>('ion-segment-button', defineIonSegmentButton, [
+  'contentId',
   'disabled',
   'layout',
   'type',
   'value'
 ],
 'value', 'ion-change');
+
+
+export const IonSegmentContent = /*@__PURE__*/ defineContainer<JSX.IonSegmentContent>('ion-segment-content', defineIonSegmentContent);
+
+
+export const IonSegmentView = /*@__PURE__*/ defineContainer<JSX.IonSegmentView>('ion-segment-view', defineIonSegmentView, [
+  'disabled',
+  'ionSegmentViewScroll'
+]);
 
 
 export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSelect["value"]>('ion-select', defineIonSelect, [
@@ -780,6 +793,13 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'ionStyle'
 ],
 'value', 'ion-change');
+
+
+export const IonSelectModal = /*@__PURE__*/ defineContainer<JSX.IonSelectModal>('ion-select-modal', defineIonSelectModal, [
+  'header',
+  'multiple',
+  'options'
+]);
 
 
 export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption>('ion-select-option', defineIonSelectOption, [

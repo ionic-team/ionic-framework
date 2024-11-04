@@ -37,6 +37,11 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   @State() checked = false;
 
   /**
+   * The `id` of the segment content.
+   */
+  @Prop({ reflect: true }) contentId?: string;
+
+  /**
    * If `true`, the user cannot interact with the segment button.
    */
   @Prop({ mutable: true }) disabled = false;
@@ -66,6 +71,30 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       this.updateState();
       addEventListener(segmentEl, 'ionSelect', this.updateState);
       addEventListener(segmentEl, 'ionStyle', this.updateStyle);
+    }
+
+    // Return if there is no contentId defined
+    if (!this.contentId) return;
+
+    // Attempt to find the Segment Content by its contentId
+    const segmentContent = document.getElementById(this.contentId) as HTMLIonSegmentContentElement | null;
+
+    // If no associated Segment Content exists, log an error and return
+    if (!segmentContent) {
+      console.error(`Segment Button: Unable to find Segment Content with id="${this.contentId}".`);
+      return;
+    }
+
+    // Ensure the found element is a valid ION-SEGMENT-CONTENT
+    if (segmentContent.tagName !== 'ION-SEGMENT-CONTENT') {
+      console.error(`Segment Button: Element with id="${this.contentId}" is not an <ion-segment-content> element.`);
+      return;
+    }
+
+    // Prevent buttons from being disabled when associated with segment content
+    if (this.disabled) {
+      console.warn(`Segment Button: Segment buttons cannot be disabled when associated with an <ion-segment-content>.`);
+      this.disabled = false;
     }
   }
 
@@ -161,13 +190,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
-        <div
-          part="indicator"
-          class={{
-            'segment-button-indicator': true,
-            'segment-button-indicator-animated': true,
-          }}
-        >
+        <div part="indicator" class="segment-button-indicator segment-button-indicator-animated">
           <div part="indicator-background" class="segment-button-indicator-background"></div>
         </div>
       </Host>
