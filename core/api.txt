@@ -1000,15 +1000,15 @@ ion-menu,prop,menuId,string | undefined,undefined,false,true
 ion-menu,prop,side,"end" | "start",'start',false,true
 ion-menu,prop,swipeGesture,boolean,true,false,false
 ion-menu,prop,type,"overlay" | "push" | "reveal" | undefined,undefined,false,false
-ion-menu,method,close,close(animated?: boolean) => Promise<boolean>
+ion-menu,method,close,close(animated?: boolean, role?: string) => Promise<boolean>
 ion-menu,method,isActive,isActive() => Promise<boolean>
 ion-menu,method,isOpen,isOpen() => Promise<boolean>
 ion-menu,method,open,open(animated?: boolean) => Promise<boolean>
-ion-menu,method,setOpen,setOpen(shouldOpen: boolean, animated?: boolean) => Promise<boolean>
+ion-menu,method,setOpen,setOpen(shouldOpen: boolean, animated?: boolean, role?: string) => Promise<boolean>
 ion-menu,method,toggle,toggle(animated?: boolean) => Promise<boolean>
-ion-menu,event,ionDidClose,void,true
+ion-menu,event,ionDidClose,MenuCloseEventDetail,true
 ion-menu,event,ionDidOpen,void,true
-ion-menu,event,ionWillClose,void,true
+ion-menu,event,ionWillClose,MenuCloseEventDetail,true
 ion-menu,event,ionWillOpen,void,true
 ion-menu,css-prop,--background,ios
 ion-menu,css-prop,--background,md
@@ -1542,6 +1542,7 @@ ion-segment,css-prop,--background,ios
 ion-segment,css-prop,--background,md
 
 ion-segment-button,shadow
+ion-segment-button,prop,contentId,string | undefined,undefined,false,true
 ion-segment-button,prop,disabled,boolean,false,false,false
 ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false,false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false,false
@@ -1607,6 +1608,12 @@ ion-segment-button,part,indicator
 ion-segment-button,part,indicator-background
 ion-segment-button,part,native
 
+ion-segment-content,shadow
+
+ion-segment-view,shadow
+ion-segment-view,prop,disabled,boolean,false,false,false
+ion-segment-view,event,ionSegmentViewScroll,SegmentViewScrollEvent,true
+
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
 ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -1614,7 +1621,7 @@ ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) 
 ion-select,prop,disabled,boolean,false,false,false
 ion-select,prop,expandedIcon,string | undefined,undefined,false,false
 ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
-ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
+ion-select,prop,interface,"action-sheet" | "alert" | "modal" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
 ion-select,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-select,prop,label,string | undefined,undefined,false,false
@@ -1671,6 +1678,11 @@ ion-select,part,icon
 ion-select,part,label
 ion-select,part,placeholder
 ion-select,part,text
+
+ion-select-modal,scoped
+ion-select-modal,prop,header,string | undefined,undefined,false,false
+ion-select-modal,prop,multiple,boolean | undefined,undefined,false,false
+ion-select-modal,prop,options,SelectModalOption[],[],false,false
 
 ion-select-option,shadow
 ion-select-option,prop,disabled,boolean,false,false,false

@@ -19,10 +19,11 @@
     <main class="ion-padding">
       <h1>Alert - A11y</h1>
 
-      <button class="expand" id="bothHeaders" onclick="presentBothHeaders()">Both Headers</button>
+      <button class="expand" id="bothHeadersOnly" onclick="presentBothHeadersOnly()">Both Headers Only</button>
+      <button class="expand" id="headerOnly" onclick="presentHeaderOnly()">Header Only</button>
       <button class="expand" id="subHeaderOnly" onclick="presentSubHeaderOnly()">Subheader Only</button>
       <button class="expand" id="noHeaders" onclick="presentNoHeaders()">No Headers</button>
-      <button class="expand" id="noMessage" onclick="presentNoMessage()">No Message</button>
+      <button class="expand" id="headersAndMessage" onclick="presentHeadersAndMessage()">Headers and Message</button>
       <button class="expand" id="customAria" onclick="presentCustomAria()">Custom Aria</button>
       <button class="expand" id="ariaLabelButton" onclick="presentAriaLabelButton()">Aria Label Button</button>
       <button class="expand" id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
@@ -34,11 +35,17 @@
         await alert.present();
       }
 
-      function presentBothHeaders() {
+      function presentBothHeadersOnly() {
         openAlert({
           header: 'Header',
           subHeader: 'Subtitle',
-          message: 'This is an alert message.',
+          buttons: ['OK'],
+        });
+      }
+
+      function presentHeaderOnly() {
+        openAlert({
+          header: 'Header',
           buttons: ['OK'],
         });
       }
@@ -46,7 +53,6 @@
       function presentSubHeaderOnly() {
         openAlert({
           subHeader: 'Subtitle',
-          message: 'This is an alert message.',
           buttons: ['OK'],
         });
       }
@@ -58,10 +64,11 @@
         });
       }
 
-      function presentNoMessage() {
+      function presentHeadersAndMessage() {
         openAlert({
           header: 'Header',
           subHeader: 'Subtitle',
+          message: 'This is an alert message.',
           buttons: ['OK'],
         });
       }
