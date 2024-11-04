@@ -63,7 +63,8 @@
   * overlapping the range. The buffer is added to the
   * bottom of the range label instead of the host.
   */
-  @include padding(calc(globals.$ion-space-100 + globals.$ion-scale-600), null, null, null);}
+  @include padding(calc(globals.$ion-space-100 + globals.$ion-scale-600), null, null, null);
+}
 
 :host(.range-has-pin.range-label-placement-stacked) .label-text-wrapper {
   /**
