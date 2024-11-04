@@ -5,16 +5,16 @@
 // --------------------------------------------------
 
 :host {
-  --knob-border-radius: 50%;
+  --knob-border-radius: #{globals.$ion-border-radius-full};
   --knob-background: #{globals.$ion-primitives-base-white};
-  --knob-box-shadow: 0;
-  --knob-size: 22px;
+  --knob-box-shadow: none;
+  --knob-size: #{globals.$ion-scale-600};
   --knob-handle-size: #{globals.$ion-scale-1000};
   --bar-height: #{globals.$ion-scale-200};
   --bar-background: #{globals.$ion-primitives-neutral-100};
   --bar-background-active: #{globals.ion-color(primary, base)};
   --bar-border-radius: #{globals.$ion-border-radius-400};
-  --height: 42px;
+  --height: #{globals.$ion-scale-1000};
 
   @include globals.typography(globals.$ion-body-md-regular);
 
@@ -39,11 +39,11 @@
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, 16px, 0, 0);
+  @include margin(0, globals.$ion-space-400, 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, 16px);
+  @include margin(0, 0, 0, globals.$ion-space-400);
 }
 
 ::slotted([slot="label"]) {
@@ -93,7 +93,7 @@
   @include border-radius(globals.$ion-border-radius-0);
 
   position: absolute;
-  top: calc((42px * 0.5) - (globals.$ion-scale-300 * 0.5));
+  top: calc((var(--height) * 0.5) - (globals.$ion-scale-300 * 0.5));
 
   width: globals.$ion-scale-100;
   height: globals.$ion-scale-300;
@@ -110,7 +110,7 @@
   @include transform(translate3d(0, 100%, 0), scale(0.01));
   @include padding(globals.$ion-space-200, globals.$ion-space-200, globals.$ion-space-200, globals.$ion-space-200);
 
-  min-width: 28px;
+  min-width: globals.$ion-scale-700;
 
   transition: transform 120ms ease;
 
@@ -123,8 +123,9 @@
 
 .range-knob {
   border-width: globals.$ion-border-size-025;
-  border-style: solid;
+  border-style: globals.$ion-border-style-solid;
   border-color: globals.ion-color(primary, base);
+  box-sizing: border-box;
 }
 
 /**
