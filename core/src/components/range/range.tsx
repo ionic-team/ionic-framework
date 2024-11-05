@@ -8,7 +8,7 @@ import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, Theme } from '../../interface';
+import type { Color, Gesture, GestureDetail } from '../../interface';
 import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
 import type {
@@ -570,9 +570,9 @@ export class Range implements ComponentInterface {
     this.value = !this.dualKnobs
       ? valA
       : {
-          lower: Math.min(valA, valB),
-          upper: Math.max(valA, valB),
-        };
+        lower: Math.min(valA, valB),
+        upper: Math.max(valA, valB),
+      };
 
     this.ionInput.emit({ value: this.value });
 
@@ -636,8 +636,6 @@ export class Range implements ComponentInterface {
       pinFormatter,
       inheritedAttributes,
     } = this;
-
-    const theme = getIonTheme(this);
 
     let barStart = `${ratioLower * 100}%`;
     let barEnd = `${100 - ratioUpper * 100}%`;
@@ -780,7 +778,6 @@ export class Range implements ComponentInterface {
           min,
           max,
           inheritedAttributes,
-          theme,
         })}
 
         {this.dualKnobs &&
@@ -796,7 +793,6 @@ export class Range implements ComponentInterface {
             min,
             max,
             inheritedAttributes,
-            theme,
           })}
       </div>
     );
@@ -877,25 +873,11 @@ interface RangeKnob {
   pinFormatter: PinFormatter;
   inheritedAttributes: Attributes;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
-  theme: Theme;
 }
 
 const renderKnob = (
   rtl: boolean,
-  {
-    knob,
-    value,
-    ratio,
-    min,
-    max,
-    disabled,
-    pressed,
-    pin,
-    handleKeyboard,
-    pinFormatter,
-    inheritedAttributes,
-    theme,
-  }: RangeKnob
+  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, pinFormatter, inheritedAttributes }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
@@ -946,7 +928,7 @@ const renderKnob = (
     >
       {pin && (
         <div class="range-pin" role="presentation" part="pin">
-          {pinFormatter(value) + (theme === 'ionic' ? '%' : '')}
+          {pinFormatter(value)}
         </div>
       )}
       <div class="range-knob" role="presentation" part="knob" />
