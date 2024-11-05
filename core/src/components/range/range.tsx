@@ -570,9 +570,9 @@ export class Range implements ComponentInterface {
     this.value = !this.dualKnobs
       ? valA
       : {
-        lower: Math.min(valA, valB),
-        upper: Math.max(valA, valB),
-      };
+          lower: Math.min(valA, valB),
+          upper: Math.max(valA, valB),
+        };
 
     this.ionInput.emit({ value: this.value });
 
