@@ -63,7 +63,7 @@
   * overlapping the range. The buffer is added to the
   * bottom of the range label instead of the host.
   */
-  @include padding(calc(globals.$ion-space-200 + globals.dynamic-font(12px)), null, null, null);
+  @include padding(calc(globals.$ion-space-100 + globals.$ion-scale-600), null, null, null);
 }
 
 :host(.range-has-pin.range-label-placement-stacked) .label-text-wrapper {
@@ -107,12 +107,11 @@
 }
 
 .range-pin {
-  @include transform(translate3d(0, 100%, 0), scale(0.01));
-  @include padding(globals.$ion-space-200, globals.$ion-space-200, globals.$ion-space-200, globals.$ion-space-200);
+  @include padding(null, null, globals.$ion-space-100, null);
 
   min-width: globals.$ion-scale-700;
 
-  transition: transform 120ms ease;
+  transform: translate3d(0, calc(-100%), 0);
 
   background: transparent;
 
@@ -126,20 +125,6 @@
   border-style: globals.$ion-border-style-solid;
   border-color: globals.ion-color(primary, base);
   box-sizing: border-box;
-}
-
-/**
- * The -100% ensures the pin sits on top
- * of the range-knob-handle container.
- * We apply 11px so that the pin
- * text is closer to the knob inside of the container.
- * We also apply the 11px here instead of using "top"
- * otherwise the pin text will translate below the knob
- * when the text is scaled.
- */
-.range-knob-pressed .range-pin,
-.range-knob-handle.ion-focused .range-pin {
-  transform: translate3d(0, calc(-100% + 11px), 0) scale(1);
 }
 
 // Ionic Range: Disabled (based on iOS Range)
