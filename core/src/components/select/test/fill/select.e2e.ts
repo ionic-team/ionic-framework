@@ -51,7 +51,6 @@ configs({ modes: ['md', 'ionic-md'] }).forEach(({ title, screenshot, config }) =
   });
 });
 
-
 configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: fill'), () => {
     test.describe('select: fill solid', () => {
