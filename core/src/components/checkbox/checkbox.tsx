@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -134,7 +134,9 @@ export class Checkbox implements ComponentInterface {
     };
   }
 
-  private setFocus() {
+  /** @internal */
+  @Method()
+  async setFocus() {
     if (this.focusEl) {
       this.focusEl.focus();
     }

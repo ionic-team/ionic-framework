@@ -1338,6 +1338,8 @@ export class IonMenu {
 }
 
 
+import type { MenuCloseEventDetail as IIonMenuMenuCloseEventDetail } from '@ionic/core';
+
 export declare interface IonMenu extends Components.IonMenu {
   /**
    * Emitted when the menu is about to be opened.
@@ -1346,7 +1348,7 @@ export declare interface IonMenu extends Components.IonMenu {
   /**
    * Emitted when the menu is about to be closed.
    */
-  ionWillClose: EventEmitter<CustomEvent<void>>;
+  ionWillClose: EventEmitter<CustomEvent<IIonMenuMenuCloseEventDetail>>;
   /**
    * Emitted when the menu is open.
    */
@@ -1354,7 +1356,7 @@ export declare interface IonMenu extends Components.IonMenu {
   /**
    * Emitted when the menu is closed.
    */
-  ionDidClose: EventEmitter<CustomEvent<void>>;
+  ionDidClose: EventEmitter<CustomEvent<IIonMenuMenuCloseEventDetail>>;
 }
 
 
@@ -1991,14 +1993,14 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['disabled', 'layout', 'mode', 'theme', 'type', 'value']
+  inputs: ['contentId', 'disabled', 'layout', 'mode', 'theme', 'type', 'value']
 })
 @Component({
   selector: 'ion-segment-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'layout', 'mode', 'theme', 'type', 'value'],
+  inputs: ['contentId', 'disabled', 'layout', 'mode', 'theme', 'type', 'value'],
 })
 export class IonSegmentButton {
   protected el: HTMLElement;
@@ -2010,6 +2012,57 @@ export class IonSegmentButton {
 
 
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
+
+
+@ProxyCmp({
+})
+@Component({
+  selector: 'ion-segment-content',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: [],
+})
+export class IonSegmentContent {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonSegmentContent extends Components.IonSegmentContent {}
+
+
+@ProxyCmp({
+  inputs: ['disabled']
+})
+@Component({
+  selector: 'ion-segment-view',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['disabled'],
+})
+export class IonSegmentView {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSegmentViewScroll']);
+  }
+}
+
+
+import type { SegmentViewScrollEvent as IIonSegmentViewSegmentViewScrollEvent } from '@ionic/core';
+
+export declare interface IonSegmentView extends Components.IonSegmentView {
+  /**
+   * Emitted when the segment view is scrolled.
+   */
+  ionSegmentViewScroll: EventEmitter<CustomEvent<IIonSegmentViewSegmentViewScrollEvent>>;
+}
 
 
 @ProxyCmp({
@@ -2059,6 +2112,28 @@ This event will not emit when programmatically setting the `value` property.
    */
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
+
+
+@ProxyCmp({
+  inputs: ['header', 'multiple', 'options']
+})
+@Component({
+  selector: 'ion-select-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['header', 'multiple', 'options'],
+})
+export class IonSelectModal {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonSelectModal extends Components.IonSelectModal {}
 
 
 @ProxyCmp({

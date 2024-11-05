@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.4.0](https://github.com/ionic-team/ionic-framework/compare/v8.3.4...v8.4.0) (2024-11-04)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
 ## [8.3.4](https://github.com/ionic-team/ionic-framework/compare/v8.3.3...v8.3.4) (2024-10-30)
 
 **Note:** Version bump only for package @ionic/angular-server
