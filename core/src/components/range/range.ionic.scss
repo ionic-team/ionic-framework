@@ -1,0 +1,217 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "./range.common";
+
+// Ionic Range
+// --------------------------------------------------
+
+:host {
+  --knob-border-radius: #{globals.$ion-border-radius-full};
+  --knob-background: #{globals.$ion-primitives-base-white};
+  --knob-box-shadow: none;
+  --knob-size: #{globals.$ion-scale-600};
+  --knob-handle-size: #{globals.$ion-scale-1000};
+  --bar-height: #{globals.$ion-scale-200};
+  --bar-background: #{globals.$ion-primitives-neutral-100};
+  --bar-background-active: #{globals.ion-color(primary, base)};
+  --bar-border-radius: #{globals.$ion-border-radius-400};
+  --height: #{globals.$ion-scale-1000};
+
+  @include globals.typography(globals.$ion-body-md-regular);
+
+  z-index: globals.$ion-z-index-100;
+}
+
+:host(.range-item-start-adjustment) {
+  @include padding(null, null, null, globals.$ion-space-600);
+}
+
+:host(.range-item-end-adjustment) {
+  @include padding(null, globals.$ion-space-600, null, null);
+}
+
+:host(.ion-color) .range-bar-active,
+:host(.ion-color) .range-tick-active {
+  background: globals.current-color(base);
+}
+
+::slotted(ion-icon[slot]) {
+  font-size: globals.$ion-font-size-600;
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, globals.$ion-space-400, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, globals.$ion-space-400);
+}
+
+::slotted([slot="label"]) {
+  max-width: globals.$ion-scale-5000;
+}
+
+:host(.range-has-pin:not(.range-label-placement-stacked)) {
+  /**
+  * The pin should not overlap any elements that are
+  * above the range. By adding padding to the top of the
+  * range, it provides a buffer for the pin to move into
+  * when it is pressed.
+  *
+  * The padding is not included when the label is stacked
+  * because the pin is below the label.
+  * It still requires a buffer to prevent the pin from
+  * overlapping the range. The buffer is added to the
+  * bottom of the range label instead of the host.
+  */
+  @include padding(calc(globals.$ion-space-200 + globals.dynamic-font(12px)), null, null, null);
+}
+
+:host(.range-has-pin.range-label-placement-stacked) .label-text-wrapper {
+  /**
+  * The pin should not overlap the stacked label. By adding
+  * margin to the bottom of the label, it provides a buffer
+  * for the pin to move into when it is pressed.
+  */
+  @include margin(null, null, calc(globals.$ion-space-200 + globals.dynamic-font(12px)), null);
+}
+
+.range-bar-active {
+  bottom: 0;
+
+  width: auto;
+
+  background: var(--bar-background-active);
+
+  &.has-ticks {
+    @include border-radius(0);
+    @include margin(null, calc(-1 * globals.$ion-scale-100 * 0.5), null, calc(-1 * globals.$ion-scale-100 * 0.5));
+  }
+}
+
+.range-tick {
+  @include margin-horizontal(calc(globals.$ion-scale-100 * -0.5), null);
+  @include border-radius(globals.$ion-border-radius-0);
+
+  position: absolute;
+  top: calc((var(--height) * 0.5) - (globals.$ion-scale-300 * 0.5));
+
+  width: globals.$ion-scale-100;
+  height: globals.$ion-scale-300;
+
+  background: globals.$ion-primitives-neutral-100;
+  pointer-events: none;
+}
+
+.range-tick-active {
+  background: var(--bar-background-active);
+}
+
+.range-pin {
+  @include transform(translate3d(0, 100%, 0), scale(0.01));
+  @include padding(globals.$ion-space-200, globals.$ion-space-200, globals.$ion-space-200, globals.$ion-space-200);
+
+  min-width: globals.$ion-scale-700;
+
+  transition: transform 120ms ease;
+
+  background: transparent;
+
+  font-size: globals.dynamic-font(12px);
+
+  text-align: center;
+}
+
+.range-knob {
+  border-width: globals.$ion-border-size-025;
+  border-style: globals.$ion-border-style-solid;
+  border-color: globals.ion-color(primary, base);
+  box-sizing: border-box;
+}
+
+/**
+ * The -100% ensures the pin sits on top
+ * of the range-knob-handle container.
+ * We apply 11px so that the pin
+ * text is closer to the knob inside of the container.
+ * We also apply the 11px here instead of using "top"
+ * otherwise the pin text will translate below the knob
+ * when the text is scaled.
+ */
+.range-knob-pressed .range-pin,
+.range-knob-handle.ion-focused .range-pin {
+  transform: translate3d(0, calc(-100% + 11px), 0) scale(1);
+}
+
+// Ionic Range: Disabled (based on iOS Range)
+// --------------------------------------------------
+// When the range is disabled, the entire range,
+// range label, any slotted labels, and any slotted
+// icons need to receive the same opacity.
+
+:host(.range-disabled) {
+  opacity: 0.3;
+}
+
+// Range Label Placement - Start
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, globals.$ion-space-400, 0, 0);
+}
+
+// Range Label Placement - End
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-end) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the start
+   * when the label sits at the end.
+   */
+  @include margin(0, 0, 0, globals.$ion-space-400);
+}
+
+// Range Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, globals.$ion-space-400, 0, 0);
+}
+
+// Range Label Placement - Stacked
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-stacked) .label-text-wrapper {
+  @include transform(scale(0.75));
+
+  /**
+  * The margin between the label and
+  * the range should be on the bottom
+  * when the label sits on top.
+  */
+  @include margin(null, 0, globals.$ion-space-400, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the range.
+   */
+  max-width: calc(100% / 0.75);
+}
+
+:host(.in-item.range-label-placement-stacked) .label-text-wrapper {
+  @include margin(globals.$ion-space-250, null, globals.$ion-space-400, null);
+}
+
+:host(.in-item.range-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, globals.$ion-space-0, null);
+}

@@ -1,4 +1,4 @@
-@import "../../themes/native/native.globals";
+@import "../../themes/mixins";
 @import "./range.vars.scss";
 
 // Range
@@ -18,7 +18,6 @@
    * @prop --pin-background: Background of the range pin (only available in MD mode)
    * @prop --pin-color: Color of the range pin (only available in MD mode)
    */
-  --knob-handle-size: calc(var(--knob-size) * 2);
 
   display: flex;
   position: relative;
@@ -26,10 +25,7 @@
   flex: 3;
   align-items: center;
 
-  font-family: $font-family-base;
-
   user-select: none;
-  z-index: $z-index-item-input;
 }
 
 :host(.range-disabled) {
@@ -38,10 +34,6 @@
 
 ::slotted(ion-label) {
   flex: initial;
-}
-
-::slotted(ion-icon[slot]) {
-  font-size: 24px;
 }
 
 .range-slider {
@@ -214,8 +206,6 @@
    * only the label would show and users
    * would not be able to see the range.
    */
-  max-width: 200px;
-
   text-overflow: ellipsis;
 
   white-space: nowrap;
@@ -254,15 +244,6 @@
   flex-direction: row;
 }
 
-:host(.range-label-placement-start) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the range should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
-
 // Range Label Placement - End
 // ----------------------------------------------------------------
 
@@ -274,26 +255,8 @@
   flex-direction: row-reverse;
 }
 
-/**
- * The margin between the label and
- * the range should be on the start
- * when the label sits at the end.
- */
-:host(.range-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, $form-control-label-margin);
-}
-
 // Range Label Placement - Fixed
 // ----------------------------------------------------------------
-
-:host(.range-label-placement-fixed) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the range should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
 
 /**
  * Label is on the left of the range in LTR and
@@ -321,26 +284,4 @@
 
 :host(.range-label-placement-stacked) .label-text-wrapper {
   @include transform-origin(start, top);
-  @include transform(scale(#{$form-control-label-stacked-scale}));
-
-  /**
-  * The margin between the label and
-  * the range should be on the bottom
-  * when the label sits on top.
-  */
-  @include margin(null, 0, $form-control-label-margin, 0);
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the range.
-   */
-  max-width: calc(100% / #{$form-control-label-stacked-scale});
-}
-
-:host(.in-item.range-label-placement-stacked) .label-text-wrapper {
-  @include margin($range-item-label-margin-top, null, $form-control-label-margin, null);
-}
-
-:host(.in-item.range-label-placement-stacked) .native-wrapper {
-  @include margin(null, null, $range-item-label-margin-bottom, null);
 }
