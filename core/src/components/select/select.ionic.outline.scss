@@ -15,18 +15,6 @@
   --border-color: #{globals.current-color(base)};
 }
 
-// Select Wrapper
-// --------------------------------------------------
-
-:host(.select-fill-outline.select-label-placement-stacked) .label-text-wrapper,
-:host(.select-fill-outline.select-label-placement-floating) .label-text-wrapper {
-  /**
-   * Label text should not extend
-   * beyond the bounds of the select.
-   */
-  max-width: calc(100% - var(--padding-start) - var(--padding-end));
-}
-
 // Select Label
 // ----------------------------------------------------------------
 
@@ -71,4 +59,14 @@
   border: var(--border-width) var(--border-style) var(--border-color);
 
   box-sizing: border-box;
+}
+
+// States
+// ----------------------------------------------------------------
+
+// Disabled
+// ----------------------------------------------------------------
+
+:host(.select-fill-outline.select-disabled) {
+  --border-color: #{globals.$ion-primitives-neutral-300};
 }

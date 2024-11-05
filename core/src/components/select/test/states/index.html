@@ -19,7 +19,7 @@
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
-      h2 {
+      h3 {
         font-size: 12px;
         font-weight: normal;
 
@@ -49,27 +49,61 @@
       </ion-header>
 
       <ion-content id="content" class="ion-padding">
+        <h2>No Fill</h2>
         <div class="grid">
           <div class="grid-item">
-            <h2>Placeholder</h2>
-            <ion-select label="Favorite Fruit" placeholder="Select a fruit"></ion-select>
+            <h3>Disabled, No Value</h3>
+            <ion-select label="Favorite Fruit" disabled="true"></ion-select>
           </div>
 
           <div class="grid-item">
-            <h2>Value</h2>
-            <ion-select label="Favorite Fruit" value="apples">
-              <ion-select-option value="apples">Apples</ion-select-option>
-            </ion-select>
-          </div>
-
-          <div class="grid-item">
-            <h2>Disabled, Placeholder</h2>
+            <h3>Disabled, Placeholder</h3>
             <ion-select label="Favorite Fruit" placeholder="Select a fruit" disabled="true"></ion-select>
           </div>
 
           <div class="grid-item">
-            <h2>Disabled, Value</h2>
+            <h3>Disabled, Value</h3>
             <ion-select label="Favorite Fruit" value="apples" disabled="true">
+              <ion-select-option value="apples">Apples</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <h2>Outline</h2>
+        <div class="grid">
+          <div class="grid-item">
+            <h3>Disabled, No Value</h3>
+            <ion-select fill="outline" label="Favorite Fruit" disabled="true"></ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h3>Disabled, Placeholder</h3>
+            <ion-select fill="outline" label="Favorite Fruit" placeholder="Select a fruit" disabled="true"></ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h3>Disabled, Value</h3>
+            <ion-select fill="outline" label="Favorite Fruit" value="apples" disabled="true">
+              <ion-select-option value="apples">Apples</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+        <h2>Solid</h2>
+        <div class="grid">
+          <div class="grid-item">
+            <h3>Disabled, No Value</h3>
+            <ion-select fill="solid" label="Favorite Fruit" disabled="true"></ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h3>Disabled, Placeholder</h3>
+            <ion-select fill="solid" label="Favorite Fruit" placeholder="Select a fruit" disabled="true"></ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h3>Disabled, Value</h3>
+            <ion-select fill="solid" label="Favorite Fruit" value="apples" disabled="true">
               <ion-select-option value="apples">Apples</ion-select-option>
             </ion-select>
           </div>
