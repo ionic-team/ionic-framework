@@ -25,8 +25,6 @@
   @include globals.border-radius(var(--border-radius));
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  min-height: 40px;
-
   /**
   * Apply the background to the native select
   * wrapper to only style the select.
@@ -51,14 +49,4 @@
   border: var(--border-width) var(--border-style) var(--border-color);
 
   box-sizing: border-box;
-}
-
-// States
-// ----------------------------------------------------------------
-
-// Disabled
-// ----------------------------------------------------------------
-
-:host(.select-fill-outline.select-disabled) {
-  --border-color: #{globals.$ion-primitives-neutral-300};
 }
