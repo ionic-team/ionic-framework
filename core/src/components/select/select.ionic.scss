@@ -7,6 +7,11 @@
 
 :host {
   --background: #{globals.$ion-primitives-base-white};
+  // TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
+  // ios and md. This will allow us to have a single color map.
+  --border-color: #{globals.current-color(neutral)};
+  --border-radius: #{globals.$ion-border-radius-400};
+  --border-width: #{globals.$ion-border-size-025};
   --padding-start: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-400};
   --padding-top: #{globals.$ion-space-300};
@@ -62,16 +67,6 @@
   @include globals.margin(0, 0, globals.$ion-space-100, 0);
 }
 
-// Select Text
-// ----------------------------------------------------------------
-
-// Targets the text inside the select and the placeholder
-.select-text {
-  @include globals.typography(globals.$ion-body-md-regular);
-
-  color: globals.$ion-primitives-neutral-1200;
-}
-
 // Select Wrapper
 // ----------------------------------------------------------------
 
@@ -85,6 +80,9 @@
 // ----------------------------------------------------------------
 
 .select-wrapper-inner {
+  @include globals.border-radius(var(--border-radius));
+  @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   position: relative;
 
   height: globals.$ion-scale-1200;
@@ -103,6 +101,12 @@
 
 // Select Native Wrapper
 // ----------------------------------------------------------------
+
+.native-wrapper {
+  @include globals.typography(globals.$ion-body-md-regular);
+
+  color: globals.$ion-primitives-neutral-1200;
+}
 
 :host(.select-label-placement-stacked) .native-wrapper,
 :host(.select-label-placement-floating) .native-wrapper {

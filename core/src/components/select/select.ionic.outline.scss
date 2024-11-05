@@ -3,14 +3,6 @@
 // Select Fill: Outline (Ionic Theme)
 // ----------------------------------------------------------------
 
-:host(.select-fill-outline) {
-  // TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
-  // ios and md. This will allow us to have a single color map.
-  --border-color: #{globals.current-color(neutral)};
-  --border-radius: #{globals.$ion-border-radius-400};
-  --border-width: #{globals.$ion-border-size-025};
-}
-
 :host(.ion-color) {
   --border-color: #{globals.current-color(base)};
 }
