@@ -7,7 +7,7 @@ import { configs, test } from '@utils/test/playwright';
  * used to change the alignment of the select
  * within the container.
  */
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: label'), () => {
     test.describe('select: default placement', () => {
       test('should render a space between justification with a default select', async ({ page }) => {
@@ -35,6 +35,73 @@ configs().forEach(({ title, screenshot, config }) => {
       });
     });
 
+    test.describe('select: stacked placement', () => {
+      test('label should appear above the select when there is a value', async ({ page }) => {
+        await page.setContent(
+          `
+           <ion-select label="Label" value="apples" label-placement="stacked">
+             <ion-select-option value="apples">Apples</ion-select-option>
+           </ion-select>
+         `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-value`));
+      });
+      test('label should appear above the select when there is no value', async ({ page }) => {
+        await page.setContent(
+          `
+           <ion-select label="Label" label-placement="stacked">
+             <ion-select-option value="apples">Apples</ion-select-option>
+           </ion-select>
+         `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-no-value`));
+      });
+      test('label should appear on top of the select when the select is expanded', async ({ page }) => {
+        await page.setContent(
+          `
+           <ion-select class="select-expanded" label="Label" label-placement="stacked" placeholder="Select a Fruit">
+             <ion-select-option value="apples">Apples</ion-select-option>
+           </ion-select>
+         `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+
+        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-expanded`));
+      });
+      test('long text should truncate', async ({ page }) => {
+        await page.setContent(
+          `
+           <ion-select label="Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label" label-placement="stacked" value="apples" placeholder="Select a Fruit">
+             <ion-select-option value="apples">Apples Apples Apples Apples Apples Apples Apples Apples</ion-select-option>
+           </ion-select>
+         `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+
+        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-long-text`));
+      });
+    });
+  });
+});
+
+/**
+ * By default ion-select takes up the full width
+ * of its container. The justify property can be
+ * used to change the alignment of the select
+ * within the container.
+ */
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: label'), () => {
     test.describe('select: start placement', () => {
       test('should render a start justification with label in the start position', async ({ page }) => {
         await page.setContent(
@@ -222,63 +289,6 @@ configs().forEach(({ title, screenshot, config }) => {
         const select = page.locator('ion-select');
 
         await expect(select).toHaveScreenshot(screenshot(`select-label-floating-long-text`));
-      });
-    });
-
-    test.describe('select: stacked placement', () => {
-      test('label should appear above the select when there is a value', async ({ page }) => {
-        await page.setContent(
-          `
-           <ion-select label="Label" value="apples" label-placement="stacked">
-             <ion-select-option value="apples">Apples</ion-select-option>
-           </ion-select>
-         `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-value`));
-      });
-      test('label should appear above the select when there is no value', async ({ page }) => {
-        await page.setContent(
-          `
-           <ion-select label="Label" label-placement="stacked">
-             <ion-select-option value="apples">Apples</ion-select-option>
-           </ion-select>
-         `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-no-value`));
-      });
-      test('label should appear on top of the select when the select is expanded', async ({ page }) => {
-        await page.setContent(
-          `
-           <ion-select class="select-expanded" label="Label" label-placement="stacked" placeholder="Select a Fruit">
-             <ion-select-option value="apples">Apples</ion-select-option>
-           </ion-select>
-         `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-
-        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-expanded`));
-      });
-      test('long text should truncate', async ({ page }) => {
-        await page.setContent(
-          `
-           <ion-select label="Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label" label-placement="stacked" value="apples" placeholder="Select a Fruit">
-             <ion-select-option value="apples">Apples Apples Apples Apples Apples Apples Apples Apples</ion-select-option>
-           </ion-select>
-         `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-
-        await expect(select).toHaveScreenshot(screenshot(`select-label-stacked-long-text`));
       });
     });
   });
