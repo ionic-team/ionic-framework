@@ -19,13 +19,19 @@
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-round) {
+  --border-radius: #{globals.$ion-border-radius-400};
+
   @include globals.border-radius(globals.$ion-border-radius-400);
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-soft) {
+  --border-radius: #{globals.$ion-border-radius-200};
+
   @include globals.border-radius(globals.$ion-border-radius-200);
 }
 
 :host(.accordion-group-expand-inset.accordion-group-shape-rectangular) {
+  --border-radius: #{globals.$ion-border-radius-0};
+
   @include globals.border-radius(globals.$ion-border-radius-0);
 }

@@ -18,7 +18,7 @@ import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-import { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
+import { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
@@ -34,7 +34,9 @@ import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+import { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+import { SelectModalOption } from "./components/select-modal/select-modal-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
@@ -53,7 +55,7 @@ export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-int
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, FormatOptions, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
-export { MenuChangeEventDetail, MenuType, Side } from "./components/menu/menu-interface";
+export { MenuChangeEventDetail, MenuCloseEventDetail, MenuType, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
@@ -69,7 +71,9 @@ export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+export { SegmentViewScrollEvent } from "./components/segment-view/segment-view-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+export { SelectModalOption } from "./components/select-modal/select-modal-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
@@ -751,6 +755,7 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        "setFocus": () => Promise<void>;
         /**
           * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
          */
@@ -1888,7 +1893,7 @@ export namespace Components {
         /**
           * Closes the menu. If the menu is already closed or it can't be closed, it returns `false`.
          */
-        "close": (animated?: boolean) => Promise<boolean>;
+        "close": (animated?: boolean, role?: string) => Promise<boolean>;
         /**
           * The `id` of the main content. When using a router this is typically `ion-router-outlet`. When not using a router, this is typically your main view's `ion-content`. This is not the id of the `ion-content` inside of your `ion-menu`.
          */
@@ -1924,7 +1929,7 @@ export namespace Components {
         /**
           * Opens or closes the button. If the operation can't be completed successfully, it returns `false`.
          */
-        "setOpen": (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
+        "setOpen": (shouldOpen: boolean, animated?: boolean, role?: string) => Promise<boolean>;
         /**
           * Which side of the view the menu should be placed.
          */
@@ -2647,7 +2652,7 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
-        "setFocus": (ev: globalThis.Event) => Promise<void>;
+        "setFocus": (ev?: globalThis.Event) => Promise<void>;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -3158,6 +3163,10 @@ export namespace Components {
     }
     interface IonSegmentButton {
         /**
+          * The `id` of the segment content.
+         */
+        "contentId"?: string;
+        /**
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled": boolean;
@@ -3182,6 +3191,19 @@ export namespace Components {
           * The value of the segment button.
          */
         "value": SegmentValue;
+    }
+    interface IonSegmentContent {
+    }
+    interface IonSegmentView {
+        /**
+          * If `true`, the segment view cannot be interacted with.
+         */
+        "disabled": boolean;
+        /**
+          * @param id : The id of the segment content to display.
+          * @param smoothScroll : Whether to animate the scroll transition.
+         */
+        "setContent": (id: string, smoothScroll?: boolean) => Promise<void>;
     }
     interface IonSelect {
         /**
@@ -3209,11 +3231,11 @@ export namespace Components {
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * The interface the select should use: `action-sheet`, `popover` or `alert`.
+          * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
         "interface": SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet), the [ion-popover docs](./popover), and the [ion-modal docs](./modal) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
         /**
@@ -3273,6 +3295,11 @@ export namespace Components {
           * The value of the select.
          */
         "value"?: any | null;
+    }
+    interface IonSelectModal {
+        "header"?: string;
+        "multiple"?: boolean;
+        "options": SelectModalOption[];
     }
     interface IonSelectOption {
         /**
@@ -4008,6 +4035,10 @@ export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSegmentElement;
 }
+export interface IonSegmentViewCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonSegmentViewElement;
+}
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
@@ -4561,9 +4592,9 @@ declare global {
     };
     interface HTMLIonMenuElementEventMap {
         "ionWillOpen": void;
-        "ionWillClose": void;
+        "ionWillClose": MenuCloseEventDetail;
         "ionDidOpen": void;
-        "ionDidClose": void;
+        "ionDidClose": MenuCloseEventDetail;
         "ionMenuChange": MenuChangeEventDetail;
     }
     interface HTMLIonMenuElement extends Components.IonMenu, HTMLStencilElement {
@@ -5004,6 +5035,29 @@ declare global {
         prototype: HTMLIonSegmentButtonElement;
         new (): HTMLIonSegmentButtonElement;
     };
+    interface HTMLIonSegmentContentElement extends Components.IonSegmentContent, HTMLStencilElement {
+    }
+    var HTMLIonSegmentContentElement: {
+        prototype: HTMLIonSegmentContentElement;
+        new (): HTMLIonSegmentContentElement;
+    };
+    interface HTMLIonSegmentViewElementEventMap {
+        "ionSegmentViewScroll": SegmentViewScrollEvent;
+    }
+    interface HTMLIonSegmentViewElement extends Components.IonSegmentView, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonSegmentViewElementEventMap>(type: K, listener: (this: HTMLIonSegmentViewElement, ev: IonSegmentViewCustomEvent<HTMLIonSegmentViewElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLIonSegmentViewElement: {
+        prototype: HTMLIonSegmentViewElement;
+        new (): HTMLIonSegmentViewElement;
+    };
     interface HTMLIonSelectElementEventMap {
         "ionChange": SelectChangeEventDetail;
         "ionCancel": void;
@@ -5025,6 +5079,12 @@ declare global {
     var HTMLIonSelectElement: {
         prototype: HTMLIonSelectElement;
         new (): HTMLIonSelectElement;
+    };
+    interface HTMLIonSelectModalElement extends Components.IonSelectModal, HTMLStencilElement {
+    }
+    var HTMLIonSelectModalElement: {
+        prototype: HTMLIonSelectModalElement;
+        new (): HTMLIonSelectModalElement;
     };
     interface HTMLIonSelectOptionElement extends Components.IonSelectOption, HTMLStencilElement {
     }
@@ -5313,7 +5373,10 @@ declare global {
         "ion-searchbar": HTMLIonSearchbarElement;
         "ion-segment": HTMLIonSegmentElement;
         "ion-segment-button": HTMLIonSegmentButtonElement;
+        "ion-segment-content": HTMLIonSegmentContentElement;
+        "ion-segment-view": HTMLIonSegmentViewElement;
         "ion-select": HTMLIonSelectElement;
+        "ion-select-modal": HTMLIonSelectModalElement;
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
@@ -7252,7 +7315,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the menu is closed.
          */
-        "onIonDidClose"?: (event: IonMenuCustomEvent<void>) => void;
+        "onIonDidClose"?: (event: IonMenuCustomEvent<MenuCloseEventDetail>) => void;
         /**
           * Emitted when the menu is open.
          */
@@ -7264,7 +7327,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the menu is about to be closed.
          */
-        "onIonWillClose"?: (event: IonMenuCustomEvent<void>) => void;
+        "onIonWillClose"?: (event: IonMenuCustomEvent<MenuCloseEventDetail>) => void;
         /**
           * Emitted when the menu is about to be opened.
          */
@@ -8507,6 +8570,10 @@ declare namespace LocalJSX {
     }
     interface IonSegmentButton {
         /**
+          * The `id` of the segment content.
+         */
+        "contentId"?: string;
+        /**
           * If `true`, the user cannot interact with the segment button.
          */
         "disabled"?: boolean;
@@ -8530,6 +8597,18 @@ declare namespace LocalJSX {
           * The value of the segment button.
          */
         "value"?: SegmentValue;
+    }
+    interface IonSegmentContent {
+    }
+    interface IonSegmentView {
+        /**
+          * If `true`, the segment view cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Emitted when the segment view is scrolled.
+         */
+        "onIonSegmentViewScroll"?: (event: IonSegmentViewCustomEvent<SegmentViewScrollEvent>) => void;
     }
     interface IonSelect {
         /**
@@ -8557,11 +8636,11 @@ declare namespace LocalJSX {
          */
         "fill"?: 'outline' | 'solid';
         /**
-          * The interface the select should use: `action-sheet`, `popover` or `alert`.
+          * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
         "interface"?: SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet), the [ion-popover docs](./popover), and the [ion-modal docs](./modal) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
         /**
@@ -8640,6 +8719,11 @@ declare namespace LocalJSX {
           * The value of the select.
          */
         "value"?: any | null;
+    }
+    interface IonSelectModal {
+        "header"?: string;
+        "multiple"?: boolean;
+        "options"?: SelectModalOption[];
     }
     interface IonSelectOption {
         /**
@@ -9346,7 +9430,10 @@ declare namespace LocalJSX {
         "ion-searchbar": IonSearchbar;
         "ion-segment": IonSegment;
         "ion-segment-button": IonSegmentButton;
+        "ion-segment-content": IonSegmentContent;
+        "ion-segment-view": IonSegmentView;
         "ion-select": IonSelect;
+        "ion-select-modal": IonSelectModal;
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
         "ion-skeleton-text": IonSkeletonText;
@@ -9445,7 +9532,10 @@ declare module "@stencil/core" {
             "ion-searchbar": LocalJSX.IonSearchbar & JSXBase.HTMLAttributes<HTMLIonSearchbarElement>;
             "ion-segment": LocalJSX.IonSegment & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
             "ion-segment-button": LocalJSX.IonSegmentButton & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
+            "ion-segment-content": LocalJSX.IonSegmentContent & JSXBase.HTMLAttributes<HTMLIonSegmentContentElement>;
+            "ion-segment-view": LocalJSX.IonSegmentView & JSXBase.HTMLAttributes<HTMLIonSegmentViewElement>;
             "ion-select": LocalJSX.IonSelect & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
+            "ion-select-modal": LocalJSX.IonSelectModal & JSXBase.HTMLAttributes<HTMLIonSelectModalElement>;
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
