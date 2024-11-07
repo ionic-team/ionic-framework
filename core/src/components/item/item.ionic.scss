@@ -9,6 +9,7 @@
   --background-activated: #{globals.$ion-primitives-neutral-200};
   --border-color: #{globals.$ion-primitives-neutral-300};
   --border-style: #{globals.$ion-border-style-solid};
+  --border-width: #{0 0 globals.$ion-border-size-025 0};
   --color: #{globals.$ion-primitives-neutral-1200};
   --detail-icon-color: #{globals.$ion-primitives-neutral-800};
   --detail-icon-font-size: #{globals.$ion-scale-600};
@@ -91,20 +92,16 @@ slot[name="end"]::slotted(*) {
 // Ionic Item Lines
 // --------------------------------------------------
 
-// Default input items have a full border
-:host(.item-interactive) {
-  --border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
-  --inner-border-width: #{globals.$ion-border-size-0};
-}
-
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 :host(.item-lines-full) {
-  --border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
+  --border-width: #{globals.$ion-border-size-0 globals.$ion-border-size-0 globals.$ion-border-size-025
+    globals.$ion-border-size-0};
 }
 
 :host(.item-lines-inset) {
-  --inner-border-width: #{globals.$ion-border-size-0} #{globals.$ion-border-size-0} #{globals.$ion-border-size-025} #{globals.$ion-border-size-0};
+  --inner-border-width: #{globals.$ion-border-size-0 globals.$ion-border-size-0 globals.$ion-border-size-025
+    globals.$ion-border-size-0};
 }
 
 // Full lines - remove the border from the item inner (inset list items)
