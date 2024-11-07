@@ -82,7 +82,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  * do have RTL logic, but those are tested in their
  * respective component test files.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select-modal: rendering'), () => {
     let selectModalPage: SelectModalPage;
 
