@@ -8,6 +8,7 @@ import type { SegmentViewScrollEvent } from './segment-view-interface';
   styleUrls: {
     ios: 'segment-view.ios.scss',
     md: 'segment-view.md.scss',
+    ionic: 'segment-view.md.scss',
   },
   shadow: true,
 })
