@@ -156,6 +156,17 @@ input {
   display: block;
 }
 
+// Radio Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
 // Radio Label Placement - Start
 // ----------------------------------------------------------------
 

@@ -14,7 +14,7 @@ import type { SelectModalOption } from './select-modal-interface';
   styleUrls: {
     ios: 'select-modal.ios.scss',
     md: 'select-modal.md.scss',
-    ionic: 'select-modal.md.scss',
+    ionic: 'select-modal.ionic.scss',
   },
   scoped: true,
 })

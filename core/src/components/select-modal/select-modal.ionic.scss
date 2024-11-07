@@ -1,0 +1,47 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./select-modal.common";
+
+// Ionic Select Modal
+// --------------------------------------------------
+
+// Toolbar
+// ----------------------------------------------------------------
+
+ion-toolbar {
+  @include globals.typography(globals.$ion-heading-h6-medium);
+}
+
+// Radio and Checkbox: Label
+// ----------------------------------------------------------------
+
+ion-list ion-radio::part(label),
+ion-list ion-checkbox::part(label) {
+  @include globals.typography(globals.$ion-body-lg-medium);
+}
+
+// Radio and Checkbox: Checked
+// ----------------------------------------------------------------
+
+.item-radio-checked,
+.item-checkbox-checked {
+  --background: #{globals.$ion-semantics-primary-100};
+  --border-radius: #{globals.$ion-border-radius-400};
+}
+
+// Content
+// ----------------------------------------------------------------
+
+ion-content {
+  /**
+   * The important is needed to override the padding set
+   * for modal sheet by the `core.ionic.scss` file.
+   * The modal sheet within the select does not match the
+   * padding of the modal sheet in the core.
+   */
+  /* stylelint-disable-next-line declaration-no-important */
+  --padding-start: #{globals.$ion-space-400} !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  --padding-end: #{globals.$ion-space-400} !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  --padding-bottom: #{globals.$ion-space-1200} !important;
+}
