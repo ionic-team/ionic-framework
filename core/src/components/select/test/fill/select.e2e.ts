@@ -1,6 +1,56 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+configs({ modes: ['md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: fill'), () => {
+    test.describe('select: fill outline', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-select
+            fill="outline"
+            label="Fruit"
+            value="apple"
+          >
+            <ion-select-option value="apple">Apple</ion-select-option>
+          </ion-select>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-outline`));
+      });
+      test('padding and border radius should be customizable', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            ion-select {
+              --border-radius: 10px !important;
+              --padding-start: 50px !important;
+              --padding-end: 50px !important;
+            }
+          </style>
+          <ion-select
+            shape="round"
+            fill="outline"
+            label="Fruit"
+            label-placement="floating"
+            value="apple"
+          >
+            <ion-select-option value="apple">Apple</ion-select-option>
+          </ion-select>
+        `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-outline-custom`));
+      });
+    });
+  });
+});
+
 configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: fill'), () => {
     test.describe('select: fill solid', () => {
@@ -85,23 +135,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
       });
     });
     test.describe('select: fill outline', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-select
-            fill="outline"
-            label="Fruit"
-            value="apple"
-          >
-            <ion-select-option value="apple">Apple</ion-select-option>
-          </ion-select>
-        `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-fill-outline`));
-      });
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
           `
@@ -138,32 +171,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
         await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-outline`));
-      });
-      test('padding and border radius should be customizable', async ({ page }) => {
-        await page.setContent(
-          `
-          <style>
-            ion-select {
-              --border-radius: 10px !important;
-              --padding-start: 50px !important;
-              --padding-end: 50px !important;
-            }
-          </style>
-          <ion-select
-            shape="round"
-            fill="outline"
-            label="Fruit"
-            label-placement="floating"
-            value="apple"
-          >
-            <ion-select-option value="apple">Apple</ion-select-option>
-          </ion-select>
-        `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-outline-custom`));
       });
     });
   });

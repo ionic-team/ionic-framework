@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: custom'), () => {
     test('should be able to customize select using css apis', async ({ page }) => {
       test.info().annotations.push({
@@ -63,6 +63,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
           ion-select::part(label) {
             color: green;
+          }
+
+          ion-select::part(placeholder) {
+            color: purple;
           }
         </style>
       `,
