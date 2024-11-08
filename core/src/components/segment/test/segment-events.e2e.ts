@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test } from '@utils/test/playwright';
+import { configs, test, dragElementBy } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across modes/directions.
@@ -105,8 +105,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
     });
 
-    // TODO FW-3021
-    test.describe.skip('when the pointer is released', () => {
+    test.describe('when the pointer is released', () => {
       test('should emit if the value has changed', async ({ page }) => {
         test.info().annotations.push({
           type: 'issue',
@@ -136,14 +135,22 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         const ionChangeSpy = await page.spyOnEvent('ionChange');
 
+        const segment = page.locator('ion-segment');
         const firstButton = page.locator('ion-segment-button[value="1"]');
         const lastButton = page.locator('ion-segment-button[value="3"]');
 
-        await firstButton.hover();
-        await page.mouse.down();
+        /*
+         * `dragByX` should represent the total width of all segment buttons,
+         * excluding the first half of the first button and the second half
+         * of the last button. This calculation accounts for dragging from
+         * the center of the first button to the center of the last button.
+         */
+        const segmentWidth = await segment.boundingBox().then((box) => (box ? box.width : 0));
+        const firstButtonWidth = await firstButton.boundingBox().then((box) => (box ? box.width : 0));
+        const lastButtonWidth = await lastButton.boundingBox().then((box) => (box ? box.width : 0));
+        const dragByX = segmentWidth - firstButtonWidth / 2 - lastButtonWidth / 2;
 
-        await lastButton.hover();
-        await page.mouse.up();
+        await dragElementBy(firstButton, page, dragByX);
 
         expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '3' });
         expect(ionChangeSpy).toHaveReceivedEventTimes(1);
