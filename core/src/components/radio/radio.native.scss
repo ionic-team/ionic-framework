@@ -12,14 +12,6 @@
 // Radio Label
 // ----------------------------------------------------------------
 
-.label-text-wrapper {
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-}
-
 :host(.in-item) .label-text-wrapper {
   @include margin($radio-item-label-margin-top, null, $radio-item-label-margin-bottom, null);
 }
