@@ -18,6 +18,17 @@ ion-toolbar {
   @include globals.typography(globals.$ion-heading-h6-medium);
 }
 
+// Radio
+// ----------------------------------------------------------------
+
+ion-list ion-radio::part(container) {
+  display: none;
+}
+
+ion-list ion-radio::part(label) {
+  @include globals.margin(0);
+}
+
 // Radio and Checkbox: Label
 // ----------------------------------------------------------------
 
