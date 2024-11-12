@@ -17,77 +17,69 @@
 
 // TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
 // ios and md. This will allow us to have a single color map.
-$primary: #105cef;
-$secondary: initial;
-$tertiary: initial;
-$success: #1fbd3b;
-$warning: #e18300;
-$danger: #bf2222;
-$light: #f2f4fd;
-$medium: initial;
-$neutral: #626262;
-$dark: initial;
-
 $ionic-colors: (
   primary: (
-    base: $primary,
-    contrast: #fff,
-    shade: color.get-color-shade($primary),
-    tint: color.get-color-tint($primary),
+    base: globals.$ion-semantics-primary-base,
+    contrast: globals.$ion-primitives-base-white,
+    shade: globals.$ion-semantics-primary-800,
+    tint: globals.$ion-semantics-primary-500,
+    subtle: globals.$ion-semantics-primary-100,
   ),
   secondary: (
-    base: $secondary,
-    contrast: $secondary,
-    shade: color.get-color-shade($secondary),
-    tint: color.get-color-tint($secondary),
+    base: globals.$ion-semantics-info-base,
+    contrast: globals.$ion-primitives-base-white,
+    shade: globals.$ion-semantics-info-800,
+    tint: globals.$ion-semantics-info-500,
+    subtle: globals.$ion-semantics-info-100,
   ),
   tertiary: (
-    base: $tertiary,
-    contrast: $tertiary,
-    shade: color.get-color-shade($tertiary),
-    tint: color.get-color-tint($tertiary),
+    base: globals.$ion-primitives-violet-700,
+    contrast: globals.$ion-primitives-base-white,
+    shade: globals.$ion-primitives-violet-800,
+    tint: globals.$ion-primitives-violet-500,
+    subtle: globals.$ion-primitives-violet-100,
   ),
   success: (
-    base: $success,
-    contrast: #000,
-    shade: color.get-color-shade($success),
-    tint: color.get-color-tint($success),
+    base: globals.$ion-semantics-success-base,
+    contrast: globals.$ion-primitives-base-white,
+    shade: globals.$ion-semantics-success-800,
+    tint: globals.$ion-semantics-success-500,
+    subtle: globals.$ion-semantics-success-100,
   ),
   warning: (
-    base: $warning,
-    contrast: #000,
-    shade: color.get-color-shade($warning),
-    tint: color.get-color-tint($warning),
+    base: globals.$ion-semantics-warning-base,
+    contrast: globals.$ion-primitives-base-white,
+    shade: globals.$ion-semantics-warning-800,
+    tint: globals.$ion-semantics-warning-500,
+    subtle: globals.$ion-semantics-warning-100,
   ),
   danger: (
-    base: $danger,
-    contrast: #fff,
-    shade: color.get-color-shade($danger),
-    tint: color.get-color-tint($danger),
+    base: globals.$ion-semantics-danger-base,
+    contrast: globals.$ion-primitives-base-white,
+    shade: globals.$ion-semantics-danger-800,
+    tint: globals.$ion-semantics-danger-500,
+    subtle: globals.$ion-semantics-danger-100,
   ),
   light: (
-    base: $light,
-    contrast: #000,
-    shade: color.get-color-shade($light),
-    tint: color.get-color-tint($light),
+    base: globals.$ion-primitives-neutral-200,
+    contrast: globals.$ion-primitives-base-black,
+    shade: globals.$ion-primitives-neutral-300,
+    tint: globals.$ion-primitives-neutral-100,
+    subtle: globals.$ion-primitives-neutral-100,
   ),
   medium: (
-    base: $medium,
-    contrast: $medium,
-    shade: color.get-color-shade($medium),
-    tint: color.get-color-tint($medium),
-  ),
-  neutral: (
-    base: $neutral,
-    contrast: #fff,
-    shade: color.get-color-shade($neutral),
-    tint: color.get-color-tint($neutral),
+    base: globals.$ion-primitives-neutral-700,
+    contrast: globals.$ion-primitives-base-white,
+    shade: globals.$ion-primitives-neutral-800,
+    tint: globals.$ion-primitives-neutral-500,
+    subtle: globals.$ion-primitives-neutral-100,
   ),
   dark: (
-    base: $dark,
-    contrast: $dark,
-    shade: color.get-color-shade($dark),
-    tint: color.get-color-tint($dark),
+    base: globals.$ion-primitives-neutral-1100,
+    contrast: globals.$ion-primitives-base-white,
+    shade: globals.$ion-primitives-neutral-1200,
+    tint: globals.$ion-primitives-neutral-900,
+    subtle: globals.$ion-primitives-neutral-100,
   ),
 );
 

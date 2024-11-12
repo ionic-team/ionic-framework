@@ -76,6 +76,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop({ reflect: true }) expand?: 'full' | 'block';
 
   /**
+   * Set to `"bold"` for a button with vibrant, bold colors or to `"subtle"` for
+   * a button with muted, subtle colors.
+   */
+  @Prop() hue?: 'bold' | 'subtle' = 'bold';
+
+  /**
    * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"`
    * for a transparent button with a border, or to `"solid"` for a button with a filled background.
    * The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
@@ -349,8 +355,20 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   render() {
-    const { buttonType, type, disabled, rel, target, href, color, expand, hasIconOnly, strong, inheritedAttributes } =
-      this;
+    const {
+      buttonType,
+      type,
+      disabled,
+      rel,
+      target,
+      href,
+      color,
+      expand,
+      hue,
+      hasIconOnly,
+      strong,
+      inheritedAttributes,
+    } = this;
 
     const theme = getIonTheme(this);
     const mode = getIonMode(this);
@@ -394,6 +412,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [theme]: true,
           [buttonType]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
+          [`${buttonType}-${hue}`]: hue !== undefined,
           [`${buttonType}-${size}`]: size !== undefined,
           [`${buttonType}-${shape}`]: true,
           [`${buttonType}-${fill}`]: true,

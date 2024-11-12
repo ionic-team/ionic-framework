@@ -162,6 +162,7 @@ export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-butto
   'buttonType',
   'disabled',
   'expand',
+  'hue',
   'fill',
   'routerDirection',
   'routerAnimation',

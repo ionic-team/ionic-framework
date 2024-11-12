@@ -12,6 +12,12 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-button {
+        margin: 8px 4px;
+      }
+    </style>
   </head>
 
   <body>
@@ -23,6 +29,8 @@
       </ion-header>
 
       <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
+        <h2>Bold (default) Buttons</h2>
+
         <p>
           <ion-button id="default">Default</ion-button>
           <ion-button class="ion-focused">Default.focused</ion-button>
@@ -83,48 +91,68 @@
           <ion-button class="ion-activated" color="dark">Dark.activated</ion-button>
         </p>
 
+        <h2>Subtle Buttons</h2>
+
         <p>
-          <ion-button style="--opacity: 0.2">Opacity: 0.2</ion-button>
+          <ion-button hue="subtle" id="default">Default</ion-button>
+          <ion-button hue="subtle" class="ion-focused">Default.focused</ion-button>
+          <ion-button hue="subtle" class="ion-activated">Default.activated</ion-button>
         </p>
 
         <p>
-          <ion-button expand="block" id="disabledButton" disabled>Button Disabled</ion-button>
-          <ion-button expand="block" color="secondary" disabled>Secondary Disabled</ion-button>
-          <ion-button expand="block" color="tertiary" style="--opacity: 1" disabled>Disabled opacity: 1</ion-button>
+          <ion-button hue="subtle" color="primary">Primary</ion-button>
+          <ion-button hue="subtle" color="primary" class="ion-focused">Primary.focused</ion-button>
+          <ion-button hue="subtle" color="primary" class="ion-activated">Primary.activated</ion-button>
         </p>
 
         <p>
-          <ion-button expand="block" onclick="toggleDisabled()">Toggle Disabled</ion-button>
+          <ion-button hue="subtle" color="secondary">Secondary</ion-button>
+          <ion-button hue="subtle" class="ion-focused" color="secondary">Secondary.focused</ion-button>
+          <ion-button hue="subtle" class="ion-activated" color="secondary">Secondary.activated</ion-button>
         </p>
 
         <p>
-          <ion-button id="dynamicColor1" onclick="changeColor(event)">Change Color</ion-button>
-          <ion-button id="dynamicColor2" onclick="changeColor(event)" fill="outline">Change Color</ion-button>
+          <ion-button hue="subtle" color="tertiary">Tertiary</ion-button>
+          <ion-button hue="subtle" class="ion-focused" color="tertiary">Tertiary.focused</ion-button>
+          <ion-button hue="subtle" class="ion-activated" color="tertiary">Tertiary.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button hue="subtle" color="success">Success</ion-button>
+          <ion-button hue="subtle" color="success" class="ion-focused">Success.focused</ion-button>
+          <ion-button hue="subtle" color="success" class="ion-activated">Success.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button hue="subtle" color="warning">Warning</ion-button>
+          <ion-button hue="subtle" color="warning" class="ion-focused">Warning.focused</ion-button>
+          <ion-button hue="subtle" color="warning" class="ion-activated">Warning.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button hue="subtle" color="danger">Danger</ion-button>
+          <ion-button hue="subtle" color="danger" class="ion-focused">Danger.focused</ion-button>
+          <ion-button hue="subtle" color="danger" class="ion-activated">Danger.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button hue="subtle" color="light">Light</ion-button>
+          <ion-button hue="subtle" color="light" class="ion-focused">Light.focused</ion-button>
+          <ion-button hue="subtle" color="light" class="ion-activated">Light.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button hue="subtle" color="medium">Medium</ion-button>
+          <ion-button hue="subtle" color="medium" class="ion-focused">Medium.focused</ion-button>
+          <ion-button hue="subtle" color="medium" class="ion-activated">Medium.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button hue="subtle" color="dark">Dark</ion-button>
+          <ion-button hue="subtle" color="dark" class="ion-focused">Dark.focused</ion-button>
+          <ion-button hue="subtle" color="dark" class="ion-activated">Dark.activated</ion-button>
         </p>
       </ion-content>
     </ion-app>
-
-    <script>
-      testingColors = ['primary', 'secondary', 'danger', 'dark'];
-      testingColorIndex = {
-        dynamicColor1: 0,
-        dynamicColor2: 0,
-      };
-
-      function changeColor(ev) {
-        el = ev.currentTarget;
-
-        testingColorIndex[el.id] =
-          testingColorIndex[el.id] >= testingColors.length - 1 ? 0 : testingColorIndex[el.id] + 1;
-        newColor = testingColors[testingColorIndex[el.id]];
-
-        el.color = newColor;
-      }
-
-      function toggleDisabled() {
-        var buttonEl = document.getElementById('disabledButton');
-        buttonEl.disabled = !buttonEl.disabled;
-      }
-    </script>
   </body>
 </html>
