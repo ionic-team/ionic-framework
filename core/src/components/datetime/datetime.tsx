@@ -1524,6 +1524,8 @@ export class Datetime implements ComponentInterface {
      * is disabled or readonly.
      */
     const isButtonDisabled = disabled || readonly;
+    const expand = theme === 'ionic' ? 'block' : undefined;
+    const confirmFill = theme === 'ionic' ? 'solid' : undefined;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
       return;
@@ -1558,7 +1560,7 @@ export class Datetime implements ComponentInterface {
                     color={this.color}
                     onClick={() => this.cancel(true)}
                     disabled={isButtonDisabled}
-                    expand={theme === 'ionic' ? 'full' : undefined}
+                    expand={expand}
                   >
                     {this.cancelText}
                   </ion-button>
@@ -1570,7 +1572,7 @@ export class Datetime implements ComponentInterface {
                       color={this.color}
                       onClick={() => clearButtonClick()}
                       disabled={isButtonDisabled}
-                      expand={theme === 'ionic' ? 'full' : undefined}
+                      expand={expand}
                     >
                       {this.clearText}
                     </ion-button>
@@ -1581,8 +1583,8 @@ export class Datetime implements ComponentInterface {
                       color={this.color}
                       onClick={() => this.confirm(true)}
                       disabled={isButtonDisabled}
-                      expand={theme === 'ionic' ? 'full' : undefined}
-                      fill={theme === 'ionic' ? 'solid' : undefined}
+                      expand={expand}
+                      fill={confirmFill}
                     >
                       {this.doneText}
                     </ion-button>
