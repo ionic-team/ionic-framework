@@ -1516,6 +1516,7 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderFooter() {
+    const theme = getIonTheme(this);
     const { disabled, readonly, showDefaultButtons, showClearButton } = this;
     /**
      * The cancel, clear, and confirm buttons
@@ -1557,6 +1558,7 @@ export class Datetime implements ComponentInterface {
                     color={this.color}
                     onClick={() => this.cancel(true)}
                     disabled={isButtonDisabled}
+                    expand={theme === 'ionic' ? 'full' : undefined}
                   >
                     {this.cancelText}
                   </ion-button>
@@ -1568,6 +1570,7 @@ export class Datetime implements ComponentInterface {
                       color={this.color}
                       onClick={() => clearButtonClick()}
                       disabled={isButtonDisabled}
+                      expand={theme === 'ionic' ? 'full' : undefined}
                     >
                       {this.clearText}
                     </ion-button>
@@ -1578,6 +1581,8 @@ export class Datetime implements ComponentInterface {
                       color={this.color}
                       onClick={() => this.confirm(true)}
                       disabled={isButtonDisabled}
+                      expand={theme === 'ionic' ? 'full' : undefined}
+                      fill={theme === 'ionic' ? 'solid' : undefined}
                     >
                       {this.doneText}
                     </ion-button>

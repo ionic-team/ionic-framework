@@ -200,3 +200,16 @@
   background-color: globals.$ion-primitives-neutral-100;
   color: globals.$ion-primitives-neutral-1200;
 }
+
+// Calendar / Footer / Action Buttons
+// -----------------------------------
+
+:host .datetime-buttons ion-buttons {
+  display: block;
+}
+
+:host .datetime-buttons ion-buttons ion-button {
+  @include globals.typography(globals.$ion-body-action-lg);
+
+  min-height: globals.$ion-space-1200;
+}

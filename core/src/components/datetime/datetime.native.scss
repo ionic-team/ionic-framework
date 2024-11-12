@@ -118,3 +118,24 @@ ion-picker {
   --highlight-border-radius: var(--wheel-highlight-border-radius);
   --fade-background-rgb: var(--wheel-fade-background-rgb);
 }
+
+// Calendar / Footer / Action Buttons
+// -----------------------------------
+
+:host .datetime-action-buttons ion-buttons {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+/**
+ * The confirm and clear buttons are grouped in a
+ * container so that they appear on the end opposite
+ * of the cancel button.
+ * We use display: flex so that the
+ * wrapper only takes up as much
+ * height as it needs.
+ */
+.datetime-action-buttons .datetime-action-buttons-container {
+  display: flex;
+}
