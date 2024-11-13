@@ -9,7 +9,7 @@ import { config } from '@global/config';
 export const printIonWarning = (message: string, ...params: any[]) => {
   const logLevel = config.get('logLevel', 'WARN');
   if (['WARN'].includes(logLevel)) {
-    return console.warn(`[Ionic Warn]: ${message}`, ...params);
+    return console.warn(`[Ionic Warning]: ${message}`, ...params);
   }
 };
 

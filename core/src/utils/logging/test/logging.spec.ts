@@ -22,7 +22,7 @@ describe('Logging', () => {
 
         printIonWarning('This is a warning message');
 
-        expect(consoleWarnSpy).toHaveBeenCalledWith('[Ionic Warn]: This is a warning message');
+        expect(consoleWarnSpy).toHaveBeenCalledWith('[Ionic Warning]: This is a warning message');
       });
     });
 
@@ -32,7 +32,7 @@ describe('Logging', () => {
 
         printIonWarning('This is a warning message');
 
-        expect(consoleWarnSpy).toHaveBeenCalledWith('[Ionic Warn]: This is a warning message');
+        expect(consoleWarnSpy).toHaveBeenCalledWith('[Ionic Warning]: This is a warning message');
       });
     });
 
