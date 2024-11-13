@@ -204,8 +204,11 @@
 // Calendar / Footer / Action Buttons
 // -----------------------------------
 
-:host .datetime-buttons ion-buttons {
-  display: block;
+:host .datetime-buttons ion-buttons,
+.datetime-action-buttons .datetime-action-buttons-container {
+  flex-flow: column;
+  align-items: stretch;
+  gap: globals.$ion-space-200;
 }
 
 :host .datetime-buttons ion-buttons ion-button {
