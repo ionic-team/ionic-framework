@@ -220,6 +220,16 @@ export interface IonicConfig {
    */
   experimentalCloseWatcher?: boolean;
 
+  /**
+   * Developers may configure the logging level for Ionic Framework.
+   * This will log all logs at the specified level and above.
+   *
+   * - `OFF` will not log any logs.
+   * - `ERROR` will log all errors.
+   * - `WARN` will log all errors and warnings.
+   */
+  logLevel?: 'OFF' | 'ERROR' | 'WARN';
+
   // PRIVATE configs
   keyboardHeight?: number;
   inputShims?: boolean;

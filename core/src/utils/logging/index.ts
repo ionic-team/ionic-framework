@@ -1,3 +1,5 @@
+import { config } from '@global/config';
+
 /**
  * Logs a warning to the console with an Ionic prefix
  * to indicate the library that is warning the developer.
@@ -5,7 +7,10 @@
  * @param message - The string message to be logged to the console.
  */
 export const printIonWarning = (message: string, ...params: any[]) => {
-  return console.warn(`[Ionic Warning]: ${message}`, ...params);
+  const logLevel = config.get('logLevel', 'WARN');
+  if (logLevel === 'WARN' || logLevel === 'ERROR') {
+    return console.warn(`[Ionic Warn]: ${message}`, ...params);
+  }
 };
 
 /*
@@ -16,7 +21,10 @@ export const printIonWarning = (message: string, ...params: any[]) => {
  * @param params - Additional arguments to supply to the console.error.
  */
 export const printIonError = (message: string, ...params: any) => {
-  return console.error(`[Ionic Error]: ${message}`, ...params);
+  const logLevel = config.get('logLevel', 'ERROR');
+  if (logLevel === 'ERROR') {
+    return console.error(`[Ionic Error]: ${message}`, ...params);
+  }
 };
 
 /**
