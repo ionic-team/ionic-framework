@@ -8,7 +8,7 @@ import { config } from '@global/config';
  */
 export const printIonWarning = (message: string, ...params: any[]) => {
   const logLevel = config.get('logLevel', 'WARN');
-  if (['WARN', 'ERROR'].includes(logLevel)) {
+  if (['WARN'].includes(logLevel)) {
     return console.warn(`[Ionic Warn]: ${message}`, ...params);
   }
 };
@@ -22,7 +22,7 @@ export const printIonWarning = (message: string, ...params: any[]) => {
  */
 export const printIonError = (message: string, ...params: any[]) => {
   const logLevel = config.get('logLevel', 'ERROR');
-  if (['ERROR'].includes(logLevel)) {
+  if (['ERROR', 'WARN'].includes(logLevel)) {
     return console.error(`[Ionic Error]: ${message}`, ...params);
   }
 };

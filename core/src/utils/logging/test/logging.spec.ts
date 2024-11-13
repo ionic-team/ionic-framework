@@ -26,16 +26,6 @@ describe('Logging', () => {
       });
     });
 
-    describe("when the logLevel configuration is set to 'ERROR'", () => {
-      it('logs a warning to the console', () => {
-        config.set('logLevel', 'ERROR');
-
-        printIonWarning('This is a warning message');
-
-        expect(consoleWarnSpy).toHaveBeenCalledWith('[Ionic Warn]: This is a warning message');
-      });
-    });
-
     describe("when the logLevel configuration is set to 'WARN'", () => {
       it('logs a warning to the console', () => {
         config.set('logLevel', 'WARN');
@@ -43,6 +33,16 @@ describe('Logging', () => {
         printIonWarning('This is a warning message');
 
         expect(consoleWarnSpy).toHaveBeenCalledWith('[Ionic Warn]: This is a warning message');
+      });
+    });
+
+    describe("when the logLevel configuration is set to 'ERROR'", () => {
+      it('does not log a warning to the console', () => {
+        config.set('logLevel', 'ERROR');
+
+        printIonWarning('This is a warning message');
+
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -91,12 +91,12 @@ describe('Logging', () => {
     });
 
     describe("when the logLevel configuration is set to 'WARN'", () => {
-      it('does not log an error to the console', () => {
+      it('logs an error to the console', () => {
         config.set('logLevel', 'WARN');
 
         printIonError('This is an error message');
 
-        expect(consoleErrorSpy).not.toHaveBeenCalled();
+        expect(consoleErrorSpy).toHaveBeenCalledWith('[Ionic Error]: This is an error message');
       });
     });
 

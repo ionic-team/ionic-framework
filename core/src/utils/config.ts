@@ -222,11 +222,10 @@ export interface IonicConfig {
 
   /**
    * Developers may configure the logging level for Ionic Framework.
-   * This will log all logs at the specified level and above.
    *
-   * - `OFF` will not log any logs.
-   * - `ERROR` will log all errors.
+   * - `OFF` will not log any errors or warnings.
    * - `WARN` will log all errors and warnings.
+   * - `ERROR` will log only errors.
    */
   logLevel?: 'OFF' | 'ERROR' | 'WARN';
 
