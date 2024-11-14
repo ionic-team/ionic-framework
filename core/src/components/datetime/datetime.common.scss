@@ -153,19 +153,14 @@
   overflow: hidden;
 }
 
-// Calendar / Header / Action Buttons
+// Calendar / Footer / Action Buttons
 // -----------------------------------
 
 :host .datetime-action-buttons.has-clear-button {
   width: 100%;
 }
 
-:host .datetime-action-buttons ion-buttons {
-  display: flex;
-
-  justify-content: space-between;
-}
-
+:host .datetime-action-buttons ion-buttons,
 /**
  * The confirm and clear buttons are grouped in a
  * container so that they appear on the end opposite
@@ -177,6 +172,9 @@
 .datetime-action-buttons .datetime-action-buttons-container {
   display: flex;
 }
+
+// Calendar / Header / Action Buttons
+// -----------------------------------
 
 /**
  * Date/Year button should be on

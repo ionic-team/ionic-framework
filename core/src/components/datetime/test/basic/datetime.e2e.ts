@@ -251,7 +251,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 });
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: footer'), () => {
     test('should render default buttons', async ({ page }) => {
       await page.setContent('<ion-datetime value="2022-05-03" show-default-buttons="true"></ion-datetime>', config);

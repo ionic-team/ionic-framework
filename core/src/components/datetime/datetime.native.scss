@@ -118,3 +118,10 @@ ion-picker {
   --highlight-border-radius: var(--wheel-highlight-border-radius);
   --fade-background-rgb: var(--wheel-fade-background-rgb);
 }
+
+// Calendar / Footer / Action Buttons
+// -----------------------------------
+
+:host .datetime-action-buttons ion-buttons {
+  justify-content: space-between;
+}
