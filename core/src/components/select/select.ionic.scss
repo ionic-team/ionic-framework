@@ -185,22 +185,14 @@
 // Sizes
 // ----------------------------------------------------------------
 
-// Small
-// ---------------------------------------------
-
 :host(.select-size-small) .select-wrapper-inner {
   height: globals.$ion-scale-1000;
 }
-
-// Medium
-// ---------------------------------------------
 
 :host(.select-size-medium) .select-wrapper-inner {
   height: globals.$ion-scale-1200;
 }
 
-// Large
-// ---------------------------------------------
 :host(.select-size-large) .select-wrapper-inner {
   height: globals.$ion-scale-1400;
 }
