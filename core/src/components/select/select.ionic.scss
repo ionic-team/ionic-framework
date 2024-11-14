@@ -186,22 +186,13 @@
 // Shapes
 // ----------------------------------------------------------------
 
-// Soft
-// ---------------------------------------------
-
 :host(.select-shape-soft) {
   --border-radius: #{globals.$ion-border-radius-200};
 }
 
-// Round
-// ---------------------------------------------
-
 :host(.select-shape-round) {
   --border-radius: #{globals.$ion-border-radius-400};
 }
-
-// Rectangular
-// ---------------------------------------------
 
 :host(.select-shape-rectangular) {
   --border-radius: #{globals.$ion-border-radius-0};
