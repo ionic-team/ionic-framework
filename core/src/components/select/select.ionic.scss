@@ -10,7 +10,6 @@
   // TODO(ROU-10778, ROU-10875): Sync the color names to the design system of
   // ios and md. This will allow us to have a single color map.
   --border-color: #{globals.current-color(neutral)};
-  --border-radius: #{globals.$ion-border-radius-400};
   --border-width: #{globals.$ion-border-size-025};
   --padding-start: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-400};
@@ -168,7 +167,7 @@
 // ----------------------------------------------------------------
 
 // Disabled
-// ----------------------------------------------------------------
+// ---------------------------------------------
 
 :host(.select-disabled) {
   --background: #{globals.$ion-primitives-neutral-100};
@@ -180,6 +179,21 @@
 :host(.select-disabled) .select-text,
 :host(.select-disabled) .select-icon {
   color: globals.$ion-primitives-neutral-500;
+}
+
+// Shapes
+// ----------------------------------------------------------------
+
+:host(.select-shape-soft) {
+  --border-radius: #{globals.$ion-border-radius-200};
+}
+
+:host(.select-shape-round) {
+  --border-radius: #{globals.$ion-border-radius-400};
+}
+
+:host(.select-shape-rectangular) {
+  --border-radius: #{globals.$ion-border-radius-0};
 }
 
 // Sizes
@@ -196,3 +210,4 @@
 :host(.select-size-large) .select-wrapper-inner {
   height: globals.$ion-scale-1400;
 }
+

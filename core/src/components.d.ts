@@ -3280,9 +3280,9 @@ export namespace Components {
          */
         "selectedText"?: string | null;
         /**
-          * The shape of the select. If "round" it will have an increased border radius.
+          * Set to `"soft"` for a select with slightly rounded corners, `"round"` for a select with fully rounded corners, or `"rectangular"` for a select without rounded corners.  Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
          */
-        "shape"?: 'round';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a select with less height, `"medium"` for the default select height, or `"large"` for a select with more height.  Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
          */
@@ -8708,9 +8708,9 @@ declare namespace LocalJSX {
          */
         "selectedText"?: string | null;
         /**
-          * The shape of the select. If "round" it will have an increased border radius.
+          * Set to `"soft"` for a select with slightly rounded corners, `"round"` for a select with fully rounded corners, or `"rectangular"` for a select without rounded corners.  Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
          */
-        "shape"?: 'round';
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Set to `"small"` for a select with less height, `"medium"` for the default select height, or `"large"` for a select with more height.  Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
          */

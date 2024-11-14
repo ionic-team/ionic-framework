@@ -191,9 +191,13 @@ export class Select implements ComponentInterface {
   @Prop() expandedIcon?: string;
 
   /**
-   * The shape of the select. If "round" it will have an increased border radius.
+   * Set to `"soft"` for a select with slightly rounded corners,
+   * `"round"` for a select with fully rounded corners,
+   * or `"rectangular"` for a select without rounded corners.
+   *
+   * Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
    */
-  @Prop() shape?: 'round';
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * The value of the select.
@@ -1015,6 +1019,18 @@ export class Select implements ComponentInterface {
     );
   }
 
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11366): Remove theme check when shapes are defined for all themes.
+    if (theme === 'ionic' && shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   /**
    * Get the icon to use for the expand icon.
    * If an icon is set on the component, use that.
@@ -1071,9 +1087,9 @@ export class Select implements ComponentInterface {
   }
 
   render() {
-    const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, shape, name, value } =
-      this;
+    const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, name, value } = this;
     const theme = getIonTheme(this);
+    const shape = this.getShape();
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const shouldRenderOuterIcon = theme !== 'ionic' && hasFloatingOrStackedLabel;
     const shouldRenderInnerIcon = theme === 'ionic' || !hasFloatingOrStackedLabel;

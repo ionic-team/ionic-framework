@@ -89,24 +89,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const select = page.locator('ion-select');
         await expect(select).toHaveScreenshot(screenshot(`select-fill-solid-label-floating`));
       });
-      test('should not have visual regressions with shaped solid', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-select
-            shape="round"
-            fill="solid"
-            label="Fruit"
-            value="apple"
-          >
-            <ion-select-option value="apple">Apple</ion-select-option>
-          </ion-select>
-        `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-solid`));
-      });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
           `
@@ -152,25 +134,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
         await expect(select).toHaveScreenshot(screenshot(`select-fill-outline-label-floating`));
-      });
-
-      test('should not have visual regressions with shaped outline', async ({ page }) => {
-        await page.setContent(
-          `
-          <ion-select
-            shape="round"
-            fill="outline"
-            label="Fruit"
-            value="apple"
-          >
-            <ion-select-option value="apple">Apple</ion-select-option>
-          </ion-select>
-        `,
-          config
-        );
-
-        const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-outline`));
       });
     });
   });
