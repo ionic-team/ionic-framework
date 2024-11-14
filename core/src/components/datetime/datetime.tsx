@@ -1516,6 +1516,7 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderFooter() {
+    const theme = getIonTheme(this);
     const { disabled, readonly, showDefaultButtons, showClearButton } = this;
     /**
      * The cancel, clear, and confirm buttons
@@ -1523,6 +1524,7 @@ export class Datetime implements ComponentInterface {
      * is disabled or readonly.
      */
     const isButtonDisabled = disabled || readonly;
+    const confirmFill = theme === 'ionic' ? 'solid' : undefined;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
       return;
@@ -1578,6 +1580,7 @@ export class Datetime implements ComponentInterface {
                       color={this.color}
                       onClick={() => this.confirm(true)}
                       disabled={isButtonDisabled}
+                      fill={confirmFill}
                     >
                       {this.doneText}
                     </ion-button>
