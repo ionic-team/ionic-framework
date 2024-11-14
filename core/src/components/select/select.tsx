@@ -201,6 +201,15 @@ export class Select implements ComponentInterface {
   @Prop({ mutable: true }) value?: any | null;
 
   /**
+   * Set to `"small"` for a select with less height,
+   * `"medium"` for the default select height,
+   * or `"large"` for a select with more height.
+   *
+   * Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
+   */
+  @Prop() size?: 'small' | 'medium' | 'large';
+
+  /**
    * Emitted when the value has changed.
    *
    * This event will not emit when programmatically setting the `value` property.
@@ -816,6 +825,22 @@ export class Select implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private getSize(): string | undefined {
+    const theme = getIonTheme(this);
+    const { size } = this;
+
+    // TODO(ROU-11370): Remove theme check when sizes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (size === undefined) {
+      return 'medium';
+    }
+
+    return size;
+  }
+
   private renderLabel() {
     const { label } = this;
 
@@ -1055,6 +1080,7 @@ export class Select implements ComponentInterface {
     const justifyEnabled = !hasFloatingOrStackedLabel && justify !== undefined;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const inItem = hostContext('ion-item', this.el);
+    const size = this.getSize();
     const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
@@ -1101,6 +1127,7 @@ export class Select implements ComponentInterface {
           [`select-justify-${justify}`]: justifyEnabled,
           [`select-shape-${shape}`]: shape !== undefined,
           [`select-label-placement-${labelPlacement}`]: true,
+          [`select-size-${size}`]: size !== undefined,
         })}
       >
         <label class="select-wrapper" id="select-label">

@@ -85,8 +85,6 @@
 
   position: relative;
 
-  height: globals.$ion-scale-1200;
-
   background: var(--background);
 
   box-sizing: border-box;
@@ -182,4 +180,27 @@
 :host(.select-disabled) .select-text,
 :host(.select-disabled) .select-icon {
   color: globals.$ion-primitives-neutral-500;
+}
+
+// Sizes
+// ----------------------------------------------------------------
+
+// Small
+// ---------------------------------------------
+
+:host(.select-size-small) .select-wrapper-inner {
+  height: globals.$ion-scale-1000;
+}
+
+// Medium
+// ---------------------------------------------
+
+:host(.select-size-medium) .select-wrapper-inner {
+  height: globals.$ion-scale-1200;
+}
+
+// Large
+// ---------------------------------------------
+:host(.select-size-large) .select-wrapper-inner {
+  height: globals.$ion-scale-1400;
 }
