@@ -524,7 +524,6 @@ export const present = async <OverlayPresentOptions>(
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
   hideUnderlyingOverlaysFromScreenReaders(overlay.el);
-  // hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -535,6 +534,8 @@ export const present = async <OverlayPresentOptions>(
   const animationBuilder = overlay.enterAnimation
     ? overlay.enterAnimation
     : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+
+  hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
