@@ -205,9 +205,8 @@ export class Select implements ComponentInterface {
   @Prop({ mutable: true }) value?: any | null;
 
   /**
-   * Set to `"small"` for a select with less height,
-   * `"medium"` for the default select height,
-   * or `"large"` for a select with more height.
+   * The size of the select. If "large" it will increase the height of the select, while
+   * "small" and "medium" provide progressively smaller heights. The default size is "medium".
    *
    * Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
    */
