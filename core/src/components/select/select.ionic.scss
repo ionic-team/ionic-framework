@@ -84,8 +84,6 @@
 
   position: relative;
 
-  height: globals.$ion-scale-1200;
-
   background: var(--background);
 
   box-sizing: border-box;
@@ -196,4 +194,19 @@
 
 :host(.select-shape-rectangular) {
   --border-radius: #{globals.$ion-border-radius-0};
+}
+
+// Sizes
+// ----------------------------------------------------------------
+
+:host(.select-size-small) .select-wrapper-inner {
+  height: globals.$ion-scale-1000;
+}
+
+:host(.select-size-medium) .select-wrapper-inner {
+  height: globals.$ion-scale-1200;
+}
+
+:host(.select-size-large) .select-wrapper-inner {
+  height: globals.$ion-scale-1400;
 }

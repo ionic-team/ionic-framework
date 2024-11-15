@@ -3284,6 +3284,10 @@ export namespace Components {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
+          * The size of the select. If "large" it will increase the height of the select, while "small" and "medium" provide progressively smaller heights.  Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -8707,6 +8711,10 @@ declare namespace LocalJSX {
           * Set to `"soft"` for a select with slightly rounded corners, `"round"` for a select with fully rounded corners, or `"rectangular"` for a select without rounded corners.  Defaults to `"round"` for the `"ionic"` theme, undefined for all other themes.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * The size of the select. If "large" it will increase the height of the select, while "small" and "medium" provide progressively smaller heights.  Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
+         */
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * The theme determines the visual appearance of the component.
          */

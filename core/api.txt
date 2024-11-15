@@ -2065,6 +2065,7 @@ ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,string | undefined,undefined,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
+ion-select,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
 ion-select,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-select,prop,toggleIcon,string | undefined,undefined,false,false
 ion-select,prop,value,any,undefined,false,false
