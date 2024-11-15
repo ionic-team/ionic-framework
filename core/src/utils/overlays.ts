@@ -539,6 +539,7 @@ export const present = async <OverlayPresentOptions>(
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
+    overlay.el.removeAttribute('aria-hidden');
     overlay.didPresent.emit();
     overlay.didPresentShorthand?.emit();
   }
