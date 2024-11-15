@@ -535,7 +535,7 @@ export const present = async <OverlayPresentOptions>(
     ? overlay.enterAnimation
     : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-  hideAnimatingOverlayFromScreenReaders(overlay.el);
+  // hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
@@ -749,6 +749,8 @@ const overlayAnimation = async (
   const aniRoot = overlay.el;
   const animation = animationBuilder(aniRoot, opts);
 
+  aniRoot.setAttribute('aria-hidden', 'true');
+
   if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
   }
@@ -766,6 +768,8 @@ const overlayAnimation = async (
   activeAnimations.set(overlay, [...activeAni, animation]);
 
   await animation.play();
+
+  aniRoot.removeAttribute('aria-hidden');
 
   return true;
 };
