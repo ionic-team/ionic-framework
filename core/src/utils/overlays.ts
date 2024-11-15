@@ -524,7 +524,7 @@ export const present = async <OverlayPresentOptions>(
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
   hideUnderlyingOverlaysFromScreenReaders(overlay.el);
-  hideAnimatingOverlayFromScreenReaders(overlay.el);
+  // hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -677,7 +677,7 @@ export const dismiss = async <OverlayDismissOptions>(
      * the dismiss animation. This is because the overlay will be removed
      * from the DOM after the animation is complete.
      */
-    hideAnimatingOverlayFromScreenReaders(overlay.el);
+    // hideAnimatingOverlayFromScreenReaders(overlay.el);
 
     // Overlay contents should not be clickable during dismiss
     overlay.el.style.setProperty('pointer-events', 'none');
@@ -977,15 +977,15 @@ export const createTriggerController = () => {
  *
  * @param overlay - The overlay that is being animated.
  */
-const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
-  if (doc === undefined) return;
+// const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
+//   if (doc === undefined) return;
 
-  /**
-   * Once the animation is complete, this attribute will be removed.
-   * This is done at the end of the `present` method.
-   */
-  overlay.setAttribute('aria-hidden', 'true');
-};
+//   /**
+//    * Once the animation is complete, this attribute will be removed.
+//    * This is done at the end of the `present` method.
+//    */
+//   overlay.setAttribute('aria-hidden', 'true');
+// };
 
 /**
  * Ensure that underlying overlays have aria-hidden if necessary so that screen readers
