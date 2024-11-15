@@ -206,7 +206,7 @@ export class Select implements ComponentInterface {
 
   /**
    * The size of the select. If "large" it will increase the height of the select, while
-   * "small" and "medium" provide progressively smaller heights. The default size is "medium".
+   * "small" and "medium" provide progressively smaller heights.
    *
    * Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
    */

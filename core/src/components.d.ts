@@ -3284,7 +3284,7 @@ export namespace Components {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * The size of the select. If "large" it will increase the height of the select, while "small" and "medium" provide progressively smaller heights. The default size is "medium".  Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
+          * The size of the select. If "large" it will increase the height of the select, while "small" and "medium" provide progressively smaller heights.  Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
@@ -8712,7 +8712,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
-          * The size of the select. If "large" it will increase the height of the select, while "small" and "medium" provide progressively smaller heights. The default size is "medium".  Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
+          * The size of the select. If "large" it will increase the height of the select, while "small" and "medium" provide progressively smaller heights.  Defaults to `"medium"` for the ionic theme, and  undefined for all other themes.
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
