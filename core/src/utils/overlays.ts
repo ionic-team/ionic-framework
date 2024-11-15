@@ -749,8 +749,6 @@ const overlayAnimation = async (
   const aniRoot = overlay.el;
   const animation = animationBuilder(aniRoot, opts);
 
-  aniRoot.setAttribute('aria-hidden', 'true');
-
   if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
   }
@@ -766,6 +764,8 @@ const overlayAnimation = async (
 
   const activeAni = activeAnimations.get(overlay) || [];
   activeAnimations.set(overlay, [...activeAni, animation]);
+
+  aniRoot.setAttribute('aria-hidden', 'true');
 
   await animation.play();
 
