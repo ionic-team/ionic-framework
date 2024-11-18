@@ -754,7 +754,10 @@ const overlayAnimation = async (
 
   animation.beforeAddWrite(() => {
     console.log('beforeAddWrite');
-    baseEl.setAttribute('aria-hidden', 'true');
+    const overlayWrapper = baseEl.querySelector('.ion-overlay-wrapper');
+    if (overlayWrapper) {
+      overlayWrapper.setAttribute('aria-hidden', 'true');
+    }
 
     if (overlay.keyboardClose) {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
@@ -765,10 +768,11 @@ const overlayAnimation = async (
   });
 
   animation.afterAddWrite(() => {
-    requestAnimationFrame(() => {
-      baseEl.removeAttribute('aria-hidden');
-      console.log('afterAddWrite');
-    });
+    const overlayWrapper = baseEl.querySelector('.ion-overlay-wrapper');
+    if (overlayWrapper) {
+      overlayWrapper.removeAttribute('aria-hidden');
+    }
+    console.log('afterAddWrite');
   });
 
   const activeAni = activeAnimations.get(overlay) || [];
