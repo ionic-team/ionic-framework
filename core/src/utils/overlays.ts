@@ -539,7 +539,6 @@ export const present = async <OverlayPresentOptions>(
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
-    overlay.el.removeAttribute('aria-hidden');
     overlay.didPresent.emit();
     overlay.didPresentShorthand?.emit();
   }
@@ -753,6 +752,8 @@ const overlayAnimation = async (
     animation.duration(0);
   }
 
+  aniRoot.setAttribute('aria-hidden', 'true');
+
   if (overlay.keyboardClose) {
     animation.beforeAddWrite(() => {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
@@ -762,14 +763,14 @@ const overlayAnimation = async (
     });
   }
 
+  animation.afterAddWrite(() => {
+    aniRoot.removeAttribute('aria-hidden');
+  });
+
   const activeAni = activeAnimations.get(overlay) || [];
   activeAnimations.set(overlay, [...activeAni, animation]);
 
-  aniRoot.setAttribute('aria-hidden', 'true');
-
   await animation.play();
-
-  aniRoot.removeAttribute('aria-hidden');
 
   return true;
 };
