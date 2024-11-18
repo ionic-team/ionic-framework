@@ -754,7 +754,7 @@ const overlayAnimation = async (
 
   animation.beforeAddWrite(() => {
     console.log('beforeAddWrite');
-    aniRoot.setAttribute('aria-hidden', 'true');
+    baseEl.setAttribute('aria-hidden', 'true');
 
     if (overlay.keyboardClose) {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
@@ -765,7 +765,7 @@ const overlayAnimation = async (
   });
 
   animation.afterAddWrite(() => {
-    aniRoot.removeAttribute('aria-hidden');
+    baseEl.removeAttribute('aria-hidden');
     console.log('afterAddWrite');
   });
 
