@@ -752,19 +752,21 @@ const overlayAnimation = async (
     animation.duration(0);
   }
 
-  aniRoot.setAttribute('aria-hidden', 'true');
+  animation.beforeAddWrite(() => {
+    console.log('beforeAddWrite');
+    aniRoot.setAttribute('aria-hidden', 'true');
 
-  if (overlay.keyboardClose) {
-    animation.beforeAddWrite(() => {
+    if (overlay.keyboardClose) {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
       if (activeElement?.matches('input,ion-input, ion-textarea')) {
         activeElement.blur();
       }
-    });
-  }
+    }
+  });
 
   animation.afterAddWrite(() => {
     aniRoot.removeAttribute('aria-hidden');
+    console.log('afterAddWrite');
   });
 
   const activeAni = activeAnimations.get(overlay) || [];
