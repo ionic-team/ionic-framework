@@ -114,6 +114,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
     return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
+      element.setAttribute('aria-hidden', 'true');
 
       /**
        * Convert the passed in overlay options into props
@@ -744,6 +745,7 @@ const overlayAnimation = async (
 ): Promise<boolean> => {
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
+  baseEl.removeAttribute('aria-hidden');
 
   const aniRoot = overlay.el;
   const animation = animationBuilder(aniRoot, opts);
@@ -753,20 +755,12 @@ const overlayAnimation = async (
   }
 
   animation.beforeAddWrite(() => {
-    console.log('beforeAddWrite');
-    baseEl.setAttribute('aria-hidden', 'true');
-
     if (overlay.keyboardClose) {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
       if (activeElement?.matches('input,ion-input, ion-textarea')) {
         activeElement.blur();
       }
     }
-  });
-
-  animation.afterAddWrite(() => {
-    baseEl.removeAttribute('aria-hidden');
-    console.log('afterAddWrite');
   });
 
   const activeAni = activeAnimations.get(overlay) || [];
