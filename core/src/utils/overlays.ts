@@ -983,13 +983,14 @@ const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) =
   const mode = getIonMode(overlay);
   console.log('mode', mode);
 
-  // if (mode === 'md') {
-  //   /**
-  //    * Once the animation is complete, this attribute will be removed.
-  //    * This is done at the end of the `present` method.
-  //    */
-  //   overlay.setAttribute('aria-hidden', 'true');
-  // }
+  if (mode === 'md') {
+    console.log('in md');
+    /**
+     * Once the animation is complete, this attribute will be removed.
+     * This is done at the end of the `present` method.
+     */
+    overlay.setAttribute('aria-hidden', 'true');
+  }
 };
 
 /**
