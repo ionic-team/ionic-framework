@@ -10,11 +10,13 @@
 // current-color(base) => var(--ion-color-base)
 // current-color(contrast, 0.1) => rgba(var(--ion-color-contrast-rgb), 0.1)
 // --------------------------------------------------------------------------------------------
-@function current-color($variation, $alpha: null) {
+@function current-color($variation, $alpha: null, $subtle: false) {
+  $variable: if($subtle, "--ion-color-subtle-#{$variation}", "--ion-color-#{$variation}");
+
   @if $alpha == null {
-    @return var(--ion-color-#{$variation});
+    @return var(#{$variable});
   } @else {
-    @return rgba(var(--ion-color-#{$variation}-rgb), #{$alpha});
+    @return rgba(var(#{$variable}-rgb), $alpha);
   }
 }
 
@@ -25,17 +27,25 @@
 // ion-color(secondary, contrast) => var(--ion-color-secondary-contrast)
 // ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.5)
 // --------------------------------------------------------------------------------------------
-@function ion-color($name, $variation, $alpha: null, $rgb: null) {
+@function ion-color($name, $variation, $alpha: null, $rgb: null, $subtle: false) {
   @if not($theme-colors) {
     @error 'No theme colors set. Please make sure to call set-theme-colors($colorsMap) before using ion-color()';
   }
 
   $values: map-get($theme-colors, $name);
-  $value: map-get($values, $variation);
-  $variable: --ion-color-#{$name}-#{$variation};
+  $values: map-get($values, if($subtle, subtle, bold));
 
+  $value: map-get($values, $variation);
+
+  // If the color requested is subtle we return `--ion-color-primary-subtle-contrast`
+  // Otherwise we return `--ion-color-primary-contrast`
+  $variable: if($subtle, "--ion-color-#{$name}-subtle-#{$variation}", "--ion-color-#{$name}-#{$variation}");
+
+  // If the variation being used is base, we do not include the variant so
+  // If the color requested is subtle we return `--ion-color-primary-subtle`
+  // Otherwise we return `--ion-color-primary`
   @if ($variation == base) {
-    $variable: --ion-color-#{$name};
+    $variable: if($subtle, "--ion-color-#{$name}-subtle", "--ion-color-#{$name}");
   }
 
   @if ($alpha) {
@@ -87,21 +97,41 @@
     @error 'No theme colors set. Please make sure to call set-theme-colors($colorsMap) before using ion-color()';
   }
 
-  $value: map-get($theme-colors, $color-name);
+  $colors: map-get($theme-colors, $color-name);
+  $bold-colors: map-get($colors, bold);
 
-  $base: map-get($value, base);
-  $contrast: map-get($value, contrast);
-  $shade: map-get($value, shade);
-  $tint: map-get($value, tint);
-  $subtle: map-get($value, subtle);
+  // Grab the bold color variants
+  $base: map-get($bold-colors, base);
+  $contrast: map-get($bold-colors, contrast);
+  $shade: map-get($bold-colors, shade);
+  $tint: map-get($bold-colors, tint);
 
+  // Generate default (bold) color variables
   --ion-color-base: var(--ion-color-#{$color-name}, #{$base}) !important;
   --ion-color-base-rgb: var(--ion-color-#{$color-name}-rgb, #{color-to-rgb-list($base)}) !important;
   --ion-color-contrast: var(--ion-color-#{$color-name}-contrast, #{$contrast}) !important;
   --ion-color-contrast-rgb: var(--ion-color-#{$color-name}-contrast-rgb, #{color-to-rgb-list($contrast)}) !important;
   --ion-color-shade: var(--ion-color-#{$color-name}-shade, #{$shade}) !important;
   --ion-color-tint: var(--ion-color-#{$color-name}-tint, #{$tint}) !important;
-  --ion-color-subtle: var(--ion-color-#{$color-name}-subtle, #{$subtle}) !important;
+
+  // Grab the subtle colors map if it exists
+  $subtle-colors: map-get($colors, subtle);
+
+  // Grab the subtle color variants
+  @if $subtle-colors != null {
+    $base: map-get($subtle-colors, base);
+    $contrast: map-get($subtle-colors, contrast);
+    $shade: map-get($subtle-colors, shade);
+    $tint: map-get($subtle-colors, tint);
+  }
+
+  // Generate subtle color variables
+  @if $subtle-colors != null {
+    --ion-color-subtle-base: var(--ion-color-#{$color-name}-subtle, #{$base}) !important;
+    --ion-color-subtle-contrast: var(--ion-color-#{$color-name}-subtle-contrast, #{$contrast}) !important;
+    --ion-color-subtle-shade: var(--ion-color-#{$color-name}-subtle-shade, #{$shade}) !important;
+    --ion-color-subtle-tint: var(--ion-color-#{$color-name}-subtle-tint, #{$tint}) !important;
+  }
 }
 
 // Generates the CSS variables for each color
@@ -113,11 +143,22 @@
   }
 
   @each $color-name, $value in $theme-colors {
-    --ion-color-#{$color-name}: #{map-get($value, base)};
-    --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map-get($value, base))};
-    --ion-color-#{$color-name}-contrast: #{map-get($value, contrast)};
-    --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map-get($value, contrast))};
-    --ion-color-#{$color-name}-shade: #{map-get($value, shade)};
-    --ion-color-#{$color-name}-tint: #{map-get($value, tint)};
+    $bold-colors: map-get($value, bold);
+    @if $bold-colors != null {
+      --ion-color-#{$color-name}: #{map-get($bold-colors, base)};
+      --ion-color-#{$color-name}-rgb: #{color-to-rgb-list(map-get($bold-colors, base))};
+      --ion-color-#{$color-name}-contrast: #{map-get($bold-colors, contrast)};
+      --ion-color-#{$color-name}-contrast-rgb: #{color-to-rgb-list(map-get($bold-colors, contrast))};
+      --ion-color-#{$color-name}-shade: #{map-get($bold-colors, shade)};
+      --ion-color-#{$color-name}-tint: #{map-get($bold-colors, tint)};
+    }
+
+    $subtle-colors: map-get($value, subtle);
+    @if $subtle-colors != null {
+      --ion-color-#{$color-name}-subtle: #{map-get($subtle-colors, base)};
+      --ion-color-#{$color-name}-subtle-contrast: #{map-get($subtle-colors, contrast)};
+      --ion-color-#{$color-name}-subtle-shade: #{map-get($subtle-colors, shade)};
+      --ion-color-#{$color-name}-subtle-tint: #{map-get($subtle-colors, tint)};
+    }
   }
 }

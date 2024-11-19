@@ -24,58 +24,76 @@ $dark: #222428;
 
 $colors: (
   primary: (
-    base: $primary,
-    contrast: #fff,
-    shade: get-color-shade($primary),
-    tint: get-color-tint($primary),
+    bold: (
+      base: $primary,
+      contrast: #fff,
+      shade: get-color-shade($primary),
+      tint: get-color-tint($primary),
+    ),
   ),
   secondary: (
-    base: $secondary,
-    contrast: #fff,
-    shade: get-color-shade($secondary),
-    tint: get-color-tint($secondary),
+    bold: (
+      base: $secondary,
+      contrast: #fff,
+      shade: get-color-shade($secondary),
+      tint: get-color-tint($secondary),
+    ),
   ),
   tertiary: (
-    base: $tertiary,
-    contrast: #fff,
-    shade: get-color-shade($tertiary),
-    tint: get-color-tint($tertiary),
+    bold: (
+      base: $tertiary,
+      contrast: #fff,
+      shade: get-color-shade($tertiary),
+      tint: get-color-tint($tertiary),
+    ),
   ),
   success: (
-    base: $success,
-    contrast: #000,
-    shade: get-color-shade($success),
-    tint: get-color-tint($success),
+    bold: (
+      base: $success,
+      contrast: #000,
+      shade: get-color-shade($success),
+      tint: get-color-tint($success),
+    ),
   ),
   warning: (
-    base: $warning,
-    contrast: #000,
-    shade: get-color-shade($warning),
-    tint: get-color-tint($warning),
+    bold: (
+      base: $warning,
+      contrast: #000,
+      shade: get-color-shade($warning),
+      tint: get-color-tint($warning),
+    ),
   ),
   danger: (
-    base: $danger,
-    contrast: #fff,
-    shade: get-color-shade($danger),
-    tint: get-color-tint($danger),
+    bold: (
+      base: $danger,
+      contrast: #fff,
+      shade: get-color-shade($danger),
+      tint: get-color-tint($danger),
+    ),
   ),
   light: (
-    base: $light,
-    contrast: #000,
-    shade: get-color-shade($light),
-    tint: get-color-tint($light),
+    bold: (
+      base: $light,
+      contrast: #000,
+      shade: get-color-shade($light),
+      tint: get-color-tint($light),
+    ),
   ),
   medium: (
-    base: $medium,
-    contrast: #fff,
-    shade: get-color-shade($medium),
-    tint: get-color-tint($medium),
+    bold: (
+      base: $medium,
+      contrast: #fff,
+      shade: get-color-shade($medium),
+      tint: get-color-tint($medium),
+    ),
   ),
   dark: (
-    base: $dark,
-    contrast: #fff,
-    shade: get-color-shade($dark),
-    tint: get-color-tint($dark),
+    bold: (
+      base: $dark,
+      contrast: #fff,
+      shade: get-color-shade($dark),
+      tint: get-color-tint($dark),
+    ),
   ),
 );
 
