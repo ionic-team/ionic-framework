@@ -524,6 +524,7 @@ export const present = async <OverlayPresentOptions>(
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
   hideUnderlyingOverlaysFromScreenReaders(overlay.el);
+  hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -534,8 +535,6 @@ export const present = async <OverlayPresentOptions>(
   const animationBuilder = overlay.enterAnimation
     ? overlay.enterAnimation
     : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-  // hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
@@ -752,26 +751,14 @@ const overlayAnimation = async (
     animation.duration(0);
   }
 
-  animation.beforeAddWrite(() => {
-    console.log('beforeAddWrite');
-    baseEl.setAttribute('aria-hidden', 'true');
-    // add class 'test' to baseEl
-    baseEl.classList.add('test');
-
-    if (overlay.keyboardClose) {
+  if (overlay.keyboardClose) {
+    animation.beforeAddWrite(() => {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
       if (activeElement?.matches('input,ion-input, ion-textarea')) {
         activeElement.blur();
       }
-    }
-  });
-
-  animation.afterAddWrite(() => {
-    baseEl.removeAttribute('aria-hidden');
-    // add test2 class to baseEl
-    baseEl.classList.add('test2');
-    console.log('afterAddWrite');
-  });
+    });
+  }
 
   const activeAni = activeAnimations.get(overlay) || [];
   activeAnimations.set(overlay, [...activeAni, animation]);
@@ -986,18 +973,28 @@ export const createTriggerController = () => {
  * If the overlay is being presented, it prevents focus rings from appearing
  * in incorrect positions due to the transition (specifically `transform`
  * styles), ensuring that when aria-hidden is removed, the focus rings are
- * correctly displayed in the final location of the elements.
+ * correctly displayed in the final location of the elements. This only
+ * applies to Android devices.
+ *
+ * If this solution is applied to iOS devices, then it leads to a bug where
+ * the overlays cannot be accessed by screen readers. This is due to
+ * VoiceOver not being able to update the accessibility tree when the
+ * `aria-hidden` is removed.
  *
  * @param overlay - The overlay that is being animated.
  */
 const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
   if (doc === undefined) return;
 
-  /**
-   * Once the animation is complete, this attribute will be removed.
-   * This is done at the end of the `present` method.
-   */
-  overlay.setAttribute('aria-hidden', 'true');
+  const mode = getIonMode(overlay);
+
+  if (mode === 'md') {
+    /**
+     * Once the animation is complete, this attribute will be removed.
+     * This is done at the end of the `present` method.
+     */
+    overlay.setAttribute('aria-hidden', 'true');
+  }
 };
 
 /**
