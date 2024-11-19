@@ -32,6 +32,7 @@ import {
   removeEventListener,
 } from './helpers';
 import { printIonWarning } from './logging';
+import { isPlatform } from './platform';
 
 let lastOverlayIndex = 0;
 let lastId = 0;
@@ -986,9 +987,7 @@ export const createTriggerController = () => {
 const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
   if (doc === undefined) return;
 
-  const mode = getIonMode(overlay);
-
-  if (mode === 'md') {
+  if (isPlatform('android')) {
     /**
      * Once the animation is complete, this attribute will be removed.
      * This is done at the end of the `present` method.
