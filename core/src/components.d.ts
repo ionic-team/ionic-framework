@@ -2303,6 +2303,7 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        "setFocus": () => Promise<void>;
         /**
           * the value of the radio group.
          */
