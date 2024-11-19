@@ -524,7 +524,6 @@ export const present = async <OverlayPresentOptions>(
   document.body.classList.add(BACKDROP_NO_SCROLL);
 
   hideUnderlyingOverlaysFromScreenReaders(overlay.el);
-  hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -535,6 +534,8 @@ export const present = async <OverlayPresentOptions>(
   const animationBuilder = overlay.enterAnimation
     ? overlay.enterAnimation
     : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+
+  // hideAnimatingOverlayFromScreenReaders(overlay.el);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
@@ -751,14 +752,26 @@ const overlayAnimation = async (
     animation.duration(0);
   }
 
-  if (overlay.keyboardClose) {
-    animation.beforeAddWrite(() => {
+  animation.beforeAddWrite(() => {
+    console.log('beforeAddWrite');
+    baseEl.setAttribute('aria-hidden', 'true');
+    // add class 'test' to baseEl
+    baseEl.classList.add('test');
+
+    if (overlay.keyboardClose) {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
       if (activeElement?.matches('input,ion-input, ion-textarea')) {
         activeElement.blur();
       }
-    });
-  }
+    }
+  });
+
+  animation.afterAddWrite(() => {
+    baseEl.removeAttribute('aria-hidden');
+    // add test2 class to baseEl
+    baseEl.classList.add('test2');
+    console.log('afterAddWrite');
+  });
 
   const activeAni = activeAnimations.get(overlay) || [];
   activeAnimations.set(overlay, [...activeAni, animation]);
@@ -980,17 +993,11 @@ export const createTriggerController = () => {
 const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
   if (doc === undefined) return;
 
-  const mode = getIonMode(overlay);
-  console.log('mode', mode);
-
-  if (mode === 'md') {
-    console.log('in md');
-    /**
-     * Once the animation is complete, this attribute will be removed.
-     * This is done at the end of the `present` method.
-     */
-    overlay.setAttribute('aria-hidden', 'true');
-  }
+  /**
+   * Once the animation is complete, this attribute will be removed.
+   * This is done at the end of the `present` method.
+   */
+  overlay.setAttribute('aria-hidden', 'true');
 };
 
 /**
