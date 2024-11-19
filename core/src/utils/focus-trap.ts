@@ -78,7 +78,6 @@ const focusElementInContext = <T extends HTMLElement>(
   }
 
   if (elementToFocus) {
-    // TODO: need to verify we're focusing a radio?
     const radioGroup = elementToFocus.closest('ion-radio-group');
 
     if (radioGroup) {
