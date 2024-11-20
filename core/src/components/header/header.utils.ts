@@ -167,13 +167,25 @@ export const handleToolbarIntersection = (
 
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   const headerEl = headerIndex.el;
+  const toolbars = headerIndex.toolbars;
+  const ionTitles = toolbars.map((toolbar) => toolbar.ionTitleEl);
 
   if (active) {
     headerEl.classList.remove('header-collapse-condense-inactive');
-    headerEl.removeAttribute('aria-hidden');
+
+    ionTitles.forEach((ionTitle) => {
+      if (ionTitle) {
+        ionTitle.removeAttribute('aria-hidden');
+      }
+    });
   } else {
     headerEl.classList.add('header-collapse-condense-inactive');
-    headerEl.setAttribute('aria-hidden', 'true');
+
+    ionTitles.forEach((ionTitle) => {
+      if (ionTitle) {
+        ionTitle.setAttribute('aria-hidden', 'true');
+      }
+    });
   }
 };
 
