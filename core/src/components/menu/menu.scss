@@ -39,6 +39,8 @@
 .menu-inner {
   @include transform(translateX(-9999px));
 
+  will-change: transform;
+
   display: flex;
   position: absolute;
 

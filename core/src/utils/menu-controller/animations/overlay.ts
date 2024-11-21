@@ -27,7 +27,6 @@ export const menuOverlayAnimation = (menu: MenuI): Animation => {
     openedX = '0px';
   }
 
-  menu.menuInnerEl!.style.willChange = 'transform';
   menuAnimation.addElement(menu.menuInnerEl!).fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
   const mode = getIonMode(menu);
