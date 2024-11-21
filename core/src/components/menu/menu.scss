@@ -37,12 +37,11 @@
 
 
 .menu-inner {
-  @include transform(translateX(-9999px));
-
-  will-change: transform;
-
   display: flex;
   position: absolute;
+  right: unset;
+  /* stylelint-disable property-disallowed-list */
+  left: -100%; /* Hide offscreen for left-sided menu */
 
   flex-direction: column;
   justify-content: space-between;
@@ -54,6 +53,8 @@
   height: var(--height);
   min-height: var(--min-height);
   max-height: var(--max-height);
+
+  transform: none; /* Avoid using transform */
 
   background: var(--background);
 
