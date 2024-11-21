@@ -398,6 +398,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                     'action-sheet-has-sub-title': this.subHeader !== undefined,
                   }}
                 >
+                  <slot name="header" />
                   {header}
                   {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
                 </div>
