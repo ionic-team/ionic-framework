@@ -27,7 +27,7 @@ export const menuOverlayAnimation = (menu: MenuI): Animation => {
     openedX = '0px';
   }
 
-  menuAnimation.addElement(menu.menuInnerEl!).fromTo('left', `${closedX}`, `${openedX}`);
+  menuAnimation.addElement(menu.menuInnerEl!).fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
   const mode = getIonMode(menu);
   const isIos = mode === 'ios';

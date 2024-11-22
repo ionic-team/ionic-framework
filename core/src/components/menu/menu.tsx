@@ -631,6 +631,9 @@ export class Menu implements ComponentInterface, MenuI {
   private beforeAnimation(shouldOpen: boolean, role?: string) {
     assert(!this.isAnimating, '_before() should not be called while animating');
 
+    // add aria-hidden to the menu
+    this.el.setAttribute('aria-hidden', 'true');
+
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.el.classList.add(SHOW_MENU);
@@ -690,6 +693,9 @@ export class Menu implements ComponentInterface, MenuI {
       // emit open event
       this.ionDidOpen.emit();
 
+      // remove aria-hidden from menu
+      this.el.removeAttribute('aria-hidden');
+
       /**
        * Move focus to the menu to prepare focus trapping, as long as
        * it isn't already focused. Use the host element instead of the
@@ -703,6 +709,8 @@ export class Menu implements ComponentInterface, MenuI {
       // start focus trapping
       document.addEventListener('focus', this.handleFocus, true);
     } else {
+      this.el.removeAttribute('aria-hidden');
+
       // remove css classes and unhide content from screen readers
       this.el.classList.remove(SHOW_MENU);
 
