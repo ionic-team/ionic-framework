@@ -712,7 +712,9 @@ export class Menu implements ComponentInterface, MenuI {
        * transition to prevent this. Once the transition is complete, the menu
        * is shown again.
        */
-      this.el.removeAttribute('aria-hidden');
+      if (isPlatform('android')) {
+        this.el.removeAttribute('aria-hidden');
+      }
 
       // emit open event
       this.ionDidOpen.emit();
