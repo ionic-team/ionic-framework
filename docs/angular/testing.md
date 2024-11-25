@@ -6,11 +6,13 @@ Ionic Framework supports multiple versions of Angular. As a result, we need to v
 
 The Angular test app supports syncing your locally built changes for validation.
 
-1. Build the `core` and `packages/angular` directories using `npm run build`.
-2. [Build the Angular test app](#test-app-build-structure).
-3. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
-4. Install dependencies using `npm install`.
-5. Sync your local changes using `npm run sync`.
+1. Build the `core` directory.
+2. Navigate to `packages/angular` and run `npm run sync`.
+3. Build `packages/angular` using `npm run build`.
+4. [Build the Angular test app](#test-app-build-structure).
+5. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
+6. Install dependencies using `npm install`.
+7. Sync your local changes using `npm run sync`.
 
 From here you can either build the application or start a local dev server. When re-syncing changes, you will need to [wipe or disable the application cache](#application-cache).
 
