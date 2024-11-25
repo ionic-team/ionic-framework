@@ -1,0 +1,20 @@
+{
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictMetadataEmit" : true
+  },
+  "extends": "../tsconfig.json",
+  "include": [
+    "src/**spec.ts",
+    "../cypress/support/index.d.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "module": "commonjs",
+    "target": "es5",
+    "types": [
+      "cypress",
+      "node"
+    ]
+  }
+}
