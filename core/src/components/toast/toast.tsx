@@ -720,6 +720,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
     const theme = getIonTheme(this);
+    const mode = getIonMode(this);
     const shape = this.getShape();
     const wrapperClass = {
       'toast-wrapper': true,
@@ -746,6 +747,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           zIndex: `${60000 + this.overlayIndex}`,
         }}
         class={createColorClasses(this.color, {
+          [mode]: true,
           [theme]: true,
           ...getClassMap(this.cssClass),
           'overlay-hidden': true,

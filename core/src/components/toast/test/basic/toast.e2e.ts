@@ -47,26 +47,34 @@ class ToastFixture {
 /**
  * This behavior does not vary across directions.
  */
+configs({ modes: ['ios', 'md', 'ionic-md', 'ionic-ios'], directions: ['ltr'] }).forEach(
+  ({ title, screenshot, config }) => {
+    test.describe(title('toast: position rendering'), () => {
+      let toastFixture: ToastFixture;
+      test.beforeEach(async ({ page }) => {
+        toastFixture = new ToastFixture(page);
+        await toastFixture.goto(config);
+      });
+      test('should render toast at the top', async () => {
+        await toastFixture.openToast('#show-top-toast');
+        await toastFixture.screenshot('top', screenshot);
+      });
+      test('should render toast at the middle', async () => {
+        await toastFixture.openToast('#show-middle-toast');
+        await toastFixture.screenshot('middle', screenshot);
+      });
+      test('should render toast at the bottom', async () => {
+        await toastFixture.openToast('#show-bottom-toast');
+        await toastFixture.screenshot('bottom', screenshot);
+      });
+    });
+  }
+);
+
+/**
+ * This behavior does not vary across directions.
+ */
 configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('toast: position rendering'), () => {
-    let toastFixture: ToastFixture;
-    test.beforeEach(async ({ page }) => {
-      toastFixture = new ToastFixture(page);
-      await toastFixture.goto(config);
-    });
-    test('should render toast at the top', async () => {
-      await toastFixture.openToast('#show-top-toast');
-      await toastFixture.screenshot('top', screenshot);
-    });
-    test('should render toast at the middle', async () => {
-      await toastFixture.openToast('#show-middle-toast');
-      await toastFixture.screenshot('middle', screenshot);
-    });
-    test('should render toast at the bottom', async () => {
-      await toastFixture.openToast('#show-bottom-toast');
-      await toastFixture.screenshot('bottom', screenshot);
-    });
-  });
   test.describe(title('toast: color rendering'), () => {
     test('should set color correctly', async ({ page }) => {
       const toastFixture = new ToastFixture(page);
