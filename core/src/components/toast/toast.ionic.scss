@@ -19,17 +19,41 @@
   z-index: 1001;
 }
 
+// Toast Wrapper
+// --------------------------------------------------
+
 .toast-wrapper {
   @include globals.margin(auto);
 
   display: block;
   position: absolute;
 
-  opacity: 0.01;
-
   // TODO(ROU-10853): replace this value with a layer token.
   z-index: 10;
 }
+
+/*
+ * In `md` mode, the toast fades in when presented.
+ * To achieve the fade-in effect, the initial opacity must be set
+ * to a value less than 1.
+ */
+:host(.md) .toast-wrapper {
+  opacity: 0.01;
+}
+
+/*
+ * In `ios` mode, the toast will move into the screen based
+ * on the `position`. If the `position` is `middle`, the toast
+ * will fade in from the middle of the screen.
+ * To achieve the fade-in effect, the initial opacity must be set
+ * to a value less than 1.
+ */
+:host(.ios) .toast-wrapper.toast-middle {
+  opacity: 0.01;
+}
+
+// Toast Container
+// --------------------------------------------------
 
 .toast-container {
   @include globals.padding(globals.$ion-space-300, globals.$ion-space-400);
