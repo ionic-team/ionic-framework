@@ -10,5 +10,5 @@ import { Component } from "@angular/core";
   templateUrl: 'keep-contents-mounted.component.html',
   standalone: false
 })
-export class OverlayKeepContentsMounted {
+export class OverlayKeepContentsMountedComponent {
 }
