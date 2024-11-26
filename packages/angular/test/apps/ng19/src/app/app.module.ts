@@ -1,19 +1,15 @@
-import { APP_ID, NgModule, PLATFORM_ID } from '@angular/core';
+import { APP_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { isPlatformBrowser } from '@angular/common';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-export function ionicConfigFactory(platformId: Object): any {
-  // Custom keyboard height for lazy loaded app
-  if (isPlatformBrowser(platformId)) {
-    const isLazy = window.location.href.includes('lazy');
-    return isLazy ? { keyboardHeight: 12345 } : {};
-  }
-  // Default configuration for non-browser environments
-  return {};
+const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+
+export function ionicConfigFactory(): any {
+  const isLazy = isBrowser && window.location.href.includes('lazy');
+  return isLazy ? { keyboardHeight: 12345 } : {};
 }
 
 @NgModule({
@@ -21,7 +17,7 @@ export function ionicConfigFactory(platformId: Object): any {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    IonicModule.forRoot(ionicConfigFactory(PLATFORM_ID)),
+    IonicModule.forRoot(ionicConfigFactory()),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
