@@ -2,8 +2,9 @@ import { Component, Input } from '@angular/core';
 import { ModalExampleComponent } from '../modal-example/modal-example.component';
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
+    selector: 'app-nav',
+    templateUrl: './nav.component.html',
+    standalone: false
 })
 export class NavComponent {
   rootPage = ModalExampleComponent;

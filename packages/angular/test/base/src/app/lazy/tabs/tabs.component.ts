@@ -4,7 +4,8 @@ import { IonTabBar } from '@ionic/angular';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.css']
+  styleUrls: ['./tabs.component.css'],
+  standalone: false
 })
 export class TabsComponent {
   tabsDidChangeCounter = 0;

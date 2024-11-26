@@ -5,6 +5,7 @@ let count = 0;
 @Component({
   selector: 'app-navigation-page1',
   templateUrl: './navigation-page1.component.html',
+  standalone: false
 })
 export class NavigationPage1Component {
   constructor(
