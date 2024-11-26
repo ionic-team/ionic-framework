@@ -33,18 +33,22 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
     elements.forEach((el) => el.classList.add(ION_FOCUSED));
     currentFocus = elements;
   };
-  const pointerDown = () => {
+  // SPACE triggers on iOS device with physical keyboard
+  const pointerDown = (ev: Event) => {
+    console.log('pointerDown', ev);
     keyboardMode = false;
     setFocus([]);
   };
-
+// Enter triggers on iOS device with physical keyboard
   const onKeydown = (ev: Event) => {
+    console.log('onKeydown', ev);
     keyboardMode = FOCUS_KEYS.includes((ev as KeyboardEvent).key);
     if (!keyboardMode) {
       setFocus([]);
     }
   };
   const onFocusin = (ev: Event) => {
+    console.log('onFocusin', ev);
     if (keyboardMode && ev.composedPath !== undefined) {
       const toFocus = ev.composedPath().filter((el: any) => {
         // TODO(FW-2832): type
