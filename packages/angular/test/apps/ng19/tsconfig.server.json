@@ -2,7 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app-server",
-    "target": "es2016",
+    "target": "ES2016",
+    "module": "commonjs",
     "types": ["node"]
   },
   "files": [
