@@ -13,6 +13,7 @@ const FOCUS_KEYS = [
   'ArrowUp',
   'Home',
   'End',
+  'Meta',
 ];
 
 export interface FocusVisibleUtility {
@@ -54,6 +55,7 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
       }) as Element[];
       setFocus(toFocus);
     }
+    keyboardMode = true;
   };
   const onFocusout = () => {
     if (ref.activeElement === root) {
