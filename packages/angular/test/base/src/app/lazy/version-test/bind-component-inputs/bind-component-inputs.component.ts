@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from "@angular/core";
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-    selector: 'app-bind-route',
-    template: `
+  selector: 'app-bind-route',
+  template: `
     <ion-header>
       <ion-toolbar>
         <ion-title>bindToComponentInputs</ion-title>
@@ -19,7 +19,8 @@ import { IonicModule } from '@ionic/angular';
       </div>
   </ion-content>
   `,
-    imports: [IonicModule]
+  standalone: true,
+  imports: [IonicModule]
 })
 export class BindComponentInputsComponent implements OnInit {
 
