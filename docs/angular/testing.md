@@ -88,6 +88,7 @@ As we add support for new versions of Angular, we will also need to update this 
 2. Update the application by following the steps on https://update.angular.io/.
 3. Make note of any files that changed during the upgrade (`package.json`, `package-lock.json`, `angular.json`, etc).
 4. Copy the changed files to a new directory in `apps`.
+  - Do NOT copy the entire directory. The `test/base` directory contains shared files between all major versions. Only files that are different than previous major versions should be copied to the new directory in `apps`.
 5. Add a new entry to the matrix for `test-core-angular` in `./github/workflows/build.yml`. This will allow the new test app to run against all PRs.
 6. Commit these changes and push.
 
