@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -219,6 +219,13 @@ export class RadioGroup implements ComponentInterface {
         ev.preventDefault();
       }
     }
+  }
+
+  /** @internal */
+  @Method()
+  async setFocus() {
+    const radioToFocus = this.getRadios().find((r) => r.tabIndex !== -1);
+    radioToFocus?.setFocus();
   }
 
   render() {

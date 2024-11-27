@@ -8,6 +8,7 @@ import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
 import { BACKDROP, GESTURE, getPresentedOverlay } from '@utils/overlays';
+import { isPlatform } from '@utils/platform';
 import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
@@ -635,6 +636,23 @@ export class Menu implements ComponentInterface, MenuI {
   private beforeAnimation(shouldOpen: boolean, role?: string) {
     assert(!this.isAnimating, '_before() should not be called while animating');
 
+    /**
+     * When the menu is presented on an Android device, TalkBack's focus rings
+     * may appear in the wrong position due to the transition (specifically
+     * `transform` styles). This occurs because the focus rings are initially
+     * displayed at the starting position of the elements before the transition
+     * begins. This workaround ensures the focus rings do not appear in the
+     * incorrect location.
+     *
+     * If this solution is applied to iOS devices, then it leads to a bug where
+     * the overlays cannot be accessed by screen readers. This is due to
+     * VoiceOver not being able to update the accessibility tree when the
+     * `aria-hidden` is removed.
+     */
+    if (isPlatform('android')) {
+      this.el.setAttribute('aria-hidden', 'true');
+    }
+
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.el.classList.add(SHOW_MENU);
@@ -691,6 +709,17 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     if (isOpen) {
+      /**
+       * When the menu is presented on an Android device, TalkBack's focus rings
+       * may appear in the wrong position due to the transition (specifically
+       * `transform` styles). The menu is hidden from screen readers during the
+       * transition to prevent this. Once the transition is complete, the menu
+       * is shown again.
+       */
+      if (isPlatform('android')) {
+        this.el.removeAttribute('aria-hidden');
+      }
+
       // emit open event
       this.ionDidOpen.emit();
 
@@ -707,6 +736,8 @@ export class Menu implements ComponentInterface, MenuI {
       // start focus trapping
       document.addEventListener('focus', this.handleFocus, true);
     } else {
+      this.el.removeAttribute('aria-hidden');
+
       // remove css classes and unhide content from screen readers
       this.el.classList.remove(SHOW_MENU);
 
