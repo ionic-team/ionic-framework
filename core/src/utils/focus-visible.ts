@@ -29,6 +29,7 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
   const root = rootEl ? rootEl : document.body;
 
   const setFocus = (elements: Element[]) => {
+    console.log('setFocus', elements, currentFocus);
     currentFocus.forEach((el) => el.classList.remove(ION_FOCUSED));
     elements.forEach((el) => el.classList.add(ION_FOCUSED));
     currentFocus = elements;
@@ -62,6 +63,7 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
     keyboardMode = true;
   };
   const onFocusout = () => {
+    console.log('onFocusout');
     if (ref.activeElement === root) {
       setFocus([]);
     }
