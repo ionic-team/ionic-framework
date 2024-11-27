@@ -30,6 +30,7 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
 
   const setFocus = (elements: Element[]) => {
     console.log('setFocus', elements, currentFocus);
+    console.log('keyboardMode', keyboardMode);
     currentFocus.forEach((el) => el.classList.remove(ION_FOCUSED));
     elements.forEach((el) => el.classList.add(ION_FOCUSED));
     currentFocus = elements;
@@ -37,12 +38,14 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
   // SPACE triggers on iOS device with physical keyboard
   const pointerDown = (ev: Event) => {
     console.log('pointerDown', ev);
+    console.log('keyboardMode', keyboardMode);
     keyboardMode = false;
     setFocus([]);
   };
-  // Enter triggers on iOS device with physical keyboard
+// Enter triggers on iOS device with physical keyboard
   const onKeydown = (ev: Event) => {
     console.log('onKeydown', ev);
+    console.log('keyboardMode', keyboardMode);
     keyboardMode = FOCUS_KEYS.includes((ev as KeyboardEvent).key);
     if (!keyboardMode) {
       setFocus([]);
@@ -50,6 +53,7 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
   };
   const onFocusin = (ev: Event) => {
     console.log('onFocusin', ev);
+    console.log('keyboardMode', keyboardMode);
     let toFocus: Element[] = [];
     if (keyboardMode && ev.composedPath !== undefined) {
       toFocus = ev.composedPath().filter((el: any) => {
@@ -61,12 +65,14 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
       }) as Element[];
       setFocus(toFocus);
     }
+    console.log('toFocus', toFocus);
     if (toFocus.length > 0) {
       keyboardMode = true;
     }
   };
   const onFocusout = () => {
     console.log('onFocusout');
+    console.log('keyboardMode', keyboardMode);
     if (ref.activeElement === root) {
       setFocus([]);
     }
