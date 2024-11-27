@@ -971,11 +971,12 @@ export const createTriggerController = () => {
  * like TalkBack do not announce or interact with the content until the
  * animation is complete, avoiding confusion for users.
  *
- * If the overlay is being presented, it prevents focus rings from appearing
- * in incorrect positions due to the transition (specifically `transform`
- * styles), ensuring that when aria-hidden is removed, the focus rings are
- * correctly displayed in the final location of the elements. This only
- * applies to Android devices.
+ * When the overlay is presented on an Android device, TalkBack's focus rings
+ * may appear in the wrong position due to the transition (specifically
+ * `transform` styles). This occurs because the focus rings are initially
+ * displayed at the starting position of the elements before the transition
+ * begins. This workaround ensures the focus rings do not appear in the
+ * incorrect location.
  *
  * If this solution is applied to iOS devices, then it leads to a bug where
  * the overlays cannot be accessed by screen readers. This is due to
