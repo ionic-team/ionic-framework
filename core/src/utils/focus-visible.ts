@@ -40,7 +40,7 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
     keyboardMode = false;
     setFocus([]);
   };
-// Enter triggers on iOS device with physical keyboard
+  // Enter triggers on iOS device with physical keyboard
   const onKeydown = (ev: Event) => {
     console.log('onKeydown', ev);
     keyboardMode = FOCUS_KEYS.includes((ev as KeyboardEvent).key);
@@ -50,8 +50,9 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
   };
   const onFocusin = (ev: Event) => {
     console.log('onFocusin', ev);
+    let toFocus: Element[] = [];
     if (keyboardMode && ev.composedPath !== undefined) {
-      const toFocus = ev.composedPath().filter((el: any) => {
+      toFocus = ev.composedPath().filter((el: any) => {
         // TODO(FW-2832): type
         if (el.classList) {
           return el.classList.contains(ION_FOCUSABLE);
@@ -60,7 +61,9 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
       }) as Element[];
       setFocus(toFocus);
     }
-    keyboardMode = true;
+    if (toFocus.length > 0) {
+      keyboardMode = true;
+    }
   };
   const onFocusout = () => {
     console.log('onFocusout');
