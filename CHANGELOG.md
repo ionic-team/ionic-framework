@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.1](https://github.com/ionic-team/ionic-framework/compare/v8.4.0...v8.4.1) (2024-11-27)
+
+
+### Bug Fixes
+
+* **header:** use aria attributes to hide small title when collapsed ([#30027](https://github.com/ionic-team/ionic-framework/issues/30027)) ([23763ab](https://github.com/ionic-team/ionic-framework/commit/23763abf797f9a4ba8262225760f718e9dcc4782)), closes [#29347](https://github.com/ionic-team/ionic-framework/issues/29347)
+* **menu:** hide from screen readers while animating ([#30036](https://github.com/ionic-team/ionic-framework/issues/30036)) ([845071c](https://github.com/ionic-team/ionic-framework/commit/845071c97a856d45eb5e0bb81d9c270bc38bb604))
+* **overlays:** announce info after opening based on platform ([#30025](https://github.com/ionic-team/ionic-framework/issues/30025)) ([f6188c4](https://github.com/ionic-team/ionic-framework/commit/f6188c47e9278fe69fd9d250c65156edbe5ef32e))
+* **overlays:** focus management with checkbox/radio ([#30026](https://github.com/ionic-team/ionic-framework/issues/30026)) ([8ee42bb](https://github.com/ionic-team/ionic-framework/commit/8ee42bbc1e0bf4731d20040c7853756722f1a4b2))
+* **toast:** swipe gesture works with custom container layout ([#29999](https://github.com/ionic-team/ionic-framework/issues/29999)) ([470decc](https://github.com/ionic-team/ionic-framework/commit/470decca7b6b89ef74095ef0bb7909b93640cd78)), closes [#29998](https://github.com/ionic-team/ionic-framework/issues/29998)
+
+
+
+
+
 # [8.4.0](https://github.com/ionic-team/ionic-framework/compare/v8.3.4...v8.4.0) (2024-11-04)
 
 
