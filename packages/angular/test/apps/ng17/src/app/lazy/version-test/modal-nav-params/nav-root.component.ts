@@ -23,7 +23,7 @@ let rootParamsException = false;
 })
 export class NavRootComponent implements OnInit {
 
-  @Input() params: any = {};
+  @Input() params: any;
 
   ngOnInit() {
     if (this.params === undefined) {
