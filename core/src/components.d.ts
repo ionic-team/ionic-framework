@@ -2679,6 +2679,7 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        "setFocus": () => Promise<void>;
         /**
           * The theme determines the visual appearance of the component.
          */

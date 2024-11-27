@@ -32,6 +32,7 @@ import {
   removeEventListener,
 } from './helpers';
 import { printIonWarning } from './logging';
+import { isPlatform } from './platform';
 
 let lastOverlayIndex = 0;
 let lastId = 0;
@@ -971,21 +972,30 @@ export const createTriggerController = () => {
  * like TalkBack do not announce or interact with the content until the
  * animation is complete, avoiding confusion for users.
  *
- * If the overlay is being presented, it prevents focus rings from appearing
- * in incorrect positions due to the transition (specifically `transform`
- * styles), ensuring that when aria-hidden is removed, the focus rings are
- * correctly displayed in the final location of the elements.
+ * When the overlay is presented on an Android device, TalkBack's focus rings
+ * may appear in the wrong position due to the transition (specifically
+ * `transform` styles). This occurs because the focus rings are initially
+ * displayed at the starting position of the elements before the transition
+ * begins. This workaround ensures the focus rings do not appear in the
+ * incorrect location.
+ *
+ * If this solution is applied to iOS devices, then it leads to a bug where
+ * the overlays cannot be accessed by screen readers. This is due to
+ * VoiceOver not being able to update the accessibility tree when the
+ * `aria-hidden` is removed.
  *
  * @param overlay - The overlay that is being animated.
  */
 const hideAnimatingOverlayFromScreenReaders = (overlay: HTMLIonOverlayElement) => {
   if (doc === undefined) return;
 
-  /**
-   * Once the animation is complete, this attribute will be removed.
-   * This is done at the end of the `present` method.
-   */
-  overlay.setAttribute('aria-hidden', 'true');
+  if (isPlatform('android')) {
+    /**
+     * Once the animation is complete, this attribute will be removed.
+     * This is done at the end of the `present` method.
+     */
+    overlay.setAttribute('aria-hidden', 'true');
+  }
 };
 
 /**
