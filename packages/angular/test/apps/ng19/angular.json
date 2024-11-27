@@ -13,11 +13,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/test-app",
+            "outputPath": "dist/test-app/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": ["src/polyfills.ts"],
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "buildOptimizer": true,
             "assets": [
               "src/favicon.ico",
               {
@@ -49,6 +50,8 @@
               "aot": true,
               "progress": false,
               "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -62,31 +65,15 @@
               ]
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
+              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/test-app-server",
-            "main": "src/main.server.ts",
-            "tsConfig": "tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -103,14 +90,6 @@
           },
           "defaultConfiguration": "development"
         },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "buildTarget": "test-app:build:production",
-            "serverTarget": "test-app:server:production",
-            "routes": ["/"]
-          }
-        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
@@ -120,10 +99,49 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/test-app/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "options": {
+            "browserTarget": "test-app:build",
+            "serverTarget": "test-app:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "test-app:build:production",
+              "serverTarget": "test-app:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "test-app:build:production",
+            "serverTarget": "test-app:server:production",
+            "routes": []
           }
         }
       }
@@ -133,7 +151,6 @@
     "schematicCollections": ["@angular-eslint/schematics"],
     "cache": {
       "enabled": false
-    },
-    "analytics": false
+    }
   }
 }
