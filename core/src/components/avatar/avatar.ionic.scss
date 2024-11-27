@@ -23,8 +23,6 @@
 
 :host(:not(.avatar-image)) {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-
-  border: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-primitives-neutral-800;
 }
 
 // Avatar Sizes
