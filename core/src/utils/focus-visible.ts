@@ -66,9 +66,7 @@ export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => 
       setFocus(toFocus);
     }
     console.log('toFocus', toFocus);
-    if (toFocus.length > 0) {
-      keyboardMode = true;
-    }
+    keyboardMode = true;
   };
   const onFocusout = () => {
     console.log('onFocusout');
