@@ -19,30 +19,39 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding" id="content" style="text-align: center">
-        (Only available for ionic theme)
-
+      <ion-content id="content" style="text-align: center">
+        <ion-text>
+          (Only available for ionic theme)
+        </ion-text>
         <ion-tab-bar style="margin-top: 16px">
-          <ion-segment style="flex: 1">
-            Default Shape:
-            <ion-tab-button id="default-tab-button" style="background: #ff9e99">
-              <ion-label>Round Shape</ion-label>
-              <ion-icon aria-hidden="true" name="stop-circle"></ion-icon>
-            </ion-tab-button>
-          </ion-segment>
+          <ion-text style="flex: 1">
+            Default Shape
+          </ion-text>
+          <ion-text style="flex: 1">
+            Soft Shape
+          </ion-text>
+          <ion-text style="flex: 1">
+            Round Shape
+          </ion-text>
+          <ion-text style="flex: 1">
+            Rectangular Shape
+          </ion-text>
+        </ion-tab-bar>
+
+        <ion-tab-bar>
+          <ion-tab-button id="default-tab-button" style="background: #ff9e99">
+            <ion-icon aria-hidden="true" name="stop-circle"></ion-icon>
+          </ion-tab-button>
 
           <ion-tab-button id="soft-tab-button" shape="soft" style="background: #faf19d">
-            <ion-label>Soft Shape</ion-label>
             <ion-icon aria-hidden="true" name="cloud"></ion-icon>
           </ion-tab-button>
 
           <ion-tab-button id="round-tab-button" shape="round" style="background: #ff9e99">
-            <ion-label>Round Shape</ion-label>
             <ion-icon aria-hidden="true" name="stop-circle"></ion-icon>
           </ion-tab-button>
 
           <ion-tab-button id="rect-tab-button" shape="rectangular" style="background: #a3ff85">
-            <ion-label>Rectangular Shape</ion-label>
             <ion-icon aria-hidden="true" name="square"></ion-icon>
           </ion-tab-button>
         </ion-tab-bar>
