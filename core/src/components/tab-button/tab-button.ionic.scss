@@ -8,8 +8,6 @@
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-radius-025};
 
-  @include globals.border-radius(globals.$ion-border-radius-200);
-
   align-content: center;
 
   min-height: globals.$ion-scale-1200;
@@ -72,4 +70,19 @@
 ::slotted(ion-icon) {
   width: globals.$ion-scale-600;
   height: globals.$ion-scale-600;
+}
+
+// Toast Shapes
+// -------------------------------------------------------------------------------
+
+:host(.toast-shape-soft) {
+  border-radius: #{globals.$ion-border-radius-200};
+}
+
+:host(.toast-shape-round) {
+  border-radius: #{globals.$ion-border-radius-400};
+}
+
+:host(.toast-shape-rectangular) {
+  border-radius: #{globals.$ion-border-radius-0};
 }

@@ -69,6 +69,15 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   @Prop({ mutable: true }) selected = false;
 
   /**
+   * Set to `"soft"` for a tab-button with slightly rounded corners,
+   * `"round"` for a tab-button with fully rounded corners, or `"rectangular"`
+   * for a tab-button without rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
+
+  /**
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
    * the selected tab or by the router to switch between them.
    */
@@ -107,6 +116,21 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     }
   }
 
+  private getShape(): string | undefined {
+    const { shape } = this;
+
+    // TODO(ROU-11300): Remove theme check when shapes are defined for all themes.
+    if (getIonTheme(this) !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   private selectTab(ev: Event | KeyboardEvent) {
     if (this.tab !== undefined) {
       if (!this.disabled) {
@@ -141,6 +165,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   render() {
     const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;
     const theme = getIonTheme(this);
+    const shape = this.getShape();
     const attrs = {
       download: this.download,
       href,
@@ -164,6 +189,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           [`tab-layout-${layout}`]: true,
           'ion-activatable': true,
           'ion-selectable': true,
+          [`toast-shape-${shape}`]: shape !== undefined,
           'ion-focusable': true,
         }}
       >

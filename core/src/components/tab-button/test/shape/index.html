@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tab Button - Shape</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/core.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Tab Button - Shape</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content" style="text-align: center">
+        (Only available for ionic theme)
+
+        <ion-tab-bar style="margin-top: 16px">
+          <ion-segment style="flex: 1">
+            Default Shape:
+            <ion-tab-button id="default-tab-button" style="background: #ff9e99">
+              <ion-label>Round Shape</ion-label>
+              <ion-icon aria-hidden="true" name="stop-circle"></ion-icon>
+            </ion-tab-button>
+          </ion-segment>
+
+          <ion-tab-button id="soft-tab-button" shape="soft" style="background: #faf19d">
+            <ion-label>Soft Shape</ion-label>
+            <ion-icon aria-hidden="true" name="cloud"></ion-icon>
+          </ion-tab-button>
+
+          <ion-tab-button id="round-tab-button" shape="round" style="background: #ff9e99">
+            <ion-label>Round Shape</ion-label>
+            <ion-icon aria-hidden="true" name="stop-circle"></ion-icon>
+          </ion-tab-button>
+
+          <ion-tab-button id="rect-tab-button" shape="rectangular" style="background: #a3ff85">
+            <ion-label>Rectangular Shape</ion-label>
+            <ion-icon aria-hidden="true" name="square"></ion-icon>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
