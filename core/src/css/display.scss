@@ -5,6 +5,14 @@
 // --------------------------------------------------
 // Modifies display of a particular element based on the given classes
 
+.ion-display-flex {
+  display: flex !important;
+}
+
+.ion-display-contents {
+  display: contents !important;
+}
+
 .ion-hide {
   display: none !important;
 }
