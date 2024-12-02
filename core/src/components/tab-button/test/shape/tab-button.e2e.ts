@@ -36,19 +36,19 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ config, screens
       await tabButtonFixture.goto(config);
     });
 
-    test('should render the default toast', async () => {
+    test('should render the default tab button', async () => {
       await tabButtonFixture.screenshot('shape-round', screenshot, '#default-tab-button');
     });
 
-    test('should render a soft toast', async () => {
+    test('should render a soft tab button', async () => {
       await tabButtonFixture.screenshot('shape-soft', screenshot, '#soft-tab-button');
     });
 
-    test('should render a round toast', async () => {
+    test('should render a round tab button', async () => {
       await tabButtonFixture.screenshot('shape-round', screenshot, '#round-tab-button');
     });
 
-    test('should render a rectangular toast', async () => {
+    test('should render a rectangular tab button', async () => {
       await tabButtonFixture.screenshot('shape-rectangular', screenshot, '#rect-tab-button');
     });
   });
