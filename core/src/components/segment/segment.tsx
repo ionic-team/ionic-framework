@@ -175,8 +175,6 @@ export class Segment implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
-
-    this.segmentViewEl = this.getSegmentView();
   }
 
   disconnectedCallback() {
@@ -188,6 +186,8 @@ export class Segment implements ComponentInterface {
   }
 
   async componentDidLoad() {
+    this.segmentViewEl = this.getSegmentView();
+
     this.setCheckedClasses();
 
     /**
