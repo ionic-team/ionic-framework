@@ -36,10 +36,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ config, screens
       await tabButtonFixture.goto(config);
     });
 
-    test('should render the default tab button', async () => {
-      await tabButtonFixture.screenshot('shape-round', screenshot, '#default-tab-button');
-    });
-
     test('should render a soft tab button', async () => {
       await tabButtonFixture.screenshot('shape-soft', screenshot, '#soft-tab-button');
     });

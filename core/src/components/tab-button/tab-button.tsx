@@ -117,10 +117,11 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   private getShape(): string | undefined {
+    const theme = getIonTheme(this);
     const { shape } = this;
 
     // TODO(ROU-11300): Remove theme check when shapes are defined for all themes.
-    if (getIonTheme(this) !== 'ionic') {
+    if (theme !== 'ionic') {
       return undefined;
     }
 
@@ -189,7 +190,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           [`tab-layout-${layout}`]: true,
           'ion-activatable': true,
           'ion-selectable': true,
-          [`toast-shape-${shape}`]: shape !== undefined,
+          [`tab-button-shape-${shape}`]: shape !== undefined,
           'ion-focusable': true,
         }}
       >

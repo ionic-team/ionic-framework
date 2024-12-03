@@ -72,17 +72,17 @@
   height: globals.$ion-scale-600;
 }
 
-// Toast Shapes
+// Tab Button Shapes
 // -------------------------------------------------------------------------------
 
-:host(.toast-shape-soft) {
-  border-radius: #{globals.$ion-border-radius-200};
+:host(.tab-button-shape-soft) {
+  @include globals.border-radius(globals.$ion-border-radius-200);
 }
 
-:host(.toast-shape-round) {
-  border-radius: #{globals.$ion-border-radius-400};
+:host(.tab-button-shape-round) {
+  @include globals.border-radius(globals.$ion-border-radius-400);
 }
 
-:host(.toast-shape-rectangular) {
-  border-radius: #{globals.$ion-border-radius-0};
+:host(.tab-button-shape-rectangular) {
+  @include globals.border-radius(globals.$ion-border-radius-0);
 }
