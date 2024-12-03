@@ -23,15 +23,15 @@
 // --------------------------------------------------
 
 :host(.input-size-medium) .native-wrapper {
-  min-height: 40px;
+  min-height: globals.$ion-scale-1000;
 }
 
 :host(.input-size-large) .native-wrapper {
-  min-height: 48px;
+  min-height: globals.$ion-scale-1200;
 }
 
 :host(.input-size-xlarge) .native-wrapper {
-  min-height: 56px;
+  min-height: globals.$ion-scale-1400;
 }
 
 // Ionic Input Password Toggle Sizes
@@ -57,7 +57,7 @@
   position: absolute;
 
   height: 100%;
-  min-height: 48px;
+  min-height: globals.$ion-scale-1200;
 
   transform: translateY(-50%);
 
@@ -85,8 +85,8 @@
 // ----------------------------------------------------------------
 
 .input-clear-icon {
-  width: 16px;
-  height: 16px;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 
   color: globals.$ion-primitives-neutral-500;
 }
@@ -236,7 +236,7 @@
 // ----------------------------------------------------------------
 
 :host(.has-focus) {
-  --border-color: #{globals.$ion-semantics-primary-base};
+  --border-color: #{globals.$ion-border-focus-default};
 }
 
 :host(.has-focus) .input-highlight {

@@ -88,5 +88,5 @@ $toolbar-order-ionic: (
   justify-content: end;
   order: map-get($toolbar-order-ionic, slot-end);
 
-  font-size: var(--ionic-font-size-600, 1.5rem);
+  font-size: globals.$ion-font-size-600;
 }
