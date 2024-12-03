@@ -175,6 +175,8 @@ export class Segment implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
+
+    this.segmentViewEl = this.getSegmentView();
   }
 
   disconnectedCallback() {
