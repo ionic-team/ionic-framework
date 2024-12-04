@@ -4,7 +4,8 @@ import { IonTabBar } from '@ionic/angular';
 @Component({
   selector: 'app-tabs-basic',
   templateUrl: './tabs-basic.component.html',
-  styleUrls: ['./tabs-basic.component.css']
+  styleUrls: ['./tabs-basic.component.css'],
+  standalone: false
 })
 export class TabsBasicComponent {
   constructor() { }
