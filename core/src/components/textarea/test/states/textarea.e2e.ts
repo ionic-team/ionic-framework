@@ -31,8 +31,12 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       test('should render focused textarea correctly', async ({ page }) => {
         await page.setContent(
           `
-          <ion-textarea label="Email" value="hi@ionic.io" class="has-focus"></ion-textarea>
+          <div class="container ion-padding">
+            <ion-textarea label="Email" value="hi@ionic.io" class="has-focus"></ion-textarea>
+          </div>
         `,
+
+        
           config
         );
 
