@@ -669,6 +669,7 @@ export class PickerColumn implements ComponentInterface {
   render() {
     const { color, disabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
+    const mobile = isPlatform('mobile');
 
     return (
       <Host
@@ -682,7 +683,32 @@ export class PickerColumn implements ComponentInterface {
         {this.renderAssistiveFocusable()}
         <slot name="prefix"></slot>
         <div
-          aria-hidden="true"
+          /**
+           * This element is hidden from mobile screen readers.
+           * This prevents the element from being incorrectly
+           * focused and announced, which can happen on mobile
+           * devices due to its overflow styles. Hiding it ensures
+           * it is excluded from the accessibility tree and does
+           * not interfere with screen reader navigation.
+           * However, the options are still clickable on web apps.
+           *
+           */
+
+          /**
+           * his element is hidden from mobile screen readers.
+           * This prevents the element from being incorrectly
+           * focused and announced, which can happen on mobile
+           * devices due to its overflow styles. Hiding it ensures
+           * it is excluded from the accessibility tree.
+           *
+           * In web apps, users can click on the options inside
+           * this element, so applying `aria-hidden="true"` can
+           * lead to a blocked `aria-hidden` error.
+           * To prevent this issue, `aria-hidden` is only added
+           * on mobile devices where options cannot be tapped.
+           */
+
+          aria-hidden={mobile ? 'true' : undefined}
           class="picker-opts"
           ref={(el) => {
             this.scrollEl = el;
