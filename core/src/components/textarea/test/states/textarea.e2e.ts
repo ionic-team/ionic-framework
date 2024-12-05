@@ -38,8 +38,6 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
           <ion-textarea fill="outline" value="hi@ionic.io" class="has-focus"></ion-textarea>
         </div>
       `,
-
-      
         config
       );
 
