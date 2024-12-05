@@ -35,7 +35,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       await page.setContent(
         `
         <div class="container ion-padding">
-          <ion-textarea label="Email" value="hi@ionic.io" class="has-focus"></ion-textarea>
+          <ion-textarea fill="outline" value="hi@ionic.io" class="has-focus"></ion-textarea>
         </div>
       `,
 
