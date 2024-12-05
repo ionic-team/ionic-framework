@@ -152,7 +152,7 @@ ion-icon {
 
   transform: scale(0);
 
-  transition: transform 200ms;
+  transition: transform globals.$ion-transition-time-200;
 
   background: var(--border-color);
 }
