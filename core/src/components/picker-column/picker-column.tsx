@@ -682,7 +682,7 @@ export class PickerColumn implements ComponentInterface {
         {this.renderAssistiveFocusable()}
         <slot name="prefix"></slot>
         <div
-          role="presentation"
+          aria-hidden="true"
           class="picker-opts"
           ref={(el) => {
             this.scrollEl = el;
@@ -716,7 +716,7 @@ export class PickerColumn implements ComponentInterface {
           <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
-          <slot></slot>
+          <slot aria-hidden="false"></slot>
           <div class="picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
