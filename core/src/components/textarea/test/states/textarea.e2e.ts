@@ -26,23 +26,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const textarea = page.locator('ion-textarea');
       await expect(textarea).toHaveScreenshot(screenshot(`textarea-disabled`));
     });
+  });
+});
 
-    test.describe(title('focused'), () => {
-      test('should render focused textarea correctly', async ({ page }) => {
-        await page.setContent(
-          `
-          <div class="container ion-padding">
-            <ion-textarea label="Email" value="hi@ionic.io" class="has-focus"></ion-textarea>
-          </div>
-        `,
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('focused'), () => {
+    test('should render focused textarea correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <div class="container ion-padding">
+          <ion-textarea label="Email" value="hi@ionic.io" class="has-focus"></ion-textarea>
+        </div>
+      `,
 
-        
-          config
-        );
+      
+        config
+      );
 
-        const container = page.locator('.container');
-        await expect(container).toHaveScreenshot(screenshot(`textarea-focused`));
-      });
+      const container = page.locator('.container');
+      await expect(container).toHaveScreenshot(screenshot(`textarea-focused`));
     });
   });
 });
