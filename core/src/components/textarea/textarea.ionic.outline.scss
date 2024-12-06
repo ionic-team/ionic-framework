@@ -59,3 +59,10 @@
 :host(.textarea-fill-outline) textarea {
   margin-top: globals.$ion-space-100;
 }
+
+// Input Focus
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-outline.has-focus) {
+  --border-width: #{globals.$ion-border-size-050};
+}
