@@ -2432,6 +2432,10 @@ Do not edit directly, this file was auto-generated.
   box-shadow: $ion-elevation-4;
 }
 
+.ion-gap-space-0 {
+  gap: #{$ion-space-0};
+}
+
 .ion-margin-space-0 {
   --margin-top: #{$ion-space-0};
   --margin-end: #{$ion-space-0};
@@ -2496,6 +2500,10 @@ Do not edit directly, this file was auto-generated.
   --padding-start: #{$ion-space-0};
 
   @include padding(null, null, null, $ion-space-0);
+}
+
+.ion-gap-space-100 {
+  gap: #{$ion-space-100};
 }
 
 .ion-margin-space-100 {
@@ -2564,6 +2572,10 @@ Do not edit directly, this file was auto-generated.
   @include padding(null, null, null, $ion-space-100);
 }
 
+.ion-gap-space-150 {
+  gap: #{$ion-space-150};
+}
+
 .ion-margin-space-150 {
   --margin-top: #{$ion-space-150};
   --margin-end: #{$ion-space-150};
@@ -2628,6 +2640,10 @@ Do not edit directly, this file was auto-generated.
   --padding-start: #{$ion-space-150};
 
   @include padding(null, null, null, $ion-space-150);
+}
+
+.ion-gap-space-200 {
+  gap: #{$ion-space-200};
 }
 
 .ion-margin-space-200 {
@@ -2696,6 +2712,10 @@ Do not edit directly, this file was auto-generated.
   @include padding(null, null, null, $ion-space-200);
 }
 
+.ion-gap-space-250 {
+  gap: #{$ion-space-250};
+}
+
 .ion-margin-space-250 {
   --margin-top: #{$ion-space-250};
   --margin-end: #{$ion-space-250};
@@ -2760,6 +2780,10 @@ Do not edit directly, this file was auto-generated.
   --padding-start: #{$ion-space-250};
 
   @include padding(null, null, null, $ion-space-250);
+}
+
+.ion-gap-space-300 {
+  gap: #{$ion-space-300};
 }
 
 .ion-margin-space-300 {
@@ -2828,6 +2852,10 @@ Do not edit directly, this file was auto-generated.
   @include padding(null, null, null, $ion-space-300);
 }
 
+.ion-gap-space-400 {
+  gap: #{$ion-space-400};
+}
+
 .ion-margin-space-400 {
   --margin-top: #{$ion-space-400};
   --margin-end: #{$ion-space-400};
@@ -2892,6 +2920,10 @@ Do not edit directly, this file was auto-generated.
   --padding-start: #{$ion-space-400};
 
   @include padding(null, null, null, $ion-space-400);
+}
+
+.ion-gap-space-500 {
+  gap: #{$ion-space-500};
 }
 
 .ion-margin-space-500 {
@@ -2960,6 +2992,10 @@ Do not edit directly, this file was auto-generated.
   @include padding(null, null, null, $ion-space-500);
 }
 
+.ion-gap-space-600 {
+  gap: #{$ion-space-600};
+}
+
 .ion-margin-space-600 {
   --margin-top: #{$ion-space-600};
   --margin-end: #{$ion-space-600};
@@ -3024,6 +3060,10 @@ Do not edit directly, this file was auto-generated.
   --padding-start: #{$ion-space-600};
 
   @include padding(null, null, null, $ion-space-600);
+}
+
+.ion-gap-space-700 {
+  gap: #{$ion-space-700};
 }
 
 .ion-margin-space-700 {
@@ -3092,6 +3132,10 @@ Do not edit directly, this file was auto-generated.
   @include padding(null, null, null, $ion-space-700);
 }
 
+.ion-gap-space-800 {
+  gap: #{$ion-space-800};
+}
+
 .ion-margin-space-800 {
   --margin-top: #{$ion-space-800};
   --margin-end: #{$ion-space-800};
@@ -3156,6 +3200,10 @@ Do not edit directly, this file was auto-generated.
   --padding-start: #{$ion-space-800};
 
   @include padding(null, null, null, $ion-space-800);
+}
+
+.ion-gap-space-900 {
+  gap: #{$ion-space-900};
 }
 
 .ion-margin-space-900 {
@@ -3224,6 +3272,10 @@ Do not edit directly, this file was auto-generated.
   @include padding(null, null, null, $ion-space-900);
 }
 
+.ion-gap-space-1000 {
+  gap: #{$ion-space-1000};
+}
+
 .ion-margin-space-1000 {
   --margin-top: #{$ion-space-1000};
   --margin-end: #{$ion-space-1000};
@@ -3290,6 +3342,10 @@ Do not edit directly, this file was auto-generated.
   @include padding(null, null, null, $ion-space-1000);
 }
 
+.ion-gap-space-1200 {
+  gap: #{$ion-space-1200};
+}
+
 .ion-margin-space-1200 {
   --margin-top: #{$ion-space-1200};
   --margin-end: #{$ion-space-1200};
@@ -3354,6 +3410,10 @@ Do not edit directly, this file was auto-generated.
   --padding-start: #{$ion-space-1200};
 
   @include padding(null, null, null, $ion-space-1200);
+}
+
+.ion-gap-space-050 {
+  gap: #{$ion-space-050};
 }
 
 .ion-margin-space-050 {
