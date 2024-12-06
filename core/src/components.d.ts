@@ -3505,6 +3505,10 @@ export namespace Components {
          */
         "selected": boolean;
         /**
+          * Set to `"soft"` for a tab-button with slightly rounded corners, `"round"` for a tab-button with fully rounded corners, or `"rectangular"` for a tab-button without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
          */
         "tab"?: string;
@@ -8941,6 +8945,10 @@ declare namespace LocalJSX {
           * The selected tab component
          */
         "selected"?: boolean;
+        /**
+          * Set to `"soft"` for a tab-button with slightly rounded corners, `"round"` for a tab-button with fully rounded corners, or `"rectangular"` for a tab-button without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
          */
