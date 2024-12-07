@@ -50,12 +50,9 @@
 
       <ion-content id="content" class="ion-padding">
         <div class="grid">
-
           <div class="grid-item">
             <h2>Select with Helper text</h2>
-            <ion-select class="ion-touched ion-valid"
-                        helper-text="Select a fruit"
-                        value="apple">
+            <ion-select class="ion-touched ion-valid" helper-text="Select a fruit" value="apple">
               <div slot="label">Favorite Fruit</div>
               <ion-select-option value="apple">Apple</ion-select-option>
               <ion-select-option value="bananna">Bananna</ion-select-option>
@@ -64,8 +61,7 @@
 
           <div class="grid-item">
             <h2>Select with Error text</h2>
-            <ion-select class="ion-touched ion-invalid"
-                        error-text="No fruit selected">
+            <ion-select class="ion-touched ion-invalid" error-text="No fruit selected">
               <div slot="label">Favorite Fruit</div>
               <ion-select-option value="apple">Apple</ion-select-option>
               <ion-select-option value="bananna">Bananna</ion-select-option>
@@ -74,8 +70,12 @@
 
           <div class="grid-item">
             <h2>Select with Helper and error text| Valid</h2>
-            <ion-select class="ion-touched ion-valid" helper-text="Select a fruit"
-                        error-text="No fruit selected" value="apple">
+            <ion-select
+              class="ion-touched ion-valid"
+              helper-text="Select a fruit"
+              error-text="No fruit selected"
+              value="apple"
+            >
               <div slot="label">Favorite Fruit</div>
               <ion-select-option value="apple">Apple</ion-select-option>
               <ion-select-option value="bananna">Bananna</ion-select-option>
@@ -84,8 +84,7 @@
 
           <div class="grid-item">
             <h2>Select with no helper or error text</h2>
-            <ion-select class="ion-touched ion-valid"
-                        value="bananna">
+            <ion-select class="ion-touched ion-valid" value="bananna">
               <div slot="label">Favorite Fruit</div>
               <ion-select-option value="apple">Apple</ion-select-option>
               <ion-select-option value="bananna">Bananna</ion-select-option>
@@ -93,8 +92,7 @@
           </div>
         </div>
 
-        <script>
-        </script>
+        <script></script>
       </ion-content>
     </ion-app>
   </body>

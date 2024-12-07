@@ -60,7 +60,6 @@ export class Select implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
-  
 
   private notchController?: NotchController;
 
@@ -109,7 +108,7 @@ export class Select implements ComponentInterface {
   /**
    * Text that is placed under the select and displayed when an error is detected.
    */
-    @Prop() errorText?: string;
+  @Prop() errorText?: string;
 
   /**
    * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
@@ -742,21 +741,6 @@ export class Select implements ComponentInterface {
       </div>,
     ];
   }
-
-  private getHintTextID(): string | undefined {
-    const { el, helperText, errorText, helperTextId, errorTextId } = this;
-
-    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
-      return errorTextId;
-    }
-
-    if (helperText) {
-      return helperTextId;
-    }
-
-    return undefined;
-  }
-
   private get childOpts() {
     return Array.from(this.el.querySelectorAll('ion-select-option'));
   }
@@ -856,10 +840,10 @@ export class Select implements ComponentInterface {
   };
 
   /**
- * Responsible for rendering helper text and
- * error text. This element should only
- * be rendered if hint text is set.
- */
+   * Responsible for rendering helper text and
+   * error text. This element should only
+   * be rendered if hint text is set.
+   */
   private renderBottomContent() {
     const { helperText, errorText } = this;
 
@@ -868,18 +852,11 @@ export class Select implements ComponentInterface {
      * be treated as not having helper/error text.
      */
     const hasHintText = !!helperText || !!errorText;
-    console.log(`HelperText: ${helperText}`);
-    console.log(`errorText: ${errorText}`);
     if (!hasHintText) {
-      console.log("No text");
       return;
     }
 
-    return (
-      <div class="input-bottom">
-        {this.renderHintText()}
-      </div>
-    );
+    return <div class="input-bottom">{this.renderHintText()}</div>;
   }
 
   private renderLabel() {
