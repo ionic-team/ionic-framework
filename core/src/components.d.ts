@@ -2756,6 +2756,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the select and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
@@ -2763,6 +2767,10 @@ export namespace Components {
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the select and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
@@ -7569,6 +7577,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the select and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
@@ -7576,6 +7588,10 @@ declare namespace LocalJSX {
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the select and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
