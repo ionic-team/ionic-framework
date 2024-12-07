@@ -52,24 +52,44 @@
         <div class="grid">
 
           <div class="grid-item">
-            <h2>Select with Helper</h2>
-            <ion-select class="ion-touched ion-invalid" helperText="Select a fruit"
-            errorText="No fruit selected">
-            <div slot="label">Favorite Fruit <ion-text color="danger">(Required)</ion-text></div>
+            <h2>Select with Helper text</h2>
+            <ion-select class="ion-touched ion-valid"
+                        helper-text="Select a fruit"
+                        value="apple">
+              <div slot="label">Favorite Fruit</div>
               <ion-select-option value="apple">Apple</ion-select-option>
               <ion-select-option value="bananna">Bananna</ion-select-option>
             </ion-select>
           </div>
 
           <div class="grid-item">
-            <h2>Counter with Error</h2>
-            <ion-input
-              class="ion-touched ion-invalid"
-              label="Email"
-              counter="true"
-              maxlength="100"
-              error-text="Please enter a valid email"
-            ></ion-input>
+            <h2>Select with Error text</h2>
+            <ion-select class="ion-touched ion-invalid"
+                        error-text="No fruit selected">
+              <div slot="label">Favorite Fruit</div>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="bananna">Bananna</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Select with Helper and error text| Valid</h2>
+            <ion-select class="ion-touched ion-valid" helper-text="Select a fruit"
+                        error-text="No fruit selected" value="apple">
+              <div slot="label">Favorite Fruit</div>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="bananna">Bananna</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Select with no helper or error text</h2>
+            <ion-select class="ion-touched ion-valid"
+                        value="bananna">
+              <div slot="label">Favorite Fruit</div>
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="bananna">Bananna</ion-select-option>
+            </ion-select>
           </div>
         </div>
 
