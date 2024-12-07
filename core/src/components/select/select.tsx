@@ -52,12 +52,15 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 })
 export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private overlay?: OverlaySelect;
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
+  
 
   private notchController?: NotchController;
 
@@ -97,6 +100,16 @@ export class Select implements ComponentInterface {
    * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
+
+  /**
+   * Text that is placed under the select and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * Text that is placed under the select and displayed when an error is detected.
+   */
+    @Prop() errorText?: string;
 
   /**
    * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
@@ -714,6 +727,36 @@ export class Select implements ComponentInterface {
     return this.getText() !== '';
   }
 
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    return [
+      <div id={helperTextId} class="helper-text">
+        {helperText}
+      </div>,
+      <div id={errorTextId} class="error-text">
+        {errorText}
+      </div>,
+    ];
+  }
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
   private get childOpts() {
     return Array.from(this.el.querySelectorAll('ion-select-option'));
   }
@@ -811,6 +854,33 @@ export class Select implements ComponentInterface {
   private onBlur = () => {
     this.ionBlur.emit();
   };
+
+  /**
+ * Responsible for rendering helper text and
+ * error text. This element should only
+ * be rendered if hint text is set.
+ */
+  private renderBottomContent() {
+    const { helperText, errorText } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    console.log(`HelperText: ${helperText}`);
+    console.log(`errorText: ${errorText}`);
+    if (!hasHintText) {
+      console.log("No text");
+      return;
+    }
+
+    return (
+      <div class="input-bottom">
+        {this.renderHintText()}
+      </div>
+    );
+  }
 
   private renderLabel() {
     const { label } = this;
@@ -1069,6 +1139,7 @@ export class Select implements ComponentInterface {
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>
+        {this.renderBottomContent()}
       </Host>
     );
   }
