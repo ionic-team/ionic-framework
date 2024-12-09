@@ -132,3 +132,37 @@ ion-icon {
 .textarea-bottom .counter {
   color: globals.$ion-primitives-neutral-800;
 }
+
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
+  --border-width: #{globals.$ion-border-size-025};
+}
+
+// Textarea Highlight
+// ----------------------------------------------------------------
+
+.textarea-highlight {
+  @include globals.position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: globals.$ion-border-size-050;
+
+  transform: scale(0);
+
+  transition: transform globals.$ion-transition-time-200;
+
+  background: var(--border-color);
+}
+
+// Textarea Focus
+// ----------------------------------------------------------------
+
+:host(.has-focus) {
+  --border-color: #{globals.$ion-border-focus-default};
+}
+
+:host(.has-focus) .textarea-highlight {
+  transform: scale(1);
+}
