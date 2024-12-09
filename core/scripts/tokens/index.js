@@ -17,7 +17,7 @@
     removeConsecutiveRepeatedWords,
     setPrefixValue,
     generateRadiusUtilityClasses,
-    generateBorderSizeUtilityClasses,
+    generateBorderUtilityClasses,
     generateFontUtilityClasses,
     generateShadowUtilityClasses,
     generateUtilityClasses
@@ -112,7 +112,6 @@
         }
 
         let utilityClass = '';
-
         switch (tokenCategory) {
           case 'color':
           case 'primitives':
@@ -123,8 +122,8 @@
           case 'state':
             utilityClass = generateColorUtilityClasses(prop, propName);
             break;
-          case 'border-size':
-            utilityClass = generateBorderSizeUtilityClasses(propName);
+          case 'border':
+            utilityClass = generateBorderUtilityClasses(prop, propName);
             break;
           case 'font':
             utilityClass = generateFontUtilityClasses(prop, propName);
