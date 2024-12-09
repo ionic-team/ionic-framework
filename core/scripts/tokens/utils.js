@@ -231,7 +231,14 @@ function generateSpaceUtilityClasses(prop, className) {
 };
 `;
 
-  return `${marginPaddingTemplate('margin')}\n${marginPaddingTemplate('padding')}`;
+  // Add gap utility classes for gap tokens
+  const generateGapUtilityClasses = () =>`
+.${variablesPrefix}-gap-${prop.name} { 
+  gap: #{$${variablesPrefix}-${prop.name}}; 
+};
+`;
+
+  return `${generateGapUtilityClasses()}\n${marginPaddingTemplate('margin')}\n${marginPaddingTemplate('padding')}`;
 }
 
 // Generates a valid box-shadow value from a shadow Design Token structure
