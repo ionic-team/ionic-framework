@@ -246,9 +246,22 @@ function generateRadiusUtilityClasses(propName) {
   return `.${variablesPrefix}-${propName} {\n  border-radius: $${variablesPrefix}-${propName};\n}`;
 }
 
-// Generates a font based css utility-class from a font Design Token structure
-function generateBorderSizeUtilityClasses(propName) {
-  return `.${variablesPrefix}-${propName} {\n  border-width: $${variablesPrefix}-${propName};\n}`;
+// Generates a board based css utility-class from a font Design Token structure
+function generateBorderUtilityClasses(prop, propName) {
+  let attribute;
+
+  switch (prop.attributes.type) {
+    case 'border-radius':
+    case 'border-style':
+      attribute = prop.attributes.type;
+      break;
+    case 'border-size':
+      attribute = 'border-width';
+      break;
+    default:
+      attribute = 'border-color';
+  }
+  return `.${variablesPrefix}-${propName} {\n  ${attribute}: $${variablesPrefix}-${propName};\n}`;
 }
 
 // Generates a font based css utility-class from a font Design Token structure
@@ -280,7 +293,7 @@ module.exports = {
     generateDefaultSpaceUtilityClasses,
     generateSpaceUtilityClasses,
     removeConsecutiveRepeatedWords,
-    generateBorderSizeUtilityClasses,
+    generateBorderUtilityClasses,
     generateFontUtilityClasses,
     generateShadowUtilityClasses,
     generateUtilityClasses
