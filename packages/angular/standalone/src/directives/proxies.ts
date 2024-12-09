@@ -2081,14 +2081,14 @@ export declare interface IonTabBar extends Components.IonTabBar {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonTabButton,
-  inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'tab', 'target', 'theme']
+  inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'shape', 'tab', 'target', 'theme']
 })
 @Component({
   selector: 'ion-tab-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'tab', 'target', 'theme'],
+  inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'shape', 'tab', 'target', 'theme'],
   standalone: true
 })
 export class IonTabButton {

@@ -2213,6 +2213,7 @@ ion-tab-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-star
 ion-tab-button,prop,mode,"ios" | "md",undefined,false,false
 ion-tab-button,prop,rel,string | undefined,undefined,false,false
 ion-tab-button,prop,selected,boolean,false,false,false
+ion-tab-button,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-tab-button,prop,tab,string | undefined,undefined,false,false
 ion-tab-button,prop,target,string | undefined,undefined,false,false
 ion-tab-button,prop,theme,"ios" | "md" | "ionic",undefined,false,false

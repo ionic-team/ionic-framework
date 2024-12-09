@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tab Button - Shape</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link rel="stylesheet" href="../../../../../css/ionic.bundle.css" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Tab Button - Shape</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-text> (Only available for ionic theme) </ion-text>
+
+        <ion-tab-bar>
+          <ion-tab-button>
+            <ion-label>Default Shape</ion-label>
+            <ion-icon aria-hidden="true" name="triangle-outline"></ion-icon>
+          </ion-tab-button>
+
+          <ion-tab-button id="soft-tab-button" shape="soft">
+            <ion-label>Soft Shape</ion-label>
+            <ion-icon aria-hidden="true" name="triangle-outline"></ion-icon>
+          </ion-tab-button>
+
+          <ion-tab-button id="round-tab-button" shape="round">
+            <ion-label>Round Shape</ion-label>
+            <ion-icon aria-hidden="true" name="triangle-outline"></ion-icon>
+          </ion-tab-button>
+
+          <ion-tab-button id="rect-tab-button" shape="rectangular">
+            <ion-label>Rectangular Shape</ion-label>
+            <ion-icon aria-hidden="true" name="triangle-outline"></ion-icon>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-content>
+
+      <style>
+        ion-tab-bar {
+          background: #d4d4d4;
+        }
+      </style>
+    </ion-app>
+  </body>
+</html>
