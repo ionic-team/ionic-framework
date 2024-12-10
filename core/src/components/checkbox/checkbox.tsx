@@ -212,6 +212,7 @@ export class Checkbox implements ComponentInterface {
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
+          'ion-focusable': true,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
           [`checkbox-justify-${justify}`]: justify !== undefined,
