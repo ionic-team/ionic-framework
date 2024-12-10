@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-test.describe(title('segment: states'), () => {
+  test.describe(title('segment: states'), () => {
     test('should render focused segment correctly', async ({ page }) => {
-        await page.setContent(
+      await page.setContent(
         `
         <ion-segment value="2">
             <ion-segment-button value="1">
@@ -19,11 +19,11 @@ test.describe(title('segment: states'), () => {
         </ion-segment>
         `,
         config
-        );
+      );
 
-        const segment = page.locator('ion-segment');
+      const segment = page.locator('ion-segment');
 
-        await expect(segment).toHaveScreenshot(screenshot(`segment-focused`));
+      await expect(segment).toHaveScreenshot(screenshot(`segment-focused`));
     });
-    });
+  });
 });
