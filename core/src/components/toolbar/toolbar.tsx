@@ -97,11 +97,11 @@ export class Toolbar implements ComponentInterface {
           }),
         }}
       >
-        <div class="toolbar-background"></div>
-        <div class="toolbar-container">
+        <div class="toolbar-background" part="background"></div>
+        <div class="toolbar-container" part="container">
           <slot name="start"></slot>
           <slot name="secondary"></slot>
-          <div class="toolbar-content">
+          <div class="toolbar-content" part="content">
             <slot></slot>
           </div>
           <slot name="primary"></slot>
