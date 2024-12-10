@@ -246,7 +246,7 @@ function generateRadiusUtilityClasses(propName) {
   return `.${variablesPrefix}-${propName} {\n  border-radius: $${variablesPrefix}-${propName};\n}`;
 }
 
-// Generates a board based css utility-class from a font Design Token structure
+// Generates a border based css utility-class from a font Design Token structure
 function generateBorderUtilityClasses(prop, propName) {
   let attribute;
 
