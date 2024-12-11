@@ -11,6 +11,7 @@
   // ios and md. This will allow us to have a single color map.
   --border-color: #{globals.current-color(neutral)};
   --border-width: #{globals.$ion-border-size-025};
+  --focus-ring-color: #{globals.$ion-border-focus-default};
   --padding-start: #{globals.$ion-space-400};
   --padding-end: #{globals.$ion-space-400};
   --padding-top: #{globals.$ion-space-300};
@@ -179,6 +180,18 @@
 :host(.select-disabled) .select-text,
 :host(.select-disabled) .select-icon {
   color: globals.$ion-primitives-neutral-500;
+}
+
+// Focus
+// ---------------------------------------------
+:host(.ion-focused) .select-wrapper-inner {
+  @include globals.focused-state(null, null, var(--focus-ring-color));
+}
+
+// Invalid
+// ---------------------------------------------
+:host(.ion-invalid) {
+  --focus-ring-color: #{globals.$ion-border-focus-error};
 }
 
 // Shapes
