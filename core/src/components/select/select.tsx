@@ -1096,7 +1096,7 @@ export class Select implements ComponentInterface {
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const inItem = hostContext('ion-item', this.el);
     const size = this.getSize();
-    const shouldRenderHighlight = theme === 'md' && fill !== 'outline' && !inItem;
+    const shouldRenderHighlight = (theme === 'md' || theme === 'ionic') && fill !== 'outline' && !inItem;
 
     const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
