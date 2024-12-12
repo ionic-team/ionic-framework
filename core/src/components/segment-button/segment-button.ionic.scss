@@ -79,6 +79,13 @@
   color: var(--color-disabled);
 }
 
+// Segment Button: Focused
+// --------------------------------------------------
+
+:host(.ion-focused) .button-inner {
+  @include globals.focused-state();
+}
+
 // Segment Button: Indicator
 // --------------------------------------------------
 
