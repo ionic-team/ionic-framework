@@ -380,8 +380,7 @@ input {
 // --------------------------------------------------
 // Only show the focus ring when the checkbox is focused and not disabled
 :host(.ion-focused:not(.checkbox-disabled)) .native-wrapper {
-  outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
+  @include globals.focused-state(var(--focus-ring-width), globals.$ion-border-style-solid, var(--focus-ring-color));
 }
 
 // Checkbox: Active
