@@ -50,3 +50,10 @@
 
   box-sizing: border-box;
 }
+
+// Focus
+// ---------------------------------------------
+
+:host(.ion-focused.select-fill-outline) { 
+  --border-color: var(--highlight-color); 
+}
