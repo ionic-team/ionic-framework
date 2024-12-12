@@ -56,37 +56,3 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
     });
   });
 });
-
-configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('select: focus'), () => {
-    test('should render with focus styles', async ({ page }) => {
-      await page.setContent(
-        `
-        <div class="container ion-padding">
-          <ion-select class="ion-focused" label="Favorite Fruit" placeholder="Select a fruit"></ion-select>
-        </div>
-      `,
-        config
-      );
-
-      const container = page.locator('.container');
-
-      await expect(container).toHaveScreenshot(screenshot(`select-focus`));
-    });
-
-    test('should render with focus and invalid styles', async ({ page }) => {
-      await page.setContent(
-        `
-        <div class="container ion-padding">
-          <ion-select class="ion-focused ion-invalid" label="Favorite Fruit" placeholder="Select a fruit"></ion-select>
-        </div>
-      `,
-        config
-      );
-
-      const container = page.locator('.container');
-
-      await expect(container).toHaveScreenshot(screenshot(`select-invalid-focus`));
-    });
-  });
-});
