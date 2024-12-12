@@ -85,7 +85,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       );
 
       const container = page.locator('.container');
-      
+
       await expect(container).toHaveScreenshot(screenshot(`select-invalid-focus`));
     });
   });
