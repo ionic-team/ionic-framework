@@ -74,7 +74,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('range: focus'), () => {
+  test.describe(title('range: states'), () => {
     test('should render focus state', async ({ page }) => {
       await page.setContent(
         `
@@ -88,9 +88,9 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
       const range = page.locator('ion-range');
 
-      const handle = await range.locator('.range-knob-handle');
+      const handle = range.locator('.range-knob-handle');
 
-      handle?.focus();
+      handle.focus();
 
       await expect(range).toHaveScreenshot(screenshot(`range-focus`));
     });
