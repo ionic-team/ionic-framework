@@ -200,3 +200,10 @@
 :host(.in-item.range-label-placement-stacked) .native-wrapper {
   @include margin(null, null, globals.$ion-space-0, null);
 }
+
+// Range Focus
+// ----------------------------------------------------------------
+
+.range-knob-handle.ion-focused .range-knob {
+  @include globals.focused-state();
+}
