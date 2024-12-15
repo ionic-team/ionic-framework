@@ -6,7 +6,7 @@ export interface IonRouteProps {
   path?: string;
   exact?: boolean;
   show?: boolean;
-  render: (props?: any) => JSX.Element; // TODO(FW-2959): type
+  render: (props?: any) => React.JSX.Element; // TODO(FW-2959): type
   disableIonPageManagement?: boolean;
 }
 

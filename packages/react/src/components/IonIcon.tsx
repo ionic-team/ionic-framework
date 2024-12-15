@@ -7,6 +7,7 @@ import { IonIconInner } from './inner-proxies';
 import { createForwardRef, getConfig } from './utils';
 
 interface IonIconProps {
+  children?: React.ReactNode;
   color?: string;
   flipRtl?: boolean;
   icon?: string;

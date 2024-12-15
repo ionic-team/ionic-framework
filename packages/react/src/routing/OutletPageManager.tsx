@@ -8,6 +8,7 @@ import type { RouteInfo } from '../models';
 import { StackContext } from './StackContext';
 
 interface OutletPageManagerProps {
+  children?: React.ReactNode;
   className?: string;
   forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
   routeInfo?: RouteInfo;
