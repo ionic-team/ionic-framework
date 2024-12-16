@@ -61,3 +61,12 @@
 :host(.ion-focused.select-fill-outline:not(.ion-invalid):not(.ion-valid)) {
   --border-width: #{globals.$ion-border-size-050};
 }
+
+/**
+ * If the select has a validity state, the
+ * border should reflect that as a color.
+ */
+ :host(.has-focus.select-fill-outline.ion-valid),
+ :host(.select-fill-outline.ion-touched.ion-invalid) {
+   --border-color: var(--highlight-color);
+ }
