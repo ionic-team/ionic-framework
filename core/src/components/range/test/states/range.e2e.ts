@@ -72,3 +72,27 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('range: states'), () => {
+    test('should render focus state', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-range>
+          <ion-icon name="volume-off" slot="start"></ion-icon>
+          <ion-icon name="volume-high" slot="end"></ion-icon>
+        </ion-range>
+      `,
+        config
+      );
+
+      const range = page.locator('ion-range');
+
+      const handle = range.locator('.range-knob-handle');
+
+      handle.focus();
+
+      await expect(range).toHaveScreenshot(screenshot(`range-focus`));
+    });
+  });
+});
