@@ -56,5 +56,8 @@
 
 :host(.ion-focused.select-fill-outline) {
   --border-color: var(--highlight-color);
+}
+
+:host(.ion-focused.select-fill-outline:not(.ion-invalid):not(.ion-valid)) {
   --border-width: #{globals.$ion-border-size-050};
 }
