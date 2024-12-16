@@ -96,6 +96,10 @@
   width: 100%;
 }
 
+:host(.select-label-placement-stacked) .select-wrapper-inner{
+  flex-grow: 0;
+}
+
 // Select Native Wrapper
 // ----------------------------------------------------------------
 
