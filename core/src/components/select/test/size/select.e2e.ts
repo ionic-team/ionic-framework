@@ -20,6 +20,16 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ config, screens
           >
             <ion-select-option value="filledText">Filled text</ion-select-option>
           </ion-select>
+
+          <ion-select 
+            size="${size}"
+            fill="outline"
+            label=""
+            label-placement="stacked"
+            value="filledText"
+          >
+            <ion-select-option value="filledText">Filled text</ion-select-option>
+          </ion-select>
       `,
           config
         );
