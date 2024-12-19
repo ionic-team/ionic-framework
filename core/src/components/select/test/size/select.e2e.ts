@@ -20,11 +20,21 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ config, screens
           >
             <ion-select-option value="filledText">Filled text</ion-select-option>
           </ion-select>
+      `,
+          config
+        );
 
+        const select = page.locator('ion-select');
+
+        await expect(select).toHaveScreenshot(screenshot(`select-size-${size}`));
+      });
+
+      test(`${size} - should not have visual regressions when label is unset`, async ({ page }) => {
+        await page.setContent(
+          `
           <ion-select 
             size="${size}"
             fill="outline"
-            label=""
             label-placement="stacked"
             value="filledText"
           >
@@ -36,7 +46,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ config, screens
 
         const select = page.locator('ion-select');
 
-        await expect(select).toHaveScreenshot(screenshot(`select-size-${size}`));
+        await expect(select).toHaveScreenshot(screenshot(`select-size-${size}-unset-label`));
       });
     });
   });
