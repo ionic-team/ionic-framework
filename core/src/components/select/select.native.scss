@@ -118,6 +118,27 @@
   max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
 
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the select text.
+ */
+:host(.select-label-placement-floating),
+:host(.select-label-placement-stacked) {
+  min-height: 56px;
+}
+
+/**
+ * When using a stacked/floating label, the inner wrapper is
+ * stacked vertically under the label container. This line
+ * ensures that the inner wrapper fills all the remaining height
+ * of the component.
+ */
+:host(.select-label-placement-stacked) .select-wrapper-inner,
+:host(.select-label-placement-floating) .select-wrapper-inner {
+  flex-grow: 1;
+}
+
 // Start/End Slots
 // ----------------------------------------------------------------
 
