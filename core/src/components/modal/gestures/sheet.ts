@@ -167,7 +167,7 @@ export const createSheetGesture = (
      * and then swipe again. The target content will not be the same between swipes.
      */
     const contentEl = findClosestIonContent(detail.event.target! as HTMLElement);
-    currentBreakpoint = getCurrentBreakpoint();;
+    currentBreakpoint = getCurrentBreakpoint();
 
     /**
      * If we are in a snap breakpoint, we should not allow the swipe to start.
