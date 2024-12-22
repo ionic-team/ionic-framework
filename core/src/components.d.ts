@@ -1802,6 +1802,10 @@ export namespace Components {
          */
         "showBackdrop": boolean;
         /**
+          * The snapBreakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. Values are relative to the height of the modal, not the height of the screen. One of the values in this array must be the value of the `initialBreakpoint` property and they must be a value in `breakpoints` property.  The difference between `breakpoints` and `snapBreakpoints` is that `snapBreakpoints` allows the content to scroll, and the modal will only be draggable by the handle.
+         */
+        "snapBreakpoints"?: number[];
+        /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
         "trigger": string | undefined;
@@ -6622,6 +6626,10 @@ declare namespace LocalJSX {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
+        /**
+          * The snapBreakpoints to use when creating a sheet modal. Each value in the array must be a decimal between 0 and 1 where 0 indicates the modal is fully closed and 1 indicates the modal is fully open. Values are relative to the height of the modal, not the height of the screen. One of the values in this array must be the value of the `initialBreakpoint` property and they must be a value in `breakpoints` property.  The difference between `breakpoints` and `snapBreakpoints` is that `snapBreakpoints` allows the content to scroll, and the modal will only be draggable by the handle.
+         */
+        "snapBreakpoints"?: number[];
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
