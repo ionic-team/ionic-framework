@@ -75,6 +75,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private wrapperEl?: HTMLElement;
   private backdropEl?: HTMLIonBackdropElement;
   private sortedBreakpoints?: number[];
+  private sortedSnapBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
   private inheritedAttributes: Attributes = {};
@@ -129,6 +130,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * For example: [0, .25, .5, 1]
    */
   @Prop() breakpoints?: number[];
+
+  /**
+   * The snapBreakpoints to use when creating a sheet modal. Each value in the
+   * array must be a decimal between 0 and 1 where 0 indicates the modal is fully
+   * closed and 1 indicates the modal is fully open. Values are relative
+   * to the height of the modal, not the height of the screen. One of the values in this
+   * array must be the value of the `initialBreakpoint` property and they must be a
+   * value in `breakpoints` property.
+   *
+   * The difference between `breakpoints` and `snapBreakpoints` is that `snapBreakpoints`
+   * allows the content to scroll, and the modal will only be draggable by the handle.
+   */
+    @Prop() snapBreakpoints?: number[];
 
   /**
    * A decimal value between 0 and 1 that indicates the
@@ -354,6 +368,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
+  snapBreakpointsChanged(snapBreakpoints: number[] | undefined) {
+    if (snapBreakpoints !== undefined) {
+      this.sortedSnapBreakpoints = snapBreakpoints.sort((a, b) => a - b);
+    }
+  }
+
   connectedCallback() {
     const { el } = this;
     prepareOverlay(el);
@@ -429,6 +449,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       raf(() => this.present());
     }
     this.breakpointsChanged(this.breakpoints);
+    this.snapBreakpointsChanged(this.snapBreakpoints);
 
     /**
      * When binding values in frameworks such as Angular
@@ -680,6 +701,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint,
       ani,
       this.sortedBreakpoints,
+      this.sortedSnapBreakpoints,
       () => this.currentBreakpoint ?? 0,
       () => this.sheetOnDismiss(),
       (breakpoint: number) => {

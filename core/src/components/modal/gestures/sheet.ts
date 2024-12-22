@@ -1,3 +1,4 @@
+import { createAnimation } from '@utils/animation/animation';
 import { isIonContent, findClosestIonContent } from '@utils/content';
 import { createGesture } from '@utils/gesture';
 import { clamp, raf, getElementRoot } from '@utils/helpers';
@@ -49,6 +50,7 @@ export const createSheetGesture = (
   backdropBreakpoint: number,
   animation: Animation,
   breakpoints: number[] = [],
+  snapBreakpoints: number[] = [],
   getCurrentBreakpoint: () => number,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
@@ -71,6 +73,10 @@ export const createSheetGesture = (
       { offset: 1, transform: 'translateY(100%)' },
     ],
     BACKDROP_KEYFRAMES: backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
+    CONTENT_KEYFRAMES: [
+      { offset: 0, maxHeight: '100%' },
+      { offset: 1, maxHeight: '0%'},
+    ],
   };
 
   const contentEl = baseEl.querySelector('ion-content');
@@ -79,10 +85,19 @@ export const createSheetGesture = (
   let offset = 0;
   let canDismissBlocksGesture = false;
   const canDismissMaxStep = 0.95;
-  const wrapperAnimation = animation.childAnimations.find((ani) => ani.id === 'wrapperAnimation');
-  const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
   const minBreakpoint = breakpoints[0];
+  const wrapperAnimation = animation.childAnimations.find((ani) => ani.id === 'wrapperAnimation');
+  const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
+  let contentAnimation: Animation | undefined;
+  if (snapBreakpoints.length > 0) {
+    contentAnimation =
+    animation.addAnimation(
+      createAnimation('contentAnimation')
+      .addElement(contentEl!.parentElement!)
+      .keyframes(SheetDefaults.CONTENT_KEYFRAMES))
+      .childAnimations.find((ani) => ani.id === 'contentAnimation');
+  }
 
   const enableBackdrop = () => {
     baseEl.style.setProperty('pointer-events', 'auto');
@@ -138,7 +153,7 @@ export const createSheetGesture = (
     }
   }
 
-  if (contentEl && currentBreakpoint !== maxBreakpoint) {
+  if (contentEl && currentBreakpoint !== maxBreakpoint && !snapBreakpoints.includes(currentBreakpoint)) {
     contentEl.scrollY = false;
   }
 
@@ -152,7 +167,14 @@ export const createSheetGesture = (
      * and then swipe again. The target content will not be the same between swipes.
      */
     const contentEl = findClosestIonContent(detail.event.target! as HTMLElement);
-    currentBreakpoint = getCurrentBreakpoint();
+    currentBreakpoint = getCurrentBreakpoint();;
+
+    /**
+     * If we are in a snap breakpoint, we should not allow the swipe to start.
+     */
+    if (snapBreakpoints.includes(currentBreakpoint) && contentEl) {
+      return false;
+    }
 
     if (currentBreakpoint === 1 && contentEl) {
       /**
@@ -323,6 +345,13 @@ export const createSheetGesture = (
         },
       ]);
 
+      if (contentAnimation) {
+        contentAnimation.keyframes([
+          { offset: 0, maxHeight: `${(1 - breakpointOffset) * 100}%` },
+          { offset: 1, maxHeight: `${snapToBreakpoint * 100}%` },
+        ]);
+      }
+
       animation.progressStep(0);
     }
 
@@ -345,7 +374,7 @@ export const createSheetGesture = (
      * re-enabled. Native iOS allows for scrolling on the sheet modal as soon
      * as the gesture is released, so we align with that.
      */
-    if (contentEl && snapToBreakpoint === breakpoints[breakpoints.length - 1]) {
+    if (contentEl && (snapToBreakpoint === breakpoints[breakpoints.length - 1] || snapBreakpoints.includes(snapToBreakpoint))) {
       contentEl.scrollY = true;
     }
 
@@ -365,6 +394,7 @@ export const createSheetGesture = (
                 raf(() => {
                   wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
                   backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
+                  contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
                   animation.progressStart(true, 1 - snapToBreakpoint);
                   currentBreakpoint = snapToBreakpoint;
                   onBreakpointChange(currentBreakpoint);
