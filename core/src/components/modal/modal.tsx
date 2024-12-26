@@ -142,7 +142,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * The difference between `breakpoints` and `snapBreakpoints` is that `snapBreakpoints`
    * allows the content to scroll, and the modal will only be draggable by the handle.
    */
-    @Prop() snapBreakpoints?: number[];
+  @Prop() snapBreakpoints?: number[];
 
   /**
    * A decimal value between 0 and 1 that indicates the

@@ -75,7 +75,7 @@ export const createSheetGesture = (
     BACKDROP_KEYFRAMES: backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
     CONTENT_KEYFRAMES: [
       { offset: 0, maxHeight: '100%' },
-      { offset: 1, maxHeight: '0%'},
+      { offset: 1, maxHeight: '0%' },
     ],
   };
 
@@ -91,11 +91,12 @@ export const createSheetGesture = (
   const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
   let contentAnimation: Animation | undefined;
   if (snapBreakpoints.length > 0) {
-    contentAnimation =
-    animation.addAnimation(
-      createAnimation('contentAnimation')
-      .addElement(contentEl!.parentElement!)
-      .keyframes(SheetDefaults.CONTENT_KEYFRAMES))
+    contentAnimation = animation
+      .addAnimation(
+        createAnimation('contentAnimation')
+          .addElement(contentEl!.parentElement!)
+          .keyframes(SheetDefaults.CONTENT_KEYFRAMES)
+      )
       .childAnimations.find((ani) => ani.id === 'contentAnimation');
   }
 
@@ -374,7 +375,10 @@ export const createSheetGesture = (
      * re-enabled. Native iOS allows for scrolling on the sheet modal as soon
      * as the gesture is released, so we align with that.
      */
-    if (contentEl && (snapToBreakpoint === breakpoints[breakpoints.length - 1] || snapBreakpoints.includes(snapToBreakpoint))) {
+    if (
+      contentEl &&
+      (snapToBreakpoint === breakpoints[breakpoints.length - 1] || snapBreakpoints.includes(snapToBreakpoint))
+    ) {
       contentEl.scrollY = true;
     }
 
