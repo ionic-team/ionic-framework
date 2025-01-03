@@ -5,7 +5,7 @@ import { generateId } from './utils/generateId';
 
 // TODO(FW-2959): types
 
-type ReactComponent = (props?: any) => JSX.Element;
+type ReactComponent = (props?: any) => React.JSX.Element;
 
 export const ReactDelegate = (
   addView: (view: React.ReactElement) => void,

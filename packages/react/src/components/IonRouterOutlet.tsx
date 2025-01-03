@@ -10,6 +10,7 @@ import { createForwardRef } from './utils';
 
 type Props = LocalJSX.IonRouterOutlet & {
   basePath?: string;
+  children?: React.ReactNode;
   ref?: React.Ref<any>;
   ionPage?: boolean;
 };
