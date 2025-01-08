@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-range',
-  templateUrl: './range.component.html'
+  templateUrl: './range.component.html',
+  standalone: false
 })
 export class RangeComponent {
 
