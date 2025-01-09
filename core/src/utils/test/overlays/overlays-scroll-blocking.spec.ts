@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Modal } from '../../../components/modal/modal';
+import { Toast } from '../../../components/toast/toast';
 
 describe('overlays: scroll blocking', () => {
   it('should not block scroll when the overlay is created', async () => {
@@ -82,6 +83,36 @@ describe('overlays: scroll blocking', () => {
     expect(body).toHaveClass('backdrop-no-scroll');
 
     await modalTwo.dismiss();
+
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+  });
+
+  it('should not enable scroll until last toast overlay is dismissed', async () => {
+    const page = await newSpecPage({
+      components: [Toast],
+      html: `
+        <ion-toast id="one"></ion-toast>
+        <ion-toast id="two"></ion-toast>
+      `,
+    });
+
+    const toastOne = page.body.querySelector('#one') as HTMLIonToastElement;
+    const toastTwo = page.body.querySelector('#two') as HTMLIonToastElement;
+    const body = page.doc.querySelector('body')!;
+
+    await toastOne.present();
+
+    expect(body).toHaveClass('backdrop-no-scroll');
+
+    await toastTwo.present();
+
+    expect(body).toHaveClass('backdrop-no-scroll');
+
+    await toastOne.dismiss();
+
+    expect(body).toHaveClass('backdrop-no-scroll');
+
+    await toastTwo.dismiss();
 
     expect(body).not.toHaveClass('backdrop-no-scroll');
   });
