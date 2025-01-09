@@ -2,6 +2,10 @@
 @import "../item/item.ios.vars";
 @import "../radio/radio.ios.vars";
 
+ion-item {
+  --inner-padding-end: 0;
+}
+
 /**
  * The bottom border of the item should only be displayed
  * under the text and not the radio icon.
