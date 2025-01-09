@@ -9,7 +9,8 @@ import { IonPopover } from "@ionic/angular";
  */
 @Component({
   selector: 'app-popover-inline',
-  templateUrl: 'popover-inline.component.html'
+  templateUrl: 'popover-inline.component.html',
+  standalone: false
 })
 export class PopoverInlineComponent {
 
