@@ -5,6 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-textarea',
   templateUrl: 'textarea.component.html',
+  standalone: false
 })
 export class TextareaComponent {
 

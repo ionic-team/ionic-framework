@@ -7,7 +7,8 @@ import { AfterViewInit, Component } from "@angular/core";
  */
 @Component({
   selector: 'app-modal-inline',
-  templateUrl: 'modal-inline.component.html'
+  templateUrl: 'modal-inline.component.html',
+  standalone: false
 })
 export class ModalInlineComponent implements AfterViewInit {
 

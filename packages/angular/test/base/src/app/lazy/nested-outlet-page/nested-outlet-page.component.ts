@@ -2,8 +2,9 @@ import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { IonRouterOutlet } from '@ionic/angular';
 
 @Component({
-  selector: 'app-nested-outlet-page',
-  templateUrl: './nested-outlet-page.component.html',
+    selector: 'app-nested-outlet-page',
+    templateUrl: './nested-outlet-page.component.html',
+    standalone: false
 })
 export class NestedOutletPageComponent implements OnDestroy, OnInit {
   hasParentOutlet = false;

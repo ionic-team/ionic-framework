@@ -190,6 +190,8 @@ export class Segment implements ComponentInterface {
   }
 
   async componentDidLoad() {
+    this.segmentViewEl = this.getSegmentView();
+
     this.setCheckedClasses();
 
     /**

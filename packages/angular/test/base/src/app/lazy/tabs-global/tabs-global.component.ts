@@ -8,7 +8,8 @@ import { NavController } from "@ionic/angular";
  */
 @Component({
   selector: 'app-tabs-global',
-  templateUrl: 'tabs-global.component.html'
+  templateUrl: 'tabs-global.component.html',
+  standalone: false
 })
 export class TabsGlobalComponent {
 
