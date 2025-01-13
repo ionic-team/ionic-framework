@@ -21,6 +21,8 @@
 
   gap: globals.$ion-space-300;
 
+  box-shadow: #{globals.$ion-elevation-2};
+
   // TODO(ROU-10853): replace this value with a layer token
   z-index: 10;
 }
@@ -53,8 +55,6 @@
   align-self: center;
 
   width: fit-content;
-
-  box-shadow: #{globals.$ion-elevation-2};
 
   contain: content;
 }
