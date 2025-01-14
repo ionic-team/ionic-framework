@@ -290,6 +290,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() canDismiss: boolean | ((data?: any, role?: string) => Promise<boolean>) = true;
 
   /**
+   * Determines whether or not the sheet modal will only
+   * scroll when fully expanded.
+   *
+   * If the value is `true`, the modal will only scroll
+   * when fully expanded.
+   * If the value is `false`, the modal will scroll at
+   * any breakpoint.
+   */
+  @Prop() scrollAtEdge = true;
+
+  /**
    * Emitted after the modal has presented.
    */
   @Event({ eventName: 'ionModalDidPresent' }) didPresent!: EventEmitter<void>;
@@ -687,7 +698,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.currentBreakpoint = breakpoint;
           this.ionBreakpointDidChange.emit({ breakpoint });
         }
-      }
+      },
+      this.scrollAtEdge
     );
 
     this.gesture = gesture;
