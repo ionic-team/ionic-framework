@@ -29,7 +29,12 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
     { offset: 1, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)` },
   ]);
 
-  return { wrapperAnimation, backdropAnimation };
+  const contentAnimation = createAnimation('contentAnimation').keyframes([
+    { offset: 0, opacity: 1, maxHeight: `${(1 - currentBreakpoint!) * 100}%` },
+    { offset: 1, opacity: 1, maxHeight: `${currentBreakpoint! * 100}%` },
+  ]);
+
+  return { wrapperAnimation, backdropAnimation, contentAnimation };
 };
 
 export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {

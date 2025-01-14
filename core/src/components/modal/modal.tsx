@@ -573,6 +573,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
+      animateContentHeight: !this.scrollAtEdge
     });
 
     /* tslint:disable-next-line */
@@ -679,6 +680,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: this.presentingElement,
       currentBreakpoint: initialBreakpoint,
       backdropBreakpoint,
+      animateContentHeight: !this.scrollAtEdge,
     }));
 
     ani.progressStart(true, 1);
@@ -1031,6 +1033,12 @@ interface ModalOverlayOptions {
    * to fade in when using a sheet modal.
    */
   backdropBreakpoint: number;
+
+  /**
+   * Whether or not the modal should animate
+   * content's max-height.
+   */
+  animateContentHeight?: boolean;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;

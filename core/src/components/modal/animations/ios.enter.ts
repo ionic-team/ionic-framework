@@ -17,27 +17,33 @@ const createEnterAnimation = () => {
 
   const wrapperAnimation = createAnimation().fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
 
-  return { backdropAnimation, wrapperAnimation };
+  return { backdropAnimation, wrapperAnimation, contentAnimation: undefined };
 };
 
 /**
  * iOS Modal Enter Animation for the Card presentation style
  */
 export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
-  const { presentingEl, currentBreakpoint } = opts;
+  const { presentingEl, currentBreakpoint, animateContentHeight } = opts;
   const root = getElementRoot(baseEl);
-  const { wrapperAnimation, backdropAnimation } =
+  const { wrapperAnimation, backdropAnimation, contentAnimation } =
     currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
 
   wrapperAnimation.addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!).beforeStyles({ opacity: 1 });
 
+  contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
+
   const baseAnimation = createAnimation('entering-base')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(500)
-    .addAnimation(wrapperAnimation);
+    .addAnimation([wrapperAnimation]);
+
+  if (contentAnimation && animateContentHeight) {
+    baseAnimation.addAnimation(contentAnimation);
+  }
 
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;

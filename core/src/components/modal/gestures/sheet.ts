@@ -1,4 +1,3 @@
-import { createAnimation } from '@utils/animation/animation';
 import { isIonContent, findClosestIonContent } from '@utils/content';
 import { createGesture } from '@utils/gesture';
 import { clamp, raf, getElementRoot } from '@utils/helpers';
@@ -89,21 +88,7 @@ export const createSheetGesture = (
   const minBreakpoint = breakpoints[0];
   const wrapperAnimation = animation.childAnimations.find((ani) => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
-  let contentAnimation: Animation | undefined;
-  if (!scrollAtEdge) {
-    /**
-     * If scrollAtEdge is disabled, the content should be scrollable
-     * at any breakpoint and the maxHeight animated so the content is
-     * fully viewable at any breakpoint.
-     */
-    contentAnimation = animation
-      .addAnimation(
-        createAnimation('contentAnimation')
-          .addElement(contentEl!.parentElement!)
-          .keyframes(SheetDefaults.CONTENT_KEYFRAMES)
-      )
-      .childAnimations.find((ani) => ani.id === 'contentAnimation');
-  }
+  const contentAnimation = animation.childAnimations.find((ani) => ani.id === 'contentAnimation');
 
   const enableBackdrop = () => {
     baseEl.style.setProperty('pointer-events', 'auto');
@@ -142,6 +127,7 @@ export const createSheetGesture = (
   if (wrapperAnimation && backdropAnimation) {
     wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
     backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
+    contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
     animation.progressStart(true, 1 - currentBreakpoint);
 
     /**
