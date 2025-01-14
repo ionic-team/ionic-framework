@@ -166,8 +166,9 @@
           const segmentView = document.querySelector('ion-segment-view');
 
           const newButton = document.createElement('ion-segment-button');
-          newButton.setAttribute('content-id', 'new');
-          newButton.setAttribute('value', 'new');
+          const newId = `new-${Date.now()}`;
+          newButton.setAttribute('content-id', newId);
+          newButton.setAttribute('value', newId);
           newButton.innerHTML = '<ion-label>New Button</ion-label>';
 
           segment.appendChild(newButton);
@@ -175,7 +176,7 @@
           setTimeout(() => {
             // Timeout to test waitForSegmentContent() in segment-button
             const newContent = document.createElement('ion-segment-content');
-            newContent.setAttribute('id', 'new');
+            newContent.setAttribute('id', newId);
             newContent.innerHTML = 'New Content';
 
             segmentView.appendChild(newContent);
@@ -183,7 +184,7 @@
             // Necessary timeout to ensure the value is set after the content is added.
             // Otherwise, the transition is unsuccessful and the content is not shown.
             setTimeout(() => {
-              segment.setAttribute('value', 'new');
+              segment.setAttribute('value', newId);
             }, 200);
           }, 200);
         }
