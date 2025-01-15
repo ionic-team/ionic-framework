@@ -80,15 +80,16 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   private waitForSegmentContent(ionSegment: HTMLIonSegmentElement | null, contentId: string): Promise<HTMLElement> {
     return new Promise((resolve, reject) => {
-      if (!ionSegment) {
-        reject(new Error(`Segment not found when looking for Segment Content`));
-      }
-
-      let timeoutId: any = null;
+      let timeoutId: NodeJS.Timeout | undefined = undefined;
       let animationFrameId: number;
 
       const check = () => {
-        const segmentView = this.getNextSiblingOfType<HTMLIonSegmentViewElement>(ionSegment!); // Skip the text nodes
+        if (!ionSegment) {
+          reject(new Error(`Segment not found when looking for Segment Content`));
+          return;
+        }
+
+        const segmentView = this.getNextSiblingOfType<HTMLIonSegmentViewElement>(ionSegment); // Skip the text nodes
         const segmentContent = segmentView?.querySelector(
           `ion-segment-content[id="${contentId}"]`
         ) as HTMLIonSegmentContentElement | null;
