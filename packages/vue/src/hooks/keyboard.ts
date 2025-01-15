@@ -1,5 +1,5 @@
 import type { Ref } from "vue";
-import { ref } from "vue";
+import { ref, onBeforeUnmount, getCurrentInstance } from "vue";
 
 export interface UseKeyboardResult {
   isOpen: Ref<boolean>;
@@ -31,6 +31,12 @@ export const useKeyboard = (): UseKeyboardResult => {
   if (typeof (window as any) !== "undefined") {
     window.addEventListener("ionKeyboardDidShow", showCallback);
     window.addEventListener("ionKeyboardDidHide", hideCallback);
+  }
+
+  if (getCurrentInstance()){
+    onBeforeUnmount(() => {
+      unregister()
+    });
   }
 
   return {
