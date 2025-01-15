@@ -10,31 +10,10 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
-          <style>
-            :root {
-              background: #ccc7c7;
-            }
-          </style>
-
-            <ion-content>
-              <ion-tab-bar expand="full">
-                <ion-tab-button tab="1">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-
-                <ion-tab-button tab="2">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-
-                <ion-tab-button tab="3">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-              </ion-tab-bar>
-            </ion-content>
-        `,
+          <ion-content>
+            <ion-tab-bar expand="full"/>
+          </ion-content>
+          `,
           config
         );
 
@@ -49,35 +28,14 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
-          <style>
-            :root {
-              background: #ccc7c7;
-            }
-          </style>
-
           <ion-content>
-            <ion-tab-bar expand="compact">
-              <ion-tab-button tab="1">
-                <ion-icon name="triangle-outline"></ion-icon>
-                <ion-label>Label</ion-label>
-              </ion-tab-button>
-
-              <ion-tab-button tab="2">
-                <ion-icon name="triangle-outline"></ion-icon>
-                <ion-label>Label</ion-label>
-              </ion-tab-button>
-
-              <ion-tab-button tab="3">
-                <ion-icon name="triangle-outline"></ion-icon>
-                <ion-label>Label</ion-label>
-              </ion-tab-button>
-            </ion-tab-bar>
+              <ion-tab-bar expand="compact"/>
           </ion-content>
-        `,
+          `,
           config
         );
 
-        // Used the `ion-content` element to take the screenshot because the `ion-tab-bar`element would not be visible otherwise
+        // Used the `ion-content` element to take the screenshot because the `ion-tab-bar` element would not be visible otherwise
         const content = page.locator('ion-content');
 
         await expect(content).toHaveScreenshot(screenshot(`tab-bar-expand-compact`));
