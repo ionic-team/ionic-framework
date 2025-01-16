@@ -10,17 +10,25 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
+          <style>
+            .container {
+               padding: 20px 10px;
+            }
+          </style>
+
           <ion-content>
-            <ion-tab-bar expand="full"/>
+            <div class="container">
+                <ion-tab-bar expand="full"/>
+            </div>
           </ion-content>
           `,
           config
         );
 
         // Used the `ion-content` element to take the screenshot because the `ion-tab-bar`element would not be visible otherwise
-        const content = page.locator('ion-content');
+        const container = page.locator('.container');
 
-        await expect(content).toHaveScreenshot(screenshot(`tab-bar-expand-full`));
+        await expect(container).toHaveScreenshot(screenshot(`tab-bar-expand-full`));
       });
     });
 
@@ -28,17 +36,26 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
       test('should not have visual regressions', async ({ page }) => {
         await page.setContent(
           `
+          <style>
+            .container {
+               width: 55px;
+               height: 95px;
+            }
+          </style>
+
           <ion-content>
+            <div class="container">
               <ion-tab-bar expand="compact"/>
+            </div>
           </ion-content>
           `,
           config
         );
 
         // Used the `ion-content` element to take the screenshot because the `ion-tab-bar` element would not be visible otherwise
-        const content = page.locator('ion-content');
+        const container = page.locator('.container');
 
-        await expect(content).toHaveScreenshot(screenshot(`tab-bar-expand-compact`));
+        await expect(container).toHaveScreenshot(screenshot(`tab-bar-expand-compact`));
       });
     });
   });
