@@ -11,21 +11,39 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
+            :root {
+              background: #ccc7c7;
+            }
+
             .container {
-               padding: 20px 10px;
+              padding: 20px 10px;
             }
           </style>
 
           <ion-content>
             <div class="container">
-                <ion-tab-bar expand="full"/>
+              <ion-tab-bar expand="full">
+                <ion-tab-button tab="1">
+                  <ion-icon name="triangle-outline"></ion-icon>
+                  <ion-label>Label</ion-label>
+                </ion-tab-button>
+      
+                <ion-tab-button tab="2">
+                  <ion-icon name="triangle-outline"></ion-icon>
+                  <ion-label>Label</ion-label>
+                </ion-tab-button>
+      
+                <ion-tab-button tab="3">
+                  <ion-icon name="triangle-outline"></ion-icon>
+                  <ion-label>Label</ion-label>
+                </ion-tab-button>
+              </ion-tab-bar>
             </div>
           </ion-content>
           `,
           config
         );
 
-        // Used the `ion-content` element to take the screenshot because the `ion-tab-bar`element would not be visible otherwise
         const container = page.locator('.container');
 
         await expect(container).toHaveScreenshot(screenshot(`tab-bar-expand-full`));
@@ -37,22 +55,42 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
+            :root {
+              background: #ccc7c7;
+            }
+
             .container {
-               width: 55px;
-               height: 95px;
+              padding: 20px 10px;
+              /* Size is needed because tab bar compact has position absolute and will not capture correctly. */
+              width: 225px;
+              height: 96px;
             }
           </style>
 
           <ion-content>
             <div class="container">
-              <ion-tab-bar expand="compact"/>
+              <ion-tab-bar expand="compact">
+                <ion-tab-button tab="1">
+                  <ion-icon name="triangle-outline"></ion-icon>
+                  <ion-label>Label</ion-label>
+                </ion-tab-button>
+      
+                <ion-tab-button tab="2">
+                  <ion-icon name="triangle-outline"></ion-icon>
+                  <ion-label>Label</ion-label>
+                </ion-tab-button>
+      
+                <ion-tab-button tab="3">
+                  <ion-icon name="triangle-outline"></ion-icon>
+                  <ion-label>Label</ion-label>
+                </ion-tab-button>
+              </ion-tab-bar>
             </div>
           </ion-content>
           `,
           config
         );
 
-        // Used the `ion-content` element to take the screenshot because the `ion-tab-bar` element would not be visible otherwise
         const container = page.locator('.container');
 
         await expect(container).toHaveScreenshot(screenshot(`tab-bar-expand-compact`));
