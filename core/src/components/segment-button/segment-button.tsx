@@ -67,7 +67,52 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     this.updateState();
   }
 
-  connectedCallback() {
+  private getNextSiblingOfType<T extends Element>(element: Element): T | null {
+    let sibling = element.nextSibling;
+    while (sibling) {
+      if (sibling.nodeType === Node.ELEMENT_NODE && (sibling as T) !== null) {
+        return sibling as T;
+      }
+      sibling = sibling.nextSibling;
+    }
+    return null;
+  }
+
+  private waitForSegmentContent(ionSegment: HTMLIonSegmentElement | null, contentId: string): Promise<HTMLElement> {
+    return new Promise((resolve, reject) => {
+      let timeoutId: NodeJS.Timeout | undefined = undefined;
+      let animationFrameId: number;
+
+      const check = () => {
+        if (!ionSegment) {
+          reject(new Error(`Segment not found when looking for Segment Content`));
+          return;
+        }
+
+        const segmentView = this.getNextSiblingOfType<HTMLIonSegmentViewElement>(ionSegment); // Skip the text nodes
+        const segmentContent = segmentView?.querySelector(
+          `ion-segment-content[id="${contentId}"]`
+        ) as HTMLIonSegmentContentElement | null;
+        if (segmentContent) {
+          clearTimeout(timeoutId); // Clear the timeout if the segmentContent is found
+          cancelAnimationFrame(animationFrameId);
+          resolve(segmentContent);
+        } else {
+          animationFrameId = requestAnimationFrame(check); // Keep checking on the next animation frame
+        }
+      };
+
+      check();
+
+      // Set a timeout to reject the promise
+      timeoutId = setTimeout(() => {
+        cancelAnimationFrame(animationFrameId);
+        reject(new Error(`Unable to find Segment Content with id="${contentId} within 1000 ms`));
+      }, 1000);
+    });
+  }
+
+  async connectedCallback() {
     const segmentEl = (this.segmentEl = this.el.closest('ion-segment'));
     if (segmentEl) {
       this.updateState();
@@ -78,12 +123,13 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     // Return if there is no contentId defined
     if (!this.contentId) return;
 
-    // Attempt to find the Segment Content by its contentId
-    const segmentContent = document.getElementById(this.contentId) as HTMLIonSegmentContentElement | null;
-
-    // If no associated Segment Content exists, log an error and return
-    if (!segmentContent) {
-      console.error(`Segment Button: Unable to find Segment Content with id="${this.contentId}".`);
+    let segmentContent;
+    try {
+      // Attempt to find the Segment Content by its contentId
+      segmentContent = await this.waitForSegmentContent(segmentEl, this.contentId);
+    } catch (error) {
+      // If no associated Segment Content exists, log an error and return
+      console.error('Segment Button: ', (error as Error).message);
       return;
     }
 
