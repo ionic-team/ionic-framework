@@ -49,6 +49,7 @@ export const createSheetGesture = (
   backdropBreakpoint: number,
   animation: Animation,
   breakpoints: number[] = [],
+  scrollAtEdge: boolean,
   getCurrentBreakpoint: () => number,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
@@ -71,6 +72,10 @@ export const createSheetGesture = (
       { offset: 1, transform: 'translateY(100%)' },
     ],
     BACKDROP_KEYFRAMES: backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop,
+    CONTENT_KEYFRAMES: [
+      { offset: 0, maxHeight: '100%' },
+      { offset: 1, maxHeight: '0%' },
+    ],
   };
 
   const contentEl = baseEl.querySelector('ion-content');
@@ -79,10 +84,11 @@ export const createSheetGesture = (
   let offset = 0;
   let canDismissBlocksGesture = false;
   const canDismissMaxStep = 0.95;
-  const wrapperAnimation = animation.childAnimations.find((ani) => ani.id === 'wrapperAnimation');
-  const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
   const minBreakpoint = breakpoints[0];
+  const wrapperAnimation = animation.childAnimations.find((ani) => ani.id === 'wrapperAnimation');
+  const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
+  const contentAnimation = animation.childAnimations.find((ani) => ani.id === 'contentAnimation');
 
   const enableBackdrop = () => {
     baseEl.style.setProperty('pointer-events', 'auto');
@@ -121,6 +127,7 @@ export const createSheetGesture = (
   if (wrapperAnimation && backdropAnimation) {
     wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
     backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
+    contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
     animation.progressStart(true, 1 - currentBreakpoint);
 
     /**
@@ -138,7 +145,7 @@ export const createSheetGesture = (
     }
   }
 
-  if (contentEl && currentBreakpoint !== maxBreakpoint) {
+  if (contentEl && currentBreakpoint !== maxBreakpoint && scrollAtEdge) {
     contentEl.scrollY = false;
   }
 
@@ -153,6 +160,14 @@ export const createSheetGesture = (
      */
     const contentEl = findClosestIonContent(detail.event.target! as HTMLElement);
     currentBreakpoint = getCurrentBreakpoint();
+
+    /**
+     * If we have scrollAtEdge disabled, we should not allow the swipe gesture to start
+     * if the content is being swiped.
+     */
+    if (!scrollAtEdge && contentEl) {
+      return false;
+    }
 
     if (currentBreakpoint === 1 && contentEl) {
       /**
@@ -323,6 +338,20 @@ export const createSheetGesture = (
         },
       ]);
 
+      if (contentAnimation) {
+        /**
+         * The modal content should scroll at any breakpoint when scrollAtEdge
+         * is disabled. In order to do this, the content needs to be completely
+         * viewable so scrolling can access everything. Othewise, the default
+         * behavior would show the content off the screen and only allow
+         * scrolling when the sheet is fully expanded.
+         */
+        contentAnimation.keyframes([
+          { offset: 0, maxHeight: `${(1 - breakpointOffset) * 100}%` },
+          { offset: 1, maxHeight: `${snapToBreakpoint * 100}%` },
+        ]);
+      }
+
       animation.progressStep(0);
     }
 
@@ -339,13 +368,14 @@ export const createSheetGesture = (
     }
 
     /**
-     * If the sheet is going to be fully expanded then we should enable
-     * scrolling immediately. The sheet modal animation takes ~500ms to finish
-     * so if we wait until then there is a visible delay for when scrolling is
-     * re-enabled. Native iOS allows for scrolling on the sheet modal as soon
-     * as the gesture is released, so we align with that.
+     * If the sheet is going to be fully expanded or if the sheet has toggled
+     * to scroll at any breakpoint then we should enable scrolling immediately.
+     * then we should enable scrolling immediately. The sheet modal animation
+     * takes ~500ms to finish so if we wait until then there is a visible delay
+     * for when scrolling is re-enabled. Native iOS allows for scrolling on the
+     * sheet modal as soon as the gesture is released, so we align with that.
      */
-    if (contentEl && snapToBreakpoint === breakpoints[breakpoints.length - 1]) {
+    if (contentEl && (snapToBreakpoint === breakpoints[breakpoints.length - 1] || !scrollAtEdge)) {
       contentEl.scrollY = true;
     }
 
@@ -365,6 +395,7 @@ export const createSheetGesture = (
                 raf(() => {
                   wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
                   backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
+                  contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
                   animation.progressStart(true, 1 - snapToBreakpoint);
                   currentBreakpoint = snapToBreakpoint;
                   onBreakpointChange(currentBreakpoint);

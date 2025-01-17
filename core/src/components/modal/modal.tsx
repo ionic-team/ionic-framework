@@ -131,6 +131,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() breakpoints?: number[];
 
   /**
+   * Determines whether or not the sheet modal will only
+   * scroll when fully expanded.
+   *
+   * If the value is `true`, the modal will only scroll
+   * when fully expanded.
+   * If the value is `false`, the modal will scroll at
+   * any breakpoint.
+   */
+  @Prop() scrollAtEdge = true;
+
+  /**
    * A decimal value between 0 and 1 that indicates the
    * initial point the modal will open at when creating a
    * sheet modal. This value must also be listed in the
@@ -562,6 +573,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
+      animateContentHeight: !this.scrollAtEdge
     });
 
     /* tslint:disable-next-line */
@@ -668,6 +680,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: this.presentingElement,
       currentBreakpoint: initialBreakpoint,
       backdropBreakpoint,
+      animateContentHeight: !this.scrollAtEdge,
     }));
 
     ani.progressStart(true, 1);
@@ -680,6 +693,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint,
       ani,
       this.sortedBreakpoints,
+      this.scrollAtEdge,
       () => this.currentBreakpoint ?? 0,
       () => this.sheetOnDismiss(),
       (breakpoint: number) => {
@@ -1019,6 +1033,12 @@ interface ModalOverlayOptions {
    * to fade in when using a sheet modal.
    */
   backdropBreakpoint: number;
+
+  /**
+   * Whether or not the modal should animate
+   * content's max-height.
+   */
+  animateContentHeight?: boolean;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;
