@@ -11,35 +11,29 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
-            :root {
-              background: #ccc7c7;
-            }
-
             .container {
               padding: 20px 10px;
             }
           </style>
 
-          <ion-content>
-            <div class="container">
-              <ion-tab-bar expand="full">
-                <ion-tab-button tab="1">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-      
-                <ion-tab-button tab="2">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-      
-                <ion-tab-button tab="3">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-              </ion-tab-bar>
-            </div>
-          </ion-content>
+          <div class="container">
+            <ion-tab-bar expand="full">
+              <ion-tab-button tab="1">
+                <ion-icon name="triangle-outline"></ion-icon>
+                <ion-label>Label</ion-label>
+              </ion-tab-button>
+
+              <ion-tab-button tab="2">
+                <ion-icon name="triangle-outline"></ion-icon>
+                <ion-label>Label</ion-label>
+              </ion-tab-button>
+
+              <ion-tab-button tab="3">
+                <ion-icon name="triangle-outline"></ion-icon>
+                <ion-label>Label</ion-label>
+              </ion-tab-button>
+            </ion-tab-bar>
+          </div>
           `,
           config
         );
@@ -55,10 +49,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         await page.setContent(
           `
           <style>
-            :root {
-              background: #ccc7c7;
-            }
-
             .container {
               padding: 20px 10px;
               /* Size is needed because tab bar compact has position absolute and will not capture correctly. */
@@ -67,26 +57,24 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
             }
           </style>
 
-          <ion-content>
-            <div class="container">
-              <ion-tab-bar expand="compact">
-                <ion-tab-button tab="1">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-      
-                <ion-tab-button tab="2">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-      
-                <ion-tab-button tab="3">
-                  <ion-icon name="triangle-outline"></ion-icon>
-                  <ion-label>Label</ion-label>
-                </ion-tab-button>
-              </ion-tab-bar>
-            </div>
-          </ion-content>
+          <div class="container">
+            <ion-tab-bar expand="compact">
+              <ion-tab-button tab="1">
+                <ion-icon name="triangle-outline"></ion-icon>
+                <ion-label>Label</ion-label>
+              </ion-tab-button>
+
+              <ion-tab-button tab="2">
+                <ion-icon name="triangle-outline"></ion-icon>
+                <ion-label>Label</ion-label>
+              </ion-tab-button>
+
+              <ion-tab-button tab="3">
+                <ion-icon name="triangle-outline"></ion-icon>
+                <ion-label>Label</ion-label>
+              </ion-tab-button>
+            </ion-tab-bar>
+          </div>
           `,
           config
         );
