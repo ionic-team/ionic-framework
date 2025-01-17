@@ -91,7 +91,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
         const segmentContent = segmentView?.querySelector(
           `ion-segment-content[id="${contentId}"]`
         ) as HTMLIonSegmentContentElement | null;
-        if (segmentContent) {
+        if (segmentContent && timeoutId) {
           clearTimeout(timeoutId); // Clear the timeout if the segmentContent is found
           cancelAnimationFrame(animationFrameId);
           resolve(segmentContent);
