@@ -7,7 +7,8 @@ import { Component } from "@angular/core";
  */
 @Component({
   selector: 'app-keep-contents-mounted',
-  templateUrl: 'keep-contents-mounted.component.html'
+  templateUrl: 'keep-contents-mounted.component.html',
+  standalone: false
 })
-export class OverlayKeepContentsMounted {
+export class OverlayKeepContentsMountedComponent {
 }

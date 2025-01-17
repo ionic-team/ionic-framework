@@ -5,7 +5,8 @@ import { Component } from "@angular/core";
  */
 @Component({
   selector: 'app-overlays-inline',
-  templateUrl: 'overlays-inline.component.html'
+  templateUrl: 'overlays-inline.component.html',
+  standalone: false
 })
 export class OverlaysInlineComponent {
   public pickerButtons = [{ text: 'Ok' }, { text: 'Cancel', role: 'cancel' }];
