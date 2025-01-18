@@ -5,6 +5,7 @@ import { DefaultIonLifeCycleContext, IonLifeCycleContext } from '../contexts/Ion
 interface ViewTransitionManagerProps {
   removeView: () => void;
   mount: boolean;
+  children?: React.ReactNode;
 }
 
 interface ViewTransitionManagerState {

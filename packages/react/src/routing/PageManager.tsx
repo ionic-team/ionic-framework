@@ -8,6 +8,7 @@ import { StackContext } from './StackContext';
 
 interface PageManagerProps {
   className?: string;
+  children?: React.ReactNode;
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;
   routeInfo?: RouteInfo;
 }

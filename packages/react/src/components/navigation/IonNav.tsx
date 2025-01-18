@@ -14,6 +14,7 @@ const IonNavInner = createReactComponent<JSX.IonNav & { delegate: FrameworkDeleg
 );
 
 type IonNavProps = JSX.IonNav & {
+  children?: React.ReactNode;
   forwardedRef?: React.ForwardedRef<HTMLIonNavElement>;
 };
 
