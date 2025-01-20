@@ -1,5 +1,11 @@
 import { config } from '@global/config';
 
+export const enum LogLevel {
+  INFO = 'INFO',
+  ERROR = 'ERROR',
+  WARN = 'WARN',
+}
+
 /**
  * Logs a warning to the console with an Ionic prefix
  * to indicate the library that is warning the developer.
@@ -7,13 +13,13 @@ import { config } from '@global/config';
  * @param message - The string message to be logged to the console.
  */
 export const printIonWarning = (message: string, ...params: any[]) => {
-  const logLevel = config.get('logLevel', 'WARN');
-  if (['WARN'].includes(logLevel)) {
+  const logLevel = config.get('logLevel', LogLevel.WARN);
+  if ([LogLevel.WARN].includes(logLevel)) {
     return console.warn(`[Ionic Warning]: ${message}`, ...params);
   }
 };
 
-/*
+/**
  * Logs an error to the console with an Ionic prefix
  * to indicate the library that is warning the developer.
  *
@@ -21,8 +27,8 @@ export const printIonWarning = (message: string, ...params: any[]) => {
  * @param params - Additional arguments to supply to the console.error.
  */
 export const printIonError = (message: string, ...params: any[]) => {
-  const logLevel = config.get('logLevel', 'ERROR');
-  if (['ERROR', 'WARN'].includes(logLevel)) {
+  const logLevel = config.get('logLevel', LogLevel.ERROR);
+  if ([LogLevel.ERROR, LogLevel.WARN].includes(logLevel)) {
     return console.error(`[Ionic Error]: ${message}`, ...params);
   }
 };

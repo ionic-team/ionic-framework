@@ -2,6 +2,7 @@ import type { SpinnerTypes } from '../components/spinner/spinner-configs';
 import type { TabButtonLayout } from '../components/tab-bar/tab-bar-interface';
 import type { AnimationBuilder, Mode } from '../interface';
 
+import type { LogLevel } from './logging';
 import type { PlatformConfig } from './platform';
 
 export interface IonicConfig {
@@ -221,13 +222,13 @@ export interface IonicConfig {
   experimentalCloseWatcher?: boolean;
 
   /**
-   * Developers may configure the logging level for Ionic Framework.
+   * Configures the logging level for Ionic Framework:
    *
-   * - `OFF` will not log any errors or warnings.
-   * - `WARN` will log all errors and warnings.
-   * - `ERROR` will log only errors.
+   * - `OFF`: No errors or warnings are logged.
+   * - `WARN`: Logs errors and warnings.
+   * - `ERROR`: Logs only errors.
    */
-  logLevel?: 'OFF' | 'ERROR' | 'WARN';
+  logLevel?: LogLevel;
 
   // PRIVATE configs
   keyboardHeight?: number;
