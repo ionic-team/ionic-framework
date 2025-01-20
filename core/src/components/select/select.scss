@@ -340,6 +340,34 @@ button {
   display: none;
 }
 
+// Select Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the input. Otherwise the helper text should
+ * be shown.
+ */
+ .input-bottom .error-text {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
+.input-bottom .helper-text {
+  display: block;
+
+  color: #{$text-color-step-450};
+}
+
+:host(.ion-touched.ion-invalid) .input-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .input-bottom .helper-text {
+  display: none;
+}
+
 // Select Native Wrapper
 // ----------------------------------------------------------------
 
