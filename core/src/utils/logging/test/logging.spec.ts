@@ -1,4 +1,5 @@
 import { config } from '@global/config';
+import { LogLevel } from '../index';
 
 import { printIonError, printIonWarning } from '../index';
 
@@ -28,7 +29,7 @@ describe('Logging', () => {
 
     describe("when the logLevel configuration is set to 'WARN'", () => {
       it('logs a warning to the console', () => {
-        config.set('logLevel', 'WARN');
+        config.set('logLevel', LogLevel.WARN);
 
         printIonWarning('This is a warning message');
 
@@ -38,7 +39,7 @@ describe('Logging', () => {
 
     describe("when the logLevel configuration is set to 'ERROR'", () => {
       it('does not log a warning to the console', () => {
-        config.set('logLevel', 'ERROR');
+        config.set('logLevel', LogLevel.ERROR);
 
         printIonWarning('This is a warning message');
 
@@ -48,7 +49,7 @@ describe('Logging', () => {
 
     describe("when the logLevel configuration is set to 'OFF'", () => {
       it('does not log a warning to the console', () => {
-        config.set('logLevel', 'OFF');
+        config.set('logLevel', LogLevel.OFF);
 
         printIonWarning('This is a warning message');
 
@@ -82,7 +83,7 @@ describe('Logging', () => {
 
     describe("when the logLevel configuration is set to 'ERROR'", () => {
       it('logs an error to the console', () => {
-        config.set('logLevel', 'ERROR');
+        config.set('logLevel', LogLevel.ERROR);
 
         printIonError('This is an error message');
 
@@ -92,7 +93,7 @@ describe('Logging', () => {
 
     describe("when the logLevel configuration is set to 'WARN'", () => {
       it('logs an error to the console', () => {
-        config.set('logLevel', 'WARN');
+        config.set('logLevel', LogLevel.WARN);
 
         printIonError('This is an error message');
 
@@ -102,7 +103,7 @@ describe('Logging', () => {
 
     describe("when the logLevel configuration is set to 'OFF'", () => {
       it('does not log an error to the console', () => {
-        config.set('logLevel', 'OFF');
+        config.set('logLevel', LogLevel.OFF);
 
         printIonError('This is an error message');
 

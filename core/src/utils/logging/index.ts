@@ -1,7 +1,7 @@
 import { config } from '@global/config';
 
 export const enum LogLevel {
-  INFO = 'INFO',
+  OFF = 'OFF',
   ERROR = 'ERROR',
   WARN = 'WARN',
 }
