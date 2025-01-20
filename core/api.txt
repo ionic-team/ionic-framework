@@ -398,6 +398,8 @@ ion-checkbox,prop,alignment,"center" | "start" | undefined,undefined,false,false
 ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false
+ion-checkbox,prop,errorText,string | undefined,undefined,false,false
+ion-checkbox,prop,helperText,string | undefined,undefined,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
@@ -425,6 +427,14 @@ ion-checkbox,css-prop,--checkmark-color,ios
 ion-checkbox,css-prop,--checkmark-color,md
 ion-checkbox,css-prop,--checkmark-width,ios
 ion-checkbox,css-prop,--checkmark-width,md
+ion-checkbox,css-prop,--highlight-color-focused,ios
+ion-checkbox,css-prop,--highlight-color-focused,md
+ion-checkbox,css-prop,--highlight-color-invalid,ios
+ion-checkbox,css-prop,--highlight-color-invalid,md
+ion-checkbox,css-prop,--highlight-color-valid,ios
+ion-checkbox,css-prop,--highlight-color-valid,md
+ion-checkbox,css-prop,--highlight-height,ios
+ion-checkbox,css-prop,--highlight-height,md
 ion-checkbox,css-prop,--size,ios
 ion-checkbox,css-prop,--size,md
 ion-checkbox,css-prop,--transition,ios

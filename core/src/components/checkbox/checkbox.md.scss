@@ -27,6 +27,13 @@
   stroke-dashoffset: 30;
 }
 
+// Material Design Checkbox: Hint Text
+// ----------------------------------------------------------------
+
+.checkbox-bottom .helper-text {
+  color: #{$text-color-step-300};
+}
+
 // Material Design Checkbox: Checked / Indeterminate
 // --------------------------------------------------------
 

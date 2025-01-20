@@ -17,6 +17,11 @@
    * @prop --border-style: Border style of the checkbox icon
    * @prop --border-color-checked: Border color of the checkbox icon when checked
    *
+   * @prop --highlight-height: The height of the highlight on the checkbox. Only applies to md mode
+   * @prop --highlight-color-focused: The color of the highlight on the checkbox when focused
+   * @prop --highlight-color-valid: The color of the highlight on the checkbox when valid
+   * @prop --highlight-color-invalid: The color of the highlight on the checkbox when invalid
+   *
    * @prop --transition: Transition of the checkbox icon
    *
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
@@ -26,6 +31,9 @@
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};
   --transition: none;
+  --highlight-color-focused: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
 
   display: inline-block;
 
@@ -146,6 +154,56 @@ input {
   stroke-width: var(--checkmark-width);
 
   opacity: 0;
+}
+
+// Checkbox Bottom Content
+// ----------------------------------------------------------------
+
+.checkbox-bottom {
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the checkbox.
+   */
+  @include padding(5px, null, null, null);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
+}
+
+:host(.checkbox-label-placement-stacked) .checkbox-bottom {
+  font-size: dynamic-font(16px);
+}
+
+// Checkbox Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the checkbox. Otherwise the helper text should
+ * be shown.
+ */
+.checkbox-bottom .error-text {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
+.checkbox-bottom .helper-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .checkbox-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .checkbox-bottom .helper-text {
+  display: none;
 }
 
 // Justify Content

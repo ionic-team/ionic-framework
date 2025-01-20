@@ -624,6 +624,14 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the checkbox and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate": boolean;
@@ -5403,6 +5411,14 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the checkbox.
          */
         "disabled"?: boolean;
+        /**
+          * Text that is placed under the checkbox and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
