@@ -225,8 +225,8 @@ export interface IonicConfig {
    * Configures the logging level for Ionic Framework:
    *
    * - `'OFF'`: No errors or warnings are logged.
-   * - `'WARN'`: Logs errors and warnings.
    * - `'ERROR'`: Logs only errors.
+   * - `'WARN'`: Logs errors and warnings.
    */
   logLevel?: LogLevel;
 
