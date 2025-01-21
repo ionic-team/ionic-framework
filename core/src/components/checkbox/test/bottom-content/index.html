@@ -105,7 +105,9 @@
 
           <div class="grid-item">
             <h2>Helper & Error Text: Label Stacked</h2>
-            <ion-checkbox label-placement="stacked" helper-text="Helper text" error-text="Error text">Label</ion-checkbox>
+            <ion-checkbox label-placement="stacked" helper-text="Helper text" error-text="Error text"
+              >Label</ion-checkbox
+            >
           </div>
 
           <div class="grid-item">
@@ -120,7 +122,7 @@
           const checkboxes = document.querySelectorAll('ion-checkbox');
 
           function toggleValid() {
-            checkboxes.forEach(checkbox => {
+            checkboxes.forEach((checkbox) => {
               checkbox.classList.toggle('ion-invalid');
               checkbox.classList.toggle('ion-touched');
             });

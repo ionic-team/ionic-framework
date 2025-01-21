@@ -83,9 +83,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(input).not.toHaveAttribute('aria-invalid');
     });
-    test('input should not have aria-describedby attribute when no hint or error text is present', async ({
-      page,
-    }) => {
+    test('input should not have aria-describedby attribute when no hint or error text is present', async ({ page }) => {
       await page.setContent(`<ion-checkbox>Label</ion-checkbox>`, config);
 
       const input = page.locator('ion-checkbox input[type=checkbox]');
@@ -107,19 +105,30 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
       await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-helper`));
     });
     test('should not have visual regressions when rendering helper text with wrapping text', async ({ page }) => {
-      await page.setContent(`<ion-checkbox helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`, config);
+      await page.setContent(
+        `<ion-checkbox helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`,
+        config
+      );
 
       const bottomEl = page.locator('ion-checkbox');
       await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-helper-wrapping`));
     });
     test('should not have visual regressions when rendering helper text with a stacked label', async ({ page }) => {
-      await page.setContent(`<ion-checkbox label-placement="stacked" helper-text="Helper text">Label</ion-checkbox>`, config);
+      await page.setContent(
+        `<ion-checkbox label-placement="stacked" helper-text="Helper text">Label</ion-checkbox>`,
+        config
+      );
 
       const bottomEl = page.locator('ion-checkbox');
       await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-helper-label-stacked`));
     });
-    test('should not have visual regressions when rendering helper text with a stacked label and wrapping text', async ({ page }) => {
-      await page.setContent(`<ion-checkbox label-placement="stacked" helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`, config);
+    test('should not have visual regressions when rendering helper text with a stacked label and wrapping text', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `<ion-checkbox label-placement="stacked" helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`,
+        config
+      );
 
       const bottomEl = page.locator('ion-checkbox');
       await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-helper-label-stacked-wrapping`));
