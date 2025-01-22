@@ -432,6 +432,17 @@ export class Picker implements ComponentInterface {
     const firstColumn = numericPickers[0];
     const lastColumn = numericPickers[1];
 
+    // Get the maximum value from the first column's options
+    const columnOptions = Array.from(firstColumn.querySelectorAll('ion-picker-column-option'));
+    const maxFirstColumnValue = Math.max(
+      ...columnOptions
+        .map((option) => parseInt(option.textContent?.trim() || '0', 10)) // Extract and parse text content
+        .filter((num) => !isNaN(num)) // Ensure valid numbers only
+    );
+
+    // check for 24-hour format
+    const allowTwo = maxFirstColumnValue >= 20;
+
     let value = inputEl.value;
     let minuteValue;
     switch (value.length) {
@@ -439,14 +450,11 @@ export class Picker implements ComponentInterface {
         this.searchColumn(firstColumn, value);
         break;
       case 2:
-        /**
-         * If the first character is `0` or `1` it is
-         * possible that users are trying to type `09`
-         * or `11` into the hour field, so we should look
-         * at that first.
-         */
         const firstCharacter = inputEl.value.substring(0, 1);
-        value = firstCharacter === '0' || firstCharacter === '1' ? inputEl.value : firstCharacter;
+        value =
+          firstCharacter === '0' || firstCharacter === '1' || (allowTwo && firstCharacter === '2')
+            ? inputEl.value
+            : firstCharacter;
 
         this.searchColumn(firstColumn, value);
 
@@ -462,14 +470,14 @@ export class Picker implements ComponentInterface {
         break;
       case 3:
         /**
-         * If the first character is `0` or `1` it is
+         * If the first character is `0` or `1` or allowed '2' it is
          * possible that users are trying to type `09`
          * or `11` into the hour field, so we should look
          * at that first.
          */
         const firstCharacterAgain = inputEl.value.substring(0, 1);
         value =
-          firstCharacterAgain === '0' || firstCharacterAgain === '1'
+          firstCharacterAgain === '0' || firstCharacterAgain === '1' || (allowTwo && firstCharacterAgain === '2')
             ? inputEl.value.substring(0, 2)
             : firstCharacterAgain;
 
@@ -486,14 +494,16 @@ export class Picker implements ComponentInterface {
         break;
       case 4:
         /**
-         * If the first character is `0` or `1` it is
+         * If the first character is `0` or `1` or allowed '2' it is
          * possible that users are trying to type `09`
          * or `11` into the hour field, so we should look
          * at that first.
          */
         const firstCharacterAgainAgain = inputEl.value.substring(0, 1);
         value =
-          firstCharacterAgainAgain === '0' || firstCharacterAgainAgain === '1'
+          firstCharacterAgainAgain === '0' ||
+          firstCharacterAgainAgain === '1' ||
+          (allowTwo && firstCharacterAgainAgain === '2')
             ? inputEl.value.substring(0, 2)
             : firstCharacterAgainAgain;
         this.searchColumn(firstColumn, value);
