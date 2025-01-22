@@ -151,13 +151,14 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: supporting text customization'), () => {
-    test('should not have visual regressions when rendering helper text with a custom color via css', async ({
+    test('should not have visual regressions when rendering helper text with custom css', async ({
       page,
     }) => {
       await page.setContent(
         `
         <style>
           ion-input.custom-input.md .input-bottom .helper-text {
+            font-size: 20px;
             color: green;
           }
         </style>
@@ -167,15 +168,16 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const helperText = page.locator('ion-input');
-      await expect(helperText).toHaveScreenshot(screenshot(`input-helper-text-custom-color`));
+      await expect(helperText).toHaveScreenshot(screenshot(`input-helper-text-custom-css`));
     });
-    test('should not have visual regressions when rendering error text with a custom color via css', async ({
+    test('should not have visual regressions when rendering error text with custom css', async ({
       page,
     }) => {
       await page.setContent(
         `
         <style>
           ion-input.custom-input.md .input-bottom .error-text {
+            font-size: 20px;
             color: purple;
           }
         </style>
@@ -185,9 +187,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const errorText = page.locator('ion-input');
-      await expect(errorText).toHaveScreenshot(screenshot(`input-error-text-custom-color`));
+      await expect(errorText).toHaveScreenshot(screenshot(`input-error-text-custom-css`));
     });
-    test('should not have visual regressions when rendering error text with a custom color via css var', async ({
+    test('should not have visual regressions when rendering error text with a custom css variable', async ({
       page,
     }) => {
       await page.setContent(
@@ -203,7 +205,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const errorText = page.locator('ion-input');
-      await expect(errorText).toHaveScreenshot(screenshot(`input-error-text-custom-color-var`));
+      await expect(errorText).toHaveScreenshot(screenshot(`input-error-text-custom-css-var`));
     });
   });
 });
