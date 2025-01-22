@@ -17,11 +17,6 @@
    * @prop --border-style: Border style of the checkbox icon
    * @prop --border-color-checked: Border color of the checkbox icon when checked
    *
-   * @prop --highlight-height: The height of the highlight on the checkbox. Only applies to md mode
-   * @prop --highlight-color-focused: The color of the highlight on the checkbox when focused
-   * @prop --highlight-color-valid: The color of the highlight on the checkbox when valid
-   * @prop --highlight-color-invalid: The color of the highlight on the checkbox when invalid
-   *
    * @prop --transition: Transition of the checkbox icon
    *
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
@@ -31,9 +26,6 @@
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};
   --transition: none;
-  --highlight-color-focused: #{ion-color(primary, base)};
-  --highlight-color-valid: #{ion-color(success, base)};
-  --highlight-color-invalid: #{ion-color(danger, base)};
 
   display: inline-block;
 
@@ -191,11 +183,13 @@ input {
 .checkbox-bottom .error-text {
   display: none;
 
-  color: var(--highlight-color-invalid);
+  color: ion-color(danger, base);
 }
 
 .checkbox-bottom .helper-text {
   display: block;
+
+  color: $text-color-step-300;
 }
 
 :host(.ion-touched.ion-invalid) .checkbox-bottom .error-text {
