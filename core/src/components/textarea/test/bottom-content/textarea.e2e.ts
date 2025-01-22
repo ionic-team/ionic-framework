@@ -30,10 +30,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const input = page.locator('ion-textarea textarea');
+      const textarea = page.locator('ion-textarea textarea');
       const helperText = page.locator('ion-textarea .helper-text');
       const helperTextId = await helperText.getAttribute('id');
-      const ariaDescribedBy = await input.getAttribute('aria-describedby');
+      const ariaDescribedBy = await textarea.getAttribute('aria-describedby');
 
       expect(ariaDescribedBy).toBe(helperTextId);
     });
@@ -56,41 +56,41 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const input = page.locator('ion-textarea textarea');
+      const textarea = page.locator('ion-textarea textarea');
       const errorText = page.locator('ion-textarea .error-text');
       const errorTextId = await errorText.getAttribute('id');
-      const ariaDescribedBy = await input.getAttribute('aria-describedby');
+      const ariaDescribedBy = await textarea.getAttribute('aria-describedby');
 
       expect(ariaDescribedBy).toBe(errorTextId);
     });
-    test('textarea should have aria-invalid attribute when input is invalid', async ({ page }) => {
+    test('textarea should have aria-invalid attribute when textarea is invalid', async ({ page }) => {
       await page.setContent(
         `<ion-textarea label="Label" class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text"></ion-textarea>`,
         config
       );
 
-      const input = page.locator('ion-textarea textarea');
+      const textarea = page.locator('ion-textarea textarea');
 
-      await expect(input).toHaveAttribute('aria-invalid');
+      await expect(textarea).toHaveAttribute('aria-invalid');
     });
-    test('textarea should not have aria-invalid attribute when input is valid', async ({ page }) => {
+    test('textarea should not have aria-invalid attribute when textarea is valid', async ({ page }) => {
       await page.setContent(
         `<ion-textarea label="Label" helper-text="Helper text" error-text="Error text"></ion-textarea>`,
         config
       );
 
-      const input = page.locator('ion-textarea textarea');
+      const textarea = page.locator('ion-textarea textarea');
 
-      await expect(input).not.toHaveAttribute('aria-invalid');
+      await expect(textarea).not.toHaveAttribute('aria-invalid');
     });
     test('textarea should not have aria-describedby attribute when no hint or error text is present', async ({
       page,
     }) => {
       await page.setContent(`<ion-textarea label="Label"></ion-textarea>`, config);
 
-      const input = page.locator('ion-textarea textarea');
+      const textarea = page.locator('ion-textarea textarea');
 
-      await expect(input).not.toHaveAttribute('aria-describedby');
+      await expect(textarea).not.toHaveAttribute('aria-describedby');
     });
   });
 });
@@ -151,16 +151,16 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
 /**
  * Customizing supporting text is the same across modes and directions
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: supporting text customization'), () => {
-    test('should not have visual regressions when rendering helper text with a custom color via css var', async ({
+    test('should not have visual regressions when rendering helper text with a custom color via css', async ({
       page,
     }) => {
       await page.setContent(
         `
         <style>
-          ion-textarea.custom-textarea {
-            --helper-text-color: green;
+          ion-textarea.custom-textarea.md .textarea-bottom .helper-text {
+            color: green;
           }
         </style>
         <ion-textarea class="custom-textarea" label="Label" helper-text="Helper text"></ion-textarea>
@@ -169,16 +169,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       );
 
       const helperText = page.locator('ion-textarea');
-      await expect(helperText).toHaveScreenshot(screenshot(`textarea-helper-text-custom-color-var`));
+      await expect(helperText).toHaveScreenshot(screenshot(`textarea-helper-text-custom-color`));
     });
-    test('should not have visual regressions when rendering error text with a custom color via css var', async ({
+    test('should not have visual regressions when rendering error text with a custom color via css', async ({
       page,
     }) => {
       await page.setContent(
         `
         <style>
-          ion-textarea.custom-textarea {
-            --error-text-color: purple;
+          ion-textarea.custom-textarea.md .textarea-bottom .error-text {
+            color: purple;
           }
         </style>
         <ion-textarea class="ion-invalid ion-touched custom-textarea" label="Label" error-text="Error text"></ion-textarea>
@@ -187,9 +187,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       );
 
       const errorText = page.locator('ion-textarea');
-      await expect(errorText).toHaveScreenshot(screenshot(`textarea-error-text-custom-color-var`));
+      await expect(errorText).toHaveScreenshot(screenshot(`textarea-error-text-custom-color`));
     });
-    test('should not have visual regressions when rendering error text with a custom color via css highlight var', async ({
+    test('should not have visual regressions when rendering error text with a custom color via css var', async ({
       page,
     }) => {
       await page.setContent(
@@ -205,7 +205,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       );
 
       const errorText = page.locator('ion-textarea');
-      await expect(errorText).toHaveScreenshot(screenshot(`textarea-error-text-custom-highlight-var`));
+      await expect(errorText).toHaveScreenshot(screenshot(`textarea-error-text-custom-color-var`));
     });
   });
 });
