@@ -1825,6 +1825,10 @@ ion-textarea,css-prop,--border-width,ios
 ion-textarea,css-prop,--border-width,md
 ion-textarea,css-prop,--color,ios
 ion-textarea,css-prop,--color,md
+ion-textarea,css-prop,--error-text-color,ios
+ion-textarea,css-prop,--error-text-color,md
+ion-textarea,css-prop,--helper-text-color,ios
+ion-textarea,css-prop,--helper-text-color,md
 ion-textarea,css-prop,--highlight-color-focused,ios
 ion-textarea,css-prop,--highlight-color-focused,md
 ion-textarea,css-prop,--highlight-color-invalid,ios
