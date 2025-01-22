@@ -193,11 +193,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          ion-input {
+          ion-input.custom-input {
             --highlight-color-invalid: purple;
           }
         </style>
-        <ion-input class="ion-invalid ion-touched" label="Label" error-text="Error text"></ion-input>
+        <ion-input class="ion-invalid ion-touched custom-input" label="Label" error-text="Error text"></ion-input>
       `,
         config
       );
