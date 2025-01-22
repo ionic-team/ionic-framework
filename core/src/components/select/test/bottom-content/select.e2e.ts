@@ -151,7 +151,9 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: supporting text customization'), () => {
-    test('should not have visual regressions when rendering helper text with a custom color via css parts', async ({ page }) => {
+    test('should not have visual regressions when rendering helper text with a custom color via css parts', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <style>
@@ -171,7 +173,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const errorText = page.locator('ion-select');
       await expect(errorText).toHaveScreenshot(screenshot(`select-helper-text-custom-parts`));
     });
-    test('should not have visual regressions when rendering helper text with a custom color via css var', async ({ page }) => {
+    test('should not have visual regressions when rendering helper text with a custom color via css var', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <style>
@@ -187,7 +191,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const helperText = page.locator('ion-select');
       await expect(helperText).toHaveScreenshot(screenshot(`select-helper-text-custom-color-var`));
     });
-    test('should not have visual regressions when rendering error text with a custom color via css parts', async ({ page }) => {
+    test('should not have visual regressions when rendering error text with a custom color via css parts', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <style>
@@ -207,7 +213,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const errorText = page.locator('ion-select');
       await expect(errorText).toHaveScreenshot(screenshot(`select-error-text-custom-parts`));
     });
-    test('should not have visual regressions when rendering error text with a custom color via css var', async ({ page }) => {
+    test('should not have visual regressions when rendering error text with a custom color via css var', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <style>
@@ -223,7 +231,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const errorText = page.locator('ion-select');
       await expect(errorText).toHaveScreenshot(screenshot(`select-error-text-custom-color-var`));
     });
-    test('should not have visual regressions when rendering error text with a custom color via css highlight var', async ({ page }) => {
+    test('should not have visual regressions when rendering error text with a custom color via css highlight var', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <style>
