@@ -83,9 +83,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(input).not.toHaveAttribute('aria-invalid');
     });
-    test('input should not have aria-describedby attribute when no hint or error text is present', async ({
-      page,
-    }) => {
+    test('input should not have aria-describedby attribute when no hint or error text is present', async ({ page }) => {
       await page.setContent(`<ion-input label="Label"></ion-input>`, config);
 
       const input = page.locator('ion-input input');
