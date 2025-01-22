@@ -26,7 +26,8 @@
    *
    * @prop --ripple-color: The color of the ripple effect on MD mode.
    *
-   * TODO: add supporting text css vars
+   * @prop --helper-text-color: The color of the supporting text displayed beneath the select when the select is valid.
+   * @prop --error-text-color: The color of the supporting text displayed beneath the select when the select is invalid and touched.
    */
   --padding-top: 0px;
   --padding-end: 0px;
@@ -39,6 +40,8 @@
   --highlight-color-focused: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
+  --helper-text-color: #{$text-color-step-300};
+  --error-text-color: var(--highlight-color-invalid);
 
   /**
    * This is a private API that is used to switch
@@ -325,13 +328,13 @@ button {
  .select-bottom .error-text {
   display: none;
 
-  color: var(--highlight-color-invalid);
+  color: var(--error-text-color);
 }
 
 .select-bottom .helper-text {
   display: block;
 
-  color: $text-color-step-300;
+  color: var(--helper-text-color);
 }
 
 :host(.ion-touched.ion-invalid) .select-bottom .error-text {
