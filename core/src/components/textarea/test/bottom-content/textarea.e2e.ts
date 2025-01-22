@@ -153,9 +153,7 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: supporting text customization'), () => {
-    test('should not have visual regressions when rendering helper text with custom css', async ({
-      page,
-    }) => {
+    test('should not have visual regressions when rendering helper text with custom css', async ({ page }) => {
       await page.setContent(
         `
         <style>
@@ -172,9 +170,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const helperText = page.locator('ion-textarea');
       await expect(helperText).toHaveScreenshot(screenshot(`textarea-helper-text-custom-css`));
     });
-    test('should not have visual regressions when rendering error text with custom css', async ({
-      page,
-    }) => {
+    test('should not have visual regressions when rendering error text with custom css', async ({ page }) => {
       await page.setContent(
         `
         <style>
