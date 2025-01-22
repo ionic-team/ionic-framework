@@ -449,6 +449,12 @@ export class Picker implements ComponentInterface {
       case 1:
         this.searchColumn(firstColumn, value);
         break;
+      /**
+       * If the first character is `0` or `1` or allowed '2' it is
+       * possible that users are trying to type `09`
+       * or `11` into the hour field, so we should look
+       * at that first.
+       */
       case 2:
         const firstCharacter = inputEl.value.substring(0, 1);
         value =
