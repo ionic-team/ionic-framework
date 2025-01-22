@@ -62,10 +62,6 @@
   background: transparent;
 }
 
-:host(.input-fill-outline.input-shape-round) .label-text-wrapper {
-  @include padding(null, var(--padding-end), null, var(--padding-start));
-}
-
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
   @include transform-origin(start, top);
 
