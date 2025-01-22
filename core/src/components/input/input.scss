@@ -306,6 +306,8 @@
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
   font-size: dynamic-font(12px);
+
+  white-space: normal;
 }
 
 /**
@@ -340,7 +342,7 @@
 .input-bottom .helper-text {
   display: block;
 
-  color: #{$text-color-step-450};
+  color: $text-color-step-300;
 }
 
 :host(.ion-touched.ion-invalid) .input-bottom .error-text {
