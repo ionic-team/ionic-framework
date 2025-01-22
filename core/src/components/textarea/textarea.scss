@@ -29,9 +29,6 @@
    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the textarea
    * @prop --padding-bottom: Bottom padding of the textarea
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the textarea
-   *
-   * @prop --helper-text-color: The color of the supporting text displayed beneath the textarea when the textarea is valid.
-   * @prop --error-text-color: The color of the supporting text displayed beneath the textarea when the textarea is invalid and touched.
    */
   --background: initial;
   --color: initial;
@@ -48,8 +45,6 @@
   --highlight-color-focused: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
-  --helper-text-color: #{$text-color-step-300};
-  --error-text-color: var(--highlight-color-invalid);
 
   /**
    * This is a private API that is used to switch
@@ -418,13 +413,13 @@
 .textarea-bottom .error-text {
   display: none;
 
-  color: var(--error-text-color);
+  color: var(--highlight-color-invalid);
 }
 
 .textarea-bottom .helper-text {
   display: block;
 
-  color: var(--helper-text-color);
+  color: $text-color-step-300;
 }
 
 :host(.ion-touched.ion-invalid) .textarea-bottom .error-text {
