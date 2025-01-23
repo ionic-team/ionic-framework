@@ -35,7 +35,7 @@
     </style>
   </head>
 
-  <body>
+  <body onLoad="onLoad()">
     <ion-app>
       <ion-header>
         <ion-toolbar>
@@ -130,6 +130,15 @@
     </ion-app>
 
     <script>
+      // Hide the toggle fill button on ios mode since it's not supported
+      function onLoad() {
+        const toggleFillButton = document.querySelector('button');
+
+        if (Ionic.mode === 'ios' && toggleFillButton) {
+          toggleFillButton.style.display = 'none';
+        }
+      }
+
       const customCounterTextarea = document.querySelector('ion-textarea#custom-counter');
       customCounterTextarea.counterFormatter = (inputLength, maxLength) => {
         const length = maxLength - inputLength;
