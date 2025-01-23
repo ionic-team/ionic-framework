@@ -643,6 +643,10 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required": boolean;
         "setFocus": () => Promise<void>;
         /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
@@ -2303,6 +2307,10 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required": boolean;
         "setFocus": () => Promise<void>;
         /**
           * the value of the radio group.
@@ -2809,6 +2817,10 @@ export namespace Components {
          */
         "placeholder"?: string;
         /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required": boolean;
+        /**
           * The text to display instead of the selected option's value.
          */
         "selectedText"?: string | null;
@@ -3280,6 +3292,10 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required": boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
@@ -5436,6 +5452,10 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required"?: boolean;
+        /**
           * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
         "value"?: any | null;
@@ -7068,6 +7088,10 @@ declare namespace LocalJSX {
          */
         "onIonValueChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
         /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required"?: boolean;
+        /**
           * the value of the radio group.
          */
         "value"?: any | null;
@@ -7641,6 +7665,10 @@ declare namespace LocalJSX {
          */
         "placeholder"?: string;
         /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required"?: boolean;
+        /**
           * The text to display instead of the selected option's value.
          */
         "selectedText"?: string | null;
@@ -8155,6 +8183,10 @@ declare namespace LocalJSX {
           * Emitted when the toggle has focus.
          */
         "onIonFocus"?: (event: IonToggleCustomEvent<void>) => void;
+        /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required"?: boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */

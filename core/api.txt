@@ -403,6 +403,7 @@ ion-checkbox,prop,justify,"end" | "space-between" | "start" | undefined,undefine
 ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
+ion-checkbox,prop,required,boolean,false,false,false
 ion-checkbox,prop,value,any,'on',false,false
 ion-checkbox,event,ionBlur,void,true
 ion-checkbox,event,ionChange,CheckboxChangeEventDetail<any>,true
@@ -1346,6 +1347,7 @@ ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
 ion-radio-group,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-radio-group,prop,name,string,this.inputId,false,false
+ion-radio-group,prop,required,boolean,false,false,false
 ion-radio-group,prop,value,any,undefined,false,false
 ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
 
@@ -1631,6 +1633,7 @@ ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false
 ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,string | undefined,undefined,false,false
+ion-select,prop,required,boolean,false,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,shape,"round" | undefined,undefined,false,false
 ion-select,prop,toggleIcon,string | undefined,undefined,false,false
@@ -1944,6 +1947,7 @@ ion-toggle,prop,justify,"end" | "space-between" | "start" | undefined,undefined,
 ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
+ion-toggle,prop,required,boolean,false,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
 ion-toggle,event,ionChange,ToggleChangeEventDetail<any>,true
