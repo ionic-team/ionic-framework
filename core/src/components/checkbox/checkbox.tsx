@@ -99,6 +99,11 @@ export class Checkbox implements ComponentInterface {
   @Prop() alignment?: 'start' | 'center';
 
   /**
+   * If `true`, the user must fill in a value before submitting a form.
+   */
+  @Prop() required = false;
+
+  /**
    * Emitted when the checked property has changed as a result of a user action such as a click.
    *
    * This event will not emit when programmatically setting the `checked` property.
@@ -182,6 +187,7 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
       alignment,
+      required
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
@@ -218,6 +224,7 @@ export class Checkbox implements ComponentInterface {
             onFocus={() => this.onFocus()}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
+            required={required}
             {...inheritedAttributes}
           />
           <div
