@@ -35,7 +35,7 @@
     </style>
   </head>
 
-  <body>
+  <body onLoad="onLoad()">
     <ion-app>
       <ion-header>
         <ion-toolbar>
@@ -111,6 +111,15 @@
     </ion-app>
 
     <script>
+      // Hide the toggle fill button on ios mode since it's not supported
+      function onLoad() {
+        const toggleFillButton = document.querySelector('button');
+
+        if (Ionic.mode === 'ios' && toggleFillButton) {
+          toggleFillButton.style.display = 'none';
+        }
+      }
+
       const selects = document.querySelectorAll('ion-select');
 
       function toggleFill() {
