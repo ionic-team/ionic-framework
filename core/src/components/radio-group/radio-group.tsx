@@ -35,6 +35,11 @@ export class RadioGroup implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
+   * If `true`, the user must fill in a value before submitting a form.
+   */
+  @Prop() required = false;
+
+  /**
    * the value of the radio group.
    */
   @Prop({ mutable: true }) value?: any | null;
@@ -225,12 +230,12 @@ export class RadioGroup implements ComponentInterface {
   }
 
   render() {
-    const { label, labelId, el, name, value } = this;
+    const { label, labelId, el, name, value, required } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, false);
 
-    return <Host role="radiogroup" aria-labelledby={label ? labelId : null} onClick={this.onClick} class={mode}></Host>;
+    return <Host role="radiogroup" aria-labelledby={label ? labelId : null} onClick={this.onClick} class={mode} aria-required={`${required}`}></Host>;
   }
 }
 
