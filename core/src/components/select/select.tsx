@@ -197,6 +197,11 @@ export class Select implements ComponentInterface {
   @Prop({ mutable: true }) value?: any | null;
 
   /**
+   * If `true`, the user must fill in a value before submitting a form.
+   */
+  @Prop() required = false;
+
+  /**
    * Emitted when the value has changed.
    *
    * This event will not emit when programmatically setting the `value` property.
@@ -974,7 +979,7 @@ export class Select implements ComponentInterface {
   }
 
   private renderListbox() {
-    const { disabled, inputId, isExpanded } = this;
+    const { disabled, inputId, isExpanded, required } = this;
 
     return (
       <button
@@ -983,6 +988,7 @@ export class Select implements ComponentInterface {
         aria-label={this.ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={`${isExpanded}`}
+        aria-required={`${required}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(focusEl) => (this.focusEl = focusEl)}
