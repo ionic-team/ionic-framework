@@ -2809,6 +2809,10 @@ export namespace Components {
          */
         "placeholder"?: string;
         /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required": boolean;
+        /**
           * The text to display instead of the selected option's value.
          */
         "selectedText"?: string | null;
@@ -7640,6 +7644,10 @@ declare namespace LocalJSX {
           * The text to display when the select is empty.
          */
         "placeholder"?: string;
+        /**
+          * If `true`, the user must fill in a value before submitting a form.
+         */
+        "required"?: boolean;
         /**
           * The text to display instead of the selected option's value.
          */
