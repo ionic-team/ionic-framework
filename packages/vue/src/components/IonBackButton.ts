@@ -34,7 +34,7 @@ export const IonBackButton = /*@__PURE__*/ defineComponent(
         slots.default && slots.default()
       );
     };
+  }, {
+    name: "IonBackButton",
   }
 );
-
-IonBackButton.name = "IonBackButton";

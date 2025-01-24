@@ -1,4 +1,6 @@
-import { defineComponent, h, ref, VNode, onMounted } from 'vue';
+/* eslint-disable no-prototype-builtins */
+import type { VNode, ComponentOptions } from 'vue';
+import { defineComponent, h, ref, onMounted } from 'vue';
 
 // TODO(FW-2969): types
 
@@ -10,6 +12,20 @@ const EMPTY_PROP = Symbol();
 const DEFAULT_EMPTY_PROP = { default: EMPTY_PROP };
 
 export const defineOverlayContainer = <Props extends object>(name: string, defineCustomElement: () => void, componentProps: string[] = [], hasDelegateHost?: boolean, controller?: any) => {
+  const options: ComponentOptions = {
+    name,
+    props: {
+      'isOpen': DEFAULT_EMPTY_PROP
+    }
+  }
+
+  componentProps.forEach(componentProp => {
+    options.props[componentProp] = DEFAULT_EMPTY_PROP;
+  });
+
+  if (controller !== undefined) {
+    options.emits = ['willPresent', 'didPresent', 'willDismiss', 'didDismiss'];
+  }
 
   const createControllerComponent = () => {
     return defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
@@ -77,7 +93,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
           return;
         }
 
-        let restOfProps: any = {};
+        const restOfProps: Record<string, any> = {};
 
         /**
          * We can use Object.entries here
@@ -130,7 +146,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
           }
         );
       }
-    });
+    }, options);
   };
   const createInlineComponent = () => {
     return defineComponent((props, { slots }) => {
@@ -147,7 +163,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
       });
 
       return () => {
-        let restOfProps: any = {};
+        const restOfProps: Record<string, any> = {};
 
         /**
          * We can use Object.entries here
@@ -187,24 +203,10 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
           (isOpen.value || restOfProps.keepContentsMounted || restOfProps.keepContentsMounted === '') ? renderChildren() : undefined
         )
       }
-    });
+    }, options);
   }
 
   const Container = (controller !== undefined) ? createControllerComponent() : createInlineComponent();
-
-  Container.name = name;
-
-  Container.props = {
-    'isOpen': DEFAULT_EMPTY_PROP
-  };
-
-  componentProps.forEach(componentProp => {
-    Container.props[componentProp] = DEFAULT_EMPTY_PROP;
-  });
-
-  if (controller !== undefined) {
-    Container.emits = ['willPresent', 'didPresent', 'willDismiss', 'didDismiss'];
-  }
 
   return Container;
 }

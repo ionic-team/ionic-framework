@@ -21,37 +21,36 @@ export const IonNav = /*@__PURE__*/ defineComponent((props) => {
   return () => {
     return h("ion-nav", { ...props, delegate }, views.value);
   };
+}, {
+  name: "IonNav",
+  /**
+   * The default values follow what is defined at
+   * https://ionicframework.com/docs/api/nav#properties
+   * otherwise the default values on the Web Component
+   * may be overridden. For example, if the default animated value
+   * is not `true` below, then Vue would default the prop to `false`
+   * which would override the Web Component default of `true`.
+   */
+  props: {
+    animated: {
+      type: Boolean,
+      default: true,
+    },
+    animation: {
+      type: Function,
+      default: undefined,
+    },
+    root: {
+      type: [Function, Object, String],
+      default: undefined,
+    },
+    rootParams: {
+      type: Object,
+      default: undefined,
+    },
+    swipeGesture: {
+      type: Boolean,
+      default: undefined,
+    },
+  }
 });
-
-IonNav.name = "IonNav";
-
-/**
- * The default values follow what is defined at
- * https://ionicframework.com/docs/api/nav#properties
- * otherwise the default values on the Web Component
- * may be overridden. For example, if the default animated value
- * is not `true` below, then Vue would default the prop to `false`
- * which would override the Web Component default of `true`.
- */
-IonNav.props = {
-  animated: {
-    type: Boolean,
-    default: true,
-  },
-  animation: {
-    type: Function,
-    default: undefined,
-  },
-  root: {
-    type: [Function, Object, String],
-    default: undefined,
-  },
-  rootParams: {
-    type: Object,
-    default: undefined,
-  },
-  swipeGesture: {
-    type: Boolean,
-    default: undefined,
-  },
-};
