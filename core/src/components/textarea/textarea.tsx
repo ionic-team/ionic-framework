@@ -547,7 +547,7 @@ export class Textarea implements ComponentInterface {
     return this.label !== undefined || this.labelSlot !== null;
   }
 
-   private getFill(): string | undefined {
+  private getFill(): string | undefined {
     const theme = getIonTheme(this);
     const { fill } = this;
 
@@ -557,7 +557,6 @@ export class Textarea implements ComponentInterface {
 
     return fill;
   }
-
 
   private getShape(): string | undefined {
     const theme = getIonTheme(this);
