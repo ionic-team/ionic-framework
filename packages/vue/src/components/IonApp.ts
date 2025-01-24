@@ -9,14 +9,15 @@ export const IonApp = /*@__PURE__*/ defineComponent((_, { attrs, slots }) => {
     return h(
       "ion-app",
       {
+        name: "IonApp",
         ...attrs,
       },
       [slots.default && slots.default(), ...userComponents.value]
     );
   };
+}, {
+  name: "IonApp",
 });
-
-IonApp.name = "IonApp";
 
 /**
  * When rendering user components inside of
