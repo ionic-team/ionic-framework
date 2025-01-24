@@ -2,6 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 
 import { config } from '../../../global/config';
 import { Toggle } from '../toggle';
+import { toggle } from 'ionicons/icons';
 
 describe('toggle', () => {
   beforeEach(() => {
@@ -73,5 +74,35 @@ describe('ion-toggle: disabled', () => {
     await page.waitForChanges();
 
     expect(toggle.checked).toBe(false);
+  });
+});
+
+describe('ion-toggle: required', () => {
+  it('should have a required attribute in inner input when true', async () => {
+    const page = await newSpecPage({
+      components: [Toggle],
+      html: `
+        <ion-toggle required="true">Toggle</ion-toggle>
+      `,
+    });
+
+    const toggle = page.body.querySelector('ion-toggle')!;
+    const nativeInput = toggle.shadowRoot?.querySelector("input[role=switch]")!;
+
+    expect(nativeInput.hasAttribute('required')).toBeTruthy();
+  });
+
+  it('should not have a required attribute in inner input when false', async () => {
+    const page = await newSpecPage({
+      components: [Toggle],
+      html: `
+        <ion-toggle required="false">Toggle</ion-toggle>
+      `,
+    });
+
+    const toggle = page.body.querySelector('ion-toggle')!;
+    const nativeInput = toggle.shadowRoot?.querySelector("input[role=switch]")!;
+
+    expect(nativeInput.hasAttribute('required')).toBeFalsy();
   });
 });
