@@ -547,6 +547,18 @@ export class Textarea implements ComponentInterface {
     return this.label !== undefined || this.labelSlot !== null;
   }
 
+   private getFill(): string | undefined {
+    const theme = getIonTheme(this);
+    const { fill } = this;
+
+    if (theme === 'ionic' && fill === undefined) {
+      return 'outline';
+    }
+
+    return fill;
+  }
+
+
   private getShape(): string | undefined {
     const theme = getIonTheme(this);
     const { shape } = this;
@@ -666,6 +678,7 @@ export class Textarea implements ComponentInterface {
 
   render() {
     const { inputId, disabled, fill, size, labelPlacement, el, hasFocus } = this;
+    const fill = this.getFill();
     const theme = getIonTheme(this);
     const shape = this.getShape();
     const value = this.getValue();

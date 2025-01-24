@@ -128,7 +128,7 @@
 }
 
 :host(.input-fill-outline.input-shape-round) {
-  --border-radius: #{$ion-border-radius-full};
+  --border-radius: #{$ion-border-radius-400};
 }
 
 :host(.input-fill-outline.input-shape-rectangular) {
