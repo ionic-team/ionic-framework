@@ -65,7 +65,7 @@ describe('ion-checkbox: required', () => {
     });
 
     const checkbox = page.body.querySelector('ion-checkbox')!;
-    const nativeInput = checkbox.shadowRoot?.querySelector("input[type=checkbox]")!;
+    const nativeInput = checkbox.shadowRoot?.querySelector('input[type=checkbox]')!;
 
     expect(nativeInput.hasAttribute('required')).toBeTruthy();
   });
@@ -79,7 +79,7 @@ describe('ion-checkbox: required', () => {
     });
 
     const checkbox = page.body.querySelector('ion-checkbox')!;
-    const nativeInput = checkbox.shadowRoot?.querySelector("input[type=checkbox]")!;
+    const nativeInput = checkbox.shadowRoot?.querySelector('input[type=checkbox]')!;
 
     expect(nativeInput.hasAttribute('required')).toBeFalsy();
   });

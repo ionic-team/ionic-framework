@@ -189,7 +189,7 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
       alignment,
-      required
+      required,
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
