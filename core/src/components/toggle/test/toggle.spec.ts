@@ -87,7 +87,7 @@ describe('ion-toggle: required', () => {
     });
 
     const toggle = page.body.querySelector('ion-toggle')!;
-    const nativeInput = toggle.shadowRoot?.querySelector("input[role=switch]")!;
+    const nativeInput = toggle.shadowRoot?.querySelector('input[role=switch]')!;
 
     expect(nativeInput.hasAttribute('required')).toBeTruthy();
   });
@@ -101,7 +101,7 @@ describe('ion-toggle: required', () => {
     });
 
     const toggle = page.body.querySelector('ion-toggle')!;
-    const nativeInput = toggle.shadowRoot?.querySelector("input[role=switch]")!;
+    const nativeInput = toggle.shadowRoot?.querySelector('input[role=switch]')!;
 
     expect(nativeInput.hasAttribute('required')).toBeFalsy();
   });

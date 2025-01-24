@@ -54,4 +54,3 @@ describe('ion-checkbox: indeterminate', () => {
     expect(checkbox.getAttribute('aria-checked')).toBe('mixed');
   });
 });
-

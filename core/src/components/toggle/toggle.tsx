@@ -297,7 +297,8 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment, required } = this;
+    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment, required } =
+      this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
