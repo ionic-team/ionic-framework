@@ -677,7 +677,7 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, fill, size, labelPlacement, el, hasFocus } = this;
+    const { inputId, disabled, size, labelPlacement, el, hasFocus } = this;
     const fill = this.getFill();
     const theme = getIonTheme(this);
     const shape = this.getShape();
