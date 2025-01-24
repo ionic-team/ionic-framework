@@ -2,7 +2,6 @@ import { newSpecPage } from '@stencil/core/testing';
 
 import { config } from '../../../global/config';
 import { Toggle } from '../toggle';
-import { toggle } from 'ionicons/icons';
 
 describe('toggle', () => {
   beforeEach(() => {
