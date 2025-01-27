@@ -278,6 +278,8 @@ input {
  */
 :host(.checkbox-label-placement-end) .label-text-wrapper {
   @include margin(null, 0, null, $form-control-label-margin);
+
+  text-align: end;
 }
 
 // Label Placement - Fixed
@@ -312,6 +314,8 @@ input {
  */
 :host(.checkbox-label-placement-stacked) .checkbox-wrapper {
   flex-direction: column;
+
+  text-align: center;
 }
 
 :host(.checkbox-label-placement-stacked) .label-text-wrapper {
