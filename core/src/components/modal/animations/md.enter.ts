@@ -19,7 +19,7 @@ const createEnterAnimation = () => {
     { offset: 1, opacity: 1, transform: `translateY(0px)` },
   ]);
 
-  return { backdropAnimation, wrapperAnimation, contentAnimation: undefined };
+  return { backdropAnimation, wrapperAnimation, contentAnimation: undefined, footerAnimation: undefined };
 };
 
 /**
@@ -28,8 +28,8 @@ const createEnterAnimation = () => {
 export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
   const { currentBreakpoint, animateContentHeight } = opts;
   const root = getElementRoot(baseEl);
-  const { wrapperAnimation, backdropAnimation, contentAnimation } =
-    currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
+  const { wrapperAnimation, backdropAnimation, contentAnimation, footerAnimation } =
+    currentBreakpoint !== undefined ? createSheetEnterAnimation(baseEl, opts) : createEnterAnimation();
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
 
@@ -37,14 +37,20 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
 
   contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
 
+  footerAnimation?.addElement(root.querySelector('ion-footer')!);
+
   const baseAnimation = createAnimation()
   .addElement(baseEl)
   .easing('cubic-bezier(0.36,0.66,0.04,1)')
   .duration(280)
   .addAnimation([backdropAnimation, wrapperAnimation]);
 
-  if (contentAnimation && animateContentHeight) {
+  if (animateContentHeight && contentAnimation) {
     baseAnimation.addAnimation(contentAnimation);
+  }
+
+  if (animateContentHeight && footerAnimation) {
+    baseAnimation.addAnimation(footerAnimation);
   }
 
   return baseAnimation;

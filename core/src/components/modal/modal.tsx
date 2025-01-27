@@ -533,6 +533,22 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
 
     /**
+     * If scrollAtEdge is false, footer must be fixed to
+     * the bottom of the modal and be always visible.
+     */
+    if (this.scrollAtEdge === false){
+      const footer = this.usersElement.querySelector('ion-footer');
+      if (!footer) return;
+      footer.style.position = 'fixed';
+      footer.style.bottom = '0';
+      const fixedFooter = footer.cloneNode(true) as HTMLIonFooterElement;
+      footer.remove();
+      this.usersElement.style.setProperty('padding-bottom', `${fixedFooter.clientHeight}px`);
+      el.shadowRoot!.querySelector('.modal-wrapper')!.appendChild(footer);
+    }
+
+
+    /**
      * When using the lazy loaded build of Stencil, we need to wait
      * for every Stencil component instance to be ready before presenting
      * otherwise there can be a flash of unstyled content. With the

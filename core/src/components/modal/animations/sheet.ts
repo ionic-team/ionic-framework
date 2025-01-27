@@ -3,7 +3,7 @@ import { createAnimation } from '@utils/animation/animation';
 import type { ModalAnimationOptions } from '../modal-interface';
 import { getBackdropValueForSheet } from '../utils';
 
-export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
+export const createSheetEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions) => {
   const { currentBreakpoint, backdropBreakpoint } = opts;
 
   /**
@@ -34,7 +34,13 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
     { offset: 1, opacity: 1, maxHeight: `${currentBreakpoint! * 100}%` },
   ]);
 
-  return { wrapperAnimation, backdropAnimation, contentAnimation };
+  const wrapperHeight = baseEl.shadowRoot?.querySelector('.modal-wrapper, .modal-shadow')?.clientHeight;
+  const footerAnimation = createAnimation('footerAnimation').keyframes([
+    { offset: 0, opacity: 1, transform: `translateY(-${wrapperHeight}px)` },
+    { offset: 1, opacity: 1, transform: `translateY(-${wrapperHeight! * (1 - currentBreakpoint!)}px)` },
+  ]);
+
+  return { wrapperAnimation, backdropAnimation, contentAnimation, footerAnimation };
 };
 
 export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
