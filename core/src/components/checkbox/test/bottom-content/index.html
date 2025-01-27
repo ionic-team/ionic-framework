@@ -27,8 +27,8 @@
 
         margin-top: 10px;
       }
-      ion-checkbox.custom-error-color {
-        --highlight-color-invalid: purple;
+      ion-checkbox {
+        width: 100%;
       }
     </style>
   </head>
@@ -55,71 +55,71 @@
 
           <div class="grid-item">
             <h2>Helper Text: Label Start</h2>
-            <ion-checkbox helper-text="Helper text">Label</ion-checkbox>
-          </div>
-
-          <div class="grid-item">
-            <h2>Helper Text: Label End</h2>
-            <ion-checkbox label-placement="end" helper-text="Helper text">Label</ion-checkbox>
-          </div>
-
-          <div class="grid-item">
-            <h2>Helper Text: Label Stacked</h2>
-            <ion-checkbox label-placement="stacked" helper-text="Helper text">Label</ion-checkbox>
-          </div>
-
-          <div class="grid-item">
-            <h2>Helper Text: Label Fixed</h2>
-            <ion-checkbox label-placement="fixed" helper-text="Helper text">Label</ion-checkbox>
-          </div>
-
-          <div class="grid-item">
-            <h2>Error Text: Label Start</h2>
-            <ion-checkbox error-text="Error text">Label</ion-checkbox>
-          </div>
-
-          <div class="grid-item">
-            <h2>Error Text: Label End</h2>
-            <ion-checkbox label-placement="end" error-text="Error text">Label</ion-checkbox>
-          </div>
-
-          <div class="grid-item">
-            <h2>Error Text: Label Stacked</h2>
-            <ion-checkbox label-placement="stacked" error-text="Error text">Label</ion-checkbox>
-          </div>
-
-          <div class="grid-item">
-            <h2>Error Text: Label Fixed</h2>
-            <ion-checkbox label-placement="fixed" error-text="Error text">Label</ion-checkbox>
-          </div>
-
-          <div class="grid-item">
-            <h2>Helper & Error Text: Label Start</h2>
             <ion-checkbox helper-text="Helper text" error-text="Error text">Label</ion-checkbox>
           </div>
 
           <div class="grid-item">
-            <h2>Helper & Error Text: Label End</h2>
+            <h2>Helper Text: Label End</h2>
             <ion-checkbox label-placement="end" helper-text="Helper text" error-text="Error text">Label</ion-checkbox>
           </div>
 
           <div class="grid-item">
-            <h2>Helper & Error Text: Label Stacked</h2>
+            <h2>Helper Text: Label Stacked</h2>
             <ion-checkbox label-placement="stacked" helper-text="Helper text" error-text="Error text"
               >Label</ion-checkbox
             >
           </div>
 
           <div class="grid-item">
-            <h2>Helper & Error Text: Label Fixed</h2>
+            <h2>Helper Text: Label Fixed</h2>
             <ion-checkbox label-placement="fixed" helper-text="Helper text" error-text="Error text">Label</ion-checkbox>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Label Start</h2>
+            <ion-checkbox helper-text="Helper text" error-text="Error text" class="ion-invalid ion-touched"
+              >Label</ion-checkbox
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Label End</h2>
+            <ion-checkbox
+              label-placement="end"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="ion-invalid ion-touched"
+              >Label</ion-checkbox
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Label Stacked</h2>
+            <ion-checkbox
+              label-placement="stacked"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="ion-invalid ion-touched"
+              >Label</ion-checkbox
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Label Fixed</h2>
+            <ion-checkbox
+              label-placement="fixed"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="ion-invalid ion-touched"
+              >Label</ion-checkbox
+            >
           </div>
         </div>
 
         <button onclick="toggleValid()" class="expand">Toggle error</button>
 
         <script>
-          const checkboxes = document.querySelectorAll('ion-checkbox');
+          const checkboxes = document.querySelectorAll('ion-checkbox[helper-text]');
 
           function toggleValid() {
             checkboxes.forEach((checkbox) => {
