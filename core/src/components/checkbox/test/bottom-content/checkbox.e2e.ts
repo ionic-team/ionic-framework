@@ -63,7 +63,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       expect(ariaDescribedBy).toBe(errorTextId);
     });
-    test('input should have aria-invalid attribute when input is invalid', async ({ page }) => {
+    test('input should have aria-invalid attribute when checkbox is invalid', async ({ page }) => {
       await page.setContent(
         `<ion-checkbox class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-checkbox>`,
         config
@@ -73,7 +73,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(input).toHaveAttribute('aria-invalid');
     });
-    test('input should not have aria-invalid attribute when input is valid', async ({ page }) => {
+    test('input should not have aria-invalid attribute when checkbox is valid', async ({ page }) => {
       await page.setContent(
         `<ion-checkbox helper-text="Helper text" error-text="Error text">Label</ion-checkbox>`,
         config
@@ -98,77 +98,100 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
  */
 configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: helper text rendering'), () => {
-    test('should not have visual regressions when rendering helper text', async ({ page }) => {
-      await page.setContent(`<ion-checkbox helper-text="Helper text">Label</ion-checkbox>`, config);
+    // Check the default label placement, end, and stacked
+    [undefined, 'end', 'stacked'].forEach((labelPlacement) => {
+      test(`${labelPlacement ? `${labelPlacement} label - ` : ''}should not have visual regressions when rendering helper text`, async ({ page }) => {
+        await page.setContent(
+          `<ion-checkbox ${labelPlacement ? `label-placement="${labelPlacement}"` : ''} helper-text="Helper text">Label</ion-checkbox>`,
+          config
+        );
 
-      const bottomEl = page.locator('ion-checkbox');
-      await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-helper`));
-    });
-    test('should not have visual regressions when rendering helper text with wrapping text', async ({ page }) => {
-      await page.setContent(
-        `<ion-checkbox helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`,
-        config
-      );
+        const bottomEl = page.locator('ion-checkbox');
+        await expect(bottomEl).toHaveScreenshot(
+          screenshot(`checkbox-helper-text${labelPlacement ? `-${labelPlacement}` : ''}`)
+        );
+      });
 
-      const bottomEl = page.locator('ion-checkbox');
-      await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-helper-wrapping`));
-    });
-    test('should not have visual regressions when rendering helper text with a stacked label', async ({ page }) => {
-      await page.setContent(
-        `<ion-checkbox label-placement="stacked" helper-text="Helper text">Label</ion-checkbox>`,
-        config
-      );
+      test(`${labelPlacement ? `${labelPlacement} label - ` : ''}should not have visual regressions when rendering helper text with wrapping text`, async ({ page }) => {
+        await page.setContent(
+          `<ion-checkbox ${labelPlacement ? `label-placement="${labelPlacement}"` : ''} helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`,
+          config
+        );
 
-      const bottomEl = page.locator('ion-checkbox');
-      await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-helper-label-stacked`));
-    });
-    test('should not have visual regressions when rendering helper text with a stacked label and wrapping text', async ({
-      page,
-    }) => {
-      await page.setContent(
-        `<ion-checkbox label-placement="stacked" helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`,
-        config
-      );
-
-      const bottomEl = page.locator('ion-checkbox');
-      await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-helper-label-stacked-wrapping`));
+        const bottomEl = page.locator('ion-checkbox');
+        await expect(bottomEl).toHaveScreenshot(
+          screenshot(`checkbox-helper-text${labelPlacement ? `-${labelPlacement}` : ''}-wrapping`)
+        );
+      });
     });
   });
 
   test.describe(title('checkbox: error text rendering'), () => {
     test('should not have visual regressions when rendering error text', async ({ page }) => {
       await page.setContent(
-        `<ion-checkbox class="ion-invalid ion-touched" error-text="Helper text">Label</ion-checkbox>`,
+        `<ion-checkbox class="ion-invalid ion-touched" error-text="Error text">Label</ion-checkbox>`,
         config
       );
 
       const bottomEl = page.locator('ion-checkbox');
-      await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-error`));
+      await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-error-text`));
     });
     test('should not have visual regressions when rendering error text with a stacked label', async ({ page }) => {
       await page.setContent(
-        `<ion-checkbox class="ion-invalid ion-touched" error-text="Helper text" label-placement="stacked">Label</ion-checkbox>`,
+        `<ion-checkbox class="ion-invalid ion-touched" error-text="Error text" label-placement="stacked">Label</ion-checkbox>`,
         config
       );
 
       const bottomEl = page.locator('ion-checkbox');
-      await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-bottom-content-error-label-stacked`));
+      await expect(bottomEl).toHaveScreenshot(screenshot(`checkbox-error-text-stacked-label`));
     });
-    test('should not have visual regressions when rendering error text with a custom color', async ({ page }) => {
+  });
+});
+
+/**
+ * Customizing supporting text is the same across modes and directions
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('checkbox: supporting text customization'), () => {
+    test('should not have visual regressions when rendering helper text with custom css', async ({ page }) => {
       await page.setContent(
         `
         <style>
-          ion-checkbox.custom-checkbox {
-            --highlight-color-invalid: purple;
+          ion-checkbox::part(supporting-text) {
+            font-size: 20px;
+          }
+
+          ion-checkbox::part(helper-text) {
+            color: green;
           }
         </style>
-        <ion-checkbox class="ion-invalid ion-touched custom-checkbox" error-text="Error text">Label</ion-checkbox>
+        <ion-checkbox helper-text="Helper text">Label</ion-checkbox>
+      `,
+        config
+      );
+
+      const helperText = page.locator('ion-checkbox');
+      await expect(helperText).toHaveScreenshot(screenshot(`checkbox-helper-text-custom-css`));
+    });
+    test('should not have visual regressions when rendering error text with custom css', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-checkbox::part(supporting-text) {
+            font-size: 20px;
+          }
+
+          ion-checkbox::part(error-text) {
+            color: purple;
+          }
+        </style>
+        <ion-checkbox class="ion-invalid ion-touched" error-text="Error text">Label</ion-checkbox>
       `,
         config
       );
 
       const errorText = page.locator('ion-checkbox');
-      await expect(errorText).toHaveScreenshot(screenshot(`checkbox-bottom-content-error-custom`));
+      await expect(errorText).toHaveScreenshot(screenshot(`checkbox-error-text-custom-css`));
     });
   });
 });
