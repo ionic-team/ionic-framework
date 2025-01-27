@@ -2006,3 +2006,6 @@ ion-toolbar,css-prop,--padding-start,ios
 ion-toolbar,css-prop,--padding-start,md
 ion-toolbar,css-prop,--padding-top,ios
 ion-toolbar,css-prop,--padding-top,md
+ion-toolbar,part,background
+ion-toolbar,part,container
+ion-toolbar,part,content
