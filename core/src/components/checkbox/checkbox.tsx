@@ -17,6 +17,9 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  * @part container - The container for the checkbox mark.
  * @part label - The label text describing the checkbox.
  * @part mark - The checkmark used to indicate the checked state.
+ * @part supporting-text - Supporting text displayed beneath the checkbox label.
+ * @part helper-text - Supporting text displayed beneath the checkbox label when the checkbox is valid.
+ * @part error-text - Supporting text displayed beneath the checkbox label when the checkbox is invalid and touched.
  */
 @Component({
   tag: 'ion-checkbox',
@@ -211,10 +214,10 @@ export class Checkbox implements ComponentInterface {
 
     return (
       <div class="checkbox-bottom">
-        <div id={helperTextId} class="helper-text">
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
           {helperText}
         </div>
-        <div id={errorTextId} class="error-text">
+        <div id={errorTextId} class="error-text" part="supporting-text error-text">
           {errorText}
         </div>
       </div>

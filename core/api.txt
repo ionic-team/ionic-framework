@@ -432,8 +432,11 @@ ion-checkbox,css-prop,--size,md
 ion-checkbox,css-prop,--transition,ios
 ion-checkbox,css-prop,--transition,md
 ion-checkbox,part,container
+ion-checkbox,part,error-text
+ion-checkbox,part,helper-text
 ion-checkbox,part,label
 ion-checkbox,part,mark
+ion-checkbox,part,supporting-text
 
 ion-chip,shadow
 ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
