@@ -167,7 +167,7 @@
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --border-color: #{globals.$ion-semantics-primary-base};
+    --border-color: #{globals.$ion-primitives-neutral-600};
   }
 }
 
