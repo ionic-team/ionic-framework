@@ -35,20 +35,31 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
 
   contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
 
-  footerAnimation?.addElement(root.querySelector('ion-footer')!);
-
   const baseAnimation = createAnimation('entering-base')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(500)
-    .addAnimation([wrapperAnimation]);
+    .addAnimation([wrapperAnimation])
+    .beforeAddWrite(() => {
+      const ionFooter = baseEl.querySelector('ion-footer');
+      if (ionFooter) {
+        const footerHeight = ionFooter.clientHeight;
+        const clonedFooter = ionFooter.cloneNode(true) as HTMLElement;
+        baseEl.shadowRoot!.appendChild(clonedFooter);
+        ionFooter.remove();
+
+        // add padding bottom to the .ion-page element to be
+        // the same as the cloned footer height
+        const page = baseEl.querySelector('.ion-page') as HTMLElement;
+        page.style.setProperty('padding-bottom', `${footerHeight}px`);
+      if (animateContentHeight && footerAnimation) {
+        footerAnimation.addElement(root.querySelector('ion-footer')!);
+        baseAnimation.addAnimation(footerAnimation);
+      }
+    }});
 
   if (animateContentHeight && contentAnimation) {
     baseAnimation.addAnimation(contentAnimation);
-  }
-
-  if (animateContentHeight && footerAnimation) {
-    baseAnimation.addAnimation(footerAnimation);
   }
 
   if (presentingEl) {

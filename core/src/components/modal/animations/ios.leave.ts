@@ -12,7 +12,7 @@ const createLeaveAnimation = () => {
 
   const wrapperAnimation = createAnimation().fromTo('transform', 'translateY(0vh)', 'translateY(100vh)');
 
-  return { backdropAnimation, wrapperAnimation };
+  return { backdropAnimation, wrapperAnimation, footerAnimation: undefined };
 };
 
 /**
@@ -21,18 +21,24 @@ const createLeaveAnimation = () => {
 export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions, duration = 500): Animation => {
   const { presentingEl, currentBreakpoint } = opts;
   const root = getElementRoot(baseEl);
-  const { wrapperAnimation, backdropAnimation } =
-    currentBreakpoint !== undefined ? createSheetLeaveAnimation(opts) : createLeaveAnimation();
+  const { wrapperAnimation, backdropAnimation, footerAnimation } =
+    currentBreakpoint !== undefined ? createSheetLeaveAnimation(baseEl, opts) : createLeaveAnimation();
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
 
   wrapperAnimation.addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!).beforeStyles({ opacity: 1 });
+
+  footerAnimation?.addElement(root.querySelector('ion-footer')!);
 
   const baseAnimation = createAnimation('leaving-base')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration)
     .addAnimation(wrapperAnimation);
+
+  if (footerAnimation) {
+    baseAnimation.addAnimation(footerAnimation);
+  }
 
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;

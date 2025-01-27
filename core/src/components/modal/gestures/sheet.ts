@@ -75,11 +75,7 @@ export const createSheetGesture = (
     CONTENT_KEYFRAMES: [
       { offset: 0, maxHeight: '100%' },
       { offset: 1, maxHeight: '0%' },
-    ],
-    FOOTER_KEYFRAMES: [
-      { offset: 0, transform: `translateY(0)` },
-      { offset: 1, transform: `translateY(-${wrapperEl.clientHeight}px)` },
-    ],
+    ]
   };
 
   const contentEl = baseEl.querySelector('ion-content');
@@ -93,7 +89,7 @@ export const createSheetGesture = (
   const wrapperAnimation = animation.childAnimations.find((ani) => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
   const contentAnimation = animation.childAnimations.find((ani) => ani.id === 'contentAnimation');
-  const footerAnimation = animation.childAnimations.find((ani) => ani.id === 'footerAnimation');
+  animation.childAnimations.find((ani) => ani.id === 'footerAnimation')?.destroy();
 
   const enableBackdrop = () => {
     baseEl.style.setProperty('pointer-events', 'auto');
@@ -133,7 +129,6 @@ export const createSheetGesture = (
     wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
     backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
     contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
-    footerAnimation?.keyframes([...SheetDefaults.FOOTER_KEYFRAMES]);
 
     animation.progressStart(true, 1 - currentBreakpoint);
 
@@ -345,7 +340,7 @@ export const createSheetGesture = (
         },
       ]);
 
-      if (contentAnimation && footerAnimation) {
+      if (contentAnimation) {
         /**
          * The modal content should scroll at any breakpoint when scrollAtEdge
          * is disabled. In order to do this, the content needs to be completely
@@ -357,11 +352,6 @@ export const createSheetGesture = (
           { offset: 0, maxHeight: `${(1 - breakpointOffset) * 100}%` },
           { offset: 1, maxHeight: `${snapToBreakpoint * 100}%` },
         ]);
-
-        footerAnimation.keyframes([
-          { offset: 0, transform: `translateY(-${height * (breakpointOffset)}px)` },
-          { offset: 1, transform: `translateY(-${height * (1 - snapToBreakpoint)}px)` },
-        ])
       }
 
       animation.progressStep(0);
@@ -408,7 +398,6 @@ export const createSheetGesture = (
                   wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
                   backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
                   contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
-                  footerAnimation?.keyframes([...SheetDefaults.FOOTER_KEYFRAMES]);
                   animation.progressStart(true, 1 - snapToBreakpoint);
                   currentBreakpoint = snapToBreakpoint;
                   onBreakpointChange(currentBreakpoint);

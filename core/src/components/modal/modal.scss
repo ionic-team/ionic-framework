@@ -166,3 +166,10 @@ ion-backdrop {
   position: absolute;
   bottom: 0;
 }
+
+:host(.modal-sheet) ion-footer {
+  position: absolute;
+  bottom: 0;
+
+  width: var(--width);
+}

@@ -34,16 +34,16 @@ export const createSheetEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimat
     { offset: 1, opacity: 1, maxHeight: `${currentBreakpoint! * 100}%` },
   ]);
 
-  const wrapperHeight = baseEl.shadowRoot?.querySelector('.modal-wrapper, .modal-shadow')?.clientHeight;
+  const footerHeight = baseEl.querySelector('ion-footer')?.clientHeight;
   const footerAnimation = createAnimation('footerAnimation').keyframes([
-    { offset: 0, opacity: 1, transform: `translateY(-${wrapperHeight}px)` },
-    { offset: 1, opacity: 1, transform: `translateY(-${wrapperHeight! * (1 - currentBreakpoint!)}px)` },
+    { offset: 0, opacity: 1, transform: `translateY(${footerHeight}px)` },
+    { offset: 0.2, opacity: 1, transform: `translateY(0)` },
   ]);
 
   return { wrapperAnimation, backdropAnimation, contentAnimation, footerAnimation };
 };
 
-export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
+export const createSheetLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions) => {
   const { currentBreakpoint, backdropBreakpoint } = opts;
 
   /**
@@ -75,5 +75,12 @@ export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
     { offset: 1, opacity: 1, transform: `translateY(100%)` },
   ]);
 
-  return { wrapperAnimation, backdropAnimation };
+  const footerHeight = baseEl.shadowRoot!.querySelector('ion-footer')?.clientHeight;
+  const footerAnimation = createAnimation('footerAnimation').keyframes([
+    { offset: 0, opacity: 1, transform: `translateY(0)` },
+    { offset: 0.7, opacity: 1, transform: `translateY(0)` },
+    { offset: 1, opacity: 1, transform: `translateY(${footerHeight}px)` },
+  ]);
+
+  return { wrapperAnimation, backdropAnimation, footerAnimation };
 };
