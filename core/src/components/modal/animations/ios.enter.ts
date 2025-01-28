@@ -41,8 +41,10 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
     .duration(500)
     .addAnimation([wrapperAnimation])
     .beforeAddWrite(() => {
+      if (!animateContentHeight) return;
+
       const ionFooter = baseEl.querySelector('ion-footer');
-      if (ionFooter) {
+      if (ionFooter && footerAnimation) {
         const footerHeight = ionFooter.clientHeight;
         const clonedFooter = ionFooter.cloneNode(true) as HTMLElement;
         baseEl.shadowRoot!.appendChild(clonedFooter);
@@ -52,14 +54,16 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
         // the same as the cloned footer height
         const page = baseEl.querySelector('.ion-page') as HTMLElement;
         page.style.setProperty('padding-bottom', `${footerHeight}px`);
-      if (animateContentHeight && footerAnimation) {
         footerAnimation.addElement(root.querySelector('ion-footer')!);
-        baseAnimation.addAnimation(footerAnimation);
-      }
-    }});
+    }
+  });
 
   if (animateContentHeight && contentAnimation) {
     baseAnimation.addAnimation(contentAnimation);
+  }
+
+  if (animateContentHeight && footerAnimation) {
+    baseAnimation.addAnimation(footerAnimation);
   }
 
   if (presentingEl) {

@@ -43,8 +43,10 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
   .duration(280)
   .addAnimation([backdropAnimation, wrapperAnimation])
   .beforeAddWrite(() => {
+    if (!animateContentHeight) return;
+
     const ionFooter = baseEl.querySelector('ion-footer');
-    if (ionFooter) {
+    if (ionFooter && footerAnimation) {
       const footerHeight = ionFooter.clientHeight;
       const clonedFooter = ionFooter.cloneNode(true) as HTMLElement;
       baseEl.shadowRoot!.appendChild(clonedFooter);
@@ -54,14 +56,16 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
       // the same as the cloned footer height
       const page = baseEl.querySelector('.ion-page') as HTMLElement;
       page.style.setProperty('padding-bottom', `${footerHeight}px`);
-    if (animateContentHeight && footerAnimation) {
       footerAnimation.addElement(root.querySelector('ion-footer')!);
-      baseAnimation.addAnimation(footerAnimation);
-    }
-  }});
+      }
+  });
 
   if (animateContentHeight && contentAnimation) {
     baseAnimation.addAnimation(contentAnimation);
+  }
+
+  if (animateContentHeight && footerAnimation) {
+    baseAnimation.addAnimation(footerAnimation);
   }
 
   return baseAnimation;
