@@ -29,7 +29,6 @@ export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
   wrapperAnimation.addElement(root.querySelector('.modal-wrapper')!);
   footerAnimation?.addElement(root.querySelector('ion-footer')!);
-  console.log(footerAnimation);
 
   const baseAnimation = createAnimation()
     .easing('cubic-bezier(0.47,0,0.745,0.715)')
