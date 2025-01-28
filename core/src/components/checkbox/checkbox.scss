@@ -195,46 +195,6 @@ input {
   display: none;
 }
 
-// Justify Content
-// ---------------------------------------------
-
-:host(.checkbox-justify-space-between) .checkbox-wrapper {
-  justify-content: space-between;
-}
-
-:host(.checkbox-justify-start) .checkbox-wrapper {
-  justify-content: start;
-}
-
-:host(.checkbox-justify-end) .checkbox-wrapper {
-  justify-content: end;
-}
-
-// Align Items
-// ---------------------------------------------
-
-:host(.checkbox-alignment-start) .checkbox-wrapper {
-  align-items: start;
-}
-
-:host(.checkbox-alignment-center) .checkbox-wrapper {
-  align-items: center;
-}
-
-// Justify Content & Align Items
-// ---------------------------------------------
-
-// The checkbox should be displayed as block when either justify
-// or alignment is set; otherwise, these properties will have no
-// visible effect.
-:host(.checkbox-justify-space-between),
-:host(.checkbox-justify-start),
-:host(.checkbox-justify-end),
-:host(.checkbox-alignment-start),
-:host(.checkbox-alignment-center) {
-  display: block;
-}
-
 // Label Placement - Start
 // ----------------------------------------------------------------
 
@@ -264,6 +224,8 @@ input {
  */
 :host(.checkbox-label-placement-end) .checkbox-wrapper {
   flex-direction: row-reverse;
+
+  justify-content: start;
 }
 
 /**
@@ -273,8 +235,6 @@ input {
  */
 :host(.checkbox-label-placement-end) .label-text-wrapper {
   @include margin(null, 0, null, $form-control-label-margin);
-
-  text-align: end;
 }
 
 // Label Placement - Fixed
@@ -336,6 +296,46 @@ input {
 
 :host(.checkbox-label-placement-stacked.checkbox-alignment-center) .label-text-wrapper {
   @include transform-origin(center, top);
+}
+
+// Justify Content
+// ---------------------------------------------
+
+:host(.checkbox-justify-space-between) .checkbox-wrapper {
+  justify-content: space-between;
+}
+
+:host(.checkbox-justify-start) .checkbox-wrapper {
+  justify-content: start;
+}
+
+:host(.checkbox-justify-end) .checkbox-wrapper {
+  justify-content: end;
+}
+
+// Align Items
+// ---------------------------------------------
+
+:host(.checkbox-alignment-start) .checkbox-wrapper {
+  align-items: start;
+}
+
+:host(.checkbox-alignment-center) .checkbox-wrapper {
+  align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The checkbox should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.checkbox-justify-space-between),
+:host(.checkbox-justify-start),
+:host(.checkbox-justify-end),
+:host(.checkbox-alignment-start),
+:host(.checkbox-alignment-center) {
+  display: block;
 }
 
 // Checked / Indeterminate Checkbox
