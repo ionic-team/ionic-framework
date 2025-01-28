@@ -2268,6 +2268,14 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the radio and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the radio and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements. Setting this property will change the radio `display` to `block`.
          */
         "justify"?: 'start' | 'end' | 'space-between';
@@ -7017,6 +7025,14 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the radio.
          */
         "disabled"?: boolean;
+        /**
+          * Text that is placed under the radio and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the radio and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements. Setting this property will change the radio `display` to `block`.
          */

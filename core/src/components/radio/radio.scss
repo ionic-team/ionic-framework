@@ -140,6 +140,53 @@ input {
   align-items: center;
 }
 
+// Radio Bottom Content
+// ----------------------------------------------------------------
+
+.radio-bottom {
+  @include padding(5px, null, null, null);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
+}
+
+:host(.radio-label-placement-stacked) .radio-bottom {
+  font-size: dynamic-font(16px);
+}
+
+// Radio Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the checkbox. Otherwise the helper text should
+ * be shown.
+ */
+.radio-bottom .error-text {
+  display: none;
+
+  color: ion-color(danger, base);
+}
+
+.radio-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .radio-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .radio-bottom .helper-text {
+  display: none;
+}
+
 // Radio Label Placement - Start
 // ----------------------------------------------------------------
 
@@ -213,6 +260,8 @@ input {
  */
 :host(.radio-label-placement-stacked) .radio-wrapper {
   flex-direction: column;
+
+  text-align: center;
 }
 
 :host(.radio-label-placement-stacked) .label-text-wrapper {

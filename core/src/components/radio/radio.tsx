@@ -15,6 +15,9 @@ import type { Color } from '../../interface';
  * @part container - The container for the radio mark.
  * @part label - The label text describing the radio.
  * @part mark - The checkmark or dot used to indicate the checked state.
+ * @part supporting-text - Supporting text displayed beneath the radio label.
+ * @part helper-text - Supporting text displayed beneath the radio label when the radio is valid.
+ * @part error-text - Supporting text displayed beneath the radio label when the radio is invalid and touched.
  */
 @Component({
   tag: 'ion-radio',
@@ -26,6 +29,8 @@ import type { Color } from '../../interface';
 })
 export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
 
   @Element() el!: HTMLIonRadioElement;
@@ -57,6 +62,16 @@ export class Radio implements ComponentInterface {
    * If `true`, the user cannot interact with the radio.
    */
   @Prop() disabled = false;
+
+  /**
+   * Text that is placed under the radio and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * Text that is placed under the radio and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
 
   /**
    * the value of the radio.
@@ -212,6 +227,48 @@ export class Radio implements ComponentInterface {
     );
   }
 
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Responsible for rendering helper text and error text.
+   * This element should only be rendered if hint text is set.
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return (
+      <div class="radio-bottom">
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
+          {helperText}
+        </div>
+        <div id={errorTextId} class="error-text" part="supporting-text error-text">
+          {errorText}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, alignment } = this;
     const mode = getIonMode(this);
@@ -237,6 +294,8 @@ export class Radio implements ComponentInterface {
         role="radio"
         aria-checked={checked ? 'true' : 'false'}
         aria-disabled={disabled ? 'true' : null}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
         tabindex={buttonTabindex}
       >
         <label class="radio-wrapper">
@@ -248,6 +307,7 @@ export class Radio implements ComponentInterface {
             part="label"
           >
             <slot></slot>
+            {this.renderHintText()}
           </div>
           <div class="native-wrapper">{this.renderRadioControl()}</div>
         </label>

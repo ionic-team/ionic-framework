@@ -1323,6 +1323,8 @@ ion-radio,shadow
 ion-radio,prop,alignment,"center" | "start" | undefined,undefined,false,false
 ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-radio,prop,disabled,boolean,false,false,false
+ion-radio,prop,errorText,string | undefined,undefined,false,false
+ion-radio,prop,helperText,string | undefined,undefined,false,false
 ion-radio,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-radio,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
@@ -1339,8 +1341,11 @@ ion-radio,css-prop,--color-checked,md
 ion-radio,css-prop,--inner-border-radius,ios
 ion-radio,css-prop,--inner-border-radius,md
 ion-radio,part,container
+ion-radio,part,error-text
+ion-radio,part,helper-text
 ion-radio,part,label
 ion-radio,part,mark
+ion-radio,part,supporting-text
 
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
