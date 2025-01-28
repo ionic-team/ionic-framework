@@ -54,6 +54,12 @@ export const createSheetGesture = (
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
+  const contentEl = baseEl.querySelector('ion-content');
+  const height = wrapperEl.clientHeight;
+  const footerEl = baseEl.shadowRoot?.querySelector('ion-footer');
+  const footerHeight = footerEl?.clientHeight ?? 0;
+  const footerDismissalPercentage = parseFloat(( 1 - (footerHeight ? (footerHeight / height) : 0)).toFixed(2));
+
   // Defaults for the sheet swipe animation
   const defaultBackdrop = [
     { offset: 0, opacity: 'var(--backdrop-opacity)' },
@@ -75,11 +81,14 @@ export const createSheetGesture = (
     CONTENT_KEYFRAMES: [
       { offset: 0, maxHeight: '100%' },
       { offset: 1, maxHeight: '0%' },
-    ]
+    ],
+    FOOTER_KEYFRAMES: [
+      { offset: 0, transform: 'translateY(0)' },
+      { offset: footerDismissalPercentage, transform: 'translateY(0)' },
+      { offset: 1, transform: `translateY(${footerHeight}px)` },
+    ],
   };
 
-  const contentEl = baseEl.querySelector('ion-content');
-  const height = wrapperEl.clientHeight;
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
   let canDismissBlocksGesture = false;
@@ -89,7 +98,11 @@ export const createSheetGesture = (
   const wrapperAnimation = animation.childAnimations.find((ani) => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find((ani) => ani.id === 'backdropAnimation');
   const contentAnimation = animation.childAnimations.find((ani) => ani.id === 'contentAnimation');
-  animation.childAnimations.find((ani) => ani.id === 'footerAnimation')?.destroy();
+  const footerAnimation = animation.childAnimations.find((ani) => ani.id === 'footerAnimation');
+
+  if (footerAnimation && footerEl) {
+    // footerAnimation.addElement(footerEl);
+  }
 
   const enableBackdrop = () => {
     baseEl.style.setProperty('pointer-events', 'auto');
@@ -129,6 +142,7 @@ export const createSheetGesture = (
     wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
     backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
     contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
+    footerAnimation?.keyframes([...SheetDefaults.FOOTER_KEYFRAMES]);
 
     animation.progressStart(true, 1 - currentBreakpoint);
 
@@ -354,6 +368,13 @@ export const createSheetGesture = (
         ]);
       }
 
+      if (footerAnimation) {
+        footerAnimation.keyframes([
+          { offset: 0, transform: 'translateY(0)' },
+          { offset: 0.85, transform: 'translateY(0)' },
+          { offset: footerDismissalPercentage, transform: `translateY(${!shouldRemainOpen ? footerHeight : 0}px)` },
+        ])
+      }
       animation.progressStep(0);
     }
 
@@ -398,6 +419,7 @@ export const createSheetGesture = (
                   wrapperAnimation.keyframes([...SheetDefaults.WRAPPER_KEYFRAMES]);
                   backdropAnimation.keyframes([...SheetDefaults.BACKDROP_KEYFRAMES]);
                   contentAnimation?.keyframes([...SheetDefaults.CONTENT_KEYFRAMES]);
+                  footerAnimation?.keyframes([...SheetDefaults.FOOTER_KEYFRAMES]);
                   animation.progressStart(true, 1 - snapToBreakpoint);
                   currentBreakpoint = snapToBreakpoint;
                   onBreakpointChange(currentBreakpoint);
