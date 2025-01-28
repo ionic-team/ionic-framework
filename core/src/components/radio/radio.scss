@@ -140,46 +140,6 @@ input {
   align-items: center;
 }
 
-// Radio Justify
-// --------------------------------------------------
-
-:host(.radio-justify-space-between) .radio-wrapper {
-  justify-content: space-between;
-}
-
-:host(.radio-justify-start) .radio-wrapper {
-  justify-content: start;
-}
-
-:host(.radio-justify-end) .radio-wrapper {
-  justify-content: end;
-}
-
-// Radio Align
-// --------------------------------------------------
-
-:host(.radio-alignment-start) .radio-wrapper {
-  align-items: start;
-}
-
-:host(.radio-alignment-center) .radio-wrapper {
-  align-items: center;
-}
-
-// Justify Content & Align Items
-// ---------------------------------------------
-
-// The radio should be displayed as block when either justify
-// or alignment is set; otherwise, these properties will have no
-// visible effect.
-:host(.radio-justify-space-between),
-:host(.radio-justify-start),
-:host(.radio-justify-end),
-:host(.radio-alignment-start),
-:host(.radio-alignment-center) {
-  display: block;
-}
-
 // Radio Label Placement - Start
 // ----------------------------------------------------------------
 
@@ -209,6 +169,8 @@ input {
  */
 :host(.radio-label-placement-end) .radio-wrapper {
   flex-direction: row-reverse;
+
+  justify-content: start;
 }
 
 /**
@@ -276,4 +238,44 @@ input {
 
 :host(.radio-label-placement-stacked.radio-alignment-center) .label-text-wrapper {
   @include transform-origin(center, top);
+}
+
+// Radio Justify
+// --------------------------------------------------
+
+:host(.radio-justify-space-between) .radio-wrapper {
+  justify-content: space-between;
+}
+
+:host(.radio-justify-start) .radio-wrapper {
+  justify-content: start;
+}
+
+:host(.radio-justify-end) .radio-wrapper {
+  justify-content: end;
+}
+
+// Radio Align
+// --------------------------------------------------
+
+:host(.radio-alignment-start) .radio-wrapper {
+  align-items: start;
+}
+
+:host(.radio-alignment-center) .radio-wrapper {
+  align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The radio should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.radio-justify-space-between),
+:host(.radio-justify-start),
+:host(.radio-justify-end),
+:host(.radio-alignment-start),
+:host(.radio-alignment-center) {
+  display: block;
 }
