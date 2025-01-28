@@ -31,7 +31,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       expect(ariaDescribedBy).toBe(helperTextId);
     });
-    test('error text should be visible when toggleis invalid', async ({ page }) => {
+    test('error text should be visible when toggle is invalid', async ({ page }) => {
       await page.setContent(
         `<ion-toggle class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-toggle>`,
         config
@@ -57,7 +57,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       expect(ariaDescribedBy).toBe(errorTextId);
     });
-    test('input should have aria-invalid attribute when toggleis invalid', async ({ page }) => {
+    test('input should have aria-invalid attribute when toggle is invalid', async ({ page }) => {
       await page.setContent(
         `<ion-toggle class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-toggle>`,
         config
@@ -67,7 +67,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(input).toHaveAttribute('aria-invalid');
     });
-    test('input should not have aria-invalid attribute when toggleis valid', async ({ page }) => {
+    test('input should not have aria-invalid attribute when toggle is valid', async ({ page }) => {
       await page.setContent(`<ion-toggle helper-text="Helper text" error-text="Error text">Label</ion-toggle>`, config);
 
       const input = page.locator('ion-toggle input[type=checkbox]');
