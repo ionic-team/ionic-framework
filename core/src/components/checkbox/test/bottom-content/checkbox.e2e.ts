@@ -100,9 +100,13 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
   test.describe(title('checkbox: helper text rendering'), () => {
     // Check the default label placement, end, and stacked
     [undefined, 'end', 'stacked'].forEach((labelPlacement) => {
-      test(`${labelPlacement ? `${labelPlacement} label - ` : ''}should not have visual regressions when rendering helper text`, async ({ page }) => {
+      test(`${
+        labelPlacement ? `${labelPlacement} label - ` : ''
+      }should not have visual regressions when rendering helper text`, async ({ page }) => {
         await page.setContent(
-          `<ion-checkbox ${labelPlacement ? `label-placement="${labelPlacement}"` : ''} helper-text="Helper text">Label</ion-checkbox>`,
+          `<ion-checkbox ${
+            labelPlacement ? `label-placement="${labelPlacement}"` : ''
+          } helper-text="Helper text">Label</ion-checkbox>`,
           config
         );
 
@@ -112,9 +116,13 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
         );
       });
 
-      test(`${labelPlacement ? `${labelPlacement} label - ` : ''}should not have visual regressions when rendering helper text with wrapping text`, async ({ page }) => {
+      test(`${
+        labelPlacement ? `${labelPlacement} label - ` : ''
+      }should not have visual regressions when rendering helper text with wrapping text`, async ({ page }) => {
         await page.setContent(
-          `<ion-checkbox ${labelPlacement ? `label-placement="${labelPlacement}"` : ''} helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`,
+          `<ion-checkbox ${
+            labelPlacement ? `label-placement="${labelPlacement}"` : ''
+          } helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-checkbox>`,
           config
         );
 
