@@ -152,11 +152,6 @@ input {
 // ----------------------------------------------------------------
 
 .checkbox-bottom {
-  /**
-   * The bottom content should take on the start and end
-   * padding so it is always aligned with either the label
-   * or the start of the checkbox.
-   */
   @include padding(5px, null, null, null);
 
   display: flex;
