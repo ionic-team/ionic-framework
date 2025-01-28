@@ -34,10 +34,21 @@ export const createSheetEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimat
     { offset: 1, opacity: 1, maxHeight: `${currentBreakpoint! * 100}%` },
   ]);
 
-  const footerHeight = baseEl.querySelector('ion-footer')?.clientHeight;
+  const headerHeight = baseEl.querySelector('ion-header')?.clientHeight ?? 0;
+
+  const footerHeight = baseEl.querySelector('ion-footer')?.clientHeight
+    ?? baseEl.shadowRoot?.querySelector('ion-footer')?.clientHeight ?? 0;
+
+  const wrapperHeight = baseEl.shadowRoot?.querySelector('.modal-wrapper, .modal-shadow')?.clientHeight ?? 100;
+
+  const footerOffset = parseFloat(((footerHeight ? (footerHeight / wrapperHeight) : 0)).toFixed(2));
+
+  const headerOffset = parseFloat(((headerHeight ? (headerHeight / wrapperHeight) : 0)).toFixed(2));
+
   const footerAnimation = createAnimation('footerAnimation').keyframes([
     { offset: 0, opacity: 1, transform: `translateY(${footerHeight}px)` },
-    { offset: 0.2, opacity: 1, transform: `translateY(0)` },
+    { offset: headerOffset, opacity: 1, transform: `translateY(${footerHeight}px)` },
+    { offset: ((footerOffset + headerOffset) * 2), opacity: 1, transform: 'translateY(0)' },
   ]);
 
   return { wrapperAnimation, backdropAnimation, contentAnimation, footerAnimation };
@@ -75,11 +86,21 @@ export const createSheetLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimat
     { offset: 1, opacity: 1, transform: `translateY(100%)` },
   ]);
 
-  const footerHeight = baseEl.shadowRoot!.querySelector('ion-footer')?.clientHeight;
+  const headerHeight = baseEl.querySelector('ion-header')?.clientHeight ?? 0;
+
+  const footerHeight = baseEl.querySelector('ion-footer')?.clientHeight
+    ?? baseEl.shadowRoot?.querySelector('ion-footer')?.clientHeight ?? 0;
+
+  const wrapperHeight = baseEl.shadowRoot?.querySelector('.modal-wrapper, .modal-shadow')?.clientHeight ?? 100;
+
+  const footerOffset = parseFloat(((footerHeight ? (footerHeight / wrapperHeight) : 0)).toFixed(2));
+
+  const headerOffset = parseFloat(((headerHeight ? (headerHeight / wrapperHeight) : 0)).toFixed(2));
+
   const footerAnimation = createAnimation('footerAnimation').keyframes([
-    { offset: 0, opacity: 1, transform: `translateY(0)` },
-    { offset: 0.7, opacity: 1, transform: `translateY(0)` },
-    { offset: 1, opacity: 1, transform: `translateY(${footerHeight}px)` },
+    { offset: 0, opacity: 1, transform: 'translateY(0)' },
+    { offset: (1 - (footerOffset + headerOffset) * 2), opacity: 1, transform: 'translateY(0)' },
+    { offset: (1), opacity: 1, transform: `translateY(${footerHeight}px)` },
   ]);
 
   return { wrapperAnimation, backdropAnimation, footerAnimation };
