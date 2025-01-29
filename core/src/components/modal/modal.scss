@@ -167,6 +167,9 @@ ion-backdrop {
   bottom: 0;
 }
 
+// Sheet Modal - Scroll at all breakpoints
+// --------------------------------------------------
+
 :host(.modal-sheet.modal-scroll-all) ion-footer {
   position: absolute;
   bottom: 0;
