@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.3](https://github.com/ionic-team/ionic-framework/compare/v8.4.2...v8.4.3) (2025-01-29)
+
+
+### Bug Fixes
+
+* **vue:** update Stencil Vue output target ([#30159](https://github.com/ionic-team/ionic-framework/issues/30159)) ([eb725fc](https://github.com/ionic-team/ionic-framework/commit/eb725fce6eb15facd8a1c21be11a1b2d46336479))
+
+
+
+
+
+## [8.4.2](https://github.com/ionic-team/ionic-framework/compare/v8.4.1...v8.4.2) (2025-01-22)
+
+
+### Bug Fixes
+
+* **segment:** add logic to connect to segment-view in `componentDidLoad()` callback ([#30060](https://github.com/ionic-team/ionic-framework/issues/30060)) ([000f553](https://github.com/ionic-team/ionic-framework/commit/000f55303e459c583e642337fb1894f419f37d48)), closes [#30000](https://github.com/ionic-team/ionic-framework/issues/30000)
+* **select-modal:** match radio styles to iOS native ([#30119](https://github.com/ionic-team/ionic-framework/issues/30119)) ([3f8346e](https://github.com/ionic-team/ionic-framework/commit/3f8346e718ae3a6eb5008d739f10b6898b84ca9b))
+
+
+
+
+
 ## [8.4.1](https://github.com/ionic-team/ionic-framework/compare/v8.4.0...v8.4.1) (2024-11-27)
 
 
