@@ -3265,11 +3265,11 @@ export namespace Components {
          */
         "enableOnOffLabels": boolean | undefined;
         /**
-          * Text that is placed under the toggle and displayed when an error is detected.
+          * Text that is placed under the toggle label and displayed when an error is detected.
          */
         "errorText"?: string;
         /**
-          * Text that is placed under the toggle and displayed when no error is detected.
+          * Text that is placed under the toggle label and displayed when no error is detected.
          */
         "helperText"?: string;
         /**
@@ -8136,11 +8136,11 @@ declare namespace LocalJSX {
          */
         "enableOnOffLabels"?: boolean | undefined;
         /**
-          * Text that is placed under the toggle and displayed when an error is detected.
+          * Text that is placed under the toggle label and displayed when an error is detected.
          */
         "errorText"?: string;
         /**
-          * Text that is placed under the toggle and displayed when no error is detected.
+          * Text that is placed under the toggle label and displayed when no error is detected.
          */
         "helperText"?: string;
         /**

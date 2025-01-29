@@ -71,12 +71,12 @@ export class Toggle implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * Text that is placed under the toggle and displayed when an error is detected.
+   * Text that is placed under the toggle label and displayed when an error is detected.
    */
   @Prop() errorText?: string;
 
   /**
-   * Text that is placed under the toggle and displayed when no error is detected.
+   * Text that is placed under the toggle label and displayed when no error is detected.
    */
   @Prop() helperText?: string;
 
