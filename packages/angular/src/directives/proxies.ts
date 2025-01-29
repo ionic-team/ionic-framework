@@ -18,7 +18,7 @@ import { Components } from '@ionic/core';
   inputs: ['disabled', 'mode', 'readonly', 'toggleIcon', 'toggleIconSlot', 'value'],
 })
 export class IonAccordion {
-  protected el: HTMLElement;
+  protected el: HTMLIonAccordionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -40,7 +40,7 @@ export declare interface IonAccordion extends Components.IonAccordion {}
   inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value'],
 })
 export class IonAccordionGroup {
-  protected el: HTMLElement;
+  protected el: HTMLIonAccordionGroupElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -73,7 +73,7 @@ This event will not emit when programmatically setting the `value` property.
   inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'subHeader', 'translucent', 'trigger'],
 })
 export class IonActionSheet {
-  protected el: HTMLElement;
+  protected el: HTMLIonActionSheetElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -136,7 +136,7 @@ Shorthand for ionActionSheetDidDismiss.
   inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'subHeader', 'translucent', 'trigger'],
 })
 export class IonAlert {
-  protected el: HTMLElement;
+  protected el: HTMLIonAlertElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -198,7 +198,7 @@ Shorthand for ionAlertDidDismiss.
   inputs: [],
 })
 export class IonApp {
-  protected el: HTMLElement;
+  protected el: HTMLIonAppElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -219,7 +219,7 @@ export declare interface IonApp extends Components.IonApp {}
   inputs: [],
 })
 export class IonAvatar {
-  protected el: HTMLElement;
+  protected el: HTMLIonAvatarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -241,7 +241,7 @@ export declare interface IonAvatar extends Components.IonAvatar {}
   inputs: ['stopPropagation', 'tappable', 'visible'],
 })
 export class IonBackdrop {
-  protected el: HTMLElement;
+  protected el: HTMLIonBackdropElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -269,7 +269,7 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
   inputs: ['color', 'mode'],
 })
 export class IonBadge {
-  protected el: HTMLElement;
+  protected el: HTMLIonBadgeElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -291,7 +291,7 @@ export declare interface IonBadge extends Components.IonBadge {}
   inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target'],
 })
 export class IonBreadcrumb {
-  protected el: HTMLElement;
+  protected el: HTMLIonBreadcrumbElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -323,7 +323,7 @@ export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
   inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode'],
 })
 export class IonBreadcrumbs {
-  protected el: HTMLElement;
+  protected el: HTMLIonBreadcrumbsElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -353,7 +353,7 @@ export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
   inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type'],
 })
 export class IonButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -385,7 +385,7 @@ export declare interface IonButton extends Components.IonButton {
   inputs: ['collapse'],
 })
 export class IonButtons {
-  protected el: HTMLElement;
+  protected el: HTMLIonButtonsElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -407,7 +407,7 @@ export declare interface IonButtons extends Components.IonButtons {}
   inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type'],
 })
 export class IonCard {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -429,7 +429,7 @@ export declare interface IonCard extends Components.IonCard {}
   inputs: ['mode'],
 })
 export class IonCardContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -451,7 +451,7 @@ export declare interface IonCardContent extends Components.IonCardContent {}
   inputs: ['color', 'mode', 'translucent'],
 })
 export class IonCardHeader {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardHeaderElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -473,7 +473,7 @@ export declare interface IonCardHeader extends Components.IonCardHeader {}
   inputs: ['color', 'mode'],
 })
 export class IonCardSubtitle {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardSubtitleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -495,7 +495,7 @@ export declare interface IonCardSubtitle extends Components.IonCardSubtitle {}
   inputs: ['color', 'mode'],
 })
 export class IonCardTitle {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardTitleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -517,7 +517,7 @@ export declare interface IonCardTitle extends Components.IonCardTitle {}
   inputs: ['alignment', 'checked', 'color', 'disabled', 'errorText', 'helperText', 'indeterminate', 'justify', 'labelPlacement', 'mode', 'name', 'value'],
 })
 export class IonCheckbox {
-  protected el: HTMLElement;
+  protected el: HTMLIonCheckboxElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -557,7 +557,7 @@ This event will not emit when programmatically setting the `checked` property.
   inputs: ['color', 'disabled', 'mode', 'outline'],
 })
 export class IonChip {
-  protected el: HTMLElement;
+  protected el: HTMLIonChipElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -579,7 +579,7 @@ export declare interface IonChip extends Components.IonChip {}
   inputs: ['offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs'],
 })
 export class IonCol {
-  protected el: HTMLElement;
+  protected el: HTMLIonColElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -602,7 +602,7 @@ export declare interface IonCol extends Components.IonCol {}
   inputs: ['color', 'fixedSlotPlacement', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
 })
 export class IonContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -645,7 +645,7 @@ Set `scrollEvents` to `true` to enable.
   inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'formatOptions', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
 })
 export class IonDatetime {
-  protected el: HTMLElement;
+  protected el: HTMLIonDatetimeElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -689,7 +689,7 @@ This event will not emit when programmatically setting the `value` property.
   inputs: ['color', 'datetime', 'disabled', 'mode'],
 })
 export class IonDatetimeButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonDatetimeButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -712,7 +712,7 @@ export declare interface IonDatetimeButton extends Components.IonDatetimeButton 
   inputs: ['activated', 'edge', 'horizontal', 'vertical'],
 })
 export class IonFab {
-  protected el: HTMLElement;
+  protected el: HTMLIonFabElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -734,7 +734,7 @@ export declare interface IonFab extends Components.IonFab {}
   inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type'],
 })
 export class IonFabButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonFabButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -766,7 +766,7 @@ export declare interface IonFabButton extends Components.IonFabButton {
   inputs: ['activated', 'side'],
 })
 export class IonFabList {
-  protected el: HTMLElement;
+  protected el: HTMLIonFabListElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -788,7 +788,7 @@ export declare interface IonFabList extends Components.IonFabList {}
   inputs: ['collapse', 'mode', 'translucent'],
 })
 export class IonFooter {
-  protected el: HTMLElement;
+  protected el: HTMLIonFooterElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -810,7 +810,7 @@ export declare interface IonFooter extends Components.IonFooter {}
   inputs: ['fixed'],
 })
 export class IonGrid {
-  protected el: HTMLElement;
+  protected el: HTMLIonGridElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -832,7 +832,7 @@ export declare interface IonGrid extends Components.IonGrid {}
   inputs: ['collapse', 'mode', 'translucent'],
 })
 export class IonHeader {
-  protected el: HTMLElement;
+  protected el: HTMLIonHeaderElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -854,7 +854,7 @@ export declare interface IonHeader extends Components.IonHeader {}
   inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src'],
 })
 export class IonIcon {
-  protected el: HTMLElement;
+  protected el: HTMLIonIconElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -876,7 +876,7 @@ export declare interface IonIcon extends Components.IonIcon {}
   inputs: ['alt', 'src'],
 })
 export class IonImg {
-  protected el: HTMLElement;
+  protected el: HTMLIonImgElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -913,7 +913,7 @@ export declare interface IonImg extends Components.IonImg {
   inputs: ['disabled', 'position', 'threshold'],
 })
 export class IonInfiniteScroll {
-  protected el: HTMLElement;
+  protected el: HTMLIonInfiniteScrollElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -944,7 +944,7 @@ your async operation has completed.
   inputs: ['loadingSpinner', 'loadingText'],
 })
 export class IonInfiniteScrollContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonInfiniteScrollContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -967,7 +967,7 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
   inputs: ['autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearInputIcon', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'spellcheck', 'step', 'type', 'value'],
 })
 export class IonInput {
-  protected el: HTMLElement;
+  protected el: HTMLIonInputElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1028,7 +1028,7 @@ This event will not emit when programmatically setting the `value` property.
   inputs: ['color', 'hideIcon', 'mode', 'showIcon'],
 })
 export class IonInputPasswordToggle {
-  protected el: HTMLElement;
+  protected el: HTMLIonInputPasswordToggleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1050,7 +1050,7 @@ export declare interface IonInputPasswordToggle extends Components.IonInputPassw
   inputs: ['button', 'color', 'detail', 'detailIcon', 'disabled', 'download', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type'],
 })
 export class IonItem {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1072,7 +1072,7 @@ export declare interface IonItem extends Components.IonItem {}
   inputs: ['color', 'mode', 'sticky'],
 })
 export class IonItemDivider {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemDividerElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1093,7 +1093,7 @@ export declare interface IonItemDivider extends Components.IonItemDivider {}
   inputs: [],
 })
 export class IonItemGroup {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemGroupElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1115,7 +1115,7 @@ export declare interface IonItemGroup extends Components.IonItemGroup {}
   inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'type'],
 })
 export class IonItemOption {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemOptionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1137,7 +1137,7 @@ export declare interface IonItemOption extends Components.IonItemOption {}
   inputs: ['side'],
 })
 export class IonItemOptions {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemOptionsElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1166,7 +1166,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
   inputs: ['disabled'],
 })
 export class IonItemSliding {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemSlidingElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1194,7 +1194,7 @@ export declare interface IonItemSliding extends Components.IonItemSliding {
   inputs: ['color', 'mode', 'position'],
 })
 export class IonLabel {
-  protected el: HTMLElement;
+  protected el: HTMLIonLabelElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1217,7 +1217,7 @@ export declare interface IonLabel extends Components.IonLabel {}
   inputs: ['inset', 'lines', 'mode'],
 })
 export class IonList {
-  protected el: HTMLElement;
+  protected el: HTMLIonListElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1239,7 +1239,7 @@ export declare interface IonList extends Components.IonList {}
   inputs: ['color', 'lines', 'mode'],
 })
 export class IonListHeader {
-  protected el: HTMLElement;
+  protected el: HTMLIonListHeaderElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1262,7 +1262,7 @@ export declare interface IonListHeader extends Components.IonListHeader {}
   inputs: ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'translucent', 'trigger'],
 })
 export class IonLoading {
-  protected el: HTMLElement;
+  protected el: HTMLIonLoadingElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1325,7 +1325,7 @@ Shorthand for ionLoadingDidDismiss.
   inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'side', 'swipeGesture', 'type'],
 })
 export class IonMenu {
-  protected el: HTMLElement;
+  protected el: HTMLIonMenuElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1367,7 +1367,7 @@ export declare interface IonMenu extends Components.IonMenu {
   inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'type'],
 })
 export class IonMenuButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonMenuButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1389,7 +1389,7 @@ export declare interface IonMenuButton extends Components.IonMenuButton {}
   inputs: ['autoHide', 'menu'],
 })
 export class IonMenuToggle {
-  protected el: HTMLElement;
+  protected el: HTMLIonMenuToggleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1411,7 +1411,7 @@ export declare interface IonMenuToggle extends Components.IonMenuToggle {}
   inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection'],
 })
 export class IonNavLink {
-  protected el: HTMLElement;
+  protected el: HTMLIonNavLinkElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1433,7 +1433,7 @@ export declare interface IonNavLink extends Components.IonNavLink {}
   inputs: ['color', 'mode'],
 })
 export class IonNote {
-  protected el: HTMLElement;
+  protected el: HTMLIonNoteElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1455,7 +1455,7 @@ export declare interface IonNote extends Components.IonNote {}
   inputs: ['mode'],
 })
 export class IonPicker {
-  protected el: HTMLElement;
+  protected el: HTMLIonPickerElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1478,7 +1478,7 @@ export declare interface IonPicker extends Components.IonPicker {}
   inputs: ['color', 'disabled', 'mode', 'value'],
 })
 export class IonPickerColumn {
-  protected el: HTMLElement;
+  protected el: HTMLIonPickerColumnElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1510,7 +1510,7 @@ This event will not emit when programmatically setting the `value` property.
   inputs: ['color', 'disabled', 'value'],
 })
 export class IonPickerColumnOption {
-  protected el: HTMLElement;
+  protected el: HTMLIonPickerColumnOptionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1533,7 +1533,7 @@ export declare interface IonPickerColumnOption extends Components.IonPickerColum
   inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
 })
 export class IonPickerLegacy {
-  protected el: HTMLElement;
+  protected el: HTMLIonPickerLegacyElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1595,7 +1595,7 @@ Shorthand for ionPickerDidDismiss.
   inputs: ['buffer', 'color', 'mode', 'reversed', 'type', 'value'],
 })
 export class IonProgressBar {
-  protected el: HTMLElement;
+  protected el: HTMLIonProgressBarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1617,7 +1617,7 @@ export declare interface IonProgressBar extends Components.IonProgressBar {}
   inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value'],
 })
 export class IonRadio {
-  protected el: HTMLElement;
+  protected el: HTMLIonRadioElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1649,7 +1649,7 @@ export declare interface IonRadio extends Components.IonRadio {
   inputs: ['allowEmptySelection', 'compareWith', 'name', 'value'],
 })
 export class IonRadioGroup {
-  protected el: HTMLElement;
+  protected el: HTMLIonRadioGroupElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1681,7 +1681,7 @@ This event will not emit when programmatically setting the `value` property.
   inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'label', 'labelPlacement', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value'],
 })
 export class IonRange {
-  protected el: HTMLElement;
+  protected el: HTMLIonRangeElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1743,7 +1743,7 @@ mouse drag, touch gesture, or keyboard interaction.
   inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
 })
 export class IonRefresher {
-  protected el: HTMLElement;
+  protected el: HTMLIonRefresherElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1784,7 +1784,7 @@ called when the async operation has completed.
   inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'],
 })
 export class IonRefresherContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonRefresherContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1805,7 +1805,7 @@ export declare interface IonRefresherContent extends Components.IonRefresherCont
   inputs: [],
 })
 export class IonReorder {
-  protected el: HTMLElement;
+  protected el: HTMLIonReorderElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1828,7 +1828,7 @@ export declare interface IonReorder extends Components.IonReorder {}
   inputs: ['disabled'],
 })
 export class IonReorderGroup {
-  protected el: HTMLElement;
+  protected el: HTMLIonReorderGroupElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1861,7 +1861,7 @@ to be called in order to finalize the reorder action.
   inputs: ['type'],
 })
 export class IonRippleEffect {
-  protected el: HTMLElement;
+  protected el: HTMLIonRippleEffectElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1882,7 +1882,7 @@ export declare interface IonRippleEffect extends Components.IonRippleEffect {}
   inputs: [],
 })
 export class IonRow {
-  protected el: HTMLElement;
+  protected el: HTMLIonRowElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1905,7 +1905,7 @@ export declare interface IonRow extends Components.IonRow {}
   inputs: ['animated', 'autocapitalize', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'searchIcon', 'showCancelButton', 'showClearButton', 'spellcheck', 'type', 'value'],
 })
 export class IonSearchbar {
-  protected el: HTMLElement;
+  protected el: HTMLIonSearchbarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1965,7 +1965,7 @@ This event will not emit when programmatically setting the `value` property.
   inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'],
 })
 export class IonSegment {
-  protected el: HTMLElement;
+  protected el: HTMLIonSegmentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1997,7 +1997,7 @@ This event will not emit when programmatically setting the `value` property.
   inputs: ['contentId', 'disabled', 'layout', 'mode', 'type', 'value'],
 })
 export class IonSegmentButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonSegmentButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2018,7 +2018,7 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
   inputs: [],
 })
 export class IonSegmentContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonSegmentContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2040,7 +2040,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
   inputs: ['disabled'],
 })
 export class IonSegmentView {
-  protected el: HTMLElement;
+  protected el: HTMLIonSegmentViewElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2071,7 +2071,7 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
   inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
 })
 export class IonSelect {
-  protected el: HTMLElement;
+  protected el: HTMLIonSelectElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2119,7 +2119,7 @@ This event will not emit when programmatically setting the `value` property.
   inputs: ['header', 'multiple', 'options'],
 })
 export class IonSelectModal {
-  protected el: HTMLElement;
+  protected el: HTMLIonSelectModalElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2141,7 +2141,7 @@ export declare interface IonSelectModal extends Components.IonSelectModal {}
   inputs: ['disabled', 'value'],
 })
 export class IonSelectOption {
-  protected el: HTMLElement;
+  protected el: HTMLIonSelectOptionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2163,7 +2163,7 @@ export declare interface IonSelectOption extends Components.IonSelectOption {}
   inputs: ['animated'],
 })
 export class IonSkeletonText {
-  protected el: HTMLElement;
+  protected el: HTMLIonSkeletonTextElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2185,7 +2185,7 @@ export declare interface IonSkeletonText extends Components.IonSkeletonText {}
   inputs: ['color', 'duration', 'name', 'paused'],
 })
 export class IonSpinner {
-  protected el: HTMLElement;
+  protected el: HTMLIonSpinnerElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2207,7 +2207,7 @@ export declare interface IonSpinner extends Components.IonSpinner {}
   inputs: ['contentId', 'disabled', 'when'],
 })
 export class IonSplitPane {
-  protected el: HTMLElement;
+  protected el: HTMLIonSplitPaneElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2236,7 +2236,7 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   inputs: ['component', 'tab'],
 })
 export class IonTab {
-  protected el: HTMLElement;
+  protected el: HTMLIonTabElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2258,7 +2258,7 @@ export declare interface IonTab extends Components.IonTab {}
   inputs: ['color', 'mode', 'selectedTab', 'translucent'],
 })
 export class IonTabBar {
-  protected el: HTMLElement;
+  protected el: HTMLIonTabBarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2280,7 +2280,7 @@ export declare interface IonTabBar extends Components.IonTabBar {}
   inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'tab', 'target'],
 })
 export class IonTabButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonTabButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2302,7 +2302,7 @@ export declare interface IonTabButton extends Components.IonTabButton {}
   inputs: ['color', 'mode'],
 })
 export class IonText {
-  protected el: HTMLElement;
+  protected el: HTMLIonTextElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2325,7 +2325,7 @@ export declare interface IonText extends Components.IonText {}
   inputs: ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit', 'color', 'cols', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'readonly', 'required', 'rows', 'shape', 'spellcheck', 'value', 'wrap'],
 })
 export class IonTextarea {
-  protected el: HTMLElement;
+  protected el: HTMLIonTextareaElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2376,7 +2376,7 @@ the user clears the textarea by performing a keydown event.
   inputs: [],
 })
 export class IonThumbnail {
-  protected el: HTMLElement;
+  protected el: HTMLIonThumbnailElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2398,7 +2398,7 @@ export declare interface IonThumbnail extends Components.IonThumbnail {}
   inputs: ['color', 'size'],
 })
 export class IonTitle {
-  protected el: HTMLElement;
+  protected el: HTMLIonTitleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2421,7 +2421,7 @@ export declare interface IonTitle extends Components.IonTitle {}
   inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'positionAnchor', 'swipeGesture', 'translucent', 'trigger'],
 })
 export class IonToast {
-  protected el: HTMLElement;
+  protected el: HTMLIonToastElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2483,7 +2483,7 @@ Shorthand for ionToastDidDismiss.
   inputs: ['alignment', 'checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'mode', 'name', 'value'],
 })
 export class IonToggle {
-  protected el: HTMLElement;
+  protected el: HTMLIonToggleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2523,7 +2523,7 @@ This event will not emit when programmatically setting the `checked` property.
   inputs: ['color', 'mode'],
 })
 export class IonToolbar {
-  protected el: HTMLElement;
+  protected el: HTMLIonToolbarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
