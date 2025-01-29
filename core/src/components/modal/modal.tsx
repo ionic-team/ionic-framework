@@ -951,7 +951,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       focusTrap,
       scrollAtEdge,
     } = this;
-    console.log('isSheetModal', isSheetModal, 'scrollAtEdge', scrollAtEdge, 'both', isSheetModal && !scrollAtEdge);
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
     const isCardModal = presentingElement !== undefined && mode === 'ios';
