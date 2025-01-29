@@ -116,6 +116,33 @@ export const createSheetGesture = (
     baseEl.classList.add(FOCUS_TRAP_DISABLE_CLASS);
   };
 
+
+  /**
+   * Used when `scrollAtEdge` is disabled.
+   * Changes the footer that is currently visible
+   * @param footer - The footer to show
+   */
+  const swapFooterVisibility = (footer: 'original' | 'cloned') => {
+    const footerToHide = footer === 'original' ?
+      wrapperEl.nextElementSibling as HTMLIonFooterElement :
+      baseEl.querySelector('ion-footer') as HTMLIonFooterElement;
+    const footerToShow = footer === 'original' ?
+      baseEl.querySelector('ion-footer') as HTMLIonFooterElement :
+      wrapperEl.nextElementSibling as HTMLIonFooterElement;
+
+    const pagePadding =
+      footer === 'original' ? 0 : footerToShow.clientHeight;
+
+    footerToShow.style.removeProperty('display');
+    footerToShow.removeAttribute('aria-hidden');
+
+    const page = baseEl.querySelector('.ion-page') as HTMLElement;
+    page.style.setProperty('padding-bottom', `${pagePadding}px`);
+
+    footerToHide.style.setProperty('display', 'none');
+    footerToHide.setAttribute('aria-hidden', 'true');
+  }
+
   /**
    * After the entering animation completes,
    * we need to set the animation to go from
@@ -201,6 +228,10 @@ export const createSheetGesture = (
      * Remove undefined check
      */
     canDismissBlocksGesture = baseEl.canDismiss !== undefined && baseEl.canDismiss !== true && minBreakpoint === 0;
+
+    if (!scrollAtEdge) {
+      swapFooterVisibility('original')
+    }
 
     /**
      * If we are pulling down, then it is possible we are pulling on the content.
@@ -361,23 +392,13 @@ export const createSheetGesture = (
      */
     gesture.enable(false);
 
+    if (!scrollAtEdge && shouldRemainOpen) {
+      swapFooterVisibility('cloned');
+    }
+
     if (shouldPreventDismiss) {
       handleCanDismiss(baseEl, animation);
     } else if (!shouldRemainOpen) {
-      if (!scrollAtEdge) {
-        const clonedFooter = wrapperEl.nextElementSibling as HTMLIonFooterElement;
-        // get the original footer, which is a child of
-        const originalFooter = baseEl.querySelector('ion-footer') as HTMLIonFooterElement;
-        // hide the cloned footer
-        clonedFooter.style.setProperty('display', 'none');
-        // add the aria-hidden attribute to the cloned footer
-        clonedFooter.setAttribute('aria-hidden', 'true');
-        // display the original footer, remove the inline style display: none
-        originalFooter.style.removeProperty('display');
-        // remove the aria-hidden attribute
-        originalFooter.removeAttribute('aria-hidden');
-      }
-
       onDismiss();
     }
 
