@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.3](https://github.com/ionic-team/ionic-framework/compare/v8.4.2...v8.4.3) (2025-01-29)
+
+
+### Bug Fixes
+
+* **vue:** update Stencil Vue output target ([#30159](https://github.com/ionic-team/ionic-framework/issues/30159)) ([eb725fc](https://github.com/ionic-team/ionic-framework/commit/eb725fce6eb15facd8a1c21be11a1b2d46336479))
+
+
+
+
+
 ## [8.4.2](https://github.com/ionic-team/ionic-framework/compare/v8.4.1...v8.4.2) (2025-01-22)
 
 
