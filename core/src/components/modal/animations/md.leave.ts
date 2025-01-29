@@ -14,7 +14,7 @@ const createLeaveAnimation = () => {
     { offset: 1, opacity: 0, transform: 'translateY(40px)' },
   ]);
 
-  return { backdropAnimation, wrapperAnimation, footerAnimation: undefined };
+  return { backdropAnimation, wrapperAnimation };
 };
 
 /**
@@ -23,21 +23,16 @@ const createLeaveAnimation = () => {
 export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
   const { currentBreakpoint } = opts;
   const root = getElementRoot(baseEl);
-  const { wrapperAnimation, backdropAnimation, footerAnimation } =
-    currentBreakpoint !== undefined ? createSheetLeaveAnimation(baseEl, opts) : createLeaveAnimation();
+  const { wrapperAnimation, backdropAnimation } =
+    currentBreakpoint !== undefined ? createSheetLeaveAnimation(opts) : createLeaveAnimation();
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
   wrapperAnimation.addElement(root.querySelector('.modal-wrapper')!);
-  footerAnimation?.addElement(root.querySelector('ion-footer')!);
 
   const baseAnimation = createAnimation()
     .easing('cubic-bezier(0.47,0,0.745,0.715)')
     .duration(200)
     .addAnimation([backdropAnimation, wrapperAnimation]);
-
-  if (footerAnimation) {
-    baseAnimation.addAnimation(footerAnimation);
-  }
 
   return baseAnimation;
 };

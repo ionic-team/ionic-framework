@@ -101,10 +101,10 @@
             Present Sheet Modal (Max breakpoint is not 1)
           </button>
           <button
-            id="custom-breakpoint-modal"
+            id="scroll-at-edge-modal"
             onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.25, 0.5, 0.75, 1], scrollAtEdge: false })"
           >
-            Present Sheet Modal (scrollAtEdge)
+            Present Sheet Modal (Scroll at any breakpoint)
           </button>
           <button
             id="custom-backdrop-modal"
@@ -193,9 +193,7 @@
       <ion-footer>
         <ion-toolbar>
           <ion-title>Footer</ion-title>
-          <ion-button id="add-content">Add More Content</ion-button>
         </ion-toolbar>
-        <div id="dynamic-content"></div>
       </ion-footer>
       `;
 
@@ -222,19 +220,6 @@
         button.addEventListener('click', () => {
           modalElement.dismiss();
         });
-
-        const buttonAdd = element.querySelector('#add-content');
-        buttonAdd.addEventListener('click', () => {
-          const dynamicContent = modalElement.shadowRoot.querySelector('#dynamic-content');
-          console.log(modalElement.shadowRoot)
-          const newToolbar = document.createElement('ion-toolbar');
-          newToolbar.innerHTML = `
-            <ion-title>Additional Content</ion-title>
-          `;
-          dynamicContent.appendChild(newToolbar);
-          dynamicContent
-        });
-
 
         document.body.appendChild(modalElement);
         return modalElement;

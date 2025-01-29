@@ -167,7 +167,7 @@ ion-backdrop {
   bottom: 0;
 }
 
-:host(.modal-sheet) ion-footer {
+:host(.modal-sheet.modal-scroll-all) ion-footer {
   position: absolute;
   bottom: 0;
 
