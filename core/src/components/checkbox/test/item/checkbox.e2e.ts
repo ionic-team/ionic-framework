@@ -53,7 +53,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: long label in item'), () => {
-    test('should render margins correctly when using long label in item', async ({ page }) => {
+    test('should not have visual regressions when using long label in item', async ({ page }) => {
       await page.setContent(
         `
           <ion-list>
@@ -69,7 +69,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`checkbox-long-label-in-item`));
     });
-    test('should render margins correctly when using long label in item with start alignment', async ({
+    test('should not have visual regressions when using long label in item with start alignment', async ({
       page,
     }, testInfo) => {
       testInfo.annotations.push({
@@ -93,8 +93,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 
+  test.describe(title('checkbox: end label in item'), () => {
+    test('should not have visual regressions when using end label in item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-item>
+              <ion-checkbox label-placement="end">Enable Notifications</ion-checkbox>
+            </ion-item>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`checkbox-end-label-in-item`));
+    });
+  });
+
   test.describe(title('checkbox: stacked label in item'), () => {
-    test('should render margins correctly when using stacked label in item', async ({ page }) => {
+    test('should not have visual regressions when using stacked label in item', async ({ page }) => {
       await page.setContent(
         `
           <ion-list>
