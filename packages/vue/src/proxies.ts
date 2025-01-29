@@ -869,6 +869,8 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'compareWith',
   'disabled',
   'fill',
+  'errorText',
+  'helperText',
   'interface',
   'interfaceOptions',
   'justify',
