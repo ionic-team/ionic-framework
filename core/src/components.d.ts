@@ -2268,11 +2268,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Text that is placed under the radio and displayed when an error is detected.
+          * Text that is placed under the radio label and displayed when an error is detected.
          */
         "errorText"?: string;
         /**
-          * Text that is placed under the radio and displayed when no error is detected.
+          * Text that is placed under the radio label and displayed when no error is detected.
          */
         "helperText"?: string;
         /**
@@ -7026,11 +7026,11 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Text that is placed under the radio and displayed when an error is detected.
+          * Text that is placed under the radio label and displayed when an error is detected.
          */
         "errorText"?: string;
         /**
-          * Text that is placed under the radio and displayed when no error is detected.
+          * Text that is placed under the radio label and displayed when no error is detected.
          */
         "helperText"?: string;
         /**
