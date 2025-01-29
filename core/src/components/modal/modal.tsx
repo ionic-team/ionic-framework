@@ -573,7 +573,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
-      animateContentHeight: !this.scrollAtEdge
+      scrollAtEdge: this.scrollAtEdge,
     });
 
     /* tslint:disable-next-line */
@@ -680,7 +680,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: this.presentingElement,
       currentBreakpoint: initialBreakpoint,
       backdropBreakpoint,
-      animateContentHeight: !this.scrollAtEdge,
+      scrollAtEdge: this.scrollAtEdge,
     }));
 
     ani.progressStart(true, 1);
@@ -941,9 +941,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   };
 
   render() {
-    const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes, focusTrap } =
-      this;
-
+    const {
+      handle,
+      isSheetModal,
+      presentingElement,
+      htmlAttributes,
+      handleBehavior,
+      inheritedAttributes,
+      focusTrap,
+      scrollAtEdge,
+    } = this;
+    console.log('isSheetModal', isSheetModal, 'scrollAtEdge', scrollAtEdge, 'both', isSheetModal && !scrollAtEdge);
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
     const isCardModal = presentingElement !== undefined && mode === 'ios';
@@ -962,6 +970,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           ['modal-default']: !isCardModal && !isSheetModal,
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
+          [`modal-scroll-all`]: isSheetModal && !scrollAtEdge,
           'overlay-hidden': true,
           [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
           ...getClassMap(this.cssClass),
@@ -1035,10 +1044,10 @@ interface ModalOverlayOptions {
   backdropBreakpoint: number;
 
   /**
-   * Whether or not the modal should animate
-   * content's max-height.
+   * Whether or not the modal should scroll
+   * only when fully expanded.
    */
-  animateContentHeight?: boolean;
+  scrollAtEdge?: boolean;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;
