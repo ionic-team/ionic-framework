@@ -40,7 +40,7 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
       }
 
       /**
-       * If scrollAtEdge is disabled, we need toß swap
+       * If scrollAtEdge is disabled, we need to swap
        * the visibility to the original, so the footer
        *  dismisses with the modal and doesn't stay
        *  until the modal is removed from the DOM.
@@ -56,7 +56,7 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
         clonedFooter.setAttribute('aria-hidden', 'true');
 
         const page = baseEl.querySelector('.ion-page') as HTMLElement;
-        page.style.setProperty('padding-bottom', `0`);
+        page.style.removeProperty('padding-bottom');
       }
     });
 

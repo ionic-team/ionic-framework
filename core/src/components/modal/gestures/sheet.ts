@@ -116,32 +116,31 @@ export const createSheetGesture = (
     baseEl.classList.add(FOCUS_TRAP_DISABLE_CLASS);
   };
 
-
   /**
    * Used when `scrollAtEdge` is disabled.
    * Changes the footer that is currently visible
    * @param footer - The footer to show
    */
   const swapFooterVisibility = (footer: 'original' | 'cloned') => {
-    const footerToHide = footer === 'original' ?
-      wrapperEl.nextElementSibling as HTMLIonFooterElement :
-      baseEl.querySelector('ion-footer') as HTMLIonFooterElement;
-    const footerToShow = footer === 'original' ?
-      baseEl.querySelector('ion-footer') as HTMLIonFooterElement :
-      wrapperEl.nextElementSibling as HTMLIonFooterElement;
+    const originalFooter = baseEl.querySelector('ion-footer') as HTMLIonFooterElement;
+    const clonedFooter = wrapperEl.nextElementSibling as HTMLIonFooterElement;
+    const footerToHide = footer === 'original' ? clonedFooter : originalFooter;
+    const footerToShow = footer === 'original' ? originalFooter : clonedFooter;
 
     footerToShow.style.removeProperty('display');
     footerToShow.removeAttribute('aria-hidden');
 
-    const pagePadding =
-      footer === 'original' ? 0 : footerToShow.clientHeight;
-
     const page = baseEl.querySelector('.ion-page') as HTMLElement;
-    page.style.setProperty('padding-bottom', `${pagePadding}px`);
+    if (footer === 'original') {
+      page.style.removeProperty('padding-bottom');
+    } else {
+      const pagePadding = footerToShow.clientHeight;
+      page.style.setProperty('padding-bottom', `${pagePadding}px`);
+    }
 
     footerToHide.style.setProperty('display', 'none');
     footerToHide.setAttribute('aria-hidden', 'true');
-  }
+  };
 
   /**
    * After the entering animation completes,
@@ -236,7 +235,7 @@ export const createSheetGesture = (
      * and doesn't stay on the screen after the modal is gone.
      */
     if (!scrollAtEdge) {
-      swapFooterVisibility('original')
+      swapFooterVisibility('original');
     }
 
     /**

@@ -56,7 +56,7 @@ export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
         clonedFooter.setAttribute('aria-hidden', 'true');
 
         const page = baseEl.querySelector('.ion-page') as HTMLElement;
-        page.style.setProperty('padding-bottom', `0`);
+        page.style.removeProperty('padding-bottom');
       }
     });
 
