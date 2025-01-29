@@ -66,12 +66,12 @@ export class Checkbox implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * Text that is placed under the checkbox and displayed when an error is detected.
+   * Text that is placed under the checkbox label and displayed when an error is detected.
    */
   @Prop() errorText?: string;
 
   /**
-   * Text that is placed under the checkbox and displayed when no error is detected.
+   * Text that is placed under the checkbox label and displayed when no error is detected.
    */
   @Prop() helperText?: string;
 
