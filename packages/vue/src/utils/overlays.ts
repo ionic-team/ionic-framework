@@ -1,4 +1,5 @@
-import { defineComponent, h, ref, VNode, onMounted } from 'vue';
+import type { VNode, ComponentOptions } from "vue";
+import { defineComponent, h, ref, onMounted } from "vue";
 
 // TODO(FW-2969): types
 
@@ -9,15 +10,20 @@ export interface OverlayProps {
 const EMPTY_PROP = Symbol();
 const DEFAULT_EMPTY_PROP = { default: EMPTY_PROP };
 
-export const defineOverlayContainer = <Props extends object>(name: string, defineCustomElement: () => void, componentProps: string[] = [], hasDelegateHost?: boolean, controller?: any) => {
-
-  const createControllerComponent = () => {
+export const defineOverlayContainer = <Props extends object>(
+  name: string,
+  defineCustomElement: () => void,
+  componentProps: string[] = [],
+  hasDelegateHost?: boolean,
+  controller?: any
+) => {
+  const createControllerComponent = (options: ComponentOptions) => {
     return defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
       const eventListeners = [
-        { componentEv: `${name}-will-present`, frameworkEv: 'willPresent' },
-        { componentEv: `${name}-did-present`, frameworkEv: 'didPresent' },
-        { componentEv: `${name}-will-dismiss`, frameworkEv: 'willDismiss' },
-        { componentEv: `${name}-did-dismiss`, frameworkEv: 'didDismiss' },
+        { componentEv: `${name}-will-present`, frameworkEv: "willPresent" },
+        { componentEv: `${name}-did-present`, frameworkEv: "didPresent" },
+        { componentEv: `${name}-will-dismiss`, frameworkEv: "willDismiss" },
+        { componentEv: `${name}-did-dismiss`, frameworkEv: "didDismiss" },
       ];
 
       if (defineCustomElement !== undefined) {
@@ -27,8 +33,8 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
       const overlay = ref();
       const onVnodeMounted = async () => {
         const isOpen = props.isOpen;
-        isOpen && (await present(props))
-      }
+        isOpen && (await present(props));
+      };
 
       const onVnodeUpdated = async (node: VNode, prevNode: VNode) => {
         const isOpen = node.props!.isOpen;
@@ -45,11 +51,11 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
         } else {
           await dismiss();
         }
-      }
+      };
 
       const onVnodeBeforeUnmount = async () => {
         await dismiss();
-      }
+      };
 
       const dismiss = async () => {
         if (!overlay.value) return;
@@ -61,7 +67,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
         await overlay.value;
 
         overlay.value = undefined;
-      }
+      };
 
       const present = async (props: Readonly<Props>) => {
         /**
@@ -77,7 +83,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
           return;
         }
 
-        let restOfProps: any = {};
+        const restOfProps: Record<string, unknown> = {};
 
         /**
          * We can use Object.entries here
@@ -87,7 +93,10 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
          */
         for (const key in props) {
           const value = props[key] as any;
-          if (props.hasOwnProperty(key) && value !== EMPTY_PROP) {
+          if (
+            Object.prototype.hasOwnProperty.call(props, key) &&
+            value !== EMPTY_PROP
+          ) {
             restOfProps[key] = value;
           }
         }
@@ -104,35 +113,32 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
         const component = slots.default && slots.default()[0];
         overlay.value = controller.create({
           ...restOfProps,
-          component
+          component,
         });
 
         overlay.value = await overlay.value;
 
-        eventListeners.forEach(eventListener => {
+        eventListeners.forEach((eventListener) => {
           overlay.value.addEventListener(eventListener.componentEv, () => {
             emit(eventListener.frameworkEv);
           });
-        })
+        });
 
         await overlay.value.present();
-      }
+      };
 
       return () => {
-        return h(
-          'div',
-          {
-            style: { display: 'none' },
-            onVnodeMounted,
-            onVnodeUpdated,
-            onVnodeBeforeUnmount,
-            isOpen: props.isOpen === true
-          }
-        );
-      }
-    });
+        return h("div", {
+          style: { display: "none" },
+          onVnodeMounted,
+          onVnodeUpdated,
+          onVnodeBeforeUnmount,
+          isOpen: props.isOpen === true,
+        });
+      };
+    }, options);
   };
-  const createInlineComponent = () => {
+  const createInlineComponent = (options: any) => {
     return defineComponent((props, { slots }) => {
       if (defineCustomElement !== undefined) {
         defineCustomElement();
@@ -141,13 +147,22 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
       const elementRef = ref();
 
       onMounted(() => {
-        elementRef.value.addEventListener('ion-mount', () => isOpen.value = true);
-        elementRef.value.addEventListener('will-present', () => isOpen.value = true);
-        elementRef.value.addEventListener('did-dismiss', () => isOpen.value = false);
+        elementRef.value.addEventListener(
+          "ion-mount",
+          () => (isOpen.value = true)
+        );
+        elementRef.value.addEventListener(
+          "will-present",
+          () => (isOpen.value = true)
+        );
+        elementRef.value.addEventListener(
+          "did-dismiss",
+          () => (isOpen.value = false)
+        );
       });
 
       return () => {
-        let restOfProps: any = {};
+        const restOfProps: Record<string, unknown> = {};
 
         /**
          * We can use Object.entries here
@@ -157,7 +172,10 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
          */
         for (const key in props) {
           const value = (props as any)[key];
-          if (props.hasOwnProperty(key) && value !== EMPTY_PROP) {
+          if (
+            Object.prototype.hasOwnProperty.call(props, key) &&
+            value !== EMPTY_PROP
+          ) {
             restOfProps[key] = value;
           }
         }
@@ -168,11 +186,11 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
          */
         const renderChildren = () => {
           if (hasDelegateHost) {
-            return h('div', { className: 'ion-delegate-host ion-page' }, slots);
+            return h("div", { className: "ion-delegate-host ion-page" }, slots);
           }
 
           return slots;
-        }
+        };
 
         return h(
           name,
@@ -184,27 +202,32 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
            * the value of the prop will be the empty string which is
            * why we still call renderChildren() in that case.
            */
-          (isOpen.value || restOfProps.keepContentsMounted || restOfProps.keepContentsMounted === '') ? renderChildren() : undefined
-        )
-      }
-    });
-  }
-
-  const Container = (controller !== undefined) ? createControllerComponent() : createInlineComponent();
-
-  Container.name = name;
-
-  Container.props = {
-    'isOpen': DEFAULT_EMPTY_PROP
+          isOpen.value ||
+            restOfProps.keepContentsMounted ||
+            restOfProps.keepContentsMounted === ""
+            ? renderChildren()
+            : undefined
+        );
+      };
+    }, options);
   };
 
-  componentProps.forEach(componentProp => {
-    Container.props[componentProp] = DEFAULT_EMPTY_PROP;
-  });
+  const options: ComponentOptions = {
+    name,
+    props: {
+      isOpen: DEFAULT_EMPTY_PROP,
+      ...componentProps.reduce((acc, prop) => {
+        acc[prop] = DEFAULT_EMPTY_PROP;
+        return acc;
+      }, {} as Record<string, unknown>),
+    },
+    emits:
+      typeof controller !== "undefined"
+        ? ["willPresent", "didPresent", "willDismiss", "didDismiss"]
+        : undefined,
+  };
 
-  if (controller !== undefined) {
-    Container.emits = ['willPresent', 'didPresent', 'willDismiss', 'didDismiss'];
-  }
-
-  return Container;
-}
+  return controller !== undefined
+    ? createControllerComponent(options)
+    : createInlineComponent(options);
+};
