@@ -229,6 +229,12 @@ export const createSheetGesture = (
      */
     canDismissBlocksGesture = baseEl.canDismiss !== undefined && baseEl.canDismiss !== true && minBreakpoint === 0;
 
+    /**
+     * If scrollAtEdge is disabled, we need to swap
+     * the visibility to the original, so if the modal
+     * is dismissed, the footer dismisses with the modal
+     * and doesn't stay on the screen after the modal is gone.
+     */
     if (!scrollAtEdge) {
       swapFooterVisibility('original')
     }
@@ -392,6 +398,11 @@ export const createSheetGesture = (
      */
     gesture.enable(false);
 
+    /**
+     * If scrollAtEdge is disabled, we need to swap
+     * the visibility to the cloned one so the footer
+     * doesn't flicker when the sheet's height is animated.
+     */
     if (!scrollAtEdge && shouldRemainOpen) {
       swapFooterVisibility('cloned');
     }
