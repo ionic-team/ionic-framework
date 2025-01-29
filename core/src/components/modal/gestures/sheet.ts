@@ -130,11 +130,11 @@ export const createSheetGesture = (
       baseEl.querySelector('ion-footer') as HTMLIonFooterElement :
       wrapperEl.nextElementSibling as HTMLIonFooterElement;
 
-    const pagePadding =
-      footer === 'original' ? 0 : footerToShow.clientHeight;
-
     footerToShow.style.removeProperty('display');
     footerToShow.removeAttribute('aria-hidden');
+
+    const pagePadding =
+      footer === 'original' ? 0 : footerToShow.clientHeight;
 
     const page = baseEl.querySelector('.ion-page') as HTMLElement;
     page.style.setProperty('padding-bottom', `${pagePadding}px`);
