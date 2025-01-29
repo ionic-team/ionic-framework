@@ -87,3 +87,7 @@
 :host(.modal-sheet) .modal-wrapper {
   @include border-radius(var(--border-radius), var(--border-radius), 0, 0);
 }
+
+:host(.modal-sheet.modal-scroll-all) ion-footer ion-toolbar.ios:first-of-type {
+  padding-top: 6px;
+}
