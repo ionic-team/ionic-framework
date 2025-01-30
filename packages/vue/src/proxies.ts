@@ -243,6 +243,10 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox, JSX.Io
   'ionChange',
   'ionFocus',
   'ionBlur'
+], [
+  'ionChange',
+  'ionFocus',
+  'ionBlur'
 ],
 'checked', 'ion-change');
 
@@ -1020,6 +1024,10 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'justify',
   'alignment',
   'required',
+  'ionChange',
+  'ionFocus',
+  'ionBlur'
+], [
   'ionChange',
   'ionFocus',
   'ionBlur'
