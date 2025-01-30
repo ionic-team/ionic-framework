@@ -1,4 +1,5 @@
 import type { DatetimeParts } from '../datetime-interface';
+import type { Theme } from '../../../interface';
 import {
   generateMonths,
   getDaysOfWeek,
@@ -133,24 +134,29 @@ describe('generateMonths()', () => {
 });
 
 describe('getDaysOfWeek()', () => {
-  it('should return English short names given a locale and mode', () => {
-    expect(getDaysOfWeek('en-US', 'ios')).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+  const themes: Theme[] = ['ios', 'ionic'];
+  it.each<Theme>(themes)('should return English short names given a locale and theme %s', (theme) => {
+    expect(getDaysOfWeek('en-US', theme)).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
   });
 
-  it('should return English narrow names given a locale and mode', () => {
+  it('should return English narrow names given a locale and theme md', () => {
     expect(getDaysOfWeek('en-US', 'md')).toEqual(['S', 'M', 'T', 'W', 'T', 'F', 'S']);
   });
 
-  it('should return Spanish short names given a locale and mode', () => {
-    expect(getDaysOfWeek('es-ES', 'ios')).toEqual(['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb']);
+  it.each<Theme>(themes)('should return Spanish short names given a locale and theme %s', (theme) => {
+    expect(getDaysOfWeek('es-ES', theme)).toEqual(['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb']);
   });
 
-  it('should return Spanish narrow names given a locale and mode', () => {
+  it('should return Spanish narrow names given a locale and theme md', () => {
     expect(getDaysOfWeek('es-ES', 'md')).toEqual(['D', 'L', 'M', 'X', 'J', 'V', 'S']);
   });
 
-  it('should return English short names given a locale, mode and startOfWeek', () => {
-    expect(getDaysOfWeek('en-US', 'ios', 1)).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+  it.each<Theme>(themes)('should return English short names given a locale and startOfWeek and theme %s', (theme) => {
+    expect(getDaysOfWeek('en-US', theme, 1)).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+  });
+
+  it('should return English narrow names given a locale and startOfWeek and theme md', () => {
+    expect(getDaysOfWeek('en-US', 'md', 1)).toEqual(['M', 'T', 'W', 'T', 'F', 'S', 'S']);
   });
 });
 
