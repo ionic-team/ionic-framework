@@ -54,3 +54,33 @@ describe('ion-checkbox: indeterminate', () => {
     expect(checkbox.getAttribute('aria-checked')).toBe('mixed');
   });
 });
+
+describe('ion-checkbox: required', () => {
+  it('should have a required attribute in inner input when true', async () => {
+    const page = await newSpecPage({
+      components: [Checkbox],
+      html: `
+        <ion-checkbox required="true">Checkbox</ion-checkbox>
+      `,
+    });
+
+    const checkbox = page.body.querySelector('ion-checkbox')!;
+    const nativeInput = checkbox.shadowRoot?.querySelector('input[type=checkbox]')!;
+
+    expect(nativeInput.hasAttribute('required')).toBeTruthy();
+  });
+
+  it('should not have a required attribute in inner input when false', async () => {
+    const page = await newSpecPage({
+      components: [Checkbox],
+      html: `
+        <ion-checkbox required="false">Checkbox</ion-checkbox>
+      `,
+    });
+
+    const checkbox = page.body.querySelector('ion-checkbox')!;
+    const nativeInput = checkbox.shadowRoot?.querySelector('input[type=checkbox]')!;
+
+    expect(nativeInput.hasAttribute('required')).toBeFalsy();
+  });
+});
