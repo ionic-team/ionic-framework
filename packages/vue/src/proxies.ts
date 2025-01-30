@@ -1024,6 +1024,10 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'ionChange',
   'ionFocus',
   'ionBlur'
+], [
+  'ionChange',
+  'ionFocus',
+  'ionBlur'
 ],
 'checked', 'ion-change');
 
