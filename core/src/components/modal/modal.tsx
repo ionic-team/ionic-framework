@@ -628,7 +628,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = (this.animation = animationBuilder(el, { presentingEl: this.presentingElement }));
+    const ani = (this.animation = animationBuilder(el, {
+      presentingEl: this.presentingElement,
+      scrollAtEdge: this.scrollAtEdge,
+    }));
 
     const contentEl = findIonContent(el);
     if (!contentEl) {
