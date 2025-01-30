@@ -897,13 +897,6 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'ionFocus',
   'ionBlur',
   'ionStyle'
-], [
-  'ionChange',
-  'ionCancel',
-  'ionDismiss',
-  'ionFocus',
-  'ionBlur',
-  'ionStyle'
 ],
 'value', 'ion-change');
 
