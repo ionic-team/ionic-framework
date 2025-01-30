@@ -109,7 +109,9 @@ export class Toggle implements ComponentInterface {
   @Prop() alignment?: 'start' | 'center';
 
   /**
-   * If `true`, the user must fill in a value before submitting a form.
+   * If true, screen readers will announce it as a required field. This property
+   * works only for accessibility purposes, it will not prevent the form from
+   * submitting if the value is invalid.
    */
   @Prop() required = false;
 
@@ -295,7 +297,8 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment, required } = this;
+    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment, required } =
+      this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
