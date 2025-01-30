@@ -644,7 +644,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * If `true`, the user must fill in a value before submitting a form.
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
          */
         "required": boolean;
         "setFocus": () => Promise<void>;
@@ -5452,7 +5452,7 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
-          * If `true`, the user must fill in a value before submitting a form.
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
          */
         "required"?: boolean;
         /**
