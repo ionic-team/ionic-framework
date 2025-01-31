@@ -26,7 +26,7 @@ const createEnterAnimation = () => {
  * Md Modal Enter Animation
  */
 export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
-  const { currentBreakpoint, scrollAtEdge } = opts;
+  const { currentBreakpoint, expandToScroll } = opts;
   const root = getElementRoot(baseEl);
   const { wrapperAnimation, backdropAnimation, contentAnimation } =
     currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
@@ -37,7 +37,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
 
   // The content animation is only added if scrolling is enabled for
   // all the breakpoints.
-  scrollAtEdge && contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
+  expandToScroll && contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)
@@ -45,7 +45,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
     .duration(280)
     .addAnimation([backdropAnimation, wrapperAnimation])
     .beforeAddWrite(() => {
-      if (scrollAtEdge) {
+      if (expandToScroll) {
         // Scroll can only be done when the modal is fully expanded.
         return;
       }

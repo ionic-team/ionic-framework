@@ -1732,6 +1732,10 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Determines whether or not the sheet modal will only scroll/drag the content when fully expanded. This will only take effect when the `breakpoints` and `initialBreakpoint` properties are set.  If the value is `true`, the modal will only scroll when fully expanded. If the value is `false`, the modal will scroll at any breakpoint.
+         */
+        "expandToScroll": boolean;
+        /**
           * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
          */
         "focusTrap": boolean;
@@ -1793,10 +1797,6 @@ export namespace Components {
           * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.
          */
         "presentingElement"?: HTMLElement;
-        /**
-          * Determines whether or not the sheet modal will only scroll when fully expanded.  If the value is `true`, the modal will only scroll when fully expanded. If the value is `false`, the modal will scroll at any breakpoint.
-         */
-        "scrollAtEdge": boolean;
         /**
           * Move a sheet style modal to a specific breakpoint. The breakpoint value must be a value defined in your `breakpoints` array.
          */
@@ -6537,6 +6537,10 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Determines whether or not the sheet modal will only scroll/drag the content when fully expanded. This will only take effect when the `breakpoints` and `initialBreakpoint` properties are set.  If the value is `true`, the modal will only scroll when fully expanded. If the value is `false`, the modal will scroll at any breakpoint.
+         */
+        "expandToScroll"?: boolean;
+        /**
           * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
          */
         "focusTrap"?: boolean;
@@ -6622,10 +6626,6 @@ declare namespace LocalJSX {
           * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.
          */
         "presentingElement"?: HTMLElement;
-        /**
-          * Determines whether or not the sheet modal will only scroll when fully expanded.  If the value is `true`, the modal will only scroll when fully expanded. If the value is `false`, the modal will scroll at any breakpoint.
-         */
-        "scrollAtEdge"?: boolean;
         /**
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */

@@ -2,6 +2,7 @@
 @import "../themes/ionic.globals";
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
+@import "../components/modal/modal.vars";
 
 :root {
   /**
@@ -51,18 +52,11 @@ body.backdrop-no-scroll {
  * the first toolbar in the header.
  * Footer also needs this. We do not adjust the bottom
  * padding though because of the safe area.
- *
- * There is a workaround to allow sheet modals to scroll
- * at any breakpoint. This requires the footer to be
- * cloned. However, the following styles are not applied.
- * This is fixed by adding the styles directly on the
- * modal iOS file. If this padding value is updated, then
- * the value also needs to be updated in the modal iOS file.
  */
 html.ios ion-modal.modal-card ion-header ion-toolbar:first-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:first-of-type,
 html.ios ion-modal ion-footer ion-toolbar:first-of-type {
-  padding-top: 6px;
+  padding-top: $modal-sheet-padding-top;
 }
 
 /**
@@ -72,7 +66,7 @@ html.ios ion-modal ion-footer ion-toolbar:first-of-type {
 */
 html.ios ion-modal.modal-card ion-header ion-toolbar:last-of-type,
 html.ios ion-modal.modal-sheet ion-header ion-toolbar:last-of-type {
-  padding-bottom: 6px;
+  padding-bottom: $modal-sheet-padding-bottom;
 }
 
 /**

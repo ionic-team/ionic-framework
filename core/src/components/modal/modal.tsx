@@ -132,14 +132,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Determines whether or not the sheet modal will only
-   * scroll when fully expanded.
+   * scroll/drag the content when fully expanded. This
+   * will only take effect when the `breakpoints` and
+   * `initialBreakpoint` properties are set.
    *
    * If the value is `true`, the modal will only scroll
    * when fully expanded.
    * If the value is `false`, the modal will scroll at
    * any breakpoint.
    */
-  @Prop() scrollAtEdge = true;
+  @Prop() expandToScroll = true;
 
   /**
    * A decimal value between 0 and 1 that indicates the
@@ -573,7 +575,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
-      scrollAtEdge: this.scrollAtEdge,
+      expandToScroll: this.expandToScroll,
     });
 
     /* tslint:disable-next-line */
@@ -630,7 +632,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
     const ani = (this.animation = animationBuilder(el, {
       presentingEl: this.presentingElement,
-      scrollAtEdge: this.scrollAtEdge,
+      expandToScroll: this.expandToScroll,
     }));
 
     const contentEl = findIonContent(el);
@@ -683,7 +685,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: this.presentingElement,
       currentBreakpoint: initialBreakpoint,
       backdropBreakpoint,
-      scrollAtEdge: this.scrollAtEdge,
+      expandToScroll: this.expandToScroll,
     }));
 
     ani.progressStart(true, 1);
@@ -696,7 +698,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint,
       ani,
       this.sortedBreakpoints,
-      this.scrollAtEdge,
+      this.expandToScroll,
       () => this.currentBreakpoint ?? 0,
       () => this.sheetOnDismiss(),
       (breakpoint: number) => {
@@ -795,7 +797,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         presentingEl: presentingElement,
         currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
-        scrollAtEdge: this.scrollAtEdge,
+        expandToScroll: this.expandToScroll,
       }
     );
 
@@ -953,7 +955,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       handleBehavior,
       inheritedAttributes,
       focusTrap,
-      scrollAtEdge,
+      expandToScroll,
     } = this;
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
@@ -973,7 +975,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           ['modal-default']: !isCardModal && !isSheetModal,
           [`modal-card`]: isCardModal,
           [`modal-sheet`]: isSheetModal,
-          [`modal-scroll-all`]: isSheetModal && !scrollAtEdge,
+          [`modal-no-expand-scroll`]: isSheetModal && !expandToScroll,
           'overlay-hidden': true,
           [FOCUS_TRAP_DISABLE_CLASS]: focusTrap === false,
           ...getClassMap(this.cssClass),
@@ -1047,10 +1049,10 @@ interface ModalOverlayOptions {
   backdropBreakpoint: number;
 
   /**
-   * Whether or not the modal should scroll
-   * only when fully expanded.
+   * Whether or not the modal should scroll/drag
+   * the content only when fully expanded.
    */
-  scrollAtEdge?: boolean;
+  expandToScroll?: boolean;
 }
 
 type ModalPresentOptions = ModalOverlayOptions;

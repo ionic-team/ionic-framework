@@ -96,9 +96,7 @@
  * `core.scss` file. However, there's a workaround that requires
  * a cloned footer to be added to the modal. This is only necessary
  * because the core styles are not being applied to the cloned footer.
- * It's important to update the padding value when the core styles are
- * updated.
  */
-:host(.modal-sheet.modal-scroll-all) ion-footer ion-toolbar:first-of-type {
-  padding-top: 6px;
+:host(.modal-sheet.modal-no-expand-scroll) ion-footer ion-toolbar:first-of-type {
+  padding-top: $modal-sheet-padding-top;
 }

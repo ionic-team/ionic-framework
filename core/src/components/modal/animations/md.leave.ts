@@ -21,7 +21,7 @@ const createLeaveAnimation = () => {
  * Md Modal Leave Animation
  */
 export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
-  const { currentBreakpoint, scrollAtEdge } = opts;
+  const { currentBreakpoint, expandToScroll } = opts;
   const root = getElementRoot(baseEl);
   const { wrapperAnimation, backdropAnimation } =
     currentBreakpoint !== undefined ? createSheetLeaveAnimation(opts) : createLeaveAnimation();
@@ -34,13 +34,13 @@ export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
     .duration(200)
     .addAnimation([backdropAnimation, wrapperAnimation])
     .beforeAddWrite(() => {
-      if (scrollAtEdge) {
+      if (expandToScroll) {
         // Scroll can only be done when the modal is fully expanded.
         return;
       }
 
       /**
-       * If scrollAtEdge is disabled, we need to swap
+       * If expandToScroll is disabled, we need to swap
        * the visibility to the original, so the footer
        *  dismisses with the modal and doesn't stay
        *  until the modal is removed from the DOM.

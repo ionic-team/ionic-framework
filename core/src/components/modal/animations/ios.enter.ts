@@ -24,7 +24,7 @@ const createEnterAnimation = () => {
  * iOS Modal Enter Animation for the Card presentation style
  */
 export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
-  const { presentingEl, currentBreakpoint, scrollAtEdge } = opts;
+  const { presentingEl, currentBreakpoint, expandToScroll } = opts;
   const root = getElementRoot(baseEl);
   const { wrapperAnimation, backdropAnimation, contentAnimation } =
     currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
@@ -35,7 +35,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
 
   // The content animation is only added if scrolling is enabled for
   // all the breakpoints.
-  !scrollAtEdge && contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
+  !expandToScroll && contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
 
   const baseAnimation = createAnimation('entering-base')
     .addElement(baseEl)
@@ -43,7 +43,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
     .duration(500)
     .addAnimation([wrapperAnimation])
     .beforeAddWrite(() => {
-      if (scrollAtEdge) {
+      if (expandToScroll) {
         // Scroll can only be done when the modal is fully expanded.
         return;
       }

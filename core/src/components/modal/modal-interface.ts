@@ -31,7 +31,7 @@ export interface ModalAnimationOptions {
   presentingEl?: HTMLElement;
   currentBreakpoint?: number;
   backdropBreakpoint?: number;
-  scrollAtEdge: boolean;
+  expandToScroll: boolean;
 }
 
 export interface ModalBreakpointChangeEventDetail {

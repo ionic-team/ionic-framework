@@ -49,7 +49,7 @@ export const createSheetGesture = (
   backdropBreakpoint: number,
   animation: Animation,
   breakpoints: number[] = [],
-  scrollAtEdge: boolean,
+  expandToScroll: boolean,
   getCurrentBreakpoint: () => number,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
@@ -117,7 +117,7 @@ export const createSheetGesture = (
   };
 
   /**
-   * Used when `scrollAtEdge` is disabled.
+   * Used when `expandToScroll` is disabled.
    * Changes the footer that is currently visible
    * @param footer - The footer to show
    */
@@ -171,7 +171,7 @@ export const createSheetGesture = (
     }
   }
 
-  if (contentEl && currentBreakpoint !== maxBreakpoint && scrollAtEdge) {
+  if (contentEl && currentBreakpoint !== maxBreakpoint && expandToScroll) {
     contentEl.scrollY = false;
   }
 
@@ -188,10 +188,10 @@ export const createSheetGesture = (
     currentBreakpoint = getCurrentBreakpoint();
 
     /**
-     * If we have scrollAtEdge disabled, we should not allow the swipe gesture to start
+     * If we have expandToScroll disabled, we should not allow the swipe gesture to start
      * if the content is being swiped.
      */
-    if (!scrollAtEdge && contentEl) {
+    if (!expandToScroll && contentEl) {
       return false;
     }
 
@@ -229,12 +229,12 @@ export const createSheetGesture = (
     canDismissBlocksGesture = baseEl.canDismiss !== undefined && baseEl.canDismiss !== true && minBreakpoint === 0;
 
     /**
-     * If scrollAtEdge is disabled, we need to swap
+     * If expandToScroll is disabled, we need to swap
      * the visibility to the original, so if the modal
      * is dismissed, the footer dismisses with the modal
      * and doesn't stay on the screen after the modal is gone.
      */
-    if (!scrollAtEdge) {
+    if (!expandToScroll) {
       swapFooterVisibility('original');
     }
 
@@ -376,7 +376,7 @@ export const createSheetGesture = (
 
       if (contentAnimation) {
         /**
-         * The modal content should scroll at any breakpoint when scrollAtEdge
+         * The modal content should scroll at any breakpoint when expandToScroll
          * is disabled. In order to do this, the content needs to be completely
          * viewable so scrolling can access everything. Othewise, the default
          * behavior would show the content off the screen and only allow
@@ -398,11 +398,11 @@ export const createSheetGesture = (
     gesture.enable(false);
 
     /**
-     * If scrollAtEdge is disabled, we need to swap
+     * If expandToScroll is disabled, we need to swap
      * the visibility to the cloned one so the footer
      * doesn't flicker when the sheet's height is animated.
      */
-    if (!scrollAtEdge && shouldRemainOpen) {
+    if (!expandToScroll && shouldRemainOpen) {
       swapFooterVisibility('cloned');
     }
 
@@ -420,7 +420,7 @@ export const createSheetGesture = (
      * for when scrolling is re-enabled. Native iOS allows for scrolling on the
      * sheet modal as soon as the gesture is released, so we align with that.
      */
-    if (contentEl && (snapToBreakpoint === breakpoints[breakpoints.length - 1] || !scrollAtEdge)) {
+    if (contentEl && (snapToBreakpoint === breakpoints[breakpoints.length - 1] || !expandToScroll)) {
       contentEl.scrollY = true;
     }
 
