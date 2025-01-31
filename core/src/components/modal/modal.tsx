@@ -131,15 +131,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() breakpoints?: number[];
 
   /**
-   * Determines whether or not the sheet modal will only
-   * scroll/drag the content when fully expanded. This
-   * will only take effect when the `breakpoints` and
-   * `initialBreakpoint` properties are set.
+   * Controls whether scrolling or dragging within the sheet modal expands
+   * it to a larger breakpoint. This only takes effect when `breakpoints`
+   * and `initialBreakpoint` are set.
    *
-   * If the value is `true`, the modal will only scroll
-   * when fully expanded.
-   * If the value is `false`, the modal will scroll at
-   * any breakpoint.
+   * If `true`, scrolling or dragging anywhere in the modal will first expand
+   * it to the next breakpoint. Once fully expanded, scrolling will affect the content.
+   * If `false`, scrolling will always affect the content, and the modal will only expand
+   * when dragging the header or handle.
    */
   @Prop() expandToScroll = true;
 

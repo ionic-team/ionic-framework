@@ -122,7 +122,12 @@ export const createSheetGesture = (
    * @param footer - The footer to show
    */
   const swapFooterVisibility = (footer: 'original' | 'cloned') => {
-    const originalFooter = baseEl.querySelector('ion-footer') as HTMLIonFooterElement;
+    const originalFooter = baseEl.querySelector('ion-footer') as HTMLIonFooterElement | null;
+
+    if (!originalFooter) {
+      return;
+    }
+
     const clonedFooter = wrapperEl.nextElementSibling as HTMLIonFooterElement;
     const footerToHide = footer === 'original' ? clonedFooter : originalFooter;
     const footerToShow = footer === 'original' ? originalFooter : clonedFooter;
