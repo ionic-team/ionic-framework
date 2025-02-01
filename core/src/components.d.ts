@@ -1732,6 +1732,10 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content, and the modal will only expand when dragging the header or handle.
+         */
+        "expandToScroll": boolean;
+        /**
           * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
          */
         "focusTrap": boolean;
@@ -6532,6 +6536,10 @@ declare namespace LocalJSX {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content, and the modal will only expand when dragging the header or handle.
+         */
+        "expandToScroll"?: boolean;
         /**
           * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
          */

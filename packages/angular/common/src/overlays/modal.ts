@@ -59,6 +59,7 @@ const MODAL_INPUTS = [
   'canDismiss',
   'cssClass',
   'enterAnimation',
+  'expandToScroll',
   'event',
   'focusTrap',
   'handle',
