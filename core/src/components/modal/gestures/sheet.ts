@@ -417,12 +417,11 @@ export const createSheetGesture = (
     }
 
     /**
-     * If the sheet is going to be fully expanded or if the sheet has toggled
-     * to scroll at any breakpoint then we should enable scrolling immediately.
-     * then we should enable scrolling immediately. The sheet modal animation
-     * takes ~500ms to finish so if we wait until then there is a visible delay
-     * for when scrolling is re-enabled. Native iOS allows for scrolling on the
-     * sheet modal as soon as the gesture is released, so we align with that.
+     * Enables scrolling immediately if the sheet is about to fully expand
+     * or if it allows scrolling at any breakpoint. Without this, there would
+     * be a ~500ms delay while the modal animation completes, causing a
+     * noticeable lag. Native iOS allows scrolling as soon as the gesture is
+     * released, so we align with that behavior.
      */
     if (contentEl && (snapToBreakpoint === breakpoints[breakpoints.length - 1] || !expandToScroll)) {
       contentEl.scrollY = true;
