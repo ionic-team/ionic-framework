@@ -403,7 +403,7 @@ export const createSheetGesture = (
 
     /**
      * If expandToScroll is disabled, we need to swap
-     * the visibility to the cloned one so the footer
+     * the footer visibility to the cloned one so the footer
      * doesn't flicker when the sheet's height is animated.
      */
     if (!expandToScroll && shouldRemainOpen) {
