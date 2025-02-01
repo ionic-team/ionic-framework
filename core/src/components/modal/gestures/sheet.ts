@@ -234,7 +234,7 @@ export const createSheetGesture = (
 
     /**
      * If expandToScroll is disabled, we need to swap
-     * the visibility to the original, so if the modal
+     * the footer visibility to the original, so if the modal
      * is dismissed, the footer dismisses with the modal
      * and doesn't stay on the screen after the modal is gone.
      */
