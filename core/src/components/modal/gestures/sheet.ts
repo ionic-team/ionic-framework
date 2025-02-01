@@ -117,9 +117,8 @@ export const createSheetGesture = (
   };
 
   /**
-   * Used when `expandToScroll` is disabled.
-   * Changes the footer that is currently visible
-   * @param footer - The footer to show
+   * Toggles the visible modal footer when `expandToScroll` is disabled.
+   * @param footer The footer to show.
    */
   const swapFooterVisibility = (footer: 'original' | 'cloned') => {
     const originalFooter = baseEl.querySelector('ion-footer') as HTMLIonFooterElement | null;
