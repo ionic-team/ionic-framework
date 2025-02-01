@@ -42,8 +42,8 @@ export const mdLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOption
       /**
        * If expandToScroll is disabled, we need to swap
        * the visibility to the original, so the footer
-       *  dismisses with the modal and doesn't stay
-       *  until the modal is removed from the DOM.
+       * dismisses with the modal and doesn't stay
+       * until the modal is removed from the DOM.
        */
       const ionFooter = baseEl.querySelector('ion-footer');
       if (ionFooter) {
