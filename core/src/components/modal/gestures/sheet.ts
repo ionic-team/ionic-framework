@@ -382,7 +382,7 @@ export const createSheetGesture = (
         /**
          * The modal content should scroll at any breakpoint when expandToScroll
          * is disabled. In order to do this, the content needs to be completely
-         * viewable so scrolling can access everything. Othewise, the default
+         * viewable so scrolling can access everything. Otherwise, the default
          * behavior would show the content off the screen and only allow
          * scrolling when the sheet is fully expanded.
          */
