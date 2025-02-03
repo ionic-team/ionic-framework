@@ -22,7 +22,7 @@ export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0)
  */
 const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
-  let animationTimeout: number | undefined;
+  let animationTimeout: NodeJS.Timeout | undefined;
   const opts: AddEventListenerOptions = { passive: true };
   const ANIMATION_FALLBACK_TIMEOUT = 500;
 
@@ -412,4 +412,15 @@ export const shallowEqualStringMap = (
   }
 
   return true;
+};
+
+export const getNextSiblingOfType = <T extends Element>(element: Element): T | null => {
+  let sibling = element.nextSibling;
+  while (sibling) {
+    if (sibling.nodeType === Node.ELEMENT_NODE && (sibling as T) !== null) {
+      return sibling as T;
+    }
+    sibling = sibling.nextSibling;
+  }
+  return null;
 };
