@@ -1632,6 +1632,7 @@ ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false
 ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,string | undefined,undefined,false,false
+ion-select,prop,required,boolean,false,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,shape,"round" | undefined,undefined,false,false
 ion-select,prop,toggleIcon,string | undefined,undefined,false,false

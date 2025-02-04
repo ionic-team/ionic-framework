@@ -2813,6 +2813,10 @@ export namespace Components {
          */
         "placeholder"?: string;
         /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required": boolean;
+        /**
           * The text to display instead of the selected option's value.
          */
         "selectedText"?: string | null;
@@ -7652,6 +7656,10 @@ declare namespace LocalJSX {
           * The text to display when the select is empty.
          */
         "placeholder"?: string;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required"?: boolean;
         /**
           * The text to display instead of the selected option's value.
          */
