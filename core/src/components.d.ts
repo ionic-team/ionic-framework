@@ -3289,6 +3289,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required": boolean;
+        /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
         "value"?: string | null;
@@ -8171,6 +8175,10 @@ declare namespace LocalJSX {
           * Emitted when the toggle has focus.
          */
         "onIonFocus"?: (event: IonToggleCustomEvent<void>) => void;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required"?: boolean;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */

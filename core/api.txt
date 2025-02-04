@@ -1946,6 +1946,7 @@ ion-toggle,prop,justify,"end" | "space-between" | "start" | undefined,undefined,
 ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
+ion-toggle,prop,required,boolean,false,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
 ion-toggle,event,ionChange,ToggleChangeEventDetail<any>,true
