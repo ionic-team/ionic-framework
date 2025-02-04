@@ -884,6 +884,7 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'expandedIcon',
   'shape',
   'value',
+  'required',
   'ionChange',
   'ionCancel',
   'ionDismiss',
@@ -1017,6 +1018,7 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'labelPlacement',
   'justify',
   'alignment',
+  'required',
   'ionChange',
   'ionFocus',
   'ionBlur'
