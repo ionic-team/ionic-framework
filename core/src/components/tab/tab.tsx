@@ -88,7 +88,7 @@ export class Tab implements ComponentInterface {
           'ion-page': component === undefined,
           'tab-hidden': !active,
         }}
-        tabIndex={!active ? -1 : 0}
+        tabIndex={!active ? '-1' : '0'}
       >
         <slot></slot>
       </Host>
