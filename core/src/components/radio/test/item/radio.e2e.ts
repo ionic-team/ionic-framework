@@ -40,7 +40,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
 configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: long label in item'), () => {
-    test('should render margins correctly when using long label in item', async ({ page }) => {
+    test('should not have visual regressions when using long label in item', async ({ page }) => {
       await page.setContent(
         `
           <ion-list>
@@ -60,8 +60,27 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
     });
   });
 
+  test.describe(title('radio: end label in item'), () => {
+    test('should not have visual regressions when using end label in item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-radio-group>
+              <ion-item>
+                <ion-radio label-placement="end">Enable Notifications</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`radio-end-label-in-item`));
+    });
+  });
+
   test.describe(title('radio: stacked label in item'), () => {
-    test('should render margins correctly when using stacked label in item', async ({ page }) => {
+    test('should not have visual regressions when using stacked label in item', async ({ page }) => {
       await page.setContent(
         `
           <ion-list>
