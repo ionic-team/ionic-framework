@@ -56,6 +56,11 @@ export class Tab implements ComponentInterface {
   @Watch('active')
   changeActive(isActive: boolean) {
     if (isActive) {
+      // ensure tabindex gets updated before setting focus to the element
+      setTimeout(() => {
+        this.el.focus();
+      }, 50);
+      
       this.prepareLazyLoaded();
     }
   }
@@ -83,6 +88,7 @@ export class Tab implements ComponentInterface {
           'ion-page': component === undefined,
           'tab-hidden': !active,
         }}
+        tabIndex={!active ? -1 : 0}
       >
         <slot></slot>
       </Host>
