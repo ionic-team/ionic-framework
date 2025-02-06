@@ -455,6 +455,7 @@ export class Content implements ComponentInterface {
           overscroll: forceOverscroll,
           [`content-${rtl}`]: true,
         })}
+        tabIndex={'0'}
         style={{
           '--offset-top': `${this.cTop}px`,
           '--offset-bottom': `${this.cBottom}px`,
