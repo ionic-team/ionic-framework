@@ -1263,21 +1263,20 @@ export class Datetime implements ComponentInterface {
     }
 
     /**
-     * If there are multiple values, pick an arbitrary one to clamp to. This way,
-     * if the values are across months, we always show at least one of them. Note
-     * that the values don't necessarily have to be in order.
+     * If there are multiple values, clamp to the last one.
+     * This is because the last value is the one that the user
+     * has most recently interacted with.
      */
-    const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
+    const singleValue = Array.isArray(valueToProcess) ? valueToProcess[valueToProcess.length - 1] : valueToProcess;
     const targetValue = clampDate(singleValue, minParts, maxParts);
 
     const { month, day, year, hour, minute } = targetValue;
     const ampm = parseAmPm(hour!);
 
     /**
-     * Since `activeParts` indicates a value that
-     * been explicitly selected either by the
-     * user or the app, only update `activeParts`
-     * if the `value` property is set.
+     * Since `activeParts` indicates a value that been explicitly selected
+     * either by the user or the app, only update `activeParts` if the
+     * `value` property is set.
      */
     if (hasValue) {
       if (Array.isArray(valueToProcess)) {
@@ -1301,53 +1300,29 @@ export class Datetime implements ComponentInterface {
       this.activeParts = [];
     }
 
-    /**
-     * Only animate if:
-     * 1. We're using grid style (wheel style pickers should just jump to new value)
-     * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
-     * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
-     * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
-     */
     const didChangeMonth =
       (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
 
-    let areAllSelectedDatesInSameMonth = true;
-    if (Array.isArray(valueToProcess)) {
-      const firstMonth = valueToProcess[0].month;
-      for (const date of valueToProcess) {
-        if (date.month !== firstMonth) {
-          areAllSelectedDatesInSameMonth = false;
-          break;
-        }
-      }
-    }
-
-    /**
-     * If there is more than one date selected
-     * and the dates aren't all in the same month,
-     * then we should neither animate to the date
-     * nor update the working parts because we do
-     * not know which date the user wants to view.
-     */
-    if (areAllSelectedDatesInSameMonth) {
-      if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
-        this.animateToDate(targetValue);
-      } else {
-        /**
-         * We only need to do this if we didn't just animate to a new month,
-         * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
-         */
-        this.setWorkingParts({
-          month,
-          day,
-          year,
-          hour,
-          minute,
-          ampm,
-        });
-      }
+    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+      /**
+       * Only animate if:
+       * 1. We're using grid style (wheel style pickers should just jump to new value)
+       * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
+       * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
+       * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
+       */
+      this.animateToDate(targetValue);
+    } else {
+      this.setWorkingParts({
+        month,
+        day,
+        year,
+        hour,
+        minute,
+        ampm,
+      });
     }
   };
 
