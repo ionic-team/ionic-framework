@@ -21,7 +21,7 @@ import type { Color } from '../../interface';
   styleUrls: {
     ios: 'progress-bar.ios.scss',
     md: 'progress-bar.md.scss',
-    ionic: 'progress-bar.md.scss',
+    ionic: 'progress-bar.ionic.scss',
   },
   shadow: true,
 })
@@ -57,10 +57,35 @@ export class ProgressBar implements ComponentInterface {
    */
   @Prop({ reflect: true }) color?: Color;
 
+  /**
+   * Set to `"round"` for a tab-button with rounded corners, or `"rectangular"`
+   * for a tab-button without rounded corners.
+   *
+   * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+   */
+  @Prop() shape?: 'round' | 'rectangular';
+
+  private getShape(): string | undefined {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11436): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   render() {
     const { color, type, reversed, value, buffer } = this;
     const paused = config.getBoolean('_testing');
     const theme = getIonTheme(this);
+    const shape = this.getShape();
     // If the progress is displayed as a solid bar.
     const progressSolid = buffer === 1;
     return (
@@ -75,6 +100,7 @@ export class ProgressBar implements ComponentInterface {
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
           'progress-bar-solid': progressSolid,
+          [`progress-bar-shape-${shape}`]: shape !== undefined,
         })}
       >
         {type === 'indeterminate' ? renderIndeterminate() : renderProgress(value, buffer)}

@@ -2610,6 +2610,10 @@ export namespace Components {
          */
         "reversed": boolean;
         /**
+          * Set to `"round"` for a tab-button with rounded corners, or `"rectangular"` for a tab-button without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'round' | 'rectangular';
+        /**
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
@@ -7959,6 +7963,10 @@ declare namespace LocalJSX {
           * If true, reverse the progress bar direction.
          */
         "reversed"?: boolean;
+        /**
+          * Set to `"round"` for a tab-button with rounded corners, or `"rectangular"` for a tab-button without rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
+         */
+        "shape"?: 'round' | 'rectangular';
         /**
           * The theme determines the visual appearance of the component.
          */

@@ -619,7 +619,8 @@ export const IonProgressBar = /*@__PURE__*/ defineContainer<JSX.IonProgressBar>(
   'reversed',
   'value',
   'buffer',
-  'color'
+  'color',
+  'shape'
 ]);
 
 
