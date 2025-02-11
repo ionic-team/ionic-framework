@@ -94,3 +94,27 @@
 .ion-align-items-baseline {
   align-items: baseline !important;
 }
+
+// Flex Direction
+// --------------------------------------------------
+.ion-flex-direction-column {
+  flex-direction: column;
+}
+
+.ion-flex-direction-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.ion-flex-direction-row {
+  flex-direction: row;
+}
+
+.ion-flex-direction-row-reverse {
+  flex-direction: row-reverse;
+}
+
+// Flex Container
+// --------------------------------------------------
+.ion-flex-1 {
+  flex: 1;
+}
