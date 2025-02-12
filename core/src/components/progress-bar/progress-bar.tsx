@@ -58,8 +58,8 @@ export class ProgressBar implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * Set to `"round"` for a tab-button with rounded corners, or `"rectangular"`
-   * for a tab-button without rounded corners.
+   * Set to `"round"` for a progress-bar with rounded corners, or `"rectangular"`
+   * for a progress-bar without rounded corners.
    *
    * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
    */
@@ -69,7 +69,7 @@ export class ProgressBar implements ComponentInterface {
     const theme = getIonTheme(this);
     const { shape } = this;
 
-    // TODO(ROU-11436): Remove theme check when shapes are defined for all themes.
+    // TODO(ROU-11638): Remove theme check when shapes are defined for all themes.
     if (theme !== 'ionic') {
       return undefined;
     }

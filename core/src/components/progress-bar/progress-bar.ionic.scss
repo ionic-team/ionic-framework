@@ -1,22 +1,13 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./progress-bar";
+@use "./progress-bar";
 
-// iOS Progress bar
+// Ionic Progress bar
 // --------------------------------------------------
 
 :host {
-  height: globals.$ion-scale-100;
-}
-
-:host(.progress-bar-solid) {
-  /**
-   * On the ionic theme the unfilled portion of the progress
-   * bar is always a consistent background color. We
-   * only apply this style when the progress bar is
-   * solid (with a buffer value of 1). This maintains
-   * the custom Ionic appearance for a buffered progress bar.
-   */
   --background: #{globals.$ion-primitives-neutral-100};
+
+  height: globals.$ion-scale-100;
 }
 
 // Progress Bar Shapes

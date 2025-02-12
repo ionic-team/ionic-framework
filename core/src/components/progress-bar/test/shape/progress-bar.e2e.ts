@@ -1,9 +1,9 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('progress-bar: shape'), () => {
-    test('should render a round progress bar', async ({ page }) => {
+    test('round - should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
           <style>
@@ -23,12 +23,12 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const tabBar = page.locator('.container');
+      const container = page.locator('.container');
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`progress-bar-shape-round`));
+      await expect(container).toHaveScreenshot(screenshot(`progress-bar-shape-round`));
     });
 
-    test('should render a rectangular progress bar', async ({ page }) => {
+    test('rectangular - should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
           <style>
@@ -48,9 +48,9 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const tabBar = page.locator('.container');
+      const container = page.locator('.container');
 
-      await expect(tabBar).toHaveScreenshot(screenshot(`progress-bar-shape-rectangular`));
+      await expect(container).toHaveScreenshot(screenshot(`progress-bar-shape-rectangular`));
     });
   });
 });
