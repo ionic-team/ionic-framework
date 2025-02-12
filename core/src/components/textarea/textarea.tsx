@@ -676,7 +676,7 @@ export class Textarea implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, size, labelPlacement, el, hasFocus } = this;
+    const { inputId, disabled, readonly, size, labelPlacement, el, hasFocus } = this;
     const fill = this.getFill();
     const theme = getIonTheme(this);
     const shape = this.getShape();
@@ -719,6 +719,7 @@ export class Textarea implements ComponentInterface {
           [`textarea-size-${size}`]: true,
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
+          'textarea-readonly': readonly,
         })}
       >
         {/**
