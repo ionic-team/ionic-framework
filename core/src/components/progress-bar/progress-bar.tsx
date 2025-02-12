@@ -58,8 +58,8 @@ export class ProgressBar implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * Set to `"round"` for a progress-bar with rounded corners, or `"rectangular"`
-   * for a progress-bar without rounded corners.
+   * Set to `"round"` for a progress bar with rounded corners, or `"rectangular"`
+   * for a progress bar without rounded corners.
    *
    * Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
    */

@@ -12,19 +12,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-
-    <style>
-      ion-content::part(scroll) {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      ion-progress-bar {
-        margin: 10px 0;
-        width: 70%;
-      }
-    </style>
   </head>
 
   <body>
@@ -36,14 +23,28 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-label> Default </ion-label>
-        <ion-progress-bar value="0.50"></ion-progress-bar>
+        <ion-list lines="none">
+          <ion-list-header>
+            <ion-label> Default </ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-progress-bar value="0.50"></ion-progress-bar>
+          </ion-item>
 
-        <ion-label> Round </ion-label>
-        <ion-progress-bar value="0.50" shape="round"></ion-progress-bar>
+          <ion-list-header>
+            <ion-label> Round </ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-progress-bar value="0.50" shape="round"></ion-progress-bar>
+          </ion-item>
 
-        <ion-label> Rectangular </ion-label>
-        <ion-progress-bar value="0.50" shape="rectangular"></ion-progress-bar>
+          <ion-list-header>
+            <ion-label> Rectangular </ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-progress-bar value="0.50" shape="rectangular"></ion-progress-bar>
+          </ion-item>
+        </ion-list>
       </ion-content>
     </ion-app>
   </body>
