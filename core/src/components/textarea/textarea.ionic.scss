@@ -179,7 +179,6 @@ ion-icon {
 // ----------------------------------------------------------------
 
 :host(.textarea-disabled) {
-  // color for the text within the textarea
   --color: #{globals.$ion-primitives-neutral-500};
   --background: #{globals.$ion-primitives-neutral-100};
   --border-color: #{globals.$ion-primitives-neutral-300};
