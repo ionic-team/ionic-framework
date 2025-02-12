@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-primitives-neutral-100};
+  --background: #{globals.$ion-bg-neutral-subtle-default};
 
   height: globals.$ion-scale-100;
 }
