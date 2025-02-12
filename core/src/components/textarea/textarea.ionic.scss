@@ -139,13 +139,6 @@ ion-icon {
   --border-width: #{globals.$ion-border-size-025};
 }
 
-// Textarea - Readonly
-// ----------------------------------------------------------------
-
-:host(.textarea-readonly) {
-  --background: #{globals.$ion-primitives-neutral-100};
-}
-
 // Textarea Highlight
 // ----------------------------------------------------------------
 
@@ -175,6 +168,15 @@ ion-icon {
   transform: scale(1);
 }
 
+// Textarea Hover
+// ----------------------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    --border-color: #{globals.$ion-primitives-neutral-600};
+  }
+}
+
 // Textarea - Disabled
 // ----------------------------------------------------------------
 
@@ -183,31 +185,18 @@ ion-icon {
   --background: #{globals.$ion-primitives-neutral-100};
   --border-color: #{globals.$ion-primitives-neutral-300};
   --placeholder-color: #{globals.$ion-primitives-neutral-500};
-
-  pointer-events: none;
 }
 
 :host(.textarea-disabled:not(.ion-valid)) .textarea-bottom .helper-text,
 :host(.textarea-disabled) .textarea-bottom .counter,
-:host(.textarea-disabled) .label-text-wrapper {
+:host(.textarea-disabled) .label-text-wrapper,
+:host(.textarea-disabled) .ion-icon {
   color: globals.$ion-primitives-neutral-500;
 }
 
-:host(.textarea-disabled.has-focus.ion-valid) {
-  --border-color: rgba(#{globals.$ion-semantics-success-base-rgb}, 0.6);
-}
+// Textarea - Readonly
+// ----------------------------------------------------------------
 
-:host(.textarea-disabled.ion-touched.ion-invalid) {
-  --border-color: rgba(#{globals.$ion-semantics-danger-base-rgb}, 0.6);
-}
-
-:host(.textarea-disabled.ion-color) {
-  --border-color: #{current-color(base, 0.6)};
-}
-
-:host(.textarea-disabled.has-focus.ion-valid) .textarea-bottom .helper-text,
-:host(.textarea-disabled.ion-touched.ion-invalid) .error-text,
-:host(.textarea-disabled.ion-color) .textarea-bottom .helper-text,
-:host(.textarea-disabled.ion-color) .helper-text {
-  opacity: 0.6;
+:host(.textarea-readonly) {
+  --background: #{globals.$ion-primitives-neutral-100};
 }
