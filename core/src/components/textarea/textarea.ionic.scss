@@ -189,7 +189,7 @@ ion-icon {
 
 :host(.textarea-disabled:not(.ion-valid)) .textarea-bottom .helper-text,
 :host(.textarea-disabled) .textarea-bottom .counter,
-:host(.textarea-disabled) .label-text-wrapper,
+:host(.textarea-disabled) .label-text-wrapper {
   color: globals.$ion-primitives-neutral-500;
 }
 
