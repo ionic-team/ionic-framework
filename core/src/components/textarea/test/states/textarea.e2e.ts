@@ -45,5 +45,4 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       await expect(container).toHaveScreenshot(screenshot(`textarea-focused`));
     });
   });
-
 });
