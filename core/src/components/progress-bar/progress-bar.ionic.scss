@@ -14,9 +14,9 @@
 // -------------------------------------------------------------------------------
 
 :host(.progress-bar-shape-round) {
-  @include globals.border-radius(globals.$ion-border-radius-full);
+  @include globals.border-radius(globals.$ion-round-xs);
 }
 
 :host(.progress-bar-shape-rectangular) {
-  @include globals.border-radius(globals.$ion-border-radius-0);
+  @include globals.border-radius(globals.$ion-rectangular-xs);
 }
