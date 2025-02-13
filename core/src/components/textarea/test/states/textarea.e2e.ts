@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: states'), () => {
     test('should render readonly textarea correctly', async ({ page }) => {
       await page.setContent(
