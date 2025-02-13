@@ -1,0 +1,22 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./progress-bar";
+
+// Ionic Progress bar
+// --------------------------------------------------
+
+:host {
+  --background: #{globals.$ion-bg-neutral-subtle-default};
+
+  height: globals.$ion-scale-100;
+}
+
+// Progress Bar Shapes
+// -------------------------------------------------------------------------------
+
+:host(.progress-bar-shape-round) {
+  @include globals.border-radius(globals.$ion-round-xs);
+}
+
+:host(.progress-bar-shape-rectangular) {
+  @include globals.border-radius(globals.$ion-rectangular-xs);
+}
