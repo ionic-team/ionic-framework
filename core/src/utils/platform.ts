@@ -99,7 +99,7 @@ const isCordova = (win: any): boolean => !!(win['cordova'] || win['phonegap'] ||
 
 const isCapacitorNative = (win: any): boolean => {
   const capacitor = win['Capacitor'];
-  return !!capacitor?.isNative;
+  return !!capacitor?.isNativePlatform();
 };
 
 const isElectron = (win: Window): boolean => testUserAgent(win, /electron/i);
