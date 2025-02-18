@@ -77,6 +77,7 @@ export const DIRECTIVES = [
   d.IonSkeletonText,
   d.IonSpinner,
   d.IonSplitPane,
+  d.IonStatusHint,
   d.IonTab,
   d.IonTabBar,
   d.IonTabButton,

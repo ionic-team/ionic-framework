@@ -1,0 +1,91 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "../../themes/functions.color" as color;
+
+// Ionic Badge
+// --------------------------------------------------
+
+:host {
+  --background: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, contrast)};
+
+  display: inline-flex;
+
+  position: static;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: globals.$ion-font-size-275;
+
+  overflow: hidden;
+}
+
+:host(.ion-color) {
+    background: #{color.current-color(base)};
+    color: #{color.current-color(contrast)};
+}
+
+// Hint Positions
+// --------------------------------------------------
+:host(.hint-top-right),
+:host(.hint-bottom-right) {
+    position: absolute;
+    right: 0;
+
+    border-width: globals.$ion-border-size-025;
+    border-style: globals.$ion-border-style-solid;
+    border-color: #fff;
+}
+
+:host(.hint-top-right) {
+    top: 0;
+}
+
+:host(.hint-bottom-right) {
+    bottom: 0;
+}
+
+// Hint Shapes
+// --------------------------------------------------
+
+/* Soft */
+:host(.hint-soft) {
+  @include globals.border-radius(globals.$ion-border-radius-200);
+}
+
+:host(.hint-small.hint-soft) {
+  @include globals.border-radius(globals.$ion-border-radius-100);
+}
+
+/* Round  */
+:host(.hint-round) {
+  @include globals.border-radius(globals.$ion-border-radius-full);
+}
+
+/* Rectangular */
+:host(.hint-rectangular) {
+  @include globals.border-radius(globals.$ion-border-radius-0);
+}
+
+// Hint Sizes
+// --------------------------------------------------
+
+/* Small status-hint */
+:host(.hint-small) {
+  width: globals.$ion-scale-200;
+  height: globals.$ion-scale-200;
+
+  transform: translateX(-50%);
+}
+
+/* Small status-hint */
+:host(.hint-medium) {
+  width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
+}
+
+/* Large status-hint */
+:host(.hint-large) {
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+}

@@ -69,6 +69,7 @@ import { defineCustomElement as defineIonSelectOption } from '@ionic/core/compon
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
 import { defineCustomElement as defineIonSplitPane } from '@ionic/core/components/ion-split-pane.js';
+import { defineCustomElement as defineIonStatusHint } from '@ionic/core/components/ion-status-hint.js';
 import { defineCustomElement as defineIonTab } from '@ionic/core/components/ion-tab.js';
 import { defineCustomElement as defineIonText } from '@ionic/core/components/ion-text.js';
 import { defineCustomElement as defineIonTextarea } from '@ionic/core/components/ion-textarea.js';
@@ -141,6 +142,7 @@ export const IonSelectOption = /*@__PURE__*/createReactComponent<JSX.IonSelectOp
 export const IonSkeletonText = /*@__PURE__*/createReactComponent<JSX.IonSkeletonText, HTMLIonSkeletonTextElement>('ion-skeleton-text', undefined, undefined, defineIonSkeletonText);
 export const IonSpinner = /*@__PURE__*/createReactComponent<JSX.IonSpinner, HTMLIonSpinnerElement>('ion-spinner', undefined, undefined, defineIonSpinner);
 export const IonSplitPane = /*@__PURE__*/createReactComponent<JSX.IonSplitPane, HTMLIonSplitPaneElement>('ion-split-pane', undefined, undefined, defineIonSplitPane);
+export const IonStatusHint = /*@__PURE__*/createReactComponent<JSX.IonStatusHint, HTMLIonStatusHintElement>('ion-status-hint', undefined, undefined, defineIonStatusHint);
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab, HTMLIonTabElement>('ion-tab', undefined, undefined, defineIonTab);
 export const IonText = /*@__PURE__*/createReactComponent<JSX.IonText, HTMLIonTextElement>('ion-text', undefined, undefined, defineIonText);
 export const IonTextarea = /*@__PURE__*/createReactComponent<JSX.IonTextarea, HTMLIonTextareaElement>('ion-textarea', undefined, undefined, defineIonTextarea);

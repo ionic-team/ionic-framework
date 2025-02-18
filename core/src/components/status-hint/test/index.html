@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Status Hint - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Status Hint - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Isolated Status Hint</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label>Small</ion-label>
+            <ion-status-hint slot="end" color="primary" size="small"></ion-status-hint>
+          </ion-item>
+          <ion-item>
+            <ion-label>Medium</ion-label>
+            <ion-status-hint slot="end" color="warning" size="medium"></ion-status-hint>
+          </ion-item>
+          <ion-item>
+            <ion-label>Large (default)</ion-label>
+            <ion-status-hint slot="end" color="danger" size="large"></ion-status-hint>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-list-header>
+              <ion-label>Status Hint in Avatar</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Top</ion-label>
+              <ion-avatar slot="end">
+                <ion-status-hint size="large" position="top-right" color="primary">1</ion-status-hint>
+              </ion-avatar>
+            </ion-item>
+            <ion-item>
+                <ion-label>Bottom</ion-label>
+                <ion-avatar slot="end">
+                  <ion-status-hint size="large" position="bottom-right" color="primary">1</ion-status-hint>
+                </ion-avatar>
+              </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

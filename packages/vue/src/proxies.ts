@@ -75,6 +75,7 @@ import { defineCustomElement as defineIonSelectOption } from '@ionic/core/compon
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
 import { defineCustomElement as defineIonSplitPane } from '@ionic/core/components/ion-split-pane.js';
+import { defineCustomElement as defineIonStatusHint } from '@ionic/core/components/ion-status-hint.js';
 import { defineCustomElement as defineIonTab } from '@ionic/core/components/ion-tab.js';
 import { defineCustomElement as defineIonText } from '@ionic/core/components/ion-text.js';
 import { defineCustomElement as defineIonTextarea } from '@ionic/core/components/ion-textarea.js';
@@ -124,7 +125,9 @@ export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-b
 export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', defineIonBadge, [
   'color',
   'shape',
-  'size'
+  'size',
+  'useAsHint',
+  'hintPosition'
 ]);
 
 
@@ -845,6 +848,14 @@ export const IonSplitPane = /*@__PURE__*/ defineContainer<JSX.IonSplitPane>('ion
   'disabled',
   'when',
   'ionSplitPaneVisible'
+]);
+
+
+export const IonStatusHint = /*@__PURE__*/ defineContainer<JSX.IonStatusHint>('ion-status-hint', defineIonStatusHint, [
+  'color',
+  'size',
+  'shape',
+  'position'
 ]);
 
 

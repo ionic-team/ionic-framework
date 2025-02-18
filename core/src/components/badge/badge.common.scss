@@ -53,7 +53,8 @@
 }
 
 ion-avatar ::slotted(ion-badge) {
-  font-size: var(--ion-font-size-275, 0.6875rem);
   position: absolute;
   right: 0;
+
+  font-size: var(--ion-font-size-275, 0.6875rem);
 }

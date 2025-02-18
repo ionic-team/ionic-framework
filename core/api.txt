@@ -313,10 +313,12 @@ ion-backdrop,event,ionBackdropTap,void,true
 
 ion-badge,shadow
 ion-badge,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-badge,prop,hintPosition,"bottom-right" | "top-right",'top-right',false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,prop,shape,"round | rectangular" | "soft" | undefined,undefined,false,false
 ion-badge,prop,size,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxsmall" | undefined,undefined,false,false
 ion-badge,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-badge,prop,useAsHint,boolean,false,false,false
 ion-badge,css-prop,--background,ionic
 ion-badge,css-prop,--background,ios
 ion-badge,css-prop,--background,md
@@ -2180,6 +2182,14 @@ ion-split-pane,css-prop,--side-min-width,md
 ion-split-pane,css-prop,--side-width,ionic
 ion-split-pane,css-prop,--side-width,ios
 ion-split-pane,css-prop,--side-width,md
+
+ion-status-hint,shadow
+ion-status-hint,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-status-hint,prop,mode,"ios" | "md",undefined,false,false
+ion-status-hint,prop,position,"bottom-right" | "static" | "top-right",'static',false,false
+ion-status-hint,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
+ion-status-hint,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
+ion-status-hint,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 
 ion-tab,shadow
 ion-tab,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false

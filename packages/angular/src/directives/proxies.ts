@@ -261,14 +261,14 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
 
 
 @ProxyCmp({
-  inputs: ['color', 'mode', 'shape', 'size', 'theme']
+  inputs: ['color', 'hintPosition', 'mode', 'shape', 'size', 'theme', 'useAsHint']
 })
 @Component({
   selector: 'ion-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'shape', 'size', 'theme'],
+  inputs: ['color', 'hintPosition', 'mode', 'shape', 'size', 'theme', 'useAsHint'],
 })
 export class IonBadge {
   protected el: HTMLElement;
@@ -2228,6 +2228,28 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
    */
   ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean }>>;
 }
+
+
+@ProxyCmp({
+  inputs: ['color', 'mode', 'position', 'shape', 'size', 'theme']
+})
+@Component({
+  selector: 'ion-status-hint',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'mode', 'position', 'shape', 'size', 'theme'],
+})
+export class IonStatusHint {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonStatusHint extends Components.IonStatusHint {}
 
 
 @ProxyCmp({

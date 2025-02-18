@@ -424,6 +424,7 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        "hintPosition": 'top-right' | 'bottom-right';
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -440,6 +441,7 @@ export namespace Components {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        "useAsHint": boolean;
     }
     interface IonBreadcrumb {
         /**
@@ -3425,6 +3427,26 @@ export namespace Components {
          */
         "when": string | boolean;
     }
+    interface IonStatusHint {
+        "color"?: Color;
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        "position": 'top-right' | 'bottom-right' | 'static';
+        /**
+          * Set to `"soft"` for an hint with slightly rounded corners, `"round"` for an hint with fully rounded corners, or `"rectangular"` for an hint without rounded corners.  Defaults to `"round"`.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * Set to `"small"` for a compact size. Set to `"medium"` for the default height and width. Set to `"large"` for a larger size.  Defaults to `"small"`.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+    }
     interface IonTab {
         "active": boolean;
         /**
@@ -5151,6 +5173,12 @@ declare global {
         prototype: HTMLIonSplitPaneElement;
         new (): HTMLIonSplitPaneElement;
     };
+    interface HTMLIonStatusHintElement extends Components.IonStatusHint, HTMLStencilElement {
+    }
+    var HTMLIonStatusHintElement: {
+        prototype: HTMLIonStatusHintElement;
+        new (): HTMLIonStatusHintElement;
+    };
     interface HTMLIonTabElement extends Components.IonTab, HTMLStencilElement {
     }
     var HTMLIonTabElement: {
@@ -5395,6 +5423,7 @@ declare global {
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
         "ion-spinner": HTMLIonSpinnerElement;
         "ion-split-pane": HTMLIonSplitPaneElement;
+        "ion-status-hint": HTMLIonStatusHintElement;
         "ion-tab": HTMLIonTabElement;
         "ion-tab-bar": HTMLIonTabBarElement;
         "ion-tab-button": HTMLIonTabButtonElement;
@@ -5784,6 +5813,7 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        "hintPosition"?: 'top-right' | 'bottom-right';
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -5800,6 +5830,7 @@ declare namespace LocalJSX {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        "useAsHint"?: boolean;
     }
     interface IonBreadcrumb {
         /**
@@ -8868,6 +8899,26 @@ declare namespace LocalJSX {
          */
         "when"?: string | boolean;
     }
+    interface IonStatusHint {
+        "color"?: Color;
+        /**
+          * The mode determines the platform behaviors of the component.
+         */
+        "mode"?: "ios" | "md";
+        "position"?: 'top-right' | 'bottom-right' | 'static';
+        /**
+          * Set to `"soft"` for an hint with slightly rounded corners, `"round"` for an hint with fully rounded corners, or `"rectangular"` for an hint without rounded corners.  Defaults to `"round"`.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
+          * Set to `"small"` for a compact size. Set to `"medium"` for the default height and width. Set to `"large"` for a larger size.  Defaults to `"small"`.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The theme determines the visual appearance of the component.
+         */
+        "theme"?: "ios" | "md" | "ionic";
+    }
     interface IonTab {
         "active"?: boolean;
         /**
@@ -9464,6 +9515,7 @@ declare namespace LocalJSX {
         "ion-skeleton-text": IonSkeletonText;
         "ion-spinner": IonSpinner;
         "ion-split-pane": IonSplitPane;
+        "ion-status-hint": IonStatusHint;
         "ion-tab": IonTab;
         "ion-tab-bar": IonTabBar;
         "ion-tab-button": IonTabButton;
@@ -9566,6 +9618,7 @@ declare module "@stencil/core" {
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
             "ion-spinner": LocalJSX.IonSpinner & JSXBase.HTMLAttributes<HTMLIonSpinnerElement>;
             "ion-split-pane": LocalJSX.IonSplitPane & JSXBase.HTMLAttributes<HTMLIonSplitPaneElement>;
+            "ion-status-hint": LocalJSX.IonStatusHint & JSXBase.HTMLAttributes<HTMLIonStatusHintElement>;
             "ion-tab": LocalJSX.IonTab & JSXBase.HTMLAttributes<HTMLIonTabElement>;
             "ion-tab-bar": LocalJSX.IonTabBar & JSXBase.HTMLAttributes<HTMLIonTabBarElement>;
             "ion-tab-button": LocalJSX.IonTabButton & JSXBase.HTMLAttributes<HTMLIonTabButtonElement>;

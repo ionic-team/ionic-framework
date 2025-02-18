@@ -72,6 +72,7 @@ import { defineCustomElement as defineIonSelectOption } from '@ionic/core/compon
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
 import { defineCustomElement as defineIonSplitPane } from '@ionic/core/components/ion-split-pane.js';
+import { defineCustomElement as defineIonStatusHint } from '@ionic/core/components/ion-status-hint.js';
 import { defineCustomElement as defineIonTab } from '@ionic/core/components/ion-tab.js';
 import { defineCustomElement as defineIonTabBar } from '@ionic/core/components/ion-tab-bar.js';
 import { defineCustomElement as defineIonTabButton } from '@ionic/core/components/ion-tab-button.js';
@@ -349,14 +350,14 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
 
 @ProxyCmp({
   defineCustomElementFn: defineIonBadge,
-  inputs: ['color', 'mode', 'shape', 'size', 'theme']
+  inputs: ['color', 'hintPosition', 'mode', 'shape', 'size', 'theme', 'useAsHint']
 })
 @Component({
   selector: 'ion-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'shape', 'size', 'theme'],
+  inputs: ['color', 'hintPosition', 'mode', 'shape', 'size', 'theme', 'useAsHint'],
   standalone: true
 })
 export class IonBadge {
@@ -2028,6 +2029,30 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
    */
   ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean }>>;
 }
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonStatusHint,
+  inputs: ['color', 'mode', 'position', 'shape', 'size', 'theme']
+})
+@Component({
+  selector: 'ion-status-hint',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'mode', 'position', 'shape', 'size', 'theme'],
+  standalone: true
+})
+export class IonStatusHint {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonStatusHint extends Components.IonStatusHint {}
 
 
 @ProxyCmp({
