@@ -47,6 +47,10 @@ export class Badge implements ComponentInterface {
    */
   @Prop() size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
+  @Prop() useAsHint: boolean = false;
+
+  @Prop() hintPosition: 'top-right' | 'bottom-right' = 'top-right';
+
   private getShape(): string | undefined {
     const theme = getIonTheme(this);
     const { shape } = this;
@@ -63,11 +67,12 @@ export class Badge implements ComponentInterface {
     return shape;
   }
 
+
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
-    const { size } = this;
+    const { size, useAsHint } = this;
 
-    // TODO(ROU-10747): Remove theme check when sizes are defined for all themes.
+    // TODO: Remove theme check when sizes are defined for all themes.
     if (theme !== 'ionic') {
       return undefined;
     }
@@ -76,8 +81,13 @@ export class Badge implements ComponentInterface {
       return 'small';
     }
 
+    if (useAsHint && size && !['small', 'medium', 'large'].includes(size)) {
+      return 'small';
+    }
+
     return size;
   }
+
 
   render() {
     const shape = this.getShape();
@@ -89,6 +99,8 @@ export class Badge implements ComponentInterface {
           [theme]: true,
           [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
+          ['badge-hint']: this.useAsHint,
+          [`badge-hint-${this.hintPosition}`]: this.useAsHint,
         })}
       >
         <slot></slot>
