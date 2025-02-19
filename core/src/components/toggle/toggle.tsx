@@ -124,6 +124,13 @@ export class Toggle implements ComponentInterface {
   @Prop() alignment?: 'start' | 'center';
 
   /**
+   * If true, screen readers will announce it as a required field. This property
+   * works only for accessibility purposes, it will not prevent the form from
+   * submitting if the value is invalid.
+   */
+  @Prop() required = false;
+
+  /**
    * Emitted when the user switches the toggle on or off.
    *
    * This event will not emit when programmatically setting the `checked` property.
@@ -347,7 +354,8 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment } = this;
+    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment, required } =
+      this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
@@ -386,6 +394,7 @@ export class Toggle implements ComponentInterface {
             ref={(focusEl) => (this.focusEl = focusEl)}
             aria-describedby={this.getHintTextID()}
             aria-invalid={this.getHintTextID() === this.errorTextId}
+            required={required}
             {...this.inheritedAttributes}
           />
           <div
