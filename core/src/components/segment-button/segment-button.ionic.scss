@@ -48,7 +48,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-label) {
-  @include globals.typography(globals.$ion-body-action-md);
+  @include globals.typography(globals.$ion-body-action-sm);
 
   color: var(--color);
 }
