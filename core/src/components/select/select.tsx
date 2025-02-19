@@ -212,6 +212,13 @@ export class Select implements ComponentInterface {
   @Prop({ mutable: true }) value?: any | null;
 
   /**
+   * If true, screen readers will announce it as a required field. This property
+   * works only for accessibility purposes, it will not prevent the form from
+   * submitting if the value is invalid.
+   */
+  @Prop() required = false;
+
+  /**
    * Emitted when the value has changed.
    *
    * This event will not emit when programmatically setting the `value` property.
@@ -989,7 +996,7 @@ export class Select implements ComponentInterface {
   }
 
   private renderListbox() {
-    const { disabled, inputId, isExpanded } = this;
+    const { disabled, inputId, isExpanded, required } = this;
 
     return (
       <button
@@ -1000,6 +1007,7 @@ export class Select implements ComponentInterface {
         aria-expanded={`${isExpanded}`}
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-required={`${required}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(focusEl) => (this.focusEl = focusEl)}
