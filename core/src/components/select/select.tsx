@@ -319,58 +319,54 @@ export class Select implements ComponentInterface {
 
     await overlay.present();
 
-    // focus selected option for popovers and modals
-    if (this.interface === 'popover' || this.interface === 'modal') {
-      const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
+    const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
+    if (indexOfSelected > -1) {
+      const selectedItem = overlay.querySelector<HTMLElement>(
+        `.select-interface-option:nth-child(${indexOfSelected + 1})`
+      );
 
-      if (indexOfSelected > -1) {
-        const selectedItem = overlay.querySelector<HTMLElement>(
-          `.select-interface-option:nth-child(${indexOfSelected + 1})`
-        );
-
-        if (selectedItem) {
-          /**
-           * Browsers such as Firefox do not
-           * correctly delegate focus when manually
-           * focusing an element with delegatesFocus.
-           * We work around this by manually focusing
-           * the interactive element.
-           * ion-radio and ion-checkbox are the only
-           * elements that ion-select-popover uses, so
-           * we only need to worry about those two components
-           * when focusing.
-           */
-          const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox') as
-            | HTMLIonRadioElement
-            | HTMLIonCheckboxElement
-            | null;
-          if (interactiveEl) {
-            // Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
-            // and removing `ion-focused` style
-            interactiveEl.setFocus();
-          }
-
-          focusVisibleElement(selectedItem);
-        }
-      } else {
+      if (selectedItem) {
         /**
-         * If no value is set then focus the first enabled option.
+         * Browsers such as Firefox do not
+         * correctly delegate focus when manually
+         * focusing an element with delegatesFocus.
+         * We work around this by manually focusing
+         * the interactive element.
+         * ion-radio and ion-checkbox are the only
+         * elements that ion-select-popover uses, so
+         * we only need to worry about those two components
+         * when focusing.
          */
-        const firstEnabledOption = overlay.querySelector<HTMLElement>(
-          'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
-        ) as HTMLIonRadioElement | HTMLIonCheckboxElement | null;
-
-        if (firstEnabledOption) {
-          /**
-           * Focus the option for the same reason as we do above.
-           *
-           * Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
-           * and removing `ion-focused` style
-           */
-          firstEnabledOption.setFocus();
-
-          focusVisibleElement(firstEnabledOption.closest('ion-item')!);
+        const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox') as
+          | HTMLIonRadioElement
+          | HTMLIonCheckboxElement
+          | null;
+        if (interactiveEl) {
+          // Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
+          // and removing `ion-focused` style
+          interactiveEl.setFocus();
         }
+
+        focusVisibleElement(selectedItem);
+      }
+    } else {
+      /**
+       * If no value is set then focus the first enabled option.
+       */
+      const firstEnabledOption = overlay.querySelector<HTMLElement>(
+        'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
+      ) as HTMLIonRadioElement | HTMLIonCheckboxElement | null;
+
+      if (firstEnabledOption) {
+        /**
+         * Focus the option for the same reason as we do above.
+         *
+         * Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
+         * and removing `ion-focused` style
+         */
+        firstEnabledOption.setFocus();
+
+        focusVisibleElement(firstEnabledOption.closest('ion-item')!);
       }
     }
 
