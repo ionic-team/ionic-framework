@@ -132,7 +132,7 @@
 .calendar-day {
   @include globals.border-radius(globals.$ion-border-radius-full);
   @include globals.padding(globals.$ion-space-100);
-  @include globals.typography(globals.$ion-body-action-md);
+  @include globals.typography(globals.$ion-body-action-sm);
 
   width: globals.$ion-scale-1200;
   min-width: globals.$ion-scale-1200;
