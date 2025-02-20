@@ -60,6 +60,11 @@
   line-height: globals.$ion-font-line-height-400;
 }
 
+:host(.badge-xxsmall) ::slotted(ion-icon) {
+  width: globals.$ion-scale-250;
+  height: globals.$ion-scale-250;
+}
+
 /* Extra Small Badge */
 :host(.badge-xsmall) {
   --padding-start: #{globals.$ion-space-100};
@@ -71,6 +76,11 @@
   font-size: globals.$ion-font-size-350;
 
   line-height: globals.$ion-font-line-height-600;
+}
+
+:host(.badge-xsmall) ::slotted(ion-icon) {
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 /* Small Badge */
@@ -86,6 +96,11 @@
   line-height: globals.$ion-font-line-height-600;
 }
 
+:host(.badge-small) ::slotted(ion-icon) {
+  width: globals.$ion-scale-500;
+  height: globals.$ion-scale-500;
+}
+
 /* Medium Badge */
 :host(.badge-medium) {
   min-width: globals.$ion-scale-1000;
@@ -94,6 +109,11 @@
   font-size: globals.$ion-font-size-450;
 
   line-height: globals.$ion-font-line-height-700;
+}
+
+:host(.badge-medium) ::slotted(ion-icon) {
+  width: globals.$ion-scale-600;
+  height: globals.$ion-scale-600;
 }
 
 /* Large Badge */
@@ -106,6 +126,11 @@
   line-height: globals.$ion-font-line-height-700;
 }
 
+:host(.badge-large) ::slotted(ion-icon) {
+  width: globals.$ion-scale-800;
+  height: globals.$ion-scale-800;
+}
+
 /* Extra Large Badge */
 :host(.badge-xlarge) {
   min-width: globals.$ion-scale-1400;
@@ -114,4 +139,9 @@
   font-size: globals.$ion-font-size-550;
 
   line-height: globals.$ion-font-line-height-700;
+}
+
+:host(.badge-xlarge) ::slotted(ion-icon) {
+  width: globals.$ion-scale-1000;
+  height: globals.$ion-scale-1000;
 }
