@@ -384,8 +384,8 @@ export class Select implements ComponentInterface {
 
         focusVisibleElement(firstEnabledOption.closest('ion-item')!);
       }
-    }    
-    
+    }
+
     return overlay;
   }
 
