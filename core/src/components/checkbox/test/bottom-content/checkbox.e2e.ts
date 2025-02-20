@@ -83,7 +83,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(checkbox).not.toHaveAttribute('aria-invalid');
     });
-    test('checkbox should not have aria-describedby attribute when no hint or error text is present', async ({ page }) => {
+    test('checkbox should not have aria-describedby attribute when no hint or error text is present', async ({
+      page,
+    }) => {
       await page.setContent(`<ion-checkbox>Label</ion-checkbox>`, config);
 
       const checkbox = page.locator('ion-checkbox');
