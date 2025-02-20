@@ -117,7 +117,7 @@
 // -----------------------------------
 
 .calendar-days-of-week {
-  @include globals.typography(globals.$ion-body-action-sm);
+  @include globals.typography(globals.$ion-overline-medium);
 
   align-content: center;
 
