@@ -23,7 +23,7 @@
   // -------------------------------------------------------------------------------
 
   &:visited {
-    color: globals.$ion-semantics-info-500;
+    color: globals.$ion-text-link-visited;
   }
 }
 
@@ -31,7 +31,7 @@
 // -------------------------------------------------------------------------------
 
 @mixin ionic-link {
-  color: globals.$ion-semantics-info-400;
+  color: globals.$ion-text-link-default;
 
   text-decoration: none;
 
@@ -51,7 +51,7 @@
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid globals.$ion-semantics-primary-100;
+    outline: 2px solid globals.$ion-text-link-default;
     outline-offset: 2px;
 
     text-decoration: underline;
@@ -62,7 +62,7 @@
 
   &:active,
   &.ion-activated {
-    color: globals.$ion-semantics-info-500;
+    color: globals.$ion-text-link-press;
 
     text-decoration: underline;
   }
@@ -88,7 +88,7 @@ a.ionic-link,
 
   @media (any-hover: hover) {
     &:hover {
-      color: globals.$ion-semantics-info-400;
+      color: globals.$ion-text-link-press;
     }
   }
 
@@ -97,7 +97,7 @@ a.ionic-link,
 
   &:focus,
   &.ion-focused {
-    outline: 2px solid globals.$ion-semantics-primary-100;
+    outline: 2px solid globals.$ion-text-link-default;
     outline-offset: 2px;
 
     color: currentColor;
@@ -110,7 +110,7 @@ a.ionic-link,
 
   &:active,
   &.ion-activated {
-    color: globals.$ion-semantics-info-500;
+    color: globals.$ion-text-link-press;
   }
 }
 

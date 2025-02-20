@@ -284,7 +284,7 @@ Do not edit directly, this file was auto-generated.
   text-decoration: none;
 }
 
-.ion-body-action-xl {
+.ion-body-action-lg {
   font-size: $ion-font-size-500;
   font-style: normal;
   font-weight: $ion-font-weight-medium;
@@ -294,7 +294,7 @@ Do not edit directly, this file was auto-generated.
   text-decoration: none;
 }
 
-.ion-body-action-lg {
+.ion-body-action-md {
   font-size: $ion-font-size-400;
   font-style: normal;
   font-weight: $ion-font-weight-medium;
@@ -304,7 +304,7 @@ Do not edit directly, this file was auto-generated.
   text-decoration: none;
 }
 
-.ion-body-action-md {
+.ion-body-action-sm {
   font-size: $ion-font-size-350;
   font-style: normal;
   font-weight: $ion-font-weight-medium;
@@ -314,7 +314,7 @@ Do not edit directly, this file was auto-generated.
   text-decoration: none;
 }
 
-.ion-body-action-sm {
+.ion-body-action-xs {
   font-size: $ion-font-size-300;
   font-style: normal;
   font-weight: $ion-font-weight-medium;
@@ -1036,11 +1036,35 @@ Do not edit directly, this file was auto-generated.
 .ion-background-bg-neutral-subtlest-press {
   background-color: $ion-bg-neutral-subtlest-press;
 }
+.ion-bg-neutral-bold-default {
+  color: $ion-bg-neutral-bold-default;
+}
+.ion-background-bg-neutral-bold-default {
+  background-color: $ion-bg-neutral-bold-default;
+}
+.ion-bg-neutral-bold-press {
+  color: $ion-bg-neutral-bold-press;
+}
+.ion-background-bg-neutral-bold-press {
+  background-color: $ion-bg-neutral-bold-press;
+}
+.ion-bg-neutral-boldest-default {
+  color: $ion-bg-neutral-boldest-default;
+}
+.ion-background-bg-neutral-boldest-default {
+  background-color: $ion-bg-neutral-boldest-default;
+}
 .ion-bg-surface-default {
   color: $ion-bg-surface-default;
 }
 .ion-background-bg-surface-default {
   background-color: $ion-bg-surface-default;
+}
+.ion-bg-surface-inverse {
+  color: $ion-bg-surface-inverse;
+}
+.ion-background-bg-surface-inverse {
+  background-color: $ion-bg-surface-inverse;
 }
 .ion-bg-input-default {
   color: $ion-bg-input-default;
@@ -1053,6 +1077,30 @@ Do not edit directly, this file was auto-generated.
 }
 .ion-background-bg-input-read-only {
   background-color: $ion-bg-input-read-only;
+}
+.ion-bg-input-press {
+  color: $ion-bg-input-press;
+}
+.ion-background-bg-input-press {
+  background-color: $ion-bg-input-press;
+}
+.ion-bg-input-disabled {
+  color: $ion-bg-input-disabled;
+}
+.ion-background-bg-input-disabled {
+  background-color: $ion-bg-input-disabled;
+}
+.ion-bg-select-default {
+  color: $ion-bg-select-default;
+}
+.ion-background-bg-select-default {
+  background-color: $ion-bg-select-default;
+}
+.ion-bg-select-press {
+  color: $ion-bg-select-press;
+}
+.ion-background-bg-select-press {
+  background-color: $ion-bg-select-press;
 }
 .ion-text-default {
   color: $ion-text-default;
@@ -1159,8 +1207,11 @@ Do not edit directly, this file was auto-generated.
 .ion-border-warning {
   border-color: $ion-border-warning;
 }
-.ion-border-danger {
-  border-color: $ion-border-danger;
+.ion-border-danger-default {
+  border-color: $ion-border-danger-default;
+}
+.ion-border-danger-press {
+  border-color: $ion-border-danger-press;
 }
 .ion-border-subtle {
   border-color: $ion-border-subtle;
@@ -1173,6 +1224,9 @@ Do not edit directly, this file was auto-generated.
 }
 .ion-border-input-read-only {
   border-color: $ion-border-input-read-only;
+}
+.ion-border-subtlest {
+  border-color: $ion-border-subtlest;
 }
 .ion-border-style-none {
   border-style: $ion-border-style-none;
@@ -1227,27 +1281,6 @@ Do not edit directly, this file was auto-generated.
 }
 .ion-border-radius-025 {
   border-radius: $ion-border-radius-025;
-}
-.ion-shadow-1 {
-  box-shadow: $ion-shadow-1;
-}
-.ion-shadow-2 {
-  box-shadow: $ion-shadow-2;
-}
-.ion-shadow-3 {
-  box-shadow: $ion-shadow-3;
-}
-.ion-shadow-4 {
-  box-shadow: $ion-shadow-4;
-}
-.ion-shadow-5 {
-  box-shadow: $ion-shadow-5;
-}
-.ion-shadow-6 {
-  box-shadow: $ion-shadow-6;
-}
-.ion-shadow-7 {
-  box-shadow: $ion-shadow-7;
 }
 .ion-icon-subtlest {
   color: $ion-icon-subtlest;
@@ -1315,1097 +1348,23 @@ Do not edit directly, this file was auto-generated.
 .ion-background-icon-select {
   background-color: $ion-icon-select;
 }
-.ion-primitives-neutral-100 {
-  color: $ion-primitives-neutral-100;
+.ion-icon-link-default {
+  color: $ion-icon-link-default;
 }
-.ion-background-primitives-neutral-100 {
-  background-color: $ion-primitives-neutral-100;
+.ion-background-icon-link-default {
+  background-color: $ion-icon-link-default;
 }
-.ion-primitives-neutral-200 {
-  color: $ion-primitives-neutral-200;
+.ion-icon-link-press {
+  color: $ion-icon-link-press;
 }
-.ion-background-primitives-neutral-200 {
-  background-color: $ion-primitives-neutral-200;
+.ion-background-icon-link-press {
+  background-color: $ion-icon-link-press;
 }
-.ion-primitives-neutral-300 {
-  color: $ion-primitives-neutral-300;
+.ion-icon-link-visited {
+  color: $ion-icon-link-visited;
 }
-.ion-background-primitives-neutral-300 {
-  background-color: $ion-primitives-neutral-300;
-}
-.ion-primitives-neutral-400 {
-  color: $ion-primitives-neutral-400;
-}
-.ion-background-primitives-neutral-400 {
-  background-color: $ion-primitives-neutral-400;
-}
-.ion-primitives-neutral-500 {
-  color: $ion-primitives-neutral-500;
-}
-.ion-background-primitives-neutral-500 {
-  background-color: $ion-primitives-neutral-500;
-}
-.ion-primitives-neutral-600 {
-  color: $ion-primitives-neutral-600;
-}
-.ion-background-primitives-neutral-600 {
-  background-color: $ion-primitives-neutral-600;
-}
-.ion-primitives-neutral-700 {
-  color: $ion-primitives-neutral-700;
-}
-.ion-background-primitives-neutral-700 {
-  background-color: $ion-primitives-neutral-700;
-}
-.ion-primitives-neutral-800 {
-  color: $ion-primitives-neutral-800;
-}
-.ion-background-primitives-neutral-800 {
-  background-color: $ion-primitives-neutral-800;
-}
-.ion-primitives-neutral-900 {
-  color: $ion-primitives-neutral-900;
-}
-.ion-background-primitives-neutral-900 {
-  background-color: $ion-primitives-neutral-900;
-}
-.ion-primitives-neutral-1000 {
-  color: $ion-primitives-neutral-1000;
-}
-.ion-background-primitives-neutral-1000 {
-  background-color: $ion-primitives-neutral-1000;
-}
-.ion-primitives-neutral-1100 {
-  color: $ion-primitives-neutral-1100;
-}
-.ion-background-primitives-neutral-1100 {
-  background-color: $ion-primitives-neutral-1100;
-}
-.ion-primitives-neutral-1200 {
-  color: $ion-primitives-neutral-1200;
-}
-.ion-background-primitives-neutral-1200 {
-  background-color: $ion-primitives-neutral-1200;
-}
-.ion-primitives-base-white {
-  color: $ion-primitives-base-white;
-}
-.ion-background-primitives-base-white {
-  background-color: $ion-primitives-base-white;
-}
-.ion-primitives-base-black {
-  color: $ion-primitives-base-black;
-}
-.ion-background-primitives-base-black {
-  background-color: $ion-primitives-base-black;
-}
-.ion-primitives-red-100 {
-  color: $ion-primitives-red-100;
-}
-.ion-background-primitives-red-100 {
-  background-color: $ion-primitives-red-100;
-}
-.ion-primitives-red-200 {
-  color: $ion-primitives-red-200;
-}
-.ion-background-primitives-red-200 {
-  background-color: $ion-primitives-red-200;
-}
-.ion-primitives-red-300 {
-  color: $ion-primitives-red-300;
-}
-.ion-background-primitives-red-300 {
-  background-color: $ion-primitives-red-300;
-}
-.ion-primitives-red-400 {
-  color: $ion-primitives-red-400;
-}
-.ion-background-primitives-red-400 {
-  background-color: $ion-primitives-red-400;
-}
-.ion-primitives-red-500 {
-  color: $ion-primitives-red-500;
-}
-.ion-background-primitives-red-500 {
-  background-color: $ion-primitives-red-500;
-}
-.ion-primitives-red-600 {
-  color: $ion-primitives-red-600;
-}
-.ion-background-primitives-red-600 {
-  background-color: $ion-primitives-red-600;
-}
-.ion-primitives-red-700 {
-  color: $ion-primitives-red-700;
-}
-.ion-background-primitives-red-700 {
-  background-color: $ion-primitives-red-700;
-}
-.ion-primitives-red-800 {
-  color: $ion-primitives-red-800;
-}
-.ion-background-primitives-red-800 {
-  background-color: $ion-primitives-red-800;
-}
-.ion-primitives-red-900 {
-  color: $ion-primitives-red-900;
-}
-.ion-background-primitives-red-900 {
-  background-color: $ion-primitives-red-900;
-}
-.ion-primitives-red-1000 {
-  color: $ion-primitives-red-1000;
-}
-.ion-background-primitives-red-1000 {
-  background-color: $ion-primitives-red-1000;
-}
-.ion-primitives-red-1100 {
-  color: $ion-primitives-red-1100;
-}
-.ion-background-primitives-red-1100 {
-  background-color: $ion-primitives-red-1100;
-}
-.ion-primitives-red-1200 {
-  color: $ion-primitives-red-1200;
-}
-.ion-background-primitives-red-1200 {
-  background-color: $ion-primitives-red-1200;
-}
-.ion-primitives-pumpkin-100 {
-  color: $ion-primitives-pumpkin-100;
-}
-.ion-background-primitives-pumpkin-100 {
-  background-color: $ion-primitives-pumpkin-100;
-}
-.ion-primitives-pumpkin-200 {
-  color: $ion-primitives-pumpkin-200;
-}
-.ion-background-primitives-pumpkin-200 {
-  background-color: $ion-primitives-pumpkin-200;
-}
-.ion-primitives-pumpkin-300 {
-  color: $ion-primitives-pumpkin-300;
-}
-.ion-background-primitives-pumpkin-300 {
-  background-color: $ion-primitives-pumpkin-300;
-}
-.ion-primitives-pumpkin-400 {
-  color: $ion-primitives-pumpkin-400;
-}
-.ion-background-primitives-pumpkin-400 {
-  background-color: $ion-primitives-pumpkin-400;
-}
-.ion-primitives-pumpkin-500 {
-  color: $ion-primitives-pumpkin-500;
-}
-.ion-background-primitives-pumpkin-500 {
-  background-color: $ion-primitives-pumpkin-500;
-}
-.ion-primitives-pumpkin-600 {
-  color: $ion-primitives-pumpkin-600;
-}
-.ion-background-primitives-pumpkin-600 {
-  background-color: $ion-primitives-pumpkin-600;
-}
-.ion-primitives-pumpkin-700 {
-  color: $ion-primitives-pumpkin-700;
-}
-.ion-background-primitives-pumpkin-700 {
-  background-color: $ion-primitives-pumpkin-700;
-}
-.ion-primitives-pumpkin-800 {
-  color: $ion-primitives-pumpkin-800;
-}
-.ion-background-primitives-pumpkin-800 {
-  background-color: $ion-primitives-pumpkin-800;
-}
-.ion-primitives-pumpkin-900 {
-  color: $ion-primitives-pumpkin-900;
-}
-.ion-background-primitives-pumpkin-900 {
-  background-color: $ion-primitives-pumpkin-900;
-}
-.ion-primitives-pumpkin-1000 {
-  color: $ion-primitives-pumpkin-1000;
-}
-.ion-background-primitives-pumpkin-1000 {
-  background-color: $ion-primitives-pumpkin-1000;
-}
-.ion-primitives-pumpkin-1100 {
-  color: $ion-primitives-pumpkin-1100;
-}
-.ion-background-primitives-pumpkin-1100 {
-  background-color: $ion-primitives-pumpkin-1100;
-}
-.ion-primitives-pumpkin-1200 {
-  color: $ion-primitives-pumpkin-1200;
-}
-.ion-background-primitives-pumpkin-1200 {
-  background-color: $ion-primitives-pumpkin-1200;
-}
-.ion-primitives-orange-100 {
-  color: $ion-primitives-orange-100;
-}
-.ion-background-primitives-orange-100 {
-  background-color: $ion-primitives-orange-100;
-}
-.ion-primitives-orange-200 {
-  color: $ion-primitives-orange-200;
-}
-.ion-background-primitives-orange-200 {
-  background-color: $ion-primitives-orange-200;
-}
-.ion-primitives-orange-300 {
-  color: $ion-primitives-orange-300;
-}
-.ion-background-primitives-orange-300 {
-  background-color: $ion-primitives-orange-300;
-}
-.ion-primitives-orange-400 {
-  color: $ion-primitives-orange-400;
-}
-.ion-background-primitives-orange-400 {
-  background-color: $ion-primitives-orange-400;
-}
-.ion-primitives-orange-500 {
-  color: $ion-primitives-orange-500;
-}
-.ion-background-primitives-orange-500 {
-  background-color: $ion-primitives-orange-500;
-}
-.ion-primitives-orange-600 {
-  color: $ion-primitives-orange-600;
-}
-.ion-background-primitives-orange-600 {
-  background-color: $ion-primitives-orange-600;
-}
-.ion-primitives-orange-700 {
-  color: $ion-primitives-orange-700;
-}
-.ion-background-primitives-orange-700 {
-  background-color: $ion-primitives-orange-700;
-}
-.ion-primitives-orange-800 {
-  color: $ion-primitives-orange-800;
-}
-.ion-background-primitives-orange-800 {
-  background-color: $ion-primitives-orange-800;
-}
-.ion-primitives-orange-900 {
-  color: $ion-primitives-orange-900;
-}
-.ion-background-primitives-orange-900 {
-  background-color: $ion-primitives-orange-900;
-}
-.ion-primitives-orange-1000 {
-  color: $ion-primitives-orange-1000;
-}
-.ion-background-primitives-orange-1000 {
-  background-color: $ion-primitives-orange-1000;
-}
-.ion-primitives-orange-1100 {
-  color: $ion-primitives-orange-1100;
-}
-.ion-background-primitives-orange-1100 {
-  background-color: $ion-primitives-orange-1100;
-}
-.ion-primitives-orange-1200 {
-  color: $ion-primitives-orange-1200;
-}
-.ion-background-primitives-orange-1200 {
-  background-color: $ion-primitives-orange-1200;
-}
-.ion-primitives-yellow-100 {
-  color: $ion-primitives-yellow-100;
-}
-.ion-background-primitives-yellow-100 {
-  background-color: $ion-primitives-yellow-100;
-}
-.ion-primitives-yellow-200 {
-  color: $ion-primitives-yellow-200;
-}
-.ion-background-primitives-yellow-200 {
-  background-color: $ion-primitives-yellow-200;
-}
-.ion-primitives-yellow-300 {
-  color: $ion-primitives-yellow-300;
-}
-.ion-background-primitives-yellow-300 {
-  background-color: $ion-primitives-yellow-300;
-}
-.ion-primitives-yellow-400 {
-  color: $ion-primitives-yellow-400;
-}
-.ion-background-primitives-yellow-400 {
-  background-color: $ion-primitives-yellow-400;
-}
-.ion-primitives-yellow-500 {
-  color: $ion-primitives-yellow-500;
-}
-.ion-background-primitives-yellow-500 {
-  background-color: $ion-primitives-yellow-500;
-}
-.ion-primitives-yellow-600 {
-  color: $ion-primitives-yellow-600;
-}
-.ion-background-primitives-yellow-600 {
-  background-color: $ion-primitives-yellow-600;
-}
-.ion-primitives-yellow-700 {
-  color: $ion-primitives-yellow-700;
-}
-.ion-background-primitives-yellow-700 {
-  background-color: $ion-primitives-yellow-700;
-}
-.ion-primitives-yellow-800 {
-  color: $ion-primitives-yellow-800;
-}
-.ion-background-primitives-yellow-800 {
-  background-color: $ion-primitives-yellow-800;
-}
-.ion-primitives-yellow-900 {
-  color: $ion-primitives-yellow-900;
-}
-.ion-background-primitives-yellow-900 {
-  background-color: $ion-primitives-yellow-900;
-}
-.ion-primitives-yellow-1000 {
-  color: $ion-primitives-yellow-1000;
-}
-.ion-background-primitives-yellow-1000 {
-  background-color: $ion-primitives-yellow-1000;
-}
-.ion-primitives-yellow-1100 {
-  color: $ion-primitives-yellow-1100;
-}
-.ion-background-primitives-yellow-1100 {
-  background-color: $ion-primitives-yellow-1100;
-}
-.ion-primitives-yellow-1200 {
-  color: $ion-primitives-yellow-1200;
-}
-.ion-background-primitives-yellow-1200 {
-  background-color: $ion-primitives-yellow-1200;
-}
-.ion-primitives-lime-100 {
-  color: $ion-primitives-lime-100;
-}
-.ion-background-primitives-lime-100 {
-  background-color: $ion-primitives-lime-100;
-}
-.ion-primitives-lime-200 {
-  color: $ion-primitives-lime-200;
-}
-.ion-background-primitives-lime-200 {
-  background-color: $ion-primitives-lime-200;
-}
-.ion-primitives-lime-300 {
-  color: $ion-primitives-lime-300;
-}
-.ion-background-primitives-lime-300 {
-  background-color: $ion-primitives-lime-300;
-}
-.ion-primitives-lime-400 {
-  color: $ion-primitives-lime-400;
-}
-.ion-background-primitives-lime-400 {
-  background-color: $ion-primitives-lime-400;
-}
-.ion-primitives-lime-500 {
-  color: $ion-primitives-lime-500;
-}
-.ion-background-primitives-lime-500 {
-  background-color: $ion-primitives-lime-500;
-}
-.ion-primitives-lime-600 {
-  color: $ion-primitives-lime-600;
-}
-.ion-background-primitives-lime-600 {
-  background-color: $ion-primitives-lime-600;
-}
-.ion-primitives-lime-700 {
-  color: $ion-primitives-lime-700;
-}
-.ion-background-primitives-lime-700 {
-  background-color: $ion-primitives-lime-700;
-}
-.ion-primitives-lime-800 {
-  color: $ion-primitives-lime-800;
-}
-.ion-background-primitives-lime-800 {
-  background-color: $ion-primitives-lime-800;
-}
-.ion-primitives-lime-900 {
-  color: $ion-primitives-lime-900;
-}
-.ion-background-primitives-lime-900 {
-  background-color: $ion-primitives-lime-900;
-}
-.ion-primitives-lime-1000 {
-  color: $ion-primitives-lime-1000;
-}
-.ion-background-primitives-lime-1000 {
-  background-color: $ion-primitives-lime-1000;
-}
-.ion-primitives-lime-1100 {
-  color: $ion-primitives-lime-1100;
-}
-.ion-background-primitives-lime-1100 {
-  background-color: $ion-primitives-lime-1100;
-}
-.ion-primitives-lime-1200 {
-  color: $ion-primitives-lime-1200;
-}
-.ion-background-primitives-lime-1200 {
-  background-color: $ion-primitives-lime-1200;
-}
-.ion-primitives-green-100 {
-  color: $ion-primitives-green-100;
-}
-.ion-background-primitives-green-100 {
-  background-color: $ion-primitives-green-100;
-}
-.ion-primitives-green-200 {
-  color: $ion-primitives-green-200;
-}
-.ion-background-primitives-green-200 {
-  background-color: $ion-primitives-green-200;
-}
-.ion-primitives-green-300 {
-  color: $ion-primitives-green-300;
-}
-.ion-background-primitives-green-300 {
-  background-color: $ion-primitives-green-300;
-}
-.ion-primitives-green-400 {
-  color: $ion-primitives-green-400;
-}
-.ion-background-primitives-green-400 {
-  background-color: $ion-primitives-green-400;
-}
-.ion-primitives-green-500 {
-  color: $ion-primitives-green-500;
-}
-.ion-background-primitives-green-500 {
-  background-color: $ion-primitives-green-500;
-}
-.ion-primitives-green-600 {
-  color: $ion-primitives-green-600;
-}
-.ion-background-primitives-green-600 {
-  background-color: $ion-primitives-green-600;
-}
-.ion-primitives-green-700 {
-  color: $ion-primitives-green-700;
-}
-.ion-background-primitives-green-700 {
-  background-color: $ion-primitives-green-700;
-}
-.ion-primitives-green-800 {
-  color: $ion-primitives-green-800;
-}
-.ion-background-primitives-green-800 {
-  background-color: $ion-primitives-green-800;
-}
-.ion-primitives-green-900 {
-  color: $ion-primitives-green-900;
-}
-.ion-background-primitives-green-900 {
-  background-color: $ion-primitives-green-900;
-}
-.ion-primitives-green-1000 {
-  color: $ion-primitives-green-1000;
-}
-.ion-background-primitives-green-1000 {
-  background-color: $ion-primitives-green-1000;
-}
-.ion-primitives-green-1100 {
-  color: $ion-primitives-green-1100;
-}
-.ion-background-primitives-green-1100 {
-  background-color: $ion-primitives-green-1100;
-}
-.ion-primitives-green-1200 {
-  color: $ion-primitives-green-1200;
-}
-.ion-background-primitives-green-1200 {
-  background-color: $ion-primitives-green-1200;
-}
-.ion-primitives-teal-100 {
-  color: $ion-primitives-teal-100;
-}
-.ion-background-primitives-teal-100 {
-  background-color: $ion-primitives-teal-100;
-}
-.ion-primitives-teal-200 {
-  color: $ion-primitives-teal-200;
-}
-.ion-background-primitives-teal-200 {
-  background-color: $ion-primitives-teal-200;
-}
-.ion-primitives-teal-300 {
-  color: $ion-primitives-teal-300;
-}
-.ion-background-primitives-teal-300 {
-  background-color: $ion-primitives-teal-300;
-}
-.ion-primitives-teal-400 {
-  color: $ion-primitives-teal-400;
-}
-.ion-background-primitives-teal-400 {
-  background-color: $ion-primitives-teal-400;
-}
-.ion-primitives-teal-500 {
-  color: $ion-primitives-teal-500;
-}
-.ion-background-primitives-teal-500 {
-  background-color: $ion-primitives-teal-500;
-}
-.ion-primitives-teal-600 {
-  color: $ion-primitives-teal-600;
-}
-.ion-background-primitives-teal-600 {
-  background-color: $ion-primitives-teal-600;
-}
-.ion-primitives-teal-700 {
-  color: $ion-primitives-teal-700;
-}
-.ion-background-primitives-teal-700 {
-  background-color: $ion-primitives-teal-700;
-}
-.ion-primitives-teal-800 {
-  color: $ion-primitives-teal-800;
-}
-.ion-background-primitives-teal-800 {
-  background-color: $ion-primitives-teal-800;
-}
-.ion-primitives-teal-900 {
-  color: $ion-primitives-teal-900;
-}
-.ion-background-primitives-teal-900 {
-  background-color: $ion-primitives-teal-900;
-}
-.ion-primitives-teal-1000 {
-  color: $ion-primitives-teal-1000;
-}
-.ion-background-primitives-teal-1000 {
-  background-color: $ion-primitives-teal-1000;
-}
-.ion-primitives-teal-1100 {
-  color: $ion-primitives-teal-1100;
-}
-.ion-background-primitives-teal-1100 {
-  background-color: $ion-primitives-teal-1100;
-}
-.ion-primitives-teal-1200 {
-  color: $ion-primitives-teal-1200;
-}
-.ion-background-primitives-teal-1200 {
-  background-color: $ion-primitives-teal-1200;
-}
-.ion-primitives-aqua-100 {
-  color: $ion-primitives-aqua-100;
-}
-.ion-background-primitives-aqua-100 {
-  background-color: $ion-primitives-aqua-100;
-}
-.ion-primitives-aqua-200 {
-  color: $ion-primitives-aqua-200;
-}
-.ion-background-primitives-aqua-200 {
-  background-color: $ion-primitives-aqua-200;
-}
-.ion-primitives-aqua-300 {
-  color: $ion-primitives-aqua-300;
-}
-.ion-background-primitives-aqua-300 {
-  background-color: $ion-primitives-aqua-300;
-}
-.ion-primitives-aqua-400 {
-  color: $ion-primitives-aqua-400;
-}
-.ion-background-primitives-aqua-400 {
-  background-color: $ion-primitives-aqua-400;
-}
-.ion-primitives-aqua-500 {
-  color: $ion-primitives-aqua-500;
-}
-.ion-background-primitives-aqua-500 {
-  background-color: $ion-primitives-aqua-500;
-}
-.ion-primitives-aqua-600 {
-  color: $ion-primitives-aqua-600;
-}
-.ion-background-primitives-aqua-600 {
-  background-color: $ion-primitives-aqua-600;
-}
-.ion-primitives-aqua-700 {
-  color: $ion-primitives-aqua-700;
-}
-.ion-background-primitives-aqua-700 {
-  background-color: $ion-primitives-aqua-700;
-}
-.ion-primitives-aqua-800 {
-  color: $ion-primitives-aqua-800;
-}
-.ion-background-primitives-aqua-800 {
-  background-color: $ion-primitives-aqua-800;
-}
-.ion-primitives-aqua-900 {
-  color: $ion-primitives-aqua-900;
-}
-.ion-background-primitives-aqua-900 {
-  background-color: $ion-primitives-aqua-900;
-}
-.ion-primitives-aqua-1000 {
-  color: $ion-primitives-aqua-1000;
-}
-.ion-background-primitives-aqua-1000 {
-  background-color: $ion-primitives-aqua-1000;
-}
-.ion-primitives-aqua-1100 {
-  color: $ion-primitives-aqua-1100;
-}
-.ion-background-primitives-aqua-1100 {
-  background-color: $ion-primitives-aqua-1100;
-}
-.ion-primitives-aqua-1200 {
-  color: $ion-primitives-aqua-1200;
-}
-.ion-background-primitives-aqua-1200 {
-  background-color: $ion-primitives-aqua-1200;
-}
-.ion-primitives-blue-100 {
-  color: $ion-primitives-blue-100;
-}
-.ion-background-primitives-blue-100 {
-  background-color: $ion-primitives-blue-100;
-}
-.ion-primitives-blue-200 {
-  color: $ion-primitives-blue-200;
-}
-.ion-background-primitives-blue-200 {
-  background-color: $ion-primitives-blue-200;
-}
-.ion-primitives-blue-300 {
-  color: $ion-primitives-blue-300;
-}
-.ion-background-primitives-blue-300 {
-  background-color: $ion-primitives-blue-300;
-}
-.ion-primitives-blue-400 {
-  color: $ion-primitives-blue-400;
-}
-.ion-background-primitives-blue-400 {
-  background-color: $ion-primitives-blue-400;
-}
-.ion-primitives-blue-500 {
-  color: $ion-primitives-blue-500;
-}
-.ion-background-primitives-blue-500 {
-  background-color: $ion-primitives-blue-500;
-}
-.ion-primitives-blue-600 {
-  color: $ion-primitives-blue-600;
-}
-.ion-background-primitives-blue-600 {
-  background-color: $ion-primitives-blue-600;
-}
-.ion-primitives-blue-700 {
-  color: $ion-primitives-blue-700;
-}
-.ion-background-primitives-blue-700 {
-  background-color: $ion-primitives-blue-700;
-}
-.ion-primitives-blue-800 {
-  color: $ion-primitives-blue-800;
-}
-.ion-background-primitives-blue-800 {
-  background-color: $ion-primitives-blue-800;
-}
-.ion-primitives-blue-900 {
-  color: $ion-primitives-blue-900;
-}
-.ion-background-primitives-blue-900 {
-  background-color: $ion-primitives-blue-900;
-}
-.ion-primitives-blue-1000 {
-  color: $ion-primitives-blue-1000;
-}
-.ion-background-primitives-blue-1000 {
-  background-color: $ion-primitives-blue-1000;
-}
-.ion-primitives-blue-1100 {
-  color: $ion-primitives-blue-1100;
-}
-.ion-background-primitives-blue-1100 {
-  background-color: $ion-primitives-blue-1100;
-}
-.ion-primitives-blue-1200 {
-  color: $ion-primitives-blue-1200;
-}
-.ion-background-primitives-blue-1200 {
-  background-color: $ion-primitives-blue-1200;
-}
-.ion-primitives-indigo-100 {
-  color: $ion-primitives-indigo-100;
-}
-.ion-background-primitives-indigo-100 {
-  background-color: $ion-primitives-indigo-100;
-}
-.ion-primitives-indigo-200 {
-  color: $ion-primitives-indigo-200;
-}
-.ion-background-primitives-indigo-200 {
-  background-color: $ion-primitives-indigo-200;
-}
-.ion-primitives-indigo-300 {
-  color: $ion-primitives-indigo-300;
-}
-.ion-background-primitives-indigo-300 {
-  background-color: $ion-primitives-indigo-300;
-}
-.ion-primitives-indigo-400 {
-  color: $ion-primitives-indigo-400;
-}
-.ion-background-primitives-indigo-400 {
-  background-color: $ion-primitives-indigo-400;
-}
-.ion-primitives-indigo-500 {
-  color: $ion-primitives-indigo-500;
-}
-.ion-background-primitives-indigo-500 {
-  background-color: $ion-primitives-indigo-500;
-}
-.ion-primitives-indigo-600 {
-  color: $ion-primitives-indigo-600;
-}
-.ion-background-primitives-indigo-600 {
-  background-color: $ion-primitives-indigo-600;
-}
-.ion-primitives-indigo-700 {
-  color: $ion-primitives-indigo-700;
-}
-.ion-background-primitives-indigo-700 {
-  background-color: $ion-primitives-indigo-700;
-}
-.ion-primitives-indigo-800 {
-  color: $ion-primitives-indigo-800;
-}
-.ion-background-primitives-indigo-800 {
-  background-color: $ion-primitives-indigo-800;
-}
-.ion-primitives-indigo-900 {
-  color: $ion-primitives-indigo-900;
-}
-.ion-background-primitives-indigo-900 {
-  background-color: $ion-primitives-indigo-900;
-}
-.ion-primitives-indigo-1000 {
-  color: $ion-primitives-indigo-1000;
-}
-.ion-background-primitives-indigo-1000 {
-  background-color: $ion-primitives-indigo-1000;
-}
-.ion-primitives-indigo-1100 {
-  color: $ion-primitives-indigo-1100;
-}
-.ion-background-primitives-indigo-1100 {
-  background-color: $ion-primitives-indigo-1100;
-}
-.ion-primitives-indigo-1200 {
-  color: $ion-primitives-indigo-1200;
-}
-.ion-background-primitives-indigo-1200 {
-  background-color: $ion-primitives-indigo-1200;
-}
-.ion-primitives-violet-100 {
-  color: $ion-primitives-violet-100;
-}
-.ion-background-primitives-violet-100 {
-  background-color: $ion-primitives-violet-100;
-}
-.ion-primitives-violet-200 {
-  color: $ion-primitives-violet-200;
-}
-.ion-background-primitives-violet-200 {
-  background-color: $ion-primitives-violet-200;
-}
-.ion-primitives-violet-300 {
-  color: $ion-primitives-violet-300;
-}
-.ion-background-primitives-violet-300 {
-  background-color: $ion-primitives-violet-300;
-}
-.ion-primitives-violet-400 {
-  color: $ion-primitives-violet-400;
-}
-.ion-background-primitives-violet-400 {
-  background-color: $ion-primitives-violet-400;
-}
-.ion-primitives-violet-500 {
-  color: $ion-primitives-violet-500;
-}
-.ion-background-primitives-violet-500 {
-  background-color: $ion-primitives-violet-500;
-}
-.ion-primitives-violet-600 {
-  color: $ion-primitives-violet-600;
-}
-.ion-background-primitives-violet-600 {
-  background-color: $ion-primitives-violet-600;
-}
-.ion-primitives-violet-700 {
-  color: $ion-primitives-violet-700;
-}
-.ion-background-primitives-violet-700 {
-  background-color: $ion-primitives-violet-700;
-}
-.ion-primitives-violet-800 {
-  color: $ion-primitives-violet-800;
-}
-.ion-background-primitives-violet-800 {
-  background-color: $ion-primitives-violet-800;
-}
-.ion-primitives-violet-900 {
-  color: $ion-primitives-violet-900;
-}
-.ion-background-primitives-violet-900 {
-  background-color: $ion-primitives-violet-900;
-}
-.ion-primitives-violet-1000 {
-  color: $ion-primitives-violet-1000;
-}
-.ion-background-primitives-violet-1000 {
-  background-color: $ion-primitives-violet-1000;
-}
-.ion-primitives-violet-1100 {
-  color: $ion-primitives-violet-1100;
-}
-.ion-background-primitives-violet-1100 {
-  background-color: $ion-primitives-violet-1100;
-}
-.ion-primitives-violet-1200 {
-  color: $ion-primitives-violet-1200;
-}
-.ion-background-primitives-violet-1200 {
-  background-color: $ion-primitives-violet-1200;
-}
-.ion-primitives-purple-100 {
-  color: $ion-primitives-purple-100;
-}
-.ion-background-primitives-purple-100 {
-  background-color: $ion-primitives-purple-100;
-}
-.ion-primitives-purple-200 {
-  color: $ion-primitives-purple-200;
-}
-.ion-background-primitives-purple-200 {
-  background-color: $ion-primitives-purple-200;
-}
-.ion-primitives-purple-300 {
-  color: $ion-primitives-purple-300;
-}
-.ion-background-primitives-purple-300 {
-  background-color: $ion-primitives-purple-300;
-}
-.ion-primitives-purple-400 {
-  color: $ion-primitives-purple-400;
-}
-.ion-background-primitives-purple-400 {
-  background-color: $ion-primitives-purple-400;
-}
-.ion-primitives-purple-500 {
-  color: $ion-primitives-purple-500;
-}
-.ion-background-primitives-purple-500 {
-  background-color: $ion-primitives-purple-500;
-}
-.ion-primitives-purple-600 {
-  color: $ion-primitives-purple-600;
-}
-.ion-background-primitives-purple-600 {
-  background-color: $ion-primitives-purple-600;
-}
-.ion-primitives-purple-700 {
-  color: $ion-primitives-purple-700;
-}
-.ion-background-primitives-purple-700 {
-  background-color: $ion-primitives-purple-700;
-}
-.ion-primitives-purple-800 {
-  color: $ion-primitives-purple-800;
-}
-.ion-background-primitives-purple-800 {
-  background-color: $ion-primitives-purple-800;
-}
-.ion-primitives-purple-900 {
-  color: $ion-primitives-purple-900;
-}
-.ion-background-primitives-purple-900 {
-  background-color: $ion-primitives-purple-900;
-}
-.ion-primitives-purple-1000 {
-  color: $ion-primitives-purple-1000;
-}
-.ion-background-primitives-purple-1000 {
-  background-color: $ion-primitives-purple-1000;
-}
-.ion-primitives-purple-1100 {
-  color: $ion-primitives-purple-1100;
-}
-.ion-background-primitives-purple-1100 {
-  background-color: $ion-primitives-purple-1100;
-}
-.ion-primitives-purple-1200 {
-  color: $ion-primitives-purple-1200;
-}
-.ion-background-primitives-purple-1200 {
-  background-color: $ion-primitives-purple-1200;
-}
-.ion-primitives-magenta-100 {
-  color: $ion-primitives-magenta-100;
-}
-.ion-background-primitives-magenta-100 {
-  background-color: $ion-primitives-magenta-100;
-}
-.ion-primitives-magenta-200 {
-  color: $ion-primitives-magenta-200;
-}
-.ion-background-primitives-magenta-200 {
-  background-color: $ion-primitives-magenta-200;
-}
-.ion-primitives-magenta-300 {
-  color: $ion-primitives-magenta-300;
-}
-.ion-background-primitives-magenta-300 {
-  background-color: $ion-primitives-magenta-300;
-}
-.ion-primitives-magenta-400 {
-  color: $ion-primitives-magenta-400;
-}
-.ion-background-primitives-magenta-400 {
-  background-color: $ion-primitives-magenta-400;
-}
-.ion-primitives-magenta-500 {
-  color: $ion-primitives-magenta-500;
-}
-.ion-background-primitives-magenta-500 {
-  background-color: $ion-primitives-magenta-500;
-}
-.ion-primitives-magenta-600 {
-  color: $ion-primitives-magenta-600;
-}
-.ion-background-primitives-magenta-600 {
-  background-color: $ion-primitives-magenta-600;
-}
-.ion-primitives-magenta-700 {
-  color: $ion-primitives-magenta-700;
-}
-.ion-background-primitives-magenta-700 {
-  background-color: $ion-primitives-magenta-700;
-}
-.ion-primitives-magenta-800 {
-  color: $ion-primitives-magenta-800;
-}
-.ion-background-primitives-magenta-800 {
-  background-color: $ion-primitives-magenta-800;
-}
-.ion-primitives-magenta-900 {
-  color: $ion-primitives-magenta-900;
-}
-.ion-background-primitives-magenta-900 {
-  background-color: $ion-primitives-magenta-900;
-}
-.ion-primitives-magenta-1000 {
-  color: $ion-primitives-magenta-1000;
-}
-.ion-background-primitives-magenta-1000 {
-  background-color: $ion-primitives-magenta-1000;
-}
-.ion-primitives-magenta-1100 {
-  color: $ion-primitives-magenta-1100;
-}
-.ion-background-primitives-magenta-1100 {
-  background-color: $ion-primitives-magenta-1100;
-}
-.ion-primitives-magenta-1200 {
-  color: $ion-primitives-magenta-1200;
-}
-.ion-background-primitives-magenta-1200 {
-  background-color: $ion-primitives-magenta-1200;
-}
-.ion-primitives-pink-100 {
-  color: $ion-primitives-pink-100;
-}
-.ion-background-primitives-pink-100 {
-  background-color: $ion-primitives-pink-100;
-}
-.ion-primitives-pink-200 {
-  color: $ion-primitives-pink-200;
-}
-.ion-background-primitives-pink-200 {
-  background-color: $ion-primitives-pink-200;
-}
-.ion-primitives-pink-300 {
-  color: $ion-primitives-pink-300;
-}
-.ion-background-primitives-pink-300 {
-  background-color: $ion-primitives-pink-300;
-}
-.ion-primitives-pink-400 {
-  color: $ion-primitives-pink-400;
-}
-.ion-background-primitives-pink-400 {
-  background-color: $ion-primitives-pink-400;
-}
-.ion-primitives-pink-500 {
-  color: $ion-primitives-pink-500;
-}
-.ion-background-primitives-pink-500 {
-  background-color: $ion-primitives-pink-500;
-}
-.ion-primitives-pink-600 {
-  color: $ion-primitives-pink-600;
-}
-.ion-background-primitives-pink-600 {
-  background-color: $ion-primitives-pink-600;
-}
-.ion-primitives-pink-700 {
-  color: $ion-primitives-pink-700;
-}
-.ion-background-primitives-pink-700 {
-  background-color: $ion-primitives-pink-700;
-}
-.ion-primitives-pink-800 {
-  color: $ion-primitives-pink-800;
-}
-.ion-background-primitives-pink-800 {
-  background-color: $ion-primitives-pink-800;
-}
-.ion-primitives-pink-900 {
-  color: $ion-primitives-pink-900;
-}
-.ion-background-primitives-pink-900 {
-  background-color: $ion-primitives-pink-900;
-}
-.ion-primitives-pink-1000 {
-  color: $ion-primitives-pink-1000;
-}
-.ion-background-primitives-pink-1000 {
-  background-color: $ion-primitives-pink-1000;
-}
-.ion-primitives-pink-1100 {
-  color: $ion-primitives-pink-1100;
-}
-.ion-background-primitives-pink-1100 {
-  background-color: $ion-primitives-pink-1100;
-}
-.ion-primitives-pink-1200 {
-  color: $ion-primitives-pink-1200;
-}
-.ion-background-primitives-pink-1200 {
-  background-color: $ion-primitives-pink-1200;
+.ion-background-icon-link-visited {
+  background-color: $ion-icon-link-visited;
 }
 .ion-state-disabled {
   color: $ion-state-disabled;
@@ -3709,6 +2668,1119 @@ Do not edit directly, this file was auto-generated.
 }
 .ion-soft-2xl {
   border-radius: $ion-soft-2xl;
+}
+.ion-primitives-neutral-100 {
+  color: $ion-primitives-neutral-100;
+}
+.ion-background-primitives-neutral-100 {
+  background-color: $ion-primitives-neutral-100;
+}
+.ion-primitives-neutral-200 {
+  color: $ion-primitives-neutral-200;
+}
+.ion-background-primitives-neutral-200 {
+  background-color: $ion-primitives-neutral-200;
+}
+.ion-primitives-neutral-300 {
+  color: $ion-primitives-neutral-300;
+}
+.ion-background-primitives-neutral-300 {
+  background-color: $ion-primitives-neutral-300;
+}
+.ion-primitives-neutral-400 {
+  color: $ion-primitives-neutral-400;
+}
+.ion-background-primitives-neutral-400 {
+  background-color: $ion-primitives-neutral-400;
+}
+.ion-primitives-neutral-500 {
+  color: $ion-primitives-neutral-500;
+}
+.ion-background-primitives-neutral-500 {
+  background-color: $ion-primitives-neutral-500;
+}
+.ion-primitives-neutral-600 {
+  color: $ion-primitives-neutral-600;
+}
+.ion-background-primitives-neutral-600 {
+  background-color: $ion-primitives-neutral-600;
+}
+.ion-primitives-neutral-700 {
+  color: $ion-primitives-neutral-700;
+}
+.ion-background-primitives-neutral-700 {
+  background-color: $ion-primitives-neutral-700;
+}
+.ion-primitives-neutral-800 {
+  color: $ion-primitives-neutral-800;
+}
+.ion-background-primitives-neutral-800 {
+  background-color: $ion-primitives-neutral-800;
+}
+.ion-primitives-neutral-900 {
+  color: $ion-primitives-neutral-900;
+}
+.ion-background-primitives-neutral-900 {
+  background-color: $ion-primitives-neutral-900;
+}
+.ion-primitives-neutral-1000 {
+  color: $ion-primitives-neutral-1000;
+}
+.ion-background-primitives-neutral-1000 {
+  background-color: $ion-primitives-neutral-1000;
+}
+.ion-primitives-neutral-1100 {
+  color: $ion-primitives-neutral-1100;
+}
+.ion-background-primitives-neutral-1100 {
+  background-color: $ion-primitives-neutral-1100;
+}
+.ion-primitives-neutral-1200 {
+  color: $ion-primitives-neutral-1200;
+}
+.ion-background-primitives-neutral-1200 {
+  background-color: $ion-primitives-neutral-1200;
+}
+.ion-primitives-base-white {
+  color: $ion-primitives-base-white;
+}
+.ion-background-primitives-base-white {
+  background-color: $ion-primitives-base-white;
+}
+.ion-primitives-base-black {
+  color: $ion-primitives-base-black;
+}
+.ion-background-primitives-base-black {
+  background-color: $ion-primitives-base-black;
+}
+.ion-primitives-red-100 {
+  color: $ion-primitives-red-100;
+}
+.ion-background-primitives-red-100 {
+  background-color: $ion-primitives-red-100;
+}
+.ion-primitives-red-200 {
+  color: $ion-primitives-red-200;
+}
+.ion-background-primitives-red-200 {
+  background-color: $ion-primitives-red-200;
+}
+.ion-primitives-red-300 {
+  color: $ion-primitives-red-300;
+}
+.ion-background-primitives-red-300 {
+  background-color: $ion-primitives-red-300;
+}
+.ion-primitives-red-400 {
+  color: $ion-primitives-red-400;
+}
+.ion-background-primitives-red-400 {
+  background-color: $ion-primitives-red-400;
+}
+.ion-primitives-red-500 {
+  color: $ion-primitives-red-500;
+}
+.ion-background-primitives-red-500 {
+  background-color: $ion-primitives-red-500;
+}
+.ion-primitives-red-600 {
+  color: $ion-primitives-red-600;
+}
+.ion-background-primitives-red-600 {
+  background-color: $ion-primitives-red-600;
+}
+.ion-primitives-red-700 {
+  color: $ion-primitives-red-700;
+}
+.ion-background-primitives-red-700 {
+  background-color: $ion-primitives-red-700;
+}
+.ion-primitives-red-800 {
+  color: $ion-primitives-red-800;
+}
+.ion-background-primitives-red-800 {
+  background-color: $ion-primitives-red-800;
+}
+.ion-primitives-red-900 {
+  color: $ion-primitives-red-900;
+}
+.ion-background-primitives-red-900 {
+  background-color: $ion-primitives-red-900;
+}
+.ion-primitives-red-1000 {
+  color: $ion-primitives-red-1000;
+}
+.ion-background-primitives-red-1000 {
+  background-color: $ion-primitives-red-1000;
+}
+.ion-primitives-red-1100 {
+  color: $ion-primitives-red-1100;
+}
+.ion-background-primitives-red-1100 {
+  background-color: $ion-primitives-red-1100;
+}
+.ion-primitives-red-1200 {
+  color: $ion-primitives-red-1200;
+}
+.ion-background-primitives-red-1200 {
+  background-color: $ion-primitives-red-1200;
+}
+.ion-primitives-pumpkin-100 {
+  color: $ion-primitives-pumpkin-100;
+}
+.ion-background-primitives-pumpkin-100 {
+  background-color: $ion-primitives-pumpkin-100;
+}
+.ion-primitives-pumpkin-200 {
+  color: $ion-primitives-pumpkin-200;
+}
+.ion-background-primitives-pumpkin-200 {
+  background-color: $ion-primitives-pumpkin-200;
+}
+.ion-primitives-pumpkin-300 {
+  color: $ion-primitives-pumpkin-300;
+}
+.ion-background-primitives-pumpkin-300 {
+  background-color: $ion-primitives-pumpkin-300;
+}
+.ion-primitives-pumpkin-400 {
+  color: $ion-primitives-pumpkin-400;
+}
+.ion-background-primitives-pumpkin-400 {
+  background-color: $ion-primitives-pumpkin-400;
+}
+.ion-primitives-pumpkin-500 {
+  color: $ion-primitives-pumpkin-500;
+}
+.ion-background-primitives-pumpkin-500 {
+  background-color: $ion-primitives-pumpkin-500;
+}
+.ion-primitives-pumpkin-600 {
+  color: $ion-primitives-pumpkin-600;
+}
+.ion-background-primitives-pumpkin-600 {
+  background-color: $ion-primitives-pumpkin-600;
+}
+.ion-primitives-pumpkin-700 {
+  color: $ion-primitives-pumpkin-700;
+}
+.ion-background-primitives-pumpkin-700 {
+  background-color: $ion-primitives-pumpkin-700;
+}
+.ion-primitives-pumpkin-800 {
+  color: $ion-primitives-pumpkin-800;
+}
+.ion-background-primitives-pumpkin-800 {
+  background-color: $ion-primitives-pumpkin-800;
+}
+.ion-primitives-pumpkin-900 {
+  color: $ion-primitives-pumpkin-900;
+}
+.ion-background-primitives-pumpkin-900 {
+  background-color: $ion-primitives-pumpkin-900;
+}
+.ion-primitives-pumpkin-1000 {
+  color: $ion-primitives-pumpkin-1000;
+}
+.ion-background-primitives-pumpkin-1000 {
+  background-color: $ion-primitives-pumpkin-1000;
+}
+.ion-primitives-pumpkin-1100 {
+  color: $ion-primitives-pumpkin-1100;
+}
+.ion-background-primitives-pumpkin-1100 {
+  background-color: $ion-primitives-pumpkin-1100;
+}
+.ion-primitives-pumpkin-1200 {
+  color: $ion-primitives-pumpkin-1200;
+}
+.ion-background-primitives-pumpkin-1200 {
+  background-color: $ion-primitives-pumpkin-1200;
+}
+.ion-primitives-orange-100 {
+  color: $ion-primitives-orange-100;
+}
+.ion-background-primitives-orange-100 {
+  background-color: $ion-primitives-orange-100;
+}
+.ion-primitives-orange-200 {
+  color: $ion-primitives-orange-200;
+}
+.ion-background-primitives-orange-200 {
+  background-color: $ion-primitives-orange-200;
+}
+.ion-primitives-orange-300 {
+  color: $ion-primitives-orange-300;
+}
+.ion-background-primitives-orange-300 {
+  background-color: $ion-primitives-orange-300;
+}
+.ion-primitives-orange-400 {
+  color: $ion-primitives-orange-400;
+}
+.ion-background-primitives-orange-400 {
+  background-color: $ion-primitives-orange-400;
+}
+.ion-primitives-orange-500 {
+  color: $ion-primitives-orange-500;
+}
+.ion-background-primitives-orange-500 {
+  background-color: $ion-primitives-orange-500;
+}
+.ion-primitives-orange-600 {
+  color: $ion-primitives-orange-600;
+}
+.ion-background-primitives-orange-600 {
+  background-color: $ion-primitives-orange-600;
+}
+.ion-primitives-orange-700 {
+  color: $ion-primitives-orange-700;
+}
+.ion-background-primitives-orange-700 {
+  background-color: $ion-primitives-orange-700;
+}
+.ion-primitives-orange-800 {
+  color: $ion-primitives-orange-800;
+}
+.ion-background-primitives-orange-800 {
+  background-color: $ion-primitives-orange-800;
+}
+.ion-primitives-orange-900 {
+  color: $ion-primitives-orange-900;
+}
+.ion-background-primitives-orange-900 {
+  background-color: $ion-primitives-orange-900;
+}
+.ion-primitives-orange-1000 {
+  color: $ion-primitives-orange-1000;
+}
+.ion-background-primitives-orange-1000 {
+  background-color: $ion-primitives-orange-1000;
+}
+.ion-primitives-orange-1100 {
+  color: $ion-primitives-orange-1100;
+}
+.ion-background-primitives-orange-1100 {
+  background-color: $ion-primitives-orange-1100;
+}
+.ion-primitives-orange-1200 {
+  color: $ion-primitives-orange-1200;
+}
+.ion-background-primitives-orange-1200 {
+  background-color: $ion-primitives-orange-1200;
+}
+.ion-primitives-yellow-100 {
+  color: $ion-primitives-yellow-100;
+}
+.ion-background-primitives-yellow-100 {
+  background-color: $ion-primitives-yellow-100;
+}
+.ion-primitives-yellow-200 {
+  color: $ion-primitives-yellow-200;
+}
+.ion-background-primitives-yellow-200 {
+  background-color: $ion-primitives-yellow-200;
+}
+.ion-primitives-yellow-300 {
+  color: $ion-primitives-yellow-300;
+}
+.ion-background-primitives-yellow-300 {
+  background-color: $ion-primitives-yellow-300;
+}
+.ion-primitives-yellow-400 {
+  color: $ion-primitives-yellow-400;
+}
+.ion-background-primitives-yellow-400 {
+  background-color: $ion-primitives-yellow-400;
+}
+.ion-primitives-yellow-500 {
+  color: $ion-primitives-yellow-500;
+}
+.ion-background-primitives-yellow-500 {
+  background-color: $ion-primitives-yellow-500;
+}
+.ion-primitives-yellow-600 {
+  color: $ion-primitives-yellow-600;
+}
+.ion-background-primitives-yellow-600 {
+  background-color: $ion-primitives-yellow-600;
+}
+.ion-primitives-yellow-700 {
+  color: $ion-primitives-yellow-700;
+}
+.ion-background-primitives-yellow-700 {
+  background-color: $ion-primitives-yellow-700;
+}
+.ion-primitives-yellow-800 {
+  color: $ion-primitives-yellow-800;
+}
+.ion-background-primitives-yellow-800 {
+  background-color: $ion-primitives-yellow-800;
+}
+.ion-primitives-yellow-900 {
+  color: $ion-primitives-yellow-900;
+}
+.ion-background-primitives-yellow-900 {
+  background-color: $ion-primitives-yellow-900;
+}
+.ion-primitives-yellow-1000 {
+  color: $ion-primitives-yellow-1000;
+}
+.ion-background-primitives-yellow-1000 {
+  background-color: $ion-primitives-yellow-1000;
+}
+.ion-primitives-yellow-1100 {
+  color: $ion-primitives-yellow-1100;
+}
+.ion-background-primitives-yellow-1100 {
+  background-color: $ion-primitives-yellow-1100;
+}
+.ion-primitives-yellow-1200 {
+  color: $ion-primitives-yellow-1200;
+}
+.ion-background-primitives-yellow-1200 {
+  background-color: $ion-primitives-yellow-1200;
+}
+.ion-primitives-lime-100 {
+  color: $ion-primitives-lime-100;
+}
+.ion-background-primitives-lime-100 {
+  background-color: $ion-primitives-lime-100;
+}
+.ion-primitives-lime-200 {
+  color: $ion-primitives-lime-200;
+}
+.ion-background-primitives-lime-200 {
+  background-color: $ion-primitives-lime-200;
+}
+.ion-primitives-lime-300 {
+  color: $ion-primitives-lime-300;
+}
+.ion-background-primitives-lime-300 {
+  background-color: $ion-primitives-lime-300;
+}
+.ion-primitives-lime-400 {
+  color: $ion-primitives-lime-400;
+}
+.ion-background-primitives-lime-400 {
+  background-color: $ion-primitives-lime-400;
+}
+.ion-primitives-lime-500 {
+  color: $ion-primitives-lime-500;
+}
+.ion-background-primitives-lime-500 {
+  background-color: $ion-primitives-lime-500;
+}
+.ion-primitives-lime-600 {
+  color: $ion-primitives-lime-600;
+}
+.ion-background-primitives-lime-600 {
+  background-color: $ion-primitives-lime-600;
+}
+.ion-primitives-lime-700 {
+  color: $ion-primitives-lime-700;
+}
+.ion-background-primitives-lime-700 {
+  background-color: $ion-primitives-lime-700;
+}
+.ion-primitives-lime-800 {
+  color: $ion-primitives-lime-800;
+}
+.ion-background-primitives-lime-800 {
+  background-color: $ion-primitives-lime-800;
+}
+.ion-primitives-lime-900 {
+  color: $ion-primitives-lime-900;
+}
+.ion-background-primitives-lime-900 {
+  background-color: $ion-primitives-lime-900;
+}
+.ion-primitives-lime-1000 {
+  color: $ion-primitives-lime-1000;
+}
+.ion-background-primitives-lime-1000 {
+  background-color: $ion-primitives-lime-1000;
+}
+.ion-primitives-lime-1100 {
+  color: $ion-primitives-lime-1100;
+}
+.ion-background-primitives-lime-1100 {
+  background-color: $ion-primitives-lime-1100;
+}
+.ion-primitives-lime-1200 {
+  color: $ion-primitives-lime-1200;
+}
+.ion-background-primitives-lime-1200 {
+  background-color: $ion-primitives-lime-1200;
+}
+.ion-primitives-green-100 {
+  color: $ion-primitives-green-100;
+}
+.ion-background-primitives-green-100 {
+  background-color: $ion-primitives-green-100;
+}
+.ion-primitives-green-200 {
+  color: $ion-primitives-green-200;
+}
+.ion-background-primitives-green-200 {
+  background-color: $ion-primitives-green-200;
+}
+.ion-primitives-green-300 {
+  color: $ion-primitives-green-300;
+}
+.ion-background-primitives-green-300 {
+  background-color: $ion-primitives-green-300;
+}
+.ion-primitives-green-400 {
+  color: $ion-primitives-green-400;
+}
+.ion-background-primitives-green-400 {
+  background-color: $ion-primitives-green-400;
+}
+.ion-primitives-green-500 {
+  color: $ion-primitives-green-500;
+}
+.ion-background-primitives-green-500 {
+  background-color: $ion-primitives-green-500;
+}
+.ion-primitives-green-600 {
+  color: $ion-primitives-green-600;
+}
+.ion-background-primitives-green-600 {
+  background-color: $ion-primitives-green-600;
+}
+.ion-primitives-green-700 {
+  color: $ion-primitives-green-700;
+}
+.ion-background-primitives-green-700 {
+  background-color: $ion-primitives-green-700;
+}
+.ion-primitives-green-800 {
+  color: $ion-primitives-green-800;
+}
+.ion-background-primitives-green-800 {
+  background-color: $ion-primitives-green-800;
+}
+.ion-primitives-green-900 {
+  color: $ion-primitives-green-900;
+}
+.ion-background-primitives-green-900 {
+  background-color: $ion-primitives-green-900;
+}
+.ion-primitives-green-1000 {
+  color: $ion-primitives-green-1000;
+}
+.ion-background-primitives-green-1000 {
+  background-color: $ion-primitives-green-1000;
+}
+.ion-primitives-green-1100 {
+  color: $ion-primitives-green-1100;
+}
+.ion-background-primitives-green-1100 {
+  background-color: $ion-primitives-green-1100;
+}
+.ion-primitives-green-1200 {
+  color: $ion-primitives-green-1200;
+}
+.ion-background-primitives-green-1200 {
+  background-color: $ion-primitives-green-1200;
+}
+.ion-primitives-teal-100 {
+  color: $ion-primitives-teal-100;
+}
+.ion-background-primitives-teal-100 {
+  background-color: $ion-primitives-teal-100;
+}
+.ion-primitives-teal-200 {
+  color: $ion-primitives-teal-200;
+}
+.ion-background-primitives-teal-200 {
+  background-color: $ion-primitives-teal-200;
+}
+.ion-primitives-teal-300 {
+  color: $ion-primitives-teal-300;
+}
+.ion-background-primitives-teal-300 {
+  background-color: $ion-primitives-teal-300;
+}
+.ion-primitives-teal-400 {
+  color: $ion-primitives-teal-400;
+}
+.ion-background-primitives-teal-400 {
+  background-color: $ion-primitives-teal-400;
+}
+.ion-primitives-teal-500 {
+  color: $ion-primitives-teal-500;
+}
+.ion-background-primitives-teal-500 {
+  background-color: $ion-primitives-teal-500;
+}
+.ion-primitives-teal-600 {
+  color: $ion-primitives-teal-600;
+}
+.ion-background-primitives-teal-600 {
+  background-color: $ion-primitives-teal-600;
+}
+.ion-primitives-teal-700 {
+  color: $ion-primitives-teal-700;
+}
+.ion-background-primitives-teal-700 {
+  background-color: $ion-primitives-teal-700;
+}
+.ion-primitives-teal-800 {
+  color: $ion-primitives-teal-800;
+}
+.ion-background-primitives-teal-800 {
+  background-color: $ion-primitives-teal-800;
+}
+.ion-primitives-teal-900 {
+  color: $ion-primitives-teal-900;
+}
+.ion-background-primitives-teal-900 {
+  background-color: $ion-primitives-teal-900;
+}
+.ion-primitives-teal-1000 {
+  color: $ion-primitives-teal-1000;
+}
+.ion-background-primitives-teal-1000 {
+  background-color: $ion-primitives-teal-1000;
+}
+.ion-primitives-teal-1100 {
+  color: $ion-primitives-teal-1100;
+}
+.ion-background-primitives-teal-1100 {
+  background-color: $ion-primitives-teal-1100;
+}
+.ion-primitives-teal-1200 {
+  color: $ion-primitives-teal-1200;
+}
+.ion-background-primitives-teal-1200 {
+  background-color: $ion-primitives-teal-1200;
+}
+.ion-primitives-aqua-100 {
+  color: $ion-primitives-aqua-100;
+}
+.ion-background-primitives-aqua-100 {
+  background-color: $ion-primitives-aqua-100;
+}
+.ion-primitives-aqua-200 {
+  color: $ion-primitives-aqua-200;
+}
+.ion-background-primitives-aqua-200 {
+  background-color: $ion-primitives-aqua-200;
+}
+.ion-primitives-aqua-300 {
+  color: $ion-primitives-aqua-300;
+}
+.ion-background-primitives-aqua-300 {
+  background-color: $ion-primitives-aqua-300;
+}
+.ion-primitives-aqua-400 {
+  color: $ion-primitives-aqua-400;
+}
+.ion-background-primitives-aqua-400 {
+  background-color: $ion-primitives-aqua-400;
+}
+.ion-primitives-aqua-500 {
+  color: $ion-primitives-aqua-500;
+}
+.ion-background-primitives-aqua-500 {
+  background-color: $ion-primitives-aqua-500;
+}
+.ion-primitives-aqua-600 {
+  color: $ion-primitives-aqua-600;
+}
+.ion-background-primitives-aqua-600 {
+  background-color: $ion-primitives-aqua-600;
+}
+.ion-primitives-aqua-700 {
+  color: $ion-primitives-aqua-700;
+}
+.ion-background-primitives-aqua-700 {
+  background-color: $ion-primitives-aqua-700;
+}
+.ion-primitives-aqua-800 {
+  color: $ion-primitives-aqua-800;
+}
+.ion-background-primitives-aqua-800 {
+  background-color: $ion-primitives-aqua-800;
+}
+.ion-primitives-aqua-900 {
+  color: $ion-primitives-aqua-900;
+}
+.ion-background-primitives-aqua-900 {
+  background-color: $ion-primitives-aqua-900;
+}
+.ion-primitives-aqua-1000 {
+  color: $ion-primitives-aqua-1000;
+}
+.ion-background-primitives-aqua-1000 {
+  background-color: $ion-primitives-aqua-1000;
+}
+.ion-primitives-aqua-1100 {
+  color: $ion-primitives-aqua-1100;
+}
+.ion-background-primitives-aqua-1100 {
+  background-color: $ion-primitives-aqua-1100;
+}
+.ion-primitives-aqua-1200 {
+  color: $ion-primitives-aqua-1200;
+}
+.ion-background-primitives-aqua-1200 {
+  background-color: $ion-primitives-aqua-1200;
+}
+.ion-primitives-blue-100 {
+  color: $ion-primitives-blue-100;
+}
+.ion-background-primitives-blue-100 {
+  background-color: $ion-primitives-blue-100;
+}
+.ion-primitives-blue-200 {
+  color: $ion-primitives-blue-200;
+}
+.ion-background-primitives-blue-200 {
+  background-color: $ion-primitives-blue-200;
+}
+.ion-primitives-blue-300 {
+  color: $ion-primitives-blue-300;
+}
+.ion-background-primitives-blue-300 {
+  background-color: $ion-primitives-blue-300;
+}
+.ion-primitives-blue-400 {
+  color: $ion-primitives-blue-400;
+}
+.ion-background-primitives-blue-400 {
+  background-color: $ion-primitives-blue-400;
+}
+.ion-primitives-blue-500 {
+  color: $ion-primitives-blue-500;
+}
+.ion-background-primitives-blue-500 {
+  background-color: $ion-primitives-blue-500;
+}
+.ion-primitives-blue-600 {
+  color: $ion-primitives-blue-600;
+}
+.ion-background-primitives-blue-600 {
+  background-color: $ion-primitives-blue-600;
+}
+.ion-primitives-blue-700 {
+  color: $ion-primitives-blue-700;
+}
+.ion-background-primitives-blue-700 {
+  background-color: $ion-primitives-blue-700;
+}
+.ion-primitives-blue-800 {
+  color: $ion-primitives-blue-800;
+}
+.ion-background-primitives-blue-800 {
+  background-color: $ion-primitives-blue-800;
+}
+.ion-primitives-blue-900 {
+  color: $ion-primitives-blue-900;
+}
+.ion-background-primitives-blue-900 {
+  background-color: $ion-primitives-blue-900;
+}
+.ion-primitives-blue-1000 {
+  color: $ion-primitives-blue-1000;
+}
+.ion-background-primitives-blue-1000 {
+  background-color: $ion-primitives-blue-1000;
+}
+.ion-primitives-blue-1100 {
+  color: $ion-primitives-blue-1100;
+}
+.ion-background-primitives-blue-1100 {
+  background-color: $ion-primitives-blue-1100;
+}
+.ion-primitives-blue-1200 {
+  color: $ion-primitives-blue-1200;
+}
+.ion-background-primitives-blue-1200 {
+  background-color: $ion-primitives-blue-1200;
+}
+.ion-primitives-indigo-100 {
+  color: $ion-primitives-indigo-100;
+}
+.ion-background-primitives-indigo-100 {
+  background-color: $ion-primitives-indigo-100;
+}
+.ion-primitives-indigo-200 {
+  color: $ion-primitives-indigo-200;
+}
+.ion-background-primitives-indigo-200 {
+  background-color: $ion-primitives-indigo-200;
+}
+.ion-primitives-indigo-300 {
+  color: $ion-primitives-indigo-300;
+}
+.ion-background-primitives-indigo-300 {
+  background-color: $ion-primitives-indigo-300;
+}
+.ion-primitives-indigo-400 {
+  color: $ion-primitives-indigo-400;
+}
+.ion-background-primitives-indigo-400 {
+  background-color: $ion-primitives-indigo-400;
+}
+.ion-primitives-indigo-500 {
+  color: $ion-primitives-indigo-500;
+}
+.ion-background-primitives-indigo-500 {
+  background-color: $ion-primitives-indigo-500;
+}
+.ion-primitives-indigo-600 {
+  color: $ion-primitives-indigo-600;
+}
+.ion-background-primitives-indigo-600 {
+  background-color: $ion-primitives-indigo-600;
+}
+.ion-primitives-indigo-700 {
+  color: $ion-primitives-indigo-700;
+}
+.ion-background-primitives-indigo-700 {
+  background-color: $ion-primitives-indigo-700;
+}
+.ion-primitives-indigo-800 {
+  color: $ion-primitives-indigo-800;
+}
+.ion-background-primitives-indigo-800 {
+  background-color: $ion-primitives-indigo-800;
+}
+.ion-primitives-indigo-900 {
+  color: $ion-primitives-indigo-900;
+}
+.ion-background-primitives-indigo-900 {
+  background-color: $ion-primitives-indigo-900;
+}
+.ion-primitives-indigo-1000 {
+  color: $ion-primitives-indigo-1000;
+}
+.ion-background-primitives-indigo-1000 {
+  background-color: $ion-primitives-indigo-1000;
+}
+.ion-primitives-indigo-1100 {
+  color: $ion-primitives-indigo-1100;
+}
+.ion-background-primitives-indigo-1100 {
+  background-color: $ion-primitives-indigo-1100;
+}
+.ion-primitives-indigo-1200 {
+  color: $ion-primitives-indigo-1200;
+}
+.ion-background-primitives-indigo-1200 {
+  background-color: $ion-primitives-indigo-1200;
+}
+.ion-primitives-violet-100 {
+  color: $ion-primitives-violet-100;
+}
+.ion-background-primitives-violet-100 {
+  background-color: $ion-primitives-violet-100;
+}
+.ion-primitives-violet-200 {
+  color: $ion-primitives-violet-200;
+}
+.ion-background-primitives-violet-200 {
+  background-color: $ion-primitives-violet-200;
+}
+.ion-primitives-violet-300 {
+  color: $ion-primitives-violet-300;
+}
+.ion-background-primitives-violet-300 {
+  background-color: $ion-primitives-violet-300;
+}
+.ion-primitives-violet-400 {
+  color: $ion-primitives-violet-400;
+}
+.ion-background-primitives-violet-400 {
+  background-color: $ion-primitives-violet-400;
+}
+.ion-primitives-violet-500 {
+  color: $ion-primitives-violet-500;
+}
+.ion-background-primitives-violet-500 {
+  background-color: $ion-primitives-violet-500;
+}
+.ion-primitives-violet-600 {
+  color: $ion-primitives-violet-600;
+}
+.ion-background-primitives-violet-600 {
+  background-color: $ion-primitives-violet-600;
+}
+.ion-primitives-violet-700 {
+  color: $ion-primitives-violet-700;
+}
+.ion-background-primitives-violet-700 {
+  background-color: $ion-primitives-violet-700;
+}
+.ion-primitives-violet-800 {
+  color: $ion-primitives-violet-800;
+}
+.ion-background-primitives-violet-800 {
+  background-color: $ion-primitives-violet-800;
+}
+.ion-primitives-violet-900 {
+  color: $ion-primitives-violet-900;
+}
+.ion-background-primitives-violet-900 {
+  background-color: $ion-primitives-violet-900;
+}
+.ion-primitives-violet-1000 {
+  color: $ion-primitives-violet-1000;
+}
+.ion-background-primitives-violet-1000 {
+  background-color: $ion-primitives-violet-1000;
+}
+.ion-primitives-violet-1100 {
+  color: $ion-primitives-violet-1100;
+}
+.ion-background-primitives-violet-1100 {
+  background-color: $ion-primitives-violet-1100;
+}
+.ion-primitives-violet-1200 {
+  color: $ion-primitives-violet-1200;
+}
+.ion-background-primitives-violet-1200 {
+  background-color: $ion-primitives-violet-1200;
+}
+.ion-primitives-purple-100 {
+  color: $ion-primitives-purple-100;
+}
+.ion-background-primitives-purple-100 {
+  background-color: $ion-primitives-purple-100;
+}
+.ion-primitives-purple-200 {
+  color: $ion-primitives-purple-200;
+}
+.ion-background-primitives-purple-200 {
+  background-color: $ion-primitives-purple-200;
+}
+.ion-primitives-purple-300 {
+  color: $ion-primitives-purple-300;
+}
+.ion-background-primitives-purple-300 {
+  background-color: $ion-primitives-purple-300;
+}
+.ion-primitives-purple-400 {
+  color: $ion-primitives-purple-400;
+}
+.ion-background-primitives-purple-400 {
+  background-color: $ion-primitives-purple-400;
+}
+.ion-primitives-purple-500 {
+  color: $ion-primitives-purple-500;
+}
+.ion-background-primitives-purple-500 {
+  background-color: $ion-primitives-purple-500;
+}
+.ion-primitives-purple-600 {
+  color: $ion-primitives-purple-600;
+}
+.ion-background-primitives-purple-600 {
+  background-color: $ion-primitives-purple-600;
+}
+.ion-primitives-purple-700 {
+  color: $ion-primitives-purple-700;
+}
+.ion-background-primitives-purple-700 {
+  background-color: $ion-primitives-purple-700;
+}
+.ion-primitives-purple-800 {
+  color: $ion-primitives-purple-800;
+}
+.ion-background-primitives-purple-800 {
+  background-color: $ion-primitives-purple-800;
+}
+.ion-primitives-purple-900 {
+  color: $ion-primitives-purple-900;
+}
+.ion-background-primitives-purple-900 {
+  background-color: $ion-primitives-purple-900;
+}
+.ion-primitives-purple-1000 {
+  color: $ion-primitives-purple-1000;
+}
+.ion-background-primitives-purple-1000 {
+  background-color: $ion-primitives-purple-1000;
+}
+.ion-primitives-purple-1100 {
+  color: $ion-primitives-purple-1100;
+}
+.ion-background-primitives-purple-1100 {
+  background-color: $ion-primitives-purple-1100;
+}
+.ion-primitives-purple-1200 {
+  color: $ion-primitives-purple-1200;
+}
+.ion-background-primitives-purple-1200 {
+  background-color: $ion-primitives-purple-1200;
+}
+.ion-primitives-magenta-100 {
+  color: $ion-primitives-magenta-100;
+}
+.ion-background-primitives-magenta-100 {
+  background-color: $ion-primitives-magenta-100;
+}
+.ion-primitives-magenta-200 {
+  color: $ion-primitives-magenta-200;
+}
+.ion-background-primitives-magenta-200 {
+  background-color: $ion-primitives-magenta-200;
+}
+.ion-primitives-magenta-300 {
+  color: $ion-primitives-magenta-300;
+}
+.ion-background-primitives-magenta-300 {
+  background-color: $ion-primitives-magenta-300;
+}
+.ion-primitives-magenta-400 {
+  color: $ion-primitives-magenta-400;
+}
+.ion-background-primitives-magenta-400 {
+  background-color: $ion-primitives-magenta-400;
+}
+.ion-primitives-magenta-500 {
+  color: $ion-primitives-magenta-500;
+}
+.ion-background-primitives-magenta-500 {
+  background-color: $ion-primitives-magenta-500;
+}
+.ion-primitives-magenta-600 {
+  color: $ion-primitives-magenta-600;
+}
+.ion-background-primitives-magenta-600 {
+  background-color: $ion-primitives-magenta-600;
+}
+.ion-primitives-magenta-700 {
+  color: $ion-primitives-magenta-700;
+}
+.ion-background-primitives-magenta-700 {
+  background-color: $ion-primitives-magenta-700;
+}
+.ion-primitives-magenta-800 {
+  color: $ion-primitives-magenta-800;
+}
+.ion-background-primitives-magenta-800 {
+  background-color: $ion-primitives-magenta-800;
+}
+.ion-primitives-magenta-900 {
+  color: $ion-primitives-magenta-900;
+}
+.ion-background-primitives-magenta-900 {
+  background-color: $ion-primitives-magenta-900;
+}
+.ion-primitives-magenta-1000 {
+  color: $ion-primitives-magenta-1000;
+}
+.ion-background-primitives-magenta-1000 {
+  background-color: $ion-primitives-magenta-1000;
+}
+.ion-primitives-magenta-1100 {
+  color: $ion-primitives-magenta-1100;
+}
+.ion-background-primitives-magenta-1100 {
+  background-color: $ion-primitives-magenta-1100;
+}
+.ion-primitives-magenta-1200 {
+  color: $ion-primitives-magenta-1200;
+}
+.ion-background-primitives-magenta-1200 {
+  background-color: $ion-primitives-magenta-1200;
+}
+.ion-primitives-pink-100 {
+  color: $ion-primitives-pink-100;
+}
+.ion-background-primitives-pink-100 {
+  background-color: $ion-primitives-pink-100;
+}
+.ion-primitives-pink-200 {
+  color: $ion-primitives-pink-200;
+}
+.ion-background-primitives-pink-200 {
+  background-color: $ion-primitives-pink-200;
+}
+.ion-primitives-pink-300 {
+  color: $ion-primitives-pink-300;
+}
+.ion-background-primitives-pink-300 {
+  background-color: $ion-primitives-pink-300;
+}
+.ion-primitives-pink-400 {
+  color: $ion-primitives-pink-400;
+}
+.ion-background-primitives-pink-400 {
+  background-color: $ion-primitives-pink-400;
+}
+.ion-primitives-pink-500 {
+  color: $ion-primitives-pink-500;
+}
+.ion-background-primitives-pink-500 {
+  background-color: $ion-primitives-pink-500;
+}
+.ion-primitives-pink-600 {
+  color: $ion-primitives-pink-600;
+}
+.ion-background-primitives-pink-600 {
+  background-color: $ion-primitives-pink-600;
+}
+.ion-primitives-pink-700 {
+  color: $ion-primitives-pink-700;
+}
+.ion-background-primitives-pink-700 {
+  background-color: $ion-primitives-pink-700;
+}
+.ion-primitives-pink-800 {
+  color: $ion-primitives-pink-800;
+}
+.ion-background-primitives-pink-800 {
+  background-color: $ion-primitives-pink-800;
+}
+.ion-primitives-pink-900 {
+  color: $ion-primitives-pink-900;
+}
+.ion-background-primitives-pink-900 {
+  background-color: $ion-primitives-pink-900;
+}
+.ion-primitives-pink-1000 {
+  color: $ion-primitives-pink-1000;
+}
+.ion-background-primitives-pink-1000 {
+  background-color: $ion-primitives-pink-1000;
+}
+.ion-primitives-pink-1100 {
+  color: $ion-primitives-pink-1100;
+}
+.ion-background-primitives-pink-1100 {
+  background-color: $ion-primitives-pink-1100;
+}
+.ion-primitives-pink-1200 {
+  color: $ion-primitives-pink-1200;
+}
+.ion-background-primitives-pink-1200 {
+  background-color: $ion-primitives-pink-1200;
+}
+.ion-shadow-1 {
+  box-shadow: $ion-shadow-1;
+}
+.ion-shadow-2 {
+  box-shadow: $ion-shadow-2;
+}
+.ion-shadow-3 {
+  box-shadow: $ion-shadow-3;
+}
+.ion-shadow-4 {
+  box-shadow: $ion-shadow-4;
+}
+.ion-shadow-5 {
+  box-shadow: $ion-shadow-5;
+}
+.ion-shadow-6 {
+  box-shadow: $ion-shadow-6;
+}
+.ion-shadow-7 {
+  box-shadow: $ion-shadow-7;
 }
 
 .ion-no-margin {

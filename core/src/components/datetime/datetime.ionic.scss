@@ -70,7 +70,7 @@
 // default round clear button style
 .calendar-month-year-toggle {
   @include globals.border-radius(globals.$ion-border-radius-full);
-  @include globals.typography(globals.$ion-body-action-lg);
+  @include globals.typography(globals.$ion-body-action-md);
   @include globals.padding(globals.$ion-space-200, globals.$ion-space-400);
 
   min-width: globals.$ion-scale-1600;
@@ -132,7 +132,7 @@
 .calendar-day {
   @include globals.border-radius(globals.$ion-border-radius-full);
   @include globals.padding(globals.$ion-space-100);
-  @include globals.typography(globals.$ion-body-action-md);
+  @include globals.typography(globals.$ion-body-action-sm);
 
   width: globals.$ion-scale-1200;
   min-width: globals.$ion-scale-1200;
@@ -183,7 +183,7 @@
 }
 
 :host .datetime-time .time-header {
-  @include globals.typography(globals.$ion-body-action-lg);
+  @include globals.typography(globals.$ion-body-action-md);
 
   color: globals.$ion-primitives-neutral-800;
 }
@@ -212,7 +212,7 @@
 }
 
 :host .datetime-buttons ion-buttons ion-button {
-  @include globals.typography(globals.$ion-body-action-lg);
+  @include globals.typography(globals.$ion-body-action-md);
 
   min-height: globals.$ion-space-1200;
 }
