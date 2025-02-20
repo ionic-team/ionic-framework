@@ -24,16 +24,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(helperText).toHaveText('Helper text');
       await expect(errorText).toBeHidden();
     });
-    test('input should have an aria-describedby attribute when helper text is present', async ({ page }) => {
+    test('checkbox should have an aria-describedby attribute when helper text is present', async ({ page }) => {
       await page.setContent(
         `<ion-checkbox helper-text="Helper text" error-text="Error text">Label</ion-checkbox>`,
         config
       );
 
-      const input = page.locator('ion-checkbox input[type=checkbox]');
+      const checkbox = page.locator('ion-checkbox');
       const helperText = page.locator('ion-checkbox .helper-text');
       const helperTextId = await helperText.getAttribute('id');
-      const ariaDescribedBy = await input.getAttribute('aria-describedby');
+      const ariaDescribedBy = await checkbox.getAttribute('aria-describedby');
 
       expect(ariaDescribedBy).toBe(helperTextId);
     });
@@ -50,45 +50,45 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(errorText).toHaveText('Error text');
     });
 
-    test('input should have an aria-describedby attribute when error text is present', async ({ page }) => {
+    test('checkbox should have an aria-describedby attribute when error text is present', async ({ page }) => {
       await page.setContent(
         `<ion-checkbox class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-checkbox>`,
         config
       );
 
-      const input = page.locator('ion-checkbox input[type=checkbox]');
+      const checkbox = page.locator('ion-checkbox');
       const errorText = page.locator('ion-checkbox .error-text');
       const errorTextId = await errorText.getAttribute('id');
-      const ariaDescribedBy = await input.getAttribute('aria-describedby');
+      const ariaDescribedBy = await checkbox.getAttribute('aria-describedby');
 
       expect(ariaDescribedBy).toBe(errorTextId);
     });
-    test('input should have aria-invalid attribute when checkbox is invalid', async ({ page }) => {
+    test('checkbox should have aria-invalid attribute when checkbox is invalid', async ({ page }) => {
       await page.setContent(
         `<ion-checkbox class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-checkbox>`,
         config
       );
 
-      const input = page.locator('ion-checkbox input[type=checkbox]');
+      const checkbox = page.locator('ion-checkbox');
 
-      await expect(input).toHaveAttribute('aria-invalid');
+      await expect(checkbox).toHaveAttribute('aria-invalid');
     });
-    test('input should not have aria-invalid attribute when checkbox is valid', async ({ page }) => {
+    test('checkbox should not have aria-invalid attribute when checkbox is valid', async ({ page }) => {
       await page.setContent(
         `<ion-checkbox helper-text="Helper text" error-text="Error text">Label</ion-checkbox>`,
         config
       );
 
-      const input = page.locator('ion-checkbox input[type=checkbox]');
+      const checkbox = page.locator('ion-checkbox');
 
-      await expect(input).not.toHaveAttribute('aria-invalid');
+      await expect(checkbox).not.toHaveAttribute('aria-invalid');
     });
-    test('input should not have aria-describedby attribute when no hint or error text is present', async ({ page }) => {
+    test('checkbox should not have aria-describedby attribute when no hint or error text is present', async ({ page }) => {
       await page.setContent(`<ion-checkbox>Label</ion-checkbox>`, config);
 
-      const input = page.locator('ion-checkbox input[type=checkbox]');
+      const checkbox = page.locator('ion-checkbox');
 
-      await expect(input).not.toHaveAttribute('aria-describedby');
+      await expect(checkbox).not.toHaveAttribute('aria-describedby');
     });
   });
 });
