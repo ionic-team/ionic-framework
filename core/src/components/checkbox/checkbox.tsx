@@ -256,6 +256,8 @@ export class Checkbox implements ComponentInterface {
     return (
       <Host
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -283,8 +285,6 @@ export class Checkbox implements ComponentInterface {
             onFocus={() => this.onFocus()}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
-            aria-describedby={this.getHintTextID()}
-            aria-invalid={this.getHintTextID() === this.errorTextId}
             required={required}
             {...inheritedAttributes}
           />
