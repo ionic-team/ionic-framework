@@ -21,13 +21,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(helperText).toHaveText('Helper text');
       await expect(errorText).toBeHidden();
     });
-    test('input should have an aria-describedby attribute when helper text is present', async ({ page }) => {
+    test('toggle should have an aria-describedby attribute when helper text is present', async ({ page }) => {
       await page.setContent(`<ion-toggle helper-text="Helper text" error-text="Error text">Label</ion-toggle>`, config);
 
-      const input = page.locator('ion-toggle input[type=checkbox]');
+      const toggle = page.locator('ion-toggle');
       const helperText = page.locator('ion-toggle .helper-text');
       const helperTextId = await helperText.getAttribute('id');
-      const ariaDescribedBy = await input.getAttribute('aria-describedby');
+      const ariaDescribedBy = await toggle.getAttribute('aria-describedby');
 
       expect(ariaDescribedBy).toBe(helperTextId);
     });
@@ -44,42 +44,44 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(errorText).toHaveText('Error text');
     });
 
-    test('input should have an aria-describedby attribute when error text is present', async ({ page }) => {
+    test('toggle should have an aria-describedby attribute when error text is present', async ({ page }) => {
       await page.setContent(
         `<ion-toggle class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-toggle>`,
         config
       );
 
-      const input = page.locator('ion-toggle input[type=checkbox]');
+      const toggle = page.locator('ion-toggle');
       const errorText = page.locator('ion-toggle .error-text');
       const errorTextId = await errorText.getAttribute('id');
-      const ariaDescribedBy = await input.getAttribute('aria-describedby');
+      const ariaDescribedBy = await toggle.getAttribute('aria-describedby');
 
       expect(ariaDescribedBy).toBe(errorTextId);
     });
-    test('input should have aria-invalid attribute when toggle is invalid', async ({ page }) => {
+    test('toggle should have aria-invalid attribute when toggle is invalid', async ({ page }) => {
       await page.setContent(
         `<ion-toggle class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-toggle>`,
         config
       );
 
-      const input = page.locator('ion-toggle input[type=checkbox]');
+      const toggle = page.locator('ion-toggle');
 
-      await expect(input).toHaveAttribute('aria-invalid');
+      await expect(toggle).toHaveAttribute('aria-invalid');
     });
-    test('input should not have aria-invalid attribute when toggle is valid', async ({ page }) => {
+    test('toggle should not have aria-invalid attribute when toggle is valid', async ({ page }) => {
       await page.setContent(`<ion-toggle helper-text="Helper text" error-text="Error text">Label</ion-toggle>`, config);
 
-      const input = page.locator('ion-toggle input[type=checkbox]');
+      const toggle = page.locator('ion-toggle');
 
-      await expect(input).not.toHaveAttribute('aria-invalid');
+      await expect(toggle).not.toHaveAttribute('aria-invalid');
     });
-    test('input should not have aria-describedby attribute when no hint or error text is present', async ({ page }) => {
+    test('toggle should not have aria-describedby attribute when no hint or error text is present', async ({
+      page,
+    }) => {
       await page.setContent(`<ion-toggle>Label</ion-toggle>`, config);
 
-      const input = page.locator('ion-toggle input[type=checkbox]');
+      const toggle = page.locator('ion-toggle');
 
-      await expect(input).not.toHaveAttribute('aria-describedby');
+      await expect(toggle).not.toHaveAttribute('aria-describedby');
     });
   });
 });

@@ -364,6 +364,8 @@ export class Toggle implements ComponentInterface {
 
     return (
       <Host
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
@@ -392,8 +394,6 @@ export class Toggle implements ComponentInterface {
             onFocus={() => this.onFocus()}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
-            aria-describedby={this.getHintTextID()}
-            aria-invalid={this.getHintTextID() === this.errorTextId}
             required={required}
             {...this.inheritedAttributes}
           />
