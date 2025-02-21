@@ -2193,7 +2193,7 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-  private renderMonth(month: number, year: number) {
+  private renderMonth(month: number, year: number, theme: Theme) {
     const { disabled, readonly } = this;
 
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
@@ -2234,10 +2234,35 @@ export class Datetime implements ComponentInterface {
         }}
       >
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
-            const { day, dayOfWeek } = dateObject;
+          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, theme === 'ionic').map((dateObject, index) => {
+            const { day, dayOfWeek, hiddenDay } = dateObject;
             const { el, highlightedDates, isDateEnabled, multiple } = this;
-            const referenceParts = { month, day, year };
+            let _month = month;
+            let _year = year;
+
+            if(theme === 'ionic'){
+              if(hiddenDay && day !== null && day > 20) {
+                // Leading with the hidden day from the previous month
+                // if its a hidden day and is higher than '20' (last week even in feb)
+                if(month === 1) {
+                  _year = year - 1;
+                  _month = 12;
+                }else{
+                  _month = month-1;
+                }
+              } else if(hiddenDay && day !== null && day < 15) {
+                // Leading with the hidden day from the next month
+                // if its a hidden day and is lower than '15' (first two weeks)
+                if(month === 12) {
+                  _year = year + 1;
+                  _month = 1;
+                } else {
+                  _month = month + 1;
+                }
+              }
+            }
+            
+            const referenceParts = { month:_month, day, year:_year };
             const isCalendarPadding = day === null;
             const {
               isActive,
@@ -2258,7 +2283,7 @@ export class Datetime implements ComponentInterface {
 
             const dateIsoString = convertDataToISO(referenceParts);
 
-            let isCalDayDisabled = isCalMonthDisabled || isDayDisabled;
+            let isCalDayDisabled = isCalMonthDisabled || isDayDisabled || hiddenDay;
 
             if (!isCalDayDisabled && isDateEnabled !== undefined) {
               try {
@@ -2292,7 +2317,7 @@ export class Datetime implements ComponentInterface {
              * Custom highlight styles should not override the style for selected dates,
              * nor apply to "filler days" at the start of the grid.
              */
-            if (highlightedDates !== undefined && !isActive && day !== null) {
+            if (highlightedDates !== undefined && !isActive && day !== null && !hiddenDay) {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
@@ -2327,8 +2352,8 @@ export class Datetime implements ComponentInterface {
                   }}
                   tabindex="-1"
                   data-day={day}
-                  data-month={month}
-                  data-year={year}
+                  data-month={_month}
+                  data-year={_year}
                   data-index={index}
                   data-day-of-week={dayOfWeek}
                   disabled={isButtonDisabled}
@@ -2384,11 +2409,11 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-  private renderCalendarBody() {
+  private renderCalendarBody(theme: Theme) {
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
         {generateMonths(this.workingParts, this.forceRenderDate).map(({ month, year }) => {
-          return this.renderMonth(month, year);
+          return this.renderMonth(month, year, theme);
         })}
       </div>
     );
@@ -2397,7 +2422,7 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="datetime-calendar" key="datetime-calendar">
         {this.renderCalendarHeader(theme)}
-        {this.renderCalendarBody()}
+        {this.renderCalendarBody(theme)}
       </div>
     );
   }
