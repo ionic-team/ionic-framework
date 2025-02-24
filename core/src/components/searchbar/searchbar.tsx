@@ -621,20 +621,20 @@ export class Searchbar implements ComponentInterface {
   }
 
   private getShape() {
-      const theme = getIonTheme(this);
-      const { shape } = this;
-      
-      // TODO(ROU-11677): Remove theme check when shapes are defined for all themes.
-      if (theme !== 'ionic') {
-        return undefined;
-      }
-  
-      if (shape === undefined) {
-        return 'round';
-      }
-  
-      return shape;
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11677): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
     }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
 
   /**
    * Get the icon to use for the clear icon.
@@ -759,7 +759,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-has-focus': this.focused,
           'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton(),
-          [`searchbar-shape-${shape}`]: shape !== undefined
+          [`searchbar-shape-${shape}`]: shape !== undefined,
         })}
       >
         <div class="searchbar-input-container">

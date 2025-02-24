@@ -26,7 +26,6 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screensh
         const searchbar = page.locator('ion-searchbar');
 
         await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-shape-${shape}`));
-
       });
     });
   });
