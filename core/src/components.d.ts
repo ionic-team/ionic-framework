@@ -3108,6 +3108,10 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
+          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
+        /**
           * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
          */
         "showCancelButton": 'never' | 'focus' | 'always';
@@ -8514,6 +8518,10 @@ declare namespace LocalJSX {
           * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
          */
         "searchIcon"?: string;
+        /**
+          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+         */
+        "shape"?: 'soft' | 'round' | 'rectangular';
         /**
           * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
          */
