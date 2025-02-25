@@ -61,8 +61,8 @@
 }
 
 :host(.badge-xxsmall) ::slotted(ion-icon) {
-  width: globals.$ion-scale-250;
-  height: globals.$ion-scale-250;
+  width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
 }
 
 /* Extra Small Badge */
