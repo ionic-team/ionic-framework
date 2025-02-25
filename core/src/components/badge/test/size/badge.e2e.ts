@@ -32,6 +32,21 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await expect(badge).toHaveScreenshot(screenshot(`badge-size-xxsmall-long-text`));
     });
 
+    test('should render xxsmall badges with icon', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="xxsmall">
+          <ion-icon name="logo-ionic"></ion-icon>
+        </ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xxsmall-icon`));
+    });
+
     test('should render xsmall badges', async ({ page }) => {
       await page.setContent(
         `
@@ -56,6 +71,21 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       const badge = page.locator('ion-badge');
 
       await expect(badge).toHaveScreenshot(screenshot(`badge-size-xsmall-long-text`));
+    });
+
+    test('should render xsmall badges with icon', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="xsmall">
+          <ion-icon name="logo-ionic"></ion-icon>
+        </ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xsmall-icon`));
     });
 
     test('should render small badges', async ({ page }) => {
@@ -84,6 +114,21 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await expect(badge).toHaveScreenshot(screenshot(`badge-size-small-long-text`));
     });
 
+    test('should render small badges with icon', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="small">
+          <ion-icon name="logo-ionic"></ion-icon>
+        </ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-small-icon`));
+    });
+
     test('should render medium badges', async ({ page }) => {
       await page.setContent(
         `
@@ -108,6 +153,21 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       const badge = page.locator('ion-badge');
 
       await expect(badge).toHaveScreenshot(screenshot(`badge-size-medium-long-text`));
+    });
+
+    test('should render medium badges with icon', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="medium">
+          <ion-icon name="logo-ionic"></ion-icon>
+        </ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-medium-icon`));
     });
 
     test('should render large badges', async ({ page }) => {
@@ -136,6 +196,21 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await expect(badge).toHaveScreenshot(screenshot(`badge-size-large-long-text`));
     });
 
+    test('should render large badges with icon', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="large">
+          <ion-icon name="logo-ionic"></ion-icon>
+        </ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-large-icon`));
+    });
+
     test('should render xlarge badges', async ({ page }) => {
       await page.setContent(
         `
@@ -160,6 +235,21 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       const badge = page.locator('ion-badge');
 
       await expect(badge).toHaveScreenshot(screenshot(`badge-size-xlarge-long-text`));
+    });
+
+    test('should render xlarge badges with icon', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-badge size="xlarge">
+          <ion-icon name="logo-ionic"></ion-icon>
+        </ion-badge>
+      `,
+        config
+      );
+
+      const badge = page.locator('ion-badge');
+
+      await expect(badge).toHaveScreenshot(screenshot(`badge-size-xlarge-icon`));
     });
   });
 });
