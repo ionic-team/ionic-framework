@@ -220,16 +220,18 @@ export class Searchbar implements ComponentInterface {
    * Set to `"soft"` for a searchbar with slightly rounded corners,
    * `"round"` for a searchbar with fully rounded corners,
    * or `"rectangular"` for a searchbar without rounded corners.
+   *
    * Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
   /**
    * Set to `"large"` for a searchbar with an increase in height,
-   * or `"medium"` for a searchbar with a medium height.
+   * while "small" and "medium" provide progressively smaller heights.
+   *
    * Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
    */
-  @Prop() size?: 'medium' | 'large';
+  @Prop() size?: 'small' | 'medium' | 'large';
 
   /**
    * Emitted when the `value` of the `ion-searchbar` element has changed.

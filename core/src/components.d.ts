@@ -3108,7 +3108,7 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners.  Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
@@ -3120,9 +3120,9 @@ export namespace Components {
          */
         "showClearButton": 'never' | 'focus' | 'always';
         /**
-          * Set to `"large"` for a searchbar with an increase in height, or `"medium"` for a searchbar with a medium height. Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
+          * Set to `"large"` for a searchbar with an increase in height, while "small" and "medium" provide progressively smaller heights.  Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
          */
-        "size"?: 'medium' | 'large';
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * If `true`, enable spellcheck on the input.
          */
@@ -8523,7 +8523,7 @@ declare namespace LocalJSX {
          */
         "searchIcon"?: string;
         /**
-          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners.  Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
@@ -8535,9 +8535,9 @@ declare namespace LocalJSX {
          */
         "showClearButton"?: 'never' | 'focus' | 'always';
         /**
-          * Set to `"large"` for a searchbar with an increase in height, or `"medium"` for a searchbar with a medium height. Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
+          * Set to `"large"` for a searchbar with an increase in height, while "small" and "medium" provide progressively smaller heights.  Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
          */
-        "size"?: 'medium' | 'large';
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * If `true`, enable spellcheck on the input.
          */
