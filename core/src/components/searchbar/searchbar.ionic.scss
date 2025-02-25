@@ -75,6 +75,20 @@
   font-size: globals.$ion-font-size-400;
 }
 
+// Searchbar Cancel Icon in Toolbar
+// -----------------------------------------
+
+:host-context(ion-toolbar).searchbar-should-show-cancel .searchbar-cancel-button {
+  /**
+   * The left edge of the cancel button
+   * should align with the left edge
+   * of the back button if the searchbar
+   * is used in a toolbar regardless of
+   * the searchbar size.
+   */
+  @include globals.position-horizontal(9px, null);
+}
+
 // Searchbar Search & Clear Icon & Cancel Icon
 // -----------------------------------------
 
