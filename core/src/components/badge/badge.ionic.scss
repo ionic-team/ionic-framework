@@ -115,3 +115,36 @@
 
   line-height: globals.$ion-font-line-height-700;
 }
+
+// Badge Empty
+// --------------------------------------------------
+
+:host(:empty) {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+:host(:empty:not(.badge-static)) {
+  border: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-bg-surface-inverse;
+}
+
+// Badge Sizes Empty
+// --------------------------------------------------
+
+/* sm */
+:host(.badge-small:empty) {
+  min-width: globals.$ion-scale-200;
+  height: globals.$ion-scale-200;
+}
+
+/* md */
+:host(.badge-medium:empty) {
+  min-width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
+}
+
+/* lg */
+:host(.badge-large:empty) {
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+}
