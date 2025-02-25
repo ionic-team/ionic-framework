@@ -28,9 +28,6 @@
 // -----------------------------------------
 
 .searchbar-search-icon {
-  // Position is based on the size of the search icon.
-  @include globals.position(globals.$ion-scale-400, null, null, globals.$ion-scale-400);
-
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 }
@@ -50,14 +47,7 @@
    * the size of the clear icon,
    * and the gap between the icon and the input.
    */
-  @include globals.padding(
-    globals.$ion-space-300,
-    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200),
-    globals.$ion-space-300,
-    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200)
-  );
-
-  min-height: globals.$ion-scale-1200;
+  @include globals.padding(globals.$ion-space-300, null);
 
   contain: strict;
 }
@@ -66,9 +56,6 @@
 // -----------------------------------------
 
 .searchbar-clear-button {
-  // Position is based on the size of the clear icon.
-  @include globals.position(globals.$ion-scale-400, globals.$ion-scale-400, null, null);
-
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 
@@ -83,14 +70,6 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  /**
-   * The left edge of the cancel button
-   * should align with the left edge
-   * of the back button if the searchbar
-   * is used in a toolbar.
-   */
-  @include globals.position(0, null, null, 9px);
-
   background-color: transparent;
 
   font-size: globals.$ion-font-size-400;
@@ -102,7 +81,11 @@
 .searchbar-search-icon,
 .searchbar-clear-button,
 .searchbar-cancel-button {
+  @include globals.position(50%, null);
+
   position: absolute;
+
+  transform: translateY(-50%);
 }
 
 // Clear Icon & Cancel Icon
@@ -115,13 +98,6 @@
   outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
   opacity: 1;
-}
-
-// Searchbar in Toolbar
-// -----------------------------------------
-
-:host-context(ion-toolbar) {
-  min-height: globals.$ion-scale-1200;
 }
 
 // Searchbar States
@@ -156,4 +132,65 @@
 
   cursor: default;
   pointer-events: none;
+}
+
+// Searchbar Sizes
+// --------------------------------------------------
+
+/* Medium */
+:host(.searchbar-size-medium) .searchbar-input {
+  /**
+   * Padding start is based on
+   * desired padding from design,
+   * the size of the search icon,
+   * and the gap between the icon and the input.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * the size of the clear icon,
+   * and the gap between the icon and the input.
+   */
+  @include globals.padding-horizontal(calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200));
+
+  min-height: globals.$ion-scale-1200;
+}
+
+:host(.searchbar-size-medium) .searchbar-search-icon,
+:host(.searchbar-size-medium) .searchbar-cancel-button {
+  // Start is based on the desired padding start from design.
+  @include globals.position-horizontal(globals.$ion-space-400, null);
+}
+
+:host(.searchbar-size-medium) .searchbar-clear-button {
+  // End is based on the desired padding end from design.
+  @include globals.position-horizontal(null, globals.$ion-scale-400);
+}
+
+/* Large */
+:host(.searchbar-size-large) .searchbar-input {
+  /**
+   * Padding start is based on
+   * desired padding from design,
+   * the size of the search icon,
+   * and the gap between the icon and the input.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * the size of the clear icon,
+   * and the gap between the icon and the input.
+   */
+  @include globals.padding-horizontal(calc(globals.$ion-space-500 + globals.$ion-scale-400 + globals.$ion-space-200));
+
+  min-height: globals.$ion-scale-1400;
+}
+
+:host(.searchbar-size-large) .searchbar-search-icon,
+:host(.searchbar-size-large) .searchbar-cancel-button {
+  // Start is based on the desired padding start from design.
+  @include globals.position-horizontal(globals.$ion-space-500, null);
+}
+
+:host(.searchbar-size-large) .searchbar-clear-button {
+  // End is based on the desired padding end from design.
+  @include globals.position-horizontal(null, globals.$ion-scale-500);
 }

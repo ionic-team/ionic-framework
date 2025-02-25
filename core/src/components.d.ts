@@ -3116,6 +3116,10 @@ export namespace Components {
          */
         "showClearButton": 'never' | 'focus' | 'always';
         /**
+          * Set to `"large"` for a searchbar with an increase in height, or `"medium"` for a searchbar with a medium height. Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
+         */
+        "size"?: 'medium' | 'large';
+        /**
           * If `true`, enable spellcheck on the input.
          */
         "spellcheck": boolean;
@@ -8522,6 +8526,10 @@ declare namespace LocalJSX {
           * Sets the behavior for the clear button. Defaults to `"focus"`. Setting to `"focus"` shows the clear button on focus if the input is not empty. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state, but only if the input is not empty.
          */
         "showClearButton"?: 'never' | 'focus' | 'always';
+        /**
+          * Set to `"large"` for a searchbar with an increase in height, or `"medium"` for a searchbar with a medium height. Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
+         */
+        "size"?: 'medium' | 'large';
         /**
           * If `true`, enable spellcheck on the input.
          */

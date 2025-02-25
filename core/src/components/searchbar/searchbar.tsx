@@ -217,6 +217,13 @@ export class Searchbar implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | null = '';
 
   /**
+   * Set to `"large"` for a searchbar with an increase in height,
+   * or `"medium"` for a searchbar with a medium height.
+   * Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
+   */
+  @Prop() size?: 'medium' | 'large';
+
+  /**
    * Emitted when the `value` of the `ion-searchbar` element has changed.
    */
   @Event() ionInput!: EventEmitter<SearchbarInputEventDetail>;
@@ -612,6 +619,22 @@ export class Searchbar implements ComponentInterface {
     return true;
   }
 
+  private getSize(): string | undefined {
+    const theme = getIonTheme(this);
+    const { size } = this;
+
+    // TODO(ROU-11678): Remove theme check when sizes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (size === undefined) {
+      return 'medium';
+    }
+
+    return size;
+  }
+
   /**
    * Get the icon to use for the clear icon.
    * If an icon is set on the component, use that.
@@ -698,6 +721,7 @@ export class Searchbar implements ComponentInterface {
     const animated = this.animated && config.getBoolean('animated', true);
     const theme = getIonTheme(this);
     const shouldShowCancelButton = this.shouldShowCancelButton();
+    const size = this.getSize();
 
     const cancelButton = this.showCancelButton !== 'never' && (
       <button
@@ -734,6 +758,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-has-focus': this.focused,
           'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton(),
+          [`searchbar-size-${size}`]: size !== undefined,
         })}
       >
         <div class="searchbar-input-container">
