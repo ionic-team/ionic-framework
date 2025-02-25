@@ -6,7 +6,7 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('tab-bar: shape'), () => {
+  test.describe(title('searchbar: shape'), () => {
     ['soft', 'round', 'rectangular'].forEach((shape) => {
       test(`${shape} - should not have visual regressions`, async ({ page }) => {
         await page.setContent(
