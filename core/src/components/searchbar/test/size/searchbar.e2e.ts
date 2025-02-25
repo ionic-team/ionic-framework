@@ -7,7 +7,7 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('searchbar: size'), () => {
-    ['medium', 'large'].forEach((size) => {
+    ['small', 'medium', 'large'].forEach((size) => {
       test(`${size} - should not have visual regressions`, async ({ page }) => {
         await page.setContent(
           `
