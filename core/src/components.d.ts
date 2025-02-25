@@ -429,6 +429,10 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
+          * Set to `"top-right"` to position the badge on top right absolute position of the parent element. Set to `"bottom-right"` to position the badge on bottom right absolute position of the parent element.  Defaults to `"static"`.
+         */
+        "position": 'top-right' | 'bottom-right' | 'static';
+        /**
           * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
         "shape"?: 'soft' | 'round | rectangular';
@@ -5788,6 +5792,10 @@ declare namespace LocalJSX {
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Set to `"top-right"` to position the badge on top right absolute position of the parent element. Set to `"bottom-right"` to position the badge on bottom right absolute position of the parent element.  Defaults to `"static"`.
+         */
+        "position"?: 'top-right' | 'bottom-right' | 'static';
         /**
           * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */

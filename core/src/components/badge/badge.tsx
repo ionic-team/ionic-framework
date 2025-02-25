@@ -47,6 +47,14 @@ export class Badge implements ComponentInterface {
    */
   @Prop() size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
+  /**
+   * Set to `"top-right"` to position the badge on top right absolute position of the parent element.
+   * Set to `"bottom-right"` to position the badge on bottom right absolute position of the parent element.
+   *
+   * Defaults to `"static"`.
+   */
+  @Prop() position: 'top-right' | 'bottom-right' | 'static' = 'static';
+
   private getShape(): string | undefined {
     const theme = getIonTheme(this);
     const { shape } = this;
@@ -89,6 +97,7 @@ export class Badge implements ComponentInterface {
           [theme]: true,
           [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
+          [`badge-${this.position}`]: true,
         })}
       >
         <slot></slot>
