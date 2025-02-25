@@ -2373,6 +2373,11 @@ export class Datetime implements ComponentInterface {
                       return;
                     }
 
+                    if(hiddenDay){
+                      //the user selected a day outside the current month, let's not focus on this button since the month will be re-render;
+                      this.el.blur();
+                    }
+                    
                     this.setWorkingParts({
                       ...this.workingParts,
                       month: _month,
