@@ -36,17 +36,6 @@
 // -----------------------------------------
 
 .searchbar-input {
-  /**
-   * Padding start is based on
-   * desired padding from design,
-   * the size of the search icon,
-   * and the gap between the icon and the input.
-   *
-   * Padding end is based on
-   * desired padding from design,
-   * the size of the clear icon,
-   * and the gap between the icon and the input.
-   */
   @include globals.padding(globals.$ion-space-300, null);
 
   contain: strict;
@@ -245,6 +234,8 @@
 
 /* Large */
 :host(.searchbar-size-large) .searchbar-input {
+  @include globals.padding(globals.$ion-space-400, null);
+
   /**
    * Padding start is based on
    * desired padding from design,
