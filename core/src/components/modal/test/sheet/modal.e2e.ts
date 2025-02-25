@@ -47,6 +47,19 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
       });
     });
   });
+
+  test.describe(title('sheet modal: backdrop hidden'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto('/src/components/modal/test/sheet', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+      await page.click('#backdrop-hidden');
+
+      await ionModalDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`modal-backdrop-hidden`), { animations: 'allow' });
+    });
+  });
 });
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
