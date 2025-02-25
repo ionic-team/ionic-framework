@@ -6,9 +6,9 @@ configs({ modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, tit
     test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/badge/test/hint', config);
 
-      await page.setIonViewport();
+      const container = page.locator('ion-list');
 
-      await expect(page).toHaveScreenshot(screenshot(`badge-hint`));
+      await expect(container).toHaveScreenshot(screenshot(`badge-hint`));
     });
   });
 });
