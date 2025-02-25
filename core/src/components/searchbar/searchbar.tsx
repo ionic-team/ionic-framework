@@ -217,6 +217,14 @@ export class Searchbar implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | null = '';
 
   /**
+   * Set to `"soft"` for a searchbar with slightly rounded corners,
+   * `"round"` for a searchbar with fully rounded corners,
+   * or `"rectangular"` for a searchbar without rounded corners.
+   * Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+   */
+  @Prop() shape?: 'soft' | 'round' | 'rectangular';
+
+  /**
    * Set to `"large"` for a searchbar with an increase in height,
    * or `"medium"` for a searchbar with a medium height.
    * Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
@@ -619,6 +627,22 @@ export class Searchbar implements ComponentInterface {
     return true;
   }
 
+  private getShape() {
+    const theme = getIonTheme(this);
+    const { shape } = this;
+
+    // TODO(ROU-11677): Remove theme check when shapes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (shape === undefined) {
+      return 'round';
+    }
+
+    return shape;
+  }
+
   private getSize(): string | undefined {
     const theme = getIonTheme(this);
     const { size } = this;
@@ -721,6 +745,7 @@ export class Searchbar implements ComponentInterface {
     const animated = this.animated && config.getBoolean('animated', true);
     const theme = getIonTheme(this);
     const shouldShowCancelButton = this.shouldShowCancelButton();
+    const shape = this.getShape();
     const size = this.getSize();
 
     const cancelButton = this.showCancelButton !== 'never' && (
@@ -758,6 +783,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-has-focus': this.focused,
           'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton(),
+          [`searchbar-shape-${shape}`]: shape !== undefined,
           [`searchbar-size-${size}`]: size !== undefined,
         })}
       >

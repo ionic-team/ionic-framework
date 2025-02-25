@@ -148,6 +148,21 @@
   pointer-events: none;
 }
 
+// Searchbar Shapes
+// --------------------------------------------------
+
+:host(.searchbar-shape-soft) {
+  --border-radius: #{globals.$ion-border-radius-200};
+}
+
+:host(.searchbar-shape-round) {
+  --border-radius: #{globals.$ion-border-radius-400};
+}
+
+:host(.searchbar-shape-rectangular) {
+  --border-radius: #{globals.$ion-border-radius-0};
+}
+
 // Searchbar Sizes
 // --------------------------------------------------
 
