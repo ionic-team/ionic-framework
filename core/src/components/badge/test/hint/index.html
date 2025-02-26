@@ -22,6 +22,7 @@
         </ion-toolbar>
       </ion-header>
 
+
       <ion-content id="content">
         <ion-list>
           <ion-list-header>
@@ -38,6 +39,45 @@
           <ion-item>
             <ion-label>Badge Large</ion-label>
             <ion-badge color="warning" size="large"></ion-badge>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Inside Avatar </ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label slot="start"> Small </ion-label>
+            <ion-avatar >
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge color="primary" size="small" position="bottom" ></ion-badge>
+            </ion-avatar>
+            <ion-avatar slot="end">
+                <img src="/src/components/avatar/test/avatar.svg" />
+                <ion-badge color="primary" size="small" position="top"></ion-badge>
+              </ion-avatar>
+            </ion-item>
+          <ion-item>
+            <ion-label slot="start"> Medium </ion-label>
+            <ion-avatar >
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge size="medium" position="bottom" color="warning"></ion-badge>
+            </ion-avatar>
+            <ion-avatar slot="end">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge size="medium" position="top" color="warning"></ion-badge>
+            </ion-avatar>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start"> Large </ion-label>
+            <ion-avatar >
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge size="large" position="bottom" color="danger"></ion-badge>
+            </ion-avatar>
+            <ion-avatar slot="end">
+              <img src="/src/components/avatar/test/avatar.svg" />
+              <ion-badge size="large" position="top" color="danger"></ion-badge>
+            </ion-avatar>
           </ion-item>
         </ion-list>
       </ion-content>
