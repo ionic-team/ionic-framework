@@ -127,6 +127,11 @@
   background: current-color(base);
 }
 
+:host .calendar-day.calendar-day-hidden-day {
+  opacity: 1;
+  color: $text-color-step-500;
+}
+
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
