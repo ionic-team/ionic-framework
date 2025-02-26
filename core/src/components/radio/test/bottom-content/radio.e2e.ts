@@ -7,13 +7,27 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio: bottom content functionality'), () => {
     test('should not render bottom content if no hint is enabled', async ({ page }) => {
-      await page.setContent(`<ion-radio>Label</ion-radio>`, config);
+      await page.setContent(
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1">Label</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
 
       const bottomEl = page.locator('ion-radio .radio-bottom');
       await expect(bottomEl).toHaveCount(0);
     });
     test('helper text should be visible initially', async ({ page }) => {
-      await page.setContent(`<ion-radio helper-text="Helper text" error-text="Error text">Label</ion-radio>`, config);
+      await page.setContent(
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1" helper-text="Helper text" error-text="Error text">Label</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
 
       const helperText = page.locator('ion-radio .helper-text');
       const errorText = page.locator('ion-radio .error-text');
@@ -22,7 +36,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(errorText).toBeHidden();
     });
     test('radio should have an aria-describedby attribute when helper text is present', async ({ page }) => {
-      await page.setContent(`<ion-radio helper-text="Helper text" error-text="Error text">Label</ion-radio>`, config);
+      await page.setContent(
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1" helper-text="Helper text" error-text="Error text">Label</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
 
       const radio = page.locator('ion-radio');
       const helperText = page.locator('ion-radio .helper-text');
@@ -33,7 +54,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
     test('error text should be visible when radio is invalid', async ({ page }) => {
       await page.setContent(
-        `<ion-radio class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-radio>`,
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1" class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-radio>
+        </ion-radio-group>
+      `,
         config
       );
 
@@ -46,7 +71,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
     test('radio should have an aria-describedby attribute when error text is present', async ({ page }) => {
       await page.setContent(
-        `<ion-radio class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-radio>`,
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1" class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-radio>
+        </ion-radio-group>
+      `,
         config
       );
 
@@ -59,7 +88,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
     test('radio should have aria-invalid attribute when radio is invalid', async ({ page }) => {
       await page.setContent(
-        `<ion-radio class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-radio>`,
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1" class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text">Label</ion-radio>
+        </ion-radio-group>
+      `,
         config
       );
 
@@ -68,14 +101,28 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(radio).toHaveAttribute('aria-invalid');
     });
     test('radio should not have aria-invalid attribute when radio is valid', async ({ page }) => {
-      await page.setContent(`<ion-radio helper-text="Helper text" error-text="Error text">Label</ion-radio>`, config);
+      await page.setContent(
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1" helper-text="Helper text" error-text="Error text">Label</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
 
       const radio = page.locator('ion-radio');
 
       await expect(radio).not.toHaveAttribute('aria-invalid');
     });
     test('radio should not have aria-describedby attribute when no hint or error text is present', async ({ page }) => {
-      await page.setContent(`<ion-radio>Label</ion-radio>`, config);
+      await page.setContent(
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1">Label</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
 
       const radio = page.locator('ion-radio');
 
@@ -95,9 +142,13 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
         labelPlacement ? `${labelPlacement} label - ` : ''
       }should not have visual regressions when rendering helper text`, async ({ page }) => {
         await page.setContent(
-          `<ion-radio ${
-            labelPlacement ? `label-placement="${labelPlacement}"` : ''
-          } helper-text="Helper text">Label</ion-radio>`,
+          `
+          <ion-radio-group value="1">
+            <ion-radio value="1" ${
+              labelPlacement ? `label-placement="${labelPlacement}"` : ''
+            } helper-text="Helper text">Label</ion-radio>
+        </ion-radio-group>
+      `,
           config
         );
 
@@ -111,9 +162,13 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
         labelPlacement ? `${labelPlacement} label - ` : ''
       }should not have visual regressions when rendering helper text with wrapping text`, async ({ page }) => {
         await page.setContent(
-          `<ion-radio ${
-            labelPlacement ? `label-placement="${labelPlacement}"` : ''
-          } helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-radio>`,
+          `
+          <ion-radio-group value="1">
+            <ion-radio value="1" ${
+              labelPlacement ? `label-placement="${labelPlacement}"` : ''
+            } helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text">Label</ion-radio>
+        </ion-radio-group>
+      `,
           config
         );
 
@@ -128,7 +183,11 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
   test.describe(title('radio: error text rendering'), () => {
     test('should not have visual regressions when rendering error text', async ({ page }) => {
       await page.setContent(
-        `<ion-radio class="ion-invalid ion-touched" error-text="Error text">Label</ion-radio>`,
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1" class="ion-invalid ion-touched" error-text="Error text">Label</ion-radio>
+        </ion-radio-group>
+      `,
         config
       );
 
@@ -137,7 +196,11 @@ configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screens
     });
     test('should not have visual regressions when rendering error text with a stacked label', async ({ page }) => {
       await page.setContent(
-        `<ion-radio class="ion-invalid ion-touched" error-text="Error text" label-placement="stacked">Label</ion-radio>`,
+        `
+        <ion-radio-group value="1">
+          <ion-radio value="1" class="ion-invalid ion-touched" error-text="Error text" label-placement="stacked">Label</ion-radio>
+        </ion-radio-group>
+      `,
         config
       );
 
@@ -164,7 +227,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             color: green;
           }
         </style>
-        <ion-radio helper-text="Helper text">Label</ion-radio>
+        <ion-radio-group value="1">
+          <ion-radio value="1" helper-text="Helper text">Label</ion-radio>
+        </ion-radio-group>
       `,
         config
       );
@@ -184,7 +249,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             color: purple;
           }
         </style>
-        <ion-radio class="ion-invalid ion-touched" error-text="Error text">Label</ion-radio>
+        <ion-radio-group value="1">
+          <ion-radio value="1" class="ion-invalid ion-touched" error-text="Error text">Label</ion-radio>
+        </ion-radio-group>
       `,
         config
       );
