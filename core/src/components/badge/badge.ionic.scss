@@ -154,7 +154,7 @@
   --padding-end: 0;
 }
 
-:host(:empty[position])  {
+:host(:empty[position]) {
   border: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-bg-surface-inverse;
 }
 
