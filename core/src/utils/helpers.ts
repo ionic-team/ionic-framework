@@ -1,4 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
+import { focusElements } from '@utils/focus-visible';
 
 import type { Side } from '../components/menu/menu-interface';
 import { config } from '../global/config';
@@ -267,10 +268,29 @@ export const focusVisibleElement = (el: HTMLElement) => {
    * which will let us explicitly set the elements to focus.
    */
   if (el.classList.contains('ion-focusable')) {
-    const appRootSelector = config.get('appRootSelector', 'ion-app');
+    const appRootSelector: string = config.get('appRootSelector', 'ion-app');
     const app = el.closest(appRootSelector) as HTMLIonAppElement | null;
     if (app) {
-      app.setFocus([el]);
+      if (appRootSelector === 'ion-app') {
+        /**
+         * If the app root is the default, then it will be
+         * in charge of setting focus. This is because the
+         * focus-visible utility is attached to the app root
+         * and will handle setting focus on the correct element.
+         */
+        app.setFocus([el]);
+      } else {
+        /**
+         * If the user has provided a custom app root selector,
+         * then we need to manually set focus on the element
+         * since the focus-visible utility will not be available
+         * on the custom app root.
+         *
+         * The focus-visible utility is used to set focus on an
+         * element that uses `ion-focusable`.
+         */
+        focusElements([el]);
+      }
     }
   }
 };

@@ -1,6 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, h } from '@stencil/core';
-import { getOrInitFocusVisibleUtility } from '@utils/focus-visible';
+import { focusElements } from '@utils/focus-visible';
 
 import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
@@ -27,8 +27,7 @@ export class App implements ComponentInterface {
    */
   @Method()
   async setFocus(elements: HTMLElement[]) {
-    const focusVisible = getOrInitFocusVisibleUtility();
-    focusVisible.setFocus(elements);
+    focusElements(elements);
   }
 
   render() {
