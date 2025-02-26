@@ -372,7 +372,12 @@ export class Select implements ComponentInterface {
     } else if (this.interface === 'popover') {
       overlay.addEventListener('ionPopoverWillPresent', scrollSelectedIntoView, { once: true });
     } else {
-      // For alerts and action sheets, we need to wait a frame after willPresent
+      /**
+       * For alerts and action sheets, we need to wait a frame after willPresent
+       * because these overlays don't have their content in the DOM immediately
+       * when willPresent fires. By waiting a frame, we ensure the content is
+       * rendered and can be properly scrolled into view.
+       */
       const scrollAfterRender = () => {
         requestAnimationFrame(() => {
           scrollSelectedIntoView();
