@@ -51,15 +51,15 @@
 // Badge Empty (hint)
 // --------------------------------------------------
 
-:host(:empty:not(.badge-static)) {
+:host(:empty[position]) {
   @include position(null, 0, null, null);
   position: absolute;
 }
 
-:host(:empty.badge-top-right) {
+:host(:empty.badge-top) {
   top: 0;
 }
 
-:host(:empty.badge-bottom-right) {
+:host(:empty.badge-bottom) {
   bottom: 0;
 }
