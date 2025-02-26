@@ -13,41 +13,45 @@ type Props = LocalJSX.IonTabButton &
     onPointerDown?: React.PointerEventHandler<HTMLIonTabButtonElement>;
     onTouchEnd?: React.TouchEventHandler<HTMLIonTabButtonElement>;
     onTouchMove?: React.TouchEventHandler<HTMLIonTabButtonElement>;
+    children?: React.ReactNode;
   };
 
-export const IonTabButton = /*@__PURE__*/ (() =>
-  class extends React.Component<Props> {
-    constructor(props: Props) {
-      super(props);
-      this.handleIonTabButtonClick = this.handleIonTabButtonClick.bind(this);
-    }
+export class IonTabButton extends React.Component<Props> {
+  shouldComponentUpdate(_nextProps: Readonly<Props>, _nextState: Readonly<{}>): boolean {
+    return true;
+  }
 
-    handleIonTabButtonClick() {
-      if (this.props.onClick) {
-        this.props.onClick(
-          new CustomEvent('ionTabButtonClick', {
-            detail: {
-              tab: this.props.tab,
-              href: this.props.href,
-              routeOptions: this.props.routerOptions,
-            },
-          })
-        );
-      }
-    }
+  constructor(props: Props) {
+    super(props);
+    this.handleIonTabButtonClick = this.handleIonTabButtonClick.bind(this);
+  }
 
-    render() {
-      /**
-       * onClick is excluded from the props, since it has a custom
-       * implementation within IonTabBar.tsx. Calling onClick within this
-       * component would result in duplicate handler calls.
-       */
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { onClick, ...rest } = this.props;
-      return <IonTabButtonInner onIonTabButtonClick={this.handleIonTabButtonClick} {...rest}></IonTabButtonInner>;
+  handleIonTabButtonClick() {
+    if (this.props.onClick) {
+      this.props.onClick(
+        new CustomEvent('ionTabButtonClick', {
+          detail: {
+            tab: this.props.tab,
+            href: this.props.href,
+            routeOptions: this.props.routerOptions,
+          },
+        })
+      );
     }
+  }
 
-    static get displayName() {
-      return 'IonTabButton';
-    }
-  })();
+  render() {
+    /**
+     * onClick is excluded from the props, since it has a custom
+     * implementation within IonTabBar.tsx. Calling onClick within this
+     * component would result in duplicate handler calls.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { onClick, ...rest } = this.props;
+    return <IonTabButtonInner onIonTabButtonClick={this.handleIonTabButtonClick} {...rest}></IonTabButtonInner>;
+  }
+
+  static get displayName() {
+    return 'IonTabButton';
+  }
+}
