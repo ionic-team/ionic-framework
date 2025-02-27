@@ -151,7 +151,7 @@
             <h2>Grid Style</h2>
             <ion-datetime id="custom-grid" value="2020-03-14T14:23:00.000Z" class="custom-grid-wheel"></ion-datetime>
           </div>
-          
+
           <div class="grid-item">
             <h2>Grid Style</h2>
             <ion-datetime id="custom-calendar-days" value="2023-06-15" presentation="date"></ion-datetime>
@@ -209,7 +209,6 @@
 
     <script>
       const customGrid = document.querySelector('#custom-grid');
-      const customWheel = document.querySelector('#custom-wheel');
       const customDatetime = document.querySelector('#custom-calendar-days');
 
       // Mock the current day to always have the same screenshots
@@ -250,7 +249,6 @@
         return true;
       };
       customGrid.showDaysOutsideCurrentMonth = true;
-      customWheel.showDaysOutsideCurrentMonth = true;
       customDatetime.showDaysOutsideCurrentMonth = true;
 
       const specificDateDisabled = document.querySelector('#specificDate');
