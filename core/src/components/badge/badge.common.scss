@@ -56,10 +56,10 @@
   position: absolute;
 }
 
-:host(:empty.badge-top) {
+:host(:empty.badge-vertical-top) {
   top: 0;
 }
 
-:host(:empty.badge-bottom) {
+:host(:empty.badge-vertical-bottom) {
   bottom: 0;
 }
