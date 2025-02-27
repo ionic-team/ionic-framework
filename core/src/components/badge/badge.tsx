@@ -95,7 +95,7 @@ export class Badge implements ComponentInterface {
           [theme]: true,
           [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
-          [`badge-${this.vertical}`]: this.vertical !== undefined,
+          [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
         })}
       >
         <slot></slot>

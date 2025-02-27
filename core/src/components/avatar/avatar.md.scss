@@ -11,10 +11,10 @@
   height: $avatar-md-height;
 }
 
-::slotted(ion-badge.badge-top:empty) {
+::slotted(ion-badge.badge-vertical-top:empty) {
   transform: translate(-50%, 50%);
 }
 
-::slotted(ion-badge.badge-bottom:empty) {
+::slotted(ion-badge.badge-vertical-bottom:empty) {
   transform: translateX(-100%);
 }
