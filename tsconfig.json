@@ -11,10 +11,9 @@
     "lib": [
       "dom",
       "es2020",
-      "dom.iterable"
     ],
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "module": "es2015",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -22,7 +21,7 @@
     "pretty": true,
     "removeComments": false,
     "strictPropertyInitialization": false,
-    "target": "es2020",
+    "target": "es2017",
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
