@@ -310,6 +310,86 @@ export class Select implements ComponentInterface {
     }
     this.isExpanded = true;
     const overlay = (this.overlay = await this.createOverlay(event));
+
+    // Add logic to scroll selected item into view before presenting
+    const scrollSelectedIntoView = () => {
+      const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
+      if (indexOfSelected > -1) {
+        const selectedItem = overlay.querySelector<HTMLElement>(
+          `.select-interface-option:nth-child(${indexOfSelected + 1})`
+        );
+
+        if (selectedItem) {
+          /**
+           * Browsers such as Firefox do not
+           * correctly delegate focus when manually
+           * focusing an element with delegatesFocus.
+           * We work around this by manually focusing
+           * the interactive element.
+           * ion-radio and ion-checkbox are the only
+           * elements that ion-select-popover uses, so
+           * we only need to worry about those two components
+           * when focusing.
+           */
+          const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox') as
+            | HTMLIonRadioElement
+            | HTMLIonCheckboxElement
+            | null;
+          if (interactiveEl) {
+            selectedItem.scrollIntoView({ block: 'nearest' });
+            // Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
+            // and removing `ion-focused` style
+            interactiveEl.setFocus();
+          }
+
+          focusVisibleElement(selectedItem);
+        }
+      } else {
+        /**
+         * If no value is set then focus the first enabled option.
+         */
+        const firstEnabledOption = overlay.querySelector<HTMLElement>(
+          'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
+        ) as HTMLIonRadioElement | HTMLIonCheckboxElement | null;
+
+        if (firstEnabledOption) {
+          /**
+           * Focus the option for the same reason as we do above.
+           *
+           * Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
+           * and removing `ion-focused` style
+           */
+          firstEnabledOption.setFocus();
+
+          focusVisibleElement(firstEnabledOption.closest('ion-item')!);
+        }
+      }
+    };
+
+    // For modals and popovers, we can scroll before they're visible
+    if (this.interface === 'modal') {
+      overlay.addEventListener('ionModalWillPresent', scrollSelectedIntoView, { once: true });
+    } else if (this.interface === 'popover') {
+      overlay.addEventListener('ionPopoverWillPresent', scrollSelectedIntoView, { once: true });
+    } else {
+      /**
+       * For alerts and action sheets, we need to wait a frame after willPresent
+       * because these overlays don't have their content in the DOM immediately
+       * when willPresent fires. By waiting a frame, we ensure the content is
+       * rendered and can be properly scrolled into view.
+       */
+      const scrollAfterRender = () => {
+        requestAnimationFrame(() => {
+          scrollSelectedIntoView();
+        });
+      };
+      if (this.interface === 'alert') {
+        overlay.addEventListener('ionAlertWillPresent', scrollAfterRender, { once: true });
+      } else if (this.interface === 'action-sheet') {
+        overlay.addEventListener('ionActionSheetWillPresent', scrollAfterRender, { once: true });
+      }
+    }
+
     overlay.onDidDismiss().then(() => {
       this.overlay = undefined;
       this.isExpanded = false;
@@ -318,58 +398,6 @@ export class Select implements ComponentInterface {
     });
 
     await overlay.present();
-
-    const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
-    if (indexOfSelected > -1) {
-      const selectedItem = overlay.querySelector<HTMLElement>(
-        `.select-interface-option:nth-child(${indexOfSelected + 1})`
-      );
-
-      if (selectedItem) {
-        /**
-         * Browsers such as Firefox do not
-         * correctly delegate focus when manually
-         * focusing an element with delegatesFocus.
-         * We work around this by manually focusing
-         * the interactive element.
-         * ion-radio and ion-checkbox are the only
-         * elements that ion-select-popover uses, so
-         * we only need to worry about those two components
-         * when focusing.
-         */
-        const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox') as
-          | HTMLIonRadioElement
-          | HTMLIonCheckboxElement
-          | null;
-        if (interactiveEl) {
-          // Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
-          // and removing `ion-focused` style
-          interactiveEl.setFocus();
-        }
-
-        focusVisibleElement(selectedItem);
-      }
-    } else {
-      /**
-       * If no value is set then focus the first enabled option.
-       */
-      const firstEnabledOption = overlay.querySelector<HTMLElement>(
-        'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
-      ) as HTMLIonRadioElement | HTMLIonCheckboxElement | null;
-
-      if (firstEnabledOption) {
-        /**
-         * Focus the option for the same reason as we do above.
-         *
-         * Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
-         * and removing `ion-focused` style
-         */
-        firstEnabledOption.setFocus();
-
-        focusVisibleElement(firstEnabledOption.closest('ion-item')!);
-      }
-    }
-
     return overlay;
   }
 
