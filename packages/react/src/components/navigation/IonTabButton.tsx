@@ -17,7 +17,7 @@ type Props = LocalJSX.IonTabButton &
   };
 
 export class IonTabButton extends React.Component<Props> {
-  shouldComponentUpdate(_nextProps: Readonly<Props>, _nextState: Readonly<{}>): boolean {
+  shouldComponentUpdate(): boolean {
     return true;
   }
 

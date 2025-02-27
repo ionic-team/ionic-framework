@@ -44,7 +44,7 @@ export class IonBackButton extends React.Component<Props> {
     return NavContext;
   }
 
-  shouldComponentUpdate(_nextProps: Readonly<Props>): boolean {
+  shouldComponentUpdate(): boolean {
     return true;
   }
 }

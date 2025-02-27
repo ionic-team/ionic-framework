@@ -48,7 +48,7 @@ interface Props extends LocalJSX.IonTabs {
 }
 
 export class IonTabs extends React.Component<Props> {
-  shouldComponentUpdate(_nextProps: Readonly<Props>, _nextState: Readonly<{}>): boolean {
+  shouldComponentUpdate(): boolean {
     return true;
   }
 
