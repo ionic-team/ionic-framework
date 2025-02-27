@@ -696,6 +696,8 @@ export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup, JS
   'compareWith',
   'name',
   'value',
+  'helperText',
+  'errorText',
   'ionChange',
   'ionValueChange'
 ], [

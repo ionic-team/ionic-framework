@@ -1639,14 +1639,14 @@ export declare interface IonRadio extends Components.IonRadio {
 
 
 @ProxyCmp({
-  inputs: ['allowEmptySelection', 'compareWith', 'name', 'value']
+  inputs: ['allowEmptySelection', 'compareWith', 'errorText', 'helperText', 'name', 'value']
 })
 @Component({
   selector: 'ion-radio-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['allowEmptySelection', 'compareWith', 'name', 'value'],
+  inputs: ['allowEmptySelection', 'compareWith', 'errorText', 'helperText', 'name', 'value'],
 })
 export class IonRadioGroup {
   protected el: HTMLIonRadioGroupElement;
