@@ -5,9 +5,12 @@ import { NavContext } from '../../contexts/NavContext';
 import type { IonicReactProps } from '../IonicReactProps';
 import { IonBackButtonInner } from '../inner-proxies';
 
-type Props = PropsWithChildren<LocalJSX.IonBackButton & IonicReactProps & {
-  ref?: React.Ref<HTMLIonBackButtonElement>;
-}>;
+type Props = PropsWithChildren<
+  LocalJSX.IonBackButton &
+    IonicReactProps & {
+      ref?: React.Ref<HTMLIonBackButtonElement>;
+    }
+>;
 
 export class IonBackButton extends React.Component<Props> {
   context!: React.ContextType<typeof NavContext>;

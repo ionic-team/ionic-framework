@@ -9,9 +9,12 @@ import { IonOverlayManager } from './IonOverlayManager';
 import type { IonicReactProps } from './IonicReactProps';
 import { IonAppInner } from './inner-proxies';
 
-type Props = PropsWithChildren<LocalJSX.IonApp & IonicReactProps & {
-  ref?: React.Ref<HTMLIonAppElement>;
-}>;
+type Props = PropsWithChildren<
+  LocalJSX.IonApp &
+    IonicReactProps & {
+      ref?: React.Ref<HTMLIonAppElement>;
+    }
+>;
 
 export class IonApp extends React.Component<Props> {
   addOverlayCallback?: (id: string, overlay: ReactComponentOrElement, containerElement: HTMLDivElement) => void;
