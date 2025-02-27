@@ -3,6 +3,11 @@
 // Radio Group
 // --------------------------------------------------
 
+ion-radio-group {
+  // Prevents additional pixels from being rendered on top
+  vertical-align: top;
+}
+
 // Radio Group: Supporting Text
 // --------------------------------------------------
 
