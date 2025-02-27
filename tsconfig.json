@@ -10,7 +10,7 @@
     "importHelpers": true,
     "lib": [
       "dom",
-      "es2020",
+      "es2017",
     ],
     "module": "es2015",
     "moduleResolution": "node",
@@ -22,7 +22,6 @@
     "removeComments": false,
     "strictPropertyInitialization": false,
     "target": "es2017",
-    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "@ionic/core/hydrate": [

@@ -24,7 +24,7 @@
     "removeComments": false,
     "inlineSources": true,
     "sourceMap": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "target": "es2020",
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
