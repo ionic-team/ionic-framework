@@ -11,6 +11,9 @@
   height: $avatar-md-height;
 }
 
+// Avatar Empty Badge (hint)
+// --------------------------------------------------
+
 ::slotted(ion-badge.badge-vertical-top:empty) {
   transform: translate(-50%, 50%);
 }
