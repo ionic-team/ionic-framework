@@ -28,8 +28,8 @@
 // -----------------------------------------
 
 .searchbar-search-icon {
-  width: globals.$ion-scale-500;
-  height: globals.$ion-scale-500;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 }
 
 // Searchbar Input Field
@@ -59,12 +59,12 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  width: globals.$ion-scale-500;
-  height: globals.$ion-scale-500;
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 
   background-color: transparent;
 
-  font-size: globals.$ion-font-size-500;
+  font-size: globals.$ion-font-size-400;
 }
 
 // Searchbar Search & Clear Icon & Cancel Icon
@@ -113,7 +113,7 @@
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: calc(9px + globals.$ion-scale-500 + globals.$ion-space-200);
+  padding-inline-start: calc(9px + globals.$ion-scale-400 + globals.$ion-space-200);
 }
 
 // Searchbar States
@@ -181,10 +181,7 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(
-    calc(globals.$ion-space-300 + globals.$ion-scale-500 + globals.$ion-space-200),
-    calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200)
-  );
+  @include globals.padding-horizontal(calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200));
 
   height: globals.$ion-scale-1000;
 }
@@ -213,10 +210,7 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(
-    calc(globals.$ion-space-400 + globals.$ion-scale-500 + globals.$ion-space-200),
-    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200)
-  );
+  @include globals.padding-horizontal(calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200));
 
   height: globals.$ion-scale-1200;
 }
@@ -233,6 +227,26 @@
 }
 
 /* Large */
+:host(.searchbar-size-large) .searchbar-search-icon,
+:host(.searchbar-size-large) .searchbar-cancel-button {
+  width: globals.$ion-scale-500;
+  height: globals.$ion-scale-500;
+}
+
+:host(.searchbar-size-large) .searchbar-cancel-button {
+  font-size: globals.$ion-font-size-500;
+}
+
+:host-context(ion-toolbar).searchbar-size-large.searchbar-should-show-cancel .searchbar-input {
+  /**
+   * Padding start is based on
+   * the alignment of the back button,
+   * the size of the leading icon (search or cancel),
+   * and the gap between the icon and the input.
+   */
+  padding-inline-start: calc(9px + globals.$ion-scale-500 + globals.$ion-space-200);
+}
+
 :host(.searchbar-size-large) .searchbar-input {
   @include globals.padding(globals.$ion-space-400, null);
 
