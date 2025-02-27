@@ -429,10 +429,6 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
-         */
-        "position"?: 'top' | 'bottom';
-        /**
           * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
         "shape"?: 'soft' | 'round | rectangular';
@@ -444,6 +440,10 @@ export namespace Components {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        /**
+          * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
+         */
+        "vertical"?: 'top' | 'bottom';
     }
     interface IonBreadcrumb {
         /**
@@ -5797,10 +5797,6 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
-         */
-        "position"?: 'top' | 'bottom';
-        /**
           * Set to `"rectangular"` for non-rounded corners. Set to `"soft"` for slightly rounded corners. Set to `"round"` for fully rounded corners.  Defaults to `"round"` for the `ionic` theme, undefined for all other themes.
          */
         "shape"?: 'soft' | 'round | rectangular';
@@ -5812,6 +5808,10 @@ declare namespace LocalJSX {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        /**
+          * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
+         */
+        "vertical"?: 'top' | 'bottom';
     }
     interface IonBreadcrumb {
         /**
