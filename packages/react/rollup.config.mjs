@@ -14,7 +14,9 @@ export default {
     }
   ],
   plugins: [
-    typescript(),
+    typescript({
+      tsconfig: './tsconfig.json',
+    }),
   ],
   external: id => external.includes(id) || id.startsWith('@ionic/core') || id.startsWith('ionicons') || id.startsWith('@stencil/react-output-target'),
 };
