@@ -13,7 +13,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
   });
 });
 
-configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
+configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('badge: hint inside avatar'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/badge/test/hint', config);
