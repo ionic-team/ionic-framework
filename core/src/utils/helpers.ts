@@ -256,6 +256,17 @@ export const hasShadowDom = (el: HTMLElement) => {
   return !!el.shadowRoot && !!(el as any).attachShadow;
 };
 
+/**
+ * Focuses a given element while ensuring proper focus management
+ * within the Ionic framework. If the element is marked as `ion-focusable`,
+ * this function will delegate focus handling to `ion-app` or manually
+ * apply focus when a custom app root is used.
+ *
+ * This function helps maintain accessibility and expected focus behavior
+ * in both standard and custom root environments.
+ *
+ * @param el - The element to focus.
+ */
 export const focusVisibleElement = (el: HTMLElement) => {
   el.focus();
 
@@ -281,15 +292,21 @@ export const focusVisibleElement = (el: HTMLElement) => {
         app.setFocus([el]);
       } else {
         /**
-         * If the user has provided a custom app root selector,
-         * then we need to manually set focus on the element
-         * since the focus-visible utility will not be available
-         * on the custom app root.
-         *
-         * The focus-visible utility is used to set focus on an
-         * element that uses `ion-focusable`.
+         * When using a custom app root selector, the focus-visible
+         * utility is not available to manage focus automatically.
+         * If we set focus immediately, the element may not be fully
+         * rendered or interactive, especially if it was just added
+         * to the DOM. Using requestAnimationFrame ensures that focus
+         * is applied on the next frame, allowing the DOM to settle
+         * before changing focus.
          */
-        focusElements([el]);
+        requestAnimationFrame(() => {
+          /**
+           * The focus-visible utility is used to set focus on an
+           * element that uses `ion-focusable`.
+           */
+          focusElements([el]);
+        });
       }
     }
   }

@@ -38,6 +38,8 @@ export const getOrInitFocusVisibleUtility = () => {
  * a result of another user action. (Ex: We focus the first element
  * inside of a popover when the user presents it, but the popover is not always
  * presented as a result of keyboard action.)
+ *
+ * @param elements - The elements to set focus on.
  */
 export const focusElements = (elements: Element[]) => {
   const focusVisible = getOrInitFocusVisibleUtility();
