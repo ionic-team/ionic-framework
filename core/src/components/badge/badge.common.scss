@@ -51,7 +51,7 @@
 // Badge Empty (hint)
 // --------------------------------------------------
 
-:host(:empty[position]) {
+:host(:empty[vertical]) {
   @include position(null, 0, null, null);
   position: absolute;
 }
