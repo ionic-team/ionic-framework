@@ -314,10 +314,10 @@ ion-backdrop,event,ionBackdropTap,void,true
 ion-badge,shadow
 ion-badge,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
-ion-badge,prop,position,"bottom" | "top" | undefined,undefined,false,false
 ion-badge,prop,shape,"round | rectangular" | "soft" | undefined,undefined,false,false
 ion-badge,prop,size,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxsmall" | undefined,undefined,false,false
 ion-badge,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-badge,prop,vertical,"bottom" | "top" | undefined,undefined,false,false
 ion-badge,css-prop,--background,ionic
 ion-badge,css-prop,--background,ios
 ion-badge,css-prop,--background,md

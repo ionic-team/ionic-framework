@@ -125,7 +125,7 @@ export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge',
   'color',
   'shape',
   'size',
-  'position'
+  'vertical'
 ]);
 
 
