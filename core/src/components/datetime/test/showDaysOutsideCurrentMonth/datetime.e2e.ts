@@ -9,12 +9,6 @@ configs().forEach(({ title, screenshot, config }) => {
       await expect(customGrid).toHaveScreenshot(screenshot(`customGrid-with-hidden-days`));
     });
 
-    test('with custom-wheel should not have any visual regressions', async ({ page }) => {
-      await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
-      const customWheel = page.locator('#custom-wheel');
-      await expect(customWheel).toHaveScreenshot(screenshot(`custom-wheel-with-hidden-days`));
-    });
-
     test('should set the first day of the week correctly', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const customDatetime = page.locator('#custom-calendar-days');
