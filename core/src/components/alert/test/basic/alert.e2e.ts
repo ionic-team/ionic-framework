@@ -31,7 +31,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
       const alertFixture = new AlertFixture(page, screenshot);
 
       const alert = await alertFixture.open('#basic');
-      await expect(alert.locator(".alert-wrapper")).toHaveAttribute('data-testid', 'basic-alert');
+      await expect(alert.locator('.alert-wrapper')).toHaveAttribute('data-testid', 'basic-alert');
     });
 
     test('should dismiss when async handler resolves', async ({ page }) => {

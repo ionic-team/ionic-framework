@@ -240,7 +240,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     /**
      * Ensure when alert container is being focused, and the user presses the tab + shift keys, the focus will be set to the last alert button.
      */
-    if(ev.target.classList.contains('alert-wrapper')) {      
+    if (ev.target.classList.contains('alert-wrapper')) {
       if (ev.key === 'Tab' && ev.shiftKey) {
         ev.preventDefault();
         const lastChildBtn = this.wrapperEl?.querySelector('.alert-button:last-child') as HTMLButtonElement;
@@ -413,18 +413,16 @@ export class Alert implements ComponentInterface, OverlayInterface {
     await this.delegateController.attachViewToDom();
 
     await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation).then(() => {
-      if(this.buttons.length === 1 && this.inputs.length === 0) {
+      if (this.buttons.length === 1 && this.inputs.length === 0) {
         const queryBtn = this.wrapperEl?.querySelector('.alert-button') as HTMLButtonElement;
-  
+
         queryBtn.focus();
-      }
-      else {
+      } else {
         this.wrapperEl?.focus();
       }
     });
 
     unlock();
-
   }
 
   /**
@@ -778,7 +776,16 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
         <div tabindex="0" aria-hidden="true"></div>
 
-        <div class="alert-wrapper ion-overlay-wrapper" role={role} aria-modal="true" aria-labelledby={ariaLabelledBy} aria-describedby={message !== undefined ? msgId : null} tabindex="0" ref={(el) => (this.wrapperEl = el)} {...(htmlAttributes as any)}>
+        <div
+          class="alert-wrapper ion-overlay-wrapper"
+          role={role}
+          aria-modal="true"
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={message !== undefined ? msgId : null}
+          tabindex="0"
+          ref={(el) => (this.wrapperEl = el)}
+          {...(htmlAttributes as any)}
+        >
           <div class="alert-head">
             {header && (
               <h2 id={hdrId} class="alert-title">
