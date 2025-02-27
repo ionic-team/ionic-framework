@@ -10,3 +10,12 @@
   width: $avatar-md-width;
   height: $avatar-md-height;
 }
+
+::slotted(ion-badge.badge-top:empty) {
+  transform: translate(-50%, 50%);
+}
+
+::slotted(ion-badge.badge-bottom:empty) {
+  transform: translateX(-100%);
+}
+
