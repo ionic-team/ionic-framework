@@ -268,8 +268,9 @@
 }
 
 :host .calendar-day.calendar-day-hidden-day:not([disabled])  {
-  opacity: 1;
   color: $text-color-step-700;
+
+  opacity: 1;
 }
 
 // Time / Header

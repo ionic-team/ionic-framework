@@ -211,7 +211,7 @@ export class Datetime implements ComponentInterface {
   /**
    * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
    */
-  @Prop() showDaysOutsideCurrentMonth?:boolean = false;
+  @Prop() showDaysOutsideCurrentMonth?: boolean = false;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -2232,187 +2232,189 @@ export class Datetime implements ComponentInterface {
         }}
       >
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showDaysOutsideCurrentMonth).map((dateObject, index) => {
-            const { day, dayOfWeek, hiddenDay } = dateObject;
-            const { el, highlightedDates, isDateEnabled, multiple, showDaysOutsideCurrentMonth } = this;
-            let _month = month;
-            let _year = year;
-            if(showDaysOutsideCurrentMonth){
-              if(hiddenDay && day !== null && day > 20) {
-                // Leading with the hidden day from the previous month
-                // if its a hidden day and is higher than '20' (last week even in feb)
-                if(month === 1) {
-                  _year = year - 1;
-                  _month = 12;
-                }else{
-                  _month = month-1;
-                }
-              } else if(hiddenDay && day !== null && day < 15) {
-                // Leading with the hidden day from the next month
-                // if its a hidden day and is lower than '15' (first two weeks)
-                if(month === 12) {
-                  _year = year + 1;
-                  _month = 1;
-                } else {
-                  _month = month + 1;
+          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showDaysOutsideCurrentMonth).map(
+            (dateObject, index) => {
+              const { day, dayOfWeek, hiddenDay } = dateObject;
+              const { el, highlightedDates, isDateEnabled, multiple, showDaysOutsideCurrentMonth } = this;
+              let _month = month;
+              let _year = year;
+              if (showDaysOutsideCurrentMonth && hiddenDay && day !== null) {
+                if (day > 20) {
+                  // Leading with the hidden day from the previous month
+                  // if its a hidden day and is higher than '20' (last week even in feb)
+                  if (month === 1) {
+                    _year = year - 1;
+                    _month = 12;
+                  } else {
+                    _month = month - 1;
+                  }
+                } else if (day < 15) {
+                  // Leading with the hidden day from the next month
+                  // if its a hidden day and is lower than '15' (first two weeks)
+                  if (month === 12) {
+                    _year = year + 1;
+                    _month = 1;
+                  } else {
+                    _month = month + 1;
+                  }
                 }
               }
-            }
 
-            const referenceParts = { month: _month, day, year:_year, hiddenDay: hiddenDay };
-            const isCalendarPadding = day === null;
-            const {
-              isActive,
-              isToday,
-              ariaLabel,
-              ariaSelected,
-              disabled: isDayDisabled,
-              text,
-            } = getCalendarDayState(
-              this.locale,
-              referenceParts,
-              this.activeParts,
-              this.todayParts,
-              this.minParts,
-              this.maxParts,
-              this.parsedDayValues
-            );
+              const referenceParts = { month: _month, day, year: _year, hiddenDay: hiddenDay };
+              const isCalendarPadding = day === null;
+              const {
+                isActive,
+                isToday,
+                ariaLabel,
+                ariaSelected,
+                disabled: isDayDisabled,
+                text,
+              } = getCalendarDayState(
+                this.locale,
+                referenceParts,
+                this.activeParts,
+                this.todayParts,
+                this.minParts,
+                this.maxParts,
+                this.parsedDayValues
+              );
 
-            const dateIsoString = convertDataToISO(referenceParts);
+              const dateIsoString = convertDataToISO(referenceParts);
 
-            let isCalDayDisabled = isCalMonthDisabled || isDayDisabled;
+              let isCalDayDisabled = isCalMonthDisabled || isDayDisabled;
 
-            if (!isCalDayDisabled && isDateEnabled !== undefined) {
-              try {
-                /**
-                 * The `isDateEnabled` implementation is try-catch wrapped
-                 * to prevent exceptions in the user's function from
-                 * interrupting the calendar rendering.
-                 */
-                isCalDayDisabled = !isDateEnabled(dateIsoString);
-              } catch (e) {
-                printIonError(
-                  'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
-                  el,
-                  e
-                );
+              if (!isCalDayDisabled && isDateEnabled !== undefined) {
+                try {
+                  /**
+                   * The `isDateEnabled` implementation is try-catch wrapped
+                   * to prevent exceptions in the user's function from
+                   * interrupting the calendar rendering.
+                   */
+                  isCalDayDisabled = !isDateEnabled(dateIsoString);
+                } catch (e) {
+                  printIonError(
+                    'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+                    el,
+                    e
+                  );
+                }
               }
-            }
 
-            /**
-             * Some days are constrained through max & min or allowed dates
-             * and also disabled because the component is readonly or disabled.
-             * These need to be displayed differently.
-             */
-            const isCalDayConstrained = isCalDayDisabled && isDatetimeDisabled;
+              /**
+               * Some days are constrained through max & min or allowed dates
+               * and also disabled because the component is readonly or disabled.
+               * These need to be displayed differently.
+               */
+              const isCalDayConstrained = isCalDayDisabled && isDatetimeDisabled;
 
-            const isButtonDisabled = isCalDayDisabled || isDatetimeDisabled;
+              const isButtonDisabled = isCalDayDisabled || isDatetimeDisabled;
 
-            let dateStyle: DatetimeHighlightStyle | undefined = undefined;
+              let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
-            /**
-             * Custom highlight styles should not override the style for selected dates,
-             * nor apply to "filler days" at the start of the grid.
-             */
-            if (highlightedDates !== undefined && !isActive && day !== null && !hiddenDay) {
-              dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
-            }
+              /**
+               * Custom highlight styles should not override the style for selected dates,
+               * nor apply to "filler days" at the start of the grid.
+               */
+              if (highlightedDates !== undefined && !isActive && day !== null && !hiddenDay) {
+                dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
+              }
 
-            let dateParts = undefined;
+              let dateParts = undefined;
 
-            // "Filler days" at the beginning of the grid should not get the calendar day
-            // CSS parts added to them
-            if (!isCalendarPadding && !hiddenDay) {
-              dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
-                isCalDayDisabled ? ' disabled' : ''
-              }`;
-            } else if(hiddenDay) {
-              dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
-            }
+              // "Filler days" at the beginning of the grid should not get the calendar day
+              // CSS parts added to them
+              if (!isCalendarPadding && !hiddenDay) {
+                dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
+                  isCalDayDisabled ? ' disabled' : ''
+                }`;
+              } else if (hiddenDay) {
+                dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
+              }
 
-            return (
-              <div class="calendar-day-wrapper">
-                <button
-                  // We need to use !important for the inline styles here because
-                  // otherwise the CSS shadow parts will override these styles.
-                  // See https://github.com/WICG/webcomponents/issues/847
-                  // Both the CSS shadow parts and highlightedDates styles are
-                  // provided by the developer, but highlightedDates styles should
-                  // always take priority.
-                  ref={(el) => {
-                    if (el) {
-                      el.style.setProperty('color', `${dateStyle ? dateStyle.textColor : ''}`, 'important');
-                      el.style.setProperty(
-                        'background-color',
-                        `${dateStyle ? dateStyle.backgroundColor : ''}`,
-                        'important'
-                      );
-                    }
-                  }}
-                  tabindex="-1"
-                  data-day={day}
-                  data-month={_month}
-                  data-year={_year}
-                  data-index={index}
-                  data-day-of-week={dayOfWeek}
-                  disabled={isButtonDisabled}
-                  class={{
-                    'calendar-day-padding': isCalendarPadding,
-                    'calendar-day': true,
-                    'calendar-day-active': isActive,
-                    'calendar-day-constrained': isCalDayConstrained,
-                    'calendar-day-today': isToday,
-                    'calendar-day-hidden-day': hiddenDay,
-                  }}
-                  part={dateParts}
-                  aria-hidden={isCalendarPadding ? 'true' : null}
-                  aria-selected={ariaSelected}
-                  aria-label={ariaLabel}
-                  onClick={() => {
-                    if (isCalendarPadding) {
-                      return;
-                    }
+              return (
+                <div class="calendar-day-wrapper">
+                  <button
+                    // We need to use !important for the inline styles here because
+                    // otherwise the CSS shadow parts will override these styles.
+                    // See https://github.com/WICG/webcomponents/issues/847
+                    // Both the CSS shadow parts and highlightedDates styles are
+                    // provided by the developer, but highlightedDates styles should
+                    // always take priority.
+                    ref={(el) => {
+                      if (el) {
+                        el.style.setProperty('color', `${dateStyle ? dateStyle.textColor : ''}`, 'important');
+                        el.style.setProperty(
+                          'background-color',
+                          `${dateStyle ? dateStyle.backgroundColor : ''}`,
+                          'important'
+                        );
+                      }
+                    }}
+                    tabindex="-1"
+                    data-day={day}
+                    data-month={_month}
+                    data-year={_year}
+                    data-index={index}
+                    data-day-of-week={dayOfWeek}
+                    disabled={isButtonDisabled}
+                    class={{
+                      'calendar-day-padding': isCalendarPadding,
+                      'calendar-day': true,
+                      'calendar-day-active': isActive,
+                      'calendar-day-constrained': isCalDayConstrained,
+                      'calendar-day-today': isToday,
+                      'calendar-day-hidden-day': hiddenDay,
+                    }}
+                    part={dateParts}
+                    aria-hidden={isCalendarPadding ? 'true' : null}
+                    aria-selected={ariaSelected}
+                    aria-label={ariaLabel}
+                    onClick={() => {
+                      if (isCalendarPadding) {
+                        return;
+                      }
 
-                    if(hiddenDay){
-                      //the user selected a day outside the current month, let's not focus on this button since the month will be re-render;
-                      this.el.blur();
-                    }
-                    
-                    this.setWorkingParts({
-                      ...this.workingParts,
-                      month: _month,
-                      day,
-                      year: _year,
-                      hiddenDay: hiddenDay,
-                    });
+                      if (hiddenDay) {
+                        //the user selected a day outside the current month, let's not focus on this button since the month will be re-render;
+                        this.el.blur();
+                      }
 
-                    // multiple only needs date info, so we can wipe out other fields like time
-                    if (multiple) {
-                      this.setActiveParts(
-                        {
-                          month: _month,
-                          day,
-                          year: _year,
-                          hiddenDay: hiddenDay,
-                        },
-                        isActive
-                      );
-                    } else {
-                      this.setActiveParts({
-                        ...activePart,
+                      this.setWorkingParts({
+                        ...this.workingParts,
                         month: _month,
                         day,
                         year: _year,
                         hiddenDay: hiddenDay,
                       });
-                    }
-                  }}
-                >
-                  {text}
-                </button>
-              </div>
-            );
-          })}
+
+                      // multiple only needs date info, so we can wipe out other fields like time
+                      if (multiple) {
+                        this.setActiveParts(
+                          {
+                            month: _month,
+                            day,
+                            year: _year,
+                            hiddenDay: hiddenDay,
+                          },
+                          isActive
+                        );
+                      } else {
+                        this.setActiveParts({
+                          ...activePart,
+                          month: _month,
+                          day,
+                          year: _year,
+                          hiddenDay: hiddenDay,
+                        });
+                      }
+                    }}
+                  >
+                    {text}
+                  </button>
+                </div>
+              );
+            }
+          )}
         </div>
       </div>
     );
