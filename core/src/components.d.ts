@@ -441,6 +441,10 @@ export namespace Components {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        /**
+          * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
+         */
+        "vertical"?: 'top' | 'bottom';
     }
     interface IonBreadcrumb {
         /**
@@ -5805,6 +5809,10 @@ declare namespace LocalJSX {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        /**
+          * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
+         */
+        "vertical"?: 'top' | 'bottom';
     }
     interface IonBreadcrumb {
         /**

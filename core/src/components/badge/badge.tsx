@@ -47,6 +47,12 @@ export class Badge implements ComponentInterface {
    */
   @Prop() size?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
+  /**
+   * Set to `"top"` to position the badge on top right absolute position of the parent element.
+   * Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
+   */
+  @Prop() vertical?: 'top' | 'bottom';
+
   private getShape(): string | undefined {
     const theme = getIonTheme(this);
     const { shape } = this;
@@ -89,6 +95,7 @@ export class Badge implements ComponentInterface {
           [theme]: true,
           [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
+          [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
         })}
       >
         <slot></slot>

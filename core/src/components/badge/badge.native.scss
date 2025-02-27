@@ -11,3 +11,16 @@
 
   font-family: $font-family-base;
 }
+
+// TODO(ROU-10747): Review size styles when sizes are defined for native themes.
+:host(:empty) {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-top: 0;
+
+  @include border-radius(999px);
+
+  width: $badge-min-width;
+  height: $badge-min-width;
+}
