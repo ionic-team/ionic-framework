@@ -220,9 +220,18 @@ export class Searchbar implements ComponentInterface {
    * Set to `"soft"` for a searchbar with slightly rounded corners,
    * `"round"` for a searchbar with fully rounded corners,
    * or `"rectangular"` for a searchbar without rounded corners.
+   *
    * Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular';
+
+  /**
+   * Set to `"large"` for a searchbar with an increase in height,
+   * while "small" and "medium" provide progressively smaller heights.
+   *
+   * Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
+   */
+  @Prop() size?: 'small' | 'medium' | 'large';
 
   /**
    * Emitted when the `value` of the `ion-searchbar` element has changed.
@@ -636,6 +645,22 @@ export class Searchbar implements ComponentInterface {
     return shape;
   }
 
+  private getSize(): string | undefined {
+    const theme = getIonTheme(this);
+    const { size } = this;
+
+    // TODO(ROU-11678): Remove theme check when sizes are defined for all themes.
+    if (theme !== 'ionic') {
+      return undefined;
+    }
+
+    if (size === undefined) {
+      return 'medium';
+    }
+
+    return size;
+  }
+
   /**
    * Get the icon to use for the clear icon.
    * If an icon is set on the component, use that.
@@ -723,6 +748,7 @@ export class Searchbar implements ComponentInterface {
     const theme = getIonTheme(this);
     const shouldShowCancelButton = this.shouldShowCancelButton();
     const shape = this.getShape();
+    const size = this.getSize();
 
     const cancelButton = this.showCancelButton !== 'never' && (
       <button
@@ -760,6 +786,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton(),
           [`searchbar-shape-${shape}`]: shape !== undefined,
+          [`searchbar-size-${size}`]: size !== undefined,
         })}
       >
         <div class="searchbar-input-container">

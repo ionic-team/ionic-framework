@@ -28,9 +28,6 @@
 // -----------------------------------------
 
 .searchbar-search-icon {
-  // Position is based on the size of the search icon.
-  @include globals.position(globals.$ion-scale-400, null, null, globals.$ion-scale-400);
-
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 }
@@ -39,25 +36,7 @@
 // -----------------------------------------
 
 .searchbar-input {
-  /**
-   * Padding start is based on
-   * desired padding from design,
-   * the size of the search icon,
-   * and the gap between the icon and the input.
-   *
-   * Padding end is based on
-   * desired padding from design,
-   * the size of the clear icon,
-   * and the gap between the icon and the input.
-   */
-  @include globals.padding(
-    globals.$ion-space-300,
-    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200),
-    globals.$ion-space-300,
-    calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200)
-  );
-
-  min-height: globals.$ion-scale-1200;
+  @include globals.padding(globals.$ion-space-300, null);
 
   contain: strict;
 }
@@ -66,9 +45,6 @@
 // -----------------------------------------
 
 .searchbar-clear-button {
-  // Position is based on the size of the clear icon.
-  @include globals.position(globals.$ion-scale-400, globals.$ion-scale-400, null, null);
-
   width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 
@@ -83,13 +59,8 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  /**
-   * The left edge of the cancel button
-   * should align with the left edge
-   * of the back button if the searchbar
-   * is used in a toolbar.
-   */
-  @include globals.position(0, null, null, 9px);
+  width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
 
   background-color: transparent;
 
@@ -102,7 +73,11 @@
 .searchbar-search-icon,
 .searchbar-clear-button,
 .searchbar-cancel-button {
+  @include globals.position(50%, null);
+
   position: absolute;
+
+  transform: translateY(-50%);
 }
 
 // Clear Icon & Cancel Icon
@@ -120,8 +95,25 @@
 // Searchbar in Toolbar
 // -----------------------------------------
 
-:host-context(ion-toolbar) {
-  min-height: globals.$ion-scale-1200;
+:host-context(ion-toolbar).searchbar-should-show-cancel .searchbar-cancel-button {
+  /**
+   * The left edge of the cancel button
+   * should align with the left edge
+   * of the back button if the searchbar
+   * is used in a toolbar regardless of
+   * the searchbar size.
+   */
+  @include globals.position-horizontal(9px, null);
+}
+
+:host-context(ion-toolbar).searchbar-should-show-cancel .searchbar-input {
+  /**
+   * Padding start is based on
+   * the alignment of the back button,
+   * the size of the leading icon (search or cancel),
+   * and the gap between the icon and the input.
+   */
+  padding-inline-start: calc(9px + globals.$ion-scale-400 + globals.$ion-space-200);
 }
 
 // Searchbar States
@@ -171,4 +163,119 @@
 
 :host(.searchbar-shape-rectangular) {
   --border-radius: #{globals.$ion-border-radius-0};
+}
+
+// Searchbar Sizes
+// --------------------------------------------------
+
+/* Small */
+:host(.searchbar-size-small) .searchbar-input {
+  /**
+   * Padding start is based on
+   * desired padding from design,
+   * the size of the leading icon (search or cancel),
+   * and the gap between the icon and the input.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * the size of the trailing icon (clear),
+   * and the gap between the icon and the input.
+   */
+  @include globals.padding-horizontal(calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200));
+
+  height: globals.$ion-scale-1000;
+}
+
+:host(.searchbar-size-small) .searchbar-search-icon,
+:host(.searchbar-size-small) .searchbar-cancel-button {
+  // Start is based on the desired padding start from design.
+  @include globals.position-horizontal(globals.$ion-space-300, null);
+}
+
+:host(.searchbar-size-small) .searchbar-clear-button {
+  // End is based on the desired padding end from design.
+  @include globals.position-horizontal(null, globals.$ion-space-300);
+}
+
+/* Medium */
+:host(.searchbar-size-medium) .searchbar-input {
+  /**
+   * Padding start is based on
+   * desired padding from design,
+   * the size of the leading icon (search or cancel),
+   * and the gap between the icon and the input.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * the size of the trailing icon (clear),
+   * and the gap between the icon and the input.
+   */
+  @include globals.padding-horizontal(calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200));
+
+  height: globals.$ion-scale-1200;
+}
+
+:host(.searchbar-size-medium) .searchbar-search-icon,
+:host(.searchbar-size-medium) .searchbar-cancel-button {
+  // Start is based on the desired padding start from design.
+  @include globals.position-horizontal(globals.$ion-space-400, null);
+}
+
+:host(.searchbar-size-medium) .searchbar-clear-button {
+  // End is based on the desired padding end from design.
+  @include globals.position-horizontal(null, globals.$ion-space-400);
+}
+
+/* Large */
+:host(.searchbar-size-large) .searchbar-search-icon,
+:host(.searchbar-size-large) .searchbar-cancel-button {
+  width: globals.$ion-scale-500;
+  height: globals.$ion-scale-500;
+}
+
+:host(.searchbar-size-large) .searchbar-cancel-button {
+  font-size: globals.$ion-font-size-500;
+}
+
+:host-context(ion-toolbar).searchbar-size-large.searchbar-should-show-cancel .searchbar-input {
+  /**
+   * Padding start is based on
+   * the alignment of the back button,
+   * the size of the leading icon (search or cancel),
+   * and the gap between the icon and the input.
+   */
+  padding-inline-start: calc(9px + globals.$ion-scale-500 + globals.$ion-space-200);
+}
+
+:host(.searchbar-size-large) .searchbar-input {
+  @include globals.padding(globals.$ion-space-400, null);
+
+  /**
+   * Padding start is based on
+   * desired padding from design,
+   * the size of the leading icon (search or cancel),
+   * and the gap between the icon and the input.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * the size of the trailing icon (clear),
+   * and the gap between the icon and the input.
+   */
+  @include globals.padding-horizontal(
+    calc(globals.$ion-space-500 + globals.$ion-scale-500 + globals.$ion-space-200),
+    calc(globals.$ion-space-500 + globals.$ion-scale-400 + globals.$ion-space-200)
+  );
+
+  height: globals.$ion-scale-1400;
+}
+
+:host(.searchbar-size-large) .searchbar-search-icon,
+:host(.searchbar-size-large) .searchbar-cancel-button {
+  // Start is based on the desired padding start from design.
+  @include globals.position-horizontal(globals.$ion-space-500, null);
+}
+
+:host(.searchbar-size-large) .searchbar-clear-button {
+  // End is based on the desired padding end from design.
+  @include globals.position-horizontal(null, globals.$ion-space-500);
 }

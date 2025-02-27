@@ -38,6 +38,19 @@
         <h5 class="ion-padding-start ion-padding-top">Search - Show Cancel Button on Focus</h5>
         <ion-searchbar id="focusCancel" value="after view" animated="true" show-cancel-button="focus"> </ion-searchbar>
 
+        <h5 class="ion-padding-start ion-padding-top">Search - Show Cancel Button within Toolbar</h5>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-back-button default-href="#"></ion-back-button>
+            </ion-buttons>
+            <ion-title>Test</ion-title>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-searchbar show-cancel-button="always"></ion-searchbar>
+          </ion-toolbar>
+        </ion-header>
+
         <h5 class="ion-padding-start ion-padding-top">Search - No Clear Button</h5>
         <ion-searchbar id="noClear" value="after view" type="text" show-clear-button="never"> </ion-searchbar>
 
