@@ -19,6 +19,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
       await page.keyboard.press(tabKey);
       await expect(alertBtns.nth(0)).toBeFocused();
 
+      await page.keyboard.press(`Shift+${tabKey}`); // this will focus the alert-wrapper
       await page.keyboard.press(`Shift+${tabKey}`);
       await expect(alertBtns.nth(2)).toBeFocused();
 
@@ -30,7 +31,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
       const alertFixture = new AlertFixture(page, screenshot);
 
       const alert = await alertFixture.open('#basic');
-      await expect(alert).toHaveAttribute('data-testid', 'basic-alert');
+      await expect(alert.locator('.alert-wrapper')).toHaveAttribute('data-testid', 'basic-alert');
     });
 
     test('should dismiss when async handler resolves', async ({ page }) => {

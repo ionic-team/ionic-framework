@@ -1,7 +1,7 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Alert } from '../alert';
-import { h } from '@stencil/core';
 
 describe('alert: id', () => {
   it('alert should be assigned an incrementing id', async () => {
@@ -49,7 +49,7 @@ describe('alert: id', () => {
       template: () => <ion-alert htmlAttributes={{ id }} overlayIndex={-1}></ion-alert>,
     });
 
-    const alert = page.body.querySelector('ion-alert')!;
-    expect(alert.id).toBe(id);
+    const alertwrapper = page.body.querySelector('.alert-wrapper')!;
+    expect(alertwrapper.id).toBe(id);
   });
 });
