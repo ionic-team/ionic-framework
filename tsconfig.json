@@ -7,9 +7,10 @@
     "declaration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
     "lib": [
       "dom",
-      "es2017"
+      "es2017",
     ],
     "module": "es2015",
     "moduleResolution": "node",
