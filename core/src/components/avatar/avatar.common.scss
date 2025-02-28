@@ -10,6 +10,8 @@
   @include border-radius(var(--border-radius));
 
   display: block;
+
+  position: relative;
 }
 
 ::slotted(ion-img),
