@@ -8,9 +8,15 @@ import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-g
 
 @Component({
   tag: 'ion-radio-group',
+  styleUrls: {
+    ios: 'radio-group.ios.scss',
+    md: 'radio-group.md.scss',
+  },
 })
 export class RadioGroup implements ComponentInterface {
   private inputId = `ion-rg-${radioGroupIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private labelId = `${this.inputId}-lbl`;
   private label?: HTMLIonLabelElement | null;
 
@@ -38,6 +44,16 @@ export class RadioGroup implements ComponentInterface {
    * the value of the radio group.
    */
   @Prop({ mutable: true }) value?: any | null;
+
+  /**
+   * The helper text to display at the top of the radio group.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * The error text to display at the top of the radio group.
+   */
+  @Prop() errorText?: string;
 
   @Watch('value')
   valueChanged(value: any | undefined) {
@@ -224,13 +240,62 @@ export class RadioGroup implements ComponentInterface {
     radioToFocus?.setFocus();
   }
 
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return (
+      <div class="supporting-text">
+        <div id={helperTextId} class="helper-text">
+          {helperText}
+        </div>
+        <div id={errorTextId} class="error-text">
+          {errorText}
+        </div>
+      </div>
+    );
+  }
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
   render() {
     const { label, labelId, el, name, value } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, false);
 
-    return <Host role="radiogroup" aria-labelledby={label ? labelId : null} onClick={this.onClick} class={mode}></Host>;
+    return (
+      <Host
+        role="radiogroup"
+        aria-labelledby={label ? labelId : null}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
+        onClick={this.onClick}
+        class={mode}
+      >
+        {this.renderHintText()}
+        <slot></slot>
+      </Host>
+    );
   }
 }
 
