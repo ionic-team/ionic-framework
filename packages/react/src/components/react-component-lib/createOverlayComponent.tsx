@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { OverlayEventDetail } from './interfaces';
-import { StencilReactForwardedRef, attachProps, dashToPascalCase, defineCustomElement, setRef } from './utils';
+import type { OverlayEventDetail } from './interfaces';
+import type { StencilReactForwardedRef } from './utils';
+import { attachProps, dashToPascalCase, defineCustomElement, setRef } from './utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
@@ -137,6 +138,6 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
   }
 
   return React.forwardRef<OverlayType, Props>((props, ref) => {
-    return <Overlay {...props} forwardedRef={ref} />;
+    return <Overlay {...(props as Props)} forwardedRef={ref} />;
   });
 };

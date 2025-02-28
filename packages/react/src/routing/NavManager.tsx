@@ -34,6 +34,7 @@ interface NavManagerProps {
   ionRoute: any;
   stackManager: any;
   locationHistory: LocationHistory;
+  children?: React.ReactNode;
 }
 
 export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {

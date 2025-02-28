@@ -10,6 +10,7 @@ interface OverlayBase extends HTMLElement {
 
 export interface ReactControllerProps {
   isOpen: boolean;
+  children?: React.ReactNode;
   onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
   onDidPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
   onWillDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
