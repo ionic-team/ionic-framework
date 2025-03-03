@@ -154,10 +154,6 @@
   --padding-end: 0;
 }
 
-:host(:empty[vertical]) {
-  border: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-bg-surface-inverse;
-}
-
 // Badge Sizes Empty
 // --------------------------------------------------
 
