@@ -123,6 +123,8 @@
         <button class="expand" onClick="changeSegmentContent()">Change Segment Content</button>
 
         <button class="expand" onClick="clearSegmentValue()">Clear Segment Value</button>
+
+        <button class="expand" onClick="addSegmentButtonAndContent()">Add New Segment Button & Content</button>
       </ion-content>
 
       <ion-footer>
@@ -157,6 +159,34 @@
             const segment = document.querySelector('#noValueSegment');
             segment.value = undefined;
           });
+        }
+
+        async function addSegmentButtonAndContent() {
+          const segment = document.querySelector('ion-segment');
+          const segmentView = document.querySelector('ion-segment-view');
+
+          const newButton = document.createElement('ion-segment-button');
+          const newId = `new-${Date.now()}`;
+          newButton.setAttribute('content-id', newId);
+          newButton.setAttribute('value', newId);
+          newButton.innerHTML = '<ion-label>New Button</ion-label>';
+
+          segment.appendChild(newButton);
+
+          setTimeout(() => {
+            // Timeout to test waitForSegmentContent() in segment-button
+            const newContent = document.createElement('ion-segment-content');
+            newContent.setAttribute('id', newId);
+            newContent.innerHTML = 'New Content';
+
+            segmentView.appendChild(newContent);
+
+            // Necessary timeout to ensure the value is set after the content is added.
+            // Otherwise, the transition is unsuccessful and the content is not shown.
+            setTimeout(() => {
+              segment.setAttribute('value', newId);
+            }, 200);
+          }, 200);
         }
       </script>
     </ion-app>
