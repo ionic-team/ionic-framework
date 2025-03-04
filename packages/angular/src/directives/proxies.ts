@@ -1900,7 +1900,7 @@ export declare interface IonRow extends Components.IonRow {}
 
 
 @ProxyCmp({
-  inputs: ['animated', 'autocapitalize', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'searchIcon', 'shape', 'showCancelButton', 'showClearButton', 'spellcheck', 'theme', 'type', 'value'],
+  inputs: ['animated', 'autocapitalize', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'searchIcon', 'shape', 'showCancelButton', 'showClearButton', 'size', 'spellcheck', 'theme', 'type', 'value'],
   methods: ['setFocus', 'getInputElement']
 })
 @Component({
@@ -1908,7 +1908,7 @@ export declare interface IonRow extends Components.IonRow {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'autocapitalize', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'searchIcon', 'shape', 'showCancelButton', 'showClearButton', 'spellcheck', 'theme', 'type', 'value'],
+  inputs: ['animated', 'autocapitalize', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'searchIcon', 'shape', 'showCancelButton', 'showClearButton', 'size', 'spellcheck', 'theme', 'type', 'value'],
 })
 export class IonSearchbar {
   protected el: HTMLElement;

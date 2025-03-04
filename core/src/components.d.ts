@@ -3113,7 +3113,7 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners.  Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
@@ -3124,6 +3124,10 @@ export namespace Components {
           * Sets the behavior for the clear button. Defaults to `"focus"`. Setting to `"focus"` shows the clear button on focus if the input is not empty. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state, but only if the input is not empty.
          */
         "showClearButton": 'never' | 'focus' | 'always';
+        /**
+          * Set to `"large"` for a searchbar with an increase in height, while "small" and "medium" provide progressively smaller heights.  Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
+         */
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * If `true`, enable spellcheck on the input.
          */
@@ -8528,7 +8532,7 @@ declare namespace LocalJSX {
          */
         "searchIcon"?: string;
         /**
-          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners. Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
+          * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners.  Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
          */
         "shape"?: 'soft' | 'round' | 'rectangular';
         /**
@@ -8539,6 +8543,10 @@ declare namespace LocalJSX {
           * Sets the behavior for the clear button. Defaults to `"focus"`. Setting to `"focus"` shows the clear button on focus if the input is not empty. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state, but only if the input is not empty.
          */
         "showClearButton"?: 'never' | 'focus' | 'always';
+        /**
+          * Set to `"large"` for a searchbar with an increase in height, while "small" and "medium" provide progressively smaller heights.  Defaults to `"medium"` for the ionic theme, and `undefined` for all other themes.
+         */
+        "size"?: 'small' | 'medium' | 'large';
         /**
           * If `true`, enable spellcheck on the input.
          */
