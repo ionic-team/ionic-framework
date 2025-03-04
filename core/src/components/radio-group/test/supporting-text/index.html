@@ -15,9 +15,9 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(200px, 1fr));
-        grid-row-gap: 20px;
-        grid-column-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 20px;
+        max-width: 800px;
       }
       h2 {
         font-size: 12px;
