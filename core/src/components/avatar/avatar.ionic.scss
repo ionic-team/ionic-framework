@@ -152,3 +152,22 @@
   width: globals.$ion-scale-1000;
   height: globals.$ion-scale-1000;
 }
+
+// Avatar Empty Badge (hint)
+// --------------------------------------------------
+
+:host ::slotted(ion-badge.badge-vertical-top:empty) {
+  transform: translate(globals.$ion-scale-050, calc(globals.$ion-scale-050 * -1));
+}
+
+:host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-top:empty) {
+  transform: translate(globals.$ion-scale-100, calc(globals.$ion-scale-100 * -1));
+}
+
+:host ::slotted(ion-badge.badge-vertical-bottom:empty) {
+  transform: translate(0, globals.$ion-scale-100);
+}
+
+:host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-bottom:empty) {
+  transform: translate(globals.$ion-scale-100, calc(globals.$ion-scale-100));
+}

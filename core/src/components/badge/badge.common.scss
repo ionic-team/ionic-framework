@@ -48,6 +48,18 @@
   color: #{color.current-color(contrast)};
 }
 
-:host(:empty) {
-  display: none;
+// Badge Empty (hint)
+// --------------------------------------------------
+
+:host([vertical]) {
+  @include position(null, 0, null, null);
+  position: absolute;
+}
+
+:host(:empty.badge-vertical-top) {
+  top: 0;
+}
+
+:host(:empty.badge-vertical-bottom) {
+  bottom: 0;
 }

@@ -1,6 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, h } from '@stencil/core';
-import { getOrInitFocusVisibleUtility } from '@utils/focus-visible';
+import { focusElements } from '@utils/focus-visible';
 
 import { config } from '../../global/config';
 import { getIonTheme } from '../../global/ionic-global';
@@ -24,11 +24,16 @@ export class App implements ComponentInterface {
    * a result of another user action. (Ex: We focus the first element
    * inside of a popover when the user presents it, but the popover is not always
    * presented as a result of keyboard action.)
+   *
+   * @param elements - The elements to set focus on.
    */
   @Method()
   async setFocus(elements: HTMLElement[]) {
-    const focusVisible = getOrInitFocusVisibleUtility();
-    focusVisible.setFocus(elements);
+    /**
+     * The focus-visible utility is used to set focus on an
+     * element that uses `ion-focusable`.
+     */
+    focusElements(elements);
   }
 
   render() {

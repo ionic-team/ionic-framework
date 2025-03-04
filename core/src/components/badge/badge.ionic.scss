@@ -145,3 +145,32 @@
   width: globals.$ion-scale-1000;
   height: globals.$ion-scale-1000;
 }
+
+// Badge Empty
+// --------------------------------------------------
+
+:host(:empty) {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+// Badge Sizes Empty
+// --------------------------------------------------
+
+/* sm */
+:host(.badge-small:empty) {
+  min-width: globals.$ion-scale-200;
+  height: globals.$ion-scale-200;
+}
+
+/* md */
+:host(.badge-medium:empty) {
+  min-width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
+}
+
+/* lg */
+:host(.badge-large:empty) {
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+}

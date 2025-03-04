@@ -334,6 +334,7 @@ export namespace Components {
         "mode"?: "ios" | "md";
         /**
           * Used to set focus on an element that uses `ion-focusable`. Do not use this if focusing the element as a result of a keyboard event as the focus utility should handle this for us. This method should be used when we want to programmatically focus an element as a result of another user action. (Ex: We focus the first element inside of a popover when the user presents it, but the popover is not always presented as a result of keyboard action.)
+          * @param elements - The elements to set focus on.
          */
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
         /**
@@ -440,6 +441,10 @@ export namespace Components {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        /**
+          * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
+         */
+        "vertical"?: 'top' | 'bottom';
     }
     interface IonBreadcrumb {
         /**
@@ -5808,6 +5813,10 @@ declare namespace LocalJSX {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+        /**
+          * Set to `"top"` to position the badge on top right absolute position of the parent element. Set to `"bottom"` to position the badge on bottom right absolute position of the parent element.
+         */
+        "vertical"?: 'top' | 'bottom';
     }
     interface IonBreadcrumb {
         /**

@@ -1,4 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
+import { focusElements } from '@utils/focus-visible';
 
 import type { Side } from '../components/menu/menu-interface';
 import { config } from '../global/config';
@@ -255,6 +256,17 @@ export const hasShadowDom = (el: HTMLElement) => {
   return !!el.shadowRoot && !!(el as any).attachShadow;
 };
 
+/**
+ * Focuses a given element while ensuring proper focus management
+ * within the Ionic framework. If the element is marked as `ion-focusable`,
+ * this function will delegate focus handling to `ion-app` or manually
+ * apply focus when a custom app root is used.
+ *
+ * This function helps maintain accessibility and expected focus behavior
+ * in both standard and custom root environments.
+ *
+ * @param el - The element to focus.
+ */
 export const focusVisibleElement = (el: HTMLElement) => {
   el.focus();
 
@@ -267,10 +279,35 @@ export const focusVisibleElement = (el: HTMLElement) => {
    * which will let us explicitly set the elements to focus.
    */
   if (el.classList.contains('ion-focusable')) {
-    const appRootSelector = config.get('appRootSelector', 'ion-app');
+    const appRootSelector: string = config.get('appRootSelector', 'ion-app');
     const app = el.closest(appRootSelector) as HTMLIonAppElement | null;
     if (app) {
-      app.setFocus([el]);
+      if (appRootSelector === 'ion-app') {
+        /**
+         * If the app root is the default, then it will be
+         * in charge of setting focus. This is because the
+         * focus-visible utility is attached to the app root
+         * and will handle setting focus on the correct element.
+         */
+        app.setFocus([el]);
+      } else {
+        /**
+         * When using a custom app root selector, the focus-visible
+         * utility is not available to manage focus automatically.
+         * If we set focus immediately, the element may not be fully
+         * rendered or interactive, especially if it was just added
+         * to the DOM. Using requestAnimationFrame ensures that focus
+         * is applied on the next frame, allowing the DOM to settle
+         * before changing focus.
+         */
+        requestAnimationFrame(() => {
+          /**
+           * The focus-visible utility is used to set focus on an
+           * element that uses `ion-focusable`.
+           */
+          focusElements([el]);
+        });
+      }
     }
   }
 };
