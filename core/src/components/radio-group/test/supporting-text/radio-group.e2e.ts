@@ -197,7 +197,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          .supporting-text {
+          .radio-group-top {
             font-size: 20px;
           }
 
@@ -222,7 +222,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
         <style>
-          .supporting-text {
+          .radio-group-top {
             font-size: 20px;
           }
 

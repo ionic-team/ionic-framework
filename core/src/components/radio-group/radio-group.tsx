@@ -252,7 +252,7 @@ export class RadioGroup implements ComponentInterface {
     }
 
     return (
-      <div class="supporting-text">
+      <div class="radio-group-top">
         <div id={helperTextId} class="helper-text">
           {helperText}
         </div>
