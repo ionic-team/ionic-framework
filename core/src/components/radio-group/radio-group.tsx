@@ -298,7 +298,7 @@ export class RadioGroup implements ComponentInterface {
           Without the wrapper, the children radio will fire the blur event
           on focus, instead of waiting for them to be blurred.
         */}
-        <div>
+        <div class="radio-group-wrapper">
           <slot></slot>
         </div>
       </Host>
