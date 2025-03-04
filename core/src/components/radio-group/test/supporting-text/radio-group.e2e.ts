@@ -201,7 +201,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             font-size: 20px;
           }
 
-          .helper-text {
+          .radio-group-top .helper-text {
             color: green;
           }
         </style>
@@ -226,7 +226,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             font-size: 20px;
           }
 
-          .error-text {
+          .radio-group-top .error-text {
             color: purple;
           }
         </style>

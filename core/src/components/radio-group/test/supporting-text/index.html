@@ -30,6 +30,12 @@
       ion-radio {
         width: 100%;
       }
+      .custom .helper-text {
+        color: green;
+      }
+      .custom .error-text {
+        color: purple;
+      }
     </style>
   </head>
 
@@ -153,6 +159,33 @@
                 </ion-item>
               </ion-radio-group>
             </ion-list>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Custom</h2>
+            <ion-radio-group value="1" helper-text="Helper text" error-text="Error text" class="custom">
+              <ion-radio value="1">Label</ion-radio>
+              <ion-radio value="2">Label</ion-radio>
+              <ion-radio value="3">Label</ion-radio>
+              <ion-radio value="4">Label</ion-radio>
+              <ion-radio value="5">Label</ion-radio>
+            </ion-radio-group>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Custom</h2>
+            <ion-radio-group
+              value="1"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="custom ion-invalid ion-touched"
+            >
+              <ion-radio value="1">Label</ion-radio>
+              <ion-radio value="2">Label</ion-radio>
+              <ion-radio value="3">Label</ion-radio>
+              <ion-radio value="4">Label</ion-radio>
+              <ion-radio value="5">Label</ion-radio>
+            </ion-radio-group>
           </div>
         </div>
 
