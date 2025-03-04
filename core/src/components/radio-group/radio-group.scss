@@ -20,22 +20,22 @@ ion-radio-group {
  * present on the radio group. Otherwise the helper text should
  * be shown.
  */
-.error-text {
+.radio-group-top .error-text {
   display: none;
 
-  color: var(--ion-color-danger, #eb445a);
+  color: ion-color(danger, base);
 }
 
-.helper-text {
+.radio-group-top .helper-text {
   display: block;
 
-  color: var(--ion-color-step-550, #737373);
+  color: $text-color-step-300;
 }
 
-.ion-touched.ion-invalid .error-text {
+.ion-touched.ion-invalid .radio-group-top .error-text {
   display: block;
 }
 
-.ion-touched.ion-invalid .helper-text {
+.ion-touched.ion-invalid .radio-group-top .helper-text {
   display: none;
 }
