@@ -294,9 +294,9 @@ export class RadioGroup implements ComponentInterface {
       >
         {this.renderHintText()}
         {/*
-          Wrapping the slot in a div is a workaround due to a Stencil issue.
-          Without the wrapper, the children radio will fire the blur event
-          on focus, instead of waiting for them to be blurred.
+          TODO(FW-6279): Wrapping the slot in a div is a workaround due to a
+          Stencil issue. Without the wrapper, the children radio will fire the
+          blur event on focus, instead of waiting for them to be blurred.
         */}
         <div class="radio-group-wrapper">
           <slot></slot>
