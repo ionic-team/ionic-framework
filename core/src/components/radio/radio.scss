@@ -140,44 +140,51 @@ input {
   align-items: center;
 }
 
-// Radio Justify
-// --------------------------------------------------
+// Radio Bottom Content
+// ----------------------------------------------------------------
 
-:host(.radio-justify-space-between) .radio-wrapper {
+.radio-bottom {
+  @include padding(4px, null, null, null);
+
+  display: flex;
+
   justify-content: space-between;
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
 }
 
-:host(.radio-justify-start) .radio-wrapper {
-  justify-content: start;
+:host(.radio-label-placement-stacked) .radio-bottom {
+  font-size: dynamic-font(16px);
 }
 
-:host(.radio-justify-end) .radio-wrapper {
-  justify-content: end;
+// Radio Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the radio. Otherwise the helper text should
+ * be shown.
+ */
+.radio-bottom .error-text {
+  display: none;
+
+  color: ion-color(danger, base);
 }
 
-// Radio Align
-// --------------------------------------------------
-
-:host(.radio-alignment-start) .radio-wrapper {
-  align-items: start;
-}
-
-:host(.radio-alignment-center) .radio-wrapper {
-  align-items: center;
-}
-
-// Justify Content & Align Items
-// ---------------------------------------------
-
-// The radio should be displayed as block when either justify
-// or alignment is set; otherwise, these properties will have no
-// visible effect.
-:host(.radio-justify-space-between),
-:host(.radio-justify-start),
-:host(.radio-justify-end),
-:host(.radio-alignment-start),
-:host(.radio-alignment-center) {
+.radio-bottom .helper-text {
   display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .radio-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .radio-bottom .helper-text {
+  display: none;
 }
 
 // Radio Label Placement - Start
@@ -209,6 +216,8 @@ input {
  */
 :host(.radio-label-placement-end) .radio-wrapper {
   flex-direction: row-reverse;
+
+  justify-content: start;
 }
 
 /**
@@ -251,6 +260,8 @@ input {
  */
 :host(.radio-label-placement-stacked) .radio-wrapper {
   flex-direction: column;
+
+  text-align: center;
 }
 
 :host(.radio-label-placement-stacked) .label-text-wrapper {
@@ -276,4 +287,44 @@ input {
 
 :host(.radio-label-placement-stacked.radio-alignment-center) .label-text-wrapper {
   @include transform-origin(center, top);
+}
+
+// Radio Justify
+// --------------------------------------------------
+
+:host(.radio-justify-space-between) .radio-wrapper {
+  justify-content: space-between;
+}
+
+:host(.radio-justify-start) .radio-wrapper {
+  justify-content: start;
+}
+
+:host(.radio-justify-end) .radio-wrapper {
+  justify-content: end;
+}
+
+// Radio Align
+// --------------------------------------------------
+
+:host(.radio-alignment-start) .radio-wrapper {
+  align-items: start;
+}
+
+:host(.radio-alignment-center) .radio-wrapper {
+  align-items: center;
+}
+
+// Justify Content & Align Items
+// ---------------------------------------------
+
+// The radio should be displayed as block when either justify
+// or alignment is set; otherwise, these properties will have no
+// visible effect.
+:host(.radio-justify-space-between),
+:host(.radio-justify-start),
+:host(.radio-justify-end),
+:host(.radio-alignment-start),
+:host(.radio-alignment-center) {
+  display: block;
 }
