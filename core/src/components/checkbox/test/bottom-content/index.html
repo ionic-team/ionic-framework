@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Checkbox - Bottom Content</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+      ion-checkbox {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Checkbox - Bottom Content</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Hint</h2>
+            <ion-checkbox>Label</ion-checkbox>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Hint: Stacked</h2>
+            <ion-checkbox label-placement="stacked">Label</ion-checkbox>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Label Start</h2>
+            <ion-checkbox helper-text="Helper text" error-text="Error text">Label</ion-checkbox>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Label End</h2>
+            <ion-checkbox label-placement="end" helper-text="Helper text" error-text="Error text">Label</ion-checkbox>
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Label Stacked</h2>
+            <ion-checkbox label-placement="stacked" helper-text="Helper text" error-text="Error text"
+              >Label</ion-checkbox
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Helper Text: Label Fixed</h2>
+            <ion-checkbox label-placement="fixed" helper-text="Helper text" error-text="Error text">Label</ion-checkbox>
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Label Start</h2>
+            <ion-checkbox helper-text="Helper text" error-text="Error text" class="ion-invalid ion-touched"
+              >Label</ion-checkbox
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Label End</h2>
+            <ion-checkbox
+              label-placement="end"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="ion-invalid ion-touched"
+              >Label</ion-checkbox
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Label Stacked</h2>
+            <ion-checkbox
+              label-placement="stacked"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="ion-invalid ion-touched"
+              >Label</ion-checkbox
+            >
+          </div>
+
+          <div class="grid-item">
+            <h2>Error Text: Label Fixed</h2>
+            <ion-checkbox
+              label-placement="fixed"
+              helper-text="Helper text"
+              error-text="Error text"
+              class="ion-invalid ion-touched"
+              >Label</ion-checkbox
+            >
+          </div>
+        </div>
+
+        <button onclick="toggleValid()" class="expand">Toggle error</button>
+
+        <script>
+          const checkboxes = document.querySelectorAll('ion-checkbox[helper-text]');
+
+          function toggleValid() {
+            checkboxes.forEach((checkbox) => {
+              checkbox.classList.toggle('ion-invalid');
+              checkbox.classList.toggle('ion-touched');
+            });
+          }
+        </script>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
