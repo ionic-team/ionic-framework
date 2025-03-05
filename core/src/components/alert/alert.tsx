@@ -417,7 +417,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
        * Check if alert has only one button and no inputs.
        * If so, focus the button, oderwise focus the alert wrapper.
        * This will map to the default native alert behavior.
-      */
+       */
       if (this.buttons.length === 1 && this.inputs.length === 0) {
         const queryBtn = this.wrapperEl?.querySelector('.alert-button') as HTMLButtonElement;
         queryBtn.focus();
