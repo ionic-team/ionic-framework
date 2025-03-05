@@ -148,22 +148,22 @@ export const defineOverlayContainer = <Props extends object>(
 
       onMounted(() => {
         elementRef.value.addEventListener("ionMount", (ev: Event) => {
-          emit("ionMount", ev)
-          isOpen.value = true
+          emit("ionMount", ev);
+          isOpen.value = true;
         });
         elementRef.value.addEventListener("willPresent", (ev: Event) => {
-          emit("willPresent", ev)
-          isOpen.value = true
+          emit("willPresent", ev);
+          isOpen.value = true;
         });
         elementRef.value.addEventListener("didDismiss", (ev: Event) => {
-          emit("didDismiss", ev)
-          isOpen.value = false
+          emit("didDismiss", ev);
+          isOpen.value = false;
         });
         elementRef.value.addEventListener("willDismiss", (ev: Event) => {
-          emit("willDismiss", ev)
+          emit("willDismiss", ev);
         });
         elementRef.value.addEventListener("didPresent", (ev: Event) => {
-          emit("didPresent", ev)
+          emit("didPresent", ev);
         });
       });
 
