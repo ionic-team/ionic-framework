@@ -415,7 +415,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation).then(() => {
       /**
        * Check if alert has only one button and no inputs.
-       * If so, focus the button, oderwise focus the alert wrapper.
+       * If so, then focus on the button. Otherwise, focus the alert wrapper.
        * This will map to the default native alert behavior.
        */
       if (this.buttons.length === 1 && this.inputs.length === 0) {
