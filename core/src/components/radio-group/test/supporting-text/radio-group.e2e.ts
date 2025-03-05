@@ -6,7 +6,7 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio group: supporting text functionality'), () => {
-    test('should not render bottom content if no hint is enabled', async ({ page }) => {
+    test('should not render top content if no hint is enabled', async ({ page }) => {
       await page.setContent(
         `
         <ion-radio-group value="1">
@@ -18,7 +18,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const bottomEl = page.locator('ion-radio-group .radio-bottom');
+      const bottomEl = page.locator('ion-radio-group .radio-group-top');
       await expect(bottomEl).toHaveCount(0);
     });
     test('helper text should be visible initially', async ({ page }) => {
