@@ -20,10 +20,10 @@ export const defineOverlayContainer = <Props extends object>(
   const createControllerComponent = (options: ComponentOptions) => {
     return defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
       const eventListeners = [
-        { componentEv: `${name}-will-present`, frameworkEv: "willPresent" },
-        { componentEv: `${name}-did-present`, frameworkEv: "didPresent" },
-        { componentEv: `${name}-will-dismiss`, frameworkEv: "willDismiss" },
-        { componentEv: `${name}-did-dismiss`, frameworkEv: "didDismiss" },
+        { componentEv: `${name}WillPresent`, frameworkEv: "willPresent" },
+        { componentEv: `${name}DidPresent`, frameworkEv: "didPresent" },
+        { componentEv: `${name}WillDismiss`, frameworkEv: "willDismiss" },
+        { componentEv: `${name}DidDismiss`, frameworkEv: "didDismiss" },
       ];
 
       if (defineCustomElement !== undefined) {
@@ -139,7 +139,7 @@ export const defineOverlayContainer = <Props extends object>(
     }, options);
   };
   const createInlineComponent = (options: any) => {
-    return defineComponent((props, { slots }) => {
+    return defineComponent((props, { slots, emit }) => {
       if (defineCustomElement !== undefined) {
         defineCustomElement();
       }
@@ -147,18 +147,24 @@ export const defineOverlayContainer = <Props extends object>(
       const elementRef = ref();
 
       onMounted(() => {
-        elementRef.value.addEventListener(
-          "ion-mount",
-          () => (isOpen.value = true)
-        );
-        elementRef.value.addEventListener(
-          "will-present",
-          () => (isOpen.value = true)
-        );
-        elementRef.value.addEventListener(
-          "did-dismiss",
-          () => (isOpen.value = false)
-        );
+        elementRef.value.addEventListener("ionMount", (ev: Event) => {
+          emit("ionMount", ev)
+          isOpen.value = true
+        });
+        elementRef.value.addEventListener("willPresent", (ev: Event) => {
+          emit("willPresent", ev)
+          isOpen.value = true
+        });
+        elementRef.value.addEventListener("didDismiss", (ev: Event) => {
+          emit("didDismiss", ev)
+          isOpen.value = false
+        });
+        elementRef.value.addEventListener("willDismiss", (ev: Event) => {
+          emit("willDismiss", ev)
+        });
+        elementRef.value.addEventListener("didPresent", (ev: Event) => {
+          emit("didPresent", ev)
+        });
       });
 
       return () => {
