@@ -6,7 +6,7 @@ configs().forEach(({ title, screenshot, config }) => {
     test('with custom-grid should not have any visual regressions', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const customGrid = page.locator('#custom-grid');
-      await expect(customGrid).toHaveScreenshot(screenshot(`customGrid-with-hidden-days`));
+      await expect(customGrid).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-custom-grid`));
     });
 
     test('should set the first day of the week correctly', async ({ page }) => {
