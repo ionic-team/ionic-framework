@@ -42,7 +42,7 @@ configs().forEach(({ title, screenshot, config }) => {
     test('with specific display should not have any visual regressions', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const display = page.locator('#display');
-      await expect(display).toHaveScreenshot(screenshot(`display-with-hidden-days`));
+      await expect(display).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-display`));
     });
   });
 });
