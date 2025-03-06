@@ -33,7 +33,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await expect(dateRangeDisabled).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-date-range-disabled`));
     });
 
-    test('with month disabled should not have any visual regressions', async ({ page }) => {
+    test('should not have any visual regressions with month disabled', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const monthDisabled = page.locator('#month');
       await expect(monthDisabled).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-month-disabled`));
