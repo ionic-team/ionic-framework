@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('datetime: ShowDaysOutsideCustomMonth'), () => {
+  test.describe(title('datetime: showAdjacentDays'), () => {
     test('with custom-grid should not have any visual regressions', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const customGrid = page.locator('#custom-grid');
