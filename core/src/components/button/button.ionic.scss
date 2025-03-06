@@ -96,11 +96,13 @@
 /* Extra Small and Small Button */
 :host(.button-xsmall),
 :host(.button-small) {
-  ::slotted(ion-icon[slot="start"]) {
+  ::slotted(ion-icon[slot="start"]),
+  ::slotted(ion-spinner[slot="start"]) {
     @include globals.margin-horizontal(null, globals.$ion-space-100);
   }
 
-  ::slotted(ion-icon[slot="end"]) {
+  ::slotted(ion-icon[slot="end"]),
+  ::slotted(ion-spinner[slot="end"]) {
     @include globals.margin-horizontal(globals.$ion-space-100, null);
   }
 }
@@ -163,6 +165,7 @@
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
     font-size: inherit;
+
   }
 }
 
@@ -170,6 +173,25 @@
   --padding-end: var(--padding-top);
 
   aspect-ratio: 1 / 1;
+}
+
+// Button with Spinner
+// -------------------------------------------------------------------------------
+::slotted(ion-spinner) {
+  --color: currentColor;
+}
+
+/* Button containing only a spinner */
+::slotted(ion-spinner[slot="start"]),
+::slotted(ion-spinner[slot="end"]),
+::slotted(ion-spinner[slot="icon-only"]) {
+  height: globals.$ion-space-500;
+  width: globals.$ion-space-500
+}
+
+:host(.button-xlarge) ::slotted(ion-spinner){
+  height: globals.$ion-space-600;
+  width: globals.$ion-space-600;
 }
 
 // Button Shapes
@@ -246,26 +268,36 @@
   font-size: globals.$ion-font-size-500;
 }
 
-:host(.button-small) ::slotted(ion-icon[slot="start"]) {
+:host(.button-small)
+  ::slotted(ion-icon[slot="start"]),
+  ::slotted(ion-spinner[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ion-space-200);
 }
 
-::slotted(ion-icon[slot="start"]) {
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-spinner[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ion-space-250);
 }
 
-:host(.button-large) ::slotted(ion-icon[slot="start"]) {
+:host(.button-large)
+  ::slotted(ion-icon[slot="start"]),
+  ::slotted(ion-spinner[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ion-space-300);
 }
 
-:host(.button-small) ::slotted(ion-icon[slot="end"]) {
+:host(.button-small)
+  ::slotted(ion-icon[slot="end"]),
+  ::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-200, null);
 }
 
-::slotted(ion-icon[slot="end"]) {
+::slotted(ion-icon[slot="end"]),
+::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-250, null);
 }
 
-:host(.button-large) ::slotted(ion-icon[slot="end"]) {
+:host(.button-large)
+  ::slotted(ion-icon[slot="end"]),
+  ::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-300, null);
 }
