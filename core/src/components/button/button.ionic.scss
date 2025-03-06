@@ -165,7 +165,6 @@
   ::slotted(ion-icon[slot="end"]),
   ::slotted(ion-icon[slot="icon-only"]) {
     font-size: inherit;
-
   }
 }
 
@@ -185,13 +184,13 @@
 ::slotted(ion-spinner[slot="start"]),
 ::slotted(ion-spinner[slot="end"]),
 ::slotted(ion-spinner[slot="icon-only"]) {
+  width: globals.$ion-space-500;
   height: globals.$ion-space-500;
-  width: globals.$ion-space-500
 }
 
-:host(.button-xlarge) ::slotted(ion-spinner){
-  height: globals.$ion-space-600;
+:host(.button-xlarge) ::slotted(ion-spinner) {
   width: globals.$ion-space-600;
+  height: globals.$ion-space-600;
 }
 
 // Button Shapes
@@ -268,9 +267,8 @@
   font-size: globals.$ion-font-size-500;
 }
 
-:host(.button-small)
-  ::slotted(ion-icon[slot="start"]),
-  ::slotted(ion-spinner[slot="start"]) {
+:host(.button-small) ::slotted(ion-icon[slot="start"]),
+::slotted(ion-spinner[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ion-space-200);
 }
 
@@ -279,15 +277,13 @@
   @include globals.margin-horizontal(null, globals.$ion-space-250);
 }
 
-:host(.button-large)
-  ::slotted(ion-icon[slot="start"]),
-  ::slotted(ion-spinner[slot="start"]) {
+:host(.button-large) ::slotted(ion-icon[slot="start"]),
+::slotted(ion-spinner[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ion-space-300);
 }
 
-:host(.button-small)
-  ::slotted(ion-icon[slot="end"]),
-  ::slotted(ion-spinner[slot="end"]) {
+:host(.button-small) ::slotted(ion-icon[slot="end"]),
+::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-200, null);
 }
 
@@ -296,8 +292,7 @@
   @include globals.margin-horizontal(globals.$ion-space-250, null);
 }
 
-:host(.button-large)
-  ::slotted(ion-icon[slot="end"]),
-  ::slotted(ion-spinner[slot="end"]) {
+:host(.button-large) ::slotted(ion-icon[slot="end"]),
+::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-300, null);
 }
