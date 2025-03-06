@@ -117,7 +117,7 @@
  * is selected should have ion-color for
  * text color and be bolder.
  */
-:host .calendar-day.calendar-day-active{
+:host .calendar-day.calendar-day-active {
   color: current-color(contrast);
 }
 
