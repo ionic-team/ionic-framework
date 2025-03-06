@@ -12,7 +12,7 @@ configs().forEach(({ title, screenshot, config }) => {
     test('should set the first day of the week correctly', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const customDatetime = page.locator('#custom-calendar-days');
-      await expect(customDatetime).toHaveScreenshot(screenshot(`custom-calendar-with-hidden-days`));
+      await expect(customDatetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-custom-calendar`));
     });
 
     test('should not have visual regressions with specific date disabled', async ({ page }) => {
