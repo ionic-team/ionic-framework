@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: showAdjacentDays'), () => {
-    test('with custom-grid should not have any visual regressions', async ({ page }) => {
+    test('should not have visual regressions with custom grid ', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const customGrid = page.locator('#custom-grid');
       await expect(customGrid).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-custom-grid`));
