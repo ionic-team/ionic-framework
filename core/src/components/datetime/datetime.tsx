@@ -139,7 +139,7 @@ export class Datetime implements ComponentInterface {
     hour: 13,
     minute: 52,
     ampm: 'pm',
-    hiddenDay: false,
+    adjacentDay: false,
   };
 
   @Element() el!: HTMLIonDatetimeElement;
