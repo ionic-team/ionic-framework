@@ -102,7 +102,7 @@ export const getDaysOfWeek = (locale: string, mode: Mode, firstDayOfWeek = 0) =>
  * the firstDayOfWeek value (Sunday by default)
  * using null values.
  */
-export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: number, displayHiddenDays = false) => {
+export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: number, showAdjacentDays = false) => {
   const numDays = getNumDaysInMonth(month, year);
   let previousNumDays: number; //previous month number of days
   if (month === 1) {
