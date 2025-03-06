@@ -197,6 +197,13 @@ export class Select implements ComponentInterface {
   @Prop({ mutable: true }) value?: any | null;
 
   /**
+   * If true, screen readers will announce it as a required field. This property
+   * works only for accessibility purposes, it will not prevent the form from
+   * submitting if the value is invalid.
+   */
+  @Prop() required = false;
+
+  /**
    * Emitted when the value has changed.
    *
    * This event will not emit when programmatically setting the `value` property.
@@ -310,19 +317,10 @@ export class Select implements ComponentInterface {
     }
     this.isExpanded = true;
     const overlay = (this.overlay = await this.createOverlay(event));
-    overlay.onDidDismiss().then(() => {
-      this.overlay = undefined;
-      this.isExpanded = false;
-      this.ionDismiss.emit();
-      this.setFocus();
-    });
 
-    await overlay.present();
-
-    // focus selected option for popovers and modals
-    if (this.interface === 'popover' || this.interface === 'modal') {
+    // Add logic to scroll selected item into view before presenting
+    const scrollSelectedIntoView = () => {
       const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
-
       if (indexOfSelected > -1) {
         const selectedItem = overlay.querySelector<HTMLElement>(
           `.select-interface-option:nth-child(${indexOfSelected + 1})`
@@ -345,6 +343,7 @@ export class Select implements ComponentInterface {
             | HTMLIonCheckboxElement
             | null;
           if (interactiveEl) {
+            selectedItem.scrollIntoView({ block: 'nearest' });
             // Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
             // and removing `ion-focused` style
             interactiveEl.setFocus();
@@ -372,8 +371,40 @@ export class Select implements ComponentInterface {
           focusVisibleElement(firstEnabledOption.closest('ion-item')!);
         }
       }
+    };
+
+    // For modals and popovers, we can scroll before they're visible
+    if (this.interface === 'modal') {
+      overlay.addEventListener('ionModalWillPresent', scrollSelectedIntoView, { once: true });
+    } else if (this.interface === 'popover') {
+      overlay.addEventListener('ionPopoverWillPresent', scrollSelectedIntoView, { once: true });
+    } else {
+      /**
+       * For alerts and action sheets, we need to wait a frame after willPresent
+       * because these overlays don't have their content in the DOM immediately
+       * when willPresent fires. By waiting a frame, we ensure the content is
+       * rendered and can be properly scrolled into view.
+       */
+      const scrollAfterRender = () => {
+        requestAnimationFrame(() => {
+          scrollSelectedIntoView();
+        });
+      };
+      if (this.interface === 'alert') {
+        overlay.addEventListener('ionAlertWillPresent', scrollAfterRender, { once: true });
+      } else if (this.interface === 'action-sheet') {
+        overlay.addEventListener('ionActionSheetWillPresent', scrollAfterRender, { once: true });
+      }
     }
 
+    overlay.onDidDismiss().then(() => {
+      this.overlay = undefined;
+      this.isExpanded = false;
+      this.ionDismiss.emit();
+      this.setFocus();
+    });
+
+    await overlay.present();
     return overlay;
   }
 
@@ -974,7 +1005,7 @@ export class Select implements ComponentInterface {
   }
 
   private renderListbox() {
-    const { disabled, inputId, isExpanded } = this;
+    const { disabled, inputId, isExpanded, required } = this;
 
     return (
       <button
@@ -983,6 +1014,7 @@ export class Select implements ComponentInterface {
         aria-label={this.ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={`${isExpanded}`}
+        aria-required={`${required}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(focusEl) => (this.focusEl = focusEl)}
