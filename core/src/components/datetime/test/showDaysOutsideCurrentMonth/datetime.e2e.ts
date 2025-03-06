@@ -36,7 +36,7 @@ configs().forEach(({ title, screenshot, config }) => {
     test('with month disabled should not have any visual regressions', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const monthDisabled = page.locator('#month');
-      await expect(monthDisabled).toHaveScreenshot(screenshot(`monthDisabled-with-hidden-days`));
+      await expect(monthDisabled).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-month-disabled`));
     });
 
     test('with specific display should not have any visual regressions', async ({ page }) => {
