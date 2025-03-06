@@ -211,7 +211,7 @@ export class Datetime implements ComponentInterface {
   /**
    * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
    */
-  @Prop() showDaysOutsideCurrentMonth?: boolean = false;
+  @Prop() showAdjacentDays = false;
 
   @Watch('disabled')
   protected disabledChanged() {
