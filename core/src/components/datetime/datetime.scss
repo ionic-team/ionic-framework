@@ -364,11 +364,11 @@
   opacity: 0.4;
 }
 
-:host .calendar-day.calendar-day-hidden-day {
+:host .calendar-day.calendar-day-adjacent-day {
   opacity: 0.4;
 }
 
-.calendar-day:not(.calendar-day-hidden-day):focus {
+.calendar-day:not(.calendar-day-adjacent-day):focus {
   background: current-color(base, 0.2);
 
   box-shadow: 0px 0px 0px 4px current-color(base, 0.2);

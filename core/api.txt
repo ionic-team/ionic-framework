@@ -528,8 +528,8 @@ ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,preferWheel,boolean,false,false,false
 ion-datetime,prop,presentation,"date" | "date-time" | "month" | "month-year" | "time" | "time-date" | "year",'date-time',false,false
 ion-datetime,prop,readonly,boolean,false,false,false
+ion-datetime,prop,showAdjacentDays,boolean,false,false,false
 ion-datetime,prop,showClearButton,boolean,false,false,false
-ion-datetime,prop,showDaysOutsideCurrentMonth,boolean | undefined,false,false,false
 ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false

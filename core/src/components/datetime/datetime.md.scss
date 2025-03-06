@@ -128,7 +128,7 @@
   background: current-color(base);
 }
 
-:host .calendar-day.calendar-day-hidden-day:not([disabled]) {
+:host .calendar-day.calendar-day-adjacent-day:not([disabled]) {
   color: $text-color-step-500;
 
   opacity: 1;

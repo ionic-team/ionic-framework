@@ -306,7 +306,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime, JSX.Io
   'formatOptions',
   'readonly',
   'isDateEnabled',
-  'showDaysOutsideCurrentMonth',
+  'showAdjacentDays',
   'min',
   'max',
   'presentation',

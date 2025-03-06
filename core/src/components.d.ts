@@ -933,13 +933,13 @@ export namespace Components {
          */
         "reset": (startDate?: string) => Promise<void>;
         /**
+          * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
+         */
+        "showAdjacentDays": boolean;
+        /**
           * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
         "showClearButton": boolean;
-        /**
-          * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
-         */
-        "showDaysOutsideCurrentMonth"?: boolean;
         /**
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
@@ -5724,13 +5724,13 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
+          * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
+         */
+        "showAdjacentDays"?: boolean;
+        /**
           * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
         "showClearButton"?: boolean;
-        /**
-          * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
-         */
-        "showDaysOutsideCurrentMonth"?: boolean;
         /**
           * If `true`, the default "Cancel" and "OK" buttons will be rendered at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
