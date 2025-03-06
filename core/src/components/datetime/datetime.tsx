@@ -2260,7 +2260,7 @@ export class Datetime implements ComponentInterface {
                 }
               }
 
-              const referenceParts = { month: _month, day, year: _year, hiddenDay: hiddenDay };
+              const referenceParts = { month: _month, day, year: _year, hiddenDay };
               const isCalendarPadding = day === null;
               const {
                 isActive,
