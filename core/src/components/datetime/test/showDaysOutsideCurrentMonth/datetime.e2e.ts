@@ -15,7 +15,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await expect(customDatetime).toHaveScreenshot(screenshot(`custom-calendar-with-hidden-days`));
     });
 
-    test('with specific date disabled  should not have any visual regressions', async ({ page }) => {
+    test('should not have visual regressions with specific date disabled', async ({ page }) => {
       await page.goto('/src/components/datetime/test/showDaysOutsideCurrentMonth', config);
       const specificDateDisabled = page.locator('#specificDate');
       await expect(specificDateDisabled).toHaveScreenshot(screenshot(`specificDate-with-hidden-days`));
