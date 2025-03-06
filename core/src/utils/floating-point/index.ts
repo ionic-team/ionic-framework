@@ -1,4 +1,4 @@
-import { isSafeNumber } from '../type-guards.ts';
+import { isSafeNumber } from "@utils/helpers";
 
 export function getDecimalPlaces(n: number) {
   if (!isSafeNumber(n)) return 0;
