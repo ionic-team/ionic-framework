@@ -29,6 +29,6 @@ describe('floating point utils', () => {
       expect(roundToMaxDecimalPlaces(undefined as any)).toBe(0);
       expect(roundToMaxDecimalPlaces(null as any)).toBe(0);
       expect(roundToMaxDecimalPlaces(NaN as any)).toBe(0);
-    })
+    });
   });
 });
