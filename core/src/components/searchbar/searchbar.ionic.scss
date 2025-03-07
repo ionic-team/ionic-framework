@@ -19,6 +19,7 @@
   --placeholder-color: #{globals.$ion-primitives-neutral-800};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
+  --leading-icon-padding: #{calc(globals.$ion-scale-400 + globals.$ion-space-200)};
 
   @include globals.typography(globals.$ion-body-md-regular);
   @include globals.padding(0);
@@ -67,7 +68,7 @@
   font-size: globals.$ion-font-size-400;
 }
 
-// Searchbar Search & Clear Icon & Cancel Icon
+// Searchbar Search Icon & Clear Icon & Cancel Icon
 // -----------------------------------------
 
 .searchbar-search-icon,
@@ -80,7 +81,7 @@
   transform: translateY(-50%);
 }
 
-// Clear Icon & Cancel Icon
+// Searchbar Clear Icon & Cancel Icon
 // -----------------------------------------
 
 .searchbar-clear-button:focus-visible,
@@ -90,6 +91,12 @@
   outline: globals.$ion-border-size-050 globals.$ion-border-style-solid globals.$ion-border-focus-default;
 
   opacity: 1;
+}
+
+// Searchbar Search Icon & Cancel Icon
+// -----------------------------------------
+:host(:not(.searchbar-has-leading-icons)) {
+  --leading-icon-padding: #{globals.$ion-scale-0};
 }
 
 // Searchbar in Toolbar
@@ -113,7 +120,7 @@
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: calc(9px + globals.$ion-scale-400 + globals.$ion-space-200);
+  padding-inline-start: calc(9px + var(--leading-icon-padding));
 }
 
 // Searchbar States
@@ -181,7 +188,7 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200));
+  @include globals.padding-horizontal(calc(globals.$ion-space-300 + var(--leading-icon-padding)));
 
   height: globals.$ion-scale-1000;
 }
@@ -210,7 +217,7 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200));
+  @include globals.padding-horizontal(calc(globals.$ion-space-400 + var(--leading-icon-padding)));
 
   height: globals.$ion-scale-1200;
 }
@@ -229,6 +236,8 @@
 /* Large */
 :host(.searchbar-size-large) .searchbar-search-icon,
 :host(.searchbar-size-large) .searchbar-cancel-button {
+  --leading-icon-padding: #{calc(globals.$ion-scale-500 + globals.$ion-space-200)};
+
   width: globals.$ion-scale-500;
   height: globals.$ion-scale-500;
 }
@@ -244,7 +253,7 @@
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: calc(9px + globals.$ion-scale-500 + globals.$ion-space-200);
+  padding-inline-start: calc(9px + var(--leading-icon-padding));
 }
 
 :host(.searchbar-size-large) .searchbar-input {
@@ -262,7 +271,7 @@
    * and the gap between the icon and the input.
    */
   @include globals.padding-horizontal(
-    calc(globals.$ion-space-500 + globals.$ion-scale-500 + globals.$ion-space-200),
+    calc(globals.$ion-space-500 + var(--leading-icon-padding)),
     calc(globals.$ion-space-500 + globals.$ion-scale-400 + globals.$ion-space-200)
   );
 

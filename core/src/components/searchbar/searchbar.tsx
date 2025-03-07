@@ -783,6 +783,8 @@ export class Searchbar implements ComponentInterface {
           'searchbar-has-value': this.hasValue(),
           'searchbar-left-aligned': this.shouldAlignLeft,
           'searchbar-has-focus': this.focused,
+          'searchbar-has-leading-icons':
+            theme === 'ionic' && (this.searchIcon !== undefined || this.showCancelButton !== 'never'),
           'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton(),
           [`searchbar-shape-${shape}`]: shape !== undefined,
@@ -816,7 +818,14 @@ export class Searchbar implements ComponentInterface {
 
           {(theme === 'md' || theme === 'ionic') && cancelButton}
 
-          <ion-icon aria-hidden="true" icon={searchbarSearchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+          {(theme === 'ionic' && this.searchIcon !== undefined) || theme !== 'ionic' ? (
+            <ion-icon
+              aria-hidden="true"
+              icon={searchbarSearchIcon}
+              lazy={false}
+              class="searchbar-search-icon"
+            ></ion-icon>
+          ) : null}
 
           <button
             aria-label="reset"
