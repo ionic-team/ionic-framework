@@ -818,7 +818,7 @@ export class Searchbar implements ComponentInterface {
 
           {(theme === 'md' || theme === 'ionic') && cancelButton}
 
-          {(theme === 'ionic' && this.searchIcon !== undefined) || theme !== 'ionic' ? (
+          {theme !== 'ionic' || this.searchIcon !== undefined ? (
             <ion-icon
               aria-hidden="true"
               icon={searchbarSearchIcon}
