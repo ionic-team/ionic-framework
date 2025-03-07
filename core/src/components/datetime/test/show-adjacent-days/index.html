@@ -108,7 +108,7 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Inline Grid</h2>
-            <ion-datetime show-adjacent-days="true" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+            <ion-datetime show-adjacent-days="true" id="default" value="2020-03-14T14:23:00.000Z"></ion-datetime>
           </div>
 
           <div class="grid-item">
@@ -182,7 +182,6 @@
     </ion-app>
 
     <script>
-      const customGrid = document.querySelector('#custom-grid');
       const customDatetime = document.querySelector('#custom-calendar-days');
 
       // Mock the current day to always have the same screenshots
