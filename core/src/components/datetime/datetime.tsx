@@ -139,6 +139,7 @@ export class Datetime implements ComponentInterface {
     hour: 13,
     minute: 52,
     ampm: 'pm',
+    adjacentDay: false,
   };
 
   @Element() el!: HTMLIonDatetimeElement;
@@ -206,6 +207,13 @@ export class Datetime implements ComponentInterface {
    * Custom implementations should be optimized for performance to avoid jank.
    */
   @Prop() isDateEnabled?: (dateIsoString: string) => boolean;
+
+  /**
+   * If `true`, the datetime calendar displays a six-week (42-day) layout,
+   * including days from the previous and next months to fill the grid.
+   * These adjacent days are selectable unless disabled.
+   */
+  @Prop() showAdjacentDays = false;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -810,9 +818,9 @@ export class Datetime implements ComponentInterface {
      * to grab the correct calendar-day element.
      */
     const padding = currentMonth.querySelectorAll('.calendar-day-padding');
-    const { day } = this.workingParts;
+    const { day, adjacentDay } = this.workingParts;
 
-    if (day === null) {
+    if (day === null || adjacentDay) {
       return;
     }
 
@@ -2226,10 +2234,34 @@ export class Datetime implements ComponentInterface {
         }}
       >
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
-            const { day, dayOfWeek } = dateObject;
-            const { el, highlightedDates, isDateEnabled, multiple } = this;
-            const referenceParts = { month, day, year };
+          {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject, index) => {
+            const { day, dayOfWeek, adjacentDay } = dateObject;
+            const { el, highlightedDates, isDateEnabled, multiple, showAdjacentDays } = this;
+            let _month = month;
+            let _year = year;
+            if (showAdjacentDays && adjacentDay && day !== null) {
+              if (day > 20) {
+                // Leading with the adjacent day from the previous month
+                // if its a adjacent day and is higher than '20' (last week even in feb)
+                if (month === 1) {
+                  _year = year - 1;
+                  _month = 12;
+                } else {
+                  _month = month - 1;
+                }
+              } else if (day < 15) {
+                // Leading with the adjacent day from the next month
+                // if its a adjacent day and is lower than '15' (first two weeks)
+                if (month === 12) {
+                  _year = year + 1;
+                  _month = 1;
+                } else {
+                  _month = month + 1;
+                }
+              }
+            }
+
+            const referenceParts = { month: _month, day, year: _year, adjacentDay };
             const isCalendarPadding = day === null;
             const {
               isActive,
@@ -2284,7 +2316,7 @@ export class Datetime implements ComponentInterface {
              * Custom highlight styles should not override the style for selected dates,
              * nor apply to "filler days" at the start of the grid.
              */
-            if (highlightedDates !== undefined && !isActive && day !== null) {
+            if (highlightedDates !== undefined && !isActive && day !== null && !adjacentDay) {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
@@ -2292,10 +2324,12 @@ export class Datetime implements ComponentInterface {
 
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
-            if (!isCalendarPadding) {
+            if (!isCalendarPadding && !adjacentDay) {
               dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
                 isCalDayDisabled ? ' disabled' : ''
               }`;
+            } else if (adjacentDay) {
+              dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
             }
 
             return (
@@ -2319,8 +2353,8 @@ export class Datetime implements ComponentInterface {
                   }}
                   tabindex="-1"
                   data-day={day}
-                  data-month={month}
-                  data-year={year}
+                  data-month={_month}
+                  data-year={_year}
                   data-index={index}
                   data-day-of-week={dayOfWeek}
                   disabled={isButtonDisabled}
@@ -2330,6 +2364,7 @@ export class Datetime implements ComponentInterface {
                     'calendar-day-active': isActive,
                     'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
+                    'calendar-day-adjacent-day': adjacentDay,
                   }}
                   part={dateParts}
                   aria-hidden={isCalendarPadding ? 'true' : null}
@@ -2340,29 +2375,37 @@ export class Datetime implements ComponentInterface {
                       return;
                     }
 
+                    if (adjacentDay) {
+                      //the user selected a day outside the current month, let's not focus on this button since the month will be re-render;
+                      this.el.blur();
+                    }
+
                     this.setWorkingParts({
                       ...this.workingParts,
-                      month,
+                      month: _month,
                       day,
-                      year,
+                      year: _year,
+                      adjacentDay: adjacentDay,
                     });
 
                     // multiple only needs date info, so we can wipe out other fields like time
                     if (multiple) {
                       this.setActiveParts(
                         {
-                          month,
+                          month: _month,
                           day,
-                          year,
+                          year: _year,
+                          adjacentDay: adjacentDay,
                         },
                         isActive
                       );
                     } else {
                       this.setActiveParts({
                         ...activePart,
-                        month,
+                        month: _month,
                         day,
-                        year,
+                        year: _year,
+                        adjacentDay: adjacentDay,
                       });
                     }
                   }}
