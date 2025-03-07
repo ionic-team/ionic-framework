@@ -209,7 +209,9 @@ export class Datetime implements ComponentInterface {
   @Prop() isDateEnabled?: (dateIsoString: string) => boolean;
 
   /**
-   * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
+   * If `true`, the datetime calendar displays a six-week (42-day) layout,
+   * including days from the previous and next months to fill the grid.
+   * These adjacent days are selectable unless disabled.
    */
   @Prop() showAdjacentDays = false;
 
