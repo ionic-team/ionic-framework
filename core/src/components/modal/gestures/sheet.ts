@@ -192,11 +192,12 @@ export const createSheetGesture = (
     currentBreakpoint = getCurrentBreakpoint();
 
     /**
-     * If we have expandToScroll disabled, we should not allow the swipe gesture to start
-     * if the content is being swiped.
+     * If `expandToScroll` is disabled, we should not allow the swipe gesture
+     * to start if the content is not scrolled to the top.
      */
     if (!expandToScroll && contentEl) {
-      return false;
+      const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
+      return scrollEl!.scrollTop === 0;
     }
 
     if (currentBreakpoint === 1 && contentEl) {
@@ -262,6 +263,14 @@ export const createSheetGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
+    /**
+     * If `expandToScroll` is disabled, we should not allow the swipe gesture
+     * to continue if the gesture is not pulling down.
+     */
+    if (!expandToScroll && detail.deltaY <= 0) {
+      return;
+    }
+
     /**
      * If we are pulling down, then it is possible we are pulling on the content.
      * We do not want scrolling to happen at the same time as the gesture.
