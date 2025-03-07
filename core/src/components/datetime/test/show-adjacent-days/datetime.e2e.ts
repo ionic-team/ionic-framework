@@ -1,48 +1,51 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('datetime: ShowDaysOutsideCustomMonth'), () => {
-    test('with custom-grid should not have any visual regressions', async ({ page }) => {
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: show adjacent days'), () => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
-      const customGrid = page.locator('#custom-grid');
-      await expect(customGrid).toHaveScreenshot(screenshot(`customGrid-with-adjacent-days`));
+      const datetime = page.locator('#default');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days`));
     });
 
-    test('should set the first day of the week correctly', async ({ page }) => {
+    test('should not have visual regressions with a custom styled calendar', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
-      const customDatetime = page.locator('#custom-calendar-days');
-      await expect(customDatetime).toHaveScreenshot(screenshot(`custom-calendar-with-adjacent-days`));
+      const datetime = page.locator('#custom-calendar-days');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-custom-calendar`));
     });
 
-    test('with specific date disabled  should not have any visual regressions', async ({ page }) => {
+    test('should not have visual regressions with specific date disabled', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
-      const specificDateDisabled = page.locator('#specificDate');
-      await expect(specificDateDisabled).toHaveScreenshot(screenshot(`specificDate-with-adjacent-days`));
+      const datetime = page.locator('#specificDate');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-specific-date-disabled`));
     });
 
-    test('with weekends disabled should not have any visual regressions', async ({ page }) => {
+    test('should not have visual regressions with weekends disabled', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
-      const weekendsDisabled = page.locator('#weekends');
-      await expect(weekendsDisabled).toHaveScreenshot(screenshot(`weekendsDisabled-with-adjacent-days`));
+      const datetime = page.locator('#weekends');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-weekends-disabled`));
     });
 
-    test('with date range disabled should not have any visual regressions', async ({ page }) => {
+    test('should not have visual regressions with date range disabled', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
-      const dateRangeDisabled = page.locator('#dateRange');
-      await expect(dateRangeDisabled).toHaveScreenshot(screenshot(`dateRangeDisabled-with-adjacent-days`));
+      const datetime = page.locator('#dateRange');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-date-range-disabled`));
     });
 
-    test('with month disabled should not have any visual regressions', async ({ page }) => {
+    test('should not have visual regressions with month disabled', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
-      const monthDisabled = page.locator('#month');
-      await expect(monthDisabled).toHaveScreenshot(screenshot(`monthDisabled-with-adjacent-days`));
+      const datetime = page.locator('#month');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-month-disabled`));
     });
 
-    test('with specific display should not have any visual regressions', async ({ page }) => {
+    test('should not have visual regressions with display specified', async ({ page }) => {
       await page.goto('/src/components/datetime/test/show-adjacent-days', config);
-      const display = page.locator('#display');
-      await expect(display).toHaveScreenshot(screenshot(`display-with-adjacent-days`));
+      const datetime = page.locator('#display');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-show-adjacent-days-display`));
     });
   });
 });
