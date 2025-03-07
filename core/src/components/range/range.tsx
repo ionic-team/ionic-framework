@@ -314,8 +314,8 @@ export class Range implements ComponentInterface {
     }
 
     this.inheritedAttributes = inheritAriaAttributes(this.el);
-    // If the min or max is not safe, set it to 0 or 100 respectively.
-    // Our watch does this, but not before the initial load.
+    // If min, max, or step are not safe, set them to 0, 100, and 1, respectively.
+    // Each watch does this, but not before the initial load.
     this.min = isSafeNumber(this.min) ? this.min : 0;
     this.max = isSafeNumber(this.max) ? this.max : 100;
     this.step = isSafeNumber(this.step) ? this.step : 1;
