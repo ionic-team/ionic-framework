@@ -159,6 +159,12 @@ export class Range implements ComponentInterface {
    * Specifies the value granularity.
    */
   @Prop() step = 1;
+  @Watch('step')
+  protected stepChanged(newValue: number) {
+    if (!isSafeNumber(newValue)) {
+      this.step = 1;
+    }
+  }
 
   /**
    * If `true`, tick marks are displayed based on the step value.
@@ -312,6 +318,7 @@ export class Range implements ComponentInterface {
     // Our watch does this, but not before the initial load.
     this.min = isSafeNumber(this.min) ? this.min : 0;
     this.max = isSafeNumber(this.max) ? this.max : 100;
+    this.step = isSafeNumber(this.step) ? this.step : 1;
   }
 
   componentDidLoad() {
