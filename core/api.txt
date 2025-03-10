@@ -1948,6 +1948,8 @@ ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
+ion-toggle,prop,errorText,string | undefined,undefined,false,false
+ion-toggle,prop,helperText,string | undefined,undefined,false,false
 ion-toggle,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
@@ -1981,8 +1983,11 @@ ion-toggle,css-prop,--track-background,ios
 ion-toggle,css-prop,--track-background,md
 ion-toggle,css-prop,--track-background-checked,ios
 ion-toggle,css-prop,--track-background-checked,md
+ion-toggle,part,error-text
 ion-toggle,part,handle
+ion-toggle,part,helper-text
 ion-toggle,part,label
+ion-toggle,part,supporting-text
 ion-toggle,part,track
 
 ion-toolbar,shadow

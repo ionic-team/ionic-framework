@@ -21,6 +21,9 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
  * @part track - The background track of the toggle.
  * @part handle - The toggle handle, or knob, used to change the checked state.
  * @part label - The label text describing the toggle.
+ * @part supporting-text - Supporting text displayed beneath the toggle label.
+ * @part helper-text - Supporting text displayed beneath the toggle label when the toggle is valid.
+ * @part error-text - Supporting text displayed beneath the toggle label when the toggle is invalid and touched.
  */
 @Component({
   tag: 'ion-toggle',
@@ -32,6 +35,8 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
 })
 export class Toggle implements ComponentInterface {
   private inputId = `ion-tg-${toggleIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
   private lastDrag = 0;
@@ -64,6 +69,16 @@ export class Toggle implements ComponentInterface {
    * If `true`, the user cannot interact with the toggle.
    */
   @Prop() disabled = false;
+
+  /**
+   * Text that is placed under the toggle label and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * Text that is placed under the toggle label and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
 
   /**
    * The value of the toggle does not mean if it's checked or not, use the `checked`
@@ -297,6 +312,48 @@ export class Toggle implements ComponentInterface {
     return this.el.textContent !== '';
   }
 
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Responsible for rendering helper text and error text.
+   * This element should only be rendered if hint text is set.
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return (
+      <div class="toggle-bottom">
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
+          {helperText}
+        </div>
+        <div id={errorTextId} class="error-text" part="supporting-text error-text">
+          {errorText}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment, required } =
       this;
@@ -308,6 +365,8 @@ export class Toggle implements ComponentInterface {
 
     return (
       <Host
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
@@ -347,6 +406,7 @@ export class Toggle implements ComponentInterface {
             part="label"
           >
             <slot></slot>
+            {this.renderHintText()}
           </div>
           <div class="native-wrapper">{this.renderToggleControl()}</div>
         </label>
