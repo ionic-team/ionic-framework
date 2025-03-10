@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, clamp, debounceEvent, renderHiddenInput } from '@utils/helpers';
+import { inheritAriaAttributes, clamp, debounceEvent, renderHiddenInput, isSafeNumber } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -109,7 +109,11 @@ export class Range implements ComponentInterface {
    */
   @Prop() min = 0;
   @Watch('min')
-  protected minChanged() {
+  protected minChanged(newValue: number) {
+    if (!isSafeNumber(newValue)) {
+      this.min = 0;
+    }
+
     if (!this.noUpdate) {
       this.updateRatio();
     }
@@ -120,7 +124,11 @@ export class Range implements ComponentInterface {
    */
   @Prop() max = 100;
   @Watch('max')
-  protected maxChanged() {
+  protected maxChanged(newValue: number) {
+    if (!isSafeNumber(newValue)) {
+      this.max = 100;
+    }
+
     if (!this.noUpdate) {
       this.updateRatio();
     }
@@ -151,6 +159,12 @@ export class Range implements ComponentInterface {
    * Specifies the value granularity.
    */
   @Prop() step = 1;
+  @Watch('step')
+  protected stepChanged(newValue: number) {
+    if (!isSafeNumber(newValue)) {
+      this.step = 1;
+    }
+  }
 
   /**
    * If `true`, tick marks are displayed based on the step value.
@@ -300,6 +314,11 @@ export class Range implements ComponentInterface {
     }
 
     this.inheritedAttributes = inheritAriaAttributes(this.el);
+    // If min, max, or step are not safe, set them to 0, 100, and 1, respectively.
+    // Each watch does this, but not before the initial load.
+    this.min = isSafeNumber(this.min) ? this.min : 0;
+    this.max = isSafeNumber(this.max) ? this.max : 100;
+    this.step = isSafeNumber(this.step) ? this.step : 1;
   }
 
   componentDidLoad() {
