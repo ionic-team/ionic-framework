@@ -398,6 +398,8 @@ ion-checkbox,prop,alignment,"center" | "start" | undefined,undefined,false,false
 ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false
+ion-checkbox,prop,errorText,string | undefined,undefined,false,false
+ion-checkbox,prop,helperText,string | undefined,undefined,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
@@ -431,8 +433,11 @@ ion-checkbox,css-prop,--size,md
 ion-checkbox,css-prop,--transition,ios
 ion-checkbox,css-prop,--transition,md
 ion-checkbox,part,container
+ion-checkbox,part,error-text
+ion-checkbox,part,helper-text
 ion-checkbox,part,label
 ion-checkbox,part,mark
+ion-checkbox,part,supporting-text
 
 ion-chip,shadow
 ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -1948,6 +1953,8 @@ ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
+ion-toggle,prop,errorText,string | undefined,undefined,false,false
+ion-toggle,prop,helperText,string | undefined,undefined,false,false
 ion-toggle,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
@@ -1981,8 +1988,11 @@ ion-toggle,css-prop,--track-background,ios
 ion-toggle,css-prop,--track-background,md
 ion-toggle,css-prop,--track-background-checked,ios
 ion-toggle,css-prop,--track-background-checked,md
+ion-toggle,part,error-text
 ion-toggle,part,handle
+ion-toggle,part,helper-text
 ion-toggle,part,label
+ion-toggle,part,supporting-text
 ion-toggle,part,track
 
 ion-toolbar,shadow

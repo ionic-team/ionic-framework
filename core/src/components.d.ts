@@ -624,6 +624,14 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the checkbox label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate": boolean;
@@ -3285,6 +3293,14 @@ export namespace Components {
          */
         "enableOnOffLabels": boolean | undefined;
         /**
+          * Text that is placed under the toggle label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the toggle label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements. Setting this property will change the toggle `display` to `block`.
          */
         "justify"?: 'start' | 'end' | 'space-between';
@@ -5427,6 +5443,14 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the checkbox.
          */
         "disabled"?: boolean;
+        /**
+          * Text that is placed under the checkbox label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox label and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
@@ -8171,6 +8195,14 @@ declare namespace LocalJSX {
           * Enables the on/off accessibility switch labels within the toggle.
          */
         "enableOnOffLabels"?: boolean | undefined;
+        /**
+          * Text that is placed under the toggle label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the toggle label and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements. Setting this property will change the toggle `display` to `block`.
          */
