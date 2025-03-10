@@ -1626,8 +1626,10 @@ ion-select,prop,cancelText,string,'Cancel',false,false
 ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
+ion-select,prop,errorText,string | undefined,undefined,false,false
 ion-select,prop,expandedIcon,string | undefined,undefined,false,false
 ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
+ion-select,prop,helperText,string | undefined,undefined,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "modal" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
 ion-select,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
@@ -1682,9 +1684,12 @@ ion-select,css-prop,--placeholder-opacity,md
 ion-select,css-prop,--ripple-color,ios
 ion-select,css-prop,--ripple-color,md
 ion-select,part,container
+ion-select,part,error-text
+ion-select,part,helper-text
 ion-select,part,icon
 ion-select,part,label
 ion-select,part,placeholder
+ion-select,part,supporting-text
 ion-select,part,text
 
 ion-select-modal,scoped
