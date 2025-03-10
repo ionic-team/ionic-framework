@@ -160,6 +160,7 @@ export class Toggle implements ComponentInterface {
     const isNowChecked = !checked;
     this.checked = isNowChecked;
 
+    this.setFocus();
     this.ionChange.emit({
       checked: isNowChecked,
       value,
