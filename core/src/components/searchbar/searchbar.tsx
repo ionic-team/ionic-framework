@@ -106,7 +106,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() cancelButtonIcon?: string;
 
   /**
-   * Set the the cancel button text. Only available when the theme is `"ios"`.
+   * Set the cancel button text. Only available when the theme is `"ios"`.
    */
   @Prop() cancelButtonText = 'Cancel';
 
@@ -827,23 +827,25 @@ export class Searchbar implements ComponentInterface {
             ></ion-icon>
           ) : null}
 
-          <button
-            aria-label="reset"
-            type="button"
-            no-blur
-            class="searchbar-clear-button"
-            onPointerDown={(ev) => {
-              /**
-               * This prevents mobile browsers from
-               * blurring the input when the clear
-               * button is activated.
-               */
-              ev.preventDefault();
-            }}
-            onClick={() => this.onClearInput(true)}
-          >
-            <ion-icon aria-hidden="true" icon={searchbarClearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
-          </button>
+          {theme !== 'ionic' || this.shouldShowClearButton() !== undefined ? (
+            <button
+              aria-label="reset"
+              type="button"
+              no-blur
+              class="searchbar-clear-button"
+              onPointerDown={(ev) => {
+                /**
+                 * This prevents mobile browsers from
+                 * blurring the input when the clear
+                 * button is activated.
+                 */
+                ev.preventDefault();
+              }}
+              onClick={() => this.onClearInput(true)}
+            >
+              <ion-icon aria-hidden="true" icon={searchbarClearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+            </button>
+          ) : null}
         </div>
         {theme === 'ios' && cancelButton}
       </Host>

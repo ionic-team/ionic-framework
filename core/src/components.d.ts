@@ -3053,7 +3053,7 @@ export namespace Components {
          */
         "cancelButtonIcon"?: string;
         /**
-          * Set the the cancel button text. Only available when the theme is `"ios"`.
+          * Set the cancel button text. Only available when the theme is `"ios"`.
          */
         "cancelButtonText": string;
         /**
@@ -8452,7 +8452,7 @@ declare namespace LocalJSX {
          */
         "cancelButtonIcon"?: string;
         /**
-          * Set the the cancel button text. Only available when the theme is `"ios"`.
+          * Set the cancel button text. Only available when the theme is `"ios"`.
          */
         "cancelButtonText"?: string;
         /**

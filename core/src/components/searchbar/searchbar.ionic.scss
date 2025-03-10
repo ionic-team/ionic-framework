@@ -20,6 +20,7 @@
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
   --leading-icon-padding: #{calc(globals.$ion-scale-400 + globals.$ion-space-200)};
+  --clear-button-padding: #{calc(globals.$ion-scale-400 + globals.$ion-space-200)};
 
   @include globals.typography(globals.$ion-body-md-regular);
   @include globals.padding(0);
@@ -40,6 +41,7 @@
   @include globals.padding(globals.$ion-space-300, null);
 
   contain: strict;
+  text-overflow: ellipsis;
 }
 
 // Searchbar Clear Input Icon
@@ -54,6 +56,10 @@
   font-size: globals.$ion-scale-400;
 
   contain: strict;
+}
+
+:host(:not(.searchbar-should-show-clear)) {
+  --clear-button-padding: #{globals.$ion-scale-0};
 }
 
 // Searchbar Cancel Icon
@@ -188,7 +194,10 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(calc(globals.$ion-space-300 + var(--leading-icon-padding)));
+  @include globals.padding-horizontal(
+    calc(globals.$ion-space-300 + var(--leading-icon-padding)),
+    calc(globals.$ion-space-300 + var(--clear-button-padding)),
+  );
 
   height: globals.$ion-scale-1000;
 }
@@ -217,7 +226,10 @@
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(calc(globals.$ion-space-400 + var(--leading-icon-padding)));
+  @include globals.padding-horizontal(
+    calc(globals.$ion-space-400 + var(--leading-icon-padding)),
+    calc(globals.$ion-space-400 + var(--clear-button-padding))
+  );
 
   height: globals.$ion-scale-1200;
 }
@@ -272,7 +284,7 @@
    */
   @include globals.padding-horizontal(
     calc(globals.$ion-space-500 + var(--leading-icon-padding)),
-    calc(globals.$ion-space-500 + globals.$ion-scale-400 + globals.$ion-space-200)
+    calc(globals.$ion-space-500 + var(--clear-button-padding))
   );
 
   height: globals.$ion-scale-1400;
