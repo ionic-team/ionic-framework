@@ -52,6 +52,14 @@
             <ion-select-option value="outline">Outline</ion-select-option>
             <ion-select-option value="clear">Clear</ion-select-option>
           </ion-select>
+
+          <ion-select id="select-color" justify="space-between" interface="alert" label="Color" placeholder="">
+            <ion-select-option value="">default</ion-select-option>
+            <ion-select-option value="primary">Primary</ion-select-option>
+            <ion-select-option value="success">Success</ion-select-option>
+            <ion-select-option value="warning">Warning</ion-select-option>
+            <ion-select-option value="neutral">Neutral</ion-select-option>
+          </ion-select>
         </p>
 
         <div id="screenshot-wrapper" class="ion-margin-top">
@@ -86,10 +94,30 @@
             </ion-button>
           </p>
 
+          <p>
+            <ion-button theme="ionic">
+              Button
+              <ion-spinner slot="end" name="lines-small" />
+            </ion-button>
+            <ion-button theme="ionic">
+              <ion-spinner slot="icon-only" name="lines-small"></ion-spinner>
+            </ion-button>
+          </p>
+          <p>
+            <ion-button theme="ionic">
+              Button
+              <ion-spinner slot="start" name="lines-small" />
+            </ion-button>
+          </p>
+
           <h4 class="ion-margin-top">States</h4>
 
           <p>
             <ion-button theme="ionic">Default</ion-button>
+            <ion-button theme="ionic">
+              Button
+              <ion-spinner slot="end" name="lines-small" />
+            </ion-button>
             <ion-button theme="ionic">
               <ion-icon slot="icon-only" name="rocket"></ion-icon>
             </ion-button>
@@ -98,12 +126,20 @@
           <p>
             <ion-button theme="ionic" class="ion-activated">Activated</ion-button>
             <ion-button theme="ionic" class="ion-activated">
+              Button
+              <ion-spinner slot="end" name="lines-small" />
+            </ion-button>
+            <ion-button theme="ionic" class="ion-activated">
               <ion-icon slot="icon-only" name="rocket"></ion-icon>
             </ion-button>
           </p>
 
           <p>
             <ion-button theme="ionic" class="ion-focused">Focused</ion-button>
+            <ion-button theme="ionic" class="ion-focused">
+              Button
+              <ion-spinner slot="end" name="lines-small" />
+            </ion-button>
             <ion-button theme="ionic" class="ion-focused ion-margin-start">
               <ion-icon slot="icon-only" name="rocket"></ion-icon>
             </ion-button>
@@ -111,6 +147,10 @@
 
           <p>
             <ion-button theme="ionic" disabled="true">Disabled</ion-button>
+            <ion-button theme="ionic" disabled="true">
+              Button
+              <ion-spinner slot="end" name="lines-small" />
+            </ion-button>
             <ion-button theme="ionic" disabled="true">
               <ion-icon slot="icon-only" name="rocket"></ion-icon>
             </ion-button>
@@ -148,6 +188,13 @@
       selectFill.addEventListener('ionChange', (e) => {
         for (const el of listOfBtns) {
           updateAttr(el, 'fill', e.detail.value);
+        }
+      });
+
+      const selectColor = document.getElementById('select-color');
+      selectColor.addEventListener('ionChange', (e) => {
+        for (const el of listOfBtns) {
+          updateAttr(el, 'color', e.detail.value);
         }
       });
     </script>
