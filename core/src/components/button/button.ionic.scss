@@ -267,6 +267,8 @@
   font-size: globals.$ion-font-size-500;
 }
 
+:host(.button-xsmall) ::slotted(ion-icon[slot="start"]),
+:host(.button-xsmall) ::slotted(ion-spinner[slot="start"]),
 :host(.button-small) ::slotted(ion-icon[slot="start"]),
 :host(.button-small) ::slotted(ion-spinner[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ion-space-200);
@@ -277,14 +279,15 @@
   @include globals.margin-horizontal(null, globals.$ion-space-250);
 }
 
-:host(.button-large) ::slotted(ion-icon[slot="start"]) {
-  @include globals.margin-horizontal(null, globals.$ion-space-300);
-}
-
+:host(.button-large) ::slotted(ion-icon[slot="start"]),
+:host(.button-large) ::slotted(ion-spinner[slot="start"]),
+:host(.button-xlarge) ::slotted(ion-icon[slot="start"]),
 :host(.button-xlarge) ::slotted(ion-spinner[slot="start"]) {
   @include globals.margin-horizontal(null, globals.$ion-space-300);
 }
 
+:host(.button-xsmall) ::slotted(ion-icon[slot="end"]),
+:host(.button-xsmall) ::slotted(ion-spinner[slot="end"]),
 :host(.button-small) ::slotted(ion-icon[slot="end"]),
 :host(.button-small) ::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-200, null);
@@ -295,10 +298,9 @@
   @include globals.margin-horizontal(globals.$ion-space-250, null);
 }
 
-:host(.button-large) ::slotted(ion-icon[slot="end"]) {
-  @include globals.margin-horizontal(globals.$ion-space-300, null);
-}
-
+:host(.button-large) ::slotted(ion-icon[slot="end"]),
+:host(.button-large) ::slotted(ion-spinner[slot="end"]),
+:host(.button-xlarge) ::slotted(ion-icon[slot="end"]),
 :host(.button-xlarge) ::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-300, null);
 }
