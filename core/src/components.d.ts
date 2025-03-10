@@ -2316,6 +2316,14 @@ export namespace Components {
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
+          * The error text to display at the top of the radio group.
+         */
+        "errorText"?: string;
+        /**
+          * The helper text to display at the top of the radio group.
+         */
+        "helperText"?: string;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
@@ -7111,6 +7119,14 @@ declare namespace LocalJSX {
           * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
+          * The error text to display at the top of the radio group.
+         */
+        "errorText"?: string;
+        /**
+          * The helper text to display at the top of the radio group.
+         */
+        "helperText"?: string;
         /**
           * The name of the control, which is submitted with the form data.
          */
