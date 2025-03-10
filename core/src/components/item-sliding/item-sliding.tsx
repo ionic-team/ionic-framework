@@ -262,7 +262,7 @@ export class ItemSliding implements ComponentInterface {
       // eslint-disable-next-line custom-rules/no-component-on-ready-method
       const option = (item as any).componentOnReady !== undefined ? await item.componentOnReady() : item;
 
-      const side = isEndSide(option.side) ? 'end' : 'start';
+      const side = isEndSide(option.side ?? option.getAttribute('side')) ? 'end' : 'start';
 
       if (side === 'start') {
         this.leftOptions = option;
