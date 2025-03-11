@@ -811,14 +811,17 @@ export class Datetime implements ComponentInterface {
 
   private focusWorkingDay = (currentMonth: Element) => {
     /**
-     * Get the number of padding days so
+     * Get the number of offset days so
      * we know how much to offset our next selector by
      * to grab the correct calendar-day element.
      */
-    const padding = currentMonth.querySelectorAll('.calendar-day-padding');
-    const { day, adjacentDay } = this.workingParts;
 
-    if (day === null || adjacentDay) {
+    const { day, month, year } = this.workingParts;
+    const firstOfMonth = new Date(`${month}/1/${year}`).getDay();
+    const offset =
+    firstOfMonth >= this.firstDayOfWeek ? firstOfMonth - (this.firstDayOfWeek) : 7 - (this.firstDayOfWeek - firstOfMonth);
+
+    if (day === null) {
       return;
     }
 
@@ -827,7 +830,7 @@ export class Datetime implements ComponentInterface {
      * and focus it.
      */
     const dayEl = currentMonth.querySelector(
-      `.calendar-day-wrapper:nth-of-type(${padding.length + day}) .calendar-day`
+      `.calendar-day-wrapper:nth-of-type(${offset + day}) .calendar-day`
     ) as HTMLElement | null;
     if (dayEl) {
       dayEl.focus();
