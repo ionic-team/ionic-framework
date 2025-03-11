@@ -21,6 +21,8 @@ const TOGGLE_INPUTS = [
   'color',
   'disabled',
   'enableOnOffLabels',
+  'errorText',
+  'helperText',
   'justify',
   'labelPlacement',
   'mode',
