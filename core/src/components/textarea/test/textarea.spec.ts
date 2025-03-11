@@ -20,7 +20,7 @@ it('should inherit watched attributes', async () => {
     html: '<ion-textarea dir="ltr"></ion-textarea>',
   });
 
-  const textareaEl = page.body.querySelector('ion-input')!;
+  const textareaEl = page.body.querySelector('ion-textarea')!;
   const nativeEl = textareaEl.querySelector('textarea')!;
 
   expect(nativeEl.getAttribute('dir')).toBe('ltr');
