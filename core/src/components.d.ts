@@ -624,6 +624,14 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the checkbox label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate": boolean;
@@ -1740,7 +1748,7 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
-          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content, and the modal will only expand when dragging the header or handle.
+          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content. The modal will only expand when dragging the header or handle. The modal will close when dragging the header or handle. It can also be closed when dragging the content, but only if the content is scrolled to the top.
          */
         "expandToScroll": boolean;
         /**
@@ -2312,6 +2320,14 @@ export namespace Components {
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
+          * The error text to display at the top of the radio group.
+         */
+        "errorText"?: string;
+        /**
+          * The helper text to display at the top of the radio group.
+         */
+        "helperText"?: string;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
@@ -2768,6 +2784,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the select and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
@@ -2775,6 +2795,10 @@ export namespace Components {
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the select and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
@@ -3280,6 +3304,14 @@ export namespace Components {
           * Enables the on/off accessibility switch labels within the toggle.
          */
         "enableOnOffLabels": boolean | undefined;
+        /**
+          * Text that is placed under the toggle label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the toggle label and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements. Setting this property will change the toggle `display` to `block`.
          */
@@ -5424,6 +5456,14 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the checkbox label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate"?: boolean;
@@ -6561,7 +6601,7 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
-          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content, and the modal will only expand when dragging the header or handle.
+          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content. The modal will only expand when dragging the header or handle. The modal will close when dragging the header or handle. It can also be closed when dragging the content, but only if the content is scrolled to the top.
          */
         "expandToScroll"?: boolean;
         /**
@@ -7088,6 +7128,14 @@ declare namespace LocalJSX {
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
+          * The error text to display at the top of the radio group.
+         */
+        "errorText"?: string;
+        /**
+          * The helper text to display at the top of the radio group.
+         */
+        "helperText"?: string;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name"?: string;
@@ -7601,6 +7649,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the select and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
@@ -7608,6 +7660,10 @@ declare namespace LocalJSX {
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the select and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
@@ -8163,6 +8219,14 @@ declare namespace LocalJSX {
           * Enables the on/off accessibility switch labels within the toggle.
          */
         "enableOnOffLabels"?: boolean | undefined;
+        /**
+          * Text that is placed under the toggle label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the toggle label and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements. Setting this property will change the toggle `display` to `block`.
          */

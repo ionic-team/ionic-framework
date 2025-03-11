@@ -28,6 +28,25 @@ describe('Range', () => {
       });
     });
 
+    it('should handle undefined min and max values by falling back to defaults', async () => {
+      const page = await newSpecPage({
+        components: [Range],
+        html: `<ion-range id="my-custom-range">
+        <div slot="label">Range</div>
+      </ion-range>`,
+      });
+
+      const range = page.body.querySelector('ion-range')!;
+      // Here we have to cast this to any, but in its react wrapper it accepts undefined as a valid value
+      range.min = undefined as any;
+      range.max = undefined as any;
+      range.step = undefined as any;
+      await page.waitForChanges();
+      expect(range.min).toBe(0);
+      expect(range.max).toBe(100);
+      expect(range.step).toBe(1);
+    });
+
     it('should return the clamped value for a range dual knob component', () => {
       sharedRange.min = 0;
       sharedRange.max = 100;

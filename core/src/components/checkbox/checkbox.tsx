@@ -17,6 +17,9 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  * @part container - The container for the checkbox mark.
  * @part label - The label text describing the checkbox.
  * @part mark - The checkmark used to indicate the checked state.
+ * @part supporting-text - Supporting text displayed beneath the checkbox label.
+ * @part helper-text - Supporting text displayed beneath the checkbox label when the checkbox is valid.
+ * @part error-text - Supporting text displayed beneath the checkbox label when the checkbox is invalid and touched.
  */
 @Component({
   tag: 'ion-checkbox',
@@ -28,6 +31,8 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
 })
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private focusEl?: HTMLElement;
   private inheritedAttributes: Attributes = {};
 
@@ -59,6 +64,16 @@ export class Checkbox implements ComponentInterface {
    * If `true`, the user cannot interact with the checkbox.
    */
   @Prop() disabled = false;
+
+  /**
+   * Text that is placed under the checkbox label and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * Text that is placed under the checkbox label and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
 
   /**
    * The value of the checkbox does not mean if it's checked or not, use the `checked`
@@ -174,6 +189,48 @@ export class Checkbox implements ComponentInterface {
     this.toggleChecked(ev);
   };
 
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Responsible for rendering helper text and error text.
+   * This element should only be rendered if hint text is set.
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return (
+      <div class="checkbox-bottom">
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
+          {helperText}
+        </div>
+        <div id={errorTextId} class="error-text" part="supporting-text error-text">
+          {errorText}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const {
       color,
@@ -199,6 +256,8 @@ export class Checkbox implements ComponentInterface {
     return (
       <Host
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -237,6 +296,7 @@ export class Checkbox implements ComponentInterface {
             part="label"
           >
             <slot></slot>
+            {this.renderHintText()}
           </div>
           <div class="native-wrapper">
             <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
