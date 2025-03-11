@@ -266,7 +266,7 @@ export class Textarea implements ComponentInterface {
    * As a result, creating these as properties
    * can have unintended side effects. Instead, we
    * listen for attribute changes and inherit them
-   * to the inner `<input>` element.
+   * to the inner `<textarea>` element.
    */
   @Watch('dir')
   onDirChanged(newValue: string) {
