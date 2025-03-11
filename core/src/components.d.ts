@@ -937,7 +937,7 @@ export namespace Components {
          */
         "reset": (startDate?: string) => Promise<void>;
         /**
-          * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
+          * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
          */
         "showAdjacentDays": boolean;
         /**
@@ -5744,7 +5744,7 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
-          * If `true`, the datetime will show the last days of the previous month and the first days of the next month on a table of 42 elements.
+          * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
          */
         "showAdjacentDays"?: boolean;
         /**

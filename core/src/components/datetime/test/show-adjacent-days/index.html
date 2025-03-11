@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Datetime - Custom</title>
+    <title>Datetime - Show Adjacent Days</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
@@ -31,47 +31,6 @@
           grid-template-columns: 1fr;
           padding: 0;
         }
-      }
-
-      /*
-        * Custom Datetime Time / Wheel Parts
-        * -------------------------------------------
-        */
-
-      .custom-grid-wheel {
-        --background: rgb(245, 235, 247);
-        --background-rgb: 245, 235, 247;
-      }
-
-      .custom-grid-wheel::part(time-button) {
-        color: rgb(128, 30, 171);
-      }
-
-      .custom-grid-wheel::part(time-button active) {
-        background-color: rgb(248, 215, 255);
-      }
-
-      .custom-grid-wheel {
-        --wheel-highlight-background: rgb(218, 216, 255);
-        --wheel-highlight-border-radius: 16px;
-        --wheel-fade-background-rgb: 245, 235, 247;
-      }
-
-      ion-picker {
-        --highlight-background: rgb(218, 216, 255);
-        --highlight-border-radius: 16px;
-        --fade-background-rgb: 245, 235, 247;
-
-        background-color: rgb(245, 235, 247);
-      }
-      .custom-grid-wheel::part(wheel-item),
-      ion-picker-column-option {
-        color: rgb(255, 134, 154);
-      }
-
-      .custom-grid-wheel::part(wheel-item active),
-      ion-picker-column-option.option-active {
-        color: rgb(128, 30, 171);
       }
 
       /*
@@ -142,46 +101,61 @@
     <ion-app>
       <ion-header translucent="true">
         <ion-toolbar>
-          <ion-title>Datetime - ShowDaysOutsideCustomMonth</ion-title>
+          <ion-title>Datetime - Show Adjacent Days</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Grid Style</h2>
-            <ion-datetime id="custom-grid" value="2020-03-14T14:23:00.000Z" class="custom-grid-wheel"></ion-datetime>
+            <h2>Inline Grid</h2>
+            <ion-datetime show-adjacent-days="true" id="default" value="2020-03-14T14:23:00.000Z"></ion-datetime>
           </div>
 
           <div class="grid-item">
-            <h2>Grid Style</h2>
-            <ion-datetime id="custom-calendar-days" value="2023-06-15" presentation="date"></ion-datetime>
+            <h2>Inline Grid: Custom Styles</h2>
+            <ion-datetime
+              show-adjacent-days="true"
+              id="custom-calendar-days"
+              value="2023-06-15"
+              presentation="date"
+            ></ion-datetime>
           </div>
         </div>
 
         <div class="grid">
           <div class="grid-item">
             <h2>Disable Specific Date</h2>
-            <ion-datetime id="specificDate" value="2021-10-01" showAdjacentDays="true"></ion-datetime>
+            <ion-datetime
+              show-adjacent-days="true"
+              id="specificDate"
+              value="2021-10-01"
+              showAdjacentDays="true"
+            ></ion-datetime>
           </div>
 
           <div class="grid-item">
             <h2>Disable Weekends</h2>
-            <ion-datetime id="weekends" value="2021-10-01"></ion-datetime>
+            <ion-datetime show-adjacent-days="true" id="weekends" value="2021-10-01"></ion-datetime>
           </div>
 
           <div class="grid-item">
             <h2>Disable Date Range</h2>
-            <ion-datetime id="dateRange" value="2021-10-01"></ion-datetime>
+            <ion-datetime show-adjacent-days="true" id="dateRange" value="2021-10-01"></ion-datetime>
           </div>
 
           <div class="grid-item">
             <h2>Disable Month</h2>
-            <ion-datetime id="month" value="2021-10-01"></ion-datetime>
+            <ion-datetime show-adjacent-days="true" id="month" value="2021-10-01"></ion-datetime>
           </div>
 
           <div class="grid-item">
             <h2>Change firstDayOfWeek</h2>
-            <ion-datetime id="firstDayOfWeek" first-day-of-week="1" value="2022-05-03"></ion-datetime>
+            <ion-datetime
+              show-adjacent-days="true"
+              id="firstDayOfWeek"
+              first-day-of-week="1"
+              value="2022-05-03"
+            ></ion-datetime>
             <button onclick="increase()">Increase firstDayOfWeek</button>
             <div>
               <span>FirstDayOfWeek: <span id="start-of-week">1</span></span>
@@ -202,13 +176,12 @@
             <option value="cover">cover</option>
           </select>
           <br /><br />
-          <ion-datetime id="display" value="2022-02-22T16:30:00"></ion-datetime>
+          <ion-datetime show-adjacent-days="true" id="display" value="2022-02-22T16:30:00"></ion-datetime>
         </div>
       </ion-content>
     </ion-app>
 
     <script>
-      const customGrid = document.querySelector('#custom-grid');
       const customDatetime = document.querySelector('#custom-calendar-days');
 
       // Mock the current day to always have the same screenshots
@@ -248,8 +221,6 @@
 
         return true;
       };
-      customGrid.showAdjacentDays = true;
-      customDatetime.showAdjacentDays = true;
 
       const specificDateDisabled = document.querySelector('#specificDate');
       specificDateDisabled.isDateEnabled = (dateIsoString) => {
@@ -260,7 +231,6 @@
         }
         return true;
       };
-      specificDateDisabled.showAdjacentDays = true;
 
       const weekendsDisabled = document.querySelector('#weekends');
       weekendsDisabled.isDateEnabled = (dateIsoString) => {
@@ -271,7 +241,6 @@
         }
         return true;
       };
-      weekendsDisabled.showAdjacentDays = true;
 
       const dateRangeDisabled = document.querySelector('#dateRange');
       dateRangeDisabled.isDateEnabled = (dateIsoString) => {
@@ -284,7 +253,6 @@
         }
         return true;
       };
-      dateRangeDisabled.showAdjacentDays = true;
 
       const monthDisabled = document.querySelector('#month');
       monthDisabled.isDateEnabled = (dateIsoString) => {
@@ -295,10 +263,8 @@
         }
         return true;
       };
-      monthDisabled.showAdjacentDays = true;
 
       const firstDayOfWeek = document.querySelector('#firstDayOfWeek');
-      firstDayOfWeek.showAdjacentDays = true;
       function increase() {
         firstDayOfWeek.firstDayOfWeek = firstDayOfWeek.firstDayOfWeek + 1;
 
@@ -307,7 +273,6 @@
       }
 
       const display = document.querySelector('#display');
-      display.showAdjacentDays = true;
 
       const mutationObserver = new MutationObserver(() => {
         window.dispatchEvent(new CustomEvent('ionWorkingPartsDidChange'));
