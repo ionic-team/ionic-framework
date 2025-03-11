@@ -364,9 +364,6 @@
   opacity: 0.4;
 }
 
-:host .calendar-day.calendar-day-adjacent-day {
-  opacity: 0.4;
-}
 
 .calendar-day:not(.calendar-day-adjacent-day):focus {
   background: current-color(base, 0.2);
