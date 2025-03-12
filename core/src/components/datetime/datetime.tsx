@@ -821,7 +821,9 @@ export class Datetime implements ComponentInterface {
     const { day, month, year } = this.workingParts;
     const firstOfMonth = new Date(`${month}/1/${year}`).getDay();
     const offset =
-    firstOfMonth >= this.firstDayOfWeek ? firstOfMonth - (this.firstDayOfWeek) : 7 - (this.firstDayOfWeek - firstOfMonth);
+      firstOfMonth >= this.firstDayOfWeek
+        ? firstOfMonth - this.firstDayOfWeek
+        : 7 - (this.firstDayOfWeek - firstOfMonth);
 
     if (day === null) {
       return;
