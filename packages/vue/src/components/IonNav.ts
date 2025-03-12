@@ -1,6 +1,6 @@
 import type { JSX, AnimationBuilder } from "@ionic/core/components";
 import { defineCustomElement } from "@ionic/core/components/ion-nav.js";
-import type { VNode , PropType } from "vue";
+import type { VNode, PropType } from "vue";
 import { defineComponent, h, shallowRef } from "vue";
 
 import { VueDelegate } from "../framework-delegate";
