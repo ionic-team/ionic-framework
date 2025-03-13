@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "8.4.3",
+  "version": "8.4.4",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -54,7 +54,6 @@
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^11.1.5",
-    "@stencil/vue-output-target": "0.9.4",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "change-case": "^4.1.1",
@@ -68,7 +67,8 @@
     "vue-router": "^4.0.16"
   },
   "dependencies": {
-    "@ionic/core": "^8.4.3",
+    "@ionic/core": "^8.4.4",
+    "@stencil/vue-output-target": "^0.10.4",
     "ionicons": "^7.0.0"
   },
   "vetur": {
