@@ -847,7 +847,12 @@ export class Searchbar implements ComponentInterface {
               }}
               onClick={() => this.onClearInput(true)}
             >
-              <ion-icon aria-hidden="true" icon={searchbarClearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+              <ion-icon
+                aria-hidden="true"
+                icon={searchbarClearIcon}
+                lazy={false}
+                class="searchbar-clear-icon"
+              ></ion-icon>
             </button>
           ) : null}
         </div>

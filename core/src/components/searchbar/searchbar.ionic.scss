@@ -40,8 +40,9 @@
 .searchbar-input {
   @include globals.padding(globals.$ion-space-300, null);
 
-  contain: strict;
   text-overflow: ellipsis;
+
+  contain: strict;
 }
 
 // Searchbar Clear Input Icon
@@ -200,7 +201,7 @@
    */
   @include globals.padding-horizontal(
     calc(globals.$ion-space-300 + var(--leading-icon-padding)),
-    calc(globals.$ion-space-300 + var(--clear-button-padding)),
+    calc(globals.$ion-space-300 + var(--clear-button-padding))
   );
 
   height: globals.$ion-scale-1000;
