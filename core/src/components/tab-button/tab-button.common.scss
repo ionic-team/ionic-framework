@@ -158,12 +158,13 @@
 :host ::slotted(ion-badge[vertical]:empty) {
   @include padding(0, 0);
 
-  height: globals.$ion-scale-200;
   width: globals.$ion-scale-200;
+  height: globals.$ion-scale-200;
 }
 
 :host ::slotted(ion-badge[vertical]) {
-  left: 50%;
+  @include position($start: 50%);
+
   transform: translateX(globals.$ion-scale-300);
 }
 
@@ -172,7 +173,8 @@
 }
 
 :host ::slotted(ion-badge[vertical="bottom"]) {
-  top: 50%;
+  @include position($top: 50%);
+
   transform: translate(globals.$ion-scale-300, calc(globals.$ion-scale-200 * -1));
 }
 
@@ -183,11 +185,12 @@
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
   @include padding(2px, 4px, 4px, 4px);
 
-  font-size: globals.$ion-font-size-300;
-  line-height: 1;
-
-  height: globals.$ion-scale-400;
   min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+
+  font-size: globals.$ion-font-size-300;
+
+  line-height: 1;
 }
 
 // Tab Button: Layout
