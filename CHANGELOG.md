@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.5](https://github.com/ionic-team/ionic-framework/compare/v8.4.4...v8.4.5) (2025-03-13)
+
+
+### Bug Fixes
+
+* **vue:** pin Vue output target to latest release ([#30248](https://github.com/ionic-team/ionic-framework/issues/30248)) ([3799d45](https://github.com/ionic-team/ionic-framework/commit/3799d456d9461faac9a5e2c44f187329f113b3db)), closes [#30221](https://github.com/ionic-team/ionic-framework/issues/30221)
+
+
+
+
+
+## [8.4.4](https://github.com/ionic-team/ionic-framework/compare/v8.4.3...v8.4.4) (2025-03-13)
+
+
+### Bug Fixes
+
+* **alert:** change focused element and improve keyboard navigation ([#30220](https://github.com/ionic-team/ionic-framework/issues/30220)) ([4df0e0f](https://github.com/ionic-team/ionic-framework/commit/4df0e0f4c00faec33f5ddc802945bf4ad9dc53d3))
+* **capacitor:** replace deprecated platform check method ([#30195](https://github.com/ionic-team/ionic-framework/issues/30195)) ([b6b43ae](https://github.com/ionic-team/ionic-framework/commit/b6b43ae2925f8a12b35cabd43abd9d838bc9714f))
+* **capacitor:** use proper types for capacitor v7 support ([#30228](https://github.com/ionic-team/ionic-framework/issues/30228)) ([2149ba2](https://github.com/ionic-team/ionic-framework/commit/2149ba2c8d56a3a8ef4a6de89de1292f6efe3031))
+* **range:** handle unsupported values for range min and max ([#30070](https://github.com/ionic-team/ionic-framework/issues/30070)) ([3223193](https://github.com/ionic-team/ionic-framework/commit/322319397ca46bafda7ca0d2e3fb4cc554432d6a)), closes [#29667](https://github.com/ionic-team/ionic-framework/issues/29667)
+* **segment-button:** protect connectedCallback for when segment-content has not yet been created ([#30138](https://github.com/ionic-team/ionic-framework/issues/30138)) ([14b6538](https://github.com/ionic-team/ionic-framework/commit/14b6538d98303cb753d881ec6978fb98f53ed54c))
+* **select:** auto-scroll to selected item for all interfaces ([#30202](https://github.com/ionic-team/ionic-framework/issues/30202)) ([8eaeb22](https://github.com/ionic-team/ionic-framework/commit/8eaeb22e7a967100ffaadae8c8221e2e4888a3b6)), closes [#19296](https://github.com/ionic-team/ionic-framework/issues/19296)
+* **toggle:** trigger focus and blur on click ([#30234](https://github.com/ionic-team/ionic-framework/issues/30234)) ([ba8d8f4](https://github.com/ionic-team/ionic-framework/commit/ba8d8f489607537b3dac915cfc9f2c32a74b994c))
+* **vue:** update output target and properly emit events ([#30227](https://github.com/ionic-team/ionic-framework/issues/30227)) ([11554a5](https://github.com/ionic-team/ionic-framework/commit/11554a5d3590c660dbf609931dcb63cc2daf79cb)), closes [#30206](https://github.com/ionic-team/ionic-framework/issues/30206) [#30178](https://github.com/ionic-team/ionic-framework/issues/30178) [#30177](https://github.com/ionic-team/ionic-framework/issues/30177) [#30170](https://github.com/ionic-team/ionic-framework/issues/30170)
+* **vue:** update output target and resolve type issues ([#30239](https://github.com/ionic-team/ionic-framework/issues/30239)) ([6dcb143](https://github.com/ionic-team/ionic-framework/commit/6dcb143307682793ac4fd46d03efa5868a49e87d)), closes [#30179](https://github.com/ionic-team/ionic-framework/issues/30179)
+
+
+
+
+
 ## [8.4.3](https://github.com/ionic-team/ionic-framework/compare/v8.4.2...v8.4.3) (2025-01-29)
 
 
