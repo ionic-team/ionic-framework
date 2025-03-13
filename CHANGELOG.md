@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.5](https://github.com/ionic-team/ionic-framework/compare/v8.4.4...v8.4.5) (2025-03-13)
+
+
+### Bug Fixes
+
+* **vue:** pin Vue output target to latest release ([#30248](https://github.com/ionic-team/ionic-framework/issues/30248)) ([3799d45](https://github.com/ionic-team/ionic-framework/commit/3799d456d9461faac9a5e2c44f187329f113b3db)), closes [#30221](https://github.com/ionic-team/ionic-framework/issues/30221)
+
+
+
+
+
 ## [8.4.4](https://github.com/ionic-team/ionic-framework/compare/v8.4.3...v8.4.4) (2025-03-13)
 
 
