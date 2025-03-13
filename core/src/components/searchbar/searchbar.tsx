@@ -626,6 +626,10 @@ export class Searchbar implements ComponentInterface {
       return false;
     }
 
+    if (getIonTheme(this) === 'ionic' && this.disabled) {
+      return false;
+    }
+
     return true;
   }
 

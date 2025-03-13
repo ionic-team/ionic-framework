@@ -9,14 +9,14 @@
    * @prop --focus-ring-color: The color of the ring around the focused element.
    * @prop --focus-ring-width: The width of the ring around the focused element.
    */
-  --background: #{globals.$ion-primitives-neutral-100};
+  --background: #{globals.$ion-bg-neutral-subtle-default};
   --border-radius: #{globals.$ion-border-radius-400};
   --box-shadow: none;
   --cancel-button-color: #{globals.$ion-primitives-neutral-800};
   --clear-button-color: #{globals.$ion-primitives-neutral-1000};
   --color: #{globals.$ion-primitives-neutral-1200};
-  --icon-color: #{globals.$ion-primitives-neutral-800};
-  --placeholder-color: #{globals.$ion-primitives-neutral-800};
+  --icon-color: #{globals.$ion-icon-default};
+  --placeholder-color: #{globals.$ion-text-subtlest};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
   --leading-icon-padding: #{calc(globals.$ion-scale-400 + globals.$ion-space-200)};
@@ -105,6 +105,10 @@
   --leading-icon-padding: #{globals.$ion-scale-0};
 }
 
+:host(:not(.searchbar-has-value)) {
+  --icon-color: #{globals.$ion-icon-subtlest};
+}
+
 // Searchbar in Toolbar
 // -----------------------------------------
 
@@ -156,8 +160,8 @@
 /* Disabled */
 :host(.searchbar-disabled) {
   --color: #{globals.$ion-primitives-neutral-500};
-  --icon-color: #{globals.$ion-primitives-neutral-500};
-  --placeholder-color: #{globals.$ion-primitives-neutral-500};
+  --icon-color: #{globals.$ion-icon-disabled};
+  --placeholder-color: #{globals.$ion-text-disabled};
 
   cursor: default;
   pointer-events: none;
