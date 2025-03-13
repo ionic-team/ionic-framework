@@ -1,5 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./tab-button.common";
+@import "../../themes/mixins";
 
 // Ionic Tab Button
 // --------------------------------------------------------------
@@ -27,6 +28,8 @@
   @include globals.margin(0);
   @include globals.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include globals.text-inherit();
+
+  overflow: visible;
 }
 
 .button-native::after {
@@ -85,4 +88,15 @@
 
 :host(.tab-button-shape-rectangular) {
   @include globals.border-radius(globals.$ion-border-radius-0);
+}
+
+// Tab Button: Badge
+// --------------------------------------------------
+
+:host ::slotted(ion-badge[vertical="top"]) {
+  top: calc(globals.$ion-scale-200 * -1);
+}
+
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include padding(3px, 4px, 4px, 4px);
 }
