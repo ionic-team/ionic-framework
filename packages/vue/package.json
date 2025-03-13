@@ -54,7 +54,6 @@
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^11.1.5",
-    "@stencil/vue-output-target": "0.9.6",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "change-case": "^4.1.1",
@@ -69,6 +68,7 @@
   },
   "dependencies": {
     "@ionic/core": "^8.4.3",
+    "@stencil/vue-output-target": "^0.10.4",
     "ionicons": "^7.0.0"
   },
   "vetur": {
