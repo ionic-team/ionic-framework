@@ -1,3 +1,4 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "../../themes/functions.color" as color;
 @import "../../themes/mixins";
 @import "./badge.common.vars";
@@ -62,4 +63,26 @@
 
 :host(:empty.badge-vertical-bottom) {
   bottom: 0;
+}
+
+// Badge Inside Tab Button
+// --------------------------------------------------
+
+:host([vertical].in-tab-button){
+  // TODO(ROU-10747/ROU-11666): Consider removing this property, by removing '@include position(null, 0, null, null);' from the badge-vertical-top and badge-vertical-bottom
+  inset-inline-end: unset;
+
+  position: relative;
+  
+  min-width: unset;
+}
+
+:host([vertical].in-tab-button) ::slotted(ion-icon) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: globals.$ion-scale-300;
+  height: globals.$ion-scale-300;
 }
