@@ -94,9 +94,17 @@
 // --------------------------------------------------
 
 :host ::slotted(ion-badge[vertical="top"]) {
-  top: calc(globals.$ion-scale-200 * -1);
+  --badge-top-position: calc(#{globals.$ion-scale-200} * -1);
 }
 
-:host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include padding(3px, 4px, 4px, 4px);
+:host ::slotted(ion-badge[vertical="top"]:empty) {
+  --badge-top-position-empty: calc(#{globals.$ion-scale-100} * -1);
+}
+
+:host ::slotted(ion-badge[vertical="bottom"]) {
+  --badge-bottom-position: calc(50% - #{globals.$ion-scale-250});
+}
+
+:host ::slotted(ion-badge[vertical="bottom"]:empty) {
+  --badge-bottom-position: calc(50% - #{globals.$ion-scale-200});
 }
