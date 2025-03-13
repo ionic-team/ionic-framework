@@ -211,10 +211,11 @@
   flex-shrink: 0;
 }
 
-// Button Icons
+// Button Icons & Spinners
 // --------------------------------------------------
 
-::slotted(ion-icon) {
+::slotted(ion-icon),
+::slotted(ion-spinner) {
   pointer-events: none;
 }
 
