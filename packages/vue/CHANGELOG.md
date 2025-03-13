@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.4](https://github.com/ionic-team/ionic-framework/compare/v8.4.3...v8.4.4) (2025-03-13)
+
+
+### Bug Fixes
+
+* **vue:** update output target and properly emit events ([#30227](https://github.com/ionic-team/ionic-framework/issues/30227)) ([11554a5](https://github.com/ionic-team/ionic-framework/commit/11554a5d3590c660dbf609931dcb63cc2daf79cb)), closes [#30206](https://github.com/ionic-team/ionic-framework/issues/30206) [#30178](https://github.com/ionic-team/ionic-framework/issues/30178) [#30177](https://github.com/ionic-team/ionic-framework/issues/30177) [#30170](https://github.com/ionic-team/ionic-framework/issues/30170)
+* **vue:** update output target and resolve type issues ([#30239](https://github.com/ionic-team/ionic-framework/issues/30239)) ([6dcb143](https://github.com/ionic-team/ionic-framework/commit/6dcb143307682793ac4fd46d03efa5868a49e87d)), closes [#30179](https://github.com/ionic-team/ionic-framework/issues/30179)
+
+
+
+
+
 ## [8.4.3](https://github.com/ionic-team/ionic-framework/compare/v8.4.2...v8.4.3) (2025-01-29)
 
 
