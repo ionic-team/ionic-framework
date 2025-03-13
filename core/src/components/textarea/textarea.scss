@@ -389,6 +389,8 @@
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
   font-size: dynamic-font(12px);
+
+  white-space: normal;
 }
 
 /**
@@ -417,7 +419,7 @@
 .textarea-bottom .helper-text {
   display: block;
 
-  color: #{$text-color-step-450};
+  color: $text-color-step-300;
 }
 
 :host(.ion-touched.ion-invalid) .textarea-bottom .error-text {
@@ -439,7 +441,7 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: #{$text-color-step-450};
+  color: $text-color-step-300;
 
   white-space: nowrap;
 

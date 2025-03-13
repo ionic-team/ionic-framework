@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.5.0](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.5.0) (2025-03-13)
+
+
+### Features
+
+* **checkbox:** add helperText and errorText properties ([#30140](https://github.com/ionic-team/ionic-framework/issues/30140)) ([99d2f1c](https://github.com/ionic-team/ionic-framework/commit/99d2f1c7503c204d0f3d3e5c11cfdd98d1bb3c4d)), closes [#29810](https://github.com/ionic-team/ionic-framework/issues/29810)
+* **checkbox:** add required prop ([#30157](https://github.com/ionic-team/ionic-framework/issues/30157)) ([41da4c3](https://github.com/ionic-team/ionic-framework/commit/41da4c3565421ccc1ddd792f883d010ba4dd618e))
+* **modal:** add expandToScroll property to allow scrolling at all breakpoints ([#30097](https://github.com/ionic-team/ionic-framework/issues/30097)) ([166e435](https://github.com/ionic-team/ionic-framework/commit/166e43554e832ff550ce6ad3505a95979b4e7138)), closes [#24631](https://github.com/ionic-team/ionic-framework/issues/24631)
+* **radio-group:** add helperText and errorText properties ([#30222](https://github.com/ionic-team/ionic-framework/issues/30222)) ([18e26ac](https://github.com/ionic-team/ionic-framework/commit/18e26acb0132234d13355d62d288e920edd11a88))
+* **select:** add helperText and errorText properties  ([#30143](https://github.com/ionic-team/ionic-framework/issues/30143)) ([bbdaec0](https://github.com/ionic-team/ionic-framework/commit/bbdaec0cc192310d86dc2bd79577991337966224)), closes [#29205](https://github.com/ionic-team/ionic-framework/issues/29205)
+* **select:** add required prop ([#30155](https://github.com/ionic-team/ionic-framework/issues/30155)) ([0b54983](https://github.com/ionic-team/ionic-framework/commit/0b549835b6b96fe9b3b312dc107ed972d0ea3d32))
+* **toggle:** add helperText and errorText properties ([#30161](https://github.com/ionic-team/ionic-framework/issues/30161)) ([94ca2e5](https://github.com/ionic-team/ionic-framework/commit/94ca2e54cbbe727e58472dd6402beb4381559c9f))
+* **toggle:** add required prop ([#30156](https://github.com/ionic-team/ionic-framework/issues/30156)) ([0bbb9f3](https://github.com/ionic-team/ionic-framework/commit/0bbb9f37b4f1f145be63765f1643dc4ac3c3b872))
+
+
+
+
+
 ## [8.4.5](https://github.com/ionic-team/ionic-framework/compare/v8.4.4...v8.4.5) (2025-03-13)
 
 **Note:** Version bump only for package @ionic/angular

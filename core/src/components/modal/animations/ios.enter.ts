@@ -17,27 +17,78 @@ const createEnterAnimation = () => {
 
   const wrapperAnimation = createAnimation().fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
 
-  return { backdropAnimation, wrapperAnimation };
+  return { backdropAnimation, wrapperAnimation, contentAnimation: undefined };
 };
 
 /**
  * iOS Modal Enter Animation for the Card presentation style
  */
 export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
-  const { presentingEl, currentBreakpoint } = opts;
+  const { presentingEl, currentBreakpoint, expandToScroll } = opts;
   const root = getElementRoot(baseEl);
-  const { wrapperAnimation, backdropAnimation } =
+  const { wrapperAnimation, backdropAnimation, contentAnimation } =
     currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
 
   wrapperAnimation.addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!).beforeStyles({ opacity: 1 });
 
+  // The content animation is only added if scrolling is enabled for
+  // all the breakpoints.
+  !expandToScroll && contentAnimation?.addElement(baseEl.querySelector('.ion-page')!);
+
   const baseAnimation = createAnimation('entering-base')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(500)
-    .addAnimation(wrapperAnimation);
+    .addAnimation([wrapperAnimation])
+    .beforeAddWrite(() => {
+      if (expandToScroll) {
+        // Scroll can only be done when the modal is fully expanded.
+        return;
+      }
+
+      /**
+       * There are some browsers that causes flickering when
+       * dragging the content when scroll is enabled at every
+       * breakpoint. This is due to the wrapper element being
+       * transformed off the screen and having a snap animation.
+       *
+       * A workaround is to clone the footer element and append
+       * it outside of the wrapper element. This way, the footer
+       * is still visible and the drag can be done without
+       * flickering. The original footer is hidden until the modal
+       * is dismissed. This maintains the animation of the footer
+       * when the modal is dismissed.
+       *
+       * The workaround needs to be done before the animation starts
+       * so there are no flickering issues.
+       */
+      const ionFooter = baseEl.querySelector('ion-footer');
+      /**
+       * This check is needed to prevent more than one footer
+       * from being appended to the shadow root.
+       * Otherwise, iOS and MD enter animations would append
+       * the footer twice.
+       */
+      const ionFooterAlreadyAppended = baseEl.shadowRoot!.querySelector('ion-footer');
+      if (ionFooter && !ionFooterAlreadyAppended) {
+        const footerHeight = ionFooter.clientHeight;
+        const clonedFooter = ionFooter.cloneNode(true) as HTMLIonFooterElement;
+
+        baseEl.shadowRoot!.appendChild(clonedFooter);
+        ionFooter.style.setProperty('display', 'none');
+        ionFooter.setAttribute('aria-hidden', 'true');
+
+        // Padding is added to prevent some content from being hidden.
+        const page = baseEl.querySelector('.ion-page') as HTMLElement;
+        page.style.setProperty('padding-bottom', `${footerHeight}px`);
+      }
+    });
+
+  if (contentAnimation) {
+    baseAnimation.addAnimation(contentAnimation);
+  }
 
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;

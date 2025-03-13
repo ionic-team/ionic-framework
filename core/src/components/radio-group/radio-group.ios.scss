@@ -1,0 +1,12 @@
+@import "../../themes/ionic.globals.ios";
+@import "./radio-group";
+@import "../item/item.ios.vars";
+
+// iOS Radio Group Top in List
+// --------------------------------------------------
+
+// Add padding to the error and helper text when used in a
+// list to align them with the list header and item text.
+ion-list .radio-group-top {
+  @include padding-horizontal($item-ios-padding-start, $item-ios-padding-end);
+}
