@@ -1,30 +1,29 @@
+import { APP_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppLandingComponent } from './app-landing/app-landing.component';
 
-const isLazy = window.location.href.includes('lazy');
+const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
-const imports = [
-  BrowserModule.withServerTransition({ appId: 'serverApp' }),
-  AppRoutingModule,
-];
-
-if (isLazy) {
-  imports.push(IonicModule.forRoot({ keyboardHeight: 12345 }));
+export function ionicConfigFactory(): any {
+  const isLazy = isBrowser && window.location.href.includes('lazy');
+  return isLazy ? { keyboardHeight: 12345 } : {};
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
+  declarations: [AppComponent, AppLandingComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    IonicModule.forRoot(ionicConfigFactory()),
   ],
-  imports,
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: APP_ID, useValue: 'serverApp' },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

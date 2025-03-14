@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>
-      Test App - Angular {{ angularVersion.major }}
+      Test App - Angular {{ angularVersion.major }} - Lazy
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,37 +12,37 @@
   <ion-list>
     <ion-item routerLink="/lazy/alerts" [routerAnimation]="routerAnimation">
       <ion-label>
-        Alerts test
+        Alerts Test
       </ion-label>
     </ion-item>
     <ion-item routerLink="/lazy/inputs">
       <ion-label>
-        Inputs test
+        Inputs Test
       </ion-label>
     </ion-item>
     <ion-item routerLink="/lazy/form">
       <ion-label>
-        Form test
+        Form Test
       </ion-label>
     </ion-item>
     <ion-item routerLink="/lazy/modals">
       <ion-label>
-        Modals test
+        Modals Test
       </ion-label>
     </ion-item>
     <ion-item routerLink="/lazy/router-link">
       <ion-label>
-        Router link test
+        Router link Test
       </ion-label>
     </ion-item>
     <ion-item routerLink="/lazy/tabs">
       <ion-label>
-        Tabs test
+        Tabs Test
       </ion-label>
     </ion-item>
     <ion-item routerLink="/lazy/tabs-basic">
       <ion-label>
-        Basic Tabs test
+        Basic Tabs Test
       </ion-label>
     </ion-item>
     <ion-item routerLink="/lazy/nested-outlet/page">
