@@ -602,6 +602,14 @@ export class Searchbar implements ComponentInterface {
     return this.getValue() !== '';
   }
 
+  private shouldShowSearchIcon(): boolean {
+    if (this.searchIcon === false || this.searchIcon === 'false') {
+      return false;
+    }
+
+    return true;
+  }
+
   /**
    * Determines whether or not the cancel button should be visible onscreen.
    * Cancel button should be shown if one of two conditions applies:
@@ -702,9 +710,10 @@ export class Searchbar implements ComponentInterface {
    * Otherwise, use the icon set in the config.
    * If no icon is set in the config, use the default icon.
    */
-  get searchbarSearchIcon(): string | boolean {
-    // Return the icon if it is explicitly set
-    if (this.searchIcon != null) {
+  get searchbarSearchIcon(): string {
+    // Return the icon if it is explicitly set.
+    // If the icon is set to a boolean or string 'true', use the default icon.
+    if (this.searchIcon != null && this.searchIcon !== 'true' && typeof this.searchIcon !== 'boolean') {
       return this.searchIcon;
     }
 
@@ -791,8 +800,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-has-value': this.hasValue(),
           'searchbar-left-aligned': this.shouldAlignLeft,
           'searchbar-has-focus': this.focused,
-          'searchbar-has-leading-icons':
-            theme === 'ionic' && (this.searchIcon !== false || this.showCancelButton !== 'never'),
+          'searchbar-should-show-search-icon': this.shouldShowSearchIcon(),
           'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton(),
           [`searchbar-shape-${shape}`]: shape !== undefined,
@@ -826,16 +834,16 @@ export class Searchbar implements ComponentInterface {
 
           {(theme === 'md' || theme === 'ionic') && cancelButton}
 
-          {this.searchIcon !== false ? (
+          {this.shouldShowSearchIcon() && (
             <ion-icon
               aria-hidden="true"
               icon={searchbarSearchIcon}
               lazy={false}
               class="searchbar-search-icon"
             ></ion-icon>
-          ) : null}
+          )}
 
-          {this.shouldShowClearButton() ? (
+          {this.shouldShowClearButton() && (
             <button
               aria-label="reset"
               type="button"
@@ -858,7 +866,7 @@ export class Searchbar implements ComponentInterface {
                 className="searchbar-clear-icon"
               ></ion-icon>
             </button>
-          ) : null}
+          )}
         </div>
         {theme === 'ios' && cancelButton}
       </Host>

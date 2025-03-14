@@ -1,9 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "searchbar.common";
 
-$leading-icon-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
-$clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
-
 // Ionic Searchbar
 // --------------------------------------------------
 
@@ -58,10 +55,6 @@ $clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
   font-size: globals.$ion-scale-400;
 
   contain: strict;
-}
-
-:host(:not(.searchbar-should-show-clear)) {
-  $clear-button-padding: #{globals.$ion-scale-0};
 }
 
 // Searchbar Cancel Icon
@@ -132,7 +125,7 @@ $clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: calc(9px + $leading-icon-padding);
+  padding-inline-start: calc(9px + globals.$ion-scale-400 + globals.$ion-space-200);
 }
 
 // Searchbar States
@@ -192,6 +185,42 @@ $clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
   /**
    * Padding start is based on
    * desired padding from design,
+   * no leading icons.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * no trailing icons.
+   */
+  @include globals.padding-horizontal(globals.$ion-space-300);
+
+  height: globals.$ion-scale-1000;
+}
+
+/* Small with Leading Icons */
+:host(.searchbar-size-small.searchbar-should-show-search-icon) .searchbar-input,
+:host(.searchbar-size-small.searchbar-should-show-cancel) .searchbar-input {
+  /**
+   * Padding start is based on
+   * desired padding from design,
+   * the size of the leading icon (search or cancel),
+   * and the gap between the icon and the input.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * no trailing icons.
+   */
+  @include globals.padding-horizontal(
+    calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200),
+    globals.$ion-space-300
+  );
+}
+
+/* Small with Leading Icons and Trailing Icons */
+:host(.searchbar-size-small.searchbar-should-show-search-icon.searchbar-should-show-clear) .searchbar-input,
+:host(.searchbar-size-small.searchbar-should-show-cancel.searchbar-should-show-clear) .searchbar-input {
+  /**
+   * Padding start is based on
+   * desired padding from design,
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    *
@@ -200,12 +229,25 @@ $clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @include globals.padding-horizontal(
-    calc(globals.$ion-space-300 + $leading-icon-padding),
-    calc(globals.$ion-space-300 + $clear-button-padding)
-  );
+  @include globals.padding-horizontal(calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200));
+}
 
-  height: globals.$ion-scale-1000;
+/* Small with Trailing Icons */
+:host(.searchbar-size-small.searchbar-should-show-clear) .searchbar-input {
+  /**
+   * Padding start is based on
+   * desired padding from design,
+   * no leading icons.
+   *
+   * Padding end is based on
+   * desired padding from design,
+   * the size of the trailing icon (clear),
+   * and the gap between the icon and the input.
+   */
+  @include globals.padding-horizontal(
+    globals.$ion-space-300,
+    calc(globals.$ion-space-300 + globals.$ion-scale-400 + globals.$ion-space-200)
+  );
 }
 
 :host(.searchbar-size-small) .searchbar-search-icon,
@@ -232,13 +274,7 @@ $clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
    * the size of the trailing icon (clear),
    * and the gap between the icon and the input.
    */
-  @debug "Leading icon padding is equal to #{$leading-icon-padding}";
-  @debug "Clear button padding is equal to #{$clear-button-padding}";
-
-  @include globals.padding-horizontal(
-    calc(globals.$ion-space-400 + $leading-icon-padding),
-    calc(globals.$ion-space-400 + $clear-button-padding)
-  );
+  @include globals.padding-horizontal(calc(globals.$ion-space-400 + globals.$ion-scale-400 + globals.$ion-space-200));
 
   height: globals.$ion-scale-1200;
 }
@@ -257,8 +293,6 @@ $clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
 /* Large */
 :host(.searchbar-size-large) .searchbar-search-icon,
 :host(.searchbar-size-large) .searchbar-cancel-button {
-  $leading-icon-padding: #{calc(globals.$ion-scale-500 + globals.$ion-space-200)};
-
   width: globals.$ion-scale-500;
   height: globals.$ion-scale-500;
 }
@@ -274,7 +308,7 @@ $clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
    * the size of the leading icon (search or cancel),
    * and the gap between the icon and the input.
    */
-  padding-inline-start: calc(9px + $leading-icon-padding);
+  padding-inline-start: calc(9px + globals.$ion-scale-500 + globals.$ion-space-200);
 }
 
 :host(.searchbar-size-large) .searchbar-input {
@@ -292,8 +326,8 @@ $clear-button-padding: calc(globals.$ion-scale-400 + globals.$ion-space-200);
    * and the gap between the icon and the input.
    */
   @include globals.padding-horizontal(
-    calc(globals.$ion-space-500 + $leading-icon-padding),
-    calc(globals.$ion-space-500 + $clear-button-padding)
+    calc(globals.$ion-space-500 + globals.$ion-scale-500 + globals.$ion-space-200),
+    calc(globals.$ion-space-500 + globals.$ion-scale-400 + globals.$ion-space-200)
   );
 
   height: globals.$ion-scale-1400;
