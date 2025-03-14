@@ -163,6 +163,100 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(ionChange).toHaveReceivedEventDetail({ value: 12 });
       await expect(column).toHaveJSProperty('value', 12);
     });
+
+    test('should allow typing 22 in a column where the max value is 23 and not just set it to 2', async ({ page }) => {
+      await page.setContent(
+        `
+    <ion-picker>
+      <ion-picker-column></ion-picker-column>
+    </ion-picker>
+
+    <script>
+      const column = document.querySelector('ion-picker-column');
+      column.numericInput = true;
+      const items = [
+        { text: '01', value: 1 },
+        { text: '02', value: 2},
+        { text: '20', value: 20 },
+        { text: '21', value: 21 },
+        { text: '22', value: 22 },
+        { text: '23', value: 23 }
+      ];
+
+      items.forEach((item) => {
+        const option = document.createElement('ion-picker-column-option');
+        option.value = item.value;
+        option.textContent = item.text;
+
+        column.appendChild(option);
+      });
+    </script>
+  `,
+        config
+      );
+
+      const column = page.locator('ion-picker-column');
+      const ionChange = await page.spyOnEvent('ionChange');
+      await column.evaluate((el: HTMLIonPickerColumnElement) => el.setFocus());
+
+      // Simulate typing '22'
+      await page.keyboard.press('Digit2');
+      await page.keyboard.press('Digit2');
+
+      // Ensure the column value is updated to 22
+      await expect(ionChange).toHaveReceivedEventDetail({ value: 22 });
+      await expect(column).toHaveJSProperty('value', 22);
+    });
+
+    test('should set value to 2 and not wait for another digit when max value is 12', async ({ page }) => {
+      await page.setContent(
+        `
+    <ion-picker>
+      <ion-picker-column></ion-picker-column>
+    </ion-picker>
+
+    <script>
+      const column = document.querySelector('ion-picker-column');
+      column.numericInput = true;
+      const items = [
+        { text: '01', value: 1 },
+        { text: '02', value: 2 },
+        { text: '03', value: 3 },
+        { text: '04', value: 4 },
+        { text: '05', value: 5 },
+        { text: '06', value: 6 },
+        { text: '07', value: 7 },
+        { text: '08', value: 8 },
+        { text: '09', value: 9 },
+        { text: '10', value: 10 },
+        { text: '11', value: 11 },
+        { text: '12', value: 12 }
+      ];
+
+      items.forEach((item) => {
+        const option = document.createElement('ion-picker-column-option');
+        option.value = item.value;
+        option.textContent = item.text;
+
+        column.appendChild(option);
+      });
+    </script>
+  `,
+        config
+      );
+
+      const column = page.locator('ion-picker-column');
+      const ionChange = await page.spyOnEvent('ionChange');
+      await column.evaluate((el: HTMLIonPickerColumnElement) => el.setFocus());
+
+      // Simulate typing '2'
+      await page.keyboard.press('Digit2');
+
+      // Ensure the value is immediately set to 2
+      await expect(ionChange).toHaveReceivedEventDetail({ value: 2 });
+      await expect(column).toHaveJSProperty('value', 2);
+    });
+
     test('pressing Enter should dismiss the keyboard', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
