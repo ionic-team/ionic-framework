@@ -75,6 +75,10 @@
   height: $tab-button-md-badge-size-empty;
 }
 
+:host ::slotted(ion-badge[vertical]) {
+  --badge-padding-top: 5px;
+}
+
 // Material Design Tab Button: Icon Top Layout
 // --------------------------------------------------------------
 
