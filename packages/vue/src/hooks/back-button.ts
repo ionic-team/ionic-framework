@@ -1,4 +1,5 @@
 import type { BackButtonEvent } from "@ionic/core/components";
+import { onBeforeUnmount, getCurrentInstance } from 'vue'
 
 type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
 export interface UseBackButtonResult {
@@ -15,6 +16,12 @@ export const useBackButton = (
     document.removeEventListener("ionBackButton", callback);
 
   document.addEventListener("ionBackButton", callback);
+  
+  if (getCurrentInstance()){
+    onBeforeUnmount(() => {
+      unregister()
+    });
+  }
 
   return { unregister };
 };
