@@ -1,6 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
-import { createColorClasses } from '@utils/theme';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
 import type { Color } from '../../interface';
@@ -19,6 +19,8 @@ import type { Color } from '../../interface';
   shadow: true,
 })
 export class Badge implements ComponentInterface {
+  @Element() el!: HTMLElement;
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -89,6 +91,7 @@ export class Badge implements ComponentInterface {
     const shape = this.getShape();
     const size = this.getSize();
     const theme = getIonTheme(this);
+
     return (
       <Host
         class={createColorClasses(this.color, {
@@ -96,6 +99,7 @@ export class Badge implements ComponentInterface {
           [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
           [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
+          'in-tab-button': hostContext('ion-tab-button', this.el),
         })}
       >
         <slot></slot>

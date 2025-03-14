@@ -1,0 +1,38 @@
+// Tab Button: Native
+// --------------------------------------------------
+
+/// @prop - Badge size
+$tab-button-badge-size: var(--badge-size, 16px);
+
+/// @prop - Badge size when empty
+$tab-button-badge-size-emtpy: var(--badge-size-emtpy, 8px);
+
+/// @prop - Badge top position
+$tab-button-badge-top-position: var(--badge-top-position, 0);
+
+/// @prop - Badge top position when empty
+$tab-button-badge-top-position-empty: var(--badge-top-position-empty, 0);
+
+/// @prop - Badge bottom position
+$tab-button-badge-bottom-position: var(--badge-bottom-position, calc(50% - 8px));
+
+/// @prop - Badge bottom position when empty
+$tab-button-badge-bottom-position-empty: var(--badge-bottom-position-empty, calc(50% - 2px));
+
+/// @prop - Badge left position
+$tab-button-badge-start-position: var(--badge-left-position, calc(50% + 12px));
+
+/// @prop - Badge padding top
+$tab-button-badge-padding-top: var(--badge-padding-top, 4px);
+
+/// @prop - Badge padding end
+$tab-button-badge-padding-end: var(--badge-padding-right, 4px);
+
+/// @prop - Badge padding bottom
+$tab-button-badge-padding-bottom: var(--badge-padding-bottom, 4px);
+
+/// @prop - Badge padding start
+$tab-button-badge-padding-start: var(--badge-padding-left, 4px);
+
+/// @prop - Badge font size
+$tab-button-badge-font-size: var(--badge-font-size, 12px);
