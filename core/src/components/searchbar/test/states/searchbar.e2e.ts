@@ -25,6 +25,27 @@ configs({ modes: ['md', 'ios', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
  * This behavior is only applicable to the `ionic-md` mode.
  * This behavior does not vary across directions.
  */
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('searchbar: disabled'), () => {
+    test('should not show clear button', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-searchbar disabled="true" value="Some text"></ion-searchbar>
+      `,
+        config
+      );
+
+      const clearButton = page.locator('.searchbar-clear-button');
+
+      await expect(clearButton).toBeHidden();
+    });
+  });
+});
+
+/**
+ * This behavior is only applicable to the `ionic-md` mode.
+ * This behavior does not vary across directions.
+ */
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('searchbar: focused'), () => {
     test('should render focus ring on the component', async ({ page, pageUtils }) => {

@@ -106,7 +106,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() cancelButtonIcon?: string;
 
   /**
-   * Set the the cancel button text. Only available when the theme is `"ios"`.
+   * Set the cancel button text. Only available when the theme is `"ios"`.
    */
   @Prop() cancelButtonText = 'Cancel';
 
@@ -179,8 +179,9 @@ export class Searchbar implements ComponentInterface {
   /**
    * The icon to use as the search icon. Defaults to `"search-outline"` in
    * the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
+   * If `false`, no search icon will be displayed.
    */
-  @Prop() searchIcon?: string;
+  @Prop() searchIcon?: string | boolean;
 
   /**
    * Sets the behavior for the cancel button. Defaults to `"never"`.
@@ -601,6 +602,14 @@ export class Searchbar implements ComponentInterface {
     return this.getValue() !== '';
   }
 
+  private shouldShowSearchIcon(): boolean {
+    if (this.searchIcon === false || this.searchIcon === 'false') {
+      return false;
+    }
+
+    return true;
+  }
+
   /**
    * Determines whether or not the cancel button should be visible onscreen.
    * Cancel button should be shown if one of two conditions applies:
@@ -620,9 +629,16 @@ export class Searchbar implements ComponentInterface {
    * Clear button should be shown if one of two conditions applies:
    * 1. `showClearButton` is set to `always`.
    * 2. `showClearButton` is set to `focus`, and the searchbar has been focused.
+   * 3. `theme` is not set `ionic`, or the searchbar has not been disabled.
    */
   private shouldShowClearButton(): boolean {
+    const theme = getIonTheme(this);
+
     if (this.showClearButton === 'never' || (this.showClearButton === 'focus' && !this.focused)) {
+      return false;
+    }
+
+    if (theme === 'ionic' && this.disabled) {
       return false;
     }
 
@@ -695,8 +711,9 @@ export class Searchbar implements ComponentInterface {
    * If no icon is set in the config, use the default icon.
    */
   get searchbarSearchIcon(): string {
-    // Return the icon if it is explicitly set
-    if (this.searchIcon != null) {
+    // Return the icon if it is explicitly set.
+    // If the icon is set to a boolean or string 'true', use the default icon.
+    if (this.searchIcon != null && this.searchIcon !== 'true' && typeof this.searchIcon !== 'boolean') {
       return this.searchIcon;
     }
 
@@ -783,6 +800,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-has-value': this.hasValue(),
           'searchbar-left-aligned': this.shouldAlignLeft,
           'searchbar-has-focus': this.focused,
+          'searchbar-should-show-search-icon': this.shouldShowSearchIcon(),
           'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton(),
           [`searchbar-shape-${shape}`]: shape !== undefined,
@@ -816,25 +834,39 @@ export class Searchbar implements ComponentInterface {
 
           {(theme === 'md' || theme === 'ionic') && cancelButton}
 
-          <ion-icon aria-hidden="true" icon={searchbarSearchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+          {this.shouldShowSearchIcon() && (
+            <ion-icon
+              aria-hidden="true"
+              icon={searchbarSearchIcon}
+              lazy={false}
+              class="searchbar-search-icon"
+            ></ion-icon>
+          )}
 
-          <button
-            aria-label="reset"
-            type="button"
-            no-blur
-            class="searchbar-clear-button"
-            onPointerDown={(ev) => {
-              /**
-               * This prevents mobile browsers from
-               * blurring the input when the clear
-               * button is activated.
-               */
-              ev.preventDefault();
-            }}
-            onClick={() => this.onClearInput(true)}
-          >
-            <ion-icon aria-hidden="true" icon={searchbarClearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
-          </button>
+          {this.shouldShowClearButton() && (
+            <button
+              aria-label="reset"
+              type="button"
+              no-blur
+              class="searchbar-clear-button"
+              onPointerDown={(ev) => {
+                /**
+                 * This prevents mobile browsers from
+                 * blurring the input when the clear
+                 * button is activated.
+                 */
+                ev.preventDefault();
+              }}
+              onClick={() => this.onClearInput(true)}
+            >
+              <ion-icon
+                aria-hidden="true"
+                icon={searchbarClearIcon}
+                lazy={false}
+                className="searchbar-clear-icon"
+              ></ion-icon>
+            </button>
+          )}
         </div>
         {theme === 'ios' && cancelButton}
       </Host>

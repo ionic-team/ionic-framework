@@ -3053,7 +3053,7 @@ export namespace Components {
          */
         "cancelButtonIcon"?: string;
         /**
-          * Set the the cancel button text. Only available when the theme is `"ios"`.
+          * Set the cancel button text. Only available when the theme is `"ios"`.
          */
         "cancelButtonText": string;
         /**
@@ -3105,9 +3105,9 @@ export namespace Components {
          */
         "placeholder": string;
         /**
-          * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
+          * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes. If `false`, no search icon will be displayed.
          */
-        "searchIcon"?: string;
+        "searchIcon"?: string | boolean;
         /**
           * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.  See [managing focus](/docs/developing/managing-focus) for more information.
          */
@@ -8452,7 +8452,7 @@ declare namespace LocalJSX {
          */
         "cancelButtonIcon"?: string;
         /**
-          * Set the the cancel button text. Only available when the theme is `"ios"`.
+          * Set the cancel button text. Only available when the theme is `"ios"`.
          */
         "cancelButtonText"?: string;
         /**
@@ -8528,9 +8528,9 @@ declare namespace LocalJSX {
          */
         "placeholder"?: string;
         /**
-          * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes.
+          * The icon to use as the search icon. Defaults to `"search-outline"` in the `"ios"` theme and `"search-sharp"` in the `"md"` and `"ionic"` themes. If `false`, no search icon will be displayed.
          */
-        "searchIcon"?: string;
+        "searchIcon"?: string | boolean;
         /**
           * Set to `"soft"` for a searchbar with slightly rounded corners, `"round"` for a searchbar with fully rounded corners, or `"rectangular"` for a searchbar without rounded corners.  Defaults to `"round"` for the ionic theme, and `undefined` for all other themes.
          */
