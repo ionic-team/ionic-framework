@@ -340,6 +340,19 @@ export const createSheetGesture = (
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
+    /**
+     * If expandToScroll is disabled, we should not allow the moveSheetToBreakpoint
+     * function to be called if the user is trying to swipe upwards and the content
+     * is not scrolled to the top.
+     */
+    if (!expandToScroll && detail.deltaY <= 0 && findClosestIonContent(detail.event.target! as HTMLElement)) {
+      const contentEl = findClosestIonContent(detail.event.target! as HTMLElement)!;
+      const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
+      if (scrollEl!.scrollTop > 0) {
+        return;
+      }
+    }
+
     moveSheetToBreakpoint({
       breakpoint: closest,
       breakpointOffset: offset,
