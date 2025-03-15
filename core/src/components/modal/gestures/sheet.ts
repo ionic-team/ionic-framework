@@ -264,8 +264,8 @@ export const createSheetGesture = (
 
   const onMove = (detail: GestureDetail) => {
     /**
-     * If `expandToScroll` is disabled, we should not allow the swipe gesture
-     * to continue if the gesture is not pulling down within scrollable content.
+     * If `expandToScroll` is disabled, and an upwards swipe gesture is done within
+     * the scrollable content, we should not allow the swipe gesture to continue.
      */
     if (!expandToScroll && detail.deltaY <= 0) {
       const contentEl = findClosestIonContent(detail.event.target! as HTMLElement)
@@ -330,7 +330,7 @@ export const createSheetGesture = (
   const onEnd = (detail: GestureDetail) => {
     /**
      * If expandToScroll is disabled, we should not allow the moveSheetToBreakpoint
-     * function to be called if the user is trying to swipe upwards and the content
+     * function to be called if the user is trying to swipe content upwards and the content
      * is not scrolled to the top.
      */
     if (!expandToScroll && detail.deltaY <= 0 && findClosestIonContent(detail.event.target! as HTMLElement)) {
