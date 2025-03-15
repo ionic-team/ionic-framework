@@ -265,10 +265,14 @@ export const createSheetGesture = (
   const onMove = (detail: GestureDetail) => {
     /**
      * If `expandToScroll` is disabled, we should not allow the swipe gesture
-     * to continue if the gesture is not pulling down.
+     * to continue if the gesture is not pulling down within scrollable content.
      */
     if (!expandToScroll && detail.deltaY <= 0) {
-      return;
+      const contentEl = findClosestIonContent(detail.event.target! as HTMLElement)
+      const scrollEl = contentEl && isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
+      if (scrollEl) {
+        return;
+      }
     }
 
     /**
