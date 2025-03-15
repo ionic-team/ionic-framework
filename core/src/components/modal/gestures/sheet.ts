@@ -329,18 +329,6 @@ export const createSheetGesture = (
 
   const onEnd = (detail: GestureDetail) => {
     /**
-     * When the gesture releases, we need to determine
-     * the closest breakpoint to snap to.
-     */
-    const velocity = detail.velocityY;
-    const threshold = (detail.deltaY + velocity * 350) / height;
-
-    const diff = currentBreakpoint - threshold;
-    const closest = breakpoints.reduce((a, b) => {
-      return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
-    });
-
-    /**
      * If expandToScroll is disabled, we should not allow the moveSheetToBreakpoint
      * function to be called if the user is trying to swipe upwards and the content
      * is not scrolled to the top.
@@ -352,6 +340,18 @@ export const createSheetGesture = (
         return;
       }
     }
+
+    /**
+     * When the gesture releases, we need to determine
+     * the closest breakpoint to snap to.
+     */
+    const velocity = detail.velocityY;
+    const threshold = (detail.deltaY + velocity * 350) / height;
+
+    const diff = currentBreakpoint - threshold;
+    const closest = breakpoints.reduce((a, b) => {
+      return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
+    });
 
     moveSheetToBreakpoint({
       breakpoint: closest,
