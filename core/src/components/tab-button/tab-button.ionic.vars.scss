@@ -1,0 +1,42 @@
+// Tab Button: Ionic
+// --------------------------------------------------
+
+
+// Tab Button: Badge
+// --------------------------------------------------
+
+/// @prop - Badge size
+$tab-ionic-button-badge-size: var(--badge-size, 16px);
+
+/// @prop - Badge size when empty
+$tab-ionic-button-badge-size-emtpy: var(--badge-size-emtpy, 8px);
+
+/// @prop - Badge top position
+$tab-ionic-button-badge-top-position: var(--badge-top-position, -2px);
+
+/// @prop - Badge top position when empty
+$tab-ionic-button-badge-top-position-empty: var(--badge-top-position-empty, -4px);
+
+/// @prop - Badge bottom position
+$tab-ionic-button-badge-bottom-position: var(--badge-bottom-position, calc(50% - 8px));
+
+/// @prop - Badge bottom position when empty
+$tab-ionic-button-badge-bottom-position-empty: var(--badge-bottom-position-empty, calc(50% - 4px));
+
+/// @prop - Badge left position
+$tab-ionic-button-badge-start-position: var(--badge-left-position, calc(50% + 12px));
+
+/// @prop - Badge padding top
+$tab-ionic-button-badge-padding-top: var(--badge-padding-top, 4px);
+
+/// @prop - Badge padding end
+$tab-ionic-button-badge-padding-end: var(--badge-padding-right, 4px);
+
+/// @prop - Badge padding bottom
+$tab-ionic-button-badge-padding-bottom: var(--badge-padding-bottom, 4px);
+
+/// @prop - Badge padding start
+$tab-ionic-button-badge-padding-start: var(--badge-padding-left, 4px);
+
+/// @prop - Badge font size
+$tab-ionic-button-badge-font-size: var(--badge-font-size, 12px);

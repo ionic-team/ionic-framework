@@ -16,3 +16,28 @@
    */
   font-size: dynamic-font-min(1, $badge-baseline-font-size);
 }
+
+// Badge Inside Tab Button
+// --------------------------------------------------
+
+:host([vertical].in-tab-button) {
+  // TODO(ROU-10747/ROU-11666): Consider removing this property, by removing '@include position(null, 0, null, null);' from the badge-vertical-top and badge-vertical-bottom
+  inset-inline-end: unset;
+
+  position: relative;
+
+  min-width: $badge-ios-in-tab-button-min-width;
+}
+
+:host([vertical].in-tab-button) ::slotted(ion-icon) {
+  @include position($top: 50%, $start: 50%);
+
+  position: absolute;
+
+  left: 50%;
+
+  width: $badge-ios-in-tab-button-icon-size;
+  height: $badge-ios-in-tab-button-icon-size;
+
+  transform: translate(-50%, -50%);
+}

@@ -15,16 +15,53 @@
 // iOS Tab Button: Badge
 // --------------------------------------------------
 
-::slotted(ion-badge) {
-  @include padding(1px, 6px);
-  @include position(4px, null, null, calc(50% + 6px));
+:host ::slotted(ion-badge[vertical]:empty) {
+  @include padding(0, 0);
 
-  height: auto;
-
-  font-size: 12px;
-
-  line-height: 16px;
+  width: $tab-ios-button-badge-size-emtpy;
+  height: $tab-ios-button-badge-size-emtpy;
 }
+
+:host ::slotted(ion-badge[vertical]) {
+  @include position($start: $tab-ios-button-badge-start-position);
+}
+
+:host ::slotted(ion-badge[vertical="top"]) {
+  top: $tab-ios-button-badge-top-position;
+}
+
+:host ::slotted(ion-badge[vertical="top"]:empty) {
+  top: $tab-ios-button-badge-top-position-empty;
+}
+
+:host ::slotted(ion-badge[vertical="bottom"]) {
+  @include position($top: $tab-ios-button-badge-bottom-position);
+}
+
+:host ::slotted(ion-badge[vertical="bottom"]:empty) {
+  @include position($top: $tab-ios-button-badge-bottom-position-empty);
+}
+
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include padding(
+    $tab-ios-button-badge-padding-top,
+    $tab-ios-button-badge-padding-end,
+    $tab-ios-button-badge-padding-bottom,
+    $tab-ios-button-badge-padding-start
+  );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: $tab-ios-button-badge-size;
+  height: $tab-ios-button-badge-size;
+
+  font-size: $tab-ios-button-badge-font-size;
+}
+
+
 
 // iOS Tab Button: Icon
 // --------------------------------------------------

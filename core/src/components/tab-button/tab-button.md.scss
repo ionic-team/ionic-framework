@@ -79,6 +79,14 @@
   --badge-padding-top: 5px;
 }
 
+:host ::slotted(ion-badge[vertical="bottom"]) {
+  @include position($top: $tab-button-md-badge-bottom-position);
+}
+
+:host ::slotted(ion-badge[vertical="bottom"]:empty) {
+  @include position($top: $tab-button-md-badge-bottom-position-empty);
+}
+
 // Material Design Tab Button: Icon Top Layout
 // --------------------------------------------------------------
 

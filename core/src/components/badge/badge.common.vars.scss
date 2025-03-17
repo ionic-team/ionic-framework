@@ -27,14 +27,3 @@ $badge-font-size: dynamic-font($badge-baseline-font-size);
 /// @prop - Font weight of the badge
 $badge-font-weight: bold;
 
-// Badge inside a Tab Button
-// --------------------------------------------------
-
-/// @prop - Minimum width of the badge inside a Tab Button
-$badge-in-tab-button-min-width: 8px;
-
-/// @prop - Height of the badge inside a Tab Button
-$badge-in-tab-button-height: 8px;
-
-/// @prop - Badge icon size inside a Tab Button
-$badge-in-tab-button-icon-size: 12px;

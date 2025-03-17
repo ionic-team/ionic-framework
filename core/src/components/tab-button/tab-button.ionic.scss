@@ -1,6 +1,7 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./tab-button.common";
 @import "../../themes/mixins";
+@import "./tab-button.ionic.vars";
 
 // Ionic Tab Button
 // --------------------------------------------------------------
@@ -93,18 +94,48 @@
 // Tab Button: Badge
 // --------------------------------------------------
 
+:host ::slotted(ion-badge[vertical]:empty) {
+  @include padding(0, 0);
+
+  width: $tab-ionic-button-badge-size-emtpy;
+  height: $tab-ionic-button-badge-size-emtpy;
+}
+
+:host ::slotted(ion-badge[vertical]) {
+  @include position($start: $tab-ionic-button-badge-start-position);
+}
+
 :host ::slotted(ion-badge[vertical="top"]) {
-  --badge-top-position: calc(#{globals.$ion-scale-200} * -1);
+  top: $tab-ionic-button-badge-top-position;
 }
 
 :host ::slotted(ion-badge[vertical="top"]:empty) {
-  --badge-top-position-empty: calc(#{globals.$ion-scale-100} * -1);
+  top: $tab-ionic-button-badge-top-position-empty;
 }
 
 :host ::slotted(ion-badge[vertical="bottom"]) {
-  --badge-bottom-position: calc(50% - #{globals.$ion-scale-250});
+  @include position($top: $tab-ionic-button-badge-bottom-position);
 }
 
 :host ::slotted(ion-badge[vertical="bottom"]:empty) {
-  --badge-bottom-position: calc(50% - #{globals.$ion-scale-200});
+  @include position($top: $tab-ionic-button-badge-bottom-position-empty);
+}
+
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include padding(
+    $tab-ionic-button-badge-padding-top,
+    $tab-ionic-button-badge-padding-end,
+    $tab-ionic-button-badge-padding-bottom,
+    $tab-ionic-button-badge-padding-start
+  );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: $tab-ionic-button-badge-size;
+  height: $tab-ionic-button-badge-size;
+
+  font-size: $tab-ionic-button-badge-font-size;
 }

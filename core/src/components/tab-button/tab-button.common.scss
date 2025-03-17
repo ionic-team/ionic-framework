@@ -1,5 +1,4 @@
 @import "../../themes/mixins";
-@import "./tab-button.common.vars";
 
 :host {
   /**
@@ -153,52 +152,6 @@
   position: absolute;
 
   z-index: 1;
-}
-
-:host ::slotted(ion-badge[vertical]:empty) {
-  @include padding(0, 0);
-
-  width: $tab-button-badge-size-emtpy;
-  height: $tab-button-badge-size-emtpy;
-}
-
-:host ::slotted(ion-badge[vertical]) {
-  @include position($start: $tab-button-badge-start-position);
-}
-
-:host ::slotted(ion-badge[vertical="top"]) {
-  top: $tab-button-badge-top-position;
-}
-
-:host ::slotted(ion-badge[vertical="top"]:empty) {
-  top: $tab-button-badge-top-position-empty;
-}
-
-:host ::slotted(ion-badge[vertical="bottom"]) {
-  @include position($top: $tab-button-badge-bottom-position);
-}
-
-:host ::slotted(ion-badge[vertical="bottom"]:empty) {
-  @include position($top: $tab-button-badge-bottom-position-empty);
-}
-
-:host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include padding(
-    $tab-button-badge-padding-top,
-    $tab-button-badge-padding-end,
-    $tab-button-badge-padding-bottom,
-    $tab-button-badge-padding-start
-  );
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  min-width: $tab-button-badge-size;
-  height: $tab-button-badge-size;
-
-  font-size: $tab-button-badge-font-size;
 }
 
 // Tab Button: Layout

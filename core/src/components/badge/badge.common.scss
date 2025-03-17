@@ -51,38 +51,15 @@
 // Badge Empty (hint)
 // --------------------------------------------------
 
-:host([vertical]) {
+:host([vertical]:not(.in-tab-button)) {
   @include position(null, 0, null, null);
   position: absolute;
 }
 
-:host(:empty.badge-vertical-top) {
+:host(:not(.in-tab-button):empty.badge-vertical-top) {
   top: 0;
 }
 
-:host(:empty.badge-vertical-bottom) {
+:host(:not(.in-tab-button):empty.badge-vertical-bottom) {
   bottom: 0;
-}
-
-// Badge Inside Tab Button
-// --------------------------------------------------
-
-:host([vertical].in-tab-button) {
-  // TODO(ROU-10747/ROU-11666): Consider removing this property, by removing '@include position(null, 0, null, null);' from the badge-vertical-top and badge-vertical-bottom
-  inset-inline-end: unset;
-
-  position: relative;
-
-  min-width: $badge-in-tab-button-min-width;
-}
-
-:host([vertical].in-tab-button) ::slotted(ion-icon) {
-  @include position($top: 50%, $start: 50%);
-
-  position: absolute;
-
-  width: $badge-in-tab-button-icon-size;
-  height: $badge-in-tab-button-icon-size;
-
-  transform: translate(-50%, -50%);
 }
