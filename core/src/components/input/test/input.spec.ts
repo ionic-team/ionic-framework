@@ -44,6 +44,24 @@ describe('input: rendering', () => {
     const bottomContent = page.body.querySelector('ion-input .input-bottom');
     expect(bottomContent).toBe(null);
   });
+
+  it('should inherit watched attributes', async () => {
+    const page = await newSpecPage({
+      components: [Input],
+      html: '<ion-input label="Input" dir="ltr"></ion-input>',
+    });
+
+    const inputEl = page.body.querySelector('ion-input')!;
+    const nativeEl = inputEl.querySelector('input')!;
+
+    expect(nativeEl.getAttribute('dir')).toBe('ltr');
+
+    inputEl.setAttribute('dir', 'rtl');
+
+    await page.waitForChanges();
+
+    expect(nativeEl.getAttribute('dir')).toBe('rtl');
+  });
 });
 
 /**

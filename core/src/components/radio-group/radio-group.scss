@@ -1,0 +1,44 @@
+@import "../../themes/ionic.globals";
+
+// Radio Group
+// --------------------------------------------------
+
+ion-radio-group {
+  // Prevents additional pixels from being rendered on top
+  vertical-align: top;
+}
+
+.radio-group-wrapper {
+  display: inline;
+}
+
+// Radio Group: Top
+// --------------------------------------------------
+
+.radio-group-top {
+  line-height: 1.5;
+}
+
+/**
+ * Error text should only be shown when .ion-invalid is present
+ * on the radio group. Otherwise the helper text should be shown.
+ */
+.radio-group-top .error-text {
+  display: none;
+
+  color: ion-color(danger, base);
+}
+
+.radio-group-top .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+.ion-touched.ion-invalid .radio-group-top .error-text {
+  display: block;
+}
+
+.ion-touched.ion-invalid .radio-group-top .helper-text {
+  display: none;
+}
