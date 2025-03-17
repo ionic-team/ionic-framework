@@ -6,7 +6,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdat
 import { debounceEvent, raf, componentOnReady, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
-import { createColorClasses } from '@utils/theme';
+import { createColorClasses, hostContext } from '@utils/theme';
 import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
@@ -805,6 +805,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-should-show-cancel': this.shouldShowCancelButton(),
           [`searchbar-shape-${shape}`]: shape !== undefined,
           [`searchbar-size-${size}`]: size !== undefined,
+          'in-toolbar': hostContext('ion-toolbar', this.el),
         })}
       >
         <div class="searchbar-input-container">
