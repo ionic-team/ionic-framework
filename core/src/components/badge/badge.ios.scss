@@ -21,9 +21,6 @@
 // --------------------------------------------------
 
 :host([vertical].in-tab-button) {
-  // TODO(ROU-10747/ROU-11666): Consider removing this property, by removing '@include position(null, 0, null, null);' from the badge-vertical-top and badge-vertical-bottom
-  inset-inline-end: unset;
-
   position: relative;
 
   min-width: $badge-ios-in-tab-button-min-width;
