@@ -189,11 +189,9 @@
 }
 
 :host([vertical].in-tab-button) ::slotted(ion-icon) {
-  @include globals.position(50%, 50%);
+  @include globals.position($top: 50%, $start: 50%);
 
   position: absolute;
-
-  left: 50%;
 
   width: $badge-ionic-in-tab-button-icon-size;
   height: $badge-ionic-in-tab-button-icon-size;
