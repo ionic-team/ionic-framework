@@ -1160,6 +1160,10 @@ export namespace Components {
          */
         "theme"?: "ios" | "md" | "ionic";
     }
+    interface IonDivider {
+        "inset"?: boolean;
+        "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'large' | 'xlarge' | 'xxlarge';
+    }
     interface IonFab {
         /**
           * If `true`, both the `ion-fab-button` and all `ion-fab-list` inside `ion-fab` will become active. That means `ion-fab-button` will become a `close` icon and `ion-fab-list` will become visible.
@@ -4436,6 +4440,12 @@ declare global {
         prototype: HTMLIonDatetimeButtonElement;
         new (): HTMLIonDatetimeButtonElement;
     };
+    interface HTMLIonDividerElement extends Components.IonDivider, HTMLStencilElement {
+    }
+    var HTMLIonDividerElement: {
+        prototype: HTMLIonDividerElement;
+        new (): HTMLIonDividerElement;
+    };
     interface HTMLIonFabElement extends Components.IonFab, HTMLStencilElement {
     }
     var HTMLIonFabElement: {
@@ -5395,6 +5405,7 @@ declare global {
         "ion-content": HTMLIonContentElement;
         "ion-datetime": HTMLIonDatetimeElement;
         "ion-datetime-button": HTMLIonDatetimeButtonElement;
+        "ion-divider": HTMLIonDividerElement;
         "ion-fab": HTMLIonFabElement;
         "ion-fab-button": HTMLIonFabButtonElement;
         "ion-fab-list": HTMLIonFabListElement;
@@ -6610,6 +6621,10 @@ declare namespace LocalJSX {
           * The theme determines the visual appearance of the component.
          */
         "theme"?: "ios" | "md" | "ionic";
+    }
+    interface IonDivider {
+        "inset"?: boolean;
+        "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'large' | 'xlarge' | 'xxlarge';
     }
     interface IonFab {
         /**
@@ -9524,6 +9539,7 @@ declare namespace LocalJSX {
         "ion-content": IonContent;
         "ion-datetime": IonDatetime;
         "ion-datetime-button": IonDatetimeButton;
+        "ion-divider": IonDivider;
         "ion-fab": IonFab;
         "ion-fab-button": IonFabButton;
         "ion-fab-list": IonFabList;
@@ -9626,6 +9642,7 @@ declare module "@stencil/core" {
             "ion-content": LocalJSX.IonContent & JSXBase.HTMLAttributes<HTMLIonContentElement>;
             "ion-datetime": LocalJSX.IonDatetime & JSXBase.HTMLAttributes<HTMLIonDatetimeElement>;
             "ion-datetime-button": LocalJSX.IonDatetimeButton & JSXBase.HTMLAttributes<HTMLIonDatetimeButtonElement>;
+            "ion-divider": LocalJSX.IonDivider & JSXBase.HTMLAttributes<HTMLIonDividerElement>;
             "ion-fab": LocalJSX.IonFab & JSXBase.HTMLAttributes<HTMLIonFabElement>;
             "ion-fab-button": LocalJSX.IonFabButton & JSXBase.HTMLAttributes<HTMLIonFabButtonElement>;
             "ion-fab-list": LocalJSX.IonFabList & JSXBase.HTMLAttributes<HTMLIonFabListElement>;

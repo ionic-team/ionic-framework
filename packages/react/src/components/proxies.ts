@@ -22,6 +22,7 @@ import { defineCustomElement as defineIonCol } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonContent } from '@ionic/core/components/ion-content.js';
 import { defineCustomElement as defineIonDatetime } from '@ionic/core/components/ion-datetime.js';
 import { defineCustomElement as defineIonDatetimeButton } from '@ionic/core/components/ion-datetime-button.js';
+import { defineCustomElement as defineIonDivider } from '@ionic/core/components/ion-divider.js';
 import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-fab.js';
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
 import { defineCustomElement as defineIonFooter } from '@ionic/core/components/ion-footer.js';
@@ -94,6 +95,7 @@ export const IonCol = /*@__PURE__*/createReactComponent<JSX.IonCol, HTMLIonColEl
 export const IonContent = /*@__PURE__*/createReactComponent<JSX.IonContent, HTMLIonContentElement>('ion-content', undefined, undefined, defineIonContent);
 export const IonDatetime = /*@__PURE__*/createReactComponent<JSX.IonDatetime, HTMLIonDatetimeElement>('ion-datetime', undefined, undefined, defineIonDatetime);
 export const IonDatetimeButton = /*@__PURE__*/createReactComponent<JSX.IonDatetimeButton, HTMLIonDatetimeButtonElement>('ion-datetime-button', undefined, undefined, defineIonDatetimeButton);
+export const IonDivider = /*@__PURE__*/createReactComponent<JSX.IonDivider, HTMLIonDividerElement>('ion-divider', undefined, undefined, defineIonDivider);
 export const IonFab = /*@__PURE__*/createReactComponent<JSX.IonFab, HTMLIonFabElement>('ion-fab', undefined, undefined, defineIonFab);
 export const IonFabList = /*@__PURE__*/createReactComponent<JSX.IonFabList, HTMLIonFabListElement>('ion-fab-list', undefined, undefined, defineIonFabList);
 export const IonFooter = /*@__PURE__*/createReactComponent<JSX.IonFooter, HTMLIonFooterElement>('ion-footer', undefined, undefined, defineIonFooter);

@@ -25,6 +25,7 @@ import { defineCustomElement as defineIonCol } from '@ionic/core/components/ion-
 import { defineCustomElement as defineIonContent } from '@ionic/core/components/ion-content.js';
 import { defineCustomElement as defineIonDatetime } from '@ionic/core/components/ion-datetime.js';
 import { defineCustomElement as defineIonDatetimeButton } from '@ionic/core/components/ion-datetime-button.js';
+import { defineCustomElement as defineIonDivider } from '@ionic/core/components/ion-divider.js';
 import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-fab.js';
 import { defineCustomElement as defineIonFabButton } from '@ionic/core/components/ion-fab-button.js';
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';

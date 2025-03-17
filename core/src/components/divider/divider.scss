@@ -1,0 +1,77 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
+@import "../../themes/native/native.globals";
+
+:host {
+  /**
+   * @prop --margin-top: Top margin of the divider
+   * @prop --margin-bottom: Bottom margin of the divider
+   * @prop --padding-end: Right margin of the divider
+   * @prop --padding-start: Left padding of the divider
+   */
+  --margin-top: 0px;
+  --margin-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+
+  padding-right: var(--padding-end);
+  padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+
+  display: block;
+
+  width: 100%;
+}
+
+:host hr {
+  margin-top: var(--margin-top);
+  margin-bottom: var(--margin-bottom);
+
+  display: block;
+
+  width: 100%;
+
+  border: none;
+  border-top: #{globals.$ion-border-size-025} solid #{globals.$ion-border-default};
+}
+
+// Divider Spacing
+// --------------------------------------------------
+
+:host(.divider-space-xsmall) {
+  --margin-top: #{globals.$ion-space-200};
+  --margin-bottom: #{globals.$ion-space-200};
+}
+
+:host(.divider-space-small) {
+  --margin-top: #{globals.$ion-space-300};
+  --margin-bottom: #{globals.$ion-space-300};
+}
+
+:host(.divider-space-medium) {
+  --margin-top: #{globals.$ion-space-400};
+  --margin-bottom: #{globals.$ion-space-400};
+}
+
+:host(.divider-space-large) {
+  --margin-top: #{globals.$ion-space-600};
+  --margin-bottom: #{globals.$ion-space-600};
+}
+
+:host(.divider-space-xlarge) {
+  --margin-top: #{globals.$ion-space-800};
+  --margin-bottom: #{globals.$ion-space-800};
+}
+
+:host(.divider-space-xxlarge) {
+  --margin-top: #{globals.$ion-space-1000};
+  --margin-bottom: #{globals.$ion-space-1000};
+}
+
+// Divider Inset
+// --------------------------------------------------
+
+:host(.divider-inset) {
+  --margin-top: #{globals.$ion-space-600};
+  --margin-bottom: #{globals.$ion-space-600};
+  --padding-start: #{globals.$ion-space-400};
+  --padding-end: #{globals.$ion-space-400};
+}
