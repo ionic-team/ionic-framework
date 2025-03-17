@@ -268,8 +268,9 @@ export const createSheetGesture = (
      * the scrollable content, we should not allow the swipe gesture to continue.
      */
     if (!expandToScroll && detail.deltaY <= 0) {
-      const contentEl = findClosestIonContent(detail.event.target! as HTMLElement)
-      const scrollEl = contentEl && isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
+      const contentEl = findClosestIonContent(detail.event.target! as HTMLElement);
+      const scrollEl =
+        contentEl && isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
       if (scrollEl) {
         return;
       }
