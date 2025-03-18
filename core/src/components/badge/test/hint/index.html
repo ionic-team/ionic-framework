@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" theme="ionic">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <title>Badge - Hint</title>
@@ -12,6 +12,12 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-tab-bar {
+        width: 100%;
+      }
+    </style>
   </head>
 
   <body>
@@ -99,12 +105,13 @@
           </div>
         </ion-list>
 
+
         <ion-list id="tab-button">
           <ion-list-header>
             <ion-label> Inside Tab Button </ion-label>
           </ion-list-header>
           <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
-            <ion-tab-bar style="width: 100%">
+            <ion-tab-bar>
               <ion-tab-button href="" tab="tab-one">
                 <ion-label>Tab One</ion-label>
                 <ion-icon name="star"></ion-icon>
@@ -134,7 +141,7 @@
           </div>
 
           <div class="ion-display-flex ion-align-items-center ion-justify-content-around ion-margin">
-            <ion-tab-bar style="width: 100%">
+            <ion-tab-bar>
               <ion-tab-button href="" tab="tab-one">
                 <ion-label>Tab One</ion-label>
                 <ion-icon name="star"></ion-icon>
@@ -162,7 +169,11 @@
               </ion-tab-button>
             </ion-tab-bar>
           </div>
+
+          
+
         </ion-list>
+
       </ion-content>
     </ion-app>
   </body>
