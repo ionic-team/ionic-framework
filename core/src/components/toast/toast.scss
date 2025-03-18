@@ -97,6 +97,8 @@
   background: var(--background);
 
   box-shadow: var(--box-shadow);
+
+  pointer-events: auto;
 }
 
 .toast-wrapper.toast-top {
@@ -115,7 +117,6 @@
   display: flex;
 
   align-items: center;
-  pointer-events: auto;
 
   height: inherit;
   min-height: inherit;

@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -8,9 +8,15 @@ import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-g
 
 @Component({
   tag: 'ion-radio-group',
+  styleUrls: {
+    ios: 'radio-group.ios.scss',
+    md: 'radio-group.md.scss',
+  },
 })
 export class RadioGroup implements ComponentInterface {
   private inputId = `ion-rg-${radioGroupIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private labelId = `${this.inputId}-lbl`;
   private label?: HTMLIonLabelElement | null;
 
@@ -38,6 +44,16 @@ export class RadioGroup implements ComponentInterface {
    * the value of the radio group.
    */
   @Prop({ mutable: true }) value?: any | null;
+
+  /**
+   * The helper text to display at the top of the radio group.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * The error text to display at the top of the radio group.
+   */
+  @Prop() errorText?: string;
 
   @Watch('value')
   valueChanged(value: any | undefined) {
@@ -155,7 +171,9 @@ export class RadioGroup implements ComponentInterface {
 
   @Listen('keydown', { target: 'document' })
   onKeydown(ev: KeyboardEvent) {
-    const inSelectPopover = !!this.el.closest('ion-select-popover');
+    // We don't want the value to automatically change/emit when the radio group is part of a select interface
+    // as this will cause the interface to close when navigating through the radio group options
+    const inSelectInterface = !!this.el.closest('ion-select-popover') || !!this.el.closest('ion-select-modal');
 
     if (ev.target && !this.el.contains(ev.target as HTMLElement)) {
       return;
@@ -187,7 +205,7 @@ export class RadioGroup implements ComponentInterface {
       if (next && radios.includes(next)) {
         next.setFocus(ev);
 
-        if (!inSelectPopover) {
+        if (!inSelectInterface) {
           this.value = next.value;
           this.emitValueChange(ev);
         }
@@ -215,13 +233,76 @@ export class RadioGroup implements ComponentInterface {
     }
   }
 
+  /** @internal */
+  @Method()
+  async setFocus() {
+    const radioToFocus = this.getRadios().find((r) => r.tabIndex !== -1);
+    radioToFocus?.setFocus();
+  }
+
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return (
+      <div class="radio-group-top">
+        <div id={helperTextId} class="helper-text">
+          {helperText}
+        </div>
+        <div id={errorTextId} class="error-text">
+          {errorText}
+        </div>
+      </div>
+    );
+  }
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
   render() {
     const { label, labelId, el, name, value } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, false);
 
-    return <Host role="radiogroup" aria-labelledby={label ? labelId : null} onClick={this.onClick} class={mode}></Host>;
+    return (
+      <Host
+        role="radiogroup"
+        aria-labelledby={label ? labelId : null}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
+        onClick={this.onClick}
+        class={mode}
+      >
+        {this.renderHintText()}
+        {/*
+          TODO(FW-6279): Wrapping the slot in a div is a workaround due to a
+          Stencil issue. Without the wrapper, the children radio will fire the
+          blur event on focus, instead of waiting for them to be blurred.
+        */}
+        <div class="radio-group-wrapper">
+          <slot></slot>
+        </div>
+      </Host>
+    );
   }
 }
 

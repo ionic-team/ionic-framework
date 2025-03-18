@@ -16,7 +16,7 @@ import { defineCustomElement } from '@ionic/core/components/ion-radio-group.js';
 
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'name', 'value'];
+const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'compareWith', 'errorText', 'helperText', 'name', 'value'];
 
 /**
  * Pulling the provider into an object and using PURE  works

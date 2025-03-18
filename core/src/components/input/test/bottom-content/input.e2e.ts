@@ -1,134 +1,218 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('input: bottom content'), () => {
-    test('entire input component should render correctly with no fill', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
-      `,
-        config
-      );
-      const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-no-fill`));
-    });
-    test('entire input component should render correctly with solid fill', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input fill="solid" value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
-      `,
-        config
-      );
-      const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-solid`));
-    });
-    test('entire input component should render correctly with outline fill', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input fill="outline" value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
-      `,
-        config
-      );
-      const input = page.locator('ion-input');
-      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-outline`));
-    });
-  });
-});
-
 /**
- * Rendering is the same across modes
+ * Functionality is the same across modes & directions
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('input: bottom content functionality'), () => {
-    test('should not render bottom content if no hint or counter is enabled', async ({ page }) => {
-      await page.setContent(`<ion-input label="my input"></ion-input>`, config);
+    test('should not render bottom content if no hint is enabled', async ({ page }) => {
+      await page.setContent(`<ion-input label="Label"></ion-input>`, config);
 
       const bottomEl = page.locator('ion-input .input-bottom');
       await expect(bottomEl).toHaveCount(0);
     });
+    test('helper text should be visible initially', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" helper-text="Helper text" error-text="Error text"></ion-input>`,
+        config
+      );
+
+      const helperText = page.locator('ion-input .helper-text');
+      const errorText = page.locator('ion-input .error-text');
+      await expect(helperText).toBeVisible();
+      await expect(helperText).toHaveText('Helper text');
+      await expect(errorText).toBeHidden();
+    });
+    test('input should have an aria-describedby attribute when helper text is present', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" helper-text="Helper text" error-text="Error text"></ion-input>`,
+        config
+      );
+
+      const input = page.locator('ion-input input');
+      const helperText = page.locator('ion-input .helper-text');
+      const helperTextId = await helperText.getAttribute('id');
+      const ariaDescribedBy = await input.getAttribute('aria-describedby');
+
+      expect(ariaDescribedBy).toBe(helperTextId);
+    });
+    test('error text should be visible when input is invalid', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text"></ion-input>`,
+        config
+      );
+
+      const helperText = page.locator('ion-input .helper-text');
+      const errorText = page.locator('ion-input .error-text');
+      await expect(helperText).toBeHidden();
+      await expect(errorText).toBeVisible();
+      await expect(errorText).toHaveText('Error text');
+    });
+
+    test('input should have an aria-describedby attribute when error text is present', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text"></ion-input>`,
+        config
+      );
+
+      const input = page.locator('ion-input input');
+      const errorText = page.locator('ion-input .error-text');
+      const errorTextId = await errorText.getAttribute('id');
+      const ariaDescribedBy = await input.getAttribute('aria-describedby');
+
+      expect(ariaDescribedBy).toBe(errorTextId);
+    });
+    test('input should have aria-invalid attribute when input is invalid', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" class="ion-invalid ion-touched" helper-text="Helper text" error-text="Error text"></ion-input>`,
+        config
+      );
+
+      const input = page.locator('ion-input input');
+
+      await expect(input).toHaveAttribute('aria-invalid');
+    });
+    test('input should not have aria-invalid attribute when input is valid', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" helper-text="Helper text" error-text="Error text"></ion-input>`,
+        config
+      );
+
+      const input = page.locator('ion-input input');
+
+      await expect(input).not.toHaveAttribute('aria-invalid');
+    });
+    test('input should not have aria-describedby attribute when no hint or error text is present', async ({ page }) => {
+      await page.setContent(`<ion-input label="Label"></ion-input>`, config);
+
+      const input = page.locator('ion-input input');
+
+      await expect(input).not.toHaveAttribute('aria-describedby');
+    });
   });
 });
 
 /**
- * Rendering is the same across modes
+ * Rendering is different across modes
+ */
+configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: helper text rendering'), () => {
+    test('should not have visual regressions when rendering helper text', async ({ page }) => {
+      await page.setContent(`<ion-input label="Label" helper-text="Helper text"></ion-input>`, config);
+
+      const bottomEl = page.locator('ion-input');
+      await expect(bottomEl).toHaveScreenshot(screenshot(`input-helper-text`));
+    });
+    test('should not have visual regressions when rendering helper text with wrapping text', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" helper-text="Helper text helper text helper text helper text helper text helper text helper text helper text helper text"></ion-input>`,
+        config
+      );
+
+      const bottomEl = page.locator('ion-input');
+      await expect(bottomEl).toHaveScreenshot(screenshot(`input-helper-text-wrapping`));
+    });
+    test('should not have visual regressions when rendering helper text with a stacked label', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" label-placement="stacked" helper-text="Helper text"></ion-input>`,
+        config
+      );
+
+      const bottomEl = page.locator('ion-input');
+      await expect(bottomEl).toHaveScreenshot(screenshot(`input-helper-text-stacked-label`));
+    });
+  });
+
+  test.describe(title('input: error text rendering'), () => {
+    test('should not have visual regressions when rendering error text', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" class="ion-invalid ion-touched" error-text="Error text"></ion-input>`,
+        config
+      );
+
+      const bottomEl = page.locator('ion-input');
+      await expect(bottomEl).toHaveScreenshot(screenshot(`input-error-text`));
+    });
+    test('should not have visual regressions when rendering error text with a stacked label', async ({ page }) => {
+      await page.setContent(
+        `<ion-input label="Label" class="ion-invalid ion-touched" error-text="Error text" label-placement="stacked"></ion-input>`,
+        config
+      );
+
+      const bottomEl = page.locator('ion-input');
+      await expect(bottomEl).toHaveScreenshot(screenshot(`input-error-text-stacked-label`));
+    });
+  });
+});
+
+/**
+ * Customizing supporting text is the same across modes and directions
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('input: hint text'), () => {
-    test.describe('input: hint text functionality', () => {
-      test('helper text should be visible initially', async ({ page }) => {
-        await page.setContent(
-          `<ion-input helper-text="my helper" error-text="my error" label="my input"></ion-input>`,
-          config
-        );
+  test.describe(title('input: supporting text customization'), () => {
+    test('should not have visual regressions when rendering helper text with custom css', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-input.custom-input.md .input-bottom .helper-text {
+            font-size: 20px;
+            color: green;
+          }
+        </style>
+        <ion-input class="custom-input" label="Label" helper-text="Helper text"></ion-input>
+      `,
+        config
+      );
 
-        const helperText = page.locator('ion-input .helper-text');
-        const errorText = page.locator('ion-input .error-text');
-        await expect(helperText).toBeVisible();
-        await expect(helperText).toHaveText('my helper');
-        await expect(errorText).toBeHidden();
-      });
-      test('error text should be visible when input is invalid', async ({ page }) => {
-        await page.setContent(
-          `<ion-input class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my input"></ion-input>`,
-          config
-        );
-
-        const helperText = page.locator('ion-input .helper-text');
-        const errorText = page.locator('ion-input .error-text');
-        await expect(helperText).toBeHidden();
-        await expect(errorText).toBeVisible();
-        await expect(errorText).toHaveText('my error');
-      });
-      test('error text should change when variable is customized', async ({ page }) => {
-        await page.setContent(
-          `
-          <style>
-            ion-input.custom-input {
-              --highlight-color-invalid: purple;
-            }
-          </style>
-          <ion-input class="ion-invalid ion-touched custom-input" label="my label" error-text="my error"></ion-input>
-        `,
-          config
-        );
-
-        const errorText = page.locator('ion-input .error-text');
-        await expect(errorText).toHaveScreenshot(screenshot(`input-error-custom-color`));
-      });
+      const helperText = page.locator('ion-input');
+      await expect(helperText).toHaveScreenshot(screenshot(`input-helper-text-custom-css`));
     });
-    test.describe('input: hint text rendering', () => {
-      test.describe('regular inputs', () => {
-        test('should not have visual regressions when rendering helper text', async ({ page }) => {
-          await page.setContent(`<ion-input helper-text="my helper" label="my input"></ion-input>`, config);
+    test('should not have visual regressions when rendering error text with custom css', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-input.custom-input.md .input-bottom .error-text {
+            font-size: 20px;
+            color: purple;
+          }
+        </style>
+        <ion-input class="ion-invalid ion-touched custom-input" label="Label" error-text="Error text"></ion-input>
+      `,
+        config
+      );
 
-          const bottomEl = page.locator('ion-input .input-bottom');
-          await expect(bottomEl).toHaveScreenshot(screenshot(`input-bottom-content-helper`));
-        });
-        test('should not have visual regressions when rendering error text', async ({ page }) => {
-          await page.setContent(
-            `<ion-input class="ion-invalid ion-touched" error-text="my helper" label="my input"></ion-input>`,
-            config
-          );
+      const errorText = page.locator('ion-input');
+      await expect(errorText).toHaveScreenshot(screenshot(`input-error-text-custom-css`));
+    });
+    test('should not have visual regressions when rendering error text with a custom css variable', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <style>
+          ion-input.custom-input {
+            --highlight-color-invalid: purple;
+          }
+        </style>
+        <ion-input class="ion-invalid ion-touched custom-input" label="Label" error-text="Error text"></ion-input>
+      `,
+        config
+      );
 
-          const bottomEl = page.locator('ion-input .input-bottom');
-          await expect(bottomEl).toHaveScreenshot(screenshot(`input-bottom-content-error`));
-        });
-      });
+      const errorText = page.locator('ion-input');
+      await expect(errorText).toHaveScreenshot(screenshot(`input-error-text-custom-css-var`));
     });
   });
 });
 
-/**
- * Rendering is the same across modes
- */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: counter'), () => {
     test.describe('input: counter functionality', () => {
       test('should not activate if maxlength is not specified even if bottom content is visible', async ({ page }) => {
         await page.setContent(
           `
-          <ion-input label="my label" counter="true" helper-text="helper text"></ion-input>
+          <ion-input label="Label" counter="true" helper-text="helper text"></ion-input>
         `,
           config
         );
@@ -138,7 +222,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       test('default formatter should be used', async ({ page }) => {
         await page.setContent(
           `
-          <ion-input label="my label" counter="true" maxlength="20"></ion-input>
+          <ion-input label="Label" counter="true" maxlength="20"></ion-input>
         `,
           config
         );
@@ -148,8 +232,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       test('custom formatter should be used when provided', async ({ page }) => {
         await page.setContent(
           `
-          <ion-input label="my label" counter="true" maxlength="20"></ion-input>
-
+          <ion-input label="Label" counter="true" maxlength="20"></ion-input>
           <script>
             const input = document.querySelector('ion-input');
             input.counterFormatter = (inputLength, maxLength) => {
@@ -174,13 +257,31 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       });
     });
     test.describe('input: counter rendering', () => {
-      test.describe('regular inputs', () => {
-        test('should not have visual regressions when rendering counter', async ({ page }) => {
-          await page.setContent(`<ion-input counter="true" maxlength="20" label="my input"></ion-input>`, config);
+      test('should not have visual regressions when rendering counter', async ({ page }) => {
+        await page.setContent(`<ion-input counter="true" maxlength="20" label="Label"></ion-input>`, config);
 
-          const bottomEl = page.locator('ion-input .input-bottom');
-          await expect(bottomEl).toHaveScreenshot(screenshot(`input-bottom-content-counter`));
-        });
+        const bottomEl = page.locator('ion-input');
+        await expect(bottomEl).toHaveScreenshot(screenshot(`input-counter`));
+      });
+
+      test('should not have visual regressions when rendering counter with helper text', async ({ page }) => {
+        await page.setContent(
+          `<ion-input label="Label" counter="true" maxlength="20" helper-text="Helper"></ion-input>`,
+          config
+        );
+
+        const bottomEl = page.locator('ion-input');
+        await expect(bottomEl).toHaveScreenshot(screenshot(`input-counter-helper-text`));
+      });
+
+      test('should not have visual regressions when rendering counter with error text', async ({ page }) => {
+        await page.setContent(
+          `<ion-input class="ion-invalid ion-touched" label="Label" counter="true" maxlength="20" error-text="Error text"></ion-input>`,
+          config
+        );
+
+        const bottomEl = page.locator('ion-input');
+        await expect(bottomEl).toHaveScreenshot(screenshot(`input-counter-error-text`));
       });
     });
   });

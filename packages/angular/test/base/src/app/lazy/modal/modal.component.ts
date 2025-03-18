@@ -4,8 +4,9 @@ import { ModalExampleComponent } from '../modal-example/modal-example.component'
 import { NavComponent } from '../nav/nav.component';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
+    selector: 'app-modal',
+    templateUrl: './modal.component.html',
+    standalone: false
 })
 export class ModalComponent {
 

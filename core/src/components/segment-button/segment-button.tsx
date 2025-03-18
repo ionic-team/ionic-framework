@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, Method, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
-import { addEventListener, removeEventListener, inheritAttributes } from '@utils/helpers';
+import { addEventListener, removeEventListener, inheritAttributes, getNextSiblingOfType } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -37,6 +37,11 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   @State() checked = false;
 
   /**
+   * The `id` of the segment content.
+   */
+  @Prop({ reflect: true }) contentId?: string;
+
+  /**
    * If `true`, the user cannot interact with the segment button.
    */
   @Prop({ mutable: true }) disabled = false;
@@ -60,12 +65,71 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     this.updateState();
   }
 
-  connectedCallback() {
+  private waitForSegmentContent(ionSegment: HTMLIonSegmentElement | null, contentId: string): Promise<HTMLElement> {
+    return new Promise((resolve, reject) => {
+      let timeoutId: NodeJS.Timeout | undefined = undefined;
+      let animationFrameId: number;
+
+      const check = () => {
+        if (!ionSegment) {
+          reject(new Error(`Segment not found when looking for Segment Content`));
+          return;
+        }
+
+        const segmentView = getNextSiblingOfType<HTMLIonSegmentViewElement>(ionSegment); // Skip the text nodes
+        const segmentContent = segmentView?.querySelector(
+          `ion-segment-content[id="${contentId}"]`
+        ) as HTMLIonSegmentContentElement | null;
+        if (segmentContent && timeoutId) {
+          clearTimeout(timeoutId); // Clear the timeout if the segmentContent is found
+          cancelAnimationFrame(animationFrameId);
+          resolve(segmentContent);
+        } else {
+          animationFrameId = requestAnimationFrame(check); // Keep checking on the next animation frame
+        }
+      };
+
+      check();
+
+      // Set a timeout to reject the promise
+      timeoutId = setTimeout(() => {
+        cancelAnimationFrame(animationFrameId);
+        reject(new Error(`Unable to find Segment Content with id="${contentId} within 1000 ms`));
+      }, 1000);
+    });
+  }
+
+  async connectedCallback() {
     const segmentEl = (this.segmentEl = this.el.closest('ion-segment'));
     if (segmentEl) {
       this.updateState();
       addEventListener(segmentEl, 'ionSelect', this.updateState);
       addEventListener(segmentEl, 'ionStyle', this.updateStyle);
+    }
+
+    // Return if there is no contentId defined
+    if (!this.contentId) return;
+
+    let segmentContent;
+    try {
+      // Attempt to find the Segment Content by its contentId
+      segmentContent = await this.waitForSegmentContent(segmentEl, this.contentId);
+    } catch (error) {
+      // If no associated Segment Content exists, log an error and return
+      console.error('Segment Button: ', (error as Error).message);
+      return;
+    }
+
+    // Ensure the found element is a valid ION-SEGMENT-CONTENT
+    if (segmentContent.tagName !== 'ION-SEGMENT-CONTENT') {
+      console.error(`Segment Button: Element with id="${this.contentId}" is not an <ion-segment-content> element.`);
+      return;
+    }
+
+    // Prevent buttons from being disabled when associated with segment content
+    if (this.disabled) {
+      console.warn(`Segment Button: Segment buttons cannot be disabled when associated with an <ion-segment-content>.`);
+      this.disabled = false;
     }
   }
 
@@ -161,13 +225,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
-        <div
-          part="indicator"
-          class={{
-            'segment-button-indicator': true,
-            'segment-button-indicator-animated': true,
-          }}
-        >
+        <div part="indicator" class="segment-button-indicator segment-button-indicator-animated">
           <div part="indicator-background" class="segment-button-indicator-background"></div>
         </div>
       </Host>

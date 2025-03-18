@@ -1,0 +1,24 @@
+@import "./select-modal";
+@import "../item/item.ios.vars";
+@import "../radio/radio.ios.vars";
+
+ion-item {
+  --inner-padding-end: 0;
+}
+
+/**
+ * The bottom border of the item should only be displayed
+ * under the text and not the radio icon.
+ */
+ion-radio::after {
+  @include position(null, null, 0, calc($radio-ios-icon-width + $item-ios-padding-start));
+  position: absolute;
+
+  width: calc(100% - $radio-ios-icon-width - $item-ios-padding-start); /* Adjust width based on the shift */
+
+  border-width: #{0px 0px $item-ios-border-bottom-width 0px};
+  border-style: #{$item-ios-border-bottom-style};
+  border-color: #{$item-ios-border-bottom-color};
+
+  content: "";
+}

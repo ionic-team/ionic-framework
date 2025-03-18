@@ -7,6 +7,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
+import type { SegmentViewScrollEvent } from '../segment-view/segment-view-interface';
 
 import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface';
 
@@ -26,6 +27,16 @@ export class Segment implements ComponentInterface {
 
   // Value before the segment is dragged
   private valueBeforeGesture?: SegmentValue;
+
+  private segmentViewEl?: HTMLIonSegmentViewElement | null = null;
+  private lastNextIndex?: number;
+
+  /**
+   * Whether to update the segment view, if exists, when the value changes.
+   * This behavior is enabled by default, but is set false when scrolling content views
+   * since we don't want to "double scroll" the segment view.
+   */
+  private triggerScrollOnValueChange?: boolean;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -78,13 +89,41 @@ export class Segment implements ComponentInterface {
   @Prop({ mutable: true }) value?: SegmentValue;
 
   @Watch('value')
-  protected valueChanged(value: SegmentValue | undefined) {
+  protected valueChanged(value: SegmentValue | undefined, oldValue?: SegmentValue | undefined) {
+    // Force a value to exist if we're using a segment view
+    if (this.segmentViewEl && value === undefined) {
+      this.value = this.getButtons()[0].value;
+      return;
+    }
+
+    if (oldValue !== undefined && value !== undefined) {
+      const buttons = this.getButtons();
+      const previous = buttons.find((button) => button.value === oldValue);
+      const current = buttons.find((button) => button.value === value);
+
+      if (previous && current) {
+        if (!this.segmentViewEl) {
+          this.checkButton(previous, current);
+        } else if (this.triggerScrollOnValueChange !== false) {
+          this.updateSegmentView();
+        }
+      }
+    } else if (value !== undefined && oldValue === undefined && this.segmentViewEl) {
+      this.updateSegmentView();
+    }
+
     /**
      * `ionSelect` is emitted every time the value changes (internal or external changes).
      * Used by `ion-segment-button` to determine if the button should be checked.
      */
     this.ionSelect.emit({ value });
-    this.scrollActiveButtonIntoView();
+
+    // The scroll listener should handle scrolling the active button into view as needed
+    if (!this.segmentViewEl) {
+      this.scrollActiveButtonIntoView();
+    }
+
+    this.triggerScrollOnValueChange = undefined;
   }
 
   /**
@@ -118,9 +157,13 @@ export class Segment implements ComponentInterface {
   disabledChanged() {
     this.gestureChanged();
 
-    const buttons = this.getButtons();
-    for (const button of buttons) {
-      button.disabled = this.disabled;
+    if (!this.segmentViewEl) {
+      const buttons = this.getButtons();
+      for (const button of buttons) {
+        button.disabled = this.disabled;
+      }
+    } else {
+      this.segmentViewEl.disabled = this.disabled;
     }
   }
 
@@ -132,6 +175,12 @@ export class Segment implements ComponentInterface {
 
   connectedCallback() {
     this.emitStyle();
+
+    this.segmentViewEl = this.getSegmentView();
+  }
+
+  disconnectedCallback() {
+    this.segmentViewEl = null;
   }
 
   componentWillLoad() {
@@ -139,6 +188,8 @@ export class Segment implements ComponentInterface {
   }
 
   async componentDidLoad() {
+    this.segmentViewEl = this.getSegmentView();
+
     this.setCheckedClasses();
 
     /**
@@ -170,6 +221,10 @@ export class Segment implements ComponentInterface {
     if (this.disabled) {
       this.disabledChanged();
     }
+
+    // Update segment view based on the initial value,
+    // but do not animate the scroll
+    this.updateSegmentView(false);
   }
 
   onStart(detail: GestureDetail) {
@@ -192,6 +247,7 @@ export class Segment implements ComponentInterface {
     if (value !== undefined) {
       if (this.valueBeforeGesture !== value) {
         this.emitValueChange();
+        this.updateSegmentView();
       }
     }
     this.valueBeforeGesture = undefined;
@@ -208,7 +264,7 @@ export class Segment implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
-  private getButtons() {
+  private getButtons(): HTMLIonSegmentButtonElement[] {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
@@ -224,11 +280,7 @@ export class Segment implements ComponentInterface {
     const buttons = this.getButtons();
 
     buttons.forEach((button) => {
-      if (activated) {
-        button.classList.add('segment-button-activated');
-      } else {
-        button.classList.remove('segment-button-activated');
-      }
+      button.classList.toggle('segment-button-activated', activated);
     });
     this.activated = activated;
   }
@@ -293,6 +345,8 @@ export class Segment implements ComponentInterface {
 
       // Remove the transform to slide the indicator back to the button clicked
       currentIndicator.style.setProperty('transform', '');
+
+      this.scrollActiveButtonIntoView(true);
     });
 
     this.value = current.value;
@@ -309,6 +363,74 @@ export class Segment implements ComponentInterface {
     }
     if (next < buttons.length) {
       buttons[next].classList.add('segment-button-after-checked');
+    }
+  }
+
+  private getSegmentView() {
+    const buttons = this.getButtons();
+    // Get the first button with a contentId
+    const firstContentId = buttons.find((button: HTMLIonSegmentButtonElement) => button.contentId);
+    // Get the segment content with an id matching the button's contentId
+    const segmentContent = document.querySelector(`ion-segment-content[id="${firstContentId?.contentId}"]`);
+    // Return the segment view for that matching segment content
+    return segmentContent?.closest('ion-segment-view');
+  }
+
+  @Listen('ionSegmentViewScroll', { target: 'body' })
+  handleSegmentViewScroll(ev: CustomEvent<SegmentViewScrollEvent>) {
+    const { scrollRatio, isManualScroll } = ev.detail;
+
+    if (!isManualScroll) {
+      return;
+    }
+
+    const dispatchedFrom = ev.target as HTMLElement;
+    const segmentViewEl = this.segmentViewEl as EventTarget;
+    const segmentEl = this.el;
+
+    // Only update the indicator if the event was dispatched from the correct segment view
+    if (ev.composedPath().includes(segmentViewEl) || dispatchedFrom?.contains(segmentEl)) {
+      const buttons = this.getButtons();
+
+      // If no buttons are found or there is no value set then do nothing
+      if (!buttons.length) return;
+
+      const index = buttons.findIndex((button) => button.value === this.value);
+      const current = buttons[index];
+
+      const nextIndex = Math.round(scrollRatio * (buttons.length - 1));
+
+      if (this.lastNextIndex === undefined || this.lastNextIndex !== nextIndex) {
+        this.lastNextIndex = nextIndex;
+        this.triggerScrollOnValueChange = false;
+
+        this.checkButton(current, buttons[nextIndex]);
+        this.emitValueChange();
+      }
+    }
+  }
+
+  /**
+   * Finds the related segment view and sets its current content
+   * based on the selected segment button. This method
+   * should be called on initial load of the segment,
+   * after the gesture is completed (if dragging between segments)
+   * and when a segment button is clicked directly.
+   */
+  private updateSegmentView(smoothScroll = true) {
+    const buttons = this.getButtons();
+    const button = buttons.find((btn) => btn.value === this.value);
+
+    // If the button does not have a contentId then there is
+    // no associated segment view to update
+    if (!button?.contentId) {
+      return;
+    }
+
+    const segmentView = this.segmentViewEl;
+
+    if (segmentView) {
+      segmentView.setContent(button.contentId, smoothScroll);
     }
   }
 
@@ -492,7 +614,13 @@ export class Segment implements ComponentInterface {
       this.emitValueChange();
     }
 
-    if (this.scrollable || !this.swipeGesture) {
+    if (this.segmentViewEl) {
+      this.updateSegmentView();
+
+      if (this.scrollable && previous) {
+        this.checkButton(previous, current);
+      }
+    } else if (this.scrollable || !this.swipeGesture) {
       if (previous) {
         this.checkButton(previous, current);
       } else {

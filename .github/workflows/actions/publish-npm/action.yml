@@ -21,7 +21,7 @@ runs:
   steps:
     - uses: actions/setup-node@v4
       with:
-        node-version: 18.x
+        node-version: 20.x
     # Provenance requires npm 9.5.0+
     - name: Install latest npm
       run: npm install -g npm@latest

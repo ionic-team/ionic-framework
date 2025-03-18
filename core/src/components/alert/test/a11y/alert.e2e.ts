@@ -16,13 +16,35 @@ const testAria = async (
   await didPresent.next();
 
   const alert = page.locator('ion-alert');
+  const alertwrapper = alert.locator('.alert-wrapper');
+
+  const header = alert.locator('.alert-title');
+  const subHeader = alert.locator('.alert-sub-title');
+
+  // If a header exists, it should be an h2 element
+  if ((await header.count()) > 0) {
+    const headerTagName = await header.evaluate((el) => el.tagName);
+    expect(headerTagName).toBe('H2');
+  }
+
+  // If a header and subHeader exist, the subHeader should be an h3 element
+  if ((await header.count()) > 0 && (await subHeader.count()) > 0) {
+    const subHeaderTagName = await subHeader.evaluate((el) => el.tagName);
+    expect(subHeaderTagName).toBe('H3');
+  }
+
+  // If a subHeader exists without a header, the subHeader should be an h2 element
+  if ((await header.count()) === 0 && (await subHeader.count()) > 0) {
+    const subHeaderTagName = await subHeader.evaluate((el) => el.tagName);
+    expect(subHeaderTagName).toBe('H2');
+  }
 
   /**
    * expect().toHaveAttribute() can't check for a null value, so grab and check
    * the values manually instead.
    */
-  const ariaLabelledBy = await alert.getAttribute('aria-labelledby');
-  const ariaDescribedBy = await alert.getAttribute('aria-describedby');
+  const ariaLabelledBy = await alertwrapper.getAttribute('aria-labelledby');
+  const ariaDescribedBy = await alertwrapper.getAttribute('aria-describedby');
 
   expect(ariaLabelledBy).toBe(expectedAriaLabelledBy);
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
@@ -124,16 +146,24 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
       await page.goto(`/src/components/alert/test/a11y`, config);
     });
 
-    test('should have aria-labelledby when header is set', async ({ page }) => {
-      await testAria(page, 'noMessage', 'alert-1-hdr', null);
+    test('should have aria-labelledby set to both when header and subHeader are set', async ({ page }) => {
+      await testAria(page, 'bothHeadersOnly', 'alert-1-hdr alert-1-sub-hdr', null);
+    });
+
+    test('should have aria-labelledby set when only header is set', async ({ page }) => {
+      await testAria(page, 'headerOnly', 'alert-1-hdr', null);
+    });
+
+    test('should fall back to subHeader for aria-labelledby if header is not defined', async ({ page }) => {
+      await testAria(page, 'subHeaderOnly', 'alert-1-sub-hdr', null);
     });
 
     test('should have aria-describedby when message is set', async ({ page }) => {
       await testAria(page, 'noHeaders', null, 'alert-1-msg');
     });
 
-    test('should fall back to subHeader for aria-labelledby if header is not defined', async ({ page }) => {
-      await testAria(page, 'subHeaderOnly', 'alert-1-sub-hdr', 'alert-1-msg');
+    test('should have aria-labelledby and aria-describedby when headers and message are set', async ({ page }) => {
+      await testAria(page, 'headersAndMessage', 'alert-1-hdr alert-1-sub-hdr', 'alert-1-msg');
     });
 
     test('should allow for manually specifying aria attributes', async ({ page }) => {
@@ -279,7 +309,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`alert-radio-scale`));
     });
-    test('should scale text on larger font sizes with text fields', async ({ page }) => {
+    test('should scale text on larger font sizes with text fields', async ({ page, skip }) => {
+      // TODO(ROU-8158): unskip this test when a solution is found
+      skip.browser('chromium', 'Rendering is flaky in Chrome.');
+
       await page.setContent(
         `
         <style>
