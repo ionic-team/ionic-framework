@@ -29,7 +29,6 @@ configs().forEach(({ title, screenshot, config }) => {
         await expect(input).toHaveScreenshot(screenshot(`input-with-placeholder`));
       });
     });
-
     test.describe('input with clear button', () => {
       test('should not have visual regressions with default label', async ({ page }) => {
         await page.setContent(
@@ -61,6 +60,45 @@ configs().forEach(({ title, screenshot, config }) => {
         const input = page.locator('ion-input');
         // Validates the display of an input with a clear button.
         await expect(input).toHaveScreenshot(screenshot(`input-with-clear-button-stacked`));
+      });
+    });
+    test.describe('input click behaviors', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-input
+            label="Label"
+            clear-input="true"
+            value="Text"
+          ></ion-input>
+        `,
+          config
+        );
+        const input = page.locator('ion-input');
+        input.dblclick();
+        // Validates the display of an input with a clear button.
+        await expect(input).toHaveScreenshot(screenshot(`input-dbclick`));
+      });
+      test('should not have visual regressions with stacked label', async ({ page, browserName }) => {
+        if (browserName === 'firefox') {
+          //TODO: Figure out why it's not working for firefox
+          test.skip();
+        }
+        await page.setContent(
+          `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="Text"
+          ></ion-input>
+        `,
+          config
+        );
+        const input = page.locator('ion-input');
+        input.dblclick();
+        // Validates the display of an input with a clear button.
+        await expect(input).toHaveScreenshot(screenshot(`input-dbclick-stacked`));
       });
     });
   });
@@ -184,6 +222,28 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
 
       const container = page.locator('#container');
       await expect(container).toHaveScreenshot(screenshot(`input-clear-button-focused`));
+    });
+
+    test('should not have visual regressions when user dbclicks', async ({ page, browserName }) => {
+      if (browserName === 'firefox' || browserName === 'webkit') {
+        //TODO: Figure out why it's not working for webkit & firefox
+        test.skip();
+      }
+      await page.setContent(
+        `
+          <ion-input
+            label="Label"
+            label-placement="stacked"
+            clear-input="true"
+            value="Text"
+          ></ion-input>
+      `,
+        config
+      );
+      const input = page.locator('ion-input');
+      await input.dblclick();
+      await page.waitForChanges();
+      await expect(input).toHaveScreenshot(screenshot(`input-dbclick`));
     });
   });
 });
