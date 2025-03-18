@@ -15,7 +15,18 @@
 // iOS Tab Button: Badge
 // --------------------------------------------------
 
-:host ::slotted(ion-badge[vertical]:empty) {
+::slotted(ion-badge:not([vertical])) {
+  @include padding(1px, 6px);
+  @include position(4px, null, null, calc(50% + 6px));
+
+  height: auto;
+
+  font-size: 12px;
+
+  line-height: 16px;
+}
+
+:host ::slotted(ion-badge:empty) {
   @include padding(0, 0);
 
   width: $tab-ios-button-badge-size-emtpy;
