@@ -241,7 +241,7 @@ button {
    * padding so it is always aligned with either the label
    * or the start of the text select.
    */
-  @include padding(5px, var(--padding-end), 0, var(--padding-start));
+  @include mixins.padding(5px, var(--padding-end), 0, var(--padding-start));
 
   display: flex;
 
@@ -277,7 +277,7 @@ button {
  * present on the select. Otherwise the helper text should
  * be shown.
  */
- .select-bottom .error-text {
+.select-bottom .error-text {
   display: none;
 
   color: var(--highlight-color-invalid);

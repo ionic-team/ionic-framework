@@ -33,10 +33,10 @@
 
 :host(.toggle-label-placement-fixed) .label-text-wrapper {
   /**
-     * The margin between the label and
-     * the input should be on the end
-     * when the label sits at the start.
-     */
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
   @include margin(null, $form-control-label-margin, null, 0);
 }
 
@@ -60,6 +60,8 @@
 */
 :host(.toggle-label-placement-stacked) .toggle-wrapper {
   flex-direction: column;
+
+  text-align: center;
 }
 
 :host(.toggle-label-placement-stacked) .label-text-wrapper {

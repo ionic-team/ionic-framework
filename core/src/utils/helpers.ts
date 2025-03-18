@@ -44,7 +44,7 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
   if (el) {
     el.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
     el.addEventListener('transitionend', onTransitionEnd, opts);
-    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT) as unknown as number;
+    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
 
     unRegTrans = () => {
       if (animationTimeout !== undefined) {
