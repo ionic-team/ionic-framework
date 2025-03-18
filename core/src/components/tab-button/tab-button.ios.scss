@@ -72,6 +72,18 @@
   font-size: $tab-ios-button-badge-font-size;
 }
 
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="top"]) {
+  @include position($top: $tab-ios-button-icon-bottom-badge-top-position);
+}
+
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="bottom"]) {
+  @include position($top: $tab-ios-button-icon-bottom-badge-bottom-position);
+}
+
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="bottom"]:empty) {
+  @include position($top: $tab-ios-button-icon-bottom-badge-bottom-position-empty);
+}
+
 // iOS Tab Button: Icon
 // --------------------------------------------------
 

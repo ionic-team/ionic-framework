@@ -36,3 +36,15 @@ $tab-ionic-button-badge-padding-bottom: var(--badge-padding-bottom, 4px);
 
 /// @prop - Badge padding start
 $tab-ionic-button-badge-padding-start: var(--badge-padding-left, 4px);
+
+/// @prop - Badge bottom position when tab bottom has icon at Bottom
+$tab-ionic-button-icon-bottom-badge-top-position: var(--icon-bottom-badge-top-position, calc(50% - 4px));
+
+/// @prop - Badge bottom position when tab bottom has icon at bottom
+$tab-ionic-button-icon-bottom-badge-bottom-position: var(--icon-bottom-badge-bottom-position, calc(50% + 4px));
+
+/// @prop - Badge bottom position when empty and when tab bottom has icon at bottom
+$tab-ionic-button-icon-bottom-badge-bottom-position-empty: var(
+  --icon-bottom-badge-bottom-position-empty,
+  calc(50% + 14px)
+);

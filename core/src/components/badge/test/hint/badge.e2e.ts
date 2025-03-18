@@ -31,4 +31,14 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
       await expect(container).toHaveScreenshot(screenshot(`badge-hint-tab-button`));
     });
   });
+
+  test.describe(title('badge: hint inside tab button when tab button has icon at bottom'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto('/src/components/badge/test/hint', config);
+
+      const container = page.locator('#tab-button-icon-bottom');
+
+      await expect(container).toHaveScreenshot(screenshot(`badge-hint-tab-button-icon-bottom`));
+    });
+  });
 });
