@@ -1,6 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./badge.common";
-@import "./badge.ionic.vars";
+@use "./badge.ionic.vars" as badge-ionic-vars;
 
 // Ionic Badge
 // --------------------------------------------------
@@ -182,16 +182,13 @@
 :host([vertical].in-tab-button) {
   position: relative;
 
-  min-width: $badge-ionic-in-tab-button-min-width;
+  min-width: badge-ionic-vars.$badge-ionic-in-tab-button-min-width;
 }
 
 :host([vertical].in-tab-button) ::slotted(ion-icon) {
   @include globals.position($top: 50%, $start: 50%);
 
   position: absolute;
-
-  width: $badge-ionic-in-tab-button-icon-size;
-  height: $badge-ionic-in-tab-button-icon-size;
 
   transform: translate(-50%, -50%);
 }
