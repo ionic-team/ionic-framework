@@ -629,7 +629,7 @@ export class Searchbar implements ComponentInterface {
    * Clear button should be shown if one of two conditions applies:
    * 1. `showClearButton` is set to `always`.
    * 2. `showClearButton` is set to `focus`, and the searchbar has been focused.
-   * 3. `theme` is not set `ionic`, or the searchbar has not been disabled.
+   * Unless the `theme` is `ionic` and the searchbar is disabled.
    */
   private shouldShowClearButton(): boolean {
     const theme = getIonTheme(this);
