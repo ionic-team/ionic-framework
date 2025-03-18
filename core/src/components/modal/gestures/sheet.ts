@@ -239,9 +239,11 @@ export const createSheetGesture = (
      * this allows us to avoid querying the DOM for the target in onMove,
      * which would impact performance significantly.
      */
-    const targetEl = findClosestIonContent(detail.event.target! as HTMLElement);
-    cachedScrollEl =
-      targetEl && isIonContent(targetEl) ? getElementRoot(targetEl).querySelector('.inner-scroll') : targetEl;
+    if (!expandToScroll) {
+      const targetEl = findClosestIonContent(detail.event.target! as HTMLElement);
+      cachedScrollEl =
+        targetEl && isIonContent(targetEl) ? getElementRoot(targetEl).querySelector('.inner-scroll') : targetEl;
+    }
 
     /**
      * If expandToScroll is disabled, we need to swap
