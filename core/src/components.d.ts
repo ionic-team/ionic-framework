@@ -741,6 +741,14 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the checkbox label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate": boolean;
@@ -760,6 +768,10 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required": boolean;
         "setFocus": () => Promise<void>;
         /**
           * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
@@ -2049,6 +2061,10 @@ export namespace Components {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content. The modal will only expand when dragging the header or handle. The modal will close when dragging the header or handle. It can also be closed when dragging the content, but only if the content is scrolled to the top.
+         */
+        "expandToScroll": boolean;
+        /**
           * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
          */
         "focusTrap": boolean;
@@ -2681,6 +2697,14 @@ export namespace Components {
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
+          * The error text to display at the top of the radio group.
+         */
+        "errorText"?: string;
+        /**
+          * The helper text to display at the top of the radio group.
+         */
+        "helperText"?: string;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -3241,6 +3265,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Text that is placed under the select and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
@@ -3248,6 +3276,10 @@ export namespace Components {
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in the `"md"` theme.
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the select and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
@@ -3293,6 +3325,10 @@ export namespace Components {
           * The text to display when the select is empty.
          */
         "placeholder"?: string;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required": boolean;
         /**
           * The text to display instead of the selected option's value.
          */
@@ -3874,6 +3910,14 @@ export namespace Components {
          */
         "enableOnOffLabels": boolean | undefined;
         /**
+          * Text that is placed under the toggle label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the toggle label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements. Setting this property will change the toggle `display` to `block`.
          */
         "justify"?: 'start' | 'end' | 'space-between';
@@ -3889,6 +3933,10 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required": boolean;
         /**
           * The theme determines the visual appearance of the component.
          */
@@ -6137,6 +6185,14 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the checkbox label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the checkbox label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate"?: boolean;
@@ -6168,6 +6224,10 @@ declare namespace LocalJSX {
           * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: IonCheckboxCustomEvent<void>) => void;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required"?: boolean;
         /**
           * Set to `"soft"` for a checkbox with more rounded corners. Only available when the theme is `"ionic"`.
          */
@@ -7466,6 +7526,10 @@ declare namespace LocalJSX {
          */
         "enterAnimation"?: AnimationBuilder;
         /**
+          * Controls whether scrolling or dragging within the sheet modal expands it to a larger breakpoint. This only takes effect when `breakpoints` and `initialBreakpoint` are set.  If `true`, scrolling or dragging anywhere in the modal will first expand it to the next breakpoint. Once fully expanded, scrolling will affect the content. If `false`, scrolling will always affect the content. The modal will only expand when dragging the header or handle. The modal will close when dragging the header or handle. It can also be closed when dragging the content, but only if the content is scrolled to the top.
+         */
+        "expandToScroll"?: boolean;
+        /**
           * If `true`, focus will not be allowed to move outside of this overlay. If `false`, focus will be allowed to move outside of the overlay.  In most scenarios this property should remain set to `true`. Setting this property to `false` can cause severe accessibility issues as users relying on assistive technologies may be able to move focus into a confusing state. We recommend only setting this to `false` when absolutely necessary.  Developers may want to consider disabling focus trapping if this overlay presents a non-Ionic overlay from a 3rd party library. Developers would disable focus trapping on the Ionic overlay when presenting the 3rd party overlay and then re-enable focus trapping when dismissing the 3rd party overlay and moving focus back to the Ionic overlay.
          */
         "focusTrap"?: boolean;
@@ -8052,6 +8116,14 @@ declare namespace LocalJSX {
           * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
+          * The error text to display at the top of the radio group.
+         */
+        "errorText"?: string;
+        /**
+          * The helper text to display at the top of the radio group.
+         */
+        "helperText"?: string;
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -8670,6 +8742,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Text that is placed under the select and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `"md"` theme will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
         "expandedIcon"?: string;
@@ -8677,6 +8753,10 @@ declare namespace LocalJSX {
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in the `"md"` theme.
          */
         "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the select and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
          */
@@ -8741,6 +8821,10 @@ declare namespace LocalJSX {
           * The text to display when the select is empty.
          */
         "placeholder"?: string;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required"?: boolean;
         /**
           * The text to display instead of the selected option's value.
          */
@@ -9353,6 +9437,14 @@ declare namespace LocalJSX {
          */
         "enableOnOffLabels"?: boolean | undefined;
         /**
+          * Text that is placed under the toggle label and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * Text that is placed under the toggle label and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements. Setting this property will change the toggle `display` to `block`.
          */
         "justify"?: 'start' | 'end' | 'space-between';
@@ -9380,6 +9472,10 @@ declare namespace LocalJSX {
           * Emitted when the toggle has focus.
          */
         "onIonFocus"?: (event: IonToggleCustomEvent<void>) => void;
+        /**
+          * If true, screen readers will announce it as a required field. This property works only for accessibility purposes, it will not prevent the form from submitting if the value is invalid.
+         */
+        "required"?: boolean;
         /**
           * The theme determines the visual appearance of the component.
          */

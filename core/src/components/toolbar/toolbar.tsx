@@ -14,6 +14,10 @@ import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
  * @slot secondary - Content is placed to the left of the toolbar text in the `"ios"` theme, and directly to the right in the `"md"` theme.
  * @slot primary - Content is placed to the right of the toolbar text in the `"ios"` theme, and to the far right in the `"md"` theme.
  * @slot end - Content is placed to the right of the toolbar text in LTR, and to the left in RTL.
+ *
+ * @part background - The background of the toolbar, covering the entire area behind the toolbar content.
+ * @part container - The container that wraps all toolbar content, including the default slot and named slot content.
+ * @part content - The container for the default slot, wrapping content provided without a named slot.
  */
 @Component({
   tag: 'ion-toolbar',
@@ -99,11 +103,11 @@ export class Toolbar implements ComponentInterface {
           }),
         }}
       >
-        <div class="toolbar-background"></div>
-        <div class="toolbar-container">
+        <div class="toolbar-background" part="background"></div>
+        <div class="toolbar-container" part="container">
           <slot name="start"></slot>
           <slot name="secondary"></slot>
-          <div class="toolbar-content">
+          <div class="toolbar-content" part="content">
             <slot></slot>
           </div>
           <slot name="primary"></slot>
