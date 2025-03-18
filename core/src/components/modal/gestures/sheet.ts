@@ -264,11 +264,16 @@ export const createSheetGesture = (
 
   const onMove = (detail: GestureDetail) => {
     /**
-     * If `expandToScroll` is disabled, we should not allow the swipe gesture
-     * to continue if the gesture is not pulling down.
+     * If `expandToScroll` is disabled, and an upwards swipe gesture is done within
+     * the scrollable content, we should not allow the swipe gesture to continue.
      */
     if (!expandToScroll && detail.deltaY <= 0) {
-      return;
+      const contentEl = findClosestIonContent(detail.event.target! as HTMLElement);
+      const scrollEl =
+        contentEl && isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
+      if (scrollEl) {
+        return;
+      }
     }
 
     /**
@@ -324,6 +329,19 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
+    /**
+     * If expandToScroll is disabled, we should not allow the moveSheetToBreakpoint
+     * function to be called if the user is trying to swipe content upwards and the content
+     * is not scrolled to the top.
+     */
+    if (!expandToScroll && detail.deltaY <= 0 && findClosestIonContent(detail.event.target! as HTMLElement)) {
+      const contentEl = findClosestIonContent(detail.event.target! as HTMLElement)!;
+      const scrollEl = isIonContent(contentEl) ? getElementRoot(contentEl).querySelector('.inner-scroll') : contentEl;
+      if (scrollEl!.scrollTop > 0) {
+        return;
+      }
+    }
+
     /**
      * When the gesture releases, we need to determine
      * the closest breakpoint to snap to.
