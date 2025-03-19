@@ -23,53 +23,19 @@
       </ion-header>
 
       <ion-content>
-        <ion-list>
-          <ion-item>
-            <ion-select id="select-spacing" justify="space-between" interface="alert" label="Spacing" placeholder="">
-              <ion-select-option selected="true" value="xxsmall">XXSmall(default)</ion-select-option>
-              <ion-select-option value="xsmall">XSmall</ion-select-option>
-              <ion-select-option value="small">Small</ion-select-option>
-              <ion-select-option value="md">Medium</ion-select-option>
-              <ion-select-option value="large">Large</ion-select-option>
-              <ion-select-option value="xlarge">Xlarge</ion-select-option>
-              <ion-select-option value="xlarge">XXlarge</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-toggle id="inset-toggle">Inset</ion-toggle>
-          </ion-item>
-        </ion-list>
-
-        <h5>Top</h5>
-        <ion-divider></ion-divider>
-        <h5>Bottom</h5>
+        <p>
+          <h3>Default</h3>
+          Top
+          <ion-divider ion-divider></ion-divider>
+          Bottom
+        </p>
+        <p>
+          <h3>Inset</h3>
+          Top
+          <ion-divider inset="true"></ion-divider>
+          Bottom
+        </p>
       </ion-content>
     </ion-app>
-    <script>
-      const listOfDividers = Array.from(document.querySelectorAll('ion-divider'));
-      const toggle = document.getElementById('inset-toggle');
-
-      function updateAttr(el, name, value) {
-        if (value === '' || value === undefined) {
-          el.removeAttribute(name);
-        } else {
-          el.setAttribute(name, value);
-        }
-      }
-
-      toggle.addEventListener('ionChange', (event) => {
-        const isChecked = event.detail.checked;
-        for (const el of listOfDividers) {
-          updateAttr(el, 'inset', isChecked);
-        }
-      });
-
-      const selectSize = document.getElementById('select-spacing');
-      selectSize.addEventListener('ionChange', (e) => {
-        for (const el of listOfDividers) {
-          updateAttr(el, 'spacing', e.detail.value);
-        }
-      });
-    </script>
   </body>
 </html>

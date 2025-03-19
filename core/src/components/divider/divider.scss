@@ -13,21 +13,22 @@
   --padding-start: 0px;
   --padding-end: 0px;
 
-  padding-right: var(--padding-end);
-  padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
-
   display: block;
 
   width: 100%;
+
+  /* stylelint-disable */
+  padding-right: var(--padding-end);
+  padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
 }
 
 :host hr {
-  margin-top: var(--margin-top);
-  margin-bottom: var(--margin-bottom);
-
   display: block;
 
   width: 100%;
+
+  margin-top: var(--margin-top);
+  margin-bottom: var(--margin-bottom);
 
   border: none;
   border-top: #{globals.$ion-border-size-025} solid #{globals.$ion-border-default};
