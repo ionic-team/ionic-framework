@@ -1,0 +1,23 @@
+@import "./radio-group.common";
+
+// Radio Group: Native
+// --------------------------------------------------
+
+.radio-group-wrapper {
+  display: inline;
+}
+
+// Radio Group: Top
+// --------------------------------------------------
+
+.radio-group-top {
+  line-height: 1.5;
+}
+
+.radio-group-top .error-text {
+  color: ion-color(danger, base);
+}
+
+.radio-group-top .helper-text {
+  color: $text-color-step-300;
+}

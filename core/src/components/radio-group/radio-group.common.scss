@@ -1,6 +1,6 @@
 @import "../../themes/native/native.globals";
 
-// Radio Group
+// Radio Group: Common
 // --------------------------------------------------
 
 ion-radio-group {
@@ -8,16 +8,8 @@ ion-radio-group {
   vertical-align: top;
 }
 
-.radio-group-wrapper {
-  display: inline;
-}
-
 // Radio Group: Top
 // --------------------------------------------------
-
-.radio-group-top {
-  line-height: 1.5;
-}
 
 /**
  * Error text should only be shown when .ion-invalid is present
@@ -25,14 +17,10 @@ ion-radio-group {
  */
 .radio-group-top .error-text {
   display: none;
-
-  color: ion-color(danger, base);
 }
 
 .radio-group-top .helper-text {
   display: block;
-
-  color: $text-color-step-300;
 }
 
 .ion-touched.ion-invalid .radio-group-top .error-text {
