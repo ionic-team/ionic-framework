@@ -11,6 +11,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [8.4.6](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.4.6) (2025-03-19)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
 # [8.5.0](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.5.0) (2025-03-13)
 
 **Note:** Version bump only for package @ionic/docs
