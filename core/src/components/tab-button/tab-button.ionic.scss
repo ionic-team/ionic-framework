@@ -1,7 +1,7 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./tab-button.common";
-@import "../../themes/mixins";
-@import "./tab-button.ionic.vars";
+@use "../../themes/mixins" as mixins;
+@use "./tab-button.ionic.vars" as ion-vars;
 
 // Ionic Tab Button
 // --------------------------------------------------------------
@@ -94,39 +94,53 @@
 // Tab Button: Badge
 // --------------------------------------------------
 
-:host ::slotted(ion-badge[vertical]:empty) {
-  @include padding(0, 0);
+:host ::slotted(ion-badge.badge-xxsmall),
+:host ::slotted(ion-badge.badge-xsmall),
+:host ::slotted(ion-badge.badge-small),
+:host ::slotted(ion-badge.badge-medium),
+:host ::slotted(ion-badge.badge-large),
+:host ::slotted(ion-badge.badge-xlarge) {
+  min-width: ion-vars.$tab-ionic-button-badge-size;
+  height: ion-vars.$tab-ionic-button-badge-size;
 
-  width: $tab-ionic-button-badge-size-emtpy;
-  height: $tab-ionic-button-badge-size-emtpy;
+  font-size: ion-vars.$tab-ionic-button-badge-font-size;
+
+  line-height: ion-vars.$tab-ionic-button-badge-line-height;
 }
 
-:host ::slotted(ion-badge[vertical]) {
-  @include position($start: $tab-ionic-button-badge-start-position);
+:host ::slotted(ion-badge:empty) {
+  @include mixins.padding(0, 0);
+
+  min-width: ion-vars.$tab-ionic-button-badge-size-emtpy;
+  height: ion-vars.$tab-ionic-button-badge-size-emtpy;
 }
 
-:host ::slotted(ion-badge[vertical="top"]) {
-  top: $tab-ionic-button-badge-top-position;
+:host ::slotted(ion-badge) {
+  @include mixins.position($start: ion-vars.$tab-ionic-button-badge-start-position);
 }
 
-:host ::slotted(ion-badge[vertical="top"]:empty) {
-  top: $tab-ionic-button-badge-top-position-empty;
+:host ::slotted(ion-badge.badge-vertical-top) {
+  @include mixins.position($top: ion-vars.$tab-ionic-button-badge-top-position);
 }
 
-:host ::slotted(ion-badge[vertical="bottom"]) {
-  @include position($top: $tab-ionic-button-badge-bottom-position);
+:host ::slotted(ion-badge.badge-vertical-top:empty) {
+  @include mixins.position($top: ion-vars.$tab-ionic-button-badge-top-position-empty);
 }
 
-:host ::slotted(ion-badge[vertical="bottom"]:empty) {
-  @include position($top: $tab-ionic-button-badge-bottom-position-empty);
+:host ::slotted(ion-badge.badge-vertical-bottom) {
+  @include mixins.position($top: ion-vars.$tab-ionic-button-badge-bottom-position);
+}
+
+:host ::slotted(ion-badge.badge-vertical-bottom:empty) {
+  @include mixins.position($top: ion-vars.$tab-ionic-button-badge-bottom-position-empty);
 }
 
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include padding(
-    $tab-ionic-button-badge-padding-top,
-    $tab-ionic-button-badge-padding-end,
-    $tab-ionic-button-badge-padding-bottom,
-    $tab-ionic-button-badge-padding-start
+  @include mixins.padding(
+    ion-vars.$tab-ionic-button-badge-padding-top,
+    ion-vars.$tab-ionic-button-badge-padding-end,
+    ion-vars.$tab-ionic-button-badge-padding-bottom,
+    ion-vars.$tab-ionic-button-badge-padding-start
   );
 
   display: flex;
@@ -134,17 +148,17 @@
   align-items: center;
   justify-content: center;
 
-  min-width: $tab-ionic-button-badge-size;
+  min-width: ion-vars.$tab-ionic-button-badge-size;
 }
 
-:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="top"]) {
-  @include position($top: $tab-ionic-button-icon-bottom-badge-top-position);
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-top) {
+  @include mixins.position($top: ion-vars.$tab-ionic-button-icon-bottom-badge-top-position);
 }
 
-:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="bottom"]) {
-  @include position($top: $tab-ionic-button-icon-bottom-badge-bottom-position);
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom) {
+  @include mixins.position($top: ion-vars.$tab-ionic-button-icon-bottom-badge-bottom-position);
 }
 
-:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="bottom"]:empty) {
-  @include position($top: $tab-ionic-button-icon-bottom-badge-bottom-position-empty);
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {
+  @include mixins.position($top: ion-vars.$tab-ionic-button-icon-bottom-badge-bottom-position-empty);
 }

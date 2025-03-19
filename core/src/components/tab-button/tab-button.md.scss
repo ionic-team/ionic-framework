@@ -75,10 +75,6 @@
   height: $tab-button-md-badge-size-empty;
 }
 
-:host ::slotted(ion-badge[vertical]) {
-  --badge-padding-top: 5px;
-}
-
 :host ::slotted(ion-badge[vertical="bottom"]) {
   @include position($top: $tab-button-md-badge-bottom-position);
 }

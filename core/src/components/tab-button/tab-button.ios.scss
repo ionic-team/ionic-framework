@@ -37,19 +37,19 @@
   @include position($start: $tab-ios-button-badge-start-position);
 }
 
-:host ::slotted(ion-badge[vertical="top"]) {
-  top: $tab-ios-button-badge-top-position;
+:host ::slotted(ion-badge.badge-vertical-top) {
+  @include position($top: $tab-ios-button-badge-top-position);
 }
 
-:host ::slotted(ion-badge[vertical="top"]:empty) {
-  top: $tab-ios-button-badge-top-position-empty;
+:host ::slotted(ion-badge.badge-vertical-top:empty) {
+  @include position($top: $tab-ios-button-badge-top-position-empty);
 }
 
-:host ::slotted(ion-badge[vertical="bottom"]) {
+:host ::slotted(ion-badge.badge-vertical-bottom) {
   @include position($top: $tab-ios-button-badge-bottom-position);
 }
 
-:host ::slotted(ion-badge[vertical="bottom"]:empty) {
+:host ::slotted(ion-badge.badge-vertical-bottom:empty) {
   @include position($top: $tab-ios-button-badge-bottom-position-empty);
 }
 
@@ -72,15 +72,15 @@
   font-size: $tab-ios-button-badge-font-size;
 }
 
-:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="top"]) {
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-top) {
   @include position($top: $tab-ios-button-icon-bottom-badge-top-position);
 }
 
-:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="bottom"]) {
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom) {
   @include position($top: $tab-ios-button-icon-bottom-badge-bottom-position);
 }
 
-:host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="bottom"]:empty) {
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {
   @include position($top: $tab-ios-button-icon-bottom-badge-bottom-position-empty);
 }
 
