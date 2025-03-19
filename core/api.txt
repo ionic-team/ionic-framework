@@ -533,11 +533,14 @@ ion-checkbox,prop,alignment,"center" | "start" | undefined,undefined,false,false
 ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false
+ion-checkbox,prop,errorText,string | undefined,undefined,false,false
+ion-checkbox,prop,helperText,string | undefined,undefined,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
+ion-checkbox,prop,required,boolean,false,false,false
 ion-checkbox,prop,shape,"rectangular" | "soft" | undefined,'soft',false,false
 ion-checkbox,prop,size,"small" | undefined,undefined,false,false
 ion-checkbox,prop,theme,"ios" | "md" | "ionic",undefined,false,false
@@ -568,8 +571,11 @@ ion-checkbox,css-prop,--size,md
 ion-checkbox,css-prop,--transition,ios
 ion-checkbox,css-prop,--transition,md
 ion-checkbox,part,container
+ion-checkbox,part,error-text
+ion-checkbox,part,helper-text
 ion-checkbox,part,label
 ion-checkbox,part,mark
+ion-checkbox,part,supporting-text
 
 ion-chip,shadow
 ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -1387,6 +1393,7 @@ ion-modal,prop,backdropDismiss,boolean,true,false,false
 ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
 ion-modal,prop,canDismiss,((data?: any, role?: string | undefined) => Promise<boolean>) | boolean,true,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
+ion-modal,prop,expandToScroll,boolean,true,false,false
 ion-modal,prop,focusTrap,boolean,true,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
 ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'none',false,false
@@ -1707,6 +1714,8 @@ ion-radio,part,mark
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
 ion-radio-group,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
+ion-radio-group,prop,errorText,string | undefined,undefined,false,false
+ion-radio-group,prop,helperText,string | undefined,undefined,false,false
 ion-radio-group,prop,mode,"ios" | "md",undefined,false,false
 ion-radio-group,prop,name,string,this.inputId,false,false
 ion-radio-group,prop,theme,"ios" | "md" | "ionic",undefined,false,false
@@ -2055,8 +2064,10 @@ ion-select,prop,cancelText,string,'Cancel',false,false
 ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
+ion-select,prop,errorText,string | undefined,undefined,false,false
 ion-select,prop,expandedIcon,string | undefined,undefined,false,false
 ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
+ion-select,prop,helperText,string | undefined,undefined,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "modal" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
 ion-select,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
@@ -2067,6 +2078,7 @@ ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false
 ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,string | undefined,undefined,false,false
+ion-select,prop,required,boolean,false,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-select,prop,size,"large" | "medium" | "small" | undefined,undefined,false,false
@@ -2128,9 +2140,12 @@ ion-select,css-prop,--ripple-color,ionic
 ion-select,css-prop,--ripple-color,ios
 ion-select,css-prop,--ripple-color,md
 ion-select,part,container
+ion-select,part,error-text
+ion-select,part,helper-text
 ion-select,part,icon
 ion-select,part,label
 ion-select,part,placeholder
+ion-select,part,supporting-text
 ion-select,part,text
 
 ion-select-modal,scoped
@@ -2477,10 +2492,13 @@ ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
+ion-toggle,prop,errorText,string | undefined,undefined,false,false
+ion-toggle,prop,helperText,string | undefined,undefined,false,false
 ion-toggle,prop,justify,"end" | "space-between" | "start" | undefined,undefined,false,false
 ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
+ion-toggle,prop,required,boolean,false,false,false
 ion-toggle,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
@@ -2522,8 +2540,11 @@ ion-toggle,css-prop,--track-background,md
 ion-toggle,css-prop,--track-background-checked,ionic
 ion-toggle,css-prop,--track-background-checked,ios
 ion-toggle,css-prop,--track-background-checked,md
+ion-toggle,part,error-text
 ion-toggle,part,handle
+ion-toggle,part,helper-text
 ion-toggle,part,label
+ion-toggle,part,supporting-text
 ion-toggle,part,track
 
 ion-toolbar,shadow
@@ -2563,3 +2584,6 @@ ion-toolbar,css-prop,--padding-start,md
 ion-toolbar,css-prop,--padding-top,ionic
 ion-toolbar,css-prop,--padding-top,ios
 ion-toolbar,css-prop,--padding-top,md
+ion-toolbar,part,background
+ion-toolbar,part,container
+ion-toolbar,part,content

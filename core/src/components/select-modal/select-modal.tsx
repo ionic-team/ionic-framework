@@ -81,6 +81,7 @@ export class SelectModal implements ComponentInterface {
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
         {this.options.map((option) => (
           <ion-item
+            lines="none"
             class={{
               // TODO FW-4784
               'item-radio-checked': option.value === checked,

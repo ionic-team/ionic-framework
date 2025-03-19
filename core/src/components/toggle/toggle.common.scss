@@ -1,5 +1,5 @@
-@import "./toggle.vars.scss";
-@import "../../themes/mixins.scss";
+@import "./toggle.vars";
+@import "../../themes/mixins";
 
 // Toggle
 // --------------------------------------------------
@@ -113,6 +113,77 @@ input {
   align-items: center;
 }
 
+// Toggle Bottom Content
+// ----------------------------------------------------------------
+
+.toggle-bottom {
+  @include padding(4px, null, null, null);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
+}
+
+:host(.toggle-label-placement-stacked) .toggle-bottom {
+  font-size: dynamic-font(16px);
+}
+
+// Toggle Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the checkbox. Otherwise the helper text should
+ * be shown.
+ */
+.toggle-bottom .error-text {
+  display: none;
+
+  color: ion-color(danger, base);
+}
+
+.toggle-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .toggle-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .toggle-bottom .helper-text {
+  display: none;
+}
+
+// Toggle Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.toggle-label-placement-start) .toggle-wrapper {
+  flex-direction: row;
+}
+
+// Toggle Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the input in LTR and
+ * on the left in RTL.
+ */
+:host(.toggle-label-placement-end) .toggle-wrapper {
+  flex-direction: row-reverse;
+
+  justify-content: start;
+}
+
 // Toggle Justify
 // --------------------------------------------------
 
@@ -151,28 +222,6 @@ input {
 :host(.toggle-alignment-start),
 :host(.toggle-alignment-center) {
   display: block;
-}
-
-// Toggle Label Placement - Start
-// ----------------------------------------------------------------
-
-/**
- * Label is on the left of the input in LTR and
- * on the right in RTL.
- */
-:host(.toggle-label-placement-start) .toggle-wrapper {
-  flex-direction: row;
-}
-
-// Toggle Label Placement - End
-// ----------------------------------------------------------------
-
-/**
- * Label is on the right of the input in LTR and
- * on the left in RTL.
- */
-:host(.toggle-label-placement-end) .toggle-wrapper {
-  flex-direction: row-reverse;
 }
 
 // Toggle Background Track: Unchecked

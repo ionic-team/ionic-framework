@@ -16,6 +16,7 @@ const testAria = async (
   await didPresent.next();
 
   const alert = page.locator('ion-alert');
+  const alertwrapper = alert.locator('.alert-wrapper');
 
   const header = alert.locator('.alert-title');
   const subHeader = alert.locator('.alert-sub-title');
@@ -42,8 +43,8 @@ const testAria = async (
    * expect().toHaveAttribute() can't check for a null value, so grab and check
    * the values manually instead.
    */
-  const ariaLabelledBy = await alert.getAttribute('aria-labelledby');
-  const ariaDescribedBy = await alert.getAttribute('aria-describedby');
+  const ariaLabelledBy = await alertwrapper.getAttribute('aria-labelledby');
+  const ariaDescribedBy = await alertwrapper.getAttribute('aria-describedby');
 
   expect(ariaLabelledBy).toBe(expectedAriaLabelledBy);
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);

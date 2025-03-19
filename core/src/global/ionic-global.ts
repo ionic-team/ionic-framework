@@ -1,4 +1,4 @@
-import { Build, getMode, setMode, setPlatformHelpers, getElement } from '@stencil/core';
+import { Build, getMode, setMode, getElement } from '@stencil/core';
 import { printIonWarning } from '@utils/logging';
 
 import type { IonicConfig, Mode, Theme } from '../interface';
@@ -170,18 +170,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   const doc = window.document;
   const win = window;
   const Ionic = ((win as any).Ionic = (win as any).Ionic || {});
-
-  const platformHelpers: any = {};
-  if (userConfig._ael) {
-    platformHelpers.ael = userConfig._ael;
-  }
-  if (userConfig._rel) {
-    platformHelpers.rel = userConfig._rel;
-  }
-  if (userConfig._ce) {
-    platformHelpers.ce = userConfig._ce;
-  }
-  setPlatformHelpers(platformHelpers);
 
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
