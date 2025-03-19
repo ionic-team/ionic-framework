@@ -746,7 +746,7 @@ export declare interface IonDatetimeButton extends Components.IonDatetimeButton 
   standalone: true
 })
 export class IonDivider {
-  protected el: HTMLElement;
+  protected el: HTMLIonDividerElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;

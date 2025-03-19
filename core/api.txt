@@ -730,6 +730,22 @@ ion-datetime-button,prop,mode,"ios" | "md",undefined,false,false
 ion-datetime-button,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-datetime-button,part,native
 
+ion-divider,shadow
+ion-divider,prop,inset,boolean | undefined,false,false,false
+ion-divider,prop,spacing,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxlarge" | "xxsmall" | undefined,undefined,false,true
+ion-divider,css-prop,--margin-bottom,ionic
+ion-divider,css-prop,--margin-bottom,ios
+ion-divider,css-prop,--margin-bottom,md
+ion-divider,css-prop,--margin-top,ionic
+ion-divider,css-prop,--margin-top,ios
+ion-divider,css-prop,--margin-top,md
+ion-divider,css-prop,--padding-end,ionic
+ion-divider,css-prop,--padding-end,ios
+ion-divider,css-prop,--padding-end,md
+ion-divider,css-prop,--padding-start,ionic
+ion-divider,css-prop,--padding-start,ios
+ion-divider,css-prop,--padding-start,md
+
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
 ion-fab,prop,edge,boolean,false,false,false

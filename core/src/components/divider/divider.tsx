@@ -12,8 +12,7 @@ import { Component, Prop, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class Divider implements ComponentInterface {
-
-    /**
+  /**
    * Set to `"xxsmall"` for the smallest spacing.
    * Set to "xsmall" for a very small spacing.
    * Set to `"small"` for a small spacing.
@@ -25,7 +24,7 @@ export class Divider implements ComponentInterface {
    */
   @Prop({ reflect: true }) spacing?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
 
-    /**
+  /**
    * If `true`, the divider will have horizontal margins
    * By default, it's `false`
    */
@@ -50,7 +49,8 @@ export class Divider implements ComponentInterface {
           [theme]: true,
           [`divider-space-${spacing}`]: spacing !== undefined,
           [`divider-inset`]: this.inset || false,
-        }}>
+        }}
+      >
         <hr />
       </Host>
     );

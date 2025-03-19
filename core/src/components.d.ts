@@ -1161,8 +1161,14 @@ export namespace Components {
         "theme"?: "ios" | "md" | "ionic";
     }
     interface IonDivider {
+        /**
+          * If `true`, the divider will have horizontal margins By default, it's `false`
+         */
         "inset"?: boolean;
-        "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'large' | 'xlarge' | 'xxlarge';
+        /**
+          * Set to `"xxsmall"` for the smallest spacing. Set to "xsmall" for a very small spacing. Set to `"small"` for a small spacing. Set to "medium" for a medium spacing. Set to "large" for a large spacing. Set to `"xlarge"` for the largest spacing.  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+         */
+        "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
     }
     interface IonFab {
         /**
@@ -6623,8 +6629,14 @@ declare namespace LocalJSX {
         "theme"?: "ios" | "md" | "ionic";
     }
     interface IonDivider {
+        /**
+          * If `true`, the divider will have horizontal margins By default, it's `false`
+         */
         "inset"?: boolean;
-        "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'large' | 'xlarge' | 'xxlarge';
+        /**
+          * Set to `"xxsmall"` for the smallest spacing. Set to "xsmall" for a very small spacing. Set to `"small"` for a small spacing. Set to "medium" for a medium spacing. Set to "large" for a large spacing. Set to `"xlarge"` for the largest spacing.  Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+         */
+        "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
     }
     interface IonFab {
         /**
