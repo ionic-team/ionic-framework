@@ -93,13 +93,6 @@
 // Tab Button: Badge
 // --------------------------------------------------
 
-:host ::slotted(ion-badge:empty) {
-  @include mixins.padding(0, 0);
-
-  min-width: globals.$ion-scale-200;
-  height: globals.$ion-scale-200;
-}
-
 :host ::slotted(ion-badge) {
   @include mixins.position($start: calc(50% + globals.$ion-scale-300));
 }
