@@ -191,13 +191,3 @@
   transform: translate(-50%, -50%);
 }
 
-// Badge Icon sizes when inside Tab Button
-:host([vertical].in-tab-button.badge-xxsmall) ::slotted(ion-icon),
-:host([vertical].in-tab-button.badge-xsmall) ::slotted(ion-icon),
-:host([vertical].in-tab-button.badge-small) ::slotted(ion-icon),
-:host([vertical].in-tab-button.badge-medium) ::slotted(ion-icon),
-:host([vertical].in-tab-button.badge-large) ::slotted(ion-icon),
-:host([vertical].in-tab-button.badge-xlarge) ::slotted(ion-icon) {
-  width: globals.$ion-scale-300;
-  height: globals.$ion-scale-300;
-}
