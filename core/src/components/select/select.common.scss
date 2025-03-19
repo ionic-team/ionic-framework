@@ -232,6 +232,71 @@ button {
   --highlight-color: var(--highlight-color-valid);
 }
 
+// Select Bottom Content
+// ----------------------------------------------------------------
+
+.select-bottom {
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the text select.
+   */
+  @include mixins.padding(5px, var(--padding-end), 0, var(--padding-start));
+
+  display: flex;
+
+  justify-content: space-between;
+
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+
+  font-size: dynamic-font(12px);
+
+  white-space: normal;
+}
+
+/**
+ * If the select has a validity state, the
+ * border and label should reflect that as a color.
+ * The invalid state should show if the select is
+ * invalid and has already been touched.
+ * The valid state should show if the select
+ * is valid, has already been touched, and
+ * is currently focused. Do not show the valid
+ * highlight when the select is blurred.
+ */
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+// Select Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the select. Otherwise the helper text should
+ * be shown.
+ */
+.select-bottom .error-text {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
+.select-bottom .helper-text {
+  display: block;
+
+  color: $text-color-step-300;
+}
+
+:host(.ion-touched.ion-invalid) .select-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-touched.ion-invalid) .select-bottom .helper-text {
+  display: none;
+}
+
 // Select Label
 // ----------------------------------------------------------------
 

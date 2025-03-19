@@ -93,7 +93,7 @@ import { defineCustomElement as defineIonToolbar } from '@ionic/core/components/
   standalone: true
 })
 export class IonAccordion {
-  protected el: HTMLElement;
+  protected el: HTMLIonAccordionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -117,7 +117,7 @@ export declare interface IonAccordion extends Components.IonAccordion {}
   standalone: true
 })
 export class IonAccordionGroup {
-  protected el: HTMLElement;
+  protected el: HTMLIonAccordionGroupElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -152,7 +152,7 @@ This event will not emit when programmatically setting the `value` property.
   standalone: true
 })
 export class IonActionSheet {
-  protected el: HTMLElement;
+  protected el: HTMLIonActionSheetElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -217,7 +217,7 @@ Shorthand for ionActionSheetDidDismiss.
   standalone: true
 })
 export class IonAlert {
-  protected el: HTMLElement;
+  protected el: HTMLIonAlertElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -282,7 +282,7 @@ Shorthand for ionAlertDidDismiss.
   standalone: true
 })
 export class IonApp {
-  protected el: HTMLElement;
+  protected el: HTMLIonAppElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -306,7 +306,7 @@ export declare interface IonApp extends Components.IonApp {}
   standalone: true
 })
 export class IonAvatar {
-  protected el: HTMLElement;
+  protected el: HTMLIonAvatarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -330,7 +330,7 @@ export declare interface IonAvatar extends Components.IonAvatar {}
   standalone: true
 })
 export class IonBackdrop {
-  protected el: HTMLElement;
+  protected el: HTMLIonBackdropElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -360,7 +360,7 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
   standalone: true
 })
 export class IonBadge {
-  protected el: HTMLElement;
+  protected el: HTMLIonBadgeElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -384,7 +384,7 @@ export declare interface IonBadge extends Components.IonBadge {}
   standalone: true
 })
 export class IonBreadcrumb {
-  protected el: HTMLElement;
+  protected el: HTMLIonBreadcrumbElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -418,7 +418,7 @@ export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
   standalone: true
 })
 export class IonBreadcrumbs {
-  protected el: HTMLElement;
+  protected el: HTMLIonBreadcrumbsElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -450,7 +450,7 @@ export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
   standalone: true
 })
 export class IonButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -484,7 +484,7 @@ export declare interface IonButton extends Components.IonButton {
   standalone: true
 })
 export class IonButtons {
-  protected el: HTMLElement;
+  protected el: HTMLIonButtonsElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -508,7 +508,7 @@ export declare interface IonButtons extends Components.IonButtons {}
   standalone: true
 })
 export class IonCard {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -532,7 +532,7 @@ export declare interface IonCard extends Components.IonCard {}
   standalone: true
 })
 export class IonCardContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -556,7 +556,7 @@ export declare interface IonCardContent extends Components.IonCardContent {}
   standalone: true
 })
 export class IonCardHeader {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardHeaderElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -580,7 +580,7 @@ export declare interface IonCardHeader extends Components.IonCardHeader {}
   standalone: true
 })
 export class IonCardSubtitle {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardSubtitleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -604,7 +604,7 @@ export declare interface IonCardSubtitle extends Components.IonCardSubtitle {}
   standalone: true
 })
 export class IonCardTitle {
-  protected el: HTMLElement;
+  protected el: HTMLIonCardTitleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -628,7 +628,7 @@ export declare interface IonCardTitle extends Components.IonCardTitle {}
   standalone: true
 })
 export class IonChip {
-  protected el: HTMLElement;
+  protected el: HTMLIonChipElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -652,7 +652,7 @@ export declare interface IonChip extends Components.IonChip {}
   standalone: true
 })
 export class IonCol {
-  protected el: HTMLElement;
+  protected el: HTMLIonColElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -677,7 +677,7 @@ export declare interface IonCol extends Components.IonCol {}
   standalone: true
 })
 export class IonContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -721,7 +721,7 @@ Set `scrollEvents` to `true` to enable.
   standalone: true
 })
 export class IonDatetimeButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonDatetimeButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -746,7 +746,7 @@ export declare interface IonDatetimeButton extends Components.IonDatetimeButton 
   standalone: true
 })
 export class IonFab {
-  protected el: HTMLElement;
+  protected el: HTMLIonFabElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -770,7 +770,7 @@ export declare interface IonFab extends Components.IonFab {}
   standalone: true
 })
 export class IonFabButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonFabButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -804,7 +804,7 @@ export declare interface IonFabButton extends Components.IonFabButton {
   standalone: true
 })
 export class IonFabList {
-  protected el: HTMLElement;
+  protected el: HTMLIonFabListElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -828,7 +828,7 @@ export declare interface IonFabList extends Components.IonFabList {}
   standalone: true
 })
 export class IonFooter {
-  protected el: HTMLElement;
+  protected el: HTMLIonFooterElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -852,7 +852,7 @@ export declare interface IonFooter extends Components.IonFooter {}
   standalone: true
 })
 export class IonGrid {
-  protected el: HTMLElement;
+  protected el: HTMLIonGridElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -876,7 +876,7 @@ export declare interface IonGrid extends Components.IonGrid {}
   standalone: true
 })
 export class IonHeader {
-  protected el: HTMLElement;
+  protected el: HTMLIonHeaderElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -900,7 +900,7 @@ export declare interface IonHeader extends Components.IonHeader {}
   standalone: true
 })
 export class IonImg {
-  protected el: HTMLElement;
+  protected el: HTMLIonImgElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -939,7 +939,7 @@ export declare interface IonImg extends Components.IonImg {
   standalone: true
 })
 export class IonInfiniteScroll {
-  protected el: HTMLElement;
+  protected el: HTMLIonInfiniteScrollElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -972,7 +972,7 @@ your async operation has completed.
   standalone: true
 })
 export class IonInfiniteScrollContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonInfiniteScrollContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -996,7 +996,7 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
   standalone: true
 })
 export class IonInputPasswordToggle {
-  protected el: HTMLElement;
+  protected el: HTMLIonInputPasswordToggleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1020,7 +1020,7 @@ export declare interface IonInputPasswordToggle extends Components.IonInputPassw
   standalone: true
 })
 export class IonItem {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1044,7 +1044,7 @@ export declare interface IonItem extends Components.IonItem {}
   standalone: true
 })
 export class IonItemDivider {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemDividerElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1068,7 +1068,7 @@ export declare interface IonItemDivider extends Components.IonItemDivider {}
   standalone: true
 })
 export class IonItemGroup {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemGroupElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1092,7 +1092,7 @@ export declare interface IonItemGroup extends Components.IonItemGroup {}
   standalone: true
 })
 export class IonItemOption {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemOptionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1116,7 +1116,7 @@ export declare interface IonItemOption extends Components.IonItemOption {}
   standalone: true
 })
 export class IonItemOptions {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemOptionsElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1147,7 +1147,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
   standalone: true
 })
 export class IonItemSliding {
-  protected el: HTMLElement;
+  protected el: HTMLIonItemSlidingElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1177,7 +1177,7 @@ export declare interface IonItemSliding extends Components.IonItemSliding {
   standalone: true
 })
 export class IonLabel {
-  protected el: HTMLElement;
+  protected el: HTMLIonLabelElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1202,7 +1202,7 @@ export declare interface IonLabel extends Components.IonLabel {}
   standalone: true
 })
 export class IonList {
-  protected el: HTMLElement;
+  protected el: HTMLIonListElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1226,7 +1226,7 @@ export declare interface IonList extends Components.IonList {}
   standalone: true
 })
 export class IonListHeader {
-  protected el: HTMLElement;
+  protected el: HTMLIonListHeaderElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1251,7 +1251,7 @@ export declare interface IonListHeader extends Components.IonListHeader {}
   standalone: true
 })
 export class IonLoading {
-  protected el: HTMLElement;
+  protected el: HTMLIonLoadingElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1316,7 +1316,7 @@ Shorthand for ionLoadingDidDismiss.
   standalone: true
 })
 export class IonMenu {
-  protected el: HTMLElement;
+  protected el: HTMLIonMenuElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1360,7 +1360,7 @@ export declare interface IonMenu extends Components.IonMenu {
   standalone: true
 })
 export class IonMenuButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonMenuButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1384,7 +1384,7 @@ export declare interface IonMenuButton extends Components.IonMenuButton {}
   standalone: true
 })
 export class IonMenuToggle {
-  protected el: HTMLElement;
+  protected el: HTMLIonMenuToggleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1408,7 +1408,7 @@ export declare interface IonMenuToggle extends Components.IonMenuToggle {}
   standalone: true
 })
 export class IonNavLink {
-  protected el: HTMLElement;
+  protected el: HTMLIonNavLinkElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1432,7 +1432,7 @@ export declare interface IonNavLink extends Components.IonNavLink {}
   standalone: true
 })
 export class IonNote {
-  protected el: HTMLElement;
+  protected el: HTMLIonNoteElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1456,7 +1456,7 @@ export declare interface IonNote extends Components.IonNote {}
   standalone: true
 })
 export class IonPicker {
-  protected el: HTMLElement;
+  protected el: HTMLIonPickerElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1481,7 +1481,7 @@ export declare interface IonPicker extends Components.IonPicker {}
   standalone: true
 })
 export class IonPickerColumn {
-  protected el: HTMLElement;
+  protected el: HTMLIonPickerColumnElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1515,7 +1515,7 @@ This event will not emit when programmatically setting the `value` property.
   standalone: true
 })
 export class IonPickerColumnOption {
-  protected el: HTMLElement;
+  protected el: HTMLIonPickerColumnOptionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1540,7 +1540,7 @@ export declare interface IonPickerColumnOption extends Components.IonPickerColum
   standalone: true
 })
 export class IonPickerLegacy {
-  protected el: HTMLElement;
+  protected el: HTMLIonPickerLegacyElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1604,7 +1604,7 @@ Shorthand for ionPickerDidDismiss.
   standalone: true
 })
 export class IonProgressBar {
-  protected el: HTMLElement;
+  protected el: HTMLIonProgressBarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1628,7 +1628,7 @@ export declare interface IonProgressBar extends Components.IonProgressBar {}
   standalone: true
 })
 export class IonRadio {
-  protected el: HTMLElement;
+  protected el: HTMLIonRadioElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1663,7 +1663,7 @@ export declare interface IonRadio extends Components.IonRadio {
   standalone: true
 })
 export class IonRefresher {
-  protected el: HTMLElement;
+  protected el: HTMLIonRefresherElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1706,7 +1706,7 @@ called when the async operation has completed.
   standalone: true
 })
 export class IonRefresherContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonRefresherContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1730,7 +1730,7 @@ export declare interface IonRefresherContent extends Components.IonRefresherCont
   standalone: true
 })
 export class IonReorder {
-  protected el: HTMLElement;
+  protected el: HTMLIonReorderElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1755,7 +1755,7 @@ export declare interface IonReorder extends Components.IonReorder {}
   standalone: true
 })
 export class IonReorderGroup {
-  protected el: HTMLElement;
+  protected el: HTMLIonReorderGroupElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1790,7 +1790,7 @@ to be called in order to finalize the reorder action.
   standalone: true
 })
 export class IonRippleEffect {
-  protected el: HTMLElement;
+  protected el: HTMLIonRippleEffectElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1814,7 +1814,7 @@ export declare interface IonRippleEffect extends Components.IonRippleEffect {}
   standalone: true
 })
 export class IonRow {
-  protected el: HTMLElement;
+  protected el: HTMLIonRowElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1838,7 +1838,7 @@ export declare interface IonRow extends Components.IonRow {}
   standalone: true
 })
 export class IonSegmentButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonSegmentButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1861,7 +1861,7 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
   standalone: true
 })
 export class IonSegmentContent {
-  protected el: HTMLElement;
+  protected el: HTMLIonSegmentContentElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1885,7 +1885,7 @@ export declare interface IonSegmentContent extends Components.IonSegmentContent 
   standalone: true
 })
 export class IonSegmentView {
-  protected el: HTMLElement;
+  protected el: HTMLIonSegmentViewElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1917,7 +1917,7 @@ export declare interface IonSegmentView extends Components.IonSegmentView {
   standalone: true
 })
 export class IonSelectModal {
-  protected el: HTMLElement;
+  protected el: HTMLIonSelectModalElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1941,7 +1941,7 @@ export declare interface IonSelectModal extends Components.IonSelectModal {}
   standalone: true
 })
 export class IonSelectOption {
-  protected el: HTMLElement;
+  protected el: HTMLIonSelectOptionElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1965,7 +1965,7 @@ export declare interface IonSelectOption extends Components.IonSelectOption {}
   standalone: true
 })
 export class IonSkeletonText {
-  protected el: HTMLElement;
+  protected el: HTMLIonSkeletonTextElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -1989,7 +1989,7 @@ export declare interface IonSkeletonText extends Components.IonSkeletonText {}
   standalone: true
 })
 export class IonSpinner {
-  protected el: HTMLElement;
+  protected el: HTMLIonSpinnerElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2013,7 +2013,7 @@ export declare interface IonSpinner extends Components.IonSpinner {}
   standalone: true
 })
 export class IonSplitPane {
-  protected el: HTMLElement;
+  protected el: HTMLIonSplitPaneElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2044,7 +2044,7 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   standalone: true
 })
 export class IonTab {
-  protected el: HTMLElement;
+  protected el: HTMLIonTabElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2068,7 +2068,7 @@ export declare interface IonTab extends Components.IonTab {}
   standalone: true
 })
 export class IonTabBar {
-  protected el: HTMLElement;
+  protected el: HTMLIonTabBarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2092,7 +2092,7 @@ export declare interface IonTabBar extends Components.IonTabBar {}
   standalone: true
 })
 export class IonTabButton {
-  protected el: HTMLElement;
+  protected el: HTMLIonTabButtonElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2116,7 +2116,7 @@ export declare interface IonTabButton extends Components.IonTabButton {}
   standalone: true
 })
 export class IonText {
-  protected el: HTMLElement;
+  protected el: HTMLIonTextElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2140,7 +2140,7 @@ export declare interface IonText extends Components.IonText {}
   standalone: true
 })
 export class IonThumbnail {
-  protected el: HTMLElement;
+  protected el: HTMLIonThumbnailElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2164,7 +2164,7 @@ export declare interface IonThumbnail extends Components.IonThumbnail {}
   standalone: true
 })
 export class IonTitle {
-  protected el: HTMLElement;
+  protected el: HTMLIonTitleElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2189,7 +2189,7 @@ export declare interface IonTitle extends Components.IonTitle {}
   standalone: true
 })
 export class IonToast {
-  protected el: HTMLElement;
+  protected el: HTMLIonToastElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
@@ -2253,7 +2253,7 @@ Shorthand for ionToastDidDismiss.
   standalone: true
 })
 export class IonToolbar {
-  protected el: HTMLElement;
+  protected el: HTMLIonToolbarElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;

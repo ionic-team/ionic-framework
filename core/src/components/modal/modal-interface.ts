@@ -27,6 +27,7 @@ export interface ModalAnimationOptions {
   presentingEl?: HTMLElement;
   currentBreakpoint?: number;
   backdropBreakpoint?: number;
+  expandToScroll: boolean;
   staticBackdropOpacity?: boolean;
 }
 

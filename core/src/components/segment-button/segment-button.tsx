@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, Method, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
-import { addEventListener, removeEventListener, inheritAttributes } from '@utils/helpers';
+import { addEventListener, removeEventListener, inheritAttributes, getNextSiblingOfType } from '@utils/helpers';
 import { hostContext } from '@utils/theme';
 
 import { getIonTheme } from '../../global/ionic-global';
@@ -67,17 +67,6 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     this.updateState();
   }
 
-  private getNextSiblingOfType<T extends Element>(element: Element): T | null {
-    let sibling = element.nextSibling;
-    while (sibling) {
-      if (sibling.nodeType === Node.ELEMENT_NODE && (sibling as T) !== null) {
-        return sibling as T;
-      }
-      sibling = sibling.nextSibling;
-    }
-    return null;
-  }
-
   private waitForSegmentContent(ionSegment: HTMLIonSegmentElement | null, contentId: string): Promise<HTMLElement> {
     return new Promise((resolve, reject) => {
       let timeoutId: NodeJS.Timeout | undefined = undefined;
@@ -89,11 +78,11 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           return;
         }
 
-        const segmentView = this.getNextSiblingOfType<HTMLIonSegmentViewElement>(ionSegment); // Skip the text nodes
+        const segmentView = getNextSiblingOfType<HTMLIonSegmentViewElement>(ionSegment); // Skip the text nodes
         const segmentContent = segmentView?.querySelector(
           `ion-segment-content[id="${contentId}"]`
         ) as HTMLIonSegmentContentElement | null;
-        if (segmentContent) {
+        if (segmentContent && timeoutId) {
           clearTimeout(timeoutId); // Clear the timeout if the segmentContent is found
           cancelAnimationFrame(animationFrameId);
           resolve(segmentContent);
