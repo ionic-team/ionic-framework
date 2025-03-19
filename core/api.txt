@@ -989,6 +989,9 @@ ion-input,css-prop,--placeholder-font-weight,md
 ion-input,css-prop,--placeholder-opacity,ionic
 ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
+ion-input,css-prop,--text-color-invalid,ionic
+ion-input,css-prop,--text-color-invalid,ios
+ion-input,css-prop,--text-color-invalid,md
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
