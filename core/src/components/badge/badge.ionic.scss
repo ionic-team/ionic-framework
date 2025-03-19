@@ -184,7 +184,7 @@
 
 // Badge Icon when Inside Tab Button
 :host([vertical].in-tab-button) ::slotted(ion-icon) {
-  @include globals.position($top: 50%, $start: 50%);
+  @include globals.position(50%, null, null, 50%);
 
   position: absolute;
 

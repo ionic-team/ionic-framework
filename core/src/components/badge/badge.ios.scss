@@ -27,7 +27,7 @@
 }
 
 :host([vertical].in-tab-button) ::slotted(ion-icon) {
-  @include position($top: 50%, $start: 50%);
+  @include position(50%, null, null, 50%);
 
   position: absolute;
 
