@@ -109,7 +109,7 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
     //If january the previous month should be january and the last year
     previousNumDays = getNumDaysInMonth(12, year - 1);
   } else {
-    //If not the previous month should be month -1 and the current year
+    // Otherwise, the previous month should be the current month - 1 of the same year.
     previousNumDays = getNumDaysInMonth(month - 1, year);
   }
   const firstOfMonth = new Date(`${month}/1/${year}`).getDay();
