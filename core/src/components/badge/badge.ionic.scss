@@ -1,6 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./badge.common";
-@use "./badge.ionic.vars" as badge-ionic-vars;
 
 // Ionic Badge
 // --------------------------------------------------
@@ -182,7 +181,7 @@
 :host([vertical].in-tab-button) {
   position: relative;
 
-  min-width: badge-ionic-vars.$badge-ionic-in-tab-button-min-width;
+  min-width: globals.$ion-scale-200;
 }
 
 // Badge Icon when Inside Tab Button
