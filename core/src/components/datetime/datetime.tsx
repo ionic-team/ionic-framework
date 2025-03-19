@@ -2381,7 +2381,7 @@ export class Datetime implements ComponentInterface {
                     }
 
                     if (adjacentDay) {
-                      //the user selected a day outside the current month, let's not focus on this button since the month will be re-render;
+                      // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
                       this.el.blur();
                     }
 
