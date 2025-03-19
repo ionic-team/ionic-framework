@@ -76,23 +76,23 @@
 }
 
 :host ::slotted(ion-badge[vertical="bottom"]) {
-  @include position($top: $tab-button-md-badge-bottom-position);
+  @include position($tab-button-md-badge-bottom-position, null, null, null);
 }
 
 :host ::slotted(ion-badge[vertical="bottom"]:empty) {
-  @include position($top: $tab-button-md-badge-bottom-position-empty);
+  @include position($tab-button-md-badge-bottom-position-empty, null, null, null);
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="top"]) {
-  @include position($top: $tab-md-button-icon-bottom-badge-top-position, $start: calc(50% + 6px));
+  @include position($tab-md-button-icon-bottom-badge-top-position, null, null, calc(50% + 6px));
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="bottom"]) {
-  @include position($top: $tab-md-button-icon-bottom-badge-bottom-position, $start: calc(50% + 6px));
+  @include position($tab-md-button-icon-bottom-badge-bottom-position, null, null, calc(50% + 6px));
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="bottom"]:empty) {
-  @include position($top: $tab-md-button-icon-bottom-badge-bottom-position-empty, $start: calc(50% + 6px));
+  @include position($tab-md-button-icon-bottom-badge-bottom-position-empty, null, null, calc(50% + 6px));
 }
 
 // Material Design Tab Button: Icon Top Layout
