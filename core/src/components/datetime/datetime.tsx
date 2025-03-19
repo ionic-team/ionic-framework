@@ -2390,7 +2390,7 @@ export class Datetime implements ComponentInterface {
                       month: _month,
                       day,
                       year: _year,
-                      isAdjacentDay: isAdjacentDay,
+                      isAdjacentDay,
                     });
 
                     // multiple only needs date info, so we can wipe out other fields like time
