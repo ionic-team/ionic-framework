@@ -93,20 +93,6 @@
 // Tab Button: Badge
 // --------------------------------------------------
 
-:host ::slotted(ion-badge.badge-xxsmall),
-:host ::slotted(ion-badge.badge-xsmall),
-:host ::slotted(ion-badge.badge-small),
-:host ::slotted(ion-badge.badge-medium),
-:host ::slotted(ion-badge.badge-large),
-:host ::slotted(ion-badge.badge-xlarge) {
-  min-width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
-
-  font-size: globals.$ion-font-size-300;
-
-  line-height: globals.$ion-font-line-height-400;
-}
-
 :host ::slotted(ion-badge:empty) {
   @include mixins.padding(0, 0);
 
