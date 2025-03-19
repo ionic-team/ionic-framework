@@ -1,0 +1,147 @@
+@import "../../themes/native/native.globals";
+@import "./checkbox.vars.scss";
+@import "./checkbox.common";
+
+// Checkbox
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --checkbox-background: Background of the checkbox icon
+   */
+  --checkbox-background-checked: #{ion-color(primary, base)};
+  --border-color-checked: #{ion-color(primary, base)};
+  --checkmark-color: #{ion-color(primary, contrast)};
+  --transition: none;
+
+  z-index: $z-index-item-input;
+}
+
+:host(.ion-color) {
+  --checkbox-background-checked: #{current-color(base)};
+  --border-color-checked: #{current-color(base)};
+  --checkmark-color: #{current-color(contrast)};
+}
+
+// Checkboxes that are not slotted inside an item and are not used with a
+// stacked label should have margins equal to those of the label.
+:host(.in-item) .label-text-wrapper,
+:host(.in-item:not(.checkbox-label-placement-stacked):not([slot])) .native-wrapper {
+  @include margin($checkbox-item-label-margin-top, null, $checkbox-item-label-margin-bottom, null);
+}
+
+:host(.in-item.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include margin($checkbox-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.checkbox-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $checkbox-item-label-margin-bottom, null);
+}
+
+
+input {
+  @include visually-hidden();
+}
+
+.checkbox-icon {
+  @include border-radius(var(--border-radius));
+
+  width: var(--size);
+  height: var(--size);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--checkbox-background);
+
+  box-sizing: border-box;
+}
+
+.checkbox-icon path {
+  fill: none;
+  stroke: var(--checkmark-color);
+  stroke-width: var(--checkmark-width);
+}
+
+// Checkbox Bottom Content
+// ----------------------------------------------------------------
+
+.checkbox-bottom {
+  @include padding(4px, null, null, null);
+
+  font-size: dynamic-font(12px);
+}
+
+:host(.checkbox-label-placement-stacked) .checkbox-bottom {
+  font-size: dynamic-font(16px);
+}
+
+// Checkbox Hint Text
+// ----------------------------------------------------------------
+
+.checkbox-bottom .error-text {
+  color: ion-color(danger, base);
+}
+
+.checkbox-bottom .helper-text {
+  color: $text-color-step-300;
+}
+
+// Label Placement - Start
+// ----------------------------------------------------------------
+
+:host(.checkbox-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(null, $form-control-label-margin, null, 0);
+}
+
+// Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * The margin between the label and
+ * the checkbox should be on the start
+ * when the label sits at the end.
+ */
+:host(.checkbox-label-placement-end) .label-text-wrapper {
+  @include margin(null, 0, null, $form-control-label-margin);
+}
+
+// Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(null, $form-control-label-margin, null, 0);
+}
+
+// Label Placement - Stacked
+// ----------------------------------------------------------------
+
+:host(.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
+  /**
+   * The margin between the label and
+   * the checkbox should be on the bottom
+   * when the label sits at the top.
+   */
+  @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the checkbox.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
