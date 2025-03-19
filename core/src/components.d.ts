@@ -945,6 +945,10 @@ export namespace Components {
          */
         "reset": (startDate?: string) => Promise<void>;
         /**
+          * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
+         */
+        "showAdjacentDays": boolean;
+        /**
           * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
         "showClearButton": boolean;
@@ -5779,6 +5783,10 @@ declare namespace LocalJSX {
           * If `true`, the datetime appears normal but the selected date cannot be changed.
          */
         "readonly"?: boolean;
+        /**
+          * If `true`, the datetime calendar displays a six-week (42-day) layout, including days from the previous and next months to fill the grid. These adjacent days are selectable unless disabled.
+         */
+        "showAdjacentDays"?: boolean;
         /**
           * If `true`, a "Clear" button will be rendered alongside the default "Cancel" and "OK" buttons at the bottom of the `ion-datetime` component. Developers can also use the `button` slot if they want to customize these buttons. If custom buttons are set in the `button` slot then the default buttons will not be rendered.
          */
