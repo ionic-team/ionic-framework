@@ -14,7 +14,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-* **sheet:** fixing performance regression on modal sheets when expandToScroll is false ([#30267](https://github.com/ionic-team/ionic-framework/issues/30267)) ([c4b9212](https://github.com/ionic-team/ionic-framework/commit/c4b92126405ae5b7160ce03f40557563e755a8a5))
+* **modal:** fixing performance regression on modal sheets when expandToScroll is false ([#30267](https://github.com/ionic-team/ionic-framework/issues/30267)) ([c4b9212](https://github.com/ionic-team/ionic-framework/commit/c4b92126405ae5b7160ce03f40557563e755a8a5))
 
 
 
