@@ -1,6 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./tab-button.common";
-@use "../../themes/mixins" as mixins;
 
 // Ionic Tab Button
 // --------------------------------------------------------------
@@ -94,27 +93,27 @@
 // --------------------------------------------------
 
 :host ::slotted(ion-badge) {
-  @include mixins.position($start: calc(50% + globals.$ion-scale-300));
+  @include globals.position($start: calc(50% + globals.$ion-scale-300));
 }
 
 :host ::slotted(ion-badge.badge-vertical-top) {
-  @include mixins.position($top: -2px);
+  @include globals.position($top: -2px);
 }
 
 :host ::slotted(ion-badge.badge-vertical-top:empty) {
-  @include mixins.position($top: calc(globals.$ion-scale-100 * -1));
+  @include globals.position($top: calc(globals.$ion-scale-100 * -1));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom) {
-  @include mixins.position($top: calc(50% - globals.$ion-scale-200));
+  @include globals.position($top: calc(50% - globals.$ion-scale-200));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  @include mixins.position($top: calc(50% - globals.$ion-scale-100));
+  @include globals.position($top: calc(50% - globals.$ion-scale-100));
 }
 
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include mixins.padding(
+  @include globals.padding(
     globals.$ion-scale-100,
     globals.$ion-scale-100,
     globals.$ion-scale-100,
@@ -128,13 +127,13 @@
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-top) {
-  @include mixins.position($top: calc(50% - globals.$ion-scale-100));
+  @include globals.position($top: calc(50% - globals.$ion-scale-100));
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom) {
-  @include mixins.position($top: calc(50% + globals.$ion-scale-100));
+  @include globals.position($top: calc(50% + globals.$ion-scale-100));
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  @include mixins.position($top: calc(50% + 14px));
+  @include globals.position($top: calc(50% + 14px));
 }
