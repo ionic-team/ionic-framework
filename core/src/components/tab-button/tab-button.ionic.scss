@@ -132,8 +132,6 @@
 
   align-items: center;
   justify-content: center;
-
-  min-width: globals.$ion-scale-400;
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-top) {
