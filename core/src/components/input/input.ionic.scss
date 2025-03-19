@@ -13,7 +13,6 @@
   --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
   --placeholder-color: #{globals.$ion-primitives-neutral-800};
   --placeholder-opacity: 1;
-  --text-color-invalid: #{globals.$ion-semantics-danger-800};
   --background: #{globals.$ion-primitives-base-white};
 
   font-size: globals.$ion-font-size-350;
@@ -154,7 +153,7 @@
 }
 
 :host(.ion-touched.ion-invalid) .error-text {
-  color: var(--text-color-invalid);
+  color: var(--highlight-color-invalid);
 }
 
 :host(.has-focus.ion-valid),
