@@ -139,7 +139,7 @@ export class Datetime implements ComponentInterface {
     hour: 13,
     minute: 52,
     ampm: 'pm',
-    adjacentDay: false,
+    isAdjacentDay: false,
   };
 
   @Element() el!: HTMLIonDatetimeElement;
@@ -2240,11 +2240,11 @@ export class Datetime implements ComponentInterface {
       >
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7, this.showAdjacentDays).map((dateObject, index) => {
-            const { day, dayOfWeek, adjacentDay } = dateObject;
+            const { day, dayOfWeek, isAdjacentDay } = dateObject;
             const { el, highlightedDates, isDateEnabled, multiple, showAdjacentDays } = this;
             let _month = month;
             let _year = year;
-            if (showAdjacentDays && adjacentDay && day !== null) {
+            if (showAdjacentDays && isAdjacentDay && day !== null) {
               if (day > 20) {
                 // Leading with the adjacent day from the previous month
                 // if its a adjacent day and is higher than '20' (last week even in feb)
@@ -2266,7 +2266,7 @@ export class Datetime implements ComponentInterface {
               }
             }
 
-            const referenceParts = { month: _month, day, year: _year, adjacentDay };
+            const referenceParts = { month: _month, day, year: _year, isAdjacentDay };
             const isCalendarPadding = day === null;
             const {
               isActive,
@@ -2321,7 +2321,7 @@ export class Datetime implements ComponentInterface {
              * Custom highlight styles should not override the style for selected dates,
              * nor apply to "filler days" at the start of the grid.
              */
-            if (highlightedDates !== undefined && !isActive && day !== null && !adjacentDay) {
+            if (highlightedDates !== undefined && !isActive && day !== null && !isAdjacentDay) {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
@@ -2329,11 +2329,11 @@ export class Datetime implements ComponentInterface {
 
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
-            if (!isCalendarPadding && !adjacentDay) {
+            if (!isCalendarPadding && !isAdjacentDay) {
               dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
                 isCalDayDisabled ? ' disabled' : ''
               }`;
-            } else if (adjacentDay) {
+            } else if (isAdjacentDay) {
               dateParts = `calendar-day${isCalDayDisabled ? ' disabled' : ''}`;
             }
 
@@ -2369,7 +2369,7 @@ export class Datetime implements ComponentInterface {
                     'calendar-day-active': isActive,
                     'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
-                    'calendar-day-adjacent-day': adjacentDay,
+                    'calendar-day-adjacent-day': isAdjacentDay,
                   }}
                   part={dateParts}
                   aria-hidden={isCalendarPadding ? 'true' : null}
@@ -2380,7 +2380,7 @@ export class Datetime implements ComponentInterface {
                       return;
                     }
 
-                    if (adjacentDay) {
+                    if (isAdjacentDay) {
                       // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
                       this.el.blur();
                     }
@@ -2390,7 +2390,7 @@ export class Datetime implements ComponentInterface {
                       month: _month,
                       day,
                       year: _year,
-                      adjacentDay: adjacentDay,
+                      isAdjacentDay: isAdjacentDay,
                     });
 
                     // multiple only needs date info, so we can wipe out other fields like time
@@ -2400,7 +2400,7 @@ export class Datetime implements ComponentInterface {
                           month: _month,
                           day,
                           year: _year,
-                          adjacentDay: adjacentDay,
+                          isAdjacentDay: isAdjacentDay,
                         },
                         isActive
                       );
@@ -2410,7 +2410,7 @@ export class Datetime implements ComponentInterface {
                         month: _month,
                         day,
                         year: _year,
-                        adjacentDay: adjacentDay,
+                        isAdjacentDay: isAdjacentDay,
                       });
                     }
                   }}

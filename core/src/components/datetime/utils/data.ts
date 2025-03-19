@@ -140,22 +140,22 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
     | {
         day: number;
         dayOfWeek: number;
-        adjacentDay: boolean;
+        isAdjacentDay: boolean;
       }
     | {
         day: null;
         dayOfWeek: null;
-        adjacentDay: boolean;
+        isAdjacentDay: boolean;
       }
   )[] = [];
   for (let i = 1; i <= numDays; i++) {
-    days.push({ day: i, dayOfWeek: (offset + i) % 7, adjacentDay: false });
+    days.push({ day: i, dayOfWeek: (offset + i) % 7, isAdjacentDay: false });
   }
 
   if (showAdjacentDays) {
     for (let i = 0; i <= offset; i++) {
       // Using offset create previous month adjacent day, starting from last day
-      days = [{ day: previousNumDays - i, dayOfWeek: (previousNumDays - i) % 7, adjacentDay: true }, ...days];
+      days = [{ day: previousNumDays - i, dayOfWeek: (previousNumDays - i) % 7, isAdjacentDay: true }, ...days];
     }
 
     // Calculate positiveOffset
@@ -164,11 +164,11 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
     // minus (the previous offset + the current month days)
     const positiveOffset = 41 - (numDays + offset);
     for (let i = 0; i < positiveOffset; i++) {
-      days.push({ day: i + 1, dayOfWeek: (numDays + offset + i) % 7, adjacentDay: true });
+      days.push({ day: i + 1, dayOfWeek: (numDays + offset + i) % 7, isAdjacentDay: true });
     }
   } else {
     for (let i = 0; i <= offset; i++) {
-      days = [{ day: null, dayOfWeek: null, adjacentDay: false }, ...days];
+      days = [{ day: null, dayOfWeek: null, isAdjacentDay: false }, ...days];
     }
   }
 
