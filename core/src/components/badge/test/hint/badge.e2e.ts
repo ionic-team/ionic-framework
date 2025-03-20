@@ -23,7 +23,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
   });
 
   test.describe(title('badge: hint inside tab button'), () => {
-    test('tab button icon top, should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions when icon is on the top', async ({ page }) => {
       await page.goto('/src/components/badge/test/hint', config);
 
       const container = page.locator('#tab-button');
@@ -31,7 +31,7 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
       await expect(container).toHaveScreenshot(screenshot(`badge-hint-tab-button-icon-top`));
     });
 
-    test('tab button icon bottom, should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions when icon is at the bottom', async ({ page }) => {
       await page.goto('/src/components/badge/test/hint', config);
 
       const container = page.locator('#tab-button-icon-bottom');
