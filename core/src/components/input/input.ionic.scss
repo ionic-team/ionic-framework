@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./input";
+@import "./input.common";
 @import "./input.ionic.outline.scss";
 
 // Ionic Input
@@ -139,8 +139,7 @@
 
 .input-bottom {
   @include padding(globals.$ion-space-100, 0, 0, 0);
-
-  font-weight: globals.$ion-font-weight-medium;
+  @include globals.typography(globals.$ion-body-sm-medium);
 }
 
 .input-bottom .helper-text,
