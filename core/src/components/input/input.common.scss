@@ -478,10 +478,10 @@
  * Ensures the input does not
  * overlap the label.
  */
- :host(.input-label-placement-stacked) input,
- :host(.input-label-placement-floating) input {
-   @include margin(1px, 0, 0, 0);
- }
+:host(.input-label-placement-stacked) input,
+:host(.input-label-placement-floating) input {
+  @include margin(1px, 0, 0, 0);
+}
 
 /**
  * The input should be hidden when the label
