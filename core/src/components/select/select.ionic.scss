@@ -22,6 +22,17 @@
   --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
 }
 
+// Select Hint Text
+// ----------------------------------------------------------------
+
+.select-bottom {
+  @include globals.typography(globals.$ion-body-sm-medium);
+}
+
+.select-bottom .helper-text {
+  color: globals.$ion-primitives-neutral-800;
+}
+
 // Select Label
 // ----------------------------------------------------------------
 

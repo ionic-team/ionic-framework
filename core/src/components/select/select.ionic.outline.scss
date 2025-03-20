@@ -7,6 +7,13 @@
   --border-color: #{globals.current-color(base)};
 }
 
+// Select Bottom Content
+// ----------------------------------------------------------------
+
+:host(.select-fill-outline) .select-bottom {
+  border-top: none;
+}
+
 // Select Label
 // ----------------------------------------------------------------
 
