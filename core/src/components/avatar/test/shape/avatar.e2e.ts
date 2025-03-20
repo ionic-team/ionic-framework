@@ -188,5 +188,188 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         await expect(container).toHaveScreenshot(screenshot(`avatar-shape-soft-image`));
       });
     });
+
+    test.describe('round-disabled', () => {
+      test('should not have visual regressions when containing text', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar shape="round" disabled>AB</ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-disabled-shape-round-text`));
+      });
+
+      test('should not have visual regressions when containing an icon', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar shape="round" disabled>
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-disabled-shape-round-icon`));
+      });
+
+      test('should not have visual regressions when containing an image', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar shape="round" disabled>
+            <img src="/src/components/avatar/test/avatar.svg"/>
+          </ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-disabled-shape-round-image`));
+      });
+    });
+
+    test.describe('rectangular-disabled', () => {
+      test('should not have visual regressions when containing text', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar shape="rectangular" disabled>AB</ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-disabled-shape-rectangular-text`));
+      });
+
+      test('should not have visual regressions when containing an icon', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar shape="rectangular" disabled>
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-disabled-shape-rectangular-icon`));
+      });
+
+      test('should not have visual regressions when containing an image', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-avatar shape="rectangular" disabled>
+            <img src="/src/components/avatar/test/avatar.svg"/>
+          </ion-avatar>
+        `,
+          config
+        );
+
+        const avatar = page.locator('ion-avatar');
+
+        await expect(avatar).toHaveScreenshot(screenshot(`avatar-disabled-shape-rectangular-image`));
+      });
+    });
+
+    test.describe('soft-disabled', () => {
+      test('should not have visual regressions when containing text', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            #container {
+              display: flex;
+              gap: 10px;
+            }
+          </style>
+
+          <div id="container">
+            <ion-avatar disabled shape="soft" size="xxsmall">A</ion-avatar>
+            <ion-avatar disabled shape="soft" size="xsmall">AB</ion-avatar>
+            <ion-avatar disabled shape="soft" size="small">AB</ion-avatar>
+            <ion-avatar disabled shape="soft">AB</ion-avatar>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('#container');
+
+        await expect(container).toHaveScreenshot(screenshot(`avatar-disabled-shape-soft-text`));
+      });
+
+      test('should not have visual regressions when containing an icon', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            #container {
+              display: flex;
+              gap: 10px;
+            }
+          </style>
+
+          <div id="container">
+            <ion-avatar disabled shape="soft" size="xxsmall">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
+            <ion-avatar disabled shape="soft" size="xsmall">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
+            <ion-avatar disabled shape="soft" size="small">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
+            <ion-avatar disabled shape="soft">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('#container');
+
+        await expect(container).toHaveScreenshot(screenshot(`avatar-disabled-shape-soft-icon`));
+      });
+
+      test('should not have visual regressions when containing an image', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            #container {
+              display: flex;
+              gap: 10px;
+            }
+          </style>
+
+          <div id="container">
+            <ion-avatar disabled shape="soft" size="xxsmall">
+              <img src="/src/components/avatar/test/avatar.svg"/>
+            </ion-avatar>
+            <ion-avatar disabled shape="soft" size="xsmall">
+              <img src="/src/components/avatar/test/avatar.svg"/>
+            </ion-avatar>
+            <ion-avatar disabled shape="soft" size="small">
+              <img src="/src/components/avatar/test/avatar.svg"/>
+            </ion-avatar>
+            <ion-avatar disabled shape="soft">
+              <img src="/src/components/avatar/test/avatar.svg"/>
+            </ion-avatar>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('#container');
+
+        await expect(container).toHaveScreenshot(screenshot(`avatar-disabled-shape-soft-image`));
+      });
+    });
   });
 });

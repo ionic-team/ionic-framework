@@ -175,5 +175,5 @@
 // Avatar Disabled
 // --------------------------------------------------
 :host(.avatar-disabled) {
-  @include globals.disabled-state();
+  opacity: 0.6;
 }
