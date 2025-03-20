@@ -72,9 +72,13 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       addEventListener(segmentEl, 'ionSelect', this.updateState);
       addEventListener(segmentEl, 'ionStyle', this.updateStyle);
     }
+
+    // Prevent buttons from being disabled when associated with segment content
+    if (this.contentId && this.disabled) {
+      console.warn(`Segment Button: Segment buttons cannot be disabled when associated with an <ion-segment-content>.`);
+      this.disabled = false;
+    }
   }
-
-
 
   disconnectedCallback() {
     const segmentEl = this.segmentEl;
@@ -106,12 +110,6 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     if (segmentContent.tagName !== 'ION-SEGMENT-CONTENT') {
       console.error(`Segment Button: Element with id="${this.contentId}" is not an <ion-segment-content> element.`);
       return;
-    }
-
-    // Prevent buttons from being disabled when associated with segment content
-    if (this.disabled) {
-      console.warn(`Segment Button: Segment buttons cannot be disabled when associated with an <ion-segment-content>.`);
-      this.disabled = false;
     }
   }
 
