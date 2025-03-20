@@ -953,7 +953,6 @@ ion-input,css-prop,--border-width,md
 ion-input,css-prop,--color,ionic
 ion-input,css-prop,--color,ios
 ion-input,css-prop,--color,md
-ion-input,css-prop,--highlight-color-focused,ionic
 ion-input,css-prop,--highlight-color-focused,ios
 ion-input,css-prop,--highlight-color-focused,md
 ion-input,css-prop,--highlight-color-invalid,ionic
@@ -962,7 +961,6 @@ ion-input,css-prop,--highlight-color-invalid,md
 ion-input,css-prop,--highlight-color-valid,ionic
 ion-input,css-prop,--highlight-color-valid,ios
 ion-input,css-prop,--highlight-color-valid,md
-ion-input,css-prop,--highlight-height,ionic
 ion-input,css-prop,--highlight-height,ios
 ion-input,css-prop,--highlight-height,md
 ion-input,css-prop,--padding-bottom,ionic

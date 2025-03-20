@@ -467,20 +467,20 @@
 }
 
 /**
- * This makes the label sit over the input
- * when the input is blurred and has no value.
- */
-:host(.input-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(100%), scale(1));
-}
-
-/**
  * Ensures the input does not
  * overlap the label.
  */
 :host(.input-label-placement-stacked) input,
 :host(.input-label-placement-floating) input {
   @include margin(1px, 0, 0, 0);
+}
+
+/**
+ * This makes the label sit over the input
+ * when the input is blurred and has no value.
+ */
+ :host(.input-label-placement-floating) .label-text-wrapper {
+  @include transform(translateY(100%), scale(1));
 }
 
 /**
