@@ -179,6 +179,8 @@
  */
 :host(.checkbox-label-placement-stacked) .checkbox-wrapper {
   flex-direction: column;
+
+  text-align: center;
 }
 
 :host(.checkbox-label-placement-stacked.checkbox-alignment-start) .label-text-wrapper {
