@@ -134,6 +134,10 @@ ion-icon {
   color: globals.$ion-primitives-neutral-800;
 }
 
+:host(.has-focus.ion-valid) .helper-text {
+  color: var(--highlight-color-valid);
+}
+
 :host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
   --border-width: #{globals.$ion-border-size-025};
@@ -191,6 +195,21 @@ ion-icon {
 :host(.textarea-disabled) .textarea-bottom .counter,
 :host(.textarea-disabled) .label-text-wrapper {
   color: globals.$ion-primitives-neutral-500;
+}
+
+:host(.textarea-disabled.has-focus.ion-valid) {
+  --border-color: rgba(#{globals.$ion-semantics-success-base-rgb}, 0.6);
+}
+
+:host(.textarea-disabled.ion-touched.ion-invalid) {
+  --border-color: rgba(#{globals.$ion-semantics-danger-base-rgb}, 0.6);
+}
+
+:host(.textarea-disabled.has-focus.ion-valid) .textarea-bottom .helper-text,
+:host(.textarea-disabled.ion-touched.ion-invalid) .error-text,
+:host(.textarea-disabled.ion-color) .textarea-bottom .helper-text,
+:host(.textarea-disabled.ion-color) .helper-text {
+  opacity: 0.6;
 }
 
 // Textarea - Readonly
