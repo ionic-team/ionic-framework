@@ -213,3 +213,28 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
     });
   });
 });
+
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: bottom content'), () => {
+    test('entire select component should render correctly with no fill', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select label="Label" label-placement="stacked" helper-text="Helper text"></ion-select>
+      `,
+        config
+      );
+      const select = page.locator('ion-select');
+      await expect(select).toHaveScreenshot(screenshot(`select-full-bottom-no-fill`));
+    });
+    test('entire select component should render correctly with outline fill', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select fill="outline" label="Label" label-placement="stacked" helper-text="Helper text"></ion-select>
+      `,
+        config
+      );
+      const select = page.locator('ion-select');
+      await expect(select).toHaveScreenshot(screenshot(`select-full-bottom-outline`));
+    });
+  });
+});
