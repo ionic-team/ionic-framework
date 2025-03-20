@@ -195,6 +195,16 @@ input {
   background: var(--checkbox-background-checked);
 }
 
+// Ionic Design Checkbox Invalid
+// --------------------------------------------------
+:host(.ion-invalid) {
+  --focus-ring-color: #{globals.$ion-border-focus-error};
+
+  .native-wrapper {
+    border-color: globals.$ion-semantics-danger-800;
+  }
+}
+
 // Checkbox overrides the disabled state mixin properties
 // to fix positioning issues, as the top and left properties
 // cause the overlay to start inside the border. We unset
