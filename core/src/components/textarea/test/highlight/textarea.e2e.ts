@@ -347,3 +347,123 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: highlights'), () => {
+    test.describe('textarea: no fill', () => {
+      test('should render valid state correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            value="hi@ionic.io"
+            class="ion-valid has-focus"
+            label="Email"
+            label-placement="stacked"
+            error-text="Please enter a valid email"
+            helper-text="Enter an email"
+            counter="true"
+            maxlength="20"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-valid`));
+      });
+      test('should render invalid state correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            value="hi@ionic.io"
+            class="ion-touched ion-invalid"
+            label="Email"
+            label-placement="stacked"
+            error-text="Please enter a valid email"
+            helper-text="Enter an email"
+            counter="true"
+            maxlength="20"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-invalid`));
+      });
+    });
+    test.describe('textarea: outline', () => {
+      test('should render valid state correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            fill="outline"
+            value="hi@ionic.io"
+            class="ion-valid has-focus"
+            label="Email"
+            label-placement="stacked"
+            error-text="Please enter a valid email"
+            helper-text="Enter an email"
+            counter="true"
+            maxlength="20"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-valid`));
+      });
+      test('should render invalid state correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            fill="outline"
+            value="hi@ionic.io"
+            class="ion-touched ion-invalid"
+            label="Email"
+            label-placement="stacked"
+            error-text="Please enter a valid email"
+            helper-text="Enter an email"
+            counter="true"
+            maxlength="20"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-invalid`));
+      });
+      test('should render custom highlight correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            ion-textarea.custom {
+              --highlight-color-valid: purple;
+            }
+          </style>
+
+          <div class="container">
+            <ion-textarea
+              fill="outline"
+              value="hi@ionic.io"
+              class="custom has-focus ion-valid"
+              label="Email"
+              label-placement="stacked"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+            ></ion-textarea>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(screenshot(`textarea-outline-custom-highlight`));
+      });
+    });
+  });
+});
