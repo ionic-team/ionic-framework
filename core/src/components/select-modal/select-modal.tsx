@@ -23,6 +23,8 @@ export class SelectModal implements ComponentInterface {
 
   @Prop() header?: string;
 
+  @Prop() closeText?: string;
+
   @Prop() multiple?: boolean;
 
   @Prop() options: SelectModalOption[] = [];
@@ -149,7 +151,7 @@ export class SelectModal implements ComponentInterface {
             {this.header !== undefined && <ion-title>{this.header}</ion-title>}
 
             <ion-buttons slot="end">
-              <ion-button onClick={() => this.closeModal()}>Close</ion-button>
+              <ion-button onClick={() => this.closeModal()}>{this.closeText || 'Close'}</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
