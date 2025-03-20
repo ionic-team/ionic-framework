@@ -14,11 +14,15 @@ configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
       const avatarChip = page.locator('#avatar-chip');
       const avatarItemStart = page.locator('#avatar-item-start');
       const avatarItemEnd = page.locator('#avatar-item-end');
+      const avatarCharactersDisabled = page.locator('avatar-characters-disabled');
+      const avatarDisabled = page.locator('avatar-disabled');
 
       await expect(avatar).toHaveScreenshot(screenshot(`avatar-diff`));
       await expect(avatarChip).toHaveScreenshot(screenshot(`avatar-chip-diff`));
       await expect(avatarItemStart).toHaveScreenshot(screenshot(`avatar-item-start-diff`));
       await expect(avatarItemEnd).toHaveScreenshot(screenshot(`avatar-item-end-diff`));
+      await expect(avatarCharactersDisabled).toHaveScreenshot(screenshot(`avatar-characters-disabled-diff`));
+      await expect(avatarDisabled).toHaveScreenshot(screenshot(`avatar-disabled-diff`));
     });
   });
 });

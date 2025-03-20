@@ -25,3 +25,10 @@
 
   overflow: hidden;
 }
+
+// Disabled Checkbox
+// ---------------------------------------------
+
+:host(.avatar-disabled) {
+  pointer-events: none;
+}
