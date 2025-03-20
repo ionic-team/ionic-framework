@@ -479,7 +479,7 @@
  * This makes the label sit over the input
  * when the input is blurred and has no value.
  */
- :host(.input-label-placement-floating) .label-text-wrapper {
+:host(.input-label-placement-floating) .label-text-wrapper {
   @include transform(translateY(100%), scale(1));
 }
 
