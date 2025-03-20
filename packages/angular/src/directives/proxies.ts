@@ -2192,14 +2192,14 @@ This event will not emit when programmatically setting the `value` property.
 
 
 @ProxyCmp({
-  inputs: ['header', 'multiple', 'options']
+  inputs: ['closeText', 'header', 'multiple', 'options']
 })
 @Component({
   selector: 'ion-select-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['header', 'multiple', 'options'],
+  inputs: ['closeText', 'header', 'multiple', 'options'],
 })
 export class IonSelectModal {
   protected el: HTMLIonSelectModalElement;
