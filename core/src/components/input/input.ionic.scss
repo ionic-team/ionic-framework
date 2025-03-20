@@ -148,7 +148,7 @@
 }
 
 :host(.has-focus.ion-valid) .helper-text {
-  color: globals.$ion-semantics-success-900;
+  color: var(--highlight-color-valid);
 }
 
 :host(.has-focus.ion-valid),
