@@ -43,17 +43,17 @@
  * toolbar which is why we do not
  * limit the below behavior to just ion-item.
  */
- :host([slot="start"]),
- :host([slot="end"]) {
-   // Reset the flex property when the checkbox
-   // is slotted to avoid growing the element larger
-   // than its content.
-   flex: initial;
+:host([slot="start"]),
+:host([slot="end"]) {
+  // Reset the flex property when the checkbox
+  // is slotted to avoid growing the element larger
+  // than its content.
+  flex: initial;
 
-   width: auto;
- }
+  width: auto;
+}
 
- .checkbox-wrapper {
+.checkbox-wrapper {
   display: flex;
 
   flex-grow: 1;
@@ -79,7 +79,7 @@
  * then the element should be hidden otherwise
  * there will be additional margins added.
  */
- .label-text-wrapper-hidden {
+.label-text-wrapper-hidden {
   display: none;
 }
 
@@ -139,7 +139,7 @@
  * Label is on the left of the checkbox in LTR and
  * on the right in RTL.
  */
- :host(.checkbox-label-placement-start) .checkbox-wrapper {
+:host(.checkbox-label-placement-start) .checkbox-wrapper {
   flex-direction: row;
 }
 
@@ -150,7 +150,7 @@
  * Label is on the right of the checkbox in LTR and
  * on the left in RTL.
  */
- :host(.checkbox-label-placement-end) .checkbox-wrapper {
+:host(.checkbox-label-placement-end) .checkbox-wrapper {
   flex-direction: row-reverse;
 }
 
@@ -175,7 +175,7 @@
 /**
  * Label is on top of the checkbox.
  */
- :host(.checkbox-label-placement-stacked) .checkbox-wrapper {
+:host(.checkbox-label-placement-stacked) .checkbox-wrapper {
   flex-direction: column;
 
   text-align: center;
@@ -244,7 +244,7 @@
   opacity: 1;
 }
 
-// Checkbox Disabled
+// Disabled Checkbox
 // --------------------------------------------------
 :host(.checkbox-disabled) {
   pointer-events: none;
