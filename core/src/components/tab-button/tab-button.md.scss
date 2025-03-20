@@ -76,11 +76,11 @@
 }
 
 :host ::slotted(ion-badge[vertical="bottom"]) {
-  @include position($tab-button-md-badge-bottom-position, null, null, null);
+  @include position($tab-button-md-badge-bottom-position);
 }
 
 :host ::slotted(ion-badge[vertical="bottom"]:empty) {
-  @include position($tab-button-md-badge-bottom-position-empty, null, null, null);
+  @include position($tab-button-md-badge-bottom-position-empty);
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge[vertical="top"]) {
@@ -166,7 +166,7 @@
 // Badge
 :host(.tab-layout-label-hide) ::slotted(ion-badge),
 :host(.tab-has-icon-only) ::slotted(ion-badge) {
-  @include position(16px, null, null, null);
+  @include position(16px);
 }
 
 // Icon

@@ -97,28 +97,23 @@
 }
 
 :host ::slotted(ion-badge.badge-vertical-top) {
-  @include globals.position(-2px, null, null, null);
+  @include globals.position(-2px);
 }
 
 :host ::slotted(ion-badge.badge-vertical-top:empty) {
-  @include globals.position(calc(globals.$ion-scale-100 * -1), null, null, null);
+  @include globals.position(calc(globals.$ion-scale-100 * -1));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom) {
-  @include globals.position(calc(50% - globals.$ion-scale-200), null, null, null);
+  @include globals.position(calc(50% - globals.$ion-scale-200));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  @include globals.position(calc(50% - globals.$ion-scale-100), null, null, null);
+  @include globals.position(calc(50% - globals.$ion-scale-100));
 }
 
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
-  @include globals.padding(
-    globals.$ion-scale-100,
-    globals.$ion-scale-100,
-    globals.$ion-scale-100,
-    globals.$ion-scale-100
-  );
+  @include globals.padding(globals.$ion-scale-100);
 
   display: flex;
 
@@ -127,13 +122,13 @@
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-top) {
-  @include globals.position(calc(50% - globals.$ion-scale-100), null, null, null);
+  @include globals.position(calc(50% - globals.$ion-scale-100));
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom) {
-  @include globals.position(calc(50% + globals.$ion-scale-100), null, null, null);
+  @include globals.position(calc(50% + globals.$ion-scale-100));
 }
 
 :host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  @include globals.position(calc(50% + 14px), null, null, null);
+  @include globals.position(calc(50% + 14px));
 }
