@@ -152,6 +152,8 @@
  */
 :host(.checkbox-label-placement-end) .checkbox-wrapper {
   flex-direction: row-reverse;
+
+  justify-content: start;
 }
 
 // Label Placement - Fixed
@@ -177,8 +179,6 @@
  */
 :host(.checkbox-label-placement-stacked) .checkbox-wrapper {
   flex-direction: column;
-
-  text-align: center;
 }
 
 :host(.checkbox-label-placement-stacked.checkbox-alignment-start) .label-text-wrapper {
