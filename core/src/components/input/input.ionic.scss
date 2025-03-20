@@ -152,10 +152,6 @@
   color: globals.$ion-semantics-success-900;
 }
 
-:host(.ion-touched.ion-invalid) .error-text {
-  color: var(--highlight-color-invalid);
-}
-
 :host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
   --border-width: #{globals.$ion-border-size-025};
