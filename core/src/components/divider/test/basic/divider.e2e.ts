@@ -4,11 +4,37 @@ import { configs, test } from '@utils/test/playwright';
 configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('divider: rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      await page.goto('/src/components/divider/test/basic', config);
+      await page.setContent(
+        `
+          <div id="container">
+            top
+            <ion-divider></ion-divider>
+            bottom
+          </div>
+        `,
+        config
+      );
 
-      await page.setIonViewport();
+      const container = page.locator('#container');
 
-      await expect(page).toHaveScreenshot(screenshot(`divider-basic`));
+      await expect(container).toHaveScreenshot(screenshot(`divider-basic-default`));
+    });
+
+    test('should not have visual regressions when inset is enabled', async ({ page }) => {
+      await page.setContent(
+        `
+          <div id="container">
+            top
+            <ion-divider inset="true"></ion-divider>
+            bottom
+          </div>
+        `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`divider-basic-inset`));
     });
   });
 });

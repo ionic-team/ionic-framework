@@ -27,7 +27,7 @@
     padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
     padding-left: var(--padding-end);
   }
-  /* stylelint-enable */  
+  /* stylelint-enable */
 }
 
 :host hr {
@@ -45,32 +45,32 @@
 // Divider Spacing
 // --------------------------------------------------
 
-:host(.divider-space-xsmall) {
+:host(.divider-spacing-xsmall) {
   --margin-top: #{globals.$ion-space-200};
   --margin-bottom: #{globals.$ion-space-200};
 }
 
-:host(.divider-space-small) {
+:host(.divider-spacing-small) {
   --margin-top: #{globals.$ion-space-300};
   --margin-bottom: #{globals.$ion-space-300};
 }
 
-:host(.divider-space-medium) {
+:host(.divider-spacing-medium) {
   --margin-top: #{globals.$ion-space-400};
   --margin-bottom: #{globals.$ion-space-400};
 }
 
-:host(.divider-space-large) {
+:host(.divider-spacing-large) {
   --margin-top: #{globals.$ion-space-600};
   --margin-bottom: #{globals.$ion-space-600};
 }
 
-:host(.divider-space-xlarge) {
+:host(.divider-spacing-xlarge) {
   --margin-top: #{globals.$ion-space-800};
   --margin-bottom: #{globals.$ion-space-800};
 }
 
-:host(.divider-space-xxlarge) {
+:host(.divider-spacing-xxlarge) {
   --margin-top: #{globals.$ion-space-1000};
   --margin-bottom: #{globals.$ion-space-1000};
 }

@@ -22,19 +22,19 @@ export class Divider implements ComponentInterface {
    *
    * Defaults to `"xxsmall"`.
    */
-  @Prop({ reflect: true }) spacing?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' = 'xxsmall';
+  @Prop({ reflect: true }) spacing?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' =
+    'xxsmall';
 
   /**
    * If `true`, the divider will have horizontal margins
    * By default, it's `false`
    */
-  @Prop() inset?: boolean = false;
-
+  @Prop() inset: boolean = false;
 
   render() {
     const { inset, spacing } = this;
     const theme = getIonTheme(this);
-    
+
     return (
       <Host
         class={{

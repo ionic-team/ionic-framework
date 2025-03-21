@@ -7,18 +7,12 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       test(`should render divider with ${spacing} spacing`, async ({ page }) => {
         await page.setContent(
           `
-        <style>
-            #container {
-              padding: 10px;
-            }
-          </style>
-
-          <div id="container">
-            top
-            <ion-divider spacing="${spacing}"></ion-divider>
-            bottom
-          </div>
-      `,
+            <div id="container">
+              top
+              <ion-divider spacing="${spacing}"></ion-divider>
+              bottom
+            </div>
+          `,
           config
         );
 
