@@ -19,10 +19,9 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       `,
         config
       );
-      const avatarCharactersDisabled = page.locator('#avatar-characters-disabled');
-      const avatarDisabled = page.locator('#avatar-disabled');
-      await expect(avatarCharactersDisabled).toHaveScreenshot(screenshot(`avatar-characters-disabled-diff`));
-      await expect(avatarDisabled).toHaveScreenshot(screenshot(`avatar-disabled-diff`));
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot(`avatar-disabled`));
     });
   });
 });
