@@ -16,3 +16,23 @@
    */
   font-size: dynamic-font-min(1, $badge-baseline-font-size);
 }
+
+// Badge Inside Tab Button
+// --------------------------------------------------
+
+:host([vertical].in-tab-button) {
+  position: relative;
+
+  min-width: $badge-ios-in-tab-button-min-width;
+}
+
+:host([vertical].in-tab-button) ::slotted(ion-icon) {
+  @include position(50%, null, null, 50%);
+
+  position: absolute;
+
+  width: $badge-ios-in-tab-button-icon-size;
+  height: $badge-ios-in-tab-button-icon-size;
+
+  transform: translate(-50%, -50%);
+}
