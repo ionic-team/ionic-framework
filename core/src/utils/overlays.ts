@@ -646,6 +646,10 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
+  const presentedOverlays = doc !== undefined ? getPresentedOverlays(doc) : [];
+
+  const isLastOverlay = presentedOverlays.length === 1;
+
   /**
    * For accessibility, toasts lack focus traps and don’t receive
    * `aria-hidden` on the root element when presented.
@@ -657,7 +661,7 @@ export const dismiss = async <OverlayDismissOptions>(
    * Therefore, we must remove `aria-hidden` from the root element
    * when the last non-toast overlay is dismissed.
    */
-  const overlaysNotToast = doc !== undefined ? getPresentedOverlays(doc).filter((o) => o.tagName !== 'ION-TOAST') : [];
+  const overlaysNotToast = presentedOverlays.filter((o) => o.tagName !== 'ION-TOAST');
 
   const lastOverlayNotToast = overlaysNotToast.length === 1 && overlaysNotToast[0].id === overlay.el.id;
 
@@ -667,6 +671,9 @@ export const dismiss = async <OverlayDismissOptions>(
    */
   if (lastOverlayNotToast) {
     setRootAriaHidden(false);
+  }
+
+  if (isLastOverlay) {
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 
