@@ -194,7 +194,7 @@ ion-icon {
 :host(.textarea-disabled:not(.ion-valid)) .textarea-bottom .helper-text,
 :host(.textarea-disabled) .textarea-bottom .counter,
 :host(.textarea-disabled) .label-text-wrapper {
-  color: globals.$ion-primitives-neutral-500;
+  color: globals.$ion-text-disabled;
 }
 
 :host(.textarea-disabled.has-focus.ion-valid) {
@@ -205,10 +205,12 @@ ion-icon {
   --border-color: rgba(#{globals.$ion-semantics-danger-base-rgb}, 0.6);
 }
 
+:host(.textarea-disabled.ion-color) {
+  --border-color: #{globals.current-color(base, 0.6)};
+}
+
 :host(.textarea-disabled.has-focus.ion-valid) .textarea-bottom .helper-text,
-:host(.textarea-disabled.ion-touched.ion-invalid) .error-text,
-:host(.textarea-disabled.ion-color) .textarea-bottom .helper-text,
-:host(.textarea-disabled.ion-color) .helper-text {
+:host(.textarea-disabled.ion-touched.ion-invalid) .error-text {
   opacity: 0.6;
 }
 
