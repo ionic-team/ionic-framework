@@ -15,6 +15,7 @@ import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-g
   styleUrls: {
     ios: 'radio-group.ios.scss',
     md: 'radio-group.md.scss',
+    ionic: 'radio-group.ionic.scss',
   },
 })
 export class RadioGroup implements ComponentInterface {
