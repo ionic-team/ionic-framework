@@ -236,20 +236,11 @@ button {
 // ----------------------------------------------------------------
 
 .select-bottom {
-  /**
-   * The bottom content should take on the start and end
-   * padding so it is always aligned with either the label
-   * or the start of the text select.
-   */
-  @include mixins.padding(5px, var(--padding-end), 0, var(--padding-start));
-
   display: flex;
 
   justify-content: space-between;
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
-
-  font-size: dynamic-font(12px);
 
   white-space: normal;
 }
@@ -285,8 +276,6 @@ button {
 
 .select-bottom .helper-text {
   display: block;
-
-  color: $text-color-step-300;
 }
 
 :host(.ion-touched.ion-invalid) .select-bottom .error-text {
