@@ -5,9 +5,9 @@ import { Component, Prop, Host, h } from '@stencil/core';
 @Component({
   tag: 'ion-divider',
   styleUrls: {
-    ios: 'divider.scss',
-    md: 'divider.scss',
-    ionic: 'divider.scss',
+    ios: 'divider.ios.scss',
+    md: 'divider.md.scss',
+    ionic: 'divider.ionic.scss',
   },
   shadow: true,
 })

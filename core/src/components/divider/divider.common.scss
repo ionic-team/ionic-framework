@@ -1,0 +1,41 @@
+@import "../../themes/native/native.globals";
+
+:host {
+  /**
+   * @prop --margin-top: Top margin of the divider
+   * @prop --margin-bottom: Bottom margin of the divider
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the divider
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the divider
+   */
+  --margin-top: 0px;
+  --margin-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+
+  display: block;
+
+  width: 100%;
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: var(--padding-end);
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
+    padding-left: var(--padding-end);
+  }
+  /* stylelint-enable */
+}
+
+:host hr {
+  display: block;
+
+  width: 100%;
+
+  margin-top: var(--margin-top);
+  margin-bottom: var(--margin-bottom);
+
+  border: none;
+}
