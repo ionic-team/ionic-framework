@@ -86,6 +86,11 @@ export class Avatar implements ComponentInterface {
   }
 
   render() {
+    const {
+      hasImage,
+      hasIcon,
+      disabled
+    } = this;
     const theme = getIonTheme(this);
     const size = this.getSize();
     const shape = this.getShape();
@@ -96,9 +101,9 @@ export class Avatar implements ComponentInterface {
           [theme]: true,
           [`avatar-${size}`]: size !== undefined,
           [`avatar-${shape}`]: shape !== undefined,
-          [`avatar-image`]: this.hasImage,
-          [`avatar-icon`]: this.hasIcon,
-          [`avatar-disabled`]: this.disabled,
+          [`avatar-image`]: hasImage,
+          [`avatar-icon`]: hasIcon,
+          [`avatar-disabled`]: disabled,
         }}
       >
         <slot></slot>
