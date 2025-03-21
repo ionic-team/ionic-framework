@@ -80,7 +80,7 @@ configs().forEach(({ title, screenshot, config }) => {
         // Validates the display of an input with a clear button.
         await expect(input).toHaveScreenshot(screenshot(`input-dbclick`));
       });
-      test('should not have visual regressions with stacked label when user double clicks', async ({ page, browserName }) => {
+      test('should not have visual regressions with stacked label when user double clicks', async ({ page }) => {
         await page.setContent(
           `
           <ion-input
@@ -222,7 +222,7 @@ configs({ modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
       await expect(container).toHaveScreenshot(screenshot(`input-clear-button-focused`));
     });
 
-    test('should not have visual regressions when user double clicks', async ({ page, browserName }) => {
+    test('should not have visual regressions when user double clicks', async ({ page }) => {
       await page.setContent(
         `
           <ion-input
