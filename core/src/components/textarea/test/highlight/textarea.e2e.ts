@@ -347,3 +347,50 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: highlights'), () => {
+    test.describe('textarea: no fill', () => {
+      test('should render valid state correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            value="hi@ionic.io"
+            class="ion-valid has-focus"
+            label="Email"
+            label-placement="stacked"
+            error-text="Please enter a valid email"
+            helper-text="Enter an email"
+            counter="true"
+            maxlength="20"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-valid`));
+      });
+      test('should render invalid state correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-textarea
+            value="hi@ionic.io"
+            class="ion-touched ion-invalid"
+            label="Email"
+            label-placement="stacked"
+            error-text="Please enter a valid email"
+            helper-text="Enter an email"
+            counter="true"
+            maxlength="20"
+          ></ion-textarea>
+        `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-invalid`));
+      });
+    });
+  });
+});

@@ -57,11 +57,18 @@
   font-size: globals.dynamic-font(12px);
 }
 
+// Textarea Hint Text
+// ----------------------------------------------------------------
+
+.textarea-bottom .helper-text {
+  color: globals.$text-color-step-300;
+}
+
 // Textarea Max Length Counter
 // ----------------------------------------------------------------
 
 .textarea-bottom .counter {
-  color: #{globals.$text-color-step-450};
+  color: globals.$text-color-step-300;
 
   padding-inline-start: 16px;
 }

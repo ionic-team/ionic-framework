@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Textarea - Disabled</title>
+    <title>Textarea - States</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -49,13 +49,127 @@
           <div class="grid-item">
             <h2>Readonly</h2>
 
-            <ion-textarea label="Email" value="hi@ionic.io" readonly="true"></ion-textarea>
+            <ion-textarea
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              counter="true"
+              maxlength="99"
+              helper-text="Helper text"
+              error-text="Error text"
+              readonly="true"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Readonly: Valid</h2>
+
+            <ion-textarea
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              counter="true"
+              maxlength="99"
+              helper-text="Helper text"
+              error-text="Error text"
+              readonly="true"
+              class="ion-valid has-focus"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Readonly: Invalid</h2>
+
+            <ion-textarea
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              counter="true"
+              maxlength="99"
+              helper-text="Helper text"
+              error-text="Error text"
+              readonly="true"
+              class="ion-invalid ion-touched"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Readonly: Color</h2>
+
+            <ion-textarea
+              color="warning"
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              counter="true"
+              maxlength="99"
+              helper-text="Helper text"
+              error-text="Error text"
+              readonly="true"
+            ></ion-textarea>
           </div>
 
           <div class="grid-item">
             <h2>Disabled</h2>
 
-            <ion-textarea label="Email" value="hi@ionic.io" disabled="true"></ion-textarea>
+            <ion-textarea
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              counter="true"
+              maxlength="99"
+              helper-text="Helper text"
+              error-text="Error text"
+              disabled="true"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disabled: Valid</h2>
+
+            <ion-textarea
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              counter="true"
+              maxlength="99"
+              helper-text="Helper text"
+              error-text="Error text"
+              disabled="true"
+              class="ion-valid has-focus"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disabled: Invalid</h2>
+
+            <ion-textarea
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              counter="true"
+              maxlength="99"
+              helper-text="Helper text"
+              error-text="Error text"
+              disabled="true"
+              class="ion-invalid ion-touched"
+            ></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disabled: Color</h2>
+
+            <ion-textarea
+              color="warning"
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              counter="true"
+              maxlength="99"
+              helper-text="Helper text"
+              error-text="Error text"
+              disabled="true"
+            ></ion-textarea>
           </div>
         </div>
       </ion-content>
