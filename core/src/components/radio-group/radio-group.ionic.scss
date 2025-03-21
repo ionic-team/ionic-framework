@@ -25,12 +25,12 @@
 // list to align them with the list header and item text.
 ion-list .radio-group-top {
   /* stylelint-disable */
-  @include ltr() {
+  @include globals.ltr() {
     padding-right: globals.$ion-space-400;
     padding-left: calc(globals.$ion-space-400 + var(--ion-safe-area-left, 0px));
   }
 
-  @include rtl() {
+  @include globals.rtl() {
     padding-right: calc(globals.$ion-space-400 + var(--ion-safe-area-right, 0px));
     padding-left: globals.$ion-space-400;
   }
