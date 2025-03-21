@@ -5,8 +5,8 @@
   /**
    * @prop --margin-top: Top margin of the divider
    * @prop --margin-bottom: Bottom margin of the divider
-   * @prop --padding-end: Right margin of the divider
-   * @prop --padding-start: Left padding of the divider
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the divider
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the divider
    */
   --margin-top: 0px;
   --margin-bottom: 0px;
@@ -18,8 +18,16 @@
   width: 100%;
 
   /* stylelint-disable */
-  padding-right: var(--padding-end);
-  padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+  @include ltr() {
+    padding-right: var(--padding-end);
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
+    padding-left: var(--padding-end);
+  }
+  /* stylelint-enable */  
 }
 
 :host hr {
@@ -31,7 +39,7 @@
   margin-bottom: var(--margin-bottom);
 
   border: none;
-  border-top: #{globals.$ion-border-size-025} solid #{globals.$ion-border-default};
+  border-top: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-border-default;
 }
 
 // Divider Spacing
