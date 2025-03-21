@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./input";
+@import "./input.common";
 @import "./input.ionic.outline.scss";
 
 // Ionic Input
@@ -13,7 +13,6 @@
   --highlight-color-invalid: #{globals.$ion-semantics-danger-800};
   --placeholder-color: #{globals.$ion-primitives-neutral-800};
   --placeholder-opacity: 1;
-  --text-color-invalid: #{globals.$ion-semantics-danger-800};
   --background: #{globals.$ion-primitives-base-white};
 
   font-size: globals.$ion-font-size-350;
@@ -138,8 +137,7 @@
 
 .input-bottom {
   @include padding(globals.$ion-space-100, 0, 0, 0);
-
-  font-weight: globals.$ion-font-weight-medium;
+  @include globals.typography(globals.$ion-body-sm-medium);
 }
 
 .input-bottom .helper-text,
@@ -148,11 +146,7 @@
 }
 
 :host(.has-focus.ion-valid) .helper-text {
-  color: globals.$ion-semantics-success-900;
-}
-
-:host(.ion-touched.ion-invalid) .error-text {
-  color: var(--text-color-invalid);
+  color: var(--highlight-color-valid);
 }
 
 :host(.has-focus.ion-valid),
@@ -173,7 +167,6 @@
 // ----------------------------------------------------------------
 
 :host(.input-disabled) {
-  // color for the text within the input
   --color: #{globals.$ion-primitives-neutral-500};
   --background: #{globals.$ion-primitives-neutral-100};
   --border-color: #{globals.$ion-primitives-neutral-300};
@@ -185,7 +178,7 @@
 :host(.input-disabled:not(.ion-valid)) .input-bottom .helper-text,
 :host(.input-disabled) .input-bottom .counter,
 :host(.input-disabled) .label-text-wrapper {
-  color: globals.$ion-primitives-neutral-500;
+  color: globals.$ion-text-disabled;
 }
 
 :host(.input-disabled.has-focus.ion-valid) {
@@ -201,9 +194,7 @@
 }
 
 :host(.input-disabled.has-focus.ion-valid) .input-bottom .helper-text,
-:host(.input-disabled.ion-touched.ion-invalid) .error-text,
-:host(.input-disabled.ion-color) .input-bottom .helper-text,
-:host(.input-disabled.ion-color) .helper-text {
+:host(.input-disabled.ion-touched.ion-invalid) .error-text {
   opacity: 0.6;
 }
 

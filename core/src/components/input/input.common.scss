@@ -1,6 +1,6 @@
-@import "./input.vars";
+@import "../../themes/mixins";
 
-// Input
+// Input: Common
 // --------------------------------------------------
 
 :host {
@@ -19,11 +19,8 @@
    * @prop --placeholder-font-weight: Font weight of the input placeholder text
    * @prop --placeholder-opacity: Opacity of the input placeholder text
    *
-   * @prop --highlight-height: The height of the highlight on the input. Only applies to md mode.
-   * @prop --highlight-color-focused: The color of the highlight on the input when focused
    * @prop --highlight-color-valid: The color of the highlight on the input when valid
    * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
-   * @prop --text-color-invalid: The color of the error text on the input when invalid. Only applies to ionic theme.
    *
    * @prop --border-color: Color of the border below the input when using helper text, error text, or counter
    * @prop --border-radius: Radius of the input. A large radius may display unevenly when using fill="outline"; if needed, use shape="round" instead or increase --padding-start.
@@ -33,17 +30,11 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: #{$placeholder-opacity};
   --padding-top: 0px;
   --padding-end: 0px;
   --padding-bottom: 0px;
   --padding-start: 0px;
-  --background: transparent;
-  --color: initial;
   --border-style: solid;
-  --highlight-color-focused: #{ion-color(primary, base)};
-  --highlight-color-valid: #{ion-color(success, base)};
-  --highlight-color-invalid: #{ion-color(danger, base)};
 
   /**
    * This is a private API that is used to switch
@@ -59,16 +50,10 @@
 
   width: 100%;
 
-  min-height: 44px;
-
   /* stylelint-disable-next-line all */
   padding: 0 !important;
 
   color: var(--color);
-
-  font-family: $font-family-base;
-
-  z-index: $z-index-item-input;
 }
 
 :host-context(ion-item)[slot="start"],
@@ -78,19 +63,6 @@
 
 :host(.ion-color) {
   --highlight-color-focused: #{current-color(base)};
-}
-
-// Input Wrapper
-// ----------------------------------------------------------------
-
-/**
- * Since the label sits on top of the element,
- * the component needs to be taller otherwise the
- * label will appear too close to the input text.
- */
-:host(.input-label-placement-floating),
-:host(.input-label-placement-stacked) {
-  min-height: 56px;
 }
 
 // Native Text Input
@@ -191,9 +163,6 @@
   align-items: center;
   justify-content: center;
 
-  width: 30px;
-  height: 30px;
-
   border: 0;
 
   outline: none;
@@ -201,25 +170,12 @@
   background-color: transparent;
   background-repeat: no-repeat;
 
-  color: $text-color-step-400;
-
   visibility: hidden;
   appearance: none;
 }
 
 :host(.in-item-color) .input-clear-icon {
   color: inherit;
-}
-
-/**
- * Normally, we would not want to use :focus
- * here because that would mean tapping the button
- * on mobile would focus it (and keep it focused).
- * However, the clear button always disappears after
- * being activated, so we never get to that state.
- */
-.input-clear-icon:focus {
-  opacity: 0.5;
 }
 
 :host(.has-value) .input-clear-icon {
@@ -293,20 +249,11 @@
 // ----------------------------------------------------------------
 
 .input-bottom {
-  /**
-   * The bottom content should take on the start and end
-   * padding so it is always aligned with either the label
-   * or the start of the text input.
-   */
-  @include padding(5px, var(--padding-end), 0, var(--padding-start));
-
   display: flex;
 
   justify-content: space-between;
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
-
-  font-size: dynamic-font(12px);
 
   white-space: normal;
 }
@@ -342,8 +289,6 @@
 
 .input-bottom .helper-text {
   display: block;
-
-  color: $text-color-step-300;
 }
 
 :host(.ion-touched.ion-invalid) .input-bottom .error-text {
@@ -365,11 +310,7 @@
    */
   @include margin-horizontal(auto, null);
 
-  color: $text-color-step-300;
-
   white-space: nowrap;
-
-  padding-inline-start: 16px;
 }
 
 // Input Native
@@ -464,15 +405,6 @@
   flex-direction: row;
 }
 
-:host(.input-label-placement-start) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the input should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
-
 // Input Label Placement - End
 // ----------------------------------------------------------------
 
@@ -484,26 +416,8 @@
   flex-direction: row-reverse;
 }
 
-/**
- * The margin between the label and
- * the input should be on the start
- * when the label sits at the end.
- */
-:host(.input-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, $form-control-label-margin);
-}
-
 // Input Label Placement - Fixed
 // ----------------------------------------------------------------
-
-:host(.input-label-placement-fixed) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the input should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
 
 /**
  * Label is on the left of the input in LTR and
@@ -583,31 +497,8 @@
   opacity: 1;
 }
 
-/**
- * This makes the label sit above the input.
- */
-:host(.label-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the input.
-   */
-  max-width: calc(100% / #{$form-control-label-stacked-scale});
-}
-
-// Start/End Slots
+// Input Password Toggle
 // ----------------------------------------------------------------
-
-::slotted([slot="start"]:last-of-type) {
-  margin-inline-end: $form-control-label-margin;
-  margin-inline-start: 0;
-}
-
-::slotted([slot="end"]:first-of-type) {
-  margin-inline-start: $form-control-label-margin;
-  margin-inline-end: 0;
-}
 
 /**
  * The input password toggle component should be hidden when the input is readonly/disabled

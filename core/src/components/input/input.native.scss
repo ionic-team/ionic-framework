@@ -1,0 +1,180 @@
+@import "./input.common";
+@import "./input.vars";
+
+// Input: Native
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --highlight-height: The height of the highlight on the input. Only applies to md mode.
+   * @prop --highlight-color-focused: The color of the highlight on the input when focused
+   */
+  --placeholder-opacity: #{$placeholder-opacity};
+  --background: transparent;
+  --color: initial;
+  --highlight-color-focused: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
+
+  min-height: 44px;
+
+  color: var(--color);
+
+  font-family: $font-family-base;
+
+  z-index: $z-index-item-input;
+}
+
+:host(.ion-color) {
+  --highlight-color-focused: #{current-color(base)};
+}
+
+// Input Wrapper
+// ----------------------------------------------------------------
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the input text.
+ */
+:host(.input-label-placement-floating),
+:host(.input-label-placement-stacked) {
+  min-height: 56px;
+}
+
+// Clear Input Icon
+// --------------------------------------------------
+
+.input-clear-icon {
+  width: 30px;
+  height: 30px;
+
+  color: $text-color-step-400;
+}
+
+/**
+ * Normally, we would not want to use :focus
+ * here because that would mean tapping the button
+ * on mobile would focus it (and keep it focused).
+ * However, the clear button always disappears after
+ * being activated, so we never get to that state.
+ */
+.input-clear-icon:focus {
+  opacity: 0.5;
+}
+
+// Input Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+/**
+ * The component highlight is only shown
+ * on focus, so we can safely set the valid
+ * color state when valid. If we
+ * set it when .has-focus is present then
+ * the highlight color would change
+ * from the valid color to the component's
+ * color during the transition after the
+ * component loses focus.
+ */
+:host(.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
+}
+
+// Input Bottom Content
+// ----------------------------------------------------------------
+
+.input-bottom {
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the text input.
+   */
+  @include padding(5px, var(--padding-end), 0, var(--padding-start));
+
+  font-size: dynamic-font(12px);
+}
+
+// Input Hint Text
+// ----------------------------------------------------------------
+
+.input-bottom .helper-text {
+  color: $text-color-step-300;
+}
+
+// Input Max Length Counter
+// ----------------------------------------------------------------
+
+.input-bottom .counter {
+  color: $text-color-step-300;
+
+  padding-inline-start: 16px;
+}
+
+// Input Label Placement - Start
+// ----------------------------------------------------------------
+
+:host(.input-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+// Input Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * The margin between the label and
+ * the input should be on the start
+ * when the label sits at the end.
+ */
+:host(.input-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, $form-control-label-margin);
+}
+
+// Input Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.input-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+// Input Label Placement - Stacked and Floating
+// ----------------------------------------------------------------
+
+/**
+ * This makes the label sit above the input.
+ */
+:host(.label-floating) .label-text-wrapper {
+  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]:last-of-type) {
+  margin-inline-end: $form-control-label-margin;
+  margin-inline-start: 0;
+}
+
+::slotted([slot="end"]:first-of-type) {
+  margin-inline-start: $form-control-label-margin;
+  margin-inline-end: 0;
+}
