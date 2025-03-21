@@ -20,62 +20,36 @@
     </style>
   </head>
 
-  <body>
+  <body onLoad="onLoad()">
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Divider - Basic</ion-title>
+          <ion-title>Divider - Spacing</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
-        <ion-list>
-          <ion-item>
-            <ion-select id="select-spacing" justify="space-between" interface="alert" label="Spacing" placeholder="">
-              <ion-select-option selected="true" value="xxsmall">XXSmall(default)</ion-select-option>
-              <ion-select-option value="xsmall">XSmall</ion-select-option>
-              <ion-select-option value="small">Small</ion-select-option>
-              <ion-select-option value="medium">Medium</ion-select-option>
-              <ion-select-option value="large">Large</ion-select-option>
-              <ion-select-option value="xlarge">Xlarge</ion-select-option>
-              <ion-select-option value="xxlarge">XXlarge</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-toggle id="inset-toggle">Inset</ion-toggle>
-          </ion-item>
-        </ion-list>
-
-        <h5 class="ion">Top</h5>
-        <ion-divider></ion-divider>
-        <h5 class="ion-margin-top-space-0">Bottom</h5>
+        <div id="grid-container" class="grid"></div>
       </ion-content>
     </ion-app>
     <script>
-      const listOfDividers = Array.from(document.querySelectorAll('ion-divider'));
-      const toggle = document.getElementById('inset-toggle');
+      function onLoad() {
+        const spacings = ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'];
+        const container = document.getElementById('grid-container');
 
-      function updateAttr(el, name, value) {
-        if (value === '' || value === undefined) {
-          el.removeAttribute(name);
-        } else {
-          el.setAttribute(name, value);
-        }
+        let htmlContent = '';
+        spacings.forEach((spacing) => {
+          htmlContent += `
+                <div class="grid-item">
+                    <h2>${spacing}</h2>
+                    top
+                    <ion-divider spacing="${spacing}"></ion-divider>
+                    bottom
+                </div>
+            `;
+        });
+        container.innerHTML = htmlContent;
       }
-
-      toggle.addEventListener('ionChange', (event) => {
-        const isChecked = event.detail.checked;
-        for (const el of listOfDividers) {
-          updateAttr(el, 'inset', isChecked);
-        }
-      });
-
-      const selectSize = document.getElementById('select-spacing');
-      selectSize.addEventListener('ionChange', (e) => {
-        for (const el of listOfDividers) {
-          updateAttr(el, 'spacing', e.detail.value);
-        }
-      });
     </script>
   </body>
 </html>
