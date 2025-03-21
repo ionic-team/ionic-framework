@@ -650,10 +650,6 @@ export const dismiss = async <OverlayDismissOptions>(
 
   const isLastOverlay = presentedOverlays.length === 1;
 
-  if (isLastOverlay) {
-    document.body.classList.remove(BACKDROP_NO_SCROLL);
-  }
-
   /**
    * For accessibility, toasts lack focus traps and don’t receive
    * `aria-hidden` on the root element when presented.
@@ -675,6 +671,10 @@ export const dismiss = async <OverlayDismissOptions>(
    */
   if (lastOverlayNotToast) {
     setRootAriaHidden(false);
+  }
+
+  if (isLastOverlay) {
+    document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 
   overlay.presented = false;
