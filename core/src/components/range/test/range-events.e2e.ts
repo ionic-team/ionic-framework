@@ -217,7 +217,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(ionInputSpy).toHaveReceivedEvent();
       });
 
-      test('should not emit when the value does not change', async ({ page }) => {
+      test('should not emit when the value does not change', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/29619',
+        });
+
         /**
          * Requires padding to prevent the knob from being clipped.
          * If it's clipped, then the value might be one off.
