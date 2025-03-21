@@ -217,6 +217,37 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(ionInputSpy).toHaveReceivedEvent();
       });
 
+      test('should not emit when the value does not change', async ({ page }) => {
+        /**
+         * Requires padding to prevent the knob from being clipped.
+         * If it's clipped, then the value might be one off.
+         * For example, if the knob is clipped on the right, then the value
+         * will be 99 instead of 100.
+         */
+        await page.setContent(
+          `
+          <div style="padding: 0 20px">
+            <ion-range aria-label="range"></ion-range>
+          </div>
+        `,
+          config
+        );
+
+        const rangeHandle = page.locator('ion-range .range-knob-handle');
+        const ionInputSpy = await page.spyOnEvent('ionInput');
+
+        const rangeHandleBoundingBox = await rangeHandle.boundingBox();
+        const x = rangeHandleBoundingBox!.width / 2;
+        const y = rangeHandleBoundingBox!.height / 2;
+
+        // Click in the middle of the knob to prevent the knob from moving.
+        await rangeHandle.click({
+          position: { x, y },
+        });
+
+        expect(ionInputSpy).not.toHaveReceivedEvent();
+      });
+
       test('should emit when the knob is moved with the keyboard', async ({ page }) => {
         await page.setContent(`<ion-range aria-label="range" value="50"></ion-range>`, config);
 

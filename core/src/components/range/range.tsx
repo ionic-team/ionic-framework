@@ -213,7 +213,12 @@ export class Range implements ComponentInterface {
    */
   @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
-  protected valueChanged() {
+  protected valueChanged(newVlue: RangeValue, oldValue: RangeValue) {
+    // The check is necessary because the value can be an object.
+    if (JSON.stringify(newVlue) !== JSON.stringify(oldValue)) {
+      this.ionInput.emit({ value: this.value });
+    }
+
     if (!this.noUpdate) {
       this.updateRatio();
     }
@@ -590,8 +595,6 @@ export class Range implements ComponentInterface {
           lower: Math.min(valA, valB),
           upper: Math.max(valA, valB),
         };
-
-    this.ionInput.emit({ value: this.value });
 
     this.noUpdate = false;
   }
