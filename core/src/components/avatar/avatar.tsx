@@ -86,11 +86,7 @@ export class Avatar implements ComponentInterface {
   }
 
   render() {
-    const {
-      hasImage,
-      hasIcon,
-      disabled
-    } = this;
+    const { hasImage, hasIcon, disabled } = this;
     const theme = getIonTheme(this);
     const size = this.getSize();
     const shape = this.getShape();
