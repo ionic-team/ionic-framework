@@ -6,7 +6,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
     test('should render readonly textarea correctly', async ({ page }) => {
       await page.setContent(
         `
-        <ion-textarea label="Email" value="hi@ionic.io" readonly="true"></ion-textarea>
+        <ion-textarea label="Email" label-placement="stacked" value="hi@ionic.io" helper-text="Helper text" error-text="Error text" counter="true" maxlength="99" readonly="true"></ion-textarea>
       `,
         config
       );
@@ -18,7 +18,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
     test('should render disabled textarea correctly', async ({ page }) => {
       await page.setContent(
         `
-        <ion-textarea label="Email" value="hi@ionic.io" disabled="true"></ion-textarea>
+        <ion-textarea label="Email" label-placement="stacked" value="hi@ionic.io" helper-text="Helper text" error-text="Error text" counter="true" maxlength="99" disabled="true"></ion-textarea>
       `,
         config
       );
@@ -30,12 +30,12 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 });
 
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('focused'), () => {
+  test.describe(title('textarea: focused'), () => {
     test('should render focused textarea correctly', async ({ page }) => {
       await page.setContent(
         `
         <div class="container ion-padding">
-          <ion-textarea fill="outline" value="hi@ionic.io" class="has-focus"></ion-textarea>
+          <ion-textarea label="Label" label-placement="stacked" fill="outline" value="hi@ionic.io" helper-text="Helper text" error-text="Error text" counter="true" maxlength="99" class="has-focus"></ion-textarea>
         </div>
       `,
         config
@@ -43,6 +43,20 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
 
       const container = page.locator('.container');
       await expect(container).toHaveScreenshot(screenshot(`textarea-focused`));
+    });
+
+    test('should render focused valid textarea correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <div class="container ion-padding">
+          <ion-textarea label="Label" label-placement="stacked" fill="outline" value="hi@ionic.io" helper-text="Helper text" error-text="Error text" counter="true" maxlength="99" class="ion-valid has-focus"></ion-textarea>
+        </div>
+      `,
+        config
+      );
+
+      const container = page.locator('.container');
+      await expect(container).toHaveScreenshot(screenshot(`textarea-focused-valid`));
     });
   });
 });
