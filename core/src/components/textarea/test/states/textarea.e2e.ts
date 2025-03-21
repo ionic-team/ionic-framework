@@ -1,12 +1,12 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: states'), () => {
     test('should render readonly textarea correctly', async ({ page }) => {
       await page.setContent(
         `
-        <ion-textarea label="Email" label-placement="stacked" value="hi@ionic.io" helper-text="Helper text" error-text="Error text" counter="true" maxlength="99" readonly="true"></ion-textarea>
+        <ion-textarea label="Email" value="hi@ionic.io" readonly="true"></ion-textarea>
       `,
         config
       );
@@ -18,7 +18,7 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
     test('should render disabled textarea correctly', async ({ page }) => {
       await page.setContent(
         `
-        <ion-textarea label="Email" label-placement="stacked" value="hi@ionic.io" helper-text="Helper text" error-text="Error text" counter="true" maxlength="99" disabled="true"></ion-textarea>
+        <ion-textarea label="Email" value="hi@ionic.io" disabled="true"></ion-textarea>
       `,
         config
       );
@@ -30,33 +30,124 @@ configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ ti
 });
 
 configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('textarea: focused'), () => {
-    test('should render focused textarea correctly', async ({ page }) => {
-      await page.setContent(
-        `
-        <div class="container ion-padding">
-          <ion-textarea label="Label" label-placement="stacked" fill="outline" value="hi@ionic.io" helper-text="Helper text" error-text="Error text" counter="true" maxlength="99" class="has-focus"></ion-textarea>
-        </div>
-      `,
-        config
-      );
+  test.describe(title('textarea: states'), () => {
+    test.describe(title('disabled'), () => {
+      test.describe(title('no fill'), () => {
+        test('should render disabled textarea correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-textarea
+                label="Email"
+                label-placement="stacked"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                disabled="true"
+              ></ion-textarea>
 
-      const container = page.locator('.container');
-      await expect(container).toHaveScreenshot(screenshot(`textarea-focused`));
+              <ion-textarea
+                label="Email"
+                label-placement="stacked"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                class="ion-valid has-focus"
+                disabled="true"
+              ></ion-textarea>
+
+              <ion-textarea
+                label="Email"
+                label-placement="stacked"
+                value="hi@ionic.io"
+                error-text="Please enter a valid email"
+                counter="true"
+                maxlength="20"
+                class="ion-touched ion-invalid"
+                disabled="true"
+              ></ion-textarea>
+
+              <ion-textarea
+                label="Email"
+                label-placement="stacked"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                disabled="true"
+                color="warning"
+              ></ion-textarea>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`textarea-disabled-no-fill`));
+        });
+      });
     });
 
-    test('should render focused valid textarea correctly', async ({ page }) => {
-      await page.setContent(
-        `
-        <div class="container ion-padding">
-          <ion-textarea label="Label" label-placement="stacked" fill="outline" value="hi@ionic.io" helper-text="Helper text" error-text="Error text" counter="true" maxlength="99" class="ion-valid has-focus"></ion-textarea>
-        </div>
-      `,
-        config
-      );
+    test.describe(title('focused'), () => {
+      test('should render focused textarea correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <div class="container">
+            <ion-textarea
+              label="Email"
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              class="has-focus"
+            ></ion-textarea>
 
-      const container = page.locator('.container');
-      await expect(container).toHaveScreenshot(screenshot(`textarea-focused-valid`));
+            <ion-textarea
+              fill="outline"
+              label="Email"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              helper-text="Enter an email"
+              counter="true"
+              maxlength="20"
+              class="has-focus"
+            ></ion-textarea>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('.container');
+        await expect(container).toHaveScreenshot(screenshot(`textarea-focused`));
+      });
+    });
+
+    test.describe(title('readonly'), () => {
+      test.describe(title('no fill'), () => {
+        test('should render readonly textarea correctly', async ({ page }) => {
+          await page.setContent(
+            `
+            <div class="container">
+              <ion-textarea
+                label="Email"
+                label-placement="stacked"
+                value="hi@ionic.io"
+                helper-text="Enter an email"
+                counter="true"
+                maxlength="20"
+                readonly="true"
+              ></ion-textarea>
+            </div>
+          `,
+            config
+          );
+
+          const container = page.locator('.container');
+          await expect(container).toHaveScreenshot(screenshot(`textarea-readonly-no-fill`));
+        });
+      });
     });
   });
 });
