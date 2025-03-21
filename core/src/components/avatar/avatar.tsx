@@ -40,6 +40,11 @@ export class Avatar implements ComponentInterface {
    */
   @Prop() shape?: 'soft' | 'round' | 'rectangular';
 
+  /**
+   * If `true`, the user cannot interact with the avatar.
+   */
+  @Prop() disabled = false;
+
   get hasImage() {
     return !!this.el.querySelector('ion-img') || !!this.el.querySelector('img');
   }
@@ -81,6 +86,7 @@ export class Avatar implements ComponentInterface {
   }
 
   render() {
+    const { hasImage, hasIcon, disabled } = this;
     const theme = getIonTheme(this);
     const size = this.getSize();
     const shape = this.getShape();
@@ -91,8 +97,9 @@ export class Avatar implements ComponentInterface {
           [theme]: true,
           [`avatar-${size}`]: size !== undefined,
           [`avatar-${shape}`]: shape !== undefined,
-          [`avatar-image`]: this.hasImage,
-          [`avatar-icon`]: this.hasIcon,
+          [`avatar-image`]: hasImage,
+          [`avatar-icon`]: hasIcon,
+          [`avatar-disabled`]: disabled,
         }}
       >
         <slot></slot>
