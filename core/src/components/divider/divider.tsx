@@ -14,15 +14,15 @@ import { Component, Prop, Host, h } from '@stencil/core';
 export class Divider implements ComponentInterface {
   /**
    * Set to `"xxsmall"` for the smallest spacing.
-   * Set to "xsmall" for a very small spacing.
-   * Set to `"small"` for a small spacing.
-   * Set to "medium" for a medium spacing.
-   * Set to "large" for a large spacing.
+   * Set to "xsmall" for very small spacing.
+   * Set to `"small"` for small spacing.
+   * Set to "medium" for medium spacing.
+   * Set to "large" for large spacing.
    * Set to `"xlarge"` for the largest spacing.
    *
-   * Defaults to `"small"` for the `ionic` theme, undefined for all other themes.
+   * Defaults to `"xxsmall"`.
    */
-  @Prop({ reflect: true }) spacing?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
+  @Prop({ reflect: true }) spacing?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' = 'xxsmall';
 
   /**
    * If `true`, the divider will have horizontal margins
@@ -30,25 +30,17 @@ export class Divider implements ComponentInterface {
    */
   @Prop() inset?: boolean = false;
 
-  private getSpacing(): string | undefined {
-    const { spacing } = this;
-
-    if (spacing === undefined) {
-      return 'xxsmall';
-    }
-
-    return spacing;
-  }
 
   render() {
+    const { inset, spacing } = this;
     const theme = getIonTheme(this);
-    const spacing = this.getSpacing();
+    
     return (
       <Host
         class={{
           [theme]: true,
-          [`divider-space-${spacing}`]: spacing !== undefined,
-          [`divider-inset`]: this.inset || false,
+          [`divider-spacing-${spacing}`]: spacing !== undefined,
+          [`divider-inset`]: inset,
         }}
       >
         <hr />
