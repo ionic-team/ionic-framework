@@ -89,7 +89,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 /**
  * Rendering is different across modes
  */
-configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toggle: helper text rendering'), () => {
     // Check the default label placement, end, and stacked
     [undefined, 'end', 'stacked'].forEach((labelPlacement) => {
