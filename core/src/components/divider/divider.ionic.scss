@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./divider.common.scss";
+@use "./divider.common.scss";
 
 :host hr {
   border-top: globals.$ion-border-size-025 globals.$ion-border-style-solid globals.$ion-border-default;
