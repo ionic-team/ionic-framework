@@ -26,7 +26,7 @@
 // ----------------------------------------------------------------
 
 .select-bottom {
-  @include globals.margin(globals.$ion-space-100, null, null, null);
+  @include globals.padding(globals.$ion-space-100, null, null, null);
   @include globals.typography(globals.$ion-body-sm-medium);
 }
 
