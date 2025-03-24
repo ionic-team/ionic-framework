@@ -295,14 +295,14 @@ export declare interface IonApp extends Components.IonApp {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonAvatar,
-  inputs: ['mode', 'shape', 'size', 'theme']
+  inputs: ['disabled', 'mode', 'shape', 'size', 'theme']
 })
 @Component({
   selector: 'ion-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'shape', 'size', 'theme'],
+  inputs: ['disabled', 'mode', 'shape', 'size', 'theme'],
   standalone: true
 })
 export class IonAvatar {
