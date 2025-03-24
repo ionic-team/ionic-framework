@@ -19,7 +19,11 @@ configs({ directions: ['ltr'], modes: ['md', 'ionic-md'] }).forEach(({ config, s
 
       await expect(container).toHaveScreenshot(screenshot(`divider-basic-default`));
     });
+  });
+});
 
+configs({ modes: ['md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('divider: inset'), () => {
     test('should not have visual regressions when inset is enabled', async ({ page }) => {
       await page.setContent(
         `
