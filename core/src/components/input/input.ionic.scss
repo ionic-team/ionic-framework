@@ -64,8 +64,6 @@
 
   // Cursor should match the native input when hovering over the target area.
   cursor: text;
-
-  z-index: 1;
 }
 
 ::slotted([slot="start"]),

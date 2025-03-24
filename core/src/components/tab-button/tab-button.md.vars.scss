@@ -80,3 +80,18 @@ $tab-button-md-badge-font-size: 8px;
 
 /// @prop - Size of the empty tab button badge
 $tab-button-md-badge-size-empty: 8px;
+
+/// @prop - Badge bottom position
+$tab-button-md-badge-bottom-position: calc(50% - 8px);
+
+/// @prop - Badge bottom position when empty
+$tab-button-md-badge-bottom-position-empty: calc(50% - 4px);
+
+/// @prop - Badge bottom position when tab bottom has icon at Bottom
+$tab-md-button-icon-bottom-badge-top-position: calc(50% - 4px);
+
+/// @prop - Badge bottom position when tab bottom has icon at bottom
+$tab-md-button-icon-bottom-badge-bottom-position: calc(50% + 4px);
+
+/// @prop - Badge bottom position when empty and when tab bottom has icon at bottom
+$tab-md-button-icon-bottom-badge-bottom-position-empty: calc(50% + 12px);

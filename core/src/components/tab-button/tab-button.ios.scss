@@ -15,7 +15,7 @@
 // iOS Tab Button: Badge
 // --------------------------------------------------
 
-::slotted(ion-badge) {
+::slotted(ion-badge:not([vertical])) {
   @include padding(1px, 6px);
   @include position(4px, null, null, calc(50% + 6px));
 
@@ -24,6 +24,64 @@
   font-size: 12px;
 
   line-height: 16px;
+}
+
+:host ::slotted(ion-badge:empty) {
+  @include padding(0, 0);
+
+  width: $tab-ios-button-badge-size-emtpy;
+  height: $tab-ios-button-badge-size-emtpy;
+}
+
+:host ::slotted(ion-badge[vertical]) {
+  @include position(null, null, null, $tab-ios-button-badge-start-position);
+}
+
+:host ::slotted(ion-badge.badge-vertical-top) {
+  @include position($tab-ios-button-badge-top-position);
+}
+
+:host ::slotted(ion-badge.badge-vertical-top:empty) {
+  @include position($tab-ios-button-badge-top-position-empty);
+}
+
+:host ::slotted(ion-badge.badge-vertical-bottom) {
+  @include position($tab-ios-button-badge-bottom-position);
+}
+
+:host ::slotted(ion-badge.badge-vertical-bottom:empty) {
+  @include position($tab-ios-button-badge-bottom-position-empty);
+}
+
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include padding(
+    $tab-ios-button-badge-padding-top,
+    $tab-ios-button-badge-padding-end,
+    $tab-ios-button-badge-padding-bottom,
+    $tab-ios-button-badge-padding-start
+  );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: $tab-ios-button-badge-size;
+  height: $tab-ios-button-badge-size;
+
+  font-size: $tab-ios-button-badge-font-size;
+}
+
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-top) {
+  @include position($tab-ios-button-icon-bottom-badge-top-position);
+}
+
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom) {
+  @include position($tab-ios-button-icon-bottom-badge-bottom-position);
+}
+
+:host(.tab-layout-icon-bottom) ::slotted(ion-badge.badge-vertical-bottom:empty) {
+  @include position($tab-ios-button-icon-bottom-badge-bottom-position-empty);
 }
 
 // iOS Tab Button: Icon
@@ -102,7 +160,7 @@
 
 // Label
 :host(.tab-layout-icon-bottom) ::slotted(ion-label) {
-  @include margin(4px, null, null, null);
+  @include margin(4px);
 }
 
 // iOS Tab Button: Icon Start / End Layout
@@ -128,7 +186,7 @@
 // Badge
 :host(.tab-layout-label-hide) ::slotted(ion-badge),
 :host(.tab-has-icon-only) ::slotted(ion-badge) {
-  @include position(10px, null, null, null);
+  @include position(10px);
 }
 
 // Icon
