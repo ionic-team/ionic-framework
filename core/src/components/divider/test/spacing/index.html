@@ -29,26 +29,50 @@
       </ion-header>
 
       <ion-content>
-        <div id="grid-container" class="grid"></div>
+        <ion-grid>
+          <ion-row>
+            <ion-col id="col-spacing">
+              <h2>No Inset</h2>
+            </ion-col>
+            <ion-col id="col-inset">
+              <h2>With Inset</h2>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-content>
     </ion-app>
     <script>
       function onLoad() {
         const spacings = ['xxsmall', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'];
-        const container = document.getElementById('grid-container');
+        const spacingContainer = document.getElementById('col-spacing');
+        const insetContainer = document.getElementById('col-inset');
 
-        let htmlContent = '';
+        let spacingHtmlContent = '';
+        let insetHtmlContent = '';
         spacings.forEach((spacing) => {
-          htmlContent += `
-                <div class="grid-item">
-                    <h2>${spacing}</h2>
+          spacingHtmlContent += `
+                <ion-row>
+                  <ion-col>
+                    <h3>${spacing}</h3>
                     top
                     <ion-divider spacing="${spacing}"></ion-divider>
                     bottom
-                </div>
+                  </ion-col>
+                </ion-row>
             `;
+          insetHtmlContent += `
+              <ion-row>
+                <ion-col>
+                  <h3>${spacing}</h3>
+                  top
+                  <ion-divider inset spacing="${spacing}"></ion-divider>
+                  bottom
+                </ion-col>
+              </ion-row>
+          `;
         });
-        container.innerHTML = htmlContent;
+        spacingContainer.innerHTML += spacingHtmlContent;
+        insetContainer.innerHTML += insetHtmlContent;
       }
     </script>
   </body>

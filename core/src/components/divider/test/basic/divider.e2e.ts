@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ config, screenshot, title }) => {
+configs({ directions: ['ltr', 'rtl'], modes: ['ios', 'md', 'ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('divider: rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
