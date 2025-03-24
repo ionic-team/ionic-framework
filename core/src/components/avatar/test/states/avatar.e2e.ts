@@ -11,8 +11,8 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await page.setContent(
         ` 
         <div id="container"> 
-          <ion-avatar id="avatar-characters-disabled" disabled> AV </ion-avatar>
-          <ion-avatar id="avatar-characters-disabled" disabled>
+          <ion-avatar disabled> AV </ion-avatar>
+          <ion-avatar disabled>
             <img src="/src/components/avatar/test/avatar.svg" />
           </ion-avatar>
         </div> 
