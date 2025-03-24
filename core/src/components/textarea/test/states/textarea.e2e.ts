@@ -84,6 +84,9 @@ configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ title, screensh
             config
           );
 
+          // Set the viewport size taller to capture all of the textareas
+          await page.setViewportSize({ width: 393, height: 800 });
+
           const container = page.locator('.container');
           await expect(container).toHaveScreenshot(screenshot(`textarea-disabled-no-fill`));
         });
