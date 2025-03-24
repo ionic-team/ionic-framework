@@ -174,3 +174,19 @@
   min-width: globals.$ion-scale-400;
   height: globals.$ion-scale-400;
 }
+
+// Badge Inside Tab Button
+// --------------------------------------------------
+
+:host([vertical].in-tab-button) {
+  position: relative;
+}
+
+// Badge Icon when Inside Tab Button
+:host([vertical].in-tab-button) ::slotted(ion-icon) {
+  @include globals.position(50%, null, null, 50%);
+
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+}

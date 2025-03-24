@@ -29,3 +29,51 @@ $tab-button-ios-icon-size: 24px;
 
 /// @prop - Size of the tab button icon when there is not a label
 $tab-button-ios-icon-only-size: 30px;
+
+// Tab Button: Badge
+// --------------------------------------------------
+
+/// @prop - Badge size
+$tab-ios-button-badge-size: 16px;
+
+/// @prop - Badge size when empty
+$tab-ios-button-badge-size-emtpy: 8px;
+
+/// @prop - Badge top position
+$tab-ios-button-badge-top-position: 2px;
+
+/// @prop - Badge top position when empty
+$tab-ios-button-badge-top-position-empty: 4px;
+
+/// @prop - Badge bottom position
+$tab-ios-button-badge-bottom-position: calc(50% - 8px);
+
+/// @prop - Badge bottom position when empty
+$tab-ios-button-badge-bottom-position-empty: calc(50% - 2px);
+
+/// @prop - Badge left position
+$tab-ios-button-badge-start-position: calc(50% + 12px);
+
+/// @prop - Badge padding top
+$tab-ios-button-badge-padding-top: 4px;
+
+/// @prop - Badge padding end
+$tab-ios-button-badge-padding-end: 4px;
+
+/// @prop - Badge padding bottom
+$tab-ios-button-badge-padding-bottom: 4px;
+
+/// @prop - Badge padding start
+$tab-ios-button-badge-padding-start: 4px;
+
+/// @prop - Badge font size
+$tab-ios-button-badge-font-size: 12px;
+
+/// @prop - Badge bottom position when tab bottom has icon at Bottom
+$tab-ios-button-icon-bottom-badge-top-position: calc(50% - 4px);
+
+/// @prop - Badge bottom position when tab bottom has icon at bottom
+$tab-ios-button-icon-bottom-badge-bottom-position: calc(50% + 4px);
+
+/// @prop - Badge bottom position when empty and when tab bottom has icon at bottom
+$tab-ios-button-icon-bottom-badge-bottom-position-empty: calc(50% + 14px);

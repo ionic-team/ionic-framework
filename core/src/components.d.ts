@@ -344,6 +344,10 @@ export namespace Components {
     }
     interface IonAvatar {
         /**
+          * If `true`, the user cannot interact with the avatar.
+         */
+        "disabled": boolean;
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -5776,6 +5780,10 @@ declare namespace LocalJSX {
         "theme"?: "ios" | "md" | "ionic";
     }
     interface IonAvatar {
+        /**
+          * If `true`, the user cannot interact with the avatar.
+         */
+        "disabled"?: boolean;
         /**
           * The mode determines the platform behaviors of the component.
          */
