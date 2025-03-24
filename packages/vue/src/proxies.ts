@@ -112,7 +112,8 @@ export const IonAccordionGroup: StencilVueComponent<JSX.IonAccordionGroup, JSX.I
 
 export const IonAvatar: StencilVueComponent<JSX.IonAvatar> = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar', defineIonAvatar, [
   'size',
-  'shape'
+  'shape',
+  'disabled'
 ]);
 
 
