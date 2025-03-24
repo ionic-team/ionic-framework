@@ -214,7 +214,7 @@ export class Range implements ComponentInterface {
   @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
   protected valueChanged(newValue: RangeValue, oldValue: RangeValue) {
-    const valuesChanged = this.areValuesDifferent(newValue, oldValue);
+    const valuesChanged = this.compareValues(newValue, oldValue);
     if (valuesChanged) {
       this.ionInput.emit({ value: this.value });
     }
