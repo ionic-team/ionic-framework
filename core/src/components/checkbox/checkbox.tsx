@@ -255,6 +255,7 @@ export class Checkbox implements ComponentInterface {
 
     return (
       <Host
+        role="checkbox"
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === this.errorTextId}
