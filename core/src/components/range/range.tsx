@@ -231,7 +231,7 @@ export class Range implements ComponentInterface {
    * @param oldVal - The old value.
    * @returns `true` if the values are different, `false` otherwise.
    */
-  private areValuesDifferent = (newVal: RangeValue, oldVal: RangeValue) => {
+  private compareValues = (newVal: RangeValue, oldVal: RangeValue) => {
     if (typeof newVal === 'object' && typeof oldVal === 'object') {
       return newVal.lower !== oldVal.lower || newVal.upper !== oldVal.upper;
     }
