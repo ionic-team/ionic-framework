@@ -2380,11 +2380,6 @@ export class Datetime implements ComponentInterface {
                       return;
                     }
 
-                    if (isAdjacentDay) {
-                      // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
-                      this.el.blur();
-                    }
-
                     this.setWorkingParts({
                       ...this.workingParts,
                       month: _month,
@@ -2392,6 +2387,12 @@ export class Datetime implements ComponentInterface {
                       year: _year,
                       isAdjacentDay,
                     });
+
+                    if (isAdjacentDay) {
+                      // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
+                      this.el.blur();
+                      this.animateToDate(this.workingParts);
+                    }
 
                     // multiple only needs date info, so we can wipe out other fields like time
                     if (multiple) {
