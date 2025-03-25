@@ -152,7 +152,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 /**
  * Rendering is different across modes
  */
-configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio-group: supporting text rendering'), () => {
     test('should not have visual regressions when rendering helper text', async ({ page }) => {
       await page.setContent(
