@@ -117,19 +117,11 @@ input {
 // ----------------------------------------------------------------
 
 .toggle-bottom {
-  @include padding(4px, null, null, null);
-
   display: flex;
 
   justify-content: space-between;
 
-  font-size: dynamic-font(12px);
-
   white-space: normal;
-}
-
-:host(.toggle-label-placement-stacked) .toggle-bottom {
-  font-size: dynamic-font(16px);
 }
 
 // Toggle Hint Text
@@ -142,14 +134,10 @@ input {
  */
 .toggle-bottom .error-text {
   display: none;
-
-  color: ion-color(danger, base);
 }
 
 .toggle-bottom .helper-text {
   display: block;
-
-  color: $text-color-step-300;
 }
 
 :host(.ion-touched.ion-invalid) .toggle-bottom .error-text {

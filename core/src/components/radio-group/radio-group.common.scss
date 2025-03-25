@@ -1,0 +1,30 @@
+// Radio Group: Common
+// --------------------------------------------------
+
+ion-radio-group {
+  // Prevents additional pixels from being rendered on top
+  vertical-align: top;
+}
+
+// Radio Group: Top
+// --------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is present
+ * on the radio group. Otherwise the helper text should be shown.
+ */
+.radio-group-top .error-text {
+  display: none;
+}
+
+.radio-group-top .helper-text {
+  display: block;
+}
+
+.ion-touched.ion-invalid .radio-group-top .error-text {
+  display: block;
+}
+
+.ion-touched.ion-invalid .radio-group-top .helper-text {
+  display: none;
+}
