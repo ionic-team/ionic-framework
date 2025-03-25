@@ -984,7 +984,6 @@ ion-input,css-prop,--border-width,md
 ion-input,css-prop,--color,ionic
 ion-input,css-prop,--color,ios
 ion-input,css-prop,--color,md
-ion-input,css-prop,--highlight-color-focused,ionic
 ion-input,css-prop,--highlight-color-focused,ios
 ion-input,css-prop,--highlight-color-focused,md
 ion-input,css-prop,--highlight-color-invalid,ionic
@@ -993,7 +992,6 @@ ion-input,css-prop,--highlight-color-invalid,md
 ion-input,css-prop,--highlight-color-valid,ionic
 ion-input,css-prop,--highlight-color-valid,ios
 ion-input,css-prop,--highlight-color-valid,md
-ion-input,css-prop,--highlight-height,ionic
 ion-input,css-prop,--highlight-height,ios
 ion-input,css-prop,--highlight-height,md
 ion-input,css-prop,--padding-bottom,ionic
@@ -1020,9 +1018,6 @@ ion-input,css-prop,--placeholder-font-weight,md
 ion-input,css-prop,--placeholder-opacity,ionic
 ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
-ion-input,css-prop,--text-color-invalid,ionic
-ion-input,css-prop,--text-color-invalid,ios
-ion-input,css-prop,--text-color-invalid,md
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
