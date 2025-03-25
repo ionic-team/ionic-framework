@@ -17,6 +17,30 @@
   @include margin(null, null, $toggle-item-label-margin-bottom, null);
 }
 
+// Toggle Bottom Content
+// ----------------------------------------------------------------
+
+.toggle-bottom {
+  @include padding(4px, null, null, null);
+
+  font-size: dynamic-font(12px);
+}
+
+:host(.toggle-label-placement-stacked) .toggle-bottom {
+  font-size: dynamic-font(16px);
+}
+
+// Toggle Hint Text
+// ----------------------------------------------------------------
+
+.toggle-bottom .error-text {
+  color: ion-color(danger, base);
+}
+
+.toggle-bottom .helper-text {
+  color: $text-color-step-300;
+}
+
 // Input Label
 // ----------------------------------------------------------------
 

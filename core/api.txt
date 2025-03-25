@@ -185,6 +185,7 @@ ion-app,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-app,method,setFocus,setFocus(elements: HTMLElement[]) => Promise<void>
 
 ion-avatar,shadow
+ion-avatar,prop,disabled,boolean,false,false,false
 ion-avatar,prop,mode,"ios" | "md",undefined,false,false
 ion-avatar,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-avatar,prop,size,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxsmall" | undefined,undefined,false,false
@@ -548,26 +549,40 @@ ion-checkbox,prop,value,any,'on',false,false
 ion-checkbox,event,ionBlur,void,true
 ion-checkbox,event,ionChange,CheckboxChangeEventDetail<any>,true
 ion-checkbox,event,ionFocus,void,true
+ion-checkbox,css-prop,--border-color,ionic
 ion-checkbox,css-prop,--border-color,ios
 ion-checkbox,css-prop,--border-color,md
+ion-checkbox,css-prop,--border-color-checked,ionic
 ion-checkbox,css-prop,--border-color-checked,ios
 ion-checkbox,css-prop,--border-color-checked,md
+ion-checkbox,css-prop,--border-radius,ionic
 ion-checkbox,css-prop,--border-radius,ios
 ion-checkbox,css-prop,--border-radius,md
+ion-checkbox,css-prop,--border-style,ionic
 ion-checkbox,css-prop,--border-style,ios
 ion-checkbox,css-prop,--border-style,md
+ion-checkbox,css-prop,--border-width,ionic
 ion-checkbox,css-prop,--border-width,ios
 ion-checkbox,css-prop,--border-width,md
 ion-checkbox,css-prop,--checkbox-background,ios
 ion-checkbox,css-prop,--checkbox-background,md
+ion-checkbox,css-prop,--checkbox-background-checked,ionic
 ion-checkbox,css-prop,--checkbox-background-checked,ios
 ion-checkbox,css-prop,--checkbox-background-checked,md
+ion-checkbox,css-prop,--checkmark-color,ionic
 ion-checkbox,css-prop,--checkmark-color,ios
 ion-checkbox,css-prop,--checkmark-color,md
+ion-checkbox,css-prop,--checkmark-height,ionic
+ion-checkbox,css-prop,--checkmark-width,ionic
 ion-checkbox,css-prop,--checkmark-width,ios
 ion-checkbox,css-prop,--checkmark-width,md
+ion-checkbox,css-prop,--focus-ring-color,ionic
+ion-checkbox,css-prop,--focus-ring-offset,ionic
+ion-checkbox,css-prop,--focus-ring-width,ionic
+ion-checkbox,css-prop,--size,ionic
 ion-checkbox,css-prop,--size,ios
 ion-checkbox,css-prop,--size,md
+ion-checkbox,css-prop,--transition,ionic
 ion-checkbox,css-prop,--transition,ios
 ion-checkbox,css-prop,--transition,md
 ion-checkbox,part,container
@@ -729,6 +744,22 @@ ion-datetime-button,prop,disabled,boolean,false,false,true
 ion-datetime-button,prop,mode,"ios" | "md",undefined,false,false
 ion-datetime-button,prop,theme,"ios" | "md" | "ionic",undefined,false,false
 ion-datetime-button,part,native
+
+ion-divider,shadow
+ion-divider,prop,inset,boolean,false,false,false
+ion-divider,prop,spacing,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxlarge" | "xxsmall" | undefined,'xxsmall',false,true
+ion-divider,css-prop,--margin-bottom,ionic
+ion-divider,css-prop,--margin-bottom,ios
+ion-divider,css-prop,--margin-bottom,md
+ion-divider,css-prop,--margin-top,ionic
+ion-divider,css-prop,--margin-top,ios
+ion-divider,css-prop,--margin-top,md
+ion-divider,css-prop,--padding-end,ionic
+ion-divider,css-prop,--padding-end,ios
+ion-divider,css-prop,--padding-end,md
+ion-divider,css-prop,--padding-start,ionic
+ion-divider,css-prop,--padding-start,ios
+ion-divider,css-prop,--padding-start,md
 
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
@@ -953,7 +984,6 @@ ion-input,css-prop,--border-width,md
 ion-input,css-prop,--color,ionic
 ion-input,css-prop,--color,ios
 ion-input,css-prop,--color,md
-ion-input,css-prop,--highlight-color-focused,ionic
 ion-input,css-prop,--highlight-color-focused,ios
 ion-input,css-prop,--highlight-color-focused,md
 ion-input,css-prop,--highlight-color-invalid,ionic
@@ -962,7 +992,6 @@ ion-input,css-prop,--highlight-color-invalid,md
 ion-input,css-prop,--highlight-color-valid,ionic
 ion-input,css-prop,--highlight-color-valid,ios
 ion-input,css-prop,--highlight-color-valid,md
-ion-input,css-prop,--highlight-height,ionic
 ion-input,css-prop,--highlight-height,ios
 ion-input,css-prop,--highlight-height,md
 ion-input,css-prop,--padding-bottom,ionic
@@ -989,9 +1018,6 @@ ion-input,css-prop,--placeholder-font-weight,md
 ion-input,css-prop,--placeholder-opacity,ionic
 ion-input,css-prop,--placeholder-opacity,ios
 ion-input,css-prop,--placeholder-opacity,md
-ion-input,css-prop,--text-color-invalid,ionic
-ion-input,css-prop,--text-color-invalid,ios
-ion-input,css-prop,--text-color-invalid,md
 
 ion-input-password-toggle,shadow
 ion-input-password-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true

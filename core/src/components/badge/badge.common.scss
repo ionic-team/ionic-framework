@@ -51,15 +51,15 @@
 // Badge Empty (hint)
 // --------------------------------------------------
 
-:host([vertical]) {
+:host([vertical]:not(.in-tab-button)) {
   @include position(null, 0, null, null);
   position: absolute;
 }
 
-:host(:empty.badge-vertical-top) {
+:host(:not(.in-tab-button):empty.badge-vertical-top) {
   top: 0;
 }
 
-:host(:empty.badge-vertical-bottom) {
+:host(:not(.in-tab-button):empty.badge-vertical-bottom) {
   bottom: 0;
 }

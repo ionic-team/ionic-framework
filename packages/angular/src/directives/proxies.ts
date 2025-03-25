@@ -211,14 +211,14 @@ export declare interface IonApp extends Components.IonApp {}
 
 
 @ProxyCmp({
-  inputs: ['mode', 'shape', 'size', 'theme']
+  inputs: ['disabled', 'mode', 'shape', 'size', 'theme']
 })
 @Component({
   selector: 'ion-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'shape', 'size', 'theme'],
+  inputs: ['disabled', 'mode', 'shape', 'size', 'theme'],
 })
 export class IonAvatar {
   protected el: HTMLIonAvatarElement;
@@ -701,6 +701,28 @@ export class IonDatetimeButton {
 
 
 export declare interface IonDatetimeButton extends Components.IonDatetimeButton {}
+
+
+@ProxyCmp({
+  inputs: ['inset', 'spacing']
+})
+@Component({
+  selector: 'ion-divider',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['inset', 'spacing'],
+})
+export class IonDivider {
+  protected el: HTMLIonDividerElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonDivider extends Components.IonDivider {}
 
 
 @ProxyCmp({
