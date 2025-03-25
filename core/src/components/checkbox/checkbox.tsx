@@ -262,13 +262,21 @@ export class Checkbox implements ComponentInterface {
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
+    // Determine appropriate accessible name
+    const hasLabelContent = el.textContent !== '';
+    const inputLabelId = inputId + '-lbl';
+
     return (
+      /*
+        The host must be a checkbox role to support Safari's Voice Over accessibility
+      */
       <Host
         role="checkbox"
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === this.errorTextId}
-        aria-labelledby={inputId + '-lbl'}
+        aria-labelledby={hasLabelContent ? inputLabelId : null}
+        aria-label={!hasLabelContent ? inheritedAttributes['aria-label'] || 'checkbox' : null}
         aria-disabled={disabled ? 'true' : null}
         tabindex="0"
         onKeyDown={this.onKeyDown}
@@ -292,8 +300,7 @@ export class Checkbox implements ComponentInterface {
           */}
           <input
             type="checkbox"
-            aria-hidden="true"
-            tabindex="-1"
+            class="checkbox-native-control"
             checked={checked ? true : undefined}
             disabled={disabled}
             id={inputId}
@@ -307,10 +314,10 @@ export class Checkbox implements ComponentInterface {
           <div
             class={{
               'label-text-wrapper': true,
-              'label-text-wrapper-hidden': el.textContent === '',
+              'label-text-wrapper-hidden': !hasLabelContent,
             }}
             part="label"
-            id={inputId + '-lbl'}
+            id={inputLabelId}
           >
             <slot></slot>
             {this.renderHintText()}

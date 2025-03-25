@@ -103,6 +103,14 @@
 }
 
 /**
+  * The native control it must be hidden with display:none instead of aria-hidden="true"
+  * to avoid nested interactive elements accessibility issues
+ */
+.checkbox-native-control {
+  display: none;
+}
+
+/**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
  * there will be additional margins added.
