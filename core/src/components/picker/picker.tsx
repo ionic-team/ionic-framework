@@ -429,13 +429,17 @@ export class Picker implements ComponentInterface {
   };
 
   /**
-    * Attempts to intelligently search the first and second
-    * column as if they're number columns for the provided numbers
-    * where the first two numbers inpu are the first column
-    * and the last 2 are the last column. Tries to allow for the first
-    * number to be ignored for situations where typos occurred.
+   * Attempts to intelligently search the first and second
+   * column as if they're number columns for the provided numbers
+   * where the first two numbers inpu are the first column
+   * and the last 2 are the last column. Tries to allow for the first
+   * number to be ignored for situations where typos occurred.
    */
-  private multiColumnSearch = (firstColumn: HTMLIonPickerColumnElement, secondColumn: HTMLIonPickerColumnElement, input: string) => {
+  private multiColumnSearch = (
+    firstColumn: HTMLIonPickerColumnElement,
+    secondColumn: HTMLIonPickerColumnElement,
+    input: string
+  ) => {
     if (input.length === 0) {
       return;
     }
@@ -461,7 +465,7 @@ export class Picker implements ComponentInterface {
         this.searchColumn(secondColumn, remainingDigits);
       }
     }
-  }
+  };
 
   private selectMultiColumn = () => {
     const { inputEl, el } = this;
