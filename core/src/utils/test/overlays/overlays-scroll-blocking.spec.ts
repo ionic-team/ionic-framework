@@ -88,32 +88,22 @@ describe('overlays: scroll blocking', () => {
   });
 
   // Fixes https://github.com/ionic-team/ionic-framework/issues/30112
-  it('should not enable scroll until last toast overlay is dismissed', async () => {
+  it('should not block scroll when the toast overlay is presented', async () => {
     const page = await newSpecPage({
       components: [Toast],
       html: `
-        <ion-toast id="one"></ion-toast>
-        <ion-toast id="two"></ion-toast>
+        <ion-toast></ion-toast>
       `,
     });
 
-    const toastOne = page.body.querySelector('#one') as HTMLIonToastElement;
-    const toastTwo = page.body.querySelector('#two') as HTMLIonToastElement;
+    const toast = page.body.querySelector('ion-toast')!;
     const body = page.doc.querySelector('body')!;
 
-    await toastOne.present();
+    await toast.present();
 
-    expect(body).toHaveClass('backdrop-no-scroll');
+    expect(body).not.toHaveClass('backdrop-no-scroll');
 
-    await toastTwo.present();
-
-    expect(body).toHaveClass('backdrop-no-scroll');
-
-    await toastOne.dismiss();
-
-    expect(body).toHaveClass('backdrop-no-scroll');
-
-    await toastTwo.dismiss();
+    await toast.dismiss();
 
     expect(body).not.toHaveClass('backdrop-no-scroll');
   });
