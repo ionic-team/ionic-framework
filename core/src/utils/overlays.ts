@@ -115,12 +115,28 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
     return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
+  
+      const { component, ...restOpts } = (opts ?? {}) as { component?: HTMLElement } & Record<string, any>;
 
       /**
-       * Convert the passed in overlay options into props
+       * If the overlay is a shadow component, then
+       * convert the passed in overlay options into props
        * that get passed down into the new overlay.
+       * 
+       * If the overlay is a scoped component, the `component` option  
+      * must be appended directly to the overlay element. Since `component`  
+      * is not set via the `attachComponent` method (used for shadow components),  
+      * it needs to be manually added to the overlay element.  
+
        */
-      Object.assign(element, { ...opts, hasController: true });
+      Object.assign(element, { 
+        ...(element.shadowRoot ? opts : restOpts),
+        hasController: true
+      });
+
+      if (!element.shadowRoot && component) {
+        element.appendChild(component);
+      }
 
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);

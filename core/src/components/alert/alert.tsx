@@ -22,7 +22,7 @@ import { getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
+import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate, ComponentRef } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
@@ -149,6 +149,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Additional attributes to pass to the alert.
    */
   @Prop() htmlAttributes?: { [key: string]: any };
+
+    /**
+     * The component to display inside of the alert.
+     */
+    @Prop() component?: ComponentRef;
 
   /**
    * If `true`, the alert will open. If `false`, the alert will close.
@@ -814,6 +819,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
           {this.renderAlertInputs()}
           {this.renderAlertButtons()}
+
+          <slot></slot>
         </div>
 
         <div tabindex="0" aria-hidden="true"></div>

@@ -234,6 +234,10 @@ export namespace Components {
          */
         "buttons": (AlertButton | string)[];
         /**
+          * The component to display inside of the alert.
+         */
+        "component"?: ComponentRef;
+        /**
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
@@ -5023,6 +5027,10 @@ declare namespace LocalJSX {
           * Array of buttons to be added to the alert.
          */
         "buttons"?: (AlertButton | string)[];
+        /**
+          * The component to display inside of the alert.
+         */
+        "component"?: ComponentRef;
         /**
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
