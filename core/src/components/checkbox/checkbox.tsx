@@ -181,6 +181,15 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private onKeyDown = (ev: KeyboardEvent) => {
+    if (ev.key === ' ' || ev.key === 'Enter') {
+      ev.preventDefault();
+      if (!this.disabled) {
+        this.toggleChecked(ev);
+      }
+    }
+  };
+
   private onClick = (ev: MouseEvent) => {
     if (this.disabled) {
       return;
@@ -259,6 +268,10 @@ export class Checkbox implements ComponentInterface {
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-labelledby={inputId + '-lbl'}
+        aria-disabled={disabled ? 'true' : null}
+        tabindex="0"
+        onKeyDown={this.onKeyDown}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -272,13 +285,15 @@ export class Checkbox implements ComponentInterface {
         })}
         onClick={this.onClick}
       >
-        <label class="checkbox-wrapper">
+        <label class="checkbox-wrapper" htmlFor={inputId}>
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
           */}
           <input
             type="checkbox"
+            aria-hidden="true"
+            tabindex="-1"
             checked={checked ? true : undefined}
             disabled={disabled}
             id={inputId}
@@ -295,6 +310,7 @@ export class Checkbox implements ComponentInterface {
               'label-text-wrapper-hidden': el.textContent === '',
             }}
             part="label"
+            id={inputId + '-lbl'}
           >
             <slot></slot>
             {this.renderHintText()}
