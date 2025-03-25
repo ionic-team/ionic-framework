@@ -5,3 +5,15 @@
 
 /// @prop - Border radius of the badge
 $badge-ios-border-radius: 10px;
+
+// Badge inside a Tab Button
+// --------------------------------------------------
+
+/// @prop - Minimum width of the badge inside a Tab Button
+$badge-ios-in-tab-button-min-width: 8px;
+
+/// @prop - Height of the badge inside a Tab Button
+$badge-ios-in-tab-button-height: 8px;
+
+/// @prop - Badge icon size inside a Tab Button
+$badge-ios-in-tab-button-icon-size: 12px;

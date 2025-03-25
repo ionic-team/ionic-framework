@@ -27,6 +27,7 @@ import { defineCustomElement as defineIonChip } from '@ionic/core/components/ion
 import { defineCustomElement as defineIonCol } from '@ionic/core/components/ion-col.js';
 import { defineCustomElement as defineIonContent } from '@ionic/core/components/ion-content.js';
 import { defineCustomElement as defineIonDatetimeButton } from '@ionic/core/components/ion-datetime-button.js';
+import { defineCustomElement as defineIonDivider } from '@ionic/core/components/ion-divider.js';
 import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-fab.js';
 import { defineCustomElement as defineIonFabButton } from '@ionic/core/components/ion-fab-button.js';
 import { defineCustomElement as defineIonFabList } from '@ionic/core/components/ion-fab-list.js';
@@ -295,14 +296,14 @@ export declare interface IonApp extends Components.IonApp {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonAvatar,
-  inputs: ['mode', 'shape', 'size', 'theme']
+  inputs: ['disabled', 'mode', 'shape', 'size', 'theme']
 })
 @Component({
   selector: 'ion-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['mode', 'shape', 'size', 'theme'],
+  inputs: ['disabled', 'mode', 'shape', 'size', 'theme'],
   standalone: true
 })
 export class IonAvatar {
@@ -730,6 +731,30 @@ export class IonDatetimeButton {
 
 
 export declare interface IonDatetimeButton extends Components.IonDatetimeButton {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonDivider,
+  inputs: ['inset', 'spacing']
+})
+@Component({
+  selector: 'ion-divider',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['inset', 'spacing'],
+  standalone: true
+})
+export class IonDivider {
+  protected el: HTMLIonDividerElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonDivider extends Components.IonDivider {}
 
 
 @ProxyCmp({
