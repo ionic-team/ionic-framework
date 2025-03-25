@@ -2380,39 +2380,34 @@ export class Datetime implements ComponentInterface {
                       return;
                     }
 
-                    this.setWorkingParts({
-                      ...this.workingParts,
+                    const targetValue = {
                       month: _month,
                       day,
                       year: _year,
                       isAdjacentDay,
-                    });
+                    };
 
                     if (isAdjacentDay) {
                       // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
                       this.el.blur();
-                      this.animateToDate(this.workingParts);
-                    }
 
-                    // multiple only needs date info, so we can wipe out other fields like time
-                    if (multiple) {
-                      this.setActiveParts(
-                        {
-                          month: _month,
-                          day,
-                          year: _year,
-                          isAdjacentDay,
-                        },
-                        isActive
-                      );
+                      this.activeParts = targetValue;
+                      this.animateToDate(targetValue);
                     } else {
-                      this.setActiveParts({
-                        ...activePart,
-                        month: _month,
-                        day,
-                        year: _year,
-                        isAdjacentDay,
+                      this.setWorkingParts({
+                        ...this.workingParts,
+                        ...targetValue,
                       });
+
+                      // multiple only needs date info, so we can wipe out other fields like time
+                      if (multiple) {
+                        this.setActiveParts(targetValue, isActive);
+                      } else {
+                        this.setActiveParts({
+                          ...activePart,
+                          ...targetValue,
+                        });
+                      }
                     }
                   }}
                 >
