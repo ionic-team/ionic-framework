@@ -704,6 +704,28 @@ export declare interface IonDatetimeButton extends Components.IonDatetimeButton 
 
 
 @ProxyCmp({
+  inputs: ['inset', 'spacing']
+})
+@Component({
+  selector: 'ion-divider',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['inset', 'spacing'],
+})
+export class IonDivider {
+  protected el: HTMLIonDividerElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonDivider extends Components.IonDivider {}
+
+
+@ProxyCmp({
   inputs: ['activated', 'edge', 'horizontal', 'mode', 'theme', 'vertical'],
   methods: ['close']
 })
