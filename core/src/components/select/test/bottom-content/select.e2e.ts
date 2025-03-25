@@ -98,7 +98,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 /**
  * Rendering is different across modes
  */
-configs({ modes: ['ios', 'md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios', 'md', 'ionic-md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: helper text rendering'), () => {
     test('should not have visual regressions when rendering helper text', async ({ page }) => {
       await page.setContent(`<ion-select label="Label" helper-text="Helper text"></ion-select>`, config);
@@ -210,6 +210,31 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       const errorText = page.locator('ion-select');
       await expect(errorText).toHaveScreenshot(screenshot(`select-error-text-custom-css-var`));
+    });
+  });
+});
+
+configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: bottom content'), () => {
+    test('entire select component should render correctly with no fill', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select label="Label" label-placement="stacked" helper-text="Helper text"></ion-select>
+      `,
+        config
+      );
+      const select = page.locator('ion-select');
+      await expect(select).toHaveScreenshot(screenshot(`select-full-bottom-no-fill`));
+    });
+    test('entire select component should render correctly with outline fill', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select fill="outline" label="Label" label-placement="stacked" helper-text="Helper text"></ion-select>
+      `,
+        config
+      );
+      const select = page.locator('ion-select');
+      await expect(select).toHaveScreenshot(screenshot(`select-full-bottom-outline`));
     });
   });
 });

@@ -1,0 +1,46 @@
+@import "./divider.common.scss";
+
+:host hr {
+  border-top: 1px solid #e0e0e0;
+}
+
+// Divider Inset
+// --------------------------------------------------
+
+:host(.divider-inset) {
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+// Divider Spacing
+// --------------------------------------------------
+
+:host(.divider-spacing-xsmall) {
+  --margin-top: 8px;
+  --margin-bottom: 8px;
+}
+
+:host(.divider-spacing-small) {
+  --margin-top: 12px;
+  --margin-bottom: 12px;
+}
+
+:host(.divider-spacing-medium) {
+  --margin-top: 16px;
+  --margin-bottom: 16px;
+}
+
+:host(.divider-spacing-large) {
+  --margin-top: 24px;
+  --margin-bottom: 24px;
+}
+
+:host(.divider-spacing-xlarge) {
+  --margin-top: 32px;
+  --margin-bottom: 32px;
+}
+
+:host(.divider-spacing-xxlarge) {
+  --margin-top: 40px;
+  --margin-bottom: 40px;
+}
