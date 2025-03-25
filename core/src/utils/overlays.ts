@@ -520,9 +520,8 @@ export const present = async <OverlayPresentOptions>(
    */
   if (overlay.el.tagName !== 'ION-TOAST') {
     setRootAriaHidden(true);
+    document.body.classList.add(BACKDROP_NO_SCROLL);
   }
-
-  document.body.classList.add(BACKDROP_NO_SCROLL);
 
   hideUnderlyingOverlaysFromScreenReaders(overlay.el);
   hideAnimatingOverlayFromScreenReaders(overlay.el);
@@ -648,8 +647,6 @@ export const dismiss = async <OverlayDismissOptions>(
 
   const presentedOverlays = doc !== undefined ? getPresentedOverlays(doc) : [];
 
-  const isLastOverlay = presentedOverlays.length === 1;
-
   /**
    * For accessibility, toasts lack focus traps and don’t receive
    * `aria-hidden` on the root element when presented.
@@ -671,9 +668,6 @@ export const dismiss = async <OverlayDismissOptions>(
    */
   if (lastOverlayNotToast) {
     setRootAriaHidden(false);
-  }
-
-  if (isLastOverlay) {
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 
