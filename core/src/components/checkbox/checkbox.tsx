@@ -266,7 +266,7 @@ export class Checkbox implements ComponentInterface {
     const hasLabelContent = el.textContent !== '';
     const inputLabelId = inputId + '-lbl';
 
-    // The host must be a checkbox role to support Safari's Voice Over accessibility      
+    // The host must be a checkbox role to support Safari's Voice Over accessibility
     return (
       <Host
         role="checkbox"
