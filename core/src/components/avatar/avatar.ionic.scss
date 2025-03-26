@@ -223,7 +223,7 @@
   @include globals.position(globals.$ion-scale-150, globals.$ion-scale-050, null, null);
 }
 
-:host(.avatar-xlarge) ::slotted(ion-badge.badge-vertical-top[vertical]:not(:empty))  {
+:host(.avatar-xlarge) ::slotted(ion-badge.badge-vertical-top[vertical]:not(:empty)) {
   @include globals.position(globals.$ion-scale-150, globals.$ion-scale-150, null, null);
 }
 
