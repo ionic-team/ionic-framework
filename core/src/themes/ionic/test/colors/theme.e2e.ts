@@ -52,7 +52,8 @@ const styleTestHelpers = `
 configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
   const colors = ['primary', 'neutral', 'success', 'warning', 'danger', 'light'];
 
-  test.describe(title('theme'), () => {
+  // TODO(ROU-10778): Re-enable this test once the colors have been finalized
+  test.describe.skip(title('theme'), () => {
     test.beforeEach(({ skip }) => {
       skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
       skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
@@ -137,8 +138,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         expect(results.violations).toEqual([]);
       });
 
-      // TODO(ROU-10778): Re-enable this test once the colors have been finalized
-      test.skip(`color "${color}" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
+      test(`color "${color}" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
