@@ -190,3 +190,11 @@
 
   transform: translate(-50%, -50%);
 }
+
+// Badge in Button
+// --------------------------------------------------
+
+:host([vertical]:not(.in-tab-button).in-button.badge-small) {
+  // stylelint-disable-next-line property-disallowed-list
+  right: calc(-1 * globals.$ion-space-050);
+}

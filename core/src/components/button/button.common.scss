@@ -1,3 +1,4 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 @import "./button.vars";
 
 // Button
@@ -305,4 +306,26 @@ ion-ripple-effect {
 :host(.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
   background: #{var(--ion-toolbar-color, var(--background))};
   color: #{var(--ion-toolbar-background, var(--color))};
+}
+
+// Button Badge
+// --------------------------------------------------
+
+// This rule only works in Chrome
+:has(ion-badge) .button-native {
+  overflow: visible;
+}
+
+// This rule only works in Safari
+:host(:has(ion-badge)) .button-native {
+  overflow: visible;
+}
+
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include globals.padding(globals.$ion-scale-050);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 }

@@ -1,3 +1,4 @@
+@use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "../../themes/functions.color" as color;
 @import "../../themes/mixins";
 @import "./badge.common.vars";
@@ -48,6 +49,14 @@
   color: #{color.current-color(contrast)};
 }
 
+:host(:not(.in-tab-button).badge-vertical-top) {
+  top: 0;
+}
+
+:host(:not(.in-tab-button).badge-vertical-bottom) {
+  bottom: 0;
+}
+
 // Badge Empty (hint)
 // --------------------------------------------------
 
@@ -56,10 +65,24 @@
   position: absolute;
 }
 
-:host(:not(.in-tab-button):empty.badge-vertical-top) {
-  top: 0;
+// Badge in Button
+// --------------------------------------------------
+
+:host([vertical]:not(.in-tab-button).in-button) {
+  // stylelint-disable-next-line property-disallowed-list
+  right: globals.$ion-space-050;
 }
 
-:host(:not(.in-tab-button):empty.badge-vertical-bottom) {
-  bottom: 0;
+:host(:not(:empty).in-button) {
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+
+  font-size: globals.$ion-font-size-300;
+
+  line-height: globals.$ion-font-line-height-500;
+
+  ::slotted(ion-icon) {
+    width: globals.$ion-scale-300;
+    height: globals.$ion-scale-300;
+  }
 }
