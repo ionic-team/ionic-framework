@@ -431,7 +431,7 @@ export class Picker implements ComponentInterface {
   /**
    * Attempts to intelligently search the first and second
    * column as if they're number columns for the provided numbers
-   * where the first two numbers inpu are the first column
+   * where the first two numbers are the first column
    * and the last 2 are the last column. Tries to allow for the first
    * number to be ignored for situations where typos occurred.
    */
@@ -446,20 +446,31 @@ export class Picker implements ComponentInterface {
 
     const inputArray = input.split('');
     const hourValue = inputArray.slice(0, 2).join('');
+    // Try to find a match for the first two digits in the first column
     const foundHour = this.searchColumn(firstColumn, hourValue);
 
+    // If we have more than 2 digits and found a match for hours,
+    // use the remaining digits for the second column (minutes)
     if (inputArray.length > 2 && foundHour) {
       const minuteValue = inputArray.slice(2, 4).join('');
       this.searchColumn(secondColumn, minuteValue);
-    } else if (!foundHour && inputArray.length >= 1) {
+    }
+    // If we couldn't find a match for the two-digit hour, try single digit approaches
+    else if (!foundHour && inputArray.length >= 1) {
+      // First try the first digit as a single-digit hour
       let singleDigitHour = inputArray[0];
       let singleDigitFound = this.searchColumn(firstColumn, singleDigitHour);
+
+      // If that didn't work, try the second digit as a single-digit hour
+      // (handles case where user made a typo in the first digit, or they typed over themselves)
       if (!singleDigitFound) {
         inputArray.shift();
         singleDigitHour = inputArray[0];
         singleDigitFound = this.searchColumn(firstColumn, singleDigitHour);
       }
 
+      // If we found a single-digit hour and have remaining digits,
+      // use up to 2 of the remaining digits for the second column
       if (singleDigitFound && inputArray.length > 1) {
         const remainingDigits = inputArray.slice(1, 3).join('');
         this.searchColumn(secondColumn, remainingDigits);
