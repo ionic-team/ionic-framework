@@ -164,10 +164,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(column).toHaveJSProperty('value', 12);
     });
 
-    test('should allow typing 22 in a column where the max value is 23 and not just set it to 2', async ({ page }, testInfo) => {
+    test('should allow typing 22 in a column where the max value is 23 and not just set it to 2', async ({
+      page,
+    }, testInfo) => {
       testInfo.annotations.push({
-         type: 'issue',
-         description: 'https://github.com/ionic-team/ionic-framework/issues/28877',
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28877',
       });
       await page.setContent(
         `
@@ -216,7 +218,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/28877',
-     });
+      });
       await page.setContent(
         `
     <ion-picker>
