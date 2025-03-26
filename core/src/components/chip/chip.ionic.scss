@@ -1,42 +1,28 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
+@use "./chip.common";
 
 // Ionic Chip
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --focus-ring-color: Color of the focus ring
+   * @prop --focus-ring-width: Width of the focus ring
+   */
   --background: #{globals.$ion-primitives-neutral-100};
-  --color: #{globals.$ion-primitives-neutral-900};
+  --color: #{globals.$ion-primitives-neutral-800};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
 
-  @include globals.font-smoothing;
   @include globals.padding(globals.$ion-space-150, globals.$ion-space-200);
   @include globals.border-radius(var(--border-radius));
 
-  display: inline-flex;
-
-  position: relative;
-
-  align-items: center;
-  justify-content: center;
-
   gap: globals.$ion-space-100;
-
-  background: var(--background);
-  color: var(--color);
 
   font-family: globals.$ion-font-family;
   font-weight: globals.$ion-font-weight-medium;
 
   line-height: globals.$ion-font-line-height-full;
-
-  cursor: pointer;
-
-  overflow: hidden;
-
-  box-sizing: border-box;
-
-  vertical-align: middle;
 }
 
 // Outline Chip
@@ -45,13 +31,7 @@
 :host(.chip-outline) {
   border-width: globals.$ion-border-size-025;
   border-style: globals.$ion-border-style-solid;
-  border-color: globals.$ion-primitives-neutral-100;
-
-  background: transparent;
-}
-
-:host(.chip-outline.ion-color) {
-  border-color: globals.current-color(base, 0.32);
+  border-color: globals.$ion-primitives-neutral-300;
 }
 
 // Chip: Focus
@@ -70,8 +50,16 @@
     --background: #{globals.$ion-primitives-neutral-200};
   }
 
+  :host(.chip-bold:hover) {
+    --background: #{globals.$ion-primitives-neutral-1100};
+  }
+
   :host(.ion-color:hover) {
-    background: globals.current-color(base, 0.12);
+    background: globals.current-color(tint, $subtle: true);
+  }
+
+  :host(.chip-bold.ion-color:hover) {
+    background: globals.current-color(shade);
   }
 }
 
@@ -80,7 +68,6 @@
 
 :host(.chip-disabled) {
   opacity: 0.6;
-  pointer-events: none;
 }
 
 // Chip Shapes
@@ -110,7 +97,7 @@
 :host(.chip-small) {
   min-height: globals.$ion-scale-600;
 
-  font-size: #{globals.$ion-font-size-300};
+  font-size: globals.$ion-font-size-300;
 }
 
 :host(.chip-large) {
@@ -119,18 +106,39 @@
   font-size: globals.$ion-font-size-350;
 }
 
+// Bold Chip
+// ---------------------------------------------
+
+:host(.chip-bold) {
+  --background: #{globals.$ion-bg-neutral-bold-default};
+  --color: #{globals.$ion-primitives-base-white};
+}
+
+:host(.chip-outline.chip-bold) {
+  // TODO this is a made up design choice based on a
+  // darker shade of the background color
+  border-color: globals.$ion-primitives-neutral-1200;
+}
+
 // Chip Colors
 // ---------------------------------------------
 
+// Subtle
 :host(.ion-color) {
-  background: globals.current-color(base, 0.08);
-  color: globals.current-color(shade);
+  background: globals.current-color(base, $subtle: true);
+  color: globals.current-color(contrast, $subtle: true);
 }
 
-:host(.ion-color:focus) {
-  background: globals.current-color(base, 0.12);
+:host(.chip-outline.ion-color) {
+  border-color: globals.current-color(shade, $subtle: true);
 }
 
-:host(.ion-color.ion-activated) {
-  background: globals.current-color(base, 0.16);
+// Bold
+:host(.chip-bold.ion-color) {
+  background: globals.current-color(base);
+  color: globals.current-color(contrast);
+}
+
+:host(.chip-bold.chip-outline.ion-color) {
+  border-color: globals.current-color(shade);
 }
