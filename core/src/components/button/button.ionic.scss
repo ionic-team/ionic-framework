@@ -52,6 +52,12 @@
   --ripple-color: var(--background-activated);
 }
 
+:host(.button-solid.button-subtle) {
+  --background: #{globals.ion-color(primary, base, $subtle: true)};
+  --background-activated: #{globals.ion-color(primary, shade, $subtle: true)};
+  --color: #{globals.ion-color(primary, contrast, $subtle: true)};
+}
+
 // Outline Button
 // --------------------------------------------------
 
@@ -80,6 +86,19 @@
 
 // Ripple Effect
 // -------------------------------------------------------------------------------
+
+:host(.button-solid.button-subtle.ion-color) .button-native {
+  background: globals.current-color(base, $subtle: true);
+  color: globals.current-color(contrast, $subtle: true);
+}
+
+:host(.button-solid.button-subtle.ion-color.ion-activated) .button-native::after {
+  background: globals.current-color(shade, $subtle: true);
+}
+
+:host(.button-solid.button-subtle.ion-color.ion-focused) .button-native::after {
+  background: globals.current-color(tint, $subtle: true);
+}
 
 :host(.button-solid.ion-color) ion-ripple-effect {
   color: globals.current-color(shade);
