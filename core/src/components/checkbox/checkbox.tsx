@@ -276,7 +276,7 @@ export class Checkbox implements ComponentInterface {
         aria-labelledby={hasLabelContent ? inputLabelId : null}
         aria-label={!hasLabelContent ? inheritedAttributes['aria-label'] || 'checkbox' : null}
         aria-disabled={disabled ? 'true' : null}
-        tabindex="0"
+        tabindex={disabled ? '-1' : '0'}
         onKeyDown={this.onKeyDown}
         class={createColorClasses(color, {
           [mode]: true,
