@@ -21,3 +21,11 @@
 ::slotted(ion-badge.badge-vertical-bottom:empty) {
   transform: translateX(-100%);
 }
+
+:host ::slotted(ion-badge.badge-vertical-top[vertical]:not(:empty)) {
+  transform: translate(0, 100%);
+}
+
+:host ::slotted(ion-badge.badge-vertical-bottom[vertical]:not(:empty)) {
+  transform: translate(0, -100%);
+}

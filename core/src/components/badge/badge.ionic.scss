@@ -203,14 +203,6 @@
 // Icon Inside Badge Hint
 // --------------------------------------------------
 :host([vertical]) ::slotted(ion-icon) {
-  @include globals.position(50%, null, null, 50%);
-
-  position: absolute;
-
-  transform: translate(-50%, -50%);
-}
-
-:host([vertical]) ::slotted(ion-icon) {
   width: globals.$ion-scale-300;
   height: globals.$ion-scale-300;
 }

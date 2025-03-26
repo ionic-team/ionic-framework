@@ -13,11 +13,14 @@
 }
 
 // TODO(ROU-10747): Review size styles when sizes are defined for native themes.
-:host(:empty) {
+:host([vertical]) {
   --padding-start: 0;
   --padding-end: 0;
   --padding-bottom: 0;
   --padding-top: 0;
+
+  font-size: $badge-hint-baseline-font-size;
+  line-height: 10px;
 
   @include border-radius(999px);
 
