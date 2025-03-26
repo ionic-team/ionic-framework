@@ -462,6 +462,7 @@ export const createSheetGesture = (
         .onFinish(
           () => {
             if (shouldRemainOpen) {
+              swapFooterVisibility('original');
               /**
                * Once the snapping animation completes,
                * we need to reset the animation to go
