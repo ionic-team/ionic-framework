@@ -804,6 +804,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.
+         */
+        "hue"?: 'bold' | 'subtle';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -6279,6 +6283,10 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the chip.
          */
         "disabled"?: boolean;
+        /**
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.
+         */
+        "hue"?: 'bold' | 'subtle';
         /**
           * The mode determines the platform behaviors of the component.
          */
