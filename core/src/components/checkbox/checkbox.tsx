@@ -298,7 +298,6 @@ export class Checkbox implements ComponentInterface {
           */}
           <input
             type="checkbox"
-            class="checkbox-native-control"
             checked={checked ? true : undefined}
             disabled={disabled}
             id={inputId}
