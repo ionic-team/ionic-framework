@@ -19,11 +19,12 @@
   --padding-bottom: 0;
   --padding-top: 0;
 
-  font-size: $badge-hint-baseline-font-size;
-  line-height: 10px;
-
   @include border-radius(999px);
 
   width: $badge-min-width;
   height: $badge-min-width;
+
+  font-size: $badge-hint-baseline-font-size;
+
+  line-height: 10px;
 }
