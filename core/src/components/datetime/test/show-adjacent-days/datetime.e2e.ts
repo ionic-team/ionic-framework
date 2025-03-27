@@ -52,34 +52,25 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
         <ion-datetime show-adjacent-days="true" locale="en-US" value="2022-10-14T16:22:00.000Z" presentation="date"></ion-datetime>
-        <script>
-          const mockToday = '2022-10-10T16:22';
-          Date = class extends Date {
-            constructor(...args) {
-              if (args.length === 0) {
-                super(mockToday)
-              } else {
-                super(...args);
-              }
-            }
-          }
-        </script>
       `,
         config
       );
-      await page.locator('.datetime-ready').waitFor();
       const datetime = page.locator('ion-datetime');
       const ionChange = await page.spyOnEvent('ionChange');
       // Oct 20, 2022
       await page.click('.calendar-day[data-month="10"][data-year="2022"][data-day="20"]');
+      await ionChange.next();
       await expect(ionChange).toHaveReceivedEventDetail({ value: '2022-10-20T16:22:00' });
       await expect(datetime).toHaveJSProperty('value', '2022-10-20T16:22:00');
       // Nov 1, 2022
       await page.click('.calendar-day[data-month="11"][data-year="2022"][data-day="1"]');
+      await page.waitForChanges();
+      await ionChange.next();
       await expect(ionChange).toHaveReceivedEventDetail({ value: '2022-11-01T16:22:00' });
       await expect(datetime).toHaveJSProperty('value', '2022-11-01T16:22:00');
       // Nov 22, 2022
       await page.click('.calendar-day[data-month="11"][data-year="2022"][data-day="22"]');
+      await ionChange.next();
       await expect(ionChange).toHaveReceivedEventDetail({ value: '2022-11-22T16:22:00' });
       await expect(datetime).toHaveJSProperty('value', '2022-11-22T16:22:00');
     });
