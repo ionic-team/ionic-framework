@@ -182,7 +182,7 @@ export class Checkbox implements ComponentInterface {
   };
 
   private onKeyDown = (ev: KeyboardEvent) => {
-    if (ev.key === ' ' || ev.key === 'Enter') {
+    if (ev.key === ' ') {
       ev.preventDefault();
       if (!this.disabled) {
         this.toggleChecked(ev);
