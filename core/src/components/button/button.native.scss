@@ -26,8 +26,6 @@
 // Button Badge
 // --------------------------------------------------
 
-:has(ion-badge) .button-native {
-  ::slotted(ion-badge) {
-    position: fixed;
-  }
+.button-native ::slotted(ion-badge) {
+  position: fixed;
 }

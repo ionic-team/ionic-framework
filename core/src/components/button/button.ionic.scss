@@ -290,18 +290,3 @@
 :host(.button-xlarge) ::slotted(ion-spinner[slot="end"]) {
   @include globals.margin-horizontal(globals.$ion-space-300, null);
 }
-
-// Button Badge
-// --------------------------------------------------
-
-:has(ion-badge) .button-native {
-  ion-ripple-effect {
-    // stylelint-disable-next-line property-disallowed-list
-    border-radius: inherit;
-  }
-
-  &::after {
-    // stylelint-disable-next-line property-disallowed-list
-    border-radius: inherit;
-  }
-}

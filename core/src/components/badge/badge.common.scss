@@ -1,4 +1,3 @@
-@use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "../../themes/functions.color" as color;
 @import "../../themes/mixins";
 @import "./badge.common.vars";
@@ -68,21 +67,16 @@
 // Badge in Button
 // --------------------------------------------------
 
-:host([vertical]:not(.in-tab-button).in-button) {
-  // stylelint-disable-next-line property-disallowed-list
-  right: globals.$ion-space-050;
-}
-
 :host(:not(:empty).in-button) {
-  min-width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
+  min-width: $badge-size-in-button;
+  height: $badge-size-in-button;
 
-  font-size: globals.$ion-font-size-300;
+  font-size: $badge-font-size-in-button;
 
-  line-height: globals.$ion-font-line-height-500;
+  line-height: $badge-line-height-in-button;
 
   ::slotted(ion-icon) {
-    width: globals.$ion-scale-300;
-    height: globals.$ion-scale-300;
+    width: $badge-icon-size-in-button;
+    height: $badge-icon-size-in-button;
   }
 }

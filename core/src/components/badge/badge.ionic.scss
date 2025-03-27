@@ -1,5 +1,6 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
 @use "./badge.common";
+@import "../../themes/mixins";
 
 // Ionic Badge
 // --------------------------------------------------
@@ -194,7 +195,14 @@
 // Badge in Button
 // --------------------------------------------------
 
+:host([vertical]:not(.in-tab-button).in-button.badge-xxsmall),
+:host([vertical]:not(.in-tab-button).in-button.badge-xsmall),
 :host([vertical]:not(.in-tab-button).in-button.badge-small) {
-  // stylelint-disable-next-line property-disallowed-list
-  right: calc(-1 * globals.$ion-space-050);
+  @include position(null, calc(-1 * var(globals.$ion-space-050)), null, null);
+}
+
+:host([vertical]:not(.in-tab-button).in-button.badge-medium),
+:host([vertical]:not(.in-tab-button).in-button.badge-large),
+:host([vertical]:not(.in-tab-button).in-button.badge-xlarge) {
+  @include position(null, globals.$ion-space-050, null, null);
 }
