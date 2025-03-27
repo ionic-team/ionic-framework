@@ -112,8 +112,8 @@
 }
 
 /**
-  * The native input must be hidden with display instead of visibility or 
-  * aria-hidden to avoid accessibility issues with nested interactive elements
+ * The native input must be hidden with display instead of visibility or 
+ * aria-hidden to avoid accessibility issues with nested interactive elements.
  */
 input {
   display: none;
