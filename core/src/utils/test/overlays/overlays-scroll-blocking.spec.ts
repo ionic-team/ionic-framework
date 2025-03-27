@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Modal } from '../../../components/modal/modal';
+import { Toast } from '../../../components/toast/toast';
 
 describe('overlays: scroll blocking', () => {
   it('should not block scroll when the overlay is created', async () => {
@@ -82,6 +83,27 @@ describe('overlays: scroll blocking', () => {
     expect(body).toHaveClass('backdrop-no-scroll');
 
     await modalTwo.dismiss();
+
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+  });
+
+  // Fixes https://github.com/ionic-team/ionic-framework/issues/30112
+  it('should not block scroll when the toast overlay is presented', async () => {
+    const page = await newSpecPage({
+      components: [Toast],
+      html: `
+        <ion-toast></ion-toast>
+      `,
+    });
+
+    const toast = page.body.querySelector('ion-toast')!;
+    const body = page.doc.querySelector('body')!;
+
+    await toast.present();
+
+    expect(body).not.toHaveClass('backdrop-no-scroll');
+
+    await toast.dismiss();
 
     expect(body).not.toHaveClass('backdrop-no-scroll');
   });
