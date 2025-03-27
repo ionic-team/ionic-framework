@@ -262,7 +262,7 @@ export class Checkbox implements ComponentInterface {
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
-    // Determine appropriate accessible name
+    // Determine appropriate accessible name.
     const hasLabelContent = el.textContent !== '';
     const inputLabelId = inputId + '-lbl';
 
