@@ -49,7 +49,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should return the same date format on current month days and on adjacent days', async ({ page }) => {
-      await page.goto('/src/components/datetime/test/show-adjacent-days', config);
       await page.setContent(
         `
         <ion-datetime show-adjacent-days="true" locale="en-US" value="2022-10-14T16:22:00.000Z" presentation="date"></ion-datetime>

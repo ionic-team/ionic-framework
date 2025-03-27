@@ -178,6 +178,8 @@
           <br /><br />
           <ion-datetime show-adjacent-days="true" id="display" value="2022-02-22T16:30:00"></ion-datetime>
         </div>
+
+        <ion-datetime id="default2" show-adjacent-days="true" locale="en-US" value="2022-10-14T16:22:00.000Z" presentation="date"></ion-datetime>
       </ion-content>
     </ion-app>
 
@@ -305,6 +307,11 @@
       };
 
       initCalendarMonthChangeObserver();
+
+      const datetimeDefault = document.querySelector('#default2');
+          datetimeDefault.addEventListener('ionChange', (ev) => {
+            console.log(ev.target.value);
+          });
     </script>
   </body>
 </html>
