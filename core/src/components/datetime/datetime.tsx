@@ -2383,7 +2383,7 @@ export class Datetime implements ComponentInterface {
                     if (isAdjacentDay) {
                       // The user selected a day outside the current month. Ignore this button, as the month will be re-rendered.
                       this.el.blur();
-                      this.activeParts = referenceParts;
+                      this.activeParts = {...activePart, ...referenceParts};
                       this.animateToDate(referenceParts);
                       this.confirm();
                     } else {
