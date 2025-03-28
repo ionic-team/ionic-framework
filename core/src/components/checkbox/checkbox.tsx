@@ -31,6 +31,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
 })
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
+  private inputLabelId = `${this.inputId}-lbl`;
   private helperTextId = `${this.inputId}-helper-text`;
   private errorTextId = `${this.inputId}-error-text`;
   private focusEl?: HTMLElement;
@@ -264,7 +265,6 @@ export class Checkbox implements ComponentInterface {
 
     // Determine appropriate accessible name.
     const hasLabelContent = el.textContent !== '';
-    const inputLabelId = inputId + '-lbl';
 
     // The host element must have a checkbox role to ensure proper VoiceOver
     // support in Safari for accessibility.
@@ -274,7 +274,7 @@ export class Checkbox implements ComponentInterface {
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === this.errorTextId}
-        aria-labelledby={hasLabelContent ? inputLabelId : null}
+        aria-labelledby={hasLabelContent ? this.inputLabelId : null}
         aria-label={!hasLabelContent ? inheritedAttributes['aria-label'] || 'checkbox' : null}
         aria-disabled={disabled ? 'true' : null}
         tabindex={disabled ? undefined : 0}
@@ -315,7 +315,7 @@ export class Checkbox implements ComponentInterface {
               'label-text-wrapper-hidden': !hasLabelContent,
             }}
             part="label"
-            id={inputLabelId}
+            id={this.inputLabelId}
           >
             <slot></slot>
             {this.renderHintText()}
