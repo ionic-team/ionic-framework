@@ -13,7 +13,7 @@
 }
 
 // TODO(ROU-10747): Review size styles when sizes are defined for native themes.
-:host([vertical]:not(.in-tab-button)),
+:host([vertical]:not(.in-button):not(.in-tab-button)),
 :host(:empty) {
   --padding-start: 0;
   --padding-end: 0;

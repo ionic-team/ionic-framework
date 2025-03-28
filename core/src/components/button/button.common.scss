@@ -1,3 +1,4 @@
+@import "../../themes/mixins";
 @import "./button.vars";
 
 // Button
@@ -305,4 +306,31 @@ ion-ripple-effect {
 :host(.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
   background: #{var(--ion-toolbar-color, var(--background))};
   color: #{var(--ion-toolbar-background, var(--color))};
+}
+
+// Button Badge
+// --------------------------------------------------
+
+.button-native ion-ripple-effect,
+.button-native::after {
+  @include border-radius(inherit);
+}
+
+// This rule works for Chrome.
+:has(ion-badge) .button-native {
+  --overflow: visible;
+}
+
+// This rule works for the rest of the browsers.
+:host(:has(ion-badge)) .button-native {
+  --overflow: visible;
+}
+
+:host ::slotted(ion-badge[vertical]:not(:empty)) {
+  @include padding($button-badge-padding);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 }

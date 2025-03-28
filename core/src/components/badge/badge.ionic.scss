@@ -198,3 +198,18 @@
 
   transform: translate(-50%, -50%);
 }
+
+// Badge in Button
+// --------------------------------------------------
+
+:host([vertical]:not(.in-tab-button).in-button.badge-xxsmall),
+:host([vertical]:not(.in-tab-button).in-button.badge-xsmall),
+:host([vertical]:not(.in-tab-button).in-button.badge-small) {
+  @include globals.position(null, calc(-1 * var(globals.$ion-space-050)));
+}
+
+:host([vertical]:not(.in-tab-button).in-button.badge-medium),
+:host([vertical]:not(.in-tab-button).in-button.badge-large),
+:host([vertical]:not(.in-tab-button).in-button.badge-xlarge) {
+  @include globals.position(null, globals.$ion-space-050);
+}
