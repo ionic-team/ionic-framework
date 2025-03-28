@@ -1,5 +1,6 @@
 @import "./avatar.common";
 @import "./avatar.md.vars";
+@use "../../themes/native/native.globals.md" as globals;
 
 // Material Design Avatar
 // --------------------------------------------------
@@ -15,7 +16,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-badge.badge-vertical-top:empty) {
-  transform: translate(-50%, 50%);
+  @include globals.transform(translate(-50%, 50%));
 }
 
 ::slotted(ion-badge.badge-vertical-bottom:empty) {
@@ -23,9 +24,9 @@
 }
 
 :host ::slotted(ion-badge.badge-vertical-top[vertical]:not(:empty)) {
-  transform: translate(0, 100%);
+  @include globals.transform(translate(0, 100%));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom[vertical]:not(:empty)) {
-  transform: translate(0, -100%);
+  @include globals.transform(translate(0, -100%));
 }
