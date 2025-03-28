@@ -26,9 +26,3 @@ $badge-font-size: dynamic-font($badge-baseline-font-size);
 
 /// @prop - Font weight of the badge
 $badge-font-weight: bold;
-
-/// @prop - Font size of the badge hint
-$badge-hint-baseline-font-size: 8px;
-
-/// @prop - Font size of the badge hint
-$badge-hint-font-size: dynamic-font($badge-hint-baseline-font-size);
