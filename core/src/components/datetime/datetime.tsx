@@ -2392,7 +2392,7 @@ export class Datetime implements ComponentInterface {
                         ...referenceParts,
                       });
 
-                      // multiple only needs date info, so we can wipe out other fields like time
+                      // Multiple only needs date info so we can wipe out other fields like time.
                       if (multiple) {
                         this.setActiveParts(referenceParts, isActive);
                       } else {
