@@ -181,7 +181,6 @@
 
 :host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
   @include globals.position(null, globals.$ion-scale-100, globals.$ion-scale-100, null);
-
   @include globals.transform(translate(100%, 100%));
 }
 
