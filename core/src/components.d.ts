@@ -5115,7 +5115,7 @@ declare namespace LocalJSX {
          */
         "onIonAlertWillPresent"?: (event: IonAlertCustomEvent<void>) => void;
         /**
-          * Emitted before the alert has presented, but after the component has been mounted in the DOM. This event exists for ion-alert to resolve an issue with the alert and the lazy build, that the transition is unable to get the correct dimensions of the alert with auto sizing. This is not required for other overlays, since the existing overlay transitions are not effected by auto sizing content.
+          * Emitted before the modal has presented, but after the component has been mounted in the DOM. This event exists so iOS can run the entering transition properly
          */
         "onIonMount"?: (event: IonAlertCustomEvent<void>) => void;
         /**

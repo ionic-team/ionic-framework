@@ -386,13 +386,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   /**
-   * Emitted before the alert has presented, but after the component
+   * Emitted before the modal has presented, but after the component
    * has been mounted in the DOM.
-   * This event exists for ion-alert to resolve an issue with the
-   * alert and the lazy build, that the transition is unable to get
-   * the correct dimensions of the alert with auto sizing.
-   * This is not required for other overlays, since the existing
-   * overlay transitions are not effected by auto sizing content.
+   * This event exists so iOS can run the entering
+   * transition properly
    *
    * @internal
    */
@@ -586,7 +583,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     if (dismissed) {
       /**
-       * If using popover inline
+       * If using alert inline
        * we potentially need to use the coreDelegate
        * so that this works in vanilla JS apps
        */
@@ -972,10 +969,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
 }
 
 const LIFECYCLE_MAP: any = {
-  ionPopoverDidPresent: 'ionViewDidEnter',
-  ionPopoverWillPresent: 'ionViewWillEnter',
-  ionPopoverWillDismiss: 'ionViewWillLeave',
-  ionPopoverDidDismiss: 'ionViewDidLeave',
+  ionAlertDidPresent: 'ionViewDidEnter',
+  ionAlertWillPresent: 'ionViewWillEnter',
+  ionAlertWillDismiss: 'ionViewWillLeave',
+  ionAlertDidDismiss: 'ionViewDidLeave',
 };
 
 const inputClass = (input: AlertInput): CssClassMap => {

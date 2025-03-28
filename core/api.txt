@@ -100,12 +100,15 @@ ion-alert,scoped
 ion-alert,prop,animated,boolean,true,false,false
 ion-alert,prop,backdropDismiss,boolean,true,false,false
 ion-alert,prop,buttons,(string | AlertButton)[],[],false,false
+ion-alert,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
+ion-alert,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-alert,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-alert,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-alert,prop,header,string | undefined,undefined,false,false
 ion-alert,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-alert,prop,inputs,AlertInput[],[],false,false
 ion-alert,prop,isOpen,boolean,false,false,false
+ion-alert,prop,keepContentsMounted,boolean,false,false,false
 ion-alert,prop,keyboardClose,boolean,true,false,false
 ion-alert,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-alert,prop,message,IonicSafeString | string | undefined,undefined,false,false
