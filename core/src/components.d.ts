@@ -1170,7 +1170,7 @@ export namespace Components {
          */
         "inset": boolean;
         /**
-          * Set to `"xxsmall"` for the smallest spacing. Set to "xsmall" for very small spacing. Set to `"small"` for small spacing. Set to "medium" for medium spacing. Set to "large" for large spacing. Set to `"xlarge"` for the largest spacing.  Defaults to `"xxsmall"`.
+          * Set to `"xxsmall"` for the smallest spacing. Set to "xsmall" for very small spacing. Set to `"small"` for small spacing. Set to "medium" for medium spacing. Set to "large" for large spacing. Set to `"xlarge"` for the largest spacing.  Defaults to `"medium"`.
          */
         "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
     }
@@ -6642,7 +6642,7 @@ declare namespace LocalJSX {
          */
         "inset"?: boolean;
         /**
-          * Set to `"xxsmall"` for the smallest spacing. Set to "xsmall" for very small spacing. Set to `"small"` for small spacing. Set to "medium" for medium spacing. Set to "large" for large spacing. Set to `"xlarge"` for the largest spacing.  Defaults to `"xxsmall"`.
+          * Set to `"xxsmall"` for the smallest spacing. Set to "xsmall" for very small spacing. Set to `"small"` for small spacing. Set to "medium" for medium spacing. Set to "large" for large spacing. Set to `"xlarge"` for the largest spacing.  Defaults to `"medium"`.
          */
         "spacing"?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
     }

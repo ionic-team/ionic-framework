@@ -18,13 +18,13 @@
 
   /* stylelint-disable */
   @include ltr() {
-    padding-right: calc(var(--padding-end) + var(--ion-safe-area-right, 0px));
-    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+    padding-right: var(--padding-end);
+    padding-left: var(--padding-start);
   }
 
   @include rtl() {
-    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
-    padding-left: calc(var(--padding-end) + var(--ion-safe-area-left, 0px));
+    padding-right: var(--padding-start);
+    padding-left: var(--padding-end);
   }
   /* stylelint-enable */
 }
