@@ -161,22 +161,35 @@
               <span>FirstDayOfWeek: <span id="start-of-week">1</span></span>
             </div>
           </div>
+
+          <div class="grid-item">
+            <h2>DateTime format with IonChange Event (console)</h2>
+            <ion-datetime
+              id="default2"
+              show-adjacent-days="true"
+              locale="en-US"
+              value="2022-10-14T16:22:00.000Z"
+              presentation="date"
+            ></ion-datetime>
+          </div>
         </div>
-        <div>
-          <label for="presentation">Presentation</label>
-          <select id="presentation" onchange="changePresentation(event)">
-            <option value="date-time" selected>date-time</option>
-            <option value="time-date">time-date</option>
-            <option value="date">date</option>
-            <option value="time">time</option>
-          </select>
-          <label for="size">Size</label>
-          <select id="size" onchange="changeSize(event)">
-            <option value="fixed" selected>fixed</option>
-            <option value="cover">cover</option>
-          </select>
-          <br /><br />
-          <ion-datetime show-adjacent-days="true" id="display" value="2022-02-22T16:30:00"></ion-datetime>
+        <div class="grid">
+          <div class="grid-item">
+            <label for="presentation">Presentation</label>
+            <select id="presentation" onchange="changePresentation(event)">
+              <option value="date-time" selected>date-time</option>
+              <option value="time-date">time-date</option>
+              <option value="date">date</option>
+              <option value="time">time</option>
+            </select>
+            <label for="size">Size</label>
+            <select id="size" onchange="changeSize(event)">
+              <option value="fixed" selected>fixed</option>
+              <option value="cover">cover</option>
+            </select>
+            <br /><br />
+            <ion-datetime show-adjacent-days="true" id="display" value="2022-02-22T16:30:00"></ion-datetime>
+          </div>
         </div>
       </ion-content>
     </ion-app>
@@ -305,6 +318,11 @@
       };
 
       initCalendarMonthChangeObserver();
+
+      const datetimeDefault = document.querySelector('#default2');
+      datetimeDefault.addEventListener('ionChange', (ev) => {
+        console.log(ev.target.value);
+      });
     </script>
   </body>
 </html>
