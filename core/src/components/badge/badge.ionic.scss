@@ -146,7 +146,7 @@
   height: globals.$ion-scale-1000;
 }
 
-// Badge Vertical Prop
+// Badge (hint)
 // --------------------------------------------------
 
 :host(:empty) {
@@ -161,7 +161,7 @@
   --padding-bottom: #{globals.$ion-scale-100};
 }
 
-// Badge Sizes Empty
+// Badge (hint) Sizes
 // --------------------------------------------------
 
 /* sm */
@@ -182,7 +182,7 @@
   height: globals.$ion-scale-400;
 }
 
-// Badge Sizes Not Empty With Vertical Prop
+// Badge (hint)
 // --------------------------------------------------
 
 :host(.badge-small[vertical]:not(:empty)),
