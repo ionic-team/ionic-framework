@@ -311,18 +311,19 @@ ion-ripple-effect {
 // Button Badge
 // --------------------------------------------------
 
-.button-native {
-  overflow: visible;
+.button-native ion-ripple-effect,
+.button-native::after {
+  @include border-radius(inherit);
+}
 
-  ion-ripple-effect {
-    // stylelint-disable-next-line property-disallowed-list
-    border-radius: inherit;
-  }
+// This rule works for Chrome.
+:has(ion-badge) .button-native {
+  --overflow: visible;
+}
 
-  &::after {
-    // stylelint-disable-next-line property-disallowed-list
-    border-radius: inherit;
-  }
+// This rule works for the rest of the browsers.
+:host(:has(ion-badge)) .button-native {
+  --overflow: visible;
 }
 
 :host ::slotted(ion-badge[vertical]:not(:empty)) {
