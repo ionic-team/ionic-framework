@@ -20,13 +20,13 @@
 }
 
 ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  transform: translateX(-100%);
+  @include globals.transform(translateX(-100%));
 }
 
 :host ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
   @include globals.transform(translate(0, 100%));
 }
 
-:host ::slotted(ion-badge.badge-vertical-bottom[vertical]:not(:empty)) {
+:host ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
   @include globals.transform(translate(0, -100%));
 }
