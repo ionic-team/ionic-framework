@@ -275,7 +275,7 @@ export class Checkbox implements ComponentInterface {
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === this.errorTextId}
         aria-labelledby={hasLabelContent ? this.inputLabelId : null}
-        aria-label={!hasLabelContent ? inheritedAttributes['aria-label'] || 'checkbox' : null}
+        aria-label={inheritedAttributes['aria-label'] || null}
         aria-disabled={disabled ? 'true' : null}
         tabindex={disabled ? undefined : 0}
         onKeyDown={this.onKeyDown}
