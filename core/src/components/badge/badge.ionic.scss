@@ -20,6 +20,20 @@
   font-weight: globals.$ion-font-weight-medium;
 }
 
+// Subtle Badge
+// --------------------------------------------------
+
+:host(.badge-subtle) {
+  --background: #{globals.ion-color(primary, base, $subtle: true)};
+  --background-activated: #{globals.ion-color(primary, shade, $subtle: true)};
+  --color: #{globals.ion-color(primary, contrast, $subtle: true)};
+}
+
+:host(.badge-subtle.ion-color) {
+  background: globals.current-color(base, $subtle: true);
+  color: globals.current-color(contrast, $subtle: true);
+}
+
 // Badge Shapes
 // --------------------------------------------------
 

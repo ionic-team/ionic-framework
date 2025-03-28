@@ -29,6 +29,12 @@ export class Badge implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
+   * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for
+   * a badge with muted, subtle colors.
+   */
+  @Prop() hue?: 'bold' | 'subtle' = 'bold';
+
+  /**
    * Set to `"rectangular"` for non-rounded corners.
    * Set to `"soft"` for slightly rounded corners.
    * Set to `"round"` for fully rounded corners.
@@ -88,6 +94,7 @@ export class Badge implements ComponentInterface {
   }
 
   render() {
+    const { hue } = this;
     const shape = this.getShape();
     const size = this.getSize();
     const theme = getIonTheme(this);
@@ -96,6 +103,7 @@ export class Badge implements ComponentInterface {
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
+          [`badge-${hue}`]: hue !== undefined,
           [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
           [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
