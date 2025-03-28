@@ -260,11 +260,9 @@ export class Checkbox implements ComponentInterface {
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
+    const hasLabelContent = el.textContent !== '';
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
-
-    // Determine appropriate accessible name.
-    const hasLabelContent = el.textContent !== '';
 
     // The host element must have a checkbox role to ensure proper VoiceOver
     // support in Safari for accessibility.
