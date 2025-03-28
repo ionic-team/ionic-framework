@@ -23,7 +23,7 @@
   transform: translateX(-100%);
 }
 
-:host ::slotted(ion-badge.badge-vertical-top[vertical]:not(:empty)) {
+:host ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
   @include globals.transform(translate(0, 100%));
 }
 
