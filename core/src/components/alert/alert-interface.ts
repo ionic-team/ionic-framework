@@ -1,8 +1,16 @@
-import type { AnimationBuilder, LiteralUnion, Mode, TextFieldTypes, ComponentRef } from '../../interface';
+import type {
+  AnimationBuilder,
+  LiteralUnion,
+  Mode,
+  TextFieldTypes,
+  ComponentRef,
+  ComponentProps,
+} from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface AlertOptions<T extends ComponentRef = ComponentRef> {
   component?: T;
+  componentProps?: ComponentProps<T>;
   header?: string;
   subHeader?: string;
   message?: string | IonicSafeString;
