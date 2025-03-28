@@ -48,20 +48,20 @@
   color: #{color.current-color(contrast)};
 }
 
-:host(:not(.in-tab-button).badge-vertical-top) {
-  top: 0;
-}
-
-:host(:not(.in-tab-button).badge-vertical-bottom) {
-  bottom: 0;
-}
-
-// Badge Empty (hint)
+// Badge (hint)
 // --------------------------------------------------
 
 :host([vertical]:not(.in-tab-button)) {
   @include position(null, 0, null, null);
   position: absolute;
+}
+
+:host(:not(.in-tab-button)[vertical].badge-vertical-top) {
+  top: 0;
+}
+
+:host(:not(.in-tab-button)[vertical].badge-vertical-bottom) {
+  bottom: 0;
 }
 
 // Badge in Button
