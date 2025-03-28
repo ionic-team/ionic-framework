@@ -182,17 +182,6 @@
   height: globals.$ion-scale-400;
 }
 
-// Badge (hint)
-// --------------------------------------------------
-
-:host(.badge-small[vertical]:not(:empty)),
-:host(.badge-medium[vertical]:not(:empty)),
-:host(.badge-large[vertical]:not(:empty)) {
-  @include globals.typography(globals.$ion-body-sm-medium);
-  min-width: globals.$ion-scale-400;
-  height: globals.$ion-scale-400;
-}
-
 // Badge Inside Tab Button
 // --------------------------------------------------
 
@@ -206,9 +195,6 @@
   @include globals.position(50%, null, null, 50%);
 
   position: absolute;
-
-  width: globals.$ion-scale-300;
-  height: globals.$ion-scale-300;
 
   transform: translate(-50%, -50%);
 }
