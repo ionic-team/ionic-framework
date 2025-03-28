@@ -1,0 +1,11 @@
+@import "../../themes/functions.font";
+@import "./badge.common.vars.scss";
+
+// Badge
+// --------------------------------------------------
+
+/// @prop - Font size of the badge hint
+$badge-hint-baseline-font-size: 8px;
+
+/// @prop - Font size of the badge hint
+$badge-hint-font-size: dynamic-font($badge-hint-baseline-font-size);
