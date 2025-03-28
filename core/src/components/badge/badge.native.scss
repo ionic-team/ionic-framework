@@ -1,6 +1,6 @@
 @import "../../themes/native/native.globals.md";
 @import "./badge.common";
-@import "./badge.common.vars";
+@import "./badge.native.vars";
 
 // Badge
 // --------------------------------------------------
@@ -13,6 +13,7 @@
 }
 
 // TODO(ROU-10747): Review size styles when sizes are defined for native themes.
+:host([vertical]:not(.in-tab-button)),
 :host(:empty) {
   --padding-start: 0;
   --padding-end: 0;
@@ -23,4 +24,8 @@
 
   width: $badge-min-width;
   height: $badge-min-width;
+
+  font-size: $badge-hint-font-size;
+
+  line-height: 10px;
 }

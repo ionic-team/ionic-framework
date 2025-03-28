@@ -153,23 +153,77 @@
   height: globals.$ion-scale-1000;
 }
 
-// Avatar Empty Badge (hint)
+// Avatar Badge Empty (hint)
 // --------------------------------------------------
 
 :host ::slotted(ion-badge.badge-vertical-top:empty) {
-  transform: translate(globals.$ion-scale-050, calc(globals.$ion-scale-050 * -1));
+  @include globals.transform(translate(globals.$ion-scale-050, calc(globals.$ion-scale-050 * -1)));
 }
 
 :host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-top:empty) {
-  transform: translate(globals.$ion-scale-100, calc(globals.$ion-scale-100 * -1));
+  @include globals.transform(translate(globals.$ion-scale-100, calc(globals.$ion-scale-100 * -1)));
 }
 
 :host ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  transform: translate(0, globals.$ion-scale-100);
+  @include globals.transform(translate(0, globals.$ion-scale-100));
 }
 
 :host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  transform: translate(globals.$ion-scale-100, calc(globals.$ion-scale-100));
+  @include globals.transform(translate(globals.$ion-scale-100, globals.$ion-scale-100));
+}
+
+// Avatar Badge Bottom (hint)
+// --------------------------------------------------
+
+:host ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
+  @include globals.transform(translate(50%, 50%));
+}
+
+:host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
+  @include globals.position(null, globals.$ion-scale-100, globals.$ion-scale-100, null);
+  @include globals.transform(translate(100%, 100%));
+}
+
+:host(.avatar-xsmall) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
+  @include globals.position(null, calc(globals.$ion-scale-050 * -1), calc(globals.$ion-scale-050 * -1), null);
+}
+
+:host(.avatar-small) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)),
+:host(.avatar-medium) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)),
+:host(.avatar-large) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
+  @include globals.position(null, globals.$ion-scale-050, globals.$ion-scale-050, null);
+}
+
+:host(.avatar-xlarge) ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
+  @include globals.position(null, globals.$ion-scale-150, globals.$ion-scale-150, null);
+}
+
+// Avatar Badge Top (hint)
+// --------------------------------------------------
+
+:host ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
+  @include globals.transform(translate(50%, -50%));
+}
+
+:host(.avatar-xxsmall) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
+  @include globals.position(globals.$ion-scale-050, 0, null, null);
+}
+
+:host(.avatar-xsmall) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
+  @include globals.position(globals.$ion-scale-100, calc(globals.$ion-scale-050 * -1), null, null);
+}
+
+:host(.avatar-small) ::slotted(ion-badge.badge-vertical-top:not(:empty)),
+:host(.avatar-medium) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
+  @include globals.position(globals.$ion-scale-150, 0, null, null);
+}
+
+:host(.avatar-large) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
+  @include globals.position(globals.$ion-scale-150, globals.$ion-scale-050, null, null);
+}
+
+:host(.avatar-xlarge) ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
+  @include globals.position(globals.$ion-scale-150, globals.$ion-scale-150, null, null);
 }
 
 // Avatar Disabled

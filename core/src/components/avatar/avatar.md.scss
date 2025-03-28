@@ -1,3 +1,4 @@
+@use "../../themes/native/native.globals.md" as globals;
 @import "./avatar.common";
 @import "./avatar.md.vars";
 
@@ -15,9 +16,17 @@
 // --------------------------------------------------
 
 ::slotted(ion-badge.badge-vertical-top:empty) {
-  transform: translate(-50%, 50%);
+  @include globals.transform(translate(-50%, 50%));
 }
 
 ::slotted(ion-badge.badge-vertical-bottom:empty) {
-  transform: translateX(-100%);
+  @include globals.transform(translateX(-100%));
+}
+
+:host ::slotted(ion-badge.badge-vertical-top:not(:empty)) {
+  @include globals.transform(translate(0, 100%));
+}
+
+:host ::slotted(ion-badge.badge-vertical-bottom:not(:empty)) {
+  @include globals.transform(translate(0, -100%));
 }
