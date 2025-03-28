@@ -238,6 +238,10 @@ export namespace Components {
          */
         "component"?: ComponentRef;
         /**
+          * The data to pass to the alert component. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just set the props directly on your component.
+         */
+        "componentProps"?: ComponentProps;
+        /**
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
@@ -269,6 +273,10 @@ export namespace Components {
           * If `true`, the alert will open. If `false`, the alert will close. Use this if you need finer grained control over presentation, otherwise just use the alertController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the alert dismisses. You will need to do that in your code.
          */
         "isOpen": boolean;
+        /**
+          * If `true`, the component passed into `ion-alert` will automatically be mounted when the alert is created. The component will remain mounted even when the alert is dismissed. However, the component will be destroyed when the alert is destroyed. This property is not reactive and should only be used when initially creating a alert.  Note: This feature only applies to inline alerts in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -3598,6 +3606,7 @@ declare global {
         "willPresent": void;
         "willDismiss": OverlayEventDetail;
         "didDismiss": OverlayEventDetail;
+        "ionMount": void;
     }
     interface HTMLIonAlertElement extends Components.IonAlert, HTMLStencilElement {
         addEventListener<K extends keyof HTMLIonAlertElementEventMap>(type: K, listener: (this: HTMLIonAlertElement, ev: IonAlertCustomEvent<HTMLIonAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5032,6 +5041,10 @@ declare namespace LocalJSX {
          */
         "component"?: ComponentRef;
         /**
+          * The data to pass to the alert component. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just set the props directly on your component.
+         */
+        "componentProps"?: ComponentProps;
+        /**
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
@@ -5057,6 +5070,10 @@ declare namespace LocalJSX {
           * If `true`, the alert will open. If `false`, the alert will close. Use this if you need finer grained control over presentation, otherwise just use the alertController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the alert dismisses. You will need to do that in your code.
          */
         "isOpen"?: boolean;
+        /**
+          * If `true`, the component passed into `ion-alert` will automatically be mounted when the alert is created. The component will remain mounted even when the alert is dismissed. However, the component will be destroyed when the alert is destroyed. This property is not reactive and should only be used when initially creating a alert.  Note: This feature only applies to inline alerts in JavaScript frameworks such as Angular, React, and Vue.
+         */
+        "keepContentsMounted"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5097,6 +5114,10 @@ declare namespace LocalJSX {
           * Emitted before the alert has presented.
          */
         "onIonAlertWillPresent"?: (event: IonAlertCustomEvent<void>) => void;
+        /**
+          * Emitted before the alert has presented, but after the component has been mounted in the DOM. This event exists for ion-alert to resolve an issue with the alert and the lazy build, that the transition is unable to get the correct dimensions of the alert with auto sizing. This is not required for other overlays, since the existing overlay transitions are not effected by auto sizing content.
+         */
+        "onIonMount"?: (event: IonAlertCustomEvent<void>) => void;
         /**
           * Emitted before the alert has dismissed. Shorthand for ionAlertWillDismiss.
          */

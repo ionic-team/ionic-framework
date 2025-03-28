@@ -1,12 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
-import { raf } from '@utils/helpers';
+import { raf, hasLazyBuild } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import {
-  createDelegateController,
   createTriggerController,
   BACKDROP,
   dismiss,
@@ -19,10 +19,18 @@ import {
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
+import { deepReady, waitForMount } from '@utils/transition';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate, ComponentRef } from '../../interface';
+import type {
+  AnimationBuilder,
+  CssClassMap,
+  OverlayInterface,
+  FrameworkDelegate,
+  ComponentRef,
+  ComponentProps,
+} from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
@@ -46,7 +54,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true,
 })
 export class Alert implements ComponentInterface, OverlayInterface {
-  private readonly delegateController = createDelegateController(this);
   private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
@@ -56,6 +63,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private processedButtons: AlertButton[] = [];
   private wrapperEl?: HTMLElement;
   private gesture?: Gesture;
+
+  private inline = false;
+  private workingDelegate?: FrameworkDelegate;
+  private coreDelegate: FrameworkDelegate = CoreDelegate();
+  private usersElement?: HTMLElement;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -150,10 +162,31 @@ export class Alert implements ComponentInterface, OverlayInterface {
    */
   @Prop() htmlAttributes?: { [key: string]: any };
 
-    /**
-     * The component to display inside of the alert.
-     */
-    @Prop() component?: ComponentRef;
+  /**
+   * The component to display inside of the alert.
+   */
+  @Prop() component?: ComponentRef;
+
+  /**
+   * The data to pass to the alert component.
+   * You only need to use this if you are not using
+   * a JavaScript framework. Otherwise, you can just
+   * set the props directly on your component.
+   */
+  @Prop() componentProps?: ComponentProps;
+
+  /**
+   * If `true`, the component passed into `ion-alert` will
+   * automatically be mounted when the alert is created. The
+   * component will remain mounted even when the alert is dismissed.
+   * However, the component will be destroyed when the alert is
+   * destroyed. This property is not reactive and should only be
+   * used when initially creating a alert.
+   *
+   * Note: This feature only applies to inline alerts in JavaScript
+   * frameworks such as Angular, React, and Vue.
+   */
+  @Prop() keepContentsMounted = false;
 
   /**
    * If `true`, the alert will open. If `false`, the alert will close.
@@ -352,6 +385,19 @@ export class Alert implements ComponentInterface, OverlayInterface {
     );
   }
 
+  /**
+   * Emitted before the alert has presented, but after the component
+   * has been mounted in the DOM.
+   * This event exists for ion-alert to resolve an issue with the
+   * alert and the lazy build, that the transition is unable to get
+   * the correct dimensions of the alert with auto sizing.
+   * This is not required for other overlays, since the existing
+   * overlay transitions are not effected by auto sizing content.
+   *
+   * @internal
+   */
+  @Event() ionMount!: EventEmitter<void>;
+
   connectedCallback() {
     prepareOverlay(this.el);
     this.triggerChanged();
@@ -408,6 +454,52 @@ export class Alert implements ComponentInterface, OverlayInterface {
     this.triggerChanged();
   }
 
+  private onLifecycle = (modalEvent: CustomEvent) => {
+    const el = this.usersElement;
+    const name = LIFECYCLE_MAP[modalEvent.type];
+    if (el && name) {
+      const event = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: false,
+        detail: modalEvent.detail,
+      });
+      el.dispatchEvent(event);
+    }
+  };
+
+  /**
+   * Determines whether or not an overlay
+   * is being used inline or via a controller/JS
+   * and returns the correct delegate.
+   * By default, subsequent calls to getDelegate
+   * will use a cached version of the delegate.
+   * This is useful for calling dismiss after
+   * present so that the correct delegate is given.
+   */
+  private getDelegate(force = false) {
+    if (this.workingDelegate && !force) {
+      return {
+        delegate: this.workingDelegate,
+        inline: this.inline,
+      };
+    }
+
+    /**
+     * If using overlay inline
+     * we potentially need to use the coreDelegate
+     * so that this works in vanilla JS apps.
+     * If a developer has presented this component
+     * via a controller, then we can assume
+     * the component is already in the
+     * correct place.
+     */
+    const parentEl = this.el.parentNode as HTMLElement | null;
+    const inline = (this.inline = parentEl !== null && !this.hasController);
+    const delegate = (this.workingDelegate = inline ? this.delegate || this.coreDelegate : this.delegate);
+
+    return { inline, delegate };
+  }
+
   /**
    * Present the alert overlay after it has been created.
    */
@@ -415,7 +507,46 @@ export class Alert implements ComponentInterface, OverlayInterface {
   async present(): Promise<void> {
     const unlock = await this.lockController.lock();
 
-    await this.delegateController.attachViewToDom();
+    const { el } = this;
+    const { inline, delegate } = this.getDelegate(true);
+
+    /**
+     * Emit ionMount so JS Frameworks have an opportunity
+     * to add the child component to the DOM. The child
+     * component will be assigned to this.usersElement below.
+     */
+    this.ionMount.emit();
+
+    this.usersElement = await attachComponent(
+      delegate,
+      el,
+      this.component,
+      ['alert-viewport'],
+      this.componentProps,
+      inline
+    );
+
+    /**
+     * When using the lazy loaded build of Stencil, we need to wait
+     * for every Stencil component instance to be ready before presenting
+     * otherwise there can be a flash of unstyled content. With the
+     * custom elements bundle we need to wait for the JS framework
+     * mount the inner contents of the overlay otherwise WebKit may
+     * get the transition incorrect.
+     */
+    if (hasLazyBuild(el)) {
+      await deepReady(this.usersElement);
+      /**
+       * If keepContentsMounted="true" then the
+       * JS Framework has already mounted the inner
+       * contents so there is no need to wait.
+       * Otherwise, we need to wait for the JS
+       * Framework to mount the inner contents
+       * of this component.
+       */
+    } else if (!this.keepContentsMounted) {
+      await waitForMount();
+    }
 
     await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation).then(() => {
       /**
@@ -454,7 +585,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const dismissed = await dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
 
     if (dismissed) {
-      this.delegateController.removeViewFromDom();
+      /**
+       * If using popover inline
+       * we potentially need to use the coreDelegate
+       * so that this works in vanilla JS apps
+       */
+      const { delegate } = this.getDelegate();
+      await detachComponent(delegate, this.usersElement);
     }
 
     unlock();
@@ -709,6 +846,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
       const cancelButton = this.processedButtons.find((b) => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
+
+    this.onLifecycle(ev);
   };
 
   private renderAlertButtons() {
@@ -751,7 +890,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { overlayIndex, header, subHeader, message, htmlAttributes } = this;
+    const { overlayIndex, header, subHeader, message, htmlAttributes, onLifecycle } = this;
     const mode = getIonMode(this);
     const hdrId = `alert-${overlayIndex}-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;
@@ -778,7 +917,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
           'overlay-hidden': true,
           'alert-translucent': this.translucent,
         }}
+        onIonAlertDidPresent={onLifecycle}
+        onIonAlertWillPresent={onLifecycle}
         onIonAlertWillDismiss={this.dispatchCancelHandler}
+        onIonAlertDidDismiss={onLifecycle}
         onIonBackdropTap={this.onBackdropTap}
       >
         <ion-backdrop tappable={this.backdropDismiss} />
@@ -828,6 +970,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
     );
   }
 }
+
+const LIFECYCLE_MAP: any = {
+  ionPopoverDidPresent: 'ionViewDidEnter',
+  ionPopoverWillPresent: 'ionViewWillEnter',
+  ionPopoverWillDismiss: 'ionViewWillLeave',
+  ionPopoverDidDismiss: 'ionViewDidLeave',
+};
 
 const inputClass = (input: AlertInput): CssClassMap => {
   return {

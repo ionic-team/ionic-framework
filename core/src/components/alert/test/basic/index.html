@@ -40,6 +40,16 @@
         <button class="expand" id="radio" onclick="presentAlertRadio()">Radio</button>
         <button class="expand" id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
         <button class="expand" onclick="presentWithCssClass()">CssClass</button>
+
+        <ion-button id="present-alert">Click Me</ion-button>
+        <ion-alert
+          trigger="present-alert"
+          header="A Short Title Is Best"
+          sub-header="A Sub Header Is Optional"
+          message="A message should be a short, complete sentence."
+        >
+          <p>woah</p>
+        </ion-alert>
       </ion-content>
 
       <style>
@@ -62,10 +72,29 @@
         },
       };
 
+      const alert = document.querySelector('ion-alert');
+      alert.buttons = ['Action'];
+
       async function openAlert(opts) {
         const alert = await alertController.create(opts);
         await alert.present();
       }
+
+      class ProfilePage extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.innerHTML = `
+          <div>
+            <p>Profile Page</p>
+          </div>
+        `;
+        }
+      }
+
+      customElements.define('profile-page', ProfilePage);
 
       function presentAlert() {
         openAlert({
@@ -76,6 +105,7 @@
           htmlAttributes: {
             'data-testid': 'basic-alert',
           },
+          component: 'profile-page',
         });
       }
 
