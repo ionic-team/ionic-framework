@@ -39,4 +39,22 @@ configs({ directions: ['ltr'], modes: ['md', 'ios', 'ionic-md'] }).forEach(({ co
       await expect(container).toHaveScreenshot(screenshot(`badge-hint-tab-button-icon-bottom`));
     });
   });
+
+  test.describe(title('badge: hint inside button'), () => {
+    test('should not have visual regressions when icon is on the top', async ({ page }) => {
+      await page.goto('/src/components/badge/test/hint', config);
+
+      const container = page.locator('#button-top');
+
+      await expect(container).toHaveScreenshot(screenshot(`badge-hint-button-top`));
+    });
+
+    test('should not have visual regressions when icon is at the bottom', async ({ page }) => {
+      await page.goto('/src/components/badge/test/hint', config);
+
+      const container = page.locator('#button-bottom');
+
+      await expect(container).toHaveScreenshot(screenshot(`badge-hint-button-bottom`));
+    });
+  });
 });
