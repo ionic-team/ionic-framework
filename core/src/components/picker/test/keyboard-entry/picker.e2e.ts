@@ -163,6 +163,172 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(ionChange).toHaveReceivedEventDetail({ value: 12 });
       await expect(column).toHaveJSProperty('value', 12);
     });
+
+    test('should allow typing 22 in a column where the max value is 23 and not just set it to 2', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28877',
+      });
+      await page.setContent(
+        `
+    <ion-picker>
+      <ion-picker-column id="hours"></ion-picker-column>
+      <ion-picker-column id="minutes"></ion-picker-column>
+    </ion-picker>
+
+    <script>
+      const hoursColumn = document.querySelector('ion-picker-column#hours');
+      hoursColumn.numericInput = true;
+      const hourItems = [
+        { text: '01', value: 1 },
+        { text: '02', value: 2},
+        { text: '20', value: 20 },
+        { text: '21', value: 21 },
+        { text: '22', value: 22 },
+        { text: '23', value: 23 }
+      ];
+
+      hourItems.forEach((item) => {
+        const option = document.createElement('ion-picker-column-option');
+        option.value = item.value;
+        option.textContent = item.text;
+
+        hoursColumn.appendChild(option);
+      });
+
+      const minutesColumn = document.querySelector('ion-picker-column#minutes');
+      minutesColumn.numericInput = true;
+      const minuteItems = [
+        { text: '00', value: 0 },
+        { text: '15', value: 15 },
+        { text: '30', value: 30 },
+        { text: '45', value: 45 }
+      ];
+
+      minuteItems.forEach((item) => {
+        const option = document.createElement('ion-picker-column-option');
+        option.value = item.value;
+        option.textContent = item.text;
+
+        minutesColumn.appendChild(option);
+      });
+    </script>
+  `,
+        config
+      );
+
+      const hoursColumn = page.locator('ion-picker-column#hours');
+      const minutesColumn = page.locator('ion-picker-column#minutes');
+      const hoursIonChange = await (hoursColumn as E2ELocator).spyOnEvent('ionChange');
+      const minutesIonChange = await (minutesColumn as E2ELocator).spyOnEvent('ionChange');
+      const highlight = page.locator('ion-picker .picker-highlight');
+
+      const box = await highlight.boundingBox();
+      if (box !== null) {
+        await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+      }
+
+      // Simulate typing '2230' (22 hours, 30 minutes)
+      await page.keyboard.press('Digit2');
+      await page.keyboard.press('Digit2');
+      await page.keyboard.press('Digit3');
+      await page.keyboard.press('Digit0');
+
+      // Ensure the hours column is set to 22
+      await expect(hoursIonChange).toHaveReceivedEventDetail({ value: 22 });
+      await expect(hoursColumn).toHaveJSProperty('value', 22);
+
+      // Ensure the minutes column is set to 30
+      await expect(minutesIonChange).toHaveReceivedEventDetail({ value: 30 });
+      await expect(minutesColumn).toHaveJSProperty('value', 30);
+    });
+
+    test('should set value to 2 and not wait for another digit when max value is 12', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28877',
+      });
+      await page.setContent(
+        `
+    <ion-picker>
+      <ion-picker-column id="hours"></ion-picker-column>
+      <ion-picker-column id="minutes"></ion-picker-column>
+    </ion-picker>
+
+    <script>
+      const hoursColumn = document.querySelector('ion-picker-column#hours');
+      hoursColumn.numericInput = true;
+      const hourItems = [
+        { text: '01', value: 1 },
+        { text: '02', value: 2 },
+        { text: '03', value: 3 },
+        { text: '04', value: 4 },
+        { text: '05', value: 5 },
+        { text: '06', value: 6 },
+        { text: '07', value: 7 },
+        { text: '08', value: 8 },
+        { text: '09', value: 9 },
+        { text: '10', value: 10 },
+        { text: '11', value: 11 },
+        { text: '12', value: 12 }
+      ];
+
+      hourItems.forEach((item) => {
+        const option = document.createElement('ion-picker-column-option');
+        option.value = item.value;
+        option.textContent = item.text;
+
+        hoursColumn.appendChild(option);
+      });
+
+      const minutesColumn = document.querySelector('ion-picker-column#minutes');
+      minutesColumn.numericInput = true;
+      const minuteItems = [
+        { text: '00', value: 0 },
+        { text: '15', value: 15 },
+        { text: '30', value: 30 },
+        { text: '45', value: 45 }
+      ];
+
+      minuteItems.forEach((item) => {
+        const option = document.createElement('ion-picker-column-option');
+        option.value = item.value;
+        option.textContent = item.text;
+
+        minutesColumn.appendChild(option);
+      });
+    </script>
+  `,
+        config
+      );
+
+      const hoursColumn = page.locator('ion-picker-column#hours');
+      const minutesColumn = page.locator('ion-picker-column#minutes');
+      const hoursIonChange = await (hoursColumn as E2ELocator).spyOnEvent('ionChange');
+      const minutesIonChange = await (minutesColumn as E2ELocator).spyOnEvent('ionChange');
+      const highlight = page.locator('ion-picker .picker-highlight');
+
+      const box = await highlight.boundingBox();
+      if (box !== null) {
+        await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+      }
+
+      // Simulate typing '245' (2 hours, 45 minutes)
+      await page.keyboard.press('Digit2');
+      await page.keyboard.press('Digit4');
+      await page.keyboard.press('Digit5');
+
+      // Ensure the hours column is set to 2
+      await expect(hoursIonChange).toHaveReceivedEventDetail({ value: 2 });
+      await expect(hoursColumn).toHaveJSProperty('value', 2);
+
+      // Ensure the minutes column is set to 45
+      await expect(minutesIonChange).toHaveReceivedEventDetail({ value: 45 });
+      await expect(minutesColumn).toHaveJSProperty('value', 45);
+    });
+
     test('pressing Enter should dismiss the keyboard', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',

@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.2](https://github.com/ionic-team/ionic-framework/compare/v8.5.1...v8.5.2) (2025-03-26)
+
+
+### Bug Fixes
+
+* **datetime:** support typing time values in a 24-hour format ([#30147](https://github.com/ionic-team/ionic-framework/issues/30147)) ([ac6e6a0](https://github.com/ionic-team/ionic-framework/commit/ac6e6a03174263d09ec55c9742a026862a3df444)), closes [#28877](https://github.com/ionic-team/ionic-framework/issues/28877)
+* **range:** emit ionInput when value changes ([#30293](https://github.com/ionic-team/ionic-framework/issues/30293)) ([7789bb5](https://github.com/ionic-team/ionic-framework/commit/7789bb59ee5c76074ff4872dc6a50ae2d83df8f5)), closes [#29619](https://github.com/ionic-team/ionic-framework/issues/29619)
+* **segment-button:** ensure consistent disabled state for segment-content error handling ([#30288](https://github.com/ionic-team/ionic-framework/issues/30288)) ([1cfa915](https://github.com/ionic-team/ionic-framework/commit/1cfa915e8fe362951c521bce970a9f5f10918ab2))
+
+
+
+
+
+## [8.5.1](https://github.com/ionic-team/ionic-framework/compare/v8.5.0...v8.5.1) (2025-03-19)
+
+
+### Bug Fixes
+
+* **modal:** consider scrollable content while dragging when expandToScroll is false ([#30257](https://github.com/ionic-team/ionic-framework/issues/30257)) ([68be8e9](https://github.com/ionic-team/ionic-framework/commit/68be8e915ce5637b20591bb0acfb3653c2184ff6))
+* **vue:** update output target and fix incorrect types ([#30259](https://github.com/ionic-team/ionic-framework/issues/30259)) ([f4186c6](https://github.com/ionic-team/ionic-framework/commit/f4186c6761c46bf386f8effecf90d88831c34726)), closes [#30254](https://github.com/ionic-team/ionic-framework/issues/30254)
+
+
+### Performance Improvements
+
+* **modal:** fixing performance regression on modal sheets when expandToScroll is false ([#30267](https://github.com/ionic-team/ionic-framework/issues/30267)) ([c4b9212](https://github.com/ionic-team/ionic-framework/commit/c4b92126405ae5b7160ce03f40557563e755a8a5))
+
+
+
+
+
+## [8.4.6](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.4.6) (2025-03-19)
+
+
+### Bug Fixes
+
+* **vue:** update output target and fix incorrect types ([#30259](https://github.com/ionic-team/ionic-framework/issues/30259)) ([0eaee78](https://github.com/ionic-team/ionic-framework/commit/0eaee78fe1cae8f8a6cb04a01abad8c05dec0723)), closes [#30254](https://github.com/ionic-team/ionic-framework/issues/30254)
+
+
+
+
+
 # [8.5.0](https://github.com/ionic-team/ionic-framework/compare/v8.4.5...v8.5.0) (2025-03-13)
 
 
