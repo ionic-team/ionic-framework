@@ -12,21 +12,11 @@
   --padding-start: 0px;
   --padding-end: 0px;
 
+  @include padding-horizontal(var(--padding-start), var(--padding-end));
+
   display: block;
 
   width: 100%;
-
-  /* stylelint-disable */
-  @include ltr() {
-    padding-right: var(--padding-end);
-    padding-left: var(--padding-start);
-  }
-
-  @include rtl() {
-    padding-right: var(--padding-start);
-    padding-left: var(--padding-end);
-  }
-  /* stylelint-enable */
 }
 
 :host hr {
