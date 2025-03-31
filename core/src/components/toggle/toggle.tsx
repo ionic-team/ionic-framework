@@ -396,6 +396,7 @@ export class Toggle implements ComponentInterface {
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
             required={required}
+            {...({ switch: true } as any)}
             {...this.inheritedAttributes}
           />
           <div
