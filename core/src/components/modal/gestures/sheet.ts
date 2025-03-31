@@ -1,6 +1,6 @@
-import { isIonContent, findClosestIonContent } from '@utils/content';
+import { findClosestIonContent, isIonContent } from '@utils/content';
 import { createGesture } from '@utils/gesture';
-import { clamp, raf, getElementRoot } from '@utils/helpers';
+import { clamp, getElementRoot, raf } from '@utils/helpers';
 import { FOCUS_TRAP_DISABLE_CLASS } from '@utils/overlays';
 
 import type { Animation } from '../../../interface';
@@ -83,6 +83,7 @@ export const createSheetGesture = (
   let currentBreakpoint = initialBreakpoint;
   let offset = 0;
   let canDismissBlocksGesture = false;
+  let cachedScrollEl: HTMLElement | null = null;
   const canDismissMaxStep = 0.95;
   const maxBreakpoint = breakpoints[breakpoints.length - 1];
   const minBreakpoint = breakpoints[0];
@@ -234,6 +235,17 @@ export const createSheetGesture = (
     canDismissBlocksGesture = baseEl.canDismiss !== undefined && baseEl.canDismiss !== true && minBreakpoint === 0;
 
     /**
+     * Cache the scroll element reference when the gesture starts,
+     * this allows us to avoid querying the DOM for the target in onMove,
+     * which would impact performance significantly.
+     */
+    if (!expandToScroll) {
+      const targetEl = findClosestIonContent(detail.event.target! as HTMLElement);
+      cachedScrollEl =
+        targetEl && isIonContent(targetEl) ? getElementRoot(targetEl).querySelector('.inner-scroll') : targetEl;
+    }
+
+    /**
      * If expandToScroll is disabled, we need to swap
      * the footer visibility to the original, so if the modal
      * is dismissed, the footer dismisses with the modal
@@ -264,10 +276,10 @@ export const createSheetGesture = (
 
   const onMove = (detail: GestureDetail) => {
     /**
-     * If `expandToScroll` is disabled, we should not allow the swipe gesture
-     * to continue if the gesture is not pulling down.
+     * If `expandToScroll` is disabled, and an upwards swipe gesture is done within
+     * the scrollable content, we should not allow the swipe gesture to continue.
      */
-    if (!expandToScroll && detail.deltaY <= 0) {
+    if (!expandToScroll && detail.deltaY <= 0 && cachedScrollEl) {
       return;
     }
 
@@ -324,6 +336,15 @@ export const createSheetGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
+    /**
+     * If expandToScroll is disabled, we should not allow the moveSheetToBreakpoint
+     * function to be called if the user is trying to swipe content upwards and the content
+     * is not scrolled to the top.
+     */
+    if (!expandToScroll && detail.deltaY <= 0 && cachedScrollEl && cachedScrollEl.scrollTop > 0) {
+      return;
+    }
+
     /**
      * When the gesture releases, we need to determine
      * the closest breakpoint to snap to.
