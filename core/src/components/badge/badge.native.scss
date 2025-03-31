@@ -29,3 +29,20 @@
 
   line-height: 10px;
 }
+
+// Badge in Button
+// --------------------------------------------------
+
+:host(:not(:empty).in-button) {
+  min-width: $badge-size-in-button;
+  height: $badge-size-in-button;
+
+  font-size: $badge-font-size-in-button;
+
+  line-height: $badge-line-height-in-button;
+
+  ::slotted(ion-icon) {
+    width: $badge-icon-size-in-button;
+    height: $badge-icon-size-in-button;
+  }
+}

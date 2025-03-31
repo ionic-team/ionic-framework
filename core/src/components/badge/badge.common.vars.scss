@@ -1,5 +1,4 @@
 @import "../../themes/functions.font";
-@import "../../themes/functions.sizes";
 
 // Badge
 // --------------------------------------------------
@@ -27,15 +26,3 @@ $badge-font-size: dynamic-font($badge-baseline-font-size);
 
 /// @prop - Font weight of the badge
 $badge-font-weight: bold;
-
-/// @prop - Size of the badge when inside button
-$badge-size-in-button: 16px;
-
-/// @prop - Font size of the badge when inside button
-$badge-font-size-in-button: px-to-rem(12);
-
-/// @prop - Line height of the badge when inside button
-$badge-line-height-in-button: 20px;
-
-/// @prop - Size of of the badge icon when inside button
-$badge-icon-size-in-button: 12px;

@@ -213,3 +213,17 @@
 :host([vertical]:not(.in-tab-button).in-button.badge-xlarge) {
   @include globals.position(null, globals.$ion-space-050);
 }
+
+:host(:not(:empty).in-button) {
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+
+  font-size: globals.$ion-font-size-300;
+
+  line-height: globals.$ion-font-line-height-500;
+
+  ::slotted(ion-icon) {
+    width: globals.$ion-scale-300;
+    height: globals.$ion-scale-300;
+  }
+}
