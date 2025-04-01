@@ -2,7 +2,8 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
-import { hapticAvailable, hapticSelection } from '@utils/native/haptic';
+import { hapticSelection } from '@utils/native/haptic';
+import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
@@ -39,8 +40,6 @@ export class Toggle implements ComponentInterface {
   private errorTextId = `${this.inputId}-error-text`;
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
-  private enableIOSHapticFeedback = config.getBoolean('toggleIOSHapticFeedback', false);
-  private hapticEl?: HTMLElement | null = null;
   private lastDrag = 0;
   private inheritedAttributes: Attributes = {};
   private toggleTrack?: HTMLElement;
@@ -162,10 +161,6 @@ export class Toggle implements ComponentInterface {
     const isNowChecked = !checked;
     this.checked = isNowChecked;
 
-    if (this.enableIOSHapticFeedback && this.hapticEl) {
-      this.hapticEl.click();
-    }
-
     this.setFocus();
     this.ionChange.emit({
       checked: isNowChecked,
@@ -253,6 +248,14 @@ export class Toggle implements ComponentInterface {
   }
 
   private onClick = (ev: MouseEvent) => {
+    /**
+     * The haptics for the toggle is
+     * an iOS-only feature when tapped.
+     * As a result, it should be
+     * disabled on Android.
+     */
+    const enableHaptics = isPlatform('ios');
+
     if (this.disabled) {
       return;
     }
@@ -261,6 +264,7 @@ export class Toggle implements ComponentInterface {
 
     if (this.lastDrag + 300 < Date.now()) {
       this.toggleChecked();
+      enableHaptics && hapticSelection();
     }
   };
 
@@ -311,33 +315,6 @@ export class Toggle implements ComponentInterface {
           </div>
         </div>
       </div>
-    );
-  }
-
-  /**
-   * On Safari (iOS 18+) we can trigger haptic feedback programatically
-   * by rendering <input type="checkbox" switch> element
-   * with an associated <label>  and triggering click()
-   * on the <label> element.
-   */
-  private renderFallbackHapticElements() {
-    const { inputId } = this;
-    const mode = getIonMode(this);
-
-    if (!this.enableIOSHapticFeedback || hapticAvailable() || mode !== 'ios') {
-      return;
-    }
-
-    return (
-      <label aria-hidden="true" ref={(hapticEl) => (this.hapticEl = hapticEl)} style={{ display: 'none' }}>
-        <input
-          id={inputId + '-haptic'}
-          type="checkbox"
-          // @ts-expect-error safari-only custom attrrbute required for haptic feedback
-          switch
-          style={{ display: 'none' }}
-        />
-      </label>
     );
   }
 
@@ -400,6 +377,7 @@ export class Toggle implements ComponentInterface {
       <Host
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === this.errorTextId}
+        onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -412,8 +390,7 @@ export class Toggle implements ComponentInterface {
           [`toggle-${rtl}`]: true,
         })}
       >
-        {this.renderFallbackHapticElements()}
-        <label class="toggle-wrapper" onClick={this.onClick}>
+        <label class="toggle-wrapper">
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
