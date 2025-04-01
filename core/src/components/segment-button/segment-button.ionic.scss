@@ -47,7 +47,8 @@
 // Segment Button Label
 // --------------------------------------------------
 
-::slotted(ion-label) {
+::slotted(ion-label),
+::slotted(ion-text) {
   @include globals.typography(globals.$ion-body-action-sm);
 
   color: var(--color);
@@ -67,6 +68,7 @@
 // --------------------------------------------------
 
 :host(.segment-button-checked) ::slotted(ion-label),
+:host(.segment-button-checked) ::slotted(ion-text),
 :host(.segment-button-checked) ::slotted(ion-icon) {
   color: var(--color-checked);
 }
@@ -75,6 +77,7 @@
 // --------------------------------------------------
 
 :host(.segment-button-disabled) ::slotted(ion-label),
+:host(.segment-button-disabled) ::slotted(ion-text),
 :host(.segment-button-disabled) ::slotted(ion-icon) {
   color: var(--color-disabled);
 }
