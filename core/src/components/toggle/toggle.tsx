@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil
 import { renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { hapticSelection } from '@utils/native/haptic';
+import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
@@ -247,6 +248,14 @@ export class Toggle implements ComponentInterface {
   }
 
   private onClick = (ev: MouseEvent) => {
+    /**
+     * The haptics for the toggle is
+     * an iOS-only feature when tapped.
+     * As a result, it should be
+     * disabled on Android.
+     */
+    const enableHaptics = isPlatform('ios');
+
     if (this.disabled) {
       return;
     }
@@ -255,6 +264,7 @@ export class Toggle implements ComponentInterface {
 
     if (this.lastDrag + 300 < Date.now()) {
       this.toggleChecked();
+      enableHaptics && hapticSelection();
     }
   };
 
@@ -396,7 +406,6 @@ export class Toggle implements ComponentInterface {
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
             required={required}
-            {...({ switch: true } as any)}
             {...this.inheritedAttributes}
           />
           <div
