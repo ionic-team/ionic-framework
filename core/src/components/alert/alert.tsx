@@ -956,10 +956,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
           {this.renderAlertMessage(msgId)}
 
+          <slot></slot>
+
           {this.renderAlertInputs()}
           {this.renderAlertButtons()}
-
-          <slot></slot>
         </div>
 
         <div tabindex="0" aria-hidden="true"></div>
