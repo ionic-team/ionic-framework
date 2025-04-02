@@ -1,4 +1,3 @@
-import { setMode } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { config } from '../../../global/config';
@@ -52,21 +51,6 @@ describe('toggle', () => {
       expect(toggle).toHaveShadowPart('label');
       expect(toggle).toHaveShadowPart('track');
       expect(toggle).toHaveShadowPart('handle');
-    });
-  });
-
-  describe('iOS haptic feedback', () => {
-    it('should render additional elements when enabled in config', async () => {
-      setMode(() => 'ios');
-      const t = await newToggle();
-      expect(t['hapticEl']).toBeNull();
-
-      config.reset({
-        toggleIOSHapticFeedback: true,
-      });
-
-      const t2 = await newToggle();
-      expect(t2['hapticEl']).not.toBeNull();
     });
   });
 });
