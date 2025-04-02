@@ -249,10 +249,9 @@ export class Toggle implements ComponentInterface {
 
   private onClick = (ev: MouseEvent) => {
     /**
-     * The haptics for the toggle is
-     * an iOS-only feature when tapped.
-     * As a result, it should be
-     * disabled on Android.
+     * The haptics for the toggle on tap is
+     * an iOS-only feature. As such, it should
+     * only trigger on iOS.
      */
     const enableHaptics = isPlatform('ios');
 
