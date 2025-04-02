@@ -3833,6 +3833,10 @@ export namespace Components {
          */
         "htmlAttributes"?: { [key: string]: any };
         /**
+          * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for a toast with muted, subtle colors.
+         */
+        "hue"?: 'bold' | 'subtle';
+        /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
@@ -9360,6 +9364,10 @@ declare namespace LocalJSX {
           * Additional attributes to pass to the toast.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for a toast with muted, subtle colors.
+         */
+        "hue"?: 'bold' | 'subtle';
         /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
