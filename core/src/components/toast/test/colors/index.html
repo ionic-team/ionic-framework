@@ -58,9 +58,7 @@
       // Show backdrop when toasts are presented
       function showBackdrop() {
         const backdrop = document.getElementById('toastBackdrop');
-        if (toastCount === 1) {
-          backdrop.style.display = 'block';
-        }
+        backdrop.style.display = 'block';
         backdrop.addEventListener('click', closeAllToasts);
       }
 
