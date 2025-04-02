@@ -147,6 +147,7 @@
     $contrast-rgb: map.get($color-variants, contrast-rgb);
     $shade: map.get($color-variants, shade);
     $tint: map.get($color-variants, tint);
+    $foreground: map.get($color-variants, foreground);
 
     // Generate CSS variables dynamically
     --ion-color#{$prefix}-base: var(--ion-color-#{$color-name}#{$prefix}, #{$base}) !important;
@@ -158,6 +159,7 @@
     ) !important;
     --ion-color#{$prefix}-shade: var(--ion-color-#{$color-name}#{$prefix}-shade, #{$shade}) !important;
     --ion-color#{$prefix}-tint: var(--ion-color-#{$color-name}#{$prefix}-tint, #{$tint}) !important;
+    --ion-color#{$prefix}-foreground: var(--ion-color-#{$color-name}#{$prefix}-foreground, #{$foreground}) !important;
   }
 }
 
@@ -223,6 +225,7 @@
         --ion-color-#{$color-name}#{$prefix}-contrast-rgb: #{map.get($colors, contrast-rgb)};
         --ion-color-#{$color-name}#{$prefix}-shade: #{map.get($colors, shade)};
         --ion-color-#{$color-name}#{$prefix}-tint: #{map.get($colors, tint)};
+        --ion-color-#{$color-name}#{$prefix}-foreground: #{map.get($colors, foreground)};
       }
     }
   }
