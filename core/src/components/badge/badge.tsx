@@ -107,6 +107,7 @@ export class Badge implements ComponentInterface {
           [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
           [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
+          'in-button': hostContext('ion-button', this.el),
           'in-tab-button': hostContext('ion-tab-button', this.el),
         })}
       >

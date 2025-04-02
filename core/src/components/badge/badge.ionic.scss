@@ -160,7 +160,7 @@
   height: globals.$ion-scale-1000;
 }
 
-// Badge Empty
+// Badge (hint)
 // --------------------------------------------------
 
 :host(:empty) {
@@ -168,7 +168,14 @@
   --padding-end: 0;
 }
 
-// Badge Sizes Empty
+:host([vertical]:not(:empty)) {
+  --padding-start: #{globals.$ion-scale-100};
+  --padding-end: #{globals.$ion-scale-100};
+  --padding-top: #{globals.$ion-scale-100};
+  --padding-bottom: #{globals.$ion-scale-100};
+}
+
+// Badge (hint) Sizes
 // --------------------------------------------------
 
 /* sm */
@@ -196,11 +203,41 @@
   position: relative;
 }
 
-// Badge Icon when Inside Tab Button
-:host([vertical].in-tab-button) ::slotted(ion-icon) {
+// Icon Inside Badge Hint
+// --------------------------------------------------
+:host([vertical]) ::slotted(ion-icon) {
   @include globals.position(50%, null, null, 50%);
 
   position: absolute;
 
   transform: translate(-50%, -50%);
+}
+
+// Badge in Button
+// --------------------------------------------------
+
+:host([vertical]:not(.in-tab-button).in-button.badge-xxsmall),
+:host([vertical]:not(.in-tab-button).in-button.badge-xsmall),
+:host([vertical]:not(.in-tab-button).in-button.badge-small) {
+  @include globals.position(null, calc(-1 * var(globals.$ion-space-050)));
+}
+
+:host([vertical]:not(.in-tab-button).in-button.badge-medium),
+:host([vertical]:not(.in-tab-button).in-button.badge-large),
+:host([vertical]:not(.in-tab-button).in-button.badge-xlarge) {
+  @include globals.position(null, globals.$ion-space-050);
+}
+
+:host(:not(:empty).in-button) {
+  min-width: globals.$ion-scale-400;
+  height: globals.$ion-scale-400;
+
+  font-size: globals.$ion-font-size-300;
+
+  line-height: globals.$ion-font-line-height-500;
+
+  ::slotted(ion-icon) {
+    width: globals.$ion-scale-300;
+    height: globals.$ion-scale-300;
+  }
 }

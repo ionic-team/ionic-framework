@@ -1,0 +1,23 @@
+@import "../../themes/functions.font";
+@import "../../themes/functions.sizes";
+
+// Badge
+// --------------------------------------------------
+
+/// @prop - Font size of the badge hint
+$badge-hint-baseline-font-size: 8px;
+
+/// @prop - Font size of the badge hint
+$badge-hint-font-size: dynamic-font($badge-hint-baseline-font-size);
+
+/// @prop - Size of the badge when inside button
+$badge-size-in-button: 16px;
+
+/// @prop - Font size of the badge when inside button
+$badge-font-size-in-button: px-to-rem(12);
+
+/// @prop - Line height of the badge when inside button
+$badge-line-height-in-button: 20px;
+
+/// @prop - Size of of the badge icon when inside button
+$badge-icon-size-in-button: 12px;
