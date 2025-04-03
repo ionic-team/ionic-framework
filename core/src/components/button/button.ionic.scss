@@ -45,8 +45,7 @@
 :host(.button-solid) {
   --background-activated: #{globals.ion-color(primary, shade)};
   --background-hover: #{globals.ion-color(primary, contrast)};
-  --background-focused: #{globals.ion-color(primary, contrast)};
-  --background-focused-opacity: 0.24;
+  --background-focused: transparent;
   --background-hover-opacity: 0.08;
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
@@ -215,16 +214,6 @@
 :host(.ion-focused) .button-native {
   outline: var(--focus-ring-width) globals.$ion-border-style-solid var(--focus-ring-color);
   outline-offset: globals.$ion-border-size-050;
-}
-
-/**
- * Only allow overriding of opacity here
- * as developers should not be overriding
- * colors when using the color prop.
- */
-
-:host(.button-solid.ion-color.ion-focused) .button-native::after {
-  background: globals.current-color(contrast);
 }
 
 // Button: Activated
