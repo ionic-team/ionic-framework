@@ -160,7 +160,9 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
 
       // 7) The subtle contrast color as the text color against the subtle shade color as the background color
       // TODO(ROU-10778): Re-enable this test once the colors have been finalized
-      test.skip(`subtle contrast color on "${color}" subtle background shade should pass AA guidelines`, async ({ page }) => {
+      test.skip(`subtle contrast color on "${color}" subtle background shade should pass AA guidelines`, async ({
+        page,
+      }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
