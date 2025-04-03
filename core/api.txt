@@ -753,7 +753,7 @@ ion-datetime-button,part,native
 
 ion-divider,shadow
 ion-divider,prop,inset,boolean,false,false,false
-ion-divider,prop,spacing,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxlarge" | "xxsmall" | undefined,'xxsmall',false,true
+ion-divider,prop,spacing,"large" | "medium" | "small" | "xlarge" | "xsmall" | "xxlarge" | "xxsmall" | undefined,'medium',false,true
 ion-divider,css-prop,--margin-bottom,ionic
 ion-divider,css-prop,--margin-bottom,ios
 ion-divider,css-prop,--margin-bottom,md

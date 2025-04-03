@@ -147,6 +147,7 @@
     $contrast-rgb: map.get($color-variants, contrast-rgb);
     $shade: map.get($color-variants, shade);
     $tint: map.get($color-variants, tint);
+    $foreground: map.get($color-variants, foreground);
 
     // Generate CSS variables dynamically
     --ion-color#{$prefix}-base: var(--ion-color-#{$color-name}#{$prefix}, #{$base}) !important;
@@ -158,6 +159,7 @@
     ) !important;
     --ion-color#{$prefix}-shade: var(--ion-color-#{$color-name}#{$prefix}-shade, #{$shade}) !important;
     --ion-color#{$prefix}-tint: var(--ion-color-#{$color-name}#{$prefix}-tint, #{$tint}) !important;
+    --ion-color#{$prefix}-foreground: var(--ion-color-#{$color-name}#{$prefix}-foreground, #{$foreground}) !important;
   }
 }
 
@@ -184,12 +186,14 @@
 //   --ion-color-primary-contrast-rgb: 255, 255, 255;
 //   --ion-color-primary-shade: #0f54da;
 //   --ion-color-primary-tint: #94a5f4;
+//   --ion-color-primary-foreground: #105cef;
 //   --ion-color-primary-subtle: #f2f4fd;
 //   --ion-color-primary-subtle-rgb: 242, 244, 253;
 //   --ion-color-primary-subtle-contrast: #105cef;
 //   --ion-color-primary-subtle-contrast-rgb: 16, 92, 239;
 //   --ion-color-primary-subtle-shade: #d0d7fa;
 //   --ion-color-primary-subtle-tint: #e9ecfc;
+//   --ion-color-primary-foreground: #105cef;
 //   ...
 //   --ion-color-dark: #292929;
 //   --ion-color-dark-rgb: 41, 41, 41;
@@ -197,12 +201,14 @@
 //   --ion-color-dark-contrast-rgb: 255, 255, 255;
 //   --ion-color-dark-shade: #242424;
 //   --ion-color-dark-tint: #4e4e4e;
+//   --ion-color-dark-foreground: #242424;
 //   --ion-color-dark-subtle: #f5f5f5;
 //   --ion-color-dark-subtle-rgb: 245, 245, 245;
 //   --ion-color-dark-subtle-contrast: #292929;
 //   --ion-color-dark-subtle-contrast-rgb: 41, 41, 41;
 //   --ion-color-dark-subtle-shade: #e0e0e0;
 //   --ion-color-dark-subtle-tint: #efefef;
+//   --ion-color-dark-subtle-foreground: #242424;
 // }
 // --------------------------------------------------------------------------------------------
 @mixin generate-color-variables() {
@@ -223,6 +229,7 @@
         --ion-color-#{$color-name}#{$prefix}-contrast-rgb: #{map.get($colors, contrast-rgb)};
         --ion-color-#{$color-name}#{$prefix}-shade: #{map.get($colors, shade)};
         --ion-color-#{$color-name}#{$prefix}-tint: #{map.get($colors, tint)};
+        --ion-color-#{$color-name}#{$prefix}-foreground: #{map.get($colors, foreground)};
       }
     }
   }

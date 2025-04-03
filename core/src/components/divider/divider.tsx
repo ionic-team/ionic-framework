@@ -20,10 +20,10 @@ export class Divider implements ComponentInterface {
    * Set to "large" for large spacing.
    * Set to `"xlarge"` for the largest spacing.
    *
-   * Defaults to `"xxsmall"`.
+   * Defaults to `"medium"`.
    */
   @Prop({ reflect: true }) spacing?: 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' =
-    'xxsmall';
+    'medium';
 
   /**
    * If `true`, the divider will have horizontal margins
