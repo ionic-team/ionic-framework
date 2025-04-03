@@ -9,58 +9,72 @@ import { configs, test } from '@utils/test/playwright';
 const styleTestHelpers = `
   <style>
     main {
-      background: var(--ion-color-contrast);
       font-size: 14pt;
     }
-    .ion-background {
-      background: var(--ion-color-base);
-    }
-    .ion-background-shade {
-      background: var(--ion-color-shade);
-    }
-    .ion-background-tint {
-      background: var(--ion-color-tint);
-    }
-    .ion-background-opacity-08 {
-      background: rgba(var(--ion-color-base-rgb), 0.08);
-    }
-    .ion-background-opacity-12 {
-      background: rgba(var(--ion-color-base-rgb), 0.12);
-    }
-    .ion-background-opacity-16 {
-      background: rgba(var(--ion-color-base-rgb), 0.16);
-    }
+
     .ion-color {
-      color: var(--ion-color-base);
+      color: var(--ion-color-foreground);
     }
-    .ion-color-contrast {
+
+    .ion-color-background {
+      background: var(--ion-color-base);
       color: var(--ion-color-contrast);
+    }
+
+    .ion-color-background-shade {
+      background: var(--ion-color-shade);
+      color: var(--ion-color-contrast);
+    }
+
+    .ion-color-background-tint {
+      background: var(--ion-color-tint);
+      color: var(--ion-color-contrast);
+    }
+
+    .ion-color-subtle {
+      color: var(--ion-color-subtle-foreground);
+    }
+
+    .ion-color-subtle-background {
+      background: var(--ion-color-subtle-base);
+      color: var(--ion-color-subtle-contrast);
+    }
+
+    .ion-color-subtle-background-shade {
+      background: var(--ion-color-subtle-shade);
+      color: var(--ion-color-subtle-contrast);
+    }
+
+    .ion-color-subtle-background-tint {
+      background: var(--ion-color-subtle-tint);
+      color: var(--ion-color-subtle-contrast);
     }
   </style>
 `;
 
 /**
  * All colors should be tested in the following scenarios:
- * 1) The base color as the text color against the contrast color as the background color
+ * 1) The foreground color as the text color against the default background color
  * 2) The contrast color as the text color against the base color as the background color
  * 3) The contrast color as the text color against the shade color as the background color
  * 4) The contrast color as the text color against the tint color as the background color
- * 5) The base color as the text color against the base color at 0.08 opacity as the background color
- * 6) The base color as the text color against the base color at 0.12 opacity as the background color
- * 7) The base color as the text color against the base color at 0.16 opacity as the background color
+ * 5) The subtle foreground color as the text color against the default background color
+ * 6) The subtle contrast color as the text color against the subtle base color as the background color
+ * 7) The subtle contrast color as the text color against the subtle shade color as the background color
+ * 8) The subtle contrast color as the text color against the subtle tint color as the background color
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
-  const colors = ['primary', 'neutral', 'success', 'warning', 'danger', 'light'];
+  const colors = ['primary', 'secondary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 
-  // TODO(ROU-10778): Re-enable this test once the colors have been finalized
-  test.describe.skip(title('theme'), () => {
+  test.describe(title('palette colors: bold'), () => {
     test.beforeEach(({ skip }) => {
       skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
       skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
     });
 
     for (const color of colors) {
-      test(`color "${color}" should pass AA guidelines`, async ({ page }) => {
+      // 1) The foreground color as the text color against the default background color
+      test(`foreground color "${color}" should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
@@ -73,11 +87,12 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         expect(results.violations).toEqual([]);
       });
 
+      // 2) The contrast color as the text color against the base color as the background color
       test(`contrast color on "${color}" background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
-            <p class="ion-color-contrast ion-background">Hello World</p>
+            <p class="ion-color-background">Hello World</p>
           </main>`,
           config
         );
@@ -86,11 +101,12 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         expect(results.violations).toEqual([]);
       });
 
+      // 3) The contrast color as the text color against the shade color as the background color
       test(`contrast color on "${color}" background shade should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
-            <p class="ion-color-contrast ion-background-shade">Hello World</p>
+            <p class="ion-color-background-shade">Hello World</p>
           </main>`,
           config
         );
@@ -99,11 +115,13 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         expect(results.violations).toEqual([]);
       });
 
-      test(`contrast color on "${color}" background tint should pass AA guidelines`, async ({ page }) => {
+      // 4) The contrast color as the text color against the tint color as the background color
+      // TODO(ROU-10778): Re-enable this test once the colors have been finalized
+      test.skip(`contrast color on "${color}" background tint should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
-            <p class="ion-color-contrast ion-background-tint">Hello World</p>
+            <p class="ion-color-background-tint">Hello World</p>
           </main>`,
           config
         );
@@ -112,11 +130,12 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         expect(results.violations).toEqual([]);
       });
 
-      test(`color "${color}" on 0.08 opacity background should pass AA guidelines`, async ({ page }) => {
+      // 5) The subtle foreground color as the text color against the default background color
+      test(`subtle foreground color "${color}" should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
-            <p class="ion-color ion-background-opacity-08">Hello World</p>
+            <p class="ion-color-subtle">Hello World</p>
           </main>`,
           config
         );
@@ -125,11 +144,12 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         expect(results.violations).toEqual([]);
       });
 
-      test(`color "${color}" on 0.12 opacity background should pass AA guidelines`, async ({ page }) => {
+      // 6) The subtle contrast color as the text color against the subtle base color as the background color
+      test(`subtle contrast color on "${color}" subtle background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
-            <p class="ion-color ion-background-opacity-12">Hello World</p>
+            <p class="ion-color-subtle-background">Hello World</p>
           </main>`,
           config
         );
@@ -138,11 +158,27 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         expect(results.violations).toEqual([]);
       });
 
-      test(`color "${color}" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
+      // 7) The subtle contrast color as the text color against the subtle shade color as the background color
+      // TODO(ROU-10778): Re-enable this test once the colors have been finalized
+      test.skip(`subtle contrast color on "${color}" subtle background shade should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main class="ion-color-${color}">
-            <p class="ion-color ion-background-opacity-16">Hello World</p>
+            <p class="ion-color-subtle-background-shade">Hello World</p>
+          </main>`,
+          config
+        );
+
+        const results = await new AxeBuilder({ page }).analyze();
+        expect(results.violations).toEqual([]);
+      });
+
+      // 8) The subtle contrast color as the text color against the subtle tint color as the background color
+      test(`subtle contrast color on "${color}" subtle background tint should pass AA guidelines`, async ({ page }) => {
+        await page.setContent(
+          `${styleTestHelpers}
+          <main class="ion-color-${color}">
+            <p class="ion-color-subtle-background-tint">Hello World</p>
           </main>`,
           config
         );
