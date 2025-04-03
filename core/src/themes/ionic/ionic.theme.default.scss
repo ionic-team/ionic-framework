@@ -98,24 +98,24 @@ $ionic-colors: (
     ),
   warning: (
     bold: (
-      base: #FFD600,
-      base-rgb: '255, 214, 0',
+      base: globals.$ion-bg-warning-base-default,
+      base-rgb: globals.$ion-bg-warning-base-default-rgb,
       contrast: globals.$ion-text-default,
       contrast-rgb: globals.$ion-text-default-rgb,
-      shade: #C3A400,
+      shade: globals.$ion-bg-warning-base-press,
       // TODO this is not a verified value
       tint: globals.$ion-primitives-yellow-300,
-      foreground: #966503,
+      foreground: globals.$ion-text-warning,
     ),
     subtle: (
-      base: #FFF5DB,
-      base-rgb: '255, 245, 219',
-      contrast: #966503,
-      contrast-rgb: '150, 101, 3',
+      base: globals.$ion-bg-warning-subtle-default,
+      base-rgb: globals.$ion-bg-warning-subtle-default-rgb,
+      contrast: globals.$ion-text-warning,
+      contrast-rgb: globals.$ion-text-warning-rgb,
       shade: globals.$ion-bg-warning-subtle-press,
       // TODO this is not a verified value
       tint: globals.$ion-primitives-yellow-100,
-      foreground: #966503,
+      foreground: globals.$ion-text-warning,
     ),
   ),
   danger: (
