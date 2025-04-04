@@ -244,6 +244,6 @@
 // Select Icon
 // ----------------------------------------------------------------
 
-:host(.in-item.select-expanded) .select-wrapper .select-icon {
+:host(.in-item.select-expanded.select-fill-outline) .select-wrapper .select-icon {
   color: var(--highlight-color);
 }
