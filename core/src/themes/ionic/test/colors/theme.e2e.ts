@@ -64,7 +64,7 @@ const styleTestHelpers = `
  * 8) The subtle contrast color as the text color against the subtle tint color as the background color
  */
 configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
-  const colors = ['primary', 'secondary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
+  const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 
   test.describe(title('palette colors: bold'), () => {
     test.beforeEach(({ skip }) => {
@@ -117,6 +117,7 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
 
       // 4) The contrast color as the text color against the tint color as the background color
       // TODO(ROU-10778): Re-enable this test once the colors have been finalized
+      // Fails on primary, tertiary, success, danger
       test.skip(`contrast color on "${color}" background tint should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
