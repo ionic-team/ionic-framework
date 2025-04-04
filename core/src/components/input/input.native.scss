@@ -29,6 +29,12 @@
   --highlight-color-focused: #{current-color(base)};
 }
 
+// Input Cover: Unfocused
+// --------------------------------------------------
+.cloned-input {
+  @include position(0, null, 0, 0);
+}
+
 // Input Wrapper
 // ----------------------------------------------------------------
 
