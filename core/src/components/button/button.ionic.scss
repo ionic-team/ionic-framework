@@ -44,9 +44,9 @@
 
 :host(.button-solid) {
   --background-activated: #{globals.ion-color(primary, shade)};
-  --background-hover: #{globals.ion-color(primary, contrast)};
+  --background-hover: #{globals.ion-color(primary, shade)};
   --background-focused: transparent;
-  --background-hover-opacity: 0.08;
+  --background-hover-opacity: 1;
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
@@ -57,10 +57,10 @@
 :host(.button-outline) {
   --border-width: #{globals.$ion-border-size-025};
   --border-style: #{globals.$ion-border-style-solid};
-  --background-activated: #{globals.$ion-primitives-neutral-200};
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
   --background-focused: transparent;
-  --background-hover: #{globals.ion-color(primary, base)};
-  --background-hover-opacity: 0.04;
+  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover-opacity: 1;
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
@@ -69,10 +69,10 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #{globals.$ion-primitives-neutral-200};
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
   --background-focused: transparent;
-  --background-hover: #{globals.ion-color(primary, base)};
-  --background-hover-opacity: 0.04;
+  --background-hover: #{globals.$ion-bg-neutral-subtlest-press};
+  --background-hover-opacity: 1;
   --ripple-opacity: var(--background-activated-opacity, 1);
   --ripple-color: var(--background-activated);
 }
@@ -226,6 +226,15 @@
 :host(.ion-activated) .button-native:has(ion-ripple-effect)::after,
 :host(.button-solid.ion-color.ion-activated) .button-native:has(ion-ripple-effect)::after {
   background: transparent;
+}
+
+// Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.button-solid.ion-color:hover) .button-native::after {
+    background: globals.current-color(shade);
+  }
 }
 
 // Button: Disabled
