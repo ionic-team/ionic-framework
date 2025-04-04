@@ -57,8 +57,8 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
        * A workaround is to clone the footer element and append
        * it outside of the wrapper element. This way, the footer
        * is still visible and the drag can be done without
-       * flickering. The original footer is hidden until the modal
-       * is dismissed. This maintains the animation of the footer
+       * flickering. The cloned footer is hidden until the modal
+       * is moving. This maintains the animation of the footer
        * when the modal is dismissed.
        *
        * The workaround needs to be done before the animation starts
