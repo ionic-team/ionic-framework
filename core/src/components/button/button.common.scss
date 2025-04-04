@@ -96,7 +96,7 @@
 :host(.button-clear) {
   --border-width: 0;
   --background: transparent;
-  --color: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, foreground)};
 }
 
 // Block Button
@@ -289,7 +289,7 @@ ion-ripple-effect {
 // Clear Button with Color
 :host(.button-clear.ion-color) .button-native {
   background: transparent;
-  color: current-color(base);
+  color: current-color(foreground);
 }
 
 // Button in Toolbar
