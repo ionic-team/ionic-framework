@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import type { E2EPage, E2ELocator, EventSpy, E2EPageOptions, ScreenshotFn } from '@utils/test/playwright';
+import type { E2ELocator, E2EPage, E2EPageOptions, EventSpy, ScreenshotFn } from '@utils/test/playwright';
 
 import type { SelectModalOption } from '../select-modal-interface';
 
@@ -31,6 +31,7 @@ export class SelectModalPage {
       const selectModal = document.querySelector('ion-select-modal');
       selectModal.options = ${JSON.stringify(options)};
       selectModal.multiple = ${multiple};
+      selectModal.closeText = 'Close me';
     </script>
     `,
       config
