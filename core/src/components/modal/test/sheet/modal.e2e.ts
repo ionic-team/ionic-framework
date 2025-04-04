@@ -52,13 +52,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
+      const dismissButton = page.locator('#dismiss');
+      const openButton = page.locator('#open-modal');
+
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
-      await page.click('#open-modal');
+      await openButton.click();
       await ionModalDidPresent.next();
 
-      await page.click('#dismiss');
+      await dismissButton.click();
       await ionModalDidDismiss.next();
     });
   });
