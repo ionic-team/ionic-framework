@@ -88,11 +88,15 @@
 
 /**
  * When the select is focused the icon should
- * take on the highlight color.
+ * take on the highlight color when the select
+ * is not in an item or when the select is in
+ * an item and has a fill.
  * The icon should also take on the highlight
  * color if there is a validation state.
  */
 :host(.select-expanded:not(.in-item)) .select-wrapper .select-icon,
+:host(.in-item.select-expanded.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.select-expanded.select-fill-outline) .select-wrapper .select-icon,
 :host(.ion-focused.ion-valid) .select-wrapper .select-icon,
 :host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
 :host(.ion-focused) .select-wrapper .select-icon {
