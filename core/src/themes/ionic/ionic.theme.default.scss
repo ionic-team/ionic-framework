@@ -14,7 +14,6 @@
 // - subtle: a map of the subtle color variations
 //
 // Each hue color map should provide
-// TODO: rename base to background?
 // - base: The main color used for backgrounds
 // - base-rgb: The base color in RGB format
 // - contrast: A color that ensures readable text on the base color
@@ -33,7 +32,6 @@ $ionic-colors: (
       contrast: globals.$ion-text-inverse,
       contrast-rgb: globals.$ion-text-inverse-rgb,
       shade: globals.$ion-bg-primary-base-press,
-      // TODO this is not a verified value
       tint: globals.$ion-semantics-primary-600,
       foreground: globals.$ion-text-primary,
     ),
@@ -43,59 +41,70 @@ $ionic-colors: (
       contrast: globals.$ion-text-primary,
       contrast-rgb: globals.$ion-text-primary-rgb,
       shade: globals.$ion-bg-primary-subtle-press,
-      // TODO this is not a verified value
       tint: globals.$ion-semantics-primary-200,
       foreground: globals.$ion-text-primary,
     ),
   ),
-  // info equivalent
-  secondary:
-    (
-      bold: (
-        base: globals.$ion-bg-info-base-default,
-        base-rgb: globals.$ion-bg-info-base-default-rgb,
-        contrast: globals.$ion-text-inverse,
-        contrast-rgb: globals.$ion-text-inverse-rgb,
-        shade: globals.$ion-bg-info-base-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-semantics-info-700,
-        foreground: globals.$ion-text-info,
-      ),
-      subtle: (
-        base: globals.$ion-bg-info-subtle-default,
-        base-rgb: globals.$ion-bg-info-subtle-default-rgb,
-        contrast: globals.$ion-text-info,
-        contrast-rgb: globals.$ion-text-info-rgb,
-        shade: globals.$ion-bg-info-subtle-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-semantics-info-200,
-        foreground: globals.$ion-text-info,
-      ),
+  secondary: (
+    bold: (
+      base: globals.$ion-bg-info-base-default,
+      base-rgb: globals.$ion-bg-info-base-default-rgb,
+      contrast: globals.$ion-text-inverse,
+      contrast-rgb: globals.$ion-text-inverse-rgb,
+      shade: globals.$ion-bg-info-base-press,
+      tint: globals.$ion-semantics-info-700,
+      foreground: globals.$ion-text-info,
     ),
-  // TODO - no equivalent for tertiary, can we add purple as a color?
-  success:
-    (
-      bold: (
-        base: globals.$ion-bg-success-base-default,
-        base-rgb: globals.$ion-bg-success-base-default-rgb,
-        contrast: globals.$ion-text-inverse,
-        contrast-rgb: globals.$ion-text-inverse-rgb,
-        shade: globals.$ion-bg-success-base-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-semantics-success-800,
-        foreground: globals.$ion-text-success,
-      ),
-      subtle: (
-        base: globals.$ion-bg-success-subtle-default,
-        base-rgb: globals.$ion-bg-success-subtle-default-rgb,
-        contrast: globals.$ion-text-success,
-        contrast-rgb: globals.$ion-text-success-rgb,
-        shade: globals.$ion-bg-success-subtle-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-semantics-success-200,
-        foreground: globals.$ion-text-success,
-      ),
+    subtle: (
+      base: globals.$ion-bg-info-subtle-default,
+      base-rgb: globals.$ion-bg-info-subtle-default-rgb,
+      contrast: globals.$ion-text-info,
+      contrast-rgb: globals.$ion-text-info-rgb,
+      shade: globals.$ion-bg-info-subtle-press,
+      tint: globals.$ion-semantics-info-200,
+      foreground: globals.$ion-text-info,
     ),
+  ),
+  tertiary: (
+    bold: (
+      base: globals.$ion-primitives-violet-700,
+      base-rgb: globals.$ion-primitives-violet-700-rgb,
+      contrast: globals.$ion-text-inverse,
+      contrast-rgb: globals.$ion-text-inverse-rgb,
+      shade: globals.$ion-primitives-violet-800,
+      tint: globals.$ion-primitives-violet-600,
+      foreground: globals.$ion-primitives-violet-700,
+    ),
+    subtle: (
+      base: globals.$ion-primitives-violet-100,
+      base-rgb: globals.$ion-primitives-violet-100-rgb,
+      contrast: globals.$ion-primitives-violet-700,
+      contrast-rgb: globals.$ion-primitives-violet-700-rgb,
+      shade: globals.$ion-primitives-violet-300,
+      tint: globals.$ion-primitives-violet-200,
+      foreground: globals.$ion-primitives-violet-700,
+    ),
+  ),
+  success: (
+    bold: (
+      base: globals.$ion-bg-success-base-default,
+      base-rgb: globals.$ion-bg-success-base-default-rgb,
+      contrast: globals.$ion-text-inverse,
+      contrast-rgb: globals.$ion-text-inverse-rgb,
+      shade: globals.$ion-bg-success-base-press,
+      tint: globals.$ion-semantics-success-800,
+      foreground: globals.$ion-text-success,
+    ),
+    subtle: (
+      base: globals.$ion-bg-success-subtle-default,
+      base-rgb: globals.$ion-bg-success-subtle-default-rgb,
+      contrast: globals.$ion-text-success,
+      contrast-rgb: globals.$ion-text-success-rgb,
+      shade: globals.$ion-bg-success-subtle-press,
+      tint: globals.$ion-semantics-success-200,
+      foreground: globals.$ion-text-success,
+    ),
+  ),
   warning: (
     bold: (
       base: globals.$ion-bg-warning-base-default,
@@ -103,7 +112,6 @@ $ionic-colors: (
       contrast: globals.$ion-text-default,
       contrast-rgb: globals.$ion-text-default-rgb,
       shade: globals.$ion-bg-warning-base-press,
-      // TODO this is not a verified value
       tint: globals.$ion-primitives-yellow-300,
       foreground: globals.$ion-text-warning,
     ),
@@ -113,7 +121,6 @@ $ionic-colors: (
       contrast: globals.$ion-text-warning,
       contrast-rgb: globals.$ion-text-warning-rgb,
       shade: globals.$ion-bg-warning-subtle-press,
-      // TODO this is not a verified value
       tint: globals.$ion-primitives-yellow-100,
       foreground: globals.$ion-text-warning,
     ),
@@ -125,7 +132,6 @@ $ionic-colors: (
       contrast: globals.$ion-text-inverse,
       contrast-rgb: globals.$ion-text-inverse-rgb,
       shade: globals.$ion-bg-danger-base-press,
-      // TODO this is not a verified value
       tint: globals.$ion-semantics-danger-700,
       foreground: globals.$ion-text-danger,
     ),
@@ -135,86 +141,70 @@ $ionic-colors: (
       contrast: globals.$ion-text-danger,
       contrast-rgb: globals.$ion-text-danger-rgb,
       shade: globals.$ion-bg-danger-subtle-press,
-      // TODO this is not a verified value
       tint: globals.$ion-semantics-danger-200,
       foreground: globals.$ion-text-danger,
     ),
   ),
-  // neutral/base equivalent
-  light:
-    (
-      bold: (
-        base: globals.$ion-bg-neutral-base-default,
-        base-rgb: globals.$ion-bg-neutral-base-default-rgb,
-        contrast: globals.$ion-text-default,
-        contrast-rgb: globals.$ion-text-default-rgb,
-        // TODO this fails AA testing
-        // shade: globals.$ion-bg-neutral-base-press,
-        shade: globals.$ion-primitives-neutral-600,
-        // TODO this is not a verified value
-        tint: globals.$ion-primitives-neutral-400,
-        foreground: globals.$ion-text-default,
-      ),
-      subtle: (
-        base: globals.$ion-bg-neutral-subtlest-default,
-        base-rgb: globals.$ion-bg-neutral-subtlest-default-rgb,
-        contrast: globals.$ion-text-default,
-        contrast-rgb: globals.$ion-text-default-rgb,
-        shade: globals.$ion-bg-neutral-subtlest-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-primitives-neutral-100,
-        foreground: globals.$ion-text-default,
-      ),
+  light: (
+    bold: (
+      base: globals.$ion-bg-neutral-base-default,
+      base-rgb: globals.$ion-bg-neutral-base-default-rgb,
+      contrast: globals.$ion-text-default,
+      contrast-rgb: globals.$ion-text-default-rgb,
+      shade: globals.$ion-primitives-neutral-600,
+      tint: globals.$ion-primitives-neutral-400,
+      foreground: globals.$ion-text-default,
     ),
-  // neutral/bold equivalent
-  medium:
-    (
-      bold: (
-        base: globals.$ion-bg-neutral-bold-default,
-        base-rgb: globals.$ion-bg-neutral-bold-default-rgb,
-        contrast: globals.$ion-text-inverse,
-        contrast-rgb: globals.$ion-text-inverse-rgb,
-        shade: globals.$ion-bg-neutral-bold-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-primitives-neutral-900,
-        foreground: globals.$ion-text-default,
-      ),
-      subtle: (
-        base: globals.$ion-bg-neutral-subtle-default,
-        base-rgb: globals.$ion-bg-neutral-subtle-default-rgb,
-        contrast: globals.$ion-text-subtlest,
-        contrast-rgb: globals.$ion-text-subtlest-rgb,
-        shade: globals.$ion-bg-neutral-subtle-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-primitives-neutral-100,
-        foreground: globals.$ion-text-default,
-      ),
+    subtle: (
+      base: globals.$ion-bg-neutral-subtlest-default,
+      base-rgb: globals.$ion-bg-neutral-subtlest-default-rgb,
+      contrast: globals.$ion-text-default,
+      contrast-rgb: globals.$ion-text-default-rgb,
+      shade: globals.$ion-bg-neutral-subtlest-press,
+      tint: globals.$ion-primitives-neutral-100,
+      foreground: globals.$ion-text-default,
     ),
-  // neutral/boldest equivalent
-  dark:
-    (
-      bold: (
-        base: globals.$ion-bg-neutral-boldest-default,
-        base-rgb: globals.$ion-bg-neutral-boldest-default-rgb,
-        contrast: globals.$ion-text-inverse,
-        contrast-rgb: globals.$ion-text-inverse-rgb,
-        // TODO $ion-bg-neutral-boldest-press does not exist
-        shade: globals.$ion-bg-neutral-bold-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-primitives-neutral-1100,
-        foreground: globals.$ion-text-default,
-      ),
-      subtle: (
-        base: globals.$ion-bg-neutral-subtle-default,
-        base-rgb: globals.$ion-bg-neutral-subtle-default-rgb,
-        contrast: globals.$ion-text-subtle,
-        contrast-rgb: globals.$ion-text-subtle-rgb,
-        shade: globals.$ion-bg-neutral-subtle-press,
-        // TODO this is not a verified value
-        tint: globals.$ion-primitives-neutral-100,
-        foreground: globals.$ion-text-default,
-      ),
+  ),
+  medium: (
+    bold: (
+      base: globals.$ion-bg-neutral-bold-default,
+      base-rgb: globals.$ion-bg-neutral-bold-default-rgb,
+      contrast: globals.$ion-text-inverse,
+      contrast-rgb: globals.$ion-text-inverse-rgb,
+      shade: globals.$ion-bg-neutral-bold-press,
+      tint: globals.$ion-primitives-neutral-900,
+      foreground: globals.$ion-text-default,
     ),
+    subtle: (
+      base: globals.$ion-bg-neutral-subtle-default,
+      base-rgb: globals.$ion-bg-neutral-subtle-default-rgb,
+      contrast: globals.$ion-text-subtlest,
+      contrast-rgb: globals.$ion-text-subtlest-rgb,
+      shade: globals.$ion-bg-neutral-subtle-press,
+      tint: globals.$ion-primitives-neutral-100,
+      foreground: globals.$ion-text-default,
+    ),
+  ),
+  dark: (
+    bold: (
+      base: globals.$ion-bg-neutral-boldest-default,
+      base-rgb: globals.$ion-bg-neutral-boldest-default-rgb,
+      contrast: globals.$ion-text-inverse,
+      contrast-rgb: globals.$ion-text-inverse-rgb,
+      shade: globals.$ion-bg-neutral-boldest-press,
+      tint: globals.$ion-primitives-neutral-1100,
+      foreground: globals.$ion-text-default,
+    ),
+    subtle: (
+      base: globals.$ion-bg-neutral-subtle-default,
+      base-rgb: globals.$ion-bg-neutral-subtle-default-rgb,
+      contrast: globals.$ion-text-subtle,
+      contrast-rgb: globals.$ion-text-subtle-rgb,
+      shade: globals.$ion-bg-neutral-subtle-press,
+      tint: globals.$ion-primitives-neutral-100,
+      foreground: globals.$ion-text-default,
+    ),
+  ),
 );
 
 // Ionic Tabs & Tab Bar
