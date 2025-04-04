@@ -452,7 +452,15 @@ export const createSheetGesture = (
         .onFinish(
           () => {
             if (shouldRemainOpen) {
-              swapFooterVisibility('original');
+              /**
+               * If expandToScroll is disabled, we need to swap
+               * the footer visibility to the original, so if the modal
+               * is dismissed, the footer dismisses with the modal
+               * and doesn't stay on the screen after the modal is gone.
+               */
+              if (!expandToScroll) {
+                swapFooterVisibility('original');
+              }
               /**
                * Once the snapping animation completes,
                * we need to reset the animation to go
