@@ -22,7 +22,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         animations: 'allow',
       });
     });
-    test('should have working eventListener in ion-footer when expandToScroll is false', async ({ page }) => {
+    test('should have working event listener in ion-footer when expandToScroll is false', async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
       test.info().annotations.push({
         type: 'issue',
