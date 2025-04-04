@@ -134,8 +134,6 @@
 // otherwise the .input-cover will not be rendered at all
 // The input cover is not clickable when the input is disabled
 .cloned-input {
-  @include position(0, null, 0, 0);
-
   position: absolute;
 
   pointer-events: none;
