@@ -65,13 +65,13 @@ configs({ directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ title, 
       await page.setContent(
         `
         <main>
-          <ion-select class="has-focus" label="Label" value="a">
+          <ion-select class="ion-focused" label="Label" value="a">
             <ion-select-option value="a">Apple</ion-select-option>
           </ion-select>
-          <ion-select class="has-focus" label-placement="floating" label="Label" value="a">
+          <ion-select class="ion-focused" label-placement="floating" label="Label" value="a">
             <ion-select-option value="a">Apple</ion-select-option>
           </ion-select>
-          <ion-select class="has-focus" fill="outline" label-placement="floating" label="Label" value="a">
+          <ion-select class="ion-focused" fill="outline" label-placement="floating" label="Label" value="a">
             <ion-select-option value="a">Apple</ion-select-option>
           </ion-select>
         </main>
