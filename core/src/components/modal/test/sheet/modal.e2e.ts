@@ -23,7 +23,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       });
     });
     test('should have working event listener in ion-footer when expandToScroll is false', async ({ page }) => {
-      await page.goto('/src/components/modal/test/sheet', config);
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/30315',
