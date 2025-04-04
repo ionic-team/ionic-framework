@@ -72,6 +72,9 @@
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0"
   },
+  "overrides": {
+    "@stencil/core": "4.29.0-dev.1743807712.6244a07"
+  },
   "scripts": {
     "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
     "build.css": "npm run css.sass && npm run css.minify",
