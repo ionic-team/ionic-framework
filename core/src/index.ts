@@ -8,6 +8,7 @@ export { getTimeGivenProgression } from './utils/animation/cubic-bezier';
 export { createGesture } from './utils/gesture';
 export { initialize } from './global/ionic-global';
 export { componentOnReady } from './utils/helpers';
+export { LogLevel } from './utils/logging';
 export { isPlatform, Platforms, PlatformConfig, getPlatforms } from './utils/platform';
 export { IonicSafeString } from './utils/sanitization';
 export { IonicConfig, getMode, setupConfig } from './utils/config';
