@@ -240,3 +240,10 @@
 :host(.label-floating.select-fill-outline) .select-outline-notch {
   border-top: none;
 }
+
+// Select Icon
+// ----------------------------------------------------------------
+
+:host(.in-item.select-expanded) .select-wrapper .select-icon {
+  color: var(--highlight-color);
+}

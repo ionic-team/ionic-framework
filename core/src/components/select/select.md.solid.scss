@@ -79,3 +79,10 @@
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
+
+// Select Icon
+// ----------------------------------------------------------------
+
+:host(.in-item.select-expanded) .select-wrapper .select-icon {
+  color: var(--highlight-color);
+}
