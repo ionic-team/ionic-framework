@@ -86,17 +86,8 @@
   @include transform(rotate(180deg));
 }
 
-/**
- * When the select is focused the icon should
- * take on the highlight color.
- * The icon should also take on the highlight
- * color if there is a validation state.
- */
-:host(.select-expanded) .select-wrapper .select-icon,
-:host(.ion-focused.ion-valid) .select-wrapper .select-icon,
-:host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
-:host(.ion-focused) .select-wrapper .select-icon {
-  color: var(--highlight-color);
+:host(.in-item.select-expanded) .select-wrapper .select-icon {
+  color: #{$text-color-step-500};
 }
 
 // Select Shape Rounded
