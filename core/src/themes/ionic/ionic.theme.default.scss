@@ -45,27 +45,26 @@ $ionic-colors: (
       foreground: globals.$ion-text-primary,
     ),
   ),
-  secondary:
-    (
-      bold: (
-        base: globals.$ion-bg-info-base-default,
-        base-rgb: globals.$ion-bg-info-base-default-rgb,
-        contrast: globals.$ion-text-inverse,
-        contrast-rgb: globals.$ion-text-inverse-rgb,
-        shade: globals.$ion-bg-info-base-press,
-        tint: globals.$ion-semantics-info-700,
-        foreground: globals.$ion-text-info,
-      ),
-      subtle: (
-        base: globals.$ion-bg-info-subtle-default,
-        base-rgb: globals.$ion-bg-info-subtle-default-rgb,
-        contrast: globals.$ion-text-info,
-        contrast-rgb: globals.$ion-text-info-rgb,
-        shade: globals.$ion-bg-info-subtle-press,
-        tint: globals.$ion-semantics-info-200,
-        foreground: globals.$ion-text-info,
-      ),
+  secondary: (
+    bold: (
+      base: globals.$ion-bg-info-base-default,
+      base-rgb: globals.$ion-bg-info-base-default-rgb,
+      contrast: globals.$ion-text-inverse,
+      contrast-rgb: globals.$ion-text-inverse-rgb,
+      shade: globals.$ion-bg-info-base-press,
+      tint: globals.$ion-semantics-info-700,
+      foreground: globals.$ion-text-info,
     ),
+    subtle: (
+      base: globals.$ion-bg-info-subtle-default,
+      base-rgb: globals.$ion-bg-info-subtle-default-rgb,
+      contrast: globals.$ion-text-info,
+      contrast-rgb: globals.$ion-text-info-rgb,
+      shade: globals.$ion-bg-info-subtle-press,
+      tint: globals.$ion-semantics-info-200,
+      foreground: globals.$ion-text-info,
+    ),
+  ),
   tertiary: (
     bold: (
       base: globals.$ion-primitives-violet-700,
@@ -146,69 +145,66 @@ $ionic-colors: (
       foreground: globals.$ion-text-danger,
     ),
   ),
-  light:
-    (
-      bold: (
-        base: globals.$ion-bg-neutral-base-default,
-        base-rgb: globals.$ion-bg-neutral-base-default-rgb,
-        contrast: globals.$ion-text-default,
-        contrast-rgb: globals.$ion-text-default-rgb,
-        shade: globals.$ion-primitives-neutral-600,
-        tint: globals.$ion-primitives-neutral-400,
-        foreground: globals.$ion-text-default,
-      ),
-      subtle: (
-        base: globals.$ion-bg-neutral-subtlest-default,
-        base-rgb: globals.$ion-bg-neutral-subtlest-default-rgb,
-        contrast: globals.$ion-text-default,
-        contrast-rgb: globals.$ion-text-default-rgb,
-        shade: globals.$ion-bg-neutral-subtlest-press,
-        tint: globals.$ion-primitives-neutral-100,
-        foreground: globals.$ion-text-default,
-      ),
+  light: (
+    bold: (
+      base: globals.$ion-bg-neutral-base-default,
+      base-rgb: globals.$ion-bg-neutral-base-default-rgb,
+      contrast: globals.$ion-text-default,
+      contrast-rgb: globals.$ion-text-default-rgb,
+      shade: globals.$ion-primitives-neutral-600,
+      tint: globals.$ion-primitives-neutral-400,
+      foreground: globals.$ion-text-default,
     ),
-  medium:
-    (
-      bold: (
-        base: globals.$ion-bg-neutral-bold-default,
-        base-rgb: globals.$ion-bg-neutral-bold-default-rgb,
-        contrast: globals.$ion-text-inverse,
-        contrast-rgb: globals.$ion-text-inverse-rgb,
-        shade: globals.$ion-bg-neutral-bold-press,
-        tint: globals.$ion-primitives-neutral-900,
-        foreground: globals.$ion-text-default,
-      ),
-      subtle: (
-        base: globals.$ion-bg-neutral-subtle-default,
-        base-rgb: globals.$ion-bg-neutral-subtle-default-rgb,
-        contrast: globals.$ion-text-subtlest,
-        contrast-rgb: globals.$ion-text-subtlest-rgb,
-        shade: globals.$ion-bg-neutral-subtle-press,
-        tint: globals.$ion-primitives-neutral-100,
-        foreground: globals.$ion-text-default,
-      ),
+    subtle: (
+      base: globals.$ion-bg-neutral-subtlest-default,
+      base-rgb: globals.$ion-bg-neutral-subtlest-default-rgb,
+      contrast: globals.$ion-text-default,
+      contrast-rgb: globals.$ion-text-default-rgb,
+      shade: globals.$ion-bg-neutral-subtlest-press,
+      tint: globals.$ion-primitives-neutral-100,
+      foreground: globals.$ion-text-default,
     ),
-  dark:
-    (
-      bold: (
-        base: globals.$ion-bg-neutral-boldest-default,
-        base-rgb: globals.$ion-bg-neutral-boldest-default-rgb,
-        contrast: globals.$ion-text-inverse,
-        contrast-rgb: globals.$ion-text-inverse-rgb,
-        shade: globals.$ion-bg-neutral-boldest-press,
-        tint: globals.$ion-primitives-neutral-1100,
-        foreground: globals.$ion-text-default,
-      ),
-      subtle: (
-        base: globals.$ion-bg-neutral-subtle-default,
-        base-rgb: globals.$ion-bg-neutral-subtle-default-rgb,
-        contrast: globals.$ion-text-subtle,
-        contrast-rgb: globals.$ion-text-subtle-rgb,
-        shade: globals.$ion-bg-neutral-subtle-press,
-        tint: globals.$ion-primitives-neutral-100,
-        foreground: globals.$ion-text-default,
-      ),
+  ),
+  medium: (
+    bold: (
+      base: globals.$ion-bg-neutral-bold-default,
+      base-rgb: globals.$ion-bg-neutral-bold-default-rgb,
+      contrast: globals.$ion-text-inverse,
+      contrast-rgb: globals.$ion-text-inverse-rgb,
+      shade: globals.$ion-bg-neutral-bold-press,
+      tint: globals.$ion-primitives-neutral-900,
+      foreground: globals.$ion-text-default,
     ),
+    subtle: (
+      base: globals.$ion-bg-neutral-subtle-default,
+      base-rgb: globals.$ion-bg-neutral-subtle-default-rgb,
+      contrast: globals.$ion-text-subtlest,
+      contrast-rgb: globals.$ion-text-subtlest-rgb,
+      shade: globals.$ion-bg-neutral-subtle-press,
+      tint: globals.$ion-primitives-neutral-100,
+      foreground: globals.$ion-text-default,
+    ),
+  ),
+  dark: (
+    bold: (
+      base: globals.$ion-bg-neutral-boldest-default,
+      base-rgb: globals.$ion-bg-neutral-boldest-default-rgb,
+      contrast: globals.$ion-text-inverse,
+      contrast-rgb: globals.$ion-text-inverse-rgb,
+      shade: globals.$ion-bg-neutral-boldest-press,
+      tint: globals.$ion-primitives-neutral-1100,
+      foreground: globals.$ion-text-default,
+    ),
+    subtle: (
+      base: globals.$ion-bg-neutral-subtle-default,
+      base-rgb: globals.$ion-bg-neutral-subtle-default-rgb,
+      contrast: globals.$ion-text-subtle,
+      contrast-rgb: globals.$ion-text-subtle-rgb,
+      shade: globals.$ion-bg-neutral-subtle-press,
+      tint: globals.$ion-primitives-neutral-100,
+      foreground: globals.$ion-text-default,
+    ),
+  ),
 );
 
 // Ionic Tabs & Tab Bar
