@@ -552,6 +552,7 @@ export const IonItemOption: StencilVueComponent<JSX.IonItemOption> = /*@__PURE__
   'download',
   'expandable',
   'href',
+  'hue',
   'rel',
   'target',
   'type',

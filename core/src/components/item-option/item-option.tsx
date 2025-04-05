@@ -63,6 +63,12 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   @Prop() href: string | undefined;
 
   /**
+   * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for
+   * an option with muted, subtle colors.
+   */
+  @Prop() hue?: 'bold' | 'subtle' = 'bold';
+
+  /**
    * Specifies the relationship of the target object to the link object.
    * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
    */
@@ -113,7 +119,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   }
 
   render() {
-    const { disabled, expandable, href } = this;
+    const { disabled, expandable, href, hue } = this;
     const TagType = href === undefined ? 'button' : ('a' as any);
     const theme = getIonTheme(this);
     const shape = this.getShape();
@@ -133,6 +139,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
         class={createColorClasses(this.color, {
           [theme]: true,
           [`item-option-${shape}`]: shape !== undefined,
+          [`item-option-${hue}`]: hue !== undefined,
           'item-option-disabled': disabled,
           'item-option-expandable': expandable,
           'ion-activatable': true,
