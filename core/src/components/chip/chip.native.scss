@@ -1,45 +1,22 @@
 @import "../../themes/native/native.globals";
 @import "./chip.vars";
+@import "./chip.common";
 
 :host {
-  /**
-   * @prop --background: Background of the chip
-   * @prop --color: Color of the chip
-   * @prop --border-radius: Border radius of the chip
-   */
   --background: #{rgba($text-color-rgb, 0.12)};
   --color: #{rgba($text-color-rgb, 0.87)};
 
   @include border-radius(var(--border-radius));
-  @include font-smoothing();
   @include margin(4px);
   @include padding(6px, 12px);
 
-  display: inline-flex;
-
-  position: relative;
-
-  align-items: center;
-
   min-height: 32px;
 
-  background: var(--background);
-  color: var(--color);
-
   font-family: $font-family-base;
-
-  cursor: pointer;
-
-  overflow: hidden;
-
-  vertical-align: middle;
-  box-sizing: border-box;
 }
 
 :host(.chip-disabled) {
-  cursor: default;
   opacity: 0.4;
-  pointer-events: none;
 }
 
 // Chip Colors
@@ -56,6 +33,15 @@
 
 :host(.ion-color.ion-activated) {
   background: current-color(base, 0.16);
+}
+
+// Chip: Hover
+// ---------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.ion-color:hover) {
+    background: current-color(base, 0.12);
+  }
 }
 
 // Outline Chip
