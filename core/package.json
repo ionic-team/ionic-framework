@@ -31,7 +31,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "4.29.0-dev.1743807712.6244a07",
+    "@stencil/core": "4.29.1",
     "ionicons": "^7.2.2",
     "tslib": "^2.1.0"
   },
@@ -71,9 +71,6 @@
     "serve": "^14.0.1",
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0"
-  },
-  "overrides": {
-    "@stencil/core": "4.29.0-dev.1743807712.6244a07"
   },
   "scripts": {
     "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
