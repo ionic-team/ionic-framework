@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Item Sliding - Colors</title>
+    <title>Item Sliding - Hue</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
@@ -18,14 +18,14 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Item Sliding - Colors</ion-title>
+          <ion-title>Item Sliding - Hue</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
         <ion-list>
           <ion-list-header>
-            <ion-label>Core Colors</ion-label>
+            <ion-label>Default Colors</ion-label>
           </ion-list-header>
           <ion-item-sliding>
             <ion-item>
@@ -34,9 +34,7 @@
               </ion-label>
             </ion-item>
             <ion-item-options side="start">
-              <ion-item-option color="primary">Primary</ion-item-option>
-              <ion-item-option color="secondary">Secondary</ion-item-option>
-              <ion-item-option color="tertiary">Tertiary</ion-item-option>
+              <ion-item-option hue="bold">Default</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
 
@@ -47,9 +45,37 @@
               </ion-label>
             </ion-item>
             <ion-item-options side="start">
-              <ion-item-option hue="subtle" color="primary">Primary</ion-item-option>
-              <ion-item-option hue="subtle" color="secondary">Secondary</ion-item-option>
-              <ion-item-option hue="subtle" color="tertiary">Tertiary</ion-item-option>
+              <ion-item-option>Default</ion-item-option>
+            </ion-item-options>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-list-header>
+            <ion-label>Core Colors</ion-label>
+          </ion-list-header>
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>
+                Bold
+              </ion-label>
+            </ion-item>
+            <ion-item-options side="start">
+              <ion-item-option hue="bold" color="primary">Primary</ion-item-option>
+              <ion-item-option hue="bold" color="secondary">Secondary</ion-item-option>
+              <ion-item-option hue="bold" color="tertiary">Tertiary</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>
+                Subtle
+              </ion-label>
+            </ion-item>
+            <ion-item-options side="start">
+              <ion-item-option color="primary">Primary</ion-item-option>
+              <ion-item-option color="secondary">Secondary</ion-item-option>
+              <ion-item-option color="tertiary">Tertiary</ion-item-option>
             </ion-item-options>
             </ion-item-options>
           </ion-item-sliding>
@@ -64,9 +90,9 @@
               </ion-label>
             </ion-item>
             <ion-item-options side="start">
-              <ion-item-option color="success">Success</ion-item-option>
-              <ion-item-option color="warning">Warning</ion-item-option>
-              <ion-item-option color="danger">Danger</ion-item-option>
+              <ion-item-option hue="bold" color="success">Success</ion-item-option>
+              <ion-item-option hue="bold" color="warning">Warning</ion-item-option>
+              <ion-item-option hue="bold" color="danger">Danger</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
 
@@ -77,9 +103,9 @@
               </ion-label>
             </ion-item>
             <ion-item-options side="start">
-              <ion-item-option hue="subtle" color="success">Success</ion-item-option>
-              <ion-item-option hue="subtle" color="warning">Warning</ion-item-option>
-              <ion-item-option hue="subtle" color="danger">Danger</ion-item-option>
+              <ion-item-option color="success">Success</ion-item-option>
+              <ion-item-option color="warning">Warning</ion-item-option>
+              <ion-item-option color="danger">Danger</ion-item-option>
             </ion-item-options>
             </ion-item-options>
           </ion-item-sliding>
@@ -95,9 +121,9 @@
               </ion-label>
             </ion-item>
             <ion-item-options side="start">
-              <ion-item-option color="light">Light</ion-item-option>
-              <ion-item-option color="medium">Medium</ion-item-option>
-              <ion-item-option color="dark">Dark</ion-item-option>
+              <ion-item-option hue="bold" color="light">Light</ion-item-option>
+              <ion-item-option hue="bold" color="medium">Medium</ion-item-option>
+              <ion-item-option hue="bold" color="dark">Dark</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
 
@@ -108,9 +134,9 @@
               </ion-label>
             </ion-item>
             <ion-item-options side="start">
-              <ion-item-option hue="subtle" color="light">Light</ion-item-option>
-              <ion-item-option hue="subtle" color="medium">Medium</ion-item-option>
-              <ion-item-option hue="subtle" color="dark">Dark</ion-item-option>
+              <ion-item-option color="light">Light</ion-item-option>
+              <ion-item-option color="medium">Medium</ion-item-option>
+              <ion-item-option color="dark">Dark</ion-item-option>
             </ion-item-options>
             </ion-item-options>
           </ion-item-sliding>
