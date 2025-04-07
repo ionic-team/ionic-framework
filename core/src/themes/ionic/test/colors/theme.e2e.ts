@@ -130,7 +130,16 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         const results = await new AxeBuilder({ page }).analyze();
         expect(results.violations).toEqual([]);
       });
+    }
+  });
 
+  test.describe(title('palette colors: subtle'), () => {
+    test.beforeEach(({ skip }) => {
+      skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
+      skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
+    });
+
+    for (const color of colors) {
       // 5) The subtle foreground color as the text color against the default background color
       test(`subtle foreground color "${color}" should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
@@ -190,5 +199,38 @@ configs({ modes: ['ionic-md'], directions: ['ltr'], palettes: ['light', 'dark'] 
         expect(results.violations).toEqual([]);
       });
     }
+  });
+});
+
+configs({ modes: ['ionic-md'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('palette colors: custom'), () => {
+    test(`overriding secondary color with foreground variant should style text properly`, async ({ page }) => {
+      await page.setContent(
+        `${styleTestHelpers}
+
+        <style>
+          :root {
+            --ion-color-secondary: #ff6c52;
+            --ion-color-secondary-rgb: 255,108,82;
+            --ion-color-secondary-contrast: #000000;
+            --ion-color-secondary-contrast-rgb: 0,0,0;
+            --ion-color-secondary-shade: #e05f48;
+            --ion-color-secondary-tint: #ff7b63;
+            --ion-color-secondary-foreground: #e05f48;
+          }
+        </style>
+
+        <main class="ion-color-secondary">
+          <p class="ion-color">Hello World</p>
+        </main>`,
+        config
+      );
+
+      const paragraph = await page.locator('p');
+      const color = await paragraph.evaluate((el) => getComputedStyle(el).color);
+
+      // Ensure the color matches --ion-color-secondary-foreground
+      expect(color).toBe('rgb(224, 95, 72)');
+    });
   });
 });
