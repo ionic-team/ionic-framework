@@ -33,8 +33,8 @@
           demo purposes only.
         </p>
 
-        <button class="expand" onclick="openAllToasts(false)">Show All Bold Toasts</button>
-        <button class="expand" onclick="openAllToasts(true)">Show All Subtle Toasts</button>
+        <button class="expand" onclick="openAllToasts(false)">Show All Subtle Toasts</button>
+        <button class="expand" onclick="openAllToasts(true)">Show All Bold Toasts</button>
       </ion-content>
 
       <div id="toastBackdrop" class="backdrop"></div>
@@ -116,7 +116,7 @@
       }
 
       // Show all toasts sequentially with a slight delay between each
-      function openAllToasts(isSubtle) {
+      function openAllToasts(isBold) {
         toastCount = 0;
         activeToasts = [];
 
@@ -127,7 +127,7 @@
               buttons: [{ text: 'Action' }, { icon: 'close', role: 'cancel' }],
               color: item.color,
               icon: item.icon,
-              ...(isSubtle ? { hue: 'subtle' } : {}),
+              ...(isBold ? { hue: 'bold' } : {}),
             },
             index * 150
           );

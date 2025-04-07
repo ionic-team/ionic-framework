@@ -139,7 +139,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for
    * a toast with muted, subtle colors.
    */
-  @Prop() hue?: 'bold' | 'subtle' = 'bold';
+  @Prop() hue?: 'bold' | 'subtle' = 'subtle';
 
   /**
    * Defines how the message and buttons are laid out in the toast.
