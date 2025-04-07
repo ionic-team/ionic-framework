@@ -39,13 +39,13 @@
 
   $value: map.get($values, $variation);
 
-  // If the color requested is subtle we return `--ion-color-primary-subtle-contrast`
-  // Otherwise we return `--ion-color-primary-contrast`
+  // If the color requested is subtle we return `--ion-color-{color}-subtle-contrast`,
+  // otherwise we return `--ion-color-{color}-contrast`.
   $variable: if($subtle, "--ion-color-#{$name}-subtle-#{$variation}", "--ion-color-#{$name}-#{$variation}");
 
-  // If the variation being used is base, we do not include the variant so
-  // If the color requested is subtle we return `--ion-color-primary-subtle`
-  // Otherwise we return `--ion-color-primary`
+  // If the variation being used is "base", we do not include the variant.
+  // If the color requested is subtle we return `--ion-color-{color}-subtle`,
+  // otherwise we return `--ion-color-{color}`.
   @if ($variation == base) {
     $variable: if($subtle, "--ion-color-#{$name}-subtle", "--ion-color-#{$name}");
   }
@@ -134,7 +134,6 @@
   $hue-colors: map.get($theme-colors, $color-name);
   $color-variants: map.get($hue-colors, $hue);
 
-  // Determine prefix based on hue value
   $prefix: if($hue == "subtle", "-subtle", "");
 
   // TODO this @if can be removed if we add subtle colors for ios and md
