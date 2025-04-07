@@ -14,11 +14,6 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
 
-  <script type="module">
-    import { toastController } from '../../../../dist/ionic/index.esm.js';
-    window.toastController = toastController;
-  </script>
-
   <body>
     <ion-app>
       <ion-header>
@@ -33,106 +28,76 @@
           demo purposes only.
         </p>
 
-        <button class="expand" onclick="openAllToasts(false)">Show All Subtle Toasts</button>
-        <button class="expand" onclick="openAllToasts(true)">Show All Bold Toasts</button>
+        <button id="show-subtle-toasts" class="expand">Show All Subtle Toasts</button>
+        <button id="show-bold-toasts" class="expand">Show All Bold Toasts</button>
       </ion-content>
 
-      <div id="toastBackdrop" class="backdrop"></div>
+      <div id="backdrop" class="backdrop"></div>
+
+      <ion-toast position="top"></ion-toast>
+      <ion-toast color="primary" position="top"></ion-toast>
+      <ion-toast color="secondary" position="top"></ion-toast>
+      <ion-toast color="tertiary" position="top"></ion-toast>
+      <ion-toast color="success" position="top"></ion-toast>
+      <ion-toast color="warning" position="top"></ion-toast>
+      <ion-toast color="danger" position="top"></ion-toast>
+      <ion-toast color="light" position="top"></ion-toast>
+      <ion-toast color="medium" position="top"></ion-toast>
+      <ion-toast color="dark" position="top"></ion-toast>
     </ion-app>
 
-    <script>
-      const colorIconMap = {
-        primary: { color: 'primary', icon: 'alert-circle' },
-        secondary: { color: 'secondary', icon: 'information-circle' },
-        tertiary: { color: 'tertiary', icon: 'alert-circle' },
-        success: { color: 'success', icon: 'checkmark-circle' },
-        warning: { color: 'warning', icon: 'warning' },
-        danger: { color: 'danger', icon: 'alert-circle' },
-        light: { color: 'light', icon: 'alert-circle' },
-        medium: { color: 'medium', icon: 'alert-circle' },
-        dark: { color: 'dark', icon: 'alert-circle' },
-      };
-      let toastCount = 0;
-      let activeToasts = [];
+    <script type="module">
+      let lastToast = null;
+      let toastOffset = 10;
 
-      // Show backdrop when toasts are presented
-      function showBackdrop() {
-        const backdrop = document.getElementById('toastBackdrop');
-        backdrop.style.display = 'block';
-        backdrop.addEventListener('click', closeAllToasts);
-      }
-
-      // Hide backdrop when all toasts are dismissed
-      function hideBackdrop() {
-        const backdrop = document.getElementById('toastBackdrop');
-        if (toastCount === 0) {
-          backdrop.style.display = 'none';
-          backdrop.removeEventListener('click', closeAllToasts);
-        }
-      }
-
-      // Close all toasts when the backdrop is clicked
-      function closeAllToasts() {
-        activeToasts.forEach((toast) => {
-          toast.dismiss();
-        });
-        toastCount = 0;
-        activeToasts = [];
-        hideBackdrop();
-      }
-
-      async function openToast(opts, delay = 0) {
-        setTimeout(async () => {
-          const yOffset = toastCount * 60;
-          toastCount++;
-
-          const toast = await toastController.create({
-            ...opts,
-            position: 'top',
-            animated: false,
-          });
-
-          await toast.present();
-          activeToasts.push(toast);
-
-          showBackdrop();
-
-          requestAnimationFrame(() => {
-            const toastEl = document.querySelector('ion-toast:last-of-type');
-            if (toastEl) {
-              toastEl.style.position = 'absolute';
-              toastEl.style.left = '50%';
-              toastEl.style.transform = 'translateX(-50%)';
-              toastEl.style.top = `${10 + yOffset}px`;
-            }
-          });
-
-          toast.onDidDismiss().then(() => {
-            toastCount--;
-            activeToasts = activeToasts.filter((t) => t !== toast);
-            hideBackdrop();
-          });
-        }, delay);
-      }
-
-      // Show all toasts sequentially with a slight delay between each
+      // Show all toasts when the button is clicked
       function openAllToasts(isBold) {
-        toastCount = 0;
-        activeToasts = [];
+        toastOffset = 10;
 
-        Object.values(colorIconMap).forEach((item, index) => {
-          openToast(
-            {
-              message: `This is a ${item.color} toast.`,
-              buttons: [{ text: 'Action' }, { icon: 'close', role: 'cancel' }],
-              color: item.color,
-              icon: item.icon,
-              ...(isBold ? { hue: 'bold' } : {}),
-            },
-            index * 150
-          );
+        const toasts = document.querySelectorAll('ion-toast');
+
+        toasts.forEach((toast, index) => {
+          toast.removeAttribute('hue');
+          toast.hue = isBold ? 'bold' : 'subtle';
+          const hue = toast.hue;
+
+          const color = toast.color || 'default';
+          toast.message = `This is a ${hue} ${color} toast.`;
+
+          toast.buttons = [{
+            text: 'Action',
+            role: 'cancel'
+          }];
+
+          // Set dynamic position for each toast to ensure they don't overlap
+          toast.style.position = 'absolute';
+          toast.style.top = `${toastOffset}px`;
+          toast.style.left = '50%';
+          toast.style.transform = 'translateX(-50%)';
+
+          toast.present();
+
+          // Update the toastOffset for the next toast to ensure it's positioned below the previous one
+          toastOffset += 60;
         });
+
+        document.getElementById("backdrop").style.display = "block";
       }
+
+      // Dismiss all toasts when backdrop is clicked
+      function dismissAllToasts() {
+        const toasts = document.querySelectorAll('ion-toast');
+        toasts.forEach(toast => toast.dismiss());
+
+        document.getElementById("backdrop").style.display = "none";
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("show-subtle-toasts").addEventListener("click", () => openAllToasts(false));
+        document.getElementById("show-bold-toasts").addEventListener("click", () => openAllToasts(true));
+
+        document.getElementById("backdrop").addEventListener("click", dismissAllToasts);
+      });
     </script>
 
     <style>
@@ -140,13 +105,11 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
         display: none;
-        z-index: 9998;
-        pointer-events: all;
-        backdrop-filter: blur(5px);
       }
     </style>
   </body>
