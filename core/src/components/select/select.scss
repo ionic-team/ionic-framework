@@ -308,7 +308,9 @@ button {
  * highlight when the select is blurred.
  */
 :host(.ion-focused.ion-valid),
-:host(.ion-touched.ion-invalid) {
+:host(.select-expanded.ion-valid),
+:host(.ion-touched.ion-invalid),
+:host(.select-expanded.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
 
@@ -320,7 +322,7 @@ button {
  * present on the select. Otherwise the helper text should
  * be shown.
  */
- .select-bottom .error-text {
+.select-bottom .error-text {
   display: none;
 
   color: var(--highlight-color-invalid);
