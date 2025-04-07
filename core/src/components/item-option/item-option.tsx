@@ -66,7 +66,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
    * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for
    * an option with muted, subtle colors.
    */
-  @Prop() hue?: 'bold' | 'subtle' = 'bold';
+  @Prop() hue?: 'bold' | 'subtle' = 'subtle';
 
   /**
    * Specifies the relationship of the target object to the link object.
