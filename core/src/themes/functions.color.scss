@@ -39,6 +39,13 @@
 
   $value: map.get($values, $variation);
 
+  // TODO(): this can be removed when foreground is required
+  // Fallback to "base" variant when "foreground" variant is undefined
+  @if ($variation == foreground and $value == null) {
+    $variation: base;
+    $value: map.get($values, $variation);
+  }
+
   // If the color requested is subtle we return `--ion-color-{color}-subtle-contrast`,
   // otherwise we return `--ion-color-{color}-contrast`.
   $variable: if($subtle, "--ion-color-#{$name}-subtle-#{$variation}", "--ion-color-#{$name}-#{$variation}");
