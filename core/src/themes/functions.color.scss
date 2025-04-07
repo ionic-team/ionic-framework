@@ -159,7 +159,13 @@
     ) !important;
     --ion-color#{$prefix}-shade: var(--ion-color-#{$color-name}#{$prefix}-shade, #{$shade}) !important;
     --ion-color#{$prefix}-tint: var(--ion-color-#{$color-name}#{$prefix}-tint, #{$tint}) !important;
-    --ion-color#{$prefix}-foreground: var(--ion-color-#{$color-name}#{$prefix}-foreground, #{$foreground}) !important;
+    // TODO(): remove the fallback variable when the foreground variable is
+    // required by all palettes for all themes:
+    // --ion-color#{$prefix}-foreground: var(--ion-color-#{$color-name}#{$prefix}-foreground, #{$foreground}) !important;
+    --ion-color#{$prefix}-foreground: var(
+      --ion-color-#{$color-name}#{$prefix}-foreground,
+      var(--ion-color-#{$color-name}#{$prefix}, #{$foreground})
+    ) !important;
   }
 }
 
@@ -229,7 +235,13 @@
         --ion-color-#{$color-name}#{$prefix}-contrast-rgb: #{map.get($colors, contrast-rgb)};
         --ion-color-#{$color-name}#{$prefix}-shade: #{map.get($colors, shade)};
         --ion-color-#{$color-name}#{$prefix}-tint: #{map.get($colors, tint)};
-        --ion-color-#{$color-name}#{$prefix}-foreground: #{map.get($colors, foreground)};
+        // TODO(): this "if" can be removed when foreground is defined for ios/md
+        // themes. It should not be added until we want foreground to be required for
+        // ios and md because this will be a breaking change, requiring users to add
+        // `--ion-color-{color}-foreground` in order to override the default colors
+        @if (map.get($colors, foreground)) {
+          --ion-color-#{$color-name}#{$prefix}-foreground: #{map.get($colors, foreground)};
+        }
       }
     }
   }
