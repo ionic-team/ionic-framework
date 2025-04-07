@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('badge: hue'), () => {
-    test('should render bold badges', async ({ page }) => {
+    test('should render subtle badges', async ({ page }) => {
       await page.setContent(
         `
         <div id="container">
@@ -37,36 +37,36 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot(`badge-hue-bold`));
+      await expect(container).toHaveScreenshot(screenshot(`badge-hue-subtle`));
     });
 
-    test('should render subtle badges', async ({ page }) => {
+    test('should render bold badges', async ({ page }) => {
       await page.setContent(
         `
         <div id="container">
-          <ion-badge hue="subtle">99</ion-badge>
-          <ion-badge hue="subtle" color="primary">99</ion-badge>
-          <ion-badge hue="subtle" color="secondary">99</ion-badge>
-          <ion-badge hue="subtle" color="tertiary">99</ion-badge>
-          <ion-badge hue="subtle" color="success">99</ion-badge>
-          <ion-badge hue="subtle" color="warning">99</ion-badge>
-          <ion-badge hue="subtle" color="danger">99</ion-badge>
-          <ion-badge hue="subtle" color="light">99</ion-badge>
-          <ion-badge hue="subtle" color="medium">99</ion-badge>
-          <ion-badge hue="subtle" color="dark">99</ion-badge>
+          <ion-badge hue="bold">99</ion-badge>
+          <ion-badge hue="bold" color="primary">99</ion-badge>
+          <ion-badge hue="bold" color="secondary">99</ion-badge>
+          <ion-badge hue="bold" color="tertiary">99</ion-badge>
+          <ion-badge hue="bold" color="success">99</ion-badge>
+          <ion-badge hue="bold" color="warning">99</ion-badge>
+          <ion-badge hue="bold" color="danger">99</ion-badge>
+          <ion-badge hue="bold" color="light">99</ion-badge>
+          <ion-badge hue="bold" color="medium">99</ion-badge>
+          <ion-badge hue="bold" color="dark">99</ion-badge>
 
           <br>
 
-          <ion-badge hue="subtle"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="primary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="secondary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="tertiary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="success"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="warning"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="danger"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="light"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="medium"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
-          <ion-badge hue="subtle" color="dark"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="primary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="secondary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="tertiary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="success"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="warning"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="danger"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="light"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="medium"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
+          <ion-badge hue="bold" color="dark"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
         </div>
       `,
         config
@@ -74,7 +74,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot(`badge-hue-subtle`));
+      await expect(container).toHaveScreenshot(screenshot(`badge-hue-bold`));
     });
   });
 });

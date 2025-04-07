@@ -32,7 +32,7 @@ export class Badge implements ComponentInterface {
    * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for
    * a badge with muted, subtle colors.
    */
-  @Prop() hue?: 'bold' | 'subtle' = 'bold';
+  @Prop() hue?: 'bold' | 'subtle' = 'subtle';
 
   /**
    * Set to `"rectangular"` for non-rounded corners.
