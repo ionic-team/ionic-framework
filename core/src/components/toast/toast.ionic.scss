@@ -5,10 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.$ion-primitives-neutral-1200};
   --box-shadow: #{globals.$ion-elevation-4};
-  --button-color: #{globals.$ion-primitives-base-white};
-  --color: #{globals.$ion-primitives-base-white};
   --max-width: 343px;
   --start: 8px;
   --end: 8px;
@@ -133,13 +130,30 @@
   font-size: globals.$ion-scale-600;
 }
 
+// Bold Toast
+// --------------------------------------------------
+
+:host(.toast-hue-bold) {
+  --background: #{globals.ion-color(secondary, base)};
+  --background-activated: #{globals.ion-color(secondary, shade)};
+  --color: #{globals.ion-color(secondary, contrast)};
+  --button-color: #{globals.ion-color(secondary, contrast)};
+}
+
+:host(.toast-hue-bold.ion-color) .toast-wrapper {
+  background: globals.current-color(base);
+  color: globals.current-color(contrast);
+}
+
+
 // Subtle Toast
 // --------------------------------------------------
 
-:host(.toast-hue-subtle) .toast-wrapper {
-  --background: #{globals.ion-color(primary, base, $subtle: true)};
-  --background-activated: #{globals.ion-color(primary, shade, $subtle: true)};
-  --color: #{globals.ion-color(primary, contrast, $subtle: true)};
+:host(.toast-hue-subtle) {
+  --background: #{globals.ion-color(secondary, base, $subtle: true)};
+  --background-activated: #{globals.ion-color(secondary, shade, $subtle: true)};
+  --color: #{globals.ion-color(secondary, contrast, $subtle: true)};
+  --button-color: #{globals.ion-color(secondary, contrast, $subtle: true)};
 }
 
 :host(.toast-hue-subtle.ion-color) .toast-wrapper {
