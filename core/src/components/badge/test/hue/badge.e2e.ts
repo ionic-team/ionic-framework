@@ -7,6 +7,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await page.setContent(
         `
         <div id="container">
+          <ion-badge>99</ion-badge>
           <ion-badge color="primary">99</ion-badge>
           <ion-badge color="secondary">99</ion-badge>
           <ion-badge color="tertiary">99</ion-badge>
@@ -19,6 +20,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
           <br>
 
+          <ion-badge><ion-icon name="logo-ionic"></ion-icon></ion-badge>
           <ion-badge color="primary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
           <ion-badge color="secondary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
           <ion-badge color="tertiary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
@@ -42,6 +44,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
       await page.setContent(
         `
         <div id="container">
+          <ion-badge hue="subtle">99</ion-badge>
           <ion-badge hue="subtle" color="primary">99</ion-badge>
           <ion-badge hue="subtle" color="secondary">99</ion-badge>
           <ion-badge hue="subtle" color="tertiary">99</ion-badge>
@@ -54,6 +57,7 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
 
           <br>
 
+          <ion-badge hue="subtle"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
           <ion-badge hue="subtle" color="primary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
           <ion-badge hue="subtle" color="secondary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
           <ion-badge hue="subtle" color="tertiary"><ion-icon name="logo-ionic"></ion-icon></ion-badge>
