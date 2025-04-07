@@ -80,3 +80,17 @@
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
+
+// Select Icon
+// ----------------------------------------------------------------
+
+/**
+ * When the select has a fill, is
+ * in an item, and is expanded, then
+ * the icon should take on the
+ * highlight color.
+ */
+:host(.in-item.select-expanded.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.select-expanded.ion-touched.ion-invalid.select-fill-solid) .select-wrapper .select-icon {
+  color: var(--highlight-color);
+}
