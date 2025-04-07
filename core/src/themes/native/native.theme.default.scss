@@ -7,14 +7,12 @@
 // Default Ionic Colors
 // -------------------------------------------------------------------------------------------
 // Color map should provide
-// TODO: rename base to background?
 // - base: The main color used for backgrounds
 // - base-rgb: The base color in RGB format
 // - contrast: A color that ensures readable text on the base color
 // - contrast-rgb: The contrast color in RGB format
 // - shade: 12% darker version of the base color (mix with black), used for pressed/active states
 // - tint: 10% lighter version of the base color (mix with white), used for focused/hover states
-// - foreground: The main color used for text and foreground elements
 
 $primary: #0054e9;
 $secondary: #0163aa;
@@ -35,7 +33,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#fff),
       shade: get-color-shade($primary),
       tint: get-color-tint($primary),
-      foreground: $primary,
     ),
   ),
   secondary: (
@@ -46,7 +43,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#fff),
       shade: get-color-shade($secondary),
       tint: get-color-tint($secondary),
-      foreground: $secondary,
     ),
   ),
   tertiary: (
@@ -57,7 +53,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#fff),
       shade: get-color-shade($tertiary),
       tint: get-color-tint($tertiary),
-      foreground: $tertiary,
     ),
   ),
   success: (
@@ -68,7 +63,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#000),
       shade: get-color-shade($success),
       tint: get-color-tint($success),
-      foreground: $success,
     ),
   ),
   warning: (
@@ -79,7 +73,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#000),
       shade: get-color-shade($warning),
       tint: get-color-tint($warning),
-      foreground: $warning,
     ),
   ),
   danger: (
@@ -90,7 +83,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#fff),
       shade: get-color-shade($danger),
       tint: get-color-tint($danger),
-      foreground: $danger,
     ),
   ),
   light: (
@@ -101,7 +93,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#000),
       shade: get-color-shade($light),
       tint: get-color-tint($light),
-      foreground: $light,
     ),
   ),
   medium: (
@@ -112,7 +103,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#fff),
       shade: get-color-shade($medium),
       tint: get-color-tint($medium),
-      foreground: $medium,
     ),
   ),
   dark: (
@@ -123,7 +113,6 @@ $colors: (
       contrast-rgb: color-to-rgb-list(#fff),
       shade: get-color-shade($dark),
       tint: get-color-tint($dark),
-      foreground: $dark,
     ),
   ),
 );
