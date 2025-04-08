@@ -64,10 +64,12 @@
           const color = toast.color || 'default';
           toast.message = `This is a ${hue} ${color} toast.`;
 
-          toast.buttons = [{
-            text: 'Action',
-            role: 'cancel'
-          }];
+          toast.buttons = [
+            {
+              text: 'Action',
+              role: 'cancel',
+            },
+          ];
 
           // Set dynamic position for each toast to ensure they don't overlap
           toast.style.position = 'absolute';
@@ -81,22 +83,22 @@
           toastOffset += 60;
         });
 
-        document.getElementById("backdrop").style.display = "block";
+        document.getElementById('backdrop').style.display = 'block';
       }
 
       // Dismiss all toasts when backdrop is clicked
       function dismissAllToasts() {
         const toasts = document.querySelectorAll('ion-toast');
-        toasts.forEach(toast => toast.dismiss());
+        toasts.forEach((toast) => toast.dismiss());
 
-        document.getElementById("backdrop").style.display = "none";
+        document.getElementById('backdrop').style.display = 'none';
       }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("show-subtle-toasts").addEventListener("click", () => openAllToasts(false));
-        document.getElementById("show-bold-toasts").addEventListener("click", () => openAllToasts(true));
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('show-subtle-toasts').addEventListener('click', () => openAllToasts(false));
+        document.getElementById('show-bold-toasts').addEventListener('click', () => openAllToasts(true));
 
-        document.getElementById("backdrop").addEventListener("click", dismissAllToasts);
+        document.getElementById('backdrop').addEventListener('click', dismissAllToasts);
       });
     </script>
 

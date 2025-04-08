@@ -134,10 +134,10 @@
 // --------------------------------------------------
 
 :host(.toast-hue-bold) {
-  --background: #{globals.ion-color(secondary, base)};
-  --background-activated: #{globals.ion-color(secondary, shade)};
-  --color: #{globals.ion-color(secondary, contrast)};
-  --button-color: #{globals.ion-color(secondary, contrast)};
+  --background: #{globals.$ion-bg-neutral-boldest-default};
+  --background-activated: #{globals.$ion-bg-neutral-boldest-press};
+  --color: #{globals.$ion-text-inverse};
+  --button-color: #{globals.$ion-text-inverse};
 }
 
 :host(.toast-hue-bold.ion-color) .toast-wrapper {
@@ -145,15 +145,14 @@
   color: globals.current-color(contrast);
 }
 
-
 // Subtle Toast
 // --------------------------------------------------
 
 :host(.toast-hue-subtle) {
-  --background: #{globals.ion-color(secondary, base, $subtle: true)};
-  --background-activated: #{globals.ion-color(secondary, shade, $subtle: true)};
-  --color: #{globals.ion-color(secondary, contrast, $subtle: true)};
-  --button-color: #{globals.ion-color(secondary, contrast, $subtle: true)};
+  --background: #{globals.$ion-bg-neutral-subtlest-default};
+  --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
+  --color: #{globals.$ion-text-default};
+  --button-color: #{globals.$ion-text-link-default};
 }
 
 :host(.toast-hue-subtle.ion-color) .toast-wrapper {
