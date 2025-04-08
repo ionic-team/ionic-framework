@@ -9,8 +9,6 @@
    * @prop --focus-ring-color: Color of the focus ring
    * @prop --focus-ring-width: Width of the focus ring
    */
-  --background: #{globals.$ion-primitives-neutral-100};
-  --color: #{globals.$ion-primitives-neutral-800};
   --focus-ring-color: #{globals.$ion-border-focus-default};
   --focus-ring-width: #{globals.$ion-border-size-050};
 
@@ -31,7 +29,6 @@
 :host(.chip-outline) {
   border-width: globals.$ion-border-size-025;
   border-style: globals.$ion-border-style-solid;
-  border-color: globals.$ion-primitives-neutral-300;
 }
 
 // Chip: Focus
@@ -46,7 +43,7 @@
 // ---------------------------------------------
 
 @media (any-hover: hover) {
-  :host(:hover) {
+  :host(.chip-subtle:hover) {
     --background: #{globals.$ion-primitives-neutral-200};
   }
 
@@ -54,7 +51,7 @@
     --background: #{globals.$ion-primitives-neutral-1100};
   }
 
-  :host(.ion-color:hover) {
+  :host(.chip-subtle.ion-color:hover) {
     background: globals.current-color(tint, $subtle: true);
   }
 
@@ -106,6 +103,18 @@
   font-size: globals.$ion-font-size-350;
 }
 
+// Subtle Chip
+// ---------------------------------------------
+
+:host(.chip-subtle) {
+  --background: #{globals.$ion-primitives-neutral-100};
+  --color: #{globals.$ion-primitives-neutral-800};
+}
+
+:host(.chip-outline.chip-subtle) {
+  border-color: globals.$ion-primitives-neutral-300;
+}
+
 // Bold Chip
 // ---------------------------------------------
 
@@ -124,12 +133,12 @@
 // ---------------------------------------------
 
 // Subtle
-:host(.ion-color) {
+:host(.chip-subtle.ion-color) {
   background: globals.current-color(base, $subtle: true);
   color: globals.current-color(contrast, $subtle: true);
 }
 
-:host(.chip-outline.ion-color) {
+:host(.chip-subtle.chip-outline.ion-color) {
   border-color: globals.current-color(shade, $subtle: true);
 }
 
