@@ -43,11 +43,6 @@
   vertical-align: baseline;
 }
 
-:host(.ion-color) {
-  background: #{color.current-color(base)};
-  color: #{color.current-color(contrast)};
-}
-
 // Badge (hint)
 // --------------------------------------------------
 
