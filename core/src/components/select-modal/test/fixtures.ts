@@ -31,7 +31,7 @@ export class SelectModalPage {
       const selectModal = document.querySelector('ion-select-modal');
       selectModal.options = ${JSON.stringify(options)};
       selectModal.multiple = ${multiple};
-      selectModal.closeText = 'Close me';
+      selectModal.cancelText = 'Close me';
     </script>
     `,
       config
