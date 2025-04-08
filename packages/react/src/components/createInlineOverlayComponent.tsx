@@ -199,8 +199,10 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * that removes the item.)
        */
       if (wrapper && el) {
+        // The delegate's removeViewFromDom call handles unmounting the React component.
+        // Setting state here can cause race conditions.
+        // Restore the wrapper to the element before the delegate removes it.
         el.append(wrapper);
-        this.setState({ isOpen: false });
       }
 
       this.props.onDidDismiss && this.props.onDidDismiss(evt);
