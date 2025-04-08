@@ -1,5 +1,5 @@
 @use "../../themes/ionic/ionic.globals.scss" as globals;
-@import "./item-option";
+@use "./item-option.common";
 
 // Ionic Item Option
 // --------------------------------------------------
@@ -29,11 +29,11 @@
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, globals.$ion-space-100, 0, 0);
+  @include globals.margin(0, globals.$ion-space-100, 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, globals.$ion-space-100);
+  @include globals.margin(0, 0, 0, globals.$ion-space-100);
 }
 
 ::slotted(ion-icon),
@@ -88,4 +88,18 @@
 :host(.item-option-subtle.ion-color) {
   background: globals.current-color(base, $subtle: true);
   color: globals.current-color(contrast, $subtle: true);
+}
+
+// Bold Item Option
+// --------------------------------------------------
+
+:host(.item-option-bold) {
+  --background: #{globals.ion-color(primary, base)};
+  --background-activated: #{globals.ion-color(primary, shade)};
+  --color: #{globals.ion-color(primary, contrast)};
+}
+
+:host(.item-option-bold.ion-color) {
+  background: globals.current-color(base);
+  color: globals.current-color(contrast);
 }
