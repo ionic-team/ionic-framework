@@ -62,11 +62,16 @@
           const hue = toast.hue;
 
           const color = toast.color || 'default';
-          toast.message = `This is a ${hue} ${color} toast.`;
+          toast.message = `This is a ${color} toast.`;
+
+          toast.icon = 'information-circle';
 
           toast.buttons = [
             {
               text: 'Action',
+            },
+            {
+              icon: 'close',
               role: 'cancel',
             },
           ];

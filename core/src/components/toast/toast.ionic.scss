@@ -145,6 +145,10 @@
   color: globals.current-color(contrast);
 }
 
+:host(.toast-hue-bold.ion-color) .toast-button {
+  color: globals.current-color(contrast);
+}
+
 // Subtle Toast
 // --------------------------------------------------
 
@@ -153,6 +157,10 @@
   --background-activated: #{globals.$ion-bg-neutral-subtlest-press};
   --color: #{globals.$ion-text-default};
   --button-color: #{globals.$ion-text-link-default};
+}
+
+:host(.toast-hue-subtle) .toast-button-cancel {
+  color: #{globals.$ion-icon-subtlest};
 }
 
 :host(.toast-hue-subtle.ion-color) .toast-wrapper {
