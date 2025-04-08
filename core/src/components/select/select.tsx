@@ -18,15 +18,15 @@ import type {
   AlertOptions,
   Color,
   CssClassMap,
+  ModalOptions,
   PopoverOptions,
   StyleEventDetail,
-  ModalOptions,
 } from '../../interface';
 import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
 import type { AlertInput } from '../alert/alert-interface';
 import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
-import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
+import type { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from './select-interface';
 
 // TODO(FW-2832): types
 
@@ -795,7 +795,7 @@ export class Select implements ComponentInterface {
       component: 'ion-select-modal',
       componentProps: {
         header: interfaceOptions.header,
-        closeText: interfaceOptions.closeText,
+        cancelText: this.cancelText,
         multiple,
         value,
         options: this.createOverlaySelectOptions(this.childOpts, value),

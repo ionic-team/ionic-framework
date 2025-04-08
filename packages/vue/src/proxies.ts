@@ -947,7 +947,7 @@ export const IonSelect: StencilVueComponent<JSX.IonSelect, JSX.IonSelect["value"
 
 export const IonSelectModal: StencilVueComponent<JSX.IonSelectModal> = /*@__PURE__*/ defineContainer<JSX.IonSelectModal>('ion-select-modal', defineIonSelectModal, [
   'header',
-  'closeText',
+  'cancelText',
   'multiple',
   'options'
 ]);
