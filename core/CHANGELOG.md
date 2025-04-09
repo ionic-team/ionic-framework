@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.4](https://github.com/ionic-team/ionic-framework/compare/v8.5.3...v8.5.4) (2025-04-09)
+
+
+### Bug Fixes
+
+* **config:** properly export LogLevel ([#30335](https://github.com/ionic-team/ionic-framework/issues/30335)) ([835ad52](https://github.com/ionic-team/ionic-framework/commit/835ad52c290a3687dc9e9c6bf4326948a9c3fe0d)), closes [#30255](https://github.com/ionic-team/ionic-framework/issues/30255)
+
+
+
+
+
 ## [8.5.3](https://github.com/ionic-team/ionic-framework/compare/v8.5.2...v8.5.3) (2025-04-02)
 
 
