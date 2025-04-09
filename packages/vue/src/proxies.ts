@@ -309,6 +309,7 @@ export const IonDatetime: StencilVueComponent<JSX.IonDatetime, JSX.IonDatetime["
   'formatOptions',
   'readonly',
   'isDateEnabled',
+  'showAdjacentDays',
   'min',
   'max',
   'presentation',

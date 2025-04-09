@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Show Adjacent Days</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+
+      /*
+        * Custom Datetime Day Parts
+        * -------------------------------------------
+        */
+
+      #custom-calendar-days::part(calendar-day) {
+        background-color: #ffe2e6;
+
+        color: #da5296;
+
+        margin: 2px 0;
+      }
+
+      #custom-calendar-days::part(calendar-day today) {
+        color: #8462d1;
+      }
+
+      #custom-calendar-days::part(calendar-day):not(.calendar-day-adjacent-day):focus {
+        background-color: rgb(154 209 98 / 0.2);
+        box-shadow: 0px 0px 0px 4px rgb(154 209 98 / 0.2);
+      }
+
+      #custom-calendar-days::part(calendar-day disabled) {
+        background: rgba(0 0 0 / 0.2);
+        color: black;
+      }
+
+      /*
+        * Custom Material Design Datetime Day Parts
+        * -------------------------------------------
+        */
+
+      #custom-calendar-days.md::part(calendar-day active),
+      #custom-calendar-days.md::part(calendar-day active):focus {
+        background-color: #9ad162;
+        border-color: #9ad162;
+        color: #fff;
+      }
+
+      #custom-calendar-days.md::part(calendar-day today) {
+        border-color: #8462d1;
+      }
+
+      /*
+        * Custom iOS Datetime Day Parts
+        * -------------------------------------------
+        */
+
+      #custom-calendar-days.ios::part(calendar-day active),
+      #custom-calendar-days.ios::part(calendar-day active):focus {
+        background-color: rgb(154 209 98 / 0.2);
+        color: #9ad162;
+      }
+
+      body {
+        padding: 20px;
+      }
+
+      ion-datetime {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Show Adjacent Days</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Inline Grid</h2>
+            <ion-datetime show-adjacent-days="true" id="default" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Inline Grid: Custom Styles</h2>
+            <ion-datetime
+              show-adjacent-days="true"
+              id="custom-calendar-days"
+              value="2023-06-15"
+              presentation="date"
+            ></ion-datetime>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Disable Specific Date</h2>
+            <ion-datetime
+              show-adjacent-days="true"
+              id="specificDate"
+              value="2021-10-01"
+              showAdjacentDays="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disable Weekends</h2>
+            <ion-datetime show-adjacent-days="true" id="weekends" value="2021-10-01"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disable Date Range</h2>
+            <ion-datetime show-adjacent-days="true" id="dateRange" value="2021-10-01"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disable Month</h2>
+            <ion-datetime show-adjacent-days="true" id="month" value="2021-10-01"></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Change firstDayOfWeek</h2>
+            <ion-datetime
+              show-adjacent-days="true"
+              id="firstDayOfWeek"
+              first-day-of-week="1"
+              value="2022-05-03"
+            ></ion-datetime>
+            <button onclick="increase()">Increase firstDayOfWeek</button>
+            <div>
+              <span>FirstDayOfWeek: <span id="start-of-week">1</span></span>
+            </div>
+          </div>
+
+          <div class="grid-item">
+            <h2>DateTime format with IonChange Event (console)</h2>
+            <ion-datetime
+              id="default2"
+              show-adjacent-days="true"
+              locale="en-US"
+              value="2022-10-14T16:22:00.000Z"
+              presentation="date"
+            ></ion-datetime>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="grid-item">
+            <label for="presentation">Presentation</label>
+            <select id="presentation" onchange="changePresentation(event)">
+              <option value="date-time" selected>date-time</option>
+              <option value="time-date">time-date</option>
+              <option value="date">date</option>
+              <option value="time">time</option>
+            </select>
+            <label for="size">Size</label>
+            <select id="size" onchange="changeSize(event)">
+              <option value="fixed" selected>fixed</option>
+              <option value="cover">cover</option>
+            </select>
+            <br /><br />
+            <ion-datetime show-adjacent-days="true" id="display" value="2022-02-22T16:30:00"></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const customDatetime = document.querySelector('#custom-calendar-days');
+
+      // Mock the current day to always have the same screenshots
+      const mockToday = '2023-06-10T16:22';
+      Date = class extends Date {
+        constructor(...args) {
+          if (args.length === 0) {
+            super(mockToday);
+          } else {
+            super(...args);
+          }
+        }
+      };
+
+      customDatetime.highlightedDates = [
+        {
+          date: '2023-06-02',
+          textColor: 'purple',
+          backgroundColor: 'pink',
+        },
+        {
+          date: '2023-06-04',
+          textColor: 'firebrick',
+          backgroundColor: 'salmon',
+        },
+        {
+          date: '2023-06-06',
+          textColor: 'blue',
+          backgroundColor: 'lightblue',
+        },
+      ];
+
+      customDatetime.isDateEnabled = (date) => {
+        if (date === '2023-06-22') {
+          return false;
+        }
+
+        return true;
+      };
+
+      const specificDateDisabled = document.querySelector('#specificDate');
+      specificDateDisabled.isDateEnabled = (dateIsoString) => {
+        const date = new Date(dateIsoString);
+        // Disables October 10, 2021.
+        if (date.getUTCDate() === 10 && date.getUTCMonth() === 9 && date.getUTCFullYear() === 2021) {
+          return false;
+        }
+        return true;
+      };
+
+      const weekendsDisabled = document.querySelector('#weekends');
+      weekendsDisabled.isDateEnabled = (dateIsoString) => {
+        const date = new Date(dateIsoString);
+        // Disables Sunday and Saturday
+        if (date.getUTCDay() === 0 || date.getUTCDay() === 6) {
+          return false;
+        }
+        return true;
+      };
+
+      const dateRangeDisabled = document.querySelector('#dateRange');
+      dateRangeDisabled.isDateEnabled = (dateIsoString) => {
+        const date = new Date(dateIsoString);
+        // Disables dates between October 10, 2021 and October 20, 2021.
+        if (date.getUTCMonth() === 9 && date.getUTCFullYear() === 2021) {
+          if (date.getUTCDate() >= 10 && date.getUTCDate() <= 20) {
+            return false;
+          }
+        }
+        return true;
+      };
+
+      const monthDisabled = document.querySelector('#month');
+      monthDisabled.isDateEnabled = (dateIsoString) => {
+        const date = new Date(dateIsoString);
+        // Disables October (every year)
+        if (date.getUTCMonth() === 9) {
+          return false;
+        }
+        return true;
+      };
+
+      const firstDayOfWeek = document.querySelector('#firstDayOfWeek');
+      function increase() {
+        firstDayOfWeek.firstDayOfWeek = firstDayOfWeek.firstDayOfWeek + 1;
+
+        const span = document.getElementById('start-of-week');
+        span.innerText = firstDayOfWeek.firstDayOfWeek;
+      }
+
+      const display = document.querySelector('#display');
+
+      const mutationObserver = new MutationObserver(() => {
+        window.dispatchEvent(new CustomEvent('ionWorkingPartsDidChange'));
+      });
+
+      const initCalendarMonthChangeObserver = async () => {
+        if (!display.componentOnReady) return;
+        await display.componentOnReady();
+
+        // We have to requestAnimationFrame to allow the display to render completely.
+        requestAnimationFrame(() => {
+          const calendarBody = display.shadowRoot.querySelector('.calendar-body');
+          if (calendarBody) {
+            mutationObserver.observe(calendarBody, {
+              childList: true,
+              subtree: true,
+            });
+          }
+        });
+      };
+
+      const changePresentation = (ev) => {
+        mutationObserver.disconnect();
+        display.presentation = ev.target.value;
+        initCalendarMonthChangeObserver();
+      };
+
+      const changeSize = (ev) => {
+        display.size = ev.target.value;
+      };
+
+      initCalendarMonthChangeObserver();
+
+      const datetimeDefault = document.querySelector('#default2');
+      datetimeDefault.addEventListener('ionChange', (ev) => {
+        console.log(ev.target.value);
+      });
+    </script>
+  </body>
+</html>
