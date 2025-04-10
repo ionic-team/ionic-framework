@@ -1,0 +1,46 @@
+@import "../../themes/native/native.globals";
+@import "./item-option.vars";
+@import "./item-option.common";
+
+// Native Item Option
+// --------------------------------------------------
+
+:host {
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+
+  font-family: $font-family-base;
+}
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+.button-native {
+  @include padding(0, 0.7em);
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, 5px, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, 5px);
+}
+
+::slotted([slot="icon-only"]) {
+  @include padding(0);
+  @include margin(0, 10px);
+
+  min-width: 0.9em;
+
+  font-size: 1.8em;
+}
+
+// Item Option: Disabled
+// --------------------------------------------------
+
+:host(.item-option-disabled) .button-native {
+  opacity: 0.5;
+}
