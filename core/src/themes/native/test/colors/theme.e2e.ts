@@ -31,7 +31,7 @@ const styleTestHelpers = `
       background: rgba(var(--ion-color-base-rgb), 0.16);
     }
     .ion-color {
-      color: var(--ion-color-base);
+      color: var(--ion-color-foreground);
     }
     .ion-color-contrast {
       color: var(--ion-color-contrast);
@@ -52,7 +52,7 @@ const styleTestHelpers = `
 configs({ modes: ['md'], directions: ['ltr'], palettes: ['light', 'dark'] }).forEach(({ config, title }) => {
   const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 
-  test.describe(title('theme'), () => {
+  test.describe(title('palette colors: bold'), () => {
     test.beforeEach(({ skip }) => {
       skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
       skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
@@ -227,3 +227,66 @@ configs({ modes: ['md'], directions: ['ltr'], palettes: ['high-contrast', 'high-
     });
   }
 );
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('colors: custom'), () => {
+    // TODO(): this test can be removed when foreground is a required variant
+    // for ios and md themes
+    test(`overriding secondary color without foreground variant should style text properly`, async ({ page }) => {
+      await page.setContent(
+        `${styleTestHelpers}
+
+        <style>
+          :root {
+            --ion-color-secondary: #ff6c52;
+            --ion-color-secondary-rgb: 255,108,82;
+            --ion-color-secondary-contrast: #000000;
+            --ion-color-secondary-contrast-rgb: 0,0,0;
+            --ion-color-secondary-shade: #e05f48;
+            --ion-color-secondary-tint: #ff7b63;
+          }
+        </style>
+
+        <main class="ion-color-secondary">
+          <p class="ion-color">Hello World</p>
+        </main>`,
+        config
+      );
+
+      const paragraph = await page.locator('p');
+      const color = await paragraph.evaluate((el) => getComputedStyle(el).color);
+
+      // Ensure the color matches --ion-color-secondary
+      expect(color).toBe('rgb(255, 108, 82)');
+    });
+
+    test(`overriding secondary color with foreground variant should style text properly`, async ({ page }) => {
+      await page.setContent(
+        `${styleTestHelpers}
+
+        <style>
+          :root {
+            --ion-color-secondary: #ff6c52;
+            --ion-color-secondary-rgb: 255,108,82;
+            --ion-color-secondary-contrast: #000000;
+            --ion-color-secondary-contrast-rgb: 0,0,0;
+            --ion-color-secondary-shade: #e05f48;
+            --ion-color-secondary-tint: #ff7b63;
+            --ion-color-secondary-foreground: #e05f48;
+          }
+        </style>
+
+        <main class="ion-color-secondary">
+          <p class="ion-color">Hello World</p>
+        </main>`,
+        config
+      );
+
+      const paragraph = await page.locator('p');
+      const color = await paragraph.evaluate((el) => getComputedStyle(el).color);
+
+      // Ensure the color matches --ion-color-secondary-foreground
+      expect(color).toBe('rgb(224, 95, 72)');
+    });
+  });
+});
