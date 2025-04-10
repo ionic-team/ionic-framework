@@ -18,6 +18,8 @@ import {
   LIFECYCLE_WILL_UNLOAD,
 } from '@ionic/core/components';
 
+import { printIonError } from '@ionic/core';
+
 import { NavParams } from '../directives/navigation/nav-params';
 
 import { ConfigToken } from './config';
@@ -164,8 +166,8 @@ export const attachView = (
      * which will cause collisions.
      */
     if (elementReferenceKey && instance[elementReferenceKey] !== undefined) {
-      console.error(
-        `[Ionic Error]: ${elementReferenceKey} is a reserved property when using ${container.tagName.toLowerCase()}. Rename or remove the "${elementReferenceKey}" property from ${
+      printIonError(
+        `${elementReferenceKey} is a reserved property when using ${container.tagName.toLowerCase()}. Rename or remove the "${elementReferenceKey}" property from ${
           component.name
         }.`
       );
