@@ -76,7 +76,9 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
     // Prevent buttons from being disabled when associated with segment content
     if (this.contentId && this.disabled) {
-      printIonWarning(`Segment Button: Segment buttons cannot be disabled when associated with an <ion-segment-content>.`);
+      printIonWarning(
+        `Segment Button: Segment buttons cannot be disabled when associated with an <ion-segment-content>.`
+      );
       this.disabled = false;
     }
   }

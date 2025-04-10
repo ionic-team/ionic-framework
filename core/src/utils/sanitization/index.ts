@@ -1,4 +1,4 @@
-import { printIonError } from "@utils/logging";
+import { printIonError } from '@utils/logging';
 
 /**
  * Does a simple sanitization of all elements
