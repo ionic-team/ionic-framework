@@ -1,7 +1,6 @@
+import { printIonWarning } from "@ionic/core";
 import type { ComponentInternalInstance } from "vue";
 import { getCurrentInstance } from "vue";
-
-import { printIonWarning } from "@ionic/core";
 
 import { LifecycleHooks } from "../utils";
 

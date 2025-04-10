@@ -9,6 +9,7 @@ import {
   InjectionToken,
   ComponentRef,
 } from '@angular/core';
+import { printIonError } from '@ionic/core';
 import {
   FrameworkDelegate,
   LIFECYCLE_DID_ENTER,
@@ -17,8 +18,6 @@ import {
   LIFECYCLE_WILL_LEAVE,
   LIFECYCLE_WILL_UNLOAD,
 } from '@ionic/core/components';
-
-import { printIonError } from '@ionic/core';
 
 import { NavParams } from '../directives/navigation/nav-params';
 

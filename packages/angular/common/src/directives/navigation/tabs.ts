@@ -10,7 +10,6 @@ import {
   AfterViewInit,
   QueryList,
 } from '@angular/core';
-
 import { printIonError } from '@ionic/core';
 
 import { NavController } from '../../providers/nav-controller';

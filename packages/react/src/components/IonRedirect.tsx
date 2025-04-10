@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { printIonError } from '@ionic/core';
+import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
 
