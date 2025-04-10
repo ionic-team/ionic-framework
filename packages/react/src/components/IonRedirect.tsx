@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { printIonError } from '@ionic/core';
+
 import { NavContext } from '../contexts/NavContext';
 
 export interface IonRedirectProps {
@@ -19,7 +21,7 @@ export class IonRedirect extends React.PureComponent<IonRedirectProps, IonRedire
     const IonRedirectInner = this.context.getIonRedirect();
 
     if (!this.context.hasIonicRouter() || !IonRedirect) {
-      console.error(
+      printIonError(
         'You either do not have an Ionic Router package, or your router does not support using <IonRedirect>'
       );
       return null;

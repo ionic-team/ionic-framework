@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { printIonWarning } from '@ionic/core';
+
 import { NavContext } from '../contexts/NavContext';
 
 import type { IonicReactProps } from './IonicReactProps';
@@ -27,7 +29,7 @@ class IonIconContainer extends React.PureComponent<InternalProps> {
   constructor(props: InternalProps) {
     super(props);
     if (this.props.name) {
-      console.warn(
+      printIonWarning(
         'In Ionic React, you import icons from "ionicons/icons" and set the icon you imported to the "icon" property. Setting the "name" property has no effect.'
       );
     }
