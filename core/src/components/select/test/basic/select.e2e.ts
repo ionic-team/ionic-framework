@@ -329,7 +329,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  * focus has a consistent behavior across modes
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.only(title('select: focus'), () => {
+  test.describe(title('select: focus'), () => {
     test('should have the focus class when tabbing', async ({ page, pageUtils }) => {
       await page.setContent(
         `
