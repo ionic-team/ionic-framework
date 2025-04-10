@@ -4,6 +4,7 @@ import type { NotchController } from '@utils/forms';
 import { compareOptions, createNotchController, isOptionSelected } from '@utils/forms';
 import { focusVisibleElement, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController, modalController } from '@utils/overlays';
 import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
@@ -426,14 +427,14 @@ export class Select implements ComponentInterface {
   private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
     if (selectInterface === 'action-sheet' && this.multiple) {
-      console.warn(
+      printIonWarning(
         `Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
     }
 
     if (selectInterface === 'popover' && !ev) {
-      console.warn(
+      printIonWarning(
         `Select interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`
       );
       selectInterface = 'alert';
