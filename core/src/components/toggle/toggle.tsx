@@ -391,6 +391,7 @@ export class Toggle implements ComponentInterface {
     return (
       <Host
         role="switch"
+        aria-checked={`${checked}`}
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === errorTextId}
         onClick={this.onClick}
