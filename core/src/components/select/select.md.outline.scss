@@ -22,7 +22,7 @@
  * If the select has a validity state, the
  * border should reflect that as a color.
  */
-:host(.ion-focused.select-fill-outline.ion-valid),
+:host(.has-focus.select-fill-outline.ion-valid),
 :host(.select-fill-outline.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
@@ -43,7 +43,7 @@
  * the select is focused.
  */
 :host(.select-fill-outline.select-expanded),
-:host(.select-fill-outline.ion-focused) {
+:host(.select-fill-outline.has-focus) {
   --border-width: var(--highlight-height);
   --border-color: var(--highlight-color);
 }

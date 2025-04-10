@@ -14,12 +14,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             }
           </style>
           <div id="container">
-            <ion-select value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
+            <ion-select value="apple" class="ion-valid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
             <ion-list>
               <ion-item>
-                <ion-select value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
+                <ion-select value="apple" class="ion-valid has-focus" label="Favorite Fruit">
                   <ion-select-option value="apple">Apple</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -70,12 +70,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             }
           </style>
           <div id="container">
-            <ion-select value="apple" class="ion-focused" label="Favorite Fruit">
+            <ion-select value="apple" class="has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
             <ion-list>
               <ion-item>
-                <ion-select value="apple" class="ion-focused" label="Favorite Fruit">
+                <ion-select value="apple" class="has-focus" label="Favorite Fruit">
                   <ion-select-option value="apple">Apple</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -101,15 +101,15 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           </style>
 
           <div class="container">
-            <ion-select value="apple" class="custom ion-valid ion-focused" label="Favorite Fruit">
+            <ion-select value="apple" class="custom ion-valid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select value="apple" class="custom ion-touched ion-invalid ion-focused" label="Favorite Fruit">
+            <ion-select value="apple" class="custom ion-touched ion-invalid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select value="apple" class="custom ion-focused" label="Favorite Fruit">
+            <ion-select value="apple" class="custom has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
           </div>
@@ -132,12 +132,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             }
           </style>
           <div id="container">
-            <ion-select fill="solid" value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
+            <ion-select fill="solid" value="apple" class="ion-valid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
             <ion-list>
               <ion-item>
-                <ion-select fill="solid" value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
+                <ion-select fill="solid" value="apple" class="ion-valid has-focus" label="Favorite Fruit">
                   <ion-select-option value="apple">Apple</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -188,12 +188,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             }
           </style>
           <div id="container">
-            <ion-select fill="solid" value="apple" class="ion-focused" label="Favorite Fruit">
+            <ion-select fill="solid" value="apple" class="has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
             <ion-list>
               <ion-item>
-                <ion-select fill="solid" value="apple" class="ion-focused" label="Favorite Fruit">
+                <ion-select fill="solid" value="apple" class="has-focus" label="Favorite Fruit">
                   <ion-select-option value="apple">Apple</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -219,15 +219,15 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           </style>
 
           <div class="container">
-            <ion-select fill="solid" value="apple" class="custom ion-valid ion-focused" label="Favorite Fruit">
+            <ion-select fill="solid" value="apple" class="custom ion-valid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select fill="solid" value="apple" class="custom ion-touched ion-invalid ion-focused" label="Favorite Fruit">
+            <ion-select fill="solid" value="apple" class="custom ion-touched ion-invalid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select fill="solid" value="apple" class="custom ion-focused" label="Favorite Fruit">
+            <ion-select fill="solid" value="apple" class="custom has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
           </div>
@@ -250,12 +250,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             }
           </style>
           <div id="container">
-            <ion-select fill="outline" value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
+            <ion-select fill="outline" value="apple" class="ion-valid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
             <ion-list>
               <ion-item>
-                <ion-select fill="outline" value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
+                <ion-select fill="outline" value="apple" class="ion-valid has-focus" label="Favorite Fruit">
                   <ion-select-option value="apple">Apple</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -278,12 +278,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             }
           </style>
           <div id="container">
-            <ion-select fill="outline" value="apple" class="ion-touched ion-invalid ion-focused" label="Favorite Fruit">
+            <ion-select fill="outline" value="apple" class="ion-touched ion-invalid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
             <ion-list>
               <ion-item>
-                <ion-select fill="outline" value="apple" class="ion-touched ion-invalid ion-focused" label="Favorite Fruit">
+                <ion-select fill="outline" value="apple" class="ion-touched ion-invalid has-focus" label="Favorite Fruit">
                   <ion-select-option value="apple">Apple</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -306,12 +306,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
             }
           </style>
           <div id="container">
-            <ion-select fill="outline" value="apple" class="ion-focused" label="Favorite Fruit">
+            <ion-select fill="outline" value="apple" class="has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
             <ion-list>
               <ion-item>
-                <ion-select fill="outline" value="apple" class="ion-focused" label="Favorite Fruit">
+                <ion-select fill="outline" value="apple" class="has-focus" label="Favorite Fruit">
                   <ion-select-option value="apple">Apple</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -337,15 +337,15 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           </style>
 
           <div class="container">
-            <ion-select fill="outline" value="apple" class="custom ion-valid ion-focused" label="Favorite Fruit">
+            <ion-select fill="outline" value="apple" class="custom ion-valid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select fill="outline" value="apple" class="custom ion-touched ion-invalid ion-focused" label="Favorite Fruit">
+            <ion-select fill="outline" value="apple" class="custom ion-touched ion-invalid has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
 
-            <ion-select fill="outline" value="apple" class="custom ion-focused" label="Favorite Fruit">
+            <ion-select fill="outline" value="apple" class="custom has-focus" label="Favorite Fruit">
               <ion-select-option value="apple">Apple</ion-select-option>
             </ion-select>
           </div>

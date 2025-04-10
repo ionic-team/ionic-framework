@@ -88,7 +88,7 @@
   pointer-events: none;
 }
 
-:host(.ion-focused) button {
+:host(.has-focus) button {
   border: 2px solid #5e9ed6;
 }
 
@@ -265,7 +265,7 @@ button {
  * The component highlight is only shown
  * on focus, so we can safely set the valid
  * color state when touched/valid. If we
- * set it when .ion-focused is present then
+ * set it when .has-focus is present then
  * the highlight color would change
  * from the valid color to the component's
  * color during the transition after the
@@ -307,7 +307,7 @@ button {
  * is currently focused. Do not show the valid
  * highlight when the select is blurred.
  */
-:host(.ion-focused.ion-valid),
+:host(.has-focus.ion-valid),
 :host(.select-expanded.ion-valid),
 :host(.ion-touched.ion-invalid),
 :host(.select-expanded.ion-touched.ion-invalid) {
@@ -599,7 +599,7 @@ button {
  * :host(.label-floating.select-label-placement-floating) .native-wrapper .select-placeholder
  */
 :host(.select-expanded.select-label-placement-floating) .native-wrapper .select-placeholder,
-:host(.ion-focused.select-label-placement-floating) .native-wrapper .select-placeholder,
+:host(.has-focus.select-label-placement-floating) .native-wrapper .select-placeholder,
 :host(.has-value.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 1;
 }

@@ -71,6 +71,16 @@ export class Select implements ComponentInterface {
   @State() isExpanded = false;
 
   /**
+   * The `hasFocus` state ensures the focus class is
+   * added regardless of how the element is focused.
+   * The `ion-focused` class only applies when focused
+   * via tabbing, not by clicking.
+   * The `has-focus` logic was added to ensure the class
+   * is applied in both cases.
+   */
+  @State() hasFocus = false;
+
+  /**
    * The text to display on the cancel button.
    */
   @Prop() cancelText = 'Cancel';
@@ -851,10 +861,14 @@ export class Select implements ComponentInterface {
   };
 
   private onFocus = () => {
+    this.hasFocus = true;
+
     this.ionFocus.emit();
   };
 
   private onBlur = () => {
+    this.hasFocus = false;
+
     this.ionBlur.emit();
   };
 
@@ -1089,8 +1103,20 @@ export class Select implements ComponentInterface {
   }
 
   render() {
-    const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, shape, name, value } =
-      this;
+    const {
+      disabled,
+      el,
+      isExpanded,
+      expandedIcon,
+      labelPlacement,
+      justify,
+      placeholder,
+      fill,
+      shape,
+      name,
+      value,
+      hasFocus,
+    } = this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel && justify !== undefined;
@@ -1136,7 +1162,7 @@ export class Select implements ComponentInterface {
           'has-value': hasValue,
           'label-floating': labelShouldFloat,
           'has-placeholder': placeholder !== undefined,
-          'ion-focusable': true,
+          'has-focus': hasFocus,
           [`select-${rtl}`]: true,
           [`select-fill-${fill}`]: fill !== undefined,
           [`select-justify-${justify}`]: justifyEnabled,

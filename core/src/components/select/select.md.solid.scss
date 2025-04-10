@@ -28,7 +28,7 @@
  * border should reflect that as a color.
  */
 :host(.select-expanded.select-fill-solid.ion-valid),
-:host(.ion-focused.select-fill-solid.ion-valid),
+:host(.has-focus.select-fill-solid.ion-valid),
 :host(.select-fill-solid.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
@@ -57,7 +57,7 @@
  * much darker on focus.
  */
 :host(.select-fill-solid.select-expanded),
-:host(.select-fill-solid.ion-focused) {
+:host(.select-fill-solid.has-focus) {
   --background: #{$background-color-step-150};
   --border-color: var(--highlight-color);
 }

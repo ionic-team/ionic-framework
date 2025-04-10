@@ -21,15 +21,15 @@
  * only apply to floating or stacked labels.
  */
 :host(.select-label-placement-floating.select-expanded) .label-text-wrapper,
-:host(.select-label-placement-floating.ion-focused) .label-text-wrapper,
+:host(.select-label-placement-floating.has-focus) .label-text-wrapper,
 :host(.select-label-placement-stacked.select-expanded) .label-text-wrapper,
-:host(.select-label-placement-stacked.ion-focused) .label-text-wrapper {
+:host(.select-label-placement-stacked.has-focus) .label-text-wrapper {
   color: var(--highlight-color);
 }
 
-:host(.ion-focused.select-label-placement-floating.ion-valid) .label-text-wrapper,
+:host(.has-focus.select-label-placement-floating.ion-valid) .label-text-wrapper,
 :host(.select-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
-:host(.ion-focused.select-label-placement-stacked.ion-valid) .label-text-wrapper,
+:host(.has-focus.select-label-placement-stacked.ion-valid) .label-text-wrapper,
 :host(.select-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
   color: var(--highlight-color);
 }
@@ -53,7 +53,7 @@
 }
 
 :host(.select-expanded) .select-highlight,
-:host(.ion-focused) .select-highlight {
+:host(.has-focus) .select-highlight {
   transform: scale(1);
 }
 
@@ -104,9 +104,9 @@
  * color if there is a validation state.
  */
 :host(.select-expanded) .select-wrapper .select-icon,
-:host(.ion-focused.ion-valid) .select-wrapper .select-icon,
+:host(.has-focus.ion-valid) .select-wrapper .select-icon,
 :host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
-:host(.ion-focused) .select-wrapper .select-icon {
+:host(.has-focus) .select-wrapper .select-icon {
   color: var(--highlight-color);
 }
 

@@ -324,3 +324,49 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * focus has a consistent behavior across modes
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe.only(title('select: focus'), () => {
+    test('should have the focus class when tabbing', async ({ page, pageUtils }) => {
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert">
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+
+      await pageUtils.pressKeys('Tab');
+      await expect(select).toHaveClass(/has-focus/);
+    });
+
+    test('should have the focus class after clicking to close', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select aria-label="Fruit" interface="alert">
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const select = page.locator('ion-select');
+      const alert = page.locator('ion-alert');
+      const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      await confirmButton.click();
+
+      await expect(select).toHaveClass(/has-focus/);
+    });
+  });
+});
