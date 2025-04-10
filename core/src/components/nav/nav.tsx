@@ -820,7 +820,7 @@ export class Nav implements NavOutlet {
     const finalNumViews = this.views.length + (insertViews?.length ?? 0) - (removeCount ?? 0);
     assert(finalNumViews >= 0, 'final balance can not be negative');
     if (finalNumViews === 0) {
-      console.warn(
+      printIonWarning(
         `You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
         this,
         this.el

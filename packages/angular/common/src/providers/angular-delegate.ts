@@ -9,6 +9,7 @@ import {
   InjectionToken,
   ComponentRef,
 } from '@angular/core';
+import { printIonError } from '@ionic/core';
 import {
   FrameworkDelegate,
   LIFECYCLE_DID_ENTER,
@@ -164,8 +165,8 @@ export const attachView = (
      * which will cause collisions.
      */
     if (elementReferenceKey && instance[elementReferenceKey] !== undefined) {
-      console.error(
-        `[Ionic Error]: ${elementReferenceKey} is a reserved property when using ${container.tagName.toLowerCase()}. Rename or remove the "${elementReferenceKey}" property from ${
+      printIonError(
+        `${elementReferenceKey} is a reserved property when using ${container.tagName.toLowerCase()}. Rename or remove the "${elementReferenceKey}" property from ${
           component.name
         }.`
       );

@@ -1,6 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 import { attachComponent } from '@utils/framework-delegate';
+import { printIonError } from '@utils/logging';
 
 import type { ComponentRef, FrameworkDelegate } from '../../interface';
 
@@ -33,7 +34,7 @@ export class Tab implements ComponentInterface {
   async componentWillLoad() {
     if (Build.isDev) {
       if (this.component !== undefined && this.el.childElementCount > 0) {
-        console.error(
+        printIonError(
           'You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
             `- Remove the component attribute in: <ion-tab component="${this.component}">` +
             ` or` +
@@ -66,7 +67,7 @@ export class Tab implements ComponentInterface {
       try {
         return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
       } catch (e) {
-        console.error(e);
+        printIonError('[ion-tab]', e);
       }
     }
     return Promise.resolve(undefined);

@@ -4,7 +4,7 @@ import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { Gesture } from '@utils/gesture';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
-import { printIonWarning } from '@utils/logging';
+import { printIonError, printIonWarning } from '@utils/logging';
 import {
   GESTURE,
   createDelegateController,
@@ -549,7 +549,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           return false;
         }
       } catch (e) {
-        console.error(e);
+        printIonError('Toast button handler error', e);
       }
     }
     return true;
