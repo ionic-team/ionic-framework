@@ -88,12 +88,14 @@
 
 /**
  * When the select has no fill, is
- * in an item, and is expanded, then
- * the icon should be the same color
+ * in an item, and is expanded or focused,
+ * then the icon should be the same color
  * as the text color.
  */
 :host(.in-item.select-expanded) .select-wrapper .select-icon,
-:host(.in-item.select-expanded.ion-touched.ion-invalid) .select-wrapper .select-icon {
+:host(.in-item.select-expanded.ion-touched.ion-invalid) .select-wrapper .select-icon,
+:host(.in-item.has-focus) .select-wrapper .select-icon,
+:host(.in-item.has-focus.ion-touched.ion-invalid) .select-wrapper .select-icon {
   color: #{$select-md-icon-color};
 }
 

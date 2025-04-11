@@ -246,11 +246,13 @@
 
 /**
  * When the select has a fill, is
- * in an item, and is expanded, then
- * the icon should take on the
+ * in an item, and is expanded or focused,
+ * then the icon should take on the
  * highlight color.
  */
 :host(.in-item.select-expanded.select-fill-outline) .select-wrapper .select-icon,
-:host(.in-item.select-expanded.ion-touched.ion-invalid.select-fill-outline) .select-wrapper .select-icon {
+:host(.in-item.select-expanded.ion-touched.ion-invalid.select-fill-outline) .select-wrapper .select-icon,
+:host(.in-item.has-focus.select-fill-outline) .select-wrapper .select-icon,
+:host(.in-item.has-focus.ion-touched.ion-invalid.select-fill-outline) .select-wrapper .select-icon {
   color: var(--highlight-color);
 }
