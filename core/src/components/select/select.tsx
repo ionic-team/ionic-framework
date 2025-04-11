@@ -1163,6 +1163,8 @@ export class Select implements ComponentInterface {
           'label-floating': labelShouldFloat,
           'has-placeholder': placeholder !== undefined,
           'has-focus': hasFocus,
+          // TODO(FW-6451): Remove `ion-focusable` class in favor of `has-focus`.
+          'ion-focusable': true,
           [`select-${rtl}`]: true,
           [`select-fill-${fill}`]: fill !== undefined,
           [`select-justify-${justify}`]: justifyEnabled,
