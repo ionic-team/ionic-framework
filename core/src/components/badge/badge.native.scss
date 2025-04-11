@@ -12,6 +12,11 @@
   font-family: $font-family-base;
 }
 
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
 // TODO(ROU-10747): Review size styles when sizes are defined for native themes.
 :host([vertical]:not(.in-button):not(.in-tab-button)),
 :host(:empty) {

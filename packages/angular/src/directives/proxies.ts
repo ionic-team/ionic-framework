@@ -261,14 +261,14 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
 
 
 @ProxyCmp({
-  inputs: ['color', 'mode', 'shape', 'size', 'theme', 'vertical']
+  inputs: ['color', 'hue', 'mode', 'shape', 'size', 'theme', 'vertical']
 })
 @Component({
   selector: 'ion-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'shape', 'size', 'theme', 'vertical'],
+  inputs: ['color', 'hue', 'mode', 'shape', 'size', 'theme', 'vertical'],
 })
 export class IonBadge {
   protected el: HTMLIonBadgeElement;
@@ -550,14 +550,14 @@ setting the `checked` property.
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'mode', 'outline', 'shape', 'size', 'theme']
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme']
 })
 @Component({
   selector: 'ion-chip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'mode', 'outline', 'shape', 'size', 'theme'],
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme'],
 })
 export class IonChip {
   protected el: HTMLIonChipElement;
@@ -1131,14 +1131,14 @@ export declare interface IonItemGroup extends Components.IonItemGroup {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'shape', 'target', 'theme', 'type']
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'hue', 'mode', 'rel', 'shape', 'target', 'theme', 'type']
 })
 @Component({
   selector: 'ion-item-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'shape', 'target', 'theme', 'type'],
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'hue', 'mode', 'rel', 'shape', 'target', 'theme', 'type'],
 })
 export class IonItemOption {
   protected el: HTMLIonItemOptionElement;

@@ -29,6 +29,14 @@ export class Badge implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
+   * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for
+   * a badge with muted, subtle colors.
+   *
+   * Only applies to the `ionic` theme.
+   */
+  @Prop() hue?: 'bold' | 'subtle';
+
+  /**
    * Set to `"rectangular"` for non-rounded corners.
    * Set to `"soft"` for slightly rounded corners.
    * Set to `"round"` for fully rounded corners.
@@ -87,7 +95,33 @@ export class Badge implements ComponentInterface {
     return size;
   }
 
+  // The 'subtle' hue is the default for badges containing text or icons
+  // The 'bold' hue is used when inside of an avatar, button, tab button,
+  // or when the badge is empty (no text or icon).
+  private getHue(): string | undefined {
+    const { hue } = this;
+
+    if (hue !== undefined) {
+      return hue;
+    }
+
+    const inAvatar = hostContext('ion-avatar', this.el);
+    const inButton = hostContext('ion-button', this.el);
+    const inTabButton = hostContext('ion-tab-button', this.el);
+    const hasContent = this.el.textContent?.trim() !== '' || this.el.querySelector('ion-icon') !== null;
+
+    // Return 'bold' if the badge is inside an avatar, button, tab button,
+    // or has no content
+    if (inAvatar || inButton || inTabButton || !hasContent) {
+      return 'bold';
+    }
+
+    // Return 'subtle' if the badge contains visible text or an icon
+    return 'subtle';
+  }
+
   render() {
+    const hue = this.getHue();
     const shape = this.getShape();
     const size = this.getSize();
     const theme = getIonTheme(this);
@@ -96,6 +130,7 @@ export class Badge implements ComponentInterface {
       <Host
         class={createColorClasses(this.color, {
           [theme]: true,
+          [`badge-${hue}`]: hue !== undefined,
           [`badge-${shape}`]: shape !== undefined,
           [`badge-${size}`]: size !== undefined,
           [`badge-vertical-${this.vertical}`]: this.vertical !== undefined,
