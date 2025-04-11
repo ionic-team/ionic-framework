@@ -41,6 +41,9 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
  * @part icon - The select icon container.
  * @part container - The container for the selected text or placeholder.
  * @part label - The label text describing the select.
+ * @part supporting-text - Supporting text displayed beneath the select.
+ * @part helper-text - Supporting text displayed beneath the select when the select is valid.
+ * @part error-text - Supporting text displayed beneath the select when the select is invalid and touched.
  */
 @Component({
   tag: 'ion-select',
@@ -52,6 +55,8 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 })
 export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private overlay?: OverlaySelect;
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
@@ -97,6 +102,16 @@ export class Select implements ComponentInterface {
    * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
+
+  /**
+   * Text that is placed under the select and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * Text that is placed under the select and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
 
   /**
    * The interface the select should use: `action-sheet`, `popover`, `alert`, or `modal`.
@@ -195,6 +210,13 @@ export class Select implements ComponentInterface {
    * The value of the select.
    */
   @Prop({ mutable: true }) value?: any | null;
+
+  /**
+   * If true, screen readers will announce it as a required field. This property
+   * works only for accessibility purposes, it will not prevent the form from
+   * submitting if the value is invalid.
+   */
+  @Prop() required = false;
 
   /**
    * Emitted when the value has changed.
@@ -310,19 +332,10 @@ export class Select implements ComponentInterface {
     }
     this.isExpanded = true;
     const overlay = (this.overlay = await this.createOverlay(event));
-    overlay.onDidDismiss().then(() => {
-      this.overlay = undefined;
-      this.isExpanded = false;
-      this.ionDismiss.emit();
-      this.setFocus();
-    });
 
-    await overlay.present();
-
-    // focus selected option for popovers and modals
-    if (this.interface === 'popover' || this.interface === 'modal') {
+    // Add logic to scroll selected item into view before presenting
+    const scrollSelectedIntoView = () => {
       const indexOfSelected = this.childOpts.findIndex((o) => o.value === this.value);
-
       if (indexOfSelected > -1) {
         const selectedItem = overlay.querySelector<HTMLElement>(
           `.select-interface-option:nth-child(${indexOfSelected + 1})`
@@ -345,6 +358,7 @@ export class Select implements ComponentInterface {
             | HTMLIonCheckboxElement
             | null;
           if (interactiveEl) {
+            selectedItem.scrollIntoView({ block: 'nearest' });
             // Needs to be called before `focusVisibleElement` to prevent issue with focus event bubbling
             // and removing `ion-focused` style
             interactiveEl.setFocus();
@@ -372,8 +386,40 @@ export class Select implements ComponentInterface {
           focusVisibleElement(firstEnabledOption.closest('ion-item')!);
         }
       }
+    };
+
+    // For modals and popovers, we can scroll before they're visible
+    if (this.interface === 'modal') {
+      overlay.addEventListener('ionModalWillPresent', scrollSelectedIntoView, { once: true });
+    } else if (this.interface === 'popover') {
+      overlay.addEventListener('ionPopoverWillPresent', scrollSelectedIntoView, { once: true });
+    } else {
+      /**
+       * For alerts and action sheets, we need to wait a frame after willPresent
+       * because these overlays don't have their content in the DOM immediately
+       * when willPresent fires. By waiting a frame, we ensure the content is
+       * rendered and can be properly scrolled into view.
+       */
+      const scrollAfterRender = () => {
+        requestAnimationFrame(() => {
+          scrollSelectedIntoView();
+        });
+      };
+      if (this.interface === 'alert') {
+        overlay.addEventListener('ionAlertWillPresent', scrollAfterRender, { once: true });
+      } else if (this.interface === 'action-sheet') {
+        overlay.addEventListener('ionActionSheetWillPresent', scrollAfterRender, { once: true });
+      }
     }
 
+    overlay.onDidDismiss().then(() => {
+      this.overlay = undefined;
+      this.isExpanded = false;
+      this.ionDismiss.emit();
+      this.setFocus();
+    });
+
+    await overlay.present();
     return overlay;
   }
 
@@ -974,7 +1020,7 @@ export class Select implements ComponentInterface {
   }
 
   private renderListbox() {
-    const { disabled, inputId, isExpanded } = this;
+    const { disabled, inputId, isExpanded, required } = this;
 
     return (
       <button
@@ -983,11 +1029,63 @@ export class Select implements ComponentInterface {
         aria-label={this.ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={`${isExpanded}`}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-required={`${required}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={(focusEl) => (this.focusEl = focusEl)}
       ></button>
     );
+  }
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    return [
+      <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
+        {helperText}
+      </div>,
+      <div id={errorTextId} class="error-text" part="supporting-text error-text">
+        {errorText}
+      </div>,
+    ];
+  }
+
+  /**
+   * Responsible for rendering helper text, and error text. This element
+   * should only be rendered if hint text is set.
+   */
+  private renderBottomContent() {
+    const { helperText, errorText } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return <div class="select-bottom">{this.renderHintText()}</div>;
   }
 
   render() {
@@ -1069,6 +1167,7 @@ export class Select implements ComponentInterface {
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>
+        {this.renderBottomContent()}
       </Host>
     );
   }

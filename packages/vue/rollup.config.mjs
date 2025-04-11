@@ -1,4 +1,6 @@
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+
 const external = ['vue', 'vue-router'];
 
 export default {
@@ -12,6 +14,13 @@ export default {
       sourcemap: true
     },
   ],
-  plugins: [typescript()],
-  external: id => external.includes(id) || id.startsWith('@ionic/core') || id.startsWith('ionicons')
+  plugins: [
+    typescript(),
+    resolve()
+  ],
+  external: (
+    id => external.includes(id) ||
+    id.startsWith('@ionic/core') ||
+    id.startsWith('ionicons')
+  )
 };

@@ -4,7 +4,7 @@ import type { ModalAnimationOptions } from '../modal-interface';
 import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
-  const { currentBreakpoint, backdropBreakpoint } = opts;
+  const { currentBreakpoint, backdropBreakpoint, expandToScroll } = opts;
 
   /**
    * If the backdropBreakpoint is undefined, then the backdrop
@@ -29,7 +29,17 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
     { offset: 1, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)` },
   ]);
 
-  return { wrapperAnimation, backdropAnimation };
+  /**
+   * This allows the content to be scrollable at any breakpoint.
+   */
+  const contentAnimation = !expandToScroll
+    ? createAnimation('contentAnimation').keyframes([
+        { offset: 0, opacity: 1, maxHeight: `${(1 - currentBreakpoint!) * 100}%` },
+        { offset: 1, opacity: 1, maxHeight: `${currentBreakpoint! * 100}%` },
+      ])
+    : undefined;
+
+  return { wrapperAnimation, backdropAnimation, contentAnimation };
 };
 
 export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {

@@ -21,6 +21,9 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
  * @part track - The background track of the toggle.
  * @part handle - The toggle handle, or knob, used to change the checked state.
  * @part label - The label text describing the toggle.
+ * @part supporting-text - Supporting text displayed beneath the toggle label.
+ * @part helper-text - Supporting text displayed beneath the toggle label when the toggle is valid.
+ * @part error-text - Supporting text displayed beneath the toggle label when the toggle is invalid and touched.
  */
 @Component({
   tag: 'ion-toggle',
@@ -32,6 +35,9 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
 })
 export class Toggle implements ComponentInterface {
   private inputId = `ion-tg-${toggleIds++}`;
+  private inputLabelId = `${this.inputId}-lbl`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
   private lastDrag = 0;
@@ -64,6 +70,16 @@ export class Toggle implements ComponentInterface {
    * If `true`, the user cannot interact with the toggle.
    */
   @Prop() disabled = false;
+
+  /**
+   * Text that is placed under the toggle label and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * Text that is placed under the toggle label and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
 
   /**
    * The value of the toggle does not mean if it's checked or not, use the `checked`
@@ -109,6 +125,13 @@ export class Toggle implements ComponentInterface {
   @Prop() alignment?: 'start' | 'center';
 
   /**
+   * If true, screen readers will announce it as a required field. This property
+   * works only for accessibility purposes, it will not prevent the form from
+   * submitting if the value is invalid.
+   */
+  @Prop() required = false;
+
+  /**
    * Emitted when the user switches the toggle on or off.
    *
    * This event will not emit when programmatically setting the `checked` property.
@@ -138,6 +161,7 @@ export class Toggle implements ComponentInterface {
     const isNowChecked = !checked;
     this.checked = isNowChecked;
 
+    this.setFocus();
     this.ionChange.emit({
       checked: isNowChecked,
       value,
@@ -223,6 +247,15 @@ export class Toggle implements ComponentInterface {
     }
   }
 
+  private onKeyDown = (ev: KeyboardEvent) => {
+    if (ev.key === ' ') {
+      ev.preventDefault();
+      if (!this.disabled) {
+        this.toggleChecked();
+      }
+    }
+  };
+
   private onClick = (ev: MouseEvent) => {
     if (this.disabled) {
       return;
@@ -289,8 +322,66 @@ export class Toggle implements ComponentInterface {
     return this.el.textContent !== '';
   }
 
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Responsible for rendering helper text and error text.
+   * This element should only be rendered if hint text is set.
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return (
+      <div class="toggle-bottom">
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
+          {helperText}
+        </div>
+        <div id={errorTextId} class="error-text" part="supporting-text error-text">
+          {errorText}
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, alignment } = this;
+    const {
+      activated,
+      alignment,
+      checked,
+      color,
+      disabled,
+      el,
+      errorTextId,
+      hasLabel,
+      inheritedAttributes,
+      inputId,
+      inputLabelId,
+      justify,
+      labelPlacement,
+      name,
+      required,
+    } = this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
@@ -299,7 +390,16 @@ export class Toggle implements ComponentInterface {
 
     return (
       <Host
+        role="switch"
+        aria-checked={`${checked}`}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === errorTextId}
         onClick={this.onClick}
+        aria-labelledby={hasLabel ? inputLabelId : null}
+        aria-label={inheritedAttributes['aria-label'] || null}
+        aria-disabled={disabled ? 'true' : null}
+        tabindex={disabled ? undefined : 0}
+        onKeyDown={this.onKeyDown}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -312,7 +412,7 @@ export class Toggle implements ComponentInterface {
           [`toggle-${rtl}`]: true,
         })}
       >
-        <label class="toggle-wrapper">
+        <label class="toggle-wrapper" htmlFor={inputId}>
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
@@ -327,16 +427,19 @@ export class Toggle implements ComponentInterface {
             onFocus={() => this.onFocus()}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
-            {...this.inheritedAttributes}
+            required={required}
+            {...inheritedAttributes}
           />
           <div
             class={{
               'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !this.hasLabel,
+              'label-text-wrapper-hidden': !hasLabel,
             }}
             part="label"
+            id={inputLabelId}
           >
             <slot></slot>
+            {this.renderHintText()}
           </div>
           <div class="native-wrapper">{this.renderToggleControl()}</div>
         </label>

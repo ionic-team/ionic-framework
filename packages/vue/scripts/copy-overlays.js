@@ -37,7 +37,7 @@ function generateOverlays() {
   let componentImports = [];
   let componentDefinitions = [];
 
-  components.forEach(component => {
+  components.sort((a, b) => a.tag.localeCompare(b.tag)).forEach(component => {
     const docsBlock = getDocsBlock(component.tag);
     const props = getPropsFromDocsBlock(docsBlock);
 
@@ -57,13 +57,12 @@ export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${comp
  * Changes made to this file will be overwritten on build.
  */
 
-import {
+import type {
   JSX,
 } from '@ionic/core/components';
-
 ${componentImports.join('\n')}
 
-import { defineOverlayContainer } from '../vue-component-lib/overlays';
+import { defineOverlayContainer } from '../utils/overlays';
 ${componentDefinitions.join('')}
 `;
 

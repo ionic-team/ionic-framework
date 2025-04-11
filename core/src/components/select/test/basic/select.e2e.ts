@@ -8,7 +8,7 @@ import type { E2ELocator } from '@utils/test/playwright';
  * does not. The overlay rendering is already tested in the respective
  * test files.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
   test.describe(title('select: basic'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/select/test/basic', config);
@@ -24,6 +24,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await expect(page.locator('ion-alert')).toBeVisible();
       });
+
+      test('it should scroll to selected option when opened', async ({ page }) => {
+        const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+        await page.click('#alert-select-scroll-to-selected');
+        await ionAlertDidPresent.next();
+
+        const alert = page.locator('ion-alert');
+        await expect(alert).toHaveScreenshot(screenshot(`select-basic-alert-scroll-to-selected`));
+      });
     });
 
     test.describe('select: action sheet', () => {
@@ -35,6 +45,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         await ionActionSheetDidPresent.next();
 
         await expect(page.locator('ion-action-sheet')).toBeVisible();
+      });
+
+      test('it should scroll to selected option when opened', async ({ page }) => {
+        const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+        await page.click('#action-sheet-select-scroll-to-selected');
+        await ionActionSheetDidPresent.next();
+
+        const actionSheet = page.locator('ion-action-sheet');
+        await expect(actionSheet).toHaveScreenshot(screenshot(`select-basic-action-sheet-scroll-to-selected`));
       });
     });
 
@@ -57,6 +77,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await expect(popover).toBeVisible();
       });
+
+      test('it should scroll to selected option when opened', async ({ page }) => {
+        const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+
+        await page.click('#popover-select-scroll-to-selected');
+        await ionPopoverDidPresent.next();
+
+        const popover = page.locator('ion-popover');
+        await expect(popover).toHaveScreenshot(screenshot(`select-basic-popover-scroll-to-selected`));
+      });
     });
 
     test.describe('select: modal', () => {
@@ -74,6 +104,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         await expect(modalOption1).toBeFocused();
 
         await expect(modal).toBeVisible();
+      });
+
+      test('it should scroll to selected option when opened', async ({ page }) => {
+        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+        await page.click('#modal-select-scroll-to-selected');
+        await ionModalDidPresent.next();
+
+        const modal = page.locator('ion-modal');
+        await expect(modal).toHaveScreenshot(screenshot(`select-basic-modal-scroll-to-selected`));
       });
     });
   });

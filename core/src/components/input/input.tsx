@@ -338,10 +338,26 @@ export class Input implements ComponentInterface {
     }
   }
 
+  /**
+   * dir is a globally enumerated attribute.
+   * As a result, creating these as properties
+   * can have unintended side effects. Instead, we
+   * listen for attribute changes and inherit them
+   * to the inner `<input>` element.
+   */
+  @Watch('dir')
+  onDirChanged(newValue: string) {
+    this.inheritedAttributes = {
+      ...this.inheritedAttributes,
+      dir: newValue,
+    };
+    forceUpdate(this);
+  }
+
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
+      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type', 'dir']),
     };
   }
 

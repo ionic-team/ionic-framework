@@ -43,7 +43,7 @@ export const IonTabBar = defineComponent({
   data() {
     return {
       tabState: {
-        activeTab: undefined,
+        activeTab: undefined as string | undefined,
         tabs: {},
         /**
          * Passing this prop to each tab button
@@ -52,7 +52,7 @@ export const IonTabBar = defineComponent({
          */
         hasRouterOutlet: false,
       },
-      tabVnodes: [],
+      tabVnodes: [] as VNode[],
       /* eslint-disable @typescript-eslint/no-empty-function */
       _tabsWillChange: { type: Function, default: () => {} },
       _tabsDidChange: { type: Function, default: () => {} },

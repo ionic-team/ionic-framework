@@ -17,6 +17,9 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
  * @part container - The container for the checkbox mark.
  * @part label - The label text describing the checkbox.
  * @part mark - The checkmark used to indicate the checked state.
+ * @part supporting-text - Supporting text displayed beneath the checkbox label.
+ * @part helper-text - Supporting text displayed beneath the checkbox label when the checkbox is valid.
+ * @part error-text - Supporting text displayed beneath the checkbox label when the checkbox is invalid and touched.
  */
 @Component({
   tag: 'ion-checkbox',
@@ -28,6 +31,9 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
 })
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
+  private inputLabelId = `${this.inputId}-lbl`;
+  private helperTextId = `${this.inputId}-helper-text`;
+  private errorTextId = `${this.inputId}-error-text`;
   private focusEl?: HTMLElement;
   private inheritedAttributes: Attributes = {};
 
@@ -59,6 +65,16 @@ export class Checkbox implements ComponentInterface {
    * If `true`, the user cannot interact with the checkbox.
    */
   @Prop() disabled = false;
+
+  /**
+   * Text that is placed under the checkbox label and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * Text that is placed under the checkbox label and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
 
   /**
    * The value of the checkbox does not mean if it's checked or not, use the `checked`
@@ -97,6 +113,13 @@ export class Checkbox implements ComponentInterface {
    * Setting this property will change the checkbox `display` to `block`.
    */
   @Prop() alignment?: 'start' | 'center';
+
+  /**
+   * If true, screen readers will announce it as a required field. This property
+   * works only for accessibility purposes, it will not prevent the form from
+   * submitting if the value is invalid.
+   */
+  @Prop() required = false;
 
   /**
    * Emitted when the checked property has changed as a result of a user action such as a click.
@@ -159,6 +182,15 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private onKeyDown = (ev: KeyboardEvent) => {
+    if (ev.key === ' ') {
+      ev.preventDefault();
+      if (!this.disabled) {
+        this.toggleChecked(ev);
+      }
+    }
+  };
+
   private onClick = (ev: MouseEvent) => {
     if (this.disabled) {
       return;
@@ -166,6 +198,48 @@ export class Checkbox implements ComponentInterface {
 
     this.toggleChecked(ev);
   };
+
+  private getHintTextID(): string | undefined {
+    const { el, helperText, errorText, helperTextId, errorTextId } = this;
+
+    if (el.classList.contains('ion-touched') && el.classList.contains('ion-invalid') && errorText) {
+      return errorTextId;
+    }
+
+    if (helperText) {
+      return helperTextId;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Responsible for rendering helper text and error text.
+   * This element should only be rendered if hint text is set.
+   */
+  private renderHintText() {
+    const { helperText, errorText, helperTextId, errorTextId } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    if (!hasHintText) {
+      return;
+    }
+
+    return (
+      <div class="checkbox-bottom">
+        <div id={helperTextId} class="helper-text" part="supporting-text helper-text">
+          {helperText}
+        </div>
+        <div id={errorTextId} class="error-text" part="supporting-text error-text">
+          {errorText}
+        </div>
+      </div>
+    );
+  }
 
   render() {
     const {
@@ -182,15 +256,27 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
       alignment,
+      required,
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
+    const hasLabelContent = el.textContent !== '';
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
+    // The host element must have a checkbox role to ensure proper VoiceOver
+    // support in Safari for accessibility.
     return (
       <Host
+        role="checkbox"
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
+        aria-describedby={this.getHintTextID()}
+        aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-labelledby={hasLabelContent ? this.inputLabelId : null}
+        aria-label={inheritedAttributes['aria-label'] || null}
+        aria-disabled={disabled ? 'true' : null}
+        tabindex={disabled ? undefined : 0}
+        onKeyDown={this.onKeyDown}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -204,7 +290,7 @@ export class Checkbox implements ComponentInterface {
         })}
         onClick={this.onClick}
       >
-        <label class="checkbox-wrapper">
+        <label class="checkbox-wrapper" htmlFor={inputId}>
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
@@ -218,16 +304,19 @@ export class Checkbox implements ComponentInterface {
             onFocus={() => this.onFocus()}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
+            required={required}
             {...inheritedAttributes}
           />
           <div
             class={{
               'label-text-wrapper': true,
-              'label-text-wrapper-hidden': el.textContent === '',
+              'label-text-wrapper-hidden': !hasLabelContent,
             }}
             part="label"
+            id={this.inputLabelId}
           >
             <slot></slot>
+            {this.renderHintText()}
           </div>
           <div class="native-wrapper">
             <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">

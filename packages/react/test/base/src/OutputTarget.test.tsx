@@ -1,9 +1,9 @@
 import { IonButton } from '@ionic/react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
+import { vi, test, expect } from 'vitest';
 
 test('should support onDoubleClick bindings', () => {
-  const mockFn = jest.fn();
+  const mockFn = vi.fn();
 
   render(<IonButton onDoubleClick={mockFn}>Click me</IonButton>);
 

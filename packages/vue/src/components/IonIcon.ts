@@ -1,23 +1,12 @@
+import type { JSX } from "@ionic/core/components";
 import { defineCustomElement } from "ionicons/components/ion-icon.js";
+import type { PropType } from "vue";
 import { h, defineComponent } from "vue";
 
 import { getConfig } from "../utils";
 
-export const IonIcon = /*@__PURE__*/ defineComponent({
-  name: "IonIcon",
-  props: {
-    color: String,
-    flipRtl: Boolean,
-    icon: String,
-    ios: String,
-    lazy: String,
-    md: String,
-    mode: String,
-    name: String,
-    size: String,
-    src: String,
-  },
-  setup(props, { slots }) {
+export const IonIcon = /*@__PURE__*/ defineComponent<JSX.IonIcon>(
+  (props, { slots }) => {
     defineCustomElement();
     return () => {
       const { icon, ios, md, mode } = props;
@@ -47,4 +36,19 @@ export const IonIcon = /*@__PURE__*/ defineComponent({
       );
     };
   },
-});
+  {
+    name: "IonIcon",
+    props: {
+      color: { type: String as PropType<string> },
+      flipRtl: { type: Boolean as PropType<boolean> },
+      icon: { type: String as PropType<string> },
+      ios: { type: String as PropType<string> },
+      lazy: { type: Boolean as PropType<boolean> },
+      md: { type: String as PropType<string> },
+      mode: { type: String as PropType<string> },
+      name: { type: String as PropType<string> },
+      size: { type: String as PropType<string> },
+      src: { type: String as PropType<string> },
+    },
+  }
+);
