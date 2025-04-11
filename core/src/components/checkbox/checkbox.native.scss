@@ -38,10 +38,6 @@
   @include margin(null, null, $checkbox-item-label-margin-bottom, null);
 }
 
-input {
-  @include visually-hidden();
-}
-
 .checkbox-icon {
   @include border-radius(var(--border-radius));
 
