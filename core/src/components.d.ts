@@ -1697,7 +1697,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for an option with muted, subtle colors.
+          * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for an option with muted, subtle colors.  Only applies to the `ionic` theme.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -7193,7 +7193,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for an option with muted, subtle colors.
+          * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for an option with muted, subtle colors.  Only applies to the `ionic` theme.
          */
         "hue"?: 'bold' | 'subtle';
         /**
