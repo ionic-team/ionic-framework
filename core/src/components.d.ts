@@ -1705,6 +1705,10 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
+          * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for an option with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -7204,6 +7208,10 @@ declare namespace LocalJSX {
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href"?: string | undefined;
+        /**
+          * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for an option with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
         /**
           * The mode determines the platform behaviors of the component.
          */
