@@ -7,11 +7,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <link href="../../../../css/ionic.bundle.css" rel="stylesheet" />
-    <link href="../../../../scripts/testing/styles.css" rel="stylesheet" />
-    <script src="../../../../scripts/testing/scripts.js"></script>
-    <script nomodule src="../../../../dist/ionic/ionic.js"></script>
-    <script type="module" src="../../../../dist/ionic/ionic.esm.js"></script>
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
     <script>
       window.Ionic = {
         config: {
@@ -24,27 +24,20 @@
     <style>
       .container {
         display: flex;
-
         justify-content: center;
-
         flex-wrap: wrap;
-
         border-bottom: 1px solid #ddd;
         padding: 20px 0;
       }
 
       .header {
         width: 100%;
-
         margin-top: 0;
       }
 
       .color-block {
         display: flex;
         align-items: center;
-
-        background: var(--ion-color-contrast);
-
         margin: 4px;
       }
 
@@ -53,7 +46,7 @@
       }
 
       .ion-color {
-        color: var(--ion-color-base);
+        color: var(--ion-color-foreground);
       }
 
       .ion-color-background {
@@ -71,19 +64,23 @@
         color: var(--ion-color-contrast);
       }
 
-      .ion-color-background-08 {
-        background: rgb(var(--ion-color-base-rgb), 0.08);
-        color: var(--ion-color-base);
+      .ion-color-subtle {
+        color: var(--ion-color-subtle-foreground);
       }
 
-      .ion-color-background-12 {
-        background: rgb(var(--ion-color-base-rgb), 0.12);
-        color: var(--ion-color-base);
+      .ion-color-subtle-background {
+        background: var(--ion-color-subtle-base);
+        color: var(--ion-color-subtle-contrast);
       }
 
-      .ion-color-background-16 {
-        background: rgb(var(--ion-color-base-rgb), 0.16);
-        color: var(--ion-color-base);
+      .ion-color-subtle-background-shade {
+        background: var(--ion-color-subtle-shade);
+        color: var(--ion-color-subtle-contrast);
+      }
+
+      .ion-color-subtle-background-tint {
+        background: var(--ion-color-subtle-tint);
+        color: var(--ion-color-subtle-contrast);
       }
     </style>
   </head>
@@ -99,156 +96,112 @@
       <ion-content id="content" class="ion-text-center" no-bounce>
         <div class="container">
           <h3 class="header">Text</h3>
-          <div class="color-block ion-color-primary">
-            <div class="ion-color">Primary</div>
-          </div>
-          <div class="color-block ion-color-success">
-            <div class="ion-color">Success</div>
-          </div>
-          <div class="color-block ion-color-warning">
-            <div class="ion-color">Warning</div>
-          </div>
-          <div class="color-block ion-color-danger">
-            <div class="ion-color">Danger</div>
-          </div>
-          <div class="color-block ion-color-light">
-            <div class="ion-color">Light</div>
-          </div>
-          <div class="color-block ion-color-neutral">
-            <div class="ion-color">Neutral</div>
-          </div>
+          <div class="color-block ion-color-primary"><div class="ion-color">Primary</div></div>
+          <div class="color-block ion-color-secondary"><div class="ion-color">Secondary</div></div>
+          <div class="color-block ion-color-tertiary"><div class="ion-color">Tertiary</div></div>
+          <div class="color-block ion-color-success"><div class="ion-color">Success</div></div>
+          <div class="color-block ion-color-warning"><div class="ion-color">Warning</div></div>
+          <div class="color-block ion-color-danger"><div class="ion-color">Danger</div></div>
+          <div class="color-block ion-color-light"><div class="ion-color">Light</div></div>
+          <div class="color-block ion-color-medium"><div class="ion-color">Medium</div></div>
+          <div class="color-block ion-color-dark"><div class="ion-color">Dark</div></div>
         </div>
 
         <div class="container">
           <h3 class="header">Background</h3>
-          <div class="color-block ion-color-primary">
-            <div class="ion-color-background">Primary</div>
-          </div>
-          <div class="color-block ion-color-success">
-            <div class="ion-color-background">Success</div>
-          </div>
-          <div class="color-block ion-color-warning">
-            <div class="ion-color-background">Warning</div>
-          </div>
-          <div class="color-block ion-color-danger">
-            <div class="ion-color-background">Danger</div>
-          </div>
-          <div class="color-block ion-color-light">
-            <div class="ion-color-background">Light</div>
-          </div>
-          <div class="color-block ion-color-neutral">
-            <div class="ion-color-background">Neutral</div>
-          </div>
+          <div class="color-block ion-color-primary"><div class="ion-color-background">Primary</div></div>
+          <div class="color-block ion-color-secondary"><div class="ion-color-background">Secondary</div></div>
+          <div class="color-block ion-color-tertiary"><div class="ion-color-background">Tertiary</div></div>
+          <div class="color-block ion-color-success"><div class="ion-color-background">Success</div></div>
+          <div class="color-block ion-color-warning"><div class="ion-color-background">Warning</div></div>
+          <div class="color-block ion-color-danger"><div class="ion-color-background">Danger</div></div>
+          <div class="color-block ion-color-light"><div class="ion-color-background">Light</div></div>
+          <div class="color-block ion-color-medium"><div class="ion-color-background">Medium</div></div>
+          <div class="color-block ion-color-dark"><div class="ion-color-background">Dark</div></div>
         </div>
 
         <div class="container">
           <h3 class="header">Background Shade</h3>
-          <div class="color-block ion-color-primary">
-            <div class="ion-color-background-shade">Primary</div>
-          </div>
-          <div class="color-block ion-color-success">
-            <div class="ion-color-background-shade">Success</div>
-          </div>
-          <div class="color-block ion-color-warning">
-            <div class="ion-color-background-shade">Warning</div>
-          </div>
-          <div class="color-block ion-color-danger">
-            <div class="ion-color-background-shade">Danger</div>
-          </div>
-          <div class="color-block ion-color-light">
-            <div class="ion-color-background-shade">Light</div>
-          </div>
-          <div class="color-block ion-color-neutral">
-            <div class="ion-color-background-shade">Neutral</div>
-          </div>
+          <div class="color-block ion-color-primary"><div class="ion-color-background-shade">Primary</div></div>
+          <div class="color-block ion-color-secondary"><div class="ion-color-background-shade">Secondary</div></div>
+          <div class="color-block ion-color-tertiary"><div class="ion-color-background-shade">Tertiary</div></div>
+          <div class="color-block ion-color-success"><div class="ion-color-background-shade">Success</div></div>
+          <div class="color-block ion-color-warning"><div class="ion-color-background-shade">Warning</div></div>
+          <div class="color-block ion-color-danger"><div class="ion-color-background-shade">Danger</div></div>
+          <div class="color-block ion-color-light"><div class="ion-color-background-shade">Light</div></div>
+          <div class="color-block ion-color-medium"><div class="ion-color-background-shade">Medium</div></div>
+          <div class="color-block ion-color-dark"><div class="ion-color-background-shade">Dark</div></div>
         </div>
 
         <div class="container">
           <h3 class="header">Background Tint</h3>
-          <div class="color-block ion-color-primary">
-            <div class="ion-color-background-tint">Primary</div>
-          </div>
-          <div class="color-block ion-color-success">
-            <div class="ion-color-background-tint">Success</div>
-          </div>
-          <div class="color-block ion-color-warning">
-            <div class="ion-color-background-tint">Warning</div>
-          </div>
-          <div class="color-block ion-color-danger">
-            <div class="ion-color-background-tint">Danger</div>
-          </div>
-          <div class="color-block ion-color-light">
-            <div class="ion-color-background-tint">Light</div>
-          </div>
-          <div class="color-block ion-color-neutral">
-            <div class="ion-color-background-tint">Neutral</div>
-          </div>
+          <div class="color-block ion-color-primary"><div class="ion-color-background-tint">Primary</div></div>
+          <div class="color-block ion-color-secondary"><div class="ion-color-background-tint">Secondary</div></div>
+          <div class="color-block ion-color-tertiary"><div class="ion-color-background-tint">Tertiary</div></div>
+          <div class="color-block ion-color-success"><div class="ion-color-background-tint">Success</div></div>
+          <div class="color-block ion-color-warning"><div class="ion-color-background-tint">Warning</div></div>
+          <div class="color-block ion-color-danger"><div class="ion-color-background-tint">Danger</div></div>
+          <div class="color-block ion-color-light"><div class="ion-color-background-tint">Light</div></div>
+          <div class="color-block ion-color-medium"><div class="ion-color-background-tint">Medium</div></div>
+          <div class="color-block ion-color-dark"><div class="ion-color-background-tint">Dark</div></div>
         </div>
 
         <div class="container">
-          <h3 class="header">Background 8%</h3>
-          <div class="color-block ion-color-primary">
-            <div class="ion-color-background-08">Primary</div>
-          </div>
-          <div class="color-block ion-color-success">
-            <div class="ion-color-background-08">Success</div>
-          </div>
-          <div class="color-block ion-color-warning">
-            <div class="ion-color-background-08">Warning</div>
-          </div>
-          <div class="color-block ion-color-danger">
-            <div class="ion-color-background-08">Danger</div>
-          </div>
-          <div class="color-block ion-color-light">
-            <div class="ion-color-background-08">Light</div>
-          </div>
-          <div class="color-block ion-color-neutral">
-            <div class="ion-color-background-08">Neutral</div>
-          </div>
+          <h3 class="header">Subtle Text</h3>
+          <div class="color-block ion-color-primary"><div class="ion-color-subtle">Primary</div></div>
+          <div class="color-block ion-color-secondary"><div class="ion-color-subtle">Secondary</div></div>
+          <div class="color-block ion-color-tertiary"><div class="ion-color-subtle">Tertiary</div></div>
+          <div class="color-block ion-color-success"><div class="ion-color-subtle">Success</div></div>
+          <div class="color-block ion-color-warning"><div class="ion-color-subtle">Warning</div></div>
+          <div class="color-block ion-color-danger"><div class="ion-color-subtle">Danger</div></div>
+          <div class="color-block ion-color-light"><div class="ion-color-subtle">Light</div></div>
+          <div class="color-block ion-color-medium"><div class="ion-color-subtle">Medium</div></div>
+          <div class="color-block ion-color-dark"><div class="ion-color-subtle">Dark</div></div>
         </div>
 
         <div class="container">
-          <h3 class="header">Background 12%</h3>
-          <div class="color-block ion-color-primary">
-            <div class="ion-color-background-12">Primary</div>
-          </div>
-          <div class="color-block ion-color-success">
-            <div class="ion-color-background-12">Success</div>
-          </div>
-          <div class="color-block ion-color-warning">
-            <div class="ion-color-background-12">Warning</div>
-          </div>
-          <div class="color-block ion-color-danger">
-            <div class="ion-color-background-12">Danger</div>
-          </div>
-          <div class="color-block ion-color-light">
-            <div class="ion-color-background-12">Light</div>
-          </div>
-          <div class="color-block ion-color-neutral">
-            <div class="ion-color-background-12">Neutral</div>
-          </div>
+          <h3 class="header">Subtle Background</h3>
+          <div class="color-block ion-color-primary"><div class="ion-color-subtle-background">Primary</div></div>
+          <div class="color-block ion-color-secondary"><div class="ion-color-subtle-background">Secondary</div></div>
+          <div class="color-block ion-color-tertiary"><div class="ion-color-subtle-background">Tertiary</div></div>
+          <div class="color-block ion-color-success"><div class="ion-color-subtle-background">Success</div></div>
+          <div class="color-block ion-color-warning"><div class="ion-color-subtle-background">Warning</div></div>
+          <div class="color-block ion-color-danger"><div class="ion-color-subtle-background">Danger</div></div>
+          <div class="color-block ion-color-light"><div class="ion-color-subtle-background">Light</div></div>
+          <div class="color-block ion-color-medium"><div class="ion-color-subtle-background">Medium</div></div>
+          <div class="color-block ion-color-dark"><div class="ion-color-subtle-background">Dark</div></div>
         </div>
 
         <div class="container">
-          <h3 class="header">Background 16%</h3>
-          <div class="color-block ion-color-primary">
-            <div class="ion-color-background-16">Primary</div>
+          <h3 class="header">Subtle Background Shade</h3>
+          <div class="color-block ion-color-primary"><div class="ion-color-subtle-background-shade">Primary</div></div>
+          <div class="color-block ion-color-secondary">
+            <div class="ion-color-subtle-background-shade">Secondary</div>
           </div>
-          <div class="color-block ion-color-success">
-            <div class="ion-color-background-16">Success</div>
+          <div class="color-block ion-color-tertiary">
+            <div class="ion-color-subtle-background-shade">Tertiary</div>
           </div>
-          <div class="color-block ion-color-warning">
-            <div class="ion-color-background-16">Warning</div>
+          <div class="color-block ion-color-success"><div class="ion-color-subtle-background-shade">Success</div></div>
+          <div class="color-block ion-color-warning"><div class="ion-color-subtle-background-shade">Warning</div></div>
+          <div class="color-block ion-color-danger"><div class="ion-color-subtle-background-shade">Danger</div></div>
+          <div class="color-block ion-color-light"><div class="ion-color-subtle-background-shade">Light</div></div>
+          <div class="color-block ion-color-medium"><div class="ion-color-subtle-background-shade">Medium</div></div>
+          <div class="color-block ion-color-dark"><div class="ion-color-subtle-background-shade">Dark</div></div>
+        </div>
+
+        <div class="container">
+          <h3 class="header">Subtle Background Tint</h3>
+          <div class="color-block ion-color-primary"><div class="ion-color-subtle-background-tint">Primary</div></div>
+          <div class="color-block ion-color-secondary">
+            <div class="ion-color-subtle-background-tint">Secondary</div>
           </div>
-          <div class="color-block ion-color-danger">
-            <div class="ion-color-background-16">Danger</div>
-          </div>
-          <div class="color-block ion-color-light">
-            <div class="ion-color-background-16">Light</div>
-          </div>
-          <div class="color-block ion-color-neutral">
-            <div class="ion-color-background-16">Neutral</div>
-          </div>
+          <div class="color-block ion-color-tertiary"><div class="ion-color-subtle-background-tint">Tertiary</div></div>
+          <div class="color-block ion-color-success"><div class="ion-color-subtle-background-tint">Success</div></div>
+          <div class="color-block ion-color-warning"><div class="ion-color-subtle-background-tint">Warning</div></div>
+          <div class="color-block ion-color-danger"><div class="ion-color-subtle-background-tint">Danger</div></div>
+          <div class="color-block ion-color-light"><div class="ion-color-subtle-background-tint">Light</div></div>
+          <div class="color-block ion-color-medium"><div class="ion-color-subtle-background-tint">Medium</div></div>
+          <div class="color-block ion-color-dark"><div class="ion-color-subtle-background-tint">Dark</div></div>
         </div>
       </ion-content>
     </ion-app>
