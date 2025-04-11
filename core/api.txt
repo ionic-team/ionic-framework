@@ -596,17 +596,23 @@ ion-checkbox,part,supporting-text
 ion-chip,shadow
 ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-chip,prop,disabled,boolean,false,false,false
+ion-chip,prop,hue,"bold" | "subtle" | undefined,'subtle',false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
 ion-chip,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
 ion-chip,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-chip,prop,theme,"ios" | "md" | "ionic",undefined,false,false
+ion-chip,css-prop,--background,ionic
 ion-chip,css-prop,--background,ios
 ion-chip,css-prop,--background,md
+ion-chip,css-prop,--border-radius,ionic
 ion-chip,css-prop,--border-radius,ios
 ion-chip,css-prop,--border-radius,md
+ion-chip,css-prop,--color,ionic
 ion-chip,css-prop,--color,ios
 ion-chip,css-prop,--color,md
+ion-chip,css-prop,--focus-ring-color,ionic
+ion-chip,css-prop,--focus-ring-width,ionic
 
 ion-col,shadow
 ion-col,prop,mode,"ios" | "md",undefined,false,false
@@ -1184,6 +1190,7 @@ ion-item-option,prop,disabled,boolean,false,false,false
 ion-item-option,prop,download,string | undefined,undefined,false,false
 ion-item-option,prop,expandable,boolean,false,false,false
 ion-item-option,prop,href,string | undefined,undefined,false,false
+ion-item-option,prop,hue,"bold" | "subtle" | undefined,'subtle',false,false
 ion-item-option,prop,mode,"ios" | "md",undefined,false,false
 ion-item-option,prop,rel,string | undefined,undefined,false,false
 ion-item-option,prop,shape,"rectangular" | "round" | "soft" | undefined,undefined,false,false
@@ -2429,6 +2436,7 @@ ion-toast,prop,duration,number,config.getNumber('toastDuration', 0),false,false
 ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-toast,prop,hue,"bold" | "subtle" | undefined,'subtle',false,false
 ion-toast,prop,icon,string | undefined,undefined,false,false
 ion-toast,prop,isOpen,boolean,false,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
