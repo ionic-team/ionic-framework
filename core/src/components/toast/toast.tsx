@@ -138,6 +138,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for
    * a toast with muted, subtle colors.
+   *
+   * Only applies to the `ionic` theme.
    */
   @Prop() hue?: 'bold' | 'subtle' = 'subtle';
 

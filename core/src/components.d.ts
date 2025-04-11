@@ -3833,7 +3833,7 @@ export namespace Components {
          */
         "htmlAttributes"?: { [key: string]: any };
         /**
-          * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for a toast with muted, subtle colors.
+          * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for a toast with muted, subtle colors.  Only applies to the `ionic` theme.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -9365,7 +9365,7 @@ declare namespace LocalJSX {
          */
         "htmlAttributes"?: { [key: string]: any };
         /**
-          * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for a toast with muted, subtle colors.
+          * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for a toast with muted, subtle colors.  Only applies to the `ionic` theme.
          */
         "hue"?: 'bold' | 'subtle';
         /**
