@@ -38,6 +38,14 @@ export class Chip implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for
+   * a chip with muted, subtle colors.
+   *
+   * Only applies to the `ionic` theme.
+   */
+  @Prop() hue?: 'bold' | 'subtle' = 'subtle';
+
+  /**
    * Set to `"soft"` for a chip with slightly rounded corners, `"round"` for a chip with fully
    * rounded corners, or `"rectangular"` for a chip without rounded corners.
    * Defaults to `"round"` for the `"ionic"` theme and `"soft"` for all other themes.
@@ -81,9 +89,9 @@ export class Chip implements ComponentInterface {
   }
 
   render() {
+    const { hue } = this;
     const theme = getIonTheme(this);
     const size = this.getSize();
-
     const shape = this.getShape();
 
     return (
@@ -97,6 +105,7 @@ export class Chip implements ComponentInterface {
           'ion-activatable': true,
           'ion-focusable': !this.disabled,
           [`chip-${size}`]: size !== undefined,
+          [`chip-${hue}`]: hue !== undefined,
         })}
       >
         <slot></slot>

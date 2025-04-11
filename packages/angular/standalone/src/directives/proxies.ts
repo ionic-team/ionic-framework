@@ -350,14 +350,14 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
 
 @ProxyCmp({
   defineCustomElementFn: defineIonBadge,
-  inputs: ['color', 'mode', 'shape', 'size', 'theme', 'vertical']
+  inputs: ['color', 'hue', 'mode', 'shape', 'size', 'theme', 'vertical']
 })
 @Component({
   selector: 'ion-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'mode', 'shape', 'size', 'theme', 'vertical'],
+  inputs: ['color', 'hue', 'mode', 'shape', 'size', 'theme', 'vertical'],
   standalone: true
 })
 export class IonBadge {
@@ -618,14 +618,14 @@ export declare interface IonCardTitle extends Components.IonCardTitle {}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonChip,
-  inputs: ['color', 'disabled', 'mode', 'outline', 'shape', 'size', 'theme']
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme']
 })
 @Component({
   selector: 'ion-chip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'mode', 'outline', 'shape', 'size', 'theme'],
+  inputs: ['color', 'disabled', 'hue', 'mode', 'outline', 'shape', 'size', 'theme'],
   standalone: true
 })
 export class IonChip {

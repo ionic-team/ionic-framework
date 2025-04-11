@@ -130,6 +130,7 @@ export const IonBackdrop: StencilVueComponent<JSX.IonBackdrop> = /*@__PURE__*/ d
 
 export const IonBadge: StencilVueComponent<JSX.IonBadge> = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', defineIonBadge, [
   'color',
+  'hue',
   'shape',
   'size',
   'vertical'
@@ -265,6 +266,7 @@ export const IonChip: StencilVueComponent<JSX.IonChip> = /*@__PURE__*/ defineCon
   'color',
   'outline',
   'disabled',
+  'hue',
   'shape',
   'size'
 ]);
