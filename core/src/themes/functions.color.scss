@@ -39,13 +39,20 @@
 
   $value: map.get($values, $variation);
 
-  // If the color requested is subtle we return `--ion-color-primary-subtle-contrast`
-  // Otherwise we return `--ion-color-primary-contrast`
+  // TODO(FW-6417): this can be removed when foreground is required
+  // Fallback to "base" variant when "foreground" variant is undefined
+  @if ($variation == foreground and $value == null) {
+    $variation: base;
+    $value: map.get($values, $variation);
+  }
+
+  // If the color requested is subtle we return `--ion-color-{color}-subtle-contrast`,
+  // otherwise we return `--ion-color-{color}-contrast`.
   $variable: if($subtle, "--ion-color-#{$name}-subtle-#{$variation}", "--ion-color-#{$name}-#{$variation}");
 
-  // If the variation being used is base, we do not include the variant so
-  // If the color requested is subtle we return `--ion-color-primary-subtle`
-  // Otherwise we return `--ion-color-primary`
+  // If the variation being used is "base", we do not include the variant.
+  // If the color requested is subtle we return `--ion-color-{color}-subtle`,
+  // otherwise we return `--ion-color-{color}`.
   @if ($variation == base) {
     $variable: if($subtle, "--ion-color-#{$name}-subtle", "--ion-color-#{$name}");
   }
@@ -134,10 +141,9 @@
   $hue-colors: map.get($theme-colors, $color-name);
   $color-variants: map.get($hue-colors, $hue);
 
-  // Determine prefix based on hue value
   $prefix: if($hue == "subtle", "-subtle", "");
 
-  // TODO this @if can be removed if we add subtle colors for ios and md
+  // TODO(FW-6417) this @if can be removed if we add subtle colors for ios and md
   // Only proceed if the color variants exist
   @if $color-variants {
     // Grab the individual color variants
@@ -159,7 +165,7 @@
     ) !important;
     --ion-color#{$prefix}-shade: var(--ion-color-#{$color-name}#{$prefix}-shade, #{$shade}) !important;
     --ion-color#{$prefix}-tint: var(--ion-color-#{$color-name}#{$prefix}-tint, #{$tint}) !important;
-    // TODO(): remove the fallback variable when the foreground variable is
+    // TODO(FW-6417): remove the fallback variable when the foreground variable is
     // required by all palettes for all themes:
     // --ion-color#{$prefix}-foreground: var(--ion-color-#{$color-name}#{$prefix}-foreground, #{$foreground}) !important;
     --ion-color#{$prefix}-foreground: var(
@@ -235,7 +241,7 @@
         --ion-color-#{$color-name}#{$prefix}-contrast-rgb: #{map.get($colors, contrast-rgb)};
         --ion-color-#{$color-name}#{$prefix}-shade: #{map.get($colors, shade)};
         --ion-color-#{$color-name}#{$prefix}-tint: #{map.get($colors, tint)};
-        // TODO(): this "if" can be removed when foreground is defined for ios/md
+        // TODO(FW-6417): this "if" can be removed when foreground is defined for ios/md
         // themes. It should not be added until we want foreground to be required for
         // ios and md because this will be a breaking change, requiring users to add
         // `--ion-color-{color}-foreground` in order to override the default colors
