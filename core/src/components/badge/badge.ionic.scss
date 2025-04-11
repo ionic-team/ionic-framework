@@ -5,8 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{globals.ion-color(primary, base)};
-  --color: #{globals.ion-color(primary, contrast)};
   --padding-start: #{globals.$ion-space-200};
   --padding-end: #{globals.$ion-space-200};
   --padding-top: #{globals.$ion-space-0};
@@ -18,6 +16,32 @@
   justify-content: center;
 
   font-weight: globals.$ion-font-weight-medium;
+}
+
+// Bold Badge
+// --------------------------------------------------
+
+:host(.badge-bold) {
+  --background: #{globals.ion-color(primary, base)};
+  --color: #{globals.ion-color(primary, contrast)};
+}
+
+:host(.badge-bold.ion-color) {
+  background: globals.current-color(base);
+  color: globals.current-color(contrast);
+}
+
+// Subtle Badge
+// --------------------------------------------------
+
+:host(.badge-subtle) {
+  --background: #{globals.ion-color(primary, base, $subtle: true)};
+  --color: #{globals.ion-color(primary, contrast, $subtle: true)};
+}
+
+:host(.badge-subtle.ion-color) {
+  background: globals.current-color(base, $subtle: true);
+  color: globals.current-color(contrast, $subtle: true);
 }
 
 // Badge Shapes
