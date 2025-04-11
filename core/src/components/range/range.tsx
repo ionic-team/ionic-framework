@@ -215,11 +215,31 @@ export class Range implements ComponentInterface {
    */
   @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
-  protected valueChanged() {
+  protected valueChanged(newValue: RangeValue, oldValue: RangeValue) {
+    const valuesChanged = this.compareValues(newValue, oldValue);
+    if (valuesChanged) {
+      this.ionInput.emit({ value: this.value });
+    }
+
     if (!this.noUpdate) {
       this.updateRatio();
     }
   }
+
+  /**
+   * Compares two RangeValue inputs to determine if they are different.
+   *
+   * @param newVal - The new value.
+   * @param oldVal - The old value.
+   * @returns `true` if the values are different, `false` otherwise.
+   */
+  private compareValues = (newVal: RangeValue, oldVal: RangeValue) => {
+    if (typeof newVal === 'object' && typeof oldVal === 'object') {
+      return newVal.lower !== oldVal.lower || newVal.upper !== oldVal.upper;
+    }
+
+    return newVal !== oldVal;
+  };
 
   private clampBounds = (value: any): number => {
     return clamp(this.min, value, this.max);
@@ -592,8 +612,6 @@ export class Range implements ComponentInterface {
           lower: Math.min(valA, valB),
           upper: Math.max(valA, valB),
         };
-
-    this.ionInput.emit({ value: this.value });
 
     this.noUpdate = false;
   }

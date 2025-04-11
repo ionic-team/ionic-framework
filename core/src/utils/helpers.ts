@@ -427,17 +427,6 @@ export const shallowEqualStringMap = (
   return true;
 };
 
-export const getNextSiblingOfType = <T extends Element>(element: Element): T | null => {
-  let sibling = element.nextSibling;
-  while (sibling) {
-    if (sibling.nodeType === Node.ELEMENT_NODE && (sibling as T) !== null) {
-      return sibling as T;
-    }
-    sibling = sibling.nextSibling;
-  }
-  return null;
-};
-
 /**
  * Checks input for usable number. Not NaN and not Infinite.
  */

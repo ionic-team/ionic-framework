@@ -33,6 +33,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
 })
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
+  private inputLabelId = `${this.inputId}-lbl`;
   private helperTextId = `${this.inputId}-helper-text`;
   private errorTextId = `${this.inputId}-error-text`;
   private focusEl?: HTMLElement;
@@ -194,6 +195,15 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private onKeyDown = (ev: KeyboardEvent) => {
+    if (ev.key === ' ') {
+      ev.preventDefault();
+      if (!this.disabled) {
+        this.toggleChecked(ev);
+      }
+    }
+  };
+
   private onClick = (ev: MouseEvent) => {
     if (this.disabled) {
       return;
@@ -264,16 +274,24 @@ export class Checkbox implements ComponentInterface {
       size,
     } = this;
     const theme = getIonTheme(this);
-
     const path = getSVGPath(theme, indeterminate);
+    const hasLabelContent = el.textContent !== '';
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
+    // The host element must have a checkbox role to ensure proper VoiceOver
+    // support in Safari for accessibility.
     return (
       <Host
+        role="checkbox"
         aria-checked={indeterminate ? 'mixed' : `${checked}`}
         aria-describedby={this.getHintTextID()}
         aria-invalid={this.getHintTextID() === this.errorTextId}
+        aria-labelledby={hasLabelContent ? this.inputLabelId : null}
+        aria-label={inheritedAttributes['aria-label'] || null}
+        aria-disabled={disabled ? 'true' : null}
+        tabindex={disabled ? undefined : 0}
+        onKeyDown={this.onKeyDown}
         class={createColorClasses(color, {
           [theme]: true,
           'in-item': hostContext('ion-item', el),
@@ -290,7 +308,7 @@ export class Checkbox implements ComponentInterface {
         })}
         onClick={this.onClick}
       >
-        <label class="checkbox-wrapper">
+        <label class="checkbox-wrapper" htmlFor={inputId}>
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
@@ -310,9 +328,10 @@ export class Checkbox implements ComponentInterface {
           <div
             class={{
               'label-text-wrapper': true,
-              'label-text-wrapper-hidden': el.textContent === '',
+              'label-text-wrapper-hidden': !hasLabelContent,
             }}
             part="label"
+            id={this.inputLabelId}
           >
             <slot></slot>
             {this.renderHintText()}
