@@ -65,16 +65,13 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         config
       );
 
-      // Wait for web components to hydrate
-      await page.waitForFunction(() => customElements.get('ion-item-sliding') !== undefined);
-
       await page.evaluate(() => {
         const items = document.querySelectorAll('ion-item-sliding');
         items.forEach((item: any) => item.open('start'));
       });
 
       // Wait for options to be visible
-      await page.waitForTimeout(500);
+      await page.waitForSelector('ion-item-options:visible', { state: 'visible' });
 
       await expect(page.locator('ion-list')).toHaveScreenshot(screenshot('item-option-hue-subtle'));
     });
@@ -141,16 +138,13 @@ configs({ directions: ['ltr'], modes: ['ionic-md'] }).forEach(({ config, screens
         config
       );
 
-      // Wait for web components to hydrate
-      await page.waitForFunction(() => customElements.get('ion-item-sliding') !== undefined);
-
       await page.evaluate(() => {
         const items = document.querySelectorAll('ion-item-sliding');
         items.forEach((item: any) => item.open('start'));
       });
 
       // Wait for options to be visible
-      await page.waitForTimeout(500);
+      await page.waitForSelector('ion-item-options:visible', { state: 'visible' });
 
       await expect(page.locator('ion-list')).toHaveScreenshot(screenshot('item-option-hue-bold'));
     });
