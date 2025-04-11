@@ -40,6 +40,8 @@ export class Chip implements ComponentInterface {
   /**
    * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for
    * a chip with muted, subtle colors.
+   *
+   * Only applies to the `ionic` theme.
    */
   @Prop() hue?: 'bold' | 'subtle' = 'subtle';
 
