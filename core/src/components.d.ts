@@ -808,6 +808,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -1700,6 +1704,10 @@ export namespace Components {
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href": string | undefined;
+        /**
+          * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for an option with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -3836,6 +3844,10 @@ export namespace Components {
           * Additional attributes to pass to the toast.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for a toast with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
         /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
@@ -6288,6 +6300,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Set to `"bold"` for a chip with vibrant, bold colors or to `"subtle"` for a chip with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -7196,6 +7212,10 @@ declare namespace LocalJSX {
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href"?: string | undefined;
+        /**
+          * Set to `"bold"` for an option with vibrant, bold colors or to `"subtle"` for an option with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
         /**
           * The mode determines the platform behaviors of the component.
          */
@@ -9368,6 +9388,10 @@ declare namespace LocalJSX {
           * Additional attributes to pass to the toast.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for a toast with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
         /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */

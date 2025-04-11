@@ -1992,7 +1992,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...activePart,
+            ...this.getActivePartsWithFallback(),
             hour: ev.detail.value,
           });
 
@@ -2032,7 +2032,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...activePart,
+            ...this.getActivePartsWithFallback(),
             minute: ev.detail.value,
           });
 
@@ -2078,7 +2078,7 @@ export class Datetime implements ComponentInterface {
           });
 
           this.setActiveParts({
-            ...activePart,
+            ...this.getActivePartsWithFallback(),
             ampm: ev.detail.value,
             hour,
           });

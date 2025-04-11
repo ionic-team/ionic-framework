@@ -266,6 +266,7 @@ export const IonChip: StencilVueComponent<JSX.IonChip> = /*@__PURE__*/ defineCon
   'color',
   'outline',
   'disabled',
+  'hue',
   'shape',
   'size'
 ]);
@@ -553,6 +554,7 @@ export const IonItemOption: StencilVueComponent<JSX.IonItemOption> = /*@__PURE__
   'download',
   'expandable',
   'href',
+  'hue',
   'rel',
   'target',
   'type',

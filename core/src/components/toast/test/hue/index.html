@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast - Hue</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Toast - Hue</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding" id="content">
+        <p>
+          Toasts are presented indefinitely but can be closed by clicking the backdrop. The backdrop has been added for
+          demo purposes only.
+        </p>
+
+        <button id="show-subtle-toasts" class="expand">Show All Subtle Toasts</button>
+        <button id="show-bold-toasts" class="expand">Show All Bold Toasts</button>
+      </ion-content>
+
+      <div id="backdrop" class="backdrop"></div>
+
+      <ion-toast position="top"></ion-toast>
+      <ion-toast color="primary" position="top"></ion-toast>
+      <ion-toast color="secondary" position="top"></ion-toast>
+      <ion-toast color="tertiary" position="top"></ion-toast>
+      <ion-toast color="success" position="top"></ion-toast>
+      <ion-toast color="warning" position="top"></ion-toast>
+      <ion-toast color="danger" position="top"></ion-toast>
+      <ion-toast color="light" position="top"></ion-toast>
+      <ion-toast color="medium" position="top"></ion-toast>
+      <ion-toast color="dark" position="top"></ion-toast>
+    </ion-app>
+
+    <script type="module">
+      let lastToast = null;
+      let toastOffset = 10;
+
+      // Show all toasts when the button is clicked
+      function openAllToasts(isBold) {
+        toastOffset = 10;
+
+        const toasts = document.querySelectorAll('ion-toast');
+
+        toasts.forEach((toast, index) => {
+          toast.removeAttribute('hue');
+          toast.hue = isBold ? 'bold' : 'subtle';
+          const hue = toast.hue;
+
+          const color = toast.color || 'default';
+          toast.message = `This is a ${color} toast.`;
+
+          toast.icon = 'information-circle';
+
+          toast.buttons = [
+            {
+              text: 'Action',
+            },
+            {
+              icon: 'close',
+              role: 'cancel',
+            },
+          ];
+
+          // Set dynamic position for each toast to ensure they don't overlap
+          toast.style.position = 'absolute';
+          toast.style.top = `${toastOffset}px`;
+          toast.style.left = '50%';
+          toast.style.transform = 'translateX(-50%)';
+
+          toast.present();
+
+          // Update the toastOffset for the next toast to ensure it's positioned below the previous one
+          toastOffset += 60;
+        });
+
+        document.getElementById('backdrop').style.display = 'block';
+      }
+
+      // Dismiss all toasts when backdrop is clicked
+      function dismissAllToasts() {
+        const toasts = document.querySelectorAll('ion-toast');
+        toasts.forEach((toast) => toast.dismiss());
+
+        document.getElementById('backdrop').style.display = 'none';
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('show-subtle-toasts').addEventListener('click', () => openAllToasts(false));
+        document.getElementById('show-bold-toasts').addEventListener('click', () => openAllToasts(true));
+
+        document.getElementById('backdrop').addEventListener('click', dismissAllToasts);
+      });
+    </script>
+
+    <style>
+      .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: none;
+      }
+    </style>
+  </body>
+</html>
