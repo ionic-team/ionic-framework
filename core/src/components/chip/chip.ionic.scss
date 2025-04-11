@@ -124,7 +124,7 @@
 }
 
 :host(.chip-outline.chip-bold) {
-  // TODO this is a made up design choice based on a
+  // TODO(FW-6450): this is a made up design choice based on a
   // darker shade of the background color
   border-color: globals.$ion-primitives-neutral-1200;
 }
