@@ -430,6 +430,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
+        /**
           * The mode determines the platform behaviors of the component.
          */
         "mode"?: "ios" | "md";
@@ -5870,6 +5874,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Only applies to the `ionic` theme.
+         */
+        "hue"?: 'bold' | 'subtle';
         /**
           * The mode determines the platform behaviors of the component.
          */
