@@ -136,6 +136,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() header?: string;
 
   /**
+   * Set to `"bold"` for a toast with vibrant, bold colors or to `"subtle"` for
+   * a toast with muted, subtle colors.
+   *
+   * Only applies to the `ionic` theme.
+   */
+  @Prop() hue?: 'bold' | 'subtle' = 'subtle';
+
+  /**
    * Defines how the message and buttons are laid out in the toast.
    * 'baseline': The message and the buttons will appear on the same line.
    * Message text may wrap within the message container.
@@ -715,7 +723,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { layout, el, revealContentToScreenReader, header, message } = this;
+    const { layout, el, revealContentToScreenReader, header, hue, message } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
@@ -753,6 +761,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           'overlay-hidden': true,
           'toast-translucent': this.translucent,
           [`toast-shape-${shape}`]: shape !== undefined,
+          [`toast-hue-${hue}`]: hue !== undefined,
         })}
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
