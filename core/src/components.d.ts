@@ -430,7 +430,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.
+          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Only applies to the `ionic` theme.
          */
         "hue"?: 'bold' | 'subtle';
         /**
@@ -5875,7 +5875,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.
+          * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for a badge with muted, subtle colors.  Only applies to the `ionic` theme.
          */
         "hue"?: 'bold' | 'subtle';
         /**

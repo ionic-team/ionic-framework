@@ -31,6 +31,8 @@ export class Badge implements ComponentInterface {
   /**
    * Set to `"bold"` for a badge with vibrant, bold colors or to `"subtle"` for
    * a badge with muted, subtle colors.
+   *
+   * Only applies to the `ionic` theme.
    */
   @Prop() hue?: 'bold' | 'subtle';
 
@@ -95,7 +97,7 @@ export class Badge implements ComponentInterface {
 
   // The 'subtle' hue is the default for badges containing text or icons
   // The 'bold' hue is used when inside of an avatar, button, tab button,
-  // or when the badge is empty (no text or icon)
+  // or when the badge is empty (no text or icon).
   private getHue(): string | undefined {
     const { hue } = this;
 
