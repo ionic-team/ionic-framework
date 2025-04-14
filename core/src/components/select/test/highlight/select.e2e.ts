@@ -60,6 +60,34 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         const container = page.locator('#container');
         await expect(container).toHaveScreenshot(screenshot(`select-no-fill-invalid`));
       });
+      test('should render invalid with focus state correctly', async ({ page }) => {
+        await page.setContent(
+          `
+          <style>
+            #container {
+              display: grid;
+              gap: 5px;
+            }
+          </style>
+          <div id="container">
+            <ion-select value="apple" class="ion-touched ion-invalid has-focus" label="Favorite Fruit">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+            <ion-list>
+              <ion-item>
+                <ion-select value="apple" class="ion-touched ion-invalid has-focus" label="Favorite Fruit">
+                  <ion-select-option value="apple">Apple</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('#container');
+        await expect(container).toHaveScreenshot(screenshot(`select-no-fill-invalid-focus`));
+      });
       test('should render focused state correctly', async ({ page }) => {
         await page.setContent(
           `
