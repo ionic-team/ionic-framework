@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { APP_ID, NgModule } from '@angular/core';
 import { BEFORE_APP_SERIALIZED } from '@angular/platform-server';
-import { printIonError } from '@ionic/core';
 import { hydrateDocument } from '@ionic/core/hydrate';
 
 // @dynamic
@@ -51,7 +50,7 @@ export function hydrateIonicComponents(doc: any, appId: any) {
     }).then((hydrateResults) => {
       hydrateResults.diagnostics.forEach((d) => {
         if (d.type === 'error') {
-          printIonError(d.messageText);
+          console.error(d.messageText);
         } else if (d.type === 'debug') {
           console.debug(d.messageText);
         } else {

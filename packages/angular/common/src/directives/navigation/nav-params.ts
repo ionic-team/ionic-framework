@@ -1,5 +1,3 @@
-import { printIonWarning } from '@ionic/core';
-
 /**
  * @description
  * NavParams are an object that exists on a page and can contain data for that particular view.
@@ -22,8 +20,8 @@ import { printIonWarning } from '@ionic/core';
  */
 export class NavParams {
   constructor(public data: { [key: string]: any } = {}) {
-    printIonWarning(
-      `NavParams has been deprecated in favor of using Angular's input API. Developers should migrate to either the @Input decorator or the Signals-based input API.`
+    console.warn(
+      `[Ionic Warning]: NavParams has been deprecated in favor of using Angular's input API. Developers should migrate to either the @Input decorator or the Signals-based input API.`
     );
   }
 
