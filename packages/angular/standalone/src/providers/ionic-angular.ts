@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { APP_INITIALIZER, makeEnvironmentProviders } from '@angular/core';
 import type { EnvironmentProviders } from '@angular/core';
 import { AngularDelegate, ConfigToken, provideComponentInputBinding } from '@ionic/angular/common';
-import { initialize } from '@ionic/core/components';
+import { initialize, setupConfig } from '@ionic/core/components';
 import type { IonicConfig } from '@ionic/core/components';
 
 import { ModalController } from './modal-controller';
@@ -13,6 +13,8 @@ type OptInAngularFeatures = {
 };
 
 export const provideIonicAngular = (config: IonicConfig & OptInAngularFeatures = {}): EnvironmentProviders => {
+  setupConfig(config);
+
   return makeEnvironmentProviders([
     {
       provide: ConfigToken,
