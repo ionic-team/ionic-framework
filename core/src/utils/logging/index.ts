@@ -13,6 +13,7 @@ export const enum LogLevel {
  * @param message - The string message to be logged to the console.
  */
 export const printIonWarning = (message: string, ...params: any[]) => {
+  console.log('printIonWarning', config.get('logLevel'));
   const logLevel = config.get('logLevel', LogLevel.WARN);
   if ([LogLevel.WARN].includes(logLevel)) {
     return console.warn(`[Ionic Warning]: ${message}`, ...params);
@@ -27,6 +28,7 @@ export const printIonWarning = (message: string, ...params: any[]) => {
  * @param params - Additional arguments to supply to the console.error.
  */
 export const printIonError = (message: string, ...params: any[]) => {
+  console.log('printIonError', config.get('logLevel'));
   const logLevel = config.get('logLevel', LogLevel.ERROR);
   if ([LogLevel.ERROR, LogLevel.WARN].includes(logLevel)) {
     return console.error(`[Ionic Error]: ${message}`, ...params);

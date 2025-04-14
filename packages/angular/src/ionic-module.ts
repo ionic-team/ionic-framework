@@ -1,7 +1,7 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
 import { ConfigToken, AngularDelegate, provideComponentInputBinding } from '@ionic/angular/common';
-import { IonicConfig } from '@ionic/core';
+import { initialize, IonicConfig, setupConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
 import {
@@ -64,6 +64,9 @@ type OptInAngularFeatures = {
 })
 export class IonicModule {
   static forRoot(config: IonicConfig & OptInAngularFeatures = {}): ModuleWithProviders<IonicModule> {
+    setupConfig(config);
+    initialize(config);
+
     return {
       ngModule: IonicModule,
       providers: [
