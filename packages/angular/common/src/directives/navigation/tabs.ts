@@ -10,6 +10,7 @@ import {
   AfterViewInit,
   QueryList,
 } from '@angular/core';
+import { printIonError } from '@ionic/core';
 
 import { NavController } from '../../providers/nav-controller';
 
@@ -184,7 +185,7 @@ export abstract class IonTabs implements AfterViewInit, AfterContentInit, AfterC
     const selectedTab = tabs.find((t: any) => t.tab === tab);
 
     if (!selectedTab) {
-      console.error(`[Ionic Error]: Tab with id: "${tab}" does not exist`);
+      printIonError(`Tab with id: "${tab}" does not exist`);
       return;
     }
 
