@@ -93,6 +93,7 @@
 :host(.in-item.select-expanded.select-fill-solid) .select-wrapper .select-icon,
 :host(.in-item.select-expanded.ion-touched.ion-invalid.select-fill-solid) .select-wrapper .select-icon,
 :host(.in-item.has-focus.select-fill-solid) .select-wrapper .select-icon,
+:host(.in-item.has-focus.ion-valid.select-fill-solid) .select-wrapper .select-icon,
 :host(.in-item.has-focus.ion-touched.ion-invalid.select-fill-solid) .select-wrapper .select-icon {
   color: var(--highlight-color);
 }
