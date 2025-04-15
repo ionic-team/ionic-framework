@@ -4,9 +4,6 @@
 // --------------------------------------------------
 
 :root {
-  --ionic-global-background-color: #{globals.$ion-primitives-neutral-100};
-  --ionic-global-text-color: #{globals.$ion-primitives-neutral-900};
-
   /**
    * Set the theme colors from the
    * `ionic.theme.default.scss` file.
@@ -26,8 +23,8 @@ html {
 }
 
 body {
-  background: var(--ionic-global-background-color);
-  color: var(--ionic-global-text-color);
+  background: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 body.backdrop-no-scroll {
