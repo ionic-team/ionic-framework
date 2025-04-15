@@ -717,7 +717,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
-        "[Ionic Warning]: Datetime: The 'date-time' presentation requires either a date or time object (or both) in formatOptions."
+        "[Ionic Warning]: [ion-datetime] - The 'date-time' presentation requires either a date or time object (or both) in formatOptions."
       );
     });
   });
