@@ -233,7 +233,7 @@ export class Router implements ComponentInterface {
     animation?: AnimationBuilder
   ): Promise<boolean> {
     if (!segments) {
-      printIonError('[ion-router] - URL is not part of the routing set');
+      printIonError('[ion-router] - URL is not part of the routing set.');
       return false;
     }
 
@@ -254,7 +254,7 @@ export class Router implements ComponentInterface {
     const routes = readRoutes(this.el);
     const chain = findChainForSegments(segments, routes);
     if (!chain) {
-      printIonError('[ion-router] - The path does not match any route');
+      printIonError('[ion-router] - The path does not match any route.');
       return false;
     }
 
@@ -339,7 +339,7 @@ export class Router implements ComponentInterface {
     animation?: AnimationBuilder
   ): Promise<boolean> {
     if (this.busy) {
-      printIonWarning('[ion-router] - Router is busy, transition was cancelled');
+      printIonWarning('[ion-router] - Router is busy, transition was cancelled.');
       return false;
     }
     this.busy = true;
