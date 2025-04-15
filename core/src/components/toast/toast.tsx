@@ -511,7 +511,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
        */
       const foundEl = document.getElementById(positionAnchor);
       if (foundEl === null) {
-        printIonWarning(`[ion-toast] - An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`, el);
+        printIonWarning(
+          `[ion-toast] - An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`,
+          el
+        );
         return undefined;
       }
 

@@ -111,7 +111,9 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
     // Ensure the found element is a valid ION-SEGMENT-CONTENT
     if (segmentContent.tagName !== 'ION-SEGMENT-CONTENT') {
-      printIonError(`[ion-segment-button] - Element with id="${this.contentId}" is not an <ion-segment-content> element.`);
+      printIonError(
+        `[ion-segment-button] - Element with id="${this.contentId}" is not an <ion-segment-content> element.`
+      );
       return;
     }
   }

@@ -33,7 +33,10 @@ export const checkForPresentationFormatMismatch = (
     case 'month':
     case 'year':
       if (formatOptions.date === undefined) {
-        printIonWarning(`[ion-datetime] - The '${presentation}' presentation requires a date object in formatOptions.`, el);
+        printIonWarning(
+          `[ion-datetime] - The '${presentation}' presentation requires a date object in formatOptions.`,
+          el
+        );
       }
       break;
     case 'time':
